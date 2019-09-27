@@ -7,30 +7,30 @@ package org.jeecg.common.constant;
  */
 public interface CacheConstant {
 
-	/**
-	 * 字典信息缓存
-	 */
+    /**
+     * 字典信息缓存
+     */
     public static final String DICT_CACHE = "dictCache";
 
-	/**
-	 * 权限信息缓存
-	 */
+    /**
+     * 权限信息缓存
+     */
     public static final String PERMISSION_CACHE = "permission";
 
-	/**
-	 * 登录用户规则缓存
-	 */
+    /**
+     * 登录用户规则缓存
+     */
     public static final String LOGIN_USER_RULES_CACHE = "loginUser_cacheRules";
 
-	/**
-	 * 部门信息缓存
-	 */
-	public static final String DEPART_INFO_CACHE = "departCache_info";
+    /**
+     * 部门信息缓存
+     */
+    public static final String DEPART_INFO_CACHE = "departCache_info";
 
 
-	/**
-	 * 部门id信息缓存
-	 */
-	public static final String DEPART_IDMODEL_CACHE = "departCache_idmodel";
+    /**
+     * 部门id信息缓存
+     */
+    public static final String DEPART_IDMODEL_CACHE = "departCache_idmodel";
 
 }
