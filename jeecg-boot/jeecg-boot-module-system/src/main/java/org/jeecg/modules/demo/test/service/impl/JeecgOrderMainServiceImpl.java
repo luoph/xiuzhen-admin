@@ -1,9 +1,6 @@
 package org.jeecg.modules.demo.test.service.impl;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.demo.test.entity.JeecgOrderCustomer;
 import org.jeecg.modules.demo.test.entity.JeecgOrderMain;
 import org.jeecg.modules.demo.test.entity.JeecgOrderTicket;
@@ -15,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @Description: 订单
  * @Author: jeecg-boot
- * @Date:  2019-02-15
+ * @Date: 2019-02-15
  * @Version: V1.0
  */
 @Service
@@ -75,22 +74,22 @@ public class JeecgOrderMainServiceImpl extends ServiceImpl<JeecgOrderMainMapper,
         }
     }
 
-	@Override
-	@Transactional
-	public void delMain(String id) {
-		jeecgOrderMainMapper.deleteById(id);
-		jeecgOrderTicketMapper.deleteTicketsByMainId(id);
-		jeecgOrderCustomerMapper.deleteCustomersByMainId(id);
-	}
+    @Override
+    @Transactional
+    public void delMain(String id) {
+        jeecgOrderMainMapper.deleteById(id);
+        jeecgOrderTicketMapper.deleteTicketsByMainId(id);
+        jeecgOrderCustomerMapper.deleteCustomersByMainId(id);
+    }
 
-	@Override
-	@Transactional
-	public void delBatchMain(Collection<? extends Serializable> idList) {
-		for(Serializable id:idList) {
-			jeecgOrderMainMapper.deleteById(id);
-			jeecgOrderTicketMapper.deleteTicketsByMainId(id.toString());
-			jeecgOrderCustomerMapper.deleteCustomersByMainId(id.toString());
-		}
-	}
+    @Override
+    @Transactional
+    public void delBatchMain(Collection<? extends Serializable> idList) {
+        for (Serializable id : idList) {
+            jeecgOrderMainMapper.deleteById(id);
+            jeecgOrderTicketMapper.deleteTicketsByMainId(id.toString());
+            jeecgOrderCustomerMapper.deleteCustomersByMainId(id.toString());
+        }
+    }
 
 }
