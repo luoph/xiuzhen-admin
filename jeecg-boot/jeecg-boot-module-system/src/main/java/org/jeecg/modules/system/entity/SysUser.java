@@ -1,21 +1,18 @@
 package org.jeecg.modules.system.entity;
 
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.io.Serializable;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
+import java.util.Date;
 
 /**
  * <p>
@@ -77,7 +74,7 @@ public class SysUser implements Serializable {
     /**
      * 性别（1：男 2：女）
      */
-    @Excel(name = "性别", width = 15,dicCode="sex")
+    @Excel(name = "性别", width = 15, dicCode = "sex")
     @Dict(dicCode = "sex")
     private Integer sex;
 
@@ -101,14 +98,14 @@ public class SysUser implements Serializable {
     /**
      * 状态(1：正常  2：冻结 ）
      */
-    @Excel(name = "状态", width = 15,dicCode="user_status")
+    @Excel(name = "状态", width = 15, dicCode = "user_status")
     @Dict(dicCode = "user_status")
     private Integer status;
 
     /**
      * 删除状态（0，正常，1已删除）
      */
-    @Excel(name = "删除状态", width = 15,dicCode="del_flag")
+    @Excel(name = "删除状态", width = 15, dicCode = "del_flag")
     @TableLogic
     private String delFlag;
 

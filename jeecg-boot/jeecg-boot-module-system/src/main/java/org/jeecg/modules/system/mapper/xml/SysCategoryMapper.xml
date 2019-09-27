@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.system.mapper.SysCategoryMapper">
 
-	<select id="queryListByPid" parameterType="String"  resultType="org.jeecg.modules.system.model.TreeSelectModel">
+    <select id="queryListByPid" parameterType="String" resultType="org.jeecg.modules.system.model.TreeSelectModel">
 		select code,
 			   name as "title",
 			   id as "key",
@@ -11,6 +11,6 @@
 			   from sys_category
 			where pid = #{pid}
 	</select>
-	
+
 
 </mapper>
