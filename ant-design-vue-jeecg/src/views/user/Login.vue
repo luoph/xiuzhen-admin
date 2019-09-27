@@ -84,7 +84,7 @@
       </a-tabs>
 
       <a-form-item>
-        <a-checkbox v-model="formLogin.rememberMe">自动登陆</a-checkbox>
+        <a-checkbox v-model="formLogin.rememberMe">自动登录</a-checkbox>
   <!--      <router-link :to="{ name: 'alteration'}" class="forge-password" style="float: right;">
           忘记密码
         </router-link>
