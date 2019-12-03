@@ -29,17 +29,17 @@ public class JeecgDataAutorUtils {
      * @param request
      * @param dataRules
      */
-    public static synchronized void installDataSearchConditon(HttpServletRequest request, List<SysPermissionDataRuleModel> dataRules) {
-        @SuppressWarnings("unchecked")
-        List<SysPermissionDataRuleModel> list = (List<SysPermissionDataRuleModel>) loadDataSearchConditon();// 1.先从request获取MENU_DATA_AUTHOR_RULES，如果存则获取到LIST
+    public static synchronized void installDataSearchCondition(HttpServletRequest request, List<SysPermissionDataRuleModel> dataRules) {
+        // 1.先从request获取MENU_DATA_AUTHOR_RULES，如果存则获取到LIST
+        List<SysPermissionDataRuleModel> list = loadDataSearchCondition();
         if (list == null) {
             // 2.如果不存在，则new一个list
-            list = new ArrayList<SysPermissionDataRuleModel>();
+            list = new ArrayList<>();
         }
-        for (SysPermissionDataRuleModel tsDataRule : dataRules) {
-            list.add(tsDataRule);
-        }
-        request.setAttribute(MENU_DATA_AUTHOR_RULES, list); // 3.往list里面增量存指
+
+        list.addAll(dataRules);
+        // 3.往list里面增量存指
+        request.setAttribute(MENU_DATA_AUTHOR_RULES, list);
     }
 
     /**
@@ -48,7 +48,7 @@ public class JeecgDataAutorUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static synchronized List<SysPermissionDataRuleModel> loadDataSearchConditon() {
+    public static synchronized List<SysPermissionDataRuleModel> loadDataSearchCondition() {
         return (List<SysPermissionDataRuleModel>) SpringContextUtils.getHttpServletRequest().getAttribute(MENU_DATA_AUTHOR_RULES);
 
     }
@@ -58,7 +58,7 @@ public class JeecgDataAutorUtils {
      *
      * @return
      */
-    public static synchronized String loadDataSearchConditonSQLString() {
+    public static synchronized String loadDataSearchConditionSqlString() {
         return (String) SpringContextUtils.getHttpServletRequest().getAttribute(MENU_DATA_AUTHOR_RULE_SQL);
     }
 
@@ -68,15 +68,15 @@ public class JeecgDataAutorUtils {
      * @param request
      * @param sql
      */
-    public static synchronized void installDataSearchConditon(HttpServletRequest request, String sql) {
-        String ruleSql = (String) loadDataSearchConditonSQLString();
+    public static synchronized void installDataSearchCondition(HttpServletRequest request, String sql) {
+        String ruleSql = loadDataSearchConditionSqlString();
         if (!StringUtils.hasText(ruleSql)) {
             request.setAttribute(MENU_DATA_AUTHOR_RULE_SQL, sql);
         }
     }
 
-    public static synchronized void installUserInfo(HttpServletRequest request, SysUserCacheInfo userinfo) {
-        request.setAttribute(SYS_USER_INFO, userinfo);
+    public static synchronized void installUserInfo(HttpServletRequest request, SysUserCacheInfo userInfo) {
+        request.setAttribute(SYS_USER_INFO, userInfo);
     }
 
     public static synchronized SysUserCacheInfo loadUserInfo() {

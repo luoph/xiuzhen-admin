@@ -10,6 +10,9 @@ import org.jeecg.common.util.oConvertUtils;
  */
 public enum QueryRuleEnum {
 
+    /**
+     * Query 规则 常量
+     */
     GT(">", "大于"),
     GE(">=", "大于等于"),
     LT("<", "小于"),

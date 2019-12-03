@@ -103,7 +103,7 @@ public class JwtUtil {
         //${myVar}%
         //得到${} 后面的值
         String moshi = "";
-        if (key.indexOf("}") != -1) {
+        if (key.contains("}")) {
             moshi = key.substring(key.indexOf("}") + 1);
         }
         String returnValue = null;
@@ -139,7 +139,7 @@ public class JwtUtil {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
         String moshi = "";
-        if (key.indexOf("}") != -1) {
+        if (key.contains("}")) {
             moshi = key.substring(key.indexOf("}") + 1);
         }
         String returnValue = null;

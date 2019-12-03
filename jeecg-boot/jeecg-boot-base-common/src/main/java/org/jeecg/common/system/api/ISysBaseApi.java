@@ -14,16 +14,16 @@ import java.util.List;
  * @Date:2019-4-20
  * @Version:V1.0
  */
-public interface ISysBaseAPI {
+public interface ISysBaseApi {
 
     /**
      * 日志添加
      *
-     * @param LogContent  内容
+     * @param logContent  内容
      * @param logType     日志类型(0:操作日志;1:登录日志;2:定时任务)
-     * @param operatetype 操作类型(1:添加;2:修改;3:删除;)
+     * @param operateType 操作类型(1:添加;2:修改;3:删除;)
      */
-    void addLog(String LogContent, Integer logType, Integer operatetype);
+    void addLog(String logContent, Integer logType, Integer operateType);
 
     /**
      * 根据用户账号查询用户信息
@@ -31,7 +31,7 @@ public interface ISysBaseAPI {
      * @param username
      * @return
      */
-    public LoginUser getUserByName(String username);
+    LoginUser getUserByName(String username);
 
     /**
      * 根据用户id查询用户信息
@@ -39,7 +39,7 @@ public interface ISysBaseAPI {
      * @param id
      * @return
      */
-    public LoginUser getUserById(String id);
+    LoginUser getUserById(String id);
 
     /**
      * 通过用户账号查询角色集合
@@ -47,7 +47,7 @@ public interface ISysBaseAPI {
      * @param username
      * @return
      */
-    public List<String> getRolesByUsername(String username);
+    List<String> getRolesByUsername(String username);
 
     /**
      * 通过用户账号查询部门集合
@@ -71,7 +71,7 @@ public interface ISysBaseAPI {
      * @return
      * @throws Exception
      */
-    public String getDatabaseType() throws SQLException;
+    String getDatabaseType() throws SQLException;
 
     /**
      * 获取数据字典
@@ -79,12 +79,12 @@ public interface ISysBaseAPI {
      * @param code
      * @return
      */
-    public List<DictModel> queryDictItemsByCode(String code);
+    List<DictModel> queryDictItemsByCode(String code);
 
     /**
      * 查询所有的父级字典，按照create_time排序
      */
-    public List<DictModel> queryAllDict();
+    List<DictModel> queryAllDict();
 
     /**
      * 获取表数据字典
@@ -101,7 +101,7 @@ public interface ISysBaseAPI {
      *
      * @return
      */
-    public List<DictModel> queryAllDepartBackDictModel();
+    List<DictModel> queryAllDepartBackDictModel();
 
     /**
      * 发送系统消息
@@ -111,7 +111,7 @@ public interface ISysBaseAPI {
      * @param title      消息主题
      * @param msgContent 消息内容
      */
-    public void sendSysAnnouncement(String fromUser, String toUser, String title, String msgContent);
+    void sendSysAnnouncement(String fromUser, String toUser, String title, String msgContent);
 
     /**
      * 查询表字典 支持过滤数据
@@ -122,14 +122,14 @@ public interface ISysBaseAPI {
      * @param filterSql
      * @return
      */
-    public List<DictModel> queryFilterTableDictInfo(String table, String text, String code, String filterSql);
+    List<DictModel> queryFilterTableDictInfo(String table, String text, String code, String filterSql);
 
     /**
      * 获取所有有效用户
      *
      * @return
      */
-    public List<ComboModel> queryAllUser();
+    List<ComboModel> queryAllUser();
 
     /**
      * 获取所有有效用户 带参
@@ -137,14 +137,14 @@ public interface ISysBaseAPI {
      *
      * @return
      */
-    public List<ComboModel> queryAllUser(String[] userIds);
+    List<ComboModel> queryAllUser(String[] userIds);
 
     /**
      * 获取所有角色
      *
      * @return
      */
-    public List<ComboModel> queryAllRole();
+    List<ComboModel> queryAllRole();
 
     /**
      * 获取所有角色 带参
@@ -152,7 +152,7 @@ public interface ISysBaseAPI {
      *
      * @return
      */
-    public List<ComboModel> queryAllRole(String[] roleIds);
+    List<ComboModel> queryAllRole(String[] roleIds);
 
     /**
      * 通过用户账号查询角色Id集合
@@ -160,7 +160,7 @@ public interface ISysBaseAPI {
      * @param username
      * @return
      */
-    public List<String> getRoleIdsByUsername(String username);
+    List<String> getRoleIdsByUsername(String username);
 
     /**
      * 通过部门编号查询部门id
@@ -168,7 +168,7 @@ public interface ISysBaseAPI {
      * @param orgCode
      * @return
      */
-    public String getDepartIdsByOrgCode(String orgCode);
+    String getDepartIdsByOrgCode(String orgCode);
 
     /**
      * 查询上一级部门
@@ -176,13 +176,13 @@ public interface ISysBaseAPI {
      * @param departId
      * @return
      */
-    public DictModel getParentDepartId(String departId);
+    DictModel getParentDepartId(String departId);
 
     /**
      * 查询所有部门
      *
      * @return
      */
-    public List<SysDepartModel> getAllSysDepart();
+    List<SysDepartModel> getAllSysDepart();
 
 }

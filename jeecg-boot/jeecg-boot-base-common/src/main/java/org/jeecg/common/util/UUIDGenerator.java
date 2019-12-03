@@ -16,10 +16,7 @@ public class UUIDGenerator {
      */
 
     public static String generate() {
-        return new StringBuilder(32).append(format(getIP())).append(
-                format(getJVM())).append(format(getHiTime())).append(
-                format(getLoTime())).append(format(getCount())).toString();
-
+        return format(getIP()) + format(getJVM()) + format(getHiTime()) + format(getLoTime()) + format(getCount());
     }
 
     private static final int IP;
@@ -38,25 +35,25 @@ public class UUIDGenerator {
 
     private static final int JVM = (int) (System.currentTimeMillis() >>> 8);
 
-    private final static String format(int intval) {
-        String formatted = Integer.toHexString(intval);
+    private static String format(int intVal) {
+        String formatted = Integer.toHexString(intVal);
         StringBuilder buf = new StringBuilder("00000000");
         buf.replace(8 - formatted.length(), 8, formatted);
         return buf.toString();
     }
 
-    private final static String format(short shortval) {
-        String formatted = Integer.toHexString(shortval);
+    private static String format(short shortVal) {
+        String formatted = Integer.toHexString(shortVal);
         StringBuilder buf = new StringBuilder("0000");
         buf.replace(4 - formatted.length(), 4, formatted);
         return buf.toString();
     }
 
-    private final static int getJVM() {
+    private static int getJVM() {
         return JVM;
     }
 
-    private final static short getCount() {
+    private static short getCount() {
         synchronized (UUIDGenerator.class) {
             if (counter < 0) {
                 counter = 0;
@@ -68,22 +65,22 @@ public class UUIDGenerator {
     /**
      * Unique in a local network
      */
-    private final static int getIP() {
+    private static int getIP() {
         return IP;
     }
 
     /**
      * Unique down to millisecond
      */
-    private final static short getHiTime() {
+    private static short getHiTime() {
         return (short) (System.currentTimeMillis() >>> 32);
     }
 
-    private final static int getLoTime() {
+    private static int getLoTime() {
         return (int) System.currentTimeMillis();
     }
 
-    private final static int toInt(byte[] bytes) {
+    private static int toInt(byte[] bytes) {
         int result = 0;
         for (int i = 0; i < 4; i++) {
             result = (result << 8) - Byte.MIN_VALUE + (int) bytes[i];

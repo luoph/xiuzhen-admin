@@ -1,7 +1,7 @@
 package org.jeecg.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.common.system.api.ISysBaseAPI;
+import org.jeecg.common.system.api.ISysBaseApi;
 import org.jeecg.modules.system.entity.SysLog;
 import org.jeecg.modules.system.mapper.SysLogMapper;
 import org.jeecg.modules.system.service.ISysLogService;
@@ -28,7 +28,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     @Resource
     private SysLogMapper sysLogMapper;
     @Autowired
-    private ISysBaseAPI sysBaseAPI;
+    private ISysBaseApi sysBaseAPI;
 
     /**
      * @功能：清空所有日志记录

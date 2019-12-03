@@ -9,6 +9,9 @@ import org.jeecg.common.util.oConvertUtils;
  */
 public enum MatchTypeEnum {
 
+    /**
+     * 查询链接规则
+     */
     AND("AND"),
     OR("OR");
 

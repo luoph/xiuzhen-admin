@@ -35,6 +35,4 @@ public class ComboModel implements Serializable {
         this.checked = false;
         this.username = username;
     }
-
-    ;
 }

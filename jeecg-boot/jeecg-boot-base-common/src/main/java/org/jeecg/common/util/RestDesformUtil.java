@@ -25,13 +25,13 @@ public class RestDesformUtil {
     /**
      * 查询数据
      *
-     * @param desformCode
+     * @param desFormCode
      * @param dataId
      * @param token
      * @return
      */
-    public static Result queryOne(String desformCode, String dataId, String token) {
-        String url = getBaseUrl(desformCode, dataId).toString();
+    public static Result queryOne(String desFormCode, String dataId, String token) {
+        String url = getBaseUrl(desFormCode, dataId).toString();
         HttpHeaders headers = getHeaders(token);
         ResponseEntity<JSONObject> result = RestUtil.request(url, HttpMethod.GET, headers, null, null, JSONObject.class);
         return packageReturn(result);
@@ -40,29 +40,29 @@ public class RestDesformUtil {
     /**
      * 新增数据
      *
-     * @param desformCode
+     * @param desFormCode
      * @param formData
      * @param token
      * @return
      */
-    public static Result addOne(String desformCode, JSONObject formData, String token) {
-        return addOrEditOne(desformCode, formData, token, HttpMethod.POST);
+    public static Result addOne(String desFormCode, JSONObject formData, String token) {
+        return addOrEditOne(desFormCode, formData, token, HttpMethod.POST);
     }
 
     /**
      * 修改数据
      *
-     * @param desformCode
+     * @param desFormCode
      * @param formData
      * @param token
      * @return
      */
-    public static Result editOne(String desformCode, JSONObject formData, String token) {
-        return addOrEditOne(desformCode, formData, token, HttpMethod.PUT);
+    public static Result editOne(String desFormCode, JSONObject formData, String token) {
+        return addOrEditOne(desFormCode, formData, token, HttpMethod.PUT);
     }
 
-    private static Result addOrEditOne(String desformCode, JSONObject formData, String token, HttpMethod method) {
-        String url = getBaseUrl(desformCode).toString();
+    private static Result addOrEditOne(String desFormCode, JSONObject formData, String token, HttpMethod method) {
+        String url = getBaseUrl(desFormCode).toString();
         HttpHeaders headers = getHeaders(token);
         ResponseEntity<JSONObject> result = RestUtil.request(url, method, headers, null, formData, JSONObject.class);
         return packageReturn(result);
@@ -71,13 +71,13 @@ public class RestDesformUtil {
     /**
      * 删除数据
      *
-     * @param desformCode
+     * @param desFormCode
      * @param dataId
      * @param token
      * @return
      */
-    public static Result removeOne(String desformCode, String dataId, String token) {
-        String url = getBaseUrl(desformCode, dataId).toString();
+    public static Result removeOne(String desFormCode, String dataId, String token) {
+        String url = getBaseUrl(desFormCode, dataId).toString();
         HttpHeaders headers = getHeaders(token);
         ResponseEntity<JSONObject> result = RestUtil.request(url, HttpMethod.DELETE, headers, null, null, JSONObject.class);
         return packageReturn(result);
@@ -96,17 +96,17 @@ public class RestDesformUtil {
         return builder;
     }
 
-    private static StringBuilder getBaseUrl(String desformCode, String dataId) {
+    private static StringBuilder getBaseUrl(String desFormCode, String dataId) {
         StringBuilder builder = getBaseUrl();
-        builder.append("/").append(desformCode);
+        builder.append("/").append(desFormCode);
         if (dataId != null) {
             builder.append("/").append(dataId);
         }
         return builder;
     }
 
-    private static StringBuilder getBaseUrl(String desformCode) {
-        return getBaseUrl(desformCode, null);
+    private static StringBuilder getBaseUrl(String desFormCode) {
+        return getBaseUrl(desFormCode, null);
     }
 
     private static HttpHeaders getHeaders(String token) {

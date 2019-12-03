@@ -5,11 +5,11 @@ import java.security.MessageDigest;
 public class MD5Util {
 
     public static String byteArrayToHexString(byte b[]) {
-        StringBuffer resultSb = new StringBuffer();
-        for (int i = 0; i < b.length; i++) {
-            resultSb.append(byteToHexString(b[i]));
+        StringBuilder buffer = new StringBuilder();
+        for (byte value : b) {
+            buffer.append(byteToHexString(value));
         }
-        return resultSb.toString();
+        return buffer.toString();
     }
 
     private static String byteToHexString(byte b) {
@@ -22,15 +22,15 @@ public class MD5Util {
         return hexDigits[d1] + hexDigits[d2];
     }
 
-    public static String MD5Encode(String origin, String charsetname) {
+    public static String md5Encode(String origin, String charset) {
         String resultString = null;
         try {
-            resultString = new String(origin);
+            resultString = origin;
             MessageDigest md = MessageDigest.getInstance("MD5");
-            if (charsetname == null || "".equals(charsetname)) {
+            if (charset == null || "".equals(charset)) {
                 resultString = byteArrayToHexString(md.digest(resultString.getBytes()));
             } else {
-                resultString = byteArrayToHexString(md.digest(resultString.getBytes(charsetname)));
+                resultString = byteArrayToHexString(md.digest(resultString.getBytes(charset)));
             }
         } catch (Exception exception) {
         }

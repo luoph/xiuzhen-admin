@@ -541,7 +541,7 @@ public class SysPermissionController {
             }
 
             if (isWWWHttpUrl(permission.getUrl())) {
-                json.put("path", MD5Util.MD5Encode(permission.getUrl(), "utf-8"));
+                json.put("path", MD5Util.md5Encode(permission.getUrl(), "utf-8"));
             } else {
                 json.put("path", permission.getUrl());
             }

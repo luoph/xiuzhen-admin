@@ -10,7 +10,14 @@ import com.alibaba.fastjson.JSONObject;
  */
 public interface IFillRuleHandler {
 
-    public Object execute(JSONObject params, JSONObject formData);
+    /**
+     * 填值规则接口
+     *
+     * @param params
+     * @param formData
+     * @return
+     */
+    Object execute(JSONObject params, JSONObject formData);
 
 }
 

@@ -15,7 +15,7 @@ public class DictProperty extends CommonProperty {
 
     private static final long serialVersionUID = 3786503639885610767L;
 
-    //字典三属性
+    // 字典三属性
     private String dictCode;
     private String dictTable;
     private String dictText;

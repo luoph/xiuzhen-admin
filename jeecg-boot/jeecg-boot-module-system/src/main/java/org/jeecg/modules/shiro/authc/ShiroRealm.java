@@ -10,7 +10,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.system.api.ISysBaseAPI;
+import org.jeecg.common.system.api.ISysBaseApi;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.RedisUtil;
@@ -38,7 +38,7 @@ public class ShiroRealm extends AuthorizingRealm {
     private ISysUserService sysUserService;
     @Autowired
     @Lazy
-    private ISysBaseAPI sysBaseAPI;
+    private ISysBaseApi sysBaseAPI;
     @Autowired
     @Lazy
     private RedisUtil redisUtil;
