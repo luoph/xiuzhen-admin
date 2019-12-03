@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -32,7 +33,7 @@ public class SysUser implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.UUID)
+    @TableId(type = IdType.ID_WORKER_STR)
     private String id;
 
     /**
@@ -50,11 +51,13 @@ public class SysUser implements Serializable {
     /**
      * 密码
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     /**
      * md5密码盐
      */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String salt;
 
     /**
@@ -108,6 +111,24 @@ public class SysUser implements Serializable {
     @Excel(name = "删除状态", width = 15, dicCode = "del_flag")
     @TableLogic
     private String delFlag;
+
+    /**
+     * 工号，唯一键
+     */
+    @Excel(name = "工号", width = 15)
+    private String workNo;
+
+    /**
+     * 职务，关联职务表
+     */
+    @Excel(name = "职务", width = 15)
+    private String post;
+
+    /**
+     * 座机号
+     */
+    @Excel(name = "座机号", width = 15)
+    private String telephone;
 
     /**
      * 创建人

@@ -1,9 +1,14 @@
 package org.jeecg;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.Context;
+import org.apache.tomcat.util.scan.StandardJarScanner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -13,6 +18,7 @@ import java.net.UnknownHostException;
 @Slf4j
 @EnableSwagger2
 @SpringBootApplication
+@EnableAutoConfiguration
 public class JeecgApplication {
 
     public static void main(String[] args) throws UnknownHostException {
@@ -30,5 +36,19 @@ public class JeecgApplication {
                 "swagger-ui: \thttp://" + ip + ":" + port + path + "/swagger-ui.html\n\t" +
                 "Doc: \t\thttp://" + ip + ":" + port + path + "/doc.html\n" +
                 "----------------------------------------------------------");
+
+    }
+
+    /**
+     * tomcat-embed-jasper引用后提示jar找不到的问题
+     */
+    @Bean
+    public TomcatServletWebServerFactory tomcatFactory() {
+        return new TomcatServletWebServerFactory() {
+            @Override
+            protected void postProcessContext(Context context) {
+                ((StandardJarScanner) context.getJarScanner()).setScanManifest(false);
+            }
+        };
     }
 }

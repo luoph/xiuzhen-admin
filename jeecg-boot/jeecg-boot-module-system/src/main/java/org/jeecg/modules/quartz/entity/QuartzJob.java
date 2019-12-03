@@ -24,7 +24,7 @@ public class QuartzJob implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.UUID)
+    @TableId(type = IdType.ID_WORKER_STR)
     private java.lang.String id;
     /**
      * 创建人

@@ -24,7 +24,7 @@ public class SysCategory implements Serializable {
     /**
      * 主键
      */
-    @TableId(type = IdType.UUID)
+    @TableId(type = IdType.ID_WORKER_STR)
     private java.lang.String id;
     /**
      * 父级节点

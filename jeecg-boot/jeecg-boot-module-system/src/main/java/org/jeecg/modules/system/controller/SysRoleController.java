@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
@@ -23,13 +22,11 @@ import org.jeecg.modules.system.service.ISysPermissionDataRuleService;
 import org.jeecg.modules.system.service.ISysPermissionService;
 import org.jeecg.modules.system.service.ISysRolePermissionService;
 import org.jeecg.modules.system.service.ISysRoleService;
-import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -137,7 +134,6 @@ public class SysRoleController {
      * @param id
      * @return
      */
-    @CacheEvict(value = CacheConstant.LOGIN_USER_RULES_CACHE, allEntries = true)
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public Result<SysRole> delete(@RequestParam(name = "id", required = true) String id) {
         Result<SysRole> result = new Result<SysRole>();
@@ -160,7 +156,6 @@ public class SysRoleController {
      * @param ids
      * @return
      */
-    @CacheEvict(value = CacheConstant.LOGIN_USER_RULES_CACHE, allEntries = true)
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     public Result<SysRole> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         Result<SysRole> result = new Result<SysRole>();
@@ -283,11 +278,7 @@ public class SysRoleController {
             params.setHeadRows(1);
             params.setNeedSave(true);
             try {
-                List<SysRole> listSysRoles = ExcelImportUtil.importExcel(file.getInputStream(), SysRole.class, params);
-                for (SysRole sysRoleExcel : listSysRoles) {
-                    sysRoleService.save(sysRoleExcel);
-                }
-                return Result.ok("文件导入成功！数据行数：" + listSysRoles.size());
+                return sysRoleService.importExcelCheckRoleCode(file, params);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 return Result.error("文件导入失败:" + e.getMessage());
@@ -351,7 +342,7 @@ public class SysRoleController {
                 this.sysRolePermissionService.updateById(sysRolePermission);
             }
         } catch (Exception e) {
-            log.error("SysRoleController.saveDatarule()发生异常：" + e.getMessage());
+            log.error("SysRoleController.saveDatarule()发生异常：" + e.getMessage(), e);
             return Result.error("保存失败");
         }
         return Result.ok("保存成功!");

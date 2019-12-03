@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
+import org.jeecg.common.constant.CacheConstant;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -18,9 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.*;
 
 import javax.annotation.Resource;
-import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.Arrays;
 
 import static java.util.Collections.singletonMap;
 
@@ -31,28 +29,31 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Resource
     private LettuceConnectionFactory lettuceConnectionFactory;
 
-    /**
-     * @return 自定义策略生成的key
-     * @description 自定义的缓存key的生成策略 若想使用这个key
-     * 只需要讲注解上keyGenerator的值设置为keyGenerator即可</br>
-     */
-    @Override
-    @Bean
-    public KeyGenerator keyGenerator() {
-        return new KeyGenerator() {
-            @Override
-            public Object generate(Object target, Method method, Object... params) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(target.getClass().getName());
-                sb.append(method.getDeclaringClass().getName());
-                Arrays.stream(params).map(Object::toString).forEach(sb::append);
-                return sb.toString();
-            }
-        };
-    }
+//	/**
+//	 * @description 自定义的缓存key的生成策略 若想使用这个key
+//	 *              只需要讲注解上keyGenerator的值设置为keyGenerator即可</br>
+//	 * @return 自定义策略生成的key
+//	 */
+//	@Override
+//	@Bean
+//	public KeyGenerator keyGenerator() {
+//		return new KeyGenerator() {
+//			@Override
+//			public Object generate(Object target, Method method, Object... params) {
+//				StringBuilder sb = new StringBuilder();
+//				sb.append(target.getClass().getName());
+//				sb.append(method.getDeclaringClass().getName());
+//				Arrays.stream(params).map(Object::toString).forEach(sb::append);
+//				return sb.toString();
+//			}
+//		};
+//	}
 
     /**
      * RedisTemplate配置
+     *
+     * @param lettuceConnectionFactory
+     * @return
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory lettuceConnectionFactory) {
@@ -76,11 +77,14 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 缓存配置管理器
+     *
+     * @param factory
+     * @return
      */
     @Bean
     public CacheManager cacheManager(LettuceConnectionFactory factory) {
-        // 配置序列化
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1));
+        // 配置序列化（缓存默认有效期 6小时）
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(6));
         RedisCacheConfiguration redisCacheConfiguration = config.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
@@ -89,9 +93,9 @@ public class RedisConfig extends CachingConfigurerSupport {
         // 创建默认缓存配置对象
         /* 默认配置，设置缓存有效期 1小时*/
         //RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1));
-        /* 配置test的超时时间为120s*/
+        /* 自定义配置test:demo 的超时时间为 5分钟*/
         RedisCacheManager cacheManager = RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(factory)).cacheDefaults(redisCacheConfiguration)
-                .withInitialCacheConfigurations(singletonMap("test", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(120)).disableCachingNullValues()))
+                .withInitialCacheConfigurations(singletonMap(CacheConstant.TEST_DEMO_CACHE, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5)).disableCachingNullValues()))
                 .transactionAware().build();
         return cacheManager;
     }

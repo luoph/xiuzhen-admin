@@ -61,7 +61,7 @@ public class SysPermissionTree implements Serializable {
     /**
      * 菜单排序
      */
-    private Integer sortNo;
+    private Double sortNo;
 
     /**
      * 类型（0：一级菜单；1：子菜单 ；2：按钮权限）
@@ -129,6 +129,13 @@ public class SysPermissionTree implements Serializable {
      */
     private java.lang.String status;
 
+    /*update_begin author:wuxianquan date:20190908 for:model增加字段 */
+    /**
+     * 外链菜单打开方式 0/内部打开 1/外部打开
+     */
+    private boolean internalOrExternal;
+    /*update_end author:wuxianquan date:20190908 for:model增加字段 */
+
 
     public SysPermissionTree() {
     }
@@ -157,6 +164,9 @@ public class SysPermissionTree implements Serializable {
         this.route = permission.isRoute();
         this.keepAlive = permission.isKeepAlive();
         this.alwaysShow = permission.isAlwaysShow();
+        /*update_begin author:wuxianquan date:20190908 for:赋值 */
+        this.internalOrExternal = permission.isInternalOrExternal();
+        /*update_end author:wuxianquan date:20190908 for:赋值 */
         this.title = permission.getName();
         if (!permission.isLeaf()) {
             this.children = new ArrayList<SysPermissionTree>();
@@ -270,11 +280,11 @@ public class SysPermissionTree implements Serializable {
         this.url = url;
     }
 
-    public Integer getSortNo() {
+    public Double getSortNo() {
         return sortNo;
     }
 
-    public void setSortNo(Integer sortNo) {
+    public void setSortNo(Double sortNo) {
         this.sortNo = sortNo;
     }
 
@@ -382,5 +392,13 @@ public class SysPermissionTree implements Serializable {
         this.status = status;
     }
 
+    /*update_begin author:wuxianquan date:20190908 for:get set方法 */
+    public boolean isInternalOrExternal() {
+        return internalOrExternal;
+    }
 
+    public void setInternalOrExternal(boolean internalOrExternal) {
+        this.internalOrExternal = internalOrExternal;
+    }
+    /*update_end author:wuxianquan date:20190908 for:get set 方法 */
 }

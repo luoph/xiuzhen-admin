@@ -35,7 +35,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
     /**
      * queryTreeList 对应 queryTreeList 查询所有的部门数据,以树结构形式响应给前端
      */
-    @Cacheable(value = CacheConstant.DEPART_INFO_CACHE)
+    @Cacheable(value = CacheConstant.SYS_DEPARTS_CACHE)
     @Override
     public List<SysDepartTreeModel> queryTreeList() {
         LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
@@ -47,7 +47,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         return listResult;
     }
 
-    @Cacheable(value = CacheConstant.DEPART_IDMODEL_CACHE)
+    @Cacheable(value = CacheConstant.SYS_DEPART_IDS_CACHE)
     @Override
     public List<DepartIdModel> queryDepartIdTreeList() {
         LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
@@ -107,7 +107,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         // 如果是最高级,则查询出同级的org_code, 调用工具类生成编码并返回
         if (StringUtil.isNullOrEmpty(parentId)) {
             // 线判断数据库中的表是否为空,空则直接返回初始编码
-            query1.eq(SysDepart::getParentId, "");
+            query1.eq(SysDepart::getParentId, "").or().isNull(SysDepart::getParentId);
             query1.orderByDesc(SysDepart::getOrgCode);
             departList = this.list(query1);
             if (departList == null || departList.size() == 0) {
@@ -255,5 +255,9 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         return baseMapper.queryUserDeparts(userId);
     }
 
+    @Override
+    public List<SysDepart> queryDepartsByUsername(String username) {
+        return baseMapper.queryDepartsByUsername(username);
+    }
 
 }

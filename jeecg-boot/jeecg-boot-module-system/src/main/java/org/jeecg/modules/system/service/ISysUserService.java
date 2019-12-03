@@ -1,11 +1,13 @@
 package org.jeecg.modules.system.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jeecg.modules.system.entity.SysUser;
+import org.jeecg.modules.system.model.SysUserSysDepartModel;
 
 import java.util.List;
 import java.util.Set;
@@ -19,6 +21,41 @@ import java.util.Set;
  * @since 2018-12-20
  */
 public interface ISysUserService extends IService<SysUser> {
+
+    /**
+     * 重置密码
+     *
+     * @param username
+     * @param oldpassword
+     * @param newpassword
+     * @param confirmpassword
+     * @return
+     */
+    public Result<?> resetPassword(String username, String oldpassword, String newpassword, String confirmpassword);
+
+    /**
+     * 修改密码
+     *
+     * @param sysUser
+     * @return
+     */
+    public Result<?> changePassword(SysUser sysUser);
+
+    /**
+     * 删除用户
+     *
+     * @param userId
+     * @return
+     */
+    public boolean deleteUser(String userId);
+
+    /**
+     * 批量删除用户
+     *
+     * @param userIds
+     * @return
+     */
+    public boolean deleteBatchUsers(String userIds);
 
     public SysUser getUserByName(String username);
 
@@ -62,6 +99,26 @@ public interface ISysUserService extends IService<SysUser> {
      * @return
      */
     public IPage<SysUser> getUserByDepId(Page<SysUser> page, String departId, String username);
+
+    /**
+     * 根据部门 Id 和 QueryWrapper 查询
+     *
+     * @param page
+     * @param departId
+     * @param queryWrapper
+     * @return
+     */
+    public IPage<SysUser> getUserByDepartIdAndQueryWrapper(Page<SysUser> page, String departId, QueryWrapper<SysUser> queryWrapper);
+
+    /**
+     * 根据 orgCode 查询用户，包括子部门下的用户
+     *
+     * @param orgCode
+     * @param userParams 用户查询条件，可为空
+     * @param page       分页参数
+     * @return
+     */
+    IPage<SysUserSysDepartModel> queryUserByOrgCode(String orgCode, SysUser userParams, IPage page);
 
     /**
      * 根据角色Id查询
