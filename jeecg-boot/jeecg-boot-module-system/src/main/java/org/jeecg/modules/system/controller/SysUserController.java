@@ -14,7 +14,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.system.api.ISysBaseAPI;
+import org.jeecg.common.system.api.ISysBaseApi;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
@@ -62,7 +62,7 @@ import java.util.*;
 @RequestMapping("/sys/user")
 public class SysUserController {
     @Autowired
-    private ISysBaseAPI sysBaseAPI;
+    private ISysBaseApi sysBaseAPI;
 
     @Autowired
     private ISysUserService sysUserService;

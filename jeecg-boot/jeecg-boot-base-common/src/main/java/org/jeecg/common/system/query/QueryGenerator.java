@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class QueryGenerator {
 
-    public static final String SQL_RULES_COLUMN = "SQL_RULES_COLUMN";
+    private static final String SQL_RULES_COLUMN = "SQL_RULES_COLUMN";
 
     private static final String BEGIN = "_begin";
     private static final String END = "_end";
@@ -196,7 +196,7 @@ public class QueryGenerator {
             //SQL注入check
             SqlInjectionUtil.filterContent(column);
 
-            if (order.toUpperCase().indexOf(ORDER_TYPE_ASC) >= 0) {
+            if (order.toUpperCase().contains(ORDER_TYPE_ASC)) {
                 queryWrapper.orderByAsc(oConvertUtils.camelToUnderline(column));
             } else {
                 queryWrapper.orderByDesc(oConvertUtils.camelToUnderline(column));
@@ -242,7 +242,7 @@ public class QueryGenerator {
         if (value == null) {
             return null;
         }
-        String val = (value + "").toString().trim();
+        String val = (value + "").trim();
         if (val.length() == 0) {
             return null;
         }
@@ -300,7 +300,7 @@ public class QueryGenerator {
         if (!(value instanceof String)) {
             return value;
         }
-        String val = (value + "").toString().trim();
+        String val = (value + "").trim();
         if (rule == QueryRuleEnum.LIKE) {
             value = val.substring(1, val.length() - 1);
         } else if (rule == QueryRuleEnum.LEFT_LIKE || rule == QueryRuleEnum.NE) {
@@ -454,7 +454,7 @@ public class QueryGenerator {
      */
     public static Map<String, SysPermissionDataRuleModel> getRuleMap() {
         Map<String, SysPermissionDataRuleModel> ruleMap = new HashMap<String, SysPermissionDataRuleModel>();
-        List<SysPermissionDataRuleModel> list = JeecgDataAutorUtils.loadDataSearchConditon();
+        List<SysPermissionDataRuleModel> list = JeecgDataAutorUtils.loadDataSearchCondition();
         if (list != null && list.size() > 0) {
             if (list.get(0) == null) {
                 return ruleMap;
@@ -639,8 +639,7 @@ public class QueryGenerator {
     /**
      * 根据权限相关配置生成相关的SQL 语句
      *
-     * @param searchObj
-     * @param parameterMap
+     * @param clazz
      * @return
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -683,8 +682,8 @@ public class QueryGenerator {
     /**
      * 根据权限相关配置 组装mp需要的权限
      *
-     * @param searchObj
-     * @param parameterMap
+     * @param queryWrapper
+     * @param clazz
      * @return
      */
     public static void installAuthMplus(QueryWrapper<?> queryWrapper, Class<?> clazz) {

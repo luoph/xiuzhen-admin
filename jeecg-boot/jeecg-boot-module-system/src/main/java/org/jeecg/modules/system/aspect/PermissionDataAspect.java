@@ -102,7 +102,7 @@ public class PermissionDataAspect {
                 // update-end--Author:scott Date:20191119 for：数据权限规则编码不规范，项目存在相同包名和类名 #722
             }
             if (dataRules != null && dataRules.size() > 0) {
-                JeecgDataAutorUtils.installDataSearchConditon(request, dataRules);
+                JeecgDataAutorUtils.installDataSearchCondition(request, dataRules);
                 SysUserCacheInfo userinfo = sysUserService.getCacheUser(username);
                 JeecgDataAutorUtils.installUserInfo(request, userinfo);
             }

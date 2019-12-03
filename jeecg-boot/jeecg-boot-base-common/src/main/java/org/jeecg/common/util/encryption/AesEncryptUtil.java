@@ -27,7 +27,8 @@ public class AesEncryptUtil {
     public static String encrypt(String data, String key, String iv) throws Exception {
         try {
 
-            Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");//"算法/模式/补码方式"NoPadding PkcsPadding
+            //"算法/模式/补码方式"NoPadding PkcsPadding
+            Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding");
             int blockSize = cipher.getBlockSize();
 
             byte[] dataBytes = data.getBytes();

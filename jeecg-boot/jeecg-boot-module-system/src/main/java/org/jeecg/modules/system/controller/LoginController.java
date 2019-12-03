@@ -10,7 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.system.api.ISysBaseAPI;
+import org.jeecg.common.system.api.ISysBaseApi;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.*;
@@ -41,7 +41,7 @@ public class LoginController {
     @Autowired
     private ISysUserService sysUserService;
     @Autowired
-    private ISysBaseAPI sysBaseAPI;
+    private ISysBaseApi sysBaseAPI;
     @Autowired
     private ISysLogService logService;
     @Autowired
@@ -376,7 +376,7 @@ public class LoginController {
         Map<String, String> map = new HashMap<String, String>();
         try {
             String code = RandomUtil.randomString(BASE_CHECK_CODES, 4);
-            String key = MD5Util.MD5Encode(code + System.currentTimeMillis(), "utf-8");
+            String key = MD5Util.md5Encode(code + System.currentTimeMillis(), "utf-8");
             redisUtil.set(key, code, 60);
             map.put("key", key);
             map.put("code", code);

@@ -27,7 +27,7 @@ public class JeecgBootExceptionHandler {
      * 处理自定义异常
      */
     @ExceptionHandler(JeecgBootException.class)
-    public Result<?> handleRRException(JeecgBootException e) {
+    public Result<?> handleJeecgBootException(JeecgBootException e) {
         log.error(e.getMessage(), e);
         return Result.error(e.getMessage());
     }
@@ -62,7 +62,7 @@ public class JeecgBootExceptionHandler {
      * @Author 政辉
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public Result<?> HttpRequestMethodNotSupportedException(Exception e) {
+    public Result<?> httpRequestMethodNotSupportedException(Exception e) {
         log.error(e.getMessage(), e);
         return Result.error("没有权限，请联系管理员授权");
     }

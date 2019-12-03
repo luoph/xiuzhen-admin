@@ -36,23 +36,21 @@ public class oConvertUtils {
     }
 
     public static boolean isNotEmpty(Object object) {
-        if (object != null && !object.equals("") && !object.equals("null")) {
+        if (object != null && !"".equals(object) && !"null".equals(object)) {
             return (true);
         }
         return (false);
     }
 
     public static String decode(String strIn, String sourceCode, String targetCode) {
-        String temp = code2code(strIn, sourceCode, targetCode);
-        return temp;
+        return code2code(strIn, sourceCode, targetCode);
     }
 
-    public static String StrToUTF(String strIn, String sourceCode, String targetCode) {
+    public static String strToUTF(String strIn, String sourceCode, String targetCode) {
         strIn = "";
         try {
             strIn = new String(strIn.getBytes("ISO-8859-1"), "GBK");
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return strIn;
@@ -60,14 +58,14 @@ public class oConvertUtils {
     }
 
     private static String code2code(String strIn, String sourceCode, String targetCode) {
-        String strOut = null;
-        if (strIn == null || (strIn.trim()).equals("")) {
+        String strOut;
+        if (strIn == null || "".equals(strIn.trim())) {
             return strIn;
         }
         try {
             byte[] b = strIn.getBytes(sourceCode);
-            for (int i = 0; i < b.length; i++) {
-                System.out.print(b[i] + "  ");
+            for (byte value : b) {
+                System.out.print(value + "  ");
             }
             strOut = new String(b, targetCode);
         } catch (Exception e) {
@@ -78,7 +76,7 @@ public class oConvertUtils {
     }
 
     public static int getInt(String s, int defval) {
-        if (s == null || s == "") {
+        if (s == null || "".equals(s)) {
             return (defval);
         }
         try {
@@ -89,7 +87,7 @@ public class oConvertUtils {
     }
 
     public static int getInt(String s) {
-        if (s == null || s == "") {
+        if (s == null || "".equals(s)) {
             return 0;
         }
         try {
@@ -100,7 +98,7 @@ public class oConvertUtils {
     }
 
     public static int getInt(String s, Integer df) {
-        if (s == null || s == "") {
+        if (s == null || "".equals(s)) {
             return df;
         }
         try {
@@ -112,9 +110,6 @@ public class oConvertUtils {
 
     public static Integer[] getInts(String[] s) {
         Integer[] integer = new Integer[s.length];
-        if (s == null) {
-            return null;
-        }
         for (int i = 0; i < s.length; i++) {
             integer[i] = Integer.parseInt(s[i]);
         }
@@ -123,7 +118,7 @@ public class oConvertUtils {
     }
 
     public static double getDouble(String s, double defval) {
-        if (s == null || s == "") {
+        if (s == null || "".equals(s)) {
             return (defval);
         }
         try {
@@ -233,7 +228,7 @@ public class oConvertUtils {
     }
 
     public static long stringToLong(String str) {
-        Long test = new Long(0);
+        Long test = 0L;
         try {
             test = Long.valueOf(str);
         } catch (Exception e) {
@@ -345,8 +340,7 @@ public class oConvertUtils {
         if (source == null || source.length == 0) {
             return false;
         }
-        for (int i = 0; i < source.length; i++) {
-            String aSource = source[i];
+        for (String aSource : source) {
             if (aSource.equals(substring)) {
                 return true;
             }
@@ -367,7 +361,7 @@ public class oConvertUtils {
      * @param str
      * @return
      */
-    public static Map<Object, Object> SetToMap(Set<Object> setobj) {
+    public static Map<Object, Object> setToMap(Set<Object> setobj) {
         Map<Object, Object> map = getHashMap();
         for (Iterator iterator = setobj.iterator(); iterator.hasNext(); ) {
             Map.Entry<Object, Object> entry = (Map.Entry<Object, Object>) iterator.next();
@@ -399,9 +393,7 @@ public class oConvertUtils {
         long b = Integer.parseInt(ip[1]);
         long c = Integer.parseInt(ip[2]);
         long d = Integer.parseInt(ip[3]);
-
-        long ipNum = a * 256 * 256 * 256 + b * 256 * 256 + c * 256 + d;
-        return ipNum;
+        return a * 256 * 256 * 256 + b * 256 * 256 + c * 256 + d;
     }
 
     private static boolean isInner(long userIp, long begin, long end) {
@@ -458,14 +450,14 @@ public class oConvertUtils {
      * @return 转换后的驼峰式命名的字符串
      */
     public static String camelNames(String names) {
-        if (names == null || names.equals("")) {
+        if (names == null || "".equals(names)) {
             return null;
         }
-        StringBuffer sf = new StringBuffer();
+        StringBuilder sf = new StringBuilder();
         String[] fs = names.split(",");
         for (String field : fs) {
             field = camelName(field);
-            sf.append(field + ",");
+            sf.append(field).append(",");
         }
         String result = sf.toString();
         return result.substring(0, result.length() - 1);
@@ -535,7 +527,7 @@ public class oConvertUtils {
      */
     public static String randomGen(int place) {
         String base = "qwertyuioplkjhgfdsazxcvbnmQAZWSXEDCRFVTGBYHNUJMIKLOP0123456789";
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Random rd = new Random();
         for (int i = 0; i < place; i++) {
             sb.append(base.charAt(rd.nextInt(base.length())));
@@ -591,7 +583,7 @@ public class oConvertUtils {
      * @return
      */
     public static <F, T> List<T> entityListToModelList(List<F> fromList, Class<T> tClass) {
-        if (fromList.isEmpty() || fromList == null) {
+        if (fromList.isEmpty()) {
             return null;
         }
         List<T> tList = new ArrayList<>();

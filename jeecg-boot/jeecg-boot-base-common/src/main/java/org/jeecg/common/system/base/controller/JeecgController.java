@@ -63,7 +63,8 @@ public class JeecgController<T, S extends IService<T>> {
 
         // Step.3 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
-        mv.addObject(NormalExcelConstants.FILE_NAME, title); //此处设置的filename无效 ,前端会重更新设置一下
+        // 此处设置的filename无效 ,前端会重更新设置一下
+        mv.addObject(NormalExcelConstants.FILE_NAME, title);
         mv.addObject(NormalExcelConstants.CLASS, clazz);
         mv.addObject(NormalExcelConstants.PARAMS, new ExportParams(title + "报表", "导出人:" + sysUser.getRealname(), title));
         mv.addObject(NormalExcelConstants.DATA_LIST, exportList);
@@ -96,7 +97,8 @@ public class JeecgController<T, S extends IService<T>> {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(1);
