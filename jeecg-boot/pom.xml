@@ -17,38 +17,22 @@
 		<module>jeecg-boot-base-common</module>
 		<module>jeecg-boot-module-system</module>
 	</modules>
-	
+
+	<!-- 发布地址 -->
 	<distributionManagement>
-	  	<repository>
-            <id>jeecg</id>
-            <name>jeecg Repository</name>
-            <url>http://maven.jeecg.com:8090/nexus/content/repositories/jeecg</url>
-        </repository>
-        <snapshotRepository>
-	        <id>jeecg-snapshots</id>
-            <name>jeecg Snapshot Repository</name>
-            <url>http://maven.jeecg.com:8090/nexus/content/repositories/snapshots/</url>
-	    </snapshotRepository>
+		<repository>
+			<id>nexus-releases</id>
+			<name>Nexus Release Repository</name>
+			<url>http://10.21.211.35:8081/repository/maven-releases/</url>
+			<uniqueVersion>false</uniqueVersion>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>Nexus Snapshot Repository</name>
+			<url>http://10.21.211.35:8081/repository/maven-snapshots/</url>
+			<uniqueVersion>true</uniqueVersion>
+		</snapshotRepository>
 	</distributionManagement>
-	
-	<repositories>
-		<repository>
-            <id>aliyun</id>
-            <name>aliyun Repository</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-            <snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-        </repository>
-		<repository>
-            <id>jeecg</id>
-            <name>jeecg Repository</name>
-            <url>http://maven.jeecg.org/nexus/content/repositories/jeecg</url>
-            <snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-        </repository>
-	</repositories>
 	
     <properties>
         <jeecgboot.common.version>2.1.2</jeecgboot.common.version>
