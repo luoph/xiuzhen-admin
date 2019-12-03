@@ -3,7 +3,7 @@ package org.jeecg.common.util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.system.api.ISysBaseApi;
+import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
 
@@ -34,7 +34,7 @@ public class TokenUtils {
     /**
      * 验证Token
      */
-    public static boolean verifyToken(HttpServletRequest request, ISysBaseApi sysBaseAPI, RedisUtil redisUtil) {
+    public static boolean verifyToken(HttpServletRequest request, ISysBaseAPI sysBaseAPI, RedisUtil redisUtil) {
         log.info(" -- url --" + request.getRequestURL());
         String token = getTokenByRequest(request);
 

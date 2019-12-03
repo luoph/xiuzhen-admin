@@ -8,7 +8,7 @@ import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.DataBaseConstant;
 import org.jeecg.common.exception.JeecgBootException;
-import org.jeecg.common.system.api.ISysBaseApi;
+import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.ComboModel;
 import org.jeecg.common.system.vo.DictModel;
 import org.jeecg.common.system.vo.LoginUser;
@@ -44,7 +44,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class SysBaseApiImpl implements ISysBaseApi {
+public class SysBaseApiImpl implements ISysBaseAPI {
     /**
      * 当前系统数据库类型
      */

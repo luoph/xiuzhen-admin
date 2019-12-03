@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.system.api.ISysBaseApi;
+import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jeecg.common.util.PasswordUtil;
@@ -46,7 +46,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private SysUserDepartMapper sysUserDepartMapper;
     @Autowired
-    private ISysBaseApi sysBaseAPI;
+    private ISysBaseAPI sysBaseAPI;
     @Autowired
     private SysDepartMapper sysDepartMapper;
 

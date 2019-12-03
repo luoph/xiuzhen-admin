@@ -10,7 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.system.api.ISysBaseApi;
+import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.*;
@@ -41,7 +41,7 @@ public class LoginController {
     @Autowired
     private ISysUserService sysUserService;
     @Autowired
-    private ISysBaseApi sysBaseAPI;
+    private ISysBaseAPI sysBaseAPI;
     @Autowired
     private ISysLogService logService;
     @Autowired
