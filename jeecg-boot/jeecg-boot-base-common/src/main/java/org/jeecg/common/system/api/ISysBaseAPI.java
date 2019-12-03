@@ -14,7 +14,7 @@ import java.util.List;
  * @Date:2019-4-20
  * @Version:V1.0
  */
-public interface ISysBaseApi {
+public interface ISysBaseAPI {
 
     /**
      * 日志添加
