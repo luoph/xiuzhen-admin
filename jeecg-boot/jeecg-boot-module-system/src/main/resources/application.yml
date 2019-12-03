@@ -1,6 +1,8 @@
 spring:
   profiles:
     active: dev
+
+# swagger
 swagger:
   production: false
   basic:
