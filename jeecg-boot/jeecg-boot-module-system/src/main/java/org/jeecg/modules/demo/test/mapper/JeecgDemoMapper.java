@@ -1,8 +1,10 @@
 package org.jeecg.modules.demo.test.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.demo.test.entity.JeecgDemo;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -15,5 +17,14 @@ import java.util.List;
 public interface JeecgDemoMapper extends BaseMapper<JeecgDemo> {
 
     public List<JeecgDemo> getDemoByName(@Param("name") String name);
+
+    /**
+     * 查询列表数据 直接传数据权限的sql进行数据过滤
+     *
+     * @param page
+     * @param permissionSql
+     * @return
+     */
+    public IPage<JeecgDemo> queryListWithPermission(Page<JeecgDemo> page, @Param("permissionSql") String permissionSql);
 
 }

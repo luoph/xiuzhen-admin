@@ -49,7 +49,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
      */
     @Override
     @Transactional
-    @CacheEvict(value = CacheConstant.PERMISSION_CACHE, allEntries = true)
+    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE, allEntries = true)
     public void deletePermission(String id) throws JeecgBootException {
         SysPermission sysPermission = this.getById(id);
         if (sysPermission == null) {
@@ -100,8 +100,8 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
      * 逻辑删除
      */
     @Override
-    @CacheEvict(value = CacheConstant.PERMISSION_CACHE, allEntries = true)
-    //@CacheEvict(value = CacheConstant.PERMISSION_CACHE,allEntries=true,condition="#sysPermission.menuType==2")
+    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE, allEntries = true)
+    //@CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE,allEntries=true,condition="#sysPermission.menuType==2")
     public void deletePermissionLogical(String id) throws JeecgBootException {
         SysPermission sysPermission = this.getById(id);
         if (sysPermission == null) {
@@ -118,7 +118,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.PERMISSION_CACHE, allEntries = true)
+    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE, allEntries = true)
     public void addPermission(SysPermission sysPermission) throws JeecgBootException {
         //----------------------------------------------------------------------
         //判断是否是一级菜单，是的话清空父菜单
@@ -138,7 +138,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.PERMISSION_CACHE, allEntries = true)
+    @CacheEvict(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE, allEntries = true)
     public void editPermission(SysPermission sysPermission) throws JeecgBootException {
         SysPermission p = this.getById(sysPermission.getId());
         //TODO 该节点判断是否还有子节点
@@ -199,7 +199,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
      * 获取模糊匹配规则的数据权限URL
      */
     @Override
-    @Cacheable(value = CacheConstant.PERMISSION_CACHE)
+    @Cacheable(value = CacheConstant.SYS_DATA_PERMISSIONS_CACHE)
     public List<String> queryPermissionUrlWithStar() {
         return this.baseMapper.queryPermissionUrlWithStar();
     }

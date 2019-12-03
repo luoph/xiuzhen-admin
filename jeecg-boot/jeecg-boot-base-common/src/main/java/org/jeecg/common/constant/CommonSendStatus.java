@@ -6,10 +6,10 @@ package org.jeecg.common.constant;
  * @Author LeeShaoQing
  */
 public interface CommonSendStatus {
-    // 未发布
-    public static final String UNPUBLISHED_STATUS_0 = "0";
-    // 已发布
-    public static final String PUBLISHED_STATUS_1 = "1";
-    // 撤销
-    public static final String REVOKE_STATUS_2 = "2";
+
+    public static final String UNPUBLISHED_STATUS_0 = "0";    //未发布
+
+    public static final String PUBLISHED_STATUS_1 = "1";        //已发布
+
+    public static final String REVOKE_STATUS_2 = "2";            //撤销
 }

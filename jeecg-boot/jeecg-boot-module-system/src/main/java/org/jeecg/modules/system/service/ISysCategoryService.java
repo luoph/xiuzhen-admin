@@ -6,6 +6,7 @@ import org.jeecg.modules.system.entity.SysCategory;
 import org.jeecg.modules.system.model.TreeSelectModel;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 分类字典
@@ -39,5 +40,22 @@ public interface ISysCategoryService extends IService<SysCategory> {
      * @return
      */
     public List<TreeSelectModel> queryListByPid(String pid);
+
+    /**
+     * 根据pid查询子节点集合,支持查询条件
+     *
+     * @param pid
+     * @param condition
+     * @return
+     */
+    public List<TreeSelectModel> queryListByPid(String pid, Map<String, String> condition);
+
+    /**
+     * 根据code查询id
+     *
+     * @param code
+     * @return
+     */
+    public String queryIdByCode(String code);
 
 }

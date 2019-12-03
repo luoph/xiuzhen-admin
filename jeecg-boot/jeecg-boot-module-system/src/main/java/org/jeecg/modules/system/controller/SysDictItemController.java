@@ -61,7 +61,7 @@ public class SysDictItemController {
      * @功能：新增
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @CacheEvict(value = CacheConstant.DICT_CACHE, allEntries = true)
+    @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
     public Result<SysDictItem> add(@RequestBody SysDictItem sysDictItem) {
         Result<SysDictItem> result = new Result<SysDictItem>();
         try {
@@ -81,7 +81,7 @@ public class SysDictItemController {
      * @功能：编辑
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    @CacheEvict(value = CacheConstant.DICT_CACHE, allEntries = true)
+    @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
     public Result<SysDictItem> edit(@RequestBody SysDictItem sysDictItem) {
         Result<SysDictItem> result = new Result<SysDictItem>();
         SysDictItem sysdict = sysDictItemService.getById(sysDictItem.getId());
@@ -104,7 +104,7 @@ public class SysDictItemController {
      * @功能：删除字典数据
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    @CacheEvict(value = CacheConstant.DICT_CACHE, allEntries = true)
+    @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
     public Result<SysDictItem> delete(@RequestParam(name = "id", required = true) String id) {
         Result<SysDictItem> result = new Result<SysDictItem>();
         SysDictItem joinSystem = sysDictItemService.getById(id);
@@ -125,7 +125,7 @@ public class SysDictItemController {
      * @功能：批量删除字典数据
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
-    @CacheEvict(value = CacheConstant.DICT_CACHE, allEntries = true)
+    @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
     public Result<SysDictItem> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         Result<SysDictItem> result = new Result<SysDictItem>();
         if (ids == null || "".equals(ids.trim())) {

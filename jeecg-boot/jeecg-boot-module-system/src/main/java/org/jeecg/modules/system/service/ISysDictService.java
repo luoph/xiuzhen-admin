@@ -7,6 +7,7 @@ import org.jeecg.modules.system.entity.SysDictItem;
 import org.jeecg.modules.system.model.TreeSelectModel;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,6 +28,8 @@ public interface ISysDictService extends IService<SysDict> {
     public String queryDictTextByKey(String code, String key);
 
     String queryTableDictTextByKey(String table, String text, String code, String key);
+
+    List<String> queryTableDictByKeys(String table, String text, String code, String[] keyArray);
 
     /**
      * 根据字典类型删除关联表中其对应的数据
@@ -77,6 +80,29 @@ public interface ISysDictService extends IService<SysDict> {
      * @param hasChildField
      * @return
      */
-    List<TreeSelectModel> queryTreeList(String table, String text, String code, String pidField, String pid, String hasChildField);
+    List<TreeSelectModel> queryTreeList(Map<String, String> query, String table, String text, String code, String pidField, String pid, String hasChildField);
+
+    /**
+     * 真实删除
+     *
+     * @param id
+     */
+    public void deleteOneDictPhysically(String id);
+
+    /**
+     * 修改delFlag
+     *
+     * @param delFlag
+     * @param id
+     */
+    public void updateDictDelFlag(int delFlag, String id);
+
+    /**
+     * 查询被逻辑删除的数据
+     *
+     * @return
+     */
+    public List<SysDict> queryDeleteList();
+
 
 }

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class SecurityToolsTest {
     @Test
-    public void Test(){
+    public void Test() {
         MyKeyPair mkeyPair = SecurityTools.generateKeyPair();
 
         JSONObject msg = new JSONObject();

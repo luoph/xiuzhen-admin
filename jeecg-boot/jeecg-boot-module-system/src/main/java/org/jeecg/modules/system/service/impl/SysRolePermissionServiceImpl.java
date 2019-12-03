@@ -3,12 +3,10 @@ package org.jeecg.modules.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.system.entity.SysRolePermission;
 import org.jeecg.modules.system.mapper.SysRolePermissionMapper;
 import org.jeecg.modules.system.service.ISysRolePermissionService;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,7 +23,6 @@ import java.util.*;
 public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionMapper, SysRolePermission> implements ISysRolePermissionService {
 
     @Override
-    @CacheEvict(value = CacheConstant.LOGIN_USER_RULES_CACHE, allEntries = true)
     public void saveRolePermission(String roleId, String permissionIds) {
         LambdaQueryWrapper<SysRolePermission> query = new QueryWrapper<SysRolePermission>().lambda().eq(SysRolePermission::getRoleId, roleId);
         this.remove(query);
@@ -41,7 +38,6 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     }
 
     @Override
-    @CacheEvict(value = CacheConstant.LOGIN_USER_RULES_CACHE, allEntries = true)
     public void saveRolePermission(String roleId, String permissionIds, String lastPermissionIds) {
         List<String> add = getDiff(lastPermissionIds, permissionIds);
         if (add != null && add.size() > 0) {

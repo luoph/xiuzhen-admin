@@ -24,7 +24,7 @@ public class SysUserAgent implements Serializable {
     /**
      * 序号
      */
-    @TableId(type = IdType.UUID)
+    @TableId(type = IdType.ID_WORKER_STR)
     private java.lang.String id;
     /**
      * 用户名
