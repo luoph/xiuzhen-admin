@@ -122,7 +122,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     public void addPermission(SysPermission sysPermission) throws JeecgBootException {
         //----------------------------------------------------------------------
         // 判断是否是一级菜单，是的话清空父菜单
-        if (CommonConstant.MENU_TYPE_0.equals(sysPermission.getMenuType())) {
+        if (CommonConstant.MENU_TYPE_0 == sysPermission.getMenuType()) {
             sysPermission.setParentId(null);
         }
         //----------------------------------------------------------------------
@@ -148,7 +148,7 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
             sysPermission.setUpdateTime(new Date());
             //----------------------------------------------------------------------
             //Step1.判断是否是一级菜单，是的话清空父菜单ID
-            if (CommonConstant.MENU_TYPE_0.equals(sysPermission.getMenuType())) {
+            if (CommonConstant.MENU_TYPE_0 == sysPermission.getMenuType()) {
                 sysPermission.setParentId("");
             }
             //Step2.判断菜单下级是否有菜单，无则设置为叶子节点

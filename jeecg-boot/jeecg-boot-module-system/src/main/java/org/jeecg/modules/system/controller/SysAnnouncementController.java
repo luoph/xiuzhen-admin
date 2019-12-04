@@ -69,7 +69,7 @@ public class SysAnnouncementController {
                                                         @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                                         HttpServletRequest req) {
         Result<IPage<SysAnnouncement>> result = new Result<>();
-        sysAnnouncement.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
+        sysAnnouncement.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_0));
         QueryWrapper<SysAnnouncement> queryWrapper = new QueryWrapper<>(sysAnnouncement);
         Page<SysAnnouncement> page = new Page<SysAnnouncement>(pageNo, pageSize);
         // 排序逻辑 处理
@@ -102,7 +102,7 @@ public class SysAnnouncementController {
     public Result<SysAnnouncement> add(@RequestBody SysAnnouncement sysAnnouncement) {
         Result<SysAnnouncement> result = new Result<>();
         try {
-            sysAnnouncement.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
+            sysAnnouncement.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_0));
             // 未发布
             sysAnnouncement.setSendStatus(CommonSendStatus.UNPUBLISHED_STATUS_0);
             sysAnnouncementService.saveAnnouncement(sysAnnouncement);
@@ -121,7 +121,7 @@ public class SysAnnouncementController {
      * @return
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public Result<SysAnnouncement> eidt(@RequestBody SysAnnouncement sysAnnouncement) {
+    public Result<SysAnnouncement> edit(@RequestBody SysAnnouncement sysAnnouncement) {
         Result<SysAnnouncement> result = new Result<>();
         SysAnnouncement sysAnnouncementEntity = sysAnnouncementService.getById(sysAnnouncement.getId());
         if (sysAnnouncementEntity == null) {
@@ -150,7 +150,7 @@ public class SysAnnouncementController {
         if (sysAnnouncement == null) {
             result.error500("未找到对应实体");
         } else {
-            sysAnnouncement.setDelFlag(CommonConstant.DEL_FLAG_1.toString());
+            sysAnnouncement.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_1));
             boolean ok = sysAnnouncementService.updateById(sysAnnouncement);
             if (ok) {
                 result.success("删除成功!");
@@ -167,7 +167,7 @@ public class SysAnnouncementController {
      * @return
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
-    public Result<SysAnnouncement> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<SysAnnouncement> deleteBatch(@RequestParam(name = "ids") String ids) {
         Result<SysAnnouncement> result = new Result<SysAnnouncement>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
@@ -175,7 +175,7 @@ public class SysAnnouncementController {
             String[] id = ids.split(",");
             for (int i = 0; i < id.length; i++) {
                 SysAnnouncement announcement = sysAnnouncementService.getById(id[i]);
-                announcement.setDelFlag(CommonConstant.DEL_FLAG_1.toString());
+                announcement.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_1));
                 sysAnnouncementService.updateById(announcement);
             }
             result.success("删除成功!");
@@ -190,8 +190,8 @@ public class SysAnnouncementController {
      * @return
      */
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
-    public Result<SysAnnouncement> queryById(@RequestParam(name = "id", required = true) String id) {
-        Result<SysAnnouncement> result = new Result<SysAnnouncement>();
+    public Result<SysAnnouncement> queryById(@RequestParam(name = "id") String id) {
+        Result<SysAnnouncement> result = new Result<>();
         SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
         if (sysAnnouncement == null) {
             result.error500("未找到对应实体");
@@ -209,8 +209,8 @@ public class SysAnnouncementController {
      * @return
      */
     @RequestMapping(value = "/doReleaseData", method = RequestMethod.GET)
-    public Result<SysAnnouncement> doReleaseData(@RequestParam(name = "id", required = true) String id, HttpServletRequest request) {
-        Result<SysAnnouncement> result = new Result<SysAnnouncement>();
+    public Result<SysAnnouncement> doReleaseData(@RequestParam(name = "id") String id, HttpServletRequest request) {
+        Result<SysAnnouncement> result = new Result<>();
         SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
         if (sysAnnouncement == null) {
             result.error500("未找到对应实体");
@@ -279,16 +279,20 @@ public class SysAnnouncementController {
      */
     @RequestMapping(value = "/listByUser", method = RequestMethod.GET)
     public Result<Map<String, Object>> listByUser() {
-        Result<Map<String, Object>> result = new Result<Map<String, Object>>();
+        Result<Map<String, Object>> result = new Result<>();
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String userId = sysUser.getId();
         // 1.将系统消息补充到用户通告阅读标记表中
         Collection<String> anntIds = sysAnnouncementSendService.queryByUserId(userId);
-        LambdaQueryWrapper<SysAnnouncement> querySaWrapper = new LambdaQueryWrapper<SysAnnouncement>();
-        querySaWrapper.eq(SysAnnouncement::getMsgType, CommonConstant.MSG_TYPE_ALL); // 全部人员
-        querySaWrapper.eq(SysAnnouncement::getDelFlag, CommonConstant.DEL_FLAG_0.toString());  // 未删除
-        querySaWrapper.eq(SysAnnouncement::getSendStatus, CommonConstant.HAS_SEND); //已发布
-        querySaWrapper.ge(SysAnnouncement::getEndTime, sysUser.getCreateTime()); //新注册用户不看结束通知
+        LambdaQueryWrapper<SysAnnouncement> querySaWrapper = new LambdaQueryWrapper<>();
+        // 全部人员
+        querySaWrapper.eq(SysAnnouncement::getMsgType, CommonConstant.MSG_TYPE_ALL);
+        // 未删除
+        querySaWrapper.eq(SysAnnouncement::getDelFlag, CommonConstant.DEL_FLAG_0);
+        // 已发布
+        querySaWrapper.eq(SysAnnouncement::getSendStatus, CommonConstant.HAS_SEND);
+        // 新注册用户不看结束通知
+        querySaWrapper.ge(SysAnnouncement::getEndTime, sysUser.getCreateTime());
         if (anntIds != null && anntIds.size() > 0) {
             querySaWrapper.notIn(SysAnnouncement::getId, anntIds);
         }
@@ -304,10 +308,13 @@ public class SysAnnouncementController {
         }
         // 2.查询用户未读的系统消息
         Page<SysAnnouncement> anntMsgList = new Page<SysAnnouncement>(0, 5);
-        anntMsgList = sysAnnouncementService.querySysCementPageByUserId(anntMsgList, userId, "1");//通知公告消息
+        // 通知公告消息
+        anntMsgList = sysAnnouncementService.querySysCementPageByUserId(anntMsgList, userId, "1");
         Page<SysAnnouncement> sysMsgList = new Page<SysAnnouncement>(0, 5);
-        sysMsgList = sysAnnouncementService.querySysCementPageByUserId(sysMsgList, userId, "2");//系统消息
-        Map<String, Object> sysMsgMap = new HashMap<String, Object>();
+        // 系统消息
+        sysMsgList = sysAnnouncementService.querySysCementPageByUserId(sysMsgList, userId, "2");
+
+        Map<String, Object> sysMsgMap = new HashMap<>();
         sysMsgMap.put("sysMsgList", sysMsgList.getRecords());
         sysMsgMap.put("sysMsgTotal", sysMsgList.getTotal());
         sysMsgMap.put("anntMsgList", anntMsgList.getRecords());
@@ -351,7 +358,8 @@ public class SysAnnouncementController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(1);
@@ -360,7 +368,7 @@ public class SysAnnouncementController {
                 List<SysAnnouncement> listSysAnnouncements = ExcelImportUtil.importExcel(file.getInputStream(), SysAnnouncement.class, params);
                 for (SysAnnouncement sysAnnouncementExcel : listSysAnnouncements) {
                     if (sysAnnouncementExcel.getDelFlag() == null) {
-                        sysAnnouncementExcel.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
+                        sysAnnouncementExcel.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_0));
                     }
                     sysAnnouncementService.save(sysAnnouncementExcel);
                 }
