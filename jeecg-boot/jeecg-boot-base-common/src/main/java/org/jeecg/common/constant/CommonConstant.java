@@ -5,22 +5,22 @@ public interface CommonConstant {
     /**
      * 正常状态
      */
-    Integer STATUS_NORMAL = 0;
+    int STATUS_NORMAL = 0;
 
     /**
      * 禁用状态
      */
-    Integer STATUS_DISABLE = -1;
+    int STATUS_DISABLE = -1;
 
     /**
      * 删除标志
      */
-    Integer DEL_FLAG_1 = 1;
+    int DEL_FLAG_1 = 1;
 
     /**
      * 未删除
      */
-    Integer DEL_FLAG_0 = 0;
+    int DEL_FLAG_0 = 0;
 
     /**
      * 系统日志类型： 登录
@@ -66,16 +66,16 @@ public interface CommonConstant {
     /**
      * {@code 500 Server Error} (HTTP/1.0 - RFC 1945)
      */
-    Integer SC_INTERNAL_SERVER_ERROR_500 = 500;
+    int SC_INTERNAL_SERVER_ERROR_500 = 500;
     /**
      * {@code 200 OK} (HTTP/1.0 - RFC 1945)
      */
-    Integer SC_OK_200 = 200;
+    int SC_OK_200 = 200;
 
     /**
      * 访问权限认证未通过 510
      */
-    Integer SC_JEECG_NO_AUTHZ = 510;
+    int SC_JEECG_NO_AUTHZ = 510;
 
     /**
      * 登录用户Shiro权限缓存KEY前缀
@@ -94,15 +94,15 @@ public interface CommonConstant {
     /**
      * 0：一级菜单
      */
-    Integer MENU_TYPE_0 = 0;
+    int MENU_TYPE_0 = 0;
     /**
      * 1：子菜单
      */
-    Integer MENU_TYPE_1 = 1;
+    int MENU_TYPE_1 = 1;
     /**
      * 2：按钮权限
      */
-    Integer MENU_TYPE_2 = 2;
+    int MENU_TYPE_2 = 2;
 
     /**
      * 通告对象类型（USER:指定用户，ALL:全体用户）
@@ -158,14 +158,14 @@ public interface CommonConstant {
     /**
      * 是否配置菜单的数据权限 1是0否
      */
-    Integer RULE_FLAG_0 = 0;
-    Integer RULE_FLAG_1 = 1;
+    int RULE_FLAG_0 = 0;
+    int RULE_FLAG_1 = 1;
 
     /**
      * 是否用户已被冻结 1(解冻)正常 2冻结
      */
-    Integer USER_UNFREEZE = 1;
-    Integer USER_FREEZE = 2;
+    int USER_UNFREEZE = 1;
+    int USER_FREEZE = 2;
 
     /**
      * 字典翻译文本后缀
@@ -175,22 +175,22 @@ public interface CommonConstant {
     /**
      * 表单设计器主表类型
      */
-    Integer DESIGN_FORM_TYPE_MAIN = 1;
+    int DESIGN_FORM_TYPE_MAIN = 1;
 
     /**
      * 表单设计器子表表类型
      */
-    Integer DESIGN_FORM_TYPE_SUB = 2;
+    int DESIGN_FORM_TYPE_SUB = 2;
 
     /**
      * 表单设计器URL授权通过
      */
-    Integer DESIGN_FORM_URL_STATUS_PASSED = 1;
+    int DESIGN_FORM_URL_STATUS_PASSED = 1;
 
     /**
      * 表单设计器URL授权未通过
      */
-    Integer DESIGN_FORM_URL_STATUS_NOT_PASSED = 2;
+    int DESIGN_FORM_URL_STATUS_NOT_PASSED = 2;
 
     /**
      * 表单设计器URL授权未通过
