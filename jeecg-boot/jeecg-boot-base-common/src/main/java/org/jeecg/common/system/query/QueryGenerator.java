@@ -54,13 +54,13 @@ public class QueryGenerator {
     /**
      * 时间格式化
      */
-    private static final ThreadLocal<SimpleDateFormat> local = new ThreadLocal<>();
+    private static final ThreadLocal<SimpleDateFormat> LOCAL = new ThreadLocal<>();
 
     private static SimpleDateFormat getTime() {
-        SimpleDateFormat time = local.get();
+        SimpleDateFormat time = LOCAL.get();
         if (time == null) {
             time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            local.set(time);
+            LOCAL.set(time);
         }
         return time;
     }
@@ -98,7 +98,7 @@ public class QueryGenerator {
 		*/
 
         // 区间条件组装 模糊查询 高级查询组装 简单排序 权限查询
-        PropertyDescriptor origDescriptors[] = PropertyUtils.getPropertyDescriptors(searchObj);
+        PropertyDescriptor[] origDescriptors = PropertyUtils.getPropertyDescriptors(searchObj);
         Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
 
         // 权限规则自定义SQL表达式
@@ -453,7 +453,7 @@ public class QueryGenerator {
      * @return
      */
     public static Map<String, SysPermissionDataRuleModel> getRuleMap() {
-        Map<String, SysPermissionDataRuleModel> ruleMap = new HashMap<String, SysPermissionDataRuleModel>();
+        Map<String, SysPermissionDataRuleModel> ruleMap = new HashMap<>();
         List<SysPermissionDataRuleModel> list = JeecgDataAutorUtils.loadDataSearchCondition();
         if (list != null && list.size() > 0) {
             if (list.get(0) == null) {
@@ -481,14 +481,14 @@ public class QueryGenerator {
             addEasyQuery(queryWrapper, name, rule, objs);
         } else {
             if (propertyType.equals(String.class)) {
-                addEasyQuery(queryWrapper, name, rule, converRuleValue(dataRule.getRuleValue()));
+                addEasyQuery(queryWrapper, name, rule, convertRuleValue(dataRule.getRuleValue()));
             } else {
                 addEasyQuery(queryWrapper, name, rule, NumberUtils.parseNumber(dataRule.getRuleValue(), propertyType));
             }
         }
     }
 
-    public static String converRuleValue(String ruleValue) {
+    public static String convertRuleValue(String ruleValue) {
         String value = JwtUtil.getSessionData(ruleValue);
         if (oConvertUtils.isEmpty(value)) {
             value = JwtUtil.getUserSystemData(ruleValue, null);
@@ -500,7 +500,7 @@ public class QueryGenerator {
         try {
             Set<String> varParams = getSqlRuleParams(sqlRule);
             for (String var : varParams) {
-                String tempValue = converRuleValue(var);
+                String tempValue = convertRuleValue(var);
                 sqlRule = sqlRule.replace("#{" + var + "}", tempValue);
             }
         } catch (Exception e) {
@@ -608,10 +608,10 @@ public class QueryGenerator {
 
     private static String getInConditionValue(Object value, boolean isString) {
         if (isString) {
-            String temp[] = value.toString().split(",");
-            String res = "";
+            String[] temp = value.toString().split(",");
+            StringBuilder res = new StringBuilder();
             for (String string : temp) {
-                res += ",'" + string + "'";
+                res.append(",'").append(string).append("'");
             }
             return "(" + res.substring(1) + ")";
         } else {
@@ -647,7 +647,7 @@ public class QueryGenerator {
         StringBuffer sb = new StringBuffer();
         //权限查询
         Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
-        PropertyDescriptor origDescriptors[] = PropertyUtils.getPropertyDescriptors(clazz);
+        PropertyDescriptor[] origDescriptors = PropertyUtils.getPropertyDescriptors(clazz);
         String sql_and = " and ";
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
@@ -655,19 +655,19 @@ public class QueryGenerator {
             }
         }
         String name;
-        for (int i = 0; i < origDescriptors.length; i++) {
-            name = origDescriptors[i].getName();
+        for (PropertyDescriptor origDescriptor : origDescriptors) {
+            name = origDescriptor.getName();
             if (judgedIsUselessField(name)) {
                 continue;
             }
             if (ruleMap.containsKey(name)) {
                 SysPermissionDataRuleModel dataRule = ruleMap.get(name);
                 QueryRuleEnum rule = QueryRuleEnum.getByValue(dataRule.getRuleConditions());
-                Class propType = origDescriptors[i].getPropertyType();
+                Class propType = origDescriptor.getPropertyType();
                 boolean isString = propType.equals(String.class);
                 Object value;
                 if (isString) {
-                    value = converRuleValue(dataRule.getRuleValue());
+                    value = convertRuleValue(dataRule.getRuleValue());
                 } else {
                     value = NumberUtils.parseNumber(dataRule.getRuleValue(), propType);
                 }
@@ -689,20 +689,20 @@ public class QueryGenerator {
     public static void installAuthMplus(QueryWrapper<?> queryWrapper, Class<?> clazz) {
         // 权限查询
         Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
-        PropertyDescriptor origDescriptors[] = PropertyUtils.getPropertyDescriptors(clazz);
+        PropertyDescriptor[] origDescriptors = PropertyUtils.getPropertyDescriptors(clazz);
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
                 queryWrapper.and(i -> i.apply(getSqlRuleValue(ruleMap.get(c).getRuleValue())));
             }
         }
         String name;
-        for (int i = 0; i < origDescriptors.length; i++) {
-            name = origDescriptors[i].getName();
+        for (PropertyDescriptor origDescriptor : origDescriptors) {
+            name = origDescriptor.getName();
             if (judgedIsUselessField(name)) {
                 continue;
             }
             if (ruleMap.containsKey(name)) {
-                addRuleToQueryWrapper(ruleMap.get(name), name, origDescriptors[i].getPropertyType(), queryWrapper);
+                addRuleToQueryWrapper(ruleMap.get(name), name, origDescriptor.getPropertyType(), queryWrapper);
             }
         }
     }

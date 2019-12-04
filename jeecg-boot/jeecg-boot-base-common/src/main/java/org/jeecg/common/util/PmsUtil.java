@@ -31,7 +31,7 @@ public class PmsUtil {
         if (!saveFile.exists()) {
             saveFile.mkdirs();
         }
-        name += DateUtils.yyyymmddhhmmss.format(d) + Math.round(Math.random() * 10000);
+        name += DateUtils.YYYYMMDDHHMMSS.format(d) + Math.round(Math.random() * 10000);
         String saveFilePath = saveFullDir + name + ".txt";
 
         try {
@@ -41,7 +41,7 @@ public class PmsUtil {
             for (String s : msg) {
                 // 写数据
                 if (s.indexOf("_") > 0) {
-                    String arr[] = s.split("_");
+                    String[] arr = s.split("_");
                     bw.write("第" + arr[0] + "行:" + arr[1]);
                 } else {
                     bw.write(s);

@@ -112,7 +112,6 @@ public class CommonController {
             response.flushBuffer();
         } catch (IOException e) {
             log.error("预览图片失败" + e.getMessage());
-            // e.printStackTrace();
         } finally {
             if (inputStream != null) {
                 try {
@@ -170,7 +169,6 @@ public class CommonController {
 
         } catch (Exception e) {
             log.info("文件下载失败" + e.getMessage());
-            // e.printStackTrace();
         } finally {
             if (inputStream != null) {
                 try {

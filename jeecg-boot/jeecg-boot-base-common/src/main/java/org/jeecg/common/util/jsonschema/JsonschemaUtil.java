@@ -62,7 +62,6 @@ public class JsonschemaUtil {
             properties.put(map.get("key").toString(), map.get("prop"));
         }
         obj.put("properties", properties);
-        //log.info("---JSONSchema--->"+obj.toString());
         return obj;
     }
 
