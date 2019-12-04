@@ -63,10 +63,6 @@ public class DepartIdModel implements Serializable {
         this.children = children;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public String getKey() {
         return key;
     }

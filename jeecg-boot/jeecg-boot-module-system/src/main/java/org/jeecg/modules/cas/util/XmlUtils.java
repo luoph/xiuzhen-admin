@@ -208,7 +208,7 @@ public final class XmlUtils {
         }
 
         @Override
-        public void startElement(final String namespaceURI, final String localName, final String qName,
+        public void startElement(final String namespace, final String localName, final String qName,
                                  final Attributes attributes) {
             if ("attributes".equals(localName)) {
                 this.foundAttributes = true;
@@ -226,7 +226,7 @@ public final class XmlUtils {
         }
 
         @Override
-        public void endElement(final String namespaceURI, final String localName, final String qName) {
+        public void endElement(final String namespace, final String localName, final String qName) {
             if ("attributes".equals(localName)) {
                 this.foundAttributes = false;
                 this.currentAttribute = null;

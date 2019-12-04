@@ -150,8 +150,8 @@ public class SysMessageTemplateController extends JeecgController<SysMessageTemp
             result.error500("解析Json出错！");
             return result;
         }
-        boolean is_sendSuccess = pushMsgUtil.sendMessage(msgParams.getMsgType(), msgParams.getTemplateCode(), map, msgParams.getReceiver());
-        if (is_sendSuccess) {
+        boolean isSendSuccess = pushMsgUtil.sendMessage(msgParams.getMsgType(), msgParams.getTemplateCode(), map, msgParams.getReceiver());
+        if (isSendSuccess) {
             result.success("发送消息任务添加成功！");
         } else {
             result.error500("发送消息任务添加失败！");
