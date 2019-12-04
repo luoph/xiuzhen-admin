@@ -85,7 +85,7 @@ public class SysMessageTemplateController extends JeecgController<SysMessageTemp
      * @return
      */
     @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         sysMessageTemplateService.removeById(id);
         return Result.ok("删除成功!");
     }
@@ -97,7 +97,7 @@ public class SysMessageTemplateController extends JeecgController<SysMessageTemp
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.sysMessageTemplateService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
@@ -109,7 +109,7 @@ public class SysMessageTemplateController extends JeecgController<SysMessageTemp
      * @return
      */
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
         SysMessageTemplate sysMessageTemplate = sysMessageTemplateService.getById(id);
         return Result.ok(sysMessageTemplate);
     }
@@ -118,7 +118,7 @@ public class SysMessageTemplateController extends JeecgController<SysMessageTemp
      * 导出excel
      *
      * @param request
-     * @param response
+     * @param sysMessageTemplate
      */
     @GetMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, SysMessageTemplate sysMessageTemplate) {

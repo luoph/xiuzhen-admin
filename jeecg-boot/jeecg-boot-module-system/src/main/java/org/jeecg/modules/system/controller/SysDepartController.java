@@ -81,7 +81,7 @@ public class SysDepartController {
         try {
             sysDepart.setCreateBy(username);
             sysDepartService.saveDepartData(sysDepart, username);
-            //清除部门树内存
+            // 清除部门树内存
             // FindsDepartsChildrenUtil.clearSysDepartTreeList();
             // FindsDepartsChildrenUtil.clearDepartIdModel();
             result.success("添加成功！");
@@ -242,17 +242,17 @@ public class SysDepartController {
     public ModelAndView exportXls(SysDepart sysDepart, HttpServletRequest request) {
         // Step.1 组装查询条件
         QueryWrapper<SysDepart> queryWrapper = QueryGenerator.initQueryWrapper(sysDepart, request.getParameterMap());
-        //Step.2 AutoPoi 导出Excel
+        // Step.2 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
         List<SysDepart> pageList = sysDepartService.list(queryWrapper);
-        //按字典排序
+        // 按字典排序
         Collections.sort(pageList, new Comparator<SysDepart>() {
             @Override
             public int compare(SysDepart arg0, SysDepart arg1) {
                 return arg0.getOrgCode().compareTo(arg1.getOrgCode());
             }
         });
-        //导出文件名称
+        // 导出文件名称
         mv.addObject(NormalExcelConstants.FILE_NAME, "部门列表");
         mv.addObject(NormalExcelConstants.CLASS, SysDepart.class);
         LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();
@@ -283,28 +283,23 @@ public class SysDepartController {
                 // orgCode编码长度
                 int codeLength = 3;
                 List<SysDepart> listSysDeparts = ExcelImportUtil.importExcel(file.getInputStream(), SysDepart.class, params);
-                //按长度排序
-                Collections.sort(listSysDeparts, new Comparator<SysDepart>() {
-                    @Override
-                    public int compare(SysDepart arg0, SysDepart arg1) {
-                        return arg0.getOrgCode().length() - arg1.getOrgCode().length();
-                    }
-                });
+                // 按长度排序
+                Collections.sort(listSysDeparts, Comparator.comparingInt(item -> item.getOrgCode().length()));
                 for (SysDepart sysDepart : listSysDeparts) {
                     String orgCode = sysDepart.getOrgCode();
                     if (orgCode.length() > codeLength) {
                         String parentCode = orgCode.substring(0, orgCode.length() - codeLength);
-                        QueryWrapper<SysDepart> queryWrapper = new QueryWrapper<SysDepart>();
+                        QueryWrapper<SysDepart> queryWrapper = new QueryWrapper<>();
                         queryWrapper.eq("org_code", parentCode);
                         try {
                             SysDepart parentDept = sysDepartService.getOne(queryWrapper);
-                            if (!parentDept.equals(null)) {
+                            if (parentDept != null) {
                                 sysDepart.setParentId(parentDept.getId());
                             } else {
                                 sysDepart.setParentId("");
                             }
                         } catch (Exception e) {
-                            //没有查找到parentDept
+                            // 没有查找到parentDept
                         }
                     } else {
                         sysDepart.setParentId("");

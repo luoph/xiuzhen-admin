@@ -17,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @Component
 @Slf4j
 @ServerEndpoint("/websocket/{userId}")
-//此注解相当于设置访问URL
+// 此注解相当于设置访问URL
 public class WebSocket {
 
     private Session session;

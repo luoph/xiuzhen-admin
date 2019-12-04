@@ -52,7 +52,7 @@ public class CasClientController {
     @GetMapping("/validateLogin")
     public Object validateLogin(@RequestParam(name = "ticket") String ticket,
                                 @RequestParam(name = "service") String service,
-                                HttpServletRequest request, HttpServletResponse response) throws Exception {
+                                HttpServletRequest request, HttpServletResponse response) {
         Result<JSONObject> result = new Result<JSONObject>();
         log.info("Rest api login.");
         try {
@@ -96,7 +96,6 @@ public class CasClientController {
             result.success("登录成功");
 
         } catch (Exception e) {
-            //e.printStackTrace();
             result.error500(e.getMessage());
         }
         return new HttpEntity<>(result);

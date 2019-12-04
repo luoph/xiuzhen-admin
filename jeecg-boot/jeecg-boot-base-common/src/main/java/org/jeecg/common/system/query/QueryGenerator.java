@@ -54,7 +54,7 @@ public class QueryGenerator {
     /**
      * 时间格式化
      */
-    private static final ThreadLocal<SimpleDateFormat> local = new ThreadLocal<SimpleDateFormat>();
+    private static final ThreadLocal<SimpleDateFormat> local = new ThreadLocal<>();
 
     private static SimpleDateFormat getTime() {
         SimpleDateFormat time = local.get();
@@ -74,7 +74,7 @@ public class QueryGenerator {
      */
     public static <T> QueryWrapper<T> initQueryWrapper(T searchObj, Map<String, String[]> parameterMap) {
         long start = System.currentTimeMillis();
-        QueryWrapper<T> queryWrapper = new QueryWrapper<T>();
+        QueryWrapper<T> queryWrapper = new QueryWrapper<>();
         installMplus(queryWrapper, searchObj, parameterMap);
         log.debug("---查询条件构造器初始化完成,耗时:" + (System.currentTimeMillis() - start) + "毫秒----");
         return queryWrapper;
@@ -97,11 +97,11 @@ public class QueryGenerator {
 		当一个人只有一个部门 就直接配置等于条件: orgCode 等于 #{sys_org_code} 或者配置自定义SQL: orgCode = '#{sys_org_code}'
 		*/
 
-        //区间条件组装 模糊查询 高级查询组装 简单排序 权限查询
+        // 区间条件组装 模糊查询 高级查询组装 简单排序 权限查询
         PropertyDescriptor origDescriptors[] = PropertyUtils.getPropertyDescriptors(searchObj);
         Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
 
-        //权限规则自定义SQL表达式
+        // 权限规则自定义SQL表达式
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
                 queryWrapper.and(i -> i.apply(getSqlRuleValue(ruleMap.get(c).getRuleValue())));
@@ -118,7 +118,7 @@ public class QueryGenerator {
                     continue;
                 }
 
-                //数据权限查询
+                // 数据权限查询
                 if (ruleMap.containsKey(name)) {
                     addRuleToQueryWrapper(ruleMap.get(name), name, origDescriptors[i].getPropertyType(), queryWrapper);
                 }
@@ -135,12 +135,12 @@ public class QueryGenerator {
                     addQueryByRule(queryWrapper, name, type, endValue, QueryRuleEnum.LE);
                 }
 
-                //判断单值  参数带不同标识字符串 走不同的查询
-                //TODO 这种前后带逗号的支持分割后模糊查询需要否 使多选字段的查询生效
+                // 判断单值  参数带不同标识字符串 走不同的查询
+                // TODO 这种前后带逗号的支持分割后模糊查询需要否 使多选字段的查询生效
                 Object value = PropertyUtils.getSimpleProperty(searchObj, name);
                 if (null != value && value.toString().startsWith(COMMA) && value.toString().endsWith(COMMA)) {
-                    String multiLikeval = value.toString().replace(",,", COMMA);
-                    String[] vals = multiLikeval.substring(1, multiLikeval.length()).split(COMMA);
+                    String multiLikeVal = value.toString().replace(",,", COMMA);
+                    String[] vals = multiLikeVal.substring(1).split(COMMA);
                     final String field = oConvertUtils.camelToUnderline(name);
                     if (vals.length > 1) {
                         queryWrapper.and(j -> {
@@ -154,7 +154,7 @@ public class QueryGenerator {
                         queryWrapper.and(j -> j.like(field, vals[0]));
                     }
                 } else {
-                    //根据参数值带什么关键字符串判断走什么类型的查询
+                    // 根据参数值带什么关键字符串判断走什么类型的查询
                     QueryRuleEnum rule = convert2Rule(value);
                     value = replaceValue(rule, value);
                     // add -begin 添加判断为字符串时设为全模糊查询
@@ -173,12 +173,12 @@ public class QueryGenerator {
         // 排序逻辑 处理
         doMultiFieldsOrder(queryWrapper, parameterMap);
 
-        //高级查询
+        // 高级查询
         doSuperQuery(queryWrapper, parameterMap);
 
     }
 
-    //多字段排序 TODO 需要修改前端
+    // 多字段排序 TODO 需要修改前端
     public static void doMultiFieldsOrder(QueryWrapper<?> queryWrapper, Map<String, String[]> parameterMap) {
         String column = null, order = null;
         if (parameterMap != null && parameterMap.containsKey(ORDER_COLUMN)) {
@@ -189,7 +189,7 @@ public class QueryGenerator {
         }
         log.debug("排序规则>>列:" + column + ",排序方式:" + order);
         if (oConvertUtils.isNotEmpty(column) && oConvertUtils.isNotEmpty(order)) {
-            //字典字段，去掉字典翻译文本后缀
+            // 字典字段，去掉字典翻译文本后缀
             if (column.endsWith(CommonConstant.DICT_TEXT_SUFFIX)) {
                 column = column.substring(0, column.lastIndexOf(CommonConstant.DICT_TEXT_SUFFIX));
             }
@@ -367,10 +367,10 @@ public class QueryGenerator {
         Date date = null;
         if (value.length() == 10) {
             if (rule == QueryRuleEnum.GE) {
-                //比较大于
+                // 比较大于
                 date = getTime().parse(value + " 00:00:00");
             } else if (rule == QueryRuleEnum.LE) {
-                //比较小于
+                // 比较小于
                 date = getTime().parse(value + " 23:59:59");
             }
             //TODO 日期类型比较特殊 可能oracle下不一定好使
@@ -687,7 +687,7 @@ public class QueryGenerator {
      * @return
      */
     public static void installAuthMplus(QueryWrapper<?> queryWrapper, Class<?> clazz) {
-        //权限查询
+        // 权限查询
         Map<String, SysPermissionDataRuleModel> ruleMap = getRuleMap();
         PropertyDescriptor origDescriptors[] = PropertyUtils.getPropertyDescriptors(clazz);
         for (String c : ruleMap.keySet()) {

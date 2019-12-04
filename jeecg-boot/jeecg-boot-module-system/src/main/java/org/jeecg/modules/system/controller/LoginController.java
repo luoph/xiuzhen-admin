@@ -105,7 +105,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/logout")
     public Result<Object> logout(HttpServletRequest request, HttpServletResponse response) {
-        //用户退出逻辑
+        // 用户退出逻辑
         String token = request.getHeader(DefContants.X_ACCESS_TOKEN);
         if (oConvertUtils.isEmpty(token)) {
             return Result.error("退出登录失败！");
@@ -115,13 +115,13 @@ public class LoginController {
         if (sysUser != null) {
             sysBaseAPI.addLog("用户名: " + sysUser.getRealname() + ",退出成功！", CommonConstant.LOG_TYPE_1, null);
             log.info(" 用户名:  " + sysUser.getRealname() + ",退出成功！ ");
-            //清空用户登录Token缓存
+            // 清空用户登录Token缓存
             redisUtil.del(CommonConstant.PREFIX_USER_TOKEN + token);
-            //清空用户登录Shiro权限缓存
+            // 清空用户登录Shiro权限缓存
             redisUtil.del(CommonConstant.PREFIX_USER_SHIRO_CACHE + sysUser.getId());
-            //清空用户的缓存信息（包括部门信息），例如sys:cache:user::<username>
+            // 清空用户的缓存信息（包括部门信息），例如sys:cache:user::<username>
             redisUtil.del(String.format("%s::%s", CacheConstant.SYS_USERS_CACHE, sysUser.getUsername()));
-            //调用shiro的logout
+            // 调用shiro的logout
             SecurityUtils.getSubject().logout();
             return Result.ok("退出登录成功！");
         } else {
@@ -226,13 +226,13 @@ public class LoginController {
             return result;
         }
 
-        //随机数
+        // 随机数
         String captcha = RandomUtil.randomNumbers(6);
         JSONObject obj = new JSONObject();
         obj.put("code", captcha);
         try {
             boolean b = false;
-            //注册模板
+            // 注册模板
             if (CommonConstant.SMS_TPL_TYPE_1.equals(smsmode)) {
                 SysUser sysUser = sysUserService.getUserByPhone(mobile);
                 if (sysUser != null) {
@@ -242,7 +242,7 @@ public class LoginController {
                 }
                 b = DySmsHelper.sendSms(mobile, obj, DySmsEnum.REGISTER_TEMPLATE_CODE);
             } else {
-                //登录模式，校验用户有效性
+                // 登录模式，校验用户有效性
                 SysUser sysUser = sysUserService.getUserByPhone(mobile);
                 result = sysUserService.checkUserIsEffective(sysUser);
                 if (!result.isSuccess()) {
@@ -253,20 +253,20 @@ public class LoginController {
                  * smsmode 短信模板方式  0 .登录模板、1.注册模板、2.忘记密码模板
                  */
                 if (CommonConstant.SMS_TPL_TYPE_0.equals(smsmode)) {
-                    //登录模板
+                    // 登录模板
                     b = DySmsHelper.sendSms(mobile, obj, DySmsEnum.LOGIN_TEMPLATE_CODE);
                 } else if (CommonConstant.SMS_TPL_TYPE_2.equals(smsmode)) {
-                    //忘记密码模板
+                    // 忘记密码模板
                     b = DySmsHelper.sendSms(mobile, obj, DySmsEnum.FORGET_PASSWORD_TEMPLATE_CODE);
                 }
             }
 
-            if (b == false) {
+            if (!b) {
                 result.setMessage("短信验证码发送失败,请稍后重试");
                 result.setSuccess(false);
                 return result;
             }
-            //验证码10分钟内有效
+            // 验证码10分钟内有效
             redisUtil.set(mobile, captcha, 600);
             //update-begin--Author:scott  Date:20190812 for：issues#391
             //result.setResult(captcha);
@@ -294,22 +294,22 @@ public class LoginController {
         Result<JSONObject> result = new Result<JSONObject>();
         String phone = jsonObject.getString("mobile");
 
-        //校验用户有效性
+        // 校验用户有效性
         SysUser sysUser = sysUserService.getUserByPhone(phone);
         result = sysUserService.checkUserIsEffective(sysUser);
         if (!result.isSuccess()) {
             return result;
         }
 
-        String smscode = jsonObject.getString("captcha");
+        String smsCode = jsonObject.getString("captcha");
         Object code = redisUtil.get(phone);
-        if (!smscode.equals(code)) {
+        if (!smsCode.equals(code)) {
             result.setMessage("手机验证码错误");
             return result;
         }
-        //用户信息
+        // 用户信息
         userInfo(sysUser, result);
-        //添加日志
+        // 添加日志
         sysBaseAPI.addLog("用户名: " + sysUser.getUsername() + ",登录成功！", CommonConstant.LOG_TYPE_1, null);
 
         return result;
@@ -419,7 +419,7 @@ public class LoginController {
 
         String orgCode = sysUser.getOrgCode();
         if (oConvertUtils.isEmpty(orgCode)) {
-            //如果当前用户无选择部门 查看部门关联信息
+            // 如果当前用户无选择部门 查看部门关联信息
             List<SysDepart> departs = sysDepartService.queryUserDeparts(sysUser.getId());
             if (departs == null || departs.size() == 0) {
                 result.error500("用户暂未归属部门,不可登录!");
@@ -430,7 +430,7 @@ public class LoginController {
             this.sysUserService.updateUserDepart(username, orgCode);
         }
         JSONObject obj = new JSONObject();
-        //用户登录信息
+        // 用户登录信息
         obj.put("userInfo", sysUser);
 
         // 生成token

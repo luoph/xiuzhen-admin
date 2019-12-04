@@ -74,24 +74,24 @@ public class SysBaseApiImpl implements ISysBaseAPI {
     @Override
     public void addLog(String logContent, Integer logType, Integer operateType) {
         SysLog sysLog = new SysLog();
-        //注解上的描述,操作日志内容
+        // 注解上的描述,操作日志内容
         sysLog.setLogContent(logContent);
         sysLog.setLogType(logType);
         sysLog.setOperateType(operateType);
 
-        //请求的方法名
-        //请求的参数
+        // 请求的方法名
+        // 请求的参数
 
         try {
-            //获取request
+            // 获取request
             HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
-            //设置IP地址
+            // 设置IP地址
             sysLog.setIp(IPUtils.getIpAddr(request));
         } catch (Exception e) {
             sysLog.setIp("127.0.0.1");
         }
 
-        //获取登录用户信息
+        // 获取登录用户信息
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         if (sysUser != null) {
             sysLog.setUserid(sysUser.getUsername());
@@ -99,7 +99,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
         }
         sysLog.setCreateTime(new Date());
-        //保存系统日志
+        // 保存系统日志
         sysLogMapper.insert(sysLog);
     }
 

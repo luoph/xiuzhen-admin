@@ -54,9 +54,9 @@ public class MybatisInterceptor implements Interceptor {
                     //update-end--Author:scott  Date:20190828 for：关于使用Quzrtz 开启线程任务， #465
                     if ("createBy".equals(field.getName())) {
                         field.setAccessible(true);
-                        Object local_createBy = field.get(parameter);
+                        Object localCreateBy = field.get(parameter);
                         field.setAccessible(false);
-                        if (local_createBy == null || local_createBy.equals("")) {
+                        if (localCreateBy == null || "".equals(localCreateBy)) {
                             String createBy = "jeecg";
                             if (sysUser != null) {
                                 // 登录账号
@@ -72,20 +72,20 @@ public class MybatisInterceptor implements Interceptor {
                     // 注入创建时间
                     if ("createTime".equals(field.getName())) {
                         field.setAccessible(true);
-                        Object local_createDate = field.get(parameter);
+                        Object localCreateDate = field.get(parameter);
                         field.setAccessible(false);
-                        if (local_createDate == null || local_createDate.equals("")) {
+                        if (localCreateDate == null || "".equals(localCreateDate)) {
                             field.setAccessible(true);
                             field.set(parameter, new Date());
                             field.setAccessible(false);
                         }
                     }
-                    //注入部门编码
+                    // 注入部门编码
                     if ("sysOrgCode".equals(field.getName())) {
                         field.setAccessible(true);
-                        Object local_sysOrgCode = field.get(parameter);
+                        Object localSysOrgCode = field.get(parameter);
                         field.setAccessible(false);
-                        if (local_sysOrgCode == null || local_sysOrgCode.equals("")) {
+                        if (localSysOrgCode == null || "".equals(localSysOrgCode)) {
                             String sysOrgCode = "";
                             // 获取登录用户信息
                             if (sysUser != null) {
@@ -130,7 +130,7 @@ public class MybatisInterceptor implements Interceptor {
                 log.debug("------field.name------" + field.getName());
                 try {
                     if ("updateBy".equals(field.getName())) {
-                        //获取登录用户信息
+                        // 获取登录用户信息
                         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
                         if (sysUser != null) {
                             // 登录账号

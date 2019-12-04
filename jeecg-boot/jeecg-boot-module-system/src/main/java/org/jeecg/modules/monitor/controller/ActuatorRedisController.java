@@ -68,15 +68,15 @@ public class ActuatorRedisController {
             log.info("查询磁盘信息:" + fs.length + "个");
             List<Map<String, Object>> list = new ArrayList<>();
 
-            for (int i = 0; i < fs.length; i++) {
-                if (fs[i].getTotalSpace() == 0) {
+            for (File f : fs) {
+                if (f.getTotalSpace() == 0) {
                     continue;
                 }
                 Map<String, Object> map = new HashMap<>();
-                map.put("name", fsv.getSystemDisplayName(fs[i]));
-                map.put("max", fs[i].getTotalSpace());
-                map.put("rest", fs[i].getFreeSpace());
-                map.put("restPPT", (fs[i].getTotalSpace() - fs[i].getFreeSpace()) * 100 / fs[i].getTotalSpace());
+                map.put("name", fsv.getSystemDisplayName(f));
+                map.put("max", f.getTotalSpace());
+                map.put("rest", f.getFreeSpace());
+                map.put("restPPT", (f.getTotalSpace() - f.getFreeSpace()) * 100 / f.getTotalSpace());
                 list.add(map);
                 log.info(map.toString());
             }

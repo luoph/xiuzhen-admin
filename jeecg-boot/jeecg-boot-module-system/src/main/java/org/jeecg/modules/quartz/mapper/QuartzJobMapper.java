@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface QuartzJobMapper extends BaseMapper<QuartzJob> {
 
-    public List<QuartzJob> findByJobClassName(@Param("jobClassName") String jobClassName);
+    List<QuartzJob> findByJobClassName(@Param("jobClassName") String jobClassName);
 
 }

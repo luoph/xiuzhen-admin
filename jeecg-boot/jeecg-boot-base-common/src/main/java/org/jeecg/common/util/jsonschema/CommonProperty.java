@@ -44,7 +44,7 @@ public abstract class CommonProperty implements Serializable {
      */
     protected Object constant;
 
-    //三个自定义 属性
+    // 三个自定义 属性
     protected String view;// 展示类型
     protected String title;//数据库字段备注
     protected Integer order;//字段显示排序

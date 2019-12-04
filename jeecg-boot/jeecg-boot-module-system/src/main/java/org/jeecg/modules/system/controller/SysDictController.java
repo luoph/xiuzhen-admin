@@ -119,19 +119,19 @@ public class SysDictController {
         List<DictModel> ls = null;
         try {
             if (dictCode.indexOf(",") != -1) {
-                //关联表字典（举例：sys_user,realname,id）
+                // 关联表字典（举例：sys_user,realname,id）
                 String[] params = dictCode.split(",");
 
                 if (params.length < 3) {
                     result.error500("字典Code格式不正确！");
                     return result;
                 }
-                //SQL注入校验（只限制非法串改数据库）
+                //S QL注入校验（只限制非法串改数据库）
                 final String[] sqlInjCheck = {params[0], params[1], params[2]};
                 SqlInjectionUtil.filterContent(sqlInjCheck);
 
                 if (params.length == 4) {
-                    //SQL注入校验（查询条件SQL 特殊check，此方法仅供此处使用）
+                    // SQL注入校验（查询条件SQL 特殊check，此方法仅供此处使用）
                     SqlInjectionUtil.specialFilterContent(params[3]);
                     ls = sysDictService.queryTableDictItemsByCodeAndFilter(params[0], params[1], params[2], params[3]);
                 } else if (params.length == 3) {
@@ -141,7 +141,7 @@ public class SysDictController {
                     return result;
                 }
             } else {
-                //字典表
+                // 字典表
                 ls = sysDictService.queryDictItemsByCode(dictCode);
             }
 

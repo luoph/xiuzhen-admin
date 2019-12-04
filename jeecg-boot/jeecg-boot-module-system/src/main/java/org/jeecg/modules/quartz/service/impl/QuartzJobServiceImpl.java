@@ -22,8 +22,10 @@ import java.util.List;
 @Slf4j
 @Service
 public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob> implements IQuartzJobService {
+
     @Autowired
     private QuartzJobMapper quartzJobMapper;
+
     @Autowired
     private Scheduler scheduler;
 

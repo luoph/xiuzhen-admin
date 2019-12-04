@@ -235,10 +235,10 @@ public class SysUserController {
     @RequestMapping(value = "/checkOnlyUser", method = RequestMethod.GET)
     public Result<Boolean> checkOnlyUser(SysUser sysUser) {
         Result<Boolean> result = new Result<>();
-        //如果此参数为false则程序发生异常
+        // 如果此参数为false则程序发生异常
         result.setResult(true);
         try {
-            //通过传入信息查询新的用户信息
+            // 通过传入信息查询新的用户信息
             SysUser user = sysUserService.getOne(new QueryWrapper<SysUser>(sysUser));
             if (user != null) {
                 result.setSuccess(false);
@@ -357,17 +357,17 @@ public class SysUserController {
     public ModelAndView exportXls(SysUser sysUser, HttpServletRequest request) {
         // Step.1 组装查询条件
         QueryWrapper<SysUser> queryWrapper = QueryGenerator.initQueryWrapper(sysUser, request.getParameterMap());
-        //Step.2 AutoPoi 导出Excel
+        // Step.2 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
-        //update-begin--Author:kangxiaolin  Date:20180825 for：[03]用户导出，如果选择数据则只导出相关数据--------------------
+        // update-begin--Author:kangxiaolin  Date:20180825 for：[03]用户导出，如果选择数据则只导出相关数据--------------------
         String selections = request.getParameter("selections");
         if (!oConvertUtils.isEmpty(selections)) {
             queryWrapper.in("id", selections.split(","));
         }
-        //update-end--Author:kangxiaolin  Date:20180825 for：[03]用户导出，如果选择数据则只导出相关数据----------------------
+        // update-end--Author:kangxiaolin  Date:20180825 for：[03]用户导出，如果选择数据则只导出相关数据----------------------
         List<SysUser> pageList = sysUserService.list(queryWrapper);
 
-        //导出文件名称
+        // 导出文件名称
         mv.addObject(NormalExcelConstants.FILE_NAME, "用户列表");
         mv.addObject(NormalExcelConstants.CLASS, SysUser.class);
         LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();
@@ -766,7 +766,8 @@ public class SysUserController {
             user.setStatus(1);
             user.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
             user.setActivitiSync(CommonConstant.ACT_SYNC_1);
-            sysUserService.addUserWithRole(user, "ee8626f80f7c2619917b6236f3a7f02b");//默认临时角色 test
+            // 默认临时角色 test
+            sysUserService.addUserWithRole(user, "ee8626f80f7c2619917b6236f3a7f02b");
             result.success("注册成功");
         } catch (Exception e) {
             result.error500("注册失败");

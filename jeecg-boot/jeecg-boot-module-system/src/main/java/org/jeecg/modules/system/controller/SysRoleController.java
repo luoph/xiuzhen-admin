@@ -215,14 +215,14 @@ public class SysRoleController {
             }
             SysRole newRole = sysRoleService.getOne(new QueryWrapper<SysRole>().lambda().eq(SysRole::getRoleCode, roleCode));
             if (newRole != null) {
-                //如果根据传入的roleCode查询到信息了，那么就需要做校验了。
+                // 如果根据传入的roleCode查询到信息了，那么就需要做校验了。
                 if (role == null) {
                     //role为空=>新增模式=>只要roleCode存在则返回false
                     result.setSuccess(false);
                     result.setMessage("角色编码已存在");
                     return result;
                 } else if (!id.equals(newRole.getId())) {
-                    //否则=>编辑模式=>判断两者ID是否一致-
+                    // 否则=>编辑模式=>判断两者ID是否一致-
                     result.setSuccess(false);
                     result.setMessage("角色编码已存在");
                     return result;
@@ -241,17 +241,17 @@ public class SysRoleController {
     /**
      * 导出excel
      *
+     * @param sysRole
      * @param request
-     * @param response
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(SysRole sysRole, HttpServletRequest request) {
         // Step.1 组装查询条件
         QueryWrapper<SysRole> queryWrapper = QueryGenerator.initQueryWrapper(sysRole, request.getParameterMap());
-        //Step.2 AutoPoi 导出Excel
+        // Step.2 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
         List<SysRole> pageList = sysRoleService.list(queryWrapper);
-        //导出文件名称
+        // 导出文件名称
         mv.addObject(NormalExcelConstants.FILE_NAME, "角色列表");
         mv.addObject(NormalExcelConstants.CLASS, SysRole.class);
         LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();
@@ -358,7 +358,7 @@ public class SysRoleController {
     @RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
     public Result<Map<String, Object>> queryTreeList(HttpServletRequest request) {
         Result<Map<String, Object>> result = new Result<>();
-        //全部权限ids
+        // 全部权限ids
         List<String> ids = new ArrayList<>();
         try {
             LambdaQueryWrapper<SysPermission> query = new LambdaQueryWrapper<SysPermission>();

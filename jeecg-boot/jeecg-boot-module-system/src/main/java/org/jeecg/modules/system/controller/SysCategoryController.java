@@ -210,7 +210,7 @@ public class SysCategoryController {
             List<SysCategory> exportList = pageList.stream().filter(item -> selectionList.contains(item.getId())).collect(Collectors.toList());
             mv.addObject(NormalExcelConstants.DATA_LIST, exportList);
         }
-        //导出文件名称
+        // 导出文件名称
         mv.addObject(NormalExcelConstants.FILE_NAME, "分类字典列表");
         mv.addObject(NormalExcelConstants.CLASS, SysCategory.class);
         LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();

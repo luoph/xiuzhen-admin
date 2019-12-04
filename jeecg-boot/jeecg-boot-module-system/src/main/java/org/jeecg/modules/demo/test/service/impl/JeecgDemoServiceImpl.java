@@ -67,7 +67,7 @@ public class JeecgDemoServiceImpl extends ServiceImpl<JeecgDemoMapper, JeecgDemo
     @Override
     public IPage<JeecgDemo> queryListWithPermission(int pageSize, int pageNo) {
         Page<JeecgDemo> page = new Page<>(pageNo, pageSize);
-        //编程方式，获取当前请求的数据权限规则SQL片段
+        // 编程方式，获取当前请求的数据权限规则SQL片段
         String sql = QueryGenerator.installAuthJdbc(JeecgDemo.class);
         return this.baseMapper.queryListWithPermission(page, sql);
     }

@@ -11,7 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AesEncryptUtil {
 
-    //使用AES-128-CBC加密模式，key需要为16位,key和iv可以相同！
+    // 使用AES-128-CBC加密模式，key需要为16位,key和iv可以相同！
     private static String KEY = EncryptedString.key;
     private static String IV = EncryptedString.iv;
 

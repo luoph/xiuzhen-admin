@@ -157,7 +157,7 @@ public class YouBianCodeUtil {
         if (code == null || StringUtil.isNullOrEmpty(code)) {
             return null;
         } else {
-            //获取标准长度为numLength+1,截取的数量为code.length/numLength+1
+            // 获取标准长度为numLength+1,截取的数量为code.length/numLength+1
             int c = code.length() / (numLength + 1);
             String[] cutcode = new String[c];
             for (int i = 0; i < c; i++) {

@@ -2,5 +2,12 @@ package org.jeecg.modules.message.handle;
 
 public interface ISendMsgHandle {
 
-    void SendMsg(String es_receiver, String es_title, String es_content);
+    /**
+     * 推送消息
+     *
+     * @param receiver
+     * @param title
+     * @param content
+     */
+    void sendMsg(String receiver, String title, String content);
 }

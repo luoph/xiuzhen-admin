@@ -43,12 +43,12 @@ public class AutoLogAspect {
     @Around("logPointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         long beginTime = System.currentTimeMillis();
-        //执行方法
+        // 执行方法
         Object result = point.proceed();
-        //执行时长(毫秒)
+        // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
 
-        //保存日志
+        // 保存日志
         saveSysLog(point, time);
 
         return result;
@@ -61,24 +61,24 @@ public class AutoLogAspect {
         SysLog sysLog = new SysLog();
         AutoLog syslog = method.getAnnotation(AutoLog.class);
         if (syslog != null) {
-            //注解上的描述,操作日志内容
+            // 注解上的描述,操作日志内容
             sysLog.setLogContent(syslog.value());
             sysLog.setLogType(syslog.logType());
 
         }
 
-        //请求的方法名
+        // 请求的方法名
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = signature.getName();
         sysLog.setMethod(className + "." + methodName + "()");
 
 
-        //设置操作类型
+        // 设置操作类型
         if (sysLog.getLogType() == CommonConstant.LOG_TYPE_2) {
             sysLog.setOperateType(getOperateType(methodName, syslog.operateType()));
         }
 
-        //请求的参数
+        // 请求的参数
         Object[] args = joinPoint.getArgs();
         try {
             String params = JSONObject.toJSONString(args);
@@ -87,22 +87,22 @@ public class AutoLogAspect {
 
         }
 
-        //获取request
+        // 获取request
         HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
-        //设置IP地址
+        // 设置IP地址
         sysLog.setIp(IPUtils.getIpAddr(request));
 
-        //获取登录用户信息
+        // 获取登录用户信息
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         if (sysUser != null) {
             sysLog.setUserid(sysUser.getUsername());
             sysLog.setUsername(sysUser.getRealname());
 
         }
-        //耗时
+        // 耗时
         sysLog.setCostTime(time);
         sysLog.setCreateTime(new Date());
-        //保存系统日志
+        // 保存系统日志
         sysLogService.save(sysLog);
     }
 

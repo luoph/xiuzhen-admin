@@ -36,9 +36,11 @@ public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     @Lazy
     private ISysUserService sysUserService;
+
     @Autowired
     @Lazy
     private ISysBaseAPI sysBaseAPI;
+
     @Autowired
     @Lazy
     private RedisUtil redisUtil;
