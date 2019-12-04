@@ -380,8 +380,8 @@ public class SysCategoryController {
                 result.setMessage("加载分类字典树参数有误.[null]!");
                 return result;
             } else {
-                if (sysCategoryService.ROOT_PID_VALUE.equals(pcode)) {
-                    pid = sysCategoryService.ROOT_PID_VALUE;
+                if (ISysCategoryService.ROOT_PID_VALUE.equals(pcode)) {
+                    pid = ISysCategoryService.ROOT_PID_VALUE;
                 } else {
                     pid = this.sysCategoryService.queryIdByCode(pcode);
                 }

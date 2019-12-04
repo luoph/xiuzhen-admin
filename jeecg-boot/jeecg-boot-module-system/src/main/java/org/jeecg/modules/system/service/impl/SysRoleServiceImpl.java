@@ -37,13 +37,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         // 去除 listSysRoles 中重复的数据
         for (int i = 0; i < listSysRoles.size(); i++) {
-            String roleCodeI = listSysRoles.get(i).getRoleCode();
+            String roleCode = listSysRoles.get(i).getRoleCode();
 
             for (int j = i + 1; j < listSysRoles.size(); j++) {
                 String roleCodeJ = listSysRoles.get(j).getRoleCode();
                 // 发现重复数据
-                if (roleCodeI.equals(roleCodeJ)) {
-                    errorStrs.add("第 " + (j + 1) + " 行的 roleCode 值：" + roleCodeI + " 已存在，忽略导入");
+                if (roleCode.equals(roleCodeJ)) {
+                    errorStrs.add("第 " + (j + 1) + " 行的 roleCode 值：" + roleCode + " 已存在，忽略导入");
                     listSysRoles.remove(j);
                     break;
                 }

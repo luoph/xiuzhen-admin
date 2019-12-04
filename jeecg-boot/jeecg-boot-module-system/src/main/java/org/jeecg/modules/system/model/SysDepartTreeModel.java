@@ -178,10 +178,6 @@ public class SysDepartTreeModel implements Serializable {
         this.parentId = parentId;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public String getDepartName() {
         return departName;
     }
