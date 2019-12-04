@@ -1,4 +1,68 @@
-.idea
-logs
+# IntelliJ IDEA files
+.idea/
+out/
+build/
+*.ipr
+*.iws
 *.iml
+
+# gradle files
+.gradle/
+gradle/
+target/
+WEB-INF/classes/
+
+# Eclipse files (and some general ones also used by Eclipse)
+.metadata/
+.settings/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+
+# NetBeans files
+.nb-gradle/
+nbproject/private/
+nbbuild/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# OSX auto files
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows auto files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux auto files
+*~
+
+# Build and Package Files
+*.class
+*.jar
+*.war
+*.ear
+
+# Log file
+*.log
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+node_modules
+.project
+.classpath
+.factorypath
+*.pyc
+.vscode
