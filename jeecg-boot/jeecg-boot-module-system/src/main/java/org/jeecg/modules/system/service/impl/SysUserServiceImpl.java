@@ -326,13 +326,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             return result;
         }
         // 情况2：根据用户信息查询，该用户已注销
-        if (CommonConstant.DEL_FLAG_1.toString().equals(sysUser.getDelFlag())) {
+        if (String.valueOf(CommonConstant.DEL_FLAG_1).equals(sysUser.getDelFlag())) {
             sysBaseAPI.addLog("用户登录失败，用户名:" + sysUser.getUsername() + "已注销！", CommonConstant.LOG_TYPE_1, null);
             result.error500("该用户已注销");
             return result;
         }
         // 情况3：根据用户信息查询，该用户已冻结
-        if (CommonConstant.USER_FREEZE.equals(sysUser.getStatus())) {
+        if (CommonConstant.USER_FREEZE == sysUser.getStatus()) {
             sysBaseAPI.addLog("用户登录失败，用户名:" + sysUser.getUsername() + "已冻结！", CommonConstant.LOG_TYPE_1, null);
             result.error500("该用户已冻结");
             return result;

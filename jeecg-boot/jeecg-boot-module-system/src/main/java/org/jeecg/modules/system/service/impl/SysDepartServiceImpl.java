@@ -39,24 +39,22 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
     @Override
     public List<SysDepartTreeModel> queryTreeList() {
         LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
-        query.eq(SysDepart::getDelFlag, CommonConstant.DEL_FLAG_0.toString());
+        query.eq(SysDepart::getDelFlag, String.valueOf(CommonConstant.DEL_FLAG_0));
         query.orderByAsc(SysDepart::getDepartOrder);
         List<SysDepart> list = this.list(query);
         // 调用wrapTreeDataToTreeList方法生成树状数据
-        List<SysDepartTreeModel> listResult = FindsDepartsChildrenUtil.wrapTreeDataToTreeList(list);
-        return listResult;
+        return FindsDepartsChildrenUtil.wrapTreeDataToTreeList(list);
     }
 
     @Cacheable(value = CacheConstant.SYS_DEPART_IDS_CACHE)
     @Override
     public List<DepartIdModel> queryDepartIdTreeList() {
         LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
-        query.eq(SysDepart::getDelFlag, CommonConstant.DEL_FLAG_0.toString());
+        query.eq(SysDepart::getDelFlag, String.valueOf(CommonConstant.DEL_FLAG_0));
         query.orderByAsc(SysDepart::getDepartOrder);
         List<SysDepart> list = this.list(query);
         // 调用wrapTreeDataToTreeList方法生成树状数据
-        List<DepartIdModel> listResult = FindsDepartsChildrenUtil.wrapTreeDataToDepartIdTreeList(list);
-        return listResult;
+        return FindsDepartsChildrenUtil.wrapTreeDataToDepartIdTreeList(list);
     }
 
     /**
@@ -79,7 +77,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
             String orgType = codeArray[1];
             sysDepart.setOrgType(String.valueOf(orgType));
             sysDepart.setCreateTime(new Date());
-            sysDepart.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
+            sysDepart.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_0));
             this.save(sysDepart);
         }
 
@@ -93,8 +91,8 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
      */
     private String[] generateOrgCode(String parentId) {
         //update-begin--Author:Steve  Date:20190201 for：组织机构添加数据代码调整
-        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
-        LambdaQueryWrapper<SysDepart> query1 = new LambdaQueryWrapper<SysDepart>();
+        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<SysDepart> query1 = new LambdaQueryWrapper<>();
         String[] strArray = new String[2];
         // 创建一个List集合,存储查询返回的所有SysDepart对象
         List<SysDepart> departList = new ArrayList<>();
@@ -184,7 +182,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
     @Override
     @Transactional
     public void deleteBatchWithChildren(List<String> ids) {
-        List<String> idList = new ArrayList<String>();
+        List<String> idList = new ArrayList<>();
         for (String id : ids) {
             idList.add(id);
             this.checkChildrenExists(id, idList);

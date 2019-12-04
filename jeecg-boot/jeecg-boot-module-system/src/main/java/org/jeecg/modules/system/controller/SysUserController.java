@@ -764,7 +764,7 @@ public class SysUserController {
             user.setEmail(email);
             user.setPhone(phone);
             user.setStatus(1);
-            user.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
+            user.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_0));
             user.setActivitiSync(CommonConstant.ACT_SYNC_1);
             // 默认临时角色 test
             sysUserService.addUserWithRole(user, "ee8626f80f7c2619917b6236f3a7f02b");
@@ -776,7 +776,9 @@ public class SysUserController {
     }
 
     /**
-     * @param 根据用户名或手机号查询用户信息
+     * 根据用户名或手机号查询用户信息
+     *
+     * @param
      * @return
      */
     @GetMapping("/querySysUser")

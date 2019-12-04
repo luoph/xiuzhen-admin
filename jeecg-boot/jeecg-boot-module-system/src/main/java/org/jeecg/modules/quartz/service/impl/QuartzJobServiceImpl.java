@@ -39,7 +39,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
      */
     @Override
     public boolean saveAndScheduleJob(QuartzJob quartzJob) {
-        if (CommonConstant.STATUS_NORMAL.equals(quartzJob.getStatus())) {
+        if (CommonConstant.STATUS_NORMAL == quartzJob.getStatus()) {
             // 定时器添加
             this.schedulerAdd(quartzJob.getJobClassName().trim(), quartzJob.getCronExpression().trim(), quartzJob.getParameter());
         }
@@ -66,7 +66,7 @@ public class QuartzJobServiceImpl extends ServiceImpl<QuartzJobMapper, QuartzJob
      */
     @Override
     public boolean editAndScheduleJob(QuartzJob quartzJob) throws SchedulerException {
-        if (CommonConstant.STATUS_NORMAL.equals(quartzJob.getStatus())) {
+        if (CommonConstant.STATUS_NORMAL == quartzJob.getStatus()) {
             schedulerDelete(quartzJob.getJobClassName().trim());
             schedulerAdd(quartzJob.getJobClassName().trim(), quartzJob.getCronExpression().trim(), quartzJob.getParameter());
         } else {
