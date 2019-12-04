@@ -100,8 +100,8 @@ public class JwtUtil {
      * @return
      */
     public static String getSessionData(String key) {
-        //${myVar}%
-        //得到${} 后面的值
+        // ${myVar}%
+        // 得到${} 后面的值
         String moshi = "";
         if (key.contains("}")) {
             moshi = key.substring(key.indexOf("}") + 1);
@@ -114,7 +114,7 @@ public class JwtUtil {
             HttpSession session = SpringContextUtils.getHttpServletRequest().getSession();
             returnValue = (String) session.getAttribute(key);
         }
-        //结果加上${} 后面的值
+        // 结果加上${} 后面的值
         if (returnValue != null) {
             returnValue = returnValue + moshi;
         }
@@ -143,13 +143,13 @@ public class JwtUtil {
             moshi = key.substring(key.indexOf("}") + 1);
         }
         String returnValue = null;
-        //针对特殊标示处理#{sysOrgCode}，判断替换
+        // 针对特殊标示处理#{sysOrgCode}，判断替换
         if (key.contains("#{")) {
             key = key.substring(2, key.indexOf("}"));
         } else {
             key = key;
         }
-        //替换为系统登录用户帐号
+        // 替换为系统登录用户帐号
         if (key.equals(DataBaseConstant.SYS_USER_CODE) || key.equals(DataBaseConstant.SYS_USER_CODE_TABLE)) {
             if (user == null) {
                 returnValue = sysUser.getUsername();
@@ -157,7 +157,7 @@ public class JwtUtil {
                 returnValue = user.getSysUserCode();
             }
         }
-        //替换为系统登录用户真实名字
+        // 替换为系统登录用户真实名字
         else if (key.equals(DataBaseConstant.SYS_USER_NAME) || key.equals(DataBaseConstant.SYS_USER_NAME_TABLE)) {
             if (user == null) {
                 returnValue = sysUser.getRealname();
@@ -166,7 +166,7 @@ public class JwtUtil {
             }
         }
 
-        //替换为系统用户登录所使用的机构编码
+        // 替换为系统用户登录所使用的机构编码
         else if (key.equals(DataBaseConstant.SYS_ORG_CODE) || key.equals(DataBaseConstant.SYS_ORG_CODE_TABLE)) {
             if (user == null) {
                 returnValue = sysUser.getOrgCode();
@@ -174,7 +174,7 @@ public class JwtUtil {
                 returnValue = user.getSysOrgCode();
             }
         }
-        //替换为系统用户所拥有的所有机构编码
+        // 替换为系统用户所拥有的所有机构编码
         else if (key.equals(DataBaseConstant.SYS_MULTI_ORG_CODE) || key.equals(DataBaseConstant.SYS_MULTI_ORG_CODE_TABLE)) {
             if (user.isOneDepart()) {
                 returnValue = user.getSysMultiOrgCode().get(0);
@@ -182,15 +182,15 @@ public class JwtUtil {
                 returnValue = Joiner.on(",").join(user.getSysMultiOrgCode());
             }
         }
-        //替换为当前系统时间(年月日)
+        // 替换为当前系统时间(年月日)
         else if (key.equals(DataBaseConstant.SYS_DATE) || key.equals(DataBaseConstant.SYS_DATE_TABLE)) {
             returnValue = user.getSysDate();
         }
-        //替换为当前系统时间（年月日时分秒）
+        // 替换为当前系统时间（年月日时分秒）
         else if (key.equals(DataBaseConstant.SYS_TIME) || key.equals(DataBaseConstant.SYS_TIME_TABLE)) {
             returnValue = user.getSysTime();
         }
-        //流程状态默认值（默认未发起）
+        // 流程状态默认值（默认未发起）
         else if (key.equals(DataBaseConstant.BPM_STATUS) || key.equals(DataBaseConstant.BPM_STATUS_TABLE)) {
             returnValue = "1";
         }

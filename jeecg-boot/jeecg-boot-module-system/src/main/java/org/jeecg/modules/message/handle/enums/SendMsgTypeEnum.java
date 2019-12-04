@@ -7,7 +7,7 @@ import org.jeecg.common.util.oConvertUtils;
  */
 public enum SendMsgTypeEnum {
 
-    //推送方式：1短信 2邮件 3微信
+    // 推送方式：1短信 2邮件 3微信
     SMS("1", "org.jeecg.modules.message.handle.impl.SmsSendMsgHandle"),
     EMAIL("2", "org.jeecg.modules.message.handle.impl.EmailSendMsgHandle"),
     WX("3", "org.jeecg.modules.message.handle.impl.WxSendMsgHandle");

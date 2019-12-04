@@ -25,7 +25,7 @@ public class MailHealthIndicator implements HealthIndicator {
     }
 
     int check() {
-        //可以实现自定义的数据库检测逻辑
+        // 可以实现自定义的数据库检测逻辑
         return 0;
     }
 }

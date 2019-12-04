@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -86,14 +85,16 @@ public final class XmlUtils {
 
             private StringBuilder buffer = new StringBuilder();
 
+            @Override
             public void startElement(final String uri, final String localName, final String qName,
-                                     final Attributes attributes) throws SAXException {
+                                     final Attributes attributes) {
                 if (localName.equals(element)) {
                     this.foundElement = true;
                 }
             }
 
-            public void endElement(final String uri, final String localName, final String qName) throws SAXException {
+            @Override
+            public void endElement(final String uri, final String localName, final String qName) {
                 if (localName.equals(element)) {
                     this.foundElement = false;
                     elements.add(this.buffer.toString());
@@ -101,7 +102,8 @@ public final class XmlUtils {
                 }
             }
 
-            public void characters(char[] ch, int start, int length) throws SAXException {
+            @Override
+            public void characters(char[] ch, int start, int length) {
                 if (this.foundElement) {
                     this.buffer.append(ch, start, length);
                 }
@@ -137,20 +139,22 @@ public final class XmlUtils {
 
             private boolean foundElement = false;
 
-            public void startElement(final String uri, final String localName, final String qName,
-                                     final Attributes attributes) throws SAXException {
+            @Override
+            public void startElement(final String uri, final String localName, final String qName, final Attributes attributes) {
                 if (localName.equals(element)) {
                     this.foundElement = true;
                 }
             }
 
-            public void endElement(final String uri, final String localName, final String qName) throws SAXException {
+            @Override
+            public void endElement(final String uri, final String localName, final String qName) {
                 if (localName.equals(element)) {
                     this.foundElement = false;
                 }
             }
 
-            public void characters(char[] ch, int start, int length) throws SAXException {
+            @Override
+            public void characters(char[] ch, int start, int length) {
                 if (this.foundElement) {
                     builder.append(ch, start, length);
                 }
@@ -199,13 +203,13 @@ public final class XmlUtils {
         private StringBuilder value;
 
         @Override
-        public void startDocument() throws SAXException {
-            this.attributes = new HashMap<String, Object>();
+        public void startDocument() {
+            this.attributes = new HashMap<>();
         }
 
         @Override
         public void startElement(final String namespaceURI, final String localName, final String qName,
-                                 final Attributes attributes) throws SAXException {
+                                 final Attributes attributes) {
             if ("attributes".equals(localName)) {
                 this.foundAttributes = true;
             } else if (this.foundAttributes) {
@@ -215,15 +219,14 @@ public final class XmlUtils {
         }
 
         @Override
-        public void characters(final char[] chars, final int start, final int length) throws SAXException {
+        public void characters(final char[] chars, final int start, final int length) {
             if (this.currentAttribute != null) {
                 value.append(chars, start, length);
             }
         }
 
         @Override
-        public void endElement(final String namespaceURI, final String localName, final String qName)
-                throws SAXException {
+        public void endElement(final String namespaceURI, final String localName, final String qName) {
             if ("attributes".equals(localName)) {
                 this.foundAttributes = false;
                 this.currentAttribute = null;
@@ -237,7 +240,7 @@ public final class XmlUtils {
                     if (o instanceof List) {
                         items = (List<Object>) o;
                     } else {
-                        items = new LinkedList<Object>();
+                        items = new LinkedList<>();
                         items.add(o);
                         this.attributes.put(this.currentAttribute, items);
                     }

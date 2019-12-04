@@ -203,7 +203,7 @@ public class SysPositionController {
         //Step.2 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
         List<SysPosition> pageList = sysPositionService.list(queryWrapper);
-        //导出文件名称
+        // 导出文件名称
         mv.addObject(NormalExcelConstants.FILE_NAME, "职务表列表");
         mv.addObject(NormalExcelConstants.CLASS, SysPosition.class);
         mv.addObject(NormalExcelConstants.PARAMS, new ExportParams("职务表列表数据", "导出人:Jeecg", "导出信息"));

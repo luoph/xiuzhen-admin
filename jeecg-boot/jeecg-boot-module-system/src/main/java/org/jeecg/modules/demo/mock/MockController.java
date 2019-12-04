@@ -193,9 +193,9 @@ public class MockController {
     private String readJson(String jsonSrc) {
         String json = "";
         try {
-            //File jsonFile = ResourceUtils.getFile(jsonSrc);
-            //json = FileUtils.re.readFileToString(jsonFile);
-            //换个写法，解决springboot读取jar包中文件的问题
+            // File jsonFile = ResourceUtils.getFile(jsonSrc);
+            // json = FileUtils.re.readFileToString(jsonFile);
+            // 换个写法，解决springboot读取jar包中文件的问题
             InputStream stream = getClass().getClassLoader().getResourceAsStream(jsonSrc.replace("classpath:", ""));
             json = IOUtils.toString(stream);
         } catch (IOException e) {

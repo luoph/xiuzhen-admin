@@ -80,7 +80,7 @@ public class SysMessageController extends JeecgController<SysMessage, ISysMessag
      * @return
      */
     @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         sysMessageService.removeById(id);
         return Result.ok("删除成功!");
     }
@@ -92,7 +92,7 @@ public class SysMessageController extends JeecgController<SysMessage, ISysMessag
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
 
         this.sysMessageService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
@@ -105,7 +105,7 @@ public class SysMessageController extends JeecgController<SysMessage, ISysMessag
      * @return
      */
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
         SysMessage sysMessage = sysMessageService.getById(id);
         return Result.ok(sysMessage);
     }

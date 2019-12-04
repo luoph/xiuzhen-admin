@@ -94,10 +94,9 @@ public class RedisConfig extends CachingConfigurerSupport {
         /* 默认配置，设置缓存有效期 1小时*/
         //RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1));
         /* 自定义配置test:demo 的超时时间为 5分钟*/
-        RedisCacheManager cacheManager = RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(factory)).cacheDefaults(redisCacheConfiguration)
+        return RedisCacheManager.builder(RedisCacheWriter.lockingRedisCacheWriter(factory)).cacheDefaults(redisCacheConfiguration)
                 .withInitialCacheConfigurations(singletonMap(CacheConstant.TEST_DEMO_CACHE, RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5)).disableCachingNullValues()))
                 .transactionAware().build();
-        return cacheManager;
     }
 
 }

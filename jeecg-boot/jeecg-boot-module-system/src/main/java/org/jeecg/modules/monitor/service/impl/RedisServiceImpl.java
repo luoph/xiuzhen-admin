@@ -3,7 +3,6 @@ package org.jeecg.modules.monitor.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.monitor.domain.RedisInfo;
-import org.jeecg.modules.monitor.exception.RedisConnectException;
 import org.jeecg.modules.monitor.service.RedisService;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class RedisServiceImpl implements RedisService {
      * Redis详细信息
      */
     @Override
-    public List<RedisInfo> getRedisInfo() throws RedisConnectException {
+    public List<RedisInfo> getRedisInfo() {
         Properties info = redisConnectionFactory.getConnection().info();
         List<RedisInfo> infoList = new ArrayList<>();
         RedisInfo redisInfo = null;
@@ -41,7 +40,7 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Map<String, Object> getKeysSize() throws RedisConnectException {
+    public Map<String, Object> getKeysSize() {
         Long dbSize = redisConnectionFactory.getConnection().dbSize();
         Map<String, Object> map = new HashMap<>();
         map.put("create_time", System.currentTimeMillis());
@@ -52,7 +51,7 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Map<String, Object> getMemoryInfo() throws RedisConnectException {
+    public Map<String, Object> getMemoryInfo() {
         Map<String, Object> map = null;
         Properties info = redisConnectionFactory.getConnection().info();
         for (Map.Entry<Object, Object> entry : info.entrySet()) {
@@ -63,7 +62,7 @@ public class RedisServiceImpl implements RedisService {
                 map.put("create_time", System.currentTimeMillis());
             }
         }
-        log.info("--getMemoryInfo--: " + map.toString());
+        log.info("--getMemoryInfo--: " + map);
         return map;
     }
 }

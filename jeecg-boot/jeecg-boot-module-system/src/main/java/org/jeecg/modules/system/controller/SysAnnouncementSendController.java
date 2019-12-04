@@ -53,7 +53,7 @@ public class SysAnnouncementSendController {
         Result<IPage<SysAnnouncementSend>> result = new Result<IPage<SysAnnouncementSend>>();
         QueryWrapper<SysAnnouncementSend> queryWrapper = new QueryWrapper<SysAnnouncementSend>(sysAnnouncementSend);
         Page<SysAnnouncementSend> page = new Page<SysAnnouncementSend>(pageNo, pageSize);
-        //排序逻辑 处理
+        // 排序逻辑 处理
         String column = req.getParameter("column");
         String order = req.getParameter("order");
         if (oConvertUtils.isNotEmpty(column) && oConvertUtils.isNotEmpty(order)) {

@@ -10,7 +10,6 @@ import org.jeecg.modules.message.handle.enums.SendMsgTypeEnum;
 import org.jeecg.modules.message.service.ISysMessageService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -26,12 +25,12 @@ public class SendMsgJob implements Job {
     private ISysMessageService sysMessageService;
 
     @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public void execute(JobExecutionContext jobExecutionContext) {
 
         log.info(String.format(" Jeecg-Boot 发送消息任务 SendMsgJob !  时间:" + DateUtils.getTimestamp()));
 
         // 1.读取消息中心数据，只查询未发送的和发送失败不超过次数的
-        QueryWrapper<SysMessage> queryWrapper = new QueryWrapper<SysMessage>();
+        QueryWrapper<SysMessage> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("es_send_status", SendMsgStatusEnum.WAIT.getCode())
                 .or(i -> i.eq("es_send_status", SendMsgStatusEnum.FAIL.getCode()).lt("es_send_num", 6));
         List<SysMessage> sysMessages = sysMessageService.list(queryWrapper);
@@ -50,19 +49,21 @@ public class SendMsgJob implements Job {
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }
+
             Integer sendNum = sysMessage.getEsSendNum();
-            try {
-                sendMsgHandle.SendMsg(sysMessage.getEsReceiver(), sysMessage.getEsTitle(),
-                        sysMessage.getEsContent().toString());
-                // 发送消息成功
-                sysMessage.setEsSendStatus(SendMsgStatusEnum.SUCCESS.getCode());
-            } catch (Exception e) {
-                // 发送消息出现异常
-                sysMessage.setEsSendStatus(SendMsgStatusEnum.FAIL.getCode());
+            if (sendMsgHandle != null) {
+                try {
+                    sendMsgHandle.sendMsg(sysMessage.getEsReceiver(), sysMessage.getEsTitle(), sysMessage.getEsContent());
+                    // 发送消息成功
+                    sysMessage.setEsSendStatus(SendMsgStatusEnum.SUCCESS.getCode());
+                } catch (Exception e) {
+                    // 发送消息出现异常
+                    sysMessage.setEsSendStatus(SendMsgStatusEnum.FAIL.getCode());
+                }
+                sysMessage.setEsSendNum(++sendNum);
+                // 发送结果回写到数据库
+                sysMessageService.updateById(sysMessage);
             }
-            sysMessage.setEsSendNum(++sendNum);
-            // 发送结果回写到数据库
-            sysMessageService.updateById(sysMessage);
         }
 
     }

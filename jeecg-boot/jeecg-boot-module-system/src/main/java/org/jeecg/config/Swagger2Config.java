@@ -56,9 +56,9 @@ public class Swagger2Config implements WebMvcConfigurer {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                //此包路径下的类，才生成接口文档
+                // 此包路径下的类，才生成接口文档
                 .apis(RequestHandlerSelectors.basePackage("org.jeecg.modules"))
-                //加了ApiOperation注解的类，才生成接口文档
+                // 加了ApiOperation注解的类，才生成接口文档
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build()

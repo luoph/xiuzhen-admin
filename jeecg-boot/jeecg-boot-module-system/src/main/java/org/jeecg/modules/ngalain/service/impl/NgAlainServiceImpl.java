@@ -29,15 +29,15 @@ public class NgAlainServiceImpl implements NgAlainService {
     }
 
     @Override
-    public JSONArray getJeecgMenu(String id) throws Exception {
+    public JSONArray getJeecgMenu(String id) {
         List<SysPermission> metaList = sysPermissionService.queryByUser(id);
         JSONArray jsonArray = new JSONArray();
         getPermissionJsonArray(jsonArray, metaList, null);
-        JSONArray menulist = parseNgAlain(jsonArray);
+        JSONArray menuList = parseNgAlain(jsonArray);
         JSONObject jeecgMenu = new JSONObject();
         jeecgMenu.put("text", "jeecg菜单");
         jeecgMenu.put("group", true);
-        jeecgMenu.put("children", menulist);
+        jeecgMenu.put("children", menuList);
         JSONArray jeecgMenuList = new JSONArray();
         jeecgMenuList.add(jeecgMenu);
         return jeecgMenuList;
@@ -49,7 +49,7 @@ public class NgAlainServiceImpl implements NgAlainService {
     }
 
     private JSONArray parseNgAlain(JSONArray jsonArray) {
-        JSONArray menulist = new JSONArray();
+        JSONArray menuList = new JSONArray();
         for (Object object : jsonArray) {
             JSONObject jsonObject = (JSONObject) object;
             String path = (String) jsonObject.get("path");
@@ -67,9 +67,9 @@ public class NgAlainServiceImpl implements NgAlainService {
             } else {
                 menu.put("link", path);
             }
-            menulist.add(menu);
+            menuList.add(menu);
         }
-        return menulist;
+        return menuList;
     }
 
     /**
@@ -123,7 +123,7 @@ public class NgAlainServiceImpl implements NgAlainService {
 
     private JSONObject getPermissionJsonObject(SysPermission permission) {
         JSONObject json = new JSONObject();
-        //类型(0：一级菜单 1：子菜单  2：按钮)
+        // 类型(0：一级菜单 1：子菜单  2：按钮)
         if (permission.getMenuType() == 2) {
             json.put("action", permission.getPerms());
             json.put("describe", permission.getName());
@@ -136,14 +136,14 @@ public class NgAlainServiceImpl implements NgAlainService {
                 json.put("path", permission.getUrl());
             }
 
-            //重要规则：路由name (通过URL生成路由name,路由name供前端开发，页面跳转使用)
+            // 重要规则：路由name (通过URL生成路由name,路由name供前端开发，页面跳转使用)
             json.put("name", urlToRouteName(permission.getUrl()));
 
-            //是否隐藏路由，默认都是显示的
+            // 是否隐藏路由，默认都是显示的
             if (permission.isHidden()) {
                 json.put("hidden", true);
             }
-            //聚合路由
+            // 聚合路由
             if (permission.isAlwaysShow()) {
                 json.put("alwaysShow", true);
             }
@@ -151,7 +151,7 @@ public class NgAlainServiceImpl implements NgAlainService {
             JSONObject meta = new JSONObject();
             meta.put("title", permission.getName());
             if (oConvertUtils.isEmpty(permission.getParentId())) {
-                //一级菜单跳转地址
+                // 一级菜单跳转地址
                 json.put("redirect", permission.getRedirect());
                 meta.put("icon", oConvertUtils.getString(permission.getIcon(), ""));
             } else {

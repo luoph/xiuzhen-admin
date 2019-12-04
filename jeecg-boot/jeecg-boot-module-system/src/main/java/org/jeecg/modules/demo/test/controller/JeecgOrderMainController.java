@@ -167,9 +167,9 @@ public class JeecgOrderMainController extends JeecgController<JeecgOrderMain, IJ
     public ModelAndView exportXls(HttpServletRequest request, JeecgOrderMain jeecgOrderMain) {
         // Step.1 组装查询条件
         QueryWrapper<JeecgOrderMain> queryWrapper = QueryGenerator.initQueryWrapper(jeecgOrderMain, request.getParameterMap());
-        //Step.2 AutoPoi 导出Excel
+        // Step.2 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
-        //获取当前用户
+        // 获取当前用户
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
         List<JeecgOrderMainPage> pageList = new ArrayList<JeecgOrderMainPage>();

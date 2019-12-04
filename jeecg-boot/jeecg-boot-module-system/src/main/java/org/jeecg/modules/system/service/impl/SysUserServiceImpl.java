@@ -137,7 +137,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional
     public void editUserWithRole(SysUser user, String roles) {
         this.updateById(user);
-        //先删后加
+        // 先删后加
         sysUserRoleMapper.delete(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, user.getId()));
         if (oConvertUtils.isNotEmpty(roles)) {
             String[] arr = roles.split(",");
@@ -207,12 +207,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             info.setSysOrgCode(user.getOrgCode());
         }
 
-        //多部门支持in查询
+        // 多部门支持in查询
         List<SysDepart> list = sysDepartMapper.queryUserDeparts(user.getId());
         List<String> sysMultiOrgCode = new ArrayList<String>();
         if (list == null || list.size() == 0) {
-            //当前用户无部门
-            //sysMultiOrgCode.add("0");
+            // 当前用户无部门
+            // sysMultiOrgCode.add("0");
         } else if (list.size() == 1) {
             sysMultiOrgCode.add(list.get(0).getOrgCode());
         } else {
@@ -296,8 +296,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional
     @CacheEvict(value = {CacheConstant.SYS_USERS_CACHE}, allEntries = true)
     public void editUserWithDepart(SysUser user, String departs) {
-        this.updateById(user);  //更新角色的时候已经更新了一次了，可以再跟新一次
-        //先删后加
+        // 更新角色的时候已经更新了一次了，可以再跟新一次
+        this.updateById(user);
+        // 先删后加
         sysUserDepartMapper.delete(new QueryWrapper<SysUserDepart>().lambda().eq(SysUserDepart::getUserId, user.getId()));
         if (oConvertUtils.isNotEmpty(departs)) {
             String[] arr = departs.split(",");
@@ -318,19 +319,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public Result<?> checkUserIsEffective(SysUser sysUser) {
         Result<?> result = new Result<Object>();
-        //情况1：根据用户信息查询，该用户不存在
+        // 情况1：根据用户信息查询，该用户不存在
         if (sysUser == null) {
             result.error500("该用户不存在，请注册");
             sysBaseAPI.addLog("用户登录失败，用户不存在！", CommonConstant.LOG_TYPE_1, null);
             return result;
         }
-        //情况2：根据用户信息查询，该用户已注销
+        // 情况2：根据用户信息查询，该用户已注销
         if (CommonConstant.DEL_FLAG_1.toString().equals(sysUser.getDelFlag())) {
             sysBaseAPI.addLog("用户登录失败，用户名:" + sysUser.getUsername() + "已注销！", CommonConstant.LOG_TYPE_1, null);
             result.error500("该用户已注销");
             return result;
         }
-        //情况3：根据用户信息查询，该用户已冻结
+        // 情况3：根据用户信息查询，该用户已冻结
         if (CommonConstant.USER_FREEZE.equals(sysUser.getStatus())) {
             sysBaseAPI.addLog("用户登录失败，用户名:" + sysUser.getUsername() + "已冻结！", CommonConstant.LOG_TYPE_1, null);
             result.error500("该用户已冻结");

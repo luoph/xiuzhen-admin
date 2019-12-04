@@ -99,7 +99,7 @@ public class SysPermissionDataRuleImpl extends ServiceImpl<SysPermissionDataRule
         if (dataRule != null) {
             this.removeById(dataRuleId);
             Integer count = this.baseMapper.selectCount(new LambdaQueryWrapper<SysPermissionDataRule>().eq(SysPermissionDataRule::getPermissionId, dataRule.getPermissionId()));
-            //注:同一个事务中删除后再查询是会认为数据已被删除的 若事务回滚上述删除无效
+            // 注:同一个事务中删除后再查询是会认为数据已被删除的 若事务回滚上述删除无效
             if (count == null || count == 0) {
                 SysPermission permission = sysPermissionMapper.selectById(dataRule.getPermissionId());
                 if (permission != null && permission.getRuleFlag().equals(CommonConstant.RULE_FLAG_1)) {

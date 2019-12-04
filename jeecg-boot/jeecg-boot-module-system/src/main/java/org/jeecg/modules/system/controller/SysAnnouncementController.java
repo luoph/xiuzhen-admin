@@ -68,11 +68,11 @@ public class SysAnnouncementController {
                                                         @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                                         @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                                         HttpServletRequest req) {
-        Result<IPage<SysAnnouncement>> result = new Result<IPage<SysAnnouncement>>();
+        Result<IPage<SysAnnouncement>> result = new Result<>();
         sysAnnouncement.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
-        QueryWrapper<SysAnnouncement> queryWrapper = new QueryWrapper<SysAnnouncement>(sysAnnouncement);
+        QueryWrapper<SysAnnouncement> queryWrapper = new QueryWrapper<>(sysAnnouncement);
         Page<SysAnnouncement> page = new Page<SysAnnouncement>(pageNo, pageSize);
-        //排序逻辑 处理
+        // 排序逻辑 处理
         String column = req.getParameter("column");
         String order = req.getParameter("order");
         if (oConvertUtils.isNotEmpty(column) && oConvertUtils.isNotEmpty(order)) {
@@ -100,10 +100,11 @@ public class SysAnnouncementController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result<SysAnnouncement> add(@RequestBody SysAnnouncement sysAnnouncement) {
-        Result<SysAnnouncement> result = new Result<SysAnnouncement>();
+        Result<SysAnnouncement> result = new Result<>();
         try {
             sysAnnouncement.setDelFlag(CommonConstant.DEL_FLAG_0.toString());
-            sysAnnouncement.setSendStatus(CommonSendStatus.UNPUBLISHED_STATUS_0);//未发布
+            // 未发布
+            sysAnnouncement.setSendStatus(CommonSendStatus.UNPUBLISHED_STATUS_0);
             sysAnnouncementService.saveAnnouncement(sysAnnouncement);
             result.success("添加成功！");
         } catch (Exception e) {
@@ -121,7 +122,7 @@ public class SysAnnouncementController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public Result<SysAnnouncement> eidt(@RequestBody SysAnnouncement sysAnnouncement) {
-        Result<SysAnnouncement> result = new Result<SysAnnouncement>();
+        Result<SysAnnouncement> result = new Result<>();
         SysAnnouncement sysAnnouncementEntity = sysAnnouncementService.getById(sysAnnouncement.getId());
         if (sysAnnouncementEntity == null) {
             result.error500("未找到对应实体");
@@ -143,8 +144,8 @@ public class SysAnnouncementController {
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public Result<SysAnnouncement> delete(@RequestParam(name = "id", required = true) String id) {
-        Result<SysAnnouncement> result = new Result<SysAnnouncement>();
+    public Result<SysAnnouncement> delete(@RequestParam(name = "id") String id) {
+        Result<SysAnnouncement> result = new Result<>();
         SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
         if (sysAnnouncement == null) {
             result.error500("未找到对应实体");
@@ -214,7 +215,8 @@ public class SysAnnouncementController {
         if (sysAnnouncement == null) {
             result.error500("未找到对应实体");
         } else {
-            sysAnnouncement.setSendStatus(CommonSendStatus.PUBLISHED_STATUS_1);//发布中
+            // 发布中
+            sysAnnouncement.setSendStatus(CommonSendStatus.PUBLISHED_STATUS_1);
             sysAnnouncement.setSendTime(new Date());
             String currentUserName = JwtUtil.getUserNameByToken(request);
             sysAnnouncement.setSender(currentUserName);
@@ -252,13 +254,14 @@ public class SysAnnouncementController {
      * @return
      */
     @RequestMapping(value = "/doReovkeData", method = RequestMethod.GET)
-    public Result<SysAnnouncement> doReovkeData(@RequestParam(name = "id", required = true) String id, HttpServletRequest request) {
-        Result<SysAnnouncement> result = new Result<SysAnnouncement>();
+    public Result<SysAnnouncement> doRevokeData(@RequestParam(name = "id") String id, HttpServletRequest request) {
+        Result<SysAnnouncement> result = new Result<>();
         SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
         if (sysAnnouncement == null) {
             result.error500("未找到对应实体");
         } else {
-            sysAnnouncement.setSendStatus(CommonSendStatus.REVOKE_STATUS_2);//撤销发布
+            // 撤销发布
+            sysAnnouncement.setSendStatus(CommonSendStatus.REVOKE_STATUS_2);
             sysAnnouncement.setCancelTime(new Date());
             boolean ok = sysAnnouncementService.updateById(sysAnnouncement);
             if (ok) {
@@ -324,10 +327,10 @@ public class SysAnnouncementController {
     public ModelAndView exportXls(SysAnnouncement sysAnnouncement, HttpServletRequest request) {
         // Step.1 组装查询条件
         QueryWrapper<SysAnnouncement> queryWrapper = QueryGenerator.initQueryWrapper(sysAnnouncement, request.getParameterMap());
-        //Step.2 AutoPoi 导出Excel
+        // Step.2 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
         List<SysAnnouncement> pageList = sysAnnouncementService.list(queryWrapper);
-        //导出文件名称
+        // 导出文件名称
         mv.addObject(NormalExcelConstants.FILE_NAME, "系统通告列表");
         mv.addObject(NormalExcelConstants.CLASS, SysAnnouncement.class);
         LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();

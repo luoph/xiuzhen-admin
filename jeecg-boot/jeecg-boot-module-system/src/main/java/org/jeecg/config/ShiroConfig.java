@@ -69,23 +69,40 @@ public class ShiroConfig {
         //cas验证登录
         filterChainDefinitionMap.put("/cas/client/validateLogin", "anon");
         // 配置不会被拦截的链接 顺序判断
-        filterChainDefinitionMap.put("/sys/getCheckCode", "anon"); //登录验证码接口排除
-        filterChainDefinitionMap.put("/sys/login", "anon"); //登录接口排除
-        filterChainDefinitionMap.put("/sys/mLogin", "anon"); //登录接口排除
-        filterChainDefinitionMap.put("/sys/logout", "anon"); //登出接口排除
-        filterChainDefinitionMap.put("/sys/getEncryptedString", "anon"); //获取加密串
-        filterChainDefinitionMap.put("/sys/sms", "anon");//短信验证码
-        filterChainDefinitionMap.put("/sys/phoneLogin", "anon");//手机登录
-        filterChainDefinitionMap.put("/sys/user/checkOnlyUser", "anon");//校验用户是否存在
-        filterChainDefinitionMap.put("/sys/user/register", "anon");//用户注册
-        filterChainDefinitionMap.put("/sys/user/querySysUser", "anon");//根据手机号获取用户信息
-        filterChainDefinitionMap.put("/sys/user/phoneVerification", "anon");//用户忘记密码验证手机号
-        filterChainDefinitionMap.put("/sys/user/passwordChange", "anon");//用户更改密码
-        filterChainDefinitionMap.put("/auth/2step-code", "anon");//登录验证码
-        filterChainDefinitionMap.put("/sys/common/view/**", "anon");//图片预览不限制token
-        filterChainDefinitionMap.put("/sys/common/download/**", "anon");//文件下载不限制token
-        filterChainDefinitionMap.put("/sys/common/pdf/**", "anon");//pdf预览
-        filterChainDefinitionMap.put("/generic/**", "anon");//pdf预览需要文件
+        // 登录验证码接口排除
+        filterChainDefinitionMap.put("/sys/getCheckCode", "anon");
+        // 登录接口排除
+        filterChainDefinitionMap.put("/sys/login", "anon");
+        // 登录接口排除
+        filterChainDefinitionMap.put("/sys/mLogin", "anon");
+        // 登出接口排除
+        filterChainDefinitionMap.put("/sys/logout", "anon");
+        // 获取加密串
+        filterChainDefinitionMap.put("/sys/getEncryptedString", "anon");
+        // 短信验证码
+        filterChainDefinitionMap.put("/sys/sms", "anon");
+        // 手机登录
+        filterChainDefinitionMap.put("/sys/phoneLogin", "anon");
+        // 校验用户是否存在
+        filterChainDefinitionMap.put("/sys/user/checkOnlyUser", "anon");
+        // 用户注册
+        filterChainDefinitionMap.put("/sys/user/register", "anon");
+        // 根据手机号获取用户信息
+        filterChainDefinitionMap.put("/sys/user/querySysUser", "anon");
+        // 用户忘记密码验证手机号
+        filterChainDefinitionMap.put("/sys/user/phoneVerification", "anon");
+        // 用户更改密码
+        filterChainDefinitionMap.put("/sys/user/passwordChange", "anon");
+        // 登录验证码
+        filterChainDefinitionMap.put("/auth/2step-code", "anon");
+        // 图片预览不限制token
+        filterChainDefinitionMap.put("/sys/common/view/**", "anon");
+        // 文件下载不限制token
+        filterChainDefinitionMap.put("/sys/common/download/**", "anon");
+        // pdf预览
+        filterChainDefinitionMap.put("/sys/common/pdf/**", "anon");
+        // pdf预览需要文件
+        filterChainDefinitionMap.put("/generic/**", "anon");
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/doc.html", "anon");
         filterChainDefinitionMap.put("/**/*.js", "anon");
@@ -108,19 +125,21 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/webjars/**", "anon");
         filterChainDefinitionMap.put("/v2/**", "anon");
 
-        //性能监控
+        // 性能监控
         filterChainDefinitionMap.put("/actuator/metrics/**", "anon");
         filterChainDefinitionMap.put("/actuator/httptrace/**", "anon");
         filterChainDefinitionMap.put("/actuator/redis/**", "anon");
 
-        //测试示例
-        filterChainDefinitionMap.put("/test/jeecgDemo/html", "anon"); //模板页面
-        filterChainDefinitionMap.put("/test/jeecgDemo/redis/**", "anon"); //redis测试
+        // 测试示例
+        // 模板页面
+        filterChainDefinitionMap.put("/test/jeecgDemo/html", "anon");
+        // redis测试
+        filterChainDefinitionMap.put("/test/jeecgDemo/redis/**", "anon");
 
-        //排除Online请求
+        // 排除Online请求
         filterChainDefinitionMap.put("/auto/cgform/**", "anon");
 
-        //websocket排除
+        // websocket排除
         filterChainDefinitionMap.put("/websocket/**", "anon");
 
         // 添加自己的过滤器并且取名为jwt
@@ -152,7 +171,7 @@ public class ShiroConfig {
         defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
         subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
         securityManager.setSubjectDAO(subjectDAO);
-        //自定义缓存实现,使用redis
+        // 自定义缓存实现,使用redis
         securityManager.setCacheManager(redisCacheManager());
         return securityManager;
     }
@@ -192,9 +211,9 @@ public class ShiroConfig {
         log.info("===============(1)创建缓存管理器RedisCacheManager");
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
-        //redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)
+        // redis中针对不同用户缓存(此处的id需要对应user实体中的id字段,用于唯一标识)
         redisCacheManager.setPrincipalIdFieldName("id");
-        //用户权限信息缓存时间
+        // 用户权限信息缓存时间
         redisCacheManager.setExpire(200000);
         return redisCacheManager;
     }

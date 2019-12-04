@@ -137,7 +137,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
             if (parentList == null || parentList.size() == 0) {
                 // 直接生成当前的部门编码并返回
                 newOrgCode = YouBianCodeUtil.getSubYouBianCode(parentCode, null);
-            } else { //处理有同级部门的情况
+            } else { // 处理有同级部门的情况
                 // 获取同级部门的编码,利用工具类
                 String subCode = parentList.get(0).getOrgCode();
                 // 返回生成的当前部门编码
@@ -226,8 +226,8 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
         List<String> idList = new ArrayList<>();
         idList.add(id);
         this.checkChildrenExists(id, idList);
-        //清空部门树内存
-        //FindsDepartsChildrenUtil.clearDepartIdModel();
+        // 清空部门树内存
+        // FindsDepartsChildrenUtil.clearDepartIdModel();
         boolean ok = this.removeByIds(idList);
         return ok;
     }

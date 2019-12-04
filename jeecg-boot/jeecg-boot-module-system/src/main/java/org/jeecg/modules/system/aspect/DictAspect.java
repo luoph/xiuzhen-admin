@@ -87,7 +87,7 @@ public class DictAspect {
                     ObjectMapper mapper = new ObjectMapper();
                     String json = "{}";
                     try {
-                        //解决@JsonFormat注解解析不了的问题详见SysAnnouncement类的@JsonFormat
+                        // 解决@JsonFormat注解解析不了的问题详见SysAnnouncement类的@JsonFormat
                         json = mapper.writeValueAsString(record);
                     } catch (JsonProcessingException e) {
                         log.error("json解析失败" + e.getMessage(), e);
@@ -96,14 +96,14 @@ public class DictAspect {
                     //update-begin--Author:scott -- Date:20190603 ----for：解决继承实体字段无法翻译问题------
                     //for (Field field : record.getClass().getDeclaredFields()) {
                     for (Field field : oConvertUtils.getAllFields(record)) {
-                        //update-end--Author:scott  -- Date:20190603 ----for：解决继承实体字段无法翻译问题------
+                        // update-end--Author:scott  -- Date:20190603 ----for：解决继承实体字段无法翻译问题------
                         if (field.getAnnotation(Dict.class) != null) {
                             String code = field.getAnnotation(Dict.class).dicCode();
                             String text = field.getAnnotation(Dict.class).dicText();
                             String table = field.getAnnotation(Dict.class).dictTable();
                             String key = String.valueOf(item.get(field.getName()));
 
-                            //翻译字典值对应的txt
+                            // 翻译字典值对应的txt
                             String textValue = translateDictValue(code, text, table, key);
 
                             log.debug(" 字典Val : " + textValue);

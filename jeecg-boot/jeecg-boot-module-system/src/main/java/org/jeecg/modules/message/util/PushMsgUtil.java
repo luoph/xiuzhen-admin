@@ -39,9 +39,9 @@ public class PushMsgUtil {
             SysMessageTemplate sysSmsTemplate = sysSmsTemplates.get(0);
             sysMessage.setEsType(msgType);
             sysMessage.setEsReceiver(sentTo);
-            //模板标题
+            // 模板标题
             String title = sysSmsTemplate.getTemplateName();
-            //模板内容
+            // 模板内容
             String content = sysSmsTemplate.getTemplateContent();
             if (map != null) {
                 for (Map.Entry<String, String> entry : map.entrySet()) {
@@ -56,9 +56,7 @@ public class PushMsgUtil {
             sysMessage.setEsSendTime(new Date());
             sysMessage.setEsSendStatus(SendMsgStatusEnum.WAIT.getCode());
             sysMessage.setEsSendNum(0);
-            if (sysMessageService.save(sysMessage)) {
-                return true;
-            }
+            return sysMessageService.save(sysMessage);
         }
         return false;
     }

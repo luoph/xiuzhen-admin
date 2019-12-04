@@ -50,7 +50,7 @@ public class SysLogController {
         Result<IPage<SysLog>> result = new Result<>();
         QueryWrapper<SysLog> queryWrapper = QueryGenerator.initQueryWrapper(syslog, req.getParameterMap());
         Page<SysLog> page = new Page<>(pageNo, pageSize);
-        //日志关键词
+        // 日志关键词
         String keyWord = req.getParameter("keyWord");
         if (oConvertUtils.isNotEmpty(keyWord)) {
             queryWrapper.like("log_content", keyWord);
@@ -58,7 +58,7 @@ public class SysLogController {
         //TODO 过滤逻辑处理
         //TODO begin、end逻辑处理
         //TODO 一个强大的功能，前端传一个字段字符串，后台只返回这些字符串对应的字段
-        //创建时间/创建人的赋值
+        // 创建时间/创建人的赋值
         IPage<SysLog> pageList = sysLogService.page(page, queryWrapper);
         log.info("查询当前页：" + pageList.getCurrent());
         log.info("查询当前页数量：" + pageList.getSize());

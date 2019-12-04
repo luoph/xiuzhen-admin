@@ -63,7 +63,7 @@ public class QuartzJobController {
     public Result<?> queryPageList(QuartzJob quartzJob, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         QueryWrapper<QuartzJob> queryWrapper = QueryGenerator.initQueryWrapper(quartzJob, req.getParameterMap());
-        Page<QuartzJob> page = new Page<QuartzJob>(pageNo, pageSize);
+        Page<QuartzJob> page = new Page<>(pageNo, pageSize);
         IPage<QuartzJob> pageList = quartzJobService.page(page, queryWrapper);
         return Result.ok(pageList);
 
@@ -109,7 +109,7 @@ public class QuartzJobController {
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         QuartzJob quartzJob = quartzJobService.getById(id);
         if (quartzJob == null) {
             return Result.error("未找到对应实体");
@@ -126,7 +126,7 @@ public class QuartzJobController {
      * @return
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
-    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         if (ids == null || "".equals(ids.trim())) {
             return Result.error("参数不识别！");
         }
@@ -140,12 +140,12 @@ public class QuartzJobController {
     /**
      * 暂停定时任务
      *
-     * @param job
+     * @param jobClassName
      * @return
      */
     @GetMapping(value = "/pause")
     @ApiOperation(value = "暂停定时任务")
-    public Result<Object> pauseJob(@RequestParam(name = "jobClassName", required = true) String jobClassName) {
+    public Result<Object> pauseJob(@RequestParam(name = "jobClassName") String jobClassName) {
         QuartzJob job = null;
         try {
             job = quartzJobService.getOne(new LambdaQueryWrapper<QuartzJob>().eq(QuartzJob::getJobClassName, jobClassName));
@@ -164,12 +164,12 @@ public class QuartzJobController {
     /**
      * 启动定时任务
      *
-     * @param job
+     * @param jobClassName
      * @return
      */
     @GetMapping(value = "/resume")
     @ApiOperation(value = "恢复定时任务")
-    public Result<Object> resumeJob(@RequestParam(name = "jobClassName", required = true) String jobClassName) {
+    public Result<Object> resumeJob(@RequestParam(name = "jobClassName") String jobClassName) {
         QuartzJob job = quartzJobService.getOne(new LambdaQueryWrapper<QuartzJob>().eq(QuartzJob::getJobClassName, jobClassName));
         if (job == null) {
             return Result.error("定时任务不存在！");
@@ -186,7 +186,7 @@ public class QuartzJobController {
      * @return
      */
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
-    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
         QuartzJob quartzJob = quartzJobService.getById(id);
         return Result.ok(quartzJob);
     }
@@ -195,7 +195,7 @@ public class QuartzJobController {
      * 导出excel
      *
      * @param request
-     * @param response
+     * @param quartzJob
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, QuartzJob quartzJob) {
@@ -224,11 +224,13 @@ public class QuartzJobController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(1);
             params.setNeedSave(true);
+
             try {
                 List<QuartzJob> listQuartzJobs = ExcelImportUtil.importExcel(file.getInputStream(), QuartzJob.class, params);
                 for (QuartzJob quartzJobExcel : listQuartzJobs) {

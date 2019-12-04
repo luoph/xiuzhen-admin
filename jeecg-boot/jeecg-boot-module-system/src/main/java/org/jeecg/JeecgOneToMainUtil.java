@@ -50,7 +50,7 @@ public class JeecgOneToMainUtil {
         po2.setEntityName("TestOrderTicket");            //实体名
         po2.setEntityPackage("test2");                //包名
         po2.setFtlDescription("产品明细");            //描述
-        //子表外键参数配置
+        // 子表外键参数配置
         /*说明:
          * a) 子表引用主表主键ID作为外键，外键字段必须以_ID结尾;
          * b) 主表和子表的外键字段名字，必须相同（除主键ID外）;
@@ -60,7 +60,7 @@ public class JeecgOneToMainUtil {
         subTables.add(po2);
         mainTable.setSubTables(subTables);
 
-        //第三步：一对多(父子表)数据模型,代码生成
+        // 第三步：一对多(父子表)数据模型,代码生成
         try {
             new CodeGenerateOneToMany(mainTable, subTables).generateCodeFile();
         } catch (Exception e) {
