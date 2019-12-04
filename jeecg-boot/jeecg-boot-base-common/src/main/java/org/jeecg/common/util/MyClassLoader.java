@@ -36,7 +36,7 @@ public class MyClassLoader extends ClassLoader {
         String clsName = cls.getName() + ".class";
         // 获得传入参数所在的包
         Package pack = cls.getPackage();
-        String path = "";
+        StringBuilder path = new StringBuilder();
         // 如果不是匿名包，将包名转化为路径
         if (pack != null) {
             String packName = pack.getName();
@@ -48,16 +48,16 @@ public class MyClassLoader extends ClassLoader {
             clsName = clsName.substring(packName.length() + 1);
             // 判定包名是否是简单包名，如果是，则直接将包名转换为路径，
             if (!packName.contains(".")) {
-                path = packName + "/";
+                path = new StringBuilder(packName + "/");
             } else {// 否则按照包名的组成部分，将包名转换为路径
                 int start = 0, end = 0;
                 end = packName.indexOf(".");
                 while (end != -1) {
-                    path = path + packName.substring(start, end) + "/";
+                    path.append(packName, start, end).append("/");
                     start = end + 1;
                     end = packName.indexOf(".", start);
                 }
-                path = path + packName.substring(start) + "/";
+                path.append(packName.substring(start)).append("/");
             }
         }
         // 调用ClassLoader的getResource方法，传入包含路径信息的类文件名

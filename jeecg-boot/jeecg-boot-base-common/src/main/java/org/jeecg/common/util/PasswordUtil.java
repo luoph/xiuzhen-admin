@@ -19,7 +19,7 @@ public class PasswordUtil {
      * 定义使用的算法为:PBEWITHMD5andDES算法
      */
     public static final String ALGORITHM = "PBEWithMD5AndDES";//加密算法
-    public static final String Salt = "63293188";//密钥
+    public static final String SALT = "63293188";//密钥
 
     /**
      * 定义迭代次数为1000次
@@ -40,7 +40,7 @@ public class PasswordUtil {
 
     public static byte[] getStaticSalt() {
         // 产出盐
-        return Salt.getBytes();
+        return SALT.getBytes();
     }
 
     /**
@@ -148,7 +148,7 @@ public class PasswordUtil {
      * @return
      */
     public static byte[] hexStringToBytes(String hexString) {
-        if (hexString == null || hexString.equals("")) {
+        if (hexString == null || "".equals(hexString)) {
             return null;
         }
         hexString = hexString.toUpperCase();

@@ -5,6 +5,7 @@ import org.apache.shiro.codec.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 
 /**
  * AES 加密
@@ -108,10 +109,10 @@ public class AesEncryptUtil {
     /**
      * 测试
      */
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
 
         String test1 = "sa";
-        String test = new String(test1.getBytes(), "UTF-8");
+        String test = new String(test1.getBytes(), StandardCharsets.UTF_8);
         String data = null;
         String key = KEY;
         String iv = IV;

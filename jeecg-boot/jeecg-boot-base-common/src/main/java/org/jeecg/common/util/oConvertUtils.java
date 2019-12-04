@@ -46,7 +46,7 @@ public class oConvertUtils {
         return code2code(strIn, sourceCode, targetCode);
     }
 
-    public static String strToUTF(String strIn, String sourceCode, String targetCode) {
+    public static String strToUtf(String strIn, String sourceCode, String targetCode) {
         strIn = "";
         try {
             strIn = new String(strIn.getBytes("ISO-8859-1"), "GBK");
@@ -371,7 +371,7 @@ public class oConvertUtils {
 
     }
 
-    public static boolean isInnerIP(String ipAddress) {
+    public static boolean isInnerIp(String ipAddress) {
         boolean isInnerIp = false;
         long ipNum = getIpNum(ipAddress);
         /**
@@ -383,7 +383,7 @@ public class oConvertUtils {
         long bEnd = getIpNum("172.31.255.255");
         long cBegin = getIpNum("192.168.0.0");
         long cEnd = getIpNum("192.168.255.255");
-        isInnerIp = isInner(ipNum, aBegin, aEnd) || isInner(ipNum, bBegin, bEnd) || isInner(ipNum, cBegin, cEnd) || ipAddress.equals("127.0.0.1");
+        isInnerIp = isInner(ipNum, aBegin, aEnd) || isInner(ipNum, bBegin, bEnd) || isInner(ipNum, cBegin, cEnd) || "127.0.0.1".equals(ipAddress);
         return isInnerIp;
     }
 
@@ -422,7 +422,7 @@ public class oConvertUtils {
             //update-end--Author:zhoujf  Date:20180503 for：TASK #2500 【代码生成器】代码生成器开发一通用模板生成功能
         }
         // 用下划线将原始字符串分割
-        String camels[] = name.split("_");
+        String[] camels = name.split("_");
         for (String camel : camels) {
             // 跳过原始字符串中开头、结尾的下换线或双重下划线
             if (camel.isEmpty()) {
@@ -484,7 +484,7 @@ public class oConvertUtils {
             return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
         }
         // 用下划线将原始字符串分割
-        String camels[] = name.split("_");
+        String[] camels = name.split("_");
         for (String camel : camels) {
             // 跳过原始字符串中开头、结尾的下换线或双重下划线
             if (camel.isEmpty()) {
