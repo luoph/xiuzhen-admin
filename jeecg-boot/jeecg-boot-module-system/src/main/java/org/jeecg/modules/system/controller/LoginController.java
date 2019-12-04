@@ -54,7 +54,7 @@ public class LoginController {
     @ApiOperation("登录接口")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result<JSONObject> login(@RequestBody SysLoginModel sysLoginModel) {
-        Result<JSONObject> result = new Result<JSONObject>();
+        Result<JSONObject> result = new Result<>();
         String username = sysLoginModel.getUsername();
         String password = sysLoginModel.getPassword();
         //update-begin--Author:scott  Date:20190805 for：暂时注释掉密码加密逻辑，有点问题
@@ -168,7 +168,7 @@ public class LoginController {
      */
     @GetMapping("visitInfo")
     public Result<List<Map<String, Object>>> visitInfo() {
-        Result<List<Map<String, Object>>> result = new Result<List<Map<String, Object>>>();
+        Result<List<Map<String, Object>>> result = new Result<>();
         Calendar calendar = new GregorianCalendar();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
