@@ -12,5 +12,6 @@ public interface DataSourceKey {
      * 多数据源key : 默认数据源
      **/
     String DEFAULT_DATA_SOURCE_KEY = "dataSourceDefault";
+    String SERVER_DATA_SOURCE_KEY = "dataSourceServer:";
 
 }
