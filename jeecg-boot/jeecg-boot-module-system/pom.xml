@@ -16,6 +16,13 @@
             <groupId>org.jeecgframework.boot</groupId>
             <artifactId>jeecg-boot-base-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.youai</groupId>
+            <artifactId>commons</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -32,7 +39,8 @@
                 <artifactId>mybatis-plus-generator-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
-                    <configurationFile>${project.basedir}/src/main/resources/generator/mp-code-generator-config.yaml</configurationFile>
+                    <configurationFile>${project.basedir}/src/main/resources/generator/mp-code-generator-config.yaml
+                    </configurationFile>
                 </configuration>
             </plugin>
         </plugins>
