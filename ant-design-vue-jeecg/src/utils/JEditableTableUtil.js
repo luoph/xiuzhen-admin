@@ -9,17 +9,20 @@ const FormTypes = {
   upload: 'upload',
   file: 'file',
   image: 'image',
-  popup:'popup',
-  list_multi:"list_multi",
-  sel_search:"sel_search",
-  radio:'radio',
-  checkbox_meta:"checkbox_meta",
+  popup: 'popup',
+  list_multi: "list_multi",
+  sel_search: "sel_search",
+  radio: 'radio',
+  checkbox_meta: "checkbox_meta",
 
   slot: 'slot',
   hidden: 'hidden'
 }
 const VALIDATE_NO_PASSED = Symbol()
-export { FormTypes, VALIDATE_NO_PASSED }
+export {
+  FormTypes,
+  VALIDATE_NO_PASSED
+}
 
 /**
  * 获取指定的 $refs 对象
@@ -59,14 +62,20 @@ export function validateFormAndTables(form, cases) {
   return new Promise((resolve, reject) => {
     // 验证主表表单
     form.validateFields((err, values) => {
-      err ? reject({ error: VALIDATE_NO_PASSED }) : resolve(values)
+      err ? reject({
+        error: VALIDATE_NO_PASSED
+      }) : resolve(values)
     })
   }).then(values => {
-    Object.assign(options, { formValue: values })
+    Object.assign(options, {
+      formValue: values
+    })
     // 验证所有子表的表单
     return validateTables(cases)
   }).then(all => {
-    Object.assign(options, { tablesValue: all })
+    Object.assign(options, {
+      tablesValue: all
+    })
     return Promise.resolve(options)
   }).catch(error => {
     return Promise.reject(error)
@@ -93,13 +102,16 @@ export function validateTables(cases) {
         // 判断校验是否全部完成，完成返回成功，否则继续进行下一步校验
         if (++index === cases.length) {
           resolve(tables)
-        } else (
+        } else(
           next()
         )
       }, error => {
         // 出现未验证通过的表单，不再进行下一步校验，直接返回失败并跳转到该表格
         if (error === VALIDATE_NO_PASSED) {
-          reject({ error: VALIDATE_NO_PASSED, index })
+          reject({
+            error: VALIDATE_NO_PASSED,
+            index
+          })
         }
         reject(error)
       })

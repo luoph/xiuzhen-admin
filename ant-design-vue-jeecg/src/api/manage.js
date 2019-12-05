@@ -1,4 +1,6 @@
-import { axios } from '@/utils/request'
+import {
+  axios
+} from '@/utils/request'
 
 const api = {
   user: '/api/user',
@@ -11,34 +13,34 @@ const api = {
 export default api
 
 //post
-export function postAction(url,parameter) {
+export function postAction(url, parameter) {
   return axios({
     url: url,
-    method:'post' ,
+    method: 'post',
     data: parameter
   })
 }
 
 //post method= {post | put}
-export function httpAction(url,parameter,method) {
+export function httpAction(url, parameter, method) {
   return axios({
     url: url,
-    method:method ,
+    method: method,
     data: parameter
   })
 }
 
 //put
-export function putAction(url,parameter) {
+export function putAction(url, parameter) {
   return axios({
     url: url,
-    method:'put',
+    method: 'put',
     data: parameter
   })
 }
 
 //get
-export function getAction(url,parameter) {
+export function getAction(url, parameter) {
   return axios({
     url: url,
     method: 'get',
@@ -47,7 +49,7 @@ export function getAction(url,parameter) {
 }
 
 //deleteAction
-export function deleteAction(url,parameter) {
+export function deleteAction(url, parameter) {
   return axios({
     url: url,
     method: 'delete',
@@ -103,12 +105,11 @@ export function saveService(parameter) {
  * @param parameter
  * @returns {*}
  */
-export function downFile(url,parameter){
+export function downFile(url, parameter) {
   return axios({
     url: url,
     params: parameter,
-    method:'get' ,
+    method: 'get',
     responseType: 'blob'
   })
 }
-
