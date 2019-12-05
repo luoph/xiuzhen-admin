@@ -13,16 +13,10 @@
       </span>
       <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
         <a-menu-item key="0">
-          <router-link :to="{ name: 'account-center' }">
-            <a-icon type="user" />
-            <span>个人中心</span>
-          </router-link>
+          <router-link :to="{ name: 'account-center' }"> <a-icon type="user" /> <span>个人中心</span> </router-link>
         </a-menu-item>
         <a-menu-item key="1">
-          <router-link :to="{ name: 'account-settings-base' }">
-            <a-icon type="setting" />
-            <span>账户设置</span>
-          </router-link>
+          <router-link :to="{ name: 'account-settings-base' }"> <a-icon type="setting" /> <span>账户设置</span> </router-link>
         </a-menu-item>
         <a-menu-item key="3" @click="systemSetting">
           <a-icon type="tool" />

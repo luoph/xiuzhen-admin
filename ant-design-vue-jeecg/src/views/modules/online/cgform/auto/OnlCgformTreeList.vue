@@ -3,48 +3,14 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button v-if="buttonSwitch.add" @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button
-        v-if="buttonSwitch.import"
-        @click="handleImportXls"
-        type="primary"
-        icon="upload"
-        style="margin-left:8px"
-      >导入</a-button>
-      <a-button
-        v-if="buttonSwitch.export"
-        @click="handleExportXls"
-        type="primary"
-        icon="download"
-        style="margin-left:8px"
-      >导出</a-button>
+      <a-button v-if="buttonSwitch.import" @click="handleImportXls" type="primary" icon="upload" style="margin-left:8px" >导入</a-button>
+      <a-button v-if="buttonSwitch.export" @click="handleExportXls" type="primary" icon="download" style="margin-left:8px" >导出</a-button>
       <template v-if="cgButtonList && cgButtonList.length>0" v-for="(item,index) in cgButtonList">
-        <a-button
-          v-if=" item.optType=='js' "
-          :key=" 'cgbtn'+index "
-          @click="cgButtonJsHandler(item.buttonCode)"
-          type="primary"
-          :icon="item.buttonIcon"
-          style="margin-left:8px"
-        >{{ item.buttonName }}</a-button>
-        <a-button
-          v-else-if=" item.optType=='action' "
-          :key=" 'cgbtn'+index "
-          @click="cgButtonActionHandler(item.buttonCode)"
-          type="primary"
-          :icon="item.buttonIcon"
-          style="margin-left:8px"
-        >{{ item.buttonName }}</a-button>
+        <a-button v-if=" item.optType=='js' " :key=" 'cgbtn'+index " @click="cgButtonJsHandler(item.buttonCode)" type="primary" :icon="item.buttonIcon" style="margin-left:8px" >{{ item.buttonName }}</a-button>
+        <a-button v-else-if=" item.optType=='action' " :key=" 'cgbtn'+index " @click="cgButtonActionHandler(item.buttonCode)" type="primary" :icon="item.buttonIcon" style="margin-left:8px" >{{ item.buttonName }}</a-button>
       </template>
 
-      <a-button
-        v-if="buttonSwitch.batch_delete"
-        @click="handleDelBatch"
-        style="margin-left:8px"
-        v-show="selectedRowKeys.length > 0"
-        ghost
-        type="primary"
-        icon="delete"
-      >批量删除</a-button>
+      <a-button v-if="buttonSwitch.batch_delete" @click="handleDelBatch" style="margin-left:8px" v-show="selectedRowKeys.length > 0" ghost type="primary" icon="delete" >批量删除</a-button>
     </div>
 
     <div>
@@ -69,13 +35,9 @@
         style="min-height: 300px"
         :expandedRowKeys="expandedRowKeys"
       >
-        <template slot="dateSlot" slot-scope="text">
-          <span>{{ getDateNoTime(text) }}</span>
-        </template>
+        <template slot="dateSlot" slot-scope="text"> <span>{{ getDateNoTime(text) }}</span> </template>
 
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <template slot="htmlSlot" slot-scope="text"> <div v-html="text"></div> </template>
 
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
@@ -90,40 +52,22 @@
 
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
-          <a-button
-            v-else
-            :ghost="true"
-            type="primary"
-            icon="download"
-            size="small"
-            @click="downloadRowFile(text)"
-          >下载</a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadRowFile(text)" >下载</a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <template v-if="showOptButton('update',record)">
-            <a @click="handleEdit(record)">编辑</a>
-            <a-divider type="vertical" />
+            <a @click="handleEdit(record)">编辑</a> <a-divider type="vertical" />
           </template>
 
           <a-dropdown>
-            <a class="ant-dropdown-link">
-              更多
-              <a-icon type="down" />
-            </a>
+            <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
             <a-menu slot="overlay">
-              <a-menu-item>
-                <a @click="handleDetail(record)">详情</a>
-              </a-menu-item>
+              <a-menu-item> <a @click="handleDetail(record)">详情</a> </a-menu-item>
 
-              <a-menu-item v-if="showSubmitFlowButton(record)">
-                <a @click="startProcess(record)">提交流程</a>
-              </a-menu-item>
+              <a-menu-item v-if="showSubmitFlowButton(record)"> <a @click="startProcess(record)">提交流程</a> </a-menu-item>
 
-              <template v-if="showViewFlowButton(record)">
-                <a-menu-item @click="handlePreviewPic(record)">审批进度</a-menu-item>
-              </template>
-
+              <template v-if="showViewFlowButton(record)"> <a-menu-item @click="handlePreviewPic(record)">审批进度</a-menu-item> </template>
               <a-menu-item v-if="showOptButton('delete',record)">
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDeleteOne(record)">
                   <a>删除</a>

@@ -119,12 +119,7 @@
               </template>
             </a-table>
 
-            <a-button
-              style="width: 100%; margin-top: 16px; margin-bottom: 8px"
-              type="dashed"
-              icon="plus"
-              @click="newRow"
-            >新增成员</a-button>
+            <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newRow" >新增成员</a-button>
           </a-tab-pane>
           <a-tab-pane tab="Tab 2" key="2" forceRender>Content of Tab Pane 2</a-tab-pane>
           <a-tab-pane tab="Tab 3" key="3">Content of Tab Pane 3</a-tab-pane>

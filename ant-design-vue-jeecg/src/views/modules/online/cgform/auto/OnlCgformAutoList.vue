@@ -47,12 +47,7 @@
           <a-col :md="6" :sm="8">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchByquery" icon="search">查询</a-button>
-              <a-button
-                type="primary"
-                @click="searchReset"
-                icon="reload"
-                style="margin-left: 8px"
-              >重置</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px" >重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
@@ -66,20 +61,8 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button v-if="buttonSwitch.add" @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button
-        v-if="buttonSwitch.import"
-        @click="handleImportXls"
-        type="primary"
-        icon="upload"
-        style="margin-left:8px"
-      >导入</a-button>
-      <a-button
-        v-if="buttonSwitch.export"
-        @click="handleExportXls"
-        type="primary"
-        icon="download"
-        style="margin-left:8px"
-      >导出</a-button>
+      <a-button v-if="buttonSwitch.import" @click="handleImportXls" type="primary" icon="upload" style="margin-left:8px" >导入</a-button>
+      <a-button v-if="buttonSwitch.export" @click="handleExportXls" type="primary" icon="download" style="margin-left:8px" >导出</a-button>
       <template v-if="cgButtonList && cgButtonList.length>0" v-for="(item,index) in cgButtonList">
         <a-button
           v-if=" item.optType=='js' "
@@ -132,35 +115,18 @@
         :scroll="table.scroll"
         style="min-height: 300px"
       >
-        <template slot="dateSlot" slot-scope="text">
-          <span>{{ getFormatDate(text) }}</span>
-        </template>
+        <template slot="dateSlot" slot-scope="text"> <span>{{ getFormatDate(text) }}</span> </template>
 
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
+        <template slot="htmlSlot" slot-scope="text"> <div v-html="text"></div> </template>
 
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img
-            v-else
-            :src="getImgView(text)"
-            height="25px"
-            alt="图片不存在"
-            style="max-width:80px;font-size: 12px;font-style: italic;"
-          />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
         </template>
 
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
-          <a-button
-            v-else
-            :ghost="true"
-            type="primary"
-            icon="download"
-            size="small"
-            @click="downloadRowFile(text)"
-          >下载</a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadRowFile(text)" >下载</a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
@@ -168,23 +134,14 @@
             <template
               v-if="record.bpm_status == '1'||record.bpm_status == ''|| record.bpm_status == null"
             >
-              <template v-if="buttonSwitch.update">
-                <a @click="handleEdit(record)">编辑</a>
-                <a-divider type="vertical" />
-              </template>
+              <template v-if="buttonSwitch.update"> <a @click="handleEdit(record)">编辑</a> <a-divider type="vertical" /> </template>
             </template>
           </template>
           <template v-else>
-            <template v-if="buttonSwitch.update">
-              <a @click="handleEdit(record)">编辑</a>
-              <a-divider type="vertical" />
-            </template>
+            <template v-if="buttonSwitch.update"> <a @click="handleEdit(record)">编辑</a> <a-divider type="vertical" /> </template>
           </template>
           <a-dropdown>
-            <a class="ant-dropdown-link">
-              更多
-              <a-icon type="down" />
-            </a>
+            <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a href="javascript:;" @click="handleDetail(record)">详情</a>

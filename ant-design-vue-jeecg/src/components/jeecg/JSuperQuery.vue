@@ -85,12 +85,7 @@
                       :destFields="item.dictCode"
                     ></j-popup>
                   </template>
-                  <j-dict-select-tag
-                    v-else
-                    v-model="item.val"
-                    :dictCode="item.dictCode"
-                    placeholder="请选择"
-                  />
+                  <j-dict-select-tag v-else v-model="item.val" :dictCode="item.dictCode" placeholder="请选择" />
                 </template>
                 <j-select-multi-user
                   v-else-if="item.type === 'select-user'"

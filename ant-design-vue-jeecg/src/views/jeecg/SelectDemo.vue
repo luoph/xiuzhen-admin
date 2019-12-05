@@ -200,11 +200,7 @@
                 <div style="width: 100%;height:20px;padding-right:32px;">
                   <div style="float: left;">{{ modal.title }}</div>
                   <div style="float: right;">
-                    <a-button
-                      icon="fullscreen"
-                      style="width:56px;height:100%;border:0"
-                      @click="handleClickToggleFullScreen"
-                    />
+                    <a-button icon="fullscreen" style="width:56px;height:100%;border:0" @click="handleClickToggleFullScreen" />
                   </div>
                 </div>
               </template>

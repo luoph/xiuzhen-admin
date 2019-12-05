@@ -171,11 +171,7 @@
             style="margin-left:10px;width: 80%"
           >
             <a-icon slot="suffixIcon" type="gold" />
-            <a-select-option
-              v-for="d in departList"
-              :key="d.id"
-              :value="d.orgCode"
-            >{{ d.departName }}</a-select-option>
+            <a-select-option v-for="d in departList" :key="d.id" :value="d.orgCode" >{{ d.departName }}</a-select-option>
           </a-select>
         </a-form-item>
       </a-form>

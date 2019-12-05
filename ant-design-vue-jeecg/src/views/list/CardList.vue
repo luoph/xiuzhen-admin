@@ -3,9 +3,7 @@
     <a-list :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}" :dataSource="dataSource">
       <a-list-item slot="renderItem" slot-scope="item, index">
         <template v-if="item === null">
-          <a-button class="new-btn" type="dashed">
-            <a-icon type="plus" />新增产品
-          </a-button>
+          <a-button class="new-btn" type="dashed"> <a-icon type="plus" />新增产品 </a-button>
         </template>
         <template v-else>
           <a-card :hoverable="true">

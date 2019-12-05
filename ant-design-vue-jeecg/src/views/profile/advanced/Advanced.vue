@@ -28,9 +28,7 @@
       <a-button-group style="margin-right: 4px;">
         <a-button>操作</a-button>
         <a-button>操作</a-button>
-        <a-button>
-          <a-icon type="ellipsis" />
-        </a-button>
+        <a-button> <a-icon type="ellipsis" /> </a-button>
       </a-button-group>
       <a-button type="primary">主操作</a-button>
     </template>
@@ -83,9 +81,7 @@
     </a-card>
 
     <a-card style="margin-top: 24px" :bordered="false" title="用户近半年来电记录">
-      <div class="no-data">
-        <a-icon type="frown-o" />暂无数据
-      </div>
+      <div class="no-data"> <a-icon type="frown-o" />暂无数据 </div>
     </a-card>
 
     <!-- 操作 -->

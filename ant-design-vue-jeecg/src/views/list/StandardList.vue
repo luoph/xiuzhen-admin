@@ -43,17 +43,10 @@
           <div slot="actions">
             <a-dropdown>
               <a-menu slot="overlay">
-                <a-menu-item>
-                  <a>编辑</a>
-                </a-menu-item>
-                <a-menu-item>
-                  <a>删除</a>
-                </a-menu-item>
+                <a-menu-item> <a>编辑</a> </a-menu-item>
+                <a-menu-item> <a>删除</a> </a-menu-item>
               </a-menu>
-              <a>
-                更多
-                <a-icon type="down" />
-              </a>
+              <a> 更多 <a-icon type="down" /> </a>
             </a-dropdown>
           </div>
           <div class="list-content">

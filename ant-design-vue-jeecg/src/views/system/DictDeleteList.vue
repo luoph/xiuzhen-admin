@@ -19,13 +19,9 @@
       :pagination="false"
     >
       <span slot="action" slot-scope="text, record">
-        <a @click="handleBack(record.id)">
-          <a-icon type="redo" />字典取回
-        </a>
+        <a @click="handleBack(record.id)"> <a-icon type="redo" />字典取回 </a>
         <a-divider type="vertical" />
-        <a @click="handleDelete(record.id)">
-          <a-icon type="scissor" />彻底删除
-        </a>
+        <a @click="handleDelete(record.id)"> <a-icon type="scissor" />彻底删除 </a>
       </span>
     </a-table>
   </a-modal>

@@ -17,12 +17,7 @@
           <a-col :md="6" :sm="8">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button
-                type="primary"
-                @click="searchReset"
-                icon="reload"
-                style="margin-left: 8px"
-              >重置</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px" >重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -33,26 +28,14 @@
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('填值规则')">导出</a-button>
-      <a-upload
-        name="file"
-        :showUploadList="false"
-        :multiple="false"
-        :headers="tokenHeader"
-        :action="importExcelUrl"
-        @change="handleImportExcel"
-      >
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel" >
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete" />删除
-          </a-menu-item>
+          <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px">
-          批量操作
-          <a-icon type="down" />
-        </a-button>
+        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
       </a-dropdown>
     </div>
 
@@ -85,10 +68,7 @@
         <a @click="handleEdit(record)">编辑</a>
         <a-divider type="vertical" />
         <a-dropdown>
-          <a class="ant-dropdown-link">
-            更多
-            <a-icon type="down" />
-          </a>
+          <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
           <a-menu slot="overlay">
             <a-menu-item @click="handleTest(record)">功能测试</a-menu-item>
             <a-menu-item>

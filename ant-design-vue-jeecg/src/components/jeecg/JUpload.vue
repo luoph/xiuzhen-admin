@@ -10,10 +10,7 @@
     @change="handleChange"
     :disabled="disabled"
   >
-    <a-button>
-      <a-icon type="upload" />
-      {{ text }}
-    </a-button>
+    <a-button> <a-icon type="upload" /> {{ text }} </a-button>
   </a-upload>
 </template>
 

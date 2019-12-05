@@ -16,10 +16,7 @@
             请在手机中打开 Google Authenticator 或两步验证 APP
             <br />输入 6 位动态码
           </p>
-          <p style="text-align: center" v-else>
-            正在验证..
-            <br />请稍后
-          </p>
+          <p style="text-align: center" v-else> 正在验证.. <br />请稍后 </p>
           <a-form-item
             :style="{ textAlign: 'center' }"
             hasFeedback
@@ -32,9 +29,7 @@
               placeholder="000000"
             />
           </a-form-item>
-          <p style="text-align: center">
-            <a @click="onForgeStepCode">遗失手机?</a>
-          </p>
+          <p style="text-align: center"> <a @click="onForgeStepCode">遗失手机?</a> </p>
         </div>
       </a-form>
     </a-spin>

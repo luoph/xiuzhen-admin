@@ -9,14 +9,9 @@
       </a-upload>-->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu-item slot="overlay">
-          <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete" />删除
-          </a-menu-item>
+          <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item>
         </a-menu-item>
-        <a-button style="margin-left: 8px">
-          批量操作
-          <a-icon type="down" />
-        </a-button>
+        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
       </a-dropdown>
     </div>
 

@@ -68,18 +68,11 @@
       <a-button type="primary" icon="plus" @click="() => $router.push({name: 'anime-add'})">新建</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1">
-            <a-icon type="delete" />删除
-          </a-menu-item>
+          <a-menu-item key="1"> <a-icon type="delete" />删除 </a-menu-item>
           <!-- lock | unlock -->
-          <a-menu-item key="2">
-            <a-icon type="lock" />锁定
-          </a-menu-item>
+          <a-menu-item key="2"> <a-icon type="lock" />锁定 </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px">
-          批量操作
-          <a-icon type="down" />
-        </a-button>
+        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
       </a-dropdown>
     </div>
 
