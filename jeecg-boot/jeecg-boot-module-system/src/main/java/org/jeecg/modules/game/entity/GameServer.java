@@ -70,7 +70,7 @@ public class GameServer implements Serializable {
     /**
      * 显示版本号
      */
-    private Integer showVerion;
+    private Integer showVersion;
 
     /**
      * 进入游戏客户端版本
