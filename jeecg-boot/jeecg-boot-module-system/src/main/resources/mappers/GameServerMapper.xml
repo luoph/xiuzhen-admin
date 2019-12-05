@@ -12,7 +12,7 @@
         <result column="status" property="status" />
         <result column="recommend" property="recommend" />
         <result column="warning" property="warning" />
-        <result column="show_verion" property="showVerion" />
+        <result column="show_version" property="showVersion" />
         <result column="client_version_code" property="clientVersionCode" />
         <result column="db_host" property="dbHost" />
         <result column="db_port" property="dbPort" />
@@ -31,7 +31,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, name, host, port, login_url, status, recommend, warning, show_verion, client_version_code, db_host, db_port, db_user, db_password, db_name, http_port, position, type, pid, merge_time, extra, open_time, create_time
+        id, name, host, port, login_url, status, recommend, warning, show_version, client_version_code, db_host, db_port, db_user, db_password, db_name, http_port, position, type, pid, merge_time, extra, open_time, create_time
     </sql>
 
 </mapper>
