@@ -18,12 +18,7 @@
           <a-col :md="6" :sm="24">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button
-                type="primary"
-                @click="searchReset"
-                icon="reload"
-                style="margin-left: 8px"
-              >重置</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px" >重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -33,50 +28,16 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button
-        @click="doCgformButton"
-        type="primary"
-        icon="highlight"
-        style="margin-left:8px"
-      >自定义按钮</a-button>
-      <a-button
-        @click="doEnhanceJs"
-        type="primary"
-        icon="strikethrough"
-        style="margin-left:8px"
-      >JS增强</a-button>
-      <a-button
-        @click="doEnhanceSql"
-        type="primary"
-        icon="filter"
-        v-has="'online:sql'"
-        style="margin-left:8px"
-      >SQL增强</a-button>
+      <a-button @click="doCgformButton" type="primary" icon="highlight" style="margin-left:8px" >自定义按钮</a-button>
+      <a-button @click="doEnhanceJs" type="primary" icon="strikethrough" style="margin-left:8px" >JS增强</a-button>
+      <a-button @click="doEnhanceSql" type="primary" icon="filter" v-has="'online:sql'" style="margin-left:8px" >SQL增强</a-button>
       <a-button @click="doEnhanceJava" type="primary" icon="tool" style="margin-left:8px">Java增强</a-button>
-      <a-button
-        @click="importOnlineForm"
-        type="primary"
-        icon="database"
-        style="margin-left:8px"
-      >从数据库导入表单</a-button>
-      <a-button
-        @click="goGenerateCode"
-        v-has="'online:goGenerateCode'"
-        type="primary"
-        icon="database"
-        style="margin-left:8px"
-      >代码生成</a-button>
+      <a-button @click="importOnlineForm" type="primary" icon="database" style="margin-left:8px" >从数据库导入表单</a-button>
+      <a-button @click="goGenerateCode" v-has="'online:goGenerateCode'" type="primary" icon="database" style="margin-left:8px" >代码生成</a-button>
 
       <a-dropdown v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete" />删除
-          </a-menu-item>
-        </a-menu>
-        <a-button style="margin-left: 8px">
-          批量操作
-          <a-icon type="down" />
-        </a-button>
+        <a-menu slot="overlay"> <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item> </a-menu>
+        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
       </a-dropdown>
     </div>
 
@@ -117,30 +78,16 @@
               </a-menu-item>
 
               <template v-if="record.isDbSynch=='Y' && record.tableType !== 3">
-                <a-menu-item>
-                  <a @click="goPageOnline(record)">功能测试</a>
-                </a-menu-item>
-                <a-menu-item>
-                  <a @click="handleOnlineUrlShow(record)">配置地址</a>
-                </a-menu-item>
+                <a-menu-item> <a @click="goPageOnline(record)">功能测试</a> </a-menu-item>
+                <a-menu-item> <a @click="handleOnlineUrlShow(record)">配置地址</a> </a-menu-item>
               </template>
 
-              <a-menu-item>
-                <a @click="copyConfig(record.id)">复制视图</a>
-              </a-menu-item>
-
-              <a-menu-item v-if="record.hascopy==1">
-                <a @click="showMyCopyInfo(record.id)">配置视图</a>
-              </a-menu-item>
+              <a-menu-item> <a @click="copyConfig(record.id)">复制视图</a> </a-menu-item>
+              <a-menu-item v-if="record.hascopy==1"> <a @click="showMyCopyInfo(record.id)">配置视图</a> </a-menu-item>
+              <a-menu-item> <a @click="handleRemoveRecord(record.id)">移除</a> </a-menu-item>
 
               <a-menu-item>
-                <a @click="handleRemoveRecord(record.id)">移除</a>
-              </a-menu-item>
-
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
+                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"> <a>删除</a> </a-popconfirm>
               </a-menu-item>
             </a-menu>
           </a-dropdown>
@@ -180,12 +127,7 @@
     <a-modal :title="onlineUrlTitle" :visible="onlineUrlVisible" @cancel="handleOnlineUrlClose">
       <template slot="footer">
         <a-button @click="handleOnlineUrlClose">关闭</a-button>
-        <a-button
-          type="primary"
-          class="copy-this-text"
-          :data-clipboard-text="onlineUrl"
-          @click="onCopyUrl"
-        >复制</a-button>
+        <a-button type="primary" class="copy-this-text" :data-clipboard-text="onlineUrl" @click="onCopyUrl" >复制</a-button>
       </template>
       <p>{{ onlineUrl }}</p>
     </a-modal>

@@ -30,9 +30,7 @@
         :beforeUpload="beforeUpload"
         @change="handleChange"
       >
-        <a-button>
-          <a-icon type="upload" />文件上传
-        </a-button>
+        <a-button> <a-icon type="upload" />文件上传 </a-button>
       </a-upload>
     </div>
 

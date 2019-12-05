@@ -41,9 +41,7 @@
             @change="handleChange"
             @preview="handlePreview"
           >
-            <a-button>
-              <a-icon type="upload" />upload
-            </a-button>
+            <a-button> <a-icon type="upload" />upload </a-button>
           </a-upload>
           <a-modal :visible="previewVisible" :footer="null" @cancel="handlePicCancel">
             <img alt="example" style="width: 100%" :src="previewImage" />

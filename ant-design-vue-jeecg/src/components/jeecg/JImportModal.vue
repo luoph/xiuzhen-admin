@@ -14,19 +14,12 @@
       :remove="handleRemove"
       :beforeUpload="beforeUpload"
     >
-      <a-button>
-        <a-icon type="upload" />选择导入文件
-      </a-button>
+      <a-button> <a-icon type="upload" />选择导入文件 </a-button>
     </a-upload>
 
     <template slot="footer">
       <a-button @click="handleClose">关闭</a-button>
-      <a-button
-        type="primary"
-        @click="handleImport"
-        :disabled="fileList.length === 0"
-        :loading="uploading"
-      >{{ uploading ? '上传中...' : '开始上传' }}</a-button>
+      <a-button type="primary" @click="handleImport" :disabled="fileList.length === 0" :loading="uploading" >{{ uploading ? '上传中...' : '开始上传' }}</a-button>
     </template>
   </a-modal>
 </template>

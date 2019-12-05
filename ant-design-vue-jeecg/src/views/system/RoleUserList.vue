@@ -14,18 +14,8 @@
               </a-col>
               <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                 <a-col :md="12" :sm="24">
-                  <a-button
-                    type="primary"
-                    @click="searchQuery"
-                    icon="search"
-                    style="margin-left: 21px"
-                  >查询</a-button>
-                  <a-button
-                    type="primary"
-                    @click="searchReset"
-                    icon="reload"
-                    style="margin-left: 8px"
-                  >重置</a-button>
+                  <a-button type="primary" @click="searchQuery" icon="search" style="margin-left: 21px" >查询</a-button>
+                  <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px" >重置</a-button>
                 </a-col>
               </span>
             </a-row>
@@ -104,18 +94,8 @@
               </a-col>
               <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                 <a-col :md="9" :sm="24">
-                  <a-button
-                    type="primary"
-                    @click="searchQuery2"
-                    icon="search"
-                    style="margin-left: 21px"
-                  >查询</a-button>
-                  <a-button
-                    type="primary"
-                    @click="searchReset2"
-                    icon="reload"
-                    style="margin-left: 8px"
-                  >重置</a-button>
+                  <a-button type="primary" @click="searchQuery2" icon="search" style="margin-left: 21px" >查询</a-button>
+                  <a-button type="primary" @click="searchReset2" icon="reload" style="margin-left: 8px" >重置</a-button>
                 </a-col>
               </span>
             </a-row>
@@ -125,23 +105,11 @@
         <div class="table-operator" :md="24" :sm="24" style="margin: -25px 0px 10px 2px">
           <a-button @click="handleAdd2" type="primary" icon="plus" style="margin-top: 16px">用户录入</a-button>
           <!--<a-button @click="handleEdit2" type="primary" icon="edit" style="margin-top: 16px">用户编辑</a-button>-->
-          <a-button
-            @click="handleAddUserRole"
-            type="primary"
-            icon="plus"
-            style="margin-top: 16px"
-          >添加已有用户</a-button>
+          <a-button @click="handleAddUserRole" type="primary" icon="plus" style="margin-top: 16px" >添加已有用户</a-button>
 
           <a-dropdown v-if="selectedRowKeys2.length > 0">
-            <a-menu slot="overlay">
-              <a-menu-item key="1" @click="batchDel2">
-                <a-icon type="delete" />删除
-              </a-menu-item>
-            </a-menu>
-            <a-button style="margin-left: 8px">
-              批量操作
-              <a-icon type="down" />
-            </a-button>
+            <a-menu slot="overlay"> <a-menu-item key="1" @click="batchDel2"> <a-icon type="delete" />删除 </a-menu-item> </a-menu>
+            <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
           </a-dropdown>
         </div>
         <!-- table区域-begin -->

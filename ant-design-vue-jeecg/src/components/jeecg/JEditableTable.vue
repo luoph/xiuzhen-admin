@@ -42,23 +42,14 @@
           </div>
           <div v-if="rowSelection" class="td td-cb" :style="style.tdLeft">
             <!--:indeterminate="true"-->
-            <a-checkbox
-              :checked="getSelectAll"
-              :indeterminate="getSelectIndeterminate"
-              @change="handleChangeCheckedAll"
-            />
+            <a-checkbox :checked="getSelectAll" :indeterminate="getSelectIndeterminate" @change="handleChangeCheckedAll" />
           </div>
           <div v-if="rowNumber" class="td td-num" :style="style.tdLeft">
             <span>#</span>
           </div>
           <!-- 右侧动态生成td -->
           <template v-for="col in columns">
-            <div
-              v-show="col.type !== formTypes.hidden"
-              class="td"
-              :key="col.key"
-              :style="buildTdStyle(col)"
-            >
+            <div v-show="col.type !== formTypes.hidden" class="td" :key="col.key" :style="buildTdStyle(col)" >
               <span>{{ col.title }}</span>
             </div>
           </template>
@@ -106,12 +97,7 @@
                 <div v-if="rowSelection" class="td td-cb" :style="style.tdLeft">
                   <!-- 此 v-for 只是为了拼接 id 字符串 -->
                   <template v-for="(id,i) in [`${row.id}`]">
-                    <a-checkbox
-                      :id="id"
-                      :key="i"
-                      :checked="selectedRowIds.indexOf(id) !== -1"
-                      @change="handleChangeLeftCheckbox"
-                    />
+                    <a-checkbox :id="id" :key="i" :checked="selectedRowIds.indexOf(id) !== -1" @change="handleChangeLeftCheckbox" />
                   </template>
                 </div>
                 <div v-if="rowNumber" class="td td-num" :style="style.tdLeft">

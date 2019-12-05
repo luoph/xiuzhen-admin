@@ -40,10 +40,7 @@
           <a-menu-item key="5" @click="expandAll">展开所有</a-menu-item>
           <a-menu-item key="6" @click="closeAll">合并所有</a-menu-item>
         </a-menu>
-        <a-button>
-          树操作
-          <a-icon type="up" />
-        </a-button>
+        <a-button> 树操作 <a-icon type="up" /> </a-button>
       </a-dropdown>
       <a-popconfirm title="确定放弃编辑？" @confirm="close" okText="确定" cancelText="取消">
         <a-button style="margin-right: .8rem">取消</a-button>

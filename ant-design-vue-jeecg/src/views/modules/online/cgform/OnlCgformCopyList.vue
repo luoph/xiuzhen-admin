@@ -13,12 +13,7 @@
           <a-col :md="6" :sm="24">
             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-              <a-button
-                type="primary"
-                @click="searchReset"
-                icon="reload"
-                style="margin-left: 8px"
-              >重置</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px" >重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -27,31 +22,14 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button
-        @click="doCgformButton"
-        type="primary"
-        icon="highlight"
-        style="margin-left:8px"
-      >自定义按钮</a-button>
-      <a-button
-        @click="doEnhanceJs"
-        type="primary"
-        icon="strikethrough"
-        style="margin-left:8px"
-      >JS增强</a-button>
+      <a-button @click="doCgformButton" type="primary" icon="highlight" style="margin-left:8px" >自定义按钮</a-button>
+      <a-button @click="doEnhanceJs" type="primary" icon="strikethrough" style="margin-left:8px" >JS增强</a-button>
       <a-button @click="doEnhanceSql" type="primary" icon="filter" style="margin-left:8px">SQL增强</a-button>
       <a-button @click="doEnhanceJava" type="primary" icon="tool" style="margin-left:8px">Java增强</a-button>
 
       <a-dropdown v-if="selectedRowKeys.length > 0">
-        <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete" />删除
-          </a-menu-item>
-        </a-menu>
-        <a-button style="margin-left: 8px">
-          批量操作
-          <a-icon type="down" />
-        </a-button>
+        <a-menu slot="overlay"> <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item> </a-menu>
+        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
       </a-dropdown>
     </div>
 
@@ -82,22 +60,11 @@
 
           <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">
-              更多
-              <a-icon type="down" />
-            </a>
+            <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
             <a-menu slot="overlay">
-              <a-menu-item>
-                <a @click="goPageOnline(record)">功能测试</a>
-              </a-menu-item>
-
-              <a-menu-item>
-                <a @click="handleOnlineUrlShow(record)">配置地址</a>
-              </a-menu-item>
-
-              <a-menu-item>
-                <a @click="handleRemoveRecord(record.id)">移除</a>
-              </a-menu-item>
+              <a-menu-item> <a @click="goPageOnline(record)">功能测试</a> </a-menu-item>
+              <a-menu-item> <a @click="handleOnlineUrlShow(record)">配置地址</a> </a-menu-item>
+              <a-menu-item> <a @click="handleRemoveRecord(record.id)">移除</a> </a-menu-item>
             </a-menu>
           </a-dropdown>
         </template>
@@ -117,12 +84,7 @@
     <a-modal :title="onlineUrlTitle" :visible="onlineUrlVisible" @cancel="handleOnlineUrlClose">
       <template slot="footer">
         <a-button @click="handleOnlineUrlClose">关闭</a-button>
-        <a-button
-          type="primary"
-          class="copy-this-text"
-          :data-clipboard-text="onlineUrl"
-          @click="onCopyUrl"
-        >复制</a-button>
+        <a-button type="primary" class="copy-this-text" :data-clipboard-text="onlineUrl" @click="onCopyUrl" >复制</a-button>
       </template>
       <p>{{ onlineUrl }}</p>
     </a-modal>

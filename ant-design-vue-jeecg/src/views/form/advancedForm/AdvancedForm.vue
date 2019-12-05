@@ -50,12 +50,7 @@
             </span>
           </template>
         </a-table>
-        <a-button
-          style="width: 100%; margin-top: 16px; margin-bottom: 8px"
-          type="dashed"
-          icon="plus"
-          @click="newMember"
-        >新增成员</a-button>
+        <a-button style="width: 100%; margin-top: 16px; margin-bottom: 8px" type="dashed" icon="plus" @click="newMember" >新增成员</a-button>
       </form>
     </a-card>
 

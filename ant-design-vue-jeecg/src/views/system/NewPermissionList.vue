@@ -3,13 +3,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button
-        @click="batchDel"
-        v-if="selectedRowKeys.length > 0"
-        ghost
-        type="primary"
-        icon="delete"
-      >批量删除</a-button>
+      <a-button @click="batchDel" v-if="selectedRowKeys.length > 0" ghost type="primary" icon="delete" >批量删除</a-button>
     </div>
 
     <!-- table区域-begin -->
@@ -37,26 +31,12 @@
 
           <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">
-              更多
-              <a-icon type="down" />
-            </a>
+            <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
             <a-menu slot="overlay">
-              <a-menu-item>
-                <a href="javascript:;" @click="handleDetail(record)">详情</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;" @click="handleAddSub(record)">添加子菜单</a>
-              </a-menu-item>
-              <a-menu-item>
-                <a href="javascript:;" @click="handleDataRule(record)">数据规则</a>
-              </a-menu-item>
-
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
+              <a-menu-item> <a href="javascript:;" @click="handleDetail(record)">详情</a> </a-menu-item>
+              <a-menu-item> <a href="javascript:;" @click="handleAddSub(record)">添加子菜单</a> </a-menu-item>
+              <a-menu-item> <a href="javascript:;" @click="handleDataRule(record)">数据规则</a> </a-menu-item>
+              <a-menu-item> <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"> <a>删除</a> </a-popconfirm> </a-menu-item>
             </a-menu>
           </a-dropdown>
         </span>

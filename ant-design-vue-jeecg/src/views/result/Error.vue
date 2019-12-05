@@ -10,17 +10,11 @@
         >您提交的内容有如下错误：</div>
         <div style="margin-bottom: 16px">
           <a-icon type="close-circle-o" style="color: #f5222d; margin-right: 8px" />您的账户已被冻结
-          <a style="margin-left: 16px">
-            立即解冻
-            <a-icon type="right" />
-          </a>
+          <a style="margin-left: 16px"> 立即解冻 <a-icon type="right" /> </a>
         </div>
         <div>
           <a-icon type="close-circle-o" style="color: #f5222d; margin-right: 8px" />您的账户还不具备申请资格
-          <a style="margin-left: 16px">
-            立即升级
-            <a-icon type="right" />
-          </a>
+          <a style="margin-left: 16px"> 立即升级 <a-icon type="right" /> </a>
         </div>
       </div>
     </result>

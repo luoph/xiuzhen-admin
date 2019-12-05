@@ -25,11 +25,7 @@
             <div slot="message">
               当前选择：
               <a v-if="this.currSelected.title">{{ getCurrSelectedTitle() }}</a>
-              <a
-                v-if="this.currSelected.title"
-                style="margin-left: 10px"
-                @click="onClearSelected"
-              >取消选择</a>
+              <a v-if="this.currSelected.title" style="margin-left: 10px" @click="onClearSelected" >取消选择</a>
             </div>
           </a-alert>
           <a-input-search
@@ -79,10 +75,7 @@
             <a-menu-item key="5" @click="expandAll">展开所有</a-menu-item>
             <a-menu-item key="6" @click="closeAll">合并所有</a-menu-item>
           </a-menu>
-          <a-button>
-            树操作
-            <a-icon type="up" />
-          </a-button>
+          <a-button> 树操作 <a-icon type="up" /> </a-button>
         </a-dropdown>
       </div>
       <!---- author:os_chengtgen -- date:20190827 --  for:切换父子勾选模式 =======------>

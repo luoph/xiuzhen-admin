@@ -90,19 +90,8 @@
                 >
                   <div class="item-group">
                     <a-row>
-                      <a-col
-                        :class="'more-btn'"
-                        :span="12"
-                        v-for="(item,index) in registerTypeList"
-                        :key=" 'registerType'+index "
-                      >
-                        <a-button
-                          @click="goPage(index)"
-                          style="margin-bottom:10px"
-                          size="small"
-                          type="primary"
-                          ghost
-                        >{{ item.text }}</a-button>
+                      <a-col :class="'more-btn'" :span="12" v-for="(item,index) in registerTypeList" :key=" 'registerType'+index " >
+                        <a-button @click="goPage(index)" style="margin-bottom:10px" size="small" type="primary" ghost >{{ item.text }}</a-button>
                       </a-col>
                     </a-row>
                   </div>
@@ -117,27 +106,11 @@
                 <bar-multid :dataSource="jhjgData" :fields="jhjgFields" title="平台与部门交互量统计"></bar-multid>
               </a-col>
               <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <a-card
-                  title="快速开始 / 便捷导航"
-                  style="margin-bottom: 24px"
-                  :bordered="false"
-                  :body-style="{padding: 0}"
-                >
+                <a-card title="快速开始 / 便捷导航" style="margin-bottom: 24px" :bordered="false" :body-style="{padding: 0}" >
                   <div class="item-group">
                     <a-row>
-                      <a-col
-                        :class="'more-btn'"
-                        :span="12"
-                        v-for="(item,index) in registerTypeList"
-                        :key=" 'registerType'+index "
-                      >
-                        <a-button
-                          @click="goPage(index)"
-                          style="margin-bottom:10px"
-                          size="small"
-                          type="primary"
-                          ghost
-                        >{{ item.text }}</a-button>
+                      <a-col :class="'more-btn'" :span="12" v-for="(item,index) in registerTypeList" :key=" 'registerType'+index " >
+                        <a-button @click="goPage(index)" style="margin-bottom:10px" size="small" type="primary" ghost >{{ item.text }}</a-button>
                       </a-col>
                     </a-row>
                   </div>
@@ -160,19 +133,8 @@
                 >
                   <div class="item-group">
                     <a-row>
-                      <a-col
-                        :class="'more-btn'"
-                        :span="12"
-                        v-for="(item,index) in registerTypeList"
-                        :key=" 'registerType'+index "
-                      >
-                        <a-button
-                          @click="goPage(index)"
-                          style="margin-bottom:10px"
-                          size="small"
-                          type="primary"
-                          ghost
-                        >{{ item.text }}</a-button>
+                      <a-col :class="'more-btn'" :span="12" v-for="(item,index) in registerTypeList" :key=" 'registerType'+index " >
+                        <a-button @click="goPage(index)" style="margin-bottom:10px" size="small" type="primary" ghost >{{ item.text }}</a-button>
                       </a-col>
                     </a-row>
                   </div>
@@ -202,19 +164,8 @@
                 >
                   <div class="item-group">
                     <a-row>
-                      <a-col
-                        :class="'more-btn'"
-                        :span="10"
-                        v-for="(item,index) in registerTypeList"
-                        :key=" 'registerType'+index "
-                      >
-                        <a-button
-                          @click="goPage(index)"
-                          style="margin-bottom:10px"
-                          size="small"
-                          type="primary"
-                          ghost
-                        >{{ item.text }}</a-button>
+                      <a-col :class="'more-btn'" :span="10" v-for="(item,index) in registerTypeList" :key=" 'registerType'+index " >
+                        <a-button @click="goPage(index)" style="margin-bottom:10px" size="small" type="primary" ghost >{{ item.text }}</a-button>
                       </a-col>
                     </a-row>
                   </div>

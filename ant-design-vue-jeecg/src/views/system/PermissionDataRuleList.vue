@@ -30,23 +30,13 @@
             <a-col :md="7" :sm="8">
               <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                 <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-                <a-button
-                  type="primary"
-                  @click="searchReset"
-                  icon="reload"
-                  style="margin-left: 8px"
-                >重置</a-button>
+                <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px" >重置</a-button>
               </span>
             </a-col>
           </a-row>
           <a-row>
             <a-col :md="24" :sm="24">
-              <a-button
-                style="margin-bottom: 10px"
-                @click="addPermissionRule"
-                type="primary"
-                icon="plus"
-              >添加</a-button>
+              <a-button style="margin-bottom: 10px" @click="addPermissionRule" type="primary" icon="plus" >添加</a-button>
             </a-col>
           </a-row>
         </a-form>
@@ -61,13 +51,9 @@
           :rowClassName="getRowClassname"
         >
           <span slot="action" slot-scope="text, record">
-            <a @click="handleEdit(record)">
-              <a-icon type="edit" />编辑
-            </a>
+            <a @click="handleEdit(record)"> <a-icon type="edit" />编辑 </a>
             <a-divider type="vertical" />
-            <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-              <a>删除</a>
-            </a-popconfirm>
+            <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"> <a>删除</a> </a-popconfirm>
           </span>
         </a-table>
       </div>
