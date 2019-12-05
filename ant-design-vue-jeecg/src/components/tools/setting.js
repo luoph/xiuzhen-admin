@@ -1,4 +1,6 @@
-import { message } from 'ant-design-vue/es';
+import {
+  message
+} from 'ant-design-vue/es';
 // import defaultSettings from '../defaultSettings';
 
 let lessNodesAppended;
@@ -41,6 +43,7 @@ const updateTheme = primaryColor => {
   }
   const hideMessage = message.loading('正在编译主题！', 0);
   console.info(`正在编译主题!`)
+
   function buildIt() {
     // 正确的判定less是否已经加载less.modifyVars可用
     if (!window.less || !window.less.modifyVars) {
@@ -92,4 +95,8 @@ const updateColorWeak = colorWeak => {
   colorWeak ? document.body.classList.add('colorWeak') : document.body.classList.remove('colorWeak')
 };
 
-export { updateTheme, colorList, updateColorWeak }
+export {
+  updateTheme,
+  colorList,
+  updateColorWeak
+}

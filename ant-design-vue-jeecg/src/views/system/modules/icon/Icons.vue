@@ -10,47 +10,78 @@
     :maskClosable="false"
     :mask="false"
     okText="确认"
-    cancelText="取消">
+    cancelText="取消"
+  >
     <a-tabs>
       <a-tab-pane tab="方向性图标" key="1">
         <ul>
           <li v-for="icon in icons.directionIcons" :key="icon">
-            <a-icon :type="icon" :title="icon" @click="chooseIcon(icon)" :class="{'active':activeIndex === icon}"/>
+            <a-icon
+              :type="icon"
+              :title="icon"
+              @click="chooseIcon(icon)"
+              :class="{'active':activeIndex === icon}"
+            />
           </li>
         </ul>
       </a-tab-pane>
       <a-tab-pane tab="指示性图标" key="2">
         <ul>
           <li v-for="icon in icons.suggestionIcons" :key="icon">
-            <a-icon :type="icon" :title="icon" @click="chooseIcon(icon)" :class="{'active':activeIndex === icon}"/>
+            <a-icon
+              :type="icon"
+              :title="icon"
+              @click="chooseIcon(icon)"
+              :class="{'active':activeIndex === icon}"
+            />
           </li>
         </ul>
       </a-tab-pane>
       <a-tab-pane tab="编辑类图标" key="3">
         <ul>
           <li v-for="icon in icons.editIcons" :key="icon">
-            <a-icon :type="icon" :title="icon" @click="chooseIcon(icon)" :class="{'active':activeIndex === icon}"/>
+            <a-icon
+              :type="icon"
+              :title="icon"
+              @click="chooseIcon(icon)"
+              :class="{'active':activeIndex === icon}"
+            />
           </li>
         </ul>
       </a-tab-pane>
       <a-tab-pane tab="数据类图标" key="4">
         <ul>
           <li v-for="icon in icons.dataIcons" :key="icon">
-            <a-icon :type="icon" :title="icon" @click="chooseIcon(icon)" :class="{'active':activeIndex === icon}"/>
+            <a-icon
+              :type="icon"
+              :title="icon"
+              @click="chooseIcon(icon)"
+              :class="{'active':activeIndex === icon}"
+            />
           </li>
         </ul>
       </a-tab-pane>
       <a-tab-pane tab="网站通用图标" key="5">
         <ul>
           <li v-for="icon in icons.webIcons" :key="icon">
-            <a-icon :type="icon" :title="icon" @click="chooseIcon(icon)" :class="{'active':activeIndex === icon}"/>
+            <a-icon
+              :type="icon"
+              :title="icon"
+              @click="chooseIcon(icon)"
+              :class="{'active':activeIndex === icon}"
+            />
           </li>
         </ul>
       </a-tab-pane>
       <a-tab-pane tab="品牌和标识" key="6">
         <ul>
           <li v-for="icon in icons.logoIcons" :key="icon">
-            <a-icon :type="icon" :title="icon" @click="chooseIcon(icon)" :class="{'active':activeIndex === icon}"/>
+            <a-icon
+              :type="icon"
+              :title="icon"
+              @click="chooseIcon(icon)"
+              :class="{'active':activeIndex === icon}"
+            />
           </li>
         </ul>
       </a-tab-pane>
@@ -71,7 +102,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       icons: {
         directionIcons,
@@ -87,23 +118,22 @@ export default {
   },
   computed: {
     show: {
-      get: function () {
+      get: function() {
         return this.iconChooseVisible
       },
-      set: function () {
-      }
+      set: function() {}
     }
   },
   methods: {
-    reset () {
+    reset() {
       this.activeIndex = ''
     },
-    chooseIcon (icon) {
+    chooseIcon(icon) {
       this.activeIndex = icon
       this.choosedIcon = icon
       this.$message.success(`选中 ${icon}`)
     },
-    ok () {
+    ok() {
       if (this.choosedIcon === '') {
         this.$message.warning('尚未选择任何图标')
         return
@@ -111,7 +141,7 @@ export default {
       this.reset()
       this.$emit('choose', this.choosedIcon)
     },
-    cancel () {
+    cancel() {
       this.reset()
       this.$emit('close')
     }
@@ -119,5 +149,5 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-@import "Icon";
+@import 'Icon';
 </style>

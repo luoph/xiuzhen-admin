@@ -6,21 +6,18 @@
 </template>
 
 <script>
-  import ImgTurnPage from '../ImgTurnPage'
-  export default {
-    name: "SplitPanelAModal",
-    components:{
-      ImgTurnPage
-    },
-    data () {
-      return {
-      }
-    },
-    created () {
-    },
-    methods: {
-    }
-  }
+import ImgTurnPage from '../ImgTurnPage'
+export default {
+  name: 'SplitPanelAModal',
+  components: {
+    ImgTurnPage
+  },
+  data() {
+    return {}
+  },
+  created() {},
+  methods: {}
+}
 </script>
 
 <style scoped>

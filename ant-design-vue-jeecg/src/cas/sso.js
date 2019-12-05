@@ -1,5 +1,7 @@
 import Vue from 'vue'
-import { ACCESS_TOKEN } from "@/store/mutation-types"
+import {
+  ACCESS_TOKEN
+} from "@/store/mutation-types"
 import store from '@/store'
 /**
  * 单点登录
@@ -8,15 +10,15 @@ const init = (callback) => {
   console.log("-------单点登录开始-------");
   let token = Vue.ls.get(ACCESS_TOKEN);
   let st = getUrlParam("ticket");
-  var sevice = "http://"+window.location.host+"/";
-  if(token){
+  var sevice = "http://" + window.location.host + "/";
+  if (token) {
     loginSuccess(callback);
-  }else{
-    if(st){
-      validateSt(st,sevice,callback);
-    }else{
+  } else {
+    if (st) {
+      validateSt(st, sevice, callback);
+    } else {
       var serviceUrl = encodeURIComponent(sevice);
-      window.location.href = window._CONFIG['casPrefixUrl']+"/login?service="+serviceUrl;
+      window.location.href = window._CONFIG['casPrefixUrl'] + "/login?service=" + serviceUrl;
     }
   }
   console.log("-------单点登录结束-------");
@@ -41,25 +43,24 @@ function getUrlParam(paraName) {
       }
     }
     return "";
-  }
-  else {
+  } else {
     return "";
   }
 }
 
-function validateSt(ticket,service,callback){
+function validateSt(ticket, service, callback) {
   let params = {
     ticket: ticket,
-    service:service
+    service: service
   };
-  store.dispatch('ValidateLogin',params).then(res => {
+  store.dispatch('ValidateLogin', params).then(res => {
     //this.departConfirm(res)
-    if(res.success){
+    if (res.success) {
       loginSuccess(callback);
-    }else{
-      var sevice = "http://"+window.location.host+"/";
+    } else {
+      var sevice = "http://" + window.location.host + "/";
       var serviceUrl = encodeURIComponent(sevice);
-      window.location.href = window._CONFIG['casPrefixUrl']+"/login?service="+serviceUrl;
+      window.location.href = window._CONFIG['casPrefixUrl'] + "/login?service=" + serviceUrl;
     }
   }).catch((err) => {
     console.log(err);
@@ -67,7 +68,7 @@ function validateSt(ticket,service,callback){
   });
 }
 
-function loginSuccess (callback) {
+function loginSuccess(callback) {
   callback();
 }
 export default SSO;

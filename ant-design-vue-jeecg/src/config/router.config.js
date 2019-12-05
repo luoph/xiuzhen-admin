@@ -1,4 +1,10 @@
-import { UserLayout, TabLayout, RouteView, BlankLayout, PageView } from '@/components/layouts'
+import {
+  UserLayout,
+  TabLayout,
+  RouteView,
+  BlankLayout,
+  PageView
+} from '@/components/layouts'
 
 /**
  * 走菜单，走权限控制
@@ -10,7 +16,9 @@ export const asyncRouterMap = [
     path: '/',
     name: 'dashboard',
     component: TabLayout,
-    meta: { title: '首页' },
+    meta: {
+      title: '首页'
+    },
     redirect: '/dashboard/workplace',
     children: [
 
@@ -285,7 +293,9 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '*', redirect: '/404', hidden: true
+    path: '*',
+    redirect: '/404',
+    hidden: true
   }
 ]
 
@@ -293,32 +303,30 @@ export const asyncRouterMap = [
  * 基础路由
  * @type { *[] }
  */
-export const constantRouterMap = [
-  {
+export const constantRouterMap = [{
     path: '/user',
     component: UserLayout,
     redirect: '/user/login',
     hidden: true,
-    children: [
-      {
+    children: [{
         path: 'login',
         name: 'login',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login')
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/Login')
       },
       {
         path: 'register',
         name: 'register',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Register')
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/Register')
       },
       {
         path: 'register-result',
         name: 'registerResult',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/RegisterResult')
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/RegisterResult')
       },
       {
         path: 'alteration',
         name: 'alteration',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/user/Alteration')
+        component: () => import( /* webpackChunkName: "user" */ '@/views/user/Alteration')
       },
     ]
   },
@@ -351,17 +359,15 @@ export const constantRouterMap = [
     path: '/test',
     component: BlankLayout,
     redirect: '/test/home',
-    children: [
-      {
-        path: 'home',
-        name: 'TestHome',
-        component: () => import('@/views/Home')
-      }
-    ]
+    children: [{
+      path: 'home',
+      name: 'TestHome',
+      component: () => import('@/views/Home')
+    }]
   },
   {
     path: '/404',
-    component: () => import(/* webpackChunkName: "fail" */ '@/views/exception/404')
+    component: () => import( /* webpackChunkName: "fail" */ '@/views/exception/404')
   },
 
 ]
