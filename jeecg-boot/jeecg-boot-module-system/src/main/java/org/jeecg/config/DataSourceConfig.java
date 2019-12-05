@@ -3,7 +3,6 @@ package org.jeecg.config;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.jeecg.common.datasource.DataSourceKey;
 import org.jeecg.common.datasource.DynamicMultipleDataSource;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
