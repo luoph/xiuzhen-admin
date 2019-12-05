@@ -18,34 +18,34 @@ import java.util.Map;
  * @author : 披荆斩棘
  * @date : 2017/9/6
  */
-@MapperScan(basePackages = "org.jeecg.**.mapper")
-@Configuration
+//@MapperScan(basePackages = "org.jeecg.**.mapper")
+//@Configuration
 public class DataSourceConfig {
 
 //    private static final String MAPPER_PACKAGE = "org.jeecg.**.mapper";
 //    private static final String MAPPER_LOCATION = "classpath*:/mappers/**/*Mapper.xml";
 
-    /**
-     * 动态数据源配置
-     *
-     * @return
-     */
-    @Bean
-    public DynamicMultipleDataSource multipleDataSource(@Qualifier(DataSourceKey.DEFAULT_DATA_SOURCE_KEY) DataSource dataSource) {
-        DynamicMultipleDataSource dynamicMultipleDataSource = new DynamicMultipleDataSource();
-        Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put(DataSourceKey.DEFAULT_DATA_SOURCE_KEY, dataSource);
-        dynamicMultipleDataSource.setTargetDataSources(targetDataSources);
-        dynamicMultipleDataSource.setDefaultTargetDataSource(dataSource);
-        return dynamicMultipleDataSource;
-    }
-
-    @Primary
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.druid.default")
-    public DataSource dataSourceDefault() {
-        return DruidDataSourceBuilder.create().build();
-    }
+//    /**
+//     * 动态数据源配置
+//     *
+//     * @return
+//     */
+//    @Bean
+//    public DynamicMultipleDataSource multipleDataSource(@Qualifier(DataSourceKey.DEFAULT_DATA_SOURCE_KEY) DataSource dataSource) {
+//        DynamicMultipleDataSource dynamicMultipleDataSource = new DynamicMultipleDataSource();
+//        Map<Object, Object> targetDataSources = new HashMap<>();
+//        targetDataSources.put(DataSourceKey.DEFAULT_DATA_SOURCE_KEY, dataSource);
+//        dynamicMultipleDataSource.setTargetDataSources(targetDataSources);
+//        dynamicMultipleDataSource.setDefaultTargetDataSource(dataSource);
+//        return dynamicMultipleDataSource;
+//    }
+//
+//    @Primary
+//    @Bean
+//    @ConfigurationProperties(prefix = "spring.datasource.druid.default")
+//    public DataSource dataSourceDefault() {
+//        return DruidDataSourceBuilder.create().build();
+//    }
 
 //    /**
 //     * 相当于顶部的：
