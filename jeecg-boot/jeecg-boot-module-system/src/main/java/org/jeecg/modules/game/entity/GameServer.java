@@ -53,12 +53,12 @@ public class GameServer implements Serializable {
     private String loginUrl;
 
     /**
-     * 服务器状态
+     * 服务器状态 0-正常 1-流畅 2-火爆 3-维护
      */
     private Integer status;
 
     /**
-     * 推荐标识
+     * 推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服
      */
     private Integer recommend;
 
@@ -68,7 +68,7 @@ public class GameServer implements Serializable {
     private String warning;
 
     /**
-     * 显示版本号
+     * 显示版本号 0-不显示 1-显示
      */
     private Integer showVersion;
 
@@ -113,7 +113,7 @@ public class GameServer implements Serializable {
     private Integer position;
 
     /**
-     * 服务器类型:0为混服,1为专服
+     * 服务器类型 0-混服 1-专服
      */
     private Boolean type;
 
