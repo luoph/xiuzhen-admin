@@ -1,0 +1,49 @@
+globalConfig:
+  author: luopeihuan
+  open: false
+  idType: AUTO
+  dateType: ONLY_DATE
+  enableCache: false
+  activeRecord: false
+  baseResultMap: true
+  baseColumnList: true
+  swagger2: false
+  fileOverride: true
+
+dataSourceConfig:
+  url: jdbc:mysql://10.21.211.35:3306/jeecg-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+  driverName: com.mysql.jdbc.Driver
+  username: jeecg-boot
+  password: A2@f93Y#L2
+
+packageConfig:
+  parent: org.jeecg.modules
+  moduleName: game
+  entity: entity
+  service: service
+  serviceImpl: service.impl
+  mapper: mapper
+  xml: mapper
+  controller: controller
+
+  pathInfo:
+    entity_path: src/main/java/org/jeecg/modules/game/entity
+    service_path: src/main/java/org/jeecg/modules/game/service
+    service_impl_path: src/main/java/org/jeecg/modules/game/service/impl
+    mapper_path: src/main/java/org/jeecg/modules/game/mapper
+    xml_path: src/main/resources/mappers
+    controller_path: src/main/java/org/jeecg/modules/game/controller
+
+strategyConfig:
+  naming: underline_to_camel
+  columnNaming: underline_to_camel
+  entityLombokModel: true
+  superMapperClass: com.baomidou.mybatisplus.core.mapper.BaseMapper
+  superServiceClass: com.baomidou.mybatisplus.extension.service.IService
+  superServiceImplClass: com.baomidou.mybatisplus.extension.service.impl.ServiceImpl
+  controllerMappingHyphenStyle: true
+  restControllerStyle: true
+  tablePrefix:
+  include:
+    # 表名
+    - game_server
