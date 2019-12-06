@@ -7,25 +7,26 @@
 </template>
 
 <script>
-import SplitPanelModal from './modules/SplitPanelModal'
+  import SplitPanelModal from './modules/SplitPanelModal'
 
-export default {
-  name: 'SplitPanel',
-  components: {
-    SplitPanelModal
-  },
-  data() {
-    return {
-      description: '分屏'
-    }
-  },
-  methods: {
-    splitPane() {
-      this.$refs.splitPanelModal.show()
+  export default {
+    name: 'SplitPanel',
+    components:{
+      SplitPanelModal,
+    },
+    data() {
+      return {
+        description: '分屏',
+      }
+    },
+    methods:{
+      splitPane(){
+        this.$refs.splitPanelModal.show();
+      }
     }
   }
-}
 </script>
 
 <style scoped>
+
 </style>

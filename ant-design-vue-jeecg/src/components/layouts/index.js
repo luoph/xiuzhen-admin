@@ -5,11 +5,4 @@ import RouteView from '@/components/layouts/RouteView'
 import PageView from '@/components/layouts/PageView'
 import TabLayout from '@/components/layouts/TabLayout'
 
-export {
-  UserLayout,
-  BasicLayout,
-  BlankLayout,
-  RouteView,
-  PageView,
-  TabLayout
-}
+export { UserLayout, BasicLayout, BlankLayout, RouteView, PageView, TabLayout }

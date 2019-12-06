@@ -1,20 +1,18 @@
 /**
  *
  */
-import {
-  disabledAuthFilter
-} from "@/utils/authFilter"
+import { disabledAuthFilter } from "@/utils/authFilter"
 
 export const DisabledAuthFilterMixin = {
   props: ['formData'],
-  data() {
+  data(){
     return {
 
     }
   },
-  methods: {
-    isDisabledAuth(code) {
-      return disabledAuthFilter(code, this.formData);
+  methods:{
+    isDisabledAuth(code){
+      return disabledAuthFilter(code,this.formData);
     },
   }
 

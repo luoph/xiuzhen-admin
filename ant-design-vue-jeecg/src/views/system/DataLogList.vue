@@ -16,11 +16,11 @@
           </a-col>
 
           <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-            <a-col :md="6" :sm="24">
-              <a-button type="primary" @click="searchQuery">查询</a-button>
-              <a-button style="margin-left: 8px" @click="searchReset">重置</a-button>
-            </a-col>
-          </span>
+               <a-col :md="6" :sm="24">
+                  <a-button type="primary" @click="searchQuery">查询</a-button>
+                  <a-button style="margin-left: 8px" @click="searchReset">重置</a-button>
+               </a-col>
+            </span>
         </a-row>
       </a-form>
     </div>
@@ -34,8 +34,7 @@
     <div>
       <!--已选择的清空 -->
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i>已选择&nbsp;
-        <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项&nbsp;&nbsp;
+        <i class="anticon anticon-info-circle ant-alert-icon"></i>已选择&nbsp;<a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项&nbsp;&nbsp;
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
       <a-table
@@ -61,77 +60,75 @@
 </template>
 
 <script>
-import DataLogModal from './modules/DataLogModal'
-import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-import JEllipsis from '@/components/jeecg/JEllipsis'
+  import DataLogModal from './modules/DataLogModal'
+  import {JeecgListMixin} from '@/mixins/JeecgListMixin'
+  import JEllipsis from "@/components/jeecg/JEllipsis";
 
-export default {
-  name: 'DataLogList',
-  mixins: [JeecgListMixin],
-  components: {
-    JEllipsis,
-    DataLogModal
-  },
-  data() {
-    return {
-      description: '数据日志管理页面',
-      //表头
-      columns: [
-        {
-          title: '表名',
-          align: 'center',
-          dataIndex: 'dataTable'
+  export default {
+    name: 'DataLogList',
+    mixins: [JeecgListMixin],
+    components: {
+      JEllipsis,
+      DataLogModal
+    },
+    data() {
+      return {
+        description: '数据日志管理页面',
+        //表头
+        columns: [
+          {
+            title: '表名',
+            align: 'center',
+            dataIndex: 'dataTable'
+          }, {
+            title: '数据ID',
+            align: 'center',
+            dataIndex: 'dataId'
+          }, {
+            title: '版本号',
+            align: 'center',
+            dataIndex: 'dataVersion'
+          }, {
+            title: '数据内容',
+            align: 'center',
+            dataIndex: 'dataContent',
+            width: "120px",
+            scopedSlots: {customRender: 'dataContent'},
+          }, {
+            title: '创建人',
+            align: 'center',
+            dataIndex: 'createBy'
+          }
+        ],
+        url: {
+          list: "/sys/dataLog/list",
         },
-        {
-          title: '数据ID',
-          align: 'center',
-          dataIndex: 'dataId'
-        },
-        {
-          title: '版本号',
-          align: 'center',
-          dataIndex: 'dataVersion'
-        },
-        {
-          title: '数据内容',
-          align: 'center',
-          dataIndex: 'dataContent',
-          width: '120px',
-          scopedSlots: { customRender: 'dataContent' }
-        },
-        {
-          title: '创建人',
-          align: 'center',
-          dataIndex: 'createBy'
-        }
-      ],
-      url: {
-        list: '/sys/dataLog/list'
-      }
-    }
-  },
-  methods: {
-    handleCompare: function() {
-      if (!this.selectionRows || this.selectionRows.length != 2) {
-        this.openNotifIcon('请选择两条数据')
-        return false
-      } else if (this.selectionRows[0].dataId != this.selectionRows[1].dataId) {
-        this.openNotifIcon('请选择相同的数据库表和数据ID进行比较')
-        return false
-      } else {
-        this.$refs.modalForm.addModal(this.selectionRows)
-        this.$refs.modalForm.title = '数据比较'
       }
     },
-    openNotifIcon(msg) {
-      this.$notification['warning']({
-        message: '提示信息',
-        description: msg
-      })
+    methods: {
+      handleCompare: function () {
+        if (!this.selectionRows || this.selectionRows.length != 2) {
+          this.openNotifIcon('请选择两条数据');
+          return false;
+        } else if (this.selectionRows[0].dataId != this.selectionRows[1].dataId) {
+          this.openNotifIcon('请选择相同的数据库表和数据ID进行比较');
+          return false;
+        } else {
+          this.$refs.modalForm.addModal(this.selectionRows);
+          this.$refs.modalForm.title = "数据比较";
+        }
+      },
+      openNotifIcon(msg) {
+        this.$notification['warning']({
+          message: '提示信息',
+          description: msg,
+        });
+      },
     }
+
   }
-}
+
 </script>
 <style scoped>
-@import '~@assets/less/common.less';
+  @import '~@assets/less/common.less'
 </style>
