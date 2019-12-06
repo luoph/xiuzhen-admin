@@ -72,8 +72,7 @@
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel">
-                        <a-icon type="delete" />
-                        删除
+                        <a-icon type="delete" />删除
                     </a-menu-item>
                 </a-menu>
                 <a-button style="margin-left: 8px">
@@ -86,8 +85,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择
+                <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
                 <span style="float:right;">
                     <a @click="loadData()"><a-icon type="sync" />刷新</a>
@@ -98,9 +97,9 @@
                                 <a-row>
                                     <template v-for="(item, index) in defColumns">
                                         <template v-if="item.key != 'rowIndex' && item.dataIndex != 'action'">
-                                            <a-col :span="12"
-                                                ><a-checkbox :value="item.dataIndex">{{ item.title }}</a-checkbox></a-col
-                                            >
+                                            <a-col :span="12">
+                                                <a-checkbox :value="item.dataIndex">{{ item.title }}</a-checkbox>
+                                            </a-col>
                                         </template>
                                     </template>
                                 </a-row>
@@ -129,9 +128,9 @@
                             <a-row>
                                 <template v-for="(item, index) in defColumns">
                                     <template v-if="item.key != 'rowIndex' && item.dataIndex != 'action'">
-                                        <a-col :span="12"
-                                            ><a-checkbox :value="item.dataIndex">{{ item.title }}</a-checkbox></a-col
-                                        >
+                                        <a-col :span="12">
+                                            <a-checkbox :value="item.dataIndex">{{ item.title }}</a-checkbox>
+                                        </a-col>
                                     </template>
                                 </template>
                             </a-row>
@@ -145,7 +144,10 @@
 
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+                        <a class="ant-dropdown-link">
+                            更多
+                            <a-icon type="down" />
+                        </a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
