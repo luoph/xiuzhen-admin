@@ -111,15 +111,7 @@
       </a-form-item>
 
       <a-form-item style="margin-top:24px">
-        <a-button
-          size="large"
-          type="primary"
-          htmlType="submit"
-          class="login-button"
-          :loading="loginBtn"
-          @click.stop.prevent="handleSubmit"
-          :disabled="loginBtn"
-        >确定</a-button>
+        <a-button size="large" type="primary" htmlType="submit" class="login-button" :loading="loginBtn" @click.stop.prevent="handleSubmit" :disabled="loginBtn" >确定</a-button>
       </a-form-item>
 
       <!-- <div class="user-login-other">
@@ -140,13 +132,7 @@
       @cancel="stepCaptchaCancel"
     ></two-step-captcha>
 
-    <a-modal
-      title="登录部门选择"
-      :width="450"
-      :visible="departVisible"
-      :closable="false"
-      :maskClosable="false"
-    >
+    <a-modal title="登录部门选择" :width="450" :visible="departVisible" :closable="false" :maskClosable="false" >
       <template slot="footer">
         <a-button type="primary" @click="departOk">确认</a-button>
       </template>
