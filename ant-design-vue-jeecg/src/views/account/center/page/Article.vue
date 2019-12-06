@@ -1,24 +1,20 @@
 <template>
-  <a-list>
-    <a-list-item>
-
-    </a-list-item>
-  </a-list>
+    <a-list>
+        <a-list-item> </a-list-item>
+    </a-list>
 </template>
 
 <script>
-  import AList from 'ant-design-vue/es/list'
-  import AListItem from 'ant-design-vue/es/list/Item'
+import AList from "ant-design-vue/es/list";
+import AListItem from "ant-design-vue/es/list/Item";
 
-  export default {
+export default {
     name: "Article",
     components: {
-      AList,
-      AListItem
-    }
-  }
+        AList,
+        AListItem,
+    },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
