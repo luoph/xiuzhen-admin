@@ -75,3 +75,4 @@ export const clearAll = () => {
 
   window.localStorage.clear()
 }
+

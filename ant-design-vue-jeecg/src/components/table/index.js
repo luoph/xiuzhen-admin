@@ -106,7 +106,7 @@ export default {
       if (result instanceof Promise) {
         result.then(r => {
           this.localPagination = Object.assign({}, this.localPagination, {
-            current: r.pageNo, // 返回结果中的当前分页数
+            current: r.pageNo,  // 返回结果中的当前分页数
             total: r.totalCount, // 返回结果中的总记录数
             showSizeChanger: this.showSizeChanger,
             pageSize: (pagination && pagination.pageSize) ||
@@ -123,8 +123,7 @@ export default {
       const totalList = []
       columns && columns instanceof Array && columns.forEach(column => {
         if (column.needTotal) {
-          totalList.push({
-            ...column,
+          totalList.push({ ...column,
             total: 0
           })
         }
@@ -227,10 +226,7 @@ export default {
         selectedRowKeys: this.selectedRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
           _vm.updateSelect(selectedRowKeys, selectedRows)
-          _vm.$emit('onSelect', {
-            selectedRowKeys: selectedRowKeys,
-            selectedRows: selectedRows
-          })
+          _vm.$emit('onSelect', { selectedRowKeys: selectedRowKeys, selectedRows: selectedRows })
         }
       };
 

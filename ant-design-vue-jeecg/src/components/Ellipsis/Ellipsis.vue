@@ -1,6 +1,6 @@
 <script>
-import Tooltip from 'ant-design-vue/es/tooltip'
-import { cutStrByFullLength, getStrFullLength } from '@/components/_util/StringUtil'
+  import Tooltip from 'ant-design-vue/es/tooltip'
+  import { cutStrByFullLength, getStrFullLength } from '@/components/_util/StringUtil'
 /*
   const isSupportLineClamp = document.body.style.webkitLineClamp !== undefined;
 
@@ -10,50 +10,54 @@ import { cutStrByFullLength, getStrFullLength } from '@/components/_util/StringU
   };
 */
 
-export default {
-  name: 'Ellipsis',
-  components: {
-    Tooltip
-  },
-  props: {
-    prefixCls: {
-      type: String,
-      default: 'ant-pro-ellipsis'
+  export default {
+    name: 'Ellipsis',
+    components: {
+      Tooltip
     },
-    tooltip: {
-      type: Boolean
+    props: {
+      prefixCls: {
+        type: String,
+        default: 'ant-pro-ellipsis'
+      },
+      tooltip: {
+        type: Boolean
+      },
+      length: {
+        type: Number,
+        required: true
+      },
+      lines: {
+        type: Number,
+        default: 1
+      },
+      fullWidthRecognition: {
+        type: Boolean,
+        default: false
+      }
     },
-    length: {
-      type: Number,
-      required: true
+    methods: {
+      getStrDom (str) {
+        return (
+          <span>{ cutStrByFullLength(str, this.length) + '...' }</span>
+        )
+      },
+      getTooltip ( fullStr) {
+        return (
+          <Tooltip>
+            <template slot="title">{ fullStr }</template>
+            { this.getStrDom(fullStr) }
+          </Tooltip>
+        )
+      }
     },
-    lines: {
-      type: Number,
-      default: 1
-    },
-    fullWidthRecognition: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    getStrDom(str) {
-      return <span>{cutStrByFullLength(str, this.length) + '...'}</span>
-    },
-    getTooltip(fullStr) {
+    render () {
+      const { tooltip, length } = this.$props
+      let str = this.$slots.default.map(vNode => vNode.text).join("")
+      const strDom = tooltip && getStrFullLength(str) > length ? this.getTooltip(str) : this.getStrDom(str);
       return (
-        <Tooltip>
-          <template slot="title">{fullStr}</template>
-          {this.getStrDom(fullStr)}
-        </Tooltip>
+        strDom
       )
     }
-  },
-  render() {
-    const { tooltip, length } = this.$props
-    let str = this.$slots.default.map(vNode => vNode.text).join('')
-    const strDom = tooltip && getStrFullLength(str) > length ? this.getTooltip(str) : this.getStrDom(str)
-    return strDom
   }
-}
 </script>

@@ -60,13 +60,13 @@ v-decorator用法：
 下拉/checkbox
 
 ## 参数配置
-| 参数        | 类型    | 必填 | 说明                                                                                            |
-| ----------- | ------- | ---- | ----------------------------------------------------------------------------------------------- |
-| placeholder | string  |      | placeholder                                                                                     |
-| disabled    | Boolean |      | 是否禁用                                                                                        |
-| type        | string  |      | 多选类型 select/checkbox 默认是select                                                           |
-| dictCode    | string  |      | 数据字典编码或者表名,显示字段名,存储字段名拼接而成的字符串,如果提供了options参数 则此参数可不填 |
-| options     | Array   |      | 多选项,如果dictCode参数未提供,可以设置此参数加载多选项                                          |
+| 参数           | 类型   | 必填 |说明|
+|--------------|---------|----|---------|
+| placeholder      |string   | | placeholder |
+| disabled      |Boolean   | | 是否禁用 |
+| type      |string   | | 多选类型 select/checkbox 默认是select |
+| dictCode      |string   | | 数据字典编码或者表名,显示字段名,存储字段名拼接而成的字符串,如果提供了options参数 则此参数可不填|
+| options      |Array   | | 多选项,如果dictCode参数未提供,可以设置此参数加载多选项 |
 
 使用示例
 ----
@@ -121,13 +121,13 @@ v-decorator用法：
 下拉搜索组件,支持异步加载,异步加载用于大数据量的字典表
 
 ## 参数配置
-| 参数        | 类型    | 必填 | 说明                                                                                  |
-| ----------- | ------- | ---- | ------------------------------------------------------------------------------------- |
-| placeholder | string  |      | placeholder                                                                           |
-| disabled    | Boolean |      | 是否禁用                                                                              |
-| dict        | string  |      | 表名,显示字段名,存储字段名拼接而成的字符串,如果提供了dictOptions参数 则此参数可不填   |
-| dictOptions | Array   |      | 多选项,如果dict参数未提供,可以设置此参数加载多选项                                    |
-| async       | Boolean |      | 是否支持异步加载,设置成true,则通过输入的内容加载远程数据,否则在本地过滤数据,默认false |
+| 参数           | 类型   | 必填 |说明|
+|--------------|---------|----|---------|
+| placeholder      |string   | | placeholder |
+| disabled      |Boolean   | | 是否禁用 |
+| dict      |string   | | 表名,显示字段名,存储字段名拼接而成的字符串,如果提供了dictOptions参数 则此参数可不填|
+| dictOptions      |Array   | | 多选项,如果dict参数未提供,可以设置此参数加载多选项 |
+| async      |Boolean   | | 是否支持异步加载,设置成true,则通过输入的内容加载远程数据,否则在本地过滤数据,默认false|
 
 使用示例
 ----

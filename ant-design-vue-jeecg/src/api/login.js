@@ -1,7 +1,5 @@
 import api from './index'
-import {
-  axios
-} from '@/utils/request'
+import { axios } from '@/utils/request'
 
 /**
  * login func
@@ -54,7 +52,7 @@ export function logout(logoutToken) {
     method: 'post',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
-      'X-Access-Token': logoutToken
+      'X-Access-Token':  logoutToken
     }
   })
 }

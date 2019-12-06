@@ -4,12 +4,8 @@
  * date: 20190109
  */
 
-import {
-  ajaxGetDictItems
-} from '@/api/api'
-import {
-  getAction
-} from '@/api/manage'
+import {ajaxGetDictItems} from '@/api/api'
+import {getAction} from '@/api/manage'
 
 /**
  * 获取字典数组
@@ -41,7 +37,7 @@ export function filterDictText(dictOptions, text) {
     }
   }
   return text
-  //--update-end----author:sunjianlei---date:20191025------for:修复字典替换方法在字典没有加载完成之前报错的问题、修复没有找到字典时返回空值的问题---
+//--update-end----author:sunjianlei---date:20191025------for:修复字典替换方法在字典没有加载完成之前报错的问题、修复没有找到字典时返回空值的问题---
 }
 
 /**
@@ -51,23 +47,23 @@ export function filterDictText(dictOptions, text) {
  * @return String
  */
 export function filterMultiDictText(dictOptions, text) {
-  if (!text || !dictOptions || dictOptions.length == 0) {
+  if(!text || !dictOptions || dictOptions.length==0){
     return ""
   }
   let re = "";
   let arr = text.split(",")
   dictOptions.forEach(function (option) {
-    for (let i = 0; i < arr.length; i++) {
+    for(let i=0;i<arr.length;i++){
       if (arr[i] === option.value) {
-        re += option.text + ",";
+        re += option.text+",";
         break;
       }
     }
   });
-  if (re == "") {
+  if(re==""){
     return text;
   }
-  return re.substring(0, re.length - 1);
+  return re.substring(0,re.length-1);
 }
 
 /**
