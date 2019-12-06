@@ -1,22 +1,22 @@
 <template>
-  <div class="toolbar">
-    <div style="float: left">
-      <slot name="extra"></slot>
+    <div class="toolbar">
+        <div style="float: left">
+            <slot name="extra"></slot>
+        </div>
+        <div style="float: right">
+            <slot></slot>
+        </div>
     </div>
-    <div style="float: right">
-      <slot></slot>
-    </div>
-  </div>
 </template>
 
 <script>
-  export default {
-    name: "FooterToolBar"
-  }
+export default {
+    name: "FooterToolBar",
+};
 </script>
 
 <style lang="scss" scoped>
-  .toolbar {
+.toolbar {
     position: fixed;
     width: 100%;
     bottom: 0;
@@ -28,5 +28,5 @@
     border-top: 1px solid #e8e8e8;
     padding: 0 24px;
     z-index: 9;
-  }
+}
 </style>

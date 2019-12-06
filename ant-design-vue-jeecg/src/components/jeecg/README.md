@@ -2,14 +2,14 @@
   
 ###### 说明: antd-vue日期组件需要用moment中转一下，用起来不是很方便，特二次封装，使用时只需要传字符串即可
 ## 参数配置
-| 参数           | 类型      | 必填 |说明|
-|--------------|---------|----|---------|
-| placeholder      |string   | | placeholder      |
-| readOnly   | boolean   | | true/false 默认false                 |
-| value      | string | | 绑定v-model或是v-decorator后不需要设置    |
-| showTime | boolean | | 是否展示时间true/false 默认false  |
-| dateFormat    | string | |日期格式 默认'YYYY-MM-DD' 若showTime设置为true则需要将其设置成对应的时间格式(如:YYYY-MM-DD HH:mm:ss)               |
-| triggerChange | string | |触发组件值改变的事件是否是change,当使用v-decorator时且没有设置decorator的option.trigger为input需要设置该值为true               |
+| 参数          | 类型    | 必填 | 说明                                                                                                             |
+| ------------- | ------- | ---- | ---------------------------------------------------------------------------------------------------------------- |
+| placeholder   | string  |      | placeholder                                                                                                      |
+| readOnly      | boolean |      | true/false 默认false                                                                                             |
+| value         | string  |      | 绑定v-model或是v-decorator后不需要设置                                                                           |
+| showTime      | boolean |      | 是否展示时间true/false 默认false                                                                                 |
+| dateFormat    | string  |      | 日期格式 默认'YYYY-MM-DD' 若showTime设置为true则需要将其设置成对应的时间格式(如:YYYY-MM-DD HH:mm:ss)             |
+| triggerChange | string  |      | 触发组件值改变的事件是否是change,当使用v-decorator时且没有设置decorator的option.trigger为input需要设置该值为true |
 使用示例
 ----
 1.组件带有v-model的使用方法
@@ -63,10 +63,10 @@ script内需引入jdate
 
 # JSuperQuery 高级查询 使用文档
 ## 参数配置
-| 参数           | 类型      | 必填 | 说明                   |
-|--------------|---------|----|----------------------|
-| fieldList      | array   |✔| 需要查询的列集合示例如下，type类型有:date/datetime/string/int/number      |
-| callback   | array   |  | 回调函数名称(非必须)默认handleSuperQuery                |
+| 参数      | 类型  | 必填 | 说明                                                                 |
+| --------- | ----- | ---- | -------------------------------------------------------------------- |
+| fieldList | array | ✔    | 需要查询的列集合示例如下，type类型有:date/datetime/string/int/number |
+| callback  | array |      | 回调函数名称(非必须)默认handleSuperQuery                             |
 
 fieldList结构示例：
 ```vue
@@ -102,7 +102,7 @@ import JSuperQuery from '@/components/jeecg/JSuperQuery.vue';
   <j-super-query :fieldList="fieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
 ```
 3.list页面data中需要定义三个属性：
-```vue
+```vue fieldList
   fieldList:superQueryFieldList,
   superQueryFlag:false,
   superQueryParams:""
@@ -145,10 +145,10 @@ this.$refs.superQueryModal.show();
   
 ###### 说明: 遇到超长文本展示，通过此标签可以截取省略号显示，鼠标放置会提示全文本
 ## 参数配置
-| 参数  | 类型     | 必填 |    说明      |
-|--------|---------|----|----------------|
-| value  |string   | 必填   |  字符串文本|
-| length | number  | 非必填 |  默认25    |
+| 参数   | 类型   | 必填   | 说明       |
+| ------ | ------ | ------ | ---------- |
+| value  | string | 必填   | 字符串文本 |
+| length | number | 非必填 | 默认25     |
 使用示例
 ----
 1.组件带有v-model的使用方法
@@ -231,7 +231,7 @@ export default {
 ## 所需参数
 
 | 参数        | 类型   | 必填   | 说明                                                         |
-|-------------|--------|--------|--------------------------------------------------------------|
+| ----------- | ------ | ------ | ------------------------------------------------------------ |
 | rowKey      | String | 非必填 | 表格行 key 的取值，默认为"id"                                |
 | columns     | Array  | 必填   | 表格列的配置描述，具体见Antd官方文档                         |
 | url         | String | 必填   | 数据查询url                                                  |
@@ -288,9 +288,9 @@ export default {
   
 ###### 说明: antd-vue checkbox组件处理的是数组，用起来不是很方便，特二次封装，使用时只需处理字符串即可
 ## 参数配置
-| 参数           | 类型   | 必填 |说明|
-|--------------|---------|----|---------|
-| options      |array   |✔| checkbox需要配置的项，是个数组，数组中每个对象包含两个属性:label(用于显示)和value(用于存储) |
+| 参数    | 类型  | 必填 | 说明                                                                                        |
+| ------- | ----- | ---- | ------------------------------------------------------------------------------------------- |
+| options | array | ✔    | checkbox需要配置的项，是个数组，数组中每个对象包含两个属性:label(用于显示)和value(用于存储) |
 
 使用示例
 ----
@@ -341,13 +341,13 @@ export default {
   
 ###### 说明: 一个简易版的代码编辑器，支持语法高亮
 ## 参数配置
-| 参数           | 类型   | 必填 |说明|
-|--------------|---------|----|---------|
-| language      |string   | | 表示当前编写代码的类型 javascript/html/css/sql |
-| placeholder      |string   | | placeholder |
-| lineNumbers      |Boolean   | | 是否显示行号 |
-| fullScreen      |Boolean   | | 是否显示全屏按钮 |
-| zIndex      |string   | | 全屏以后的z-index |
+| 参数        | 类型    | 必填 | 说明                                           |
+| ----------- | ------- | ---- | ---------------------------------------------- |
+| language    | string  |      | 表示当前编写代码的类型 javascript/html/css/sql |
+| placeholder | string  |      | placeholder                                    |
+| lineNumbers | Boolean |      | 是否显示行号                                   |
+| fullScreen  | Boolean |      | 是否显示全屏按钮                               |
+| zIndex      | string  |      | 全屏以后的z-index                              |
 
 使用示例
 ----
@@ -471,13 +471,13 @@ online用 实际开发请使用components/dict/JMultiSelectTag
 异步加载的树形下拉组件
 
 ## 参数配置
-| 参数           | 类型   | 必填 |说明|
-|--------------|---------|----|---------|
-| placeholder      |string   | | placeholder |
-| dict      |string   | ✔| 表名,显示字段名,存储字段名拼接的字符串 |
-| pidField      |string   | ✔| 父ID的字段名 |
-| pidValue      |string   | | 根节点父ID的值 默认'0' 不可以设置为空,如果想使用此组件，而数据库根节点父ID为空，请修改之 |
-| multiple      |boolean   | |是否支持多选 |
+| 参数        | 类型    | 必填 | 说明                                                                                     |
+| ----------- | ------- | ---- | ---------------------------------------------------------------------------------------- |
+| placeholder | string  |      | placeholder                                                                              |
+| dict        | string  | ✔    | 表名,显示字段名,存储字段名拼接的字符串                                                   |
+| pidField    | string  | ✔    | 父ID的字段名                                                                             |
+| pidValue    | string  |      | 根节点父ID的值 默认'0' 不可以设置为空,如果想使用此组件，而数据库根节点父ID为空，请修改之 |
+| multiple    | boolean |      | 是否支持多选                                                                             |
 
 使用示例
 ----
