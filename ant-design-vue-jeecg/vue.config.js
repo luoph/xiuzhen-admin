@@ -1,5 +1,5 @@
 const path = require("path");
-const debug = process.env.NODE_ENV !== 'production'
+const debug = process.env.NODE_ENV !== 'production';
 
 function resolve(dir) {
     return path.join(__dirname, dir);
@@ -20,7 +20,8 @@ module.exports = {
     configureWebpack: config => {
         if (debug) {
             // 测试环境
-            config.devtool = "cheap-module-eval-source-map";
+            // config.devtool = "cheap-module-eval-source-map";
+            config.devtool = 'source-map';
         } else {
             config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
             config.productionSourceMap = false;
