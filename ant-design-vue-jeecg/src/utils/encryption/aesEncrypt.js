@@ -105,7 +105,7 @@ var CryptoJS =
                         };
                     }
 
-                    // Initializer's prototype is the subtype object
+                    // Initializers prototype is the subtype object
                     subtype.init.prototype = subtype;
 
                     // Reference supertype
@@ -942,7 +942,7 @@ var CryptoJS =
             var M_offset_14 = M[offset + 14];
             var M_offset_15 = M[offset + 15];
 
-            // Working varialbes
+            // Working variables
             var a = H[0];
             var b = H[1];
             var c = H[2];
@@ -3646,7 +3646,7 @@ CryptoJS.lib.Cipher ||
             /**
              * Initializes a newly created cipher.
              *
-             * @param {number} xformMode Either the encryption or decryption transormation mode constant.
+             * @param {number} xformMode Either the encryption or decryption transformation mode constant.
              * @param {WordArray} key The key.
              * @param {Object} cfg (Optional) The configuration options to use for this operation.
              *
@@ -3763,8 +3763,8 @@ CryptoJS.lib.Cipher ||
                             return selectCipherStrategy(key).encrypt(cipher, message, key, cfg);
                         },
 
-                        decrypt: function(ciphertext, key, cfg) {
-                            return selectCipherStrategy(key).decrypt(cipher, ciphertext, key, cfg);
+                        decrypt: function(cipherText, key, cfg) {
+                            return selectCipherStrategy(key).decrypt(cipher, cipherText, key, cfg);
                         },
                     };
                 };
@@ -4072,8 +4072,8 @@ CryptoJS.lib.Cipher ||
         /**
          * A collection of cipher parameters.
          *
-         * @property {WordArray} ciphertext The raw ciphertext.
-         * @property {WordArray} key The key to this ciphertext.
+         * @property {WordArray} cipherText The raw cipherText.
+         * @property {WordArray} key The key to this cipherText.
          * @property {WordArray} iv The IV used in the ciphering operation.
          * @property {WordArray} salt The salt used with a key derivation function.
          * @property {Cipher} algorithm The cipher algorithm.

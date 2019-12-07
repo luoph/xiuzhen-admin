@@ -253,7 +253,7 @@ public class SysAnnouncementController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/doReovkeData", method = RequestMethod.GET)
+    @RequestMapping(value = "/doRevokeData", method = RequestMethod.GET)
     public Result<SysAnnouncement> doRevokeData(@RequestParam(name = "id") String id, HttpServletRequest request) {
         Result<SysAnnouncement> result = new Result<>();
         SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);

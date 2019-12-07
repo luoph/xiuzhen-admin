@@ -1,4 +1,4 @@
-import { UserLayout, TabLayout, RouteView, BlankLayout, PageView } from '@/components/layouts'
+import { UserLayout, TabLayout, RouteView, BlankLayout, PageView } from '@/components/layouts';
 
 /**
  * 走菜单，走权限控制
@@ -287,7 +287,7 @@ export const asyncRouterMap = [
   {
     path: '*', redirect: '/404', hidden: true
   }
-]
+];
 
 /**
  * 基础路由
