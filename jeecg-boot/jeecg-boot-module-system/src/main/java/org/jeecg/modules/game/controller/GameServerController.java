@@ -31,6 +31,7 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("/game/gameServer")
 public class GameServerController extends JeecgController<GameServer, IGameServerService> {
+
     @Autowired
     private IGameServerService gameServerService;
 
@@ -51,7 +52,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         QueryWrapper<GameServer> queryWrapper = QueryGenerator.initQueryWrapper(gameServer, req.getParameterMap());
-        Page<GameServer> page = new Page<GameServer>(pageNo, pageSize);
+        Page<GameServer> page = new Page<>(pageNo, pageSize);
         IPage<GameServer> pageList = gameServerService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
@@ -93,7 +94,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-通过id删除")
     @ApiOperation(value = "游戏服配置-通过id删除", notes = "游戏服配置-通过id删除")
     @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         gameServerService.removeById(id);
         return Result.ok("删除成功!");
     }
@@ -107,7 +108,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-批量删除")
     @ApiOperation(value = "游戏服配置-批量删除", notes = "游戏服配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.gameServerService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
@@ -121,7 +122,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-通过id查询")
     @ApiOperation(value = "游戏服配置-通过id查询", notes = "游戏服配置-通过id查询")
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
         GameServer gameServer = gameServerService.getById(id);
         return Result.ok(gameServer);
     }
