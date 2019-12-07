@@ -21,7 +21,7 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
     /**
      * @功能：清空所有日志记录
      */
-    public void removeAll();
+    void removeAll();
 
     /**
      * 获取系统总访问次数

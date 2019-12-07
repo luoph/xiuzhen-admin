@@ -36,7 +36,7 @@ public class AutoPoiDictService implements AutoPoiDictServiceI {
      */
     @Override
     public String[] queryDict(String dicTable, String dicCode, String dicText) {
-        List<String> dictReplaces = new ArrayList<String>();
+        List<String> dictReplaces = new ArrayList<>();
         List<DictModel> dictList = null;
         // step.1 如果没有字典表则使用系统字典表
         if (oConvertUtils.isEmpty(dicTable)) {
