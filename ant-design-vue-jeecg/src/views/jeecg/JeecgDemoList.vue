@@ -30,7 +30,7 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="选择用户">
-                                <!-- dictCode:表名,文本字段,取值字段 -->
+                                <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库，java接口：SysDictController#getDictItems-->
                                 <j-dict-select-tag v-model="queryParam.id" placeholder="请选择用户" dictCode="demo,name,id" />
                             </a-form-item>
                         </a-col>
