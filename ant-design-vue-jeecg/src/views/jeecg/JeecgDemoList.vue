@@ -62,7 +62,7 @@
 
         <!-- 操作按钮区域 -->
         <div class="table-operator" style="margin-top: 5px">
-            <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+            <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
             <a-button type="primary" icon="plus" @click="jump">创建单据</a-button>
             <a-button type="primary" icon="plus" @click="onetomany">一对多</a-button>
             <a-button type="primary" icon="download" @click="handleExportXls('demo')">导出</a-button>
@@ -82,14 +82,16 @@
             </a-dropdown>
         </div>
 
-        <!-- table区域-begin -->
+        <!-- table区域-begin，已选择xx项，清空、自定义列的操作条 -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
                 <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择
                 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
                 <span style="float:right;">
-                    <a @click="loadData()"><a-icon type="sync" />刷新</a>
+                    <a @click="loadData()">
+                        <a-icon type="sync" />刷新
+                    </a>
                     <a-divider type="vertical" />
                     <a-popover title="自定义列" trigger="click" placement="leftBottom">
                         <template slot="content">
@@ -105,7 +107,9 @@
                                 </a-row>
                             </a-checkbox-group>
                         </template>
-                        <a><a-icon type="setting" />自定义列</a>
+                        <a>
+                            <a-icon type="setting" />自定义列
+                        </a>
                     </a-popover>
                 </span>
             </div>
@@ -122,6 +126,7 @@
                 :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
+                <!-- 自定义展示列下拉组件 -->
                 <div slot="filterDropdown">
                     <a-card>
                         <a-checkbox-group @change="onColSettingsChange" v-model="settingColumns" :defaultValue="settingColumns">
@@ -137,11 +142,13 @@
                         </a-checkbox-group>
                     </a-card>
                 </div>
+                <!-- 自定义展示列按钮 -->
                 <a-icon slot="filterIcon" type="setting" :style="{ fontSize: '16px', color: '#108ee9' }" />
 
+                <!-- 操作列（编辑、更多） -->
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
-
+                    <!-- 分割线 -->
                     <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">
