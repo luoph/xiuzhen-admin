@@ -1,6 +1,7 @@
 package org.jeecg.common.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * sql注入处理工具类
@@ -11,6 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 public class SqlInjectionUtil {
     private static final String XSS_STR = "'|and |exec |insert |select |delete |update |drop |count |chr |mid |master |truncate |char |declare |;|or |+|,";
 
+    private static final String[] XSS_STR_ARR;
+
+    static {
+        XSS_STR_ARR = XSS_STR.split("\\|");
+    }
+
     /**
      * sql注入过滤处理，遇到注入关键字抛异常
      *
@@ -18,18 +25,7 @@ public class SqlInjectionUtil {
      * @return
      */
     public static void filterContent(String value) {
-        if (value == null || "".equals(value)) {
-            return;
-        }
-        value = value.toLowerCase();// 统一转为小写
-        String[] xssArr = XSS_STR.split("\\|");
-        for (int i = 0; i < xssArr.length; i++) {
-            if (value.indexOf(xssArr[i]) > -1) {
-                log.error("请注意，值可能存在SQL注入风险!---> {}", value);
-                throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
-            }
-        }
-        return;
+        detectInject(value);
     }
 
     /**
@@ -39,20 +35,9 @@ public class SqlInjectionUtil {
      * @return
      */
     public static void filterContent(String[] values) {
-        String[] xssArr = XSS_STR.split("\\|");
         for (String value : values) {
-            if (value == null || "".equals(value)) {
-                return;
-            }
-            value = value.toLowerCase();// 统一转为小写
-            for (int i = 0; i < xssArr.length; i++) {
-                if (value.indexOf(xssArr[i]) > -1) {
-                    log.error("请注意，值可能存在SQL注入风险!---> {}", value);
-                    throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
-                }
-            }
+            detectInject(value);
         }
-        return;
     }
 
     /**
@@ -63,18 +48,7 @@ public class SqlInjectionUtil {
     @Deprecated
     public static void specialFilterContent(String value) {
         String specialXssStr = "exec |insert |select |delete |update |drop |count |chr |mid |master |truncate |char |declare |;|+|";
-        String[] xssArr = specialXssStr.split("\\|");
-        if (value == null || "".equals(value)) {
-            return;
-        }
-        value = value.toLowerCase();// 统一转为小写
-        for (int i = 0; i < xssArr.length; i++) {
-            if (value.indexOf(xssArr[i]) > -1) {
-                log.error("请注意，值可能存在SQL注入风险!---> {}", value);
-                throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
-            }
-        }
-        return;
+        detectInject(value, specialXssStr);
     }
 
 
@@ -86,18 +60,38 @@ public class SqlInjectionUtil {
     @Deprecated
     public static void specialFilterContentForOnlineReport(String value) {
         String specialXssStr = "exec |insert |delete |update |drop |chr |mid |master |truncate |char |declare |";
-        String[] xssArr = specialXssStr.split("\\|");
-        if (value == null || "".equals(value)) {
+        detectInject(value, specialXssStr);
+    }
+
+    private static void detectInject(String value, String filterStr) {
+        if (StringUtils.isEmpty(value)) {
             return;
         }
-        value = value.toLowerCase();// 统一转为小写
-        for (int i = 0; i < xssArr.length; i++) {
-            if (value.indexOf(xssArr[i]) > -1) {
+
+        String[] filterArr = filterStr.split("\\|");
+        // 统一转为小写
+        value = value.toLowerCase();
+        for (String s : filterArr) {
+            if (value.contains(s)) {
                 log.error("请注意，值可能存在SQL注入风险!---> {}", value);
                 throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
             }
         }
-        return;
+    }
+
+    private static void detectInject(String value) {
+        if (StringUtils.isEmpty(value)) {
+            return;
+        }
+
+        // 统一转为小写
+        value = value.toLowerCase();
+        for (String s : XSS_STR_ARR) {
+            if (value.contains(s)) {
+                log.error("请注意，值可能存在SQL注入风险!---> {}", value);
+                throw new RuntimeException("请注意，值可能存在SQL注入风险!--->" + value);
+            }
+        }
     }
 
 }

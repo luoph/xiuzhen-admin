@@ -19,10 +19,28 @@ import java.util.Map;
  */
 public interface ISysDictService extends IService<SysDict> {
 
+
     List<DictModel> queryDictItemsByCode(String code);
 
+    /**
+     * 查询 dictCode，生成选项数组
+     *
+     * @param table 表名
+     * @param text  文本显示字段
+     * @param code  值字段
+     * @return {@linkplain DictModel}选项数组
+     */
     List<DictModel> queryTableDictItemsByCode(String table, String text, String code);
 
+    /**
+     * 查询 dictCode，生成选项数组
+     *
+     * @param table     表名
+     * @param text      文本显示字段
+     * @param code      值字段
+     * @param filterSql 过滤条件
+     * @return {@linkplain DictModel}选项数组
+     */
     List<DictModel> queryTableDictItemsByCodeAndFilter(String table, String text, String code, String filterSql);
 
     String queryDictTextByKey(String code, String key);
@@ -42,32 +60,32 @@ public interface ISysDictService extends IService<SysDict> {
     /**
      * 添加一对多
      */
-    public void saveMain(SysDict sysDict, List<SysDictItem> sysDictItemList);
+    void saveMain(SysDict sysDict, List<SysDictItem> sysDictItemList);
 
     /**
      * 查询所有部门 作为字典信息 id -->value,departName -->text
      *
      * @return
      */
-    public List<DictModel> queryAllDepartBackDictModel();
+    List<DictModel> queryAllDepartBackDictModel();
 
     /**
      * 查询所有用户  作为字典信息 username -->value,realname -->text
      *
      * @return
      */
-    public List<DictModel> queryAllUserBackDictModel();
+    List<DictModel> queryAllUserBackDictModel();
 
     /**
      * 通过关键字查询字典表
      *
-     * @param table
-     * @param text
-     * @param code
-     * @param keyword
+     * @param table   表名
+     * @param text    文本显示字段
+     * @param code    值字段
+     * @param keyword 关键字
      * @return
      */
-    public List<DictModel> queryTableDictItems(String table, String text, String code, String keyword);
+    List<DictModel> queryTableDictItems(String table, String text, String code, String keyword);
 
     /**
      * 根据表名、显示字段名、存储字段名 查询树

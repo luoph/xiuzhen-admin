@@ -53,6 +53,20 @@ import java.util.*;
 @Slf4j
 public class SysDictController {
 
+    /**
+     * 参数分隔符
+     */
+    private static final String DICT_PARAM_SPLIT_CHAR = ",";
+
+    /**
+     * 不带查询条件的参数：表名,文本字段,取值字段
+     */
+    private static final int DICT_PARAM_NO_FILTER_LEN = 3;
+    /**
+     * 带查询条件的参数：表名,文本字段,取值字段,查询条件
+     */
+    private static final int DICT_PARAM_WITH_FILTER_LEN = DICT_PARAM_NO_FILTER_LEN + 1;
+
     @Autowired
     private ISysDictService sysDictService;
 
@@ -115,26 +129,27 @@ public class SysDictController {
     @RequestMapping(value = "/getDictItems/{dictCode}", method = RequestMethod.GET)
     public Result<List<DictModel>> getDictItems(@PathVariable String dictCode) {
         log.info(" dictCode : " + dictCode);
-        Result<List<DictModel>> result = new Result<List<DictModel>>();
+        Result<List<DictModel>> result = new Result<>();
         List<DictModel> ls = null;
         try {
-            if (dictCode.indexOf(",") != -1) {
+            if (dictCode.contains(DICT_PARAM_SPLIT_CHAR)) {
                 // 关联表字典（举例：sys_user,realname,id）
-                String[] params = dictCode.split(",");
+                String[] params = dictCode.split(DICT_PARAM_SPLIT_CHAR);
 
-                if (params.length < 3) {
+                if (params.length < DICT_PARAM_NO_FILTER_LEN) {
                     result.error500("字典Code格式不正确！");
                     return result;
                 }
+
                 //S QL注入校验（只限制非法串改数据库）
                 final String[] sqlInjCheck = {params[0], params[1], params[2]};
                 SqlInjectionUtil.filterContent(sqlInjCheck);
 
-                if (params.length == 4) {
+                if (params.length == DICT_PARAM_WITH_FILTER_LEN) {
                     // SQL注入校验（查询条件SQL 特殊check，此方法仅供此处使用）
-                    SqlInjectionUtil.specialFilterContent(params[3]);
+                    SqlInjectionUtil.specialFilterContent(params[DICT_PARAM_NO_FILTER_LEN]);
                     ls = sysDictService.queryTableDictItemsByCodeAndFilter(params[0], params[1], params[2], params[3]);
-                } else if (params.length == 3) {
+                } else if (params.length == DICT_PARAM_NO_FILTER_LEN) {
                     ls = sysDictService.queryTableDictItemsByCode(params[0], params[1], params[2]);
                 } else {
                     result.error500("字典Code格式不正确！");
@@ -229,7 +244,7 @@ public class SysDictController {
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
-    public Result<SysDict> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<SysDict> delete(@RequestParam(name = "id") String id) {
         Result<SysDict> result = new Result<SysDict>();
         boolean ok = sysDictService.removeById(id);
         if (ok) {
@@ -247,12 +262,12 @@ public class SysDictController {
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
-    public Result<SysDict> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<SysDict> deleteBatch(@RequestParam(name = "ids") String ids) {
         Result<SysDict> result = new Result<SysDict>();
         if (oConvertUtils.isEmpty(ids)) {
             result.error500("参数不识别！");
         } else {
-            sysDictService.removeByIds(Arrays.asList(ids.split(",")));
+            sysDictService.removeByIds(Arrays.asList(ids.split(DICT_PARAM_SPLIT_CHAR)));
             result.success("删除成功!");
         }
         return result;
@@ -261,8 +276,8 @@ public class SysDictController {
     /**
      * 导出excel
      *
+     * @param sysDict
      * @param request
-     * @param response
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(SysDict sysDict, HttpServletRequest request) {
@@ -270,7 +285,7 @@ public class SysDictController {
         QueryWrapper<SysDict> queryWrapper = QueryGenerator.initQueryWrapper(sysDict, request.getParameterMap());
         //Step.2 AutoPoi 导出Excel
         ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
-        List<SysDictPage> pageList = new ArrayList<SysDictPage>();
+        List<SysDictPage> pageList = new ArrayList<>();
 
         List<SysDict> sysDictList = sysDictService.list(queryWrapper);
         for (SysDict dictMain : sysDictList) {
@@ -306,7 +321,8 @@ public class SysDictController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(2);
@@ -345,11 +361,11 @@ public class SysDictController {
     @RequestMapping(value = "/loadDict/{dictCode}", method = RequestMethod.GET)
     public Result<List<DictModel>> loadDict(@PathVariable String dictCode, @RequestParam(name = "keyword") String keyword) {
         log.info(" 加载字典表数据,加载关键字: " + keyword);
-        Result<List<DictModel>> result = new Result<List<DictModel>>();
+        Result<List<DictModel>> result = new Result<>();
         List<DictModel> ls = null;
         try {
-            if (dictCode.indexOf(",") != -1) {
-                String[] params = dictCode.split(",");
+            if (dictCode.contains(DICT_PARAM_SPLIT_CHAR)) {
+                String[] params = dictCode.split(DICT_PARAM_SPLIT_CHAR);
                 if (params.length != 3) {
                     result.error500("字典Code格式不正确！");
                     return result;
@@ -377,9 +393,9 @@ public class SysDictController {
     public Result<List<String>> loadDictItem(@PathVariable String dictCode, @RequestParam(name = "key") String key) {
         Result<List<String>> result = new Result<>();
         try {
-            if (dictCode.indexOf(",") != -1) {
-                String[] params = dictCode.split(",");
-                if (params.length != 3) {
+            if (dictCode.contains(DICT_PARAM_SPLIT_CHAR)) {
+                String[] params = dictCode.split(DICT_PARAM_SPLIT_CHAR);
+                if (params.length != DICT_PARAM_NO_FILTER_LEN) {
                     result.error500("字典Code格式不正确！");
                     return result;
                 }
@@ -406,17 +422,17 @@ public class SysDictController {
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/loadTreeData", method = RequestMethod.GET)
     public Result<List<TreeSelectModel>> loadDict(@RequestParam(name = "pid") String pid, @RequestParam(name = "pidField") String pidField,
-                                                  @RequestParam(name = "tableName") String tbname,
+                                                  @RequestParam(name = "tableName") String tableName,
                                                   @RequestParam(name = "text") String text,
                                                   @RequestParam(name = "code") String code,
                                                   @RequestParam(name = "hasChildField") String hasChildField,
                                                   @RequestParam(name = "condition") String condition) {
-        Result<List<TreeSelectModel>> result = new Result<List<TreeSelectModel>>();
+        Result<List<TreeSelectModel>> result = new Result<>();
         Map<String, String> query = null;
         if (oConvertUtils.isNotEmpty(condition)) {
             query = JSON.parseObject(condition, Map.class);
         }
-        List<TreeSelectModel> ls = sysDictService.queryTreeList(query, tbname, text, code, pidField, pid, hasChildField);
+        List<TreeSelectModel> ls = sysDictService.queryTreeList(query, tableName, text, code, pidField, pid, hasChildField);
         result.setSuccess(true);
         result.setResult(ls);
         return result;
@@ -430,7 +446,7 @@ public class SysDictController {
      */
     @RequestMapping(value = "/deleteList", method = RequestMethod.GET)
     public Result<List<SysDict>> deleteList() {
-        Result<List<SysDict>> result = new Result<List<SysDict>>();
+        Result<List<SysDict>> result = new Result<>();
         List<SysDict> list = this.sysDictService.queryDeleteList();
         result.setSuccess(true);
         result.setResult(list);
