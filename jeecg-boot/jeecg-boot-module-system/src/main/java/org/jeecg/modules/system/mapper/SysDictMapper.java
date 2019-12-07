@@ -27,36 +27,36 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      *
      * @return
      */
-    public Long duplicateCheckCountSql(DuplicateCheckVo duplicateCheckVo);
+    Long duplicateCheckCountSql(DuplicateCheckVo duplicateCheckVo);
 
-    public Long duplicateCheckCountSqlNoDataId(DuplicateCheckVo duplicateCheckVo);
+    Long duplicateCheckCountSqlNoDataId(DuplicateCheckVo duplicateCheckVo);
 
-    public List<DictModel> queryDictItemsByCode(@Param("code") String code);
+    List<DictModel> queryDictItemsByCode(@Param("code") String code);
 
-    public List<DictModel> queryTableDictItemsByCode(@Param("table") String table, @Param("text") String text, @Param("code") String code);
+    List<DictModel> queryTableDictItemsByCode(@Param("table") String table, @Param("text") String text, @Param("code") String code);
 
-    public List<DictModel> queryTableDictItemsByCodeAndFilter(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("filterSql") String filterSql);
+    List<DictModel> queryTableDictItemsByCodeAndFilter(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("filterSql") String filterSql);
 
 
-    public String queryDictTextByKey(@Param("code") String code, @Param("key") String key);
+    String queryDictTextByKey(@Param("code") String code, @Param("key") String key);
 
-    public String queryTableDictTextByKey(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("key") String key);
+    String queryTableDictTextByKey(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("key") String key);
 
-    public List<DictModel> queryTableDictByKeys(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyArray") String[] keyArray);
+    List<DictModel> queryTableDictByKeys(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyArray") String[] keyArray);
 
     /**
      * 查询所有部门 作为字典信息 id -->value,departName -->text
      *
      * @return
      */
-    public List<DictModel> queryAllDepartBackDictModel();
+    List<DictModel> queryAllDepartBackDictModel();
 
     /**
      * 查询所有用户  作为字典信息 username -->value,realname -->text
      *
      * @return
      */
-    public List<DictModel> queryAllUserBackDictModel();
+    List<DictModel> queryAllUserBackDictModel();
 
     /**
      * 通过关键字查询出字典表
@@ -67,7 +67,7 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @param keyword
      * @return
      */
-    public List<DictModel> queryTableDictItems(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyword") String keyword);
+    List<DictModel> queryTableDictItems(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyword") String keyword);
 
     /**
      * 根据表名、显示字段名、存储字段名 查询树
@@ -87,7 +87,7 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @param id
      */
     @Select("delete from sys_dict where id = #{id}")
-    public void deleteOneById(@Param("id") String id);
+    void deleteOneById(@Param("id") String id);
 
     /**
      * 查询被逻辑删除的数据
@@ -95,7 +95,7 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @return
      */
     @Select("select * from sys_dict where del_flag = 1")
-    public List<SysDict> queryDeleteList();
+    List<SysDict> queryDeleteList();
 
     /**
      * 修改状态值
@@ -104,6 +104,6 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      * @param id
      */
     @Update("update sys_dict set del_flag = #{flag,jdbcType=INTEGER} where id = #{id,jdbcType=VARCHAR}")
-    public void updateDictDelFlag(@Param("flag") int delFlag, @Param("id") String id);
+    void updateDictDelFlag(@Param("flag") int delFlag, @Param("id") String id);
 
 }

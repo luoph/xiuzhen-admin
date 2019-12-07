@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface SysDictItemMapper extends BaseMapper<SysDictItem> {
     @Select("SELECT * FROM SYS_DICT_ITEM WHERE DICT_ID = #{mainId}")
-    public List<SysDictItem> selectItemsByMainId(String mainId);
+    List<SysDictItem> selectItemsByMainId(String mainId);
 }

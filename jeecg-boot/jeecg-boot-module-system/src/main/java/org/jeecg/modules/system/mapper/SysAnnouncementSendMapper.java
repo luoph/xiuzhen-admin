@@ -16,15 +16,15 @@ import java.util.List;
  */
 public interface SysAnnouncementSendMapper extends BaseMapper<SysAnnouncementSend> {
 
-    public List<String> queryByUserId(@Param("userId") String userId);
+    List<String> queryByUserId(@Param("userId") String userId);
 
     /**
+     * 获取我的消息
+     *
+     * @param page
      * @param announcementSendModel
-     * @param pageSize
-     * @param pageNo
      * @return
-     * @功能：获取我的消息
      */
-    public List<AnnouncementSendModel> getMyAnnouncementSendList(Page<AnnouncementSendModel> page, @Param("announcementSendModel") AnnouncementSendModel announcementSendModel);
+    List<AnnouncementSendModel> getMyAnnouncementSendList(Page<AnnouncementSendModel> page, @Param("announcementSendModel") AnnouncementSendModel announcementSendModel);
 
 }

@@ -19,13 +19,13 @@ import java.util.Map;
  */
 public interface ISysDictService extends IService<SysDict> {
 
-    public List<DictModel> queryDictItemsByCode(String code);
+    List<DictModel> queryDictItemsByCode(String code);
 
     List<DictModel> queryTableDictItemsByCode(String table, String text, String code);
 
-    public List<DictModel> queryTableDictItemsByCodeAndFilter(String table, String text, String code, String filterSql);
+    List<DictModel> queryTableDictItemsByCodeAndFilter(String table, String text, String code, String filterSql);
 
-    public String queryDictTextByKey(String code, String key);
+    String queryDictTextByKey(String code, String key);
 
     String queryTableDictTextByKey(String table, String text, String code, String key);
 
