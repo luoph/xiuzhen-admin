@@ -103,7 +103,7 @@ export default {
                     placeholder: "点击上传",
                     token: true,
                     responseName: "message",
-                    action: window._CONFIG["domianURL"] + "/sys/common/upload",
+                    action: window._CONFIG["domainURL"] + "/sys/common/upload",
                 },
                 {
                     title: "字段类型",

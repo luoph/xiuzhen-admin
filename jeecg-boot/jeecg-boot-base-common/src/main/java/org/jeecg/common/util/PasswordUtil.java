@@ -18,8 +18,10 @@ public class PasswordUtil {
     /**
      * 定义使用的算法为:PBEWITHMD5andDES算法
      */
-    public static final String ALGORITHM = "PBEWithMD5AndDES";//加密算法
-    public static final String SALT = "63293188";//密钥
+    //加密算法
+    public static final String ALGORITHM = "PBEWithMD5AndDES";
+    //密钥
+    public static final String SALT = "63293188";
 
     /**
      * 定义迭代次数为1000次

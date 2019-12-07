@@ -265,7 +265,7 @@ export default {
                 },
             ],
             url: {
-                imgerver: window._CONFIG["domianURL"] + "/sys/common/view",
+                imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
                 syncUser: "/process/extActProcess/doSyncUser",
                 list: "/sys/user/list",
                 delete: "/sys/user/delete",
@@ -277,7 +277,7 @@ export default {
     },
     computed: {
         importExcelUrl: function() {
-            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
+            return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
         },
     },
     methods: {

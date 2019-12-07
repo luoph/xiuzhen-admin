@@ -30,6 +30,7 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="选择用户">
+                                <!-- dictCode:表名,文本字段,取值字段 -->
                                 <j-dict-select-tag v-model="queryParam.id" placeholder="请选择用户" dictCode="demo,name,id" />
                             </a-form-item>
                         </a-col>
@@ -71,14 +72,9 @@
             </a-upload>
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel">
-                        <a-icon type="delete" />删除
-                    </a-menu-item>
+                    <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item>
                 </a-menu>
-                <a-button style="margin-left: 8px">
-                    批量操作
-                    <a-icon type="down" />
-                </a-button>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
             </a-dropdown>
         </div>
 
@@ -89,9 +85,7 @@
                 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
                 <span style="float:right;">
-                    <a @click="loadData()">
-                        <a-icon type="sync" />刷新
-                    </a>
+                    <a @click="loadData()"> <a-icon type="sync" />刷新 </a>
                     <a-divider type="vertical" />
                     <a-popover title="自定义列" trigger="click" placement="leftBottom">
                         <template slot="content">
@@ -107,9 +101,7 @@
                                 </a-row>
                             </a-checkbox-group>
                         </template>
-                        <a>
-                            <a-icon type="setting" />自定义列
-                        </a>
+                        <a><a-icon type="setting" />自定义列</a>
                     </a-popover>
                 </span>
             </div>
@@ -151,10 +143,7 @@
                     <!-- 分割线 -->
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">
-                            更多
-                            <a-icon type="down" />
-                        </a>
+                        <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -221,7 +210,7 @@ export default {
             description: "用户管理页面",
             //字典数组缓存
             sexDictOptions: [],
-            importExcelUrl: `${window._CONFIG["domianURL"]}/test/jeecgDemo/importExcel`,
+            importExcelUrl: `${window._CONFIG["domainURL"]}/test/jeecgDemo/importExcel`,
             //表头
             columns: [],
             //列设置

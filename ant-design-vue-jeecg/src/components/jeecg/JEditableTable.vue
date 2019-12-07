@@ -1992,7 +1992,7 @@ export default {
         /** 上传请求地址 */
         getUploadAction(value) {
             if (!value) {
-                return window._CONFIG["domianURL"] + "/sys/common/upload";
+                return window._CONFIG["domainURL"] + "/sys/common/upload";
             } else {
                 return value;
             }
@@ -2001,7 +2001,7 @@ export default {
         getCellImageView(id) {
             let currUploadObj = this.uploadValues[id] || null;
             if (currUploadObj && currUploadObj["path"]) {
-                return window._CONFIG["domianURL"] + "/sys/common/view/" + currUploadObj["path"];
+                return window._CONFIG["domainURL"] + "/sys/common/view/" + currUploadObj["path"];
             } else {
                 return "";
             }

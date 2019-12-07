@@ -141,8 +141,8 @@ export default {
             url: {
                 add: "/test/order/addCustomer",
                 edit: "/test/order/editCustomer",
-                fileUpload: window._CONFIG["domianURL"] + "/sys/common/upload",
-                imgerver: window._CONFIG["domianURL"] + "/sys/common/view",
+                fileUpload: window._CONFIG["domainURL"] + "/sys/common/upload",
+                imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
                 getOrderCustomerList: "/test/order/listOrderCustomerByMainId",
             },
             validatorRules: {

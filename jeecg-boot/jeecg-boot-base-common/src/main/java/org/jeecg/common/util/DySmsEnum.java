@@ -1,5 +1,6 @@
 package org.jeecg.common.util;
 
+import lombok.Getter;
 import org.apache.commons.lang.StringUtils;
 
 public enum DySmsEnum {
@@ -11,43 +12,22 @@ public enum DySmsEnum {
     /**
      * 短信模板编码
      */
+    @Getter
     private String templateCode;
     /**
      * 签名
      */
+    @Getter
     private String signName;
     /**
      * 短信模板必需的数据名称，多个key以逗号分隔，此处配置作为校验
      */
+    @Getter
     private String keys;
 
     private DySmsEnum(String templateCode, String signName, String keys) {
         this.templateCode = templateCode;
         this.signName = signName;
-        this.keys = keys;
-    }
-
-    public String getTemplateCode() {
-        return templateCode;
-    }
-
-    public void setTemplateCode(String templateCode) {
-        this.templateCode = templateCode;
-    }
-
-    public String getSignName() {
-        return signName;
-    }
-
-    public void setSignName(String signName) {
-        this.signName = signName;
-    }
-
-    public String getKeys() {
-        return keys;
-    }
-
-    public void setKeys(String keys) {
         this.keys = keys;
     }
 

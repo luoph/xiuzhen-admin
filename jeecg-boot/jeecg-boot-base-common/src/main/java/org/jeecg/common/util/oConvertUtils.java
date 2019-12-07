@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -22,6 +23,8 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 public class oConvertUtils {
+    private static final Pattern BLANK_PATTERN = Pattern.compile("\\s*|\t|\r|\n");
+
     public static boolean isEmpty(Object object) {
         if (object == null) {
             return (true);
@@ -29,17 +32,11 @@ public class oConvertUtils {
         if ("".equals(object)) {
             return (true);
         }
-        if ("null".equals(object)) {
-            return (true);
-        }
-        return (false);
+        return "null".equals(object);
     }
 
     public static boolean isNotEmpty(Object object) {
-        if (object != null && !"".equals(object) && !"null".equals(object)) {
-            return (true);
-        }
-        return (false);
+        return object != null && !"".equals(object) && !"null".equals(object);
     }
 
     public static String decode(String strIn, String sourceCode, String targetCode) {
@@ -49,7 +46,7 @@ public class oConvertUtils {
     public static String strToUtf(String strIn, String sourceCode, String targetCode) {
         strIn = "";
         try {
-            strIn = new String(strIn.getBytes("ISO-8859-1"), "GBK");
+            strIn = new String(strIn.getBytes(StandardCharsets.ISO_8859_1), "GBK");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -75,14 +72,14 @@ public class oConvertUtils {
         return strOut;
     }
 
-    public static int getInt(String s, int defval) {
+    public static int getInt(String s, int defaultValue) {
         if (s == null || "".equals(s)) {
-            return (defval);
+            return (defaultValue);
         }
         try {
             return (Integer.parseInt(s));
         } catch (NumberFormatException e) {
-            return (defval);
+            return (defaultValue);
         }
     }
 
@@ -97,9 +94,9 @@ public class oConvertUtils {
         }
     }
 
-    public static int getInt(String s, Integer df) {
+    public static int getInt(String s, Integer defaultValue) {
         if (s == null || "".equals(s)) {
-            return df;
+            return defaultValue;
         }
         try {
             return (Integer.parseInt(s));
@@ -117,20 +114,20 @@ public class oConvertUtils {
 
     }
 
-    public static double getDouble(String s, double defval) {
+    public static double getDouble(String s, double defaultValue) {
         if (s == null || "".equals(s)) {
-            return (defval);
+            return (defaultValue);
         }
         try {
             return (Double.parseDouble(s));
         } catch (NumberFormatException e) {
-            return (defval);
+            return (defaultValue);
         }
     }
 
-    public static double getDou(Double s, double defval) {
+    public static double getDouble(Double s, double defaultValue) {
         if (s == null) {
-            return (defval);
+            return (defaultValue);
         }
         return s;
     }
@@ -143,14 +140,14 @@ public class oConvertUtils {
 		}
 	}*/
 
-    public static int getInt(Object object, int defval) {
+    public static int getInt(Object object, int defaultValue) {
         if (isEmpty(object)) {
-            return (defval);
+            return (defaultValue);
         }
         try {
             return (Integer.parseInt(object.toString()));
         } catch (NumberFormatException e) {
-            return (defval);
+            return (defaultValue);
         }
     }
 
@@ -165,9 +162,9 @@ public class oConvertUtils {
         }
     }
 
-    public static int getInt(BigDecimal s, int defval) {
+    public static int getInt(BigDecimal s, int defaultValue) {
         if (s == null) {
-            return (defval);
+            return (defaultValue);
         }
         return s.intValue();
     }
@@ -189,15 +186,6 @@ public class oConvertUtils {
         return (getString(s, ""));
     }
 
-    /**
-     * 转义成Unicode编码
-     *
-     * @param s
-     * @return
-     */
-	/*public static String escapeJava(Object s) {
-		return StringEscapeUtils.escapeJava(getString(s));
-	}*/
     public static String getString(Object object) {
         if (isEmpty(object)) {
             return "";
@@ -213,27 +201,27 @@ public class oConvertUtils {
         return (String.valueOf(i));
     }
 
-    public static String getString(String s, String defval) {
+    public static String getString(String s, String defaultValue) {
         if (isEmpty(s)) {
-            return (defval);
+            return (defaultValue);
         }
         return (s.trim());
     }
 
-    public static String getString(Object s, String defval) {
+    public static String getString(Object s, String defaultValue) {
         if (isEmpty(s)) {
-            return (defval);
+            return (defaultValue);
         }
         return (s.toString().trim());
     }
 
     public static long stringToLong(String str) {
-        Long test = 0L;
+        long test = 0L;
         try {
-            test = Long.valueOf(str);
+            test = Long.parseLong(str);
         } catch (Exception e) {
         }
-        return test.longValue();
+        return test;
     }
 
     /**
@@ -257,7 +245,7 @@ public class oConvertUtils {
      * @param clazz 要判断的类。
      * @return true 表示为基本数据类型。
      */
-    private static boolean isBaseDataType(Class clazz) throws Exception {
+    private static boolean isBaseDataType(Class clazz) {
         return (clazz.equals(String.class) || clazz.equals(Integer.class) || clazz.equals(Byte.class) || clazz.equals(Long.class) || clazz.equals(Double.class) || clazz.equals(Float.class) || clazz.equals(Character.class) || clazz.equals(Short.class) || clazz.equals(BigDecimal.class) || clazz.equals(BigInteger.class) || clazz.equals(Boolean.class) || clazz.equals(Date.class) || clazz.isPrimitive());
     }
 
@@ -284,22 +272,27 @@ public class oConvertUtils {
      * @throws SocketException
      */
     public static String getRealIp() throws SocketException {
-        String localip = null;// 本地IP，如果没有配置外网IP则返回它
-        String netip = null;// 外网IP
+        // 本地IP，如果没有配置外网IP则返回它
+        String localip = null;
+        // 外网IP
+        String netip = null;
 
         Enumeration<NetworkInterface> netInterfaces = NetworkInterface.getNetworkInterfaces();
         InetAddress ip = null;
-        boolean finded = false;// 是否找到外网IP
+        // 是否找到外网IP
+        boolean finded = false;
         while (netInterfaces.hasMoreElements() && !finded) {
             NetworkInterface ni = netInterfaces.nextElement();
             Enumeration<InetAddress> address = ni.getInetAddresses();
             while (address.hasMoreElements()) {
                 ip = address.nextElement();
-                if (!ip.isSiteLocalAddress() && !ip.isLoopbackAddress() && ip.getHostAddress().indexOf(":") == -1) {// 外网IP
+                if (!ip.isSiteLocalAddress() && !ip.isLoopbackAddress() && !ip.getHostAddress().contains(":")) {
+                    // 外网IP
                     netip = ip.getHostAddress();
                     finded = true;
                     break;
-                } else if (ip.isSiteLocalAddress() && !ip.isLoopbackAddress() && ip.getHostAddress().indexOf(":") == -1) {// 内网IP
+                } else if (ip.isSiteLocalAddress() && !ip.isLoopbackAddress() && !ip.getHostAddress().contains(":")) {
+                    // 内网IP
                     localip = ip.getHostAddress();
                 }
             }
@@ -321,8 +314,7 @@ public class oConvertUtils {
     public static String replaceBlank(String str) {
         String dest = "";
         if (str != null) {
-            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-            Matcher m = p.matcher(str);
+            Matcher m = BLANK_PATTERN.matcher(str);
             dest = m.replaceAll("");
         }
         return dest;
@@ -352,7 +344,7 @@ public class oConvertUtils {
      * 获取Map对象
      */
     public static Map<Object, Object> getHashMap() {
-        return new HashMap<Object, Object>();
+        return new HashMap<>();
     }
 
     /**

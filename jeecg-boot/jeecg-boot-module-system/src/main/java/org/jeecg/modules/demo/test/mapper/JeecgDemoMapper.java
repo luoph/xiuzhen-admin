@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface JeecgDemoMapper extends BaseMapper<JeecgDemo> {
 
-    public List<JeecgDemo> getDemoByName(@Param("name") String name);
+    List<JeecgDemo> getDemoByName(@Param("name") String name);
 
     /**
      * 查询列表数据 直接传数据权限的sql进行数据过滤
@@ -25,6 +25,6 @@ public interface JeecgDemoMapper extends BaseMapper<JeecgDemo> {
      * @param permissionSql
      * @return
      */
-    public IPage<JeecgDemo> queryListWithPermission(Page<JeecgDemo> page, @Param("permissionSql") String permissionSql);
+    IPage<JeecgDemo> queryListWithPermission(Page<JeecgDemo> page, @Param("permissionSql") String permissionSql);
 
 }
