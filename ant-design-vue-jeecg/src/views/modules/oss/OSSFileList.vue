@@ -105,7 +105,7 @@ export default {
     },
     computed: {
         uploadAction() {
-            return window._CONFIG["domianURL"] + this.url.upload;
+            return window._CONFIG["domainURL"] + this.url.upload;
         },
     },
     methods: {

@@ -15,15 +15,19 @@ public class MyClassLoader extends ClassLoader {
         return myclass;
     }
 
-    // 获得类的全名，包括包名
+    /**
+     * 获得类的全名，包括包名
+     *
+     * @param object
+     * @return
+     */
     public static String getPackPath(Object object) {
         // 检查用户传入的参数是否为空
         if (object == null) {
             throw new java.lang.IllegalArgumentException("参数不能为空！");
         }
         // 获得类的全名，包括包名
-        String clsName = object.getClass().getName();
-        return clsName;
+        return object.getClass().getName();
     }
 
     public static String getAppPath(Class cls) {

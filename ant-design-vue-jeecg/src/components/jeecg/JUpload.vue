@@ -35,8 +35,8 @@ export default {
     name: "JUpload",
     data() {
         return {
-            uploadAction: window._CONFIG["domianURL"] + "/sys/common/upload",
-            urlDownload: window._CONFIG["domianURL"] + "/sys/common/download/",
+            uploadAction: window._CONFIG["domainURL"] + "/sys/common/upload",
+            urlDownload: window._CONFIG["domainURL"] + "/sys/common/download/",
             headers: {},
             fileList: [],
         };

@@ -35,7 +35,7 @@ public class SqlInjectionUtil {
     /**
      * sql注入过滤处理，遇到注入关键字抛异常
      *
-     * @param value
+     * @param values
      * @return
      */
     public static void filterContent(String[] values) {

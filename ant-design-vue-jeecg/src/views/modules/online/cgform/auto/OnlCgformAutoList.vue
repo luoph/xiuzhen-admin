@@ -472,7 +472,7 @@ export default {
             }
             let paramsStr = encodeURI(JSON.stringify(param));
             console.log("paramsStr: " + paramsStr);
-            let url = window._CONFIG["domianURL"] + this.url.exportXls + this.code + "?paramsStr=" + paramsStr;
+            let url = window._CONFIG["domainURL"] + this.url.exportXls + this.code + "?paramsStr=" + paramsStr;
             window.location.href = url;
         },
         handleExportXls() {

@@ -134,12 +134,12 @@ public class DateUtils extends PropertyEditorSupport {
     /**
      * 日期转换为字符串
      *
-     * @param dateFormat 日期格式
+     * @param sdf 日期格式
      * @return 字符串
      */
-    public static String date2Str(SimpleDateFormat dateFormat) {
+    public static String date2Str(SimpleDateFormat sdf) {
         Date date = getDate();
-        return dateFormat.format(date);
+        return sdf.format(date);
     }
 
     /**
@@ -164,15 +164,15 @@ public class DateUtils extends PropertyEditorSupport {
     /**
      * 日期转换为字符串
      *
-     * @param date       日期
-     * @param dateFormat 日期格式
+     * @param date 日期
+     * @param sdf  日期格式
      * @return 字符串
      */
-    public static String date2Str(Date date, SimpleDateFormat dateFormat) {
+    public static String date2Str(Date date, SimpleDateFormat sdf) {
         if (null == date) {
             return null;
         }
-        return dateFormat.format(date);
+        return sdf.format(date);
     }
 
     /**
@@ -252,8 +252,7 @@ public class DateUtils extends PropertyEditorSupport {
         Date dt = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String nowTime = df.format(dt);
-        java.sql.Timestamp buydate = java.sql.Timestamp.valueOf(nowTime);
-        return buydate;
+        return Timestamp.valueOf(nowTime);
     }
 
     // ////////////////////////////////////////////////////////////////////////////
@@ -509,7 +508,6 @@ public class DateUtils extends PropertyEditorSupport {
      * @throws ParseException
      */
     public static Calendar parseCalendar(String src, String pattern) throws ParseException {
-
         Date date = parseDate(src, pattern);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

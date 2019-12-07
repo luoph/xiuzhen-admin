@@ -75,8 +75,7 @@ public class AesEncryptUtil {
             cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
 
             byte[] original = cipher.doFinal(encrypted1);
-            String originalString = new String(original);
-            return originalString;
+            return new String(original);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

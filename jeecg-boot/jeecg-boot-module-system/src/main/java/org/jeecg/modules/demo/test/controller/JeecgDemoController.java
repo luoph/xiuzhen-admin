@@ -67,10 +67,10 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
          * ===== //高级组合查询 try { String superQueryParams =
          * req.getParameter("superQueryParams");
          * if(oConvertUtils.isNotEmpty(superQueryParams)) { // 解码 superQueryParams =
-         * URLDecoder.decode(superQueryParams, "UTF-8"); List<QueryRuleVo> userList =
-         * JSON.parseArray(superQueryParams, QueryRuleVo.class);
+         * URLDecoder.decode(superQueryParams, "UTF-8"); List<QueryRuleVO> userList =
+         * JSON.parseArray(superQueryParams, QueryRuleVO.class);
          * log.info(superQueryParams); queryWrapper = new QueryWrapper<JeecgDemo>(); for
-         * (QueryRuleVo rule : userList) { if(oConvertUtils.isNotEmpty(rule.getField())
+         * (QueryRuleVO rule : userList) { if(oConvertUtils.isNotEmpty(rule.getField())
          * && oConvertUtils.isNotEmpty(rule.getRule()) &&
          * oConvertUtils.isNotEmpty(rule.getVal())){
          * ObjectParseUtil.addCriteria(queryWrapper, rule.getField(),
