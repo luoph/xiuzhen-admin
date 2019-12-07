@@ -40,10 +40,10 @@ public class DictAspect {
 
     // 定义切点Pointcut
     @Pointcut("execution(public * org.jeecg.modules..*.*Controller.*(..))")
-    public void excudeService() {
+    public void executeService() {
     }
 
-    @Around("excudeService()")
+    @Around("executeService()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         long time1 = System.currentTimeMillis();
         Object result = pjp.proceed();

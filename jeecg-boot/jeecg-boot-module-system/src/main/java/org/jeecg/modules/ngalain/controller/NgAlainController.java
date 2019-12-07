@@ -21,6 +21,7 @@ import java.util.List;
 public class NgAlainController {
     @Autowired
     private NgAlainService ngAlainService;
+
     @Autowired
     private ISysDictService sysDictService;
 
@@ -29,17 +30,21 @@ public class NgAlainController {
     public JSONObject getAppData(HttpServletRequest request) throws Exception {
         String token = request.getHeader("X-Access-Token");
         JSONObject j = new JSONObject();
+
         LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        JSONObject userObjcet = new JSONObject();
-        userObjcet.put("name", user.getUsername());
-        userObjcet.put("avatar", user.getAvatar());
-        userObjcet.put("email", user.getEmail());
-        userObjcet.put("token", token);
-        j.put("user", userObjcet);
+        JSONObject userObject = new JSONObject();
+        userObject.put("name", user.getUsername());
+        userObject.put("avatar", user.getAvatar());
+        userObject.put("email", user.getEmail());
+        userObject.put("token", token);
+
+        j.put("user", userObject);
         j.put("menu", ngAlainService.getMenu(user.getUsername()));
+
         JSONObject app = new JSONObject();
         app.put("name", "jeecg-boot-angular");
         app.put("description", "jeecg+ng-alain整合版本");
+
         j.put("app", app);
         return j;
     }
@@ -47,7 +52,7 @@ public class NgAlainController {
     @RequestMapping(value = "/getDictItems/{dictCode}", method = RequestMethod.GET)
     public Object getDictItems(@PathVariable String dictCode) {
         log.info(" dictCode : " + dictCode);
-        Result<List<DictModel>> result = new Result<List<DictModel>>();
+        Result<List<DictModel>> result = new Result<>();
         List<DictModel> ls = null;
         try {
             ls = sysDictService.queryDictItemsByCode(dictCode);
@@ -58,7 +63,8 @@ public class NgAlainController {
             result.error500("操作失败");
             return result;
         }
-        List<JSONObject> dictlist = new ArrayList<>();
+
+        List<JSONObject> dictList = new ArrayList<>();
         for (DictModel l : ls) {
             JSONObject dict = new JSONObject();
             try {
@@ -67,9 +73,9 @@ public class NgAlainController {
                 dict.put("value", l.getValue());
             }
             dict.put("label", l.getText());
-            dictlist.add(dict);
+            dictList.add(dict);
         }
-        return dictlist;
+        return dictList;
     }
 
     @RequestMapping(value = "/getDictItemsByTable/{table}/{key}/{value}", method = RequestMethod.GET)

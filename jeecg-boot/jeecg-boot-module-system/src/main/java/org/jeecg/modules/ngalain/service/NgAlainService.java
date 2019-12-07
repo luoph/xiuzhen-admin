@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface NgAlainService {
-    public JSONArray getMenu(String id) throws Exception;
+    JSONArray getMenu(String id) throws Exception;
 
-    public JSONArray getJeecgMenu(String id) throws Exception;
+    JSONArray getJeecgMenu(String id) throws Exception;
 
-    public List<Map<String, String>> getDictByTable(String table, String key, String value);
+    List<Map<String, String>> getDictByTable(String table, String key, String value);
 }
