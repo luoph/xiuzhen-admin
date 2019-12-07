@@ -6,28 +6,28 @@
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
                         <a-form-item label="服务器名字">
-                            <a-input placeholder="请输入服务器名字" v-model="queryParam.name"></a-input>
+                            <a-input placeholder="服务器名字" v-model="queryParam.name"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="服务器路径">
-                            <a-input placeholder="请输入服务器路径" v-model="queryParam.host"></a-input>
+                            <a-input placeholder="服务器路径" v-model="queryParam.host"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
                             <a-form-item label="服务器端口">
-                                <a-input placeholder="请输入服务器端口" v-model="queryParam.port"></a-input>
+                                <a-input placeholder="服务器端口" v-model="queryParam.port"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="登陆地址和端口">
-                                <a-input placeholder="请输入登陆地址和端口" v-model="queryParam.loginUrl"></a-input>
+                            <a-form-item label="登录地址和端口">
+                                <a-input placeholder="登录地址和端口" v-model="queryParam.loginUrl"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="服务器状态 0-正常 1-流畅 2-火爆 3-维护">
-                                <a-input placeholder="请输入服务器状态 0-正常 1-流畅 2-火爆 3-维护" v-model="queryParam.status"></a-input>
+                            <a-form-item label="服务器状态">
+                                <a-input placeholder="0-正常 1-流畅 2-火爆 3-维护" v-model="queryParam.status"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -85,10 +85,7 @@
 
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">
-                            更多
-                            <a-icon type="down" />
-                        </a>
+                        <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -119,7 +116,7 @@ export default {
     },
     data() {
         return {
-            description: "游戏服配置管理页面",
+            description: "游戏服配置页面",
             // 表头
             columns: [
                 {
@@ -148,17 +145,17 @@ export default {
                     dataIndex: "port",
                 },
                 {
-                    title: "登陆地址和端口",
+                    title: "登录地址和端口",
                     align: "center",
                     dataIndex: "loginUrl",
                 },
                 {
-                    title: "服务器状态 0-正常 1-流畅 2-火爆 3-维护",
+                    title: "服务器状态",
                     align: "center",
                     dataIndex: "status",
                 },
                 {
-                    title: "推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服",
+                    title: "推荐标识",
                     align: "center",
                     dataIndex: "recommend",
                 },
@@ -168,7 +165,7 @@ export default {
                     dataIndex: "warning",
                 },
                 {
-                    title: "显示版本号 0-不显示 1-显示",
+                    title: "显示版本号",
                     align: "center",
                     dataIndex: "showVersion",
                 },

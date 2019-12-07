@@ -14,16 +14,16 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="登陆地址和端口">
                     <a-input placeholder="请输入登陆地址和端口" v-decorator="['loginUrl', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器状态 0-正常 1-流畅 2-火爆 3-维护">
-                    <a-input placeholder="请输入服务器状态 0-正常 1-流畅 2-火爆 3-维护" v-decorator="['status', validatorRules.status]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器状态">
+                    <a-input placeholder="0-正常 1-流畅 2-火爆 3-维护" v-decorator="['status', validatorRules.status]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服">
-                    <a-input placeholder="请输入推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服" v-decorator="['recommend', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识">
+                    <a-input placeholder="0-普遍 1-推荐 2-新服 3-推荐新服" v-decorator="['recommend', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">
                     <a-input placeholder="请输入出错提示信息" v-decorator="['warning', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="显示版本号 0-不显示 1-显示">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="显示版本号">
                     <a-input placeholder="请输入显示版本号 0-不显示 1-显示" v-decorator="['showVersion', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="进入游戏客户端版本">
@@ -50,8 +50,8 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="排序字段">
                     <a-input-number v-decorator="['position', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器类型 0-混服 1-专服">
-                    <a-input placeholder="请输入服务器类型 0-混服 1-专服" v-decorator="['type', validatorRules.type]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器类型">
+                    <a-input placeholder="0-混服 1-专服" v-decorator="['type', validatorRules.type]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时母服id">
                     <a-input-number v-decorator="['pid', {}]" />
@@ -97,8 +97,8 @@ export default {
                 name: { rules: [{ required: true, message: "请输入服务器名字!" }] },
                 host: { rules: [{ required: true, message: "请输入服务器路径!" }] },
                 port: { rules: [{ required: true, message: "请输入服务器端口!" }] },
-                status: { rules: [{ required: true, message: "请输入服务器状态 0-正常 1-流畅 2-火爆 3-维护!" }] },
-                type: { rules: [{ required: true, message: "请输入服务器类型 0-混服 1-专服!" }] },
+                status: { rules: [{ required: true, message: "请输入服务器状态!" }] },
+                type: { rules: [{ required: true, message: "请输入服务器类型!" }] },
             },
             url: {
                 add: "/game/gameServer/add",
