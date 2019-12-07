@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -35,6 +36,13 @@ import java.util.List;
 @Component
 @Slf4j
 public class DictAspect {
+
+    private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    static {
+        OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    }
+
     @Autowired
     private ISysDictService dictService;
 
@@ -79,16 +87,16 @@ public class DictAspect {
      *
      * @param result
      */
+    @SuppressWarnings("unchecked")
     private void parseDictText(Object result) {
         if (result instanceof Result) {
             if (((Result) result).getResult() instanceof IPage) {
                 List<JSONObject> items = new ArrayList<>();
                 for (Object record : ((IPage) ((Result) result).getResult()).getRecords()) {
-                    ObjectMapper mapper = new ObjectMapper();
                     String json = "{}";
                     try {
                         // 解决@JsonFormat注解解析不了的问题详见SysAnnouncement类的@JsonFormat
-                        json = mapper.writeValueAsString(record);
+                        json = OBJECT_MAPPER.writeValueAsString(record);
                     } catch (JsonProcessingException e) {
                         log.error("json解析失败" + e.getMessage(), e);
                     }
@@ -137,7 +145,7 @@ public class DictAspect {
         if (oConvertUtils.isEmpty(key)) {
             return null;
         }
-        StringBuffer textValue = new StringBuffer();
+        StringBuilder textValue = new StringBuilder();
         String[] keys = key.split(",");
         for (String k : keys) {
             String tmpValue = null;
