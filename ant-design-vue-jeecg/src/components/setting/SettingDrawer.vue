@@ -5,7 +5,7 @@
                 <div :style="{ marginBottom: '24px' }">
                     <h3 class="setting-drawer-index-title">整体风格设置</h3>
 
-                    <div class="setting-drawer-index-blockChecbox">
+                    <div class="setting-drawer-index-blockCheckbox">
                         <a-tooltip>
                             <template slot="title">
                                 暗色菜单风格
@@ -51,7 +51,7 @@
                 <div :style="{ marginBottom: '24px' }">
                     <h3 class="setting-drawer-index-title">导航模式</h3>
 
-                    <div class="setting-drawer-index-blockChecbox">
+                    <div class="setting-drawer-index-blockCheckbox">
                         <a-tooltip>
                             <template slot="title">
                                 侧边栏导航
@@ -246,7 +246,7 @@ export default {
 
 <style lang="scss" scoped>
 .setting-drawer-index-content {
-    .setting-drawer-index-blockChecbox {
+    .setting-drawer-index-blockCheckbox {
         display: flex;
 
         .setting-drawer-index-item {

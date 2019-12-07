@@ -149,8 +149,8 @@ const user = {
                 //console.log('logoutToken: '+ logoutToken)
                 logout(logoutToken)
                     .then(() => {
-                        //var sevice = "http://"+window.location.host+"/";
-                        //var serviceUrl = encodeURIComponent(sevice);
+                        //var service = "http://"+window.location.host+"/";
+                        //var serviceUrl = encodeURIComponent(service);
                         //window.location.href = window._CONFIG['casPrefixUrl']+"/logout?service="+serviceUrl;
                         resolve();
                     })

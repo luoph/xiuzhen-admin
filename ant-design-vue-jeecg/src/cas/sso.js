@@ -8,14 +8,14 @@ const init = callback => {
     console.log("-------单点登录开始-------");
     let token = Vue.ls.get(ACCESS_TOKEN);
     let st = getUrlParam("ticket");
-    var sevice = "http://" + window.location.host + "/";
+    var service = "http://" + window.location.host + "/";
     if (token) {
         loginSuccess(callback);
     } else {
         if (st) {
-            validateSt(st, sevice, callback);
+            validateSt(st, service, callback);
         } else {
-            var serviceUrl = encodeURIComponent(sevice);
+            var serviceUrl = encodeURIComponent(service);
             window.location.href = window._CONFIG["casPrefixUrl"] + "/login?service=" + serviceUrl;
         }
     }
@@ -57,8 +57,8 @@ function validateSt(ticket, service, callback) {
             if (res.success) {
                 loginSuccess(callback);
             } else {
-                var sevice = "http://" + window.location.host + "/";
-                var serviceUrl = encodeURIComponent(sevice);
+                var service = "http://" + window.location.host + "/";
+                var serviceUrl = encodeURIComponent(service);
                 window.location.href = window._CONFIG["casPrefixUrl"] + "/login?service=" + serviceUrl;
             }
         })

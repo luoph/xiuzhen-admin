@@ -78,9 +78,9 @@ export function filterGlobalPermission(el, binding, vnode) {
     }
     //console.log("页面权限--Global--",sessionStorage.getItem(SYS_BUTTON_AUTH));
     let allAuthList = JSON.parse(sessionStorage.getItem(SYS_BUTTON_AUTH) || "[]");
-    for (var gauth of allAuthList) {
-        if (gauth.type != "2") {
-            allPermissionList.push(gauth);
+    for (var authItem of allAuthList) {
+        if (authItem.type != "2") {
+            allPermissionList.push(authItem);
         }
     }
     //设置全局配置是否有命中

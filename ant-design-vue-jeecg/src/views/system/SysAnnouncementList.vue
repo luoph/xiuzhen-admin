@@ -84,7 +84,7 @@
                                 </a-popconfirm>
                             </a-menu-item>
                             <a-menu-item v-if="record.sendStatus == 1">
-                                <a-popconfirm title="确定撤销吗?" @confirm="() => reovkeData(record.id)">
+                                <a-popconfirm title="确定撤销吗?" @confirm="() => revokeData(record.id)">
                                     <a>撤销</a>
                                 </a-popconfirm>
                             </a-menu-item>
@@ -105,7 +105,7 @@
 
 <script>
 import SysAnnouncementModal from "./modules/SysAnnouncementModal";
-import { doReleaseData, doReovkeData } from "@/api/api";
+import { doReleaseData, doRevokeData } from "@/api/api";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 
 export default {
@@ -239,7 +239,7 @@ export default {
                 delete: "/sys/annountCement/delete",
                 deleteBatch: "/sys/annountCement/deleteBatch",
                 releaseDataUrl: "/sys/annountCement/doReleaseData",
-                reovkeDataUrl: "sys/annountCement/doReovkeData",
+                revokeDataUrl: "sys/annountCement/doRevokeData",
                 exportXlsUrl: "sys/annountCement/exportXls",
                 importExcelUrl: "sys/annountCement/importExcel",
             },
@@ -265,9 +265,9 @@ export default {
             });
         },
         //执行撤销操作
-        reovkeData: function(id) {
+        revokeData: function(id) {
             var that = this;
-            doReovkeData({ id: id }).then(res => {
+            doRevokeData({ id: id }).then(res => {
                 if (res.success) {
                     that.$message.success(res.message);
                     that.loadData(1);
