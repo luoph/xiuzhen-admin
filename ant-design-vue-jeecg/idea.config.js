@@ -19,6 +19,6 @@ module.exports = {
             "@entry": resolve("src/entry"),
             "@router": resolve("src/router"),
             "@store": resolve("src/store"),
-        },
-    },
-};
+        }
+    }
+}
