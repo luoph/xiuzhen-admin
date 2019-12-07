@@ -84,6 +84,7 @@ public class NgAlainServiceImpl implements NgAlainService {
             if (permission.getMenuType() == null) {
                 continue;
             }
+
             String tempPid = permission.getParentId();
             JSONObject json = getPermissionJsonObject(permission);
             if (parentJson == null && oConvertUtils.isEmpty(tempPid)) {

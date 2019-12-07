@@ -11,9 +11,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
-;
-
-
 // 暂时注释掉，提高系统性能
 //@Aspect   //定义一个切面
 //@Configuration
@@ -22,10 +19,10 @@ public class LogRecordAspect {
 
     // 定义切点Pointcut
     @Pointcut("execution(public * org.jeecg.modules.*.*.*Controller.*(..))")
-    public void excudeService() {
+    public void executeService() {
     }
 
-    @Around("excudeService()")
+    @Around("executeService()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
         RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;
@@ -39,7 +36,6 @@ public class LogRecordAspect {
 
         // result的值就是被拦截方法的返回值
         Object result = pjp.proceed();
-
         logger.info("请求结束，controller的返回值是 " + result);
         return result;
     }
