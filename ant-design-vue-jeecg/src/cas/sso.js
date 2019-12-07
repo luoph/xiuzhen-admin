@@ -41,9 +41,8 @@ function getUrlParam(paraName) {
             }
         }
         return "";
-    } else {
-        return "";
     }
+    return "";
 }
 
 function validateSt(ticket, service, callback) {

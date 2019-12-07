@@ -1,24 +1,29 @@
-import Vue from 'vue'
-import router from './router'
-import store from './store'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
-import notification from 'ant-design-vue/es/notification'
-import { ACCESS_TOKEN } from '@/store/mutation-types'
-import { generateIndexRouter } from "@/utils/util"
+import Vue from 'vue';
+import router from './router';
+import store from './store';
+// progress bar
+import NProgress from 'nprogress';
+// progress bar style
+import 'nprogress/nprogress.css';
+import notification from 'ant-design-vue/es/notification';
+import { ACCESS_TOKEN } from '@/store/mutation-types';
+import { generateIndexRouter } from "@/utils/util";
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+// NProgress Configuration
+NProgress.configure({ showSpinner: false });
 
-const whiteList = ['/user/login', '/user/register', '/user/register-result','/user/alteration'] // no redirect whitelist
+// no redirect whitelist
+const whiteList = ['/user/login', '/user/register', '/user/register-result','/user/alteration'];
 
 router.beforeEach((to, from, next) => {
-  NProgress.start() // start progress bar
+  // start progress bar
+  NProgress.start();
 
   if (Vue.ls.get(ACCESS_TOKEN)) {
     /* has token */
     if (to.path === '/user/login') {
-      next({ path: '/dashboard/workplace' })
-      NProgress.done()
+      next({ path: '/dashboard/workplace' });
+      NProgress.done();
     } else {
       if (store.getters.permissionList.length === 0) {
         store.dispatch('GetPermissionList').then(res => {
@@ -37,10 +42,10 @@ router.beforeEach((to, from, next) => {
                 const redirect = decodeURIComponent(from.query.redirect || to.path)
                 if (to.path === redirect) {
                   // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-                  next({ ...to, replace: true })
+                  next({ ...to, replace: true });
                 } else {
                   // 跳转到目的路由
-                  next({ path: redirect })
+                  next({ path: redirect });
                 }
               })
             })
@@ -52,9 +57,9 @@ router.beforeEach((to, from, next) => {
             store.dispatch('Logout').then(() => {
               next({ path: '/user/login', query: { redirect: to.fullPath } })
             })
-          })
+          });
       } else {
-        next()
+        next();
       }
     }
   } else {
@@ -63,11 +68,13 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       next({ path: '/user/login', query: { redirect: to.fullPath } })
-      NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
+      // if current page is login will not trigger afterEach hook, so manually handle it
+      NProgress.done();
     }
   }
-})
+});
 
 router.afterEach(() => {
-  NProgress.done() // finish progress bar
-})
+  // finish progress bar
+  NProgress.done();
+});
