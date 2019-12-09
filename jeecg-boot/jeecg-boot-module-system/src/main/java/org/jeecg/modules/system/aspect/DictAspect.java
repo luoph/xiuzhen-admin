@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -38,9 +39,12 @@ import java.util.List;
 public class DictAspect {
 
     private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DATE_TIME_FORMAT));
     }
 
     @Autowired
@@ -118,10 +122,14 @@ public class DictAspect {
                             log.debug(" __翻译字典字段__ " + field.getName() + CommonConstant.DICT_TEXT_SUFFIX + "： " + textValue);
                             item.put(field.getName() + CommonConstant.DICT_TEXT_SUFFIX, textValue);
                         }
-                        //date类型默认转换string格式化日期
-                        if ("java.util.Date".equals(field.getType().getName()) && field.getAnnotation(JsonFormat.class) == null && item.get(field.getName()) != null) {
-                            SimpleDateFormat aDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                            item.put(field.getName(), aDate.format(new Date((Long) item.get(field.getName()))));
+
+                        // date类型默认转换string格式化日期
+                        if (Date.class == field.getType() && field.getAnnotation(JsonFormat.class) == null && item.get(field.getName()) != null) {
+                            Object value = item.get(field.getName());
+                            if (value instanceof Number) {
+                                String date2String = DateFormatUtils.format(new Date(((Number) value).longValue()), DATE_TIME_FORMAT);
+                                item.put(field.getName(), date2String);
+                            }
                         }
                     }
                     items.add(item);

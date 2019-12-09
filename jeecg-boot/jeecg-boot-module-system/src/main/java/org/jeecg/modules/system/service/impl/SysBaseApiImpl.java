@@ -185,7 +185,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
         announcement.setMsgContent(msgContent);
         announcement.setSender(fromUser);
         announcement.setPriority(CommonConstant.PRIORITY_M);
-        announcement.setMsgType(CommonConstant.MSG_TYPE_UESR);
+        announcement.setMsgType(CommonConstant.MSG_TYPE_USER);
         announcement.setSendStatus(CommonConstant.HAS_SEND);
         announcement.setSendTime(new Date());
         announcement.setMsgCategory(CommonConstant.MSG_CATEGORY_2);
