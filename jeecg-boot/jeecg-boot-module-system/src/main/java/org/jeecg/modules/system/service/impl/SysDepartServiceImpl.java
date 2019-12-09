@@ -38,7 +38,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
     @Cacheable(value = CacheConstant.SYS_DEPARTS_CACHE)
     @Override
     public List<SysDepartTreeModel> queryTreeList() {
-        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
+        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<>();
         query.eq(SysDepart::getDelFlag, String.valueOf(CommonConstant.DEL_FLAG_0));
         query.orderByAsc(SysDepart::getDepartOrder);
         List<SysDepart> list = this.list(query);
@@ -49,7 +49,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
     @Cacheable(value = CacheConstant.SYS_DEPART_IDS_CACHE)
     @Override
     public List<DepartIdModel> queryDepartIdTreeList() {
-        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
+        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<>();
         query.eq(SysDepart::getDelFlag, String.valueOf(CommonConstant.DEL_FLAG_0));
         query.orderByAsc(SysDepart::getDepartOrder);
         List<SysDepart> list = this.list(query);
@@ -198,7 +198,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
      */
     @Override
     public List<SysDepartTreeModel> searhBy(String keyWord) {
-        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
+        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<>();
         query.like(SysDepart::getDepartName, keyWord);
         //update-begin--Author:huangzhilin  Date:20140417 for：[bugfree号]组织机构搜索回显优化--------------------
         SysDepartTreeModel model = new SysDepartTreeModel();
@@ -237,7 +237,7 @@ public class SysDepartServiceImpl extends ServiceImpl<SysDepartMapper, SysDepart
      * @param idList
      */
     private void checkChildrenExists(String id, List<String> idList) {
-        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
+        LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<>();
         query.eq(SysDepart::getParentId, id);
         List<SysDepart> departList = this.list(query);
         if (departList != null && departList.size() > 0) {

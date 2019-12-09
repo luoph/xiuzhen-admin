@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.system.mapper.SysDictMapper;
-import org.jeecg.modules.system.model.DuplicateCheckVo;
+import org.jeecg.modules.system.model.DuplicateCheckVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,7 +37,7 @@ public class DuplicateCheckController {
      */
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     @ApiOperation("重复校验接口")
-    public Result<Object> doDuplicateCheck(DuplicateCheckVo duplicateCheckVo, HttpServletRequest request) {
+    public Result<Object> doDuplicateCheck(DuplicateCheckVO duplicateCheckVo, HttpServletRequest request) {
         Long num = null;
 
         log.info("----duplicate check------：" + duplicateCheckVo.toString());

@@ -387,12 +387,12 @@ public class SysRoleController {
             TreeModel tree = new TreeModel(permission.getId(), tempPid, permission.getName(), permission.getRuleFlag(), permission.isLeaf());
             if (temp == null && oConvertUtils.isEmpty(tempPid)) {
                 treeList.add(tree);
-                if (!tree.getIsLeaf()) {
+                if (!tree.isLeaf()) {
                     getTreeModelList(treeList, metaList, tree);
                 }
             } else if (temp != null && tempPid != null && tempPid.equals(temp.getKey())) {
                 temp.getChildren().add(tree);
-                if (!tree.getIsLeaf()) {
+                if (!tree.isLeaf()) {
                     getTreeModelList(treeList, metaList, tree);
                 }
             }

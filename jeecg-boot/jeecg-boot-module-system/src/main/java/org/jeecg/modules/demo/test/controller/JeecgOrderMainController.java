@@ -39,7 +39,7 @@ import java.util.Map;
  * @author jeecg-boot
  * @version V2.0
  * @description 一对多示例（JEditableTable行编辑）
- * @Date:2019-02-15
+ * @date 2019-02-15
  */
 @RestController
 @RequestMapping("/test/jeecgOrderMain")

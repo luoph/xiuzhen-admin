@@ -44,14 +44,14 @@ public interface ISysPermissionDataRuleService extends IService<SysPermissionDat
      *
      * @param sysPermissionDataRule
      */
-    public void savePermissionDataRule(SysPermissionDataRule sysPermissionDataRule);
+    void savePermissionDataRule(SysPermissionDataRule sysPermissionDataRule);
 
     /**
      * 删除菜单权限配置 判断菜单还有无权限
      *
      * @param dataRuleId
      */
-    public void deletePermissionDataRule(String dataRuleId);
+    void deletePermissionDataRule(String dataRuleId);
 
 
 }

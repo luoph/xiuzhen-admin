@@ -105,7 +105,7 @@ public interface ISysDictService extends IService<SysDict> {
      *
      * @param id
      */
-    public void deleteOneDictPhysically(String id);
+    void deleteOneDictPhysically(String id);
 
     /**
      * 修改delFlag
@@ -113,14 +113,14 @@ public interface ISysDictService extends IService<SysDict> {
      * @param delFlag
      * @param id
      */
-    public void updateDictDelFlag(int delFlag, String id);
+    void updateDictDelFlag(int delFlag, String id);
 
     /**
      * 查询被逻辑删除的数据
      *
      * @return
      */
-    public List<SysDict> queryDeleteList();
+    List<SysDict> queryDeleteList();
 
 
 }

@@ -37,7 +37,7 @@ public class AnnouncementSendModel implements Serializable {
     /**
      * 标题
      */
-    private java.lang.String titile;
+    private java.lang.String title;
     /**
      * 内容
      */

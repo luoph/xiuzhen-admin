@@ -15,13 +15,13 @@ import java.util.List;
  */
 public interface ISysAnnouncementSendService extends IService<SysAnnouncementSend> {
 
-    public List<String> queryByUserId(String userId);
+    List<String> queryByUserId(String userId);
 
     /**
      * @param announcementSendModel
      * @return
      * @功能：获取我的消息
      */
-    public Page<AnnouncementSendModel> getMyAnnouncementSendPage(Page<AnnouncementSendModel> page, AnnouncementSendModel announcementSendModel);
+    Page<AnnouncementSendModel> getMyAnnouncementSendPage(Page<AnnouncementSendModel> page, AnnouncementSendModel announcementSendModel);
 
 }

@@ -100,7 +100,7 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
     @Override
     public void saveSysAnnouncement(String title, String msgContent) {
         SysAnnouncement announcement = new SysAnnouncement();
-        announcement.setTitile(title);
+        announcement.setTitle(title);
         announcement.setMsgContent(msgContent);
         announcement.setSender("JEECG BOOT");
         announcement.setPriority(CommonConstant.PRIORITY_L);

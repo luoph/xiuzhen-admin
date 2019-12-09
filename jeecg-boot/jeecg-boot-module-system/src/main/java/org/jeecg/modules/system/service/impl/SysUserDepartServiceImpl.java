@@ -37,8 +37,8 @@ public class SysUserDepartServiceImpl extends ServiceImpl<SysUserDepartMapper, S
      */
     @Override
     public List<DepartIdModel> queryDepartIdsOfUser(String userId) {
-        LambdaQueryWrapper<SysUserDepart> queryUDep = new LambdaQueryWrapper<SysUserDepart>();
-        LambdaQueryWrapper<SysDepart> queryDep = new LambdaQueryWrapper<SysDepart>();
+        LambdaQueryWrapper<SysUserDepart> queryUDep = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<SysDepart> queryDep = new LambdaQueryWrapper<>();
         try {
             queryUDep.eq(SysUserDepart::getUserId, userId);
             List<String> depIdList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class SysUserDepartServiceImpl extends ServiceImpl<SysUserDepartMapper, S
                 }
                 queryDep.in(SysDepart::getId, depIdList);
                 List<SysDepart> depList = sysDepartService.list(queryDep);
-                if (depList != null || depList.size() > 0) {
+                if (depList != null && depList.size() > 0) {
                     for (SysDepart depart : depList) {
                         depIdModelList.add(new DepartIdModel().convertByUserDepart(depart));
                     }
@@ -71,7 +71,7 @@ public class SysUserDepartServiceImpl extends ServiceImpl<SysUserDepartMapper, S
      */
     @Override
     public List<SysUser> queryUserByDepId(String depId) {
-        LambdaQueryWrapper<SysUserDepart> queryUDep = new LambdaQueryWrapper<SysUserDepart>();
+        LambdaQueryWrapper<SysUserDepart> queryUDep = new LambdaQueryWrapper<>();
         queryUDep.eq(SysUserDepart::getDepId, depId);
         List<String> userIdList = new ArrayList<>();
         List<SysUserDepart> uDepList = this.list(queryUDep);
@@ -88,7 +88,7 @@ public class SysUserDepartServiceImpl extends ServiceImpl<SysUserDepartMapper, S
             //update-end-author:taoyan date:201905047 for:接口调用查询返回结果不能返回密码相关信息
             return userList;
         }
-        return new ArrayList<SysUser>();
+        return new ArrayList<>();
     }
 
 }

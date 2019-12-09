@@ -12,13 +12,13 @@ import org.jeecg.modules.system.entity.SysAnnouncement;
  */
 public interface ISysAnnouncementService extends IService<SysAnnouncement> {
 
-    public void saveAnnouncement(SysAnnouncement sysAnnouncement);
+    void saveAnnouncement(SysAnnouncement sysAnnouncement);
 
-    public boolean upDateAnnouncement(SysAnnouncement sysAnnouncement);
+    boolean upDateAnnouncement(SysAnnouncement sysAnnouncement);
 
-    public void saveSysAnnouncement(String title, String msgContent);
+    void saveSysAnnouncement(String title, String msgContent);
 
-    public Page<SysAnnouncement> querySysCementPageByUserId(Page<SysAnnouncement> page, String userId, String msgCategory);
+    Page<SysAnnouncement> querySysCementPageByUserId(Page<SysAnnouncement> page, String userId, String msgCategory);
 
 
 }

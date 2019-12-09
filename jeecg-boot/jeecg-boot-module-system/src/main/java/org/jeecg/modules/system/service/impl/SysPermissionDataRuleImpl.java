@@ -39,7 +39,7 @@ public class SysPermissionDataRuleImpl extends ServiceImpl<SysPermissionDataRule
      */
     @Override
     public List<SysPermissionDataRule> getPermRuleListByPermId(String permissionId) {
-        LambdaQueryWrapper<SysPermissionDataRule> query = new LambdaQueryWrapper<SysPermissionDataRule>();
+        LambdaQueryWrapper<SysPermissionDataRule> query = new LambdaQueryWrapper<>();
         query.eq(SysPermissionDataRule::getPermissionId, permissionId);
         query.orderByDesc(SysPermissionDataRule::getCreateTime);
         List<SysPermissionDataRule> permRuleList = this.list(query);
