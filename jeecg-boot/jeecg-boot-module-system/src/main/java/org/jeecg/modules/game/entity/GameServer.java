@@ -28,7 +28,7 @@ public class GameServer {
     /**
      * 自增主键
      */
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "自增主键")
     private java.lang.Integer id;
     /**
