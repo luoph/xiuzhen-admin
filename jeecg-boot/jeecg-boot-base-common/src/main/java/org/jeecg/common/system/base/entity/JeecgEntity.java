@@ -14,10 +14,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 
 /**
- * @Description: Entity基类
- * @Author: dangzhenghui@163.com
- * @Date: 2019-4-28
- * @Version: 1.1
+ * @author dangzhenghui@163.com
+ * @version 1.1
+ * @description Entity基类
+ * @date 2019-4-28
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

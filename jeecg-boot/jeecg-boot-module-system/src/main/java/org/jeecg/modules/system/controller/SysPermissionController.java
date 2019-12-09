@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * 菜单权限表 前端控制器
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-21
  */
 @Slf4j

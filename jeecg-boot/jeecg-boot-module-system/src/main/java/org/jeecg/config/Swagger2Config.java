@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @Author scott
+ * @author scott
  */
 @Slf4j
 @Configuration

@@ -20,10 +20,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Description: 系统通告表
- * @Author: jeecg-boot
- * @Date: 2019-01-02
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 系统通告表
+ * @date 2019-01-02
  */
 @Service
 public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMapper, SysAnnouncement> implements ISysAnnouncementService {

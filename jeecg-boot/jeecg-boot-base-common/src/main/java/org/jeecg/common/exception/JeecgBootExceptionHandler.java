@@ -16,7 +16,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 /**
  * 异常处理器
  *
- * @Author scott
+ * @author scott
  * @Date 2019
  */
 @RestControllerAdvice
@@ -59,7 +59,7 @@ public class JeecgBootExceptionHandler {
     /**
      * @param e
      * @return
-     * @Author 政辉
+     * @author 政辉
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result<?> httpRequestMethodNotSupportedException(Exception e) {

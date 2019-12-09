@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
- * @Description: 填值规则
- * @Author: jeecg-boot
- * @Date: 2019-11-07
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 填值规则
+ * @date 2019-11-07
  */
 @Slf4j
 @Api(tags = "填值规则")

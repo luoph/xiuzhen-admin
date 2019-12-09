@@ -6,10 +6,10 @@ import org.jeecg.modules.demo.test.entity.JeecgOrderTicket;
 import java.util.List;
 
 /**
- * @Description: 订单机票
- * @Author: jeecg-boot
- * @Date: 2019-02-15
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 订单机票
+ * @date 2019-02-15
  */
 public interface IJeecgOrderTicketService extends IService<JeecgOrderTicket> {
 

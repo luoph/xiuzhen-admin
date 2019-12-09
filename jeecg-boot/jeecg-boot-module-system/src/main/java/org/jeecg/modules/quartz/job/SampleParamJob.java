@@ -8,7 +8,7 @@ import org.quartz.JobExecutionContext;
 /**
  * 示例带参定时任务
  *
- * @Author Scott
+ * @author Scott
  */
 @Slf4j
 public class SampleParamJob implements Job {

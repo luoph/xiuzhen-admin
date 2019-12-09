@@ -1,7 +1,7 @@
 package org.jeecg.common.util;
 
 /**
- * @Author 张代浩
+ * @author 张代浩
  */
 public enum BrowserType {
     /**

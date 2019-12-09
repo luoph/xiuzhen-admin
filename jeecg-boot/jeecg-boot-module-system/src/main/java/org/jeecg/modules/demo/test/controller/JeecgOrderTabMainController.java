@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
- * @Description: 一对多示例（ERP TAB风格）
- * @Author: ZhiLin
- * @Date: 2019-02-20
- * @Version: v2.0
+ * @author ZhiLin
+ * @version v2.0
+ * @description 一对多示例（ERP TAB风格）
+ * @date 2019-02-20
  */
 @Slf4j
 @RestController

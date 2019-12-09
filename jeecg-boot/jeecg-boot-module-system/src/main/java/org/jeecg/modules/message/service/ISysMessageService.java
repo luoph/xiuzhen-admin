@@ -4,10 +4,10 @@ import org.jeecg.common.system.base.service.JeecgService;
 import org.jeecg.modules.message.entity.SysMessage;
 
 /**
- * @Description: 消息
- * @Author: jeecg-boot
- * @Date: 2019-04-09
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 消息
+ * @date 2019-04-09
  */
 public interface ISysMessageService extends JeecgService<SysMessage> {
 

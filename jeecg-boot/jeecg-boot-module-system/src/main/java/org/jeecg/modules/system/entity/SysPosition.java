@@ -15,10 +15,10 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * @Description: 职务表
- * @Author: jeecg-boot
- * @Date: 2019-09-19
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 职务表
+ * @date 2019-09-19
  */
 @Data
 @TableName("sys_position")

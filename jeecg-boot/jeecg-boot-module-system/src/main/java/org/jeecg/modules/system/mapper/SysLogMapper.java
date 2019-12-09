@@ -13,7 +13,7 @@ import java.util.Map;
  * 系统日志表 Mapper 接口
  * </p>
  *
- * @Author zhangweijian
+ * @author zhangweijian
  * @since 2018-12-26
  */
 public interface SysLogMapper extends BaseMapper<SysLog> {

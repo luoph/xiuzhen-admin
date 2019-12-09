@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 /**
  * 系统日志注解
  *
- * @Author scott
+ * @author scott
  * @email jeecgos@163.com
  * @Date 2019年1月14日
  */

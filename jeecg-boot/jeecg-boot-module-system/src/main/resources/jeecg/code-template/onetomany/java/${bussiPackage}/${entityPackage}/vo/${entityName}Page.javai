@@ -14,10 +14,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * @description: ${tableVo.ftlDescription}
- * @author: jeecg-boot
- * @date:   ${.now?string["yyyy-MM-dd"]}
- * @version: V1.0
+ * @description ${tableVo.ftlDescription}
+ * @author jeecg-boot
+ * @date   ${.now?string["yyyy-MM-dd"]}
+ * @version V1.0
  */
 @Data
 public class ${entityName}Page {

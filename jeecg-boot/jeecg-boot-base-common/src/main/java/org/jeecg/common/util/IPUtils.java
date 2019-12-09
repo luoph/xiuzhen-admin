@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * IP地址
  *
- * @Author scott
+ * @author scott
  * @email jeecgos@163.com
  * @Date 2019年01月14日
  */

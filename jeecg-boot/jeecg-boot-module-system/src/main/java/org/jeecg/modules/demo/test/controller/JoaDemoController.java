@@ -31,10 +31,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: 流程测试
- * @Author: jeecg-boot
- * @Date: 2019-05-14
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 流程测试
+ * @date 2019-05-14
  */
 @RestController
 @RequestMapping("/test/joaDemo")

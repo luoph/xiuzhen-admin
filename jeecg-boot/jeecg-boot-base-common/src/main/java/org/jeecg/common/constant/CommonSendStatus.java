@@ -3,7 +3,7 @@ package org.jeecg.common.constant;
 /**
  * 系统通告 - 发布状态
  *
- * @Author LeeShaoQing
+ * @author LeeShaoQing
  */
 public interface CommonSendStatus {
 

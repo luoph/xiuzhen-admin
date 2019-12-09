@@ -3,10 +3,10 @@ package org.jeecg;
 import org.jeecgframework.codegenerate.window.CodeWindow;
 
 /**
+ * @author 张代浩
+ * @version V1.0.1
  * @Title: 单表代码生成器入口
- * @Author 张代浩
  * @site www.jeecg.org
- * @Version:V1.0.1
  */
 public class JeecgOneGUI {
 

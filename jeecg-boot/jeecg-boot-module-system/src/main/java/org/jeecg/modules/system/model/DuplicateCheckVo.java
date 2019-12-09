@@ -7,9 +7,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * @author 张代浩
  * @Title: DuplicateCheckVo
- * @Description: 重复校验VO
- * @Author 张代浩
+ * @description 重复校验VO
  * @Date 2019-03-25
  * @Version V1.0
  */

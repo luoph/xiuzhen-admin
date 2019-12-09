@@ -11,10 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.jeecg.common.constant.TimeConstant;
 
 /**
- * @description: ${tableVo.ftlDescription}
- * @author: jeecg-boot
- * @date:   ${.now?string["yyyy-MM-dd"]}
- * @version: V1.0
+ * @description ${tableVo.ftlDescription}
+ * @author jeecg-boot
+ * @date   ${.now?string["yyyy-MM-dd"]}
+ * @version V1.0
  */
 @Data
 @TableName("${tableName}")

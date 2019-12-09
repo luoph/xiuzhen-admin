@@ -13,7 +13,7 @@ import java.util.List;
  * SysUserDpeart用户组织机构service
  * </p>
  *
- * @Author ZhiLin
+ * @author ZhiLin
  */
 public interface ISysUserDepartService extends IService<SysUserDepart> {
 

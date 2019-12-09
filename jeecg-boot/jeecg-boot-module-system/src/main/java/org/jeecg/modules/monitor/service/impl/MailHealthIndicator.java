@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 /**
  * 功能说明:自定义邮件检测
  *
- * @author: 李波
+ * @author 李波
  * @email: 503378406@qq.com
- * @date: 2019-06-29
+ * @date 2019-06-29
  */
 @Component
 public class MailHealthIndicator implements HealthIndicator {

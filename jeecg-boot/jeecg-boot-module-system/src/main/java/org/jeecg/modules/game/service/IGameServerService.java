@@ -1,13 +1,13 @@
 package org.jeecg.modules.game.service;
 
-import org.jeecg.modules.game.entity.GameServer;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.modules.game.entity.GameServer;
 
 /**
- * @Description: 游戏服配置
- * @Author: jeecg-boot
- * @Date:   2019-12-05
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 游戏服配置
+ * @date 2019-12-05
  */
 public interface IGameServerService extends IService<GameServer> {
 

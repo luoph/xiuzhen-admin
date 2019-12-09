@@ -9,10 +9,10 @@ import org.jeecg.modules.demo.test.entity.JeecgDemo;
 import java.util.List;
 
 /**
- * @Description: jeecg 测试demo
- * @Author: jeecg-boot
- * @Date: 2018-12-29
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description jeecg 测试demo
+ * @date 2018-12-29
  */
 public interface JeecgDemoMapper extends BaseMapper<JeecgDemo> {
 

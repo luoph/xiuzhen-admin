@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * Redis 监控信息获取
  *
- * @Author MrBird
+ * @author MrBird
  */
 @Service("redisService")
 @Slf4j

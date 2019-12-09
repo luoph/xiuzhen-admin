@@ -3,7 +3,7 @@ package org.jeecg.modules.shiro.authc;
 import org.apache.shiro.authc.AuthenticationToken;
 
 /**
- * @Author Scott
+ * @author Scott
  * @create 2018-07-12 15:19
  * @desc
  **/

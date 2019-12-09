@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * 数据权限注解
  *
- * @Author taoyan
+ * @author taoyan
  * @Date 2019年4月11日
  */
 @Retention(RetentionPolicy.RUNTIME)

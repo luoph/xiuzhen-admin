@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
- * @Description: 阿里云 oss 上传工具类(高依赖版)
- * @Date: 2019/5/10
+ * @description 阿里云 oss 上传工具类(高依赖版)
+ * @date 2019/5/10
  */
 public class OssBootUtil {
 

@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
- * @Description: 游戏服配置
- * @Author: jeecg-boot
- * @Date: 2019-12-05
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 游戏服配置
+ * @date 2019-12-05
  */
 @Slf4j
 @Api(tags = "游戏服配置")

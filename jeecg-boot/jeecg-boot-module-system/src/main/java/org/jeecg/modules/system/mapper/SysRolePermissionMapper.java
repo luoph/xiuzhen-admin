@@ -8,7 +8,7 @@ import org.jeecg.modules.system.entity.SysRolePermission;
  * 角色权限表 Mapper 接口
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-21
  */
 public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {

@@ -27,7 +27,7 @@ import java.util.List;
  * 菜单权限表 服务实现类
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-21
  */
 @Service

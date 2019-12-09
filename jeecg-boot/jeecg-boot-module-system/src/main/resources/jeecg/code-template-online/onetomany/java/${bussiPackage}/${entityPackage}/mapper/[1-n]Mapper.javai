@@ -8,10 +8,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * @description: ${subTab.ftlDescription}
- * @author: jeecg-boot
- * @date:   ${.now?string["yyyy-MM-dd"]}
- * @version: V1.0
+ * @description ${subTab.ftlDescription}
+ * @author jeecg-boot
+ * @date   ${.now?string["yyyy-MM-dd"]}
+ * @version V1.0
  */
 public interface ${subTab.entityName}Mapper extends BaseMapper<${subTab.entityName}> {
 

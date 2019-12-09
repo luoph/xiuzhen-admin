@@ -17,9 +17,9 @@ import java.util.List;
  * 1、导出的时候会根据字典配置，把值1,2翻译成：男、女;
  * 2、导入的时候，会把男、女翻译成1,2存进数据库;
  *
- * @Author:scott
- * @since：2019-04-09
- * @Version:1.0
+ * @author scott
+ * @version 1.0
+ * @since 2019-04-09
  */
 @Slf4j
 @Service
@@ -31,8 +31,8 @@ public class AutoPoiDictService implements AutoPoiDictServiceI {
      * 通过字典查询easypoi，所需字典文本
      *
      * @return
-     * @Author:scott
-     * @since：2019-04-09
+     * @author:scott
+     * @since 2019-04-09
      */
     @Override
     public String[] queryDict(String dicTable, String dicCode, String dicText) {

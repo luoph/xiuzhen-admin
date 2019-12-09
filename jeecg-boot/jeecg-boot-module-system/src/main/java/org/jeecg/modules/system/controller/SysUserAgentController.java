@@ -30,11 +30,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @author jeecg-boot
+ * @version V1.0
  * @Title: Controller
- * @Description: 用户代理人设置
- * @Author: jeecg-boot
- * @Date: 2019-04-17
- * @Version: V1.0
+ * @description 用户代理人设置
+ * @date 2019-04-17
  */
 @RestController
 @RequestMapping("/sys/sysUserAgent")

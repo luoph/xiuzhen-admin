@@ -25,7 +25,7 @@ import java.util.Date;
  * 用户表 前端控制器
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-20
  */
 @Slf4j
@@ -38,7 +38,7 @@ public class CommonController {
 
     /**
      * @return
-     * @Author 政辉
+     * @author 政辉
      */
     @GetMapping("/403")
     public Result<?> noauth() {

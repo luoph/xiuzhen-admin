@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * Spring Boot 2.0 解决跨域问题
  *
- * @Author qinfeng
+ * @author qinfeng
  */
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {

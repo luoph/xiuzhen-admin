@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * 登录表单
  *
- * @Author scott
+ * @author scott
  * @since 2019-01-18
  */
 @ApiModel(value = "登录对象", description = "登录对象")

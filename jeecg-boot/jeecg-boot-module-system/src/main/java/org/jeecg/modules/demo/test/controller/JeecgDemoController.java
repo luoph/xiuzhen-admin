@@ -30,10 +30,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Description: 测试demo
- * @Author: jeecg-boot
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 测试demo
  * @Date:2018-12-29
- * @Version:V1.0
  */
 @Slf4j
 @Api(tags = "单表DEMO")

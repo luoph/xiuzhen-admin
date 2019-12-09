@@ -16,7 +16,7 @@ import java.util.Date;
  * 菜单权限表
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-21
  */
 @Data

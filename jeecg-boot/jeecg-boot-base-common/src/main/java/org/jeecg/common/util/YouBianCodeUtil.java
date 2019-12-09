@@ -7,7 +7,7 @@ import io.netty.util.internal.StringUtil;
  * A001
  * A001A002
  *
- * @Author zhangdaihao
+ * @author zhangdaihao
  */
 public class YouBianCodeUtil {
 

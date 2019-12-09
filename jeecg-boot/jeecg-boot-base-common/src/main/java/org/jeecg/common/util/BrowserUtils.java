@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @Author 张代浩
+ * @author 张代浩
  */
 public class BrowserUtils {
 

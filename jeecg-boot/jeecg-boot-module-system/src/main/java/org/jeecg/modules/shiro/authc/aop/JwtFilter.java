@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Description: 鉴权登录拦截器
- * @Author: Scott
- * @Date: 2018/10/7
+ * @author Scott
+ * @description 鉴权登录拦截器
+ * @date 2018/10/7
  **/
 @Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
