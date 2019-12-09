@@ -36,10 +36,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
  /**
- * @Description: ${tableVo.ftlDescription}
- * @Author: jeecg-boot
- * @Date:   ${.now?string["yyyy-MM-dd"]}
- * @Version: V1.0
+ * @description: ${tableVo.ftlDescription}
+ * @author: jeecg-boot
+ * @date:   ${.now?string["yyyy-MM-dd"]}
+ * @version: V1.0
  */
 @Slf4j
 @Api(tags="${tableVo.ftlDescription}")
