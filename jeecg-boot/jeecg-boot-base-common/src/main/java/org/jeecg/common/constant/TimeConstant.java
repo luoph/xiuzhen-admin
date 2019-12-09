@@ -7,6 +7,8 @@ package org.jeecg.common.constant;
  */
 public class TimeConstant {
 
+    public static final String DEFAULT_TIMEZONE = "GMT+8";
+
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 
     public static final String DEFAULT_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";

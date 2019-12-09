@@ -1,6 +1,7 @@
 package org.jeecg.modules.demo.test.vo;
 
 import lombok.Data;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.modules.demo.test.entity.JeecgOrderCustomer;
 import org.jeecg.modules.demo.test.entity.JeecgOrderTicket;
 import org.jeecgframework.poi.excel.annotation.Excel;
@@ -27,7 +28,7 @@ public class JeecgOrderMainPage {
     /**
      * 订单日期
      */
-    @Excel(name = "订单日期", width = 15, format = "yyyy-MM-dd")
+    @Excel(name = "订单日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date orderDate;
     /**
      * 订单金额
