@@ -1,5 +1,6 @@
 package org.jeecg.modules.message.handle.enums;
 
+import lombok.Getter;
 import org.jeecg.common.util.oConvertUtils;
 
 /**
@@ -12,28 +13,14 @@ public enum SendMsgTypeEnum {
     EMAIL("2", "org.jeecg.modules.message.handle.impl.EmailSendMsgHandle"),
     WX("3", "org.jeecg.modules.message.handle.impl.WxSendMsgHandle");
 
+    @Getter
     private String type;
 
+    @Getter
     private String implClass;
 
-    private SendMsgTypeEnum(String type, String implClass) {
+    SendMsgTypeEnum(String type, String implClass) {
         this.type = type;
-        this.implClass = implClass;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getImplClass() {
-        return implClass;
-    }
-
-    public void setImplClass(String implClass) {
         this.implClass = implClass;
     }
 

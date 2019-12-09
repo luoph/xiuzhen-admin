@@ -24,14 +24,14 @@ public class PmsUtil {
 
     public static String saveErrorTxtByList(List<String> msg, String name) {
         Date d = new Date();
-        String saveDir = "logs" + File.separator + DateUtils.yyyyMMdd.format(d) + File.separator;
+        String saveDir = "logs" + File.separator + DateUtils.formatShortFileNameByTime(d) + File.separator;
         String saveFullDir = uploadPath + File.separator + saveDir;
 
         File saveFile = new File(saveFullDir);
         if (!saveFile.exists()) {
             saveFile.mkdirs();
         }
-        name += DateUtils.YYYYMMDDHHMMSS.format(d) + Math.round(Math.random() * 10000);
+        name += DateUtils.formatLongFileNameByTime(d) + Math.round(Math.random() * 10000);
         String saveFilePath = saveFullDir + name + ".txt";
 
         try {
