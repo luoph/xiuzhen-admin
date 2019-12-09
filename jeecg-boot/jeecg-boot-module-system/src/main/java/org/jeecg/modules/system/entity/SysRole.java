@@ -22,7 +22,6 @@ import java.util.Date;
  * @since 2018-12-19
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysRole implements Serializable {
 

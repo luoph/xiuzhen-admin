@@ -1,6 +1,8 @@
 package org.jeecg.common.util.jsonschema.validate;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jeecg.common.util.jsonschema.CommonProperty;
 
 import java.util.HashMap;
@@ -11,58 +13,29 @@ import java.util.Map;
  *
  * @author 86729
  */
+@Data
+@Accessors(chain = true)
 public class TreeSelectProperty extends CommonProperty {
 
     private static final long serialVersionUID = 3786503639885610767L;
 
-    private String dict;//表名,文本,id
-    private String pidField;//父级字段 默认pid
-    private String pidValue;//父级节点的值 暂时没用到 默认为0
+    /**
+     * 表名,文本,id
+     */
+    private String dict;
+    /**
+     * 父级字段 默认pid
+     */
+    private String pidField;
+    /**
+     * 父级节点的值 暂时没用到 默认为0
+     */
+    private String pidValue;
     private String hasChildField;
-    private String textField;//树形下拉保存text值的字段名
-
-    public String getDict() {
-        return dict;
-    }
-
-    public void setDict(String dict) {
-        this.dict = dict;
-    }
-
-    public String getPidField() {
-        return pidField;
-    }
-
-    public void setPidField(String pidField) {
-        this.pidField = pidField;
-    }
-
-    public String getPidValue() {
-        return pidValue;
-    }
-
-    public void setPidValue(String pidValue) {
-        this.pidValue = pidValue;
-    }
-
-    public String getHasChildField() {
-        return hasChildField;
-    }
-
-    public void setHasChildField(String hasChildField) {
-        this.hasChildField = hasChildField;
-    }
-
-    public TreeSelectProperty() {
-    }
-
-    public String getTextField() {
-        return textField;
-    }
-
-    public void setTextField(String textField) {
-        this.textField = textField;
-    }
+    /**
+     * 树形下拉保存text值的字段名
+     */
+    private String textField;
 
     /**
      * 构造器 构造普通树形下拉

@@ -1,6 +1,9 @@
 package org.jeecg.common.util.jsonschema.validate;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.jeecg.common.system.vo.DictModel;
 import org.jeecg.common.util.jsonschema.CommonProperty;
 
@@ -8,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class StringProperty extends CommonProperty {
 
     private static final long serialVersionUID = -3200493311633999539L;
@@ -25,41 +31,6 @@ public class StringProperty extends CommonProperty {
      * 错误提示信息
      */
     private String errorInfo;
-
-    public Integer getMaxLength() {
-        return maxLength;
-    }
-
-
-    public void setMaxLength(Integer maxLength) {
-        this.maxLength = maxLength;
-    }
-
-    public Integer getMinLength() {
-        return minLength;
-    }
-
-    public void setMinLength(Integer minLength) {
-        this.minLength = minLength;
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
-
-    public String getErrorInfo() {
-        return errorInfo;
-    }
-
-
-    public void setErrorInfo(String errorInfo) {
-        this.errorInfo = errorInfo;
-    }
-
 
     public StringProperty() {
     }

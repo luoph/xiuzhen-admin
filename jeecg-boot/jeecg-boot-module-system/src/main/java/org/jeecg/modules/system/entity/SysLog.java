@@ -22,7 +22,6 @@ import java.util.Date;
  * @since 2018-12-26
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysLog implements Serializable {
 

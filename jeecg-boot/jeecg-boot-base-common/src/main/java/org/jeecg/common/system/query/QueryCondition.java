@@ -1,7 +1,12 @@
 package org.jeecg.common.system.query;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 
+@Data
+@Accessors(chain = true)
 public class QueryCondition implements Serializable {
 
     private static final long serialVersionUID = 4740166316629191651L;
@@ -10,38 +15,6 @@ public class QueryCondition implements Serializable {
     private String type;
     private String rule;
     private String val;
-
-    public String getField() {
-        return field;
-    }
-
-    public void setField(String field) {
-        this.field = field;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getRule() {
-        return rule;
-    }
-
-    public void setRule(String rule) {
-        this.rule = rule;
-    }
-
-    public String getVal() {
-        return val;
-    }
-
-    public void setVal(String val) {
-        this.val = val;
-    }
 
     @Override
     public String toString() {

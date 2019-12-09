@@ -1,6 +1,9 @@
 package org.jeecg.common.util.jsonschema.validate;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.jeecg.common.system.vo.DictModel;
 import org.jeecg.common.util.jsonschema.CommonProperty;
 
@@ -8,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class NumberProperty extends CommonProperty {
 
     private static final long serialVersionUID = -558615331436437200L;
@@ -44,54 +50,6 @@ public class NumberProperty extends CommonProperty {
     private Integer exclusiveMinimum;
 
     private String pattern;
-
-    public Integer getMultipleOf() {
-        return multipleOf;
-    }
-
-    public void setMultipleOf(Integer multipleOf) {
-        this.multipleOf = multipleOf;
-    }
-
-    public Integer getMaxinum() {
-        return maxinum;
-    }
-
-    public void setMaxinum(Integer maxinum) {
-        this.maxinum = maxinum;
-    }
-
-    public Integer getExclusiveMaximum() {
-        return exclusiveMaximum;
-    }
-
-    public void setExclusiveMaximum(Integer exclusiveMaximum) {
-        this.exclusiveMaximum = exclusiveMaximum;
-    }
-
-    public Integer getMinimum() {
-        return minimum;
-    }
-
-    public void setMinimum(Integer minimum) {
-        this.minimum = minimum;
-    }
-
-    public Integer getExclusiveMinimum() {
-        return exclusiveMinimum;
-    }
-
-    public void setExclusiveMinimum(Integer exclusiveMinimum) {
-        this.exclusiveMinimum = exclusiveMinimum;
-    }
-
-    public String getPattern() {
-        return pattern;
-    }
-
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
 
     public NumberProperty() {
     }

@@ -20,7 +20,6 @@ import java.util.Date;
  * @since 2018-12-21
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysPermission implements Serializable {
 

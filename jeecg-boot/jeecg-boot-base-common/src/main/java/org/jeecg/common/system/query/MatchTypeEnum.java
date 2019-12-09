@@ -1,5 +1,6 @@
 package org.jeecg.common.system.query;
 
+import lombok.Getter;
 import org.jeecg.common.util.oConvertUtils;
 
 /**
@@ -15,14 +16,11 @@ public enum MatchTypeEnum {
     AND("AND"),
     OR("OR");
 
+    @Getter
     private String value;
 
     MatchTypeEnum(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public static MatchTypeEnum getByValue(String value) {

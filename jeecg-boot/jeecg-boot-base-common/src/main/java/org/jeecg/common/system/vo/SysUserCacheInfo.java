@@ -1,9 +1,13 @@
 package org.jeecg.common.system.vo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jeecg.common.util.DateUtils;
 
 import java.util.List;
 
+@Data
+@Accessors(chain = true)
 public class SysUserCacheInfo {
 
     private String sysUserCode;
@@ -16,14 +20,6 @@ public class SysUserCacheInfo {
 
     private boolean oneDepart;
 
-    public boolean isOneDepart() {
-        return oneDepart;
-    }
-
-    public void setOneDepart(boolean oneDepart) {
-        this.oneDepart = oneDepart;
-    }
-
     public String getSysDate() {
         return DateUtils.formatDate();
     }
@@ -31,37 +27,4 @@ public class SysUserCacheInfo {
     public String getSysTime() {
         return DateUtils.now();
     }
-
-    public String getSysUserCode() {
-        return sysUserCode;
-    }
-
-    public void setSysUserCode(String sysUserCode) {
-        this.sysUserCode = sysUserCode;
-    }
-
-    public String getSysUserName() {
-        return sysUserName;
-    }
-
-    public void setSysUserName(String sysUserName) {
-        this.sysUserName = sysUserName;
-    }
-
-    public String getSysOrgCode() {
-        return sysOrgCode;
-    }
-
-    public void setSysOrgCode(String sysOrgCode) {
-        this.sysOrgCode = sysOrgCode;
-    }
-
-    public List<String> getSysMultiOrgCode() {
-        return sysMultiOrgCode;
-    }
-
-    public void setSysMultiOrgCode(List<String> sysMultiOrgCode) {
-        this.sysMultiOrgCode = sysMultiOrgCode;
-    }
-
 }

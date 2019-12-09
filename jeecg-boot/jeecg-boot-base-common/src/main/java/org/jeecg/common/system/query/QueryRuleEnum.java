@@ -1,5 +1,6 @@
 package org.jeecg.common.system.query;
 
+import lombok.Getter;
 import org.jeecg.common.util.oConvertUtils;
 
 /**
@@ -25,40 +26,19 @@ public enum QueryRuleEnum {
     RIGHT_LIKE("RIGHT_LIKE", "right_like", "右模糊"),
     SQL_RULES("USE_SQL_RULES", "ext", "自定义SQL片段");
 
+    @Getter
     private String value;
 
+    @Getter
     private String condition;
 
+    @Getter
     private String msg;
 
     QueryRuleEnum(String value, String condition, String msg) {
         this.value = value;
         this.condition = condition;
         this.msg = msg;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public String getCondition() {
-        return condition;
-    }
-
-    public void setCondition(String condition) {
-        this.condition = condition;
     }
 
     public static QueryRuleEnum getByValue(String value) {

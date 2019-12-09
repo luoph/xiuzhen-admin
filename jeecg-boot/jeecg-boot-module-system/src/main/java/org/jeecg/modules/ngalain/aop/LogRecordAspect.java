@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 public class LogRecordAspect {
     private static final Logger logger = LoggerFactory.getLogger(LogRecordAspect.class);
 
-    // 定义切点Pointcut
+    /**
+     * 定义切点Pointcut
+     */
     @Pointcut("execution(public * org.jeecg.modules.*.*.*Controller.*(..))")
     public void executeService() {
     }
@@ -32,7 +34,7 @@ public class LogRecordAspect {
         String method = request.getMethod();
         String uri = request.getRequestURI();
         String queryString = request.getQueryString();
-        logger.info("请求开始, 各个参数, url: {}, method: {}, uri: {}, params: {}", url, method, uri, queryString);
+        logger.info("请求开始, 各个参数, url:{}, method:{}, uri:{}, params:{}", url, method, uri, queryString);
 
         // result的值就是被拦截方法的返回值
         Object result = pjp.proceed();

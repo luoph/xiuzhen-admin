@@ -18,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @date 2019-04-09
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_sms")
 public class SysMessage extends JeecgEntity {
