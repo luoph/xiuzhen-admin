@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.JeecgEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -48,9 +49,9 @@ public class JeecgDemo extends JeecgEntity implements Serializable {
      * 打卡时间
      */
     @ApiModelProperty(value = "打卡时间")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Excel(name = "打卡时间", width = 20, format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @Excel(name = "打卡时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date punchTime;
     /**
      * 工资
@@ -80,9 +81,9 @@ public class JeecgDemo extends JeecgEntity implements Serializable {
      * 生日
      */
     @ApiModelProperty(value = "生日")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "生日", format = "yyyy-MM-dd")
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @Excel(name = "生日", format = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date birthday;
     /**
      * 邮箱
