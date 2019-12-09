@@ -32,12 +32,12 @@ public class ${entityName} implements Serializable {
   		<#if po.fieldDbType == 'Date'>
 			<#if po.classType == 'date'>
 	@Excel(name = "${po.filedComment}", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE,pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
 			<#else>
 	@Excel(name = "${po.filedComment}", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
 			</#if>
 		<#else>
 	@Excel(name = "${po.filedComment}", width = 15)

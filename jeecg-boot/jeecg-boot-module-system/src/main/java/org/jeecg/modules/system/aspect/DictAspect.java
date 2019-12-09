@@ -7,7 +7,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,6 +14,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.CommonConstant;
+import org.jeecg.common.constant.TimeConstant;
+import org.jeecg.common.util.DateUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.system.service.ISysDictService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,9 @@ public class DictAspect {
 
     private static ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
     static {
         OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(DATE_TIME_FORMAT));
+        OBJECT_MAPPER.setDateFormat(new SimpleDateFormat(TimeConstant.DEFAULT_TIME_FORMAT));
     }
 
     @Autowired
@@ -127,7 +126,7 @@ public class DictAspect {
                         if (Date.class == field.getType() && field.getAnnotation(JsonFormat.class) == null && item.get(field.getName()) != null) {
                             Object value = item.get(field.getName());
                             if (value instanceof Number) {
-                                String date2String = DateFormatUtils.format(new Date(((Number) value).longValue()), DATE_TIME_FORMAT);
+                                String date2String = DateUtils.formatDateTime(new Date(((Number) value).longValue()));
                                 item.put(field.getName(), date2String);
                             }
                         }
