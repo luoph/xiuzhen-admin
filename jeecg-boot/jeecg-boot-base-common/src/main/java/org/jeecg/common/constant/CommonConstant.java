@@ -107,7 +107,7 @@ public interface CommonConstant {
     /**
      * 通告对象类型（USER:指定用户，ALL:全体用户）
      */
-    String MSG_TYPE_UESR = "USER";
+    String MSG_TYPE_USER = "USER";
     String MSG_TYPE_ALL = "ALL";
 
     /**
