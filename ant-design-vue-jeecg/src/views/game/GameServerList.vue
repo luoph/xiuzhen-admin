@@ -5,19 +5,19 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="服务器名字">
-                            <a-input placeholder="服务器名字" v-model="queryParam.name"></a-input>
+                        <a-form-item label="名字">
+                            <a-input placeholder="名字" v-model="queryParam.name"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="服务器路径">
-                            <a-input placeholder="服务器路径" v-model="queryParam.host"></a-input>
+                        <a-form-item label="地址">
+                            <a-input placeholder="地址" v-model="queryParam.host"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="服务器端口">
-                                <a-input placeholder="服务器端口" v-model="queryParam.port"></a-input>
+                            <a-form-item label="端口">
+                                <a-input placeholder="端口" v-model="queryParam.port"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -26,8 +26,8 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="服务器状态">
-                                <a-input placeholder="服务器状态" v-model="queryParam.status"></a-input>
+                            <a-form-item label="状态">
+                                <a-input placeholder="状态" v-model="queryParam.status"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -48,10 +48,10 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('游戏服配置')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+            <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏服配置')">导出</a-button> -->
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
+            </a-upload> -->
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item>
@@ -130,17 +130,17 @@ export default {
                     },
                 },
                 {
-                    title: "服务器名字",
+                    title: "名字",
                     align: "center",
                     dataIndex: "name",
                 },
                 {
-                    title: "服务器路径",
+                    title: "地址",
                     align: "center",
                     dataIndex: "host",
                 },
                 {
-                    title: "服务器端口",
+                    title: "端口",
                     align: "center",
                     dataIndex: "port",
                 },
@@ -150,7 +150,7 @@ export default {
                     dataIndex: "loginUrl",
                 },
                 {
-                    title: "服务器状态",
+                    title: "状态",
                     align: "center",
                     dataIndex: "status",
                 },
@@ -175,31 +175,6 @@ export default {
                     dataIndex: "clientVersionCode",
                 },
                 {
-                    title: "数据库路径",
-                    align: "center",
-                    dataIndex: "dbHost",
-                },
-                {
-                    title: "数据库端口",
-                    align: "center",
-                    dataIndex: "dbPort",
-                },
-                {
-                    title: "数据库用户名",
-                    align: "center",
-                    dataIndex: "dbUser",
-                },
-                {
-                    title: "数据库密码",
-                    align: "center",
-                    dataIndex: "dbPassword",
-                },
-                {
-                    title: "数据库名",
-                    align: "center",
-                    dataIndex: "dbName",
-                },
-                {
                     title: "后台HTTP端口",
                     align: "center",
                     dataIndex: "httpPort",
@@ -210,14 +185,9 @@ export default {
                     dataIndex: "position",
                 },
                 {
-                    title: "服务器类型 0-混服 1-专服",
+                    title: "类型",
                     align: "center",
                     dataIndex: "type",
-                },
-                {
-                    title: "合服时母服id",
-                    align: "center",
-                    dataIndex: "pid",
                 },
                 {
                     title: "合服时间",
@@ -230,7 +200,7 @@ export default {
                     dataIndex: "extra",
                 },
                 {
-                    title: "服务器开服时间",
+                    title: "开服时间",
                     align: "center",
                     dataIndex: "openTime",
                 },
@@ -245,8 +215,8 @@ export default {
                 list: "/game/gameServer/list",
                 delete: "/game/gameServer/delete",
                 deleteBatch: "/game/gameServer/deleteBatch",
-                exportXlsUrl: "game/gameServer/exportXls",
-                importExcelUrl: "game/gameServer/importExcel",
+                // exportXlsUrl: "game/gameServer/exportXls",
+                // importExcelUrl: "game/gameServer/importExcel",
             },
         };
     },
