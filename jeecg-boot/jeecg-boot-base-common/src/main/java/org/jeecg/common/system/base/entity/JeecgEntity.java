@@ -12,6 +12,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author dangzhenghui@163.com
@@ -29,13 +30,13 @@ public class JeecgEntity implements Serializable {
      */
     @TableId(type = IdType.ID_WORKER_STR)
     @ApiModelProperty(value = "ID")
-    private java.lang.String id;
+    private String id;
     /**
      * 创建人
      */
     @ApiModelProperty(value = "创建人")
     @Excel(name = "创建人", width = 15)
-    private java.lang.String createBy;
+    private String createBy;
     /**
      * 创建时间
      */
@@ -43,13 +44,13 @@ public class JeecgEntity implements Serializable {
     @Excel(name = "创建时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date createTime;
+    private Date createTime;
     /**
      * 更新人
      */
     @ApiModelProperty(value = "更新人")
     @Excel(name = "更新人", width = 15)
-    private java.lang.String updateBy;
+    private String updateBy;
     /**
      * 更新时间
      */
@@ -57,5 +58,5 @@ public class JeecgEntity implements Serializable {
     @Excel(name = "更新时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date updateTime;
+    private Date updateTime;
 }
