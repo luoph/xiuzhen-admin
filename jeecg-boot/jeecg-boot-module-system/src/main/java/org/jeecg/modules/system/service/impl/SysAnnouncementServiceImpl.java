@@ -67,7 +67,7 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
         // 1.更新系统信息表数据
         sysAnnouncementMapper.updateById(sysAnnouncement);
         String userId = sysAnnouncement.getUserIds();
-        if (oConvertUtils.isNotEmpty(userId) && sysAnnouncement.getMsgType().equals(CommonConstant.MSG_TYPE_UESR)) {
+        if (oConvertUtils.isNotEmpty(userId) && sysAnnouncement.getMsgType().equals(CommonConstant.MSG_TYPE_USER)) {
             // 2.补充新的通知用户数据
             String[] userIds = userId.substring(0, (userId.length() - 1)).split(",");
             String anntId = sysAnnouncement.getId();

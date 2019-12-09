@@ -91,7 +91,7 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
          */
 
         QueryWrapper<JeecgDemo> queryWrapper = QueryGenerator.initQueryWrapper(jeecgDemo, req.getParameterMap());
-        Page<JeecgDemo> page = new Page<JeecgDemo>(pageNo, pageSize);
+        Page<JeecgDemo> page = new Page<>(pageNo, pageSize);
 
         IPage<JeecgDemo> pageList = jeecgDemoService.page(page, queryWrapper);
 //		log.info("查询当前页：" + pageList.getCurrent());
@@ -113,7 +113,7 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
     @AutoLog(value = "添加测试DEMO")
     @ApiOperation(value = "添加DEMO", notes = "添加DEMO")
     public Result<JeecgDemo> add(@RequestBody JeecgDemo jeecgDemo) {
-        Result<JeecgDemo> result = new Result<JeecgDemo>();
+        Result<JeecgDemo> result = new Result<>();
         try {
             jeecgDemoService.save(jeecgDemo);
             result.success("添加成功！");
@@ -134,7 +134,7 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
     @ApiOperation(value = "编辑DEMO", notes = "编辑DEMO")
     @AutoLog(value = "编辑DEMO", operateType = CommonConstant.OPERATE_TYPE_3)
     public Result<JeecgDemo> edit(@RequestBody JeecgDemo jeecgDemo) {
-        Result<JeecgDemo> result = new Result<JeecgDemo>();
+        Result<JeecgDemo> result = new Result<>();
         JeecgDemo jeecgDemoEntity = jeecgDemoService.getById(jeecgDemo.getId());
         if (jeecgDemoEntity == null) {
             result.error500("未找到对应实体");
@@ -158,11 +158,11 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
     @AutoLog(value = "删除测试DEMO")
     @DeleteMapping(value = "/delete")
     @ApiOperation(value = "通过ID删除DEMO", notes = "通过ID删除DEMO")
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         try {
             jeecgDemoService.removeById(id);
         } catch (Exception e) {
-            log.error("删除失败", e.getMessage());
+            log.error("delete error", e);
             return Result.error("删除失败!");
         }
         return Result.ok("删除成功!");
@@ -196,7 +196,7 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
     @GetMapping(value = "/queryById")
     @ApiOperation(value = "通过ID查询DEMO", notes = "通过ID查询DEMO")
     public Result<JeecgDemo> queryById(@ApiParam(name = "id", value = "示例id", required = true) @RequestParam(name = "id", required = true) String id) {
-        Result<JeecgDemo> result = new Result<JeecgDemo>();
+        Result<JeecgDemo> result = new Result<>();
         JeecgDemo jeecgDemo = jeecgDemoService.getById(id);
         if (jeecgDemo == null) {
             result.error500("未找到对应实体");
@@ -211,7 +211,7 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
      * 导出excel
      *
      * @param request
-     * @param response
+     * @param jeecgDemo
      */
     @RequestMapping(value = "/exportXls")
     @PermissionData(pageComponent = "jeecg/JeecgDemoList")
@@ -290,7 +290,7 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
     @RequestMapping("/demo3")
     public ModelAndView demo3(ModelAndView modelAndView) {
         modelAndView.setViewName("demo3");
-        List<String> userList = new ArrayList<String>();
+        List<String> userList = new ArrayList<>();
         userList.add("admin");
         userList.add("user1");
         userList.add("user2");
@@ -305,7 +305,7 @@ public class JeecgDemoController extends JeecgController<JeecgDemo, IJeecgDemoSe
     // JSON接收测试===========================================//
     @PostMapping(value = "/testOnlineAdd")
     public Result<JeecgDemo> testOnlineAdd(@RequestBody JSONObject json) {
-        Result<JeecgDemo> result = new Result<JeecgDemo>();
+        Result<JeecgDemo> result = new Result<>();
         log.info(json.toJSONString());
         result.success("添加成功！");
         return result;
