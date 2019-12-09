@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,7 +23,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  */
 @Data
 @TableName("${tableName}")
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "${tableName}对象", description = "${tableVo.ftlDescription}")
 public class ${entityName} {

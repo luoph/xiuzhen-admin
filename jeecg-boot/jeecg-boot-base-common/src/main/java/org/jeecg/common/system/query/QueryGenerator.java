@@ -76,7 +76,7 @@ public class QueryGenerator {
         long start = System.currentTimeMillis();
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
         installMplus(queryWrapper, searchObj, parameterMap);
-        log.debug("---查询条件构造器初始化完成,耗时:" + (System.currentTimeMillis() - start) + "毫秒----");
+        log.debug("---查询条件构造器初始化完成,耗时:{}ms----", (System.currentTimeMillis() - start));
         return queryWrapper;
     }
 
@@ -187,7 +187,7 @@ public class QueryGenerator {
         if (parameterMap != null && parameterMap.containsKey(ORDER_TYPE)) {
             order = parameterMap.get(ORDER_TYPE)[0];
         }
-        log.debug("排序规则>>列:" + column + ",排序方式:" + order);
+        log.debug("排序规则>>列:{},排序方式:{}", column, order);
         if (oConvertUtils.isNotEmpty(column) && oConvertUtils.isNotEmpty(order)) {
             // 字典字段，去掉字典翻译文本后缀
             if (column.endsWith(CommonConstant.DICT_TEXT_SUFFIX)) {

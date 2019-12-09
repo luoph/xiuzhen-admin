@@ -21,7 +21,6 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Data
 @TableName("game_server")
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "game_server对象", description = "游戏服配置")
 public class GameServer {

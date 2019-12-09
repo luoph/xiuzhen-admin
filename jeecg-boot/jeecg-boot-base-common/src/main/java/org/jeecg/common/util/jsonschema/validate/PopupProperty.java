@@ -1,11 +1,17 @@
 package org.jeecg.common.util.jsonschema.validate;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.jeecg.common.util.jsonschema.CommonProperty;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class PopupProperty extends CommonProperty {
 
     private static final long serialVersionUID = -3200493311633999539L;
@@ -15,30 +21,6 @@ public class PopupProperty extends CommonProperty {
     private String destFields;
 
     private String orgFields;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDestFields() {
-        return destFields;
-    }
-
-    public void setDestFields(String destFields) {
-        this.destFields = destFields;
-    }
-
-    public String getOrgFields() {
-        return orgFields;
-    }
-
-    public void setOrgFields(String orgFields) {
-        this.orgFields = orgFields;
-    }
 
     public PopupProperty() {
     }

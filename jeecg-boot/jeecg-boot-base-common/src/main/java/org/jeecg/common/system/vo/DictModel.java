@@ -8,7 +8,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DictModel implements Serializable {

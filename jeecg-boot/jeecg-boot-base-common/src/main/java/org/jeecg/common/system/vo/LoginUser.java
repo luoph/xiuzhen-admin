@@ -18,7 +18,6 @@ import java.util.Date;
  * @since 2018-12-20
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class LoginUser {
 

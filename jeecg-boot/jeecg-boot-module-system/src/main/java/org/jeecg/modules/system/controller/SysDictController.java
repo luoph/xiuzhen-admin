@@ -80,10 +80,8 @@ public class SysDictController {
         QueryWrapper<SysDict> queryWrapper = QueryGenerator.initQueryWrapper(sysDict, req.getParameterMap());
         Page<SysDict> page = new Page<SysDict>(pageNo, pageSize);
         IPage<SysDict> pageList = sysDictService.page(page, queryWrapper);
-        log.debug("查询当前页：" + pageList.getCurrent());
-        log.debug("查询当前页数量：" + pageList.getSize());
-        log.debug("查询结果数量：" + pageList.getRecords().size());
-        log.debug("数据总数：" + pageList.getTotal());
+        log.debug("查询当前页:{}, 查询当前页数量:{}, 查询结果数量:{}, 数据总数:{}",
+                pageList.getCurrent(), pageList.getSize(), pageList.getRecords().size(), pageList.getTotal());
         result.setSuccess(true);
         result.setResult(pageList);
         return result;

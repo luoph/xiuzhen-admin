@@ -59,11 +59,11 @@ public class DictAspect {
         long time1 = System.currentTimeMillis();
         Object result = pjp.proceed();
         long time2 = System.currentTimeMillis();
-        log.debug("获取JSON数据 耗时：" + (time2 - time1) + "ms");
+        log.debug("获取JSON数据 耗时：{}ms", (time2 - time1));
         long start = System.currentTimeMillis();
         this.parseDictText(result);
         long end = System.currentTimeMillis();
-        log.debug("解析注入JSON数据  耗时" + (end - start) + "ms");
+        log.debug("解析注入JSON数据 耗时：{}ms", (end - start));
         return result;
     }
 
@@ -117,8 +117,8 @@ public class DictAspect {
                             // 翻译字典值对应的txt
                             String textValue = translateDictValue(code, text, table, key);
 
-                            log.debug(" 字典Val : " + textValue);
-                            log.debug(" __翻译字典字段__ " + field.getName() + CommonConstant.DICT_TEXT_SUFFIX + "： " + textValue);
+                            log.debug(" 字典Val:{}", textValue);
+                            log.debug(" __翻译字典字段__{}:{}", field.getName() + CommonConstant.DICT_TEXT_SUFFIX, textValue);
                             item.put(field.getName() + CommonConstant.DICT_TEXT_SUFFIX, textValue);
                         }
 
@@ -156,7 +156,7 @@ public class DictAspect {
         String[] keys = key.split(",");
         for (String k : keys) {
             String tmpValue = null;
-            log.debug(" 字典 key : " + k);
+            log.debug(" 字典 key:{}", k);
             if (k.trim().length() == 0) {
                 continue; //跳过循环
             }

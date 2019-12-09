@@ -1,5 +1,8 @@
 package org.jeecg.common.util.jsonschema;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -7,6 +10,8 @@ import java.util.List;
  * JsonSchema 模式类
  * < http://json-schema.org/draft-07/schema# >
  */
+@Data
+@Accessors(chain = true)
 public class JsonSchemaDescrip implements Serializable {
 
     /**
@@ -15,7 +20,7 @@ public class JsonSchemaDescrip implements Serializable {
     private static final long serialVersionUID = 7682073117441544718L;
 
 
-    private String $schema = "http://json-schema.org/draft-07/schema#";
+    private String schema = "http://json-schema.org/draft-07/schema#";
 
     /**
      * 用它给我们的模式提供了标题。
@@ -33,47 +38,6 @@ public class JsonSchemaDescrip implements Serializable {
     private String type;
 
     private List<String> required;
-
-
-    public List<String> getRequired() {
-        return required;
-    }
-
-    public void setRequired(List<String> required) {
-        this.required = required;
-    }
-
-    public String get$schema() {
-        return $schema;
-    }
-
-    public void set$schema(String $schema) {
-        this.$schema = $schema;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public JsonSchemaDescrip() {
     }

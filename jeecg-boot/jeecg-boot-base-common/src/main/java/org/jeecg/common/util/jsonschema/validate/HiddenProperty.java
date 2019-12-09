@@ -1,6 +1,9 @@
 package org.jeecg.common.util.jsonschema.validate;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.jeecg.common.util.jsonschema.CommonProperty;
 
 import java.util.HashMap;
@@ -11,6 +14,9 @@ import java.util.Map;
  *
  * @author 86729
  */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class HiddenProperty extends CommonProperty {
 
     private static final long serialVersionUID = -8939298551502162479L;

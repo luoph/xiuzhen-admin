@@ -1,6 +1,9 @@
 package org.jeecg.common.util.jsonschema.validate;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.jeecg.common.util.jsonschema.CommonProperty;
 
 import java.util.HashMap;
@@ -11,6 +14,9 @@ import java.util.Map;
  *
  * @author 86729
  */
+@Data
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class DictProperty extends CommonProperty {
 
     private static final long serialVersionUID = 3786503639885610767L;
@@ -19,30 +25,6 @@ public class DictProperty extends CommonProperty {
     private String dictCode;
     private String dictTable;
     private String dictText;
-
-    public String getDictCode() {
-        return dictCode;
-    }
-
-    public void setDictCode(String dictCode) {
-        this.dictCode = dictCode;
-    }
-
-    public String getDictTable() {
-        return dictTable;
-    }
-
-    public void setDictTable(String dictTable) {
-        this.dictTable = dictTable;
-    }
-
-    public String getDictText() {
-        return dictText;
-    }
-
-    public void setDictText(String dictText) {
-        this.dictText = dictText;
-    }
 
     public DictProperty() {
     }

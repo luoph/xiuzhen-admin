@@ -17,7 +17,6 @@ import java.io.Serializable;
  * @since 2018-12-21
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysRolePermission implements Serializable {
 

@@ -14,8 +14,8 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2019-04-09
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 @TableName("sys_sms_template")
 public class SysMessageTemplate extends JeecgEntity {
     /**

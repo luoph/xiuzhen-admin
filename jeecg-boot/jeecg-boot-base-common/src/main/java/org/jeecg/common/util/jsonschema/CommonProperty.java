@@ -1,6 +1,8 @@
 package org.jeecg.common.util.jsonschema;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jeecg.common.system.vo.DictModel;
 
 import java.io.Serializable;
@@ -10,6 +12,8 @@ import java.util.Map;
 /**
  * 验证通用属性
  */
+@Data
+@Accessors(chain = true)
 public abstract class CommonProperty implements Serializable {
 
     private static final long serialVersionUID = -426159949502493187L;
@@ -50,70 +54,6 @@ public abstract class CommonProperty implements Serializable {
     protected Integer order;//字段显示排序
 
     protected boolean disabled;//是否禁用
-
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
-    }
-
-    public String getView() {
-        return view;
-    }
-
-    public void setView(String view) {
-        this.view = view;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public List<DictModel> getInclude() {
-        return include;
-    }
-
-    public void setInclude(List<DictModel> include) {
-        this.include = include;
-    }
-
-    public Object getConstant() {
-        return constant;
-    }
-
-    public void setConstant(Object constant) {
-        this.constant = constant;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
 
     /**
      * 返回一个map有两个key

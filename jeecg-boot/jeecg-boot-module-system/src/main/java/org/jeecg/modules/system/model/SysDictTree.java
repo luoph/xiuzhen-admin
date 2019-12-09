@@ -19,7 +19,6 @@ import java.util.Date;
  * @since 2018-12-28
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysDictTree implements Serializable {
 

@@ -22,7 +22,6 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Data
 @TableName("sys_position")
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "sys_position对象", description = "职务表")
 public class SysPosition {

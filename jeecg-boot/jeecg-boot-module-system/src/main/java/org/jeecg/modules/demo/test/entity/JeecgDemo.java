@@ -21,7 +21,6 @@ import java.io.Serializable;
  * @date 2018-12-29
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "测试DEMO对象", description = "测试DEMO")
 @TableName("demo")

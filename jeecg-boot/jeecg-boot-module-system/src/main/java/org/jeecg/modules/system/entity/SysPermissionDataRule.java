@@ -18,7 +18,6 @@ import java.util.Date;
  * @since 2019-03-29
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysPermissionDataRule implements Serializable {
 

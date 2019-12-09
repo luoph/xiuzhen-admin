@@ -9,8 +9,8 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 
 @Data
 @TableName("oss_file")
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class OSSFile extends JeecgEntity {
 
     private static final long serialVersionUID = 1L;
