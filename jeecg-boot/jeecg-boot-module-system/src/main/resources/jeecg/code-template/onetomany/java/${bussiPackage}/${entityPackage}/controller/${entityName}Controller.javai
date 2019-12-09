@@ -43,10 +43,10 @@ import lombok.extern.slf4j.Slf4j;
 import com.alibaba.fastjson.JSON;
 
  /**
- * @Description: ${tableVo.ftlDescription}
- * @Author: jeecg-boot
- * @Date:   ${.now?string["yyyy-MM-dd"]}
- * @Version: V1.0
+ * @description: ${tableVo.ftlDescription}
+ * @author: jeecg-boot
+ * @date:   ${.now?string["yyyy-MM-dd"]}
+ * @version: V1.0
  */
 @RestController
 @RequestMapping("/${entityPackage}/${entityName?uncap_first}")
