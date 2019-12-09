@@ -11,10 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 
 /**
- * @Description: 订单
- * @Author: jeecg-boot
- * @Date: 2019-02-15
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 订单
+ * @date 2019-02-15
  */
 @Data
 @TableName("jeecg_order_main")

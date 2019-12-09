@@ -5,7 +5,7 @@ import org.jeecg.common.util.oConvertUtils;
 /**
  * 查询链接规则
  *
- * @Author Sunjianlei
+ * @author Sunjianlei
  */
 public enum MatchTypeEnum {
 

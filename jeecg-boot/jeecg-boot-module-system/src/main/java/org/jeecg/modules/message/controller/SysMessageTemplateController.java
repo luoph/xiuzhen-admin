@@ -22,10 +22,10 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
- * @Description: 消息模板
- * @Author: jeecg-boot
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 消息模板
  * @Sate: 2019-04-09
- * @Version: V1.0
  */
 @Slf4j
 @RestController

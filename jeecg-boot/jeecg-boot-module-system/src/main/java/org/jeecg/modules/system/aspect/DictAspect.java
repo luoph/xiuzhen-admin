@@ -28,10 +28,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Description: 字典aop类
- * @Author: dangzhenghui
- * @Date: 2019-3-17 21:50
- * @Version: 1.0
+ * @author dangzhenghui
+ * @version 1.0
+ * @description 字典aop类
+ * @date 2019-3-17 21:50
  */
 @Aspect
 @Component

@@ -7,10 +7,10 @@ import org.jeecg.modules.message.entity.SysMessageTemplate;
 import java.util.List;
 
 /**
- * @Description: 消息模板
- * @Author: jeecg-boot
- * @Date: 2019-04-09
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 消息模板
+ * @date 2019-04-09
  */
 public interface SysMessageTemplateMapper extends BaseMapper<SysMessageTemplate> {
     @Select("SELECT * FROM SYS_SMS_TEMPLATE WHERE TEMPLATE_CODE = #{code}")

@@ -54,7 +54,7 @@ import java.util.*;
  * 用户表 前端控制器
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-20
  */
 @Slf4j

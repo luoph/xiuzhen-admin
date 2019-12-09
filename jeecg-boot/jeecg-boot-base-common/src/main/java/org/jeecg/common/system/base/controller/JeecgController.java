@@ -28,10 +28,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Description: Controller基类
- * @Author: dangzhenghui@163.com
- * @Date: 2019-4-21 8:13
- * @Version: 1.0
+ * @author dangzhenghui@163.com
+ * @version 1.0
+ * @description Controller基类
+ * @date 2019-4-21 8:13
  */
 @Slf4j
 public class JeecgController<T, S extends IService<T>> {

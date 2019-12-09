@@ -12,10 +12,10 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * @Description: 消息
- * @Author: jeecg-boot
- * @Date: 2019-04-09
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 消息
+ * @date 2019-04-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

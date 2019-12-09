@@ -7,10 +7,10 @@ import org.jeecg.modules.demo.test.service.IJoaDemoService;
 import org.springframework.stereotype.Service;
 
 /**
- * @Description: 流程测试
- * @Author: jeecg-boot
- * @Date: 2019-05-14
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 流程测试
+ * @date 2019-05-14
  */
 @Service
 public class JoaDemoServiceImpl extends ServiceImpl<JoaDemoMapper, JoaDemo> implements IJoaDemoService {

@@ -10,7 +10,7 @@ import java.util.List;
  * 菜单权限规则 服务类
  * </p>
  *
- * @Author huangzhilin
+ * @author huangzhilin
  * @since 2019-04-01
  */
 public interface ISysPermissionDataRuleService extends IService<SysPermissionDataRule> {

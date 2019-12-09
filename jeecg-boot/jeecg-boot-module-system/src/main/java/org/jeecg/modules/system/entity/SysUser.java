@@ -21,7 +21,7 @@ import java.util.Date;
  * 用户表
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-20
  */
 @Data

@@ -18,10 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
- * @Description: 消息
- * @author: jeecg-boot
- * @date: 2019-04-09
- * @version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 消息
+ * @date 2019-04-09
  */
 @Slf4j
 @RestController

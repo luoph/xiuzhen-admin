@@ -14,10 +14,10 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * @Description: 游戏服配置
- * @Author: jeecg-boot
- * @Date: 2019-12-05
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 游戏服配置
+ * @date 2019-12-05
  */
 @Data
 @TableName("game_server")

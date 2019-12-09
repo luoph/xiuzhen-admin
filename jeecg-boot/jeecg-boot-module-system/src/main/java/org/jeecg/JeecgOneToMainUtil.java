@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 代码生成器入口【一对多】
  *
- * @Author 张代浩
+ * @author 张代浩
  * @site www.jeecg.org
  */
 public class JeecgOneToMainUtil {

@@ -36,10 +36,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: 一对多示例（JEditableTable行编辑）
- * @Author: jeecg-boot
+ * @author jeecg-boot
+ * @version V2.0
+ * @description 一对多示例（JEditableTable行编辑）
  * @Date:2019-02-15
- * @Version: V2.0
  */
 @RestController
 @RequestMapping("/test/jeecgOrderMain")

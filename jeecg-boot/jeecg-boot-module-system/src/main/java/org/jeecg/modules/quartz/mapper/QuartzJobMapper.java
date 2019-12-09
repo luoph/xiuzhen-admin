@@ -7,10 +7,10 @@ import org.jeecg.modules.quartz.entity.QuartzJob;
 import java.util.List;
 
 /**
- * @Description: 定时任务在线管理
- * @Author: jeecg-boot
- * @Date: 2019-01-02
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 定时任务在线管理
+ * @date 2019-01-02
  */
 public interface QuartzJobMapper extends BaseMapper<QuartzJob> {
 

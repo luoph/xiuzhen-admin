@@ -12,10 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 
 /**
- * @Description: 用户代理人设置
- * @Author: jeecg-boot
- * @Date: 2019-04-17
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 用户代理人设置
+ * @date 2019-04-17
  */
 @Data
 @TableName("sys_user_agent")

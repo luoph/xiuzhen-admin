@@ -18,7 +18,7 @@ import java.util.Properties;
 /**
  * mybatis拦截器，自动注入创建人、创建时间、修改人、修改时间
  *
- * @Author scott
+ * @author scott
  * @Date 2019-01-19
  */
 @Slf4j

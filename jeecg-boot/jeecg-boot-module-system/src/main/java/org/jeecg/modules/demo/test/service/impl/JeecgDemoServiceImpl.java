@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @Description: jeecg 测试demo
- * @Author: jeecg-boot
- * @Date: 2018-12-29
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description jeecg 测试demo
+ * @date 2018-12-29
  */
 @Service
 public class JeecgDemoServiceImpl extends ServiceImpl<JeecgDemoMapper, JeecgDemo> implements IJeecgDemoService {

@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: Scott
- * @Date: 2018/2/7
- * @description: autopoi 配置类
+ * @author Scott
+ * @date 2018/2/7
+ * @description autopoi 配置类
  */
 
 @Configuration

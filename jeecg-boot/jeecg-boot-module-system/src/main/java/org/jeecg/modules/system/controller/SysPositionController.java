@@ -34,10 +34,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: 职务表
- * @Author: jeecg-boot
- * @Date: 2019-09-19
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 职务表
+ * @date 2019-09-19
  */
 @Slf4j
 @Api(tags = "职务表")

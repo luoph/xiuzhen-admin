@@ -30,8 +30,8 @@ import java.util.*;
  * 用户表 服务实现类
  * </p>
  *
- * @Author: scott
- * @Date: 2018-12-20
+ * @author scott
+ * @date 2018-12-20
  */
 @Service
 @Slf4j

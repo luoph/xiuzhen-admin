@@ -11,10 +11,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 
 /**
- * @Description: 用户通告阅读标记表
- * @Author: jeecg-boot
- * @Date: 2019-02-21
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 用户通告阅读标记表
+ * @date 2019-02-21
  */
 @Data
 @TableName("sys_announcement_send")

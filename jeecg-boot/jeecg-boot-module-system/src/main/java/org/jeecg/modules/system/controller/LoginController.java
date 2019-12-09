@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
- * @Author scott
+ * @author scott
  * @since 2018-12-17
  */
 @RestController

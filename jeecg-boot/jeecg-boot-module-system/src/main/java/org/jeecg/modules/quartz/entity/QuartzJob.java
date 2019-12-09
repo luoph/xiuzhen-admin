@@ -12,10 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 
 /**
- * @Description: 定时任务在线管理
- * @Author: jeecg-boot
- * @Date: 2019-01-02
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 定时任务在线管理
+ * @date 2019-01-02
  */
 @Data
 @TableName("sys_quartz_job")

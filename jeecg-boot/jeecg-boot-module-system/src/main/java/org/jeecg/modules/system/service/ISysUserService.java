@@ -17,7 +17,7 @@ import java.util.Set;
  * 用户表 服务类
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-20
  */
 public interface ISysUserService extends IService<SysUser> {

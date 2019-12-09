@@ -17,7 +17,7 @@ import java.util.Map;
  * 字典表 Mapper 接口
  * </p>
  *
- * @Author zhangweijian
+ * @author zhangweijian
  * @since 2018-12-28
  */
 public interface SysDictMapper extends BaseMapper<SysDict> {

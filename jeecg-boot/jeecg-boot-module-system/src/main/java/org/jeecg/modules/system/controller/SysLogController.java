@@ -25,7 +25,7 @@ import java.util.Arrays;
  * 系统日志表 前端控制器
  * </p>
  *
- * @Author zhangweijian
+ * @author zhangweijian
  * @since 2018-12-26
  */
 @RestController

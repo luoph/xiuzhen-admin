@@ -30,7 +30,7 @@ import java.util.List;
  * CAS单点登录客户端登录认证
  * </p>
  *
- * @Author zhoujf
+ * @author zhoujf
  * @since 2018-12-20
  */
 @Slf4j

@@ -17,10 +17,10 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @Description: 订单
- * @Author: jeecg-boot
- * @Date: 2019-02-15
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 订单
+ * @date 2019-02-15
  */
 @Service
 public class JeecgOrderMainServiceImpl extends ServiceImpl<JeecgOrderMainMapper, JeecgOrderMain> implements IJeecgOrderMainService {

@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * @author 张代浩
  * @Title: DuplicateCheckAction
- * @Description: 重复校验工具
- * @Author 张代浩
+ * @description 重复校验工具
  * @Date 2019-03-25
  * @Version V1.0
  */

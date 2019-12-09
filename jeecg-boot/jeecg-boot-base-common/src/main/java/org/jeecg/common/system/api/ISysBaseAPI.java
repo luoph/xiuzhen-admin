@@ -9,10 +9,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * @Description: 底层共通业务API，提供其他独立模块调用
- * @Author: scott
+ * @author scott
+ * @version V1.0
+ * @description 底层共通业务API，提供其他独立模块调用
  * @Date:2019-4-20
- * @Version:V1.0
  */
 public interface ISysBaseAPI {
 

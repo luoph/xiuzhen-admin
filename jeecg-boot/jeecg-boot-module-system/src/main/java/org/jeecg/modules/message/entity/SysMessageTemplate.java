@@ -8,10 +8,10 @@ import org.jeecg.common.system.base.entity.JeecgEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
- * @Description: 消息模板
- * @Author: jeecg-boot
- * @Date: 2019-04-09
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 消息模板
+ * @date 2019-04-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

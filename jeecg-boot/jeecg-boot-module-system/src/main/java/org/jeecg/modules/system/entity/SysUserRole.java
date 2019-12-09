@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 用户角色表
  * </p>
  *
- * @Author scott
+ * @author scott
  * @since 2018-12-21
  */
 @Data

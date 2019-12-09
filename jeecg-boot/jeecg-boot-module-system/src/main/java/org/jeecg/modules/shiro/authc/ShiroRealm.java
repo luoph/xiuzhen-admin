@@ -24,10 +24,10 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 /**
- * @Description: 用户登录鉴权和获取用户授权
- * @Author: Scott
- * @Date: 2019-4-23 8:13
- * @Version: 1.1
+ * @author Scott
+ * @version 1.1
+ * @description 用户登录鉴权和获取用户授权
+ * @date 2019-4-23 8:13
  */
 @Component
 @Slf4j

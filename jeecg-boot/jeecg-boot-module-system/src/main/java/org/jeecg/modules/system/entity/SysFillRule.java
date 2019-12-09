@@ -14,10 +14,10 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * @Description: 填值规则
- * @Author: jeecg-boot
- * @Date: 2019-11-07
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 填值规则
+ * @date 2019-11-07
  */
 @Data
 @TableName("sys_fill_rule")

@@ -21,10 +21,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 </#list>
 
 /**
- * @description: ${tableVo.ftlDescription}
- * @author: jeecg-boot
- * @date:   ${.now?string["yyyy-MM-dd"]}
- * @version: V1.0
+ * @description ${tableVo.ftlDescription}
+ * @author jeecg-boot
+ * @date   ${.now?string["yyyy-MM-dd"]}
+ * @version V1.0
  */
 @Service
 public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, ${entityName}> implements I${entityName}Service {

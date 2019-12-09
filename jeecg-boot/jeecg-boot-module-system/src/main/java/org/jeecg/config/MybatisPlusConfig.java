@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 单数据源配置（jeecg.datasource.open = false时生效）
  *
- * @Author zhoujf
+ * @author zhoujf
  */
 @Configuration
 @MapperScan(value = {"org.jeecg.modules.**.mapper*"})

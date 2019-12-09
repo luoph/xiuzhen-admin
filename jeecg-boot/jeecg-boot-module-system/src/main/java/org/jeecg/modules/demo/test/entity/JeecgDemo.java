@@ -15,10 +15,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 
 /**
- * @Description: jeecg 测试demo
- * @Author: jeecg-boot
- * @Date: 2018-12-29
- * @Version:V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description jeecg 测试demo
+ * @date 2018-12-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

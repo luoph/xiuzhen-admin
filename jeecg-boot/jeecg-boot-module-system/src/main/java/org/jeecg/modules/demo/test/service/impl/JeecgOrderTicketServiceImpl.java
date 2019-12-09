@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Description: 订单机票
- * @Author: jeecg-boot
- * @Date: 2019-02-15
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 订单机票
+ * @date 2019-02-15
  */
 @Service
 public class JeecgOrderTicketServiceImpl extends ServiceImpl<JeecgOrderTicketMapper, JeecgOrderTicket> implements IJeecgOrderTicketService {

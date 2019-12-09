@@ -10,9 +10,9 @@ import org.jeecg.common.system.vo.LoginUser;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Author scott
+ * @author scott
  * @Date 2019/9/23 14:12
- * @Description: 编程校验token有效性
+ * @description 编程校验token有效性
  */
 @Slf4j
 public class TokenUtils {

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 /**
- * @Author Scott
+ * @author Scott
  * @Date 2018-07-12 14:23
  * @Desc JWT工具类
  **/

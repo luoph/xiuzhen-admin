@@ -7,7 +7,7 @@ import java.util.Date;
  * 菜单权限规则表
  * </p>
  *
- * @Author huangzhilin
+ * @author huangzhilin
  * @since 2019-03-29
  */
 public class SysPermissionDataRuleModel {

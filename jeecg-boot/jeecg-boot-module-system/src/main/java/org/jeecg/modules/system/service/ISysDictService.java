@@ -14,7 +14,7 @@ import java.util.Map;
  * 字典表 服务类
  * </p>
  *
- * @Author zhangweijian
+ * @author zhangweijian
  * @since 2018-12-28
  */
 public interface ISysDictService extends IService<SysDict> {

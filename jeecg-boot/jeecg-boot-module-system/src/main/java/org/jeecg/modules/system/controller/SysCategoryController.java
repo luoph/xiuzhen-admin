@@ -36,10 +36,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @Description: 分类字典
- * @Author: jeecg-boot
- * @Date: 2019-05-29
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 分类字典
+ * @date 2019-05-29
  */
 @RestController
 @RequestMapping("/sys/category")

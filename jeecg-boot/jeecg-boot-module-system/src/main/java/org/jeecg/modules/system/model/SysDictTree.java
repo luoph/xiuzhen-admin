@@ -15,7 +15,7 @@ import java.util.Date;
  * 字典表
  * </p>
  *
- * @Author zhangweijian
+ * @author zhangweijian
  * @since 2018-12-28
  */
 @Data

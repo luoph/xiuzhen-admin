@@ -24,7 +24,7 @@ import java.util.Set;
  * 菜单权限规则  服务实现类
  * </p>
  *
- * @Author huangzhilin
+ * @author huangzhilin
  * @since 2019-04-01
  */
 @Service

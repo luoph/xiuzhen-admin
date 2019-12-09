@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.jeecg.modules.demo.test.entity.JeecgOrderMain;
 
 /**
- * @Description: 订单
- * @Author: jeecg-boot
- * @Date: 2019-02-15
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 订单
+ * @date 2019-02-15
  */
 public interface JeecgOrderMainMapper extends BaseMapper<JeecgOrderMain> {
 

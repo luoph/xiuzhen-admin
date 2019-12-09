@@ -34,7 +34,7 @@ import java.util.*;
  * 部门表 前端控制器
  * <p>
  *
- * @Author: Steve @Since： 2019-01-22
+ * @author Steve @since  2019-01-22
  */
 @RestController
 @RequestMapping("/sys/sysDepart")

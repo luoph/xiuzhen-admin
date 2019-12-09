@@ -7,10 +7,10 @@ import org.jeecg.modules.system.service.ISysPositionService;
 import org.springframework.stereotype.Service;
 
 /**
- * @Description: 职务表
- * @Author: jeecg-boot
- * @Date: 2019-09-19
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 职务表
+ * @date 2019-09-19
  */
 @Service
 public class SysPositionServiceImpl extends ServiceImpl<SysPositionMapper, SysPosition> implements ISysPositionService {

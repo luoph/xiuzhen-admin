@@ -8,10 +8,10 @@ import org.jeecg.modules.demo.test.entity.JeecgOrderCustomer;
 import java.util.List;
 
 /**
- * @Description: 订单客户
- * @Author: jeecg-boot
- * @Date: 2019-02-15
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 订单客户
+ * @date 2019-02-15
  */
 public interface JeecgOrderCustomerMapper extends BaseMapper<JeecgOrderCustomer> {
 

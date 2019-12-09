@@ -11,10 +11,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @description: ${subTab.ftlDescription}
- * @author: jeecg-boot
- * @date:   ${.now?string["yyyy-MM-dd"]}
- * @version: V1.0
+ * @description ${subTab.ftlDescription}
+ * @author jeecg-boot
+ * @date   ${.now?string["yyyy-MM-dd"]}
+ * @version V1.0
  */
 @Service
 public class ${subTab.entityName}ServiceImpl extends ServiceImpl<${subTab.entityName}Mapper, ${subTab.entityName}> implements I${subTab.entityName}Service {

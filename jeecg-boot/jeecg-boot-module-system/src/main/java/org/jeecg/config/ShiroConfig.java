@@ -26,9 +26,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @author: Scott
- * @date: 2018/2/7
- * @description: shiro 配置类
+ * @author Scott
+ * @date 2018/2/7
+ * @description shiro 配置类
  */
 
 @Slf4j

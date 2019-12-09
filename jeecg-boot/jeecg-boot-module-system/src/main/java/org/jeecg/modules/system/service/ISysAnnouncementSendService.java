@@ -8,10 +8,10 @@ import org.jeecg.modules.system.model.AnnouncementSendModel;
 import java.util.List;
 
 /**
- * @Description: 用户通告阅读标记表
- * @Author: jeecg-boot
- * @Date: 2019-02-21
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 用户通告阅读标记表
+ * @date 2019-02-21
  */
 public interface ISysAnnouncementSendService extends IService<SysAnnouncementSend> {
 

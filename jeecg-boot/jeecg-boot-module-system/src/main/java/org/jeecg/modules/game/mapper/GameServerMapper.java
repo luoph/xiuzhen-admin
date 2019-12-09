@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.jeecg.modules.game.entity.GameServer;
 
 /**
- * @Description: 游戏服配置
- * @Author: jeecg-boot
- * @Date: 2019-12-05
- * @Version: V1.0
+ * @author jeecg-boot
+ * @version V1.0
+ * @description 游戏服配置
+ * @date 2019-12-05
  */
 public interface GameServerMapper extends BaseMapper<GameServer> {
 
