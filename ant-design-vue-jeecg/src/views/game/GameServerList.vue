@@ -27,7 +27,7 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="服务器状态">
-                                <a-input placeholder="0-正常 1-流畅 2-火爆 3-维护" v-model="queryParam.status"></a-input>
+                                <a-input placeholder="服务器状态" v-model="queryParam.status"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -116,7 +116,7 @@ export default {
     },
     data() {
         return {
-            description: "游戏服配置页面",
+            description: "游戏服配置",
             // 表头
             columns: [
                 {
@@ -255,7 +255,8 @@ export default {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
         },
     },
-    methods: {},
+    methods: {
+    },
 };
 </script>
 <style scoped>
