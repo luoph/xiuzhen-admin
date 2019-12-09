@@ -3,19 +3,20 @@ package org.jeecg.modules.system.model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 /**
  * @author 张代浩
- * @Title: DuplicateCheckVo
  * @description 重复校验VO
- * @Date 2019-03-25
- * @Version V1.0
+ * @date 2019-03-25
+ * @version V1.0
  */
 @Data
+@Accessors(chain = true)
 @ApiModel(value = "重复校验数据模型", description = "重复校验数据模型")
-public class DuplicateCheckVo implements Serializable {
+public class DuplicateCheckVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

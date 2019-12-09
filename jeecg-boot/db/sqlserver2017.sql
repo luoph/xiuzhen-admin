@@ -3735,7 +3735,7 @@ GO
 
 CREATE TABLE [dbo].[sys_announcement] (
   [id] nvarchar(32) COLLATE SQL_Latin1_General_CP1_CI_AS  NOT NULL,
-  [titile] nvarchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL,
+  [title] nvarchar(100) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL,
   [msg_content] nvarchar(max) COLLATE SQL_Latin1_General_CP1_CI_AS  NULL,
   [start_time] datetime2(7)  NULL,
   [end_time] datetime2(7)  NULL,
@@ -3762,7 +3762,7 @@ EXEC sp_addextendedproperty
 'MS_Description', N'标题',
 'SCHEMA', N'dbo',
 'TABLE', N'sys_announcement',
-'COLUMN', N'titile'
+'COLUMN', N'title'
 GO
 
 EXEC sp_addextendedproperty

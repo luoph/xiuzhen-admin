@@ -40,7 +40,7 @@ import java.util.List;
  * @author scott
  * @version V1.0
  * @description 底层共通业务API，提供其他独立模块调用
- * @Date:2019-4-20
+ * @date 2019-4-20
  */
 @Slf4j
 @Service
@@ -181,7 +181,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
     @Override
     public void sendSysAnnouncement(String fromUser, String toUser, String title, String msgContent) {
         SysAnnouncement announcement = new SysAnnouncement();
-        announcement.setTitile(title);
+        announcement.setTitle(title);
         announcement.setMsgContent(msgContent);
         announcement.setSender(fromUser);
         announcement.setPriority(CommonConstant.PRIORITY_M);
@@ -210,7 +210,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
                 obj.put("cmd", "user");
                 obj.put("userId", sysUser.getId());
                 obj.put("msgId", announcement.getId());
-                obj.put("msgTxt", announcement.getTitile());
+                obj.put("msgTxt", announcement.getTitle());
                 webSocket.sendOneMessage(sysUser.getId(), obj.toJSONString());
             }
         }
@@ -226,25 +226,22 @@ public class SysBaseApiImpl implements ISysBaseAPI {
      */
     private String getDatabaseTypeByDataSource(DataSource dataSource) throws SQLException {
         if ("".equals(DB_TYPE)) {
-            Connection connection = dataSource.getConnection();
-            try {
+            try (Connection connection = dataSource.getConnection()) {
                 DatabaseMetaData md = connection.getMetaData();
                 String dbType = md.getDatabaseProductName().toLowerCase();
-                if (dbType.indexOf("mysql") >= 0) {
+                if (dbType.contains("mysql")) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_MYSQL;
-                } else if (dbType.indexOf("oracle") >= 0) {
+                } else if (dbType.contains("oracle")) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_ORACLE;
-                } else if (dbType.indexOf("sqlserver") >= 0 || dbType.indexOf("sql server") >= 0) {
+                } else if (dbType.contains("sqlserver") || dbType.contains("sql server")) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_SQLSERVER;
-                } else if (dbType.indexOf("postgresql") >= 0) {
+                } else if (dbType.contains("postgresql")) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_POSTGRESQL;
                 } else {
                     throw new JeecgBootException("数据库类型:[" + dbType + "]不识别!");
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
-            } finally {
-                connection.close();
             }
         }
         return DB_TYPE;
@@ -254,11 +251,11 @@ public class SysBaseApiImpl implements ISysBaseAPI {
     @Override
     public List<DictModel> queryAllDict() {
         // 查询并排序
-        QueryWrapper<SysDict> queryWrapper = new QueryWrapper<SysDict>();
+        QueryWrapper<SysDict> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("create_time");
         List<SysDict> dicts = sysDictService.list(queryWrapper);
         // 封装成 model
-        List<DictModel> list = new ArrayList<DictModel>();
+        List<DictModel> list = new ArrayList<>();
         for (SysDict dict : dicts) {
             list.add(new DictModel(dict.getDictCode(), dict.getDictName()));
         }
@@ -273,7 +270,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
     @Override
     public List<ComboModel> queryAllUser() {
-        List<ComboModel> list = new ArrayList<ComboModel>();
+        List<ComboModel> list = new ArrayList<>();
         List<SysUser> userList = userMapper.selectList(new QueryWrapper<SysUser>().eq("status", "1").eq("del_flag", "0"));
         for (SysUser user : userList) {
             ComboModel model = new ComboModel();
@@ -286,7 +283,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
     @Override
     public List<ComboModel> queryAllUser(String[] userIds) {
-        List<ComboModel> list = new ArrayList<ComboModel>();
+        List<ComboModel> list = new ArrayList<>();
         List<SysUser> userList = userMapper.selectList(new QueryWrapper<SysUser>().eq("status", "1").eq("del_flag", "0"));
         for (SysUser user : userList) {
             ComboModel model = new ComboModel();
@@ -294,8 +291,8 @@ public class SysBaseApiImpl implements ISysBaseAPI {
             model.setTitle(user.getRealname());
             model.setId(user.getId());
             if (oConvertUtils.isNotEmpty(userIds)) {
-                for (int i = 0; i < userIds.length; i++) {
-                    if (userIds[i].equals(user.getId())) {
+                for (String userId : userIds) {
+                    if (userId.equals(user.getId())) {
                         model.setChecked(true);
                     }
                 }
@@ -307,8 +304,8 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
     @Override
     public List<ComboModel> queryAllRole() {
-        List<ComboModel> list = new ArrayList<ComboModel>();
-        List<SysRole> roleList = roleMapper.selectList(new QueryWrapper<SysRole>());
+        List<ComboModel> list = new ArrayList<>();
+        List<SysRole> roleList = roleMapper.selectList(new QueryWrapper<>());
         for (SysRole role : roleList) {
             ComboModel model = new ComboModel();
             model.setTitle(role.getRoleName());
@@ -321,14 +318,14 @@ public class SysBaseApiImpl implements ISysBaseAPI {
     @Override
     public List<ComboModel> queryAllRole(String[] roleIds) {
         List<ComboModel> list = new ArrayList<ComboModel>();
-        List<SysRole> roleList = roleMapper.selectList(new QueryWrapper<SysRole>());
+        List<SysRole> roleList = roleMapper.selectList(new QueryWrapper<>());
         for (SysRole role : roleList) {
             ComboModel model = new ComboModel();
             model.setTitle(role.getRoleName());
             model.setId(role.getId());
             if (oConvertUtils.isNotEmpty(roleIds)) {
-                for (int i = 0; i < roleIds.length; i++) {
-                    if (roleIds[i].equals(role.getId())) {
+                for (String roleId : roleIds) {
+                    if (roleId.equals(role.getId())) {
                         model.setChecked(true);
                     }
                 }
@@ -351,13 +348,12 @@ public class SysBaseApiImpl implements ISysBaseAPI {
     @Override
     public DictModel getParentDepartId(String departId) {
         SysDepart depart = departMapper.getParentDepartId(departId);
-        DictModel model = new DictModel(depart.getId(), depart.getParentId());
-        return model;
+        return new DictModel(depart.getId(), depart.getParentId());
     }
 
     @Override
     public List<SysDepartModel> getAllSysDepart() {
-        List<SysDepartModel> departModelList = new ArrayList<SysDepartModel>();
+        List<SysDepartModel> departModelList = new ArrayList<>();
         List<SysDepart> departList = departMapper.selectList(new QueryWrapper<SysDepart>().eq("del_flag", "0"));
         for (SysDepart depart : departList) {
             SysDepartModel model = new SysDepartModel();

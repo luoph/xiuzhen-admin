@@ -15,7 +15,7 @@ import java.util.GregorianCalendar;
  * 类描述：时间操作定义类
  *
  * @author 张代浩
- * @Date:2012-12-8 12:15:03
+ * @date 2012-12-8 12:15:03
  * @Version 1.0
  */
 public class DateUtils extends PropertyEditorSupport {

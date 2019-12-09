@@ -88,7 +88,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //1.删除用户
         this.removeById(userId);
         //2.删除用户部门关联关系
-        LambdaQueryWrapper<SysUserDepart> query = new LambdaQueryWrapper<SysUserDepart>();
+        LambdaQueryWrapper<SysUserDepart> query = new LambdaQueryWrapper<>();
         query.eq(SysUserDepart::getUserId, userId);
         sysUserDepartMapper.delete(query);
         //3.删除用户角色关联关系
@@ -103,7 +103,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //1.删除用户
         this.removeByIds(Arrays.asList(userIds.split(",")));
         //2.删除用户部门关系
-        LambdaQueryWrapper<SysUserDepart> query = new LambdaQueryWrapper<SysUserDepart>();
+        LambdaQueryWrapper<SysUserDepart> query = new LambdaQueryWrapper<>();
         for (String id : userIds.split(",")) {
             query.eq(SysUserDepart::getUserId, id);
             this.sysUserDepartMapper.delete(query);
@@ -284,9 +284,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //		this.save(user);  //保存角色的时候已经添加过一次了
         if (oConvertUtils.isNotEmpty(selectedParts)) {
             String[] arr = selectedParts.split(",");
-            for (String deaprtId : arr) {
-                SysUserDepart userDeaprt = new SysUserDepart(user.getId(), deaprtId);
-                sysUserDepartMapper.insert(userDeaprt);
+            for (String departId : arr) {
+                SysUserDepart userDepart = new SysUserDepart(user.getId(), departId);
+                sysUserDepartMapper.insert(userDepart);
             }
         }
     }
@@ -318,7 +318,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public Result<?> checkUserIsEffective(SysUser sysUser) {
-        Result<?> result = new Result<Object>();
+        Result<?> result = new Result<>();
         // 情况1：根据用户信息查询，该用户不存在
         if (sysUser == null) {
             result.error500("该用户不存在，请注册");

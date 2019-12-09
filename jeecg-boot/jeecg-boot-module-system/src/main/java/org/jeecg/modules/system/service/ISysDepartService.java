@@ -30,7 +30,7 @@ public interface ISysDepartService extends IService<SysDepart> {
      *
      * @return
      */
-    public List<DepartIdModel> queryDepartIdTreeList();
+    List<DepartIdModel> queryDepartIdTreeList();
 
     /**
      * 保存部门数据
@@ -76,7 +76,7 @@ public interface ISysDepartService extends IService<SysDepart> {
      * @param userId
      * @return
      */
-    public List<SysDepart> queryUserDeparts(String userId);
+    List<SysDepart> queryUserDeparts(String userId);
 
     /**
      * 根据用户名查询部门

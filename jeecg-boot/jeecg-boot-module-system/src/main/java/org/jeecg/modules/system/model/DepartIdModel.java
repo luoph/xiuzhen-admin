@@ -1,5 +1,7 @@
 package org.jeecg.modules.system.model;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
 import org.jeecg.modules.system.entity.SysDepart;
 
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.util.List;
  * @author Steve
  * @since 2019-01-22
  */
+@Data
+@Accessors(chain = true)
 public class DepartIdModel implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,7 +31,7 @@ public class DepartIdModel implements Serializable {
     // 部门名称
     private String title;
 
-    List<DepartIdModel> children = new ArrayList<>();
+    private List<DepartIdModel> children = new ArrayList<>();
 
     /**
      * 将SysDepartTreeModel的部分数据放在该对象当中
@@ -53,37 +57,5 @@ public class DepartIdModel implements Serializable {
         this.value = sysDepart.getId();
         this.title = sysDepart.getDepartName();
         return this;
-    }
-
-    public List<DepartIdModel> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<DepartIdModel> children) {
-        this.children = children;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 }

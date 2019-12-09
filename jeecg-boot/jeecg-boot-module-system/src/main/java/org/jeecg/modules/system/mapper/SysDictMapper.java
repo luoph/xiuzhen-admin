@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.jeecg.common.system.vo.DictModel;
 import org.jeecg.modules.system.entity.SysDict;
-import org.jeecg.modules.system.model.DuplicateCheckVo;
+import org.jeecg.modules.system.model.DuplicateCheckVO;
 import org.jeecg.modules.system.model.TreeSelectModel;
 
 import java.util.List;
@@ -27,9 +27,9 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
      *
      * @return
      */
-    Long duplicateCheckCountSql(DuplicateCheckVo duplicateCheckVo);
+    Long duplicateCheckCountSql(DuplicateCheckVO duplicateCheckVo);
 
-    Long duplicateCheckCountSqlNoDataId(DuplicateCheckVo duplicateCheckVo);
+    Long duplicateCheckCountSqlNoDataId(DuplicateCheckVO duplicateCheckVo);
 
     List<DictModel> queryDictItemsByCode(@Param("code") String code);
 

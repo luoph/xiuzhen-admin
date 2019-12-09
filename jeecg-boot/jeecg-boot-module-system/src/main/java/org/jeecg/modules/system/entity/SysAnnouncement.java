@@ -32,7 +32,7 @@ public class SysAnnouncement implements Serializable {
      * 标题
      */
     @Excel(name = "标题", width = 15)
-    private java.lang.String titile;
+    private java.lang.String title;
     /**
      * 内容
      */

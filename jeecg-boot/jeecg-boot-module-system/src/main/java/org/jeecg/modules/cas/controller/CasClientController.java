@@ -13,6 +13,7 @@ import org.jeecg.modules.system.entity.SysDepart;
 import org.jeecg.modules.system.entity.SysUser;
 import org.jeecg.modules.system.service.ISysDepartService;
 import org.jeecg.modules.system.service.ISysUserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -40,20 +41,21 @@ public class CasClientController {
 
     @Autowired
     private ISysUserService sysUserService;
+
     @Autowired
     private ISysDepartService sysDepartService;
+
     @Autowired
     private RedisUtil redisUtil;
 
     @Value("${cas.prefixUrl}")
     private String prefixUrl;
 
-
     @GetMapping("/validateLogin")
     public Object validateLogin(@RequestParam(name = "ticket") String ticket,
                                 @RequestParam(name = "service") String service,
                                 HttpServletRequest request, HttpServletResponse response) {
-        Result<JSONObject> result = new Result<JSONObject>();
+        Result<JSONObject> result = new Result<>();
         log.info("Rest api login.");
         try {
             String validateUrl = prefixUrl + "/p3/serviceValidate";
@@ -68,12 +70,15 @@ public class CasClientController {
                 throw new Exception("No principal was found in the response from the CAS server.");
             }
             log.info("-------token----username---" + principal);
-            //1. 校验用户是否有效
+
+            // 1. 校验用户是否有效
             SysUser sysUser = sysUserService.getUserByName(principal);
-            result = sysUserService.checkUserIsEffective(sysUser);
-            if (!result.isSuccess()) {
+            Result checkResult = sysUserService.checkUserIsEffective(sysUser);
+            if (!checkResult.isSuccess()) {
+                BeanUtils.copyProperties(checkResult, result);
                 return result;
             }
+
             String token = JwtUtil.sign(sysUser.getUsername(), sysUser.getPassword());
             redisUtil.set(CommonConstant.PREFIX_USER_TOKEN + token, token);
             // 设置超时时间

@@ -32,10 +32,9 @@ public class FindsDepartsChildrenUtil {
     public static List<SysDepartTreeModel> wrapTreeDataToTreeList(List<SysDepart> recordList) {
         // 在该方法每请求一次,都要对全局list集合进行一次清理
         //idList.clear();
-        List<DepartIdModel> idList = new ArrayList<DepartIdModel>();
+        List<DepartIdModel> idList = new ArrayList<>();
         List<SysDepartTreeModel> records = new ArrayList<>();
-        for (int i = 0; i < recordList.size(); i++) {
-            SysDepart depart = recordList.get(i);
+        for (SysDepart depart : recordList) {
             records.add(new SysDepartTreeModel(depart));
         }
         List<SysDepartTreeModel> tree = findChildren(records, idList);
@@ -52,10 +51,9 @@ public class FindsDepartsChildrenUtil {
     public static List<DepartIdModel> wrapTreeDataToDepartIdTreeList(List<SysDepart> recordList) {
         // 在该方法每请求一次,都要对全局list集合进行一次清理
         //idList.clear();
-        List<DepartIdModel> idList = new ArrayList<DepartIdModel>();
+        List<DepartIdModel> idList = new ArrayList<>();
         List<SysDepartTreeModel> records = new ArrayList<>();
-        for (int i = 0; i < recordList.size(); i++) {
-            SysDepart depart = recordList.get(i);
+        for (SysDepart depart : recordList) {
             records.add(new SysDepartTreeModel(depart));
         }
         findChildren(records, idList);
@@ -70,8 +68,7 @@ public class FindsDepartsChildrenUtil {
                                                          List<DepartIdModel> departIdList) {
 
         List<SysDepartTreeModel> treeList = new ArrayList<>();
-        for (int i = 0; i < recordList.size(); i++) {
-            SysDepartTreeModel branch = recordList.get(i);
+        for (SysDepartTreeModel branch : recordList) {
             if (oConvertUtils.isEmpty(branch.getParentId())) {
                 treeList.add(branch);
                 DepartIdModel departIdModel = new DepartIdModel().convert(branch);
@@ -93,8 +90,7 @@ public class FindsDepartsChildrenUtil {
         for (int i = 0; i < treeList.size(); i++) {
             SysDepartTreeModel model = treeList.get(i);
             DepartIdModel idModel = idList.get(i);
-            for (int i1 = 0; i1 < recordList.size(); i1++) {
-                SysDepartTreeModel m = recordList.get(i1);
+            for (SysDepartTreeModel m : recordList) {
                 if (m.getParentId() != null && m.getParentId().equals(model.getId())) {
                     model.getChildren().add(m);
                     DepartIdModel dim = new DepartIdModel().convert(m);
@@ -112,15 +108,13 @@ public class FindsDepartsChildrenUtil {
      * 该方法是将子节点为空的List集合设置为Null值
      */
     private static void setEmptyChildrenAsNull(List<SysDepartTreeModel> treeList) {
-
-        for (int i = 0; i < treeList.size(); i++) {
-            SysDepartTreeModel model = treeList.get(i);
+        for (SysDepartTreeModel model : treeList) {
             if (model.getChildren().size() == 0) {
                 model.setChildren(null);
-                model.setIsLeaf(true);
+                model.setLeaf(true);
             } else {
                 setEmptyChildrenAsNull(model.getChildren());
-                model.setIsLeaf(false);
+                model.setLeaf(false);
             }
         }
         // sysDepartTreeList = treeList;

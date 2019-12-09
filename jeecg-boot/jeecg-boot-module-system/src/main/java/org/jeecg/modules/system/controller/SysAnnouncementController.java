@@ -227,7 +227,7 @@ public class SysAnnouncementController {
                     JSONObject obj = new JSONObject();
                     obj.put("cmd", "topic");
                     obj.put("msgId", sysAnnouncement.getId());
-                    obj.put("msgTxt", sysAnnouncement.getTitile());
+                    obj.put("msgTxt", sysAnnouncement.getTitle());
                     webSocket.sendAllMessage(obj.toJSONString());
                 } else {
                     // 2.插入用户通告阅读标记表记录
@@ -238,7 +238,7 @@ public class SysAnnouncementController {
                     JSONObject obj = new JSONObject();
                     obj.put("cmd", "user");
                     obj.put("msgId", sysAnnouncement.getId());
-                    obj.put("msgTxt", sysAnnouncement.getTitile());
+                    obj.put("msgTxt", sysAnnouncement.getTitle());
                     webSocket.sendMoreMessage(userIds, obj.toJSONString());
                 }
             }

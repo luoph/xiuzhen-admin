@@ -14,5 +14,5 @@ import java.util.List;
  * @since 2018-12-28
  */
 public interface ISysDictItemService extends IService<SysDictItem> {
-    public List<SysDictItem> selectItemsByMainId(String mainId);
+    List<SysDictItem> selectItemsByMainId(String mainId);
 }

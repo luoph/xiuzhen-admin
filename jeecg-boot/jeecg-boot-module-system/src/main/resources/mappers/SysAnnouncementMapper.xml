@@ -4,7 +4,7 @@
 
     <resultMap id="SysAnnouncement" type="org.jeecg.modules.system.entity.SysAnnouncement">
         <result column="id" property="id" jdbcType="VARCHAR"/>
-        <result column="titile" property="titile" jdbcType="VARCHAR"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="msg_content" property="msgContent" jdbcType="VARCHAR"/>
         <result column="start_time" property="startTime" jdbcType="TIMESTAMP"/>
         <result column="end_time" property="endTime" jdbcType="TIMESTAMP"/>

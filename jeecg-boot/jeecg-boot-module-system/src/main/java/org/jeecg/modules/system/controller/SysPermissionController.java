@@ -392,12 +392,12 @@ public class SysPermissionController {
             SysPermissionTree tree = new SysPermissionTree(permission);
             if (temp == null && oConvertUtils.isEmpty(tempPid)) {
                 treeList.add(tree);
-                if (!tree.getIsLeaf()) {
+                if (!tree.isLeaf()) {
                     getTreeList(treeList, metaList, tree);
                 }
             } else if (temp != null && tempPid != null && tempPid.equals(temp.getId())) {
                 temp.getChildren().add(tree);
-                if (!tree.getIsLeaf()) {
+                if (!tree.isLeaf()) {
                     getTreeList(treeList, metaList, tree);
                 }
             }
@@ -411,12 +411,12 @@ public class SysPermissionController {
             TreeModel tree = new TreeModel(permission);
             if (temp == null && oConvertUtils.isEmpty(tempPid)) {
                 treeList.add(tree);
-                if (!tree.getIsLeaf()) {
+                if (!tree.isLeaf()) {
                     getTreeModelList(treeList, metaList, tree);
                 }
             } else if (temp != null && tempPid != null && tempPid.equals(temp.getKey())) {
                 temp.getChildren().add(tree);
-                if (!tree.getIsLeaf()) {
+                if (!tree.isLeaf()) {
                     getTreeModelList(treeList, metaList, tree);
                 }
             }
@@ -428,8 +428,7 @@ public class SysPermissionController {
      * 获取权限JSON数组
      *
      * @param jsonArray
-     * @param metaList
-     * @param parentJson
+     * @param allList
      */
     private void getAllAuthJsonArray(JSONArray jsonArray, List<SysPermission> allList) {
         JSONObject json = null;
@@ -448,15 +447,16 @@ public class SysPermissionController {
      *
      * @param jsonArray
      * @param metaList
-     * @param parentJson
      */
     private void getAuthJsonArray(JSONArray jsonArray, List<SysPermission> metaList) {
         for (SysPermission permission : metaList) {
             if (permission.getMenuType() == null) {
                 continue;
             }
+
             JSONObject json = null;
-            if (permission.getMenuType().equals(CommonConstant.MENU_TYPE_2) && CommonConstant.STATUS_1.equals(permission.getStatus())) {
+            if (permission.getMenuType().equals(CommonConstant.MENU_TYPE_2)
+                    && CommonConstant.STATUS_1.equals(permission.getStatus())) {
                 json = new JSONObject();
                 json.put("action", permission.getPerms());
                 json.put("type", permission.getPermsType());
@@ -483,6 +483,7 @@ public class SysPermissionController {
             if (json == null) {
                 continue;
             }
+
             if (parentJson == null && oConvertUtils.isEmpty(tempPid)) {
                 jsonArray.add(json);
                 if (!permission.isLeaf()) {

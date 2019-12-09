@@ -12,7 +12,7 @@ import java.util.List;
  * @author scott
  * @version V1.0
  * @description 底层共通业务API，提供其他独立模块调用
- * @Date:2019-4-20
+ * @date 2019-4-20
  */
 public interface ISysBaseAPI {
 
