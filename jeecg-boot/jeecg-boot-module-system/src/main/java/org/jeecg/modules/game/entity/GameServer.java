@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -59,12 +60,14 @@ public class GameServer {
      */
     @Excel(name = "服务器状态 0-正常 1-流畅 2-火爆 3-维护", width = 15)
     @ApiModelProperty(value = "服务器状态 0-正常 1-流畅 2-火爆 3-维护")
+    @Dict(dicCode = "server_status")
     private java.lang.Integer status;
     /**
      * 推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服
      */
     @Excel(name = "推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服", width = 15)
     @ApiModelProperty(value = "推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服")
+    @Dict(dicCode = "recommend_status")
     private java.lang.Integer recommend;
     /**
      * 出错提示信息
@@ -77,6 +80,7 @@ public class GameServer {
      */
     @Excel(name = "显示版本号 0-不显示 1-显示", width = 15)
     @ApiModelProperty(value = "显示版本号 0-不显示 1-显示")
+    @Dict(dicCode = "yn")
     private java.lang.Integer showVersion;
     /**
      * 进入游戏客户端版本
@@ -131,6 +135,7 @@ public class GameServer {
      */
     @Excel(name = "服务器类型 0-混服 1-专服", width = 15)
     @ApiModelProperty(value = "服务器类型 0-混服 1-专服")
+    @Dict(dicCode = "server_type")
     private java.lang.Integer type;
     /**
      * 合服时母服id
