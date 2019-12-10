@@ -52,7 +52,7 @@
                     <a-input placeholder="请输入数据库用户名" v-decorator="['dbUser', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库密码">
-                    <a-input placeholder="请输入数据库密码" v-decorator="['dbPassword', {}]" />
+                    <a-input-password placeholder="请输入数据库密码" v-decorator="['dbPassword', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">
                     <a-input placeholder="请输入数据库名" v-decorator="['dbName', {}]" />
