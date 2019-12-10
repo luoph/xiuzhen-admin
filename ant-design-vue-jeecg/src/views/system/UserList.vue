@@ -68,23 +68,11 @@
             </a-upload>
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay" @click="handleMenuClick">
-                    <a-menu-item key="1">
-                        <a-icon type="delete" @click="batchDel" />
-                        删除
-                    </a-menu-item>
-                    <a-menu-item key="2">
-                        <a-icon type="lock" @click="batchFrozen('2')" />
-                        冻结
-                    </a-menu-item>
-                    <a-menu-item key="3">
-                        <a-icon type="unlock" @click="batchFrozen('1')" />
-                        解冻
-                    </a-menu-item>
+                    <a-menu-item key="1"> <a-icon type="delete" @click="batchDel" /> 删除 </a-menu-item>
+                    <a-menu-item key="2"> <a-icon type="lock" @click="batchFrozen('2')" /> 冻结 </a-menu-item>
+                    <a-menu-item key="3"> <a-icon type="unlock" @click="batchFrozen('1')" /> 解冻 </a-menu-item>
                 </a-menu>
-                <a-button style="margin-left: 8px">
-                    批量操作
-                    <a-icon type="down" />
-                </a-button>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
             </a-dropdown>
         </div>
 

@@ -11,20 +11,33 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器端口">
                     <a-input-number v-decorator="['port', validatorRules.port]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="登陆地址和端口">
-                    <a-input placeholder="请输入登陆地址和端口" v-decorator="['loginUrl', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="登录地址和端口">
+                    <a-input placeholder="请输入登录地址和端口" v-decorator="['loginUrl', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器状态">
-                    <a-input placeholder="0-正常 1-流畅 2-火爆 3-维护" v-decorator="['status', validatorRules.status]" />
+                    <a-select placeholder="请选择服务器状态" v-decorator="['status', {}]">
+                        <a-select-option value="0">正常</a-select-option>
+                        <a-select-option value="1">流畅</a-select-option>
+                        <a-select-option value="2">火爆</a-select-option>
+                        <a-select-option value="3">维护</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识">
-                    <a-input placeholder="0-普遍 1-推荐 2-新服 3-推荐新服" v-decorator="['recommend', {}]" />
+                    <a-select placeholder="请选择推荐标识" v-decorator="['recommend', {}]">
+                        <a-select-option value="0">普遍</a-select-option>
+                        <a-select-option value="1">推荐</a-select-option>
+                        <a-select-option value="2">新服</a-select-option>
+                        <a-select-option value="3">推荐新服</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">
                     <a-input placeholder="请输入出错提示信息" v-decorator="['warning', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="显示版本号">
-                    <a-input placeholder="请输入显示版本号 0-不显示 1-显示" v-decorator="['showVersion', {}]" />
+                    <a-select v-decorator="['showVersion', {}]" placeholder="请选择显示版本号">
+                        <a-select-option value="0">不显示</a-select-option>
+                        <a-select-option value="1">显示</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="进入游戏客户端版本">
                     <a-input-number v-decorator="['clientVersionCode', {}]" />
@@ -51,7 +64,10 @@
                     <a-input-number v-decorator="['position', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器类型">
-                    <a-input placeholder="0-混服 1-专服" v-decorator="['type', validatorRules.type]" />
+                    <a-select v-decorator="['type', {}]" placeholder="请选择服务器类型">
+                        <a-select-option value="0">混服</a-select-option>
+                        <a-select-option value="1">专服</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时母服id">
                     <a-input-number v-decorator="['pid', {}]" />
@@ -74,6 +90,7 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
+import { stringify } from 'querystring';
 
 export default {
     name: "GameServerModal",
@@ -99,6 +116,10 @@ export default {
                 port: { rules: [{ required: true, message: "请输入服务器端口!" }] },
                 status: { rules: [{ required: true, message: "请输入服务器状态!" }] },
                 type: { rules: [{ required: true, message: "请输入服务器类型!" }] },
+                dbHost: { rules: [{ required: true, message: "请输入数据库地址!" }] },
+                dbUser: { rules: [{ required: true, message: "请输入数据库帐号!" }] },
+                dbPassword: { rules: [{ required: true, message: "请输入数据库密码!" }] },
+                dbName: { rules: [{ required: true, message: "请输入数据库名称!" }] },
             },
             url: {
                 add: "/game/gameServer/add",
@@ -116,30 +137,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(
-                    pick(
-                        this.model,
-                        "name",
-                        "host",
-                        "port",
-                        "loginUrl",
-                        "status",
-                        "recommend",
-                        "warning",
-                        "showVersion",
-                        "clientVersionCode",
-                        "dbHost",
-                        "dbPort",
-                        "dbUser",
-                        "dbPassword",
-                        "dbName",
-                        "httpPort",
-                        "position",
-                        "type",
-                        "pid",
-                        "extra"
-                    )
-                );
+                this.form.setFieldsValue(pick( this.model, "name", "host", "port", "loginUrl", "status", "recommend", "warning", "showVersion", "clientVersionCode", "dbHost", "dbPort", "dbUser", "dbPassword", "dbName", "httpPort", "position", "type", "pid", "extra" ));
                 //时间格式化
                 this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
