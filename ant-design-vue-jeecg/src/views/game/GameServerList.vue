@@ -129,17 +129,14 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { initDictOptions, filterDictText } from "@/components/dict/JDictSelectUtil";
 import Vue from "vue";
 import { filterObj } from "@/utils/util";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "GameServerList",
     mixins: [JeecgListMixin],
-    // 字典数组缓存
-    ynDictOptions: [],
-    recommendDictOptions: [],
-    serverTypeDictOptions: [],
-    serverStatusDictOptions: [],
     components: {
         GameServerModal,
+        JInput,
     },
     data() {
         return {
@@ -259,29 +256,6 @@ export default {
             // 范围参数不传递后台
             delete param.createTimeRange;
             return filterObj(param);
-        },
-        initDictConfig() {
-            // 初始化字典
-            initDictOptions("yn").then(res => {
-                if (res.success) {
-                    this.ynDictOptions = res.result;
-                }
-            });
-            initDictOptions("server_status").then(res => {
-                if (res.success) {
-                    this.serverStatusDictOptions = res.result;
-                }
-            });
-            initDictOptions("server_type").then(res => {
-                if (res.success) {
-                    this.serverTypeDictOptions = res.result;
-                }
-            });
-            initDictOptions("recommend_status").then(res => {
-                if (res.success) {
-                    this.recommendDictOptions = res.result;
-                }
-            });
         },
         onDateChange: function(value, dateString) {
             console.log(dateString[0], dateString[1]);

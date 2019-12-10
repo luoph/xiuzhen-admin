@@ -16,18 +16,18 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器状态">
                     <a-select placeholder="请选择服务器状态" v-decorator="['status', {}]">
-                        <a-select-option value="0">正常</a-select-option>
-                        <a-select-option value="1">流畅</a-select-option>
-                        <a-select-option value="2">火爆</a-select-option>
-                        <a-select-option value="3">维护</a-select-option>
+                        <a-select-option :value="0">正常</a-select-option>
+                        <a-select-option :value="1">流畅</a-select-option>
+                        <a-select-option :value="2">火爆</a-select-option>
+                        <a-select-option :value="3">维护</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识">
                     <a-select placeholder="请选择推荐标识" v-decorator="['recommend', {}]">
-                        <a-select-option value="0">普遍</a-select-option>
-                        <a-select-option value="1">推荐</a-select-option>
-                        <a-select-option value="2">新服</a-select-option>
-                        <a-select-option value="3">推荐新服</a-select-option>
+                        <a-select-option :value="0">普遍</a-select-option>
+                        <a-select-option :value="1">推荐</a-select-option>
+                        <a-select-option :value="2">新服</a-select-option>
+                        <a-select-option :value="3">推荐新服</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">
@@ -35,8 +35,8 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="显示版本号">
                     <a-select v-decorator="['showVersion', {}]" placeholder="请选择显示版本号">
-                        <a-select-option value="0">不显示</a-select-option>
-                        <a-select-option value="1">显示</a-select-option>
+                        <a-select-option :value="0">不显示</a-select-option>
+                        <a-select-option :value="1">显示</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="进入游戏客户端版本">
@@ -65,8 +65,8 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器类型">
                     <a-select v-decorator="['type', {}]" placeholder="请选择服务器类型">
-                        <a-select-option value="0">混服</a-select-option>
-                        <a-select-option value="1">专服</a-select-option>
+                        <a-select-option :value="0">混服</a-select-option>
+                        <a-select-option :value="1">专服</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时母服id">
