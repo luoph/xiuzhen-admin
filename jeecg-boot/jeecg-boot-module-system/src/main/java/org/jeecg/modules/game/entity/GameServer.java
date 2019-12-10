@@ -76,18 +76,17 @@ public class GameServer {
     @ApiModelProperty(value = "出错提示信息")
     private java.lang.String warning;
     /**
-     * 显示版本号 0-不显示 1-显示
+     * 客户端最小版本号
      */
-    @Excel(name = "显示版本号 0-不显示 1-显示", width = 15)
-    @ApiModelProperty(value = "显示版本号 0-不显示 1-显示")
-    @Dict(dicCode = "yn")
-    private java.lang.Integer showVersion;
+    @Excel(name = "客户端最小版本号", width = 15)
+    @ApiModelProperty(value = "客户端最小版本号")
+    private java.lang.Integer minVersion;
     /**
-     * 进入游戏客户端版本
+     * 客户端最大版本号
      */
-    @Excel(name = "进入游戏客户端版本", width = 15)
-    @ApiModelProperty(value = "进入游戏客户端版本")
-    private java.lang.Integer clientVersionCode;
+    @Excel(name = "客户端最大版本号", width = 15)
+    @ApiModelProperty(value = "客户端最大版本号")
+    private java.lang.Integer maxVersion;
     /**
      * 数据库路径
      */

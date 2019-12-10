@@ -33,14 +33,11 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">
                     <a-input placeholder="请输入出错提示信息" v-decorator="['warning', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="显示版本号">
-                    <a-select v-decorator="['showVersion', {}]" placeholder="请选择显示版本号">
-                        <a-select-option :value="0">不显示</a-select-option>
-                        <a-select-option :value="1">显示</a-select-option>
-                    </a-select>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户端最小版本号">
+                    <a-input-number v-decorator="['minVersion', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="进入游戏客户端版本">
-                    <a-input-number v-decorator="['clientVersionCode', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户端最大版本号">
+                    <a-input-number v-decorator="['maxVersion', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库路径">
                     <a-input placeholder="请输入数据库路径" v-decorator="['dbHost', {}]" />
@@ -137,7 +134,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick( this.model, "name", "host", "port", "loginUrl", "status", "recommend", "warning", "showVersion", "clientVersionCode", "dbHost", "dbPort", "dbUser", "dbPassword", "dbName", "httpPort", "position", "type", "pid", "extra" ));
+                this.form.setFieldsValue(pick( this.model, "name", "host", "port", "loginUrl", "status", "recommend", "warning", "minVersion", "maxVersion", "dbHost", "dbPort", "dbUser", "dbPassword", "dbName", "httpPort", "position", "type", "pid", "extra" ));
                 //时间格式化
                 this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
