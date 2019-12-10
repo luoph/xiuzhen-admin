@@ -57,9 +57,9 @@ public class SysUserAgentController {
                                                      @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                                      @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                                      HttpServletRequest req) {
-        Result<IPage<SysUserAgent>> result = new Result<IPage<SysUserAgent>>();
+        Result<IPage<SysUserAgent>> result = new Result<>();
         QueryWrapper<SysUserAgent> queryWrapper = QueryGenerator.initQueryWrapper(sysUserAgent, req.getParameterMap());
-        Page<SysUserAgent> page = new Page<SysUserAgent>(pageNo, pageSize);
+        Page<SysUserAgent> page = new Page<>(pageNo, pageSize);
         IPage<SysUserAgent> pageList = sysUserAgentService.page(page, queryWrapper);
         result.setSuccess(true);
         result.setResult(pageList);
@@ -74,7 +74,7 @@ public class SysUserAgentController {
      */
     @PostMapping(value = "/add")
     public Result<SysUserAgent> add(@RequestBody SysUserAgent sysUserAgent) {
-        Result<SysUserAgent> result = new Result<SysUserAgent>();
+        Result<SysUserAgent> result = new Result<>();
         try {
             sysUserAgentService.save(sysUserAgent);
             result.success("代理人设置成功！");
@@ -93,7 +93,7 @@ public class SysUserAgentController {
      */
     @PutMapping(value = "/edit")
     public Result<SysUserAgent> edit(@RequestBody SysUserAgent sysUserAgent) {
-        Result<SysUserAgent> result = new Result<SysUserAgent>();
+        Result<SysUserAgent> result = new Result<>();
         SysUserAgent sysUserAgentEntity = sysUserAgentService.getById(sysUserAgent.getId());
         if (sysUserAgentEntity == null) {
             result.error500("未找到对应实体");
@@ -115,7 +115,7 @@ public class SysUserAgentController {
      * @return
      */
     @DeleteMapping(value = "/delete")
-    public Result<SysUserAgent> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<SysUserAgent> delete(@RequestParam(name = "id") String id) {
         Result<SysUserAgent> result = new Result<SysUserAgent>();
         SysUserAgent sysUserAgent = sysUserAgentService.getById(id);
         if (sysUserAgent == null) {
@@ -137,8 +137,8 @@ public class SysUserAgentController {
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
-    public Result<SysUserAgent> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
-        Result<SysUserAgent> result = new Result<SysUserAgent>();
+    public Result<SysUserAgent> deleteBatch(@RequestParam(name = "ids") String ids) {
+        Result<SysUserAgent> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
         } else {
@@ -155,8 +155,8 @@ public class SysUserAgentController {
      * @return
      */
     @GetMapping(value = "/queryById")
-    public Result<SysUserAgent> queryById(@RequestParam(name = "id", required = true) String id) {
-        Result<SysUserAgent> result = new Result<SysUserAgent>();
+    public Result<SysUserAgent> queryById(@RequestParam(name = "id") String id) {
+        Result<SysUserAgent> result = new Result<>();
         SysUserAgent sysUserAgent = sysUserAgentService.getById(id);
         if (sysUserAgent == null) {
             result.error500("未找到对应实体");
@@ -174,9 +174,9 @@ public class SysUserAgentController {
      * @return
      */
     @GetMapping(value = "/queryByUserName")
-    public Result<SysUserAgent> queryByUserName(@RequestParam(name = "userName", required = true) String userName) {
-        Result<SysUserAgent> result = new Result<SysUserAgent>();
-        LambdaQueryWrapper<SysUserAgent> queryWrapper = new LambdaQueryWrapper<SysUserAgent>();
+    public Result<SysUserAgent> queryByUserName(@RequestParam(name = "userName") String userName) {
+        Result<SysUserAgent> result = new Result<>();
+        LambdaQueryWrapper<SysUserAgent> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysUserAgent::getUserName, userName);
         SysUserAgent sysUserAgent = sysUserAgentService.getOne(queryWrapper);
         if (sysUserAgent == null) {
@@ -222,7 +222,8 @@ public class SysUserAgentController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(1);

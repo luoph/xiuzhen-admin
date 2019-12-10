@@ -76,7 +76,7 @@ public class SysLogController {
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public Result<SysLog> delete(@RequestParam(name = "id") String id) {
-        Result<SysLog> result = new Result<SysLog>();
+        Result<SysLog> result = new Result<>();
         SysLog sysLog = sysLogService.getById(id);
         if (sysLog == null) {
             result.error500("未找到对应实体");
@@ -96,7 +96,7 @@ public class SysLogController {
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     public Result<SysRole> deleteBatch(@RequestParam(name = "ids") String ids) {
-        Result<SysRole> result = new Result<SysRole>();
+        Result<SysRole> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
         } else {

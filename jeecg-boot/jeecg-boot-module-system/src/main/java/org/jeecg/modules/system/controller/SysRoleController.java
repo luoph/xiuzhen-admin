@@ -77,7 +77,7 @@ public class SysRoleController {
                                                 HttpServletRequest req) {
         Result<IPage<SysRole>> result = new Result<IPage<SysRole>>();
         QueryWrapper<SysRole> queryWrapper = QueryGenerator.initQueryWrapper(role, req.getParameterMap());
-        Page<SysRole> page = new Page<SysRole>(pageNo, pageSize);
+        Page<SysRole> page = new Page<>(pageNo, pageSize);
         IPage<SysRole> pageList = sysRoleService.page(page, queryWrapper);
         result.setSuccess(true);
         result.setResult(pageList);
@@ -92,7 +92,7 @@ public class SysRoleController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result<SysRole> add(@RequestBody SysRole role) {
-        Result<SysRole> result = new Result<SysRole>();
+        Result<SysRole> result = new Result<>();
         try {
             role.setCreateTime(new Date());
             sysRoleService.save(role);
@@ -112,7 +112,7 @@ public class SysRoleController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public Result<SysRole> edit(@RequestBody SysRole role) {
-        Result<SysRole> result = new Result<SysRole>();
+        Result<SysRole> result = new Result<>();
         SysRole sysrole = sysRoleService.getById(role.getId());
         if (sysrole == null) {
             result.error500("未找到对应实体");
@@ -135,8 +135,8 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public Result<SysRole> delete(@RequestParam(name = "id", required = true) String id) {
-        Result<SysRole> result = new Result<SysRole>();
+    public Result<SysRole> delete(@RequestParam(name = "id") String id) {
+        Result<SysRole> result = new Result<>();
         SysRole sysrole = sysRoleService.getById(id);
         if (sysrole == null) {
             result.error500("未找到对应实体");
@@ -157,8 +157,8 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
-    public Result<SysRole> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
-        Result<SysRole> result = new Result<SysRole>();
+    public Result<SysRole> deleteBatch(@RequestParam(name = "ids") String ids) {
+        Result<SysRole> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
         } else {
@@ -175,8 +175,8 @@ public class SysRoleController {
      * @return
      */
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
-    public Result<SysRole> queryById(@RequestParam(name = "id", required = true) String id) {
-        Result<SysRole> result = new Result<SysRole>();
+    public Result<SysRole> queryById(@RequestParam(name = "id") String id) {
+        Result<SysRole> result = new Result<>();
         SysRole sysrole = sysRoleService.getById(id);
         if (sysrole == null) {
             result.error500("未找到对应实体");
@@ -272,7 +272,8 @@ public class SysRoleController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(1);
@@ -297,7 +298,7 @@ public class SysRoleController {
      * 查询数据规则数据
      */
     @GetMapping(value = "/datarule/{permissionId}/{roleId}")
-    public Result<?> loadDatarule(@PathVariable("permissionId") String permissionId, @PathVariable("roleId") String roleId) {
+    public Result<?> loadDataRule(@PathVariable("permissionId") String permissionId, @PathVariable("roleId") String roleId) {
         List<SysPermissionDataRule> list = sysPermissionDataRuleService.getPermRuleListByPermId(permissionId);
         if (list == null || list.size() == 0) {
             return Result.error("未找到权限配置信息");
@@ -361,7 +362,7 @@ public class SysRoleController {
         // 全部权限ids
         List<String> ids = new ArrayList<>();
         try {
-            LambdaQueryWrapper<SysPermission> query = new LambdaQueryWrapper<SysPermission>();
+            LambdaQueryWrapper<SysPermission> query = new LambdaQueryWrapper<>();
             query.eq(SysPermission::getDelFlag, CommonConstant.DEL_FLAG_0);
             query.orderByAsc(SysPermission::getSortNo);
             List<SysPermission> list = sysPermissionService.list(query);
@@ -370,7 +371,7 @@ public class SysRoleController {
             }
             List<TreeModel> treeList = new ArrayList<>();
             getTreeModelList(treeList, list, null);
-            Map<String, Object> resMap = new HashMap<String, Object>();
+            Map<String, Object> resMap = new HashMap<>();
             resMap.put("treeList", treeList); //全部树节点数据
             resMap.put("ids", ids);//全部树ids
             result.setResult(resMap);

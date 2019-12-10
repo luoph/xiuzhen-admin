@@ -23,7 +23,7 @@ public class WebSocket {
     private Session session;
 
     private static CopyOnWriteArraySet<WebSocket> webSockets = new CopyOnWriteArraySet<>();
-    private static Map<String, Session> sessionPool = new HashMap<String, Session>();
+    private static Map<String, Session> sessionPool = new HashMap<>();
 
     @OnOpen
     public void onOpen(Session session, @PathParam(value = "userId") String userId) {
@@ -31,7 +31,7 @@ public class WebSocket {
             this.session = session;
             webSockets.add(this);
             sessionPool.put(userId, session);
-            log.info("【websocket消息】有新的连接，总数为:" + webSockets.size());
+            log.info("【websocket消息】有新的连接，总数为:{}", webSockets.size());
         } catch (Exception e) {
         }
     }
@@ -40,7 +40,7 @@ public class WebSocket {
     public void onClose() {
         try {
             webSockets.remove(this);
-            log.info("【websocket消息】连接断开，总数为:" + webSockets.size());
+            log.info("【websocket消息】连接断开，总数为:{}", webSockets.size());
         } catch (Exception e) {
         }
     }
@@ -49,14 +49,20 @@ public class WebSocket {
     public void onMessage(String message) {
         //log.info("【websocket消息】收到客户端消息:"+message);
         JSONObject obj = new JSONObject();
-        obj.put("cmd", "heartcheck");//业务类型
-        obj.put("msgTxt", "心跳响应");//消息内容
+        //业务类型
+        obj.put("cmd", "heartcheck");
+        //消息内容
+        obj.put("msgTxt", "心跳响应");
         session.getAsyncRemote().sendText(obj.toJSONString());
     }
 
-    // 此为广播消息
+    /**
+     * 此为广播消息
+     *
+     * @param message
+     */
     public void sendAllMessage(String message) {
-        log.info("【websocket消息】广播消息:" + message);
+        log.info("【websocket消息】广播消息:{}", message);
         for (WebSocket webSocket : webSockets) {
             try {
                 if (webSocket.session.isOpen()) {
@@ -68,12 +74,17 @@ public class WebSocket {
         }
     }
 
-    // 此为单点消息
+    /**
+     * 此为单点消息
+     *
+     * @param userId
+     * @param message
+     */
     public void sendOneMessage(String userId, String message) {
         Session session = sessionPool.get(userId);
         if (session != null && session.isOpen()) {
             try {
-                log.info("【websocket消息】 单点消息:" + message);
+                log.info("【websocket消息】 单点消息:{}", message);
                 session.getAsyncRemote().sendText(message);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -81,13 +92,18 @@ public class WebSocket {
         }
     }
 
-    // 此为单点消息(多人)
+    /**
+     * 此为单点消息(多人)
+     *
+     * @param userIds
+     * @param message
+     */
     public void sendMoreMessage(String[] userIds, String message) {
         for (String userId : userIds) {
             Session session = sessionPool.get(userId);
             if (session != null && session.isOpen()) {
                 try {
-                    log.info("【websocket消息】 单点消息:" + message);
+                    log.info("【websocket消息】 单点消息:{}", message);
                     session.getAsyncRemote().sendText(message);
                 } catch (Exception e) {
                     e.printStackTrace();

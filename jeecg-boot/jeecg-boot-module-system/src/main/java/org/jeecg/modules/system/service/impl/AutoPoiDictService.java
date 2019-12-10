@@ -49,10 +49,12 @@ public class AutoPoiDictService implements AutoPoiDictServiceI {
                 log.error(e.getMessage(), e);
             }
         }
+
         for (DictModel t : dictList) {
             dictReplaces.add(t.getText() + "_" + t.getValue());
         }
-        if (dictReplaces != null && dictReplaces.size() != 0) {
+
+        if (!dictReplaces.isEmpty()) {
             log.info("---AutoPoi--Get_DB_Dict------" + dictReplaces.toString());
             return dictReplaces.toArray(new String[dictReplaces.size()]);
         }
