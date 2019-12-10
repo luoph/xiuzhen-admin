@@ -69,7 +69,7 @@ public class SysMessage extends JeecgEntity {
      * 推送方式：1短信 2邮件 3微信
      */
     @Excel(name = "推送方式：1短信 2邮件 3微信", width = 15)
-    @Dict(dicCode = "msg_type")
+    @Dict(dicCode = "send_type")
     private java.lang.String esType;
     /**
      * 备注

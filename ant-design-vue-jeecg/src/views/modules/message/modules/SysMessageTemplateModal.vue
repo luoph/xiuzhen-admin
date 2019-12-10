@@ -13,7 +13,7 @@
                     <j-dict-select-tag
                         @change="handleChangeTemplateType"
                         :triggerChange="true"
-                        dictCode="msg_type"
+                        dictCode="send_type"
                         v-decorator="['templateType', validatorRules.templateType]"
                         placeholder="请选择模板类型"
                     >
