@@ -12,7 +12,7 @@
                     <a-textarea placeholder="请输入json格式测试数据" v-model="testData" :autosize="{ minRows: 5, maxRows: 8 }" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="消息类型">
-                    <j-dict-select-tag v-model="msgType" placeholder="请选择消息类型" dictCode="msg_type" />
+                    <j-dict-select-tag v-model="msgType" placeholder="请选择消息类型" dictCode="send_type" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="消息接收方">
                     <a-input placeholder="请输入消息接收方" v-model="receiver" />
