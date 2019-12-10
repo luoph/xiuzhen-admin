@@ -23,7 +23,7 @@
                     <a-form-item label="连接密码" :required="false">
                         <a-input placeholder="h3gSbecd" />
                     </a-form-item>
-                    <a-form-item label="登陆密码" :required="false">
+                    <a-form-item label="登录密码" :required="false">
                         <a-input placeholder="密码" />
                     </a-form-item>
 

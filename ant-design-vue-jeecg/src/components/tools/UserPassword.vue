@@ -79,7 +79,7 @@ export default {
     methods: {
         show(uname) {
             if (!uname) {
-                this.$message.warning("当前系统无登陆用户!");
+                this.$message.warning("当前系统无登录用户!");
                 return;
             } else {
                 this.username = uname;

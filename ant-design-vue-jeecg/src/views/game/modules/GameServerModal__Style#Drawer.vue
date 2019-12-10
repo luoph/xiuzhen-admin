@@ -11,8 +11,8 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器端口">
                     <a-input-number v-decorator="['port', validatorRules.port]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="登陆地址和端口">
-                    <a-input placeholder="请输入登陆地址和端口" v-decorator="['loginUrl', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="登录地址和端口">
+                    <a-input placeholder="请输入登录地址和端口" v-decorator="['loginUrl', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器状态 ">
                     <a-input placeholder="0-正常 1-流畅 2-火爆 3-维护" v-decorator="['status', validatorRules.status]" />

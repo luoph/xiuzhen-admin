@@ -80,6 +80,7 @@ export default {
                 this.form.setFieldsValue({ punchTime: this.model.punchTime ? moment(this.model.punchTime, "YYYY-MM-DD HH:mm:ss") : null });
                 this.form.setFieldsValue({ birthday: this.model.birthday ? moment(this.model.birthday) : null });
             });
+            console.log(this.model);
         },
         close() {
             this.$emit("close");
