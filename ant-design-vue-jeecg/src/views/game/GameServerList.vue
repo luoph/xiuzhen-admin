@@ -28,7 +28,12 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="状态">
-                                <a-input placeholder="状态" v-model="queryParam.status"></a-input>
+                                <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="类型">
+                                <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type" />
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -121,11 +126,18 @@
 <script>
 import GameServerModal from "./modules/GameServerModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { initDictOptions, filterDictText } from "@/components/dict/JDictSelectUtil";
+import Vue from "vue";
 import { filterObj } from "@/utils/util";
 
 export default {
     name: "GameServerList",
     mixins: [JeecgListMixin],
+    // 字典数组缓存
+    ynDictOptions: [],
+    recommendDictOptions: [],
+    serverTypeDictOptions: [],
+    serverStatusDictOptions: [],
     components: {
         GameServerModal,
     },
@@ -167,22 +179,18 @@ export default {
                 {
                     title: "状态",
                     align: "center",
-                    dataIndex: "status",
+                    dataIndex: "status_dictText",
                 },
                 {
                     title: "推荐标识",
                     align: "center",
                     dataIndex: "recommend",
+                    dataIndex: "recommend_dictText",
                 },
                 {
                     title: "出错提示信息",
                     align: "center",
                     dataIndex: "warning",
-                },
-                {
-                    title: "显示版本号",
-                    align: "center",
-                    dataIndex: "showVersion",
                 },
                 {
                     title: "进入游戏客户端版本",
@@ -203,6 +211,13 @@ export default {
                     title: "类型",
                     align: "center",
                     dataIndex: "type",
+                    dataIndex: "type_dictText",
+                },
+                {
+                    title: "显示版本号",
+                    align: "center",
+                    dataIndex: "showVersion",
+                    dataIndex: "showVersion_dictText",
                 },
                 {
                     title: "开服时间",
@@ -244,6 +259,29 @@ export default {
             // 范围参数不传递后台
             delete param.createTimeRange;
             return filterObj(param);
+        },
+        initDictConfig() {
+            // 初始化字典
+            initDictOptions("yn").then(res => {
+                if (res.success) {
+                    this.ynDictOptions = res.result;
+                }
+            });
+            initDictOptions("server_status").then(res => {
+                if (res.success) {
+                    this.serverStatusDictOptions = res.result;
+                }
+            });
+            initDictOptions("server_type").then(res => {
+                if (res.success) {
+                    this.serverTypeDictOptions = res.result;
+                }
+            });
+            initDictOptions("recommend_status").then(res => {
+                if (res.success) {
+                    this.recommendDictOptions = res.result;
+                }
+            });
         },
         onDateChange: function(value, dateString) {
             console.log(dateString[0], dateString[1]);
