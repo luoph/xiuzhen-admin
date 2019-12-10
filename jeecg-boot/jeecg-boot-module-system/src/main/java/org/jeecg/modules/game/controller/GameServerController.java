@@ -24,14 +24,13 @@ import java.util.Arrays;
  * @author jeecg-boot
  * @version V1.0
  * @description 游戏服配置
- * @date 2019-12-05
+ * @date 2019-12-10
  */
 @Slf4j
 @Api(tags = "游戏服配置")
 @RestController
 @RequestMapping("/game/gameServer")
 public class GameServerController extends JeecgController<GameServer, IGameServerService> {
-
     @Autowired
     private IGameServerService gameServerService;
 

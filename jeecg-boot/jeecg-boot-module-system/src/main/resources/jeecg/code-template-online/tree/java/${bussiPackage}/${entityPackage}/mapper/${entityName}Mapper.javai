@@ -1,6 +1,5 @@
 package ${bussiPackage}.${entityPackage}.mapper;
 
-import org.apache.ibatis.annotations.Param;
 import ${bussiPackage}.${entityPackage}.entity.${entityName};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

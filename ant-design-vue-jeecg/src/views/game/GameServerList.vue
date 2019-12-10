@@ -6,7 +6,8 @@
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
                         <a-form-item label="名字">
-                            <a-input placeholder="名字" v-model="queryParam.name"></a-input>
+                            <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库，java接口：SysDictController#getDictItems-->
+                            <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -14,12 +15,12 @@
                             <a-input placeholder="地址" v-model="queryParam.host"></a-input>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="创建时间">
+                            <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                        </a-form-item>
+                    </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="端口">
-                                <a-input placeholder="端口" v-model="queryParam.port"></a-input>
-                            </a-form-item>
-                        </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="登录地址和端口">
                                 <a-input placeholder="登录地址和端口" v-model="queryParam.loginUrl"></a-input>
@@ -28,6 +29,21 @@
                         <a-col :md="6" :sm="8">
                             <a-form-item label="状态">
                                 <a-input placeholder="状态" v-model="queryParam.status"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="数据库地址">
+                                <a-input placeholder="数据库地址" v-model="queryParam.dbHost"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="数据库名">
+                                <a-input placeholder="数据库名" v-model="queryParam.dbName"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="顺序">
+                                <a-input placeholder="顺序" v-model="queryParam.position"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -51,11 +67,9 @@
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏服配置')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
-            </a-upload> -->
+            </a-upload>-->
             <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item>
-                </a-menu>
+                <a-menu slot="overlay"> <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item> </a-menu>
                 <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
             </a-dropdown>
         </div>
@@ -107,6 +121,7 @@
 <script>
 import GameServerModal from "./modules/GameServerModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { filterObj } from "@/utils/util";
 
 export default {
     name: "GameServerList",
@@ -180,7 +195,7 @@ export default {
                     dataIndex: "httpPort",
                 },
                 {
-                    title: "排序字段",
+                    title: "顺序",
                     align: "center",
                     dataIndex: "position",
                 },
@@ -190,19 +205,14 @@ export default {
                     dataIndex: "type",
                 },
                 {
-                    title: "合服时间",
-                    align: "center",
-                    dataIndex: "mergeTime",
-                },
-                {
-                    title: "扩展字段",
-                    align: "center",
-                    dataIndex: "extra",
-                },
-                {
                     title: "开服时间",
                     align: "center",
                     dataIndex: "openTime",
+                },
+                {
+                    title: "创建时间",
+                    align: "center",
+                    dataIndex: "createTime",
                 },
                 {
                     title: "操作",
@@ -226,6 +236,23 @@ export default {
         },
     },
     methods: {
+        getQueryParams() {
+            console.log(this.queryParam.createTimeRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.createTimeRange;
+            return filterObj(param);
+        },
+        onDateChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.createTime_begin = dateString[0];
+            this.queryParam.createTime_end = dateString[1];
+        },
+        onDateOk(value) {
+            console.log(value);
+        },
     },
 };
 </script>
