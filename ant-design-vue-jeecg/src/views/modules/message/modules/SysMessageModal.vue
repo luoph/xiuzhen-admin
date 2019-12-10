@@ -24,13 +24,13 @@
                     <a-input placeholder="请输入接收人" v-decorator="['esReceiver', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="发送方式">
-                    <j-dict-select-tag :triggerChange="true" dictCode="msgType" v-decorator="['esType', {}]" placeholder="请选择发送方式"> </j-dict-select-tag>
+                    <j-dict-select-tag :triggerChange="true" dictCode="msg_type" v-decorator="['esType', {}]" placeholder="请选择发送方式"> </j-dict-select-tag>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="发送时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['esSendTime', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="发送状态">
-                    <j-dict-select-tag :triggerChange="true" dictCode="msgSendStatus" v-decorator="['esSendStatus', {}]" placeholder="请选择发送状态"> </j-dict-select-tag>
+                    <j-dict-select-tag :triggerChange="true" dictCode="msg_send_status" v-decorator="['esSendStatus', {}]" placeholder="请选择发送状态"> </j-dict-select-tag>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="发送次数">
                     <a-input-number v-decorator="['esSendNum', {}]" />
