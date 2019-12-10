@@ -190,11 +190,6 @@ export default {
                     dataIndex: "warning",
                 },
                 {
-                    title: "进入游戏客户端版本",
-                    align: "center",
-                    dataIndex: "clientVersionCode",
-                },
-                {
                     title: "后台HTTP端口",
                     align: "center",
                     dataIndex: "httpPort",
@@ -211,10 +206,14 @@ export default {
                     dataIndex: "type_dictText",
                 },
                 {
-                    title: "显示版本号",
+                    title: "最小版本号",
                     align: "center",
-                    dataIndex: "showVersion",
-                    dataIndex: "showVersion_dictText",
+                    dataIndex: "minVersion",
+                },
+                {
+                    title: "最大版本号",
+                    align: "center",
+                    dataIndex: "maxVersion",
                 },
                 {
                     title: "开服时间",
