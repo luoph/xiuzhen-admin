@@ -51,7 +51,7 @@ public class SysMessage extends JeecgEntity {
      * 推送状态 0未推送 1推送成功 2推送失败
      */
     @Excel(name = "推送状态 0未推送 1推送成功 2推送失败", width = 15)
-    @Dict(dicCode = "msgSendStatus")
+    @Dict(dicCode = "msg_send_status")
     private java.lang.String esSendStatus;
     /**
      * 推送时间
@@ -69,7 +69,7 @@ public class SysMessage extends JeecgEntity {
      * 推送方式：1短信 2邮件 3微信
      */
     @Excel(name = "推送方式：1短信 2邮件 3微信", width = 15)
-    @Dict(dicCode = "msgType")
+    @Dict(dicCode = "msg_type")
     private java.lang.String esType;
     /**
      * 备注
