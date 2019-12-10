@@ -4593,7 +4593,7 @@ GO
 INSERT INTO [dbo].[sys_dict]  VALUES (N'4e4602b3e3686f0911384e188dc7efb4', N'条件规则', N'rule_conditions', N'', N'0', N'admin', N'2019-04-01 10:15:03.0000000', N'admin', N'2019-04-01 10:30:47.0000000', N'0')
 GO
 
-INSERT INTO [dbo].[sys_dict]  VALUES (N'4f69be5f507accea8d5df5f11346181a', N'发送消息类型', N'msgType', NULL, N'0', N'admin', N'2019-04-11 14:27:09.0000000', NULL, NULL, N'0')
+INSERT INTO [dbo].[sys_dict]  VALUES (N'4f69be5f507accea8d5df5f11346181a', N'发送消息类型', N'msg_type', NULL, N'0', N'admin', N'2019-04-11 14:27:09.0000000', NULL, NULL, N'0')
 GO
 
 INSERT INTO [dbo].[sys_dict]  VALUES (N'68168534ff5065a152bfab275c2136f8', N'有效无效状态', N'valid_status', N'有效无效状态', N'0', N'admin', N'2020-09-26 19:21:14.0000000', N'admin', N'2019-04-26 19:21:23.0000000', N'0')
@@ -4623,7 +4623,7 @@ GO
 INSERT INTO [dbo].[sys_dict]  VALUES (N'a7adbcd86c37f7dbc9b66945c82ef9e6', N'1是0否', N'yn', N'', N'1', N'admin', N'2019-05-22 19:29:29.0000000', NULL, NULL, N'0')
 GO
 
-INSERT INTO [dbo].[sys_dict]  VALUES (N'a9d9942bd0eccb6e89de92d130ec4c4a', N'消息发送状态', N'msgSendStatus', NULL, N'0', N'admin', N'2019-04-12 18:18:17.0000000', NULL, NULL, N'0')
+INSERT INTO [dbo].[sys_dict]  VALUES (N'a9d9942bd0eccb6e89de92d130ec4c4a', N'消息发送状态', N'msg_send_status', NULL, N'0', N'admin', N'2019-04-12 18:18:17.0000000', NULL, NULL, N'0')
 GO
 
 INSERT INTO [dbo].[sys_dict]  VALUES (N'ac2f7c0c5c5775fcea7e2387bcb22f01', N'菜单类型', N'menu_type', NULL, N'0', N'admin', N'2020-12-18 23:24:32.0000000', N'admin', N'2019-04-01 15:27:06.0000000', N'1')
