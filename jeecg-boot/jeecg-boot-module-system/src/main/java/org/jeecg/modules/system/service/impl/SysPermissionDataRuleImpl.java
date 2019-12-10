@@ -63,7 +63,7 @@ public class SysPermissionDataRuleImpl extends ServiceImpl<SysPermissionDataRule
             return null;
         }
         //update-end--Author:scott  Date:20191119  for：数据权限失效问题处理--------------------
-        Set<String> set = new HashSet<String>();
+        Set<String> set = new HashSet<>();
         for (String ids : idsList) {
             if (oConvertUtils.isEmpty(ids)) {
                 continue;

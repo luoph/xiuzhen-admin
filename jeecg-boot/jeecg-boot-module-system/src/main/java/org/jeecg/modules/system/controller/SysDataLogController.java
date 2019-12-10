@@ -28,7 +28,7 @@ public class SysDataLogController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result<IPage<SysDataLog>> queryPageList(SysDataLog dataLog, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        Result<IPage<SysDataLog>> result = new Result<IPage<SysDataLog>>();
+        Result<IPage<SysDataLog>> result = new Result<>();
         QueryWrapper<SysDataLog> queryWrapper = QueryGenerator.initQueryWrapper(dataLog, req.getParameterMap());
         Page<SysDataLog> page = new Page<SysDataLog>(pageNo, pageSize);
         IPage<SysDataLog> pageList = service.page(page, queryWrapper);
@@ -52,7 +52,7 @@ public class SysDataLogController {
         Result<List<SysDataLog>> result = new Result<>();
         String dataId1 = req.getParameter("dataId1");
         String dataId2 = req.getParameter("dataId2");
-        List<String> idList = new ArrayList<String>();
+        List<String> idList = new ArrayList<>();
         idList.add(dataId1);
         idList.add(dataId2);
         try {
@@ -76,7 +76,8 @@ public class SysDataLogController {
         Result<List<SysDataLog>> result = new Result<>();
         String dataTable = req.getParameter("dataTable");
         String dataId = req.getParameter("dataId");
-        QueryWrapper<SysDataLog> queryWrapper = new QueryWrapper<SysDataLog>();
+
+        QueryWrapper<SysDataLog> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("data_table", dataTable);
         queryWrapper.eq("data_id", dataId);
         List<SysDataLog> list = service.list(queryWrapper);

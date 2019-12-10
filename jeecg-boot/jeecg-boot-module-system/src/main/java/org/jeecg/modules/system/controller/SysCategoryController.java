@@ -65,11 +65,11 @@ public class SysCategoryController {
         if (oConvertUtils.isEmpty(sysCategory.getPid())) {
             sysCategory.setPid("0");
         }
-        Result<IPage<SysCategory>> result = new Result<IPage<SysCategory>>();
+        Result<IPage<SysCategory>> result = new Result<>();
 
         //--author:os_chengtgen---date:20190804 -----for: 分类字典页面显示错误,issues:377--------start
         //QueryWrapper<SysCategory> queryWrapper = QueryGenerator.initQueryWrapper(sysCategory, req.getParameterMap());
-        QueryWrapper<SysCategory> queryWrapper = new QueryWrapper<SysCategory>();
+        QueryWrapper<SysCategory> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("pid", sysCategory.getPid());
         //--author:os_chengtgen---date:20190804 -----for: 分类字典页面显示错误,issues:377--------end
 
@@ -82,7 +82,7 @@ public class SysCategoryController {
 
     @GetMapping(value = "/childList")
     public Result<List<SysCategory>> queryPageList(SysCategory sysCategory, HttpServletRequest req) {
-        Result<List<SysCategory>> result = new Result<List<SysCategory>>();
+        Result<List<SysCategory>> result = new Result<>();
         QueryWrapper<SysCategory> queryWrapper = QueryGenerator.initQueryWrapper(sysCategory, req.getParameterMap());
         List<SysCategory> list = sysCategoryService.list(queryWrapper);
         result.setSuccess(true);
@@ -99,7 +99,7 @@ public class SysCategoryController {
      */
     @PostMapping(value = "/add")
     public Result<SysCategory> add(@RequestBody SysCategory sysCategory) {
-        Result<SysCategory> result = new Result<SysCategory>();
+        Result<SysCategory> result = new Result<>();
         try {
             sysCategoryService.addSysCategory(sysCategory);
             result.success("添加成功！");
@@ -118,7 +118,7 @@ public class SysCategoryController {
      */
     @PutMapping(value = "/edit")
     public Result<SysCategory> edit(@RequestBody SysCategory sysCategory) {
-        Result<SysCategory> result = new Result<SysCategory>();
+        Result<SysCategory> result = new Result<>();
         SysCategory sysCategoryEntity = sysCategoryService.getById(sysCategory.getId());
         if (sysCategoryEntity == null) {
             result.error500("未找到对应实体");
@@ -136,8 +136,8 @@ public class SysCategoryController {
      * @return
      */
     @DeleteMapping(value = "/delete")
-    public Result<SysCategory> delete(@RequestParam(name = "id", required = true) String id) {
-        Result<SysCategory> result = new Result<SysCategory>();
+    public Result<SysCategory> delete(@RequestParam(name = "id") String id) {
+        Result<SysCategory> result = new Result<>();
         SysCategory sysCategory = sysCategoryService.getById(id);
         if (sysCategory == null) {
             result.error500("未找到对应实体");
@@ -158,8 +158,8 @@ public class SysCategoryController {
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
-    public Result<SysCategory> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
-        Result<SysCategory> result = new Result<SysCategory>();
+    public Result<SysCategory> deleteBatch(@RequestParam(name = "ids") String ids) {
+        Result<SysCategory> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
         } else {
@@ -176,8 +176,8 @@ public class SysCategoryController {
      * @return
      */
     @GetMapping(value = "/queryById")
-    public Result<SysCategory> queryById(@RequestParam(name = "id", required = true) String id) {
-        Result<SysCategory> result = new Result<SysCategory>();
+    public Result<SysCategory> queryById(@RequestParam(name = "id") String id) {
+        Result<SysCategory> result = new Result<>();
         SysCategory sysCategory = sysCategoryService.getById(id);
         if (sysCategory == null) {
             result.error500("未找到对应实体");
@@ -230,7 +230,8 @@ public class SysCategoryController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(1);
@@ -261,10 +262,10 @@ public class SysCategoryController {
      */
     @RequestMapping(value = "/loadOne", method = RequestMethod.GET)
     public Result<SysCategory> loadOne(@RequestParam(name = "field") String field, @RequestParam(name = "val") String val) {
-        Result<SysCategory> result = new Result<SysCategory>();
+        Result<SysCategory> result = new Result<>();
         try {
 
-            QueryWrapper<SysCategory> query = new QueryWrapper<SysCategory>();
+            QueryWrapper<SysCategory> query = new QueryWrapper<>();
             query.eq(field, val);
             List<SysCategory> ls = this.sysCategoryService.list(query);
             if (ls == null || ls.size() == 0) {
@@ -290,7 +291,7 @@ public class SysCategoryController {
      */
     @RequestMapping(value = "/loadTreeChildren", method = RequestMethod.GET)
     public Result<List<TreeSelectModel>> loadTreeChildren(@RequestParam(name = "pid") String pid) {
-        Result<List<TreeSelectModel>> result = new Result<List<TreeSelectModel>>();
+        Result<List<TreeSelectModel>> result = new Result<>();
         try {
             List<TreeSelectModel> ls = this.sysCategoryService.queryListByPid(pid);
             result.setResult(ls);
@@ -308,7 +309,7 @@ public class SysCategoryController {
      */
     @RequestMapping(value = "/loadTreeRoot", method = RequestMethod.GET)
     public Result<List<TreeSelectModel>> loadTreeRoot(@RequestParam(name = "async") Boolean async, @RequestParam(name = "pcode") String pcode) {
-        Result<List<TreeSelectModel>> result = new Result<List<TreeSelectModel>>();
+        Result<List<TreeSelectModel>> result = new Result<>();
         try {
             List<TreeSelectModel> ls = this.sysCategoryService.queryListByCode(pcode);
             if (!async) {
@@ -372,7 +373,7 @@ public class SysCategoryController {
      */
     @RequestMapping(value = "/loadTreeData", method = RequestMethod.GET)
     public Result<List<TreeSelectModel>> loadDict(@RequestParam(name = "pid", required = false) String pid, @RequestParam(name = "pcode", required = false) String pcode, @RequestParam(name = "condition", required = false) String condition) {
-        Result<List<TreeSelectModel>> result = new Result<List<TreeSelectModel>>();
+        Result<List<TreeSelectModel>> result = new Result<>();
         //pid如果传值了 就忽略pcode的作用
         if (oConvertUtils.isEmpty(pid)) {
             if (oConvertUtils.isEmpty(pcode)) {
@@ -405,7 +406,7 @@ public class SysCategoryController {
     /**
      * 分类字典控件数据回显[表单页面]
      *
-     * @param key
+     * @param ids
      * @return
      */
     @RequestMapping(value = "/loadDictItem", method = RequestMethod.GET)
@@ -413,7 +414,7 @@ public class SysCategoryController {
         Result<List<String>> result = new Result<>();
         LambdaQueryWrapper<SysCategory> query = new LambdaQueryWrapper<SysCategory>().in(SysCategory::getId, ids);
         List<SysCategory> list = this.sysCategoryService.list(query);
-        List<String> textList = new ArrayList<String>();
+        List<String> textList = new ArrayList<>();
         for (String id : ids.split(",")) {
             for (SysCategory c : list) {
                 if (id.equals(c.getId())) {
@@ -435,19 +436,21 @@ public class SysCategoryController {
      * @return
      */
     @RequestMapping(value = "/loadAllData", method = RequestMethod.GET)
-    public Result<List<DictModel>> loadAllData(@RequestParam(name = "code", required = true) String code) {
-        Result<List<DictModel>> result = new Result<List<DictModel>>();
-        LambdaQueryWrapper<SysCategory> query = new LambdaQueryWrapper<SysCategory>();
+    public Result<List<DictModel>> loadAllData(@RequestParam(name = "code") String code) {
+        Result<List<DictModel>> result = new Result<>();
+        LambdaQueryWrapper<SysCategory> query = new LambdaQueryWrapper<>();
         if (oConvertUtils.isNotEmpty(code) && !"0".equals(code)) {
             query.likeRight(SysCategory::getCode, code);
         }
+
         List<SysCategory> list = this.sysCategoryService.list(query);
         if (list == null || list.size() == 0) {
             result.setMessage("无数据,参数有误.[code]");
             result.setSuccess(false);
             return result;
         }
-        List<DictModel> rdList = new ArrayList<DictModel>();
+
+        List<DictModel> rdList = new ArrayList<>();
         for (SysCategory c : list) {
             rdList.add(new DictModel(c.getId(), c.getName()));
         }

@@ -49,7 +49,8 @@ public class LoginController {
     @Autowired
     private ISysDepartService sysDepartService;
 
-    private static final String BASE_CHECK_CODES = "qwertyuiplkjhgfdsazxcvbnmQWERTYUPLKJHGFDSAZXCVBNM1234567890";
+    //    private static final String BASE_CHECK_CODES = "qwertyuiplkjhgfdsazxcvbnmQWERTYUPLKJHGFDSAZXCVBNM1234567890";
+    private static final String BASE_CHECK_CODES = "1234567890";
 
     @ApiOperation("登录接口")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -110,6 +111,7 @@ public class LoginController {
         if (oConvertUtils.isEmpty(token)) {
             return Result.error("退出登录失败！");
         }
+
         String username = JwtUtil.getUsername(token);
         LoginUser sysUser = sysBaseAPI.getUserByName(username);
         if (sysUser != null) {
@@ -124,9 +126,8 @@ public class LoginController {
             // 调用shiro的logout
             SecurityUtils.getSubject().logout();
             return Result.ok("退出登录成功！");
-        } else {
-            return Result.error("Token无效!");
         }
+        return Result.error("Token无效!");
     }
 
     /**
@@ -136,7 +137,7 @@ public class LoginController {
      */
     @GetMapping("loginfo")
     public Result<JSONObject> loginfo() {
-        Result<JSONObject> result = new Result<JSONObject>();
+        Result<JSONObject> result = new Result<>();
         JSONObject obj = new JSONObject();
         //update-begin--Author:zhangweijian  Date:20190428 for：传入开始时间，结束时间参数
         // 获取一天的开始和结束时间
@@ -192,7 +193,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/selectDepart", method = RequestMethod.PUT)
     public Result<JSONObject> selectDepart(@RequestBody SysUser user) {
-        Result<JSONObject> result = new Result<JSONObject>();
+        Result<JSONObject> result = new Result<>();
         String username = user.getUsername();
         if (oConvertUtils.isEmpty(username)) {
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
@@ -215,7 +216,7 @@ public class LoginController {
      */
     @PostMapping(value = "/sms")
     public Result<String> sms(@RequestBody JSONObject jsonObject) {
-        Result<String> result = new Result<String>();
+        Result<String> result = new Result<>();
         String mobile = jsonObject.get("mobile").toString();
         String smsmode = jsonObject.get("smsmode").toString();
         log.info(mobile);
@@ -372,8 +373,8 @@ public class LoginController {
     @ApiOperation("获取验证码")
     @GetMapping(value = "/getCheckCode")
     public Result<Map<String, String>> getCheckCode() {
-        Result<Map<String, String>> result = new Result<Map<String, String>>();
-        Map<String, String> map = new HashMap<String, String>();
+        Result<Map<String, String>> result = new Result<>();
+        Map<String, String> map = new HashMap<>();
         try {
             String code = RandomUtil.randomString(BASE_CHECK_CODES, 4);
             String key = MD5Util.md5Encode(code + System.currentTimeMillis(), "utf-8");
@@ -398,7 +399,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/mLogin", method = RequestMethod.POST)
     public Result<JSONObject> mLogin(@RequestBody SysLoginModel sysLoginModel) throws Exception {
-        Result<JSONObject> result = new Result<JSONObject>();
+        Result<JSONObject> result = new Result<>();
         String username = sysLoginModel.getUsername();
         String password = sysLoginModel.getPassword();
 

@@ -103,7 +103,7 @@ public class SysDepartController {
     public Result<SysDepart> edit(@RequestBody SysDepart sysDepart, HttpServletRequest request) {
         String username = JwtUtil.getUserNameByToken(request);
         sysDepart.setUpdateBy(username);
-        Result<SysDepart> result = new Result<SysDepart>();
+        Result<SysDepart> result = new Result<>();
         SysDepart sysDepartEntity = sysDepartService.getById(sysDepart.getId());
         if (sysDepartEntity == null) {
             result.error500("未找到对应实体");
@@ -130,7 +130,7 @@ public class SysDepartController {
     @CacheEvict(value = {CacheConstant.SYS_DEPARTS_CACHE, CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries = true)
     public Result<SysDepart> delete(@RequestParam(name = "id", required = true) String id) {
 
-        Result<SysDepart> result = new Result<SysDepart>();
+        Result<SysDepart> result = new Result<>();
         SysDepart sysDepart = sysDepartService.getById(id);
         if (sysDepart == null) {
             result.error500("未找到对应实体");
@@ -157,7 +157,7 @@ public class SysDepartController {
     @CacheEvict(value = {CacheConstant.SYS_DEPARTS_CACHE, CacheConstant.SYS_DEPART_IDS_CACHE}, allEntries = true)
     public Result<SysDepart> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
 
-        Result<SysDepart> result = new Result<SysDepart>();
+        Result<SysDepart> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
         } else {
@@ -214,10 +214,10 @@ public class SysDepartController {
      */
     @RequestMapping(value = "/searchBy", method = RequestMethod.GET)
     public Result<List<SysDepartTreeModel>> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
-        Result<List<SysDepartTreeModel>> result = new Result<List<SysDepartTreeModel>>();
+        Result<List<SysDepartTreeModel>> result = new Result<>();
         try {
             List<SysDepartTreeModel> treeList = this.sysDepartService.searhBy(keyWord);
-            if (treeList.size() == 0 || treeList == null) {
+            if (treeList.size() == 0) {
                 throw new Exception();
             }
             result.setSuccess(true);
@@ -274,7 +274,8 @@ public class SysDepartController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-            MultipartFile file = entity.getValue();// 获取上传文件对象
+            // 获取上传文件对象
+            MultipartFile file = entity.getValue();
             ImportParams params = new ImportParams();
             params.setTitleRows(2);
             params.setHeadRows(1);

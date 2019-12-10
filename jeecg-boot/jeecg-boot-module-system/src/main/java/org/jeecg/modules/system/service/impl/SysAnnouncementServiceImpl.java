@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * @author jeecg-boot
@@ -47,14 +48,14 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
             String[] userIds = userId.substring(0, (userId.length() - 1)).split(",");
             String anntId = sysAnnouncement.getId();
             Date refDate = new Date();
-            for (int i = 0; i < userIds.length; i++) {
+            IntStream.range(0, userIds.length).forEach(i -> {
                 SysAnnouncementSend announcementSend = new SysAnnouncementSend();
                 announcementSend.setAnntId(anntId);
                 announcementSend.setUserId(userIds[i]);
                 announcementSend.setReadFlag(CommonConstant.NO_READ_FLAG);
                 announcementSend.setReadTime(refDate);
                 sysAnnouncementSendMapper.insert(announcementSend);
-            }
+            });
         }
     }
 
@@ -72,15 +73,15 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
             String[] userIds = userId.substring(0, (userId.length() - 1)).split(",");
             String anntId = sysAnnouncement.getId();
             Date refDate = new Date();
-            for (int i = 0; i < userIds.length; i++) {
-                LambdaQueryWrapper<SysAnnouncementSend> queryWrapper = new LambdaQueryWrapper<SysAnnouncementSend>();
+            for (String id : userIds) {
+                LambdaQueryWrapper<SysAnnouncementSend> queryWrapper = new LambdaQueryWrapper<>();
                 queryWrapper.eq(SysAnnouncementSend::getAnntId, anntId);
-                queryWrapper.eq(SysAnnouncementSend::getUserId, userIds[i]);
+                queryWrapper.eq(SysAnnouncementSend::getUserId, id);
                 List<SysAnnouncementSend> announcementSends = sysAnnouncementSendMapper.selectList(queryWrapper);
                 if (announcementSends.size() <= 0) {
                     SysAnnouncementSend announcementSend = new SysAnnouncementSend();
                     announcementSend.setAnntId(anntId);
-                    announcementSend.setUserId(userIds[i]);
+                    announcementSend.setUserId(id);
                     announcementSend.setReadFlag(CommonConstant.NO_READ_FLAG);
                     announcementSend.setReadTime(refDate);
                     sysAnnouncementSendMapper.insert(announcementSend);
@@ -88,7 +89,7 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
             }
             // 3. 删除多余通知用户数据
             Collection<String> delUserIds = Arrays.asList(userIds);
-            LambdaQueryWrapper<SysAnnouncementSend> queryWrapper = new LambdaQueryWrapper<SysAnnouncementSend>();
+            LambdaQueryWrapper<SysAnnouncementSend> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.notIn(SysAnnouncementSend::getUserId, delUserIds);
             queryWrapper.eq(SysAnnouncementSend::getAnntId, anntId);
             sysAnnouncementSendMapper.delete(queryWrapper);

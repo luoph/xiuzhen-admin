@@ -71,7 +71,7 @@ public class SysAnnouncementController {
         Result<IPage<SysAnnouncement>> result = new Result<>();
         sysAnnouncement.setDelFlag(String.valueOf(CommonConstant.DEL_FLAG_0));
         QueryWrapper<SysAnnouncement> queryWrapper = new QueryWrapper<>(sysAnnouncement);
-        Page<SysAnnouncement> page = new Page<SysAnnouncement>(pageNo, pageSize);
+        Page<SysAnnouncement> page = new Page<>(pageNo, pageSize);
         // 排序逻辑 处理
         String column = req.getParameter("column");
         String order = req.getParameter("order");
@@ -168,7 +168,7 @@ public class SysAnnouncementController {
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     public Result<SysAnnouncement> deleteBatch(@RequestParam(name = "ids") String ids) {
-        Result<SysAnnouncement> result = new Result<SysAnnouncement>();
+        Result<SysAnnouncement> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
         } else {

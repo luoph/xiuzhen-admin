@@ -76,9 +76,9 @@ public class SysDictController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result<IPage<SysDict>> queryPageList(SysDict sysDict, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                                 @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        Result<IPage<SysDict>> result = new Result<IPage<SysDict>>();
+        Result<IPage<SysDict>> result = new Result<>();
         QueryWrapper<SysDict> queryWrapper = QueryGenerator.initQueryWrapper(sysDict, req.getParameterMap());
-        Page<SysDict> page = new Page<SysDict>(pageNo, pageSize);
+        Page<SysDict> page = new Page<>(pageNo, pageSize);
         IPage<SysDict> pageList = sysDictService.page(page, queryWrapper);
         log.debug("查询当前页:{}, 查询当前页数量:{}, 查询结果数量:{}, 数据总数:{}",
                 pageList.getCurrent(), pageList.getSize(), pageList.getRecords().size(), pageList.getTotal());
@@ -200,7 +200,7 @@ public class SysDictController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result<SysDict> add(@RequestBody SysDict sysDict) {
-        Result<SysDict> result = new Result<SysDict>();
+        Result<SysDict> result = new Result<>();
         try {
             sysDict.setCreateTime(new Date());
             sysDict.setDelFlag(CommonConstant.DEL_FLAG_0);
@@ -220,17 +220,18 @@ public class SysDictController {
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public Result<SysDict> edit(@RequestBody SysDict sysDict) {
-        Result<SysDict> result = new Result<SysDict>();
+        Result<SysDict> result = new Result<>();
         SysDict sysdict = sysDictService.getById(sysDict.getId());
         if (sysdict == null) {
             result.error500("未找到对应实体");
-        } else {
-            sysDict.setUpdateTime(new Date());
-            boolean ok = sysDictService.updateById(sysDict);
-            //TODO 返回false说明什么？
-            if (ok) {
-                result.success("编辑成功!");
-            }
+            return result;
+        }
+
+        sysDict.setUpdateTime(new Date());
+        boolean ok = sysDictService.updateById(sysDict);
+        //TODO 返回false说明什么？
+        if (ok) {
+            result.success("编辑成功!");
         }
         return result;
     }
@@ -261,13 +262,14 @@ public class SysDictController {
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
     public Result<SysDict> deleteBatch(@RequestParam(name = "ids") String ids) {
-        Result<SysDict> result = new Result<SysDict>();
+        Result<SysDict> result = new Result<>();
         if (oConvertUtils.isEmpty(ids)) {
             result.error500("参数不识别！");
-        } else {
-            sysDictService.removeByIds(Arrays.asList(ids.split(DICT_PARAM_SPLIT_CHAR)));
-            result.success("删除成功!");
+            return result;
         }
+        
+        sysDictService.removeByIds(Arrays.asList(ids.split(DICT_PARAM_SPLIT_CHAR)));
+        result.success("删除成功!");
         return result;
     }
 

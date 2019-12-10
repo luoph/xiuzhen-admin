@@ -108,7 +108,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
     @AutoLog(value = "填值规则-通过id删除")
     @ApiOperation(value = "填值规则-通过id删除", notes = "填值规则-通过id删除")
     @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         sysFillRuleService.removeById(id);
         return Result.ok("删除成功!");
     }
@@ -122,7 +122,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
     @AutoLog(value = "填值规则-批量删除")
     @ApiOperation(value = "填值规则-批量删除", notes = "填值规则-批量删除")
     @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.sysFillRuleService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
@@ -136,7 +136,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
     @AutoLog(value = "填值规则-通过id查询")
     @ApiOperation(value = "填值规则-通过id查询", notes = "填值规则-通过id查询")
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
         SysFillRule sysFillRule = sysFillRuleService.getById(id);
         return Result.ok(sysFillRule);
     }

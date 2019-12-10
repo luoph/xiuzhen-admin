@@ -26,7 +26,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     public void saveRolePermission(String roleId, String permissionIds) {
         LambdaQueryWrapper<SysRolePermission> query = new QueryWrapper<SysRolePermission>().lambda().eq(SysRolePermission::getRoleId, roleId);
         this.remove(query);
-        List<SysRolePermission> list = new ArrayList<SysRolePermission>();
+        List<SysRolePermission> list = new ArrayList<>();
         String[] arr = permissionIds.split(",");
         for (String p : arr) {
             if (oConvertUtils.isNotEmpty(p)) {
@@ -41,7 +41,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     public void saveRolePermission(String roleId, String permissionIds, String lastPermissionIds) {
         List<String> add = getDiff(lastPermissionIds, permissionIds);
         if (add != null && add.size() > 0) {
-            List<SysRolePermission> list = new ArrayList<SysRolePermission>();
+            List<SysRolePermission> list = new ArrayList<>();
             for (String p : add) {
                 if (oConvertUtils.isNotEmpty(p)) {
                     SysRolePermission rolepms = new SysRolePermission(roleId, p);
@@ -80,7 +80,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
         for (String string : mainArr) {
             map.put(string, 1);
         }
-        List<String> res = new ArrayList<String>();
+        List<String> res = new ArrayList<>();
         for (String key : diffArr) {
             if (oConvertUtils.isNotEmpty(key) && !map.containsKey(key)) {
                 res.add(key);

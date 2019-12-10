@@ -35,20 +35,21 @@ public class SysDictItemController {
     private ISysDictItemService sysDictItemService;
 
     /**
+     * 查询字典数据
+     *
      * @param sysDictItem
      * @param pageNo
      * @param pageSize
      * @param req
      * @return
-     * @功能：查询字典数据
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result<IPage<SysDictItem>> queryPageList(SysDictItem sysDictItem, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                                     @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        Result<IPage<SysDictItem>> result = new Result<IPage<SysDictItem>>();
+        Result<IPage<SysDictItem>> result = new Result<>();
         QueryWrapper<SysDictItem> queryWrapper = QueryGenerator.initQueryWrapper(sysDictItem, req.getParameterMap());
         queryWrapper.orderByAsc("sort_order");
-        Page<SysDictItem> page = new Page<SysDictItem>(pageNo, pageSize);
+        Page<SysDictItem> page = new Page<>(pageNo, pageSize);
         IPage<SysDictItem> pageList = sysDictItemService.page(page, queryWrapper);
         result.setSuccess(true);
         result.setResult(pageList);
@@ -56,14 +57,15 @@ public class SysDictItemController {
     }
 
     /**
-     * @param sysDict
+     * 新增
+     *
+     * @param sysDictItem
      * @return
-     * @功能：新增
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
     public Result<SysDictItem> add(@RequestBody SysDictItem sysDictItem) {
-        Result<SysDictItem> result = new Result<SysDictItem>();
+        Result<SysDictItem> result = new Result<>();
         try {
             sysDictItem.setCreateTime(new Date());
             sysDictItemService.save(sysDictItem);
@@ -76,37 +78,40 @@ public class SysDictItemController {
     }
 
     /**
+     * 编辑
+     *
      * @param sysDictItem
      * @return
-     * @功能：编辑
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
     public Result<SysDictItem> edit(@RequestBody SysDictItem sysDictItem) {
-        Result<SysDictItem> result = new Result<SysDictItem>();
-        SysDictItem sysdict = sysDictItemService.getById(sysDictItem.getId());
-        if (sysdict == null) {
+        Result<SysDictItem> result = new Result<>();
+        SysDictItem sysDict = sysDictItemService.getById(sysDictItem.getId());
+        if (sysDict == null) {
             result.error500("未找到对应实体");
-        } else {
-            sysDictItem.setUpdateTime(new Date());
-            boolean ok = sysDictItemService.updateById(sysDictItem);
-            //TODO 返回false说明什么？
-            if (ok) {
-                result.success("编辑成功!");
-            }
+            return result;
+        }
+
+        sysDictItem.setUpdateTime(new Date());
+        boolean ok = sysDictItemService.updateById(sysDictItem);
+        //TODO 返回false说明什么？
+        if (ok) {
+            result.success("编辑成功!");
         }
         return result;
     }
 
     /**
+     * 删除字典数据
+     *
      * @param id
      * @return
-     * @功能：删除字典数据
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
-    public Result<SysDictItem> delete(@RequestParam(name = "id", required = true) String id) {
-        Result<SysDictItem> result = new Result<SysDictItem>();
+    public Result<SysDictItem> delete(@RequestParam(name = "id") String id) {
+        Result<SysDictItem> result = new Result<>();
         SysDictItem joinSystem = sysDictItemService.getById(id);
         if (joinSystem == null) {
             result.error500("未找到对应实体");
@@ -120,20 +125,22 @@ public class SysDictItemController {
     }
 
     /**
+     * 批量删除字典数据
+     *
      * @param ids
      * @return
-     * @功能：批量删除字典数据
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
-    public Result<SysDictItem> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
-        Result<SysDictItem> result = new Result<SysDictItem>();
+    public Result<SysDictItem> deleteBatch(@RequestParam(name = "ids") String ids) {
+        Result<SysDictItem> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
-        } else {
-            this.sysDictItemService.removeByIds(Arrays.asList(ids.split(",")));
-            result.success("删除成功!");
+            return result;
         }
+
+        this.sysDictItemService.removeByIds(Arrays.asList(ids.split(",")));
+        result.success("删除成功!");
         return result;
     }
 

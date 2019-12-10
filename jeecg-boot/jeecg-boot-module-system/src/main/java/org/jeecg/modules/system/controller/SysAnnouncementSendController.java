@@ -50,8 +50,8 @@ public class SysAnnouncementSendController {
                                                             @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                                             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                                             HttpServletRequest req) {
-        Result<IPage<SysAnnouncementSend>> result = new Result<IPage<SysAnnouncementSend>>();
-        QueryWrapper<SysAnnouncementSend> queryWrapper = new QueryWrapper<SysAnnouncementSend>(sysAnnouncementSend);
+        Result<IPage<SysAnnouncementSend>> result = new Result<>();
+        QueryWrapper<SysAnnouncementSend> queryWrapper = new QueryWrapper<>(sysAnnouncementSend);
         Page<SysAnnouncementSend> page = new Page<SysAnnouncementSend>(pageNo, pageSize);
         // 排序逻辑 处理
         String column = req.getParameter("column");
@@ -81,7 +81,7 @@ public class SysAnnouncementSendController {
      */
     @PostMapping(value = "/add")
     public Result<SysAnnouncementSend> add(@RequestBody SysAnnouncementSend sysAnnouncementSend) {
-        Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
+        Result<SysAnnouncementSend> result = new Result<>();
         try {
             sysAnnouncementSendService.save(sysAnnouncementSend);
             result.success("添加成功！");
@@ -100,7 +100,7 @@ public class SysAnnouncementSendController {
      */
     @PutMapping(value = "/edit")
     public Result<SysAnnouncementSend> eidt(@RequestBody SysAnnouncementSend sysAnnouncementSend) {
-        Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
+        Result<SysAnnouncementSend> result = new Result<>();
         SysAnnouncementSend sysAnnouncementSendEntity = sysAnnouncementSendService.getById(sysAnnouncementSend.getId());
         if (sysAnnouncementSendEntity == null) {
             result.error500("未找到对应实体");
@@ -122,8 +122,8 @@ public class SysAnnouncementSendController {
      * @return
      */
     @DeleteMapping(value = "/delete")
-    public Result<SysAnnouncementSend> delete(@RequestParam(name = "id", required = true) String id) {
-        Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
+    public Result<SysAnnouncementSend> delete(@RequestParam(name = "id") String id) {
+        Result<SysAnnouncementSend> result = new Result<>();
         SysAnnouncementSend sysAnnouncementSend = sysAnnouncementSendService.getById(id);
         if (sysAnnouncementSend == null) {
             result.error500("未找到对应实体");
@@ -144,7 +144,7 @@ public class SysAnnouncementSendController {
      * @return
      */
     @DeleteMapping(value = "/deleteBatch")
-    public Result<SysAnnouncementSend> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<SysAnnouncementSend> deleteBatch(@RequestParam(name = "ids") String ids) {
         Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
@@ -162,8 +162,8 @@ public class SysAnnouncementSendController {
      * @return
      */
     @GetMapping(value = "/queryById")
-    public Result<SysAnnouncementSend> queryById(@RequestParam(name = "id", required = true) String id) {
-        Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
+    public Result<SysAnnouncementSend> queryById(@RequestParam(name = "id") String id) {
+        Result<SysAnnouncementSend> result = new Result<>();
         SysAnnouncementSend sysAnnouncementSend = sysAnnouncementSendService.getById(id);
         if (sysAnnouncementSend == null) {
             result.error500("未找到对应实体");
@@ -181,7 +181,7 @@ public class SysAnnouncementSendController {
      */
     @PutMapping(value = "/editByAnntIdAndUserId")
     public Result<SysAnnouncementSend> editById(@RequestBody JSONObject json) {
-        Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
+        Result<SysAnnouncementSend> result = new Result<>();
         String anntId = json.getString("anntId");
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String userId = sysUser.getId();
@@ -203,13 +203,13 @@ public class SysAnnouncementSendController {
     public Result<IPage<AnnouncementSendModel>> getMyAnnouncementSend(AnnouncementSendModel announcementSendModel,
                                                                       @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                                                       @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        Result<IPage<AnnouncementSendModel>> result = new Result<IPage<AnnouncementSendModel>>();
+        Result<IPage<AnnouncementSendModel>> result = new Result<>();
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String userId = sysUser.getId();
         announcementSendModel.setUserId(userId);
         announcementSendModel.setPageNo((pageNo - 1) * pageSize);
         announcementSendModel.setPageSize(pageSize);
-        Page<AnnouncementSendModel> pageList = new Page<AnnouncementSendModel>(pageNo, pageSize);
+        Page<AnnouncementSendModel> pageList = new Page<>(pageNo, pageSize);
         pageList = sysAnnouncementSendService.getMyAnnouncementSendPage(pageList, announcementSendModel);
         result.setResult(pageList);
         result.setSuccess(true);
@@ -222,7 +222,7 @@ public class SysAnnouncementSendController {
      */
     @PutMapping(value = "/readAll")
     public Result<SysAnnouncementSend> readAll() {
-        Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
+        Result<SysAnnouncementSend> result = new Result<>();
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String userId = sysUser.getId();
         LambdaUpdateWrapper<SysAnnouncementSend> updateWrapper = new UpdateWrapper().lambda();
