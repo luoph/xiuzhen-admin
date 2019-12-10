@@ -154,8 +154,8 @@ export default {
             // 分页参数
             pagination: {
                 current: 1,
-                pageSize: 10,
-                pageSizeOptions: ["10", "20", "30"],
+                pageSize: 50,
+                pageSizeOptions: ["20", "50", "100"],
                 showTotal: (total, range) => {
                     return range[0] + "-" + range[1] + " 共" + total + "条";
                 },

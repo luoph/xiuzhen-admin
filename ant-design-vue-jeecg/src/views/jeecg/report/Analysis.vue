@@ -393,7 +393,7 @@ export default {
             ipagination: {
                 current: 1,
                 pageSize: 5,
-                pageSizeOptions: ["10", "20", "30"],
+                pageSizeOptions: ["20", "50", "100"],
                 showTotal: (total, range) => {
                     return range[0] + "-" + range[1] + " 共" + total + "条";
                 },
