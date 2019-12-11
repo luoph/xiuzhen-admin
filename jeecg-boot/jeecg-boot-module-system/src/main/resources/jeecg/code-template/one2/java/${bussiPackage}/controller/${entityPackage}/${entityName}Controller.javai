@@ -59,11 +59,11 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-分页列表查询")
-	@ApiOperation(value="${tableVo.ftlDescription}-分页列表查询", notes="${tableVo.ftlDescription}-分页列表查询")
+	@ApiOperation(value = "${tableVo.ftlDescription}-分页列表查询", notes = "${tableVo.ftlDescription}-分页列表查询")
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(${entityName} ${entityName?uncap_first},
-								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
-							       @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
+								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+							       @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
 								   HttpServletRequest req) {
 		QueryWrapper<${entityName}> queryWrapper = QueryGenerator.initQueryWrapper(${entityName?uncap_first}, req.getParameterMap());
 		Page<${entityName}> page = new Page<>(pageNo, pageSize);
@@ -78,7 +78,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-添加")
-	@ApiOperation(value="${tableVo.ftlDescription}-添加", notes="${tableVo.ftlDescription}-添加")
+	@ApiOperation(value = "${tableVo.ftlDescription}-添加", notes = "${tableVo.ftlDescription}-添加")
 	@PostMapping(value = "/add")
 	public Result<?> add(@RequestBody ${entityName} ${entityName?uncap_first}) {
 		${entityName?uncap_first}Service.save(${entityName?uncap_first});
@@ -92,7 +92,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-编辑")
-	@ApiOperation(value="${tableVo.ftlDescription}-编辑", notes="${tableVo.ftlDescription}-编辑")
+	@ApiOperation(value = "${tableVo.ftlDescription}-编辑", notes = "${tableVo.ftlDescription}-编辑")
 	@PutMapping(value = "/edit")
 	public Result<?> edit(@RequestBody ${entityName} ${entityName?uncap_first}) {
 		${entityName?uncap_first}Service.updateById(${entityName?uncap_first});
@@ -105,9 +105,9 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-通过id删除")
-	@ApiOperation(value="${tableVo.ftlDescription}-通过id删除", notes="${tableVo.ftlDescription}-通过id删除")
+	@ApiOperation(value = "${tableVo.ftlDescription}-通过id删除", notes = "${tableVo.ftlDescription}-通过id删除")
 	@DeleteMapping(value = "/delete")
-	public Result<?> delete(@RequestParam(name="id",required=true) String id) {
+	public Result<?> delete(@RequestParam(name = "id") String id) {
 		${entityName?uncap_first}Service.removeById(id);
 		return Result.ok("删除成功!");
 	}
@@ -119,9 +119,9 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-批量删除")
-	@ApiOperation(value="${tableVo.ftlDescription}-批量删除", notes="${tableVo.ftlDescription}-批量删除")
+	@ApiOperation(value = "${tableVo.ftlDescription}-批量删除", notes = "${tableVo.ftlDescription}-批量删除")
 	@DeleteMapping(value = "/deleteBatch")
-	public Result<?> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
+	public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
 		this.${entityName?uncap_first}Service.removeByIds(Arrays.asList(ids.split(",")));
 		return Result.ok("批量删除成功！");
 	}
@@ -133,9 +133,9 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-通过id查询")
-	@ApiOperation(value="${tableVo.ftlDescription}-通过id查询", notes="${tableVo.ftlDescription}-通过id查询")
+	@ApiOperation(value = "${tableVo.ftlDescription}-通过id查询", notes = "${tableVo.ftlDescription}-通过id查询")
 	@GetMapping(value = "/queryById")
-	public Result<?> queryById(@RequestParam(name="id",required=true) String id) {
+	public Result<?> queryById(@RequestParam(name = "id") String id) {
 		${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getById(id);
 		return Result.ok(${entityName?uncap_first});
 	}

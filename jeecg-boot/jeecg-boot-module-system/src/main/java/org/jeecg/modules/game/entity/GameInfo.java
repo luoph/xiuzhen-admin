@@ -21,7 +21,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_info")
-@ApiModel(value = "game_info对象", description = "游戏信息")
+@ApiModel(value = "GameInfo", description = "游戏信息")
 public class GameInfo extends BaseEntity {
 
     /**
