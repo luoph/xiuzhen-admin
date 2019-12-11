@@ -13,10 +13,10 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import java.util.Date;
 
 /**
- * @description ${subTab.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${subTab.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 @Data
 @TableName("${subTab.tableName}")

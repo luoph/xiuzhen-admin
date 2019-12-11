@@ -34,10 +34,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 
  /**
- * @description ${tableVo.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${tableVo.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 <#assign pidFieldName = "">
 <#list originalColumns as po>
@@ -70,7 +70,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 			${entityName?uncap_first}.set${pidFieldName?cap_first}("0");
 		}
 		QueryWrapper<${entityName}> queryWrapper = QueryGenerator.initQueryWrapper(${entityName?uncap_first}, req.getParameterMap());
-		Page<${entityName}> page = new Page<${entityName}>(pageNo, pageSize);
+		Page<${entityName}> page = new Page<>(pageNo, pageSize);
 		IPage<${entityName}> pageList = ${entityName?uncap_first}Service.page(page, queryWrapper);
 		return Result.ok(pageList);
 	}

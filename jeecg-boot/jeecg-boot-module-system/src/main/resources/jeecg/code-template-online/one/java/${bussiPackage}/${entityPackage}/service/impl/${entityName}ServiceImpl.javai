@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
- * @description ${tableVo.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${tableVo.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 @Service
 public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, ${entityName}> implements I${entityName}Service {

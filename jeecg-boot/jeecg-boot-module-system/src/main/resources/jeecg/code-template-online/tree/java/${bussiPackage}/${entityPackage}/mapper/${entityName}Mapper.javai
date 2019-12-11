@@ -4,10 +4,10 @@ import ${bussiPackage}.${entityPackage}.entity.${entityName};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @description ${tableVo.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${tableVo.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 public interface ${entityName}Mapper extends BaseMapper<${entityName}> {
 

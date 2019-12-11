@@ -15,10 +15,10 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecg.common.aspect.annotation.Dict;
 
 /**
- * @description ${tableVo.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${tableVo.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 @Data
 @TableName("${tableName}")
