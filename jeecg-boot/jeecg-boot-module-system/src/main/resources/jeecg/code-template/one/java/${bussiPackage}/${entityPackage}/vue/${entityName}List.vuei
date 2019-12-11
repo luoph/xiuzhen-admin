@@ -113,7 +113,7 @@ export default {
     components: {
         ${entityName}Modal
     },
-    data () {
+    data() {
         return {
             description: "${tableVo.ftlDescription}管理页面",
             // 表头
@@ -124,7 +124,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender:function (t, r, index) {
+                    customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -158,10 +158,9 @@ export default {
             <#noparse>return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;</#noparse>
         }
     },
-    methods: {
-    }
+    methods: {}
 }
 </script>
 <style scoped>
-    @import '~@assets/less/common.less'
+@import "~@assets/less/common.less";
 </style>
