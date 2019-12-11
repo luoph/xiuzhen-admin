@@ -58,8 +58,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @param req
 	 * @return
 	 */
-	@AutoLog(value = "${tableVo.ftlDescription}-分页列表查询")
-	@ApiOperation(value = "${tableVo.ftlDescription}-分页列表查询", notes = "${tableVo.ftlDescription}-分页列表查询")
+	@AutoLog(value = "${tableVo.ftlDescription}-列表查询")
+	@ApiOperation(value = "${tableVo.ftlDescription}-列表查询", notes = "${tableVo.ftlDescription}-列表查询")
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(${entityName} ${entityName?uncap_first},
 								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,

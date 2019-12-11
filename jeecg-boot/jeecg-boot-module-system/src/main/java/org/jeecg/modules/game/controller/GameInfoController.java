@@ -44,8 +44,8 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
      * @param req
      * @return
      */
-    @AutoLog(value = "游戏信息-分页列表查询")
-    @ApiOperation(value = "游戏信息-分页列表查询", notes = "游戏信息-分页列表查询")
+    @AutoLog(value = "游戏信息-列表查询")
+    @ApiOperation(value = "游戏信息-列表查询", notes = "游戏信息-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameInfo gameInfo,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
