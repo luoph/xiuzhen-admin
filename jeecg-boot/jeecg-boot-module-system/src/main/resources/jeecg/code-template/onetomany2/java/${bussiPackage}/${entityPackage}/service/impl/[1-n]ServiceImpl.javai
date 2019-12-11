@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author jeecg-boot
  * @version V1.0
  * @description ${subTab.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 @Service
 public class ${subTab.entityName}ServiceImpl extends ServiceImpl<${subTab.entityName}Mapper, ${subTab.entityName}> implements I${subTab.entityName}Service {

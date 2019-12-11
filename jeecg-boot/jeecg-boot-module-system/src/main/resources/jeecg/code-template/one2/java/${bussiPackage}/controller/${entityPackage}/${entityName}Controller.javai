@@ -40,7 +40,7 @@ import com.alibaba.fastjson.JSON;
  * @author jeecg-boot
  * @version V1.0
  * @description ${tableVo.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 @RestController
 @RequestMapping("/${entityPackage}/${entityName?uncap_first}")
