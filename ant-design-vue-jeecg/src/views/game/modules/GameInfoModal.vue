@@ -43,22 +43,22 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                name: { rules: [{ required: true, message: "请输入游戏名称!" }] },
+                name: { rules: [{ required: true, message: "请输入游戏名称!" }] }
             },
             url: {
                 add: "/game/gameInfo/add",
-                edit: "/game/gameInfo/edit",
-            },
+                edit: "/game/gameInfo/edit"
+            }
         };
     },
     created() {},
@@ -72,7 +72,7 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "remark"));
-                //时间格式化
+                // 时间格式化
             });
         },
         close() {
@@ -85,20 +85,20 @@ export default {
             this.form.validateFields((err, values) => {
                 if (!err) {
                     that.confirmLoading = true;
-                    let httpurl = "";
+                    let httpUrl = "";
                     let method = "";
                     if (!this.model.id) {
-                        httpurl += this.url.add;
+                        httpUrl += this.url.add;
                         method = "post";
                     } else {
-                        httpurl += this.url.edit;
+                        httpUrl += this.url.edit;
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-                    //时间格式化
+                    // 时间格式化
 
                     console.log(formData);
-                    httpAction(httpurl, formData, method)
+                    httpAction(httpUrl, formData, method)
                         .then(res => {
                             if (res.success) {
                                 that.$message.success(res.message);
@@ -116,8 +116,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

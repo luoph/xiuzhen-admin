@@ -49,22 +49,22 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                name: { rules: [{ required: true, message: "请输入渠道名称!" }] },
+                name: { rules: [{ required: true, message: "请输入渠道名称!" }] }
             },
             url: {
                 add: "/game/gameChannel/add",
-                edit: "/game/gameChannel/edit",
-            },
+                edit: "/game/gameChannel/edit"
+            }
         };
     },
     created() {},
@@ -122,8 +122,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -1,6 +1,6 @@
 {
     "printWidth": 180,
     "tabWidth": 4,
-    "prettier.trailingComma": "none",
+    "trailingComma": "none",
     "useTabs": false
 }

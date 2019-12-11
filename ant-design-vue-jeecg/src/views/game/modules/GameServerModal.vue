@@ -102,11 +102,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -120,12 +120,12 @@ export default {
                 dbHost: { rules: [{ required: true, message: "请输入数据库地址!" }] },
                 dbUser: { rules: [{ required: true, message: "请输入数据库帐号!" }] },
                 dbPassword: { rules: [{ required: true, message: "请输入数据库密码!" }] },
-                dbName: { rules: [{ required: true, message: "请输入数据库名称!" }] },
+                dbName: { rules: [{ required: true, message: "请输入数据库名称!" }] }
             },
             url: {
                 add: "/game/gameServer/add",
-                edit: "/game/gameServer/edit",
-            },
+                edit: "/game/gameServer/edit"
+            }
         };
     },
     created() {},
@@ -210,8 +210,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 
