@@ -1,30 +1,30 @@
 <template>
   <a-drawer
-      :title = "title"
-      :width = "800"
-      placement = "right"
-      :closable = "false"
-      @close = "close"
-      :visible = "visible"
+      :title="title"
+      :width="800"
+      placement="right"
+      :closable="false"
+      @close="close"
+      :visible="visible"
   >
 
-    <a-spin :spinning = "confirmLoading">
-      <a-form :form = "form">
+    <a-spin :spinning="confirmLoading">
+      <a-form :form="form">
       
 <#list columns as po><#rt/>
 <#if po.fieldName != 'id'><#rt/>
         <a-form-item
-          :labelCol = "labelCol"
-          :wrapperCol = "wrapperCol"
-          label = "${po.filedComment}">
-          <#if po.fieldType == 'date'>
-          <a-date-picker v-decorator = "[ '${po.fieldName}', <#if po.nullable == 'N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
-          <#elseif po.fieldType == 'datetime'>
-          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator = "[ '${po.fieldName}', <#if po.nullable == 'N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+          label="${po.filedComment}">
+          <#if po.fieldType=='date'>
+          <a-date-picker v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName}<#else>{}</#if>]" />
+          <#elseif po.fieldType=='datetime'>
+          <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName}<#else>{}</#if>]" />
           <#elseif "int,decimal,double,"?contains(po.fieldType)>
-          <a-input-number v-decorator = "[ '${po.fieldName}', <#if po.nullable == 'N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
+          <a-input-number v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName}<#else>{}</#if>]" />
           <#else>
-          <a-input placeholder = "请输入${po.filedComment}" v-decorator = "['${po.fieldName}', <#if po.nullable == 'N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
+          <a-input placeholder="请输入${po.filedComment}" v-decorator="['${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName}<#else>{}</#if>]" />
           </#if>
         </a-form-item>
 </#if>
@@ -32,8 +32,8 @@
 
       </a-form>
     </a-spin>
-    <a-button type = "primary" @click = "handleOk">确定</a-button>
-    <a-button type = "primary" @click = "handleCancel">取消</a-button>
+    <a-button type="primary" @click="handleOk">确定</a-button>
+    <a-button type="primary" @click="handleCancel">取消</a-button>
   </a-drawer>
 </template>
 
@@ -44,18 +44,18 @@
 
   export default {
     name: "${entityName}Modal",
-    data () {
+    data() {
       return {
         title:"操作",
         visible: false,
         model: {},
         labelCol: {
           xs: { span: 24 },
-          sm: { span: 5 },
+          sm: { span: 5 }
         },
         wrapperCol: {
           xs: { span: 24 },
-          sm: { span: 16 },
+          sm: { span: 16 }
         },
 
         confirmLoading: false,
@@ -63,7 +63,7 @@
         validatorRules:{
         <#list columns as po>
         <#if po.fieldName != 'id'>
-        <#if po.nullable == 'N'>
+        <#if po.nullable=='N'>
         ${po.fieldName}:{rules: [{ required: true, message: '请输入${po.filedComment}!' }]},
         </#if>
         </#if>
@@ -75,18 +75,18 @@
         },
       }
     },
-    created () {
+    created() {
     },
     methods: {
-      add () {
+      add() {
         this.edit({});
       },
-      edit (record) {
+      edit(record) {
         this.form.resetFields();
         this.model = Object.assign({}, record);
         this.visible = true;
         this.$nextTick(() => {
-          this.form.setFieldsValue(pick(this.model<#list columns as po><#if po.fieldName != 'id' && po.fieldType?index_of("date") == -1>,'${po.fieldName}'</#if></#list>))
+          this.form.setFieldsValue(pick(this.model<#list columns as po><#if po.fieldName != 'id' && po.fieldType?index_of("date")==-1>,'${po.fieldName}'</#if></#list>))
 		  //时间格式化
           <#list columns as po>
           <#if po.fieldName != 'id' && po.fieldType?index_of("date") != -1>
@@ -96,32 +96,32 @@
         });
 
       },
-      close () {
+      close() {
         this.$emit('close');
-        this.visible = false;
+        this.visible=false;
       },
-      handleOk () {
+      handleOk() {
         const that = this;
         // 触发表单验证
         this.form.validateFields((err, values) => {
           if (!err) {
-            that.confirmLoading = true;
+            that.confirmLoading=true;
             let httpUrl = '';
             let method = '';
             if (!this.model.id) {
               httpUrl += this.url.add;
               method = 'post';
             } else {
-               httpUrl+=this.url.edit;
+               httpUrl += this.url.edit;
                method = 'put';
             }
             let formData = Object.assign(this.model, values);
             //时间格式化
             <#list columns as po>
-            <#if po.fieldName != 'id' && po.fieldType == 'date'>
-            formData.${po.fieldName} = formData.${po.fieldName}?formData.${po.fieldName}.format():null;
-            <#elseif po.fieldName != 'id' && po.fieldType == 'datetime'>
-            formData.${po.fieldName} = formData.${po.fieldName}?formData.${po.fieldName}.format('YYYY-MM-DD HH:mm:ss'):null;
+            <#if po.fieldName!='id' && po.fieldType=='date'>
+            formData.${po.fieldName}=formData.${po.fieldName}?formData.${po.fieldName}.format():null;
+            <#elseif po.fieldName!='id'&&po.fieldType=='datetime'>
+            formData.${po.fieldName}=formData.${po.fieldName}?formData.${po.fieldName}.format('YYYY-MM-DD HH:mm:ss'):null;
             </#if>
             </#list>
 
@@ -134,22 +134,20 @@
                 that.$message.warning(res.message);
               }
             }).finally(() => {
-              that.confirmLoading = false;
+              that.confirmLoading=false;
               that.close();
             })
           }
         })
       },
-      handleCancel () {
+      handleCancel() {
         this.close()
-      },
-
-
+      }
     }
   }
 </script>
 
-<style lang = "less" scoped>
+<style lang="less" scoped>
 /** Button按钮间距 */
   .ant-btn {
     margin-left: 30px;

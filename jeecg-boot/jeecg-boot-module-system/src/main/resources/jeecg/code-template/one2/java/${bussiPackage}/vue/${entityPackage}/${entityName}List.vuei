@@ -161,9 +161,7 @@
       <#noparse>return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;</#noparse>
     }
   },
-    methods: {
-
-    }
+    methods: {}
   }
 </script>
 <style scoped>
