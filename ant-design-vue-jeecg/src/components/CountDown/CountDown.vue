@@ -14,16 +14,16 @@ export default {
     props: {
         format: {
             type: Function,
-            default: undefined,
+            default: undefined
         },
         target: {
             type: [Date, Number],
-            required: true,
+            required: true
         },
         onEnd: {
             type: Function,
-            default: () => {},
-        },
+            default: () => {}
+        }
     },
     data() {
         return {
@@ -31,7 +31,7 @@ export default {
             originTargetTime: 0,
             lastTime: 0,
             timer: 0,
-            interval: 1000,
+            interval: 1000
         };
     },
     filters: {
@@ -43,7 +43,7 @@ export default {
             const m = Math.floor((time - h * hours) / minutes);
             const s = Math.floor((time - h * hours - m * minutes) / 1000);
             return `${fixedZero(h)}:${fixedZero(m)}:${fixedZero(s)}`;
-        },
+        }
     },
     created() {
         this.initTime();
@@ -83,7 +83,7 @@ export default {
                     this.tick();
                 }
             }, this.interval);
-        },
+        }
     },
     beforeUpdate() {
         if (this.originTargetTime !== this.target) {
@@ -92,7 +92,7 @@ export default {
     },
     beforeDestroy() {
         clearTimeout(this.timer);
-    },
+    }
 };
 </script>
 

@@ -22,13 +22,13 @@ export default {
         disabled: Boolean,
         value: String,
         type: String,
-        options: Array,
+        options: Array
     },
     data() {
         return {
             dictOptions: [],
             tagType: "",
-            arrayValue: !this.value ? [] : this.value.split(","),
+            arrayValue: !this.value ? [] : this.value.split(",")
         };
     },
     created() {
@@ -50,7 +50,7 @@ export default {
             } else {
                 this.arrayValue = this.value.split(",");
             }
-        },
+        }
     },
     methods: {
         initDictData() {
@@ -73,11 +73,11 @@ export default {
         },
         getCurrentDictOptions() {
             return this.dictOptions;
-        },
+        }
     },
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>

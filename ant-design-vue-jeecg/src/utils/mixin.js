@@ -16,16 +16,16 @@ const mixin = {
             fixSiderbar: state => state.app.fixSiderbar,
             contentWidth: state => state.app.contentWidth,
             autoHideHeader: state => state.app.autoHideHeader,
-            sidebarOpened: state => state.app.sidebar.opened,
-        }),
-    },
+            sidebarOpened: state => state.app.sidebar.opened
+        })
+    }
 };
 
 const mixinDevice = {
     computed: {
         ...mapState({
-            device: state => state.app.device,
-        }),
+            device: state => state.app.device
+        })
     },
     methods: {
         isMobile() {
@@ -33,8 +33,8 @@ const mixinDevice = {
         },
         isDesktop() {
             return this.device === "desktop";
-        },
-    },
+        }
+    }
 };
 
 export { mixin, mixinDevice };

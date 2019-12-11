@@ -4,7 +4,7 @@ import { httpAction, getAction } from "@/api/manage";
 
 export const JEditableTableMixin = {
     components: {
-        JEditableTable,
+        JEditableTable
     },
     data() {
         return {
@@ -15,12 +15,12 @@ export const JEditableTableMixin = {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 6 },
+                sm: { span: 6 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 18 },
-            },
+                sm: { span: 18 }
+            }
         };
     },
     methods: {
@@ -164,6 +164,6 @@ export const JEditableTableMixin = {
         /** not a array */
         throwNotArray(name) {
             return `${name} 未定义或不是一个数组`;
-        },
-    },
+        }
+    }
 };

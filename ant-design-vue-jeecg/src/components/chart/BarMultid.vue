@@ -18,37 +18,37 @@ export default {
     props: {
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         dataSource: {
             type: Array,
             default: () => [
                 { type: "Jeecg", "Jan.": 18.9, "Feb.": 28.8, "Mar.": 39.3, "Apr.": 81.4, May: 47, "Jun.": 20.3, "Jul.": 24, "Aug.": 35.6 },
-                { type: "Jeebt", "Jan.": 12.4, "Feb.": 23.2, "Mar.": 34.5, "Apr.": 99.7, May: 52.6, "Jun.": 35.5, "Jul.": 37.4, "Aug.": 42.4 },
-            ],
+                { type: "Jeebt", "Jan.": 12.4, "Feb.": 23.2, "Mar.": 34.5, "Apr.": 99.7, May: 52.6, "Jun.": 35.5, "Jul.": 37.4, "Aug.": 42.4 }
+            ]
         },
         fields: {
             type: Array,
-            default: () => ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug."],
+            default: () => ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug."]
         },
         // 别名，需要的格式：[{field:'name',alias:'姓名'}, {field:'sex',alias:'性别'}]
         aliases: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         height: {
             type: Number,
-            default: 254,
-        },
+            default: 254
+        }
     },
     data() {
         return {
             adjust: [
                 {
                     type: "dodge",
-                    marginRatio: 1 / 32,
-                },
-            ],
+                    marginRatio: 1 / 32
+                }
+            ]
         };
     },
     computed: {
@@ -58,7 +58,7 @@ export default {
                 type: "fold",
                 fields: this.fields,
                 key: "x",
-                value: "y",
+                value: "y"
             });
 
             // bar 使用不了 - 和 / 所以替换下
@@ -78,8 +78,8 @@ export default {
                 }
             });
             return rows;
-        },
-    },
+        }
+    }
 };
 </script>
 

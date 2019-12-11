@@ -13,14 +13,14 @@ export default {
     props: {
         value: {
             type: String,
-            required: false,
+            required: false
         },
         length: {
             type: Number,
             required: false,
-            default: 25,
-        },
-    },
+            default: 25
+        }
+    }
 };
 </script>
 

@@ -41,7 +41,7 @@ export default {
             dataList: [],
             checkedKeys: [],
             checkedRows: [],
-            searchValue: "",
+            searchValue: ""
         };
     },
     created() {
@@ -59,8 +59,8 @@ export default {
                 } else {
                     this.checkedKeys = [];
                 }
-            },
-        },
+            }
+        }
     },
     methods: {
         show() {
@@ -194,7 +194,7 @@ export default {
             Object.assign(this, {
                 expandedKeys,
                 searchValue: value,
-                autoExpandParent: true,
+                autoExpandParent: true
             });
         },
         // 根据 checkedKeys 获取 rows
@@ -222,8 +222,8 @@ export default {
                 }
             }
             return rows;
-        },
-    },
+        }
+    }
 };
 </script>
 

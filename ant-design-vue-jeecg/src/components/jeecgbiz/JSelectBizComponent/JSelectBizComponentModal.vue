@@ -58,43 +58,43 @@ export default {
     props: {
         value: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         visible: {
             type: Boolean,
-            default: false,
+            default: false
         },
         valueKey: {
             type: String,
-            required: true,
+            required: true
         },
         multiple: {
             type: Boolean,
-            default: true,
+            default: true
         },
 
         name: {
             type: String,
-            default: "",
+            default: ""
         },
         listUrl: {
             type: String,
             required: true,
-            default: "",
+            default: ""
         },
         displayKey: {
             type: String,
-            default: null,
+            default: null
         },
         propColumns: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         // 查询条件文字
         queryParamText: {
             type: String,
-            default: null,
-        },
+            default: null
+        }
     },
     data() {
         return {
@@ -105,9 +105,9 @@ export default {
                 pagination: false,
                 scroll: { y: 240 },
                 columns: [this.propColumns[0], { title: "操作", dataIndex: "action", align: "center", width: 60, scopedSlots: { customRender: "action" } }],
-                dataSource: [],
+                dataSource: []
             },
-            url: { list: this.listUrl },
+            url: { list: this.listUrl }
         };
     },
     watch: {
@@ -115,7 +115,7 @@ export default {
             immediate: true,
             handler(val) {
                 this.valueWatchHandler(val);
-            },
+            }
         },
         dataSource: {
             deep: true,
@@ -123,15 +123,15 @@ export default {
                 let options = val.map(data => ({ label: data[this.displayKey || this.valueKey], value: data[this.valueKey] }));
                 this.$emit("ok", options);
                 this.valueWatchHandler(this.value);
-            },
+            }
         },
         selectionRows: {
             immediate: true,
             deep: true,
             handler(val) {
                 this.selectedTable.dataSource = val;
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -175,13 +175,13 @@ export default {
                         click: () => {
                             this.selectedRowKeys = [record.id];
                             this.selectedTable.dataSource = [record];
-                        },
-                    },
+                        }
+                    }
                 };
             }
             return {};
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less" scoped></style>

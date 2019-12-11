@@ -19,31 +19,31 @@ import "tinymce/plugins/textcolor";
 import "tinymce/plugins/fullscreen";
 export default {
     components: {
-        Editor,
+        Editor
     },
     props: {
         value: {
             type: String,
-            required: false,
+            required: false
         },
         triggerChange: {
             type: Boolean,
             default: false,
-            required: false,
+            required: false
         },
         disabled: {
             type: Boolean,
-            default: false,
+            default: false
         },
         plugins: {
             type: [String, Array],
-            default: "lists image media table textcolor wordcount contextmenu fullscreen",
+            default: "lists image media table textcolor wordcount contextmenu fullscreen"
         },
         toolbar: {
             type: [String, Array],
             default:
-                "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat | fullscreen",
-        },
+                "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat | fullscreen"
+        }
     },
     data() {
         return {
@@ -61,9 +61,9 @@ export default {
                 images_upload_handler: (blobInfo, success) => {
                     const img = "data:image/jpeg;base64," + blobInfo.base64();
                     success(img);
-                },
+                }
             },
-            myValue: this.value,
+            myValue: this.value
         };
     },
     mounted() {
@@ -76,7 +76,7 @@ export default {
         //可以添加一些自己的自定义事件，如清空内容
         clear() {
             this.myValue = "";
-        },
+        }
     },
     watch: {
         value(newValue) {
@@ -88,8 +88,8 @@ export default {
             } else {
                 this.$emit("input", newValue);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped></style>

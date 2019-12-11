@@ -19,7 +19,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         dataSource: {
             type: Array,
@@ -35,22 +35,22 @@ export default {
                 { type: "Sep", jeecg: 23.3, jeebt: 14.2 },
                 { type: "Oct", jeecg: 18.3, jeebt: 10.3 },
                 { type: "Nov", jeecg: 13.9, jeebt: 6.6 },
-                { type: "Dec", jeecg: 9.6, jeebt: 4.8 },
-            ],
+                { type: "Dec", jeecg: 9.6, jeebt: 4.8 }
+            ]
         },
         fields: {
             type: Array,
-            default: () => ["jeecg", "jeebt"],
+            default: () => ["jeecg", "jeebt"]
         },
         // 别名，需要的格式：[{field:'name',alias:'姓名'}, {field:'sex',alias:'性别'}]
         aliases: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         height: {
             type: Number,
-            default: 254,
-        },
+            default: 254
+        }
     },
     data() {
         return {
@@ -58,10 +58,10 @@ export default {
                 {
                     dataKey: "x",
                     min: 0,
-                    max: 1,
-                },
+                    max: 1
+                }
             ],
-            style: { stroke: "#fff", lineWidth: 1 },
+            style: { stroke: "#fff", lineWidth: 1 }
         };
     },
     computed: {
@@ -71,7 +71,7 @@ export default {
                 type: "fold",
                 fields: this.fields,
                 key: "x",
-                value: "y",
+                value: "y"
             });
             let rows = dv.rows;
             // 替换别名
@@ -84,8 +84,8 @@ export default {
                 }
             });
             return rows;
-        },
-    },
+        }
+    }
 };
 </script>
 

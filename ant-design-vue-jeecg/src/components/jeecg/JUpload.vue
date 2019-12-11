@@ -38,48 +38,48 @@ export default {
             uploadAction: window._CONFIG["domainURL"] + "/sys/common/upload",
             urlDownload: window._CONFIG["domainURL"] + "/sys/common/download/",
             headers: {},
-            fileList: [],
+            fileList: []
         };
     },
     props: {
         text: {
             type: String,
             required: false,
-            default: "点击上传",
+            default: "点击上传"
         },
         fileType: {
             type: String,
             required: false,
-            default: FILE_TYPE_ALL,
+            default: FILE_TYPE_ALL
         },
         /*这个属性用于控制文件上传的业务路径*/
         bizPath: {
             type: String,
             required: false,
-            default: "temp",
+            default: "temp"
         },
         value: {
             type: String,
-            required: false,
+            required: false
         },
         // update-begin- --- author:wangshuai ------ date:20190929 ---- for:Jupload组件增加是否能够点击
         disabled: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         // update-end- --- author:wangshuai ------ date:20190929 ---- for:Jupload组件增加是否能够点击
         //此属性被废弃了
         triggerChange: {
             type: Boolean,
             required: false,
-            default: false,
-        },
+            default: false
+        }
     },
     watch: {
         value(val) {
             this.initFileList(val);
-        },
+        }
     },
     created() {
         const token = Vue.ls.get(ACCESS_TOKEN);
@@ -105,8 +105,8 @@ export default {
                     url: this.urlDownload + arr[a],
                     response: {
                         status: "history",
-                        message: arr[a],
-                    },
+                        message: arr[a]
+                    }
                 });
             }
             this.fileList = fileList;
@@ -169,12 +169,12 @@ export default {
         handleDelete(file) {
             //如有需要新增 删除逻辑
             console.log(file);
-        },
+        }
     },
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>
 

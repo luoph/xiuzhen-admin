@@ -16,7 +16,7 @@ export default {
     name: "PageContent",
     components: {
         RouteView,
-        PageLayout,
+        PageLayout
     },
     data() {
         return {
@@ -25,7 +25,7 @@ export default {
             linkList: [],
             extraImage: "",
             search: false,
-            tabs: {},
+            tabs: {}
         };
     },
     mounted() {
@@ -37,7 +37,7 @@ export default {
     computed: {
         getTitle() {
             return this.$route.meta.title;
-        },
+        }
     },
     methods: {
         getPageHeaderInfo() {
@@ -53,8 +53,8 @@ export default {
                 this.search = content.search == true ? true : false;
                 this.tabs = content.tabs;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

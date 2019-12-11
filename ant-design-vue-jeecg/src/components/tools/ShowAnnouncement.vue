@@ -21,24 +21,24 @@ export default {
             record: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             visible: false,
             loading: false,
             bodyStyle: {
                 padding: "0",
                 height: window.innerHeight * 0.8 + "px",
-                "overflow-y": "auto",
+                "overflow-y": "auto"
             },
             modelStyle: {
                 width: "60%",
                 style: { top: "20px" },
-                fullScreen: false,
-            },
+                fullScreen: false
+            }
         };
     },
     created() {},
@@ -61,8 +61,8 @@ export default {
                 this.modelStyle.style.top = "50px";
             }
             this.modelStyle.fullScreen = mode;
-        },
-    },
+        }
+    }
 };
 </script>
 

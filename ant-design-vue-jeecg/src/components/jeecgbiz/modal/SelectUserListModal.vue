@@ -29,7 +29,7 @@ export default {
             confirmLoading: false,
             url: {
                 add: "/act/model/create",
-                list: "/sys/user/list",
+                list: "/sys/user/list"
             },
             columns: [
                 {
@@ -37,34 +37,34 @@ export default {
                     align: "center",
                     dataIndex: "username",
                     fixed: "left",
-                    width: 200,
+                    width: 200
                 },
                 {
                     title: "用户真实姓名",
                     align: "center",
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "性别",
                     align: "center",
-                    dataIndex: "sex_dictText",
+                    dataIndex: "sex_dictText"
                 },
                 {
                     title: "手机号码",
                     align: "center",
-                    dataIndex: "phone",
+                    dataIndex: "phone"
                 },
                 {
                     title: "邮箱",
                     align: "center",
-                    dataIndex: "email",
+                    dataIndex: "email"
                 },
                 {
                     title: "状态",
                     align: "center",
-                    dataIndex: "status_dictText",
-                },
-            ],
+                    dataIndex: "status_dictText"
+                }
+            ]
         };
     },
     created() {
@@ -105,8 +105,8 @@ export default {
         handleSubmit() {
             this.$emit("ok", this.selectionRows);
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -22,12 +22,12 @@ export default {
         tabs: {
             type: Array,
             default: null,
-            required: true,
-        },
+            required: true
+        }
     },
     data() {
         return {
-            loadding: false,
+            loadding: false
         };
     },
     methods: {
@@ -40,8 +40,8 @@ export default {
             setTimeout(() => {
                 this.loadding = false;
             }, 2000);
-        },
-    },
+        }
+    }
 };
 </script>
 

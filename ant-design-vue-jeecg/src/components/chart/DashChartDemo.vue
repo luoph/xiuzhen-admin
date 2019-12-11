@@ -21,7 +21,7 @@ registerShape("point", "pointer", {
         point = this.parsePoint(point);
         const center = this.parsePoint({
             x: 0,
-            y: 0,
+            y: 0
         });
         container.addShape("line", {
             attrs: {
@@ -31,8 +31,8 @@ registerShape("point", "pointer", {
                 y2: point.y + 15,
                 stroke: cfg.color,
                 lineWidth: 5,
-                lineCap: "round",
-            },
+                lineCap: "round"
+            }
         });
         return container.addShape("circle", {
             attrs: {
@@ -41,10 +41,10 @@ registerShape("point", "pointer", {
                 r: 9.75,
                 stroke: cfg.color,
                 lineWidth: 4.5,
-                fill: "#fff",
-            },
+                fill: "#fff"
+            }
         });
-    },
+    }
 });
 
 const scale = [
@@ -53,8 +53,8 @@ const scale = [
         min: 0,
         max: 9,
         tickInterval: 1,
-        nice: false,
-    },
+        nice: false
+    }
 ];
 
 const data = [{ value: 0 }];
@@ -64,12 +64,12 @@ export default {
     props: {
         datasource: {
             type: Number,
-            default: 0,
+            default: 0
         },
         title: {
             type: String,
-            default: "",
-        },
+            default: ""
+        }
     },
     created() {
         if (!this.datasource) {
@@ -83,7 +83,7 @@ export default {
         datasource: function(val) {
             this.chartData = [{ value: val }];
             this.getChartData();
-        },
+        }
     },
     methods: {
         getChartData() {
@@ -107,7 +107,7 @@ export default {
         },
         getArcGuide2End() {
             return [this.chartData[0].value, 0.945];
-        },
+        }
     },
     data() {
         return {
@@ -120,29 +120,29 @@ export default {
                 textStyle: {
                     fontSize: 18,
                     textAlign: "center",
-                    textBaseline: "middle",
-                },
+                    textBaseline: "middle"
+                }
             },
             axisSubTickLine: {
                 length: -8,
                 stroke: "#fff",
-                strokeOpacity: 1,
+                strokeOpacity: 1
             },
             axisTickLine: {
                 length: -17,
                 stroke: "#fff",
-                strokeOpacity: 1,
+                strokeOpacity: 1
             },
             arcGuide1Start: [0, 0.945],
             arcGuide1End: [9, 0.945],
             arcGuide1Style: {
                 stroke: "#CBCBCB",
-                lineWidth: 18,
+                lineWidth: 18
             },
             arcGuide2Start: [0, 0.945],
             arcGuide2Style: {
                 stroke: "#1890FF",
-                lineWidth: 18,
+                lineWidth: 18
             },
             htmlGuidePosition: ["50%", "100%"],
             htmlGuideHtml: `
@@ -150,8 +150,8 @@ export default {
           <p style="font-size: 14px;color: #545454;margin: 0;">${this.title}</p>
           <p style="font-size: 36px;color: #545454;margin: 0;">${this.abcd}%</p>
         </div>
-      `,
+      `
         };
-    },
+    }
 };
 </script>

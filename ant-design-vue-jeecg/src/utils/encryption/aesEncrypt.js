@@ -26,7 +26,7 @@ export function encryption(word, keyStr, ivStr) {
     var encrypted = CryptoJS.AES.encrypt(srcs, key, {
         iv: iv,
         mode: CryptoJS.mode.CBC,
-        padding: CryptoJS.pad.ZeroPadding,
+        padding: CryptoJS.pad.ZeroPadding
     });
     // console.log("-=-=-=-", encrypted.ciphertext)
     return CryptoJS.enc.Base64.stringify(encrypted.ciphertext);
@@ -182,7 +182,7 @@ var CryptoJS =
                  */
                 clone: function() {
                     return this.init.prototype.extend(this);
-                },
+                }
             };
         })());
 
@@ -344,7 +344,7 @@ var CryptoJS =
                 }
 
                 return new WordArray.init(words, nBytes);
-            },
+            }
         }));
 
         /**
@@ -409,7 +409,7 @@ var CryptoJS =
                 }
 
                 return new WordArray.init(words, hexStrLength / 2);
-            },
+            }
         });
 
         /**
@@ -468,7 +468,7 @@ var CryptoJS =
                 }
 
                 return new WordArray.init(words, latin1StrLength);
-            },
+            }
         });
 
         /**
@@ -511,7 +511,7 @@ var CryptoJS =
              */
             parse: function(utf8Str) {
                 return Latin1.parse(unescape(encodeURIComponent(utf8Str)));
-            },
+            }
         });
 
         /**
@@ -627,7 +627,7 @@ var CryptoJS =
                 return clone;
             },
 
-            _minBufferSize: 0,
+            _minBufferSize: 0
         }));
 
         /**
@@ -760,7 +760,7 @@ var CryptoJS =
                 return function(message, key) {
                     return new C_algo.HMAC.init(hasher, key).finalize(message);
                 };
-            },
+            }
         }));
 
         /**
@@ -868,7 +868,7 @@ var CryptoJS =
             return parseLoop(base64Str, base64StrLength, reverseMap);
         },
 
-        _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+        _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
     });
 
     function parseLoop(base64Str, base64StrLength, reverseMap) {
@@ -1068,7 +1068,7 @@ var CryptoJS =
             clone._hash = this._hash.clone();
 
             return clone;
-        },
+        }
     }));
 
     function FF(a, b, c, d, x, s, t) {
@@ -1215,7 +1215,7 @@ var CryptoJS =
             clone._hash = this._hash.clone();
 
             return clone;
-        },
+        }
     }));
 
     /**
@@ -1391,7 +1391,7 @@ var CryptoJS =
             clone._hash = this._hash.clone();
 
             return clone;
-        },
+        }
     }));
 
     /**
@@ -1490,7 +1490,7 @@ var CryptoJS =
             }
 
             return WordArray.create(words, utf16StrLength * 2);
-        },
+        }
     });
 
     /**
@@ -1549,7 +1549,7 @@ var CryptoJS =
             }
 
             return WordArray.create(words, utf16StrLength * 2);
-        },
+        }
     };
 
     function swapEndian(word) {
@@ -1714,7 +1714,7 @@ var CryptoJS =
         11,
         6,
         15,
-        13,
+        13
     ]);
     var _zr = WordArray.create([
         5,
@@ -1796,7 +1796,7 @@ var CryptoJS =
         0,
         3,
         9,
-        11,
+        11
     ]);
     var _sl = WordArray.create([
         11,
@@ -1878,7 +1878,7 @@ var CryptoJS =
         11,
         8,
         5,
-        6,
+        6
     ]);
     var _sr = WordArray.create([
         8,
@@ -1960,7 +1960,7 @@ var CryptoJS =
         15,
         13,
         11,
-        11,
+        11
     ]);
 
     var _hl = WordArray.create([0x00000000, 0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xa953fd4e]);
@@ -2096,7 +2096,7 @@ var CryptoJS =
             clone._hash = this._hash.clone();
 
             return clone;
-        },
+        }
     }));
 
     function f1(x, y, z) {
@@ -2278,7 +2278,7 @@ var CryptoJS =
             var hmac = hasher.finalize(this._oKey.clone().concat(innerHash));
 
             return hmac;
-        },
+        }
     }));
 })();
 
@@ -2306,7 +2306,7 @@ var CryptoJS =
         cfg: Base.extend({
             keySize: 128 / 32,
             hasher: SHA1,
-            iterations: 1,
+            iterations: 1
         }),
 
         /**
@@ -2383,7 +2383,7 @@ var CryptoJS =
             derivedKey.sigBytes = keySize * 4;
 
             return derivedKey;
-        },
+        }
     }));
 
     /**
@@ -2432,7 +2432,7 @@ var CryptoJS =
         cfg: Base.extend({
             keySize: 128 / 32,
             hasher: MD5,
-            iterations: 1,
+            iterations: 1
         }),
 
         /**
@@ -2496,7 +2496,7 @@ var CryptoJS =
             derivedKey.sigBytes = keySize * 4;
 
             return derivedKey;
-        },
+        }
     }));
 
     /**
@@ -2543,7 +2543,7 @@ var CryptoJS =
             hash.sigBytes -= 4;
 
             return hash;
-        },
+        }
     }));
 
     /**
@@ -2608,7 +2608,7 @@ var CryptoJS =
         init: function(high, low) {
             this.high = high;
             this.low = low;
-        },
+        }
 
         /**
          * Bitwise NOTs this word.
@@ -2860,7 +2860,7 @@ var CryptoJS =
             }
 
             return clone;
-        },
+        }
     }));
 })();
 
@@ -2950,7 +2950,7 @@ var CryptoJS =
          *   Default: 512
          */
         cfg: Hasher.cfg.extend({
-            outputLength: 512,
+            outputLength: 512
         }),
 
         _doReset: function() {
@@ -3122,7 +3122,7 @@ var CryptoJS =
             }
 
             return clone;
-        },
+        }
     }));
 
     /**
@@ -3253,7 +3253,7 @@ var CryptoJS =
         X64Word_create(0x4cc5d4be, 0xcb3e42b6),
         X64Word_create(0x597f299c, 0xfc657e2a),
         X64Word_create(0x5fcb6fab, 0x3ad6faec),
-        X64Word_create(0x6c44198c, 0x4a475817),
+        X64Word_create(0x6c44198c, 0x4a475817)
     ];
 
     // Reusable objects
@@ -3277,7 +3277,7 @@ var CryptoJS =
                 new X64Word.init(0x510e527f, 0xade682d1),
                 new X64Word.init(0x9b05688c, 0x2b3e6c1f),
                 new X64Word.init(0x1f83d9ab, 0xfb41bd6b),
-                new X64Word.init(0x5be0cd19, 0x137e2179),
+                new X64Word.init(0x5be0cd19, 0x137e2179)
             ]);
         },
 
@@ -3470,7 +3470,7 @@ var CryptoJS =
             return clone;
         },
 
-        blockSize: 1024 / 32,
+        blockSize: 1024 / 32
     }));
 
     /**
@@ -3528,7 +3528,7 @@ var CryptoJS =
                 new X64Word.init(0x67332667, 0xffc00b31),
                 new X64Word.init(0x8eb44a87, 0x68581511),
                 new X64Word.init(0xdb0c2e0d, 0x64f98fa7),
-                new X64Word.init(0x47b5481d, 0xbefa4fa4),
+                new X64Word.init(0x47b5481d, 0xbefa4fa4)
             ]);
         },
 
@@ -3538,7 +3538,7 @@ var CryptoJS =
             hash.sigBytes -= 16;
 
             return hash;
-        },
+        }
     }));
 
     /**
@@ -3765,10 +3765,10 @@ CryptoJS.lib.Cipher ||
 
                         decrypt: function(cipherText, key, cfg) {
                             return selectCipherStrategy(key).decrypt(cipher, cipherText, key, cfg);
-                        },
+                        }
                     };
                 };
-            })(),
+            })()
         }));
 
         /**
@@ -3784,7 +3784,7 @@ CryptoJS.lib.Cipher ||
                 return finalProcessedBlocks;
             },
 
-            blockSize: 1,
+            blockSize: 1
         }));
 
         /**
@@ -3841,7 +3841,7 @@ CryptoJS.lib.Cipher ||
             init: function(cipher, iv) {
                 this._cipher = cipher;
                 this._iv = iv;
-            },
+            }
         }));
 
         /**
@@ -3878,7 +3878,7 @@ CryptoJS.lib.Cipher ||
 
                     // Remember this block to use with next block
                     this._prevBlock = words.slice(offset, offset + blockSize);
-                },
+                }
             });
 
             /**
@@ -3909,7 +3909,7 @@ CryptoJS.lib.Cipher ||
 
                     // This block becomes the previous block
                     this._prevBlock = thisBlock;
-                },
+                }
             });
 
             function xorBlock(words, offset, blockSize) {
@@ -3994,7 +3994,7 @@ CryptoJS.lib.Cipher ||
 
                 // Remove padding
                 data.sigBytes -= nPaddingBytes;
-            },
+            }
         });
 
         /**
@@ -4011,7 +4011,7 @@ CryptoJS.lib.Cipher ||
              */
             cfg: Cipher.cfg.extend({
                 mode: CBC,
-                padding: Pkcs7,
+                padding: Pkcs7
             }),
 
             reset: function() {
@@ -4066,7 +4066,7 @@ CryptoJS.lib.Cipher ||
                 return finalProcessedBlocks;
             },
 
-            blockSize: 128 / 32,
+            blockSize: 128 / 32
         }));
 
         /**
@@ -4123,7 +4123,7 @@ CryptoJS.lib.Cipher ||
              */
             toString: function(formatter) {
                 return (formatter || this.formatter).stringify(this);
-            },
+            }
         }));
 
         /**
@@ -4196,7 +4196,7 @@ CryptoJS.lib.Cipher ||
                 }
 
                 return CipherParams.create({ ciphertext: ciphertext, salt: salt });
-            },
+            }
         });
 
         /**
@@ -4209,7 +4209,7 @@ CryptoJS.lib.Cipher ||
              * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string. Default: OpenSSL
              */
             cfg: Base.extend({
-                format: OpenSSLFormatter,
+                format: OpenSSLFormatter
             }),
 
             /**
@@ -4250,7 +4250,7 @@ CryptoJS.lib.Cipher ||
                     mode: cipherCfg.mode,
                     padding: cipherCfg.padding,
                     blockSize: cipher.blockSize,
-                    formatter: cfg.format,
+                    formatter: cfg.format
                 });
             },
 
@@ -4305,7 +4305,7 @@ CryptoJS.lib.Cipher ||
                 } else {
                     return ciphertext;
                 }
-            },
+            }
         }));
 
         /**
@@ -4349,7 +4349,7 @@ CryptoJS.lib.Cipher ||
 
                 // Return params
                 return CipherParams.create({ key: key, iv: iv, salt: salt });
-            },
+            }
         });
 
         /**
@@ -4363,7 +4363,7 @@ CryptoJS.lib.Cipher ||
              * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password. Default: OpenSSL
              */
             cfg: SerializableCipher.cfg.extend({
-                kdf: OpenSSLKdf,
+                kdf: OpenSSLKdf
             }),
 
             /**
@@ -4436,7 +4436,7 @@ CryptoJS.lib.Cipher ||
                 var plaintext = SerializableCipher.decrypt.call(this, cipher, ciphertext, derivedParams.key, cfg);
 
                 return plaintext;
-            },
+            }
         }));
     })();
 
@@ -4456,7 +4456,7 @@ CryptoJS.mode.CFB = (function() {
 
             // Remember this block to use with next block
             this._prevBlock = words.slice(offset, offset + blockSize);
-        },
+        }
     });
 
     CFB.Decryptor = CFB.extend({
@@ -4472,7 +4472,7 @@ CryptoJS.mode.CFB = (function() {
 
             // This block becomes the previous block
             this._prevBlock = thisBlock;
-        },
+        }
     });
 
     function generateKeystreamAndEncrypt(words, offset, blockSize, cipher) {
@@ -4508,13 +4508,13 @@ CryptoJS.mode.ECB = (function() {
     ECB.Encryptor = ECB.extend({
         processBlock: function(words, offset) {
             this._cipher.encryptBlock(words, offset);
-        },
+        }
     });
 
     ECB.Decryptor = ECB.extend({
         processBlock: function(words, offset) {
             this._cipher.decryptBlock(words, offset);
-        },
+        }
     });
 
     return ECB;
@@ -4547,7 +4547,7 @@ CryptoJS.pad.AnsiX923 = {
 
         // Remove padding
         data.sigBytes -= nPaddingBytes;
-    },
+    }
 };
 
 /**
@@ -4571,7 +4571,7 @@ CryptoJS.pad.Iso10126 = {
 
         // Remove padding
         data.sigBytes -= nPaddingBytes;
-    },
+    }
 };
 
 /**
@@ -4592,7 +4592,7 @@ CryptoJS.pad.Iso97971 = {
 
         // Remove one more byte -- the 0x80 byte
         data.sigBytes--;
-    },
+    }
 };
 
 /**
@@ -4622,7 +4622,7 @@ CryptoJS.mode.OFB = (function() {
             for (var i = 0; i < blockSize; i++) {
                 words[offset + i] ^= keystream[i];
             }
-        },
+        }
     }));
 
     OFB.Decryptor = Encryptor;
@@ -4636,7 +4636,7 @@ CryptoJS.mode.OFB = (function() {
 CryptoJS.pad.NoPadding = {
     pad: function() {},
 
-    unpad: function() {},
+    unpad: function() {}
 };
 
 (function(undefined) {
@@ -4682,7 +4682,7 @@ CryptoJS.pad.NoPadding = {
         parse: function(input) {
             var ciphertext = Hex.parse(input);
             return CipherParams.create({ ciphertext: ciphertext });
-        },
+        }
     });
 })();
 
@@ -4885,7 +4885,7 @@ CryptoJS.pad.NoPadding = {
             M[offset + 3] = t3;
         },
 
-        keySize: 256 / 32,
+        keySize: 256 / 32
     }));
 
     /**
@@ -4964,7 +4964,7 @@ CryptoJS.pad.NoPadding = {
         28,
         20,
         12,
-        4,
+        4
     ];
 
     // Permuted Choice 2 constants
@@ -5016,7 +5016,7 @@ CryptoJS.pad.NoPadding = {
         50,
         36,
         29,
-        32,
+        32
     ];
 
     // Cumulative bit shift constants
@@ -5088,7 +5088,7 @@ CryptoJS.pad.NoPadding = {
             0xc8000001: 0x800200,
             0xd8000001: 0x0,
             0xe8000001: 0x8200,
-            0xf8000001: 0x808002,
+            0xf8000001: 0x808002
         },
         {
             0x0: 0x40084010,
@@ -5154,7 +5154,7 @@ CryptoJS.pad.NoPadding = {
             0x1c800000: 0x0,
             0x1d800000: 0x4010,
             0x1e800000: 0x40080010,
-            0x1f800000: 0x84000,
+            0x1f800000: 0x84000
         },
         {
             0x0: 0x104,
@@ -5220,7 +5220,7 @@ CryptoJS.pad.NoPadding = {
             0x1c80000: 0x4000104,
             0x1d80000: 0x4010000,
             0x1e80000: 0x4,
-            0x1f80000: 0x10100,
+            0x1f80000: 0x10100
         },
         {
             0x0: 0x80401000,
@@ -5286,7 +5286,7 @@ CryptoJS.pad.NoPadding = {
             0x1c8000: 0x1040,
             0x1d8000: 0x80401000,
             0x1e8000: 0x400000,
-            0x1f8000: 0x401040,
+            0x1f8000: 0x401040
         },
         {
             0x0: 0x80,
@@ -5352,7 +5352,7 @@ CryptoJS.pad.NoPadding = {
             0x1c800: 0x1000080,
             0x1d800: 0x40000,
             0x1e800: 0x20040000,
-            0x1f800: 0x20000080,
+            0x1f800: 0x20000080
         },
         {
             0x0: 0x10000008,
@@ -5418,7 +5418,7 @@ CryptoJS.pad.NoPadding = {
             0x1c80: 0x200008,
             0x1d80: 0x0,
             0x1e80: 0x10000000,
-            0x1f80: 0x10002008,
+            0x1f80: 0x10002008
         },
         {
             0x0: 0x100000,
@@ -5484,7 +5484,7 @@ CryptoJS.pad.NoPadding = {
             0x1c8: 0x100401,
             0x1d8: 0x400,
             0x1e8: 0x2000400,
-            0x1f8: 0x100001,
+            0x1f8: 0x100001
         },
         {
             0x0: 0x8000820,
@@ -5550,8 +5550,8 @@ CryptoJS.pad.NoPadding = {
             0x8000001c: 0x20800,
             0x8000001d: 0x820,
             0x8000001e: 0x20020,
-            0x8000001f: 0x8020800,
-        },
+            0x8000001f: 0x8020800
+        }
     ];
 
     // Masks that select the SBOX input
@@ -5665,7 +5665,7 @@ CryptoJS.pad.NoPadding = {
 
         ivSize: 64 / 32,
 
-        blockSize: 64 / 32,
+        blockSize: 64 / 32
     }));
 
     // Swap bits across the left and right words
@@ -5722,7 +5722,7 @@ CryptoJS.pad.NoPadding = {
 
         ivSize: 64 / 32,
 
-        blockSize: 64 / 32,
+        blockSize: 64 / 32
     }));
 
     /**
@@ -5782,7 +5782,7 @@ CryptoJS.pad.NoPadding = {
 
         keySize: 256 / 32,
 
-        ivSize: 0,
+        ivSize: 0
     }));
 
     function generateKeystreamWord() {
@@ -5832,7 +5832,7 @@ CryptoJS.pad.NoPadding = {
          * @property {number} drop The number of keystream words to drop. Default 192
          */
         cfg: RC4.cfg.extend({
-            drop: 192,
+            drop: 192
         }),
 
         _doReset: function() {
@@ -5842,7 +5842,7 @@ CryptoJS.pad.NoPadding = {
             for (var i = this.cfg.drop; i > 0; i--) {
                 generateKeystreamWord.call(this);
             }
-        },
+        }
     }));
 
     /**
@@ -5931,7 +5931,7 @@ CryptoJS.mode.CTRGladman = (function() {
             for (var i = 0; i < blockSize; i++) {
                 words[offset + i] ^= keystream[i];
             }
-        },
+        }
     }));
 
     CTRGladman.Decryptor = Encryptor;
@@ -5977,7 +5977,7 @@ CryptoJS.mode.CTRGladman = (function() {
                 (K[0] << 16) | (K[0] >>> 16),
                 (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
                 (K[1] << 16) | (K[1] >>> 16),
-                (K[3] & 0xffff0000) | (K[0] & 0x0000ffff),
+                (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
             ]);
 
             // Carry bit
@@ -6047,7 +6047,7 @@ CryptoJS.mode.CTRGladman = (function() {
 
         blockSize: 128 / 32,
 
-        ivSize: 64 / 32,
+        ivSize: 64 / 32
     }));
 
     function nextState() {
@@ -6140,7 +6140,7 @@ CryptoJS.mode.CTR = (function() {
             for (var i = 0; i < blockSize; i++) {
                 words[offset + i] ^= keystream[i];
             }
-        },
+        }
     }));
 
     CTR.Decryptor = Encryptor;
@@ -6185,7 +6185,7 @@ CryptoJS.mode.CTR = (function() {
                 (K[0] << 16) | (K[0] >>> 16),
                 (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
                 (K[1] << 16) | (K[1] >>> 16),
-                (K[3] & 0xffff0000) | (K[0] & 0x0000ffff),
+                (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
             ]);
 
             // Carry bit
@@ -6255,7 +6255,7 @@ CryptoJS.mode.CTR = (function() {
 
         blockSize: 128 / 32,
 
-        ivSize: 64 / 32,
+        ivSize: 64 / 32
     }));
 
     function nextState() {
@@ -6340,5 +6340,5 @@ CryptoJS.pad.ZeroPadding = {
             i--;
         }
         data.sigBytes = i + 1;
-    },
+    }
 };

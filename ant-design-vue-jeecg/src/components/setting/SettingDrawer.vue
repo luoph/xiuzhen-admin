@@ -164,14 +164,14 @@ import { triggerWindowResizeEvent } from "@/utils/util";
 export default {
     components: {
         DetailList,
-        SettingItem,
+        SettingItem
     },
     mixins: [mixin, mixinDevice],
     data() {
         return {
             visible: true,
             colorList,
-            dataFixSiderbar: false,
+            dataFixSiderbar: false
         };
     },
     watch: {},
@@ -239,8 +239,8 @@ export default {
             }
             this.dataFixSiderbar = fixed;
             this.$store.dispatch("ToggleFixSiderbar", fixed);
-        },
-    },
+        }
+    }
 };
 </script>
 

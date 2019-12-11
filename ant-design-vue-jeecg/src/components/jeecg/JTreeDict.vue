@@ -26,66 +26,66 @@ export default {
             treeValue: "",
             url_root: "/sys/category/loadTreeRoot",
             url_children: "/sys/category/loadTreeChildren",
-            url_view: "/sys/category/loadOne",
+            url_view: "/sys/category/loadOne"
         };
     },
     props: {
         value: {
             type: String,
-            required: false,
+            required: false
         },
         placeholder: {
             type: String,
             default: "请选择",
-            required: false,
+            required: false
         },
         parentCode: {
             type: String,
             default: "",
-            required: false,
+            required: false
         },
         field: {
             type: String,
             default: "id",
-            required: false,
+            required: false
         },
         root: {
             type: Object,
             required: false,
             default: () => {
                 return {
-                    pid: "0",
+                    pid: "0"
                 };
-            },
+            }
         },
         async: {
             type: Boolean,
             default: false,
-            required: false,
+            required: false
         },
         disabled: {
             type: Boolean,
             default: false,
-            required: false,
-        },
+            required: false
+        }
     },
     watch: {
         root: {
             handler(val) {
                 console.log("root-change", val);
             },
-            deep: true,
+            deep: true
         },
         parentCode: {
             handler() {
                 this.loadRoot();
-            },
+            }
         },
         value: {
             handler() {
                 this.loadViewInfo();
-            },
-        },
+            }
+        }
     },
     created() {
         this.loadRoot();
@@ -93,7 +93,7 @@ export default {
     },
     model: {
         prop: "value",
-        event: "change",
+        event: "change"
     },
     methods: {
         loadViewInfo() {
@@ -102,13 +102,13 @@ export default {
             } else {
                 let param = {
                     field: this.field,
-                    val: this.value,
+                    val: this.value
                 };
                 getAction(this.url_view, param).then(res => {
                     if (res.success) {
                         this.treeValue = {
                             value: this.value,
-                            label: res.result.name,
+                            label: res.result.name
                         };
                     }
                 });
@@ -117,7 +117,7 @@ export default {
         loadRoot() {
             let param = {
                 async: this.async,
-                pcode: this.parentCode,
+                pcode: this.parentCode
             };
             getAction(this.url_root, param).then(res => {
                 if (res.success) {
@@ -141,7 +141,7 @@ export default {
                 }
                 let pid = treeNode.$vnode.key;
                 let param = {
-                    pid: pid,
+                    pid: pid
                 };
                 getAction(this.url_children, param).then(res => {
                     if (res.success) {
@@ -189,7 +189,7 @@ export default {
         },
         getCurrTreeData() {
             return this.treeData;
-        },
-    },
+        }
+    }
 };
 </script>

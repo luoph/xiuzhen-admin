@@ -15,24 +15,24 @@ export default {
     props: {
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         x: {
             type: String,
-            default: "x",
+            default: "x"
         },
         y: {
             type: String,
-            default: "y",
+            default: "y"
         },
         data: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         height: {
             type: Number,
-            default: 254,
-        },
+            default: 254
+        }
     },
     data() {
         return {};
@@ -41,9 +41,9 @@ export default {
         scale() {
             return [
                 { dataKey: "x", title: this.x, alias: this.x },
-                { dataKey: "y", title: this.y, alias: this.y },
+                { dataKey: "y", title: this.y, alias: this.y }
             ];
-        },
+        }
     },
     created() {
         // this.getMonthBar()
@@ -55,6 +55,6 @@ export default {
         //       this.data = res.result
         //     })
         // }
-    },
+    }
 };
 </script>

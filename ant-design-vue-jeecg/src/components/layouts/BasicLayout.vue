@@ -15,7 +15,7 @@ import GlobalLayout from "@/components/page/GlobalLayout";
 export default {
     name: "BasicLayout",
     components: {
-        GlobalLayout,
+        GlobalLayout
     },
     data() {
         return {};
@@ -23,9 +23,9 @@ export default {
     computed: {
         keepAlive() {
             return this.$route.meta.keepAlive;
-        },
+        }
     },
-    methods: {},
+    methods: {}
 };
 </script>
 

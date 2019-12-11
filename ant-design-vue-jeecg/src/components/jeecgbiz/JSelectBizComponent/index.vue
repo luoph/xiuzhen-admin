@@ -43,30 +43,30 @@ export default {
     props: {
         value: {
             type: String,
-            default: "",
+            default: ""
         },
         /** 是否返回 id，默认 false，返回 code */
         returnId: {
             type: Boolean,
-            default: false,
+            default: false
         },
         placeholder: {
             type: String,
-            default: "请选择",
+            default: "请选择"
         },
         disabled: {
             type: Boolean,
-            default: false,
+            default: false
         },
         // 是否支持多选，默认 true
         multiple: {
             type: Boolean,
-            default: true,
+            default: true
         },
         // 是否显示按钮，默认 true
         buttons: {
             type: Boolean,
-            default: true,
+            default: true
         },
 
         /* 可复用属性 */
@@ -74,51 +74,51 @@ export default {
         // 被选择的名字，例如选择部门就填写'部门'
         name: {
             type: String,
-            default: "",
+            default: ""
         },
         // list 接口地址
         listUrl: {
             type: String,
             required: true,
-            default: "",
+            default: ""
         },
         // 显示的 Key
         displayKey: {
             type: String,
-            default: null,
+            default: null
         },
         // 返回的 key
         returnKeys: {
             type: Array,
-            default: () => ["id", "id"],
+            default: () => ["id", "id"]
         },
         // 选择按钮文字
         selectButtonText: {
             type: String,
-            default: "选择",
+            default: "选择"
         },
         // 查询条件文字
         queryParamText: {
             type: String,
-            default: null,
+            default: null
         },
         // columns
         columns: {
             type: Array,
-            default: () => [],
-        },
+            default: () => []
+        }
     },
     data() {
         return {
             selectValue: [],
             selectOptions: [],
-            visible: false,
+            visible: false
         };
     },
     computed: {
         valueKey() {
             return this.returnId ? this.returnKeys[0] : this.returnKeys[1];
-        },
+        }
     },
     watch: {
         value: {
@@ -129,7 +129,7 @@ export default {
                 } else {
                     this.selectValue = [];
                 }
-            },
+            }
         },
         selectValue: {
             deep: true,
@@ -137,10 +137,10 @@ export default {
                 const data = val.join(",");
                 this.$emit("input", data);
                 this.$emit("change", data);
-            },
-        },
+            }
+        }
     },
-    methods: {},
+    methods: {}
 };
 </script>
 

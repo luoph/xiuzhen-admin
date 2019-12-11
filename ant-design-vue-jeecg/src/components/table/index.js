@@ -10,64 +10,64 @@ export default {
 
             localLoading: false,
             localDataSource: [],
-            localPagination: Object.assign({}, T.props.pagination),
+            localPagination: Object.assign({}, T.props.pagination)
         };
     },
     props: Object.assign({}, T.props, {
         rowKey: {
             type: [String, Function],
-            default: "id",
+            default: "id"
         },
         data: {
             type: Function,
-            required: true,
+            required: true
         },
         pageNum: {
             type: Number,
-            default: 1,
+            default: 1
         },
         pageSize: {
             type: Number,
-            default: 10,
+            default: 10
         },
         showSizeChanger: {
             type: Boolean,
-            default: true,
+            default: true
         },
         showAlertInfo: {
             type: Boolean,
-            default: false,
+            default: false
         },
         showPagination: {
-            default: "auto",
-        },
+            default: "auto"
+        }
     }),
     watch: {
         "localPagination.current"(val) {
             this.$router.push({
                 name: this.$route.name,
                 params: Object.assign({}, this.$route.params, {
-                    pageNo: val,
-                }),
+                    pageNo: val
+                })
             });
         },
         pageNum(val) {
             Object.assign(this.localPagination, {
-                current: val,
+                current: val
             });
         },
         pageSize(val) {
             console.log("pageSize:", val);
             Object.assign(this.localPagination, {
-                pageSize: val,
+                pageSize: val
             });
         },
         showSizeChanger(val) {
             console.log("showSizeChanger", val);
             Object.assign(this.localPagination, {
-                showSizeChanger: val,
+                showSizeChanger: val
             });
-        },
+        }
     },
     created() {
         this.localPagination =
@@ -75,7 +75,7 @@ export default {
             Object.assign({}, this.localPagination, {
                 current: this.pageNum,
                 pageSize: this.pageSize,
-                showSizeChanger: this.showSizeChanger,
+                showSizeChanger: this.showSizeChanger
             });
         this.needTotalList = this.initTotalList(this.columns);
         this.loadData();
@@ -90,20 +90,20 @@ export default {
                 Object.assign(
                     {
                         pageNo: (pagination && pagination.current) || this.localPagination.current,
-                        pageSize: (pagination && pagination.pageSize) || this.localPagination.pageSize,
+                        pageSize: (pagination && pagination.pageSize) || this.localPagination.pageSize
                     },
                     (sorter &&
                         sorter.field && {
-                            sortField: sorter.field,
+                            sortField: sorter.field
                         }) ||
                         {},
                     (sorter &&
                         sorter.order && {
-                            sortOrder: sorter.order,
+                            sortOrder: sorter.order
                         }) ||
                         {},
                     {
-                        ...filters,
+                        ...filters
                     }
                 )
             );
@@ -114,7 +114,7 @@ export default {
                         current: r.pageNo, // 返回结果中的当前分页数
                         total: r.totalCount, // 返回结果中的总记录数
                         showSizeChanger: this.showSizeChanger,
-                        pageSize: (pagination && pagination.pageSize) || this.localPagination.pageSize,
+                        pageSize: (pagination && pagination.pageSize) || this.localPagination.pageSize
                     });
 
                     !r.totalCount && ["auto", false].includes(this.showPagination) && (this.localPagination = false);
@@ -144,7 +144,7 @@ export default {
                     total: selectedRows.reduce((sum, val) => {
                         let total = sum + get(val, item.dataIndex);
                         return isNaN(total) ? 0 : total;
-                    }, 0),
+                    }, 0)
                 };
             });
             // this.$emit('change', selectedRowKeys, selectedRows)
@@ -165,8 +165,8 @@ export default {
                     "span",
                     {
                         style: {
-                            marginRight: "12px",
-                        },
+                            marginRight: "12px"
+                        }
                     },
                     [
                         "已选择 ",
@@ -174,11 +174,11 @@ export default {
                             "a",
                             {
                                 style: {
-                                    fontWeight: 600,
-                                },
+                                    fontWeight: 600
+                                }
                             },
                             this.selectedRows.length
-                        ),
+                        )
                     ]
                 )
             );
@@ -190,8 +190,8 @@ export default {
                         "span",
                         {
                             style: {
-                                marginRight: "12px",
-                            },
+                                marginRight: "12px"
+                            }
                         },
                         [
                             `${item.title}总计 `,
@@ -199,11 +199,11 @@ export default {
                                 "a",
                                 {
                                     style: {
-                                        fontWeight: 600,
-                                    },
+                                        fontWeight: 600
+                                    }
                                 },
                                 `${!item.customRender ? item.total : item.customRender(item.total)}`
-                            ),
+                            )
                         ]
                     )
                 );
@@ -215,11 +215,11 @@ export default {
                     "a",
                     {
                         style: {
-                            marginLeft: "24px",
+                            marginLeft: "24px"
                         },
                         on: {
-                            click: _vm.onClearSelected,
-                        },
+                            click: _vm.onClearSelected
+                        }
                     },
                     "清空"
                 )
@@ -231,11 +231,11 @@ export default {
             return h(
                 "span",
                 {
-                    slot: "message",
+                    slot: "message"
                 },
                 this.renderMsg(h)
             );
-        },
+        }
     },
 
     render(h) {
@@ -259,7 +259,7 @@ export default {
                 onChange: (selectedRowKeys, selectedRows) => {
                     _vm.updateSelect(selectedRowKeys, selectedRows);
                     _vm.$emit("onSelect", { selectedRowKeys: selectedRowKeys, selectedRows: selectedRows });
-                },
+                }
             };
 
             return h("div", {}, [
@@ -267,12 +267,12 @@ export default {
                     "a-alert",
                     {
                         style: {
-                            marginBottom: "16px",
+                            marginBottom: "16px"
                         },
                         props: {
                             type: "info",
-                            showIcon: true,
-                        },
+                            showIcon: true
+                        }
                     },
                     [_vm.renderAlert(h)]
                 ),
@@ -282,12 +282,12 @@ export default {
                         tag: "component",
                         attrs: props,
                         on: {
-                            change: _vm.loadData,
+                            change: _vm.loadData
                         },
-                        scopedSlots: this.$scopedSlots,
+                        scopedSlots: this.$scopedSlots
                     },
                     this.$slots.default
-                ),
+                )
             ]);
         }
 
@@ -297,11 +297,11 @@ export default {
                 tag: "component",
                 attrs: props,
                 on: {
-                    change: _vm.loadData,
+                    change: _vm.loadData
                 },
-                scopedSlots: this.$scopedSlots,
+                scopedSlots: this.$scopedSlots
             },
             this.$slots.default
         );
-    },
+    }
 };

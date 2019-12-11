@@ -16,8 +16,8 @@ export default {
                 { title: "姓名", align: "center", width: 100, dataIndex: "realname" },
                 { title: "账号", align: "center", width: 100, dataIndex: "username" },
                 { title: "电话", align: "center", width: 100, dataIndex: "phone" },
-                { title: "出生日期", align: "center", width: 100, dataIndex: "birthday" },
-            ],
+                { title: "出生日期", align: "center", width: 100, dataIndex: "birthday" }
+            ]
         };
     },
     watch: {
@@ -28,9 +28,9 @@ export default {
                 if (!val.returnKeys) {
                     val.returnKeys = ["id", "username"];
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

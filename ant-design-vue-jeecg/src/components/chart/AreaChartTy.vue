@@ -20,65 +20,65 @@ export default {
         // 图表数据
         dataSource: {
             type: Array,
-            required: true,
+            required: true
         },
         // 图表标题
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         // x 轴别名
         x: {
             type: String,
-            default: "x",
+            default: "x"
         },
         // y 轴别名
         y: {
             type: String,
-            default: "y",
+            default: "y"
         },
         // Y轴最小值
         min: {
             type: Number,
-            default: 0,
+            default: 0
         },
         // Y轴最大值
         max: {
             type: Number,
-            default: null,
+            default: null
         },
         // 图表高度
         height: {
             type: Number,
-            default: 254,
+            default: 254
         },
         // 线的粗细
         lineSize: {
             type: Number,
-            default: 2,
+            default: 2
         },
         // 面积的颜色
         color: {
             type: String,
-            default: "",
+            default: ""
         },
         // 线的颜色
         lineColor: {
             type: String,
-            default: "",
-        },
+            default: ""
+        }
     },
     computed: {
         scale() {
             return [
                 { dataKey: "x", title: this.x, alias: this.x },
-                { dataKey: "y", title: this.y, alias: this.y, min: this.min, max: this.max },
+                { dataKey: "y", title: this.y, alias: this.y, min: this.min, max: this.max }
             ];
-        },
+        }
     },
     mounted() {
         triggerWindowResizeEvent();
-    },
+    }
 };
 </script>
 

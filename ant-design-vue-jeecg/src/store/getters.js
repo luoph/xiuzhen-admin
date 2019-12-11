@@ -20,7 +20,7 @@ const getters = {
         state.user.info = Vue.ls.get(USER_INFO);
         return state.user.info;
     },
-    addRouters: state => state.permission.addRouters,
+    addRouters: state => state.permission.addRouters
 };
 
 export default getters;

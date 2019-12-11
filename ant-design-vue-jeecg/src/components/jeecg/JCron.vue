@@ -12,23 +12,23 @@ import JCronModal from "./modal/JCronModal";
 export default {
     name: "JCron",
     components: {
-        JCronModal,
+        JCronModal
     },
     props: {
         value: {
             required: false,
-            type: String,
-        },
+            type: String
+        }
     },
     data() {
         return {
-            cron: this.value,
+            cron: this.value
         };
     },
     watch: {
         value(val) {
             this.cron = val;
-        },
+        }
     },
     methods: {
         openModal() {
@@ -41,12 +41,12 @@ export default {
         },
         handleEmpty() {
             this.handleOK("");
-        },
+        }
     },
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>
 <style scoped>

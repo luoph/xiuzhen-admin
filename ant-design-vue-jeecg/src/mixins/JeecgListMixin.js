@@ -13,7 +13,7 @@ export const JeecgListMixin = {
         return {
             //token header
             tokenHeader: {
-                "X-Access-Token": Vue.ls.get(ACCESS_TOKEN),
+                "X-Access-Token": Vue.ls.get(ACCESS_TOKEN)
             },
             /* 查询条件-请不要在queryParam中声明非字符串值的属性 */
             queryParam: {},
@@ -29,12 +29,12 @@ export const JeecgListMixin = {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             /* 排序参数 */
             isorter: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             /* 筛选参数 */
             filters: {},
@@ -49,7 +49,7 @@ export const JeecgListMixin = {
             /* 高级查询条件生效状态 */
             superQueryFlag: false,
             /* 高级查询条件 */
-            superQueryParams: "",
+            superQueryParams: ""
         };
     },
     created() {
@@ -156,7 +156,7 @@ export const JeecgListMixin = {
                     onOk: function() {
                         that.loading = true;
                         deleteAction(that.url.deleteBatch, {
-                            ids: ids,
+                            ids: ids
                         })
                             .then(res => {
                                 if (res.success) {
@@ -170,7 +170,7 @@ export const JeecgListMixin = {
                             .finally(() => {
                                 that.loading = false;
                             });
-                    },
+                    }
                 });
             }
         },
@@ -181,7 +181,7 @@ export const JeecgListMixin = {
             }
             var that = this;
             deleteAction(that.url.delete, {
-                id: id,
+                id: id
             }).then(res => {
                 if (res.success) {
                     that.$message.success(res.message);
@@ -234,7 +234,7 @@ export const JeecgListMixin = {
                 fileName = "导出文件";
             }
             let param = {
-                ...this.queryParam,
+                ...this.queryParam
             };
             if (this.selectedRowKeys && this.selectedRowKeys.length > 0) {
                 param["selections"] = this.selectedRowKeys.join(",");
@@ -271,7 +271,7 @@ export const JeecgListMixin = {
                     if (info.file.response.code === 201) {
                         let {
                             message,
-                            result: { msg, fileUrl, fileName },
+                            result: { msg, fileUrl, fileName }
                         } = info.file.response;
                         let href = window._CONFIG["domainURL"] + fileUrl;
                         this.$warning({
@@ -289,7 +289,7 @@ export const JeecgListMixin = {
                                         </a>{" "}
                                     </span>
                                 </div>
-                            ),
+                            )
                         });
                     } else {
                         this.$message.success(info.file.response.message || `${info.file.name} 文件上传成功`);
@@ -319,6 +319,6 @@ export const JeecgListMixin = {
                 text = text.substring(0, text.indexOf(","));
             }
             window.open(window._CONFIG["domainURL"] + "/sys/common/download/" + text);
-        },
-    },
+        }
+    }
 };

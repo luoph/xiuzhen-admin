@@ -10,9 +10,9 @@ const hasPermission = {
                 if (!filterNodePermission(el, binding, vnode)) {
                     filterGlobalPermission(el, binding, vnode);
                 }
-            },
+            }
         });
-    },
+    }
 };
 
 /**

@@ -13,7 +13,7 @@ export default {
     computed: {
         keepAlive() {
             return this.$route.meta.keepAlive;
-        },
-    },
+        }
+    }
 };
 </script>

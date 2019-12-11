@@ -49,8 +49,8 @@ export default {
         placeholder: {
             type: String,
             default: "请选择",
-            required: false,
-        },
+            required: false
+        }
     },
     data() {
         this.loadData = debounce(this.loadData, 800); //消抖
@@ -59,7 +59,7 @@ export default {
             loading: false,
             selectedValue: [],
             selectedAsyncValue: [],
-            options: [],
+            options: []
         };
     },
     created() {
@@ -75,13 +75,13 @@ export default {
                 } else {
                     this.initSelectValue();
                 }
-            },
+            }
         },
         dict: {
             handler() {
                 this.initDictData();
-            },
-        },
+            }
+        }
     },
     methods: {
         initSelectValue() {
@@ -92,7 +92,7 @@ export default {
                         if (res.success) {
                             let obj = {
                                 key: this.value,
-                                label: res.result,
+                                label: res.result
                             };
                             this.selectedAsyncValue = { ...obj };
                         }
@@ -158,12 +158,12 @@ export default {
         },
         getCurrentDictOptions() {
             return this.options;
-        },
+        }
     },
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>
 

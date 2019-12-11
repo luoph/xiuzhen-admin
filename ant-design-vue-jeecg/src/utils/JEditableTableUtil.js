@@ -16,7 +16,7 @@ const FormTypes = {
     checkbox_meta: "checkbox_meta",
 
     slot: "slot",
-    hidden: "hidden",
+    hidden: "hidden"
 };
 const VALIDATE_NO_PASSED = Symbol();
 export { FormTypes, VALIDATE_NO_PASSED };

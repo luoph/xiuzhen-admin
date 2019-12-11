@@ -17,10 +17,10 @@ const axis1Opts = {
     tickLine: null,
     grid: {
         lineStyle: {
-            lineDash: null,
+            lineDash: null
         },
-        hideFirstLine: false,
-    },
+        hideFirstLine: false
+    }
 };
 const axis2Opts = {
     dataKey: "score",
@@ -29,21 +29,21 @@ const axis2Opts = {
     grid: {
         type: "polygon",
         lineStyle: {
-            lineDash: null,
-        },
-    },
+            lineDash: null
+        }
+    }
 };
 
 const scale = [
     {
         dataKey: "score",
         min: 0,
-        max: 100,
+        max: 100
     },
     {
         dataKey: "user",
-        alias: "类型",
-    },
+        alias: "类型"
+    }
 ];
 
 const sourceData = [
@@ -51,7 +51,7 @@ const sourceData = [
     { item: "示例二", score: 20 },
     { item: "示例三", score: 67 },
     { item: "示例四", score: 43 },
-    { item: "示例五", score: 90 },
+    { item: "示例五", score: 90 }
 ];
 
 export default {
@@ -59,19 +59,19 @@ export default {
     props: {
         height: {
             type: Number,
-            default: 254,
+            default: 254
         },
         dataSource: {
             type: Array,
-            default: () => [],
-        },
+            default: () => []
+        }
     },
     data() {
         return {
             axis1Opts,
             axis2Opts,
             scale,
-            data: sourceData,
+            data: sourceData
         };
     },
     watch: {
@@ -81,8 +81,8 @@ export default {
             } else {
                 this.data = newVal;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

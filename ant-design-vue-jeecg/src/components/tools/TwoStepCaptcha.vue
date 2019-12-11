@@ -45,14 +45,14 @@ export default {
     props: {
         visible: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
     data() {
         return {
             stepLoading: false,
 
-            form: null,
+            form: null
         };
     },
     methods: {
@@ -76,8 +76,8 @@ export default {
             this.visible = false;
             this.$emit("cancel");
         },
-        onForgeStepCode() {},
-    },
+        onForgeStepCode() {}
+    }
 };
 </script>
 <style lang="scss" scoped>

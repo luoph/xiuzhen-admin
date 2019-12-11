@@ -88,7 +88,7 @@ import store from "@/store/";
 export default {
     name: "HeaderNotice",
     components: {
-        ShowAnnouncement,
+        ShowAnnouncement
     },
     data() {
         return {
@@ -96,7 +96,7 @@ export default {
             url: {
                 listCementByUser: "/sys/annountCement/listByUser",
                 editCementSend: "/sys/sysAnnouncementSend/editByAnntIdAndUserId",
-                queryById: "/sys/annountCement/queryById",
+                queryById: "/sys/annountCement/queryById"
             },
             hovered: false,
             announcement1: [],
@@ -108,13 +108,13 @@ export default {
             stopTimer: false,
             websock: null,
             lockReconnect: false,
-            heartCheck: null,
+            heartCheck: null
         };
     },
     computed: {
         msgTotal() {
             return parseInt(this.msg1Count) + parseInt(this.msg2Count);
-        },
+        }
     },
     mounted() {
         this.loadData();
@@ -184,7 +184,7 @@ export default {
         toMyAnnouncement() {
             this.$router.push({
                 path: "/isps/userAnnouncement",
-                name: "isps-userAnnouncement",
+                name: "isps-userAnnouncement"
             });
         },
         modalFormOk() {},
@@ -253,15 +253,15 @@ export default {
                         {
                             props: {
                                 type: "primary",
-                                size: "small",
+                                size: "small"
                             },
                             on: {
-                                click: () => this.showDetail(key, data),
-                            },
+                                click: () => this.showDetail(key, data)
+                            }
                         },
                         "查看详情"
                     );
-                },
+                }
             });
         },
 
@@ -299,7 +299,7 @@ export default {
                         //  that.websock.close();//如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
                         //}, self.timeout)
                     }, this.timeout);
-                },
+                }
             };
         },
 
@@ -312,8 +312,8 @@ export default {
                     this.showAnnouncement(record);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

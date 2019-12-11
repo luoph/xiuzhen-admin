@@ -26,12 +26,12 @@ export default {
         disabled: {
             type: Boolean,
             default: false,
-            required: false,
-        },
+            required: false
+        }
     },
     mounted() {
         console.log("我是表单禁用专用组件,但是我并不支持表单中iframe的内容禁用");
-    },
+    }
 };
 </script>
 <style>

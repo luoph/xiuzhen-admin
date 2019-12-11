@@ -24,15 +24,15 @@ export default {
         url: {
             type: String,
             default: "",
-            required: false,
-        },
+            required: false
+        }
     },
     data() {
         return {
             visible: false,
             uploading: false,
             fileList: [],
-            uploadAction: "",
+            uploadAction: ""
         };
     },
     watch: {
@@ -40,7 +40,7 @@ export default {
             if (val) {
                 this.uploadAction = window._CONFIG["domainURL"] + val;
             }
-        },
+        }
     },
     created() {
         this.uploadAction = window._CONFIG["domainURL"] + this.url;
@@ -82,8 +82,8 @@ export default {
                     this.$message.warning(res.message);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

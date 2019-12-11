@@ -17,27 +17,27 @@ export default {
         modalWidth: {
             type: Number,
             default: 1250,
-            required: false,
+            required: false
         },
         value: {
             type: String,
-            required: false,
+            required: false
         },
         disabled: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         multi: {
             type: Boolean,
             default: true,
-            required: false,
-        },
+            required: false
+        }
     },
     data() {
         return {
             userIds: "",
-            userNames: "",
+            userNames: ""
         };
     },
     mounted() {
@@ -46,11 +46,11 @@ export default {
     watch: {
         value(val) {
             this.userIds = val;
-        },
+        }
     },
     model: {
         prop: "value",
-        event: "change",
+        event: "change"
     },
     methods: {
         initComp(userNames) {
@@ -74,8 +74,8 @@ export default {
                 this.userIds = idstr;
             }
             this.$emit("change", this.userIds);
-        },
-    },
+        }
+    }
 };
 </script>
 
