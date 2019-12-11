@@ -12,7 +12,7 @@ export default {
     data() {
         return {
             url: "",
-            id: "",
+            id: ""
         };
     },
     created() {
@@ -24,7 +24,7 @@ export default {
     watch: {
         $route(to, from) {
             this.goUrl();
-        },
+        }
     },
     methods: {
         goUrl() {
@@ -42,8 +42,8 @@ export default {
                 }
                 /*update_end author:wuxianquan date:20190908 for:判断打开方式，新窗口打开时this.$route.meta.internalOrExternal==true */
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

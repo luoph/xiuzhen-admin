@@ -25,10 +25,10 @@ export default {
             url: { list: "/sys/role/list" },
             columns: [
                 { title: "角色名称", dataIndex: "roleName", align: "center", width: 120 },
-                { title: "角色编码", dataIndex: "roleCode", align: "center", width: 120 },
-            ],
+                { title: "角色编码", dataIndex: "roleCode", align: "center", width: 120 }
+            ]
         };
-    },
+    }
 };
 </script>
 

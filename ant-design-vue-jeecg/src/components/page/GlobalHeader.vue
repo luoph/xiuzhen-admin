@@ -42,34 +42,34 @@ export default {
     components: {
         UserMenu,
         SMenu,
-        Logo,
+        Logo
     },
     mixins: [mixin],
     props: {
         mode: {
             type: String,
             // sidemenu, topmenu
-            default: "sidemenu",
+            default: "sidemenu"
         },
         menus: {
             type: Array,
-            required: true,
+            required: true
         },
         theme: {
             type: String,
             required: false,
-            default: "dark",
+            default: "dark"
         },
         collapsed: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         device: {
             type: String,
             required: false,
-            default: "desktop",
-        },
+            default: "desktop"
+        }
     },
     data() {
         return {
@@ -79,8 +79,8 @@ export default {
                 headerIndexLeft: {},
                 topNavHeader: {},
                 headerIndexRight: {},
-                topSmenuStyle: {},
-            },
+                topSmenuStyle: {}
+            }
         };
     },
     watch: {
@@ -95,7 +95,7 @@ export default {
             if (newVal === "topmenu") {
                 this.buildTopMenuStyle();
             }
-        },
+        }
     },
     //update-end--author:sunjianlei---date:20190508------for: 顶部导航栏过长时显示更多按钮-----
     mounted() {
@@ -139,9 +139,9 @@ export default {
                     this.topMenuStyle.headerIndexLeft = { width: `calc(100% - ${rightWidth})` };
                 }
             }
-        },
+        }
         //update-begin--author:sunjianlei---date:20190508------for: 顶部导航栏过长时显示更多按钮-----
-    },
+    }
 };
 </script>
 

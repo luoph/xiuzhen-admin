@@ -42,44 +42,44 @@ import PageHeader from "./PageHeader";
 export default {
     name: "LayoutContent",
     components: {
-        PageHeader,
+        PageHeader
     },
     // ['desc', 'logo', 'title', 'avatar', 'linkList', 'extraImage']
     props: {
         desc: {
             type: String,
-            default: null,
+            default: null
         },
         logo: {
             type: String,
-            default: null,
+            default: null
         },
         title: {
             type: String,
-            default: null,
+            default: null
         },
         avatar: {
             type: String,
-            default: null,
+            default: null
         },
         linkList: {
             type: Array,
-            default: null,
+            default: null
         },
         extraImage: {
             type: String,
-            default: null,
+            default: null
         },
         search: {
             type: Boolean,
-            default: false,
+            default: false
         },
         tabs: {
             type: Object,
-            default: () => {},
-        },
+            default: () => {}
+        }
     },
-    methods: {},
+    methods: {}
 };
 </script>
 

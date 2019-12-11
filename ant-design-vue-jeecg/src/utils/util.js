@@ -59,7 +59,7 @@ export function formatDate(value, fmt) {
             "m+": getDate.getMinutes(),
             "s+": getDate.getSeconds(),
             "q+": Math.floor((getDate.getMonth() + 3) / 3),
-            S: getDate.getMilliseconds(),
+            S: getDate.getMilliseconds()
         };
         if (/(y+)/.test(fmt)) {
             fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -87,13 +87,13 @@ export function generateIndexRouter(data) {
             component: resolve => require(["@/components/layouts/TabLayout"], resolve),
             meta: { title: "首页" },
             redirect: "/dashboard/analysis",
-            children: [...generateChildRouters(data)],
+            children: [...generateChildRouters(data)]
         },
         {
             path: "*",
             redirect: "/404",
-            hidden: true,
-        },
+            hidden: true
+        }
     ];
     return indexRouter;
 }
@@ -130,9 +130,9 @@ function generateChildRouters(data) {
                 permissionList: item.meta.permissionList,
                 keepAlive: item.meta.keepAlive,
                 /*update_begin author:wuxianquan date:20190908 for:赋值 */
-                internalOrExternal: item.meta.internalOrExternal,
+                internalOrExternal: item.meta.internalOrExternal
                 /*update_end author:wuxianquan date:20190908 for:赋值 */
-            },
+            }
         };
         if (item.alwaysShow) {
             menu.alwaysShow = true;

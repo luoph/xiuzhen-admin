@@ -13,7 +13,7 @@ const user = {
         welcome: "",
         avatar: "",
         permissionList: [],
-        info: {},
+        info: {}
     },
 
     mutations: {
@@ -33,7 +33,7 @@ const user = {
         },
         SET_INFO: (state, info) => {
             state.info = info;
-        },
+        }
     },
 
     actions: {
@@ -158,8 +158,8 @@ const user = {
                         resolve();
                     });
             });
-        },
-    },
+        }
+    }
 };
 
 export default user;

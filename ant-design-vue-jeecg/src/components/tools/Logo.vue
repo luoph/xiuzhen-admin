@@ -21,14 +21,14 @@ export default {
         title: {
             type: String,
             default: "Jeecg-Boot Pro",
-            required: false,
+            required: false
         },
         showTitle: {
             type: Boolean,
             default: true,
-            required: false,
-        },
-    },
+            required: false
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

@@ -142,5 +142,5 @@ export {
     queryTreeListForRole,
     getSystemMenuList,
     getSystemSubmenu,
-    loadCategoryData,
+    loadCategoryData
 };

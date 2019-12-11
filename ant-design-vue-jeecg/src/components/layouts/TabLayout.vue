@@ -44,7 +44,7 @@ export default {
     name: "TabLayout",
     components: {
         GlobalLayout,
-        Contextmenu,
+        Contextmenu
     },
     mixins: [mixin, mixinDevice],
     data() {
@@ -57,15 +57,15 @@ export default {
                 { key: "4", icon: "reload", text: "刷 新" },
                 { key: "1", icon: "arrow-left", text: "关闭左侧" },
                 { key: "2", icon: "arrow-right", text: "关闭右侧" },
-                { key: "3", icon: "close", text: "关闭其它" },
+                { key: "3", icon: "close", text: "关闭其它" }
             ],
-            reloadFlag: true,
+            reloadFlag: true
         };
     },
     /* update_begin author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用 ->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
     provide() {
         return {
-            closeCurrent: this.closeCurrent,
+            closeCurrent: this.closeCurrent
         };
     },
     /* update_end author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
@@ -77,7 +77,7 @@ export default {
             } else {
                 return this.$store.state.app.multipage;
             }
-        },
+        }
     },
     created() {
         if (this.$route.path != indexKey) {
@@ -87,8 +87,8 @@ export default {
                 fullPath: indexKey,
                 meta: {
                     icon: "dashboard",
-                    title: "首页",
-                },
+                    title: "首页"
+                }
             });
             this.linkList.push(indexKey);
         }
@@ -123,7 +123,7 @@ export default {
                     this.pageList = [this.$route];
                 }
             }
-        },
+        }
     },
     methods: {
         changePage(key) {
@@ -250,9 +250,9 @@ export default {
                 this.$store.dispatch(ToggleMultipage, true);
                 this.reloadFlag = true;
             });
-        },
+        }
         //update-end-author:taoyan date:20191008 for:路由刷新
-    },
+    }
 };
 </script>
 

@@ -24,12 +24,12 @@ export default {
         triggerChange: Boolean,
         disabled: Boolean,
         value: String,
-        type: String,
+        type: String
     },
     data() {
         return {
             dictOptions: [],
-            tagType: "",
+            tagType: ""
         };
     },
     watch: {
@@ -37,8 +37,8 @@ export default {
             immediate: true,
             handler() {
                 this.initDictData();
-            },
-        },
+            }
+        }
     },
     created() {
         // console.log(this.dictCode);
@@ -79,8 +79,8 @@ export default {
         },
         getCurrentDictOptions() {
             return this.dictOptions;
-        },
-    },
+        }
+    }
 };
 </script>
 

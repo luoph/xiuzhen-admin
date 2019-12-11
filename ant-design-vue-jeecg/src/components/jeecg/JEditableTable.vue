@@ -570,60 +570,60 @@ export default {
         // 列信息
         columns: {
             type: Array,
-            required: true,
+            required: true
         },
         // 数据源
         dataSource: {
             type: Array,
             required: true,
-            default: () => [],
+            default: () => []
         },
         // 是否显示操作按钮
         actionButton: {
             type: Boolean,
-            default: false,
+            default: false
         },
         // 是否显示行号
         rowNumber: {
             type: Boolean,
-            default: false,
+            default: false
         },
         // 是否可选择行
         rowSelection: {
             type: Boolean,
-            default: false,
+            default: false
         },
         // 页面是否在加载中
         loading: {
             type: Boolean,
-            default: false,
+            default: false
         },
         // 页面是否在加载中
         maxHeight: {
             type: Number,
-            default: 400,
+            default: 400
         },
         // 要禁用的行
         disabledRows: {
             type: Object,
             default() {
                 return {};
-            },
+            }
         },
         // 是否禁用全部组件
         disabled: {
             type: Boolean,
-            default: false,
+            default: false
         },
         // 是否可拖拽排序
         dragSort: {
             type: Boolean,
-            default: false,
+            default: false
         },
         dragSortKey: {
             type: String,
-            default: "orderNum",
-        },
+            default: "orderNum"
+        }
     },
     data() {
         return {
@@ -632,7 +632,7 @@ export default {
             // 存储document element 对象
             el: {
                 inputTable: null,
-                tbody: null,
+                tbody: null
             },
             // 存储各个div的style
             style: {
@@ -640,7 +640,7 @@ export default {
                 tbody: { left: "0px" },
                 // 左侧固定td的style
                 tdLeft: { "min-width": "4%", "max-width": "45px" },
-                tdLeftDs: { "min-width": "30px", "max-width": "35px" },
+                tdLeftDs: { "min-width": "30px", "max-width": "35px" }
             },
             // 表单的类型
             formTypes: FormTypes,
@@ -672,7 +672,7 @@ export default {
             // 存储显示tooltip的信息
             tooltips: {},
             // 存储没有通过验证的inputId
-            notPassedIds: [],
+            notPassedIds: []
         };
     },
     created() {
@@ -732,7 +732,7 @@ export default {
             calcWidth += ")";
             // console.log('calcWidth: ', calcWidth)
             return calcWidth;
-        },
+        }
     },
     // 侦听器
     watch: {
@@ -748,7 +748,7 @@ export default {
                 //   }
                 // })
                 // console.log('watch.rows:', cloneObject({ val, old }))
-            },
+            }
         },
         dataSource: {
             immediate: true,
@@ -820,7 +820,7 @@ export default {
                                 uploadValues[inputId] = {
                                     name: fileName,
                                     status: "done",
-                                    path: sourceValue,
+                                    path: sourceValue
                                 };
                             }
                         } else {
@@ -864,7 +864,7 @@ export default {
                 this.$nextTick(() => {
                     this.updateFormValues();
                 });
-            },
+            }
         },
         columns: {
             immediate: true,
@@ -878,7 +878,7 @@ export default {
                                     return {
                                         ...item,
                                         text: item.text || item.title,
-                                        title: item.text || item.title,
+                                        title: item.text || item.title
                                     };
                                 }
                                 return {};
@@ -889,7 +889,7 @@ export default {
                         }
                     }
                 });
-            },
+            }
         },
         // 当selectRowIds改变时触发事件
         selectedRowIds(newValue) {
@@ -897,7 +897,7 @@ export default {
                 "selectRowChange",
                 cloneObject(newValue).map(i => this.removeCaseId(i))
             );
-        },
+        }
     },
     mounted() {
         // 获取document element对象
@@ -1106,7 +1106,7 @@ export default {
 
             let rowValue = this.getValuesSync({
                 validate: false,
-                rowIds: [this.removeCaseId(row.id)],
+                rowIds: [this.removeCaseId(row.id)]
             }).values[0];
 
             this.$nextTick(() => {
@@ -1115,7 +1115,7 @@ export default {
             // 触发add事件
             this.$emit("added", {
                 row: rowValue,
-                target: this,
+                target: this
             });
             // 设置滚动条位置
             let tbody = this.el.tbody;
@@ -1332,7 +1332,7 @@ export default {
                 popupValues: this.popupValues,
                 radioValues: this.radioValues,
                 multiSelectValues: this.multiSelectValues,
-                searchSelectValues: this.searchSelectValues,
+                searchSelectValues: this.searchSelectValues
             });
         },
         /** 设置某行某列的值 */
@@ -1501,7 +1501,7 @@ export default {
                             { title: "整数", value: "z", pattern: /^[1-9]\d*$/ },
                             { title: "非空", value: "*", pattern: /^.+$/ },
                             { title: "6到18位字符串", value: "s6-18", pattern: /^.{6,18}$/ },
-                            { title: "金额", value: "money", pattern: /^(([1-9][0-9]*)|([0]\.\d{0,2}|[1-9][0-9]*\.\d{0,2}))$/ },
+                            { title: "金额", value: "money", pattern: /^(([1-9][0-9]*)|([0]\.\d{0,2}|[1-9][0-9]*\.\d{0,2}))$/ }
                         ];
                         let flag = false;
                         for (let item of foo) {
@@ -1662,8 +1662,8 @@ export default {
                 oldIndex,
                 newIndex,
                 item: {
-                    dataset: { idx: dataIdx },
-                },
+                    dataset: { idx: dataIdx }
+                }
             } = event;
 
             // 由于动态显示隐藏行导致index有误差，需要算出真实的index
@@ -1677,7 +1677,7 @@ export default {
             this.$emit("dragged", {
                 oldIndex,
                 newIndex,
-                target: this,
+                target: this
             });
         },
 
@@ -1780,7 +1780,7 @@ export default {
                 type: file.type,
                 size: file.size,
                 status: file.status,
-                percent: file.percent,
+                percent: file.percent
             };
             if (column.responseName && file.response) {
                 value["responseName"] = file.response[column.responseName];
@@ -1920,7 +1920,7 @@ export default {
         /** view辅助方法：构建 tr style */
         buildTrStyle(index) {
             return {
-                top: `${rowHeight * index}px`,
+                top: `${rowHeight * index}px`
             };
         },
         /** view辅助方法：构建 td style */
@@ -2049,8 +2049,8 @@ export default {
         },
         filterOption(input, option) {
             return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-        },
-    },
+        }
+    }
 };
 </script>
 

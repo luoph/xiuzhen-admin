@@ -143,7 +143,7 @@ export default {
       * */
         fieldList: {
             type: Array,
-            required: true,
+            required: true
         },
         /*
          * 这个回调函数接收一个数组参数 即查询条件
@@ -151,26 +151,26 @@ export default {
         callback: {
             type: String,
             required: false,
-            default: "handleSuperQuery",
+            default: "handleSuperQuery"
         },
 
         // 当前是否在加载中
         loading: {
             type: Boolean,
-            default: false,
+            default: false
         },
 
         // 保存查询条件的唯一 code，通过该 code 区分
         saveCode: {
             type: String,
-            default: "testSaveCode",
-        },
+            default: "testSaveCode"
+        }
     },
     data() {
         return {
             prompt: {
                 visible: false,
-                value: "",
+                value: ""
             },
 
             visible: false,
@@ -179,7 +179,7 @@ export default {
             treeData: [],
             // 保存查询条件的前缀名
             saveCodeBefore: "JSuperQuerySaved_",
-            selectValue: "and",
+            selectValue: "and"
         };
     },
     watch: {
@@ -194,8 +194,8 @@ export default {
                         return item;
                     });
                 }
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -210,7 +210,7 @@ export default {
             if (!this.isNullArray(this.queryParamsModel)) {
                 let event = {
                     matchType: this.selectValue,
-                    params: this.removeEmptyObject(utils.cloneObject(this.queryParamsModel)),
+                    params: this.removeEmptyObject(utils.cloneObject(this.queryParamsModel))
                 };
                 this.$emit(this.callback, event.params, event.matchType);
             } else {
@@ -266,14 +266,14 @@ export default {
                         filterList[0].records = this.removeEmptyObject(utils.cloneObject(this.queryParamsModel));
                         this.saveToLocalStore();
                         this.$message.success("保存成功");
-                    },
+                    }
                 });
             } else {
                 this.prompt.visible = false;
                 this.treeData.push({
                     title: value,
                     icon: this.treeIcon,
-                    records: this.removeEmptyObject(utils.cloneObject(this.queryParamsModel)),
+                    records: this.removeEmptyObject(utils.cloneObject(this.queryParamsModel))
                 });
                 this.saveToLocalStore();
                 this.$message.success("保存成功");
@@ -289,12 +289,12 @@ export default {
                 content: "是否删除当前查询？",
                 onOk: () => {
                     let {
-                        node: { eventKey },
+                        node: { eventKey }
                     } = args;
                     this.treeData.splice(Number.parseInt(eventKey.substring(2)), 1);
                     this.saveToLocalStore();
                     this.$message.success("删除成功");
-                },
+                }
             });
         },
 
@@ -330,8 +330,8 @@ export default {
                 }
             }
             return array;
-        },
-    },
+        }
+    }
 };
 </script>
 

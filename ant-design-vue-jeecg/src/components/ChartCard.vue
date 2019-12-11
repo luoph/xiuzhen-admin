@@ -30,17 +30,17 @@ export default {
     props: {
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         total: {
             type: String,
-            default: "",
+            default: ""
         },
         loading: {
             type: Boolean,
-            default: false,
-        },
-    },
+            default: false
+        }
+    }
 };
 </script>
 

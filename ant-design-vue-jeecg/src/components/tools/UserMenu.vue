@@ -76,14 +76,14 @@ export default {
         HeaderNotice,
         UserPassword,
         DepartSelect,
-        SettingDrawer,
+        SettingDrawer
     },
     props: {
         theme: {
             type: String,
             required: false,
-            default: "dark",
-        },
+            default: "dark"
+        }
     },
     methods: {
         ...mapActions(["Logout"]),
@@ -108,11 +108,11 @@ export default {
                         .catch(err => {
                             that.$message.error({
                                 title: "错误",
-                                description: err.message,
+                                description: err.message
                             });
                         });
                 },
-                onCancel() {},
+                onCancel() {}
             });
         },
         updatePassword() {
@@ -124,8 +124,8 @@ export default {
         },
         systemSetting() {
             this.$refs.settingDrawer.showDrawer();
-        },
-    },
+        }
+    }
 };
 </script>
 

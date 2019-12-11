@@ -26,12 +26,12 @@ export default {
     name: "AvatarList",
     components: {
         Avatar,
-        AvatarItem,
+        AvatarItem
     },
     props: {
         prefixCls: {
             type: String,
-            default: "ant-pro-avatar-list",
+            default: "ant-pro-avatar-list"
         },
         /**
          * 头像大小 类型: large、small 、mini, default
@@ -39,14 +39,14 @@ export default {
          */
         size: {
             type: [String, Number],
-            default: "default",
+            default: "default"
         },
         /**
          * 要显示的最大项目
          */
         maxLength: {
             type: Number,
-            default: 0,
+            default: 0
         },
         /**
          * 多余的项目风格
@@ -56,10 +56,10 @@ export default {
             default: () => {
                 return {
                     color: "#f56a00",
-                    backgroundColor: "#fde3cf",
+                    backgroundColor: "#fde3cf"
                 };
-            },
-        },
+            }
+        }
     },
     data() {
         return {};
@@ -68,7 +68,7 @@ export default {
         getItems(items) {
             const classString = {
                 [`${this.prefixCls}-item`]: true,
-                [`${this.size}`]: true,
+                [`${this.size}`]: true
             };
 
             if (this.maxLength > 0) {
@@ -77,18 +77,18 @@ export default {
             }
             const itemList = items.map(item => <li class={classString}>{item}</li>);
             return itemList;
-        },
+        }
     },
     render() {
         const { prefixCls, size } = this.$props;
         const classString = {
             [`${prefixCls}`]: true,
-            [`${size}`]: true,
+            [`${size}`]: true
         };
         const items = filterEmpty(this.$slots.default);
         const itemsDom = items && items.length ? <ul class={`${prefixCls}-items`}>{this.getItems(items)}</ul> : null;
 
         return <div class={classString}>{itemsDom}</div>;
-    },
+    }
 };
 </script>

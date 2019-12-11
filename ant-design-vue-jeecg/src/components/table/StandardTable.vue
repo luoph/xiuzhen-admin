@@ -6,10 +6,7 @@
                     已选择&nbsp;<a style="font-weight: 600">{{ selectedRows.length }}</a
                     >&nbsp;&nbsp;
                     <template v-for="(item, index) in needTotalList" v-if="item.needTotal">
-                        {{ item.title }} 总计&nbsp;
-                        <a :key="index" style="font-weight: 600">
-                            {{ item.customRender ? item.customRender(item.total) : item.total }} </a
-                        >&nbsp;&nbsp;
+                        {{ item.title }} 总计&nbsp; <a :key="index" style="font-weight: 600"> {{ item.customRender ? item.customRender(item.total) : item.total }} </a>&nbsp;&nbsp;
                     </template>
                     <a style="margin-left: 24px" @click="onClearSelected">清空</a>
                 </div>
@@ -44,17 +41,17 @@ export default {
          */
         data: {
             type: Function,
-            required: true,
+            required: true
         },
         dataSource: {
             type: Array,
             default() {
                 return [];
-            },
+            }
         },
         columns: {
             type: Array,
-            required: true,
+            required: true
         },
         /*      pagination: {
         type: Object,
@@ -64,43 +61,43 @@ export default {
       },*/
         pageSize: {
             type: Number,
-            default: 10,
+            default: 10
         },
         pageNum: {
             type: Number,
-            default: 1,
+            default: 1
         },
         pageSizeOptions: {
             type: Array,
             default() {
                 return ["10", "20", "30", "40", "50"];
-            },
+            }
         },
         responseParamsName: {
             type: Object,
             default() {
                 return {};
-            },
+            }
         },
         bordered: {
             type: Boolean,
-            default: false,
+            default: false
         },
         /**
          * 表格大小风格，default, middle, small
          */
         size: {
             type: String,
-            default: "default",
+            default: "default"
         },
         rowKey: {
             type: String,
-            default: "",
+            default: ""
         },
         selectedRows: {
             type: Array,
-            default: null,
-        },
+            default: null
+        }
     },
     data() {
         return {
@@ -117,7 +114,7 @@ export default {
 
             current: [],
             pagination: {},
-            paramsName: {},
+            paramsName: {}
         };
     },
     created() {
@@ -129,7 +126,7 @@ export default {
                 pageSize: "pageSize",
                 total: "totalCount",
                 results: "data",
-                sortColumns: "sortColumns",
+                sortColumns: "sortColumns"
             },
             this.responseParamsName
         );
@@ -148,7 +145,7 @@ export default {
                     ...item,
                     total: selectedRows.reduce((sum, val) => {
                         return sum + val[item.dataIndex];
-                    }, 0),
+                    }, 0)
                 };
             });
             this.$emit("change", selectedRowKeys, selectedRows);
@@ -229,9 +226,9 @@ export default {
                 pageSize: this.pageSize,
                 defaultCurrent: this.defaultCurrent,
                 onChange: this.onPagerChange,
-                onShowSizeChange: this.onPagerSizeChange,
+                onShowSizeChange: this.onPagerSizeChange
             };
-        },
+        }
     },
     watch: {
         selectedRows: function(selectedRows) {
@@ -240,11 +237,11 @@ export default {
                     ...item,
                     total: selectedRows.reduce((sum, val) => {
                         return sum + val[item.dataIndex];
-                    }, 0),
+                    }, 0)
                 };
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

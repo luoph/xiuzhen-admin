@@ -20,16 +20,16 @@ export default {
                 columns: [
                     { title: "职务名称", dataIndex: "name", align: "center", width: 100 },
                     { title: "职务编码", dataIndex: "code", align: "center", width: 100 },
-                    { title: "职级", dataIndex: "rank_dictText", align: "center", width: 100 },
-                ],
-            },
+                    { title: "职级", dataIndex: "rank_dictText", align: "center", width: 100 }
+                ]
+            }
         };
     },
     computed: {
         configs() {
             return Object.assign({ value: this.value }, this.settings, this.$attrs);
-        },
-    },
+        }
+    }
 };
 </script>
 

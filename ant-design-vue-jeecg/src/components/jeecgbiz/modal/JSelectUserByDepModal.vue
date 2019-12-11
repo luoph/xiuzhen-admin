@@ -63,23 +63,23 @@ export default {
     data() {
         return {
             queryParam: {
-                username: "",
+                username: ""
             },
             columns: [
                 {
                     title: "用户账号",
                     align: "center",
-                    dataIndex: "username",
+                    dataIndex: "username"
                 },
                 {
                     title: "真实姓名",
                     align: "center",
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "角色名称",
                     align: "center",
-                    dataIndex: "roleName",
+                    dataIndex: "roleName"
                 },
                 {
                     title: "性别",
@@ -93,18 +93,18 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "手机号码",
                     align: "center",
-                    dataIndex: "phone",
+                    dataIndex: "phone"
                 },
                 {
                     title: "邮箱",
                     align: "center",
-                    dataIndex: "email",
-                },
+                    dataIndex: "email"
+                }
             ],
             scrollTrigger: {},
             dataSource: [],
@@ -121,16 +121,16 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             isorter: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             selectedDepIds: [],
             departTree: [],
             visible: false,
-            form: this.$form.createForm(this),
+            form: this.$form.createForm(this)
         };
     },
     computed: {
@@ -138,12 +138,12 @@ export default {
         getType: function() {
             console.log("multi: ", this.multi);
             return this.multi == true ? "checkbox" : "radio";
-        },
+        }
     },
     watch: {
         userIds() {
             this.initUserNames();
-        },
+        }
     },
     created() {
         // 该方法触发屏幕自适应
@@ -289,8 +289,8 @@ export default {
         },
         modalFormOk() {
             this.loadData();
-        },
-    },
+        }
+    }
 };
 </script>
 

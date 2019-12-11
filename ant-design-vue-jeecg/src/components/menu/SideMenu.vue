@@ -25,27 +25,27 @@ export default {
         mode: {
             type: String,
             required: false,
-            default: "inline",
+            default: "inline"
         },
         theme: {
             type: String,
             required: false,
-            default: "dark",
+            default: "dark"
         },
         collapsible: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         collapsed: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         menus: {
             type: Array,
-            required: true,
-        },
+            required: true
+        }
     },
     computed: {
         smenuStyle() {
@@ -56,13 +56,13 @@ export default {
                 style["overflow-x"] = "hidden";
             }
             return style;
-        },
+        }
     },
     methods: {
         onSelect(obj) {
             this.$emit("menuSelect", obj);
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

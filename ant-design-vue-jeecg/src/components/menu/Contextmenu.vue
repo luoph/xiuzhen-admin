@@ -11,29 +11,29 @@ export default {
         visible: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         itemList: {
             type: Array,
             required: true,
-            default: () => [],
-        },
+            default: () => []
+        }
     },
     data() {
         return {
             left: 0,
             top: 0,
             target: null,
-            selectedKeys: [],
+            selectedKeys: []
         };
     },
     computed: {
         style() {
             return {
                 left: this.left + "px",
-                top: this.top + "px",
+                top: this.top + "px"
             };
-        },
+        }
     },
     created() {
         window.addEventListener("mousedown", e => this.closeMenu(e));
@@ -53,8 +53,8 @@ export default {
         handleClick({ key }) {
             this.$emit("select", key, this.target);
             this.$emit("update:visible", false);
-        },
-    },
+        }
+    }
 };
 </script>
 

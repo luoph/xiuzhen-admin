@@ -14,7 +14,7 @@ export default {
     data() {
         return {
             name: "",
-            breadList: [],
+            breadList: []
         };
     },
     created() {
@@ -32,13 +32,13 @@ export default {
                 // item.meta.name === 'dashboard' ? item.path = '/dashboard' : this.$route.path === item.path
                 this.breadList.push(item);
             });
-        },
+        }
     },
     watch: {
         $route() {
             this.getBreadcrumb();
-        },
-    },
+        }
+    }
 };
 </script>
 

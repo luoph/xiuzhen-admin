@@ -34,46 +34,46 @@ export default {
                     rules: [
                         {
                             required: true,
-                            message: "请输入旧密码!",
-                        },
-                    ],
+                            message: "请输入旧密码!"
+                        }
+                    ]
                 },
                 password: {
                     rules: [
                         {
                             required: true,
-                            message: "请输入新密码!",
+                            message: "请输入新密码!"
                         },
                         {
-                            validator: this.validateToNextPassword,
-                        },
-                    ],
+                            validator: this.validateToNextPassword
+                        }
+                    ]
                 },
                 confirmpassword: {
                     rules: [
                         {
                             required: true,
-                            message: "请确认新密码!",
+                            message: "请确认新密码!"
                         },
                         {
-                            validator: this.compareToFirstPassword,
-                        },
-                    ],
-                },
+                            validator: this.compareToFirstPassword
+                        }
+                    ]
+                }
             },
             confirmDirty: false,
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             form: this.$form.createForm(this),
             url: "sys/user/updatePassword",
-            username: "",
+            username: ""
         };
     },
     methods: {
@@ -138,8 +138,8 @@ export default {
         handleConfirmBlur(e) {
             const value = e.target.value;
             this.confirmDirty = this.confirmDirty || !!value;
-        },
-    },
+        }
+    }
 };
 </script>
 

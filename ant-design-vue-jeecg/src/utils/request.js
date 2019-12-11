@@ -8,7 +8,7 @@ import { ACCESS_TOKEN } from "@/store/mutation-types";
 // 创建 axios 实例
 const service = axios.create({
     baseURL: "/jeecg-boot", // api base_url
-    timeout: 6000, // 请求超时时间
+    timeout: 6000 // 请求超时时间
 });
 
 const err = error => {
@@ -38,7 +38,7 @@ const err = error => {
                                 Vue.ls.remove(ACCESS_TOKEN);
                                 window.location.reload();
                             });
-                        },
+                        }
                     });
                     // update-end- --- author:scott ------ date:20190225 ---- for:Token失效采用弹框模式，不直接跳转----
                 }
@@ -63,7 +63,7 @@ const err = error => {
                 notification.error({
                     message: "系统提示",
                     description: data.message,
-                    duration: 4,
+                    duration: 4
                 });
                 break;
         }
@@ -82,7 +82,7 @@ service.interceptors.request.use(
             if (config.url.indexOf("sys/dict/getDictItems") < 0) {
                 config.params = {
                     _t: Date.parse(new Date()) / 1000,
-                    ...config.params,
+                    ...config.params
                 };
             }
         }
@@ -102,7 +102,7 @@ const installer = {
     vm: {},
     install(Vue, router = {}) {
         Vue.use(VueAxios, router, service);
-    },
+    }
 };
 
 export { installer as VueAxios, service as axios };

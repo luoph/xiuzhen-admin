@@ -15,11 +15,11 @@ export default {
     props: {
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         height: {
             type: Number,
-            default: 254,
+            default: 254
         },
         dataSource: {
             type: Array,
@@ -28,9 +28,9 @@ export default {
                 { item: "示例二", count: 21 },
                 { item: "示例三", count: 17 },
                 { item: "示例四", count: 13 },
-                { item: "示例五", count: 9 },
-            ],
-        },
+                { item: "示例五", count: 9 }
+            ]
+        }
     },
     data() {
         return {
@@ -38,21 +38,21 @@ export default {
                 {
                     dataKey: "percent",
                     min: 0,
-                    formatter: ".0%",
-                },
+                    formatter: ".0%"
+                }
             ],
             pieStyle: {
                 stroke: "#fff",
-                lineWidth: 1,
+                lineWidth: 1
             },
             labelConfig: [
                 "percent",
                 {
                     formatter: (val, item) => {
                         return item.point.item + ": " + val;
-                    },
-                },
-            ],
+                    }
+                }
+            ]
         };
     },
     computed: {
@@ -63,10 +63,10 @@ export default {
                 type: "percent",
                 field: "count",
                 dimension: "item",
-                as: "percent",
+                as: "percent"
             });
             return dv.rows;
-        },
-    },
+        }
+    }
 };
 </script>

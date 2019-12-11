@@ -14,30 +14,30 @@ export default {
         placeholder: {
             type: String,
             default: "",
-            required: false,
+            required: false
         },
         value: {
             type: String,
-            required: false,
+            required: false
         },
         readOnly: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         options: {
             type: Array,
-            required: true,
+            required: true
         },
         triggerChange: {
             type: Boolean,
             required: false,
-            default: false,
-        },
+            default: false
+        }
     },
     data() {
         return {
-            arrayValue: !this.value ? [] : this.value.split(","),
+            arrayValue: !this.value ? [] : this.value.split(",")
         };
     },
     watch: {
@@ -47,7 +47,7 @@ export default {
             } else {
                 this.arrayValue = this.value.split(",");
             }
-        },
+        }
     },
     methods: {
         onChange(selectedValue) {
@@ -56,7 +56,7 @@ export default {
             } else {
                 this.$emit("input", selectedValue.join(","));
             }
-        },
-    },
+        }
+    }
 };
 </script>

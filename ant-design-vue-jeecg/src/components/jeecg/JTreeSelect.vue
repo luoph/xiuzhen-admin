@@ -27,53 +27,53 @@ export default {
     props: {
         value: {
             type: String,
-            required: false,
+            required: false
         },
         placeholder: {
             type: String,
             default: "请选择",
-            required: false,
+            required: false
         },
         dict: {
             type: String,
             default: "",
-            required: false,
+            required: false
         },
         pidField: {
             type: String,
             default: "pid",
-            required: false,
+            required: false
         },
         pidValue: {
             type: String,
             default: "",
-            required: false,
+            required: false
         },
         disabled: {
             type: Boolean,
             default: false,
-            required: false,
+            required: false
         },
         hasChildField: {
             type: String,
             default: "",
-            required: false,
+            required: false
         },
         condition: {
             type: String,
             default: "",
-            required: false,
+            required: false
         },
         // 是否支持多选
         multiple: {
             type: Boolean,
-            default: false,
+            default: false
         },
         loadTriggleChange: {
             type: Boolean,
             default: false,
-            required: false,
-        },
+            required: false
+        }
     },
     data() {
         return {
@@ -83,7 +83,7 @@ export default {
             view: "/sys/dict/loadDictItem/",
             tableName: "",
             text: "",
-            code: "",
+            code: ""
         };
     },
     watch: {
@@ -93,7 +93,7 @@ export default {
         dict() {
             this.initDictInfo();
             this.loadRoot();
-        },
+        }
     },
     created() {
         this.validateProp().then(() => {
@@ -113,7 +113,7 @@ export default {
                         this.treeValue = res.result.map((item, index) => ({
                             key: values[index],
                             value: values[index],
-                            label: item,
+                            label: item
                         }));
                         this.onLoadTriggleChange(res.result[0]);
                     }
@@ -146,7 +146,7 @@ export default {
                     code: this.code,
                     pidField: this.pidField,
                     hasChildField: this.hasChildField,
-                    condition: this.condition,
+                    condition: this.condition
                 };
                 getAction(this.url, param).then(res => {
                     if (res.success) {
@@ -189,7 +189,7 @@ export default {
                 code: this.code,
                 pidField: this.pidField,
                 hasChildField: this.hasChildField,
-                condition: this.condition,
+                condition: this.condition
             };
             getAction(this.url, param).then(res => {
                 if (res.success && res.result) {
@@ -246,12 +246,12 @@ export default {
                     }
                 }
             });
-        },
+        }
     },
     //2.2新增 在组件内定义 指定父组件调用时候的传值属性和事件类型 这个牛逼
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>

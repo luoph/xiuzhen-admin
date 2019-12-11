@@ -23,53 +23,53 @@ export default {
     props: {
         rowKey: {
             type: String,
-            default: "id",
+            default: "id"
         },
         // 根据什么查询，如果传递 id 就根据 id 查询
         queryKey: {
             type: String,
-            default: "parentId",
+            default: "parentId"
         },
         queryParams: {
             type: Object,
-            default: () => ({}),
+            default: () => ({})
         },
         // 查询顶级时的值，如果顶级为0，则传0
         topValue: {
             type: String,
-            default: null,
+            default: null
         },
         columns: {
             type: Array,
-            required: true,
+            required: true
         },
         url: {
             type: String,
-            required: true,
+            required: true
         },
         childrenUrl: {
             type: String,
-            default: null,
+            default: null
         },
         tableProps: {
             type: Object,
-            default: () => ({}),
+            default: () => ({})
         },
         /** 是否在创建组件的时候就查询数据 */
         immediateRequest: {
             type: Boolean,
-            default: true,
+            default: true
         },
         condition: {
             type: String,
             default: "",
-            required: false,
-        },
+            required: false
+        }
     },
     data() {
         return {
             dataSource: [],
-            expandedRowKeys: [],
+            expandedRowKeys: []
         };
     },
     computed: {
@@ -91,15 +91,15 @@ export default {
         },
         tableAttrs() {
             return Object.assign(this.$attrs, this.tableProps);
-        },
+        }
     },
     watch: {
         queryParams: {
             deep: true,
             handler() {
                 this.loadData();
-            },
-        },
+            }
+        }
     },
     created() {
         if (this.immediateRequest) this.loadData();
@@ -169,8 +169,8 @@ export default {
                     });
                 }
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -8,16 +8,16 @@
                 color=""
                 :v-style="{
                     lineWidth: 8,
-                    opacity: 0.75,
+                    opacity: 0.75
                 }"
                 :tooltip="[
                     'transfer*value',
                     (transfer, value) => {
                         return {
                             name: transfer,
-                            value,
+                            value
                         };
-                    },
+                    }
                 ]"
             ></v-interval>
             <v-guide
@@ -27,13 +27,13 @@
                 :top="true"
                 :position="{
                     gender: row.transfer,
-                    value: 45,
+                    value: 45
                 }"
                 :content="row.value + '%'"
                 :v-style="{
                     fontSize: 100,
                     textAlign: 'center',
-                    opacity: 0.75,
+                    opacity: 0.75
                 }"
             />
         </v-chart>
@@ -44,7 +44,7 @@
 const sourceDataConst = [
     { transfer: "一月", value: 813 },
     { transfer: "二月", value: 233 },
-    { transfer: "三月", value: 561 },
+    { transfer: "三月", value: 561 }
 ];
 
 export default {
@@ -52,19 +52,19 @@ export default {
     props: {
         height: {
             type: Number,
-            default: 0,
+            default: 0
         },
         width: {
             type: Number,
-            default: 0,
-        },
+            default: 0
+        }
     },
     data() {
         return {
             data: sourceDataConst,
-            scale: [],
+            scale: []
         };
-    },
+    }
 };
 </script>
 

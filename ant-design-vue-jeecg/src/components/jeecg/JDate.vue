@@ -17,48 +17,48 @@ export default {
         placeholder: {
             type: String,
             default: "",
-            required: false,
+            required: false
         },
         value: {
             type: String,
-            required: false,
+            required: false
         },
         dateFormat: {
             type: String,
             default: "YYYY-MM-DD",
-            required: false,
+            required: false
         },
         //此属性可以被废弃了
         triggerChange: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         readOnly: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         disabled: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         showTime: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         getCalendarContainer: {
             type: Function,
-            default: () => document.body,
-        },
+            default: () => document.body
+        }
     },
     data() {
         let dateStr = this.value;
         return {
             decorator: "",
-            momVal: !dateStr ? null : moment(dateStr, this.dateFormat),
+            momVal: !dateStr ? null : moment(dateStr, this.dateFormat)
         };
     },
     watch: {
@@ -68,18 +68,18 @@ export default {
             } else {
                 this.momVal = moment(val, this.dateFormat);
             }
-        },
+        }
     },
     methods: {
         moment,
         handleDateChange(mom, dateStr) {
             this.$emit("change", dateStr);
-        },
+        }
     },
     //2.2新增 在组件内定义 指定父组件调用时候的传值属性和事件类型 这个牛逼
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>

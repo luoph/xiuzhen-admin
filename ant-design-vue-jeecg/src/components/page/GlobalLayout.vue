@@ -69,7 +69,7 @@ export default {
     components: {
         SideMenu,
         GlobalHeader,
-        GlobalFooter,
+        GlobalFooter
         // update-start---- author:os_chengtgen -- date:20190830 --  for:issues/463 -编译主题颜色已生效，但还一直转圈，显示主题 正在编译 ------
         // // SettingDrawer
         // 注释这个因为在个人设置模块已经加载了SettingDrawer页面
@@ -80,7 +80,7 @@ export default {
         return {
             collapsed: false,
             activeMenu: {},
-            menus: [],
+            menus: []
         };
     },
     computed: {
@@ -88,13 +88,13 @@ export default {
             // 主路由
             mainRouters: state => state.permission.addRouters,
             // 后台菜单
-            permissionMenuList: state => state.user.permissionList,
-        }),
+            permissionMenuList: state => state.user.permissionList
+        })
     },
     watch: {
         sidebarOpened(val) {
             this.collapsed = !val;
-        },
+        }
     },
     created() {
         //--update-begin----author:scott---date:20190320------for:根据后台菜单配置，判断是否路由菜单字段，动态选择是否生成路由（为了支持参数URL菜单）------
@@ -133,9 +133,9 @@ export default {
                     this.findMenuBykey(i.children, key);
                 }
             }
-        },
+        }
         //update-end-author:taoyan date:20190430 for:动态路由title显示配置的菜单title而不是其对应路由的title
-    },
+    }
 };
 </script>
 

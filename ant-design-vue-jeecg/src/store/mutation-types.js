@@ -17,5 +17,5 @@ export const ENCRYPTED_STRING = "ENCRYPTED_STRING";
 
 export const CONTENT_WIDTH_TYPE = {
     Fluid: "Fluid",
-    Fixed: "Fixed",
+    Fixed: "Fixed"
 };

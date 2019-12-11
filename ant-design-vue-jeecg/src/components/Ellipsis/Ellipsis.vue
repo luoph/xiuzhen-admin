@@ -13,28 +13,28 @@ import { cutStrByFullLength, getStrFullLength } from "@/components/_util/StringU
 export default {
     name: "Ellipsis",
     components: {
-        Tooltip,
+        Tooltip
     },
     props: {
         prefixCls: {
             type: String,
-            default: "ant-pro-ellipsis",
+            default: "ant-pro-ellipsis"
         },
         tooltip: {
-            type: Boolean,
+            type: Boolean
         },
         length: {
             type: Number,
-            required: true,
+            required: true
         },
         lines: {
             type: Number,
-            default: 1,
+            default: 1
         },
         fullWidthRecognition: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
     methods: {
         getStrDom(str) {
@@ -47,13 +47,13 @@ export default {
                     {this.getStrDom(fullStr)}
                 </Tooltip>
             );
-        },
+        }
     },
     render() {
         const { tooltip, length } = this.$props;
         let str = this.$slots.default.map(vNode => vNode.text).join("");
         const strDom = tooltip && getStrFullLength(str) > length ? this.getTooltip(str) : this.getStrDom(str);
         return strDom;
-    },
+    }
 };
 </script>

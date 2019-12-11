@@ -11,7 +11,7 @@ export default {
     data() {
         return {
             url: "",
-            id: "",
+            id: ""
         };
     },
     created() {
@@ -23,7 +23,7 @@ export default {
     watch: {
         $route(to, from) {
             this.goUrl();
-        },
+        }
     },
     methods: {
         goUrl() {
@@ -36,8 +36,8 @@ export default {
                 this.url = url;
                 //window.open(this.url);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

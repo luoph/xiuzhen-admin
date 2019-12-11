@@ -19,19 +19,19 @@ const VueAxios = {
             axios: {
                 get: function get() {
                     return instance;
-                },
+                }
             },
             $http: {
                 get: function get() {
                     return instance;
-                },
-            },
+                }
+            }
         });
-    },
+    }
 };
 
 export {
-    VueAxios,
+    VueAxios
     // eslint-disable-next-line no-undef
     //instance as axios
 };

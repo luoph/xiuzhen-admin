@@ -16,7 +16,7 @@ export function login(parameter) {
     return axios({
         url: "/sys/login",
         method: "post",
-        data: parameter,
+        data: parameter
     });
 }
 
@@ -24,7 +24,7 @@ export function phoneLogin(parameter) {
     return axios({
         url: "/sys/phoneLogin",
         method: "post",
-        data: parameter,
+        data: parameter
     });
 }
 
@@ -32,7 +32,7 @@ export function getSmsCaptcha(parameter) {
     return axios({
         url: api.SendSms,
         method: "post",
-        data: parameter,
+        data: parameter
     });
 }
 
@@ -41,8 +41,8 @@ export function getInfo() {
         url: "/api/user/info",
         method: "get",
         headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-        },
+            "Content-Type": "application/json;charset=UTF-8"
+        }
     });
 }
 
@@ -52,7 +52,7 @@ export function logout(logoutToken) {
         method: "post",
         headers: {
             "Content-Type": "application/json;charset=UTF-8",
-            "X-Access-Token": logoutToken,
-        },
+            "X-Access-Token": logoutToken
+        }
     });
 }

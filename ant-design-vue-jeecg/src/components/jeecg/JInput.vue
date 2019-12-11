@@ -13,34 +13,34 @@ export default {
     props: {
         value: {
             type: String,
-            required: false,
+            required: false
         },
         type: {
             type: String,
             required: false,
-            default: JINPUT_QUERY_LIKE,
+            default: JINPUT_QUERY_LIKE
         },
         placeholder: {
             type: String,
             required: false,
-            default: "",
-        },
+            default: ""
+        }
     },
     watch: {
         value: {
             immediate: true,
             handler: function() {
                 this.initVal();
-            },
-        },
+            }
+        }
     },
     model: {
         prop: "value",
-        event: "change",
+        event: "change"
     },
     data() {
         return {
-            inputVal: "",
+            inputVal: ""
         };
     },
     methods: {
@@ -85,8 +85,8 @@ export default {
                 default:
             }
             this.$emit("change", text);
-        },
-    },
+        }
+    }
 };
 </script>
 

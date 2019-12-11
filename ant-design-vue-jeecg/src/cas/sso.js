@@ -22,7 +22,7 @@ const init = callback => {
     console.log("-------单点登录结束-------");
 };
 const SSO = {
-    init: init,
+    init: init
 };
 
 function getUrlParam(paraName) {
@@ -48,7 +48,7 @@ function getUrlParam(paraName) {
 function validateSt(ticket, service, callback) {
     let params = {
         ticket: ticket,
-        service: service,
+        service: service
     };
     store
         .dispatch("ValidateLogin", params)

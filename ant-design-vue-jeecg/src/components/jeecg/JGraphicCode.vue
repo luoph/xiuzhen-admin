@@ -12,61 +12,61 @@ export default {
     props: {
         length: {
             type: Number,
-            default: 4,
+            default: 4
         },
         fontSizeMin: {
             type: Number,
-            default: 20,
+            default: 20
         },
         fontSizeMax: {
             type: Number,
-            default: 45,
+            default: 45
         },
         backgroundColorMin: {
             type: Number,
-            default: 180,
+            default: 180
         },
         backgroundColorMax: {
             type: Number,
-            default: 240,
+            default: 240
         },
         colorMin: {
             type: Number,
-            default: 50,
+            default: 50
         },
         colorMax: {
             type: Number,
-            default: 160,
+            default: 160
         },
         lineColorMin: {
             type: Number,
-            default: 40,
+            default: 40
         },
         lineColorMax: {
             type: Number,
-            default: 180,
+            default: 180
         },
         dotColorMin: {
             type: Number,
-            default: 0,
+            default: 0
         },
         dotColorMax: {
             type: Number,
-            default: 255,
+            default: 255
         },
         contentWidth: {
             type: Number,
-            default: 136,
+            default: 136
         },
         contentHeight: {
             type: Number,
-            default: 38,
+            default: 38
         },
         remote: {
             type: Boolean,
             default: false,
-            required: false,
-        },
+            required: false
+        }
     },
     methods: {
         // 生成一个随机数
@@ -183,9 +183,9 @@ export default {
         getLoginParam() {
             return {
                 checkCode: this.code,
-                checkKey: this.checkKey,
+                checkKey: this.checkKey
             };
-        },
+        }
     },
     mounted() {
         this.drawPic();
@@ -193,9 +193,9 @@ export default {
     data() {
         return {
             code: "",
-            checkKey: "",
+            checkKey: ""
         };
-    },
+    }
 };
 </script>
 

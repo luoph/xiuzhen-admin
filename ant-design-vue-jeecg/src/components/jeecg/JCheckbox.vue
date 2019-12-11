@@ -8,17 +8,17 @@ export default {
     props: {
         value: {
             type: String,
-            required: false,
+            required: false
         },
         /*label value*/
         options: {
             type: Array,
-            required: true,
-        },
+            required: true
+        }
     },
     data() {
         return {
-            checkboxArray: !this.value ? [] : this.value.split(","),
+            checkboxArray: !this.value ? [] : this.value.split(",")
         };
     },
     watch: {
@@ -28,16 +28,16 @@ export default {
             } else {
                 this.checkboxArray = this.value.split(",");
             }
-        },
+        }
     },
     methods: {
         onChange(checkedValues) {
             this.$emit("change", checkedValues.join(","));
-        },
+        }
     },
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>

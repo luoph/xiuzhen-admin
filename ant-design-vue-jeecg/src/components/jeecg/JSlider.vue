@@ -21,7 +21,7 @@ export default {
             mouseMoveStata: false /*触发拖动状态  判断*/,
             maxwidth: "" /*拖动最大宽度，依据滑块宽度算出来的*/,
             confirmWords: "拖动滑块验证" /*滑块文字*/,
-            confirmSuccess: false /*验证成功判断*/,
+            confirmSuccess: false /*验证成功判断*/
         };
     },
     methods: {
@@ -73,13 +73,13 @@ export default {
                 }
                 // ---- update-end- author:sunjianlei --- date:20191009 --- for: 修复获取不到 handler 的时候报错 ----
             }
-        }, //mouseup事件
+        } //mouseup事件
     },
     mounted() {
         this.maxwidth = this.$refs.dragDiv.clientWidth - this.$refs.moveDiv.clientWidth;
         document.getElementsByTagName("html")[0].addEventListener("mousemove", this.mouseMoveFn);
         document.getElementsByTagName("html")[0].addEventListener("mouseup", this.moseUpFn);
-    },
+    }
 };
 </script>
 

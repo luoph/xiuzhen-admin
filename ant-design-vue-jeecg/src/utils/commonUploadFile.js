@@ -41,8 +41,8 @@ const getUploadFileList = paths => {
                 url: window._CONFIG["domainURL"] + "/sys/common/view/" + arr[a],
                 response: {
                     status: "history",
-                    message: arr[a],
-                },
+                    message: arr[a]
+                }
             });
         }
     }

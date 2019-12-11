@@ -36,25 +36,25 @@ export default {
         title: {
             type: String,
             default: "部门选择",
-            required: false,
+            required: false
         },
         closable: {
             type: Boolean,
             default: false,
-            required: false,
+            required: false
         },
         username: {
             type: String,
             default: "",
-            required: false,
-        },
+            required: false
+        }
     },
     watch: {
         username(val) {
             if (val) {
                 this.loadDepartList();
             }
-        },
+        }
     },
     data() {
         return {
@@ -63,7 +63,7 @@ export default {
             departList: [],
             departSelected: "",
             validate_status: "",
-            currDepartName: "",
+            currDepartName: ""
         };
     },
     created() {
@@ -106,7 +106,7 @@ export default {
             }
             let obj = {
                 orgCode: this.departSelected,
-                username: this.username,
+                username: this.username
             };
             putAction("/sys/selectDepart", obj).then(res => {
                 if (res.success) {
@@ -134,8 +134,8 @@ export default {
             this.visible = false;
             this.validate_status = "";
             this.currDepartName = "";
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

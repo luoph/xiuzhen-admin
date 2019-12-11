@@ -8,29 +8,29 @@ export default {
     props: {
         menu: {
             type: Array,
-            required: true,
+            required: true
         },
         theme: {
             type: String,
             required: false,
-            default: "dark",
+            default: "dark"
         },
         mode: {
             type: String,
             required: false,
-            default: "inline",
+            default: "inline"
         },
         collapsed: {
             type: Boolean,
             required: false,
-            default: false,
-        },
+            default: false
+        }
     },
     data() {
         return {
             openKeys: [],
             selectedKeys: [],
-            cachedOpenKeys: [],
+            cachedOpenKeys: []
         };
     },
     computed: {
@@ -38,7 +38,7 @@ export default {
             const keys = [];
             vm.menu.forEach(item => keys.push(item.path));
             return keys;
-        },
+        }
     },
     mounted() {
         this.updateMenu();
@@ -54,7 +54,7 @@ export default {
         },
         $route: function() {
             this.updateMenu();
-        },
+        }
     },
     methods: {
         // select menu item
@@ -151,7 +151,7 @@ export default {
             const props = {};
             typeof icon === "object" ? (props.component = icon) : (props.type = icon);
             return <Icon {...{ props }} />;
-        },
+        }
     },
 
     render() {
@@ -159,14 +159,14 @@ export default {
         const props = {
             mode: mode,
             theme: theme,
-            openKeys: this.openKeys,
+            openKeys: this.openKeys
         };
         const on = {
             select: obj => {
                 this.selectedKeys = obj.selectedKeys;
                 this.$emit("select", obj);
             },
-            openChange: this.onOpenChange,
+            openChange: this.onOpenChange
         };
 
         const menuTree = menu.map(item => {
@@ -181,5 +181,5 @@ export default {
                 {menuTree}
             </Menu>
         );
-    },
+    }
 };

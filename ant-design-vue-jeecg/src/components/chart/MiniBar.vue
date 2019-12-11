@@ -16,7 +16,7 @@ const beginDay = new Date().getTime();
 for (let i = 0; i < 10; i++) {
     sourceData.push({
         x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format("YYYY-MM-DD"),
-        y: Math.round(Math.random() * 10),
+        y: Math.round(Math.random() * 10)
     });
 }
 
@@ -24,21 +24,21 @@ const tooltip = [
     "x*y",
     (x, y) => ({
         name: x,
-        value: y,
-    }),
+        value: y
+    })
 ];
 
 const scale = [
     {
         dataKey: "x",
-        min: 2,
+        min: 2
     },
     {
         dataKey: "y",
         title: "时间",
         min: 1,
-        max: 30,
-    },
+        max: 30
+    }
 ];
 
 export default {
@@ -46,16 +46,16 @@ export default {
     props: {
         dataSource: {
             type: Array,
-            default: () => [],
+            default: () => []
         },
         width: {
             type: Number,
-            default: null,
+            default: null
         },
         height: {
             type: Number,
-            default: 200,
-        },
+            default: 200
+        }
     },
     created() {
         if (this.dataSource.length === 0) {
@@ -68,9 +68,9 @@ export default {
         return {
             tooltip,
             data: [],
-            scale,
+            scale
         };
-    },
+    }
 };
 </script>
 

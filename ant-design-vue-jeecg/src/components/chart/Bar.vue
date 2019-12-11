@@ -17,20 +17,20 @@ export default {
     props: {
         dataSource: {
             type: Array,
-            required: true,
+            required: true
         },
         yaxisText: {
             type: String,
-            default: "y",
+            default: "y"
         },
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         height: {
             type: Number,
-            default: 254,
-        },
+            default: 254
+        }
     },
     data() {
         return { padding: ["auto", "auto", "40", "50"] };
@@ -40,13 +40,13 @@ export default {
             return [
                 {
                     dataKey: "y",
-                    alias: this.yaxisText,
-                },
+                    alias: this.yaxisText
+                }
             ];
-        },
+        }
     },
     mounted() {
         triggerWindowResizeEvent();
-    },
+    }
 };
 </script>

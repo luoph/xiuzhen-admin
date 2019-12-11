@@ -23,45 +23,45 @@ import JSelectDepartModal from "./modal/JSelectDepartModal";
 export default {
     name: "JSelectDepart",
     components: {
-        JSelectDepartModal,
+        JSelectDepartModal
     },
     props: {
         modalWidth: {
             type: Number,
             default: 500,
-            required: false,
+            required: false
         },
         multi: {
             type: Boolean,
             default: false,
-            required: false,
+            required: false
         },
         rootOpened: {
             type: Boolean,
             default: true,
-            required: false,
+            required: false
         },
         value: {
             type: String,
-            required: false,
+            required: false
         },
         disabled: {
             type: Boolean,
             required: false,
-            default: false,
+            default: false
         },
         // 自定义返回字段，默认返回 id
         customReturnField: {
             type: String,
-            default: "id",
-        },
+            default: "id"
+        }
     },
     data() {
         return {
             visible: false,
             confirmLoading: false,
             departNames: "",
-            departIds: "",
+            departIds: ""
         };
     },
     mounted() {
@@ -72,7 +72,7 @@ export default {
             if (this.customReturnField === "id") {
                 this.departIds = val;
             }
-        },
+        }
     },
     methods: {
         initComp(departNames) {
@@ -98,12 +98,12 @@ export default {
         },
         handleEmpty() {
             this.handleOK("");
-        },
+        }
     },
     model: {
         prop: "value",
-        event: "change",
-    },
+        event: "change"
+    }
 };
 </script>
 
