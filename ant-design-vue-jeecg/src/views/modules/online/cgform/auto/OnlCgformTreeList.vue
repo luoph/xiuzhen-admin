@@ -133,7 +133,7 @@ import JImportModal from "@/components/jeecg/JImportModal";
 export default {
     name: "OnlCgformTreeList",
     components: {
-        JImportModal,
+        JImportModal
     },
     data() {
         return {
@@ -161,7 +161,7 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
 
             url: {
@@ -170,11 +170,11 @@ export default {
                 optPre: "/online/cgform/api/form/",
                 exportXls: "/online/cgform/api/exportXls/",
                 buttonAction: "/online/cgform/api/doButton",
-                startProcess: "/process/extActProcess/startMutilProcess",
+                startProcess: "/process/extActProcess/startMutilProcess"
             },
             isorter: {
                 column: "create_time",
-                order: "desc",
+                order: "desc"
             },
             dictOptions: {},
 
@@ -185,7 +185,7 @@ export default {
                 scopedSlots: { customRender: "action" },
                 fixed: "right",
                 align: "center",
-                width: 150,
+                width: 150
             },
             formTemplate: "99",
 
@@ -202,11 +202,11 @@ export default {
                 delete: true,
                 batch_delete: true,
                 import: true,
-                export: true,
+                export: true
             },
             expandedRowKeys: [],
             hasBpmStatus: false,
-            flowCodePre: "onl_",
+            flowCodePre: "onl_"
         };
     },
     created() {
@@ -231,7 +231,7 @@ export default {
                 .catch(msg => {
                     console.log(msg);
                 });
-        },
+        }
     },
     computed: {
         tableProps() {
@@ -241,10 +241,10 @@ export default {
                 // https://vue.ant.design/components/table-cn/#rowSelection
                 rowSelection: {
                     selectedRowKeys: _this.selectedRowKeys,
-                    onChange: selectedRowKeys => (_this.selectedRowKeys = selectedRowKeys),
-                },
+                    onChange: selectedRowKeys => (_this.selectedRowKeys = selectedRowKeys)
+                }
             };
-        },
+        }
     },
     methods: {
         resetData() {
@@ -562,7 +562,7 @@ export default {
                     onOk: function() {
                         that.handleDelete(ids);
                         that.onClearSelected();
-                    },
+                    }
                 });
             }
         },
@@ -578,7 +578,7 @@ export default {
                 let params = {
                     formId: this.code,
                     buttonCode: buttonCode,
-                    dataId: record.id,
+                    dataId: record.id
                 };
                 console.log("自定义按钮link请求后台参数：", params);
                 postAction(this.url.buttonAction, params).then(res => {
@@ -609,7 +609,7 @@ export default {
             let params = {
                 formId: this.code,
                 buttonCode: buttonCode,
-                dataId: this.selectedRowKeys[0],
+                dataId: this.selectedRowKeys[0]
             };
             console.log("自定义按钮请求后台参数：", params);
             postAction(this.url.buttonAction, params).then(res => {
@@ -661,7 +661,7 @@ export default {
                         flowCode: that.flowCodePre + that.currentTableName,
                         id: record.id,
                         formUrl: "modules/bpm/task/form/OnlineFormDetail",
-                        formUrlMobile: "modules/bpm/task/form/OnlineFormDetail",
+                        formUrlMobile: "modules/bpm/task/form/OnlineFormDetail"
                     };
                     postAction(that.url.startProcess, param).then(res => {
                         if (res.success) {
@@ -672,7 +672,7 @@ export default {
                             that.$message.warning(res.message);
                         }
                     });
-                },
+                }
             });
         },
         handlePreviewPic: function(record) {
@@ -680,8 +680,8 @@ export default {
             var dataId = record.id;
             this.$refs.processInstPicModal.preview(flowCode, dataId);
             this.$refs.processInstPicModal.title = "流程图";
-        },
-    },
+        }
+    }
 };
 </script>
 <style>

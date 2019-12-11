@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name: "RedisTerminal",
+    name: "RedisTerminal"
 };
 </script>
 <style></style>

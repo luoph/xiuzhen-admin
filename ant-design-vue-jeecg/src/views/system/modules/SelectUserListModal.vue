@@ -89,12 +89,12 @@ export default {
                     align: "center",
                     dataIndex: "username",
                     fixed: "left",
-                    width: 200,
+                    width: 200
                 },
                 {
                     title: "真实姓名",
                     align: "center",
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "性别",
@@ -108,17 +108,17 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "手机号码",
                     align: "center",
-                    dataIndex: "phone",
+                    dataIndex: "phone"
                 },
                 {
                     title: "邮箱",
                     align: "center",
-                    dataIndex: "email",
+                    dataIndex: "email"
                 },
                 {
                     title: "状态",
@@ -132,8 +132,8 @@ export default {
                         } else {
                             return text;
                         }
-                    },
-                },
+                    }
+                }
             ],
             dataSource: [],
             ipagination: {
@@ -145,16 +145,16 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             isorter: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             selectedRowKeys: [],
             selectionRows: [],
             visible: false,
-            toggleSearchStatus: false,
+            toggleSearchStatus: false
         };
     },
     created() {
@@ -260,8 +260,8 @@ export default {
         },
         handleToggleSearch() {
             this.toggleSearchStatus = !this.toggleSearchStatus;
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

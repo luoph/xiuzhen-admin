@@ -33,7 +33,7 @@ import { checkOnlyUser } from "@/api/api";
 export default {
     name: "Step1",
     components: {
-        JGraphicCode,
+        JGraphicCode
     },
     data() {
         return {
@@ -43,8 +43,8 @@ export default {
             verifiedCode: "",
             validatorRules: {
                 username: { rules: [{ required: false }, { validator: this.validateInputUsername }] },
-                inputCode: { rules: [{ required: true, message: "请输入验证码!" }, { validator: this.validateInputCode }] },
-            },
+                inputCode: { rules: [{ required: true, message: "请输入验证码!" }, { validator: this.validateInputCode }] }
+            }
         };
     },
     methods: {
@@ -64,7 +64,7 @@ export default {
                         if (res.success) {
                             var userList = {
                                 username: res.result.username,
-                                phone: res.result.phone,
+                                phone: res.result.phone
                             };
                             setTimeout(function() {
                                 that.$emit("nextStep", userList);
@@ -105,7 +105,7 @@ export default {
             //判断用户输入账号还是手机号码
             if (reg.test(value)) {
                 var params = {
-                    phone: value,
+                    phone: value
                 };
                 checkOnlyUser(params).then(res => {
                     if (res.success) {
@@ -116,7 +116,7 @@ export default {
                 });
             } else {
                 var params = {
-                    username: value,
+                    username: value
                 };
                 checkOnlyUser(params).then(res => {
                     if (res.success) {
@@ -126,8 +126,8 @@ export default {
                     }
                 });
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

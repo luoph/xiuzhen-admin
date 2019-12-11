@@ -28,7 +28,7 @@ export default {
             loading: false,
             treeDataSource: [],
             selectedKeys: [],
-            expandedKeys: [],
+            expandedKeys: []
         };
     },
     created() {
@@ -38,7 +38,7 @@ export default {
         queryTreeData(keyword) {
             this.commonRequestThen(
                 queryDepartTreeList({
-                    departName: keyword ? keyword : undefined,
+                    departName: keyword ? keyword : undefined
                 })
             );
         },
@@ -90,8 +90,8 @@ export default {
                     this.loading = false;
                     this.cardLoading = false;
                 });
-        },
-    },
+        }
+    }
 };
 </script>
 

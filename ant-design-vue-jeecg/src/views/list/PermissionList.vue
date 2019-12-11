@@ -101,7 +101,7 @@ import STable from "@/components/table/";
 export default {
     name: "TableList",
     components: {
-        STable,
+        STable
     },
     data() {
         return {
@@ -110,11 +110,11 @@ export default {
             visible: false,
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             form: null,
             mdl: {},
@@ -127,28 +127,28 @@ export default {
             columns: [
                 {
                     title: "唯一识别码",
-                    dataIndex: "id",
+                    dataIndex: "id"
                 },
                 {
                     title: "权限名称",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "可操作权限",
                     dataIndex: "actions",
-                    scopedSlots: { customRender: "actions" },
+                    scopedSlots: { customRender: "actions" }
                 },
                 {
                     title: "状态",
                     dataIndex: "status",
-                    scopedSlots: { customRender: "status" },
+                    scopedSlots: { customRender: "status" }
                 },
                 {
                     title: "操作",
                     width: "150px",
                     dataIndex: "action",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             // 向后端拉取可以用的操作列表
             permissionList: null,
@@ -156,7 +156,7 @@ export default {
             loadData: parameter => {
                 return this.$http
                     .get("/api/permission", {
-                        params: Object.assign(parameter, this.queryParam),
+                        params: Object.assign(parameter, this.queryParam)
                     })
                     .then(res => {
                         let result = res.result;
@@ -169,17 +169,17 @@ export default {
             },
 
             selectedRowKeys: [],
-            selectedRows: [],
+            selectedRows: []
         };
     },
     filters: {
         statusFilter(status) {
             const statusMap = {
                 1: "正常",
-                2: "禁用",
+                2: "禁用"
             };
             return statusMap[status];
-        },
+        }
     },
     created() {
         this.loadPermissionList();
@@ -195,7 +195,7 @@ export default {
                     { label: "列表", value: "query", defaultChecked: false },
                     { label: "删除", value: "delete", defaultChecked: false },
                     { label: "导入", value: "import", defaultChecked: false },
-                    { label: "导出", value: "export", defaultChecked: false },
+                    { label: "导出", value: "export", defaultChecked: false }
                 ];
                 setTimeout(resolve(data), 1500);
             }).then(res => {
@@ -214,7 +214,7 @@ export default {
         },
         toggleAdvanced() {
             this.advanced = !this.advanced;
-        },
+        }
     },
     watch: {
         /*
@@ -229,6 +229,6 @@ export default {
         })
       }
       */
-    },
+    }
 };
 </script>

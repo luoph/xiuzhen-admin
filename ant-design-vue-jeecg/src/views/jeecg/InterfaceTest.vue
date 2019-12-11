@@ -36,7 +36,7 @@ export default {
             url: "",
             paramJson: "",
             resultJson: {},
-            requestMethod: "POST",
+            requestMethod: "POST"
         };
     },
     methods: {
@@ -83,7 +83,7 @@ export default {
         created() {
             const token = Vue.ls.get(ACCESS_TOKEN);
             this.headers = { "X-Access-Token": token };
-        },
-    },
+        }
+    }
 };
 </script>

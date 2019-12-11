@@ -26,7 +26,7 @@ export default {
                     customRender: (value, row, index) => {
                         const obj = {
                             children: value,
-                            attrs: {},
+                            attrs: {}
                         };
                         if (index === 0) {
                             obj.attrs.rowSpan = this.dataSource.length;
@@ -34,7 +34,7 @@ export default {
                             obj.attrs.rowSpan = 0;
                         }
                         return obj;
-                    },
+                    }
                 },
                 {
                     title: "分组二",
@@ -43,7 +43,7 @@ export default {
                     customRender: (value, row, index) => {
                         const obj = {
                             children: value,
-                            attrs: {},
+                            attrs: {}
                         };
                         //当前列跨行的条数
                         var a = parseInt(this.levelNum);
@@ -60,7 +60,7 @@ export default {
                             }
                         }
                         return obj;
-                    },
+                    }
                 },
                 {
                     title: "分组三",
@@ -69,7 +69,7 @@ export default {
                     customRender: (value, row, index) => {
                         const obj = {
                             children: value,
-                            attrs: {},
+                            attrs: {}
                         };
                         var a = parseInt(this.levelNum) * parseInt(this.gridNum);
                         var b = parseInt(this.boxNum);
@@ -82,23 +82,23 @@ export default {
                             }
                         }
                         return obj;
-                    },
+                    }
                 },
                 {
                     title: "字段一",
                     align: "center",
-                    dataIndex: "boxNo",
+                    dataIndex: "boxNo"
                 },
                 {
                     title: "字段二",
                     align: "center",
-                    dataIndex: "storedNum",
+                    dataIndex: "storedNum"
                 },
                 {
                     title: "字段三",
                     align: "center",
-                    dataIndex: "maxNum",
-                },
+                    dataIndex: "maxNum"
+                }
             ],
             //数据集
             dataSource: [
@@ -118,7 +118,7 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-02",
+                    updateTime: "2019-04-02"
                 },
                 {
                     id: "f903d50d02904b14175dccf2a7948777",
@@ -136,7 +136,7 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-02",
+                    updateTime: "2019-04-02"
                 },
                 {
                     id: "4f04c0ca4202535d678871b07e706cf6",
@@ -154,7 +154,7 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-02",
+                    updateTime: "2019-04-02"
                 },
                 {
                     id: "d0c91dabedfc03efad0126e50ea72e80",
@@ -172,7 +172,7 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-08",
+                    updateTime: "2019-04-08"
                 },
                 {
                     id: "1e8bfcbe4352afbab8878f9fd368e007",
@@ -190,7 +190,7 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-08",
+                    updateTime: "2019-04-08"
                 },
                 {
                     id: "d76087d8d3ebc7a59d43458588f26941",
@@ -208,7 +208,7 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-02",
+                    updateTime: "2019-04-02"
                 },
                 {
                     id: "7bf7754f12e1bf95edcd501cc6b85e62",
@@ -226,7 +226,7 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-02",
+                    updateTime: "2019-04-02"
                 },
                 {
                     id: "9cd08d733657d5b286bec870f12f6ecf",
@@ -244,14 +244,14 @@ export default {
                     createBy: "admin",
                     createTime: "2019-04-02",
                     updateBy: "admin",
-                    updateTime: "2019-04-02",
-                },
+                    updateTime: "2019-04-02"
+                }
             ],
             isorter: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
-            url: {},
+            url: {}
         };
     },
     created() {
@@ -262,8 +262,8 @@ export default {
             this.levelNum = 4;
             this.gridNum = 2;
             this.boxNum = 2;
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

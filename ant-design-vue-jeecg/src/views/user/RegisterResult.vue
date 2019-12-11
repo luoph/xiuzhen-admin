@@ -12,11 +12,11 @@ import Result from "@/views/result/Result";
 export default {
     name: "RegisterResult",
     components: {
-        Result,
+        Result
     },
     data() {
         return {
-            form: {},
+            form: {}
         };
     },
     computed: {
@@ -25,7 +25,7 @@ export default {
             let title = `你的账户：${v} 注册成功`;
             this.username = v;
             return title;
-        },
+        }
     },
     created() {
         this.form = this.$route.params;
@@ -37,8 +37,8 @@ export default {
             params.password = this.form.password;
             console.log(params);
             this.$router.push({ name: "login", params });
-        },
-    },
+        }
+    }
 };
 </script>
 

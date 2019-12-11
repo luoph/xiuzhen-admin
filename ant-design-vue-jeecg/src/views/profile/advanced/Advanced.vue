@@ -120,7 +120,7 @@ export default {
     components: {
         PageLayout,
         DetailList,
-        DetailListItem,
+        DetailListItem
     },
     mixins: [mixinDevice],
     data() {
@@ -128,16 +128,16 @@ export default {
             tabList: [
                 {
                     key: "1",
-                    tab: "操作日志一",
+                    tab: "操作日志一"
                 },
                 {
                     key: "2",
-                    tab: "操作日志二",
+                    tab: "操作日志二"
                 },
                 {
                     key: "3",
-                    tab: "操作日志三",
-                },
+                    tab: "操作日志三"
+                }
             ],
             activeTabKey: "1",
 
@@ -145,29 +145,29 @@ export default {
                 {
                     title: "操作类型",
                     dataIndex: "type",
-                    key: "type",
+                    key: "type"
                 },
                 {
                     title: "操作人",
                     dataIndex: "name",
-                    key: "name",
+                    key: "name"
                 },
                 {
                     title: "执行结果",
                     dataIndex: "status",
                     key: "status",
-                    scopedSlots: { customRender: "status" },
+                    scopedSlots: { customRender: "status" }
                 },
                 {
                     title: "操作时间",
                     dataIndex: "updatedAt",
-                    key: "updatedAt",
+                    key: "updatedAt"
                 },
                 {
                     title: "备注",
                     dataIndex: "remark",
-                    key: "remark",
-                },
+                    key: "remark"
+                }
             ],
             operation1: [
                 {
@@ -176,7 +176,7 @@ export default {
                     name: "曲丽丽",
                     status: "agree",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "-",
+                    remark: "-"
                 },
                 {
                     key: "op2",
@@ -184,7 +184,7 @@ export default {
                     name: "付小小",
                     status: "reject",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "不通过原因",
+                    remark: "不通过原因"
                 },
                 {
                     key: "op3",
@@ -192,7 +192,7 @@ export default {
                     name: "周毛毛",
                     status: "agree",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "-",
+                    remark: "-"
                 },
                 {
                     key: "op4",
@@ -200,7 +200,7 @@ export default {
                     name: "林东东",
                     status: "agree",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "很棒",
+                    remark: "很棒"
                 },
                 {
                     key: "op5",
@@ -208,8 +208,8 @@ export default {
                     name: "汗牙牙",
                     status: "agree",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "-",
-                },
+                    remark: "-"
+                }
             ],
             operation2: [
                 {
@@ -218,7 +218,7 @@ export default {
                     name: "付小小",
                     status: "reject",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "不通过原因",
+                    remark: "不通过原因"
                 },
                 {
                     key: "op3",
@@ -226,7 +226,7 @@ export default {
                     name: "周毛毛",
                     status: "agree",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "-",
+                    remark: "-"
                 },
                 {
                     key: "op4",
@@ -234,8 +234,8 @@ export default {
                     name: "林东东",
                     status: "agree",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "很棒",
-                },
+                    remark: "很棒"
+                }
             ],
             operation3: [
                 {
@@ -244,7 +244,7 @@ export default {
                     name: "付小小",
                     status: "reject",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "不通过原因",
+                    remark: "不通过原因"
                 },
                 {
                     key: "op3",
@@ -252,27 +252,27 @@ export default {
                     name: "周毛毛",
                     status: "agree",
                     updatedAt: "2017-10-03  19:23:12",
-                    remark: "-",
-                },
-            ],
+                    remark: "-"
+                }
+            ]
         };
     },
     filters: {
         statusFilter(status) {
             const statusMap = {
                 agree: "成功",
-                reject: "驳回",
+                reject: "驳回"
             };
             return statusMap[status];
         },
         statusTypeFilter(type) {
             const statusTypeMap = {
                 agree: "success",
-                reject: "error",
+                reject: "error"
             };
             return statusTypeMap[type];
-        },
-    },
+        }
+    }
 };
 </script>
 

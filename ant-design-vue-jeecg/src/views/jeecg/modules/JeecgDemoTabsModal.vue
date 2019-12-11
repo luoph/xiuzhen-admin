@@ -119,27 +119,27 @@ export default {
                     dataIndex: "name",
                     key: "name",
                     width: "20%",
-                    scopedSlots: { customRender: "name" },
+                    scopedSlots: { customRender: "name" }
                 },
                 {
                     title: "工号",
                     dataIndex: "workId",
                     key: "workId",
                     width: "20%",
-                    scopedSlots: { customRender: "workId" },
+                    scopedSlots: { customRender: "workId" }
                 },
                 {
                     title: "所属部门",
                     dataIndex: "department",
                     key: "department",
                     width: "40%",
-                    scopedSlots: { customRender: "department" },
+                    scopedSlots: { customRender: "department" }
                 },
                 {
                     title: "操作",
                     key: "action",
-                    scopedSlots: { customRender: "operation" },
-                },
+                    scopedSlots: { customRender: "operation" }
+                }
             ],
             data: [
                 {
@@ -147,22 +147,22 @@ export default {
                     name: "小明",
                     workId: "001",
                     editable: false,
-                    department: "行政部",
+                    department: "行政部"
                 },
                 {
                     key: "2",
                     name: "李莉",
                     workId: "002",
                     editable: false,
-                    department: "IT部",
+                    department: "IT部"
                 },
                 {
                     key: "3",
                     name: "王小帅",
                     workId: "003",
                     editable: false,
-                    department: "财务部",
-                },
+                    department: "财务部"
+                }
             ],
 
             confirmLoading: false,
@@ -170,8 +170,8 @@ export default {
             validatorRules: {},
             url: {
                 add: "/test/jeecgDemo/add",
-                edit: "/test/jeecgDemo/edit",
-            },
+                edit: "/test/jeecgDemo/edit"
+            }
         };
     },
     created() {},
@@ -244,7 +244,7 @@ export default {
                 workId: "",
                 department: "",
                 editable: true,
-                isNew: true,
+                isNew: true
             });
         },
         removeRow(key) {
@@ -271,8 +271,8 @@ export default {
         cancelEditRow(key) {
             let target = this.data.filter(item => item.key === key)[0];
             target.editable = false;
-        },
-    },
+        }
+    }
 };
 </script>
 

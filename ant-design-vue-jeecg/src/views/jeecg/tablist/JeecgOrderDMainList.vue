@@ -110,7 +110,7 @@ export default {
         JeecgOrderCustomerModal,
         JeecgOrderDMainModal,
         JeecgOrderCustomerList,
-        JeecgOrderTicketList,
+        JeecgOrderTicketList
     },
     data() {
         return {
@@ -125,7 +125,7 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             // 表头
             columns: [
@@ -137,12 +137,12 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "订单号",
                     align: "center",
-                    dataIndex: "orderCode",
+                    dataIndex: "orderCode"
                 },
                 {
                     title: "订单类型",
@@ -156,37 +156,37 @@ export default {
                             re = "国际订单";
                         }
                         return re;
-                    },
+                    }
                 },
                 {
                     title: "订单日期",
                     align: "center",
-                    dataIndex: "orderDate",
+                    dataIndex: "orderDate"
                 },
                 {
                     title: "订单金额",
                     align: "center",
-                    dataIndex: "orderMoney",
+                    dataIndex: "orderMoney"
                 },
                 {
                     title: "订单备注",
                     align: "center",
-                    dataIndex: "content",
+                    dataIndex: "content"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             // 分页参数
             type: "radio",
             url: {
                 list: "/test/order/orderList",
                 delete: "/test/order/delete",
-                deleteBatch: "/test/order/deleteBatch",
-            },
+                deleteBatch: "/test/order/deleteBatch"
+            }
         };
     },
     methods: {
@@ -195,8 +195,8 @@ export default {
                 on: {
                     click: () => {
                         this.onSelectChange(record.id.split(","), [record]);
-                    },
-                },
+                    }
+                }
             };
         },
         onSelectChange(selectedRowKeys, selectionRows) {
@@ -243,8 +243,8 @@ export default {
             this.$refs.JeecgOrderTicketList.selectedRowKeys = [];
             this.$refs.JeecgOrderTicketList.selectionRows = [];
             this.loadData();
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

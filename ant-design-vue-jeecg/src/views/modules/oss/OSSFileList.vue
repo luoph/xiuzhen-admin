@@ -77,36 +77,36 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "文件名称",
                     align: "center",
-                    dataIndex: "fileName",
+                    dataIndex: "fileName"
                 },
                 {
                     title: "文件地址",
                     align: "center",
-                    dataIndex: "url",
+                    dataIndex: "url"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 upload: "/oss/file/upload",
                 list: "/oss/file/list",
-                delete: "/oss/file/delete",
-            },
+                delete: "/oss/file/delete"
+            }
         };
     },
     computed: {
         uploadAction() {
             return window._CONFIG["domainURL"] + this.url.upload;
-        },
+        }
     },
     methods: {
         beforeUpload(file) {
@@ -143,10 +143,10 @@ export default {
                 content: "是否删除选中文件?",
                 onOk: function() {
                     that.handleDelete(id);
-                },
+                }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

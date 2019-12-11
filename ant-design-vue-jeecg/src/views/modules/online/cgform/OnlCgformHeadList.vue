@@ -172,7 +172,7 @@ export default {
     name: "OnlCgformHeadList",
     mixins: [JeecgListMixin],
     components: {
-        JDictSelectTag,
+        JDictSelectTag
     },
     data() {
         return {
@@ -187,7 +187,7 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "表类型",
@@ -195,36 +195,36 @@ export default {
                     dataIndex: "tableType",
                     customRender: text => {
                         return filterDictText(this.tableTypeDictOptions, `${text}`);
-                    },
+                    }
                 },
                 {
                     title: "表名",
                     align: "center",
-                    dataIndex: "tableName",
+                    dataIndex: "tableName"
                 },
                 {
                     title: "表描述",
                     align: "center",
-                    dataIndex: "tableTxt",
+                    dataIndex: "tableTxt"
                 },
                 {
                     title: "版本",
                     align: "center",
-                    dataIndex: "tableVersion",
+                    dataIndex: "tableVersion"
                 },
 
                 {
                     title: "同步数据库状态",
                     align: "center",
                     dataIndex: "isDbSynch",
-                    scopedSlots: { customRender: "dbsync" },
+                    scopedSlots: { customRender: "dbsync" }
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/online/cgform/head/list",
@@ -232,7 +232,7 @@ export default {
                 deleteBatch: "/online/cgform/head/deleteBatch",
                 doDbSynch: "/online/cgform/api/doDbSynch/",
                 removeRecord: "/online/cgform/head/removeRecord",
-                copyOnline: "/online/cgform/head/copyOnline",
+                copyOnline: "/online/cgform/head/copyOnline"
             },
             tableTypeDictOptions: [],
             sexDictOptions: [],
@@ -244,7 +244,7 @@ export default {
             onlineUrlVisible: false,
             onlineUrl: "",
             selectedRowKeys: [],
-            selectedRows: [],
+            selectedRows: []
         };
     },
     created() {
@@ -338,7 +338,7 @@ export default {
                         }
                     });
                 },
-                onCancel() {},
+                onCancel() {}
             });
         },
         doEnhanceJs() {
@@ -421,8 +421,8 @@ export default {
                     this.$message.error("复制失败>>" + res.message);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less">

@@ -53,11 +53,11 @@ export default {
                     validateRules: [
                         {
                             required: true, // 必填
-                            message: "请输入${title}", // 显示的文本
+                            message: "请输入${title}" // 显示的文本
                         },
                         {
                             pattern: /^[a-z|A-Z][a-z|A-Z\d_-]{0,}$/, // 正则
-                            message: "${title}必须以字母开头，可包含数字、下划线、横杠",
+                            message: "${title}必须以字母开头，可包含数字、下划线、横杠"
                         },
                         {
                             handler(type, value, row, column, callback, target) {
@@ -90,9 +90,9 @@ export default {
                                     callback(); // 不填写或者填写 null 代表不进行任何操作
                                 }
                             },
-                            message: "${title}默认提示",
-                        },
-                    ],
+                            message: "${title}默认提示"
+                        }
+                    ]
                 },
                 {
                     title: "文件域",
@@ -103,7 +103,7 @@ export default {
                     placeholder: "点击上传",
                     token: true,
                     responseName: "message",
-                    action: window._CONFIG["domainURL"] + "/sys/common/upload",
+                    action: window._CONFIG["domainURL"] + "/sys/common/upload"
                 },
                 {
                     title: "字段类型",
@@ -116,12 +116,12 @@ export default {
                         { title: "String", value: "string" },
                         { title: "Integer", value: "int" },
                         { title: "Double", value: "double" },
-                        { title: "Boolean", value: "boolean" },
+                        { title: "Boolean", value: "boolean" }
                     ],
                     allowInput: true,
                     defaultValue: "",
                     placeholder: "请选择${title}",
-                    validateRules: [{ required: true, message: "请选择${title}" }],
+                    validateRules: [{ required: true, message: "请选择${title}" }]
                 },
                 {
                     title: "性别（字典）",
@@ -131,7 +131,7 @@ export default {
                     options: [],
                     dictCode: "sex",
                     placeholder: "请选择${title}",
-                    validateRules: [{ required: true, message: "请选择${title}" }],
+                    validateRules: [{ required: true, message: "请选择${title}" }]
                 },
                 {
                     title: "多选测试",
@@ -144,12 +144,12 @@ export default {
                         { title: "String", value: "string" },
                         { title: "Integer", value: "int" },
                         { title: "Double", value: "double" },
-                        { title: "Boolean", value: "boolean" },
+                        { title: "Boolean", value: "boolean" }
                     ],
                     defaultValue: ["int", "boolean"], // 多个默认项
                     // defaultValue: 'string,double,int', // 也可使用这种方式
                     placeholder: "这里可以多选",
-                    validateRules: [{ required: true, message: "请选择${title}" }],
+                    validateRules: [{ required: true, message: "请选择${title}" }]
                 },
                 {
                     title: "字段长度",
@@ -159,7 +159,7 @@ export default {
                     type: FormTypes.inputNumber,
                     defaultValue: 32,
                     placeholder: "${title}",
-                    validateRules: [{ required: true, message: "请输入${title}" }],
+                    validateRules: [{ required: true, message: "请输入${title}" }]
                 },
                 {
                     title: "日期",
@@ -169,7 +169,7 @@ export default {
                     type: FormTypes.datetime,
                     defaultValue: "2019-4-30 14:52:22",
                     placeholder: "请选择${title}",
-                    validateRules: [{ required: true, message: "请选择${title}" }],
+                    validateRules: [{ required: true, message: "请选择${title}" }]
                 },
                 {
                     title: "可以为空",
@@ -178,7 +178,7 @@ export default {
                     width: "100px",
                     type: FormTypes.checkbox,
                     customValue: ["Y", "N"], // true ,false
-                    defaultChecked: false,
+                    defaultChecked: false
                 },
                 {
                     title: "操作",
@@ -187,11 +187,11 @@ export default {
                     width: "100px",
                     type: FormTypes.slot,
                     slotName: "action",
-                    defaultValue: "删除",
-                },
+                    defaultValue: "删除"
+                }
             ],
             dataSource: [],
-            selectedRowIds: [],
+            selectedRowIds: []
         };
     },
     mounted() {
@@ -248,7 +248,7 @@ export default {
                     dbFieldType: ["string", "int", "double", "boolean"][randomNumber(0, 3)],
                     dbLength: randomNumber(0, 233),
                     datetime: randomDatetime(),
-                    isNull: ["Y", "N"][randomNumber(0, 1)],
+                    isNull: ["Y", "N"][randomNumber(0, 1)]
                 });
             }
 
@@ -266,8 +266,8 @@ export default {
         handleDelete(props) {
             let { rowId, target } = props;
             target.removeRows(rowId);
-        },
-    },
+        }
+    }
 };
 </script>
 

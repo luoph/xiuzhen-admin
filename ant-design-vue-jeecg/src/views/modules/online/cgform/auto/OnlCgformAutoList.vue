@@ -183,7 +183,7 @@ import JImportModal from "@/components/jeecg/JImportModal";
 export default {
     name: "OnlCgFormAutoList",
     components: {
-        JImportModal,
+        JImportModal
     },
     data() {
         return {
@@ -197,12 +197,12 @@ export default {
                 optPre: "/online/cgform/api/form/",
                 exportXls: "/online/cgform/api/exportXls/",
                 buttonAction: "/online/cgform/api/doButton",
-                startProcess: "/process/extActProcess/startMutilProcess",
+                startProcess: "/process/extActProcess/startMutilProcess"
             },
             flowCodePre: "onl_",
             isorter: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             //dictOptions:{fieldName:[]}
             dictOptions: {},
@@ -222,7 +222,7 @@ export default {
                 selectedRowKeys: [],
                 selectionRows: [],
                 // 分页参数
-                pagination: {},
+                pagination: {}
             },
             metaPagination: {
                 current: 1,
@@ -233,7 +233,7 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             actionColumn: {
                 title: "操作",
@@ -241,7 +241,7 @@ export default {
                 scopedSlots: { customRender: "action" },
                 fixed: "right",
                 align: "center",
-                width: 150,
+                width: 150
             },
             formTemplate: "99",
             EnhanceJS: "",
@@ -252,10 +252,10 @@ export default {
                 delete: true,
                 batch_delete: true,
                 import: true,
-                export: true,
+                export: true
             },
             hasBpmStatus: false,
-            checkboxFlag: false,
+            checkboxFlag: false
         };
     },
     created() {
@@ -268,7 +268,7 @@ export default {
         $route() {
             // 刷新参数放到这里去触发，就可以刷新相同界面了
             this.initAutoList();
-        },
+        }
     },
     computed: {
         rowSelectionConfig: function() {
@@ -278,9 +278,9 @@ export default {
             return {
                 fixed: true,
                 selectedRowKeys: this.table.selectedRowKeys,
-                onChange: this.handleChangeInTableSelect,
+                onChange: this.handleChangeInTableSelect
             };
-        },
+        }
     },
     methods: {
         hasBpmStatusFilter() {
@@ -305,7 +305,7 @@ export default {
                         flowCode: that.flowCodePre + that.currentTableName,
                         id: record.id,
                         formUrl: "modules/bpm/task/form/OnlineFormDetail",
-                        formUrlMobile: "modules/bpm/task/form/OnlineFormDetail",
+                        formUrlMobile: "modules/bpm/task/form/OnlineFormDetail"
                     };
                     postAction(that.url.startProcess, param).then(res => {
                         if (res.success) {
@@ -316,7 +316,7 @@ export default {
                             that.$message.warning(res.message);
                         }
                     });
-                },
+                }
             });
         },
         initQueryInfo() {
@@ -563,7 +563,7 @@ export default {
                     onOk: function() {
                         that.handleDelete(ids);
                         that.onClearSelected();
-                    },
+                    }
                 });
             }
         },
@@ -635,7 +635,7 @@ export default {
             let params = {
                 formId: this.code,
                 buttonCode: buttonCode,
-                dataId: this.table.selectedRowKeys[0],
+                dataId: this.table.selectedRowKeys[0]
             };
             console.log("自定义按钮请求后台参数：", params);
             postAction(this.url.buttonAction, params).then(res => {
@@ -656,7 +656,7 @@ export default {
                 let params = {
                     formId: this.code,
                     buttonCode: buttonCode,
-                    dataId: record.id,
+                    dataId: record.id
                 };
                 console.log("自定义按钮link请求后台参数：", params);
                 postAction(this.url.buttonAction, params).then(res => {
@@ -677,8 +677,8 @@ export default {
                     }
                 });
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style>

@@ -43,18 +43,18 @@ export default {
             status: 1,
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
                 itemText: { rules: [{ required: true, message: "请输入名称!" }] },
-                itemValue: { rules: [{ required: true, message: "请输入数据值!" }] },
-            },
+                itemValue: { rules: [{ required: true, message: "请输入数据值!" }] }
+            }
         };
     },
     created() {},
@@ -125,7 +125,7 @@ export default {
         close() {
             this.$emit("close");
             this.visible = false;
-        },
-    },
+        }
+    }
 };
 </script>

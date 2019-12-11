@@ -59,7 +59,7 @@ export default {
     name: "SysCategoryList",
     mixins: [JeecgListMixin],
     components: {
-        SysCategoryModal,
+        SysCategoryModal
     },
     data() {
         return {
@@ -69,19 +69,19 @@ export default {
                 {
                     title: "类型名称",
                     align: "left",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "类型编码",
                     align: "left",
-                    dataIndex: "code",
+                    dataIndex: "code"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/sys/category/rootList",
@@ -89,12 +89,12 @@ export default {
                 delete: "/sys/category/delete",
                 deleteBatch: "/sys/category/deleteBatch",
                 exportXlsUrl: "/sys/category/exportXls",
-                importExcelUrl: "sys/category/importExcel",
+                importExcelUrl: "sys/category/importExcel"
             },
             expandedRowKeys: [],
             hasChildrenField: "hasChild",
             pidField: "pid",
-            dictOptions: {},
+            dictOptions: {}
         };
     },
     computed: {
@@ -107,10 +107,10 @@ export default {
                 // 列表项是否可选择
                 rowSelection: {
                     selectedRowKeys: _this.selectedRowKeys,
-                    onChange: selectedRowKeys => (_this.selectedRowKeys = selectedRowKeys),
-                },
+                    onChange: selectedRowKeys => (_this.selectedRowKeys = selectedRowKeys)
+                }
             };
-        },
+        }
     },
     methods: {
         loadData(arg) {
@@ -242,8 +242,8 @@ export default {
                     }
                 }
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

@@ -42,8 +42,8 @@ export default {
                 ruleCode: {
                     rules: [
                         { required: true, message: "规则Code不能为空" },
-                        { validator: (rule, value, callback) => validateDuplicateValue("sys_fill_rule", "rule_code", value, this.model.id, callback) },
-                    ],
+                        { validator: (rule, value, callback) => validateDuplicateValue("sys_fill_rule", "rule_code", value, this.model.id, callback) }
+                    ]
                 },
                 ruleClass: { rules: [{ required: true, message: "规则实现类不能为空" }] },
                 ruleParams: {
@@ -62,21 +62,21 @@ export default {
                                 } catch {
                                     callback("请输入JSON字符串");
                                 }
-                            },
-                        },
-                    ],
-                },
+                            }
+                        }
+                    ]
+                }
             },
             url: {
                 add: "/sys/fillRule/add",
-                edit: "/sys/fillRule/edit",
-            },
+                edit: "/sys/fillRule/edit"
+            }
         };
     },
     computed: {
         disabledCode() {
             return !!this.model.id;
-        },
+        }
     },
     created() {},
     methods: {
@@ -127,8 +127,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

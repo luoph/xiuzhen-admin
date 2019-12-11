@@ -19,7 +19,7 @@ export default {
     name: "DiskMonitoring",
     components: {
         ARow,
-        DashChartDemo,
+        DashChartDemo
     },
     data() {
         return {
@@ -27,8 +27,8 @@ export default {
             //数据集
             diskInfo: [],
             url: {
-                queryDiskInfo: "actuator/redis/queryDiskInfo",
-            },
+                queryDiskInfo: "actuator/redis/queryDiskInfo"
+            }
         };
     },
     created() {
@@ -40,7 +40,7 @@ export default {
                 this.diskInfo = res.result;
             }
         });
-    },
+    }
 };
 </script>
 

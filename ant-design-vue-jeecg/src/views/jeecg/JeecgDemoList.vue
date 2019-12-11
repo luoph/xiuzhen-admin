@@ -81,8 +81,8 @@
         <!-- table区域-begin，已选择xx项，清空、自定义列的操作条 -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择
-                <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
                 <span style="float:right;">
                     <a @click="loadData()"> <a-icon type="sync" />刷新 </a>
@@ -183,18 +183,18 @@ const superQueryFieldList = [
     {
         type: "date",
         value: "birthday",
-        text: "生日",
+        text: "生日"
     },
     {
         type: "string",
         value: "name",
-        text: "用户名",
+        text: "用户名"
     },
     {
         type: "int",
         value: "age",
-        text: "年龄",
-    },
+        text: "年龄"
+    }
 ];
 export default {
     name: "JeecgDemoList",
@@ -203,7 +203,7 @@ export default {
         JeecgDemoModal,
         JSuperQuery,
         JeecgDemoTabsModal,
-        JInput,
+        JInput
     },
     data() {
         return {
@@ -225,22 +225,22 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "姓名",
                     align: "center",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "关键词",
                     align: "center",
-                    dataIndex: "keyWord",
+                    dataIndex: "keyWord"
                 },
                 {
                     title: "打卡时间",
                     align: "center",
-                    dataIndex: "punchTime",
+                    dataIndex: "punchTime"
                 },
                 {
                     title: "性别",
@@ -249,27 +249,27 @@ export default {
                     customRender: text => {
                         //字典值替换通用方法
                         return filterDictText(this.sexDictOptions, text);
-                    },
+                    }
                 },
                 {
                     title: "年龄",
                     align: "center",
-                    dataIndex: "age",
+                    dataIndex: "age"
                 },
                 {
                     title: "生日",
                     align: "center",
-                    dataIndex: "birthday",
+                    dataIndex: "birthday"
                 },
                 {
                     title: "邮箱",
                     align: "center",
-                    dataIndex: "email",
+                    dataIndex: "email"
                 },
                 {
                     title: "个人简介",
                     align: "center",
-                    dataIndex: "content",
+                    dataIndex: "content"
                 },
                 {
                     title: "操作",
@@ -278,17 +278,17 @@ export default {
                     scopedSlots: {
                         filterDropdown: "filterDropdown",
                         filterIcon: "filterIcon",
-                        customRender: "action",
-                    },
-                },
+                        customRender: "action"
+                    }
+                }
             ],
             url: {
                 list: "/test/jeecgDemo/list",
                 delete: "/test/jeecgDemo/delete",
                 deleteBatch: "/test/jeecgDemo/deleteBatch",
-                exportXlsUrl: "/test/jeecgDemo/exportXls",
+                exportXlsUrl: "/test/jeecgDemo/exportXls"
             },
-            fieldList: superQueryFieldList,
+            fieldList: superQueryFieldList
         };
     },
     methods: {
@@ -365,11 +365,11 @@ export default {
                 });
                 this.columns = cols;
             }
-        },
+        }
     },
     created() {
         this.initColumns();
-    },
+    }
 };
 </script>
 <style scoped>

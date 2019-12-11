@@ -19,19 +19,19 @@ export default {
     name: "Step4",
     props: ["userList"],
     components: {
-        Result,
+        Result
     },
     data() {
         return {
             loading: false,
-            time: 0,
+            time: 0
         };
     },
     methods: {
         countDown() {
             let that = this;
             that.time--;
-        },
+        }
     },
     mounted() {
         let that = this;
@@ -42,12 +42,12 @@ export default {
         time: function(newVal, oldVal) {
             if (newVal == 0) {
                 var params = {
-                    username: this.userList.username,
+                    username: this.userList.username
                 };
                 this.$router.push({ name: "login", params });
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

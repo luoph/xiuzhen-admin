@@ -17,24 +17,24 @@ export default {
                     dataIndex: "rowIndex",
                     customRender: function(text, r, index) {
                         return text !== "合计" ? parseInt(index) + 1 : text;
-                    },
+                    }
                 },
                 {
                     title: "姓名",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "贡献点",
-                    dataIndex: "point",
+                    dataIndex: "point"
                 },
                 {
                     title: "等级",
-                    dataIndex: "level",
+                    dataIndex: "level"
                 },
                 {
                     title: "更新时间",
-                    dataIndex: "updateTime",
-                },
+                    dataIndex: "updateTime"
+                }
             ],
             dataSource: [
                 { name: "张三", point: 23, level: 3, updateTime: "2019-8-14" },
@@ -42,8 +42,8 @@ export default {
                 { name: "李四", point: 53, level: 8, updateTime: "2019-8-12" },
                 { name: "小红", point: 44, level: 5, updateTime: "2019-8-11" },
                 { name: "王五", point: 97, level: 10, updateTime: "2019-8-10" },
-                { name: "小明", point: 33, level: 2, updateTime: "2019-8-10" },
-            ],
+                { name: "小明", point: 33, level: 2, updateTime: "2019-8-10" }
+            ]
         };
     },
     mounted() {
@@ -71,8 +71,8 @@ export default {
             });
 
             dataSource.push(totalRow);
-        },
-    },
+        }
+    }
 };
 </script>
 

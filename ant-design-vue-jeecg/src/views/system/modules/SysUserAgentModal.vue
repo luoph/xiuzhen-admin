@@ -55,7 +55,7 @@ export default {
     name: "SysUserAgentModal",
     components: {
         JDate,
-        JSelectUserByDep,
+        JSelectUserByDep
     },
     data() {
         return {
@@ -64,11 +64,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             username: "",
             confirmLoading: false,
@@ -76,13 +76,13 @@ export default {
             validatorRules: {
                 agentUserName: { rules: [{ required: true, message: "请输入代理人用户名!" }] },
                 startTime: { rules: [{ required: true, message: "请输入代理开始时间!" }] },
-                endTime: { rules: [{ required: true, message: "请输入代理结束时间!" }] },
+                endTime: { rules: [{ required: true, message: "请输入代理结束时间!" }] }
             },
             url: {
                 add: "/sys/sysUserAgent/add",
                 edit: "/sys/sysUserAgent/edit",
-                queryByUserName: "/sys/sysUserAgent/queryByUserName",
-            },
+                queryByUserName: "/sys/sysUserAgent/queryByUserName"
+            }
         };
     },
     created() {},
@@ -148,8 +148,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

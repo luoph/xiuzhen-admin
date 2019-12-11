@@ -41,7 +41,7 @@ import JEditor from "@/components/jeecg/JEditor";
 export default {
     name: "SysMessageTemplateModal",
     components: {
-        JEditor,
+        JEditor
     },
     data() {
         return {
@@ -51,11 +51,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
@@ -63,14 +63,14 @@ export default {
                 templateCode: { rules: [{ required: true, message: "请输入模板CODE!" }, { validator: this.validateTemplateCode }] },
                 templateName: { rules: [{ required: true, message: "请输入模板标题!" }] },
                 templateContent: { rules: [] },
-                templateType: { rules: [{ required: true, message: "请输入模板类型!" }] },
+                templateType: { rules: [{ required: true, message: "请输入模板类型!" }] }
             },
             url: {
                 add: "/message/sysMessageTemplate/add",
-                edit: "/message/sysMessageTemplate/edit",
+                edit: "/message/sysMessageTemplate/edit"
             },
             useEditor: false,
-            templateEditorContent: "",
+            templateEditorContent: ""
         };
     },
     created() {},
@@ -146,7 +146,7 @@ export default {
                 tableName: "sys_sms_template",
                 fieldName: "template_code",
                 fieldVal: value,
-                dataId: this.model.id,
+                dataId: this.model.id
             };
             duplicateCheck(params).then(res => {
                 if (res.success) {
@@ -162,8 +162,8 @@ export default {
         handleChangeTemplateType(value) {
             //如果是邮件类型那么则改变模板内容是富文本编辑器
             this.useEditor = value == 2;
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -110,7 +110,7 @@ import { getRoleList, getServiceList } from "@/api/manage";
 export default {
     name: "TableList",
     components: {
-        STable,
+        STable
     },
     data() {
         return {
@@ -119,11 +119,11 @@ export default {
             visible: false,
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             form: null,
             mdl: {},
@@ -136,27 +136,27 @@ export default {
             columns: [
                 {
                     title: "唯一识别码",
-                    dataIndex: "id",
+                    dataIndex: "id"
                 },
                 {
                     title: "角色名称",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "状态",
-                    dataIndex: "status",
+                    dataIndex: "status"
                 },
                 {
                     title: "创建时间",
                     dataIndex: "createTime",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "操作",
                     width: "150px",
                     dataIndex: "action",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
@@ -166,7 +166,7 @@ export default {
             },
 
             selectedRowKeys: [],
-            selectedRows: [],
+            selectedRows: []
         };
     },
     created() {
@@ -197,7 +197,7 @@ export default {
         },
         toggleAdvanced() {
             this.advanced = !this.advanced;
-        },
+        }
     },
     watch: {
         /*
@@ -212,6 +212,6 @@ export default {
         })
       }
       */
-    },
+    }
 };
 </script>

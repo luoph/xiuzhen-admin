@@ -53,7 +53,7 @@ import AvatarModal from "./AvatarModal";
 
 export default {
     components: {
-        AvatarModal,
+        AvatarModal
     },
     data() {
         return {
@@ -72,11 +72,11 @@ export default {
                 fixedBox: true,
                 // 开启宽度和高度比例
                 fixed: true,
-                fixedNumber: [1, 1],
-            },
+                fixedNumber: [1, 1]
+            }
         };
     },
-    methods: {},
+    methods: {}
 };
 </script>
 

@@ -274,7 +274,7 @@ export default {
                     incrementIncrement: 5,
                     rangeStart: 1,
                     rangeEnd: 0,
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 minute: {
                     cronEvery: "",
@@ -282,7 +282,7 @@ export default {
                     incrementIncrement: 5,
                     rangeStart: 1,
                     rangeEnd: "0",
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 hour: {
                     cronEvery: "",
@@ -290,7 +290,7 @@ export default {
                     incrementIncrement: 5,
                     rangeStart: "0",
                     rangeEnd: "0",
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 day: {
                     cronEvery: "",
@@ -301,7 +301,7 @@ export default {
                     specificSpecific: [],
                     cronLastSpecificDomDay: 1,
                     cronDaysBeforeEomMinus: "",
-                    cronDaysNearestWeekday: "",
+                    cronDaysNearestWeekday: ""
                 },
                 week: {
                     cronEvery: "",
@@ -309,7 +309,7 @@ export default {
                     incrementIncrement: "1",
                     specificSpecific: [],
                     cronNthDayDay: 1,
-                    cronNthDayNth: "1",
+                    cronNthDayNth: "1"
                 },
                 month: {
                     cronEvery: "",
@@ -317,7 +317,7 @@ export default {
                     incrementIncrement: 5,
                     rangeStart: 1,
                     rangeEnd: 1,
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 year: {
                     cronEvery: "",
@@ -325,9 +325,9 @@ export default {
                     incrementIncrement: 1,
                     rangeStart: 2019,
                     rangeEnd: 2019,
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
-                label: "",
+                label: ""
             },
             output: {
                 second: {
@@ -336,7 +336,7 @@ export default {
                     incrementIncrement: "",
                     rangeStart: "",
                     rangeEnd: "",
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 minute: {
                     cronEvery: "",
@@ -344,7 +344,7 @@ export default {
                     incrementIncrement: "",
                     rangeStart: "",
                     rangeEnd: "",
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 hour: {
                     cronEvery: "",
@@ -352,7 +352,7 @@ export default {
                     incrementIncrement: "",
                     rangeStart: "",
                     rangeEnd: "",
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 day: {
                     cronEvery: "",
@@ -363,7 +363,7 @@ export default {
                     specificSpecific: [],
                     cronLastSpecificDomDay: "",
                     cronDaysBeforeEomMinus: "",
-                    cronDaysNearestWeekday: "",
+                    cronDaysNearestWeekday: ""
                 },
                 week: {
                     cronEvery: "",
@@ -371,7 +371,7 @@ export default {
                     incrementIncrement: "",
                     specificSpecific: [],
                     cronNthDayDay: "",
-                    cronNthDayNth: "",
+                    cronNthDayNth: ""
                 },
                 month: {
                     cronEvery: "",
@@ -379,7 +379,7 @@ export default {
                     incrementIncrement: "",
                     rangeStart: "",
                     rangeEnd: "",
-                    specificSpecific: [],
+                    specificSpecific: []
                 },
                 year: {
                     cronEvery: "",
@@ -387,9 +387,9 @@ export default {
                     incrementIncrement: "",
                     rangeStart: "",
                     rangeEnd: "",
-                    specificSpecific: [],
-                },
-            },
+                    specificSpecific: []
+                }
+            }
         };
     },
     computed: {
@@ -582,14 +582,14 @@ export default {
             return {
                 value: this.result,
                 label: `${this.secondsText || "*"} ${this.minutesText || "*"} ${this.hoursText || "*"} ${this.daysText || "*"} ${this.monthsText || "*"} ${this.weeksText ||
-                    "*"} ${this.yearsText || "*"}`,
+                    "*"} ${this.yearsText || "*"}`
             };
-        },
+        }
     },
     watch: {
         data() {
             //this.rest(this.data);
-        },
+        }
     },
     methods: {
         show() {
@@ -635,8 +635,8 @@ export default {
         },
         callback(key) {
             console.log(key);
-        },
-    },
+        }
+    }
 };
 </script>
 

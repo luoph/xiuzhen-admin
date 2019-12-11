@@ -24,7 +24,7 @@ import AreaChartTy from "@/components/chart/AreaChartTy";
 export default {
     name: "RedisInfo",
     components: {
-        AreaChartTy,
+        AreaChartTy
     },
     data() {
         return {
@@ -44,7 +44,7 @@ export default {
                 max: 100,
                 color: "#FF6987",
                 lineSize: 8,
-                lineColor: "#DC143C",
+                lineColor: "#DC143C"
             },
             // 内存实时占用情况
             memory: {
@@ -54,32 +54,32 @@ export default {
                 min: 0,
                 max: 3000,
                 height: 340,
-                lineSize: 8,
+                lineSize: 8
             },
             redisInfo: [],
             columns: [
                 {
                     title: "Key",
                     align: "center",
-                    dataIndex: "key",
+                    dataIndex: "key"
                 },
                 {
                     title: "Description",
                     align: "left",
-                    dataIndex: "description",
+                    dataIndex: "description"
                 },
                 {
                     title: "Value",
                     align: "center",
-                    dataIndex: "value",
-                },
+                    dataIndex: "value"
+                }
             ],
             url: {
                 keysSize: "/actuator/redis/keysSize",
                 memoryInfo: "/actuator/redis/memoryInfo",
-                info: "/actuator/redis/info",
+                info: "/actuator/redis/info"
             },
-            path: "/monitor/redis/info",
+            path: "/monitor/redis/info"
         };
     },
     mounted() {
@@ -180,8 +180,8 @@ export default {
                 .finally(() => {
                     this.tableLoading = false;
                 });
-        },
-    },
+        }
+    }
 };
 </script>
 <style></style>

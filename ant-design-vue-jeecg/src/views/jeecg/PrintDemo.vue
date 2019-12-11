@@ -55,25 +55,25 @@ export default {
     components: {
         ATextarea,
         ARow,
-        ACol,
+        ACol
     },
     name: "Printgzsld",
     props: {
         reBizCode: {
             type: String,
-            default: "",
-        },
+            default: ""
+        }
     },
     data() {
         return {
             columns: [{}],
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 2 },
+                sm: { span: 2 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
+                sm: { span: 8 }
             },
             printer: "张三",
             printTime: "2019-02-01 12:00:00",
@@ -86,19 +86,19 @@ export default {
                     uid: "-1",
                     name: "xxx.png",
                     status: "done",
-                    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+                    url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                 },
                 {
                     uid: "-2",
                     name: "pic1.png",
                     status: "done",
-                    url: "https://www.gizbot.com/img/2016/11/whatsapp-error-lead-image-08-1478607387.jpg",
-                },
+                    url: "https://www.gizbot.com/img/2016/11/whatsapp-error-lead-image-08-1478607387.jpg"
+                }
             ],
             url: {
                 loadApplicant: "/sps/register/loadApplicants",
-                loadRegisterFiles: "/sps/register/getRegisterFilesConfig",
-            },
+                loadRegisterFiles: "/sps/register/getRegisterFilesConfig"
+            }
         };
     },
     created() {
@@ -118,8 +118,8 @@ export default {
         },
         handleChange({ fileList }) {
             this.fileList = fileList;
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

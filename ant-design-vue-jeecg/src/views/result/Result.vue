@@ -21,21 +21,21 @@ export default {
     props: {
         isSuccess: {
             type: Boolean,
-            default: false,
+            default: false
         },
         title: {
             type: String,
-            default: "",
+            default: ""
         },
         description: {
             type: String,
-            default: "",
+            default: ""
         },
         content: {
             type: Boolean,
-            default: true,
-        },
-    },
+            default: true
+        }
+    }
 };
 </script>
 

@@ -74,7 +74,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JeecgOrderDMainList,
-        JeecgOrderCustomerModal,
+        JeecgOrderCustomerModal
     },
     data() {
         return {
@@ -86,7 +86,7 @@ export default {
                     align: "center",
                     width: 100,
                     dataIndex: "name",
-                    key: "name",
+                    key: "name"
                 },
                 {
                     title: "性别",
@@ -100,31 +100,31 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "身份证号码",
                     align: "center",
-                    dataIndex: "idcard",
+                    dataIndex: "idcard"
                 },
                 {
                     title: "电话",
                     dataIndex: "telphone",
-                    align: "center",
+                    align: "center"
                 },
                 {
                     title: "操作",
                     key: "operation",
                     align: "center",
                     width: 130,
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/test/order/listOrderCustomerByMainId",
                 delete: "/test/order/deleteCustomer",
-                deleteBatch: "/test/order/deleteBatchCustomer",
-            },
+                deleteBatch: "/test/order/deleteBatchCustomer"
+            }
         };
     },
     methods: {
@@ -151,8 +151,8 @@ export default {
         handleAdd: function() {
             this.$refs.modalForm.add(this.queryParam.mainId);
             this.$refs.modalForm.title = "添加客户信息";
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

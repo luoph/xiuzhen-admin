@@ -40,7 +40,7 @@ import userModal from "./UserModal";
 export default {
     name: "DepartWindow",
     components: {
-        userModal,
+        userModal
     },
     data() {
         return {
@@ -55,18 +55,18 @@ export default {
             visible: false,
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             headers: {},
             form: this.$form.createForm(this),
             url: {
-                userId: "/sys/user/generateUserId", // 引入生成添加用户情况下的url
-            },
+                userId: "/sys/user/generateUserId" // 引入生成添加用户情况下的url
+            }
         };
     },
     methods: {
@@ -149,8 +149,8 @@ export default {
                 }
             });
         },
-        modalFormOk() {},
-    },
+        modalFormOk() {}
+    }
 };
 </script>
 

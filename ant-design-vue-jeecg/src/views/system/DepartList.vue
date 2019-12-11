@@ -140,46 +140,46 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 const columns = [
     {
         title: "机构名称",
-        dataIndex: "departName",
+        dataIndex: "departName"
     },
     {
         title: "机构类型",
         align: "center",
-        dataIndex: "orgType",
+        dataIndex: "orgType"
     },
     {
         title: "机构编码",
-        dataIndex: "orgCode",
+        dataIndex: "orgCode"
     },
     {
         title: "手机号",
-        dataIndex: "mobile",
+        dataIndex: "mobile"
     },
     {
         title: "传真",
-        dataIndex: "fax",
+        dataIndex: "fax"
     },
     {
         title: "地址",
-        dataIndex: "address",
+        dataIndex: "address"
     },
     {
         title: "排序",
         align: "center",
-        dataIndex: "departOrder",
+        dataIndex: "departOrder"
     },
     {
         title: "操作",
         align: "center",
         dataIndex: "action",
-        scopedSlots: { customRender: "action" },
-    },
+        scopedSlots: { customRender: "action" }
+    }
 ];
 export default {
     name: "DepartList",
     mixins: [JeecgListMixin],
     components: {
-        DepartModal,
+        DepartModal
     },
     data() {
         return {
@@ -210,36 +210,36 @@ export default {
             form: this.$form.createForm(this),
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             graphDatasource: {
                 nodes: [],
-                edges: [],
+                edges: []
             },
             validatorRules: {
                 departName: { rules: [{ required: true, message: "请输入机构/部门名称!" }] },
                 orgCode: { rules: [{ required: true, message: "请输入机构编码!" }] },
                 orgCategory: { rules: [{ required: true, message: "请输入机构类型!" }] },
-                mobile: { rules: [{ validator: this.validateMobile }] },
+                mobile: { rules: [{ validator: this.validateMobile }] }
             },
             url: {
                 delete: "/sys/sysDepart/delete",
                 edit: "/sys/sysDepart/edit",
                 deleteBatch: "/sys/sysDepart/deleteBatch",
                 exportXlsUrl: "sys/sysDepart/exportXls",
-                importExcelUrl: "sys/sysDepart/importExcel",
+                importExcelUrl: "sys/sysDepart/importExcel"
             },
-            orgCategoryDisabled: false,
+            orgCategoryDisabled: false
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         loadData() {
@@ -327,7 +327,7 @@ export default {
                                 that.$message.warning(res.message);
                             }
                         });
-                    },
+                    }
                 });
             }
         },
@@ -478,14 +478,14 @@ export default {
         getFlowGraphData(node) {
             this.graphDatasource.nodes.push({
                 id: node.id,
-                text: node.flowNodeName,
+                text: node.flowNodeName
             });
             if (node.children.length > 0) {
                 for (let a = 0; a < node.children.length; a++) {
                     let temp = node.children[a];
                     this.graphDatasource.edges.push({
                         source: node.id,
-                        target: temp.id,
+                        target: temp.id
                     });
                     this.getFlowGraphData(temp);
                 }
@@ -521,14 +521,14 @@ export default {
                     this.getAllKeys(node.children[a]);
                 }
             }
-        },
+        }
         // <!---- author:os_chengtgen -- date:20190827 --  for:切换父子勾选模式 =======------>
     },
     created() {
         this.currFlowId = this.$route.params.id;
         this.currFlowName = this.$route.params.name;
         // this.loadTree()
-    },
+    }
 };
 </script>
 <style scoped>

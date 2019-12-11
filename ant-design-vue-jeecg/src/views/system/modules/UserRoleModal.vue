@@ -57,7 +57,7 @@ import RoleDataruleModal from "./RoleDataruleModal.vue";
 export default {
     name: "RoleModal",
     components: {
-        RoleDataruleModal,
+        RoleDataruleModal
     },
     data() {
         return {
@@ -72,7 +72,7 @@ export default {
             title: "角色权限配置",
             visible: false,
             loading: false,
-            selectedKeys: [],
+            selectedKeys: []
         };
     },
     methods: {
@@ -136,7 +136,7 @@ export default {
             let params = {
                 roleId: that.roleId,
                 permissionIds: that.checkedKeys.join(","),
-                lastpermissionIds: that.defaultCheckedKeys.join(","),
+                lastpermissionIds: that.defaultCheckedKeys.join(",")
             };
             that.loading = true;
             console.log("请求参数：", params);
@@ -151,7 +151,7 @@ export default {
                     that.close();
                 }
             });
-        },
+        }
     },
     watch: {
         visible() {
@@ -167,8 +167,8 @@ export default {
                     });
                 });
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

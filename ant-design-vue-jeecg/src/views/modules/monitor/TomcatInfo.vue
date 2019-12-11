@@ -40,20 +40,20 @@ export default {
                     title: "参数",
                     width: "30%",
                     dataIndex: "param",
-                    scopedSlots: { customRender: "param" },
+                    scopedSlots: { customRender: "param" }
                 },
                 {
                     title: "描述",
                     width: "40%",
                     dataIndex: "text",
-                    scopedSlots: { customRender: "text" },
+                    scopedSlots: { customRender: "text" }
                 },
                 {
                     title: "当前值",
                     width: "30%",
                     dataIndex: "value",
-                    scopedSlots: { customRender: "value" },
-                },
+                    scopedSlots: { customRender: "value" }
+                }
             ],
             dataSource: [],
             // 列表通过 textInfo 渲染出颜色、描述和单位
@@ -74,13 +74,13 @@ export default {
                 "tomcat.servlet.request.totalTime": { color: "cyan", text: "servlet 请求总耗时", unit: "秒" },
 
                 "tomcat.threads.current": { color: "pink", text: "tomcat 当前线程数（包括守护线程）", unit: "个" },
-                "tomcat.threads.config.max": { color: "pink", text: "tomcat 配置的线程最大数", unit: "个" },
+                "tomcat.threads.config.max": { color: "pink", text: "tomcat 配置的线程最大数", unit: "个" }
             },
             // 当一条记录中需要取出多条数据的时候需要配置该字段
             moreInfo: {
                 "tomcat.global.request": [".count", ".totalTime"],
-                "tomcat.servlet.request": [".count", ".totalTime"],
-            },
+                "tomcat.servlet.request": [".count", ".totalTime"]
+            }
         };
     },
     mounted() {
@@ -107,7 +107,7 @@ export default {
                 //getAction('actuator/metrics/tomcat.servlet.request'),
                 // getAction('actuator/metrics/tomcat.servlet.request.max'),
                 getAction("actuator/metrics/tomcat.threads.current"),
-                getAction("actuator/metrics/tomcat.threads.config.max"),
+                getAction("actuator/metrics/tomcat.threads.config.max")
             ])
                 .then(res => {
                     let tomcatInfo = [];
@@ -122,7 +122,7 @@ export default {
                                 id: param + id,
                                 param,
                                 text: "false value",
-                                value: value.measurements[idx].value,
+                                value: value.measurements[idx].value
                             });
                         });
                     });
@@ -136,8 +136,8 @@ export default {
                     this.loading = false;
                     this.tableLoading = false;
                 });
-        },
-    },
+        }
+    }
 };
 </script>
 <style></style>

@@ -127,7 +127,7 @@ const directionIcons = [
     "radius-upleft",
     "radius-upright",
     "fullscreen",
-    "fullscreen-exit",
+    "fullscreen-exit"
 ];
 const suggestionIcons = [
     "question",
@@ -153,7 +153,7 @@ const suggestionIcons = [
     "clock-circle",
     "warning",
     "issues-close",
-    "stop",
+    "stop"
 ];
 const editIcons = [
     "edit",
@@ -186,7 +186,7 @@ const editIcons = [
     "sort-descending",
     "drag",
     "ordered-list",
-    "radius-setting",
+    "radius-setting"
 ];
 const dataIcons = ["area-chart", "pie-chart", "bar-chart", "dot-chart", "line-chart", "radar-chart", "heat-map", "fall", "rise", "stock", "box-plot", "fund", "sliders"];
 const webIcons = [
@@ -349,7 +349,7 @@ const webIcons = [
     "gateway",
     "gold",
     "robot",
-    "shopping",
+    "shopping"
 ];
 const logoIcons = [
     "android",
@@ -396,14 +396,14 @@ const logoIcons = [
     "instagram",
     "yuque",
     "alibaba",
-    "yahoo",
+    "yahoo"
 ];
 export default {
     name: "Icons",
     props: {
         iconChooseVisible: {
-            default: false,
-        },
+            default: false
+        }
     },
     data() {
         return {
@@ -413,10 +413,10 @@ export default {
                 editIcons,
                 dataIcons,
                 webIcons,
-                logoIcons,
+                logoIcons
             },
             choosedIcon: "",
-            activeIndex: "",
+            activeIndex: ""
         };
     },
     computed: {
@@ -424,8 +424,8 @@ export default {
             get: function() {
                 return this.iconChooseVisible;
             },
-            set: function() {},
-        },
+            set: function() {}
+        }
     },
     methods: {
         reset() {
@@ -447,8 +447,8 @@ export default {
         cancel() {
             this.reset();
             this.$emit("close");
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less" scoped>

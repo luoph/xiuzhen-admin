@@ -140,41 +140,41 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
 
                 {
                     title: "视图表名",
                     align: "center",
-                    dataIndex: "tableName",
+                    dataIndex: "tableName"
                 },
                 {
                     title: "视图表描述",
                     align: "center",
-                    dataIndex: "tableTxt",
+                    dataIndex: "tableTxt"
                 },
                 {
                     title: "原表版本",
                     align: "center",
-                    dataIndex: "tableVersion",
+                    dataIndex: "tableVersion"
                 },
                 {
                     title: "视图版本",
                     align: "center",
-                    dataIndex: "copyVersion",
+                    dataIndex: "copyVersion"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/online/cgform/head/list",
                 delete: "/online/cgform/head/delete",
                 deleteBatch: "/online/cgform/head/deleteBatch",
-                removeRecord: "/online/cgform/head/removeRecord",
+                removeRecord: "/online/cgform/head/removeRecord"
             },
             tableTypeDictOptions: [],
             sexDictOptions: [],
@@ -187,13 +187,13 @@ export default {
             onlineUrl: "",
             selectedRowKeys: [],
             selectedRows: [],
-            physicId: "",
+            physicId: ""
         };
     },
     watch: {
         $route() {
             this.loadData();
-        },
+        }
     },
     methods: {
         getQueryParams() {
@@ -268,7 +268,7 @@ export default {
                         }
                     });
                 },
-                onCancel() {},
+                onCancel() {}
             });
         },
         doEnhanceJs() {
@@ -335,8 +335,8 @@ export default {
                     this.$message.error("复制失败>>" + res.message);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less">

@@ -34,8 +34,8 @@ export default {
     methods: {
         nextStep() {
             this.$emit("nextStep");
-        },
-    },
+        }
+    }
 };
 </script>
 

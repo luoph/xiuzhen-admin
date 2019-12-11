@@ -42,11 +42,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
@@ -54,20 +54,20 @@ export default {
                 roleName: {
                     rules: [
                         { required: true, message: "请输入角色名称!" },
-                        { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" },
-                    ],
+                        { min: 2, max: 30, message: "长度在 2 到 30 个字符", trigger: "blur" }
+                    ]
                 },
                 roleCode: {
                     rules: [
                         { required: true, message: "请输入角色名称!" },
                         { min: 0, max: 64, message: "长度不超过 64 个字符", trigger: "blur" },
-                        { validator: this.validateRoleCode },
-                    ],
+                        { validator: this.validateRoleCode }
+                    ]
                 },
                 description: {
-                    rules: [{ min: 0, max: 126, message: "长度不超过 126 个字符", trigger: "blur" }],
-                },
-            },
+                    rules: [{ min: 0, max: 126, message: "长度不超过 126 个字符", trigger: "blur" }]
+                }
+            }
         };
     },
     created() {},
@@ -133,7 +133,7 @@ export default {
                     tableName: "sys_role",
                     fieldName: "role_code",
                     fieldVal: value,
-                    dataId: this.model.id,
+                    dataId: this.model.id
                 };
                 duplicateCheck(params).then(res => {
                     if (res.success) {
@@ -143,8 +143,8 @@ export default {
                     }
                 });
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

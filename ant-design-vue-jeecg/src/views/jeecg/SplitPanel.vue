@@ -12,18 +12,18 @@ import SplitPanelModal from "./modules/SplitPanelModal";
 export default {
     name: "SplitPanel",
     components: {
-        SplitPanelModal,
+        SplitPanelModal
     },
     data() {
         return {
-            description: "分屏",
+            description: "分屏"
         };
     },
     methods: {
         splitPane() {
             this.$refs.splitPanelModal.show();
-        },
-    },
+        }
+    }
 };
 </script>
 

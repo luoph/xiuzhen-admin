@@ -40,20 +40,20 @@ export default {
                     title: "参数",
                     width: "30%",
                     dataIndex: "param",
-                    scopedSlots: { customRender: "param" },
+                    scopedSlots: { customRender: "param" }
                 },
                 {
                     title: "描述",
                     width: "40%",
                     dataIndex: "text",
-                    scopedSlots: { customRender: "text" },
+                    scopedSlots: { customRender: "text" }
                 },
                 {
                     title: "当前值",
                     width: "30%",
                     dataIndex: "value",
-                    scopedSlots: { customRender: "value" },
-                },
+                    scopedSlots: { customRender: "value" }
+                }
             ],
             dataSource: [],
             // 列表通过 textInfo 渲染出颜色、描述和单位
@@ -62,10 +62,10 @@ export default {
                 "system.cpu.usage": { color: "green", text: "系统 CPU 使用率", unit: "%" },
                 "process.start.time": { color: "purple", text: "应用启动时间点", unit: "" },
                 "process.uptime": { color: "purple", text: "应用已运行时间", unit: "秒" },
-                "process.cpu.usage": { color: "purple", text: "当前应用 CPU 使用率", unit: "%" },
+                "process.cpu.usage": { color: "purple", text: "当前应用 CPU 使用率", unit: "%" }
             },
             // 当一条记录中需要取出多条数据的时候需要配置该字段
-            moreInfo: {},
+            moreInfo: {}
         };
     },
     mounted() {
@@ -84,7 +84,7 @@ export default {
                 getAction("actuator/metrics/system.cpu.usage"),
                 getAction("actuator/metrics/process.start.time"),
                 getAction("actuator/metrics/process.uptime"),
-                getAction("actuator/metrics/process.cpu.usage"),
+                getAction("actuator/metrics/process.cpu.usage")
             ])
                 .then(res => {
                     let info = [];
@@ -124,8 +124,8 @@ export default {
                 return moment(value * 1000).format("YYYY-MM-DD HH:mm:ss");
             }
             return value;
-        },
-    },
+        }
+    }
 };
 </script>
 <style></style>

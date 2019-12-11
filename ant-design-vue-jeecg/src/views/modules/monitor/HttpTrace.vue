@@ -64,10 +64,10 @@ export default {
                 pageSizeOptions: ["10", "20", "30", "40", "100"],
                 showQuickJumper: true,
                 showSizeChanger: true,
-                showTotal: (total, range) => `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`,
+                showTotal: (total, range) => `显示 ${range[0]} ~ ${range[1]} 条记录，共 ${total} 条记录`
             },
             loading: true,
-            tableLoading: true,
+            tableLoading: true
         };
     },
     computed: {
@@ -78,7 +78,7 @@ export default {
                     dataIndex: "timestamp",
                     customRender(text) {
                         return moment(text).format("YYYY-MM-DD HH:mm:ss");
-                    },
+                    }
                 },
                 {
                     title: "请求方法",
@@ -88,30 +88,30 @@ export default {
                         { text: "GET", value: "GET" },
                         { text: "POST", value: "POST" },
                         { text: "PUT", value: "PUT" },
-                        { text: "DELETE", value: "DELETE" },
+                        { text: "DELETE", value: "DELETE" }
                     ],
                     filterMultiple: true,
-                    onFilter: (value, record) => record.request.method.includes(value),
+                    onFilter: (value, record) => record.request.method.includes(value)
                 },
                 {
                     title: "请求URL",
                     dataIndex: "request.uri",
                     customRender(text) {
                         return text.split("?")[0];
-                    },
+                    }
                 },
                 {
                     title: "响应状态",
                     dataIndex: "response.status",
-                    scopedSlots: { customRender: "responseStatus" },
+                    scopedSlots: { customRender: "responseStatus" }
                 },
                 {
                     title: "请求耗时",
                     dataIndex: "timeTaken",
-                    scopedSlots: { customRender: "timeTaken" },
-                },
+                    scopedSlots: { customRender: "timeTaken" }
+                }
             ];
-        },
+        }
     },
     mounted() {
         this.fetch();
@@ -145,8 +145,8 @@ export default {
                     this.loading = false;
                     this.tableLoading = false;
                 });
-        },
-    },
+        }
+    }
 };
 </script>
 <style></style>

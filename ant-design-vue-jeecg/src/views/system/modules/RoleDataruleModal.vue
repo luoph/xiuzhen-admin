@@ -38,19 +38,19 @@ export default {
             tabList: [
                 {
                     key: "1",
-                    tab: "数据规则",
+                    tab: "数据规则"
                 },
                 {
                     key: "2",
-                    tab: "按钮权限",
-                },
+                    tab: "按钮权限"
+                }
             ],
             activeTabKey: "1",
             url: {
-                datarule: "/sys/role/datarule",
+                datarule: "/sys/role/datarule"
             },
             dataruleList: [],
-            dataruleChecked: [],
+            dataruleChecked: []
         };
     },
     methods: {
@@ -73,7 +73,7 @@ export default {
             let params = {
                 permissionId: this.functionId,
                 roleId: this.roleId,
-                dataRuleIds: this.dataruleChecked.join(","),
+                dataRuleIds: this.dataruleChecked.join(",")
             };
             console.log("保存数据权限", params);
             postAction(this.url.datarule, params).then(res => {
@@ -103,8 +103,8 @@ export default {
             this.roleId = "";
             this.dataruleList = [];
             this.dataruleChecked = [];
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -27,7 +27,7 @@ export default {
     name: "Step2",
     data() {
         return {
-            loading: false,
+            loading: false
         };
     },
     methods: {
@@ -40,8 +40,8 @@ export default {
         },
         prevStep() {
             this.$emit("prevStep");
-        },
-    },
+        }
+    }
 };
 </script>
 

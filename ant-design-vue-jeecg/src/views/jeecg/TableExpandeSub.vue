@@ -103,7 +103,7 @@ export default {
     name: "TableDemo",
     mixins: [JeecgListMixin],
     components: {
-        JeecgOrderDMainModal,
+        JeecgOrderDMainModal
     },
     data() {
         return {
@@ -114,7 +114,7 @@ export default {
                     align: "center",
                     width: 100,
                     dataIndex: "name",
-                    key: "name",
+                    key: "name"
                 },
                 {
                     title: "性别",
@@ -128,18 +128,18 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "身份证号码",
                     align: "center",
-                    dataIndex: "idcard",
+                    dataIndex: "idcard"
                 },
                 {
                     title: "电话",
                     dataIndex: "telphone",
-                    align: "center",
-                },
+                    align: "center"
+                }
             ],
             innerData: [],
             expandedRowKeys: [],
@@ -155,12 +155,12 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "订单号",
                     align: "center",
-                    dataIndex: "orderCode",
+                    dataIndex: "orderCode"
                 },
                 {
                     title: "订单类型",
@@ -174,29 +174,29 @@ export default {
                             re = "国际订单";
                         }
                         return re;
-                    },
+                    }
                 },
                 {
                     title: "订单日期",
                     align: "center",
-                    dataIndex: "orderDate",
+                    dataIndex: "orderDate"
                 },
                 {
                     title: "订单金额",
                     align: "center",
-                    dataIndex: "orderMoney",
+                    dataIndex: "orderMoney"
                 },
                 {
                     title: "订单备注",
                     align: "center",
-                    dataIndex: "content",
+                    dataIndex: "content"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             // 分页参数
             type: "radio",
@@ -204,14 +204,14 @@ export default {
                 list: "/test/order/orderList",
                 delete: "/test/order/delete",
                 deleteBatch: "/test/order/deleteBatch",
-                customerListByMainId: "/test/order/listOrderCustomerByMainId",
-            },
+                customerListByMainId: "/test/order/listOrderCustomerByMainId"
+            }
         };
     },
     computed: {
         currentId() {
             return this.id;
-        },
+        }
     },
     methods: {
         handleExpand(expanded, record) {
@@ -227,8 +227,8 @@ export default {
                     }
                 });
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

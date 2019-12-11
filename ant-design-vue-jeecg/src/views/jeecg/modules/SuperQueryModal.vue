@@ -58,7 +58,7 @@ export default {
         return {
             visible: false,
             queryParamsModel: [{}, {}],
-            confirmLoading: false,
+            confirmLoading: false
         };
     },
     created() {},
@@ -84,8 +84,8 @@ export default {
         handleDel(index) {
             console.log(index);
             this.queryParamsModel.splice(index, 1);
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -40,11 +40,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
@@ -64,7 +64,7 @@ export default {
                                         tableName: "sys_position",
                                         fieldName: "code",
                                         fieldVal: value,
-                                        dataId: this.model.id,
+                                        dataId: this.model.id
                                     })
                                         .then(res => {
                                             if (res.success) {
@@ -75,17 +75,17 @@ export default {
                                         })
                                         .catch(console.error);
                                 }, 300);
-                            },
-                        },
-                    ],
+                            }
+                        }
+                    ]
                 },
                 name: { rules: [{ required: true, message: "请输入职务名称" }] },
-                postRank: { rules: [{ required: true, message: "请选择职级" }] },
+                postRank: { rules: [{ required: true, message: "请选择职级" }] }
             },
             url: {
                 add: "/sys/position/add",
-                edit: "/sys/position/edit",
-            },
+                edit: "/sys/position/edit"
+            }
         };
     },
     created() {},
@@ -148,8 +148,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

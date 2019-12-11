@@ -70,7 +70,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JEllipsis,
-        DataLogModal,
+        DataLogModal
     },
     data() {
         return {
@@ -80,34 +80,34 @@ export default {
                 {
                     title: "表名",
                     align: "center",
-                    dataIndex: "dataTable",
+                    dataIndex: "dataTable"
                 },
                 {
                     title: "数据ID",
                     align: "center",
-                    dataIndex: "dataId",
+                    dataIndex: "dataId"
                 },
                 {
                     title: "版本号",
                     align: "center",
-                    dataIndex: "dataVersion",
+                    dataIndex: "dataVersion"
                 },
                 {
                     title: "数据内容",
                     align: "center",
                     dataIndex: "dataContent",
                     width: "120px",
-                    scopedSlots: { customRender: "dataContent" },
+                    scopedSlots: { customRender: "dataContent" }
                 },
                 {
                     title: "创建人",
                     align: "center",
-                    dataIndex: "createBy",
-                },
+                    dataIndex: "createBy"
+                }
             ],
             url: {
-                list: "/sys/dataLog/list",
-            },
+                list: "/sys/dataLog/list"
+            }
         };
     },
     methods: {
@@ -126,10 +126,10 @@ export default {
         openNotifIcon(msg) {
             this.$notification["warning"]({
                 message: "提示信息",
-                description: msg,
+                description: msg
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

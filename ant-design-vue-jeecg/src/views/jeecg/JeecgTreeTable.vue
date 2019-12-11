@@ -24,23 +24,23 @@ export default {
             columns: [
                 {
                     title: "菜单名称",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "组件",
-                    dataIndex: "component",
+                    dataIndex: "component"
                 },
                 {
                     title: "排序",
-                    dataIndex: "orderNum",
+                    dataIndex: "orderNum"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
-            selectedRowKeys: [],
+            selectedRowKeys: []
         };
     },
     computed: {
@@ -51,10 +51,10 @@ export default {
                 // https://vue.ant.design/components/table-cn/#rowSelection
                 rowSelection: {
                     selectedRowKeys: _this.selectedRowKeys,
-                    onChange: selectedRowKeys => (_this.selectedRowKeys = selectedRowKeys),
-                },
+                    onChange: selectedRowKeys => (_this.selectedRowKeys = selectedRowKeys)
+                }
             };
-        },
+        }
     },
     methods: {
         handleEdit(record) {
@@ -63,10 +63,10 @@ export default {
                 title: "编辑",
                 content: "编辑ID：" + record.id + "；名称：" + record.name,
                 okText: "确定",
-                maskClosable: true,
+                maskClosable: true
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

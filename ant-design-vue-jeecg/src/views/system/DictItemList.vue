@@ -7,7 +7,7 @@
                 :style="{
                     padding: '10px',
                     border: '1px solid #e9e9e9',
-                    background: '#fff',
+                    background: '#fff'
                 }"
             >
                 <div class="table-page-search-wrapper">
@@ -83,26 +83,26 @@ export default {
                 {
                     title: "名称",
                     align: "center",
-                    dataIndex: "itemText",
+                    dataIndex: "itemText"
                 },
                 {
                     title: "数据值",
                     align: "center",
-                    dataIndex: "itemValue",
+                    dataIndex: "itemValue"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             queryParam: {
                 dictId: "",
                 dictName: "",
                 itemText: "",
                 delFlag: "1",
-                status: [],
+                status: []
             },
             title: "操作",
             visible: false,
@@ -112,22 +112,22 @@ export default {
             status: 1,
             labelCol: {
                 xs: { span: 5 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 12 },
-                sm: { span: 12 },
+                sm: { span: 12 }
             },
             form: this.$form.createForm(this),
             validatorRules: {
                 itemText: { rules: [{ required: true, message: "请输入名称!" }] },
-                itemValue: { rules: [{ required: true, message: "请输入数据值!" }] },
+                itemValue: { rules: [{ required: true, message: "请输入数据值!" }] }
             },
             url: {
                 list: "/sys/dictItem/list",
                 delete: "/sys/dictItem/delete",
-                deleteBatch: "/sys/dictItem/deleteBatch",
-            },
+                deleteBatch: "/sys/dictItem/deleteBatch"
+            }
         };
     },
     created() {
@@ -186,8 +186,8 @@ export default {
             } else {
                 this.screenWidth = 600;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped></style>

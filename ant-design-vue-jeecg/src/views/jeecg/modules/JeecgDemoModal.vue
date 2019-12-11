@@ -49,11 +49,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -61,8 +61,8 @@ export default {
             validatorRules: {},
             url: {
                 add: "/test/jeecgDemo/add",
-                edit: "/test/jeecgDemo/edit",
-            },
+                edit: "/test/jeecgDemo/edit"
+            }
         };
     },
     created() {},
@@ -125,8 +125,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

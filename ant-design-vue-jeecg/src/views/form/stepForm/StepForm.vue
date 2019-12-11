@@ -23,7 +23,7 @@ export default {
     components: {
         Step1,
         Step2,
-        Step3,
+        Step3
     },
     data() {
         return {
@@ -31,7 +31,7 @@ export default {
             currentTab: 0,
 
             // form
-            form: null,
+            form: null
         };
     },
     methods: {
@@ -48,8 +48,8 @@ export default {
         },
         finish() {
             this.currentTab = 0;
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -35,7 +35,7 @@ import moment from "moment";
 export default {
     name: "JeecgOrderDMainModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -43,15 +43,15 @@ export default {
             visible: false,
             orderMainModel: {
                 jeecgOrderCustomerList: [{}],
-                jeecgOrderTicketList: [{}],
+                jeecgOrderTicketList: [{}]
             },
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
@@ -60,8 +60,8 @@ export default {
                 add: "/test/order/add",
                 edit: "/test/order/edit",
                 orderCustomerList: "/test/order/listOrderCustomerByMainId",
-                orderTicketList: "/test/order/listOrderTicketByMainId",
-            },
+                orderTicketList: "/test/order/listOrderTicketByMainId"
+            }
         };
     },
     methods: {
@@ -103,7 +103,7 @@ export default {
                     //时间格式化
                     orderMainData.orderDate = orderMainData.orderDate ? orderMainData.orderDate.format("YYYY-MM-DD HH:mm:ss") : null;
                     let formData = {
-                        ...orderMainData,
+                        ...orderMainData
                     };
 
                     console.log(formData);
@@ -125,8 +125,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

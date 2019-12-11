@@ -55,7 +55,7 @@
                                             placeholder="客户名"
                                             v-decorator="[
                                                 'jeecgOrderCustomerList[' + index + '].name',
-                                                { initialValue: item.name, rules: [{ required: true, message: '请输入用户名!' }] },
+                                                { initialValue: item.name, rules: [{ required: true, message: '请输入用户名!' }] }
                                             ]"
                                         />
                                     </a-form-item>
@@ -77,9 +77,9 @@
                                                 {
                                                     initialValue: item.idcard,
                                                     rules: [
-                                                        { pattern: '^\\d{6}(18|19|20)?\\d{2}(0[1-9]|1[012])(0[1-9]|[12]\\d|3[01])\\d{3}(\\d|[xX])$', message: '身份证号格式不对!' },
-                                                    ],
-                                                },
+                                                        { pattern: '^\\d{6}(18|19|20)?\\d{2}(0[1-9]|1[012])(0[1-9]|[12]\\d|3[01])\\d{3}(\\d|[xX])$', message: '身份证号格式不对!' }
+                                                    ]
+                                                }
                                             ]"
                                         />
                                     </a-form-item>
@@ -90,7 +90,7 @@
                                             placeholder="手机号"
                                             v-decorator="[
                                                 'jeecgOrderCustomerList[' + index + '].telphone',
-                                                { initialValue: item.telphone, rules: [{ pattern: '^1(3|4|5|7|8)\\d{9}$', message: '手机号格式不对!' }] },
+                                                { initialValue: item.telphone, rules: [{ pattern: '^1(3|4|5|7|8)\\d{9}$', message: '手机号格式不对!' }] }
                                             ]"
                                         />
                                     </a-form-item>
@@ -119,7 +119,7 @@
                                             placeholder="航班号"
                                             v-decorator="[
                                                 'jeecgOrderTicketList[' + index + '].ticketCode',
-                                                { initialValue: item.ticketCode, rules: [{ required: true, message: '请输入航班号!' }] },
+                                                { initialValue: item.ticketCode, rules: [{ required: true, message: '请输入航班号!' }] }
                                             ]"
                                         />
                                     </a-form-item>
@@ -157,7 +157,7 @@ import moment from "moment";
 export default {
     name: "JeecgOrderMainModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -166,11 +166,11 @@ export default {
             orderMainModel: { jeecgOrderCustomerList: [{}], jeecgOrderTicketList: [{}] },
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -180,8 +180,8 @@ export default {
                 add: "/test/jeecgOrderMain/add",
                 edit: "/test/jeecgOrderMain/edit",
                 orderCustomerList: "/test/jeecgOrderMain/queryOrderCustomerListByMainId",
-                orderTicketList: "/test/jeecgOrderMain/queryOrderTicketListByMainId",
-            },
+                orderTicketList: "/test/jeecgOrderMain/queryOrderTicketListByMainId"
+            }
         };
     },
     created() {},
@@ -247,7 +247,7 @@ export default {
                     let formData = {
                         ...orderMainData,
                         jeecgOrderCustomerList: orderMainData.jeecgOrderCustomerList,
-                        jeecgOrderTicketList: orderMainData.jeecgOrderTicketList,
+                        jeecgOrderTicketList: orderMainData.jeecgOrderTicketList
                     };
 
                     console.log(formData);
@@ -288,8 +288,8 @@ export default {
             console.log(index);
             this.orderMainModel.jeecgOrderTicketList.splice(index, 1);
             this.$forceUpdate();
-        },
-    },
+        }
+    }
 };
 </script>
 

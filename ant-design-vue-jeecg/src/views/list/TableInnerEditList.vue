@@ -106,7 +106,7 @@ import STable from "@/components/table/";
 export default {
     name: "TableList",
     components: {
-        STable,
+        STable
     },
     data() {
         return {
@@ -119,12 +119,12 @@ export default {
                 {
                     title: "规则编号",
                     dataIndex: "no",
-                    width: 90,
+                    width: 90
                 },
                 {
                     title: "描述",
                     dataIndex: "description",
-                    scopedSlots: { customRender: "description" },
+                    scopedSlots: { customRender: "description" }
                 },
                 {
                     title: "服务调用次数",
@@ -132,7 +132,7 @@ export default {
                     width: "150px",
                     sorter: true,
                     needTotal: true,
-                    scopedSlots: { customRender: "callNo" },
+                    scopedSlots: { customRender: "callNo" }
                     // customRender: (text) => text + ' 次'
                 },
                 {
@@ -140,27 +140,27 @@ export default {
                     dataIndex: "status",
                     width: "100px",
                     needTotal: true,
-                    scopedSlots: { customRender: "status" },
+                    scopedSlots: { customRender: "status" }
                 },
                 {
                     title: "更新时间",
                     dataIndex: "updatedAt",
                     width: "150px",
                     sorter: true,
-                    scopedSlots: { customRender: "updatedAt" },
+                    scopedSlots: { customRender: "updatedAt" }
                 },
                 {
                     table: "操作",
                     dataIndex: "action",
                     width: "120px",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
                 return this.$http
                     .get("/api/service", {
-                        params: Object.assign(parameter, this.queryParam),
+                        params: Object.assign(parameter, this.queryParam)
                     })
                     .then(res => {
                         return res.result;
@@ -168,7 +168,7 @@ export default {
             },
 
             selectedRowKeys: [],
-            selectedRows: [],
+            selectedRows: []
         };
     },
     methods: {
@@ -197,7 +197,7 @@ export default {
                 },
                 onCancel() {
                     console.log("Cancel");
-                },
+                }
             });
         },
         save(row) {
@@ -215,7 +215,7 @@ export default {
         },
         toggleAdvanced() {
             this.advanced = !this.advanced;
-        },
+        }
     },
     watch: {
         /*
@@ -230,7 +230,7 @@ export default {
         })
       }
       */
-    },
+    }
 };
 </script>
 

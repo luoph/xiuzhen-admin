@@ -61,7 +61,7 @@ for (let i = 0; i < 11; i++) {
         title: "Alipay",
         avatar: "https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png",
         activeUser: 17,
-        newUser: 1700,
+        newUser: 1700
     });
 }
 
@@ -70,9 +70,9 @@ export default {
     components: {},
     data() {
         return {
-            dataSource,
+            dataSource
         };
-    },
+    }
 };
 </script>
 

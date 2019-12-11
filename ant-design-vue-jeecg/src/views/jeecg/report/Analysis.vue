@@ -207,7 +207,7 @@ const rankList = [];
 for (let i = 0; i < 7; i++) {
     rankList.push({
         name: "白鹭岛 " + (i + 1) + " 号店",
-        total: 1234.56 - i * 100,
+        total: 1234.56 - i * 100
     });
 }
 
@@ -215,114 +215,114 @@ const dataCol1 = [
     {
         title: "业务号",
         align: "center",
-        dataIndex: "reBizCode",
+        dataIndex: "reBizCode"
     },
     {
         title: "权利类型",
         align: "center",
-        dataIndex: "droitType",
+        dataIndex: "droitType"
     },
     {
         title: "登记类型",
         align: "center",
-        dataIndex: "registeType",
+        dataIndex: "registeType"
     },
     {
         title: "座落",
         align: "center",
-        dataIndex: "beLocated",
+        dataIndex: "beLocated"
     },
     {
         title: "权利人",
         align: "center",
-        dataIndex: "qlr",
+        dataIndex: "qlr"
     },
     {
         title: "义务人",
         align: "center",
-        dataIndex: "ywr",
+        dataIndex: "ywr"
     },
     {
         title: "受理人",
         align: "center",
-        dataIndex: "acceptBy",
+        dataIndex: "acceptBy"
     },
     {
         title: "受理时间",
         align: "center",
-        dataIndex: "acceptDate",
+        dataIndex: "acceptDate"
     },
     {
         title: "当前节点",
         align: "center",
-        dataIndex: "curNode",
+        dataIndex: "curNode"
     },
     {
         title: "办理进度",
         align: "center",
         dataIndex: "flowRate",
-        scopedSlots: { customRender: "flowRate" },
-    },
+        scopedSlots: { customRender: "flowRate" }
+    }
 ];
 
 const dataCol2 = [
     {
         title: "业务号",
         align: "center",
-        dataIndex: "reBizCode",
+        dataIndex: "reBizCode"
     },
     {
         title: "权利类型",
         align: "center",
-        dataIndex: "droitType",
+        dataIndex: "droitType"
     },
     {
         title: "登记类型",
         align: "center",
-        dataIndex: "registeType",
+        dataIndex: "registeType"
     },
     {
         title: "座落",
         align: "center",
-        dataIndex: "beLocated",
+        dataIndex: "beLocated"
     },
     {
         title: "权利人",
         align: "center",
-        dataIndex: "qlr",
+        dataIndex: "qlr"
     },
     {
         title: "义务人",
         align: "center",
-        dataIndex: "ywr",
+        dataIndex: "ywr"
     },
     {
         title: "受理人",
         align: "center",
-        dataIndex: "acceptBy",
+        dataIndex: "acceptBy"
     },
     {
         title: "发起时间",
         align: "center",
-        dataIndex: "acceptDate",
+        dataIndex: "acceptDate"
     },
     {
         title: "当前节点",
         align: "center",
-        dataIndex: "curNode",
+        dataIndex: "curNode"
     },
     {
         title: "超时时间",
         align: "center",
         dataIndex: "flowRate",
-        scopedSlots: { customRender: "flowRate" },
-    },
+        scopedSlots: { customRender: "flowRate" }
+    }
 ];
 
 const jhjgData = [
     { type: "房管", 一月: 900, 二月: 1120, 三月: 1380, 四月: 1480, 五月: 1450, 六月: 1100, 七月: 1300, 八月: 900, 九月: 1000, 十月: 1200, 十一月: 600, 十二月: 900 },
     { type: "税务", 一月: 1200, 二月: 1500, 三月: 1980, 四月: 2000, 五月: 1000, 六月: 600, 七月: 900, 八月: 1100, 九月: 1300, 十月: 2000, 十一月: 900, 十二月: 1100 },
-    { type: "不动产", 一月: 2000, 二月: 1430, 三月: 1300, 四月: 1400, 五月: 900, 六月: 500, 七月: 600, 八月: 1000, 九月: 600, 十月: 1000, 十一月: 1500, 十二月: 1200 },
+    { type: "不动产", 一月: 2000, 二月: 1430, 三月: 1300, 四月: 1400, 五月: 900, 六月: 500, 七月: 600, 八月: 1000, 九月: 600, 十月: 1000, 十一月: 1500, 十二月: 1200 }
 ];
 const jhjgFields = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
 
@@ -341,7 +341,7 @@ const xljgData = [
 
     { type: "十月", 房管: 1.1, 税务: 1.1, 不动产: 1.4 },
     { type: "十一月", 房管: 1.85, 税务: 1.6, 不动产: 1.5 },
-    { type: "十二月", 房管: 1.5, 税务: 1.4, 不动产: 1.3 },
+    { type: "十二月", 房管: 1.5, 税务: 1.4, 不动产: 1.3 }
 ];
 const xljgFields = ["房管", "税务", "不动产"];
 export default {
@@ -359,7 +359,7 @@ export default {
         LineChartMultid,
         AreaChartTy,
         DashChartDemo,
-        BarMultid,
+        BarMultid
     },
     data() {
         return {
@@ -377,17 +377,17 @@ export default {
             todayIBjl: 0,
             registerTypeList: [
                 {
-                    text: "业务受理",
+                    text: "业务受理"
                 },
                 {
-                    text: "业务管理",
+                    text: "业务管理"
                 },
                 {
-                    text: "文件管理",
+                    text: "文件管理"
                 },
                 {
-                    text: "信息查询",
-                },
+                    text: "信息查询"
+                }
             ],
             // 分页参数
             ipagination: {
@@ -399,7 +399,7 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             //数据集
             dataSource: [],
@@ -412,23 +412,23 @@ export default {
                 countBjl: "sps/register/bjlTenDaysCount",
                 countISll: "sps/register/ISllTenDaysCount",
                 countIBjl: "sps/register/IBjlTenDaysCount",
-                queryDiskInfo: "api/queryDiskInfo",
+                queryDiskInfo: "api/queryDiskInfo"
             },
             chartData: {
                 sll: [],
                 bjl: [],
                 isll: [],
-                ibjl: [],
+                ibjl: []
             },
             cardCount: {
                 sll: 0,
                 bjl: 0,
                 isll: 0,
-                ibjl: 0,
+                ibjl: 0
             },
             columns: dataCol1,
             columns2: dataCol2,
-            diskInfo: [],
+            diskInfo: []
         };
     },
     methods: {
@@ -436,22 +436,22 @@ export default {
             if (index == 0) {
                 this.$router.push({
                     path: "/isps/registerStepForm",
-                    name: "isps-registerStepForm",
+                    name: "isps-registerStepForm"
                 });
             } else if (index == 1) {
                 this.$router.push({
                     path: "/isps/registerList",
-                    name: "isps-registerList",
+                    name: "isps-registerList"
                 });
             } else if (index == 2) {
                 this.$router.push({
                     path: "/isps/fileManage",
-                    name: "isps-fileManage",
+                    name: "isps-fileManage"
                 });
             } else if (index == 3) {
                 this.$router.push({
                     path: "/isps/infoSearch",
-                    name: "isps-infoSearch",
+                    name: "isps-infoSearch"
                 });
             }
         },
@@ -573,7 +573,7 @@ export default {
                         }
                         this.chartData.sll.push({
                             x: dataStr,
-                            y: value,
+                            y: value
                         });
                     }
                 }
@@ -590,7 +590,7 @@ export default {
                             }
                             this.chartData.bjl.push({
                                 x: dataStr,
-                                y: value,
+                                y: value
                             });
                         }
                     }
@@ -607,7 +607,7 @@ export default {
                             }
                             this.chartData.isll.push({
                                 x: key,
-                                y: value,
+                                y: value
                             });
                         }
                     }
@@ -624,12 +624,12 @@ export default {
                             }
                             this.chartData.ibjl.push({
                                 x: key,
-                                y: value,
+                                y: value
                             });
                         }
                     }
                 });
-        },
+        }
     },
     created() {
         this.loadDiskInfo();
@@ -639,7 +639,7 @@ export default {
         setTimeout(() => {
             this.loading = !this.loading;
         }, 1000);
-    },
+    }
 };
 </script>
 

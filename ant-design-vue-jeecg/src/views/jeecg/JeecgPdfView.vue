@@ -49,14 +49,14 @@ const mockdata = [
         title: "实例.pdf",
         fileCode: "shili",
         fileName: "实例",
-        filePdfPath: "实例",
-    },
+        filePdfPath: "实例"
+    }
 ];
 
 export default {
     name: "JeecgPdfView",
     components: {
-        PdfPreviewModal,
+        PdfPreviewModal
     },
     data() {
         return {
@@ -66,8 +66,8 @@ export default {
                 {
                     title: "所有PDF电子档",
                     key: "0-0",
-                    children: mockdata,
-                },
+                    children: mockdata
+                }
             ],
             // 文件数据集
             dataSource: mockdata,
@@ -77,8 +77,8 @@ export default {
             // 加载中
             spinning: false,
             url: {
-                pdfList: "/api/pdfList",
-            },
+                pdfList: "/api/pdfList"
+            }
         };
     },
     created() {
@@ -114,8 +114,8 @@ export default {
         // model回调
         modalFormOk() {
             this.loadData();
-        },
-    },
+        }
+    }
 };
 </script>
 

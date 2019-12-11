@@ -34,23 +34,23 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
             url: {
-                send: "/message/sysMessageTemplate/sendMsg",
+                send: "/message/sysMessageTemplate/sendMsg"
             },
             templateName: "",
             templateContent: "",
             receiver: "",
             msgType: "",
             testData: "",
-            sendParams: {},
+            sendParams: {}
         };
     },
     methods: {
@@ -88,8 +88,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

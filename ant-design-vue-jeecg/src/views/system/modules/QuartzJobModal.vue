@@ -40,7 +40,7 @@ import pick from "lodash.pick";
 export default {
     name: "QuartzJobModal",
     components: {
-        JCron,
+        JCron
     },
     data() {
         return {
@@ -49,15 +49,15 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             cron: {
                 label: "",
-                value: "",
+                value: ""
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
@@ -66,15 +66,15 @@ export default {
                     rules: [
                         {
                             required: true,
-                            message: "请输入cron表达式!",
-                        },
-                    ],
-                },
+                            message: "请输入cron表达式!"
+                        }
+                    ]
+                }
             },
             url: {
                 add: "/sys/quartzJob/add",
-                edit: "/sys/quartzJob/edit",
-            },
+                edit: "/sys/quartzJob/edit"
+            }
         };
     },
     created() {},
@@ -157,8 +157,8 @@ export default {
             } else if (Object.keys(value).length == 0) {
                 callback("请输入cron表达式!");
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

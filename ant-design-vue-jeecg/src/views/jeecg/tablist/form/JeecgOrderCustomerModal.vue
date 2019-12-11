@@ -65,64 +65,64 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             // 表头
             columns: [
                 {
                     title: "客户名",
                     align: "center",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "性别",
                     align: "center",
-                    dataIndex: "sex",
+                    dataIndex: "sex"
                 },
                 {
                     title: "身份证号码",
                     align: "center",
-                    dataIndex: "idcard",
+                    dataIndex: "idcard"
                 },
                 {
                     title: "身份证扫描件",
                     align: "center",
-                    dataIndex: "idcardPic",
+                    dataIndex: "idcardPic"
                 },
                 {
                     title: "电话",
                     dataIndex: "telphone",
-                    align: "center",
+                    align: "center"
                 },
                 {
                     title: "订单号码",
                     dataIndex: "orderId",
-                    align: "center",
+                    align: "center"
                 },
                 {
                     title: "创建人",
                     dataIndex: "createBy",
-                    align: "center",
+                    align: "center"
                 },
                 {
                     title: "创建时间",
                     dataIndex: "createTime",
-                    align: "center",
+                    align: "center"
                 },
                 {
                     title: "更新时间",
                     dataIndex: "updateBy",
-                    align: "center",
+                    align: "center"
                 },
                 {
                     title: "更新人",
                     dataIndex: "updateTime",
-                    align: "center",
-                },
+                    align: "center"
+                }
             ],
             fileList: [],
             disableSubmit: false,
@@ -143,18 +143,18 @@ export default {
                 edit: "/test/order/editCustomer",
                 fileUpload: window._CONFIG["domainURL"] + "/sys/common/upload",
                 imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
-                getOrderCustomerList: "/test/order/listOrderCustomerByMainId",
+                getOrderCustomerList: "/test/order/listOrderCustomerByMainId"
             },
             validatorRules: {
                 telphone: { rules: [{ validator: this.validateMobile }] },
-                idcard: { rules: [{ validator: this.validateIdCard }] },
-            },
+                idcard: { rules: [{ validator: this.validateIdCard }] }
+            }
         };
     },
     computed: {
         uploadAction: function() {
             return this.url.fileUpload;
-        },
+        }
     },
     created() {
         const token = Vue.ls.get(ACCESS_TOKEN);
@@ -290,8 +290,8 @@ export default {
             //let pics_len = pics.length;
             // 显示上传的最后一个图片
             return this.url.imgerver + "/" + url;
-        },
-    },
+        }
+    }
 };
 </script>
 

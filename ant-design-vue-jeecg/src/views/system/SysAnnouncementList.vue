@@ -112,7 +112,7 @@ export default {
     name: "SysAnnouncementList",
     mixins: [JeecgListMixin],
     components: {
-        SysAnnouncementModal,
+        SysAnnouncementModal
     },
     data() {
         return {
@@ -129,13 +129,13 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
 
                 {
                     title: "标题",
                     align: "center",
-                    dataIndex: "titile",
+                    dataIndex: "titile"
                 },
                 {
                     title: "消息类型",
@@ -149,7 +149,7 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 /*{
             title: '开始时间',
@@ -164,7 +164,7 @@ export default {
                 {
                     title: "发布人",
                     align: "center",
-                    dataIndex: "sender",
+                    dataIndex: "sender"
                 },
                 {
                     title: "优先级",
@@ -180,7 +180,7 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "通告对象",
@@ -194,7 +194,7 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "发布状态",
@@ -210,17 +210,17 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "发布时间",
                     align: "center",
-                    dataIndex: "sendTime",
+                    dataIndex: "sendTime"
                 },
                 {
                     title: "撤销时间",
                     align: "center",
-                    dataIndex: "cancelTime",
+                    dataIndex: "cancelTime"
                 },
                 /*{
                 title: '删除状态（0，正常，1已删除）',
@@ -231,8 +231,8 @@ export default {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/sys/annountCement/list",
@@ -241,14 +241,14 @@ export default {
                 releaseDataUrl: "/sys/annountCement/doReleaseData",
                 revokeDataUrl: "sys/annountCement/doRevokeData",
                 exportXlsUrl: "sys/annountCement/exportXls",
-                importExcelUrl: "sys/annountCement/importExcel",
-            },
+                importExcelUrl: "sys/annountCement/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         //执行发布操作
@@ -275,8 +275,8 @@ export default {
                     that.$message.warning(res.message);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

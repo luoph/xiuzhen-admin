@@ -39,7 +39,7 @@ export default {
         return {
             formLayout: "horizontal",
             form: this.$form.createForm(this),
-            areaOptions: [],
+            areaOptions: []
         };
     },
     methods: {
@@ -54,7 +54,7 @@ export default {
         handleSelectChange(value) {
             console.log(value);
             this.form.setFieldsValue({
-                note: `Hi, ${value === "male" ? "man" : "lady"}!`,
+                note: `Hi, ${value === "male" ? "man" : "lady"}!`
             });
         },
         onChange(value, selectedOptions) {
@@ -62,7 +62,7 @@ export default {
         },
         filter(inputValue, path) {
             return path.some(option => option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1);
-        },
+        }
     },
     created() {
         getAction("/api/area").then(res => {
@@ -70,6 +70,6 @@ export default {
             console.log(res);
             this.areaOptions = res;
         });
-    },
+    }
 };
 </script>

@@ -55,18 +55,18 @@ export default {
         return {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             visible: false,
             confirmLoading: false,
             mdl: {},
 
             form: this.$form.createForm(this),
-            permissions: [],
+            permissions: []
         };
     },
     created() {
@@ -141,7 +141,7 @@ export default {
             Object.assign(permission, {
                 selected: e.target.checked ? permission.actionsOptions.map(obj => obj.value) : [],
                 indeterminate: false,
-                checkedAll: e.target.checked,
+                checkedAll: e.target.checked
             });
         },
         loadPermissions() {
@@ -155,14 +155,14 @@ export default {
                     permission.actionsOptions = options.map(option => {
                         return {
                             label: option.describe,
-                            value: option.action,
+                            value: option.action
                         };
                     });
                     return permission;
                 });
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

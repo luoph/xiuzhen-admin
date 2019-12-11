@@ -19,11 +19,11 @@ export default {
     data() {
         return {
             description: "通讯录页面",
-            currentOrgCode: "",
+            currentOrgCode: ""
         };
     },
 
-    methods: {},
+    methods: {}
 };
 </script>
 <style scoped>

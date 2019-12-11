@@ -120,11 +120,11 @@ export default {
         CountDown,
         Trend,
         AvatarList,
-        AvatarListItem,
+        AvatarListItem
     },
     data() {
         return {
-            targetTime: new Date().getTime() + 3900000,
+            targetTime: new Date().getTime() + 3900000
         };
     },
     methods: {
@@ -134,10 +134,10 @@ export default {
         onEndHandle2() {
             this.$notification.open({
                 message: "Notification Title",
-                description: "This is the content of the notification. This is the content of the notification. This is the content of the notification.",
+                description: "This is the content of the notification. This is the content of the notification. This is the content of the notification."
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

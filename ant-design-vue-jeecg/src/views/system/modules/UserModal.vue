@@ -139,7 +139,7 @@ export default {
     name: "UserModal",
     components: {
         departWindow,
-        JSelectPosition,
+        JSelectPosition
     },
     data() {
         return {
@@ -162,53 +162,53 @@ export default {
                     rules: [
                         {
                             required: true,
-                            message: "请输入用户账号!",
+                            message: "请输入用户账号!"
                         },
                         {
-                            validator: this.validateUsername,
-                        },
-                    ],
+                            validator: this.validateUsername
+                        }
+                    ]
                 },
                 password: {
                     rules: [
                         {
                             required: true,
                             pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
-                            message: "密码由8位数字、大小写字母和特殊符号组成!",
+                            message: "密码由8位数字、大小写字母和特殊符号组成!"
                         },
                         {
-                            validator: this.validateToNextPassword,
-                        },
-                    ],
+                            validator: this.validateToNextPassword
+                        }
+                    ]
                 },
                 confirmpassword: {
                     rules: [
                         {
                             required: true,
-                            message: "请重新输入登录密码!",
+                            message: "请重新输入登录密码!"
                         },
                         {
-                            validator: this.compareToFirstPassword,
-                        },
-                    ],
+                            validator: this.compareToFirstPassword
+                        }
+                    ]
                 },
                 realname: { rules: [{ required: true, message: "请输入用户名称!" }] },
                 phone: { rules: [{ validator: this.validatePhone }] },
                 email: {
                     rules: [
                         {
-                            validator: this.validateEmail,
-                        },
-                    ],
+                            validator: this.validateEmail
+                        }
+                    ]
                 },
                 roles: {},
                 //  sex:{initialValue:((!this.model.sex)?"": (this.model.sex+""))}
                 workNo: {
-                    rules: [{ required: true, message: "请输入工号" }, { validator: this.validateWorkNo }],
+                    rules: [{ required: true, message: "请输入工号" }, { validator: this.validateWorkNo }]
                 },
                 telephone: {
-                    rules: [{ pattern: /^0\d{2,3}-[1-9]\d{6,7}$/, message: "请输入正确的座机号码" }],
-                },
+                    rules: [{ pattern: /^0\d{2,3}-[1-9]\d{6,7}$/, message: "请输入正确的座机号码" }]
+                }
             },
             title: "操作",
             visible: false,
@@ -217,11 +217,11 @@ export default {
             selectedRole: [],
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             uploadLoading: false,
             confirmLoading: false,
@@ -233,8 +233,8 @@ export default {
                 imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
                 userWithDepart: "/sys/user/userDepartList", // 引入为指定用户查看部门信息需要的url
                 userId: "/sys/user/generateUserId", // 引入生成添加用户情况下的url
-                syncUserByUserName: "/process/extActProcess/doSyncUserByUserName", //同步用户到工作流
-            },
+                syncUserByUserName: "/process/extActProcess/doSyncUserByUserName" //同步用户到工作流
+            }
         };
     },
     created() {
@@ -244,7 +244,7 @@ export default {
     computed: {
         uploadAction: function() {
             return this.url.fileUpload;
-        },
+        }
     },
     methods: {
         isDisabledAuth(code) {
@@ -418,7 +418,7 @@ export default {
                         tableName: "sys_user",
                         fieldName: "phone",
                         fieldVal: value,
-                        dataId: this.userId,
+                        dataId: this.userId
                     };
                     duplicateCheck(params).then(res => {
                         if (res.success) {
@@ -445,7 +445,7 @@ export default {
                         tableName: "sys_user",
                         fieldName: "email",
                         fieldVal: value,
-                        dataId: this.userId,
+                        dataId: this.userId
                     };
                     duplicateCheck(params).then(res => {
                         console.log(res);
@@ -465,7 +465,7 @@ export default {
                 tableName: "sys_user",
                 fieldName: "username",
                 fieldVal: value,
-                dataId: this.userId,
+                dataId: this.userId
             };
             duplicateCheck(params).then(res => {
                 if (res.success) {
@@ -480,7 +480,7 @@ export default {
                 tableName: "sys_user",
                 fieldName: "work_no",
                 fieldVal: value,
-                dataId: this.userId,
+                dataId: this.userId
             };
             duplicateCheck(params).then(res => {
                 if (res.success) {
@@ -559,8 +559,8 @@ export default {
             } else {
                 this.drawerWidth = 700;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -6,10 +6,10 @@
 export default {
     data() {
         return {
-            data: [],
+            data: []
         };
     },
-    methods: {},
+    methods: {}
 };
 </script>
 

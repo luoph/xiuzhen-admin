@@ -39,7 +39,7 @@ import JDate from "@/components/jeecg/JDate";
 
 export default {
     components: {
-        JDate,
+        JDate
     },
     name: "JeecgOrderTicketModal",
     data() {
@@ -49,11 +49,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             moment,
             format: "YYYY-MM-DD HH:mm:ss",
@@ -65,8 +65,8 @@ export default {
             validatorRules: {},
             url: {
                 add: "/test/order/addTicket",
-                edit: "/test/order/editTicket",
-            },
+                edit: "/test/order/editTicket"
+            }
         };
     },
     created() {},
@@ -139,8 +139,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 
