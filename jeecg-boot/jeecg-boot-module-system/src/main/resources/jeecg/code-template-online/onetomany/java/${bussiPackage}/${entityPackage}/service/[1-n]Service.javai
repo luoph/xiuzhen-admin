@@ -7,10 +7,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 
 /**
- * @description ${subTab.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${subTab.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 public interface I${subTab.entityName}Service extends IService<${subTab.entityName}> {
 

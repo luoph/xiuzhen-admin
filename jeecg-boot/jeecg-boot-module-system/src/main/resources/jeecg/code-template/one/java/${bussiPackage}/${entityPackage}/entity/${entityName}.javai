@@ -16,10 +16,10 @@ import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
- * @description ${tableVo.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${tableVo.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 @Data
 @TableName("${tableName}")

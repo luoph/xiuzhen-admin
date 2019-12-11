@@ -44,10 +44,10 @@ import lombok.extern.slf4j.Slf4j;
 import com.alibaba.fastjson.JSON;
 
  /**
- * @description ${tableVo.ftlDescription}
  * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
  * @version V1.0
+ * @description ${tableVo.ftlDescription}
+ * @date   ${.now?string["yyyy-MM-dd"]}
  */
 @RestController
 @RequestMapping("/${entityPackage}/${entityName?uncap_first}")
@@ -75,7 +75,7 @@ public class ${entityName}Controller {
 								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
 								   HttpServletRequest req) {
 		QueryWrapper<${entityName}> queryWrapper = QueryGenerator.initQueryWrapper(${entityName?uncap_first}, req.getParameterMap());
-		Page<${entityName}> page = new Page<${entityName}>(pageNo, pageSize);
+		Page<${entityName}> page = new Page<>(pageNo, pageSize);
 		IPage<${entityName}> pageList = ${entityName?uncap_first}Service.page(page, queryWrapper);
 		return Result.ok(pageList);
 	}

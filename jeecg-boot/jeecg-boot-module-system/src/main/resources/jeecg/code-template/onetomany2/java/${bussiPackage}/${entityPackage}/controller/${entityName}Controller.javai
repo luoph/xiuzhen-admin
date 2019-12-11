@@ -42,11 +42,11 @@ import lombok.extern.slf4j.Slf4j;
 import com.alibaba.fastjson.JSON;
 
  /**
- * @description ${tableVo.ftlDescription}
- * @author jeecg-boot
- * @date   ${.now?string["yyyy-MM-dd"]}
- * @version V1.0
- */
+  * @author jeecg-boot
+  * @version V1.0
+  * @description ${tableVo.ftlDescription}
+  * @date   ${.now?string["yyyy-MM-dd"]}
+  */
 @RestController
 @RequestMapping("/${entityPackage}/${entityName?uncap_first}")
 @Slf4j
@@ -73,7 +73,7 @@ public class ${entityName}Controller {
 								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
 								   HttpServletRequest req) {
 		QueryWrapper<${entityName}> queryWrapper = QueryGenerator.initQueryWrapper(${entityName?uncap_first}, req.getParameterMap());
-		Page<${entityName}> page = new Page<${entityName}>(pageNo, pageSize);
+		Page<${entityName}> page = new Page<>(pageNo, pageSize);
 		IPage<${entityName}> pageList = ${entityName?uncap_first}Service.page(page, queryWrapper);
 		return Result.ok(pageList);
 	}
@@ -214,7 +214,7 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
      * @return
      */
     @DeleteMapping(value = "/delete${sub.entityName}")
-    public Result<?> delete${sub.entityName}(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete${sub.entityName}(@RequestParam(name = "id") String id) {
        ${sub.entityName?uncap_first}Service.removeById(id);
         return Result.ok("删除${sub.ftlDescription}成功！");
     }
@@ -226,7 +226,7 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
      * @return
      */
     @DeleteMapping(value = "/deleteBatch${sub.entityName}")
-    public Result<?> deleteBatch${sub.entityName}(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch${sub.entityName}(@RequestParam(name = "ids") String ids) {
         if (ids == null || "".equals(ids.trim())) {
             return Result.error("参数不识别！");
         } 
