@@ -1,19 +1,17 @@
 package ${bussiPackage}.${entityPackage}.entity;
 
-import java.io.Serializable;
-import java.util.Date;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.springframework.format.annotation.DateTimeFormat;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author jeecg-boot
@@ -24,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Data
 @TableName("${tableName}")
 @Accessors(chain = true)
-@ApiModel(value = "${tableName}对象", description = "${tableVo.ftlDescription}")
+@ApiModel(value = "${entityName}", description = "${tableVo.ftlDescription}")
 public class ${entityName} {
     
     <#list originalColumns as po>

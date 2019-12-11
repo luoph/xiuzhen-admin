@@ -57,8 +57,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 */
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(${entityName} ${entityName?uncap_first},
-								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
-								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
+								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
 								   HttpServletRequest req) {
 		QueryWrapper<${entityName}> queryWrapper = QueryGenerator.initQueryWrapper(${entityName?uncap_first}, req.getParameterMap());
 		Page<${entityName}> page = new Page<>(pageNo, pageSize);
@@ -67,7 +67,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	}
 	
 	/**
-	 *   添加
+	 * 添加
 	 *
 	 * @param ${entityName?uncap_first}
 	 * @return
@@ -79,7 +79,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	}
 	
 	/**
-	 *  编辑
+	 * 编辑
 	 *
 	 * @param ${entityName?uncap_first}
 	 * @return
@@ -91,13 +91,13 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	}
 	
 	/**
-	 *   通过id删除
+	 * 通过id删除
 	 *
 	 * @param id
 	 * @return
 	 */
 	@DeleteMapping(value = "/delete")
-	public Result<?> delete(@RequestParam(name="id",required=true) String id) {
+	public Result<?> delete(@RequestParam(name = "id") String id) {
 		${entityName?uncap_first}Service.removeById(id);
 		return Result.ok("删除成功!");
 	}
@@ -109,7 +109,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@DeleteMapping(value = "/deleteBatch")
-	public Result<?> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
+	public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
 		this.${entityName?uncap_first}Service.removeByIds(Arrays.asList(ids.split(",")));
 		return Result.ok("批量删除成功!");
 	}
@@ -121,32 +121,32 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	 * @return
 	 */
 	@GetMapping(value = "/queryById")
-	public Result<?> queryById(@RequestParam(name="id",required=true) String id) {
+	public Result<?> queryById(@RequestParam(name = "id") String id) {
 		${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getById(id);
-		if(${entityName?uncap_first}==null) {
+		if(${entityName?uncap_first} == null) {
 			return Result.error("未找到对应数据");
 		}
 		return Result.ok(${entityName?uncap_first});
 	}
 
     /**
-    * 导出excel
-    *
-    * @param request
-    * @param ${entityName?uncap_first}
-    */
+     * 导出excel
+     *
+     * @param request
+     * @param ${entityName?uncap_first}
+     */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, ${entityName} ${entityName?uncap_first}) {
         return super.exportXls(request, ${entityName?uncap_first}, ${entityName}.class, "${tableVo.ftlDescription}");
     }
 
     /**
-      * 通过excel导入数据
-    *
-    * @param request
-    * @param response
-    * @return
-    */
+     * 通过excel导入数据
+     *
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, ${entityName}.class);

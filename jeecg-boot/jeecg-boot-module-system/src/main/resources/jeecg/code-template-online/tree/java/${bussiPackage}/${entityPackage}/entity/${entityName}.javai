@@ -44,9 +44,9 @@ public class ${entityName} implements Serializable {
   		</#if>
   		<#--  <#if po.classType!='popup'>
   			<#if po.dictTable?default("")?trim?length gt 1>
-  	@Dict(dicCode="${po.dictField}",dicText = "${po.dictText}",dictTable="${po.dictTable}")
+  	@Dict(dicCode = "${po.dictField}",dicText = "${po.dictText}",dictTable = "${po.dictTable}")
   			<#elseif po.dictField?default("")?trim?length gt 1>
-  	@Dict(dicCode="${po.dictField}")
+  	@Dict(dicCode = "${po.dictField}")
   			</#if>
   		</#if>-->
     </#if>

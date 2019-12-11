@@ -71,8 +71,8 @@ public class ${entityName}Controller {
 	 */
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(${entityName} ${entityName?uncap_first},
-								   @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
-								   @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
+								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
 								   HttpServletRequest req) {
 		QueryWrapper<${entityName}> queryWrapper = QueryGenerator.initQueryWrapper(${entityName?uncap_first}, req.getParameterMap());
 		Page<${entityName}> page = new Page<>(pageNo, pageSize);
@@ -119,7 +119,7 @@ public class ${entityName}Controller {
 	 * @return
 	 */
 	@DeleteMapping(value = "/delete")
-	public Result<?> delete(@RequestParam(name="id",required=true) String id) {
+	public Result<?> delete(@RequestParam(name = "id") String id) {
 		${entityName?uncap_first}Service.delMain(id);
 		return Result.ok("删除成功!");
 	}
@@ -131,7 +131,7 @@ public class ${entityName}Controller {
 	 * @return
 	 */
 	@DeleteMapping(value = "/deleteBatch")
-	public Result<?> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
+	public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
 		this.${entityName?uncap_first}Service.delBatchMain(Arrays.asList(ids.split(",")));
 		return Result.ok("批量删除成功！");
 	}
@@ -143,7 +143,7 @@ public class ${entityName}Controller {
 	 * @return
 	 */
 	@GetMapping(value = "/queryById")
-	public Result<?> queryById(@RequestParam(name="id",required=true) String id) {
+	public Result<?> queryById(@RequestParam(name = "id") String id) {
 		${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getById(id);
 		if(${entityName?uncap_first}==null) {
 			return Result.error("未找到对应数据");
@@ -160,7 +160,7 @@ public class ${entityName}Controller {
 	 * @return
 	 */
 	@GetMapping(value = "/query${sub.entityName}ByMainId")
-	public Result<?> query${sub.entityName}ListByMainId(@RequestParam(name="id",required=true) String id) {
+	public Result<?> query${sub.entityName}ListByMainId(@RequestParam(name = "id") String id) {
 		List<${sub.entityName}> ${sub.entityName?uncap_first}List = ${sub.entityName?uncap_first}Service.selectByMainId(id);
 		return Result.ok(${sub.entityName?uncap_first}List);
 	}
