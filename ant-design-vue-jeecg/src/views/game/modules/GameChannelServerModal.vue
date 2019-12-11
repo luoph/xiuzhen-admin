@@ -64,7 +64,7 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "severId", "channelId", "delFlag"));
-                //时间格式化
+                // 时间格式化
             });
         },
         close() {
@@ -77,20 +77,20 @@ export default {
             this.form.validateFields((err, values) => {
                 if (!err) {
                     that.confirmLoading = true;
-                    let httpurl = "";
+                    let httpUrl = "";
                     let method = "";
                     if (!this.model.id) {
-                        httpurl += this.url.add;
+                        httpUrl += this.url.add;
                         method = "post";
                     } else {
-                        httpurl += this.url.edit;
+                        httpUrl += this.url.edit;
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-                    //时间格式化
+                    // 时间格式化
 
                     console.log(formData);
-                    httpAction(httpurl, formData, method)
+                    httpAction(httpUrl, formData, method)
                         .then(res => {
                             if (res.success) {
                                 that.$message.success(res.message);

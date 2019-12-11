@@ -1,25 +1,30 @@
 <template>
     <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
-
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏名称">
-                    <a-input placeholder="请输入游戏名称" v-decorator="['name', validatorRules.name ]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道名称">
+                    <a-input placeholder="请输入渠道名称" v-decorator="['name', validatorRules.name]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPID">
-                    <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
+                    <a-input placeholder="请输入唯一标识" v-decorator="['simpleName', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPKEY">
-                    <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="排序字段">
+                    <a-input-number v-decorator="['position', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="gameSimpleName">
-                    <a-input placeholder="请输入gameSimpleName" v-decorator="['yaSimpleName', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告id">
+                    <a-input placeholder="请输入公告id" v-decorator="['noticeId', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="gameAppKey">
-                    <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="大渠道描述">
+                    <a-input placeholder="请输入大渠道描述" v-decorator="['remark', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
-                    <a-input placeholder="请输入描述" v-decorator="['remark', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
+                    <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
+                    <a-input placeholder="请输入游戏编号" v-decorator="['gameId', {}]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="分组">
+                    <a-input placeholder="请输入分组" v-decorator="['groupName', {}]" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -34,7 +39,7 @@ import pick from "lodash.pick";
 import moment from "moment";
 
 export default {
-    name: "GameInfoModal",
+    name: "GameChannelModal",
     data() {
         return {
             title: "操作",
@@ -42,23 +47,23 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                name: { rules: [{ required: true, message: "请输入游戏名称!" }] },
+                name: { rules: [{ required: true, message: "请输入渠道名称!" }] }
             },
             url: {
-                add: "/game/gameInfo/add",
-                edit: "/game/gameInfo/edit",
-            },
-        }
+                add: "/game/gameChannel/add",
+                edit: "/game/gameChannel/edit"
+            }
+        };
     },
     created() {},
     methods: {
@@ -70,8 +75,8 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "remark"))
-            // 时间格式化
+                this.form.setFieldsValue(pick(this.model, "name", "simpleName", "position", "noticeId", "remark", "extra", "gameId", "groupName"));
+                // 时间格式化
             });
         },
         close() {
@@ -117,14 +122,14 @@ export default {
             this.close();
         }
     }
-}
+};
 </script>
 
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {
-        margin-left: 30px;
-        margin-bottom: 30px;
-        float: right;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    float: right;
 }
 </style>

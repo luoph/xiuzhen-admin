@@ -1,35 +1,18 @@
 <template>
     <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
-        <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道名称">
-                    <a-input placeholder="请输入渠道名称" v-decorator="['name', validatorRules.name]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器id">
+                    <a-input placeholder="请输入服务器id" v-decorator="['severId', validatorRules.severId]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
-                    <a-input placeholder="请输入唯一标识" v-decorator="['simpleName', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道id">
+                    <a-input placeholder="请输入渠道id" v-decorator="['channelId', validatorRules.channelId]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="排序字段">
-                    <a-input-number v-decorator="['position', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告id">
-                    <a-input placeholder="请输入公告id" v-decorator="['noticeId', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="大渠道描述">
-                    <a-input placeholder="请输入大渠道描述" v-decorator="['remark', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
-                    <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
-                    <a-input placeholder="请输入游戏编号" v-decorator="['gameId', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="分组">
-                    <a-input placeholder="请输入分组" v-decorator="['groupName', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="删除状态">
+                    <a-input-number v-decorator="['delFlag', {}]" />
                 </a-form-item>
             </a-form>
         </a-spin>
-        <!-- </a-modal> -->
         <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
     </a-drawer>
@@ -41,7 +24,7 @@ import pick from "lodash.pick";
 import moment from "moment";
 
 export default {
-    name: "GameChannelModal",
+    name: "GameChannelServerModal",
     data() {
         return {
             title: "操作",
@@ -59,11 +42,12 @@ export default {
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                name: { rules: [{ required: true, message: "请输入渠道名称!" }] }
+                severId: { rules: [{ required: true, message: "请输入服务器id!" }] },
+                channelId: { rules: [{ required: true, message: "请输入渠道id!" }] }
             },
             url: {
-                add: "/game/gameChannel/add",
-                edit: "/game/gameChannel/edit"
+                add: "/game/gameChannelServer/add",
+                edit: "/game/gameChannelServer/edit"
             }
         };
     },
@@ -77,7 +61,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "name", "simpleName", "position", "noticeId", "remark", "extra", "gameId", "groupName"));
+                this.form.setFieldsValue(pick(this.model, "severId", "channelId", "delFlag"));
                 // 时间格式化
             });
         },
@@ -127,7 +111,6 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {
