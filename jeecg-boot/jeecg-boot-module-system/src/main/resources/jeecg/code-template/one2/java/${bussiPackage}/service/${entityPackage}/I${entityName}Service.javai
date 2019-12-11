@@ -7,7 +7,7 @@ import ${bussiPackage}.entity.${entityPackage}.${entityName};
  * @author jeecg-boot
  * @version V1.0
  * @description ${tableVo.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 public interface I${entityName}Service extends IService<${entityName}> {
 

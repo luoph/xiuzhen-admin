@@ -17,7 +17,7 @@ import java.util.Date;
  * @author jeecg-boot
  * @version V1.0
  * @description ${tableVo.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 @Data
 public class ${entityName}Page {

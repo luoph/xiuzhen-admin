@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author jeecg-boot
  * @version V1.0
  * @description ${tableVo.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 public interface ${entityName}Mapper extends BaseMapper<${entityName}> {
 

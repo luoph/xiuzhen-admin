@@ -26,7 +26,7 @@ import java.util.Arrays;
  * @author jeecg-boot
  * @version V1.0
  * @description ${tableVo.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 @Slf4j
 @RestController
