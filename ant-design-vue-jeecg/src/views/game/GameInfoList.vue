@@ -10,21 +10,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="YA_APPID">
-                            <a-input placeholder="请输入YA_APPID" v-model="queryParam.yaAppId"></a-input>
+                        <a-form-item label="唯一标识">
+                            <j-dict-select-tag v-model="queryParam.yaAppId" placeholder="唯一标识" dictCode="game_info,ya_simple_name,ya_app_id" />
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="YA_APPKEY">
-                                <a-input placeholder="请输入YA_APPKEY" v-model="queryParam.yaAppKey"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="gameSimpleName">
-                                <a-input placeholder="请输入gameSimpleName" v-model="queryParam.yaSimpleName"></a-input>
-                            </a-form-item>
-                        </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="gameAppKey">
                                 <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"></a-input>
@@ -145,7 +135,7 @@ export default {
                     dataIndex: "yaAppKey"
                 },
                 {
-                    title: "gameSimpleName",
+                    title: "唯一标识",
                     align: "center",
                     dataIndex: "yaSimpleName"
                 },

@@ -12,6 +12,7 @@
                     <a-col :md="6" :sm="8">
                         <a-form-item label="唯一标识">
                             <a-input placeholder="请输入唯一标识" v-model="queryParam.simpleName"></a-input>
+                            <j-dict-select-tag v-model="queryParam.simpleName" placeholder="请选择唯一标识" dictCode="game_channel,simple_name,simple_name" />
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">

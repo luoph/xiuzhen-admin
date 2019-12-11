@@ -12,8 +12,8 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPKEY">
                     <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="gameSimpleName">
-                    <a-input placeholder="请输入gameSimpleName" v-decorator="['yaSimpleName', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
+                    <a-input placeholder="请输入唯一标识" v-decorator="['yaSimpleName', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="gameAppKey">
                     <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', {}]" />
