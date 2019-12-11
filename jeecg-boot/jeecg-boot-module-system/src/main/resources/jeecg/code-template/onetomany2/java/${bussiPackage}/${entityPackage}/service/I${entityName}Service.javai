@@ -3,8 +3,8 @@ package ${bussiPackage}.${entityPackage}.service;
 <#list subTables as sub>
 import ${bussiPackage}.${entityPackage}.entity.${sub.entityName};
 </#list>
-import ${bussiPackage}.${entityPackage}.entity.${entityName};
 import com.baomidou.mybatisplus.extension.service.IService;
+import ${bussiPackage}.${entityPackage}.entity.${entityName};
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
