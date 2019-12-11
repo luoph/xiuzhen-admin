@@ -43,8 +43,8 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
      * @param req
      * @return
      */
-    @AutoLog(value = "游戏服配置-分页列表查询")
-    @ApiOperation(value = "游戏服配置-分页列表查询", notes = "游戏服配置-分页列表查询")
+    @AutoLog(value = "游戏服配置-列表查询")
+    @ApiOperation(value = "游戏服配置-列表查询", notes = "游戏服配置-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameServer gameServer,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,

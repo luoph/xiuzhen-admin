@@ -46,8 +46,8 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
      * @param req
      * @return
      */
-    @AutoLog(value = "填值规则-分页列表查询")
-    @ApiOperation(value = "填值规则-分页列表查询", notes = "填值规则-分页列表查询")
+    @AutoLog(value = "填值规则-列表查询")
+    @ApiOperation(value = "填值规则-列表查询", notes = "填值规则-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(SysFillRule sysFillRule,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,

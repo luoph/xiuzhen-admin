@@ -44,8 +44,8 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
      * @param req
      * @return
      */
-    @AutoLog(value = "游戏渠道服配置-分页列表查询")
-    @ApiOperation(value = "游戏渠道服配置-分页列表查询", notes = "游戏渠道服配置-分页列表查询")
+    @AutoLog(value = "游戏渠道服配置-列表查询")
+    @ApiOperation(value = "游戏渠道服配置-列表查询", notes = "游戏渠道服配置-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameChannelServer gameChannelServer,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,

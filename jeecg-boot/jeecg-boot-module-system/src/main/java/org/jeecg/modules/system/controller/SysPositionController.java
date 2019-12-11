@@ -57,8 +57,8 @@ public class SysPositionController {
      * @param req
      * @return
      */
-    @AutoLog(value = "职务表-分页列表查询")
-    @ApiOperation(value = "职务表-分页列表查询", notes = "职务表-分页列表查询")
+    @AutoLog(value = "职务表-列表查询")
+    @ApiOperation(value = "职务表-列表查询", notes = "职务表-列表查询")
     @GetMapping(value = "/list")
     public Result<IPage<SysPosition>> queryPageList(SysPosition sysPosition,
                                                     @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
