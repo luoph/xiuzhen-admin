@@ -11,7 +11,7 @@
                     <#elseif po.fieldType=='datetime'>
                     <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
                     <#elseif "int, decimal, double,"?contains(po.fieldType)>
-                    <a-input-number v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
+                    <a-input-number v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName}<#else>{}</#if>]" />
                     <#else>
                     <a-input placeholder="请输入${po.filedComment}" v-decorator="['${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
                     </#if>
@@ -71,10 +71,10 @@ export default {
         },
         edit(record) {
             this.form.resetFields();
-            this.model=Object.assign({}, record);
-            this.visible=true;
+            this.model = Object.assign({}, record);
+            this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model<#list columns as po><#if po.fieldName!='id' && po.fieldType ? index_of("date")==-1>,"${po.fieldName}"</#if></#list>))
+                this.form.setFieldsValue(pick(this.model<#list columns as po><#if po.fieldName!='id' && po.fieldType ? index_of("date")==-1>, "${po.fieldName}"</#if></#list>))
                 // 时间格式化
                 <#list columns as po>
                 <#if po.fieldName!='id' && po.fieldType?index_of("date")!=-1>
@@ -82,18 +82,17 @@ export default {
                 </#if>
                 </#list>
             });
-
         },
         close() {
-            this.$emit('close');
-            this.visible=false;
+            this.$emit("close");
+            this.visible = false;
         },
         handleOk() {
             const that = this;
             // 触发表单验证
             this.form.validateFields((err, values) => {
                 if (!err) {
-                    that.confirmLoading=true;
+                    that.confirmLoading = true;
                     let httpUrl = "";
                     let method = "";
                     if (!this.model.id) {
@@ -107,9 +106,9 @@ export default {
                     // 时间格式化
                     <#list columns as po>
                     <#if po.fieldName!='id' && po.fieldType=='date'>
-                    formData.${po.fieldName}=formData.${po.fieldName} ? formData.${po.fieldName}.format() : null;
-                    <#elseif po.fieldName!='id' && po.fieldType=='datetime'>
-                    formData.${po.fieldName}=formData.${po.fieldName} ? formData.${po.fieldName}.format('YYYY-MM-DD HH:mm:ss') : null;
+                    formData.${po.fieldName}=formData.${po.fieldName}?formData.${po.fieldName}.format():null;
+                    <#elseif po.fieldName != 'id'&&po.fieldType=='datetime'>
+                    formData.${po.fieldName}=formData.${po.fieldName}?formData.${po.fieldName}.format('YYYY-MM-DD HH:mm:ss'):null;
                     </#if>
                     </#list>
 
@@ -132,9 +131,9 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
-};
+        }
+    }
+}
 </script>
 
 // <style lang="less" scoped></style>
