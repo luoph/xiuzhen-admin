@@ -138,7 +138,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         GameServerModal,
-        JInput,
+        JInput
     },
     data() {
         return {
@@ -153,100 +153,100 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "名字",
                     align: "center",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "地址",
                     align: "center",
-                    dataIndex: "host",
+                    dataIndex: "host"
                 },
                 {
                     title: "端口",
                     align: "center",
-                    dataIndex: "port",
+                    dataIndex: "port"
                 },
                 {
                     title: "登录地址和端口",
                     align: "center",
-                    dataIndex: "loginUrl",
+                    dataIndex: "loginUrl"
                 },
                 {
                     title: "状态",
                     align: "center",
-                    dataIndex: "status_dictText",
+                    dataIndex: "status_dictText"
                 },
                 {
                     title: "推荐标识",
                     align: "center",
                     dataIndex: "recommend",
-                    dataIndex: "recommend_dictText",
+                    dataIndex: "recommend_dictText"
                 },
                 {
                     title: "出错提示信息",
                     align: "center",
-                    dataIndex: "warning",
+                    dataIndex: "warning"
                 },
                 {
                     title: "后台HTTP端口",
                     align: "center",
-                    dataIndex: "httpPort",
+                    dataIndex: "httpPort"
                 },
                 {
                     title: "顺序",
                     align: "center",
-                    dataIndex: "position",
+                    dataIndex: "position"
                 },
                 {
                     title: "类型",
                     align: "center",
                     dataIndex: "type",
-                    dataIndex: "type_dictText",
+                    dataIndex: "type_dictText"
                 },
                 {
                     title: "最小版本号",
                     align: "center",
-                    dataIndex: "minVersion",
+                    dataIndex: "minVersion"
                 },
                 {
                     title: "最大版本号",
                     align: "center",
-                    dataIndex: "maxVersion",
+                    dataIndex: "maxVersion"
                 },
                 {
                     title: "开服时间",
                     align: "center",
-                    dataIndex: "openTime",
+                    dataIndex: "openTime"
                 },
                 {
                     title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
+                    dataIndex: "createTime"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/game/gameServer/list",
                 delete: "/game/gameServer/delete",
-                deleteBatch: "/game/gameServer/deleteBatch",
+                deleteBatch: "/game/gameServer/deleteBatch"
                 // exportXlsUrl: "game/gameServer/exportXls",
                 // importExcelUrl: "game/gameServer/importExcel",
-            },
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         getQueryParams() {
@@ -265,8 +265,8 @@ export default {
         },
         onDateOk(value) {
             console.log(value);
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

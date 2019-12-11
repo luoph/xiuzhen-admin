@@ -1,10 +1,9 @@
 <template>
     <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
-
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏名称">
-                    <a-input placeholder="请输入游戏名称" v-decorator="['name', validatorRules.name ]" />
+                    <a-input placeholder="请输入游戏名称" v-decorator="['name', validatorRules.name]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPID">
                     <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', {}]" />
@@ -42,23 +41,23 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                name: { rules: [{ required: true, message: "请输入游戏名称!" }] },
+                name: { rules: [{ required: true, message: "请输入游戏名称!" }] }
             },
             url: {
                 add: "/game/gameInfo/add",
-                edit: "/game/gameInfo/edit",
-            },
-        }
+                edit: "/game/gameInfo/edit"
+            }
+        };
     },
     created() {},
     methods: {
@@ -70,8 +69,8 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "remark"))
-            // 时间格式化
+                this.form.setFieldsValue(pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "remark"));
+                // 时间格式化
             });
         },
         close() {
@@ -117,14 +116,14 @@ export default {
             this.close();
         }
     }
-}
+};
 </script>
 
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {
-        margin-left: 30px;
-        margin-bottom: 30px;
-        float: right;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    float: right;
 }
 </style>

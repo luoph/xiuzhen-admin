@@ -112,7 +112,7 @@ export default {
     name: "GameInfoList",
     mixins: [JeecgListMixin],
     components: {
-        GameInfoModal,
+        GameInfoModal
     },
     data() {
         return {
@@ -127,60 +127,60 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "游戏名称",
                     align: "center",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "YA_APPID",
                     align: "center",
-                    dataIndex: "yaAppId",
+                    dataIndex: "yaAppId"
                 },
                 {
                     title: "YA_APPKEY",
                     align: "center",
-                    dataIndex: "yaAppKey",
+                    dataIndex: "yaAppKey"
                 },
                 {
                     title: "gameSimpleName",
                     align: "center",
-                    dataIndex: "yaSimpleName",
+                    dataIndex: "yaSimpleName"
                 },
                 {
                     title: "gameAppKey",
                     align: "center",
-                    dataIndex: "yaGameKey",
+                    dataIndex: "yaGameKey"
                 },
                 {
                     title: "描述",
                     align: "center",
-                    dataIndex: "remark",
+                    dataIndex: "remark"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/game/gameInfo/list",
                 delete: "/game/gameInfo/delete",
                 deleteBatch: "/game/gameInfo/deleteBatch",
                 exportXlsUrl: "game/gameInfo/exportXls",
-                importExcelUrl: "game/gameInfo/importExcel",
-            },
+                importExcelUrl: "game/gameInfo/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
-    methods: {},
+    methods: {}
 };
 </script>
 <style scoped>

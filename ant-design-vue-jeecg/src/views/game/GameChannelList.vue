@@ -112,7 +112,7 @@ export default {
     name: "GameChannelList",
     mixins: [JeecgListMixin],
     components: {
-        GameChannelModal,
+        GameChannelModal
     },
     data() {
         return {
@@ -127,70 +127,70 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "渠道名称",
                     align: "center",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "唯一标识",
                     align: "center",
-                    dataIndex: "simpleName",
+                    dataIndex: "simpleName"
                 },
                 {
                     title: "排序字段",
                     align: "center",
-                    dataIndex: "position",
+                    dataIndex: "position"
                 },
                 {
                     title: "公告id",
                     align: "center",
-                    dataIndex: "noticeId",
+                    dataIndex: "noticeId"
                 },
                 {
                     title: "大渠道描述",
                     align: "center",
-                    dataIndex: "remark",
+                    dataIndex: "remark"
                 },
                 {
                     title: "扩展字段",
                     align: "center",
-                    dataIndex: "extra",
+                    dataIndex: "extra"
                 },
                 {
                     title: "游戏编号",
                     align: "center",
-                    dataIndex: "gameId",
+                    dataIndex: "gameId"
                 },
                 {
                     title: "分组",
                     align: "center",
-                    dataIndex: "groupName",
+                    dataIndex: "groupName"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/game/gameChannel/list",
                 delete: "/game/gameChannel/delete",
                 deleteBatch: "/game/gameChannel/deleteBatch",
                 exportXlsUrl: "game/gameChannel/exportXls",
-                importExcelUrl: "game/gameChannel/importExcel",
-            },
+                importExcelUrl: "game/gameChannel/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
-    methods: {},
+    methods: {}
 };
 </script>
 <style scoped>

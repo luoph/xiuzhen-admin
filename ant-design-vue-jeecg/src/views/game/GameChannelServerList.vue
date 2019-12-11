@@ -102,7 +102,7 @@ export default {
     name: "GameChannelServerList",
     mixins: [JeecgListMixin],
     components: {
-        GameChannelServerModal,
+        GameChannelServerModal
     },
     data() {
         return {
@@ -117,45 +117,45 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "服务器id",
                     align: "center",
-                    dataIndex: "severId",
+                    dataIndex: "severId"
                 },
                 {
                     title: "渠道id",
                     align: "center",
-                    dataIndex: "channelId",
+                    dataIndex: "channelId"
                 },
                 {
                     title: "删除状态",
                     align: "center",
-                    dataIndex: "delFlag",
+                    dataIndex: "delFlag"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/game/gameChannelServer/list",
                 delete: "/game/gameChannelServer/delete",
                 deleteBatch: "/game/gameChannelServer/deleteBatch",
                 exportXlsUrl: "game/gameChannelServer/exportXls",
-                importExcelUrl: "game/gameChannelServer/importExcel",
-            },
+                importExcelUrl: "game/gameChannelServer/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
-    methods: {},
+    methods: {}
 };
 </script>
 <style scoped>

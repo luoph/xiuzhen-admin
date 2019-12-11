@@ -34,23 +34,23 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
                 severId: { rules: [{ required: true, message: "请输入服务器id!" }] },
-                channelId: { rules: [{ required: true, message: "请输入渠道id!" }] },
+                channelId: { rules: [{ required: true, message: "请输入渠道id!" }] }
             },
             url: {
                 add: "/game/gameChannelServer/add",
-                edit: "/game/gameChannelServer/edit",
-            },
+                edit: "/game/gameChannelServer/edit"
+            }
         };
     },
     created() {},
@@ -108,8 +108,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 
