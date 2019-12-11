@@ -23,12 +23,12 @@ import java.util.Arrays;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 游戏渠道配置
+ * @description 游戏渠道
  * @date 2019-12-11
  */
 @Slf4j
-@Api(tags = "游戏渠道配置")
 @RestController
+@Api(tags = "游戏渠道")
 @RequestMapping("/game/gameChannel")
 public class GameChannelController extends JeecgController<GameChannel, IGameChannelService> {
 
@@ -44,8 +44,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
      * @param req         请求
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "游戏渠道配置-列表查询")
-    @ApiOperation(value = "游戏渠道配置-列表查询", notes = "游戏渠道配置-列表查询")
+    @AutoLog(value = "游戏渠道-列表查询")
+    @ApiOperation(value = "游戏渠道-列表查询", notes = "游戏渠道-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameChannel gameChannel,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -63,8 +63,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
      * @param gameChannel 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "游戏渠道配置-添加")
-    @ApiOperation(value = "游戏渠道配置-添加", notes = "游戏渠道配置-添加")
+    @AutoLog(value = "游戏渠道-添加")
+    @ApiOperation(value = "游戏渠道-添加", notes = "游戏渠道-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameChannel gameChannel) {
         gameChannelService.save(gameChannel);
@@ -77,8 +77,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
      * @param gameChannel 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "游戏渠道配置-编辑")
-    @ApiOperation(value = "游戏渠道配置-编辑", notes = "游戏渠道配置-编辑")
+    @AutoLog(value = "游戏渠道-编辑")
+    @ApiOperation(value = "游戏渠道-编辑", notes = "游戏渠道-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameChannel gameChannel) {
         gameChannelService.updateById(gameChannel);
@@ -91,8 +91,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "游戏渠道配置-通过id删除")
-    @ApiOperation(value = "游戏渠道配置-通过id删除", notes = "游戏渠道配置-通过id删除")
+    @AutoLog(value = "游戏渠道-通过id删除")
+    @ApiOperation(value = "游戏渠道-通过id删除", notes = "游戏渠道-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         gameChannelService.removeById(id);
@@ -105,8 +105,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
      * @param ids id列表，使用','分割的字符串
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "游戏渠道配置-批量删除")
-    @ApiOperation(value = "游戏渠道配置-批量删除", notes = "游戏渠道配置-批量删除")
+    @AutoLog(value = "游戏渠道-批量删除")
+    @ApiOperation(value = "游戏渠道-批量删除", notes = "游戏渠道-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.gameChannelService.removeByIds(Arrays.asList(ids.split(",")));
@@ -119,8 +119,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "游戏渠道配置-通过id查询")
-    @ApiOperation(value = "游戏渠道配置-通过id查询", notes = "游戏渠道配置-通过id查询")
+    @AutoLog(value = "游戏渠道-通过id查询")
+    @ApiOperation(value = "游戏渠道-通过id查询", notes = "游戏渠道-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         GameChannel gameChannel = gameChannelService.getById(id);
@@ -135,13 +135,13 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameChannel gameChannel) {
-        return super.exportXls(request, gameChannel, GameChannel.class, "游戏渠道配置");
+        return super.exportXls(request, gameChannel, GameChannel.class, "游戏渠道");
     }
 
     /**
      * 通过excel导入数据
      *
-     * @param request 请求
+     * @param request  请求
      * @param response 响应
      * @return {@linkplain Result}
      */
@@ -149,5 +149,4 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameChannel.class);
     }
-
 }

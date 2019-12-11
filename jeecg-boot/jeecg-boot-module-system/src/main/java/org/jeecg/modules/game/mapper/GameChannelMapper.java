@@ -6,7 +6,7 @@ import org.jeecg.modules.game.entity.GameChannel;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 游戏渠道配置
+ * @description 游戏渠道
  * @date 2019-12-11
  */
 public interface GameChannelMapper extends BaseMapper<GameChannel> {

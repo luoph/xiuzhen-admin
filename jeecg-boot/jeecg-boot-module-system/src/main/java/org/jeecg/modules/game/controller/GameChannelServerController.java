@@ -27,8 +27,8 @@ import java.util.Arrays;
  * @date 2019-12-11
  */
 @Slf4j
-@Api(tags = "游戏渠道服配置")
 @RestController
+@Api(tags = "游戏渠道服配置")
 @RequestMapping("/game/gameChannelServer")
 public class GameChannelServerController extends JeecgController<GameChannelServer, IGameChannelServerService> {
 
@@ -38,11 +38,11 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 分页列表查询
      *
-     * @param gameChannelServer
-     * @param pageNo
-     * @param pageSize
-     * @param req
-     * @return
+     * @param gameChannelServer 数据实体
+     * @param pageNo            页码
+     * @param pageSize          分页大小
+     * @param req               请求
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道服配置-列表查询")
     @ApiOperation(value = "游戏渠道服配置-列表查询", notes = "游戏渠道服配置-列表查询")
@@ -52,7 +52,7 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         QueryWrapper<GameChannelServer> queryWrapper = QueryGenerator.initQueryWrapper(gameChannelServer, req.getParameterMap());
-        Page<GameChannelServer> page = new Page<GameChannelServer>(pageNo, pageSize);
+        Page<GameChannelServer> page = new Page<>(pageNo, pageSize);
         IPage<GameChannelServer> pageList = gameChannelServerService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
@@ -60,8 +60,8 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 添加
      *
-     * @param gameChannelServer
-     * @return
+     * @param gameChannelServer 数据实体
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道服配置-添加")
     @ApiOperation(value = "游戏渠道服配置-添加", notes = "游戏渠道服配置-添加")
@@ -74,8 +74,8 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 编辑
      *
-     * @param gameChannelServer
-     * @return
+     * @param gameChannelServer 数据实体
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道服配置-编辑")
     @ApiOperation(value = "游戏渠道服配置-编辑", notes = "游戏渠道服配置-编辑")
@@ -88,13 +88,13 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 通过id删除
      *
-     * @param id
-     * @return
+     * @param id 实体id
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道服配置-通过id删除")
     @ApiOperation(value = "游戏渠道服配置-通过id删除", notes = "游戏渠道服配置-通过id删除")
     @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         gameChannelServerService.removeById(id);
         return Result.ok("删除成功!");
     }
@@ -102,13 +102,13 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 批量删除
      *
-     * @param ids
-     * @return
+     * @param ids id列表，使用','分割的字符串
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道服配置-批量删除")
     @ApiOperation(value = "游戏渠道服配置-批量删除", notes = "游戏渠道服配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.gameChannelServerService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
@@ -116,13 +116,13 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 通过id查询
      *
-     * @param id
-     * @return
+     * @param id 实体id
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道服配置-通过id查询")
     @ApiOperation(value = "游戏渠道服配置-通过id查询", notes = "游戏渠道服配置-通过id查询")
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
         GameChannelServer gameChannelServer = gameChannelServerService.getById(id);
         return Result.ok(gameChannelServer);
     }
@@ -130,8 +130,8 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 导出excel
      *
-     * @param request
-     * @param gameChannelServer
+     * @param request           请求
+     * @param gameChannelServer 实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameChannelServer gameChannelServer) {
@@ -141,13 +141,12 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     /**
      * 通过excel导入数据
      *
-     * @param request
-     * @param response
-     * @return
+     * @param request  请求
+     * @param response 响应
+     * @return {@linkplain Result}
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameChannelServer.class);
     }
-
 }
