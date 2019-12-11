@@ -27,8 +27,10 @@
 
 <script>
 import { httpAction } from "@/api/manage";
+import { getAction, putAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
+import Vue from "vue";
 
 export default {
     name: "${entityName}Modal",
