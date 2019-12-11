@@ -74,7 +74,7 @@ export default {
     name: "LogList",
     mixins: [JeecgListMixin],
     components: {
-        JEllipsis,
+        JEllipsis
     },
     data() {
         return {
@@ -84,7 +84,7 @@ export default {
                 ipInfo: "",
                 createTimeRange: [],
                 logType: "1",
-                keyWord: "",
+                keyWord: ""
             },
             tabKey: "1",
             // 表头
@@ -96,38 +96,38 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "日志内容",
                     align: "left",
                     dataIndex: "logContent",
                     scopedSlots: { customRender: "logContent" },
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "操作人ID",
                     dataIndex: "userid",
                     align: "center",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "操作人名称",
                     dataIndex: "username",
                     align: "center",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "IP",
                     dataIndex: "ip",
                     align: "center",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "耗时(毫秒)",
                     dataIndex: "costTime",
                     align: "center",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "日志类型",
@@ -141,31 +141,31 @@ export default {
                 return text;
               }
             },*/
-                    align: "center",
+                    align: "center"
                 },
                 {
                     title: "创建时间",
                     dataIndex: "createTime",
                     align: "center",
-                    sorter: true,
-                },
+                    sorter: true
+                }
             ],
             operateColumn: {
                 title: "操作类型",
                 dataIndex: "operateType_dictText",
-                align: "center",
+                align: "center"
             },
             labelCol: {
                 xs: { span: 1 },
-                sm: { span: 2 },
+                sm: { span: 2 }
             },
             wrapperCol: {
                 xs: { span: 10 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             url: {
-                list: "/sys/log/list",
-            },
+                list: "/sys/log/list"
+            }
         };
     },
     methods: {
@@ -209,8 +209,8 @@ export default {
         },
         onDateOk(value) {
             console.log(value);
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

@@ -89,11 +89,11 @@ export default {
             menuusing: true,
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -101,12 +101,12 @@ export default {
             validatorRules: {
                 departName: { rules: [{ required: true, message: "请输入机构/部门名称!" }] },
                 orgCode: { rules: [{ required: true, message: "请输入机构编码!" }] },
-                mobile: { rules: [{ validator: this.validateMobile }] },
+                mobile: { rules: [{ validator: this.validateMobile }] }
             },
             url: {
-                add: "/sys/sysDepart/add",
+                add: "/sys/sysDepart/add"
             },
-            dictDisabled: true,
+            dictDisabled: true
         };
     },
     created() {},
@@ -206,8 +206,8 @@ export default {
             } else {
                 callback("您的手机号码格式不正确!");
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

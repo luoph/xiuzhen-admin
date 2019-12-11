@@ -10,13 +10,13 @@ import ImgTurnPage from "../ImgTurnPage";
 export default {
     name: "SplitPanelAModal",
     components: {
-        ImgTurnPage,
+        ImgTurnPage
     },
     data() {
         return {};
     },
     created() {},
-    methods: {},
+    methods: {}
 };
 </script>
 

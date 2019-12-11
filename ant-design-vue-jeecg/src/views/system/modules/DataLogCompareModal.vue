@@ -50,34 +50,34 @@ export default {
                     title: "字段名",
                     align: "left",
                     dataIndex: "code",
-                    width: "30%",
+                    width: "30%"
                 },
                 {
                     align: "left",
                     dataIndex: "dataVersion1",
                     width: "30%",
-                    slots: { title: "dataVersionTitle1" },
+                    slots: { title: "dataVersionTitle1" }
                 },
                 {
                     title: "",
                     dataIndex: "imgshow",
                     align: "center",
                     scopedSlots: { customRender: "avatarslot" },
-                    width: "10%",
+                    width: "10%"
                 },
                 {
                     align: "left",
                     dataIndex: "dataVersion2",
                     width: "30%",
-                    slots: { title: "dataVersionTitle2" },
-                },
+                    slots: { title: "dataVersionTitle2" }
+                }
             ],
             //数据集
             dataSource: [],
             loading: false,
             url: {
-                queryCompareUrl: "/sys/dataLog/queryCompareList",
-            },
+                queryCompareUrl: "/sys/dataLog/queryCompareList"
+            }
         };
     },
     created() {},
@@ -98,7 +98,7 @@ export default {
                                     code: item1,
                                     imgshow: "",
                                     dataVersion1: json1[item1],
-                                    dataVersion2: json2[item2],
+                                    dataVersion2: json2[item2]
                                 });
                             }
                         }
@@ -135,8 +135,8 @@ export default {
             } else {
                 return "";
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

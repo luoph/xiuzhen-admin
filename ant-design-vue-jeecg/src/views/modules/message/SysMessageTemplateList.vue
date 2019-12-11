@@ -127,7 +127,7 @@ export default {
     components: {
         JEllipsis,
         SysMessageTemplateModal,
-        SysMessageTestModal,
+        SysMessageTestModal
     },
     data() {
         return {
@@ -142,23 +142,23 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "模板CODE",
                     align: "center",
-                    dataIndex: "templateCode",
+                    dataIndex: "templateCode"
                 },
                 {
                     title: "模板标题",
                     align: "center",
-                    dataIndex: "templateName",
+                    dataIndex: "templateName"
                 },
                 {
                     title: "模板内容",
                     align: "center",
                     dataIndex: "templateContent",
-                    scopedSlots: { customRender: "templateContent" },
+                    scopedSlots: { customRender: "templateContent" }
                 },
                 {
                     title: "模板类型",
@@ -174,35 +174,35 @@ export default {
                         if (text == "3") {
                             return "微信";
                         }
-                    },
+                    }
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/message/sysMessageTemplate/list",
                 delete: "/message/sysMessageTemplate/delete",
                 deleteBatch: "/message/sysMessageTemplate/deleteBatch",
                 exportXlsUrl: "message/sysMessageTemplate/exportXls",
-                importExcelUrl: "message/sysMessageTemplate/importExcel",
-            },
+                importExcelUrl: "message/sysMessageTemplate/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         handleTest(record) {
             this.$refs.testModal.open(record);
             this.$refs.testModal.title = "发送测试";
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less" scoped>

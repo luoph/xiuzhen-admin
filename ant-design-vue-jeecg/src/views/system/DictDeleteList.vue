@@ -34,30 +34,30 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "字典名称",
                     align: "left",
-                    dataIndex: "dictName",
+                    dataIndex: "dictName"
                 },
                 {
                     title: "字典编号",
                     align: "left",
-                    dataIndex: "dictCode",
+                    dataIndex: "dictCode"
                 },
                 {
                     title: "描述",
                     align: "left",
-                    dataIndex: "description",
+                    dataIndex: "description"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
-            ],
+                    scopedSlots: { customRender: "action" }
+                }
+            ]
         };
     },
 
@@ -99,8 +99,8 @@ export default {
                     this.$message.warning(res.message);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

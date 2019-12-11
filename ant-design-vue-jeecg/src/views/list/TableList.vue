@@ -165,7 +165,7 @@ export default {
     components: {
         AInput,
         ATextarea,
-        STable,
+        STable
     },
     data() {
         return {
@@ -173,11 +173,11 @@ export default {
             visible: false,
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 12 },
+                sm: { span: 12 }
             },
             form: null,
             mdl: {},
@@ -190,35 +190,35 @@ export default {
             columns: [
                 {
                     title: "规则编号",
-                    dataIndex: "no",
+                    dataIndex: "no"
                 },
                 {
                     title: "描述",
-                    dataIndex: "description",
+                    dataIndex: "description"
                 },
                 {
                     title: "服务调用次数",
                     dataIndex: "callNo",
                     sorter: true,
                     needTotal: true,
-                    customRender: text => text + " 次",
+                    customRender: text => text + " 次"
                 },
                 {
                     title: "状态",
                     dataIndex: "status",
-                    needTotal: true,
+                    needTotal: true
                 },
                 {
                     title: "更新时间",
                     dataIndex: "updatedAt",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     table: "操作",
                     dataIndex: "action",
                     width: "150px",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             // 加载数据方法 必须为 Promise 对象
             loadData: parameter => {
@@ -228,7 +228,7 @@ export default {
             },
 
             selectedRowKeys: [],
-            selectedRows: [],
+            selectedRows: []
         };
     },
     created() {
@@ -254,7 +254,7 @@ export default {
                 const description = this.createForm.getFieldValue("description");
                 axios
                     .post("/saveRule", {
-                        desc: description,
+                        desc: description
                     })
                     .then(res => {
                         this.createForm.resetFields();
@@ -279,9 +279,9 @@ export default {
 
         resetSearchForm() {
             this.queryParam = {
-                date: moment(new Date()),
+                date: moment(new Date())
             };
-        },
+        }
     },
     watch: {
         /*
@@ -296,6 +296,6 @@ export default {
         })
       }
       */
-    },
+    }
 };
 </script>

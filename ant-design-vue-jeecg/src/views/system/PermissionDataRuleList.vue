@@ -5,7 +5,7 @@
             :style="{
                 padding: '10px',
                 border: '1px solid #e9e9e9',
-                background: '#fff',
+                background: '#fff'
             }"
         >
             <div class="table-page-search-wrapper">
@@ -58,30 +58,30 @@ const columns = [
     {
         title: "规则名称",
         dataIndex: "ruleName",
-        key: "ruleName",
+        key: "ruleName"
     },
     {
         title: "规则字段",
         dataIndex: "ruleColumn",
-        key: "ruleColumn",
+        key: "ruleColumn"
     },
     {
         title: "规则值",
         dataIndex: "ruleValue",
-        key: "ruleValue",
+        key: "ruleValue"
     },
     {
         title: "操作",
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
-        align: "center",
-    },
+        align: "center"
+    }
 ];
 export default {
     name: "PermissionDataRuleList",
     mixins: [JeecgListMixin],
     components: {
-        PermissionDataRuleModal,
+        PermissionDataRuleModal
     },
     data() {
         return {
@@ -94,8 +94,8 @@ export default {
             loading: false,
             url: {
                 list: "/sys/permission/getPermRuleListByPermId",
-                delete: "/sys/permission/deletePermissionRule",
-            },
+                delete: "/sys/permission/deletePermissionRule"
+            }
         };
     },
     created() {
@@ -161,8 +161,8 @@ export default {
             if (record.status != 1) {
                 return "data-rule-invalid";
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

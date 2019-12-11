@@ -73,11 +73,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -87,18 +87,18 @@ export default {
                 msgCategory: { rules: [{ required: true, message: "请选择消息类型!" }] },
                 msgType: { rules: [{ required: true, message: "请选择通告对象类型!" }] },
                 endTime: { rules: [{ validator: this.endTimeValidate }] },
-                startTime: { rules: [{ validator: this.startTimeValidate }] },
+                startTime: { rules: [{ validator: this.startTimeValidate }] }
             },
             url: {
                 queryByIds: "/sys/user/queryByIds",
                 add: "/sys/annountCement/add",
-                edit: "/sys/annountCement/edit",
+                edit: "/sys/annountCement/edit"
             },
             userType: false,
             userIds: [],
             selectedUser: [],
             disabled: false,
-            msgContent: "",
+            msgContent: ""
         };
     },
     created() {},
@@ -225,8 +225,8 @@ export default {
             } else {
                 callback("结束时间需大于开始时间");
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -73,7 +73,7 @@ export default {
             // 查询条件
             queryParam: {
                 dictCode: "",
-                dictName: "",
+                dictName: ""
             },
             // 表头
             columns: [
@@ -85,51 +85,51 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "字典名称",
                     align: "left",
-                    dataIndex: "dictName",
+                    dataIndex: "dictName"
                 },
                 {
                     title: "字典编号",
                     align: "left",
-                    dataIndex: "dictCode",
+                    dataIndex: "dictCode"
                 },
                 {
                     title: "描述",
                     align: "left",
-                    dataIndex: "description",
+                    dataIndex: "description"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             dict: "",
             labelCol: {
                 xs: { span: 8 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 16 },
-                sm: { span: 19 },
+                sm: { span: 19 }
             },
             url: {
                 list: "/sys/dict/list",
                 delete: "/sys/dict/delete",
                 exportXlsUrl: "sys/dict/exportXls",
-                importExcelUrl: "sys/dict/importExcel",
-            },
+                importExcelUrl: "sys/dict/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         getQueryParams() {
@@ -159,13 +159,13 @@ export default {
 
         openDeleteList() {
             this.$refs.dictDeleteList.show();
-        },
+        }
     },
     watch: {
         openKeys(val) {
             console.log("openKeys", val);
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

@@ -12,7 +12,7 @@ export default {
         AListItem,
         AList,
         ASwitch,
-        Meta,
+        Meta
     },
     mixins: [mixin],
     data() {
@@ -22,10 +22,10 @@ export default {
         themeFilter(theme) {
             const themeMap = {
                 dark: "暗色",
-                light: "白色",
+                light: "白色"
             };
             return themeMap[theme];
-        },
+        }
     },
     methods: {
         colorFilter(color) {
@@ -39,7 +39,7 @@ export default {
             } else {
                 this.$store.dispatch("ToggleTheme", "light");
             }
-        },
+        }
     },
     render() {
         return (
@@ -63,7 +63,7 @@ export default {
                 </AListItem>
             </AList>
         );
-    },
+    }
 };
 </script>
 

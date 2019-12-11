@@ -61,12 +61,12 @@ export default {
     props: {
         showSubmit: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
     data() {
         return {
-            form: this.$form.createForm(this),
+            form: this.$form.createForm(this)
         };
     },
     methods: {
@@ -76,7 +76,7 @@ export default {
                 if (!err) {
                     this.$notification["error"]({
                         message: "Received values of form:",
-                        description: values,
+                        description: values
                     });
                 }
             });
@@ -87,8 +87,8 @@ export default {
                 callback("需要以 user- 开头");
             }
             callback();
-        },
-    },
+        }
+    }
 };
 </script>
 

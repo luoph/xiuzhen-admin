@@ -58,7 +58,7 @@ export default {
     name: "UserAnnouncementList",
     mixins: [JeecgListMixin],
     components: {
-        ShowAnnouncement,
+        ShowAnnouncement
     },
     data() {
         return {
@@ -68,7 +68,7 @@ export default {
                 {
                     title: "标题",
                     align: "center",
-                    dataIndex: "titile",
+                    dataIndex: "titile"
                 },
                 {
                     title: "消息类型",
@@ -82,17 +82,17 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "发布人",
                     align: "center",
-                    dataIndex: "sender",
+                    dataIndex: "sender"
                 },
                 {
                     title: "发布时间",
                     align: "center",
-                    dataIndex: "sendTime",
+                    dataIndex: "sendTime"
                 },
                 {
                     title: "优先级",
@@ -108,7 +108,7 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "阅读状态",
@@ -122,21 +122,21 @@ export default {
                         } else {
                             return text;
                         }
-                    },
+                    }
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/sys/sysAnnouncementSend/getMyAnnouncementSend",
                 editCementSend: "sys/sysAnnouncementSend/editByAnntIdAndUserId",
-                readAllMsg: "sys/sysAnnouncementSend/readAll",
+                readAllMsg: "sys/sysAnnouncementSend/readAll"
             },
-            loading: false,
+            loading: false
         };
     },
     methods: {
@@ -164,10 +164,10 @@ export default {
                             that.loadData();
                         }
                     });
-                },
+                }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

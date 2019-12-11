@@ -74,7 +74,7 @@ export default {
     name: "JeecgOrderTicketList",
     mixins: [JeecgListMixin],
     components: {
-        JeecgOrderTicketModal,
+        JeecgOrderTicketModal
     },
     data() {
         return {
@@ -84,42 +84,42 @@ export default {
                 {
                     title: "航班号",
                     align: "center",
-                    dataIndex: "ticketCode",
+                    dataIndex: "ticketCode"
                 },
                 {
                     title: "航班时间",
                     align: "center",
-                    dataIndex: "tickectDate",
+                    dataIndex: "tickectDate"
                 },
                 {
                     title: "订单号码",
                     align: "center",
-                    dataIndex: "orderId",
+                    dataIndex: "orderId"
                 },
                 {
                     title: "创建人",
                     align: "center",
-                    dataIndex: "createBy",
+                    dataIndex: "createBy"
                 },
                 {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "操作",
                     key: "operation",
                     align: "center",
                     width: 130,
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/test/order/listOrderTicketByMainId",
                 delete: "/test/order/deleteTicket",
-                deleteBatch: "/test/order/deleteBatchTicket",
-            },
+                deleteBatch: "/test/order/deleteBatchTicket"
+            }
         };
     },
     methods: {
@@ -146,8 +146,8 @@ export default {
         handleAdd: function() {
             this.$refs.modalForm.add(this.queryParam.mainId);
             this.$refs.modalForm.title = "添加机票信息";
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

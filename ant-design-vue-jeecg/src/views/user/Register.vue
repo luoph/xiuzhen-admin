@@ -41,7 +41,7 @@
                 fieldDecoratorId="password2"
                 :fieldDecoratorOptions="{
                     rules: [{ required: true, message: '至少8位密码，区分大小写' }, { validator: this.handlePasswordCheck }],
-                    validateTrigger: ['change', 'blur'],
+                    validateTrigger: ['change', 'blur']
                 }"
             >
                 <a-input size="large" type="password" autocomplete="false" placeholder="确认密码"></a-input>
@@ -50,7 +50,7 @@
                 fieldDecoratorId="email"
                 :fieldDecoratorOptions="{
                     rules: [{ required: true, type: 'email', message: '请输入正确的邮箱地址' }, { validator: this.handleEmailCheck }],
-                    validateTrigger: ['change', 'blur'],
+                    validateTrigger: ['change', 'blur']
                 }"
             >
                 <a-input size="large" type="text" placeholder="邮箱"></a-input>
@@ -59,7 +59,7 @@
                 fieldDecoratorId="mobile"
                 :fieldDecoratorOptions="{
                     rules: [{ required: true, pattern: /^1[3456789]\d{9}$/, message: '请输入正确的手机号' }, { validator: this.handlePhoneCheck }],
-                    validateTrigger: ['change', 'blur'],
+                    validateTrigger: ['change', 'blur']
                 }"
             >
                 <a-input size="large" placeholder="11 位手机号">
@@ -116,19 +116,19 @@ const levelNames = {
     0: "低",
     1: "低",
     2: "中",
-    3: "强",
+    3: "强"
 };
 const levelClass = {
     0: "error",
     1: "error",
     2: "warning",
-    3: "success",
+    3: "success"
 };
 const levelColor = {
     0: "#ff0000",
     1: "#ff0000",
     2: "#ff7e05",
-    3: "#52c41a",
+    3: "#52c41a"
 };
 export default {
     name: "Register",
@@ -144,9 +144,9 @@ export default {
                 passwordLevel: 0,
                 passwordLevelChecked: false,
                 percent: 10,
-                progressColor: "#FF0000",
+                progressColor: "#FF0000"
             },
-            registerBtn: false,
+            registerBtn: false
         };
     },
     computed: {
@@ -158,12 +158,12 @@ export default {
         },
         passwordLevelColor() {
             return levelColor[this.state.passwordLevel];
-        },
+        }
     },
     methods: {
         checkUsername(rule, value, callback) {
             var params = {
-                username: value,
+                username: value
             };
             checkOnlyUser(params).then(res => {
                 if (res.success) {
@@ -175,7 +175,7 @@ export default {
         },
         handleEmailCheck(rule, value, callback) {
             var params = {
-                email: value,
+                email: value
             };
             checkOnlyUser(params).then(res => {
                 if (res.success) {
@@ -232,7 +232,7 @@ export default {
 
         handlePhoneCheck(rule, value, callback) {
             var params = {
-                phone: value,
+                phone: value
             };
             checkOnlyUser(params).then(res => {
                 if (res.success) {
@@ -259,7 +259,7 @@ export default {
                         password: values.password,
                         email: values.email,
                         phone: values.mobile,
-                        smscode: values.captcha,
+                        smscode: values.captcha
                     };
                     postAction("/sys/user/register", register).then(res => {
                         if (!res.success) {
@@ -288,7 +288,7 @@ export default {
                     const hide = this.$message.loading("验证码发送中..", 0);
                     const params = {
                         mobile: values.mobile,
-                        smsmode: "1",
+                        smsmode: "1"
                     };
                     postAction("/sys/sms", params)
                         .then(res => {
@@ -312,23 +312,23 @@ export default {
             this.$notification["error"]({
                 message: "注册失败",
                 description: message,
-                duration: 2,
+                duration: 2
             });
         },
         requestFailed(err) {
             this.$notification["error"]({
                 message: "错误",
                 description: ((err.response || {}).data || {}).message || "请求出现错误，请稍后再试",
-                duration: 4,
+                duration: 4
             });
             this.registerBtn = false;
-        },
+        }
     },
     watch: {
         "state.passwordLevel"(val) {
             console.log(val);
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss">

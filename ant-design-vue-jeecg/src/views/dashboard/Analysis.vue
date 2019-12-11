@@ -156,14 +156,14 @@ const rankList = [];
 for (let i = 0; i < 7; i++) {
     rankList.push({
         name: "白鹭岛 " + (i + 1) + " 号店",
-        total: 1234.56 - i * 100,
+        total: 1234.56 - i * 100
     });
 }
 const barData = [];
 for (let i = 0; i < 12; i += 1) {
     barData.push({
         x: `${i + 1}月`,
-        y: Math.floor(Math.random() * 1000) + 200,
+        y: Math.floor(Math.random() * 1000) + 200
     });
 }
 export default {
@@ -179,7 +179,7 @@ export default {
         Bar,
         Trend,
         LineChartMultid,
-        HeadInfo,
+        HeadInfo
     },
     data() {
         return {
@@ -190,7 +190,7 @@ export default {
             loginfo: {},
             visitFields: ["ip", "visit"],
             visitInfo: [],
-            indicator: <a-icon type="loading" style="font-size: 24px" spin />,
+            indicator: <a-icon type="loading" style="font-size: 24px" spin />
         };
     },
     created() {
@@ -215,8 +215,8 @@ export default {
                     this.visitInfo = res.result;
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 

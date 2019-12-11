@@ -78,46 +78,46 @@ import { deleteAction } from "@/api/manage";
 const columns = [
     {
         title: "机构名称",
-        dataIndex: "departName",
+        dataIndex: "departName"
     },
     {
         title: "机构类型",
         align: "center",
-        dataIndex: "orgType",
+        dataIndex: "orgType"
     },
     {
         title: "机构编码",
-        dataIndex: "orgCode",
+        dataIndex: "orgCode"
     },
     {
         title: "手机号",
-        dataIndex: "mobile",
+        dataIndex: "mobile"
     },
     {
         title: "传真",
-        dataIndex: "fax",
+        dataIndex: "fax"
     },
     {
         title: "地址",
-        dataIndex: "address",
+        dataIndex: "address"
     },
     {
         title: "排序",
         align: "center",
-        dataIndex: "departOrder",
+        dataIndex: "departOrder"
     },
     {
         title: "操作",
         align: "center",
         dataIndex: "action",
-        scopedSlots: { customRender: "action" },
-    },
+        scopedSlots: { customRender: "action" }
+    }
 ];
 
 export default {
     name: "DepartList2",
     components: {
-        SysDepartModal,
+        SysDepartModal
     },
     data() {
         return {
@@ -142,7 +142,7 @@ export default {
                 },*/
             isorter: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             loading: false,
             selectedRowKeys: [],
@@ -150,8 +150,8 @@ export default {
             url: {
                 list: "/sys/sysDepart/list",
                 delete: "/sys/sysDepart/delete",
-                deleteBatch: "/sys/sysDepart/deleteBatch",
-            },
+                deleteBatch: "/sys/sysDepart/deleteBatch"
+            }
         };
     },
     created() {
@@ -223,7 +223,7 @@ export default {
                                 that.$message.warning(res.message);
                             }
                         });
-                    },
+                    }
                 });
             }
         },
@@ -249,8 +249,8 @@ export default {
         modalFormOk() {
             // 新增/修改 成功时，重载列表
             this.loadData();
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

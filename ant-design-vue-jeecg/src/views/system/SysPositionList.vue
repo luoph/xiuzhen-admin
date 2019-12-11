@@ -110,7 +110,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         SysPositionModal,
-        JDictSelectTag,
+        JDictSelectTag
     },
     data() {
         return {
@@ -125,22 +125,22 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "职务编码",
                     align: "center",
-                    dataIndex: "code",
+                    dataIndex: "code"
                 },
                 {
                     title: "职务名称",
                     align: "center",
-                    dataIndex: "name",
+                    dataIndex: "name"
                 },
                 {
                     title: "职级",
                     align: "center",
-                    dataIndex: "postRank_dictText",
+                    dataIndex: "postRank_dictText"
                 },
                 // {
                 //   title: '公司id',
@@ -151,23 +151,23 @@ export default {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/sys/position/list",
                 delete: "/sys/position/delete",
                 deleteBatch: "/sys/position/deleteBatch",
                 exportXlsUrl: "/sys/position/exportXls",
-                importExcelUrl: "/sys/position/importExcel",
-            },
+                importExcelUrl: "/sys/position/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

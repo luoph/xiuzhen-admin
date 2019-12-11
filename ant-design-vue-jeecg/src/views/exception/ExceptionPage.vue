@@ -21,19 +21,19 @@ export default {
     props: {
         type: {
             type: String,
-            default: "404",
-        },
+            default: "404"
+        }
     },
     data() {
         return {
-            config: types,
+            config: types
         };
     },
     methods: {
         handleToHome() {
             this.$router.push({ name: "dashboard" });
-        },
-    },
+        }
+    }
 };
 </script>
 

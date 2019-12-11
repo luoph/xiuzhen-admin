@@ -32,20 +32,20 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
                 dictName: { rules: [{ required: true, message: "请输入字典名称!" }] },
                 dictCode: {
-                    rules: [{ required: true, message: "请输入字典编码!" }, { validator: this.validateDictCode }],
-                },
-            },
+                    rules: [{ required: true, message: "请输入字典编码!" }, { validator: this.validateDictCode }]
+                }
+            }
         };
     },
     created() {},
@@ -56,7 +56,7 @@ export default {
                 tableName: "sys_dict",
                 fieldName: "dict_code",
                 fieldVal: value,
-                dataId: this.model.id,
+                dataId: this.model.id
             };
             duplicateCheck(params).then(res => {
                 if (res.success) {
@@ -124,7 +124,7 @@ export default {
         close() {
             this.$emit("close");
             this.visible = false;
-        },
-    },
+        }
+    }
 };
 </script>

@@ -18,7 +18,7 @@ export default {
                     type: FormTypes.select,
                     width: "240px",
                     options: [],
-                    placeholder: "请选择${title}",
+                    placeholder: "请选择${title}"
                 },
                 {
                     title: "市",
@@ -26,7 +26,7 @@ export default {
                     type: FormTypes.select,
                     width: "240px",
                     options: [],
-                    placeholder: "请选择${title}",
+                    placeholder: "请选择${title}"
                 },
                 {
                     title: "县/区",
@@ -34,8 +34,8 @@ export default {
                     type: FormTypes.select,
                     width: "240px",
                     options: [],
-                    placeholder: "请选择${title}",
-                },
+                    placeholder: "请选择${title}"
+                }
             ],
             dataSource: [],
 
@@ -69,8 +69,8 @@ export default {
                 { label: "古冶区", value: "130204", parent: "130200" },
                 { label: "海港区", value: "130302", parent: "130300" },
                 { label: "山海关区", value: "130303", parent: "130300" },
-                { label: "北戴河区", value: "130304", parent: "130300" },
-            ],
+                { label: "北戴河区", value: "130304", parent: "130300" }
+            ]
         };
     },
     mounted() {
@@ -95,8 +95,8 @@ export default {
                     target.setValues([
                         {
                             rowKey: row.id,
-                            values: { s2: "", s3: "" },
-                        },
+                            values: { s2: "", s3: "" }
+                        }
                     ]);
                     this.columns[2].options = [];
                 }
@@ -106,13 +106,13 @@ export default {
                     target.setValues([
                         {
                             rowKey: row.id,
-                            values: { s3: "" },
-                        },
+                            values: { s3: "" }
+                        }
                     ]);
                 }
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

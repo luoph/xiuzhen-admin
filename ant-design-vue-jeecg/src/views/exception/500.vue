@@ -7,8 +7,8 @@ import ExceptionPage from "./ExceptionPage";
 
 export default {
     components: {
-        ExceptionPage,
-    },
+        ExceptionPage
+    }
 };
 </script>
 

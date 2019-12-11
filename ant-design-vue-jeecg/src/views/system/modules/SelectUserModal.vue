@@ -65,45 +65,45 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "用户账号",
                     align: "center",
                     width: 113,
-                    dataIndex: "username",
+                    dataIndex: "username"
                 },
                 {
                     title: "用户名称",
                     align: "center",
                     width: 100,
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "状态",
                     align: "center",
                     width: 100,
-                    dataIndex: "status",
-                },
+                    dataIndex: "status"
+                }
             ],
             columns2: [
                 {
                     title: "用户账号",
                     align: "center",
-                    dataIndex: "username",
+                    dataIndex: "username"
                 },
                 {
                     title: "用户名称",
                     align: "center",
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
                     width: 100,
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             //数据集
             dataSource1: [],
@@ -118,18 +118,18 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             isorter: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             loading: false,
             selectedRowKeys: [],
             selectedRows: [],
             url: {
-                list: "/sys/user/list",
-            },
+                list: "/sys/user/list"
+            }
         };
     },
     created() {
@@ -222,8 +222,8 @@ export default {
             }
             this.ipagination = pagination;
             this.loadData();
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less" scoped>

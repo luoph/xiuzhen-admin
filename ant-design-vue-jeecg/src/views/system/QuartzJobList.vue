@@ -112,7 +112,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         QuartzJobModal,
-        JEllipsis,
+        JEllipsis
     },
     data() {
         return {
@@ -129,13 +129,13 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "任务类名",
                     align: "center",
                     dataIndex: "jobClassName",
-                    sorter: true,
+                    sorter: true
                     /*            customRender:function (text) {
               return "*"+text.substring(9,text.length);
             }*/
@@ -143,19 +143,19 @@ export default {
                 {
                     title: "cron表达式",
                     align: "center",
-                    dataIndex: "cronExpression",
+                    dataIndex: "cronExpression"
                 },
                 {
                     title: "参数",
                     align: "center",
-                    dataIndex: "parameter",
+                    dataIndex: "parameter"
                 },
                 {
                     title: "描述",
                     align: "center",
                     width: 300,
                     dataIndex: "description",
-                    scopedSlots: { customRender: "description" },
+                    scopedSlots: { customRender: "description" }
                 },
                 {
                     title: "状态",
@@ -165,16 +165,16 @@ export default {
                     filterMultiple: false,
                     filters: [
                         { text: "已启动", value: "0" },
-                        { text: "已暂停", value: "-1" },
-                    ],
+                        { text: "已暂停", value: "-1" }
+                    ]
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
                     width: 180,
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/sys/quartzJob/list",
@@ -183,14 +183,14 @@ export default {
                 pause: "/sys/quartzJob/pause",
                 resume: "/sys/quartzJob/resume",
                 exportXlsUrl: "sys/quartzJob/exportXls",
-                importExcelUrl: "sys/quartzJob/importExcel",
-            },
+                importExcelUrl: "sys/quartzJob/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
 
     methods: {
@@ -223,7 +223,7 @@ export default {
                             that.$message.warning(res.message);
                         }
                     });
-                },
+                }
             });
         },
         resumeJob: function(record) {
@@ -242,10 +242,10 @@ export default {
                             that.$message.warning(res.message);
                         }
                     });
-                },
+                }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

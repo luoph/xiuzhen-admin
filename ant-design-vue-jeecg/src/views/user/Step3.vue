@@ -38,13 +38,13 @@ export default {
                         {
                             required: true,
                             pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,.\/]).{8,}$/,
-                            message: "密码由8位数字、大小写字母和特殊符号组成!!",
+                            message: "密码由8位数字、大小写字母和特殊符号组成!!"
                         },
-                        { validator: this.handlePasswordLevel },
-                    ],
+                        { validator: this.handlePasswordLevel }
+                    ]
                 },
-                confirmPassword: { rules: [{ required: true, message: "密码不能为空!" }, { validator: this.handlePasswordCheck }] },
-            },
+                confirmPassword: { rules: [{ required: true, message: "密码不能为空!" }, { validator: this.handlePasswordCheck }] }
+            }
         };
     },
     methods: {
@@ -61,7 +61,7 @@ export default {
                     getAction("/sys/user/passwordChange", params).then(res => {
                         if (res.success) {
                             var userList = {
-                                username: this.userList.username,
+                                username: this.userList.username
                             };
                             console.log(userList);
                             setTimeout(function() {
@@ -92,10 +92,10 @@ export default {
             this.$notification["error"]({
                 message: "更改密码失败",
                 description: err,
-                duration: 4,
+                duration: 4
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

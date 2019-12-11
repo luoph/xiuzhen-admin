@@ -29,8 +29,8 @@ export default {
                         title: "修改",
                         callback: () => {
                             this.$message.info("This is a normal message");
-                        },
-                    },
+                        }
+                    }
                 },
                 {
                     title: "密保手机",
@@ -40,8 +40,8 @@ export default {
                         title: "修改",
                         callback: () => {
                             this.$message.success("This is a message of success");
-                        },
-                    },
+                        }
+                    }
                 },
                 {
                     title: "密保问题",
@@ -51,8 +51,8 @@ export default {
                         title: "设置",
                         callback: () => {
                             this.$message.error("This is a message of error");
-                        },
-                    },
+                        }
+                    }
                 },
                 {
                     title: "备用邮箱",
@@ -62,8 +62,8 @@ export default {
                         title: "修改",
                         callback: () => {
                             this.$message.warning("This is message of warning");
-                        },
-                    },
+                        }
+                    }
                 },
                 {
                     title: "MFA 设备",
@@ -73,12 +73,12 @@ export default {
                         title: "绑定",
                         callback: () => {
                             this.$message.info("This is a normal message");
-                        },
-                    },
-                },
-            ],
+                        }
+                    }
+                }
+            ]
         };
-    },
+    }
 };
 </script>
 

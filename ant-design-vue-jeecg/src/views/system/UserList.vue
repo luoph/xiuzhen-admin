@@ -170,7 +170,7 @@ export default {
         SysUserAgentModal,
         UserModal,
         PasswordModal,
-        JInput,
+        JInput
     },
     data() {
         return {
@@ -191,20 +191,20 @@ export default {
                     title: "用户账号",
                     align: "center",
                     dataIndex: "username",
-                    width: 120,
+                    width: 120
                 },
                 {
                     title: "真实姓名",
                     align: "center",
                     width: 100,
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "头像",
                     align: "center",
                     width: 120,
                     dataIndex: "avatar",
-                    scopedSlots: { customRender: "avatarslot" },
+                    scopedSlots: { customRender: "avatarslot" }
                 },
 
                 {
@@ -212,30 +212,30 @@ export default {
                     align: "center",
                     width: 80,
                     dataIndex: "sex_dictText",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "生日",
                     align: "center",
                     width: 180,
-                    dataIndex: "birthday",
+                    dataIndex: "birthday"
                 },
                 {
                     title: "手机号码",
                     align: "center",
                     width: 100,
-                    dataIndex: "phone",
+                    dataIndex: "phone"
                 },
                 {
                     title: "邮箱",
                     align: "center",
-                    dataIndex: "email",
+                    dataIndex: "email"
                 },
                 {
                     title: "状态",
                     align: "center",
                     width: 80,
-                    dataIndex: "status_dictText",
+                    dataIndex: "status_dictText"
                 },
                 /* {
             title: '创建时间',
@@ -249,8 +249,8 @@ export default {
                     dataIndex: "action",
                     scopedSlots: { customRender: "action" },
                     align: "center",
-                    width: 170,
-                },
+                    width: 170
+                }
             ],
             url: {
                 imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
@@ -259,14 +259,14 @@ export default {
                 delete: "/sys/user/delete",
                 deleteBatch: "/sys/user/deleteBatch",
                 exportXlsUrl: "/sys/user/exportXls",
-                importExcelUrl: "sys/user/importExcel",
-            },
+                importExcelUrl: "sys/user/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         getAvatarView: function(avatar) {
@@ -306,7 +306,7 @@ export default {
                                 that.$message.warning(res.message);
                             }
                         });
-                    },
+                    }
                 });
             }
         },
@@ -344,8 +344,8 @@ export default {
         },
         passwordModalOk() {
             //TODO 密码修改完成 不需要刷新页面，可以把datasource中的数据更新一下
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

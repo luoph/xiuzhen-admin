@@ -35,11 +35,11 @@ import Result from "../../result/Result";
 export default {
     name: "Step3",
     components: {
-        Result,
+        Result
     },
     data() {
         return {
-            loading: false,
+            loading: false
         };
     },
     methods: {
@@ -48,8 +48,8 @@ export default {
         },
         toOrderList() {
             this.$router.push("/list/query-list");
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>

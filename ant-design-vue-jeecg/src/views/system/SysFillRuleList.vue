@@ -115,34 +115,34 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: (t, r, index) => 1 + index,
+                    customRender: (t, r, index) => 1 + index
                 },
                 {
                     title: "规则名称",
                     align: "center",
-                    dataIndex: "ruleName",
+                    dataIndex: "ruleName"
                 },
                 {
                     title: "规则Code",
                     align: "center",
-                    dataIndex: "ruleCode",
+                    dataIndex: "ruleCode"
                 },
                 {
                     title: "规则实现类",
                     align: "center",
-                    dataIndex: "ruleClass",
+                    dataIndex: "ruleClass"
                 },
                 {
                     title: "规则参数",
                     align: "center",
-                    dataIndex: "ruleParams",
+                    dataIndex: "ruleParams"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/sys/fillRule/list",
@@ -150,27 +150,27 @@ export default {
                 delete: "/sys/fillRule/delete",
                 deleteBatch: "/sys/fillRule/deleteBatch",
                 exportXlsUrl: "/sys/fillRule/exportXls",
-                importExcelUrl: "/sys/fillRule/importExcel",
-            },
+                importExcelUrl: "/sys/fillRule/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl() {
             return `${window._CONFIG["domainURL"]}${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         handleTest(record) {
             let closeLoading = this.$message.loading("生成中...", 0);
 
             getAction(this.url.test, {
-                ruleCode: record.ruleCode,
+                ruleCode: record.ruleCode
             })
                 .then(res => {
                     if (res.success) {
                         this.$info({
                             title: "填值规则功能测试",
-                            content: "生成结果：" + res.result,
+                            content: "生成结果：" + res.result
                         });
                     } else {
                         this.$message.warn(res.message);
@@ -179,8 +179,8 @@ export default {
                 .finally(() => {
                     closeLoading();
                 });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

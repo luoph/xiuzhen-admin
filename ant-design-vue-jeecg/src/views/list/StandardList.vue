@@ -76,8 +76,8 @@ data.push({
     owner: "付晓晓",
     startAt: "2018-07-26 22:44",
     progress: {
-        value: 90,
-    },
+        value: 90
+    }
 });
 data.push({
     title: "Angular",
@@ -86,8 +86,8 @@ data.push({
     owner: "曲丽丽",
     startAt: "2018-07-26 22:44",
     progress: {
-        value: 54,
-    },
+        value: 54
+    }
 });
 data.push({
     title: "Ant Design",
@@ -96,8 +96,8 @@ data.push({
     owner: "林东东",
     startAt: "2018-07-26 22:44",
     progress: {
-        value: 66,
-    },
+        value: 66
+    }
 });
 data.push({
     title: "Ant Design Pro",
@@ -106,8 +106,8 @@ data.push({
     owner: "周星星",
     startAt: "2018-07-26 22:44",
     progress: {
-        value: 30,
-    },
+        value: 30
+    }
 });
 data.push({
     title: "Bootstrap",
@@ -117,20 +117,20 @@ data.push({
     startAt: "2018-07-26 22:44",
     progress: {
         status: "exception",
-        value: 100,
-    },
+        value: 100
+    }
 });
 
 export default {
     name: "StandardList",
     components: {
-        HeadInfo,
+        HeadInfo
     },
     data() {
         return {
-            data,
+            data
         };
-    },
+    }
 };
 </script>
 

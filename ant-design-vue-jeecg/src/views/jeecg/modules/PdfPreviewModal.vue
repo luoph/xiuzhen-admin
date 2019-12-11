@@ -14,7 +14,7 @@ export default {
         return {
             url: window._CONFIG["pdfDomainURL"],
             id: "pdfPreviewIframe",
-            headers: {},
+            headers: {}
         };
     },
     created() {
@@ -36,8 +36,8 @@ export default {
             var iframe = document.getElementById("pdfPreviewIframe");
             var json = { title: title, token: token };
             iframe.contentWindow.postMessage(json, "*");
-        },
-    },
+        }
+    }
 };
 </script>
 

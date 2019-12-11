@@ -64,11 +64,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -77,8 +77,8 @@ export default {
             disableSubmit: true,
             url: {
                 add: "/message/sysMessage/add",
-                edit: "/message/sysMessage/edit",
-            },
+                edit: "/message/sysMessage/edit"
+            }
         };
     },
     created() {},
@@ -138,8 +138,8 @@ export default {
         },
         handleCancel() {
             this.close();
-        },
-    },
+        }
+    }
 };
 </script>
 

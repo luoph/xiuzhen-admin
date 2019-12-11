@@ -61,25 +61,25 @@ export default {
                     dataIndex: "",
                     width: 60,
                     align: "center",
-                    customRender: (t, r, i) => parseInt(i) + 1,
+                    customRender: (t, r, i) => parseInt(i) + 1
                 },
                 {
                     title: "部门",
                     width: "20%",
                     align: "center",
-                    dataIndex: "departName",
+                    dataIndex: "departName"
                 },
                 {
                     title: "姓名",
                     width: "15%",
                     align: "center",
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "工号",
                     width: "15%",
                     align: "center",
-                    dataIndex: "workNo",
+                    dataIndex: "workNo"
                 },
                 {
                     title: "职务",
@@ -90,13 +90,13 @@ export default {
                         (text || "")
                             .split(",")
                             .map(t => (this.positionInfo[t] ? this.positionInfo[t] : t))
-                            .join(","),
+                            .join(",")
                 },
                 {
                     title: "座机",
                     width: "15%",
                     align: "center",
-                    dataIndex: "telephone",
+                    dataIndex: "telephone"
                 },
                 // {
                 //   title: '手机号',
@@ -108,13 +108,13 @@ export default {
                     title: "公司邮箱",
                     width: "15%",
                     align: "center",
-                    dataIndex: "email",
-                },
+                    dataIndex: "email"
+                }
             ],
             url: {
                 list: "/sys/user/queryByOrgCodeForAddressList",
-                listByPosition: "/sys/position/list",
-            },
+                listByPosition: "/sys/position/list"
+            }
         };
     },
     watch: {
@@ -123,8 +123,8 @@ export default {
             handler(orgCode) {
                 this.dataSource = [];
                 this.loadData(1, orgCode);
-            },
-        },
+            }
+        }
     },
     created() {
         this.queryPositionInfo();
@@ -141,7 +141,7 @@ export default {
             this.loading = true;
             getAction(this.url.list, {
                 orgCode,
-                ...this.getQueryParams(),
+                ...this.getQueryParams()
             })
                 .then(res => {
                     if (res.success) {
@@ -183,8 +183,8 @@ export default {
                     this.positionInfo = positionInfo;
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style>

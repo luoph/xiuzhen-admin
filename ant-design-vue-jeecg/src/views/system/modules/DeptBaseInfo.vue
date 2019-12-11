@@ -64,12 +64,12 @@ export default {
             form: this.$form.createForm(this),
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 3 },
+                sm: { span: 3 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
-            },
+                sm: { span: 16 }
+            }
         };
     },
     created() {
@@ -99,8 +99,8 @@ export default {
         clearForm() {
             this.form.resetFields();
             this.treeData = [];
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

@@ -56,7 +56,7 @@ import { mixinDevice } from "@/utils/mixin.js";
 export default {
     components: {
         RouteView,
-        PageLayout,
+        PageLayout
     },
     mixins: [mixinDevice],
     data() {
@@ -82,10 +82,10 @@ export default {
                 fixedBox: true,
                 // 开启宽度和高度比例
                 fixed: true,
-                fixedNumber: [1, 1],
+                fixedNumber: [1, 1]
             },
 
-            pageTitle: "",
+            pageTitle: ""
         };
     },
     created() {
@@ -101,8 +101,8 @@ export default {
         updateMenu() {
             let routes = this.$route.matched.concat();
             this.defaultSelectedKeys = [routes.pop().path];
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -168,7 +168,7 @@ export default {
     components: {
         SelectUserModal,
         RoleModal,
-        UserModal,
+        UserModal
     },
     data() {
         return {
@@ -188,7 +188,7 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             ipagination2: {
                 current: 1,
@@ -199,15 +199,15 @@ export default {
                 },
                 showQuickJumper: true,
                 showSizeChanger: true,
-                total: 0,
+                total: 0
             },
             isorter1: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             isorter2: {
                 column: "createTime",
-                order: "desc",
+                order: "desc"
             },
             filters1: {},
             filters2: {},
@@ -221,38 +221,38 @@ export default {
                 {
                     title: "角色编码",
                     align: "center",
-                    dataIndex: "roleCode",
+                    dataIndex: "roleCode"
                 },
                 {
                     title: "角色名称",
                     align: "center",
-                    dataIndex: "roleName",
+                    dataIndex: "roleName"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             columns2: [
                 {
                     title: "用户账号",
                     align: "center",
                     dataIndex: "username",
-                    width: 120,
+                    width: 120
                 },
                 {
                     title: "用户名称",
                     align: "center",
                     width: 100,
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "状态",
                     align: "center",
                     width: 80,
-                    dataIndex: "status_dictText",
+                    dataIndex: "status_dictText"
                 },
 
                 {
@@ -260,8 +260,8 @@ export default {
                     dataIndex: "action",
                     scopedSlots: { customRender: "action" },
                     align: "center",
-                    width: 120,
-                },
+                    width: 120
+                }
             ],
 
             url: {
@@ -272,8 +272,8 @@ export default {
                 delete2: "/sys/user/deleteUserRole",
                 deleteBatch2: "/sys/user/deleteUserRoleBatch",
                 exportXlsUrl: "sys/role/exportXls",
-                importExcelUrl: "sys/role/importExcel",
-            },
+                importExcelUrl: "sys/role/importExcel"
+            }
         };
     },
     computed: {
@@ -285,7 +285,7 @@ export default {
         },
         rightColMd() {
             return this.selectedRowKeys1.length === 0 ? 0 : 12;
-        },
+        }
     },
     methods: {
         onSelectChange2(selectedRowKeys, selectionRows) {
@@ -420,7 +420,7 @@ export default {
                                 that.$message.warning(res.message);
                             }
                         });
-                    },
+                    }
                 });
             }
         },
@@ -481,8 +481,8 @@ export default {
             }
             this.ipagination2 = pagination;
             this.loadData2();
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

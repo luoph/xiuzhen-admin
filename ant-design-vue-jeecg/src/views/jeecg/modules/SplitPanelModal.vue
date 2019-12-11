@@ -20,16 +20,16 @@ export default {
     components: {
         splitPane,
         SplitPanelA,
-        SplitPanelB,
+        SplitPanelB
     },
     data() {
         return {
             visible: false,
             bodyStyle: {
                 padding: "0",
-                height: window.innerHeight - 150 + "px",
+                height: window.innerHeight - 150 + "px"
             },
-            modalWidth: 800,
+            modalWidth: 800
         };
     },
     created() {
@@ -42,8 +42,8 @@ export default {
         handleOk() {},
         handleCancel() {
             this.visible = false;
-        },
-    },
+        }
+    }
 };
 </script>
 

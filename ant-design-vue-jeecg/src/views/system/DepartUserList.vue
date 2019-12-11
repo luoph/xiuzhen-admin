@@ -45,7 +45,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         DeptBaseInfo,
-        DeptUserInfo,
+        DeptUserInfo
     },
     data() {
         return {
@@ -72,16 +72,16 @@ export default {
             form: this.$form.createForm(this),
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             graphDatasource: {
                 nodes: [],
-                edges: [],
-            },
+                edges: []
+            }
         };
     },
     methods: {
@@ -176,13 +176,13 @@ export default {
             this.$refs.DeptBaseInfo.open(record);
             this.$refs.DeptUserInfo.onClearSelected();
             this.$refs.DeptUserInfo.open(record);
-        },
+        }
     },
     created() {
         this.currFlowId = this.$route.params.id;
         this.currFlowName = this.$route.params.name;
         // this.loadTree()
-    },
+    }
 };
 </script>
 <style scoped>

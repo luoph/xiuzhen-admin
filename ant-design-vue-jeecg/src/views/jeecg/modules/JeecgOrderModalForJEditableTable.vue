@@ -81,7 +81,7 @@ export default {
     name: "JeecgOrderModalForJEditableTable",
     components: {
         JDate,
-        JEditableTable,
+        JEditableTable
     },
     data() {
         return {
@@ -92,11 +92,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 6 },
+                sm: { span: 6 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 24 - 6 },
+                sm: { span: 24 - 6 }
             },
             activeKey: "1",
             // 客户信息
@@ -111,7 +111,7 @@ export default {
                         type: FormTypes.input,
                         defaultValue: "",
                         placeholder: "请输入${title}",
-                        validateRules: [{ required: true, message: "${title}不能为空" }],
+                        validateRules: [{ required: true, message: "${title}不能为空" }]
                     },
                     {
                         title: "性别",
@@ -121,10 +121,10 @@ export default {
                         options: [
                             // 下拉选项
                             { title: "男", value: "1" },
-                            { title: "女", value: "2" },
+                            { title: "女", value: "2" }
                         ],
                         defaultValue: "",
-                        placeholder: "请选择${title}",
+                        placeholder: "请选择${title}"
                     },
                     {
                         title: "身份证号",
@@ -136,9 +136,9 @@ export default {
                         validateRules: [
                             {
                                 pattern: "^\\d{6}(18|19|20)?\\d{2}(0[1-9]|1[012])(0[1-9]|[12]\\d|3[01])\\d{3}(\\d|[xX])$",
-                                message: "${title}格式不正确",
-                            },
-                        ],
+                                message: "${title}格式不正确"
+                            }
+                        ]
                     },
                     {
                         title: "手机号",
@@ -150,11 +150,11 @@ export default {
                         validateRules: [
                             {
                                 pattern: "^1(3|4|5|7|8)\\d{9}$",
-                                message: "${title}格式不正确",
-                            },
-                        ],
-                    },
-                ],
+                                message: "${title}格式不正确"
+                            }
+                        ]
+                    }
+                ]
             },
             // 机票信息
             table2: {
@@ -168,7 +168,7 @@ export default {
                         type: FormTypes.input,
                         defaultValue: "",
                         placeholder: "请输入${title}",
-                        validateRules: [{ required: true, message: "${title}不能为空" }],
+                        validateRules: [{ required: true, message: "${title}不能为空" }]
                     },
                     {
                         title: "航班时间",
@@ -176,16 +176,16 @@ export default {
                         width: "30%",
                         type: FormTypes.date,
                         placeholder: "请选择${title}",
-                        defaultValue: "",
-                    },
-                ],
+                        defaultValue: ""
+                    }
+                ]
             },
             url: {
                 add: "/test/jeecgOrderMain/add",
                 edit: "/test/jeecgOrderMain/edit",
                 orderCustomerList: "/test/jeecgOrderMain/queryOrderCustomerListByMainId",
-                orderTicketList: "/test/jeecgOrderMain/queryOrderTicketListByMainId",
-            },
+                orderTicketList: "/test/jeecgOrderMain/queryOrderTicketListByMainId"
+            }
         };
     },
     created() {},
@@ -284,7 +284,7 @@ export default {
             return {
                 ...orderMain, // 展开
                 jeecgOrderCustomerList: allValues.tablesValue[0].values,
-                jeecgOrderTicketList: allValues.tablesValue[1].values,
+                jeecgOrderTicketList: allValues.tablesValue[1].values
             };
         },
         /** 发起新增或修改的请求 */
@@ -309,8 +309,8 @@ export default {
                 .finally(() => {
                     this.confirmLoading = false;
                 });
-        },
-    },
+        }
+    }
 };
 </script>
 

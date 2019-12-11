@@ -105,14 +105,14 @@ export default {
         Trend,
         Liquid,
         MiniArea,
-        BarAndLine,
+        BarAndLine
     },
     data() {
         return {
             height: 420,
             rankList: [],
             barData: [],
-            areaData: [],
+            areaData: []
         };
     },
     created() {
@@ -128,7 +128,7 @@ export default {
             for (let i = 0; i < 12; i += 1) {
                 data.push({
                     [x]: `${before}${i + 1}${after}`,
-                    [y]: Math.floor(Math.random() * max) + min,
+                    [y]: Math.floor(Math.random() * max) + min
                 });
             }
             return data;
@@ -143,8 +143,8 @@ export default {
         },
         loadRankListData() {
             this.rankList = this.loadData("name", "total", 2000, 100, "北京朝阳 ", " 号店");
-        },
-    },
+        }
+    }
 };
 </script>
 

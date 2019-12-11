@@ -268,7 +268,7 @@ export default {
         JSlider,
         JSelectMultiple,
         JCron,
-        JTreeSelect,
+        JTreeSelect
     },
     data() {
         return {
@@ -285,47 +285,47 @@ export default {
                     { label: "Jeecg", value: "jeecg" },
                     { label: "Jeecg-Boot", value: "jeecgboot" },
                     { label: "Spring", value: "spring", disabled: true },
-                    { label: "MyBaits", value: "mybatis" },
-                ],
+                    { label: "MyBaits", value: "mybatis" }
+                ]
             },
             jcodedditor: {
                 value: `function sayHi(word) {
   alert(word)
 }
-sayHi('hello, world!')`,
+sayHi('hello, world!')`
             },
             jdate: {
-                value: "2019-5-10 15:33:06",
+                value: "2019-5-10 15:33:06"
             },
             jeditor: {
-                value: '<h2 style="text-align: center;">富文本编辑器</h2> <p>这里是富文本编辑器。</p>',
+                value: '<h2 style="text-align: center;">富文本编辑器</h2> <p>这里是富文本编辑器。</p>'
             },
             jellipsis: {
-                value: "这是一串很长很长的文字段落。这是一串很长很长的文字段落。这是一串很长很长的文字段落。这是一串很长很长的文字段落。",
+                value: "这是一串很长很长的文字段落。这是一串很长很长的文字段落。这是一串很长很长的文字段落。这是一串很长很长的文字段落。"
             },
             jgraphicCode: {
-                value: "",
+                value: ""
             },
             jslider: {
-                value: false,
+                value: false
             },
             jselectMultiple: {
                 options: [
                     { text: "字符串", value: "String" },
                     { text: "整数型", value: "Integer" },
                     { text: "浮点型", value: "Double" },
-                    { text: "布尔型", value: "Boolean" },
+                    { text: "布尔型", value: "Boolean" }
                 ],
-                value: "Integer,Boolean",
+                value: "Integer,Boolean"
             },
             modal: {
                 title: "这里是标题",
                 visible: false,
                 width: "100%",
                 style: { top: "20px" },
-                fullScreen: true,
+                fullScreen: true
             },
-            cron: "",
+            cron: ""
         };
     },
     computed: {
@@ -335,7 +335,7 @@ sayHi('hello, world!')`,
                 names.push(this.selectList[a].name);
             }
             return names;
-        },
+        }
     },
     methods: {
         handleChange() {},
@@ -382,8 +382,8 @@ sayHi('hello, world!')`,
             this.$nextTick(() => {
                 this.form.cronExpression = data;
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less" scoped>

@@ -109,7 +109,7 @@ export default {
     components: {
         RoleModal,
         UserRoleModal,
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -126,55 +126,55 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "角色名称",
                     align: "center",
-                    dataIndex: "roleName",
+                    dataIndex: "roleName"
                 },
                 {
                     title: "角色编码",
                     align: "center",
-                    dataIndex: "roleCode",
+                    dataIndex: "roleCode"
                 },
                 {
                     title: "备注",
                     align: "center",
-                    dataIndex: "description",
+                    dataIndex: "description"
                 },
                 {
                     title: "创建时间",
                     dataIndex: "createTime",
                     align: "center",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "更新时间",
                     dataIndex: "updateTime",
                     align: "center",
-                    sorter: true,
+                    sorter: true
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/sys/role/list",
                 delete: "/sys/role/delete",
                 deleteBatch: "/sys/role/deleteBatch",
                 exportXlsUrl: "/sys/role/exportXls",
-                importExcelUrl: "sys/role/importExcel",
-            },
+                importExcelUrl: "sys/role/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
     methods: {
         handlePerssion: function(roleId) {
@@ -183,8 +183,8 @@ export default {
         },
         onChangeDate(date, dateString) {
             console.log(date, dateString);
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

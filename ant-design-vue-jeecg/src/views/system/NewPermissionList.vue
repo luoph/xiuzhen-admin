@@ -76,7 +76,7 @@ const columns = [
     {
         title: "菜单名称",
         dataIndex: "name",
-        key: "name",
+        key: "name"
     },
     {
         title: "菜单类型",
@@ -92,7 +92,7 @@ const columns = [
             } else {
                 return text;
             }
-        },
+        }
     },
     /*{
       title: '权限编码',
@@ -101,32 +101,32 @@ const columns = [
     },*/ {
         title: "icon",
         dataIndex: "icon",
-        key: "icon",
+        key: "icon"
     },
     {
         title: "组件",
         dataIndex: "component",
         key: "component",
-        scopedSlots: { customRender: "component" },
+        scopedSlots: { customRender: "component" }
     },
     {
         title: "路径",
         dataIndex: "url",
         key: "url",
-        scopedSlots: { customRender: "url" },
+        scopedSlots: { customRender: "url" }
     },
     {
         title: "排序",
         dataIndex: "sortNo",
-        key: "sortNo",
+        key: "sortNo"
     },
     {
         title: "操作",
         dataIndex: "action",
         scopedSlots: { customRender: "action" },
         align: "center",
-        width: 150,
-    },
+        width: 150
+    }
 ];
 
 export default {
@@ -135,7 +135,7 @@ export default {
     components: {
         PermissionDataRuleList,
         PermissionModal,
-        JEllipsis,
+        JEllipsis
     },
     data() {
         return {
@@ -146,8 +146,8 @@ export default {
             url: {
                 list: "/sys/permission/list",
                 delete: "/sys/permission/delete",
-                deleteBatch: "/sys/permission/deleteBatch",
-            },
+                deleteBatch: "/sys/permission/deleteBatch"
+            }
         };
     },
     methods: {
@@ -178,8 +178,8 @@ export default {
             this.$refs.modalForm.localMenuType = 1;
             this.$refs.modalForm.disableSubmit = false;
             this.$refs.modalForm.edit({ status: "1", permsType: "1", route: true, parentId: record.id });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

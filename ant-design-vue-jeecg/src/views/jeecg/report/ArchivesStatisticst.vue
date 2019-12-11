@@ -63,7 +63,7 @@ export default {
     components: {
         ACol,
         Bar,
-        Pie,
+        Pie
     },
     data() {
         return {
@@ -86,8 +86,8 @@ export default {
                 getYearCountInfo: "/api/report/getYearCountInfo",
                 getMonthCountInfo: "/api/report/getMonthCountInfo",
                 getCntrNoCountInfo: "/api/report/getCntrNoCountInfo",
-                getCabinetCountInfo: "/api/report/getCabinetCountInfo",
-            },
+                getCabinetCountInfo: "/api/report/getCabinetCountInfo"
+            }
         };
     },
     created() {
@@ -122,12 +122,12 @@ export default {
                 if (this.tabStatus === "bar") {
                     this.countSource.push({
                         x: `${data[i].year}年`,
-                        y: data[i].yearcount,
+                        y: data[i].yearcount
                     });
                 } else {
                     this.countSource.push({
                         item: `${data[i].year}年`,
-                        count: data[i].yearcount,
+                        count: data[i].yearcount
                     });
                 }
             }
@@ -137,12 +137,12 @@ export default {
                 if (this.tabStatus === "bar") {
                     this.countSource.push({
                         x: data[i].month,
-                        y: data[i].monthcount,
+                        y: data[i].monthcount
                     });
                 } else {
                     this.countSource.push({
                         item: data[i].month,
-                        count: data[i].monthcount,
+                        count: data[i].monthcount
                     });
                 }
             }
@@ -152,12 +152,12 @@ export default {
                 if (this.tabStatus === "bar") {
                     this.countSource.push({
                         x: data[i].classifyname,
-                        y: data[i].cntrnocount,
+                        y: data[i].cntrnocount
                     });
                 } else {
                     this.countSource.push({
                         item: data[i].classifyname,
-                        count: data[i].cntrnocount,
+                        count: data[i].cntrnocount
                     });
                 }
             }
@@ -167,12 +167,12 @@ export default {
                 if (this.tabStatus === "bar") {
                     this.countSource.push({
                         x: data[i].cabinetname,
-                        y: data[i].cabinetcocunt,
+                        y: data[i].cabinetcocunt
                     });
                 } else {
                     this.countSource.push({
                         item: data[i].cabinetname,
-                        count: data[i].cabinetcocunt,
+                        count: data[i].cabinetcocunt
                     });
                 }
             }
@@ -246,8 +246,8 @@ export default {
         handlePieDate(value, mode) {
             this.pieValue = value;
             this.pieDate = [mode[0] === "date" ? "month" : mode[0], mode[1] === "date" ? "month" : mode[1]];
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

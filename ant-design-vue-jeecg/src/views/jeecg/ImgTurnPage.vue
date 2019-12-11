@@ -38,7 +38,7 @@ import draggable from "vuedraggable";
 export default {
     name: "ImgTurnPage",
     components: {
-        draggable,
+        draggable
     },
     data() {
         return {
@@ -52,14 +52,14 @@ export default {
                         {
                             title: "1页",
                             key: "0-0-0",
-                            imgUrl: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2735633715,2749454924&fm=27&gp=0.jpg",
+                            imgUrl: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2735633715,2749454924&fm=27&gp=0.jpg"
                         },
                         {
                             title: "2页",
                             key: "0-0-1",
-                            imgUrl: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3967239004,1951414302&fm=27&gp=0.jpg",
-                        },
-                    ],
+                            imgUrl: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3967239004,1951414302&fm=27&gp=0.jpg"
+                        }
+                    ]
                 },
                 {
                     title: "第二页",
@@ -69,14 +69,14 @@ export default {
                             title: "1页",
                             key: "0-1-0",
                             imgUrl:
-                                "https://ss0.bdstatic.com/6Ox1bjeh1BF3odCf/it/u=3660968530,985748925&fm=191&app=48&size=h300&n=0&g=4n&f=JPEG?sec=1853310920&t=5e64af964be378c6c2a3b0acc65dfe24",
+                                "https://ss0.bdstatic.com/6Ox1bjeh1BF3odCf/it/u=3660968530,985748925&fm=191&app=48&size=h300&n=0&g=4n&f=JPEG?sec=1853310920&t=5e64af964be378c6c2a3b0acc65dfe24"
                         },
                         {
                             title: "2页",
                             key: "0-1-1",
-                            imgUrl: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=889120611,3801177793&fm=27&gp=0.jpg",
-                        },
-                    ],
+                            imgUrl: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=889120611,3801177793&fm=27&gp=0.jpg"
+                        }
+                    ]
                 },
                 {
                     title: "第三页",
@@ -85,17 +85,17 @@ export default {
                         {
                             title: "1页",
                             key: "0-2-0",
-                            imgUrl: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2445468140,2491956848&fm=27&gp=0.jpg",
-                        },
-                    ],
-                },
+                            imgUrl: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2445468140,2491956848&fm=27&gp=0.jpg"
+                        }
+                    ]
+                }
             ],
             selectedKeys: [],
             expandedKeys: [],
             sort: 0,
             imgUrl: "",
             navName: "",
-            imgList: [],
+            imgList: []
         };
     },
     created() {
@@ -111,7 +111,7 @@ export default {
                         pkey: this.treeData[i].key,
                         sort: count++,
                         imgUrl: this.treeData[i].children[j].imgUrl,
-                        navName: this.treeData[i].title + "/" + this.treeData[i].children[j].title,
+                        navName: this.treeData[i].title + "/" + this.treeData[i].children[j].title
                     });
                 }
             }
@@ -155,8 +155,8 @@ export default {
             this.selectedKeys[0] = value.key;
             this.expandedKeys[0] = value.pkey;
             this.navName = value.navName;
-        },
-    },
+        }
+    }
 };
 </script>
 

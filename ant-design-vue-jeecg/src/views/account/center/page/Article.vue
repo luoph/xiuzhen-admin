@@ -12,8 +12,8 @@ export default {
     name: "Article",
     components: {
         AList,
-        AListItem,
-    },
+        AListItem
+    }
 };
 </script>
 

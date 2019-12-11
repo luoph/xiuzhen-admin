@@ -134,7 +134,7 @@ import { USER_INFO } from "@/store/mutation-types";
 export default {
     components: {
         TwoStepCaptcha,
-        JGraphicCode,
+        JGraphicCode
     },
     data() {
         return {
@@ -147,18 +147,18 @@ export default {
             form: this.$form.createForm(this),
             encryptedString: {
                 key: "",
-                iv: "",
+                iv: ""
             },
             state: {
                 time: 60,
-                smsSendBtn: false,
+                smsSendBtn: false
             },
             validatorRules: {
                 username: { rules: [{ required: true, message: "请输入用户名!", validator: "click" }] },
                 password: { rules: [{ required: true, message: "请输入密码!", validator: "click" }] },
                 mobile: { rules: [{ validator: this.validateMobile }] },
                 captcha: { rule: [{ required: true, message: "请输入验证码!" }] },
-                inputCode: { rules: [{ required: true, message: "请输入验证码!" }, { validator: this.validateInputCode }] },
+                inputCode: { rules: [{ required: true, message: "请输入验证码!" }, { validator: this.validateInputCode }] }
             },
             verifiedCode: "",
             inputCodeContent: "",
@@ -168,7 +168,7 @@ export default {
             departVisible: false,
             departSelected: "",
             currentUsername: "",
-            validate_status: "",
+            validate_status: ""
         };
     },
     created() {
@@ -298,21 +298,21 @@ export default {
             this.$router.push({ name: "dashboard" });
             this.$notification.success({
                 message: "欢迎",
-                description: `${timeFix()}，欢迎回来`,
+                description: `${timeFix()}，欢迎回来`
             });
         },
         cmsFailed(err) {
             this.$notification["error"]({
                 message: "登录失败",
                 description: err,
-                duration: 4,
+                duration: 4
             });
         },
         requestFailed(err) {
             this.$notification["error"]({
                 message: "登录失败",
                 description: ((err.response || {}).data || {}).message || err.message || "请求出现错误，请稍后再试",
-                duration: 4,
+                duration: 4
             });
             this.loginBtn = false;
         },
@@ -351,7 +351,7 @@ export default {
                     this.$notification.warn({
                         message: "提示",
                         description: `您尚未归属部门,请确认账号信息`,
-                        duration: 3,
+                        duration: 3
                     });
                 } else if (multi_depart == 2) {
                     this.departVisible = true;
@@ -372,7 +372,7 @@ export default {
             }
             let obj = {
                 orgCode: this.departSelected,
-                username: this.form.getFieldValue("username"),
+                username: this.form.getFieldValue("username")
             };
             putAction("/sys/selectDepart", obj).then(res => {
                 if (res.success) {
@@ -404,7 +404,7 @@ export default {
         getRouterData() {
             this.$nextTick(() => {
                 this.form.setFieldsValue({
-                    username: this.$route.params.username,
+                    username: this.$route.params.username
                 });
             });
         },
@@ -418,8 +418,8 @@ export default {
             } else {
                 this.encryptedString = encryptedString;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -40,20 +40,20 @@ export default {
                     title: "参数",
                     width: "30%",
                     dataIndex: "param",
-                    scopedSlots: { customRender: "param" },
+                    scopedSlots: { customRender: "param" }
                 },
                 {
                     title: "描述",
                     width: "40%",
                     dataIndex: "text",
-                    scopedSlots: { customRender: "text" },
+                    scopedSlots: { customRender: "text" }
                 },
                 {
                     title: "当前值",
                     width: "30%",
                     dataIndex: "value",
-                    scopedSlots: { customRender: "value" },
-                },
+                    scopedSlots: { customRender: "value" }
+                }
             ],
             dataSource: [],
             // 列表通过 textInfo 渲染出颜色、描述和单位
@@ -73,12 +73,12 @@ export default {
                 "jvm.gc.max.data.size": { color: "pink", text: "GC 时, 老年代的最大内存空间", unit: "MB" },
                 "jvm.gc.live.data.size": { color: "pink", text: "FullGC 时, 老年代的内存空间", unit: "MB" },
                 "jvm.gc.pause.count": { color: "blue", text: "系统启动以来GC 次数", unit: "次" },
-                "jvm.gc.pause.totalTime": { color: "blue", text: "系统启动以来GC 总耗时", unit: "秒" },
+                "jvm.gc.pause.totalTime": { color: "blue", text: "系统启动以来GC 总耗时", unit: "秒" }
             },
             // 当一条记录中需要取出多条数据的时候需要配置该字段
             moreInfo: {
-                "jvm.gc.pause": [".count", ".totalTime"],
-            },
+                "jvm.gc.pause": [".count", ".totalTime"]
+            }
         };
     },
     mounted() {
@@ -107,7 +107,7 @@ export default {
                 getAction("actuator/metrics/jvm.gc.memory.promoted"),
                 getAction("actuator/metrics/jvm.gc.max.data.size"),
                 getAction("actuator/metrics/jvm.gc.live.data.size"),
-                getAction("actuator/metrics/jvm.gc.pause"),
+                getAction("actuator/metrics/jvm.gc.pause")
             ])
                 .then(res => {
                     let info = [];
@@ -154,8 +154,8 @@ export default {
                 return moment(value * 1000).format("YYYY-MM-DD HH:mm:ss");
             }
             return value;
-        },
-    },
+        }
+    }
 };
 </script>
 <style></style>

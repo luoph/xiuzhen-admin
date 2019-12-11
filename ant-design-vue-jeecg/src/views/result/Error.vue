@@ -29,14 +29,14 @@ import Result from "./Result";
 export default {
     name: "Error",
     components: {
-        Result,
+        Result
     },
     data() {
         return {
             title: "提交失败",
-            description: "请核对并修改以下信息后，再重新提交。",
+            description: "请核对并修改以下信息后，再重新提交。"
         };
-    },
+    }
 };
 </script>
 

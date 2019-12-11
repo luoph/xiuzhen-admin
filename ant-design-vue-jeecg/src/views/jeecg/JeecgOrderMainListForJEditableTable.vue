@@ -102,7 +102,7 @@ export default {
     name: "JeecgOrderMainListForJEditableTable",
     mixins: [JeecgListMixin],
     components: {
-        JeecgOrderModalForJEditableTable,
+        JeecgOrderModalForJEditableTable
     },
     data() {
         return {
@@ -111,7 +111,7 @@ export default {
             url: {
                 list: "/test/jeecgOrderMain/list",
                 delete: "/test/jeecgOrderMain/delete",
-                deleteBatch: "/test/jeecgOrderMain/deleteBatch",
+                deleteBatch: "/test/jeecgOrderMain/deleteBatch"
             },
             // 表头
             columns: [
@@ -123,12 +123,12 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "订单号",
                     align: "center",
-                    dataIndex: "orderCode",
+                    dataIndex: "orderCode"
                 },
                 {
                     title: "订单类型",
@@ -142,35 +142,35 @@ export default {
                             re = "国际订单";
                         }
                         return re;
-                    },
+                    }
                 },
                 {
                     title: "订单日期",
                     align: "center",
-                    dataIndex: "orderDate",
+                    dataIndex: "orderDate"
                 },
                 {
                     title: "订单金额",
                     align: "center",
-                    dataIndex: "orderMoney",
+                    dataIndex: "orderMoney"
                 },
                 {
                     title: "订单备注",
                     align: "center",
-                    dataIndex: "content",
+                    dataIndex: "content"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
-            ],
+                    scopedSlots: { customRender: "action" }
+                }
+            ]
         };
     },
     methods: {
-        initDictConfig() {},
-    },
+        initDictConfig() {}
+    }
 };
 </script>
 <style scoped>

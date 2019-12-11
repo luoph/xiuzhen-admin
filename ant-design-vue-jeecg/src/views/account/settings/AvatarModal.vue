@@ -32,7 +32,7 @@ import { VueCropper } from "vue-cropper";
 
 export default {
     components: {
-        VueCropper,
+        VueCropper
     },
     data() {
         return {
@@ -45,9 +45,9 @@ export default {
                 autoCrop: true,
                 autoCropWidth: 200,
                 autoCropHeight: 200,
-                fixedBox: true,
+                fixedBox: true
             },
-            previews: {},
+            previews: {}
         };
     },
     methods: {
@@ -76,8 +76,8 @@ export default {
 
         realTime(data) {
             this.previews = data;
-        },
-    },
+        }
+    }
 };
 </script>
 

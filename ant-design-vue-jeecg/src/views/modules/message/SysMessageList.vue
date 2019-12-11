@@ -117,7 +117,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JEllipsis,
-        SysMessageModal,
+        SysMessageModal
     },
     data() {
         return {
@@ -134,66 +134,66 @@ export default {
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
-                    },
+                    }
                 },
                 {
                     title: "消息标题",
                     align: "center",
-                    dataIndex: "esTitle",
+                    dataIndex: "esTitle"
                 },
                 {
                     title: "发送内容",
                     align: "center",
                     dataIndex: "esContent",
-                    scopedSlots: { customRender: "esContent" },
+                    scopedSlots: { customRender: "esContent" }
                 },
                 {
                     title: "接收人",
                     align: "center",
-                    dataIndex: "esReceiver",
+                    dataIndex: "esReceiver"
                 },
                 {
                     title: "发送次数",
                     align: "center",
-                    dataIndex: "esSendNum",
+                    dataIndex: "esSendNum"
                 },
                 {
                     title: "发送状态",
                     align: "center",
-                    dataIndex: "esSendStatus_dictText",
+                    dataIndex: "esSendStatus_dictText"
                 },
                 {
                     title: "发送时间",
                     align: "center",
-                    dataIndex: "esSendTime",
+                    dataIndex: "esSendTime"
                 },
                 {
                     title: "发送方式",
                     align: "center",
-                    dataIndex: "esType_dictText",
+                    dataIndex: "esType_dictText"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
-                },
+                    scopedSlots: { customRender: "action" }
+                }
             ],
             url: {
                 list: "/message/sysMessage/list",
                 delete: "/message/sysMessage/delete",
                 deleteBatch: "/message/sysMessage/deleteBatch",
                 exportXlsUrl: "message/sysMessage/exportXls",
-                importExcelUrl: "message/sysMessage/importExcel",
-            },
+                importExcelUrl: "message/sysMessage/importExcel"
+            }
         };
     },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
-        },
+        }
     },
-    methods: {},
+    methods: {}
 };
 </script>
 <style lang="less" scoped>

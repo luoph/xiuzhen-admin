@@ -34,7 +34,7 @@ import JTreeSelect from "@/components/jeecg/JTreeSelect";
 export default {
     name: "SysCategoryModal",
     components: {
-        JTreeSelect,
+        JTreeSelect
     },
     data() {
         return {
@@ -45,11 +45,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -58,23 +58,23 @@ export default {
                     rules: [
                         {
                             required: true,
-                            message: "请输入类型编码!",
+                            message: "请输入类型编码!"
                         },
                         {
-                            validator: this.validateMyCode,
-                        },
-                    ],
+                            validator: this.validateMyCode
+                        }
+                    ]
                 },
                 pid: {},
-                name: {},
+                name: {}
             },
             url: {
                 add: "/sys/category/add",
                 edit: "/sys/category/edit",
-                checkCode: "/sys/category/checkCode",
+                checkCode: "/sys/category/checkCode"
             },
             expandedRowKeys: [],
-            pidField: "pid",
+            pidField: "pid"
         };
     },
     created() {},
@@ -158,7 +158,7 @@ export default {
         validateMyCode(rule, value, callback) {
             let params = {
                 pid: this.form.getFieldValue("pid"),
-                code: value,
+                code: value
             };
             getAction(this.url.checkCode, params).then(res => {
                 if (res.success) {
@@ -167,7 +167,7 @@ export default {
                     callback(res.message);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>

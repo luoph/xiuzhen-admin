@@ -11,7 +11,7 @@ export default {
             value: 1,
 
             // form
-            form: this.$form.createForm(this),
+            form: this.$form.createForm(this)
         };
     },
     methods: {
@@ -24,7 +24,7 @@ export default {
                     console.log("Received values of form: ", values);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>

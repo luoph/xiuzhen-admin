@@ -16,7 +16,7 @@ export default {
                     title: "输入框",
                     key: "input",
                     type: FormTypes.input,
-                    placeholder: "清输入",
+                    placeholder: "清输入"
                 },
                 {
                     title: "下拉框",
@@ -26,32 +26,32 @@ export default {
                         { title: "String", value: "string" },
                         { title: "Integer", value: "int" },
                         { title: "Double", value: "double" },
-                        { title: "Boolean", value: "boolean" },
+                        { title: "Boolean", value: "boolean" }
                     ],
-                    placeholder: "请选择",
+                    placeholder: "请选择"
                 },
                 {
                     title: "多选框",
                     key: "checkbox",
                     type: FormTypes.checkbox,
-                    customValue: [true, false],
+                    customValue: [true, false]
                 },
                 {
                     title: "日期",
                     key: "datetime",
-                    type: FormTypes.datetime,
-                },
+                    type: FormTypes.datetime
+                }
             ],
             dataSource: [
                 { input: "hello", select: "int", checkbox: true, datetime: "2019-6-17 14:50:48" },
                 { input: "world", select: "string", checkbox: false, datetime: "2019-6-16 14:50:48" },
                 { input: "one", select: "double", checkbox: true, datetime: "2019-6-17 15:50:48" },
                 { input: "two", select: "boolean", checkbox: false, datetime: "2019-6-14 14:50:48" },
-                { input: "three", select: "", checkbox: false, datetime: "2019-6-13 14:50:48" },
-            ],
+                { input: "three", select: "", checkbox: false, datetime: "2019-6-13 14:50:48" }
+            ]
         };
     },
-    mounted() {},
+    mounted() {}
 };
 </script>
 

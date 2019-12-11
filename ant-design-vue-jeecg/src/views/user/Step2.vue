@@ -49,15 +49,15 @@ export default {
             show: true,
             state: {
                 time: 60,
-                smsSendBtn: false,
+                smsSendBtn: false
             },
             formLogin: {
                 captcha: "",
-                mobile: "",
+                mobile: ""
             },
             validatorRules: {
-                captcha: { rule: [{ required: true, message: "请输入短信验证码!" }, { validator: this.validateCaptcha }] },
-            },
+                captcha: { rule: [{ required: true, message: "请输入短信验证码!" }, { validator: this.validateCaptcha }] }
+            }
         };
     },
     methods: {
@@ -80,7 +80,7 @@ export default {
                                     var userList = {
                                         username: this.userList.username,
                                         phone: this.userList.phone,
-                                        smscode: res.result,
+                                        smscode: res.result
                                     };
                                     setTimeout(function() {
                                         that.$emit("nextStep", userList);
@@ -112,7 +112,7 @@ export default {
             const hide = this.$message.loading("验证码发送中..", 0);
             let smsParams = {
                 mobile: this.userList.phone,
-                smsmode: "2",
+                smsmode: "2"
             };
             postAction("/sys/sms", smsParams).then(res => {
                 if (!res.success) {
@@ -126,7 +126,7 @@ export default {
             this.$notification["error"]({
                 message: "验证错误",
                 description: err,
-                duration: 4,
+                duration: 4
             });
         },
         handleChangeSelect(value) {
@@ -139,8 +139,8 @@ export default {
                 that.dropList = "1";
                 that.show = false;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

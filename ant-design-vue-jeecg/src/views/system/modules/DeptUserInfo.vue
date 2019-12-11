@@ -105,7 +105,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         SelectUserModal,
-        UserModal,
+        UserModal
     },
     data() {
         return {
@@ -116,27 +116,27 @@ export default {
                 {
                     title: "用户账号",
                     align: "center",
-                    dataIndex: "username",
+                    dataIndex: "username"
                 },
                 {
                     title: "用户名称",
                     align: "center",
-                    dataIndex: "realname",
+                    dataIndex: "realname"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     scopedSlots: { customRender: "action" },
                     align: "center",
-                    width: 170,
-                },
+                    width: 170
+                }
             ],
             url: {
                 list: "/sys/user/departUserList",
                 edit: "/sys/user/editSysDepartWithUser",
                 delete: "/sys/user/deleteUserInDepart",
-                deleteBatch: "/sys/user/deleteUserInDepartBatch",
-            },
+                deleteBatch: "/sys/user/deleteUserInDepartBatch"
+            }
         };
     },
     created() {},
@@ -189,7 +189,7 @@ export default {
                                 that.$message.warning(res.message);
                             }
                         });
-                    },
+                    }
                 });
             }
         },
@@ -271,8 +271,8 @@ export default {
                     this.$message.warning(res.message);
                 }
             });
-        },
-    },
+        }
+    }
 };
 </script>
 <style scoped>

@@ -143,18 +143,18 @@ export default {
             isRequrie: true, // 是否需要验证
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
             form: this.$form.createForm(this),
 
             iconChooseVisible: false,
-            validateStatus: "",
+            validateStatus: ""
         };
     },
     computed: {
@@ -164,9 +164,9 @@ export default {
                 component: { rules: [{ required: this.show, message: "请输入前端组件!" }] },
                 url: { rules: [{ required: this.show, message: "请输入菜单路径!" }] },
                 permsType: { rules: [{ required: true, message: "请输入授权策略!" }] },
-                sortNo: { initialValue: 1.0 },
+                sortNo: { initialValue: 1.0 }
             };
-        },
+        }
     },
     created() {
         this.initDictConfig();
@@ -338,8 +338,8 @@ export default {
             } else {
                 this.validateStatus = "success";
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

@@ -46,11 +46,11 @@ export default {
             ruleConditionList: [],
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
             confirmLoading: false,
             form: this.$form.createForm(this),
@@ -59,14 +59,14 @@ export default {
                 ruleConditions: { rules: [{ required: true, message: "请选择条件!" }] },
                 ruleName: { rules: [{ required: true, message: "请输入规则名称!" }] },
                 ruleValue: { rules: [{ required: true, message: "请输入规则值!" }] },
-                ruleColumn: { rules: [] },
+                ruleColumn: { rules: [] }
             },
             url: {
                 list: "/sys/dictItem/list",
                 add: "/sys/permission/addPermissionRule",
-                edit: "/sys/permission/editPermissionRule",
+                edit: "/sys/permission/editPermissionRule"
             },
-            showRuleColumn: true,
+            showRuleColumn: true
         };
     },
     created() {},
@@ -144,14 +144,14 @@ export default {
         handleChangeRuleCondition(val) {
             if (val == "USE_SQL_RULES") {
                 this.form.setFieldsValue({
-                    ruleColumn: "",
+                    ruleColumn: ""
                 });
                 this.showRuleColumn = false;
             } else {
                 this.showRuleColumn = true;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

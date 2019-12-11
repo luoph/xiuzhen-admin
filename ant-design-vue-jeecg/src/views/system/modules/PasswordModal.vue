@@ -34,37 +34,37 @@ export default {
                         {
                             required: true,
                             pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
-                            message: "密码由8位数字、大小写字母和特殊符号组成!",
+                            message: "密码由8位数字、大小写字母和特殊符号组成!"
                         },
                         {
-                            validator: this.validateToNextPassword,
-                        },
-                    ],
+                            validator: this.validateToNextPassword
+                        }
+                    ]
                 },
                 confirmpassword: {
                     rules: [
                         {
                             required: true,
-                            message: "请重新输入登录密码!",
+                            message: "请重新输入登录密码!"
                         },
                         {
-                            validator: this.compareToFirstPassword,
-                        },
-                    ],
-                },
+                            validator: this.compareToFirstPassword
+                        }
+                    ]
+                }
             },
 
             model: {},
 
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
-            form: this.$form.createForm(this),
+            form: this.$form.createForm(this)
         };
     },
     created() {
@@ -134,7 +134,7 @@ export default {
         handleConfirmBlur(e) {
             const value = e.target.value;
             this.confirmDirty = this.confirmDirty || !!value;
-        },
-    },
+        }
+    }
 };
 </script>
