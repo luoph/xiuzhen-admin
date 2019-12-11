@@ -1,6 +1,5 @@
 <template>
     <a-card :bordered="false">
-
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
@@ -14,21 +13,21 @@
                     </a-col>
                     <#elseif po_index == 2>
                     <template v-if="toggleSearchStatus">
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="${po.filedComment}">
-                            <a-input placeholder="请输入${po.filedComment}" v-model="queryParam.${po.fieldName}"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <#elseif po.fieldName!='id' && po_index < 5>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="${po.filedComment}">
-                            <a-input placeholder="请输入${po.filedComment}" v-model="queryParam.${po.fieldName}"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <#else>
-                    </#if>
-                    </#list>
-                    <#if (columns ? size > 1)>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="${po.filedComment}">
+                                <a-input placeholder="请输入${po.filedComment}" v-model="queryParam.${po.fieldName}"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <#elseif po.fieldName!='id' && po_index < 5>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="${po.filedComment}">
+                                <a-input placeholder="请输入${po.filedComment}" v-model="queryParam.${po.fieldName}"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <#else>
+                        </#if>
+                        </#list>
+                        <#if (columns ? size > 1)>
                     </template>
                     </#if>
                     <a-col :md="6" :sm="8">
