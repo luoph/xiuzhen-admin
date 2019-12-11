@@ -64,11 +64,11 @@ public class ${entityName}Controller {
 	/**
 	 * 分页列表查询
 	 *
-	 * @param ${entityName?uncap_first}
-	 * @param pageNo
-	 * @param pageSize
-	 * @param req
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @param pageNo 页码
+	 * @param pageSize 分页大小
+	 * @param req 请求
+	 * @return {@linkplain Result}
 	 */
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(${entityName} ${entityName?uncap_first},
@@ -84,8 +84,8 @@ public class ${entityName}Controller {
 	/**
 	 * 添加
 	 *
-	 * @param ${entityName?uncap_first}Page
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @return {@linkplain Result}
 	 */
 	@PostMapping(value = "/add")
 	public Result<?> add(@RequestBody ${entityName}Page ${entityName?uncap_first}Page) {
@@ -98,8 +98,8 @@ public class ${entityName}Controller {
 	/**
 	 * 编辑
 	 *
-	 * @param ${entityName?uncap_first}Page
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @return {@linkplain Result}
 	 */
 	@PutMapping(value = "/edit")
 	public Result<?> edit(@RequestBody ${entityName}Page ${entityName?uncap_first}Page) {
@@ -112,8 +112,8 @@ public class ${entityName}Controller {
 	/**
 	 * 通过id删除
 	 *
-	 * @param id
-	 * @return
+	 * @param id 实体id
+	 * @return {@linkplain Result}
 	 */
 	@DeleteMapping(value = "/delete")
 	public Result<?> delete(@RequestParam(name = "id") String id) {
@@ -124,8 +124,8 @@ public class ${entityName}Controller {
 	/**
 	 * 批量删除
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids  id列表，使用','分割的字符串
+	 * @return {@linkplain Result}
 	 */
 	@DeleteMapping(value = "/deleteBatch")
 	public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
@@ -136,8 +136,8 @@ public class ${entityName}Controller {
 	/**
 	 * 通过id查询
      *
-	 * @param id
-	 * @return
+	 * @param id 实体id
+	 * @return {@linkplain Result}
 	 */
 	@GetMapping(value = "/queryById")
 	public Result<?> queryById(@RequestParam(name = "id") String id) {
@@ -149,8 +149,8 @@ public class ${entityName}Controller {
 	/**
 	 * 通过id查询
      *
-	 * @param id
-	 * @return
+	 * @param id 实体id
+	 * @return {@linkplain Result}
 	 */
 	@GetMapping(value = "/query${sub.entityName}ByMainId")
 	public Result<?> query${sub.entityName}ListByMainId(@RequestParam(name = "id") String id) {
@@ -162,7 +162,7 @@ public class ${entityName}Controller {
   /**
    * 导出excel
    *
-   * @param request
+   * @param request 请求
    * @param ${entityName?uncap_first}
    */
   @RequestMapping(value = "/exportXls")
@@ -195,9 +195,9 @@ public class ${entityName}Controller {
   /**
    * 通过excel导入数据
    *
-   * @param request
-   * @param response
-   * @return
+   * @param request 请求
+   * @param response 响应
+   * @return {@linkplain Result}
    */
   @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
   public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {

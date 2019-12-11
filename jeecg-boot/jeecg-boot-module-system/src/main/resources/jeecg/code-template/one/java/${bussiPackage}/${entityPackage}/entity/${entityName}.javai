@@ -26,11 +26,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class ${entityName} {
     
     <#list originalColumns as po>
-	/**${po.filedComment}*/
+	/**
+	 * ${po.filedComment}
+	 */
 	<#if po.fieldName == primaryKeyField>
 	@TableId(type = IdType.AUTO)
 	<#else>
-  <#if po.fieldType == 'java.util.Date'>
+    <#if po.fieldType == 'java.util.Date'>
 	<#if po.fieldDbType == 'date'>
 	@Excel(name = "${po.filedComment}", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE,pattern = TimeConstant.DEFAULT_DATE_FORMAT)
@@ -42,8 +44,8 @@ public class ${entityName} {
 	</#if>
 	<#else>
 	@Excel(name = "${po.filedComment}", width = 15)
-  </#if>
-  </#if>
+    </#if>
+    </#if>
     @ApiModelProperty(value = "${po.filedComment}")
 	private <#if po.fieldType == 'java.sql.Blob'>byte[]<#else>${po.fieldType}</#if> ${po.fieldName};
 	</#list>
