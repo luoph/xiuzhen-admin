@@ -27,8 +27,8 @@ import java.util.Arrays;
  * @date 2019-12-11
  */
 @Slf4j
-@Api(tags = "游戏信息")
 @RestController
+@Api(tags = "游戏信息")
 @RequestMapping("/game/gameInfo")
 public class GameInfoController extends JeecgController<GameInfo, IGameInfoService> {
 
@@ -38,11 +38,11 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 分页列表查询
      *
-     * @param gameInfo
-     * @param pageNo
-     * @param pageSize
-     * @param req
-     * @return
+     * @param gameInfo 数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏信息-列表查询")
     @ApiOperation(value = "游戏信息-列表查询", notes = "游戏信息-列表查询")
@@ -60,8 +60,8 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 添加
      *
-     * @param gameInfo
-     * @return
+     * @param gameInfo 数据实体
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏信息-添加")
     @ApiOperation(value = "游戏信息-添加", notes = "游戏信息-添加")
@@ -74,8 +74,8 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 编辑
      *
-     * @param gameInfo
-     * @return
+     * @param gameInfo 数据实体
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏信息-编辑")
     @ApiOperation(value = "游戏信息-编辑", notes = "游戏信息-编辑")
@@ -88,13 +88,13 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 通过id删除
      *
-     * @param id
-     * @return
+     * @param id 实体id
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏信息-通过id删除")
     @ApiOperation(value = "游戏信息-通过id删除", notes = "游戏信息-通过id删除")
     @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> delete(@RequestParam(name = "id") String id) {
         gameInfoService.removeById(id);
         return Result.ok("删除成功!");
     }
@@ -102,13 +102,13 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 批量删除
      *
-     * @param ids
-     * @return
+     * @param ids id列表，使用','分割的字符串
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏信息-批量删除")
     @ApiOperation(value = "游戏信息-批量删除", notes = "游戏信息-批量删除")
     @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.gameInfoService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
@@ -116,13 +116,13 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 通过id查询
      *
-     * @param id
-     * @return
+     * @param id 实体id
+     * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏信息-通过id查询")
     @ApiOperation(value = "游戏信息-通过id查询", notes = "游戏信息-通过id查询")
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
         GameInfo gameInfo = gameInfoService.getById(id);
         return Result.ok(gameInfo);
     }
@@ -130,8 +130,8 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 导出excel
      *
-     * @param request
-     * @param gameInfo
+     * @param request  请求
+     * @param gameInfo 实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameInfo gameInfo) {
@@ -141,13 +141,12 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     /**
      * 通过excel导入数据
      *
-     * @param request
-     * @param response
-     * @return
+     * @param request  请求
+     * @param response 响应
+     * @return {@linkplain Result}
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameInfo.class);
     }
-
 }
