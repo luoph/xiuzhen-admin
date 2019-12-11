@@ -4,8 +4,8 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <#list columns as po>
-                    <#if po.fieldName!='id' && po_index<=tableVo.searchFieldNum>
+<#list columns as po>
+<#if po.fieldName!='id' && po_index<=tableVo.searchFieldNum>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="${po.filedComment}">
                             <a-input placeholder="请输入${po.filedComment}" v-model="queryParam.${po.fieldName}"></a-input>
