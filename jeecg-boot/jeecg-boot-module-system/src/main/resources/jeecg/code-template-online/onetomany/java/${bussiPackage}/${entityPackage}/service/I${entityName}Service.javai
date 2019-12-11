@@ -1,10 +1,10 @@
 package ${bussiPackage}.${entityPackage}.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 <#list subTables as sub>
 import ${bussiPackage}.${entityPackage}.entity.${sub.entityName};
 </#list>
 import ${bussiPackage}.${entityPackage}.entity.${entityName};
-import com.baomidou.mybatisplus.extension.service.IService;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
