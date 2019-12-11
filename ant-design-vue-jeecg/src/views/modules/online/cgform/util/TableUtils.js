@@ -30,9 +30,9 @@ export function syncAllTable(vm, table1) {
                                     rowKey: thisValue.id,
                                     values: {
                                         dbFieldName: value.dbFieldName,
-                                        dbFieldTxt: value.dbFieldTxt,
-                                    },
-                                },
+                                        dbFieldTxt: value.dbFieldTxt
+                                    }
+                                }
                             ]);
                         }
                         flag = true;
@@ -106,7 +106,7 @@ export function getMasterTableInitialData() {
             fieldShowType: "text",
             fieldLength: "120",
             queryMode: "single",
-            orderNum: 1,
+            orderNum: 1
         },
         {
             dbFieldName: "create_by",
@@ -123,7 +123,7 @@ export function getMasterTableInitialData() {
             fieldShowType: "text",
             fieldLength: "120",
             queryMode: "single",
-            orderNum: 2,
+            orderNum: 2
         },
         {
             dbFieldName: "create_time",
@@ -140,7 +140,7 @@ export function getMasterTableInitialData() {
             fieldShowType: "datetime",
             fieldLength: "120",
             queryMode: "single",
-            orderNum: 3,
+            orderNum: 3
         },
         {
             dbFieldName: "update_by",
@@ -157,7 +157,7 @@ export function getMasterTableInitialData() {
             fieldShowType: "text",
             fieldLength: "120",
             queryMode: "single",
-            orderNum: 4,
+            orderNum: 4
         },
         {
             dbFieldName: "update_time",
@@ -174,7 +174,7 @@ export function getMasterTableInitialData() {
             fieldShowType: "datetime",
             fieldLength: "120",
             queryMode: "single",
-            orderNum: 5,
+            orderNum: 5
         },
         {
             dbFieldName: "sys_org_code",
@@ -191,8 +191,8 @@ export function getMasterTableInitialData() {
             fieldShowType: "text",
             fieldLength: "120",
             queryMode: "single",
-            orderNum: 6,
-        },
+            orderNum: 6
+        }
         // {
         //   dbFieldName: 'sys_org_code',
         //   dbFieldTxt: '所属部门',
@@ -241,7 +241,7 @@ export function getTreeNeedFields() {
             fieldShowType: "text",
             fieldLength: "120",
             queryMode: "single",
-            orderNum: 7,
+            orderNum: 7
         },
         {
             dbFieldName: "has_child",
@@ -260,7 +260,7 @@ export function getTreeNeedFields() {
             queryMode: "single",
             orderNum: 8,
             // table3
-            dictField: "yn",
-        },
+            dictField: "yn"
+        }
     ];
 }
