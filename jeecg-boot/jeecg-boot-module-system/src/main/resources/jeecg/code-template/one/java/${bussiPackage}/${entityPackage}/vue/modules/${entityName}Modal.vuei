@@ -53,7 +53,7 @@ export default {
             <#list columns as po>
             <#if po.fieldName!='id'>
             <#if po.nullable=='N'>
-            ${po.fieldName}: { rules: [{ required: true, message: "请输入${po.filedComment}!" }] },
+                ${po.fieldName}: { rules: [{ required: true, message: "请输入${po.filedComment}!" }] },
             </#if>
             </#if>
             </#list>
