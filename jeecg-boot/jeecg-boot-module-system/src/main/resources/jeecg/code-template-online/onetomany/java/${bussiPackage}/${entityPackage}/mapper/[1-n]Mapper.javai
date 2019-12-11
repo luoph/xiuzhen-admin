@@ -3,8 +3,8 @@
 package ${bussiPackage}.${entityPackage}.mapper;
 
 import java.util.List;
-import ${bussiPackage}.${entityPackage}.entity.${subTab.entityName};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import ${bussiPackage}.${entityPackage}.entity.${subTab.entityName};
 import org.apache.ibatis.annotations.Param;
 
 /**
