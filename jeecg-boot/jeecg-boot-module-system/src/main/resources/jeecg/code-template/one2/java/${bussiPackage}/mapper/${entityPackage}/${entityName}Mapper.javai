@@ -1,7 +1,5 @@
 package ${bussiPackage}.mapper.${entityPackage};
 
-import java.util.List;
-
 import ${bussiPackage}.entity.${entityPackage}.${entityName};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

@@ -87,7 +87,7 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
-import { stringify } from 'querystring';
+import { stringify } from "querystring";
 
 export default {
     name: "GameServerModal",
@@ -134,7 +134,30 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick( this.model, "name", "host", "port", "loginUrl", "status", "recommend", "warning", "minVersion", "maxVersion", "dbHost", "dbPort", "dbUser", "dbPassword", "dbName", "httpPort", "position", "type", "pid", "extra" ));
+                this.form.setFieldsValue(
+                    pick(
+                        this.model,
+                        "name",
+                        "host",
+                        "port",
+                        "loginUrl",
+                        "status",
+                        "recommend",
+                        "warning",
+                        "minVersion",
+                        "maxVersion",
+                        "dbHost",
+                        "dbPort",
+                        "dbUser",
+                        "dbPassword",
+                        "dbName",
+                        "httpPort",
+                        "position",
+                        "type",
+                        "pid",
+                        "extra"
+                    )
+                );
                 //时间格式化
                 this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
