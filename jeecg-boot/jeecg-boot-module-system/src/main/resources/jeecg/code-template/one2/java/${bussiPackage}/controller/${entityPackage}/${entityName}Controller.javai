@@ -52,11 +52,11 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 * 分页列表查询
 	 *
-	 * @param ${entityName?uncap_first}
-	 * @param pageNo
-	 * @param pageSize
-	 * @param req
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @param pageNo 页码
+	 * @param pageSize 分页大小
+	 * @param req 请求
+	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-列表查询")
 	@ApiOperation(value = "${tableVo.ftlDescription}-列表查询", notes = "${tableVo.ftlDescription}-列表查询")
@@ -74,8 +74,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	
 	/**
 	 * 添加
-	 * @param ${entityName?uncap_first}
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-添加")
 	@ApiOperation(value = "${tableVo.ftlDescription}-添加", notes = "${tableVo.ftlDescription}-添加")
@@ -88,8 +88,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 * 编辑
 	 *
-	 * @param ${entityName?uncap_first}
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-编辑")
 	@ApiOperation(value = "${tableVo.ftlDescription}-编辑", notes = "${tableVo.ftlDescription}-编辑")
@@ -101,8 +101,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	
 	/**
 	 * 通过id删除
-	 * @param id
-	 * @return
+	 * @param id 实体id
+	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-通过id删除")
 	@ApiOperation(value = "${tableVo.ftlDescription}-通过id删除", notes = "${tableVo.ftlDescription}-通过id删除")
@@ -115,8 +115,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 * 批量删除
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids id列表，使用','分割的字符串
+	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-批量删除")
 	@ApiOperation(value = "${tableVo.ftlDescription}-批量删除", notes = "${tableVo.ftlDescription}-批量删除")
@@ -129,8 +129,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 * 通过id查询
      *
-	 * @param id
-	 * @return
+	 * @param id 数据实体id
+	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "${tableVo.ftlDescription}-通过id查询")
 	@ApiOperation(value = "${tableVo.ftlDescription}-通过id查询", notes = "${tableVo.ftlDescription}-通过id查询")
@@ -143,8 +143,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
      * 导出excel
      *
-     * @param request
-     * @param ${entityName?uncap_first}
+     * @param request 请求
+     * @param ${entityName?uncap_first} 数据实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, ${entityName} ${entityName?uncap_first}) {
@@ -154,9 +154,9 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
     /**
      * 通过excel导入数据
      *
-     * @param request
-     * @param response
-     * @return
+     * @param request 请求
+     * @param response 响应
+     * @return {@linkplain Result}
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {

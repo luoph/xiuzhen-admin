@@ -16,7 +16,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @author jeecg-boot
  * @version V1.0
  * @description ${subTab.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 @Data
 @TableName("${subTab.tableName}")
@@ -26,6 +26,7 @@ public class ${subTab.entityName} implements Serializable {
     <#list subTab.originalColumns as po>
 	/**${po.filedComment}*/
 	<#if po.fieldName == primaryKeyField>
+
 	@TableId(type = IdType.ID_WORKER_STR)
 	<#else>
   <#if po.fieldType == 'java.util.Date'>

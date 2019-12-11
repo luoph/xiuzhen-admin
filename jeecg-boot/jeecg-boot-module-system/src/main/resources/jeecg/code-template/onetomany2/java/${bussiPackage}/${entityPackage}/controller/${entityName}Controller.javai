@@ -51,9 +51,11 @@ import com.alibaba.fastjson.JSON;
 @RequestMapping("/${entityPackage}/${entityName?uncap_first}")
 @Slf4j
 public class ${entityName}Controller {
+
 	@Autowired
 	private I${entityName}Service ${entityName?uncap_first}Service;
-	<#list subTables as sub>
+    <#list subTables as sub>
+
 	@Autowired
 	private I${sub.entityName}Service ${sub.entityName?uncap_first}Service;
 	</#list>
@@ -61,11 +63,11 @@ public class ${entityName}Controller {
 	/**
 	 * 分页列表查询
 	 *
-	 * @param ${entityName?uncap_first}
-	 * @param pageNo
-	 * @param pageSize
-	 * @param req
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @param pageNo 页码
+	 * @param pageSize 分页大小
+	 * @param req 请求
+	 * @return {@linkplain Result}
 	 */
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(${entityName} ${entityName?uncap_first},
@@ -79,10 +81,10 @@ public class ${entityName}Controller {
 	}
 	
 	/**
-	 *   添加
+	 * 添加
 	 *
-	 * @param ${entityName?uncap_first}Page
-	 * @return
+	 * @param ${entityName?uncap_first}Page 数据实体
+	 * @return {@linkplain Result}
 	 */
 	@PostMapping(value = "/add")
 	public Result<?> add(@RequestBody ${entityName}Page ${entityName?uncap_first}Page) {
@@ -93,10 +95,10 @@ public class ${entityName}Controller {
 	}
 	
 	/**
-	 *  编辑
+	 * 编辑
 	 *
-	 * @param ${entityName?uncap_first}Page
-	 * @return
+	 * @param ${entityName?uncap_first}Page 数据实体
+	 * @return {@linkplain Result}
 	 */
 	@PutMapping(value = "/edit")
 	public Result<?> edit(@RequestBody ${entityName}Page ${entityName?uncap_first}Page) {
@@ -107,10 +109,10 @@ public class ${entityName}Controller {
 	}
 	
 	/**
-	 *   通过id删除
+	 * 通过id删除
 	 *
 	 * @param id
-	 * @return
+	 * @return {@linkplain Result}
 	 */
 	@DeleteMapping(value = "/delete")
 	public Result<?> delete(@RequestParam(name = "id") String id) {
@@ -119,10 +121,10 @@ public class ${entityName}Controller {
 	}
 	
 	/**
-	 *  批量删除
+	 * 批量删除
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids id列表，使用','分割的字符串
+	 * @return {@linkplain Result}
 	 */
 	@DeleteMapping(value = "/deleteBatch")
 	public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
@@ -133,8 +135,8 @@ public class ${entityName}Controller {
 	/**
 	 * 通过id查询
 	 *
-	 * @param id
-	 * @return
+	 * @param id 数据实体id
+	 * @return {@linkplain Result}
 	 */
 	@GetMapping(value = "/queryById")
 	public Result<?> queryById(@RequestParam(name = "id") String id) {
@@ -187,7 +189,7 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
      * 添加${sub.ftlDescription}
      *
      * @param ${sub.entityName?uncap_first}
-     * @return
+     * @return {@linkplain Result}
      */
     @PostMapping(value = "/add${sub.entityName}")
     public Result<?> add${sub.entityName}(@RequestBody ${sub.entityName} ${sub.entityName?uncap_first}) {
@@ -199,7 +201,7 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
      * 编辑${sub.ftlDescription}
      *
      * @param ${sub.entityName?uncap_first}
-     * @return
+     * @return {@linkplain Result}
      */
     @PutMapping("/edit${sub.entityName}")
     public Result<?> edit${sub.entityName}(@RequestBody ${sub.entityName} ${sub.entityName?uncap_first}) {
@@ -210,8 +212,8 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
     /**
      * 通过id删除${sub.ftlDescription}
      *
-     * @param id
-     * @return
+     * @param id 数据实体id
+     * @return {@linkplain Result}
      */
     @DeleteMapping(value = "/delete${sub.entityName}")
     public Result<?> delete${sub.entityName}(@RequestParam(name = "id") String id) {
@@ -222,8 +224,8 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
 	/**
      * 批量删除${sub.ftlDescription}
      *
-     * @param ids
-     * @return
+     * @param ids id列表，使用','分割的字符串
+     * @return {@linkplain Result}
      */
     @DeleteMapping(value = "/deleteBatch${sub.entityName}")
     public Result<?> deleteBatch${sub.entityName}(@RequestParam(name = "ids") String ids) {
@@ -240,8 +242,8 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
     /**
     * 导出excel
     *
-    * @param request
-    * @param ${entityName?uncap_first}
+    * @param request 请求
+    * @param ${entityName?uncap_first} 数据实体
     */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, ${entityName} ${entityName?uncap_first}) {
@@ -273,9 +275,9 @@ ${sub.entityName?uncap_first}.get${key}()!=null<#rt/>
     /**
     * 通过excel导入数据
     *
-    * @param request
-    * @param response
-    * @return
+    * @param request 请求
+    * @param response 响应
+    * @return {@linkplain Result}
     */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {

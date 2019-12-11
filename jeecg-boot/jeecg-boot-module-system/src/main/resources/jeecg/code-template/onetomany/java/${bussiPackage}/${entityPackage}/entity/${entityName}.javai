@@ -19,6 +19,7 @@ import org.jeecg.common.constant.TimeConstant;
 @Data
 @TableName("${tableName}")
 public class ${entityName} implements Serializable {
+
     private static final long serialVersionUID = 1L;
     
     <#list originalColumns as po>

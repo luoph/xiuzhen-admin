@@ -39,7 +39,7 @@ public class ${entityName}Page {
   	<#else>
   	@Excel(name = "${po.filedComment}", width = 15)
     </#if>
-  </#if>
+    </#if>
 	private <#if po.fieldType == 'java.sql.Blob'>byte[]<#else>${po.fieldType}</#if> ${po.fieldName};
 	</#list>
 	

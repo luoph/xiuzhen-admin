@@ -19,25 +19,33 @@ public interface IJeecgOrderMainService extends IService<JeecgOrderMain> {
 
     /**
      * 添加一对多
+     *
+     * @param jeecgOrderMain
+     * @param jeecgOrderCustomerList
+     * @param jeecgOrderTicketList
      */
-    public void saveMain(JeecgOrderMain jeecgOrderMain, List<JeecgOrderCustomer> jeecgOrderCustomerList, List<JeecgOrderTicket> jeecgOrderTicketList);
+    void saveMain(JeecgOrderMain jeecgOrderMain, List<JeecgOrderCustomer> jeecgOrderCustomerList, List<JeecgOrderTicket> jeecgOrderTicketList);
 
     /**
      * 修改一对多
+     *
+     * @param jeecgOrderMain
+     * @param jeecgOrderCustomerList
+     * @param jeecgOrderTicketList
      */
-    public void updateMain(JeecgOrderMain jeecgOrderMain, List<JeecgOrderCustomer> jeecgOrderCustomerList, List<JeecgOrderTicket> jeecgOrderTicketList);
+    void updateMain(JeecgOrderMain jeecgOrderMain, List<JeecgOrderCustomer> jeecgOrderCustomerList, List<JeecgOrderTicket> jeecgOrderTicketList);
 
     /**
      * 删除一对多
      *
-     * @param jformOrderMain
+     * @param id
      */
-    public void delMain(String id);
+    void delMain(String id);
 
     /**
      * 批量删除一对多
      *
-     * @param jformOrderMain
+     * @param idList
      */
-    public void delBatchMain(Collection<? extends Serializable> idList);
+    void delBatchMain(Collection<? extends Serializable> idList);
 }
