@@ -1,15 +1,13 @@
 <template>
     <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
     <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
-
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-
 <#list columns as po><#rt/>
 <#if po.fieldName!='id'><#rt/>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="${po.filedComment}">
                     <#if po.fieldType=='date'>
-                    <a-date-picker v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
+                    <a-date-picker v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName}<#else>{}</#if>]" />
                     <#elseif po.fieldType=='datetime'>
                     <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ '${po.fieldName}', <#if po.nullable=='N'>validatorRules.${po.fieldName} <#else>{}</#if>]" />
                     <#elseif "int, decimal, double,"?contains(po.fieldType)>
@@ -20,7 +18,6 @@
                 </a-form-item>
 </#if>
 </#list>
-
             </a-form>
         </a-spin>
         <!-- </a-modal> -->
@@ -30,13 +27,13 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage'
-import pick from 'lodash.pick'
-import moment from "moment"
+import { httpAction } from "@/api/manage";
+import pick from "lodash.pick";
+import moment from "moment";
 
 export default {
     name: "${entityName}Modal",
-    data () {
+    data() {
         return {
             title: "操作",
             visible: false,
@@ -56,7 +53,7 @@ export default {
             <#list columns as po>
             <#if po.fieldName!='id'>
             <#if po.nullable=='N'>
-            ${po.fieldName}: {rules: [{ required: true, message: '请输入${po.filedComment}!' }]},
+            ${po.fieldName}: { rules: [{ required: true, message: "请输入${po.filedComment}!" }] },
             </#if>
             </#if>
             </#list>
@@ -67,18 +64,17 @@ export default {
             },
         }
     },
-    created () {
-    },
+    created() {},
     methods: {
-        add () {
+        add() {
             this.edit({});
         },
-        edit (record) {
+        edit(record) {
             this.form.resetFields();
             this.model=Object.assign({}, record);
             this.visible=true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model<#list columns as po><#if po.fieldName!='id' && po.fieldType ? index_of("date")==-1>,'${po.fieldName}'</#if></#list>))
+                this.form.setFieldsValue(pick(this.model<#list columns as po><#if po.fieldName!='id' && po.fieldType ? index_of("date")==-1>,"${po.fieldName}"</#if></#list>))
                 // 时间格式化
                 <#list columns as po>
                 <#if po.fieldName!='id' && po.fieldType?index_of("date")!=-1>
@@ -88,12 +84,12 @@ export default {
             });
 
         },
-        close () {
+        close() {
             this.$emit('close');
             this.visible=false;
         },
-        handleOk () {
-            const that=this;
+        handleOk() {
+            const that = this;
             // 触发表单验证
             this.form.validateFields((err, values) => {
                 if (!err) {
@@ -107,7 +103,7 @@ export default {
                         httpUrl += this.url.edit;
                         method = "put";
                     }
-                    let formData=Object.assign(this.model, values);
+                    let formData = Object.assign(this.model, values);
                     // 时间格式化
                     <#list columns as po>
                     <#if po.fieldName!='id' && po.fieldType=='date'>
@@ -117,26 +113,28 @@ export default {
                     </#if>
                     </#list>
 
-                    console.log(formData)
-                    httpAction(httpUrl, formData, method).then((res) => {
-                        if (res.success) {
-                            that.$message.success(res.message);
-                            that.$emit('ok');
-                        } else {
-                            that.$message.warning(res.message);
-                        }
-                    }).finally(() => {
-                        that.confirmLoading=false;
-                        that.close();
-                    })
+                    console.log(formData);
+                    httpAction(httpUrl, formData, method)
+                        .then(res => {
+                            if (res.success) {
+                                that.$message.success(res.message);
+                                that.$emit("ok");
+                            } else {
+                                that.$message.warning(res.message);
+                            }
+                        })
+                        .finally(() => {
+                            that.confirmLoading = false;
+                            that.close();
+                        });
                 }
-            })
+            });
         },
-        handleCancel () {
-            this.close()
+        handleCancel() {
+            this.close();
         },
-    }
-}
+    },
+};
 </script>
 
 // <style lang="less" scoped></style>
