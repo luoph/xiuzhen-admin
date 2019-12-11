@@ -29,6 +29,7 @@ public class ${entityName}ServiceImpl extends ServiceImpl<${entityName}Mapper, $
 	@Autowired
 	private ${entityName}Mapper ${entityName?uncap_first}Mapper;
 	<#list subTables as sub>
+
 	@Autowired
 	private ${sub.entityName}Mapper ${sub.entityName?uncap_first}Mapper;
 	</#list>

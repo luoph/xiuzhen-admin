@@ -73,7 +73,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	}
 	
 	/**
-	 *   添加
+	 * 添加
 	 * @param ${entityName?uncap_first}
 	 * @return
 	 */
@@ -86,7 +86,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	}
 	
 	/**
-	 *  编辑
+	 * 编辑
 	 *
 	 * @param ${entityName?uncap_first}
 	 * @return
@@ -100,7 +100,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	}
 	
 	/**
-	 *  通过id删除
+	 * 通过id删除
 	 * @param id
 	 * @return
 	 */
@@ -113,7 +113,7 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	}
 	
 	/**
-	 *  批量删除
+	 * 批量删除
 	 *
 	 * @param ids
 	 * @return

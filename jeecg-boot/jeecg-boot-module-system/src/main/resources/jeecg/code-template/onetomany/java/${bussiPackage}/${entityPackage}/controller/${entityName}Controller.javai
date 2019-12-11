@@ -52,9 +52,11 @@ import com.alibaba.fastjson.JSON;
 @RequestMapping("/${entityPackage}/${entityName?uncap_first}")
 @Slf4j
 public class ${entityName}Controller {
+
 	@Autowired
 	private I${entityName}Service ${entityName?uncap_first}Service;
 	<#list subTables as sub>
+
 	@Autowired
 	private I${sub.entityName}Service ${sub.entityName?uncap_first}Service;
 	</#list>
@@ -169,7 +171,7 @@ public class ${entityName}Controller {
       QueryWrapper<${entityName}> queryWrapper = QueryGenerator.initQueryWrapper(${entityName?uncap_first}, request.getParameterMap());
       LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-      //Step.2 获取导出数据
+      // Step.2 获取导出数据
       List<${entityName}Page> pageList = new ArrayList<${entityName}Page>();
       List<${entityName}> ${entityName?uncap_first}List = ${entityName?uncap_first}Service.list(queryWrapper);
       for (${entityName} temp : ${entityName?uncap_first}List) {
@@ -181,7 +183,7 @@ public class ${entityName}Controller {
           </#list>
           pageList.add(vo);
       }
-      //Step.3 调用AutoPoi导出Excel
+      // Step.3 调用AutoPoi导出Excel
       ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
       mv.addObject(NormalExcelConstants.FILE_NAME, "${tableVo.ftlDescription}");
       mv.addObject(NormalExcelConstants.CLASS, ${entityName}Page.class);
@@ -202,7 +204,8 @@ public class ${entityName}Controller {
       MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
       Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
       for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
-          MultipartFile file = entity.getValue();// 获取上传文件对象
+          // 获取上传文件对象
+          MultipartFile file = entity.getValue();
           ImportParams params = new ImportParams();
           params.setTitleRows(2);
           params.setHeadRows(1);

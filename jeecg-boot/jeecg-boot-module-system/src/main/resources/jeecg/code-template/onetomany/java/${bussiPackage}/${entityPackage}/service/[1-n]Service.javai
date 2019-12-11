@@ -10,10 +10,11 @@ import java.util.List;
  * @author jeecg-boot
  * @version V1.0
  * @description ${subTab.ftlDescription}
- * @date   ${.now?string["yyyy-MM-dd"]}
+ * @date ${.now?string["yyyy-MM-dd"]}
  */
 public interface I${subTab.entityName}Service extends IService<${subTab.entityName}> {
 
-	public List<${subTab.entityName}> selectByMainId(String mainId);
+	List<${subTab.entityName}> selectByMainId(String mainId);
+
 }
 </#list>
