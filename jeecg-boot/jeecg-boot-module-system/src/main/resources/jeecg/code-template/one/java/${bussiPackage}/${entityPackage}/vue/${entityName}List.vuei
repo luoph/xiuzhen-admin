@@ -103,6 +103,8 @@
 </template>
 
 <script>
+import { filterObj } from "@/utils/util";
+import { getAction, putAction, httpAction } from "@/api/manage";
 import ${entityName}Modal from "./modules/${entityName}Modal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 
