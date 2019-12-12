@@ -9,8 +9,11 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器id">
                     <a-input placeholder="请输入服务器id" v-decorator="['severId', validatorRules.severId]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="删除状态">
-                    <a-input-number v-decorator="['delFlag', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
+                    <a-select v-decorator="['delFlag', {}]" placeholder="请选择状态" :defaultValue="0">
+                        <a-select-option :value="0">未删除</a-select-option>
+                        <a-select-option :value="1">已删除</a-select-option>
+                    </a-select>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -51,8 +54,9 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(channelId) {
+            // 从上层传递过来的参数，默认选择未删除
+            this.edit({ channelId: channelId, delFlag: 0 });
         },
         edit(record) {
             this.form.resetFields();
