@@ -141,10 +141,7 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    created() {
-        // 当页面初始化时,根据屏幕大小来给抽屉设置宽度
-        this.resetScreenSize();
-    },
+    created() {},
     methods: {
         add(channelId) {
             this.channelId = channelId;
