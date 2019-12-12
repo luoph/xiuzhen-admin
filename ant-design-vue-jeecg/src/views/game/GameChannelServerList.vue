@@ -13,11 +13,6 @@
                                     <a-input placeholder="请输入服务器id" v-model="queryParam.severId"></a-input>
                                 </a-form-item>
                             </a-col>
-                            <a-col :md="6" :sm="8">
-                                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道id">
-                                    <a-input placeholder="请输入渠道id" v-model="queryParam.channelId"></a-input>
-                                </a-form-item>
-                            </a-col>
                             <a-col :md="12" :sm="8">
                                 <span style="float: left;" class="table-page-search-submitButtons">
                                     <a-button type="primary" @click="searchQuery">查询</a-button>
@@ -184,7 +179,6 @@ export default {
             param.pageSize = this.ipagination.pageSize;
             return filterObj(param);
         },
-        // 添加字典数据
         handleAdd() {
             this.$refs.modalForm.add(this.channelId);
             this.$refs.modalForm.title = "新增";
