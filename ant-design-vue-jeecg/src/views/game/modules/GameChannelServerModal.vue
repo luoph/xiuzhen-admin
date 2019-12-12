@@ -64,7 +64,6 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "severId", "channelId", "delFlag"));
-                // 时间格式化
             });
         },
         close() {
