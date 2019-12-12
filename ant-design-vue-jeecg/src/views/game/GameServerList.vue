@@ -5,14 +5,14 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="名字">
-                            <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库，java接口：SysDictController#getDictItems-->
-                            <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id" />
+                        <a-form-item label="游戏编号">
+                            <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="地址">
-                            <a-input placeholder="地址" v-model="queryParam.host"></a-input>
+                        <a-form-item label="名字">
+                            <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库，java接口：SysDictController#getDictItems-->
+                            <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -21,6 +21,11 @@
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                        <a-form-item label="地址">
+                            <a-input placeholder="地址" v-model="queryParam.host"></a-input>
+                        </a-form-item>
+                    </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="登录地址和端口">
                                 <a-input placeholder="登录地址和端口" v-model="queryParam.loginUrl"></a-input>
@@ -129,20 +134,31 @@
 import GameServerModal from "./modules/GameServerModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { initDictOptions, filterDictText } from "@/components/dict/JDictSelectUtil";
-import Vue from "vue";
 import { filterObj } from "@/utils/util";
-import JInput from "@/components/jeecg/JInput";
+import { getAction, putAction, httpAction } from "@/api/manage";
+import Vue from "vue";
+
+function filterGameIdText(options, text) {
+    if (options instanceof Array) {
+        for (let game of options) {
+            if (text === game.id) {
+                return game.name + "(" + game.id + ")";
+            }
+        }
+    }
+    return text;
+}
 
 export default {
     name: "GameServerList",
     mixins: [JeecgListMixin],
     components: {
-        GameServerModal,
-        JInput
+        GameServerModal
     },
     data() {
         return {
             description: "游戏服配置",
+            gameList: [],
             // 表头
             columns: [
                 {
@@ -159,6 +175,14 @@ export default {
                     title: "名字",
                     align: "center",
                     dataIndex: "name"
+                },
+                {
+                    title: "游戏编号",
+                    align: "center",
+                    dataIndex: "gameId",
+                    customRender: text => {
+                        return filterGameIdText(this.gameList, text);
+                    }
                 },
                 {
                     title: "地址",
@@ -237,9 +261,11 @@ export default {
             url: {
                 list: "/game/gameServer/list",
                 delete: "/game/gameServer/delete",
-                deleteBatch: "/game/gameServer/deleteBatch"
+                deleteBatch: "/game/gameServer/deleteBatch",
                 // exportXlsUrl: "game/gameServer/exportXls",
                 // importExcelUrl: "game/gameServer/importExcel",
+                // 游戏列表
+                queryGameListUrl: "/game/gameInfo/list"
             }
         };
     },
@@ -248,7 +274,24 @@ export default {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
         }
     },
+    created() {
+        this.initialGameList();
+    },
     methods: {
+        initialGameList() {
+            let that = this;
+            getAction(that.url.queryGameListUrl).then(res => {
+                if (res.success) {
+                    if (res.result instanceof Array) {
+                        this.gameList = res.result;
+                    } else if (res.result.records instanceof Array) {
+                        this.gameList = res.result.records;
+                    }
+                } else {
+                    this.gameList = [];
+                }
+            });
+        },
         getQueryParams() {
             console.log(this.queryParam.createTimeRange);
             var param = Object.assign({}, this.queryParam, this.isorter);

@@ -22,7 +22,9 @@
                     <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
-                    <a-input placeholder="请输入游戏编号" v-decorator="['gameId', {}]" />
+                    <a-select placeholder="请选择游戏编号" v-decorator="['gameId', {}]">
+                        <a-select-option v-for="game in gameList" :key="game.id" :value="game.id"> {{ game.name }}({{ game.id }}) </a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="分组">
                     <a-input placeholder="请输入分组" v-decorator="['groupName', {}]" />
@@ -36,9 +38,10 @@
 </template>
 
 <script>
-import { httpAction } from "@/api/manage";
+import { getAction, putAction, httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
+import Vue from "vue";
 
 export default {
     name: "GameChannelModal",
@@ -47,6 +50,7 @@ export default {
             title: "操作",
             visible: false,
             model: {},
+            gameList: [],
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -63,12 +67,29 @@ export default {
             },
             url: {
                 add: "/game/gameChannel/add",
-                edit: "/game/gameChannel/edit"
+                edit: "/game/gameChannel/edit",
+                queryGameListUrl: "/game/gameInfo/list"
             }
         };
     },
-    created() {},
+    created() {
+        this.initialGameList();
+    },
     methods: {
+        initialGameList() {
+            let that = this;
+            getAction(that.url.queryGameListUrl).then(res => {
+                if (res.success) {
+                    if (res.result instanceof Array) {
+                        this.gameList = res.result;
+                    } else if (res.result.records instanceof Array) {
+                        this.gameList = res.result.records;
+                    }
+                } else {
+                    this.gameList = [];
+                }
+            });
+        },
         add() {
             this.edit({});
         },

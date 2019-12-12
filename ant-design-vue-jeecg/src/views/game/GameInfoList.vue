@@ -97,6 +97,8 @@
 <script>
 import GameInfoModal from "./modules/GameInfoModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction, putAction, httpAction } from "@/api/manage";
+import Vue from "vue";
 
 export default {
     name: "GameInfoList",
@@ -118,6 +120,11 @@ export default {
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
+                },
+                {
+                    title: "游戏Id",
+                    align: "center",
+                    dataIndex: "id"
                 },
                 {
                     title: "游戏名称",
