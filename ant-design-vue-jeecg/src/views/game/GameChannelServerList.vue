@@ -116,7 +116,7 @@ export default {
                     dataIndex: "channelId"
                 },
                 {
-                    title: "删除状态",
+                    title: "状态",
                     align: "center",
                     dataIndex: "delFlag_dictText"
                 },
