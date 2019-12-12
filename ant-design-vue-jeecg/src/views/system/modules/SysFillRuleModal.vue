@@ -21,7 +21,7 @@
 
 <script>
 import pick from "lodash.pick";
-import { httpAction } from "@/api/manage";
+import { getAction, putAction, httpAction } from "@/api/manage";
 import { validateDuplicateValue } from "@/utils/util";
 
 export default {

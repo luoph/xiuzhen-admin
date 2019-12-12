@@ -24,7 +24,7 @@
 
 <script>
 import pick from "lodash.pick";
-import { httpAction } from "@/api/manage";
+import { getAction, putAction, httpAction } from "@/api/manage";
 import { duplicateCheck } from "@/api/api";
 import JDictSelectTag from "@/components/dict/JDictSelectTag";
 
