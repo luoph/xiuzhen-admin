@@ -54,9 +54,8 @@
 </template>
 
 <script>
-import { httpAction } from "@/api/manage";
+import { getAction, putAction, httpAction } from "@/api/manage";
 import pick from "lodash.pick";
-import { getAction } from "@/api/manage";
 import JDate from "@/components/jeecg/JDate";
 import JEditor from "@/components/jeecg/JEditor";
 import SelectUserListModal from "./SelectUserListModal";
