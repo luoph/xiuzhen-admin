@@ -1,92 +1,65 @@
 <template>
     <a-card :bordered="false">
-        <!-- 查询区域 -->
-        <div class="table-page-search-wrapper">
-            <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="服务器id">
-                            <a-input placeholder="请输入服务器id" v-model="queryParam.severId"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="渠道id">
-                            <a-input placeholder="请输入渠道id" v-model="queryParam.channelId"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="删除状态">
-                                <a-input placeholder="请输入删除状态" v-model="queryParam.delFlag"></a-input>
-                            </a-form-item>
-                        </a-col>
-                    </template>
-                    <a-col :md="6" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-                            <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-                            <a @click="handleToggleSearch" style="margin-left: 8px">
-                                {{ toggleSearchStatus ? "收起" : "展开" }}
-                                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
-                            </a>
+        <!-- 抽屉 -->
+        <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
+            <!-- 抽屉内容的border -->
+            <div :style="{ padding: '20px', border: '1px solid #e9e9e9', background: '#fff' }">
+                <!-- 查询区域 -->
+                <div class="table-page-search-wrapper">
+                    <a-form layout="inline" :form="form" @keyup.enter.native="searchQuery">
+                        <a-row :gutter="10">
+                            <a-col :md="6" :sm="8">
+                                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器id">
+                                    <a-input placeholder="请输入服务器id" v-model="queryParam.severId"></a-input>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :md="6" :sm="8">
+                                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道id">
+                                    <a-input placeholder="请输入渠道id" v-model="queryParam.channelId"></a-input>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :md="12" :sm="8">
+                                <span style="float: left;" class="table-page-search-submitButtons">
+                                    <a-button type="primary" @click="searchQuery">查询</a-button>
+                                    <a-button type="primary" @click="searchReset">重置</a-button>
+                                    <a-button type="primary" @click="handleAdd">新增</a-button>
+                                </span>
+                            </a-col>
+                        </a-row>
+                    </a-form>
+                </div>
+
+                <!-- table区域-begin -->
+                <div>
+                    <a-table
+                        ref="table"
+                        size="middle"
+                        bordered
+                        rowKey="id"
+                        :columns="columns"
+                        :dataSource="dataSource"
+                        :pagination="ipagination"
+                        :loading="loading"
+                        @change="handleTableChange"
+                    >
+                        <span slot="action" slot-scope="text, record">
+                            <a @click="handleEdit(record)">编辑</a>
+                            <a-divider type="vertical" />
+                            <a-dropdown>
+                                <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+                                <a-menu slot="overlay">
+                                    <a-menu-item>
+                                        <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                                            <a>删除</a>
+                                        </a-popconfirm>
+                                    </a-menu-item>
+                                </a-menu>
+                            </a-dropdown>
                         </span>
-                    </a-col>
-                </a-row>
-            </a-form>
-        </div>
-
-        <!-- 操作按钮区域 -->
-        <div class="table-operator">
-            <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道服配置')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
-        </div>
-
-        <!-- table区域-begin -->
-        <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+                    </a-table>
+                </div>
             </div>
-
-            <a-table
-                ref="table"
-                size="middle"
-                bordered
-                rowKey="id"
-                :columns="columns"
-                :dataSource="dataSource"
-                :pagination="ipagination"
-                :loading="loading"
-                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-                @change="handleTableChange"
-            >
-                <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
-
-                    <a-divider type="vertical" />
-                    <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown>
-                </span>
-            </a-table>
-        </div>
+        </a-drawer>
         <!-- table区域-end -->
 
         <!-- 表单区域 -->
@@ -97,6 +70,8 @@
 <script>
 import GameChannelServerModal from "./modules/GameChannelServerModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { filterObj } from "@/utils/util";
+import pick from "lodash.pick";
 
 export default {
     name: "GameChannelServerList",
@@ -141,12 +116,28 @@ export default {
                     scopedSlots: { customRender: "action" }
                 }
             ],
+            queryParam: {
+                channelId: "",
+                severId: "",
+                delFlag: "1"
+            },
+            title: "操作",
+            visible: false,
+            model: {},
+            channelId: "",
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 5 }
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 16 }
+            },
+            form: this.$form.createForm(this),
             url: {
                 list: "/game/gameChannelServer/list",
                 delete: "/game/gameChannelServer/delete",
-                deleteBatch: "/game/gameChannelServer/deleteBatch",
-                exportXlsUrl: "game/gameChannelServer/exportXls",
-                importExcelUrl: "game/gameChannelServer/importExcel"
+                deleteBatch: "/game/gameChannelServer/deleteBatch"
             }
         };
     },
@@ -155,9 +146,60 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    methods: {}
+    created() {
+        // 当页面初始化时,根据屏幕大小来给抽屉设置宽度
+        this.resetScreenSize();
+    },
+    methods: {
+        add(channelId) {
+            this.channelId = channelId;
+            this.edit({});
+        },
+        edit(record) {
+            if (record.id) {
+                this.channelId = record.id;
+            }
+            this.queryParam = {};
+            this.form.resetFields();
+            this.model = Object.assign({}, record);
+            this.model.channelId = this.channelId;
+            this.visible = true;
+            this.$nextTick(() => {
+                this.form.setFieldsValue(pick(this.model, "channelId", "serverId", "delFlag"));
+            });
+            // 当其它模块调用该模块时,调用此方法加载字典数据
+            this.loadData();
+        },
+        close() {
+            this.$emit("close");
+            this.visible = false;
+            this.form.resetFields();
+            this.dataSource = [];
+        },
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam);
+            param.channelId = this.channelId;
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            return filterObj(param);
+        },
+        // 添加字典数据
+        handleAdd() {
+            this.$refs.modalForm.add(this.channelId);
+            this.$refs.modalForm.title = "新增";
+        },
+        handleCancel() {
+            this.close();
+        }
+    }
 };
 </script>
-<style scoped>
-@import "~@assets/less/common.less";
+
+<style lang="less" scoped>
+/** Button按钮间距 */
+.ant-btn {
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
 </style>

@@ -62,11 +62,12 @@
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+            <!-- <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
                 <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
                 >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
+            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
 
             <a-table
                 ref="table"
@@ -77,12 +78,12 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
-
+                    <a-divider type="vertical" />
+                    <a @click="editChannelServer(record)"><a-icon type="setting" /> 游戏服</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -101,11 +102,15 @@
 
         <!-- 表单区域 -->
         <gameChannel-modal ref="modalForm" @ok="modalFormOk"></gameChannel-modal>
+        <!-- 字典类型 -->
+        <gameChannel-serverList ref="channelServerList"></gameChannel-serverList>
     </a-card>
 </template>
 
 <script>
+import { filterObj } from "@/utils/util";
 import GameChannelModal from "./modules/GameChannelModal";
+import GameChannelServerList from "./GameChannelServerList";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction, putAction, httpAction } from "@/api/manage";
 import Vue from "vue";
@@ -124,9 +129,7 @@ function filterGameIdText(options, text) {
 export default {
     name: "GameChannelList",
     mixins: [JeecgListMixin],
-    components: {
-        GameChannelModal
-    },
+    components: { GameChannelModal, GameChannelServerList },
     data() {
         return {
             description: "游戏渠道管理页面",
@@ -154,6 +157,14 @@ export default {
                     dataIndex: "simpleName"
                 },
                 {
+                    title: "游戏编号",
+                    align: "center",
+                    dataIndex: "gameId",
+                    customRender: text => {
+                        return filterGameIdText(this.gameList, text);
+                    }
+                },
+                {
                     title: "排序字段",
                     align: "center",
                     dataIndex: "position"
@@ -167,14 +178,6 @@ export default {
                     title: "大渠道描述",
                     align: "center",
                     dataIndex: "remark"
-                },
-                {
-                    title: "游戏编号",
-                    align: "center",
-                    dataIndex: "gameId",
-                    customRender: text => {
-                        return filterGameIdText(this.gameList, text);
-                    }
                 },
                 {
                     title: "分组",
@@ -213,6 +216,13 @@ export default {
         this.initialGameList();
     },
     methods: {
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            return filterObj(param);
+        },
         initialGameList() {
             let that = this;
             getAction(that.url.queryGameListUrl).then(res => {
@@ -226,6 +236,10 @@ export default {
                     this.gameList = [];
                 }
             });
+        },
+        // 编辑游戏服数据
+        editChannelServer(record) {
+            this.$refs.channelServerList.edit(record);
         }
     }
 };
