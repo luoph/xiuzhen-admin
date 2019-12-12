@@ -147,6 +147,11 @@ export default {
                     }
                 },
                 {
+                    title: "渠道id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "渠道名称",
                     align: "center",
                     dataIndex: "name"
