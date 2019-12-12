@@ -265,7 +265,7 @@ export default {
                 // exportXlsUrl: "game/gameServer/exportXls",
                 // importExcelUrl: "game/gameServer/importExcel",
                 // 游戏列表
-                queryGameListUrl: "/game/gameInfo/list"
+                gameInfoListUrl: "/game/gameInfo/list"
             }
         };
     },
@@ -275,12 +275,12 @@ export default {
         }
     },
     created() {
-        this.initialGameList();
+        this.queryGameInfoList();
     },
     methods: {
-        initialGameList() {
+        queryGameInfoList() {
             let that = this;
-            getAction(that.url.queryGameListUrl).then(res => {
+            getAction(that.url.gameInfoListUrl).then(res => {
                 if (res.success) {
                     if (res.result instanceof Array) {
                         this.gameList = res.result;

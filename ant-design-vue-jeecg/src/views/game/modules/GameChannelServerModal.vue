@@ -7,7 +7,9 @@
                     <a-input disabled="true" placeholder="请输入渠道id" v-decorator="['channelId', validatorRules.channelId]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器id">
-                    <a-input placeholder="请输入服务器id" v-decorator="['severId', validatorRules.severId]" />
+                    <a-select placeholder="请选择服务器id" v-decorator="['severId', {}]">
+                        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
                     <a-select v-decorator="['delFlag', {}]" placeholder="请选择状态" :defaultValue="0">
@@ -27,6 +29,7 @@ import moment from "moment";
 
 export default {
     name: "GameChannelServerModal",
+    serverList: [],
     data() {
         return {
             title: "操作",
@@ -48,11 +51,15 @@ export default {
             },
             url: {
                 add: "/game/gameChannelServer/add",
-                edit: "/game/gameChannelServer/edit"
+                edit: "/game/gameChannelServer/edit",
+                // 游戏服列表
+                serverListUrl: "/game/gameServer/list"
             }
         };
     },
-    created() {},
+    created() {
+        this.queryServerList();
+    },
     methods: {
         add(channelId) {
             // 从上层传递过来的参数，默认选择未删除
@@ -106,6 +113,20 @@ export default {
         },
         handleCancel() {
             this.close();
+        },
+        queryServerList() {
+            let that = this;
+            getAction(that.url.serverListUrl).then(res => {
+                if (res.success) {
+                    if (res.result instanceof Array) {
+                        this.serverList = res.result;
+                    } else if (res.result.records instanceof Array) {
+                        this.serverList = res.result.records;
+                    }
+                } else {
+                    this.serverList = [];
+                }
+            });
         }
     }
 };

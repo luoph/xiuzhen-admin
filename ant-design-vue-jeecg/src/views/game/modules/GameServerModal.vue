@@ -131,17 +131,17 @@ export default {
             url: {
                 add: "/game/gameServer/add",
                 edit: "/game/gameServer/edit",
-                queryGameListUrl: "/game/gameInfo/list"
+                gameInfoListUrl: "/game/gameInfo/list"
             }
         };
     },
     created() {
-        this.initialGameList();
+        this.queryGameInfoList();
     },
     methods: {
-        initialGameList() {
+        queryGameInfoList() {
             let that = this;
-            getAction(that.url.queryGameListUrl).then(res => {
+            getAction(that.url.gameInfoListUrl).then(res => {
                 if (res.success) {
                     if (res.result instanceof Array) {
                         this.gameList = res.result;

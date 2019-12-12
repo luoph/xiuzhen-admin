@@ -208,7 +208,7 @@ export default {
                 exportXlsUrl: "game/gameChannel/exportXls",
                 importExcelUrl: "game/gameChannel/importExcel",
                 // 游戏列表
-                queryGameListUrl: "/game/gameInfo/list"
+                gameInfoListUrl: "/game/gameInfo/list"
             }
         };
     },
@@ -218,7 +218,7 @@ export default {
         }
     },
     created() {
-        this.initialGameList();
+        this.queryGameInfoList();
     },
     methods: {
         getQueryParams() {
@@ -228,9 +228,9 @@ export default {
             param.pageSize = this.ipagination.pageSize;
             return filterObj(param);
         },
-        initialGameList() {
+        queryGameInfoList() {
             let that = this;
-            getAction(that.url.queryGameListUrl).then(res => {
+            getAction(that.url.gameInfoListUrl).then(res => {
                 if (res.success) {
                     if (res.result instanceof Array) {
                         this.gameList = res.result;
