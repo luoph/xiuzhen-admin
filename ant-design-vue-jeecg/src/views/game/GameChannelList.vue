@@ -48,10 +48,10 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+            <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
+            </a-upload> -->
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
@@ -205,8 +205,8 @@ export default {
                 list: "/game/gameChannel/list",
                 delete: "/game/gameChannel/delete",
                 deleteBatch: "/game/gameChannel/deleteBatch",
-                exportXlsUrl: "game/gameChannel/exportXls",
-                importExcelUrl: "game/gameChannel/importExcel",
+                // exportXlsUrl: "game/gameChannel/exportXls",
+                // importExcelUrl: "game/gameChannel/importExcel",
                 // 游戏列表
                 gameInfoListUrl: "/game/gameInfo/list"
             }
