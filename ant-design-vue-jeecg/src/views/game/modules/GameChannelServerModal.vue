@@ -4,16 +4,16 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道id">
-                    <a-input disabled="true" placeholder="请输入渠道id" v-decorator="['channelId', validatorRules.channelId]" />
+                    <a-input :disabled="true" placeholder="请输入渠道id" v-decorator="['channelId', validatorRules.channelId]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器id">
-                    <a-select placeholder="请选择服务器id" v-decorator="['severId', {}]">
+                    <a-select :disabled="isEdit" placeholder="请选择服务器id" v-decorator="['severId', {}]">
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
-                    <a-select v-decorator="['delFlag', {}]" placeholder="请选择状态" :defaultValue="0">
-                        <a-select-option :value="0">未删除</a-select-option>
+                    <a-select v-decorator="['delFlag', {}]" placeholder="请选择状态" :initialValue="0">
+                        <a-select-option :value="0">正常</a-select-option>
                         <a-select-option :value="1">已删除</a-select-option>
                     </a-select>
                 </a-form-item>
@@ -29,12 +29,13 @@ import moment from "moment";
 
 export default {
     name: "GameChannelServerModal",
-    serverList: [],
     data() {
         return {
             title: "操作",
             visible: false,
+            isEdit: false,
             model: {},
+            serverList: [],
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -68,6 +69,7 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "severId", "channelId", "delFlag"));

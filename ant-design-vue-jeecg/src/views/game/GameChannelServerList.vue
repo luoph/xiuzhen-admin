@@ -64,9 +64,21 @@
 
 <script>
 import GameChannelServerModal from "./modules/GameChannelServerModal";
+import { getAction, putAction, httpAction } from "@/api/manage";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
+
+function filterServerIdText(options, text) {
+    if (options instanceof Array) {
+        for (let server of options) {
+            if (text === server.id) {
+                return server.name + "(" + server.id + ")";
+            }
+        }
+    }
+    return text;
+}
 
 export default {
     name: "GameChannelServerList",
@@ -77,6 +89,7 @@ export default {
     data() {
         return {
             description: "游戏渠道服配置管理页面",
+            serverList: [],
             // 表头
             columns: [
                 {
@@ -92,7 +105,10 @@ export default {
                 {
                     title: "服务器id",
                     align: "center",
-                    dataIndex: "severId"
+                    dataIndex: "severId",
+                    customRender: text => {
+                        return filterServerIdText(this.serverList, text);
+                    }
                 },
                 {
                     title: "渠道id",
@@ -102,7 +118,7 @@ export default {
                 {
                     title: "删除状态",
                     align: "center",
-                    dataIndex: "delFlag"
+                    dataIndex: "delFlag_dictText"
                 },
                 {
                     title: "操作",
@@ -132,7 +148,9 @@ export default {
             url: {
                 list: "/game/gameChannelServer/list",
                 delete: "/game/gameChannelServer/delete",
-                deleteBatch: "/game/gameChannelServer/deleteBatch"
+                deleteBatch: "/game/gameChannelServer/deleteBatch",
+                // 游戏服列表
+                serverListUrl: "/game/gameServer/list"
             }
         };
     },
@@ -141,7 +159,9 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    created() {},
+    created() {
+        this.queryServerList();
+    },
     methods: {
         add(channelId) {
             this.channelId = channelId;
@@ -157,7 +177,7 @@ export default {
             this.model.channelId = this.channelId;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "channelId", "serverId", "delFlag"));
+                this.form.setFieldsValue(pick(this.model, "serverId", "delFlag"));
             });
             // 当其它模块调用该模块时,调用此方法加载字典数据
             this.loadData();
@@ -182,6 +202,20 @@ export default {
         },
         handleCancel() {
             this.close();
+        },
+        queryServerList() {
+            let that = this;
+            getAction(that.url.serverListUrl).then(res => {
+                if (res.success) {
+                    if (res.result instanceof Array) {
+                        this.serverList = res.result;
+                    } else if (res.result.records instanceof Array) {
+                        this.serverList = res.result.records;
+                    }
+                } else {
+                    this.serverList = [];
+                }
+            });
         }
     }
 };

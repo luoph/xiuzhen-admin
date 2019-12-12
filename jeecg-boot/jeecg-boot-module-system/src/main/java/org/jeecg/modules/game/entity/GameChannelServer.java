@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
@@ -46,6 +47,7 @@ public class GameChannelServer extends BaseEntity {
      * 删除状态
      */
     @Excel(name = "删除状态", width = 15)
+    @Dict(dicCode = "del_flag")
     @ApiModelProperty(value = "删除状态")
     private java.lang.Integer delFlag;
 }
