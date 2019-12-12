@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
+import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,10 +22,11 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @date 2019-12-10
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("game_server")
 @Accessors(chain = true)
-@ApiModel(value = "game_server对象", description = "游戏服配置")
-public class GameServer {
+@ApiModel(value = "GameServer", description = "游戏服配置")
+public class GameServer extends BaseEntity {
 
     /**
      * 自增主键
@@ -31,6 +34,12 @@ public class GameServer {
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "自增主键")
     private java.lang.Integer id;
+    /**
+     * 游戏编号
+     */
+    @Excel(name = "游戏编号", width = 15)
+    @ApiModelProperty(value = "游戏编号")
+    private java.lang.Integer gameId;
     /**
      * 服务器名字
      */
@@ -164,32 +173,4 @@ public class GameServer {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @ApiModelProperty(value = "服务器开服时间")
     private java.util.Date openTime;
-    /**
-     * 创建人
-     */
-    @Excel(name = "创建人", width = 15)
-    @ApiModelProperty(value = "创建人")
-    private java.lang.String createBy;
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @ApiModelProperty(value = "创建时间")
-    private java.util.Date createTime;
-    /**
-     * 修改人
-     */
-    @Excel(name = "修改人", width = 15)
-    @ApiModelProperty(value = "修改人")
-    private java.lang.String updateBy;
-    /**
-     * 修改时间
-     */
-    @Excel(name = "修改时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @ApiModelProperty(value = "修改时间")
-    private java.util.Date updateTime;
 }

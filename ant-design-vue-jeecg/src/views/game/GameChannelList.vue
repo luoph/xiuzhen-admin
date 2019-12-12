@@ -11,7 +11,6 @@
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="唯一标识">
-                            <a-input placeholder="请输入唯一标识" v-model="queryParam.simpleName"></a-input>
                             <j-dict-select-tag v-model="queryParam.simpleName" placeholder="请选择唯一标识" dictCode="game_channel,simple_name,simple_name" />
                         </a-form-item>
                     </a-col>
@@ -108,6 +107,19 @@
 <script>
 import GameChannelModal from "./modules/GameChannelModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction, putAction, httpAction } from "@/api/manage";
+import Vue from "vue";
+
+function filterGameIdText(options, text) {
+    if (options instanceof Array) {
+        for (let game of options) {
+            if (text === game.id) {
+                return game.name + "(" + game.id + ")";
+            }
+        }
+    }
+    return text;
+}
 
 export default {
     name: "GameChannelList",
@@ -118,6 +130,7 @@ export default {
     data() {
         return {
             description: "游戏渠道管理页面",
+            gameList: [],
             // 表头
             columns: [
                 {
@@ -156,19 +169,22 @@ export default {
                     dataIndex: "remark"
                 },
                 {
-                    title: "扩展字段",
-                    align: "center",
-                    dataIndex: "extra"
-                },
-                {
                     title: "游戏编号",
                     align: "center",
-                    dataIndex: "gameId"
+                    dataIndex: "gameId",
+                    customRender: text => {
+                        return filterGameIdText(this.gameList, text);
+                    }
                 },
                 {
                     title: "分组",
                     align: "center",
                     dataIndex: "groupName"
+                },
+                {
+                    title: "扩展字段",
+                    align: "center",
+                    dataIndex: "extra"
                 },
                 {
                     title: "操作",
@@ -182,7 +198,9 @@ export default {
                 delete: "/game/gameChannel/delete",
                 deleteBatch: "/game/gameChannel/deleteBatch",
                 exportXlsUrl: "game/gameChannel/exportXls",
-                importExcelUrl: "game/gameChannel/importExcel"
+                importExcelUrl: "game/gameChannel/importExcel",
+                // 游戏列表
+                queryGameListUrl: "/game/gameInfo/list"
             }
         };
     },
@@ -191,7 +209,25 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    methods: {}
+    created() {
+        this.initialGameList();
+    },
+    methods: {
+        initialGameList() {
+            let that = this;
+            getAction(that.url.queryGameListUrl).then(res => {
+                if (res.success) {
+                    if (res.result instanceof Array) {
+                        this.gameList = res.result;
+                    } else if (res.result.records instanceof Array) {
+                        this.gameList = res.result.records;
+                    }
+                } else {
+                    this.gameList = [];
+                }
+            });
+        }
+    }
 };
 </script>
 <style scoped>

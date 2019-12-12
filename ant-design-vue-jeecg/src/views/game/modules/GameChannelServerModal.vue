@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { httpAction } from "@/api/manage";
+import { getAction, putAction, httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
 
