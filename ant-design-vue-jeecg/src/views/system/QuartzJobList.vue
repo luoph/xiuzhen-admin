@@ -194,22 +194,22 @@ export default {
     },
 
     methods: {
-        //筛选需要重写handleTableChange
+        // 筛选需要重写handleTableChange
         handleTableChange(pagination, filters, sorter) {
-            //分页、排序、筛选变化时触发
-            //TODO 筛选
+            // 分页、排序、筛选变化时触发
+            // TODO 筛选
             if (Object.keys(sorter).length > 0) {
                 this.isorter.column = sorter.field;
                 this.isorter.order = "ascend" == sorter.order ? "asc" : "desc";
             }
-            //这种筛选方式只支持单选
+            // 这种筛选方式只支持单选
             this.filters.status = filters.status[0];
             this.ipagination = pagination;
             this.loadData();
         },
         pauseJob: function(record) {
             var that = this;
-            //暂停定时任务
+            // 暂停定时任务
             this.$confirm({
                 title: "确认暂停",
                 content: "是否暂停选中任务?",
@@ -228,7 +228,7 @@ export default {
         },
         resumeJob: function(record) {
             var that = this;
-            //恢复定时任务
+            // 恢复定时任务
             this.$confirm({
                 title: "确认启动",
                 content: "是否启动选中任务?",

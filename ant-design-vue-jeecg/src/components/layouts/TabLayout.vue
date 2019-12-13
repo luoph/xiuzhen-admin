@@ -71,7 +71,7 @@ export default {
     /* update_end author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
     computed: {
         multipage() {
-            //判断如果是手机模式，自动切换为单页面模式
+            // 判断如果是手机模式，自动切换为单页面模式
             if (this.isMobile()) {
                 return false;
             } else {

@@ -195,7 +195,7 @@ export default {
             this.orderMainModel.jeecgOrderCustomerList = [{}];
             this.orderMainModel.jeecgOrderTicketList = [{}];
             //--------------------------------------------------------
-            //初始化明细表数据
+            // 初始化明细表数据
             console.log(this.orderMainModel.id);
             if (this.orderMainModel.id) {
                 let params = { id: this.orderMainModel.id };

@@ -28,7 +28,7 @@ export default {
             default: "YYYY-MM-DD",
             required: false
         },
-        //此属性可以被废弃了
+        // 此属性可以被废弃了
         triggerChange: {
             type: Boolean,
             required: false,

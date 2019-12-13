@@ -71,7 +71,7 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.orderMainModel = Object.assign({}, record);
-            //初始化明细表数据
+            // 初始化明细表数据
             console.log(this.orderMainModel.id);
             this.visible = true;
             this.$nextTick(() => {

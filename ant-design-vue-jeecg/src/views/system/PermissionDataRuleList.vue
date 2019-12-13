@@ -109,7 +109,7 @@ export default {
             }
             let that = this;
             this.dataSource = [];
-            var params = this.getQueryParams(); //查询条件
+            var params = this.getQueryParams(); // 查询条件
             getPermissionRuleList(params).then(res => {
                 if (res.success) {
                     that.dataSource = res.result;

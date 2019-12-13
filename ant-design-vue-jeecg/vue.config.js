@@ -15,8 +15,8 @@ module.exports = {
     // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
     productionSourceMap: true,
 
-    //打包app时放开该配置
-    //publicPath:'./',
+    // 打包app时放开该配置
+    // publicPath:'./',
     configureWebpack: config => {
         if (debug) {
             // 测试环境
@@ -63,11 +63,11 @@ module.exports = {
          ws: false,
          changeOrigin: true,
          pathRewrite: {
-           '/jeecg-boot': ''  //默认所有请求都加了jeecg-boot前缀，需要去掉
+           '/jeecg-boot': ''  // 默认所有请求都加了jeecg-boot前缀，需要去掉
          }
        },*/
             "/jeecg-boot": {
-                target: "http://localhost:8080", //请求本地 需要jeecg-boot后台项目
+                target: "http://localhost:8080", // 请求本地 需要jeecg-boot后台项目
                 ws: false,
                 changeOrigin: true,
             },

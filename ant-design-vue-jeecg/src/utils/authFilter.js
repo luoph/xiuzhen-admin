@@ -68,9 +68,9 @@ function globalDisabledAuth(code) {
             allPermissionList.push(gauth);
         }
     }
-    //设置全局配置是否有命中
-    var gFlag = false; //禁用命中
-    var invalidFlag = false; //无效命中
+    // 设置全局配置是否有命中
+    var gFlag = false; // 禁用命中
+    var invalidFlag = false; // 无效命中
     if (allPermissionList != null && allPermissionList != "" && allPermissionList != undefined && allPermissionList.length > 0) {
         for (var itemG of allPermissionList) {
             if (code === itemG.action) {
@@ -128,8 +128,8 @@ function hasColoum(item, authList) {
     return true;
 }
 
-//权限无效时不做控制，有效时控制，只能控制 显示不显示
-//根据授权码前缀获取未授权的列信息
+// 权限无效时不做控制，有效时控制，只能控制 显示不显示
+// 根据授权码前缀获取未授权的列信息
 function getNoAuthCols(pre) {
     var permissionList = [];
     var allPermissionList = [];
@@ -137,7 +137,7 @@ function getNoAuthCols(pre) {
     //let authList = Vue.ls.get(USER_AUTH);
     let authList = JSON.parse(sessionStorage.getItem(USER_AUTH) || "[]");
     for (var auth of authList) {
-        //显示策略，有效状态
+        // 显示策略，有效状态
         if (auth.type == "1" && startWith(auth.action, pre)) {
             permissionList.push(substrPre(auth.action, pre));
         }
@@ -145,7 +145,7 @@ function getNoAuthCols(pre) {
     //console.log("页面禁用权限--Global--",sessionStorage.getItem(SYS_BUTTON_AUTH));
     let allAuthList = JSON.parse(sessionStorage.getItem(SYS_BUTTON_AUTH) || "[]");
     for (var gauth of allAuthList) {
-        //显示策略，有效状态
+        // 显示策略，有效状态
         if (gauth.type == "1" && gauth.status == "1" && startWith(gauth.action, pre)) {
             allPermissionList.push(substrPre(gauth.action, pre));
         }

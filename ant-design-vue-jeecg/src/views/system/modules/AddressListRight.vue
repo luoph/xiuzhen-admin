@@ -134,7 +134,7 @@ export default {
             if (!orgCode) {
                 return;
             }
-            //加载数据 若传入参数1则加载第一页的内容
+            // 加载数据 若传入参数1则加载第一页的内容
             if (pageNum === 1) {
                 this.ipagination.current = 1;
             }

@@ -172,7 +172,7 @@ export default {
         },
         randomLocalCode() {
             let random = "";
-            //去掉了I l i o O
+            // 去掉了I l i o O
             let str = "QWERTYUPLKJHGFDSAZXCVBNMqwertyupkjhgfdsazxcvbnm1234567890";
             for (let i = 0; i < this.length; i++) {
                 let index = Math.floor(Math.random() * 57);

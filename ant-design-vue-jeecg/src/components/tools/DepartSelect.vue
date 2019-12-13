@@ -119,7 +119,7 @@ export default {
             });
         },
         show() {
-            //如果组件传值username此处就不用loadDepartList了
+            // 如果组件传值username此处就不用loadDepartList了
             this.loadDepartList().then(() => {
                 this.visible = true;
                 if (!this.departList || this.departList.length <= 0) {

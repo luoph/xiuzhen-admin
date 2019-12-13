@@ -309,7 +309,7 @@ export default {
         },
 
         isNullArray(array) {
-            //判断是不是空数组对象
+            // 判断是不是空数组对象
             if (!array || array.length === 0) {
                 return true;
             }

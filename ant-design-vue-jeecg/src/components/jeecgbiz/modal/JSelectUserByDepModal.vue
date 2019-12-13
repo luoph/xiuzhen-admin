@@ -174,7 +174,7 @@ export default {
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
-            let params = this.getQueryParams(); //查询条件
+            let params = this.getQueryParams(); // 查询条件
             await getUserList(params).then(res => {
                 if (res.success) {
                     this.dataSource = res.result.records;
@@ -242,7 +242,7 @@ export default {
             that.searchReset(0);
             that.close();
         },
-        //获取选择用户信息
+        // 获取选择用户信息
         getSelectUserRows(rowId) {
             let dataSource = this.dataSource;
             let userIds = "";

@@ -118,7 +118,7 @@ export default {
         };
     },
     created() {
-        //数据请求参数配置
+        // 数据请求参数配置
         this.paramsName = Object.assign(
             {},
             {

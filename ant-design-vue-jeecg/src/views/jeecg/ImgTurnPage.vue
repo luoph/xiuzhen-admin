@@ -43,7 +43,7 @@ export default {
     data() {
         return {
             description: "图片翻页",
-            //数据集
+            // 数据集
             treeData: [
                 {
                     title: "第一页",

@@ -53,7 +53,7 @@ export default {
         }
     },
     data() {
-        this.loadData = debounce(this.loadData, 800); //消抖
+        this.loadData = debounce(this.loadData, 800); // 消抖
         this.lastLoad = 0;
         return {
             loading: false,
@@ -124,11 +124,11 @@ export default {
         },
         initDictData() {
             if (!this.async) {
-                //如果字典项集合有数据
+                // 如果字典项集合有数据
                 if (this.dictOptions && this.dictOptions.length > 0) {
                     this.options = [...this.dictOptions];
                 } else {
-                    //根据字典Code, 初始化字典数组
+                    // 根据字典Code, 初始化字典数组
                     ajaxGetDictItems(this.dict, null).then(res => {
                         if (res.success) {
                             this.options = res.result;

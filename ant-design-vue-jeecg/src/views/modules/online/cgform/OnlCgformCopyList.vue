@@ -197,7 +197,7 @@ export default {
     },
     methods: {
         getQueryParams() {
-            //获取查询条件
+            // 获取查询条件
             var param = Object.assign({}, this.queryParam, this.isorter, this.filters);
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
@@ -216,11 +216,11 @@ export default {
                 this.$message.error("请设置url.list属性!");
                 return;
             }
-            //加载数据 若传入参数1则加载第一页的内容
+            // 加载数据 若传入参数1则加载第一页的内容
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
-            var params = this.getQueryParams(); //查询条件
+            var params = this.getQueryParams(); // 查询条件
             this.loading = true;
             getAction(this.url.list, params).then(res => {
                 if (res.success) {

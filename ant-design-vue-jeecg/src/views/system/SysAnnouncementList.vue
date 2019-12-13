@@ -251,7 +251,7 @@ export default {
         }
     },
     methods: {
-        //执行发布操作
+        // 执行发布操作
         releaseData: function(id) {
             console.log(id);
             var that = this;
@@ -264,7 +264,7 @@ export default {
                 }
             });
         },
-        //执行撤销操作
+        // 执行撤销操作
         revokeData: function(id) {
             var that = this;
             doRevokeData({ id: id }).then(res => {

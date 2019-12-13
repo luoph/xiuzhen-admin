@@ -69,7 +69,7 @@ export default {
             default: false
         },
         // update-end- --- author:wangshuai ------ date:20190929 ---- for:Jupload组件增加是否能够点击
-        //此属性被废弃了
+        // 此属性被废弃了
         triggerChange: {
             type: Boolean,
             required: false,
@@ -167,7 +167,7 @@ export default {
             }
         },
         handleDelete(file) {
-            //如有需要新增 删除逻辑
+            // 如有需要新增 删除逻辑
             console.log(file);
         }
     },

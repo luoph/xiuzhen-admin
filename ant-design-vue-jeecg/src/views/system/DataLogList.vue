@@ -75,7 +75,7 @@ export default {
     data() {
         return {
             description: "数据日志管理页面",
-            //表头
+            // 表头
             columns: [
                 {
                     title: "表名",

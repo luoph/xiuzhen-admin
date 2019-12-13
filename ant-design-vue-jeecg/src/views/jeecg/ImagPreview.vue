@@ -64,7 +64,7 @@ export default {
         return {
             description: "电子档补扫页面",
             spinning: false,
-            //数据集
+            // 数据集
             dataSource: [
                 {
                     key: 0,

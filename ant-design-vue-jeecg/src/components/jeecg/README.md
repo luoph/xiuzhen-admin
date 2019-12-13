@@ -109,7 +109,7 @@ import JSuperQuery from '@/components/jeecg/JSuperQuery.vue';
 ```
 4.list页面声明回调事件handleSuperQuery(与组件的callback对应即可)
 ```vue
-//高级查询方法
+// 高级查询方法
 handleSuperQuery(arg) {
   if(!arg){
     this.superQueryParams=''
@@ -414,11 +414,11 @@ export default {
     components: {JCodeEditor},
     data() {
       return {
-        //省略代码......
+        // 省略代码......
       }
     },
     methods:{
-      //省略部分代码......
+      // 省略部分代码......
       handleImportXls(){
         this.$refs.importModal.show()
       },

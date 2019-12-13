@@ -47,12 +47,12 @@ export default {
         } else {
             this.tagType = this.type;
         }
-        //获取字典数据
+        // 获取字典数据
         // this.initDictData();
     },
     methods: {
         initDictData() {
-            //根据字典Code, 初始化字典数组
+            // 根据字典Code, 初始化字典数组
             ajaxGetDictItems(this.dictCode, null).then(res => {
                 if (res.success) {
                     //                console.log(res.result);

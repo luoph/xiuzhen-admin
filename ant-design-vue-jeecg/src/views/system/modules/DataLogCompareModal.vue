@@ -41,10 +41,10 @@ export default {
             model: {},
             confirmLoading: false,
             headers: {},
-            //版本号
+            // 版本号
             dataVersion1Num: "",
             dataVersion2Num: "",
-            //表头
+            // 表头
             columns: [
                 {
                     title: "字段名",
@@ -72,7 +72,7 @@ export default {
                     slots: { title: "dataVersionTitle2" }
                 }
             ],
-            //数据集
+            // 数据集
             dataSource: [],
             loading: false,
             url: {
