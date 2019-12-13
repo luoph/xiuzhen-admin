@@ -7,7 +7,7 @@
                 <a-row :gutter="10">
                     <a-col :md="10" :sm="12">
                         <a-form-item label="用户账号" style="margin-left:8px">
-                            <a-input placeholder="请输入名称查询" v-model="queryParam.username"></a-input>
+                            <a-input v-model="queryParam.username" placeholder="请输入名称查询"></a-input>
                         </a-form-item>
                     </a-col>
                     <!--<a-col :md="8" :sm="8">-->
@@ -17,8 +17,8 @@
                     <!--</a-col>-->
                     <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                         <a-col :md="6" :sm="24">
-                            <a-button type="primary" @click="searchQuery" icon="search" style="margin-left: 18px">查询</a-button>
-                            <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+                            <a-button type="primary" icon="search" style="margin-left: 18px" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                         </a-col>
                     </span>
                 </a-row>
@@ -26,9 +26,9 @@
         </div>
         <!-- 操作按钮区域 -->
         <div class="table-operator" :md="24" :sm="24" style="margin: -46px 0px 10px 2px">
-            <a-button @click="handleAdd" type="primary" icon="plus" style="margin-top: 16px">用户录入</a-button>
+            <a-button type="primary" icon="plus" style="margin-top: 16px" @click="handleAdd">用户录入</a-button>
             <!--<a-button @click="handleEdit" type="primary" icon="edit" style="margin-top: 16px">用户编辑</a-button>-->
-            <a-button @click="handleAddUserDepart" type="primary" icon="plus">添加已有用户</a-button>
+            <a-button type="primary" icon="plus" @click="handleAddUserDepart">添加已有用户</a-button>
 
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
@@ -147,12 +147,13 @@ export default {
                 this.$message.error("请设置url.list属性!");
                 return;
             }
-            //加载数据 若传入参数1则加载第一页的内容
+            // 加载数据 若传入参数1则加载第一页的内容
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
             if (this.currentDeptId === "") return;
-            var params = this.getQueryParams(); //查询条件
+            // 查询条件
+            var params = this.getQueryParams();
             params.depId = this.currentDeptId;
             getAction(this.url.list, params).then(res => {
                 if (res.success) {

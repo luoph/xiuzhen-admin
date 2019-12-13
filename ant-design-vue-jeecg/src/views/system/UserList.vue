@@ -7,7 +7,7 @@
                     <a-col :md="6" :sm="12">
                         <a-form-item label="账号">
                             <!--<a-input placeholder="请输入账号查询" v-model="queryParam.username"></a-input>-->
-                            <j-input placeholder="输入账号模糊查询" v-model="queryParam.username"></j-input>
+                            <j-input v-model="queryParam.username" placeholder="输入账号模糊查询"></j-input>
                         </a-form-item>
                     </a-col>
 
@@ -47,9 +47,9 @@
 
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-                            <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
-                            <a @click="handleToggleSearch" style="margin-left: 8px">
+                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+                            <a style="margin-left: 8px" @click="handleToggleSearch">
                                 {{ toggleSearchStatus ? "收起" : "展开" }}
                                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
                             </a>
@@ -61,7 +61,7 @@
 
         <!-- 操作按钮区域 -->
         <div class="table-operator" style="border-top: 5px">
-            <a-button @click="handleAdd" type="primary" icon="plus" v-has="'user:add'">添加用户</a-button>
+            <a-button type="primary" icon="plus" v-has="'user:add'" @click="handleAdd">添加用户</a-button>
             <a-button type="primary" icon="download" @click="handleExportXls('用户信息')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -321,7 +321,7 @@ export default {
         },
         handleFrozen: function(id, status, username) {
             let that = this;
-            //TODO 后台校验管理员角色
+            // TODO 后台校验管理员角色
             if ("admin" == username) {
                 that.$message.warning("管理员账号不允许此操作！");
                 return;
@@ -343,7 +343,7 @@ export default {
             this.$refs.sysUserAgentModal.title = "用户代理人设置";
         },
         passwordModalOk() {
-            //TODO 密码修改完成 不需要刷新页面，可以把datasource中的数据更新一下
+            // TODO 密码修改完成 不需要刷新页面，可以把datasource中的数据更新一下
         }
     }
 };

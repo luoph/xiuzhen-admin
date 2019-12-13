@@ -21,8 +21,8 @@
 
                     <a-col :md="6" :sm="10">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-                            <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                         </span>
                     </a-col>
                 </a-row>

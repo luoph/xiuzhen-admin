@@ -17,8 +17,8 @@
 
                     <a-col :md="6" :sm="24">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
-                            <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -127,7 +127,7 @@
         <onl-cgform-head-modal ref="modalForm" @ok="modalFormOk"></onl-cgform-head-modal>
 
         <!-- 同步数据库提示框 -->
-        <a-modal :width="500" :height="300" title="同步数据库" :visible="syncModalVisible" @cancel="handleCancleDbSync" style="top:5%;height: 95%;">
+        <a-modal :width="500" :height="300" title="同步数据库" :visible="syncModalVisible" style="top:5%;height: 95%;" @cancel="handleCancleDbSync" >
             <template slot="footer">
                 <a-button @click="handleCancleDbSync">关闭</a-button>
                 <a-button type="primary" :loading="syncLoading" @click="handleDbSync">
@@ -248,7 +248,7 @@ export default {
         };
     },
     created() {
-        //初始化字典 - 表类型
+        // 初始化字典 - 表类型
         initDictOptions("cgform_table_type").then(res => {
             if (res.success) {
                 this.tableTypeDictOptions = res.result;
@@ -267,7 +267,7 @@ export default {
             });
         },
         getQueryParams() {
-            //获取查询条件
+            // 获取查询条件
             var param = Object.assign({}, this.queryParam, this.isorter, this.filters);
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
@@ -369,7 +369,7 @@ export default {
             }
             this.$refs.btnList.show(this.selectedRowKeys[0]);
 
-            //this.$router.push({ path: '/online/cgformButton/' + this.selectedRowKeys[0] })
+            // this.$router.push({ path: '/online/cgformButton/' + this.selectedRowKeys[0] })
         },
         importOnlineForm() {
             this.$refs.transd2o.show();
