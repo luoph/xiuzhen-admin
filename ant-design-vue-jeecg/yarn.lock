@@ -715,7 +715,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.7.4"
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/polyfill@^7.2.5":
+"@babel/polyfill@^7.7.0":
   version "7.7.0"
   resolved "https://registry.npm.taobao.org/@babel/polyfill/download/@babel/polyfill-7.7.0.tgz#e1066e251e17606ec7908b05617f9b7f8180d8f3"
   integrity sha1-4QZuJR4XYG7HkIsFYX+bf4GA2PM=
