@@ -1,0 +1,74 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "chrome",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "userDataDir": "${workspaceRoot}/out/chrome",
+            // "runtimeExecutable": "/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary",
+            "sourceMapPathOverrides": {
+                "webpack:///./src/*": "${webRoot}/*"
+            },
+            "pathMapping": {
+                "/": "${workspaceFolder}/src/views"
+            }
+        },
+        {
+            "type": "firefox",
+            "request": "attach",
+            "name": "firefox-attach",
+            "url": "http://localhost:3000",
+            "port": 6080,
+            "webRoot": "${workspaceFolder}/src",
+            "reloadOnAttach": true,
+            "pathMappings": [
+                {
+                    "url": "webpack:///src/views",
+                    "path": "${workspaceFolder}/src/views"
+                },
+                {
+                    "url": "webpack:///src/",
+                    "path": "${webRoot}/"
+                }
+            ],
+            "reloadOnChange": {
+                "watch": ["${workspaceFolder}/**/*.js"],
+                "ignore": ["${workspaceFolder}/node_modules/**"]
+            }
+        },
+        {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "firefox-launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/src",
+            "pathMappings": [
+                {
+                    "url": "webpack:///src/views",
+                    "path": "${workspaceFolder}/src/views"
+                },
+                {
+                    "url": "webpack:///src/",
+                    "path": "${webRoot}/"
+                }
+            ],
+            "port": 6000,
+            "profile": "default",
+            // "firefoxExecutable": "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox",
+            "firefoxArgs": ["-new-tab http://localhost:3000", "-start-debugger-server", "-no-remote", "-devtools"],
+            "reloadOnChange": {
+                "watch": ["${workspaceFolder}/**/*.js"],
+                "ignore": ["${workspaceFolder}/node_modules/**"]
+            }
+        }
+    ]
+}
