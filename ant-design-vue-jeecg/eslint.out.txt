@@ -1,0 +1,100 @@
+
+/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/ant-design-vue-jeecg/src/config/router.config.js
+  1:33  warning  'RouteView' is defined but never used  no-unused-vars
+  1:57  warning  'PageView' is defined but never used   no-unused-vars
+
+/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/ant-design-vue-jeecg/src/permission.js
+  8:8  warning  'notification' is defined but never used  no-unused-vars
+
+/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/ant-design-vue-jeecg/src/router/index.js
+  11:13  warning  Empty block statement  no-empty
+
+/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/ant-design-vue-jeecg/src/utils/encryption/aesEncrypt.js
+    37:21  warning  Shadowing of global property 'undefined'                                   no-shadow-restricted-names
+   102:34  warning  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+   163:40  warning  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+   169:36  warning  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+   265:30  warning  'i' is already defined                                                     no-redeclare
+   325:25  warning  'm_w' is already defined                                                   no-redeclare
+   638:13  warning  'Hasher' is assigned a value but never used                                no-unused-vars
+   784:9   warning  'Base64' is assigned a value but never used                                no-unused-vars
+  1440:9   warning  'Utf16BE' is assigned a value but never used                               no-unused-vars
+  1628:11  warning  'Math' is defined but never used                                           no-unused-vars
+  2007:22  warning  'i' is already defined                                                     no-redeclare
+  2171:9   warning  'HMAC' is assigned a value but never used                                  no-unused-vars
+  2582:11  warning  Shadowing of global property 'undefined'                                   no-shadow-restricted-names
+  2597:9   warning  'X64Word' is assigned a value but never used                               no-unused-vars
+  2785:9   warning  'X64WordArray' is assigned a value but never used                          no-unused-vars
+  2897:18  warning  'x' is already defined                                                     no-redeclare
+  2898:22  warning  'y' is already defined                                                     no-redeclare
+  2994:29  warning  'lane' is already defined                                                  no-redeclare
+  3004:26  warning  'x' is already defined                                                     no-redeclare
+  3012:25  warning  'tMsw' is already defined                                                  no-redeclare
+  3013:25  warning  'tLsw' is already defined                                                  no-redeclare
+  3014:30  warning  'y' is already defined                                                     no-redeclare
+  3015:29  warning  'lane' is already defined                                                  no-redeclare
+  3024:25  warning  'lane' is already defined                                                  no-redeclare
+  3031:29  warning  'tMsw' is already defined                                                  no-redeclare
+  3032:29  warning  'tLsw' is already defined                                                  no-redeclare
+  3034:29  warning  'tMsw' is already defined                                                  no-redeclare
+  3035:29  warning  'tLsw' is already defined                                                  no-redeclare
+  3051:26  warning  'x' is already defined                                                     no-redeclare
+  3052:30  warning  'y' is already defined                                                     no-redeclare
+  3054:29  warning  'laneIndex' is already defined                                             no-redeclare
+  3055:29  warning  'lane' is already defined                                                  no-redeclare
+  3067:21  warning  'lane' is already defined                                                  no-redeclare
+  3078:17  warning  'nBitsTotal' is assigned a value but never used                            no-unused-vars
+  3365:25  warning  'Wil' is already defined                                                   no-redeclare
+  3366:25  warning  'Wih' is already defined                                                   no-redeclare
+  3367:25  warning  'Wil' is already defined                                                   no-redeclare
+  3368:25  warning  'Wih' is already defined                                                   no-redeclare
+  3369:25  warning  'Wil' is already defined                                                   no-redeclare
+  3370:25  warning  'Wih' is already defined                                                   no-redeclare
+  3393:21  warning  't1l' is already defined                                                   no-redeclare
+  3394:21  warning  't1h' is already defined                                                   no-redeclare
+  3395:21  warning  't1l' is already defined                                                   no-redeclare
+  3396:21  warning  't1h' is already defined                                                   no-redeclare
+  3397:21  warning  't1l' is already defined                                                   no-redeclare
+  3398:21  warning  't1h' is already defined                                                   no-redeclare
+  3581:15  warning  Shadowing of global property 'undefined'                                   no-shadow-restricted-names
+  3589:13  warning  'Utf8' is assigned a value but never used                                  no-unused-vars
+  3779:13  warning  'StreamCipher' is assigned a value but never used                          no-unused-vars
+  3926:25  warning  'block' is already defined                                                 no-redeclare
+  4005:13  warning  'BlockCipher' is assigned a value but never used                           no-unused-vars
+  4030:25  warning  'modeCreator' is already defined                                           no-redeclare
+  4060:25  warning  'finalProcessedBlocks' is already defined                                  no-redeclare
+  4162:25  warning  'wordArray' is already defined                                             no-redeclare
+  4489:17  warning  'keystream' is already defined                                             no-redeclare
+  4642:11  warning  'undefined' is defined but never used                                      no-unused-vars
+  4642:11  warning  Shadowing of global property 'undefined'                                   no-shadow-restricted-names
+  4651:9   warning  'HexFormatter' is assigned a value but never used                          no-unused-vars
+  4723:18  warning  'i' is already defined                                                     no-redeclare
+  4743:17  warning  't' is already defined                                                     no-redeclare
+  4812:21  warning  'ksRow' is already defined                                                 no-redeclare
+  4815:25  warning  't' is already defined                                                     no-redeclare
+  4817:25  warning  't' is already defined                                                     no-redeclare
+  4842:17  warning  't' is already defined                                                     no-redeclare
+  4876:17  warning  't0' is already defined                                                    no-redeclare
+  4877:17  warning  't1' is already defined                                                    no-redeclare
+  4878:17  warning  't2' is already defined                                                    no-redeclare
+  4879:17  warning  't3' is already defined                                                    no-redeclare
+  5586:26  warning  'i' is already defined                                                     no-redeclare
+  5598:26  warning  'i' is already defined                                                     no-redeclare
+  5606:22  warning  'i' is already defined                                                     no-redeclare
+  5763:22  warning  'i' is already defined                                                     no-redeclare
+  5987:22  warning  'i' is already defined                                                     no-redeclare
+  5992:22  warning  'i' is already defined                                                     no-redeclare
+  6020:26  warning  'i' is already defined                                                     no-redeclare
+  6075:18  warning  'i' is already defined                                                     no-redeclare
+  6200:22  warning  'i' is already defined                                                     no-redeclare
+  6228:26  warning  'i' is already defined                                                     no-redeclare
+  6283:18  warning  'i' is already defined                                                     no-redeclare
+
+/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/ant-design-vue-jeecg/src/utils/hasPermission.js
+  66:53  warning  'vnode' is defined but never used  no-unused-vars
+
+/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/ant-design-vue-jeecg/src/utils/util.js
+  37:17  warning  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+
+✖ 85 problems (0 errors, 85 warnings)
+
