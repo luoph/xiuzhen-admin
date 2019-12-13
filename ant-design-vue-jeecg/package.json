@@ -43,7 +43,7 @@
         "vuex-class": "^0.3.2"
     },
     "devDependencies": {
-        "@babel/polyfill": "^7.2.5",
+        "@babel/polyfill": "^7.7.0",
         "@vue/cli-plugin-babel": "^3.3.0",
         "@vue/cli-plugin-eslint": "^3.3.0",
         "@vue/cli-service": "^3.3.0",
