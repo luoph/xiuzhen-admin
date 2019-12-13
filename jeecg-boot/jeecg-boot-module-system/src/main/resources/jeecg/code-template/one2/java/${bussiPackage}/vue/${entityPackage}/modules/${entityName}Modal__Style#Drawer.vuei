@@ -87,7 +87,7 @@
         this.visible = true;
         this.$nextTick(() => {
           this.form.setFieldsValue(pick(this.model<#list columns as po><#if po.fieldName != 'id' && po.fieldType?index_of("date")==-1>,'${po.fieldName}'</#if></#list>))
-		  //时间格式化
+		  // 时间格式化
           <#list columns as po>
           <#if po.fieldName != 'id' && po.fieldType?index_of("date") != -1>
           this.form.setFieldsValue({${po.fieldName}: this.model.${po.fieldName}? moment(this.model.${po.fieldName}) : null})
@@ -116,7 +116,7 @@
                method = 'put';
             }
             let formData = Object.assign(this.model, values);
-            //时间格式化
+            // 时间格式化
             <#list columns as po>
             <#if po.fieldName!='id' && po.fieldType=='date'>
             formData.${po.fieldName}=formData.${po.fieldName}?formData.${po.fieldName}.format():null;

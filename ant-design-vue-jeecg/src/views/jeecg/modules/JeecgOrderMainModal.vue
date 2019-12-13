@@ -199,14 +199,14 @@ export default {
             console.log(this.orderMainModel.id);
             if (this.orderMainModel.id) {
                 let params = { id: this.orderMainModel.id };
-                //初始化订单机票列表
+                // 初始化订单机票列表
                 getAction(this.url.orderCustomerList, params).then(res => {
                     if (res.success) {
                         this.orderMainModel.jeecgOrderCustomerList = res.result;
                         this.$forceUpdate();
                     }
                 });
-                //初始化订单客户列表
+                // 初始化订单客户列表
                 getAction(this.url.orderTicketList, params).then(res => {
                     if (res.success) {
                         this.orderMainModel.jeecgOrderTicketList = res.result;
@@ -218,7 +218,7 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.orderMainModel, "orderCode", "ctype", "orderMoney", "content"));
-                this.form.setFieldsValue({ orderDate: this.orderMainModel.orderDate ? moment(this.orderMainModel.orderDate) : null }); //时间格式化
+                this.form.setFieldsValue({ orderDate: this.orderMainModel.orderDate ? moment(this.orderMainModel.orderDate) : null }); // 时间格式化
             });
             console.log(this.orderMainModel);
         },
@@ -242,7 +242,7 @@ export default {
                         method = "put";
                     }
                     let orderMainData = Object.assign(this.orderMainModel, values);
-                    //时间格式化
+                    // 时间格式化
                     orderMainData.orderDate = orderMainData.orderDate ? orderMainData.orderDate.format("YYYY-MM-DD HH:mm:ss") : null;
                     let formData = {
                         ...orderMainData,

@@ -116,7 +116,7 @@
               method = 'put';
             }
             let formData = Object.assign(this.model, values);
-            //时间格式化
+            // 时间格式化
             <#list columns as po>
             <#if po.fieldName !='id' && po.fieldType =='date'>
             formData.${po.fieldName} = formData.${po.fieldName}?formData.${po.fieldName}.format():null;

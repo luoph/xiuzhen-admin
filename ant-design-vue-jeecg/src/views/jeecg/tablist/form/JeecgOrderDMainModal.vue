@@ -76,7 +76,7 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.orderMainModel, "orderCode", "ctype", "orderMoney", "content"));
-                this.form.setFieldsValue({ orderDate: this.orderMainModel.orderDate ? moment(this.orderMainModel.orderDate) : null }); //时间格式化
+                this.form.setFieldsValue({ orderDate: this.orderMainModel.orderDate ? moment(this.orderMainModel.orderDate) : null }); // 时间格式化
             });
             console.log(this.orderMainModel);
         },
@@ -100,7 +100,7 @@ export default {
                         method = "put";
                     }
                     let orderMainData = Object.assign(this.orderMainModel, values);
-                    //时间格式化
+                    // 时间格式化
                     orderMainData.orderDate = orderMainData.orderDate ? orderMainData.orderDate.format("YYYY-MM-DD HH:mm:ss") : null;
                     let formData = {
                         ...orderMainData

@@ -178,7 +178,7 @@ export default {
                 if (!err) {
                     that.confirmLoading = true;
                     let formData = Object.assign(this.model, values);
-                    //时间格式化
+                    // 时间格式化
                     console.log(formData);
                     httpAction(this.url.add, formData, "post")
                         .then(res => {

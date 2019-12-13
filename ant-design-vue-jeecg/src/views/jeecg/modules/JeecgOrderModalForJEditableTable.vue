@@ -212,7 +212,7 @@ export default {
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "orderCode", "ctype", "orderMoney", "content"));
-                //时间格式化
+                // 时间格式化
                 this.form.setFieldsValue({ orderDate: this.model.orderDate ? moment(this.model.orderDate) : null });
             });
 
@@ -279,7 +279,7 @@ export default {
         /** 整理成formData */
         classifyIntoFormData(allValues) {
             let orderMain = Object.assign(this.model, allValues.formValue);
-            //时间格式化
+            // 时间格式化
             orderMain.orderDate = orderMain.orderDate ? orderMain.orderDate.format("YYYY-MM-DD HH:mm:ss") : null;
             return {
                 ...orderMain, // 展开

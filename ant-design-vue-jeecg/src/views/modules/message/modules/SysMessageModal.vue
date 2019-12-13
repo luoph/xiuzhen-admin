@@ -92,7 +92,7 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "esContent", "esParam", "esReceiver", "esResult", "esSendNum", "esSendStatus", "esTitle", "esType", "remark"));
-                //时间格式化
+                // 时间格式化
                 this.form.setFieldsValue({ esSendTime: this.model.esSendTime ? moment(this.model.esSendTime) : null });
             });
         },
@@ -116,7 +116,7 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-                    //时间格式化
+                    // 时间格式化
                     formData.esSendTime = formData.esSendTime ? formData.esSendTime.format("YYYY-MM-DD HH:mm:ss") : null;
 
                     console.log(formData);

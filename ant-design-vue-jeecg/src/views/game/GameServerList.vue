@@ -136,7 +136,6 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { initDictOptions, filterDictText } from "@/components/dict/JDictSelectUtil";
 import { filterObj } from "@/utils/util";
 import { getAction, putAction, httpAction } from "@/api/manage";
-import Vue from "vue";
 
 function filterGameIdText(options, text) {
     if (options instanceof Array) {
@@ -207,7 +206,6 @@ export default {
                 {
                     title: "推荐标识",
                     align: "center",
-                    dataIndex: "recommend",
                     dataIndex: "recommend_dictText"
                 },
                 {
@@ -228,7 +226,6 @@ export default {
                 {
                     title: "类型",
                     align: "center",
-                    dataIndex: "type",
                     dataIndex: "type_dictText"
                 },
                 {

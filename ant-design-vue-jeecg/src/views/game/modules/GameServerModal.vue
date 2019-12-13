@@ -185,7 +185,7 @@ export default {
                         "extra"
                     )
                 );
-                //时间格式化
+                // 时间格式化
                 this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
             });
@@ -210,7 +210,7 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-                    //时间格式化
+                    // 时间格式化
                     formData.mergeTime = formData.mergeTime ? formData.mergeTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD HH:mm:ss") : null;
 
