@@ -94,13 +94,13 @@ export default {
                     },
                     (sorter &&
                         sorter.field && {
-                        sortField: sorter.field
-                    }) ||
+                            sortField: sorter.field
+                        }) ||
                         {},
                     (sorter &&
                         sorter.order && {
-                        sortOrder: sorter.order
-                    }) ||
+                            sortOrder: sorter.order
+                        }) ||
                         {},
                     {
                         ...filters
@@ -137,12 +137,12 @@ export default {
         updateSelect(selectedRowKeys, selectedRows) {
             this.selectedRowKeys = selectedRowKeys;
             this.selectedRows = selectedRows;
-            const list = this.needTotalList;
+            let list = this.needTotalList;
             this.needTotalList = list.map(item => {
                 return {
                     ...item,
                     total: selectedRows.reduce((sum, val) => {
-                        const total = sum + get(val, item.dataIndex);
+                        let total = sum + get(val, item.dataIndex);
                         return isNaN(total) ? 0 : total;
                     }, 0)
                 };
@@ -158,7 +158,7 @@ export default {
         },
         renderMsg(h) {
             const _vm = this;
-            const d = [];
+            let d = [];
             // 构建 已选择
             d.push(
                 h(
@@ -241,11 +241,11 @@ export default {
     render(h) {
         const _vm = this;
 
-        const props = {},
+        let props = {},
             localKeys = Object.keys(this.$data);
 
         Object.keys(T.props).forEach(k => {
-            const localKey = `local${k.substring(0, 1).toUpperCase()}${k.substring(1)}`;
+            let localKey = `local${k.substring(0, 1).toUpperCase()}${k.substring(1)}`;
             if (localKeys.includes(localKey)) {
                 return (props[k] = _vm[localKey]);
             }

@@ -16,7 +16,7 @@ import "@/permission";
 // base filter
 import "@/utils/filter";
 import Print from "vue-print-nb-jeecg";
-/* import '@babel/polyfill'*/
+/*import '@babel/polyfill'*/
 import VueApexCharts from "vue-apexcharts";
 
 import preview from "vue-photo-preview";

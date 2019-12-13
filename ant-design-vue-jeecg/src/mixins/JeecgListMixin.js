@@ -11,7 +11,7 @@ import { ACCESS_TOKEN } from "@/store/mutation-types";
 export const JeecgListMixin = {
     data() {
         return {
-            // token header
+            //token header
             tokenHeader: {
                 "X-Access-Token": Vue.ls.get(ACCESS_TOKEN)
             },
@@ -56,7 +56,7 @@ export const JeecgListMixin = {
         if (!this.disableMixinCreated) {
             console.log(" -- mixin created -- ");
             this.loadData();
-            // 初始化字典配置 在自己页面定义
+            //初始化字典配置 在自己页面定义
             this.initDictConfig();
         }
     },
@@ -66,11 +66,11 @@ export const JeecgListMixin = {
                 this.$message.error("请设置url.list属性!");
                 return;
             }
-            // 加载数据 若传入参数1则加载第一页的内容
+            //加载数据 若传入参数1则加载第一页的内容
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
-            var params = this.getQueryParams(); // 查询条件
+            var params = this.getQueryParams(); //查询条件
             this.loading = true;
             getAction(this.url.list, params).then(res => {
                 if (res.success) {
@@ -87,7 +87,7 @@ export const JeecgListMixin = {
             console.log("--这是一个假的方法!");
         },
         handleSuperQuery(arg) {
-            // 高级查询方法
+            //高级查询方法
             if (!arg) {
                 this.superQueryParams = "";
                 this.superQueryFlag = false;
@@ -98,8 +98,8 @@ export const JeecgListMixin = {
             this.loadData();
         },
         getQueryParams() {
-            // 获取查询条件
-            const sqp = {};
+            //获取查询条件
+            let sqp = {};
             if (this.superQueryParams) {
                 sqp["superQueryParams"] = encodeURI(this.superQueryParams);
             }
@@ -110,7 +110,7 @@ export const JeecgListMixin = {
             return filterObj(param);
         },
         getQueryField() {
-            // TODO 字段权限控制
+            //TODO 字段权限控制
             var str = "id,";
             this.columns.forEach(function(value) {
                 str += "," + value.dataIndex;
@@ -202,11 +202,11 @@ export const JeecgListMixin = {
             this.$refs.modalForm.disableSubmit = false;
         },
         handleTableChange(pagination, filters, sorter) {
-            // 分页、排序、筛选变化时触发
-            // TODO 筛选
+            //分页、排序、筛选变化时触发
+            //TODO 筛选
             if (Object.keys(sorter).length > 0) {
                 this.isorter.column = sorter.field;
-                this.isorter.order = "ascend" === sorter.order ? "asc" : "desc";
+                this.isorter.order = "ascend" == sorter.order ? "asc" : "desc";
             }
             this.ipagination = pagination;
             this.loadData();
@@ -225,15 +225,15 @@ export const JeecgListMixin = {
         },
         /* 导出 */
         handleExportXls2() {
-            const paramsStr = encodeURI(JSON.stringify(this.getQueryParams()));
-            const url = `${window._CONFIG["domainURL"]}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
+            let paramsStr = encodeURI(JSON.stringify(this.getQueryParams()));
+            let url = `${window._CONFIG["domainURL"]}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
             window.location.href = url;
         },
         handleExportXls(fileName) {
-            if (!fileName || typeof fileName !== "string") {
+            if (!fileName || typeof fileName != "string") {
                 fileName = "导出文件";
             }
-            const param = {
+            let param = {
                 ...this.queryParam
             };
             if (this.selectedRowKeys && this.selectedRowKeys.length > 0) {
@@ -248,15 +248,15 @@ export const JeecgListMixin = {
                 if (typeof window.navigator.msSaveBlob !== "undefined") {
                     window.navigator.msSaveBlob(new Blob([data]), fileName + ".xls");
                 } else {
-                    const url = window.URL.createObjectURL(new Blob([data]));
-                    const link = document.createElement("a");
+                    let url = window.URL.createObjectURL(new Blob([data]));
+                    let link = document.createElement("a");
                     link.style.display = "none";
                     link.href = url;
                     link.setAttribute("download", fileName + ".xls");
                     document.body.appendChild(link);
                     link.click();
-                    document.body.removeChild(link); // 下载完成移除元素
-                    window.URL.revokeObjectURL(url); // 释放掉blob对象
+                    document.body.removeChild(link); //下载完成移除元素
+                    window.URL.revokeObjectURL(url); //释放掉blob对象
                 }
             });
         },
@@ -269,11 +269,11 @@ export const JeecgListMixin = {
                 if (info.file.response.success) {
                     // this.$message.success(`${info.file.name} 文件上传成功`);
                     if (info.file.response.code === 201) {
-                        const {
+                        let {
                             message,
                             result: { msg, fileUrl, fileName }
                         } = info.file.response;
-                        const href = window._CONFIG["domainURL"] + fileUrl;
+                        let href = window._CONFIG["domainURL"] + fileUrl;
                         this.$warning({
                             title: message,
                             content: (

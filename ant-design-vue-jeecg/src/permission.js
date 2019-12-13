@@ -5,6 +5,7 @@ import store from "./store";
 import NProgress from "nprogress";
 // progress bar style
 import "nprogress/nprogress.css";
+import notification from "ant-design-vue/es/notification";
 import { ACCESS_TOKEN } from "@/store/mutation-types";
 import { generateIndexRouter } from "@/utils/util";
 
