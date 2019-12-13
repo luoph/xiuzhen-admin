@@ -38,6 +38,7 @@ module.exports = {
         "vue/component-name-in-template-casing": "off",
         "vue/html-closing-bracket-newline": "off",
         "vue/html-closing-bracket-spacing": "off",
+        "vue/html-indent": "off",
         "vue/html-self-closing": "off",
         "vue/max-attributes-per-line": ["error", { singleline: 5, multiline: { max: 1, allowFirstLine: false } }],
         "vue/multiline-html-element-content-newline": "off",
@@ -45,7 +46,7 @@ module.exports = {
         "vue/no-parsing-error": "off",
         "vue/no-unused-components": "off",
         "vue/no-use-v-if-with-v-for": "off",
-        "vue/order-in-components":"off",
+        "vue/order-in-components": "off",
         "vue/singleline-html-element-content-newline": "off",
         indent: ["error", 4, { SwitchCase: 1 }]
     }
