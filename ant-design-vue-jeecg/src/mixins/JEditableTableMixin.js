@@ -29,7 +29,7 @@ export const JEditableTableMixin = {
             if (!(this.refKeys instanceof Array)) {
                 throw this.throwNotArray("refKeys");
             }
-            const values = this.refKeys.map(key => getRefPromise(this, key));
+            let values = this.refKeys.map(key => getRefPromise(this, key));
             return Promise.all(values);
         },
 
@@ -140,7 +140,7 @@ export const JEditableTableMixin = {
                     if (typeof this.classifyIntoFormData !== "function") {
                         throw this.throwNotFunction("classifyIntoFormData");
                     }
-                    const formData = this.classifyIntoFormData(allValues);
+                    let formData = this.classifyIntoFormData(allValues);
                     // 发起请求
                     return this.request(formData);
                 })

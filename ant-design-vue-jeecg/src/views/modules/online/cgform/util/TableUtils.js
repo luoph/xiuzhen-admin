@@ -4,7 +4,7 @@
  * */
 export function syncAllTable(vm, table1) {
     vm.$refs.editableTable.resetScrollTop();
-    const deleteIds = table1.$refs.editableTable.getDeleteIds();
+    let deleteIds = table1.$refs.editableTable.getDeleteIds();
     let table1Value;
     table1.$refs.editableTable
         .getValuesPromise(false)
@@ -18,8 +18,8 @@ export function syncAllTable(vm, table1) {
                 values.forEach(thisValue => {
                     if (value.id === thisValue.id) {
                         // 判断是否修改了值
-                        const dbFieldName = thisValue["dbFieldName"];
-                        const dbFieldTxt = thisValue["dbFieldTxt"];
+                        let dbFieldName = thisValue["dbFieldName"];
+                        let dbFieldTxt = thisValue["dbFieldTxt"];
 
                         // return
 
@@ -51,7 +51,7 @@ export function syncAllTable(vm, table1) {
                 // return
                 // 判断是否操作了该条数据，若没有操作则代表要执行新增操作
                 if (!flag) {
-                    const record = Object.assign({}, value);
+                    let record = Object.assign({}, value);
                     vm.columns.forEach(column => {
                         if (column.dataIndex !== "dbFieldName" && column.dataIndex !== "dbFieldTxt") {
                             record[column.dataIndex] = column.defaultValue;
@@ -68,12 +68,12 @@ export function syncAllTable(vm, table1) {
  * @author sunjianlei
  **/
 export function setDataSource(vm, queryData) {
-    const dataSource = [];
+    let dataSource = [];
     // 遍历查询出来的数据
     queryData.forEach(value => {
-        const data = { id: value["id"] };
+        let data = { id: value["id"] };
         vm.columns.forEach(column => {
-            const key = column.key;
+            let key = column.key;
             if (key) {
                 data[key] = value[key];
 

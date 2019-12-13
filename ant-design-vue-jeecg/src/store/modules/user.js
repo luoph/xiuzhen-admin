@@ -68,7 +68,7 @@ const user = {
             return new Promise((resolve, reject) => {
                 login(userInfo)
                     .then(response => {
-                        if (response.code === "200") {
+                        if (response.code == "200") {
                             const result = response.result;
                             const userInfo = result.userInfo;
                             Vue.ls.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000);
@@ -88,12 +88,12 @@ const user = {
                     });
             });
         },
-        // 手机号登录
+        //手机号登录
         PhoneLogin({ commit }, userInfo) {
             return new Promise((resolve, reject) => {
                 phoneLogin(userInfo)
                     .then(response => {
-                        if (response.code === "200") {
+                        if (response.code == "200") {
                             const result = response.result;
                             const userInfo = result.userInfo;
                             Vue.ls.set(ACCESS_TOKEN, result.token, 7 * 24 * 60 * 60 * 1000);
@@ -116,14 +116,14 @@ const user = {
         // 获取用户信息
         GetPermissionList({ commit }) {
             return new Promise((resolve, reject) => {
-                const v_token = Vue.ls.get(ACCESS_TOKEN);
-                const params = { token: v_token };
+                let v_token = Vue.ls.get(ACCESS_TOKEN);
+                let params = { token: v_token };
                 queryPermissionsByUser(params)
                     .then(response => {
                         const menuData = response.result.menu;
                         const authData = response.result.auth;
                         const allAuthData = response.result.allAuth;
-                        // Vue.ls.set(USER_AUTH,authData);
+                        //Vue.ls.set(USER_AUTH,authData);
                         sessionStorage.setItem(USER_AUTH, JSON.stringify(authData));
                         sessionStorage.setItem(SYS_BUTTON_AUTH, JSON.stringify(allAuthData));
                         if (menuData && menuData.length > 0) {
@@ -142,16 +142,16 @@ const user = {
         // 登出
         Logout({ commit, state }) {
             return new Promise(resolve => {
-                const logoutToken = state.token;
+                let logoutToken = state.token;
                 commit("SET_TOKEN", "");
                 commit("SET_PERMISSIONLIST", []);
                 Vue.ls.remove(ACCESS_TOKEN);
-                // console.log('logoutToken: '+ logoutToken)
+                //console.log('logoutToken: '+ logoutToken)
                 logout(logoutToken)
                     .then(() => {
-                        // var service = "http://"+window.location.host+"/";
-                        // var serviceUrl = encodeURIComponent(service);
-                        // window.location.href = window._CONFIG['casPrefixUrl']+"/logout?service="+serviceUrl;
+                        //var service = "http://"+window.location.host+"/";
+                        //var serviceUrl = encodeURIComponent(service);
+                        //window.location.href = window._CONFIG['casPrefixUrl']+"/logout?service="+serviceUrl;
                         resolve();
                     })
                     .catch(() => {
