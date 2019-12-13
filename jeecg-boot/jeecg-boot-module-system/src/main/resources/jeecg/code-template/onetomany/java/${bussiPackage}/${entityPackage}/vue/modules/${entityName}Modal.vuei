@@ -154,7 +154,7 @@
       /** 整理成formData */
       classifyIntoFormData(allValues) {
         let main=Object.assign(this.model, allValues.formValue)
-        //时间格式化
+        // 时间格式化
 <#list columns as col><#rt/>
 	<#if col.fieldName!='id' && col.fieldType=='date'>
         main.${col.fieldName}=main.${col.fieldName} ? main.${col.fieldName}.format() : null;
