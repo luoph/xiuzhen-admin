@@ -5,8 +5,8 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="公告类型 1 - 渠道公告 2 - 滚动公告">
-                            <a-input placeholder="请输入公告类型 1 - 渠道公告 2 - 滚动公告" v-model="queryParam.noticeType"></a-input>
+                        <a-form-item label="公告类型">
+                            <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -16,11 +16,6 @@
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="公告内容">
-                                <a-input placeholder="请输入公告内容" v-model="queryParam.content"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
                             <a-form-item label="开始时间">
                                 <a-input placeholder="请输入开始时间" v-model="queryParam.beginTime"></a-input>
                             </a-form-item>
@@ -28,6 +23,11 @@
                         <a-col :md="6" :sm="8">
                             <a-form-item label="结束时间">
                                 <a-input placeholder="请输入结束时间" v-model="queryParam.endTime"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="公告内容">
+                                <a-input placeholder="请输入公告内容" v-model="queryParam.content"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -48,10 +48,10 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('游戏公告')">导出</a-button>
+            <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏公告')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
+            </a-upload> -->
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
@@ -132,9 +132,9 @@ export default {
                     }
                 },
                 {
-                    title: "公告类型 1 - 渠道公告 2 - 滚动公告",
+                    title: "公告类型",
                     align: "center",
-                    dataIndex: "noticeType"
+                    dataIndex: "noticeType_dictText"
                 },
                 {
                     title: "标题",
@@ -157,14 +157,14 @@ export default {
                     dataIndex: "endTime"
                 },
                 {
-                    title: "状态 1 - 可用 0 - 不可用",
+                    title: "状态",
                     align: "center",
-                    dataIndex: "status"
+                    dataIndex: "status_dictText"
                 },
                 {
-                    title: "滚动公告间隔",
+                    title: "滚动公告间隔(秒)",
                     align: "center",
-                    dataIndex: "interval"
+                    dataIndex: "intervalSeconds"
                 },
                 {
                     title: "操作",
@@ -177,8 +177,8 @@ export default {
                 list: "/game/gameNotice/list",
                 delete: "/game/gameNotice/delete",
                 deleteBatch: "/game/gameNotice/deleteBatch",
-                exportXlsUrl: "game/gameNotice/exportXls",
-                importExcelUrl: "game/gameNotice/importExcel"
+                // exportXlsUrl: "game/gameNotice/exportXls",
+                // importExcelUrl: "game/gameNotice/importExcel"
             }
         };
     },
