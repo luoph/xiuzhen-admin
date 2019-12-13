@@ -67,8 +67,7 @@ const permission = {
             return new Promise(resolve => {
                 const { roles } = data;
                 console.log("-----mutations---data----", data);
-                let accessedRouters;
-                accessedRouters = filterAsyncRouter(asyncRouterMap, roles);
+                const accessedRouters = filterAsyncRouter(asyncRouterMap, roles);
                 console.log("-----mutations---accessedRouters----", accessedRouters);
                 commit("SET_ROUTERS", accessedRouters);
                 resolve();
@@ -77,8 +76,8 @@ const permission = {
         // 动态添加主界面路由，需要缓存
         UpdateAppRouter({ commit }, routes) {
             return new Promise(resolve => {
-                //const [ roles ] = routes.constRoutes
-                let routelist = routes.constRoutes;
+                // const [ roles ] = routes.constRoutes
+                const routelist = routes.constRoutes;
                 commit("SET_ROUTERS", routelist);
                 resolve();
             });

@@ -6,8 +6,8 @@ import store from "@/store";
  */
 const init = callback => {
     console.log("-------单点登录开始-------");
-    let token = Vue.ls.get(ACCESS_TOKEN);
-    let st = getUrlParam("ticket");
+    const token = Vue.ls.get(ACCESS_TOKEN);
+    const st = getUrlParam("ticket");
     var service = "http://" + window.location.host + "/";
     if (token) {
         loginSuccess(callback);
@@ -36,7 +36,7 @@ function getUrlParam(paraName) {
         for (var i = 0; i < arrPara.length; i++) {
             arr = arrPara[i].split("=");
 
-            if (arr != null && arr[0] == paraName) {
+            if (arr != null && arr[0] === paraName) {
                 return arr[1];
             }
         }
@@ -46,14 +46,14 @@ function getUrlParam(paraName) {
 }
 
 function validateSt(ticket, service, callback) {
-    let params = {
+    const params = {
         ticket: ticket,
         service: service
     };
     store
         .dispatch("ValidateLogin", params)
         .then(res => {
-            //this.departConfirm(res)
+            // this.departConfirm(res)
             if (res.success) {
                 loginSuccess(callback);
             } else {
@@ -64,7 +64,7 @@ function validateSt(ticket, service, callback) {
         })
         .catch(err => {
             console.log(err);
-            //that.requestFailed(err);
+            // that.requestFailed(err);
         });
 }
 

@@ -9,3 +9,6 @@ node_modules/
 **/*.spec.*
 *.html
 package.json
+
+# 第三方库不检测
+src/utils
