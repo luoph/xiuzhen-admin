@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
@@ -20,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @date 2019-12-13
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @TableName("game_notice")
 @Accessors(chain = true)
 @ApiModel(value = "GameNotice", description = "游戏公告")
@@ -34,8 +37,9 @@ public class GameNotice extends BaseEntity {
     /**
      * 公告类型 1 - 渠道公告 2 - 滚动公告
      */
-    @Excel(name = "公告类型 1 - 渠道公告 2 - 滚动公告", width = 15)
-    @ApiModelProperty(value = "公告类型 1 - 渠道公告 2 - 滚动公告")
+    @Excel(name = "公告类型", width = 15)
+    @Dict(dicCode = "notice_type")
+    @ApiModelProperty(value = "公告类型")
     private java.lang.Integer noticeType;
     /**
      * 标题
@@ -68,13 +72,14 @@ public class GameNotice extends BaseEntity {
     /**
      * 状态 1 - 可用 0 - 不可用
      */
-    @Excel(name = "状态 1 - 可用 0 - 不可用", width = 15)
-    @ApiModelProperty(value = "状态 1 - 可用 0 - 不可用")
+    @Excel(name = "状态", width = 15)
+    @Dict(dicCode = "valid_status")
+    @ApiModelProperty(value = "状态")
     private java.lang.Integer status;
     /**
      * 滚动公告间隔
      */
     @Excel(name = "滚动公告间隔", width = 15)
     @ApiModelProperty(value = "滚动公告间隔")
-    private java.lang.Integer interval;
+    private java.lang.Integer intervalSeconds;
 }
