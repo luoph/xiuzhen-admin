@@ -160,7 +160,7 @@ export default {
             this.close();
         },
         handleChangeTemplateType(value) {
-            //如果是邮件类型那么则改变模板内容是富文本编辑器
+            // 如果是邮件类型那么则改变模板内容是富文本编辑器
             this.useEditor = value == 2;
         }
     }

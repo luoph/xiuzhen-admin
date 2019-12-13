@@ -30,7 +30,7 @@ export default {
         },
         mousedownFn: function(e) {
             if (!this.confirmSuccess) {
-                e.preventDefault && e.preventDefault(); //阻止文字选中等 浏览器默认事件
+                e.preventDefault && e.preventDefault(); // 阻止文字选中等 浏览器默认事件
                 this.mouseMoveStata = true;
                 this.beginClientX = e.clientX;
             }
@@ -49,7 +49,7 @@ export default {
             document.getElementsByClassName("drag_bg")[0].style.width = this.maxwidth + "px";
 
             this.$emit("onSuccess", true);
-        }, //验证成功函数
+        }, // 验证成功函数
         mouseMoveFn(e) {
             if (this.mouseMoveStata) {
                 let width = e.clientX - this.beginClientX;

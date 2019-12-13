@@ -187,7 +187,7 @@ export default {
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
-            let params = this.getQueryParams(); //查询条件
+            let params = this.getQueryParams(); // 查询条件
             getUserList(params).then(res => {
                 if (res.success) {
                     this.dataSource = res.result.records;

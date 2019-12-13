@@ -141,7 +141,7 @@ export default {
         },
         getDataByResult(result) {
             return result.map(item => {
-                //判断是否标记了带有子节点
+                // 判断是否标记了带有子节点
                 if (item[this.hasChildrenField] == "1") {
                     let loadChild = { id: item.id + "_loadChild", name: "loading...", isLoading: true };
                     item.children = [loadChild];
@@ -154,7 +154,7 @@ export default {
             if (expanded) {
                 this.expandedRowKeys.push(record.id);
                 if (record.children.length > 0 && record.children[0].isLoading === true) {
-                    let params = this.getQueryParams(); //查询条件
+                    let params = this.getQueryParams(); // 查询条件
                     params[this.pidField] = record.id;
                     getAction(this.url.childList, params).then(res => {
                         if (res.success) {
@@ -214,7 +214,7 @@ export default {
                 this.getFormDataById(nodeId, this.dataSource);
                 let row = this.parentFormData;
                 this.expandedRowKeys.push(nodeId);
-                let params = this.getQueryParams(); //查询条件
+                let params = this.getQueryParams(); // 查询条件
                 params[this.pidField] = nodeId;
                 getAction(this.url.childList, params).then(res => {
                     console.log("11111", res);

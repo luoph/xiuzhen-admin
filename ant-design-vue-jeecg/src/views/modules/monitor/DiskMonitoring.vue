@@ -24,7 +24,7 @@ export default {
     data() {
         return {
             description: "磁盘监控",
-            //数据集
+            // 数据集
             diskInfo: [],
             url: {
                 queryDiskInfo: "actuator/redis/queryDiskInfo"

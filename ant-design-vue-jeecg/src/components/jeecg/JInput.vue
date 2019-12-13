@@ -5,8 +5,8 @@
 <script>
 const JINPUT_QUERY_LIKE = "like";
 const JINPUT_QUERY_NE = "ne";
-const JINPUT_QUERY_GE = "ge"; //大于等于
-const JINPUT_QUERY_LE = "le"; //小于等于
+const JINPUT_QUERY_GE = "ge"; // 大于等于
+const JINPUT_QUERY_LE = "le"; // 小于等于
 
 export default {
     name: "JInput",

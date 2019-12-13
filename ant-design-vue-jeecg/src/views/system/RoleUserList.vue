@@ -311,7 +311,7 @@ export default {
         onClearSelected() {},
 
         getQueryParams2() {
-            //获取查询条件
+            // 获取查询条件
             let sqp = {};
             if (this.superQueryParams2) {
                 sqp["superQueryParams"] = encodeURI(this.superQueryParams2);
@@ -356,12 +356,12 @@ export default {
                 this.$message.error("请设置url.list2属性!");
                 return;
             }
-            //加载数据 若传入参数1则加载第一页的内容
+            // 加载数据 若传入参数1则加载第一页的内容
             if (arg === 1) {
                 this.ipagination2.current = 1;
             }
             if (this.currentRoleId === "") return;
-            let params = this.getQueryParams2(); //查询条件
+            let params = this.getQueryParams2(); // 查询条件
             params.roleId = this.currentRoleId;
             this.loading2 = true;
             getAction(this.url.list2, params).then(res => {
@@ -473,8 +473,8 @@ export default {
             this.loadData2(1);
         },
         handleTableChange2(pagination, filters, sorter) {
-            //分页、排序、筛选变化时触发
-            //TODO 筛选
+            // 分页、排序、筛选变化时触发
+            // TODO 筛选
             if (Object.keys(sorter).length > 0) {
                 this.isorter2.column = sorter.field;
                 this.isorter2.order = "ascend" == sorter.order ? "asc" : "desc";

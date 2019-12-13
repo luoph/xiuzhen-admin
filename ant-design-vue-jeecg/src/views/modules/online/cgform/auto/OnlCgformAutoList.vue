@@ -216,7 +216,7 @@ export default {
                 scroll: { x: false },
                 // 表头
                 columns: [],
-                //数据集
+                // 数据集
                 dataSource: [],
                 // 选择器
                 selectedRowKeys: [],
@@ -394,7 +394,7 @@ export default {
                 if (arg == 1) {
                     this.table.pagination.current = 1;
                 }
-                let params = this.getQueryParams(); //查询条件
+                let params = this.getQueryParams(); // 查询条件
                 console.log("--onlineList-查询条件-->", params);
                 getAction(`${this.url.getData}${this.code}`, params).then(res => {
                     console.log("--onlineList-列表数据", res);
@@ -497,8 +497,8 @@ export default {
                     link.setAttribute("download", this.description + ".xls");
                     document.body.appendChild(link);
                     link.click();
-                    document.body.removeChild(link); //下载完成移除元素
-                    window.URL.revokeObjectURL(url); //释放掉blob对象
+                    document.body.removeChild(link); // 下载完成移除元素
+                    window.URL.revokeObjectURL(url); // 释放掉blob对象
                 }
             });
         },
@@ -623,7 +623,7 @@ export default {
             }
         },
         cgButtonActionHandler(buttonCode) {
-            //处理自定义button的 需要配置该button自定义sql
+            // 处理自定义button的 需要配置该button自定义sql
             if (!this.table.selectedRowKeys || this.table.selectedRowKeys.length == 0) {
                 this.$message.warning("请先选中一条记录");
                 return false;

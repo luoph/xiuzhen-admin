@@ -36,7 +36,7 @@ const defaultSettings = {
         center: "title",
         right: "hide, custom, month,agendaWeek,agendaDay"
     },
-    //点击今天日列表图
+    // 点击今天日列表图
     eventLimitClick: "day",
     // 隐藏超出的事件
     eventLimit: true,

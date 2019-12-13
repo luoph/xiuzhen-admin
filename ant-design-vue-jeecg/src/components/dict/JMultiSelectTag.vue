@@ -37,7 +37,7 @@ export default {
         } else {
             this.tagType = this.type;
         }
-        //获取字典数据
+        // 获取字典数据
         this.initDictData();
     },
     watch: {
@@ -57,7 +57,7 @@ export default {
             if (this.options && this.options.length > 0) {
                 this.dictOptions = [...this.options];
             } else {
-                //根据字典Code, 初始化字典数组
+                // 根据字典Code, 初始化字典数组
                 ajaxGetDictItems(this.dictCode, null).then(res => {
                     if (res.success) {
                         this.dictOptions = res.result;

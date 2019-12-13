@@ -121,7 +121,7 @@ export default {
         },
         //update-begin-author:taoyan date:20190430 for:动态路由title显示配置的菜单title而不是其对应路由的title
         myMenuSelect(value) {
-            //此处触发动态路由被点击事件
+            // 此处触发动态路由被点击事件
             this.findMenuBykey(this.menus, value.key);
             this.$emit("dynamicRouterShow", value.key, this.activeMenu.meta.title);
         },

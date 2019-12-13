@@ -153,7 +153,7 @@ export default {
                         }
                     })
                     .catch(error => {
-                        console.log("系统消息通知异常", error); //这行打印permissionName is undefined
+                        console.log("系统消息通知异常", error); // 这行打印permissionName is undefined
                         this.stopTimer = true;
                         console.log("清理timer");
                     });
@@ -205,7 +205,7 @@ export default {
         },
         websocketonopen: function() {
             console.log("WebSocket连接成功");
-            //心跳检测重置
+            // 心跳检测重置
             this.heartCheck.reset().start();
         },
         websocketonerror: function(e) {
@@ -214,16 +214,16 @@ export default {
         },
         websocketonmessage: function(e) {
             //console.log("-----接收消息-------",e.data);
-            var data = eval("(" + e.data + ")"); //解析对象
+            var data = eval("(" + e.data + ")"); // 解析对象
             if (data.cmd == "topic") {
-                //系统通知
+                // 系统通知
                 this.loadData();
             } else if (data.cmd == "user") {
-                //用户消息
+                // 用户消息
                 this.loadData();
             }
 
-            //心跳检测重置
+            // 心跳检测重置
             this.heartCheck.reset().start();
         },
         websocketsend(text) {
@@ -269,7 +269,7 @@ export default {
             var that = this;
             if (that.lockReconnect) return;
             that.lockReconnect = true;
-            //没连接上会一直重连，设置延迟避免请求过多
+            // 没连接上会一直重连，设置延迟避免请求过多
             setTimeout(function() {
                 console.info("尝试重连...");
                 that.initWebSocket();
@@ -278,7 +278,7 @@ export default {
         },
         heartCheckFun() {
             var that = this;
-            //心跳检测,每20s心跳一次
+            // 心跳检测,每20s心跳一次
             that.heartCheck = {
                 timeout: 20000,
                 timeoutObj: null,
@@ -291,12 +291,12 @@ export default {
                 start: function() {
                     var self = this;
                     this.timeoutObj = setTimeout(function() {
-                        //这里发送一个心跳，后端收到后，返回一个心跳消息，
+                        // 这里发送一个心跳，后端收到后，返回一个心跳消息，
                         //onmessage拿到返回的心跳就说明连接正常
                         that.websocketsend("HeartBeat");
                         console.info("客户端发送心跳");
-                        //self.serverTimeoutObj = setTimeout(function(){//如果超过一定时间还没重置，说明后端主动断开了
-                        //  that.websock.close();//如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
+                        //self.serverTimeoutObj = setTimeout(function(){ // 如果超过一定时间还没重置，说明后端主动断开了
+                        //  that.websock.close(); // 如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
                         //}, self.timeout)
                     }, this.timeout);
                 }

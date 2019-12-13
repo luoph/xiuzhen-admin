@@ -124,7 +124,7 @@ export default {
             description: "jeecg 生成SysDepart代码管理页面",
             // 查询条件
             queryParam: {},
-            //数据集
+            // 数据集
             factories: "",
             dataSource: [],
             columns: columns,
@@ -236,9 +236,9 @@ export default {
             this.$refs.sysDepartModal.title = "新增";
         },
         handleTableChange(pagination, filters, sorter) {
-            //分页、排序、筛选变化时触发
+            // 分页、排序、筛选变化时触发
             console.log(sorter);
-            //TODO 筛选
+            // TODO 筛选
             if (Object.keys(sorter).length > 0) {
                 this.isorter.column = sorter.field;
                 this.isorter.order = "ascend" == sorter.order ? "asc" : "desc";

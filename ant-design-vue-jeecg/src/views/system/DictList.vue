@@ -139,13 +139,13 @@ export default {
             param.pageSize = this.ipagination.pageSize;
             return filterObj(param);
         },
-        //取消选择
+        // 取消选择
         cancelDict() {
             this.dict = "";
             this.visible = false;
             this.loadData();
         },
-        //编辑字典数据
+        // 编辑字典数据
         editDictItem(record) {
             this.$refs.dictItemList.edit(record);
         },

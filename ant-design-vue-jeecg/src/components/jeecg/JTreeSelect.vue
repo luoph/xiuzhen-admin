@@ -121,7 +121,7 @@ export default {
             }
         },
         onLoadTriggleChange(text) {
-            //只有单选才会触发
+            // 只有单选才会触发
             if (!this.multiple && this.loadTriggleChange) {
                 this.$emit("change", this.value, text);
             }

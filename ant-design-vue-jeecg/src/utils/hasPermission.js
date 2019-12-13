@@ -6,7 +6,7 @@ const hasPermission = {
         Vue.directive("has", {
             inserted: (el, binding, vnode) => {
                 console.log("页面权限控制----");
-                //节点权限处理，如果命中则不进行全局权限处理
+                // 节点权限处理，如果命中则不进行全局权限处理
                 if (!filterNodePermission(el, binding, vnode)) {
                     filterGlobalPermission(el, binding, vnode);
                 }
@@ -83,8 +83,8 @@ export function filterGlobalPermission(el, binding, vnode) {
             allPermissionList.push(authItem);
         }
     }
-    //设置全局配置是否有命中
-    var invalidFlag = false; //无效命中
+    // 设置全局配置是否有命中
+    var invalidFlag = false; // 无效命中
     if (allPermissionList != null && allPermissionList != "" && allPermissionList != undefined && allPermissionList.length > 0) {
         for (var itemG of allPermissionList) {
             if (binding.value === itemG.action) {

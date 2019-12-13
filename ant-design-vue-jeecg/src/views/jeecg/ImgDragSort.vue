@@ -40,7 +40,7 @@ export default {
         return {
             description: "图片拖拽排序",
             spinning: false,
-            //数据集
+            // 数据集
             dataSource: [
                 { id: "000", sort: 0, filePath: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2735633715,2749454924&fm=27&gp=0.jpg" },
                 { id: "111", sort: 1, filePath: "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3967239004,1951414302&fm=27&gp=0.jpg" },

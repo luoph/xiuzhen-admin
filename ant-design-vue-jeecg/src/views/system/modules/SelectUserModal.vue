@@ -105,7 +105,7 @@ export default {
                     scopedSlots: { customRender: "action" }
                 }
             ],
-            //数据集
+            // 数据集
             dataSource1: [],
             dataSource2: [],
             // 分页参数
@@ -156,11 +156,11 @@ export default {
             this.visible = true;
         },
         loadData(arg) {
-            //加载数据 若传入参数1则加载第一页的内容
+            // 加载数据 若传入参数1则加载第一页的内容
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
-            var params = this.getQueryParams(); //查询条件
+            var params = this.getQueryParams(); // 查询条件
             getAction(this.url.list, params).then(res => {
                 if (res.success) {
                     this.dataSource1 = res.result.records;
@@ -213,7 +213,7 @@ export default {
             this.dataSource2.splice(this.dataSource2.indexOf(record), 1);
         },
         handleTableChange(pagination, filters, sorter) {
-            //分页、排序、筛选变化时触发
+            // 分页、排序、筛选变化时触发
             console.log(sorter);
             //TODO 筛选
             if (Object.keys(sorter).length > 0) {

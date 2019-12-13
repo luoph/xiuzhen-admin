@@ -143,17 +143,17 @@ export default {
     },
     data() {
         return {
-            departDisabled: false, //是否是我的部门调用该页面
-            roleDisabled: false, //是否是角色维护调用该页面
+            departDisabled: false, // 是否是我的部门调用该页面
+            roleDisabled: false, // 是否是角色维护调用该页面
             modalWidth: 800,
             drawerWidth: 700,
             modaltoggleFlag: true,
             confirmDirty: false,
-            selectedDepartKeys: [], //保存用户选择部门id
+            selectedDepartKeys: [], // 保存用户选择部门id
             checkedDepartKeys: [],
             checkedDepartNames: [], // 保存部门的名称 =>title
             checkedDepartNameString: "", // 保存部门的名称 =>title
-            userId: "", //保存用户id
+            userId: "", // 保存用户id
             disableSubmit: false,
             userDepartModel: { userId: "", departIdList: [] }, // 保存SysUserDepart的用户部门中间表数据需要的对象
             dateFormat: "YYYY-MM-DD",
@@ -233,7 +233,7 @@ export default {
                 imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
                 userWithDepart: "/sys/user/userDepartList", // 引入为指定用户查看部门信息需要的url
                 userId: "/sys/user/generateUserId", // 引入生成添加用户情况下的url
-                syncUserByUserName: "/process/extActProcess/doSyncUserByUserName" //同步用户到工作流
+                syncUserByUserName: "/process/extActProcess/doSyncUserByUserName" // 同步用户到工作流
             }
         };
     },
@@ -250,7 +250,7 @@ export default {
         isDisabledAuth(code) {
             return disabledAuthFilter(code);
         },
-        //窗口最大化切换
+        // 窗口最大化切换
         toggleScreen() {
             if (this.modaltoggleFlag) {
                 this.modalWidth = window.innerWidth;
@@ -549,7 +549,7 @@ export default {
                 this.checkedDepartNameString = this.checkedDepartNames.join(",");
             }
             this.userDepartModel.departIdList = this.selectedDepartKeys;
-            this.checkedDepartKeys = this.selectedDepartKeys; //更新当前的选择keys
+            this.checkedDepartKeys = this.selectedDepartKeys; // 更新当前的选择keys
         },
         // 根据屏幕变化,设置抽屉尺寸
         resetScreenSize() {

@@ -117,7 +117,6 @@
 </template>
 
 <script>
-//import md5 from "md5"
 import api from "@/api";
 import TwoStepCaptcha from "@/components/tools/TwoStepCaptcha";
 import { mapActions } from "vuex";
@@ -175,7 +174,7 @@ export default {
         Vue.ls.remove(ACCESS_TOKEN);
         this.getRouterData();
         // update-begin- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
-        //this.getEncrypte();
+        // this.getEncrypte();
         // update-end- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
     },
     methods: {
@@ -204,8 +203,8 @@ export default {
                     if (!err) {
                         loginParams.username = values.username;
                         // update-begin- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
-                        //loginParams.password = md5(values.password)
-                        //loginParams.password = encryption(values.password,that.encryptedString.key,that.encryptedString.iv)
+                        // loginParams.password = md5(values.password)
+                        // loginParams.password = encryption(values.password,that.encryptedString.key,that.encryptedString.iv)
                         loginParams.password = values.password;
                         loginParams.remember_me = values.rememberMe;
                         // update-begin- --- author:scott ------ date:20190805 ---- for:密码加密逻辑暂时注释掉，有点问题
@@ -345,7 +344,7 @@ export default {
         departConfirm(res) {
             if (res.success) {
                 let multi_depart = res.result.multi_depart;
-                //0:无部门 1:一个部门 2:多个部门
+                // 0:无部门 1:一个部门 2:多个部门
                 if (multi_depart == 0) {
                     this.loginSuccess();
                     this.$notification.warn({
@@ -379,7 +378,7 @@ export default {
                     const userInfo = res.result.userInfo;
                     Vue.ls.set(USER_INFO, userInfo, 7 * 24 * 60 * 60 * 1000);
                     store.commit("SET_INFO", userInfo);
-                    //console.log("---切换组织机构---userInfo-------",store.getters.userInfo.orgCode);
+                    // console.log("---切换组织机构---userInfo-------",store.getters.userInfo.orgCode);
                     this.departClear();
                     this.loginSuccess();
                 } else {
@@ -408,7 +407,7 @@ export default {
                 });
             });
         },
-        //获取密码加密规则
+        // 获取密码加密规则
         getEncrypte() {
             var encryptedString = Vue.ls.get(ENCRYPTED_STRING);
             if (encryptedString == null) {

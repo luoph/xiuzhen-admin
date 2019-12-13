@@ -92,7 +92,7 @@ export default {
             this.init();
         },
         init() {
-            var params = { userName: this.username }; //查询条件
+            var params = { userName: this.username }; // 查询条件
             getAction(this.url.queryByUserName, params).then(res => {
                 if (res.success) {
                     console.log("获取流程节点信息", res);

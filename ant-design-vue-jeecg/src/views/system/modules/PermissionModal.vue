@@ -131,14 +131,14 @@ export default {
             disableSubmit: false,
             model: {},
             localMenuType: 0,
-            alwaysShow: false, //表单元素-聚合路由
-            menuHidden: false, //表单元素-隐藏路由
-            routeSwitch: true, //是否路由菜单
+            alwaysShow: false, // 表单元素-聚合路由
+            menuHidden: false, // 表单元素-隐藏路由
+            routeSwitch: true, // 是否路由菜单
             /*update_begin author:wuxianquan date:20190908 for:定义变量，初始值代表内部打开*/
-            internalOrExternal: false, //菜单打开方式
+            internalOrExternal: false, // 菜单打开方式
             /*update_end author:wuxianquan date:20190908 for:定义变量，初始值代表内部打开*/
-            isKeepalive: true, //是否缓存路由
-            show: true, //根据菜单类型，动态显示隐藏表单元素
+            isKeepalive: true, // 是否缓存路由
+            show: true, // 根据菜单类型，动态显示隐藏表单元素
             menuLabel: "菜单名称",
             isRequrie: true, // 是否需要验证
             labelCol: {
@@ -197,7 +197,7 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             //--------------------------------------------------------------------------------------------------
-            //根据菜单类型，动态展示页面字段
+            // 根据菜单类型，动态展示页面字段
             console.log(record);
             this.alwaysShow = !record.alwaysShow ? false : true;
             this.menuHidden = !record.hidden ? false : true;

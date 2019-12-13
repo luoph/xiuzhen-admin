@@ -47,7 +47,7 @@ export default {
     },
     data() {
         return {
-            //初始化配置
+            // 初始化配置
             init: {
                 language_url: "/tinymce/langs/zh_CN.js",
                 language: "zh_CN",
@@ -73,7 +73,7 @@ export default {
         onClick(e) {
             this.$emit("onClick", e, tinymce);
         },
-        //可以添加一些自己的自定义事件，如清空内容
+        // 可以添加一些自己的自定义事件，如清空内容
         clear() {
             this.myValue = "";
         }

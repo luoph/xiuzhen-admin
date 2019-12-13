@@ -45,7 +45,7 @@ export default {
                             children: value,
                             attrs: {}
                         };
-                        //当前列跨行的条数
+                        // 当前列跨行的条数
                         var a = parseInt(this.levelNum);
                         var b = parseInt(this.gridNum) * parseInt(this.boxNum);
                         console.log(a);
@@ -100,7 +100,7 @@ export default {
                     dataIndex: "maxNum"
                 }
             ],
-            //数据集
+            // 数据集
             dataSource: [
                 {
                     id: "cb1dfd12cbeca3f8ba121439ee7e2411",

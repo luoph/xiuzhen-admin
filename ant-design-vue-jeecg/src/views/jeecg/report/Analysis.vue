@@ -401,7 +401,7 @@ export default {
                 showSizeChanger: true,
                 total: 0
             },
-            //数据集
+            // 数据集
             dataSource: [],
             dataSource1: [],
             dataSource2: [],
@@ -459,7 +459,7 @@ export default {
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
-            var params = this.getQueryParams(); //查询条件
+            var params = this.getQueryParams(); // 查询条件
             getAction(this.url.list, params).then(res => {
                 console.log("dsdsd", res.result);
                 this.dataSource1 = res.result.data1;

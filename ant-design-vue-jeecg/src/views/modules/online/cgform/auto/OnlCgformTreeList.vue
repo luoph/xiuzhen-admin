@@ -146,7 +146,7 @@ export default {
             loading: false,
             // 表头
             columns: [],
-            //数据集
+            // 数据集
             dataSource: [],
             // 选择器
             selectedRowKeys: [],
@@ -291,29 +291,29 @@ export default {
             this.pidField = res.result.pidField;
             this.hasChildrenField = res.result.hasChildrenField;
             this.textField = res.result.textField;
-            //自定义按钮
+            // 自定义按钮
             this.initCgButtonList(res.result.cgButtonList);
-            //JS增强
+            // JS增强
             this.initCgEnhanceJs(res.result.enhanceJs);
-            //操作按钮权限
+            // 操作按钮权限
             this.initButtonSwitch(res.result.hideColumns);
             let currColumns = res.result.columns;
             let textFieldIndex = -1;
             let hasBpmStatus = false;
             for (let a = 0; a < currColumns.length; a++) {
                 currColumns[a].align = "left";
-                //找到显示列
+                // 找到显示列
                 if (this.textField == currColumns[a].dataIndex) {
                     textFieldIndex = a;
                 }
-                //数据字典翻译
+                // 数据字典翻译
                 if (currColumns[a].customRender) {
                     let dictCode = currColumns[a].customRender;
                     currColumns[a].customRender = text => {
                         return filterMultiDictText(this.dictOptions[dictCode], text);
                     };
                 }
-                //判断是否有bpm_status
+                // 判断是否有bpm_status
                 if (currColumns[a].dataIndex.toLowerCase() == "bpm_status") {
                     hasBpmStatus = true;
                 }
@@ -327,14 +327,14 @@ export default {
             currColumns.push(this.actionColumn);
             this.columns = [...currColumns];
         },
-        //加载根节点
+        // 加载根节点
         loadData(arg) {
             if (arg == 1) {
                 this.pagination.current = 1;
             }
             this.loading = true;
             this.expandedRowKeys = [];
-            let params = this.getQueryParams(); //查询条件
+            let params = this.getQueryParams(); // 查询条件
             params[this.pidField] = "0";
             console.log("--onlineList-查询条件-->", params);
             getAction(`${this.url.getTreeData}${this.code}`, params).then(res => {
@@ -362,13 +362,13 @@ export default {
                 this.loading = false;
             });
         },
-        //加载叶子节点
+        // 加载叶子节点
         handleExpand(expanded, record) {
             // 判断是否是展开状态
             if (expanded) {
                 this.expandedRowKeys.push(record.id);
                 if (record.children.length > 0 && record.children[0].isLoading === true) {
-                    let params = this.getQueryParams(); //查询条件
+                    let params = this.getQueryParams(); // 查询条件
                     params[this.pidField] = record.id;
                     getAction(`${this.url.getTreeData}${this.code}`, params).then(res => {
                         if (res.success) {
@@ -541,8 +541,8 @@ export default {
                     link.setAttribute("download", this.description + ".xls");
                     document.body.appendChild(link);
                     link.click();
-                    document.body.removeChild(link); //下载完成移除元素
-                    window.URL.revokeObjectURL(url); //释放掉blob对象
+                    document.body.removeChild(link); // 下载完成移除元素
+                    window.URL.revokeObjectURL(url); // 释放掉blob对象
                 }
             });
         },
@@ -597,7 +597,7 @@ export default {
             }
         },
         cgButtonActionHandler(buttonCode) {
-            //处理自定义button的 需要配置该button自定义sql
+            // 处理自定义button的 需要配置该button自定义sql
             if (!this.selectedRowKeys || this.selectedRowKeys.length == 0) {
                 this.$message.warning("请先选中一条记录");
                 return false;
@@ -623,7 +623,7 @@ export default {
         },
         /*-------JS增强-end----------*/
         showOptButton(opt, record) {
-            //只有当按钮属性为false,或是按钮属性为true但是流程已提交时才隐藏
+            // 只有当按钮属性为false,或是按钮属性为true但是流程已提交时才隐藏
             if (!this.buttonSwitch[opt]) {
                 return false;
             } else {
