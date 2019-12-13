@@ -1508,10 +1508,10 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-ant-design-vue@^1.4.0:
-  version "1.4.4"
-  resolved "https://registry.npmjs.org/ant-design-vue/-/ant-design-vue-1.4.4.tgz#e3950489324a870273928ed22f5dabf6284424a7"
-  integrity sha512-ASRR/rn+ONAeNWd96MzCpReZa4177fdwEBHpgPc/L0Bj/1EakJNN54JacKVXCXxnJt0VI2UXByfgUibpnOQwRQ==
+ant-design-vue@^1.4.10:
+  version "1.4.10"
+  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-1.4.10.tgz#26bf3570a3c93d54bae571e98f29457b0fd116d8"
+  integrity sha1-Jr81cKPJPVS65XHpjylFew/RFtg=
   dependencies:
     "@ant-design/icons" "^2.1.1"
     "@ant-design/icons-vue" "^2.0.0"
