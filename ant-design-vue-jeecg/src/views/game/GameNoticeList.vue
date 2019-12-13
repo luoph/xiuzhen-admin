@@ -63,7 +63,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -169,7 +170,7 @@ export default {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
-                    scopedSlots: { customRender: "action" },
+                    scopedSlots: { customRender: "action" }
                 }
             ],
             url: {
@@ -177,17 +178,17 @@ export default {
                 delete: "/game/gameNotice/delete",
                 deleteBatch: "/game/gameNotice/deleteBatch",
                 exportXlsUrl: "game/gameNotice/exportXls",
-                importExcelUrl: "game/gameNotice/importExcel",
-            },
-        }
+                importExcelUrl: "game/gameNotice/importExcel"
+            }
+        };
     },
     computed: {
         importExcelUrl: function() {
-            return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
     methods: {}
-}
+};
 </script>
 <style scoped>
 @import "~@assets/less/common.less";

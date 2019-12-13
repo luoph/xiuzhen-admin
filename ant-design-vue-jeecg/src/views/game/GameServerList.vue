@@ -22,10 +22,10 @@
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
-                        <a-form-item label="地址">
-                            <a-input placeholder="地址" v-model="queryParam.host"></a-input>
-                        </a-form-item>
-                    </a-col>
+                            <a-form-item label="地址">
+                                <a-input placeholder="地址" v-model="queryParam.host"></a-input>
+                            </a-form-item>
+                        </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="登录地址和端口">
                                 <a-input placeholder="登录地址和端口" v-model="queryParam.loginUrl"></a-input>

@@ -1,10 +1,10 @@
 <template>
     <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
-    <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+        <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告类型 1 - 渠道公告 2 - 滚动公告">
-                    <a-input-number v-decorator="[ 'noticeType', validatorRules.noticeType]" />
+                    <a-input-number v-decorator="['noticeType', validatorRules.noticeType]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="标题">
                     <a-input placeholder="请输入标题" v-decorator="['title', {}]" />
@@ -13,16 +13,16 @@
                     <a-input placeholder="请输入公告内容" v-decorator="['content', validatorRules.content]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开始时间">
-                    <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'beginTime', validatorRules.beginTime]" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="结束时间">
-                    <a-date-picker showTime format='YYYY-MM-DD HH:mm:ss' v-decorator="[ 'endTime', validatorRules.endTime]" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态 1 - 可用 0 - 不可用">
                     <a-input placeholder="请输入状态 1 - 可用 0 - 不可用" v-decorator="['status', validatorRules.status]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="滚动公告间隔">
-                    <a-input-number v-decorator="[ 'interval', {}]" />
+                    <a-input-number v-decorator="['interval', {}]" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -47,11 +47,11 @@ export default {
             model: {},
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 5 },
+                sm: { span: 5 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 16 },
+                sm: { span: 16 }
             },
 
             confirmLoading: false,
@@ -61,13 +61,13 @@ export default {
                 content: { rules: [{ required: true, message: "请输入公告内容!" }] },
                 beginTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
-                status: { rules: [{ required: true, message: "请输入状态 1 - 可用 0 - 不可用!" }] },
+                status: { rules: [{ required: true, message: "请输入状态 1 - 可用 0 - 不可用!" }] }
             },
             url: {
                 add: "/game/gameNotice/add",
-                edit: "/game/gameNotice/edit",
-            },
-        }
+                edit: "/game/gameNotice/edit"
+            }
+        };
     },
     created() {},
     methods: {
@@ -79,10 +79,10 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "noticeType", "title", "content", "status", "interval"))
+                this.form.setFieldsValue(pick(this.model, "noticeType", "title", "content", "status", "interval"));
                 // 时间格式化
-                this.form.setFieldsValue({beginTime : this.model.beginTime ? moment(this.model.beginTime) : null})
-                this.form.setFieldsValue({endTime : this.model.endTime ? moment(this.model.endTime) : null})
+                this.form.setFieldsValue({ beginTime: this.model.beginTime ? moment(this.model.beginTime) : null });
+                this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
             });
         },
         close() {
@@ -106,8 +106,8 @@ export default {
                     }
                     let formData = Object.assign(this.model, values);
                     // 时间格式化
-                    formData.beginTime=formData.beginTime?formData.beginTime.format('YYYY-MM-DD HH:mm:ss'):null;
-                    formData.endTime=formData.endTime?formData.endTime.format('YYYY-MM-DD HH:mm:ss'):null;
+                    formData.beginTime = formData.beginTime ? formData.beginTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
 
                     console.log(formData);
                     httpAction(httpUrl, formData, method)
@@ -130,7 +130,7 @@ export default {
             this.close();
         }
     }
-}
+};
 </script>
 
 // <style lang="less" scoped></style>
