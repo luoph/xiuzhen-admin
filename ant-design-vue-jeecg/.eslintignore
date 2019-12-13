@@ -1,2 +1,11 @@
-/src
-/out
+out/
+es/
+lib/
+_site/
+dist/
+**/style/
+/components/test/*
+node_modules/
+**/*.spec.*
+*.html
+package.json
