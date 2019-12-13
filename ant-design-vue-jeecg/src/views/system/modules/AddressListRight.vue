@@ -5,20 +5,20 @@
                 <a-row :gutter="10">
                     <a-col :md="6" :sm="12">
                         <a-form-item label="姓名" style="margin-left:8px">
-                            <a-input placeholder="请输入姓名查询" v-model="queryParam.realname"></a-input>
+                            <a-input v-model="queryParam.realname" placeholder="请输入姓名查询"></a-input>
                         </a-form-item>
                     </a-col>
 
                     <a-col :md="6" :sm="12">
                         <a-form-item label="工号" style="margin-left:8px">
-                            <a-input placeholder="请输入工号查询" v-model="queryParam.workNo"></a-input>
+                            <a-input v-model="queryParam.workNo" placeholder="请输入工号查询"></a-input>
                         </a-form-item>
                     </a-col>
 
                     <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                         <a-col :md="6" :sm="24">
-                            <a-button type="primary" @click="searchQuery" icon="search" style="margin-left: 18px">查询</a-button>
-                            <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+                            <a-button type="primary" icon="search" style="margin-left: 18px" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                         </a-col>
                     </span>
                 </a-row>

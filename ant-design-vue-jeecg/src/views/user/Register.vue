@@ -33,7 +33,7 @@
                     fieldDecoratorId="password"
                     :fieldDecoratorOptions="{ rules: [{ required: false }, { validator: this.handlePasswordLevel }], validateTrigger: ['change', 'blur'] }"
                 >
-                    <a-input size="large" type="password" @click="handlePasswordInputClick" autocomplete="false" placeholder="至少8位密码，区分大小写"></a-input>
+                    <a-input size="large" type="password" autocomplete="false" placeholder="至少8位密码，区分大小写" @click="handlePasswordInputClick"></a-input>
                 </a-form-item>
             </a-popover>
 
@@ -220,7 +220,7 @@ export default {
 
         handlePasswordCheck(rule, value, callback) {
             let password = this.form.getFieldValue("password");
-            //console.log('value', value)
+            // console.log('value', value)
             if (value === undefined) {
                 callback(new Error("请输入密码"));
             }
