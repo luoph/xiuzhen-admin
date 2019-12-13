@@ -14,7 +14,7 @@ module.exports = {
     // add your custom rules here
     //it is base on https://github.com/vuejs/eslint-config-vue
     rules: {
-        "generator-star-spacing": "off",
+        "generator-star-spacing": [2, { before: true, after: true }],
         "no-mixed-operators": 0,
         "vue/attribute-hyphenation": 0,
         "vue/component-name-in-template-casing": 0,
@@ -29,7 +29,7 @@ module.exports = {
         "vue/no-use-v-if-with-v-for": 0,
         "vue/no-v-html": "off",
         "vue/singleline-html-element-content-newline": "off",
-        "no-console": 0,
+        "no-console": "off",
         indent: [2, 4, { SwitchCase: 1 }],
         "accessor-pairs": 2,
         "arrow-spacing": [2, { before: true, after: true }],
@@ -44,7 +44,6 @@ module.exports = {
         "dot-location": [2, "property"],
         "eol-last": 2,
         eqeqeq: ["error", "always", { null: "ignore" }],
-        "generator-star-spacing": [2, { before: true, after: true }],
         "handle-callback-err": [2, "^(err|error)$"],
         "jsx-quotes": [2, "prefer-single"],
         "key-spacing": [2, { beforeColon: false, afterColon: true }],
@@ -53,7 +52,6 @@ module.exports = {
         "new-parens": 2,
         "no-array-constructor": 2,
         "no-caller": 2,
-        "no-console": "off",
         "no-class-assign": 2,
         "no-cond-assign": 2,
         "no-const-assign": 2,
@@ -126,8 +124,6 @@ module.exports = {
         "one-var": [2, { initialized: "never" }],
         "operator-linebreak": [2, "after", { overrides: { "?": "before", ":": "before" } }],
         "padded-blocks": [2, "never"],
-        quotes: [2, "single", { avoidEscape: true, allowTemplateLiterals: true }],
-        semi: [2, "never"],
         "semi-spacing": [2, { before: false, after: true }],
         "space-before-blocks": [2, "always"],
         "space-before-function-paren": [2, "never"],
