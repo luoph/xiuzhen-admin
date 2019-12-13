@@ -10,7 +10,7 @@ const api = {
 
 export default api;
 
-//post
+// post
 export function postAction(url, parameter) {
     return axios({
         url: url,
@@ -19,7 +19,7 @@ export function postAction(url, parameter) {
     });
 }
 
-//post method= {post | put}
+// post method= {post | put}
 export function httpAction(url, parameter, method) {
     return axios({
         url: url,
@@ -28,7 +28,7 @@ export function httpAction(url, parameter, method) {
     });
 }
 
-//put
+// put
 export function putAction(url, parameter) {
     return axios({
         url: url,
@@ -37,7 +37,7 @@ export function putAction(url, parameter) {
     });
 }
 
-//get
+// get
 export function getAction(url, parameter) {
     return axios({
         url: url,
@@ -46,7 +46,7 @@ export function getAction(url, parameter) {
     });
 }
 
-//deleteAction
+// deleteAction
 export function deleteAction(url, parameter) {
     return axios({
         url: url,
