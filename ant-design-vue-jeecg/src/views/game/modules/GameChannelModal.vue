@@ -13,7 +13,9 @@
                     <a-input-number v-decorator="['position', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告id">
-                    <a-input placeholder="请输入公告id" v-decorator="['noticeId', {}]" />
+                    <a-select placeholder="请选择公告id" v-decorator="['noticeId', {}]">
+                        <a-select-option v-for="notice in noticeList" :key="notice.id" :value="notice.id"> {{ notice.title }}({{ notice.id }}) </a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="大渠道描述">
                     <a-input placeholder="请输入大渠道描述" v-decorator="['remark', {}]" />
@@ -51,6 +53,7 @@ export default {
             visible: false,
             model: {},
             gameList: [],
+            noticeList: [],
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -68,12 +71,14 @@ export default {
             url: {
                 add: "/game/gameChannel/add",
                 edit: "/game/gameChannel/edit",
-                gameInfoListUrl: "/game/gameInfo/list"
+                gameInfoListUrl: "/game/gameInfo/list",
+                noticeListUrl: "/game/gameNotice/list"
             }
         };
     },
     created() {
         this.queryGameInfoList();
+        this.queryNoticeList();
     },
     methods: {
         queryGameInfoList() {
@@ -87,6 +92,20 @@ export default {
                     }
                 } else {
                     this.gameList = [];
+                }
+            });
+        },
+        queryNoticeList() {
+            let that = this;
+            getAction(that.url.noticeListUrl).then(res => {
+                if (res.success) {
+                    if (res.result instanceof Array) {
+                        this.noticeList = res.result;
+                    } else if (res.result.records instanceof Array) {
+                        this.noticeList = res.result.records;
+                    }
+                } else {
+                    this.noticeList = [];
                 }
             });
         },
