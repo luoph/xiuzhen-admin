@@ -31,7 +31,7 @@ module.exports = {
         "no-self-compare": "error",
         "no-shadow-restricted-names": "warn",
         "no-unused-vars": "warn",
-        "prefer-const": ["error", { ignoreReadBeforeAssign: false }],
+        // "prefer-const": ["error", { ignoreReadBeforeAssign: false }],
         "semi-spacing": ["error", { before: false, after: true }],
         "spaced-comment": ["error", "always", { markers: ["global", "globals", "eslint", "eslint-disable", "*package", "!", ","] }],
         "vue/attribute-hyphenation": "off",
@@ -46,7 +46,6 @@ module.exports = {
         "vue/no-unused-components": "off",
         "vue/no-use-v-if-with-v-for": "off",
         "vue/singleline-html-element-content-newline": "off",
-        eqeqeq: ["error", "always", { null: "ignore" }],
         indent: ["error", 4, { SwitchCase: 1 }]
     }
 };
