@@ -235,7 +235,7 @@ export default {
             }
         },
         websocketclose: function(e) {
-            console.log("connection closed (" + e.code + ")");
+            // console.log("connection closed (" + e.code + ")");
             this.reconnect();
         },
 
