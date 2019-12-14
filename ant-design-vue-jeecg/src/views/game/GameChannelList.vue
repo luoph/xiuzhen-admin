@@ -251,7 +251,7 @@ export default {
         writeServerFileUrl() {
             // 刷新服务器列表
             console.log("开始刷新服务器列表");
-            getAction(that.url.writeServerFileUrl).then(res => {
+            getAction(this.url.writeServerFileUrl).then(res => {
                 if (res.success) {
                     this.$message.success("刷新成功");
                 } else {
