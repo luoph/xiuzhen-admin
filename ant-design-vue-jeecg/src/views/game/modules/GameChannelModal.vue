@@ -1,59 +1,55 @@
 <template>
-    <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
-        <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
+    <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道名称">
-                    <a-input placeholder="请输入渠道名称" v-decorator="['name', validatorRules.name]" />
+                    <a-form-item label="渠道名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入渠道名称"></a-input>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
-                    <a-input placeholder="请输入唯一标识" v-decorator="['simpleName', {}]" />
+                <a-form-item label="唯一标识" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['simpleName', validatorRules.simpleName]" placeholder="请输入唯一标识"></a-input>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="排序字段">
-                    <a-input-number v-decorator="['position', {}]" />
+                <a-form-item label="排序字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入排序字段" style="width: 100%" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告id">
-                    <a-select placeholder="请选择公告id" v-decorator="['noticeId', {}]">
-                        <a-select-option v-for="notice in noticeList" :key="notice.id" :value="notice.id"> {{ notice.title }}({{ notice.id }}) </a-select-option>
-                    </a-select>
+                <a-form-item label="公告id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请输入公告id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="大渠道描述">
-                    <a-input placeholder="请输入大渠道描述" v-decorator="['remark', {}]" />
+                <a-form-item label="大渠道描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入大渠道描述"></a-input>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
-                    <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
+                <a-form-item label="扩展字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['extra', validatorRules.extra]" placeholder="请输入扩展字段"></a-input>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
-                    <a-select placeholder="请选择游戏编号" v-decorator="['gameId', {}]">
-                        <a-select-option v-for="game in gameList" :key="game.id" :value="game.id"> {{ game.name }}({{ game.id }}) </a-select-option>
-                    </a-select>
+                <a-form-item label="游戏编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['gameId', validatorRules.gameId]" placeholder="请输入游戏编号" style="width: 100%" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="分组">
-                    <a-input placeholder="请输入分组" v-decorator="['groupName', {}]" />
+                <a-form-item label="分组" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['groupName', validatorRules.groupName]" placeholder="请输入分组"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
-        <!-- </a-modal> -->
+    <!-- </a-modal> -->
         <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
     </a-drawer>
 </template>
 
 <script>
-import { getAction, putAction, httpAction } from "@/api/manage";
+import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
-import moment from "moment";
-import Vue from "vue";
 
 export default {
     name: "GameChannelModal",
+    components: {
+    },
     data() {
         return {
+            form: this.$form.createForm(this),
             title: "操作",
+            width: 800,
             visible: false,
             model: {},
-            gameList: [],
-            noticeList: [],
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -62,53 +58,26 @@ export default {
                 xs: { span: 24 },
                 sm: { span: 16 }
             },
-
             confirmLoading: false,
-            form: this.$form.createForm(this),
             validatorRules: {
-                name: { rules: [{ required: true, message: "请输入渠道名称!" }] }
+                name: { rules: [{ required: true, message: "请输入渠道名称!" }] },
+                simpleName: {},
+                position: {},
+                noticeId: {},
+                remark: {},
+                extra: {},
+                gameId: {},
+                groupName: {},
             },
             url: {
                 add: "/game/gameChannel/add",
-                edit: "/game/gameChannel/edit",
-                gameInfoListUrl: "/game/gameInfo/list",
-                noticeListUrl: "/game/gameNotice/list"
+                edit: "/game/gameChannel/edit"
             }
         };
     },
     created() {
-        this.queryGameInfoList();
-        this.queryNoticeList();
     },
     methods: {
-        queryGameInfoList() {
-            let that = this;
-            getAction(that.url.gameInfoListUrl).then(res => {
-                if (res.success) {
-                    if (res.result instanceof Array) {
-                        this.gameList = res.result;
-                    } else if (res.result.records instanceof Array) {
-                        this.gameList = res.result.records;
-                    }
-                } else {
-                    this.gameList = [];
-                }
-            });
-        },
-        queryNoticeList() {
-            let that = this;
-            getAction(that.url.noticeListUrl).then(res => {
-                if (res.success) {
-                    if (res.result instanceof Array) {
-                        this.noticeList = res.result;
-                    } else if (res.result.records instanceof Array) {
-                        this.noticeList = res.result.records;
-                    }
-                } else {
-                    this.noticeList = [];
-                }
-            });
-        },
         add() {
             this.edit({});
         },
@@ -118,7 +87,6 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "name", "simpleName", "position", "noticeId", "remark", "extra", "gameId", "groupName"));
-                // 时间格式化
             });
         },
         close() {
@@ -141,9 +109,7 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-                    // 时间格式化
-
-                    console.log(formData);
+                    console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
                             if (res.success) {
@@ -162,7 +128,10 @@ export default {
         },
         handleCancel() {
             this.close();
-        }
+        },
+        popupCallback(row) {
+            this.form.setFieldsValue(pick(row, "name", "simpleName", "position", "noticeId", "remark", "extra", "gameId", "groupName"));
+        },
     }
 };
 </script>
