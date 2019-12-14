@@ -150,7 +150,7 @@ export default {
                 delete: "/${entityPackage}/${entityName?uncap_first}/delete",
                 deleteBatch: "/${entityPackage}/${entityName?uncap_first}/deleteBatch",
                 exportXlsUrl: "${entityPackage}/${entityName?uncap_first}/exportXls",
-                importExcelUrl: "${entityPackage}/${entityName?uncap_first}/importExcel",
+                importExcelUrl: "/${entityPackage}/${entityName?uncap_first}/importExcel",
             },
         }
     },
