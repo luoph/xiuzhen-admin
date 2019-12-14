@@ -206,6 +206,7 @@ export default {
                 list: "/game/gameChannel/list",
                 delete: "/game/gameChannel/delete",
                 deleteBatch: "/game/gameChannel/deleteBatch",
+                writeServerFileUrl: "/game/gameChannel/writeServerFileUrl",
                 // exportXlsUrl: "game/gameChannel/exportXls",
                 // importExcelUrl: "game/gameChannel/importExcel",
                 // 游戏列表
@@ -247,9 +248,16 @@ export default {
         editChannelServer(record) {
             this.$refs.channelServerList.edit(record);
         },
-        generateServerFile() {
+        writeServerFileUrl() {
             // 刷新服务器列表
             console.log("开始刷新服务器列表");
+            getAction(that.url.writeServerFileUrl).then(res => {
+                if (res.success) {
+                    this.$message.success("刷新成功");
+                } else {
+                    this.$message.success("刷新失败");
+                }
+            });
             console.log("刷新服务器列表完成");
         }
     }

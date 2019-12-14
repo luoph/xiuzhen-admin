@@ -29,7 +29,7 @@ public class GameChannel extends BaseEntity {
      */
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "自增主键")
-    private java.lang.Integer id;
+    private java.lang.Long id;
     /**
      * 渠道名称
      */
