@@ -77,7 +77,7 @@
                     </template>
 </#if>
 <#if query_flag>
-                    <a-col :md="6" :sm="8" >
+                    <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
@@ -88,12 +88,10 @@
                         </span>
                     </a-col>
 </#if>
-
                 </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
-        
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
@@ -103,9 +101,9 @@
             </a-upload>
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
+                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
                 </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
             </a-dropdown>
         </div>
 
@@ -125,24 +123,24 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed:true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+                @change="handleTableChange"
                 <#if tableVo.extendParams.scroll=='1'>:scroll="tableScroll"</#if>
-                @change="handleTableChange">
-
+            >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;"/>
+                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true"type="primary"icon="download"size="small"@click="uploadFile(text)"> 下载 </a-button> </template>
+                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+                </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
-
                     <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -155,7 +153,6 @@
                         </a-menu>
                     </a-dropdown>
                 </span>
-
             </a-table>
         </div>
 
@@ -191,7 +188,7 @@ export default {
         </#if>
         ${entityName}Modal
     },
-    data () {
+    data() {
         return {
             description: "${tableVo.ftlDescription}管理页面",
             // 表头
@@ -287,15 +284,16 @@ export default {
                 </#if>
                 </#if>
                 </#list>
-            },
+            }
             <#if tableVo.extendParams.scroll=='1'>
+            ,
             tableScroll: { x :${showColNum}*147+50 }
             </#if>
-        }
+        };
     },
     computed: {
         importExcelUrl: function() {
-            <#noparse>return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;</#noparse>
+            <#noparse>return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;</#noparse>
         }
     },
     methods: {
@@ -331,7 +329,7 @@ export default {
         </#list>
         }
     }
-}
+};
 </script>
 
 <style scoped>
