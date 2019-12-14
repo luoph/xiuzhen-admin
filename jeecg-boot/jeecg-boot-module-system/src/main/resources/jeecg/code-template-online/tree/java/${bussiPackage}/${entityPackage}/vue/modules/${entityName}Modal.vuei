@@ -156,7 +156,7 @@ export default {
             validatorRules: {
             <#list columns as po>
             <#if po.isShow=='Y'>
-            <#if po.fieldName !='id'>
+            <#if po.fieldName!='id'>
             <#if po.nullable=='N'>
             ${po.fieldName}: {rules: [{ required: true, message: '请输入${po.filedComment}!' }]},
             <#else>

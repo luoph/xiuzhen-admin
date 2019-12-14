@@ -133,25 +133,25 @@
 
 <script>
 
-import pick from 'lodash.pick';
-import { FormTypes,getRefPromise } from '@/utils/JEditableTableUtil';
-import { JEditableTableMixin } from '@/mixins/JEditableTableMixin';
+import pick from "lodash.pick";
+import { FormTypes,getRefPromise } from "@/utils/JEditableTableUtil";
+import { JEditableTableMixin } from "@/mixins/JEditableTableMixin";
 <#list subTables as sub>
 <#if sub.foreignRelationType =='1'>
-import ${sub.entityName}Form from './${sub.entityName}Form.vue';
+import ${sub.entityName}Form from "./${sub.entityName}Form.vue";
 </#if>
 </#list>
 <#if form_date>
-import JDate from '@/components/jeecg/JDate'    ;
+import JDate from "@/components/jeecg/JDate"    ;
 </#if>
 <#if form_file>
-import JUpload from '@/components/jeecg/JUpload';
+import JUpload from "@/components/jeecg/JUpload";
 </#if>
 <#if form_sel_depart>
-import JSelectDepart from '@/components/jeecgbiz/JSelectDepart';
+import JSelectDepart from "@/components/jeecgbiz/JSelectDepart";
 </#if>
 <#if form_sel_user>
-import JSelectUserByDep from '@/components/jeecgbiz/JSelectUserByDep';
+import JSelectUserByDep from "@/components/jeecgbiz/JSelectUserByDep";
 </#if>
 <#if form_select>
 import JDictSelectTag from "@/components/dict/JDictSelectTag";
@@ -160,17 +160,17 @@ import JDictSelectTag from "@/components/dict/JDictSelectTag";
 import JMultiSelectTag from "@/components/dict/JMultiSelectTag";
 </#if>
 <#if form_select_search>
-import JSearchSelectTag from '@/components/dict/JSearchSelectTag';
+import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
 </#if>
 <#if form_editor>
-import JEditor from '@/components/jeecg/JEditor';
+import JEditor from "@/components/jeecg/JEditor";
 </#if>
 <#if form_cat_tree>
-import JCategorySelect from '@/components/jeecg/JCategorySelect';
+import JCategorySelect from "@/components/jeecg/JCategorySelect";
 </#if>
 
 export default {
-    name: '${entityName}Modal',
+    name: "${entityName}Modal",
     mixins: [JEditableTableMixin],
     components: {
     <#list subTables as sub>
@@ -224,8 +224,8 @@ export default {
             addDefaultRowNum: 1,
             validatorRules: {
 <#list columns as po>
-<#if po.isShow =='Y'>
-<#if po.fieldName !='id'>
+<#if po.isShow=='Y'>
+<#if po.fieldName!='id'>
     <#if po.nullable =='N'>
                 ${po.fieldName}: { rules: [{ required: true, message: '请输入${po.filedComment}!' }] },
                 <#else>
@@ -236,7 +236,7 @@ export default {
 </#list>
             },
             refKeys: [<#list subTables as sub>'${sub.entityName?uncap_first}', </#list>],
-            tableKeys:[<#list subTables as sub><#if sub.foreignRelationType =='0'>'${sub.entityName?uncap_first}', </#if></#list>],
+            tableKeys:[<#list subTables as sub><#if sub.foreignRelationType=='0'>'${sub.entityName?uncap_first}', </#if></#list>],
             activeKey: '${subTables[0].entityName?uncap_first}',
 <#list subTables as sub><#rt/>
             // ${sub.ftlDescription}
@@ -244,77 +244,77 @@ export default {
                 loading: false,
                 dataSource: [],
                 columns: [
-<#if sub.foreignRelationType =='0'>
-<#assign popupBackFields = "">
+<#if sub.foreignRelationType=='0'>
+<#assign popupBackFields="">
 
 <#-- 循环子表的列 开始 -->
 <#list sub.colums as col><#rt/>
-<#if col.isShow =='Y'>
-    <#if col.filedComment !='外键' >
+<#if col.isShow=='Y'>
+    <#if col.filedComment!='外键' >
                     {
-                        title: '${col.filedComment}',
-                        key: '${col.fieldName}',
-        <#if col.classType =='date'>
+                        title: "${col.filedComment}",
+                        key: "${col.fieldName}",
+        <#if col.classType=='date'>
                         type: FormTypes.date,
-        <#elseif col.classType =='datetime'>
+        <#elseif col.classType=='datetime'>
                         type: FormTypes.datetime,
         <#elseif "int,decimal,double,"?contains(col.classType)>
                         type: FormTypes.inputNumber,
-        <#elseif col.classType =='list' || col.classType =='radio'>
+        <#elseif col.classType=='list'||col.classType=='radio'>
                         type: FormTypes.select,
                         <#if col.dictTable?default("")?trim?length gt 1>
-                        dictCode:"${col.dictTable},${col.dictText},${col.dictField}",
+                        dictCode: "${col.dictTable},${col.dictText},${col.dictField}",
                         <#else>
-                        dictCode:"${col.dictField}",
+                        dictCode: "${col.dictField}",
                         </#if>
-        <#elseif col.classType =='list_multi' || col.classType =='checkbox'>
+        <#elseif col.classType=='list_multi'||col.classType=='checkbox'>
                         type: FormTypes.list_multi,
                         <#if col.dictTable?default("")?trim?length gt 1>
-                        dictCode:"${col.dictTable},${col.dictText},${col.dictField}",
+                        dictCode: "${col.dictTable},${col.dictText},${col.dictField}",
                         <#else>
-                        dictCode:"${col.dictField}",
+                        dictCode: "${col.dictField}",
                         </#if>
-        <#elseif col.classType =='sel_search'>
+        <#elseif col.classType=='sel_search'>
                         type: FormTypes.sel_search,
                         <#if col.dictTable?default("")?trim?length gt 1>
-                        dictCode:"${col.dictTable},${col.dictText},${col.dictField}",
+                        dictCode: "${col.dictTable},${col.dictText},${col.dictField}",
                         <#else>
-                        dictCode:"${col.dictField}",
+                        dictCode: "${col.dictField}",
                         </#if>
-        <#elseif col.classType =='image'>
+        <#elseif col.classType=='image'>
                         type: FormTypes.image,
-                        token:true,
-                        responseName:"message",
-        <#elseif col.classType =='file'>
+                        token: true,
+                        responseName: "message",
+        <#elseif col.classType=='file'>
                         type: FormTypes.file,
-                        token:true,
-                        responseName:"message",
-        <#elseif col.classType =='popup'>
+                        token: true,
+                        responseName: "message",
+        <#elseif col.classType=='popup'>
             <#if popupBackFields?length gt 0>
-                    <#assign popupBackFields = "${popupBackFields}"+","+"${col.dictText}">
+                    <#assign popupBackFields="${popupBackFields}"+","+"${col.dictText}">
             <#else>
-                    <#assign popupBackFields = "${col.dictText}">
+                    <#assign popupBackFields="${col.dictText}">
             </#if>
                         type: FormTypes.popup,
-                        popupCode:"${col.dictTable}",
-                        destFields:"${col.dictText}",
-                        orgFieldse:"${col.dictField}",
+                        popupCode: "${col.dictTable}",
+                        destFields: "${col.dictText}",
+                        orgFieldse: "${col.dictField}",
         <#else>
                         type: FormTypes.input,
         </#if>
-        <#if col.classType =='list_multi' || col.classType =='checkbox'>
-                        width:"250px",
+        <#if col.classType=='list_multi'||col.classType=='checkbox'>
+                        width: "250px",
         <#else>
-                        width:"200px",
+                        width: "200px",
         </#if>
-        <#if col.classType =='file'>
-                        placeholder: '请选择文件',
+        <#if col.classType=='file'>
+                        placeholder: "请选择文件",
         <#else>
-                        placeholder: '请输入${'$'}{title}',
+                        placeholder: "请输入${'$'}{title}",
         </#if>
-                        defaultValue: '',
-        <#if col.nullable =='N'>
-                        validateRules: [{ required: true, message: '${'$'}{title}不能为空' }],
+                        defaultValue: "",
+        <#if col.nullable=='N'>
+                        validateRules: [{ required: true, message: "${'$'}{title}不能为空" }],
         </#if>
                     },
     </#if>
@@ -326,18 +326,18 @@ export default {
 <#if popupBackFields?length gt 0>
 <#list popupBackFields?split(",") as item>
 <#if item?length gt 0>
-<#assign tempItemFlag = true>
+<#assign tempItemFlag=true>
 
 <#list sub.colums as col>
 <#if col.isShow =='Y' && col.fieldName == item>
-<#assign tempItemFlag = false>
+<#assign tempItemFlag=false>
 </#if>
 </#list>
 <#if tempItemFlag>
                     {
-                        title: '${item}',
-                        key: '${item}',
-                        type:"hidden"
+                        title: "${item}",
+                        key: "${item}",
+                        type: "hidden"
                     },
 </#if>
 </#if>
@@ -352,7 +352,7 @@ export default {
                 edit: "/${entityPackage}/${entityName?uncap_first}/edit",
 <#list subTables as sub><#rt/>
                 ${sub.entityName?uncap_first}: {
-                    list: '/${entityPackage}/${entityName?uncap_first}/query${sub.entityName}ByMainId'
+                    list: "/${entityPackage}/${entityName?uncap_first}/query${sub.entityName}ByMainId"
                 },
 </#list>
             }
@@ -360,34 +360,33 @@ export default {
     },
     methods: {
         getAllTable() {
-            let values = this.tableKeys.map(key => getRefPromise(this, key))
-            return Promise.all(values)
+            let values = this.tableKeys.map(key => getRefPromise(this, key));
+            return Promise.all(values);
         },
         /** 调用完edit()方法之后会自动调用此方法 */
         editAfter() {
-            let fieldval = pick(this.model<#list columns as po><#if po.fieldName !='id'><#if po.fieldDbType=='Blob'>,'${po.fieldName}String'<#else>,'${po.fieldName}'</#if></#if></#list>)
+            let fieldval = pick(this.model<#list columns as po><#if po.fieldName !='id'><#if po.fieldDbType=='Blob'>, "${po.fieldName}String"<#else>, "${po.fieldName}"</#if></#if></#list>)
             this.$nextTick(() => {
-                this.form.setFieldsValue(fieldval)
+                this.form.setFieldsValue(fieldval);
 <#list subTables as sub><#rt/>
 <#if sub.foreignRelationType =='1'>
-                this.$refs.${sub.entityName?uncap_first}Form.initFormData(this.url.${sub.entityName?uncap_first}.list,this.model.id)
+                this.$refs.${sub.entityName?uncap_first}Form.initFormData(this.url.${sub.entityName?uncap_first}.list, this.model.id);
 </#if>
 </#list>                 
-            })
+            });
             // 加载子表数据
             if (this.model.id) {
-                let params = { id: this.model.id }
+                let params = { id: this.model.id };
 <#list subTables as sub><#rt/>
-<#if sub.foreignRelationType =='0'>
-                this.requestSubTableData(this.url.${sub.entityName?uncap_first}.list, params, this.${sub.entityName?uncap_first}Table)
+<#if sub.foreignRelationType=='0'>
+                this.requestSubTableData(this.url.${sub.entityName?uncap_first}.list, params, this.${sub.entityName?uncap_first}Table);
 </#if>
 </#list>
             }
         },
         /** 整理成formData */
         classifyIntoFormData(allValues) {
-            let main = Object.assign(this.model, allValues.formValue)
-
+            let main = Object.assign(this.model, allValues.formValue);
             return {
                 ...main, // 展开
 <#list subTables as sub><#rt/>
@@ -402,12 +401,12 @@ export default {
         validateError(msg){
             this.$message.error(msg)
         },
-     popupCallback(row){
-         this.form.setFieldsValue(pick(row<#list columns as po><#if po.fieldName !='id'><#if po.fieldDbType=='Blob'>,'${po.fieldName}String'<#else>,'${po.fieldName}'</#if></#if></#list>))
-     },
+        popupCallback(row){
+            this.form.setFieldsValue(pick(row<#list columns as po><#if po.fieldName !='id'><#if po.fieldDbType=='Blob'>, "${po.fieldName}String"<#else>, "${po.fieldName}"</#if></#if></#list>));
+        },
  <#if form_cat_tree>
-     handleCategoryChange(value,backObj){
-         this.form.setFieldsValue(backObj)
+        handleCategoryChange(value,backObj) {
+            this.form.setFieldsValue(backObj);
         }
  </#if>
     }
