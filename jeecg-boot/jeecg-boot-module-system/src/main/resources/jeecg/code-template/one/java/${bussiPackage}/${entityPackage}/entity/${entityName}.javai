@@ -22,10 +22,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @TableName("${tableName}")
 @Accessors(chain = true)
-@ApiModel(value = "${entityName}", description = "${tableVo.ftlDescription}")
-public class ${entityName} {
-    
+@ApiModel(value = "${entityName}"{, description = "${tableVo.ftlDescription}")
+public class ${entityName} implements Serializable {
+    private static final long serialVersionUID = 1L;
     <#list originalColumns as po>
+	
 	/**
 	 * ${po.filedComment}
 	 */
