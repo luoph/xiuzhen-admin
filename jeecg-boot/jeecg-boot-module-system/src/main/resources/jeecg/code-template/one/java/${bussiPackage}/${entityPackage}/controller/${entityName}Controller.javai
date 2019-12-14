@@ -124,6 +124,9 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	@GetMapping(value = "/queryById")
 	public Result<?> queryById(@RequestParam(name = "id") String id) {
 		${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getById(id);
+		if(${entityName?uncap_first} == null) {
+			return Result.error("未找到对应数据");
+		}
 		return Result.ok(${entityName?uncap_first});
 	}
 
@@ -149,4 +152,5 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
   public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
       return super.importExcel(request, response, ${entityName}.class);
   }
+
 }
