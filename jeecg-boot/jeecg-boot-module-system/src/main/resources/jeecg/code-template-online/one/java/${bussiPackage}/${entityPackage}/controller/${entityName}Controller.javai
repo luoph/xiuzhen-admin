@@ -1,37 +1,24 @@
 package ${bussiPackage}.${entityPackage}.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.common.util.oConvertUtils;
-import ${bussiPackage}.${entityPackage}.entity.${entityName};
-import ${bussiPackage}.${entityPackage}.service.I${entityName}Service;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-
-import org.jeecgframework.poi.excel.ExcelImportUtil;
-import org.jeecgframework.poi.excel.def.NormalExcelConstants;
-import org.jeecgframework.poi.excel.entity.ExportParams;
-import org.jeecgframework.poi.excel.entity.ImportParams;
-import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
+import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.jeecg.common.system.query.QueryGenerator;
+import ${bussiPackage}.${entityPackage}.entity.${entityName};
+import ${bussiPackage}.${entityPackage}.service.I${entityName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
-import com.alibaba.fastjson.JSON;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * @author jeecg-boot
@@ -39,22 +26,24 @@ import com.alibaba.fastjson.JSON;
  * @description ${tableVo.ftlDescription}
  * @date ${.now?string["yyyy-MM-dd"]}
  */
+@Slf4j
 @RestController
 @RequestMapping("/${entityPackage}/${entityName?uncap_first}")
-@Slf4j
 public class ${entityName}Controller extends JeecgController<${entityName}, I${entityName}Service> {
+
 	@Autowired
 	private I${entityName}Service ${entityName?uncap_first}Service;
 	
 	/**
 	 * 分页列表查询
 	 *
-	 * @param ${entityName?uncap_first}
-	 * @param pageNo
-	 * @param pageSize
-	 * @param req
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @param pageNo 页码
+	 * @param pageSize 分页大小
+	 * @param req 请求
+	 * @return {@linkplain Result}
 	 */
+	@AutoLog(value = "${tableVo.ftlDescription}-列表查询")
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(${entityName} ${entityName?uncap_first},
 								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -69,9 +58,10 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 * 添加
 	 *
-	 * @param ${entityName?uncap_first}
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @return {@linkplain Result}
 	 */
+	@AutoLog(value = "${tableVo.ftlDescription}-添加")
 	@PostMapping(value = "/add")
 	public Result<?> add(@RequestBody ${entityName} ${entityName?uncap_first}) {
 		${entityName?uncap_first}Service.save(${entityName?uncap_first});
@@ -81,9 +71,10 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 * 编辑
 	 *
-	 * @param ${entityName?uncap_first}
-	 * @return
+	 * @param ${entityName?uncap_first} 数据实体
+	 * @return {@linkplain Result}
 	 */
+	@AutoLog(value = "${tableVo.ftlDescription}-编辑")
 	@PutMapping(value = "/edit")
 	public Result<?> edit(@RequestBody ${entityName} ${entityName?uncap_first}) {
 		${entityName?uncap_first}Service.updateById(${entityName?uncap_first});
@@ -93,9 +84,10 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 * 通过id删除
 	 *
-	 * @param id
-	 * @return
+	 * @param id 实体id
+	 * @return {@linkplain Result}
 	 */
+	@AutoLog(value = "${tableVo.ftlDescription}-通过id删除")
 	@DeleteMapping(value = "/delete")
 	public Result<?> delete(@RequestParam(name = "id") String id) {
 		${entityName?uncap_first}Service.removeById(id);
@@ -105,21 +97,23 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
 	/**
 	 *  批量删除
 	 *
-	 * @param ids
-	 * @return
+	 * @param ids id列表，使用','分割的字符串
+	 * @return {@linkplain Result}
 	 */
+	@AutoLog(value = "${tableVo.ftlDescription}-批量删除")
 	@DeleteMapping(value = "/deleteBatch")
 	public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
 		this.${entityName?uncap_first}Service.removeByIds(Arrays.asList(ids.split(",")));
-		return Result.ok("批量删除成功!");
+		return Result.ok("批量删除成功！");
 	}
 	
 	/**
 	 * 通过id查询
 	 *
-	 * @param id
-	 * @return
+	 * @param id 实体id
+	 * @return {@linkplain Result}
 	 */
+	@AutoLog(value = "${tableVo.ftlDescription}-通过id查询")
 	@GetMapping(value = "/queryById")
 	public Result<?> queryById(@RequestParam(name = "id") String id) {
 		${entityName} ${entityName?uncap_first} = ${entityName?uncap_first}Service.getById(id);
@@ -132,8 +126,8 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
     /**
      * 导出excel
      *
-     * @param request
-     * @param ${entityName?uncap_first}
+   * @param request 请求
+   * @param ${entityName?uncap_first} 实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, ${entityName} ${entityName?uncap_first}) {
@@ -143,9 +137,9 @@ public class ${entityName}Controller extends JeecgController<${entityName}, I${e
     /**
      * 通过excel导入数据
      *
-     * @param request
-     * @param response
-     * @return
+   * @param request 请求
+   * @param response 响应
+   * @return {@linkplain Result}
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
