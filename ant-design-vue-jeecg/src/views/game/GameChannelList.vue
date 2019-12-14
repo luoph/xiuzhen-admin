@@ -259,7 +259,7 @@ export default {
                 } else {
                     this.$message.success("服务器列表刷新失败");
                 }
-                console.log("刷新服务器列表完成, 结果:" + res.success);
+                console.log("刷新服务器列表完成", res);
             });
         }
     }
