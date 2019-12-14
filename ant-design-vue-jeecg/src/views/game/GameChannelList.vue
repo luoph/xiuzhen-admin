@@ -48,7 +48,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-button type="danger" icon="update" @click="generateServerFile()">生成服务器列表文件</a-button>
+            <a-button type="danger" icon="update" @click="writeServerFileUrl()">生成服务器列表文件</a-button>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -206,7 +206,7 @@ export default {
                 list: "/game/gameChannel/list",
                 delete: "/game/gameChannel/delete",
                 deleteBatch: "/game/gameChannel/deleteBatch",
-                writeServerFileUrl: "/game/gameChannel/writeServerFileUrl",
+                writeServerFileUrl: "/game/gameChannel/writeServerFile",
                 // exportXlsUrl: "game/gameChannel/exportXls",
                 // importExcelUrl: "game/gameChannel/importExcel",
                 // 游戏列表
