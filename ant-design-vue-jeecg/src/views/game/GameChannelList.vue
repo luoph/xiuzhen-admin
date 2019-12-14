@@ -253,12 +253,12 @@ export default {
             console.log("开始刷新服务器列表");
             getAction(this.url.writeServerFileUrl).then(res => {
                 if (res.success) {
-                    this.$message.success("刷新成功");
+                    this.$message.success("服务器列表刷新成功");
                 } else {
-                    this.$message.success("刷新失败");
+                    this.$message.success("服务器列表刷新失败");
                 }
+                console.log("刷新服务器列表完成, 结果:" + res);
             });
-            console.log("刷新服务器列表完成");
         }
     }
 };
