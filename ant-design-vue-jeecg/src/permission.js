@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
                     .dispatch("GetPermissionList")
                     .then(res => {
                         const menuData = res.result.menu;
-                        console.log(res.message);
+                        // console.log(res.message);
                         if (menuData === null || menuData === "" || menuData === undefined) {
                             return;
                         }
