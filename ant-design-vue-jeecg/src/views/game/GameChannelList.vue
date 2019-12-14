@@ -48,7 +48,9 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-button type="danger" icon="update" @click="writeServerFileUrl()">生成服务器列表文件</a-button>
+            <a-popconfirm title="刷新服务器列表文件" @confirm="writeServerFileUrl()">
+                <a-button type="danger" icon="update">刷新服务器列表文件</a-button>
+            </a-popconfirm>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
