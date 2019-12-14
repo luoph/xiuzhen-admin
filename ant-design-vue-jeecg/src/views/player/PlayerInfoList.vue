@@ -3,8 +3,7 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    </a-row>
+                <a-row :gutter="24"> </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
@@ -26,7 +25,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -41,7 +41,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -107,7 +106,7 @@ export default {
                     dataIndex: "uuid"
                 },
                 {
-                    title: "与bs_player_account 表中的player_id相同",
+                    title: "玩家Id",
                     align: "center",
                     dataIndex: "playerId"
                 },
@@ -151,7 +150,7 @@ export default {
                     align: "center",
                     dataIndex: "createTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -159,7 +158,7 @@ export default {
                     align: "center",
                     dataIndex: "updateTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -176,8 +175,7 @@ export default {
                 exportXlsUrl: "/player/playerInfo/exportXls",
                 importExcelUrl: "/player/playerInfo/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -186,8 +184,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>

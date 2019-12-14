@@ -1,9 +1,9 @@
 <template>
     <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
-    <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+        <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="渠道名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="渠道名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入渠道名称"></a-input>
                 </a-form-item>
                 <a-form-item label="唯一标识" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -29,7 +29,7 @@
                 </a-form-item>
             </a-form>
         </a-spin>
-    <!-- </a-modal> -->
+        <!-- </a-modal> -->
         <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
     </a-drawer>
@@ -41,8 +41,7 @@ import pick from "lodash.pick";
 
 export default {
     name: "GameChannelModal",
-    components: {
-    },
+    components: {},
     data() {
         return {
             form: this.$form.createForm(this),
@@ -67,7 +66,7 @@ export default {
                 remark: {},
                 extra: {},
                 gameId: {},
-                groupName: {},
+                groupName: {}
             },
             url: {
                 add: "/game/gameChannel/add",
@@ -75,8 +74,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -131,7 +129,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "name", "simpleName", "position", "noticeId", "remark", "extra", "gameId", "groupName"));
-        },
+        }
     }
 };
 </script>
