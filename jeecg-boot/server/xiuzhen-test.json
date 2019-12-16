@@ -1,0 +1,28 @@
+[
+    {
+        "gameId": 1000,
+        "host": "10.21.210.70",
+        "id": 1002,
+        "loginUrl": "10.21.210.70:10080",
+        "maxVersion": 2147483647,
+        "minVersion": 1,
+        "name": "测试服",
+        "port": 9080,
+        "recommend": 1,
+        "status": 0,
+        "warning": ""
+    },
+    {
+        "gameId": 1000,
+        "host": "10.21.210.70",
+        "id": 1010,
+        "loginUrl": "10.21.210.70:10088",
+        "maxVersion": 2147483647,
+        "minVersion": 1,
+        "name": "内网稳定服",
+        "port": 80,
+        "recommend": 1,
+        "status": 0,
+        "warning": ""
+    }
+]
