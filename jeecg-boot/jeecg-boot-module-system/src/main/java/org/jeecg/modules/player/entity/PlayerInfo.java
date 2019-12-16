@@ -29,7 +29,7 @@ public class PlayerInfo implements Serializable {
      * id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 全局uuid
@@ -41,7 +41,7 @@ public class PlayerInfo implements Serializable {
      * 玩家Id
      */
     @Excel(name = "玩家Id", width = 15)
-    private java.lang.Integer playerId;
+    private java.lang.Long playerId;
 
     /**
      * 角色昵称

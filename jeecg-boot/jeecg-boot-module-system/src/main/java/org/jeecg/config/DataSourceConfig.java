@@ -51,11 +51,23 @@ public class DataSourceConfig {
         DATA_SOURCE_MAP.put(key, dataSource);
     }
 
+    /**
+     * 获取数据源
+     *
+     * @param key
+     * @return
+     */
+    public static DataSource getDataSource(String key) {
+        return (DataSource) DATA_SOURCE_MAP.get(key);
+    }
+
     @Primary
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource.druid.default")
     public DataSource dataSourceDefault() {
-        return DruidDataSourceBuilder.create().build();
+        DataSource defaultDataSource = DruidDataSourceBuilder.create().build();
+        addDataSource(DataSourceKey.DEFAULT_DATA_SOURCE_KEY, defaultDataSource);
+        return defaultDataSource;
     }
 
     /**
