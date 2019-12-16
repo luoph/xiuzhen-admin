@@ -4,7 +4,61 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    </a-row>
+                    <a-col :md="12" :sm="16">
+                <a-form-item label="玩家Id">
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.playerId_begin"></a-input>
+                <span class="query-group-split-cust"></span>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.playerId_end"></a-input>
+            </a-form-item>
+            </a-col>
+                <a-col :md="12" :sm="16">
+                <a-form-item label="角色昵称">
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.nickname_begin"></a-input>
+                <span class="query-group-split-cust"></span>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.nickname_end"></a-input>
+            </a-form-item>
+            </a-col>
+                <template v-if="toggleSearchStatus">
+                    <a-col :md="12" :sm="16">
+                    <a-form-item label="性别 1男 0女">
+                    <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sex_begin"></a-input>
+                    <span class="query-group-split-cust"></span>
+                    <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sex_end"></a-input>
+                </a-form-item>
+                </a-col>
+                    <a-col :md="12" :sm="16">
+                    <a-form-item label="出身id">
+                    <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.birthId_begin"></a-input>
+                    <span class="query-group-split-cust"></span>
+                    <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.birthId_end"></a-input>
+                </a-form-item>
+                </a-col>
+                    <a-col :md="12" :sm="16">
+                    <a-form-item label="createTime">
+                    <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
+                    <span class="query-group-split-cust"></span>
+                    <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date>
+                </a-form-item>
+                </a-col>
+                    <a-col :md="12" :sm="16">
+                    <a-form-item label="updateTime">
+                    <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.updateTime_begin"></j-date>
+                    <span class="query-group-split-cust"></span>
+                    <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.updateTime_end"></j-date>
+                </a-form-item>
+                </a-col>
+        </template>
+                    <a-col :md="6" :sm="8">
+                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+                            <a style="margin-left: 8px" @click="handleToggleSearch">
+                                {{ toggleSearchStatus ? "收起" : "展开" }}
+                                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                            </a>
+                        </span>
+                    </a-col>
+                </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
@@ -79,11 +133,13 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import PlayerInfoModal from "./modules/PlayerInfoModal";
+import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
     name: "PlayerInfoList",
     mixins: [JeecgListMixin],
     components: {
+        JDate,
         PlayerInfoModal
     },
     data() {
@@ -107,7 +163,7 @@ export default {
                     dataIndex: "uuid"
                 },
                 {
-                    title: "与bs_player_account 表中的player_id相同",
+                    title: "玩家Id",
                     align: "center",
                     dataIndex: "playerId"
                 },
