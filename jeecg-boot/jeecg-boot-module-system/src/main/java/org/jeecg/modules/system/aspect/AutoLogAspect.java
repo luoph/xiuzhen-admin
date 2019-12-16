@@ -7,11 +7,14 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.hibernate.type.descriptor.java.DataHelper;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.constant.CommonConstant;
+import org.jeecg.common.datasource.DynamicMultipleDataSource;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.IPUtils;
 import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.system.entity.SysLog;
 import org.jeecg.modules.system.service.ISysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,14 +67,12 @@ public class AutoLogAspect {
             // 注解上的描述,操作日志内容
             sysLog.setLogContent(syslog.value());
             sysLog.setLogType(syslog.logType());
-
         }
 
         // 请求的方法名
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = signature.getName();
         sysLog.setMethod(className + "." + methodName + "()");
-
 
         // 设置操作类型
         if (sysLog.getLogType() == CommonConstant.LOG_TYPE_2) {
@@ -84,7 +85,6 @@ public class AutoLogAspect {
             String params = JSONObject.toJSONString(args);
             sysLog.setRequestParam(params);
         } catch (Exception e) {
-
         }
 
         // 获取request
@@ -97,13 +97,24 @@ public class AutoLogAspect {
         if (sysUser != null) {
             sysLog.setUserid(sysUser.getUsername());
             sysLog.setUsername(sysUser.getRealname());
-
         }
+
+        // 查询前保存
+        String dataSource = DynamicMultipleDataSource.get();
+        if (dataSource != null) {
+            DataSourceHelper.useDefaultDatabase();
+        }
+
         // 耗时
         sysLog.setCostTime(time);
         sysLog.setCreateTime(new Date());
         // 保存系统日志
         sysLogService.save(sysLog);
+
+        // 查询后恢复
+        if (dataSource != null) {
+            DataSourceHelper.useDatabase(dataSource);
+        }
     }
 
     /**

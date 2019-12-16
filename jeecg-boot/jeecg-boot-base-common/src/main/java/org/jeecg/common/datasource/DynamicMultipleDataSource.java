@@ -12,12 +12,16 @@ public class DynamicMultipleDataSource extends AbstractRoutingDataSource {
 
     private static final ThreadLocal<String> DATA_SOURCE_KEY = new ThreadLocal<>();
 
-    static void setDataSourceKey(String dataSource) {
+    public static void setDataSourceKey(String dataSource) {
         DATA_SOURCE_KEY.set(dataSource);
     }
 
-    private static void clear() {
+    public static void clear() {
         DATA_SOURCE_KEY.remove();
+    }
+
+    public static String get() {
+        return DATA_SOURCE_KEY.get();
     }
 
     @Override
