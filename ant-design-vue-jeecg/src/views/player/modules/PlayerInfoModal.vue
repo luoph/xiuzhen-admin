@@ -3,9 +3,6 @@
         <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item label="全局uuid" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['uuid', validatorRules.uuid]" placeholder="请输入全局uuid"></a-input>
-                </a-form-item>
                 <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
@@ -62,7 +59,6 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                uuid: { rules: [{ required: true, message: "请输入全局uuid!" }] },
                 playerId: {},
                 nickname: {},
                 avatar: {},
