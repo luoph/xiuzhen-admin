@@ -52,7 +52,7 @@ public class SysAnnouncementSendController {
                                                             HttpServletRequest req) {
         Result<IPage<SysAnnouncementSend>> result = new Result<>();
         QueryWrapper<SysAnnouncementSend> queryWrapper = new QueryWrapper<>(sysAnnouncementSend);
-        Page<SysAnnouncementSend> page = new Page<SysAnnouncementSend>(pageNo, pageSize);
+        Page<SysAnnouncementSend> page = new Page<>(pageNo, pageSize);
         // 排序逻辑 处理
         String column = req.getParameter("column");
         String order = req.getParameter("order");
@@ -145,7 +145,7 @@ public class SysAnnouncementSendController {
      */
     @DeleteMapping(value = "/deleteBatch")
     public Result<SysAnnouncementSend> deleteBatch(@RequestParam(name = "ids") String ids) {
-        Result<SysAnnouncementSend> result = new Result<SysAnnouncementSend>();
+        Result<SysAnnouncementSend> result = new Result<>();
         if (ids == null || "".equals(ids.trim())) {
             result.error500("参数不识别！");
         } else {
