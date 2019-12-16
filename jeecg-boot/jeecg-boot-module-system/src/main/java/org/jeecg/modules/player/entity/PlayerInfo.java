@@ -41,7 +41,7 @@ public class PlayerInfo implements Serializable {
      * 玩家Id
      */
     @Excel(name = "玩家Id", width = 15)
-    private java.lang.Long playerId;
+    private java.lang.String playerId;
 
     /**
      * 角色昵称
