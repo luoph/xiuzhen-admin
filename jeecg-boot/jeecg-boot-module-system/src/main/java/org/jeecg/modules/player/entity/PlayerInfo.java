@@ -62,15 +62,15 @@ public class PlayerInfo implements Serializable {
     private java.lang.Integer sex;
 
     /**
-     * 设置中是否开启 音乐 0否 1是
+     * 音乐开关
      */
-    @Excel(name = "设置中是否开启 音乐 0否 1是", width = 15)
+    @Excel(name = "音乐开关", width = 15)
     private java.lang.Integer openMusic;
 
     /**
-     * 设置中是否开启 音效 0否 1是
+     * 音效开关
      */
-    @Excel(name = "设置中是否开启 音效 0否 1是", width = 15)
+    @Excel(name = "音效开关", width = 15)
     private java.lang.Integer openSound;
 
     /**

@@ -183,12 +183,12 @@ export default {
                     dataIndex: "sex"
                 },
                 {
-                    title: "设置中是否开启 音乐 0否 1是",
+                    title: "音乐开关",
                     align: "center",
                     dataIndex: "openMusic"
                 },
                 {
-                    title: "设置中是否开启 音效 0否 1是",
+                    title: "音效开关",
                     align: "center",
                     dataIndex: "openSound"
                 },

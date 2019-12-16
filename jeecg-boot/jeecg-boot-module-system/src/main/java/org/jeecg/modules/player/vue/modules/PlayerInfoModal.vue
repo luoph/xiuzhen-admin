@@ -18,11 +18,11 @@
                 <a-form-item label="性别 1男 0女" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sex', validatorRules.sex]" placeholder="请输入性别 1男 0女" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="设置中是否开启 音乐 0否 1是" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['openMusic', validatorRules.openMusic]" placeholder="请输入设置中是否开启 音乐 0否 1是" style="width: 100%" />
+                <a-form-item label="音乐开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['openMusic', validatorRules.openMusic]" placeholder="请输入音乐开关" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="设置中是否开启 音效 0否 1是" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['openSound', validatorRules.openSound]" placeholder="请输入设置中是否开启 音效 0否 1是" style="width: 100%" />
+                <a-form-item label="音效开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['openSound', validatorRules.openSound]" placeholder="请输入音效开关" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="出身id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['birthId', validatorRules.birthId]" placeholder="请输入出身id" style="width: 100%" />
