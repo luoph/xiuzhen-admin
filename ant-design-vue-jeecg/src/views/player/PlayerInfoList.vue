@@ -3,7 +3,40 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24"> </a-row>
+                <a-row :gutter="24">
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="玩家id">
+                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="角色昵称">
+                            <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="性别">
+                                <a-input placeholder="请输入性别" v-model="queryParam.sex"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="出身id">
+                                <a-input placeholder="请输入出身id" v-model="queryParam.birthId"></a-input>
+                            </a-form-item>
+                        </a-col>
+                    </template>
+                    <a-col :md="6" :sm="8">
+                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+                            <a style="margin-left: 8px" @click="handleToggleSearch">
+                                {{ toggleSearchStatus ? "收起" : "展开" }}
+                                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                            </a>
+                        </span>
+                    </a-col>
+                </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
@@ -106,7 +139,7 @@ export default {
                     dataIndex: "uuid"
                 },
                 {
-                    title: "玩家Id",
+                    title: "玩家id",
                     align: "center",
                     dataIndex: "playerId"
                 },
@@ -121,17 +154,17 @@ export default {
                     dataIndex: "avatar"
                 },
                 {
-                    title: "性别 1男 0女",
+                    title: "性别",
                     align: "center",
                     dataIndex: "sex"
                 },
                 {
-                    title: "设置中是否开启 音乐 0否 1是",
+                    title: "音乐开关",
                     align: "center",
                     dataIndex: "openMusic"
                 },
                 {
-                    title: "设置中是否开启 音效 0否 1是",
+                    title: "音效开关",
                     align: "center",
                     dataIndex: "openSound"
                 },
@@ -144,22 +177,6 @@ export default {
                     title: "是否初始化",
                     align: "center",
                     dataIndex: "initialized"
-                },
-                {
-                    title: "createTime",
-                    align: "center",
-                    dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
-                },
-                {
-                    title: "updateTime",
-                    align: "center",
-                    dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
                 },
                 {
                     title: "操作",
