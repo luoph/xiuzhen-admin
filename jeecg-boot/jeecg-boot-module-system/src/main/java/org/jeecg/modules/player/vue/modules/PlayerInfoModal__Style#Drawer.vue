@@ -5,8 +5,8 @@
                     <a-form-item label="全局uuid" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['uuid', validatorRules.uuid]" placeholder="请输入全局uuid"></a-input>
                 </a-form-item>
-                <a-form-item label="与bs_player_account 表中的player_id相同" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入与bs_player_account 表中的player_id相同" style="width: 100%" />
+                <a-form-item label="玩家Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家Id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="角色昵称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['nickname', validatorRules.nickname]" placeholder="请输入角色昵称"></a-input>

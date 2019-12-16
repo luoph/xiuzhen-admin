@@ -38,9 +38,9 @@ public class PlayerInfo implements Serializable {
     private java.lang.String uuid;
 
     /**
-     * 与bs_player_account 表中的player_id相同
+     * 玩家Id
      */
-    @Excel(name = "与bs_player_account 表中的player_id相同", width = 15)
+    @Excel(name = "玩家Id", width = 15)
     private java.lang.Integer playerId;
 
     /**
