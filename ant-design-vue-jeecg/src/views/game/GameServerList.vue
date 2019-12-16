@@ -171,6 +171,11 @@ export default {
                     }
                 },
                 {
+                    title: "服务器Id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "名字",
                     align: "center",
                     dataIndex: "name"
