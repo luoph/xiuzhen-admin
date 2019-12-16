@@ -19,6 +19,8 @@ export const JeecgListMixin = {
             queryParam: {},
             /* 数据源 */
             dataSource: [],
+            /* 是否需要选择serverId，默认不需要 */
+            serverIdOption: false,
             /* 分页参数 */
             ipagination: {
                 current: 1,
@@ -53,6 +55,10 @@ export const JeecgListMixin = {
         };
     },
     created() {
+        // 服务器id
+        if (this.serverIdOption) {
+            this.queryServerList();
+        }
         if (!this.disableMixinCreated) {
             this.loadData();
             // 初始化字典配置 在自己页面定义
@@ -69,7 +75,12 @@ export const JeecgListMixin = {
             if (arg === 1) {
                 this.ipagination.current = 1;
             }
-            var params = this.getQueryParams(); // 查询条件
+            // 查询条件
+            var params = this.getQueryParams();
+            if (this.serverIdOption && !params.serverId || params.serverId < 0) {
+                this.$message.error("请选择服务器id");
+                return;
+            }
             this.loading = true;
             getAction(this.url.list, params).then(res => {
                 if (res.success) {
@@ -82,8 +93,7 @@ export const JeecgListMixin = {
                 this.loading = false;
             });
         },
-        initDictConfig() {
-        },
+        initDictConfig() {},
         handleSuperQuery(arg) {
             // 高级查询方法
             if (!arg) {
@@ -318,6 +328,24 @@ export const JeecgListMixin = {
                 text = text.substring(0, text.indexOf(","));
             }
             window.open(window._CONFIG["domainURL"] + "/sys/common/download/" + text);
+        },
+        queryServerList() {
+            let that = this;
+            if (!this.url.serverListUrl) {
+                this.$message.error("请设置url.serverListUrl属性");
+                return;
+            }
+            getAction(that.url.serverListUrl).then(res => {
+                if (res.success) {
+                    if (res.result instanceof Array) {
+                        this.serverList = res.result;
+                    } else if (res.result.records instanceof Array) {
+                        this.serverList = res.result.records;
+                    }
+                } else {
+                    this.serverList = [];
+                }
+            });
         }
     }
 };
