@@ -60,7 +60,7 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
     }
 
     /**
-     * @功能：编辑消息信息
+     * 编辑消息信息
      */
     @Transactional
     @Override
@@ -97,7 +97,7 @@ public class SysAnnouncementServiceImpl extends ServiceImpl<SysAnnouncementMappe
         return true;
     }
 
-    // @功能：流程执行完成保存消息通知
+    // 流程执行完成保存消息通知
     @Override
     public void saveSysAnnouncement(String title, String msgContent) {
         SysAnnouncement announcement = new SysAnnouncement();

@@ -18,9 +18,10 @@ public interface ISysAnnouncementSendService extends IService<SysAnnouncementSen
     List<String> queryByUserId(String userId);
 
     /**
+     * 获取我的消息
+     *
      * @param announcementSendModel
      * @return
-     * @功能：获取我的消息
      */
     Page<AnnouncementSendModel> getMyAnnouncementSendPage(Page<AnnouncementSendModel> page, AnnouncementSendModel announcementSendModel);
 

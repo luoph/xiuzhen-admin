@@ -8,6 +8,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.player.entity.PlayerInfo;
 import org.jeecg.modules.player.service.IPlayerInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +47,12 @@ public class PlayerInfoController extends JeecgController<PlayerInfo, IPlayerInf
     public Result<?> queryPageList(PlayerInfo playerInfo,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                                    HttpServletRequest req) {
+
         QueryWrapper<PlayerInfo> queryWrapper = QueryGenerator.initQueryWrapper(playerInfo, req.getParameterMap());
         Page<PlayerInfo> page = new Page<>(pageNo, pageSize);
+        DataSourceHelper.useServerDatabase(serverId);
         IPage<PlayerInfo> pageList = playerInfoService.page(page, queryWrapper);
         return Result.ok(pageList);
     }

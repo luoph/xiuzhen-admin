@@ -273,9 +273,7 @@ public class SysAnnouncementController {
     }
 
     /**
-     * @param id
-     * @return
-     * @功能：补充用户数据，并返回系统消息
+     * 补充用户数据，并返回系统消息
      */
     @RequestMapping(value = "/listByUser", method = RequestMethod.GET)
     public Result<Map<String, Object>> listByUser() {
