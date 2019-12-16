@@ -6,8 +6,8 @@
                 <a-form-item label="全局uuid" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['uuid', validatorRules.uuid]" placeholder="请输入全局uuid"></a-input>
                 </a-form-item>
-                <a-form-item label="玩家Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家Id" style="width: 100%" />
+                <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="角色昵称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['nickname', validatorRules.nickname]" placeholder="请输入角色昵称"></a-input>
@@ -15,8 +15,8 @@
                 <a-form-item label="角色头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['avatar', validatorRules.avatar]" placeholder="请输入角色头像"></a-input>
                 </a-form-item>
-                <a-form-item label="性别 1男 0女" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sex', validatorRules.sex]" placeholder="请输入性别 1男 0女" style="width: 100%" />
+                <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['sex', validatorRules.sex]" placeholder="请输入性别" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="音乐开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['openMusic', validatorRules.openMusic]" placeholder="请输入音乐开关" style="width: 100%" />
@@ -30,12 +30,6 @@
                 <a-form-item label="是否初始化" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['initialized', validatorRules.initialized]" placeholder="请输入是否初始化" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="创角时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择创角时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择更新时间" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
             </a-form>
         </a-spin>
         <!-- </a-modal> -->
@@ -47,13 +41,10 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
-import JDate from "@/components/jeecg/JDate";
 
 export default {
     name: "PlayerInfoModal",
-    components: {
-        JDate
-    },
+    components: {},
     data() {
         return {
             form: this.$form.createForm(this),
@@ -79,9 +70,7 @@ export default {
                 openMusic: {},
                 openSound: {},
                 birthId: { rules: [{ required: true, message: "请输入出身id!" }] },
-                initialized: { rules: [{ required: true, message: "请输入是否初始化!" }] },
-                createTime: {},
-                updateTime: {}
+                initialized: { rules: [{ required: true, message: "请输入是否初始化!" }] }
             },
             url: {
                 add: "/player/playerInfo/add",
@@ -99,9 +88,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(
-                    pick(this.model, "uuid", "playerId", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized", "createTime", "updateTime")
-                );
+                this.form.setFieldsValue(pick(this.model, "uuid", "playerId", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
             });
         },
         close() {
@@ -145,7 +132,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "uuid", "playerId", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "uuid", "playerId", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
         }
     }
 };
