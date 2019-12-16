@@ -189,9 +189,10 @@ public class CommonController {
     }
 
     /**
+     * pdf预览Iframe
+     *
      * @param modelAndView
      * @return
-     * @功能：pdf预览Iframe
      */
     @RequestMapping("/pdf/pdfPreviewIframe")
     public ModelAndView pdfPreviewIframe(ModelAndView modelAndView) {

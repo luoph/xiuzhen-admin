@@ -175,9 +175,10 @@ public class SysAnnouncementSendController {
     }
 
     /**
+     * 更新用户系统消息阅读状态
+     *
      * @param json
      * @return
-     * @功能：更新用户系统消息阅读状态
      */
     @PutMapping(value = "/editByAnntIdAndUserId")
     public Result<SysAnnouncementSend> editById(@RequestBody JSONObject json) {
@@ -196,8 +197,9 @@ public class SysAnnouncementSendController {
     }
 
     /**
+     * 获取我的消息
+     *
      * @return
-     * @功能：获取我的消息
      */
     @GetMapping(value = "/getMyAnnouncementSend")
     public Result<IPage<AnnouncementSendModel>> getMyAnnouncementSend(AnnouncementSendModel announcementSendModel,
@@ -217,8 +219,7 @@ public class SysAnnouncementSendController {
     }
 
     /**
-     * @return
-     * @功能：一键已读
+     * 一键已读
      */
     @PutMapping(value = "/readAll")
     public Result<SysAnnouncementSend> readAll() {

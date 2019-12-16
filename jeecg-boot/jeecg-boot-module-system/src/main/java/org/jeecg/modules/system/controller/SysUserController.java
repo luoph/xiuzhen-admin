@@ -421,9 +421,10 @@ public class SysUserController {
     }
 
     /**
+     * 根据id 批量查询
+     *
      * @param userIds
      * @return
-     * @功能：根据id 批量查询
      */
     @RequestMapping(value = "/queryByIds", method = RequestMethod.GET)
     public Result<Collection<SysUser>> queryByIds(@RequestParam String userIds) {

@@ -105,6 +105,7 @@ export const JeecgListMixin = {
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
+            param.serverId = this.queryParam.serverId;
             return filterObj(param);
         },
         getQueryField() {

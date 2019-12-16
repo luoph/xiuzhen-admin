@@ -88,12 +88,13 @@ public class SysDictController {
     }
 
     /**
+     * 获取树形字典数据
+     *
      * @param sysDict
      * @param pageNo
      * @param pageSize
      * @param req
      * @return
-     * @功能：获取树形字典数据
      */
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "/treeList", method = RequestMethod.GET)
@@ -195,8 +196,7 @@ public class SysDictController {
 
     /**
      * @param sysDict
-     * @return
-     * @功能：新增
+     * @return 新增
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result<SysDict> add(@RequestBody SysDict sysDict) {
@@ -215,8 +215,7 @@ public class SysDictController {
 
     /**
      * @param sysDict
-     * @return
-     * @功能：编辑
+     * @return 编辑
      */
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public Result<SysDict> edit(@RequestBody SysDict sysDict) {
@@ -237,9 +236,10 @@ public class SysDictController {
     }
 
     /**
+     * 删除
+     *
      * @param id
      * @return
-     * @功能：删除
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
@@ -255,9 +255,10 @@ public class SysDictController {
     }
 
     /**
+     * 批量删除
+     *
      * @param ids
      * @return
-     * @功能：批量删除
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     @CacheEvict(value = CacheConstant.SYS_DICT_CACHE, allEntries = true)
@@ -267,7 +268,7 @@ public class SysDictController {
             result.error500("参数不识别！");
             return result;
         }
-        
+
         sysDictService.removeByIds(Arrays.asList(ids.split(DICT_PARAM_SPLIT_CHAR)));
         result.success("删除成功!");
         return result;

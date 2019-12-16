@@ -20,10 +20,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2019-12-05.
  */
 @Component
-public class GameServerDbHelper implements InitializingBean {
+public class DataSourceHelper implements InitializingBean {
 
-    private static final ObjectReference<GameServerDbHelper> REFERENCE = new ObjectReference<>();
-    private final Map<Long, DataSource> dataSourceMap = new ConcurrentHashMap<>();
+    private static final ObjectReference<DataSourceHelper> REFERENCE = new ObjectReference<>();
+    private final Map<Integer, DataSource> dataSourceMap = new ConcurrentHashMap<>();
 
     @Autowired
     private GameServerMapper gameServerMapper;
@@ -33,11 +33,15 @@ public class GameServerDbHelper implements InitializingBean {
         REFERENCE.set(this);
     }
 
-    public GameServer getGameServerById(Long serverId) {
+    public static DataSourceHelper getInstance() {
+        return REFERENCE.get();
+    }
+
+    private GameServer getGameServerById(Integer serverId) {
         return gameServerMapper.selectById(serverId);
     }
 
-    private void loadDataSourceByServerId(Long serverId) {
+    private void loadDataSourceByServerId(Integer serverId) {
         DataSource dataSource = dataSourceMap.get(serverId);
         if (dataSource == null) {
             GameServer gameServer = getGameServerById(serverId);
@@ -51,12 +55,20 @@ public class GameServerDbHelper implements InitializingBean {
         }
     }
 
-    public void switch2GameServerDb(Long serverId) {
-        loadDataSourceByServerId(serverId);
+    /**
+     * 切换数据源
+     *
+     * @param serverId 游戏服id
+     */
+    public static void useServerDatabase(Integer serverId) {
+        getInstance().loadDataSourceByServerId(serverId);
         DataSourceSwitch.switchDataSource(DataSourceKey.SERVER_DATA_SOURCE_KEY + serverId);
     }
 
-    public void switch2DefaultDb() {
+    /**
+     * 切换到默认数据源
+     */
+    public static void useDefaultDatabase() {
         DataSourceSwitch.resetDataSource();
     }
 }

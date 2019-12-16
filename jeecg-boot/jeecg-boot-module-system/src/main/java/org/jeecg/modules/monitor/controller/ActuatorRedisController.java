@@ -52,10 +52,11 @@ public class ActuatorRedisController {
     //update-begin--Author:zhangweijian  Date:20190425 for：获取磁盘信息
 
     /**
+     * 获取磁盘信息
+     *
      * @param request
      * @param response
      * @return
-     * @功能：获取磁盘信息
      */
     @GetMapping("/queryDiskInfo")
     public Result<List<Map<String, Object>>> queryDiskInfo(HttpServletRequest request, HttpServletResponse response) {

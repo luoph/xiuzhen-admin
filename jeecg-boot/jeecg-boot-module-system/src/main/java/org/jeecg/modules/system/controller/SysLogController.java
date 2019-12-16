@@ -37,12 +37,13 @@ public class SysLogController {
     private ISysLogService sysLogService;
 
     /**
+     * 查询日志记录
+     *
      * @param syslog
      * @param pageNo
      * @param pageSize
      * @param req
      * @return
-     * @功能：查询日志记录
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result<IPage<SysLog>> queryPageList(SysLog syslog, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -71,8 +72,7 @@ public class SysLogController {
 
     /**
      * @param id
-     * @return
-     * @功能：删除单个日志记录
+     * @return 删除单个日志记录
      */
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public Result<SysLog> delete(@RequestParam(name = "id") String id) {
@@ -91,8 +91,7 @@ public class SysLogController {
 
     /**
      * @param ids
-     * @return
-     * @功能：批量，全部清空日志记录
+     * @return 批量，全部清空日志记录
      */
     @RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
     public Result<SysRole> deleteBatch(@RequestParam(name = "ids") String ids) {

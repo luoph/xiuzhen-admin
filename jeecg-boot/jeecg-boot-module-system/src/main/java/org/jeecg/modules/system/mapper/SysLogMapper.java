@@ -19,7 +19,7 @@ import java.util.Map;
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
     /**
-     * @功能：清空所有日志记录
+     * 清空所有日志记录
      */
     void removeAll();
 
