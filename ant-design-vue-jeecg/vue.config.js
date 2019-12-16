@@ -1,5 +1,5 @@
 const path = require("path");
-const debug = process.env.NODE_ENV !== 'production';
+const debug = process.env.NODE_ENV !== "production";
 
 function resolve(dir) {
     return path.join(__dirname, dir);
@@ -16,12 +16,12 @@ module.exports = {
     productionSourceMap: true,
 
     // 打包app时放开该配置
-    // publicPath:'./',
+    // publicPath:"./",
     configureWebpack: config => {
         if (debug) {
             // 测试环境
             // config.devtool = "cheap-module-eval-source-map";
-            config.devtool = 'source-map';
+            config.devtool = "source-map";
         } else {
             config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
             config.productionSourceMap = false;
@@ -45,9 +45,9 @@ module.exports = {
                 modifyVars: {
                     /* less 变量覆盖，用于自定义 ant design 主题 */
                     /*
-          'primary-color': '#F5222D',
-          'link-color': '#F5222D',
-          'border-radius-base': '4px',
+          "primary-color": "#F5222D",
+          "link-color": "#F5222D",
+          "border-radius-base": "4px",
           */
                 },
                 javascriptEnabled: true,
@@ -58,12 +58,12 @@ module.exports = {
     devServer: {
         port: 3000,
         proxy: {
-            /* '/api': {
-         target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro', //mock API接口系统
+            /* "/api": {
+         target: "https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro", //mock API接口系统
          ws: false,
          changeOrigin: true,
          pathRewrite: {
-           '/jeecg-boot': ''  // 默认所有请求都加了jeecg-boot前缀，需要去掉
+           "/jeecg-boot": ""  // 默认所有请求都加了jeecg-boot前缀，需要去掉
          }
        },*/
             "/jeecg-boot": {
