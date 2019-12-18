@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.26-ndb-7.6.10-log)
 # Database: jeecg-boot
-# Generation Time: 2019-12-18 04:26:27 +0000
+# Generation Time: 2019-12-18 07:32:40 +0000
 # ************************************************************
 
 
@@ -18,11 +18,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-# Dump of table bs_player_info
-# ------------------------------------------------------------
-
 
 
 # Dump of table demo
@@ -57,41 +52,6 @@ VALUES
 	('1575901888','秦999',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'admin','2019-01-19 23:36:34','admin','2019-02-14 17:30:43',NULL);
 
 /*!40000 ALTER TABLE `demo` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table demo_copy
-# ------------------------------------------------------------
-
-LOCK TABLES `demo_copy` WRITE;
-/*!40000 ALTER TABLE `demo_copy` DISABLE KEYS */;
-
-INSERT INTO `demo_copy` (`id`, `name`, `key_word`, `punch_time`, `salary_money`, `bonus_money`, `sex`, `age`, `birthday`, `email`, `content`, `create_by`, `create_time`, `update_by`, `update_time`, `sys_org_code`)
-VALUES
-	('08375a2dff80e821d5a158dd98302b23','导入小虎',NULL,NULL,NULL,NULL,'2',28,NULL,NULL,NULL,'jeecg-boot','2019-04-10 11:42:57',NULL,NULL,NULL),
-	('1c2ba51b29a42d9de02bbd708ea8121a','777777','777','2018-12-07 19:43:17',NULL,NULL,NULL,7,'2018-12-07',NULL,NULL,NULL,NULL,'admin','2019-02-21 18:26:04',NULL),
-	('1dc29e80be14d1400f165b5c6b30c707','zhang daihao',NULL,NULL,NULL,NULL,'2',NULL,NULL,'zhangdaiscott@163.com',NULL,NULL,NULL,NULL,NULL,NULL),
-	('304e651dc769d5c9b6e08fb30457a602','小白兔',NULL,NULL,NULL,NULL,'2',28,NULL,NULL,NULL,'scott','2019-01-19 13:12:53','qinfeng','2019-01-19 13:13:12',NULL),
-	('4','Sandy','开源，很好','2018-12-15 00:00:00',NULL,NULL,'2',21,'2018-12-15','test4@baomidou.com','聪明00',NULL,NULL,'admin','2019-02-25 16:29:27',NULL),
-	('42c08b1a2e5b2a96ffa4cc88383d4b11','秦50090',NULL,'2019-01-05 20:33:31',NULL,NULL,NULL,28,'2019-01-05',NULL,NULL,'admin','2019-01-19 20:33:54','admin','2019-01-19 20:34:29',NULL),
-	('4436302a0de50bb83025286bc414d6a9','zhang daihao',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'zhangdaiscott@163.com',NULL,'admin','2019-01-19 15:39:04',NULL,NULL,NULL),
-	('4981637bf71b0c1ed1365241dfcfa0ea','小虎',NULL,NULL,NULL,NULL,'2',28,NULL,NULL,NULL,'scott','2019-01-19 13:12:53','qinfeng','2019-01-19 13:13:12',NULL),
-	('5c16e6a5c31296bcd3f1053d5d118815','导入zhangdaiscott',NULL,NULL,NULL,NULL,'1',NULL,'2019-01-03',NULL,NULL,'jeecg-boot','2019-04-10 11:42:57','admin','2019-05-19 18:35:51',NULL),
-	('7','zhangdaiscott',NULL,NULL,NULL,NULL,'1',NULL,'2019-01-03',NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-	('73bc58611012617ca446d8999379e4ac','郭靖11a','777','2018-12-07 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'jeecg-boot','2019-03-28 18:16:39',NULL,NULL,NULL),
-	('917e240eaa0b1b2d198ae869b64a81c3','zhang daihao',NULL,NULL,NULL,NULL,'2',0,'2018-11-29','zhangdaiscott@163.com',NULL,NULL,NULL,NULL,NULL,NULL),
-	('94420c5d8fc4420dde1e7196154b3a24','秦111',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'scott','2019-01-19 12:54:58','qinfeng','2019-01-19 13:12:10',NULL),
-	('95740656751c5f22e5932ab0ae33b1e4','杨康22a','奸臣',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'jeecg-boot','2019-03-28 18:16:39',NULL,NULL,NULL),
-	('b86897900c770503771c7bb88e5d1e9b','scott1','开源、很好、hello',NULL,NULL,NULL,'1',NULL,NULL,'zhangdaiscott@163.com',NULL,'scott','2019-01-19 12:22:34',NULL,NULL,NULL),
-	('c0b7c3de7c62a295ab715943de8a315d','秦风555',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'admin','2019-01-19 13:18:30','admin','2019-01-19 13:18:50',NULL),
-	('c28fa8391ef81d6fabd8bd894a7615aa','小麦',NULL,NULL,NULL,NULL,'2',NULL,NULL,'zhangdaiscott@163.com',NULL,'jeecg-boot','2019-04-04 17:18:09',NULL,NULL,NULL),
-	('c2c0d49e3c01913067cf8d1fb3c971d2','zhang daihao',NULL,NULL,NULL,NULL,'2',NULL,NULL,'zhangdaiscott@163.com',NULL,'admin','2019-01-19 23:37:18','admin','2019-01-21 16:49:06',NULL),
-	('c96279c666b4b82e3ef1e4e2978701ce','报名时间',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'jeecg-boot','2019-03-28 18:00:52',NULL,NULL,NULL),
-	('d24668721446e8478eeeafe4db66dcff','zhang daihao999',NULL,NULL,NULL,NULL,'1',NULL,NULL,'zhangdaiscott@163.com',NULL,NULL,NULL,NULL,NULL,NULL),
-	('eaa6c1116b41dc10a94eae34cf990133','zhang daihao',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'zhangdaiscott@163.com',NULL,NULL,NULL,NULL,NULL,NULL),
-	('ffa9da1ad40632dfcabac51d766865bd','秦999',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'admin','2019-01-19 23:36:34','admin','2019-02-14 17:30:43',NULL);
-
-/*!40000 ALTER TABLE `demo_copy` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -398,11 +358,6 @@ VALUES
 
 /*!40000 ALTER TABLE `jeecg_project_nature_income` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table joa_demo
-# ------------------------------------------------------------
-
 
 
 # Dump of table onl_cgform_button
@@ -4672,7 +4627,6 @@ VALUES
 	('b1cb0a3fedf7ed0e4653cb5a229837ee','08e6b9dc3c04489c8e1ff2ce6f105aa4','定时任务','/isystem/QuartzJobList','system/QuartzJobList',NULL,NULL,1,NULL,NULL,3.00,0,NULL,1,1,NULL,0,NULL,NULL,'2019-01-03 09:38:52','admin','2019-04-02 10:24:13',0,0,NULL,NULL),
 	('b3c824fc22bd953e2eb16ae6914ac8f9','4875ebe289344e14844d8e3ea1edd73f','高级详情页','/profile/advanced','profile/advanced/Advanced',NULL,NULL,1,NULL,NULL,2.00,NULL,NULL,1,1,NULL,NULL,NULL,NULL,'2018-12-25 20:34:38',NULL,NULL,0,0,NULL,NULL),
 	('b4dfc7d5dd9e8d5b6dd6d4579b1aa559','c65321e57b7949b7a975313220de0422','500','/exception/500','exception/500',NULL,NULL,1,NULL,NULL,3.00,NULL,NULL,1,1,NULL,NULL,NULL,NULL,'2018-12-25 20:34:38',NULL,NULL,0,0,NULL,NULL),
-	('b6bcee2ccc854052d3cc3e9c96d90197','71102b3b87fb07e5527bbd2c530dd90a','加班申请','/modules/extbpm/joa/JoaOvertimeList','modules/extbpm/joa/JoaOvertimeList',NULL,NULL,1,NULL,NULL,1.00,0,NULL,1,1,NULL,0,NULL,'admin','2019-04-03 15:33:10','admin','2019-04-03 15:34:48',0,0,NULL,NULL),
 	('c431130c0bc0ec71b0a5be37747bb36a','2a470fc0c3954d9dbb61de6d80846549','一对多JEditable','/jeecg/JeecgOrderMainListForJEditableTable','jeecg/JeecgOrderMainListForJEditableTable',NULL,NULL,1,NULL,NULL,3.00,0,NULL,1,1,NULL,0,NULL,'admin','2019-03-29 10:51:59','admin','2019-04-04 20:09:39',0,0,NULL,NULL),
 	('c65321e57b7949b7a975313220de0422','d7d6e2e4e2934f2c9385a623fd98c6f3','异常页','/exception','layouts/RouteView',NULL,NULL,1,NULL,NULL,0.00,0,'warning',1,0,0,0,NULL,NULL,'2018-12-25 20:34:38','admin','2019-12-06 16:38:57',0,0,NULL,0),
 	('c6cf95444d80435eb37b2f9db3971ae6','2a470fc0c3954d9dbb61de6d80846549','数据回执模拟','/jeecg/InterfaceTest','jeecg/InterfaceTest',NULL,NULL,1,NULL,NULL,6.00,0,NULL,1,1,NULL,0,NULL,'admin','2019-02-19 16:02:23','admin','2019-02-21 16:25:45',0,0,NULL,NULL),

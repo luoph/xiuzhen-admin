@@ -236,24 +236,6 @@ CREATE TABLE `jeecg_project_nature_income` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Table structure for joa_demo
--- ----------------------------
-DROP TABLE IF EXISTS `joa_demo`;
-CREATE TABLE `joa_demo` (
-  `id` varchar(32) DEFAULT NULL COMMENT 'ID',
-  `name` varchar(100) DEFAULT NULL COMMENT '请假人',
-  `days` int(11) DEFAULT NULL COMMENT '请假天数',
-  `begin_date` datetime DEFAULT NULL COMMENT '开始时间',
-  `end_date` datetime DEFAULT NULL COMMENT '请假结束时间',
-  `reason` varchar(500) DEFAULT NULL COMMENT '请假原因',
-  `bpm_status` varchar(50) DEFAULT '1' COMMENT '流程状态',
-  `create_by` varchar(32) DEFAULT NULL COMMENT '创建人id',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `update_by` varchar(32) DEFAULT NULL COMMENT '修改人id'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='流程测试';
-
--- ----------------------------
 -- Table structure for onl_cgform_button
 -- ----------------------------
 DROP TABLE IF EXISTS `onl_cgform_button`;
