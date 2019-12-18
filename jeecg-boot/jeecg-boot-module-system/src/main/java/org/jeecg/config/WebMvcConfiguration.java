@@ -19,9 +19,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Value("${jeecg.path.upload}")
-    private String upLoadPath;
+    private String uploadPath;
+
     @Value("${jeecg.path.webapp}")
     private String webAppPath;
+
     @Value("${spring.resource.static-locations}")
     private String staticLocations;
 
@@ -47,7 +49,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
-                .addResourceLocations("file:" + upLoadPath + "//", "file:" + webAppPath + "//")
+                .addResourceLocations("file:" + uploadPath + "//", "file:" + webAppPath + "//")
                 .addResourceLocations(staticLocations.split(","));
     }
 
