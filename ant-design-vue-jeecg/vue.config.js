@@ -12,6 +12,9 @@ module.exports = {
     Crashed when using Webpack `import()` #2463
     https://github.com/vuejs/vue-cli/issues/2463
    */
+    // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
+    productionSourceMap: true,
+
     // 打包app时放开该配置
     // publicPath:"./",
     configureWebpack: config => {
@@ -21,7 +24,6 @@ module.exports = {
             config.devtool = "source-map";
         } else {
             config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
-            config.productionSourceMap = false;
         }
     },
     chainWebpack: config => {
