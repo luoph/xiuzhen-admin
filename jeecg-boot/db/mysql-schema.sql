@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 18/12/2019 12:18:35
+ Date: 18/12/2019 15:18:39
 */
 
 SET NAMES utf8mb4;
@@ -22,30 +22,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `demo`;
 CREATE TABLE `demo` (
-  `id` varchar(50) NOT NULL COMMENT '主键ID',
-  `name` varchar(30) DEFAULT NULL COMMENT '姓名',
-  `key_word` varchar(255) DEFAULT NULL COMMENT '关键词',
-  `punch_time` datetime DEFAULT NULL COMMENT '打卡时间',
-  `salary_money` decimal(10,3) DEFAULT NULL COMMENT '工资',
-  `bonus_money` double(10,2) DEFAULT NULL COMMENT '奖金',
-  `sex` varchar(2) DEFAULT NULL COMMENT '性别 {男:1,女:2}',
-  `age` int(11) DEFAULT NULL COMMENT '年龄',
-  `birthday` date DEFAULT NULL COMMENT '生日',
-  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `content` varchar(1000) DEFAULT NULL COMMENT '个人简介',
-  `create_by` varchar(32) DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_by` varchar(32) DEFAULT NULL COMMENT '修改人',
-  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `sys_org_code` varchar(64) DEFAULT NULL COMMENT '所属部门编码',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
--- Table structure for demo_copy
--- ----------------------------
-DROP TABLE IF EXISTS `demo_copy`;
-CREATE TABLE `demo_copy` (
   `id` varchar(50) NOT NULL COMMENT '主键ID',
   `name` varchar(30) DEFAULT NULL COMMENT '姓名',
   `key_word` varchar(255) DEFAULT NULL COMMENT '关键词',
