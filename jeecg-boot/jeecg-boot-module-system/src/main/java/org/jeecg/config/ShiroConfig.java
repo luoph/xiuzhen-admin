@@ -128,8 +128,8 @@ public class ShiroConfig {
         // 性能监控
         filterChainDefinitionMap.put("/actuator/info", "anon");
         filterChainDefinitionMap.put("/actuator/health", "anon");
+        filterChainDefinitionMap.put("/actuator/httptrace", "anon");
         filterChainDefinitionMap.put("/actuator/metrics/**", "anon");
-        filterChainDefinitionMap.put("/actuator/httptrace/**", "anon");
         filterChainDefinitionMap.put("/actuator/redis/**", "anon");
 
         // 测试示例
