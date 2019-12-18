@@ -30,6 +30,7 @@ import { getAction } from "@/api/manage";
 moment.locale("zh-cn");
 
 export default {
+    name: "TomcatInfo",
     data() {
         return {
             time: "",
@@ -90,24 +91,16 @@ export default {
         handleClickUpdate() {
             this.loadTomcatInfo();
         },
-
         loadTomcatInfo() {
             this.tableLoading = true;
             this.time = moment().format("YYYY年MM月DD日 HH时mm分ss秒");
             Promise.all([
-                getAction("actuator/metrics/tomcat.sessions.created"),
-                getAction("actuator/metrics/tomcat.sessions.expired"),
-                getAction("actuator/metrics/tomcat.sessions.active.current"),
-                getAction("actuator/metrics/tomcat.sessions.active.max"),
-                getAction("actuator/metrics/tomcat.sessions.rejected"),
-                getAction("actuator/metrics/tomcat.global.sent"),
-                getAction("actuator/metrics/tomcat.global.request.max"),
-                getAction("actuator/metrics/tomcat.global.request"),
-                // 2.1.3.RELEASE 无此API
-                //getAction('actuator/metrics/tomcat.servlet.request'),
-                // getAction('actuator/metrics/tomcat.servlet.request.max'),
-                getAction("actuator/metrics/tomcat.threads.current"),
-                getAction("actuator/metrics/tomcat.threads.config.max")
+                getAction("/actuator/metrics/tomcat.sessions.created"),
+                getAction("/actuator/metrics/tomcat.sessions.expired"),
+                getAction("/actuator/metrics/tomcat.sessions.rejected"),
+                getAction("/actuator/metrics/tomcat.sessions.active.current"),
+                getAction("/actuator/metrics/tomcat.sessions.alive.max"),
+                getAction("/actuator/metrics/tomcat.sessions.active.max"),
             ])
                 .then(res => {
                     let tomcatInfo = [];

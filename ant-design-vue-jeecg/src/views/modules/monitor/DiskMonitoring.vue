@@ -27,7 +27,7 @@ export default {
             // 数据集
             diskInfo: [],
             url: {
-                queryDiskInfo: "actuator/redis/queryDiskInfo"
+                queryDiskInfo: "/actuator/redis/queryDiskInfo"
             }
         };
     },
