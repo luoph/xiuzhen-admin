@@ -60,7 +60,7 @@ logger "==> remote_host:[${host}]"
 logger "==> work_path:[${work_path}]"
 logger "==> server_path:[${server_path}]"
 
-target_path=${work_path}/target
+package_path="${work_path}/package"
 
 logger "==> start building"
 mvn clean package -P${profile}
@@ -71,8 +71,8 @@ logger "==> finish building"
 
 ssh_key="/var/lib/jenkins/.ssh/id_rsa"
 logger "==> start uploading:${server_name}.jar"
-logger "==> scp -i ${ssh_key} -o StrictHostKeyChecking=no ${server_name}.jar ${host}:${target_path}"
-scp -i ${ssh_key} -o StrictHostKeyChecking=no ${server_name}.jar ${host}:${target_path}
+logger "==> scp -i ${ssh_key} -o StrictHostKeyChecking=no ${server_name}.jar ${host}:${package_path}"
+scp -i ${ssh_key} -o StrictHostKeyChecking=no ${server_name}.jar ${host}:${package_path}
 logger "==> finish uploading:${server_name}.jar"
 
 logger "==> start deploying"
@@ -80,14 +80,14 @@ logger "==> start deploying"
 backup_path=${work_path}/backup
 
 args="-p ${profile} -n ${server_name} -s ${server_path} -b ${backup_path}"
-logger "==> service.sh args:$args"
+logger "==> service.sh $args"
 
 ssh -i ${ssh_key} ${host} << ENDSSH
 
 bash ${work_path}/service.sh stop ${args}
 
 bash ${work_path}/service.sh backup ${args}
-cp ${target_path}/${server_name}.jar ${server_path}
+cp ${package_path}/${server_name}.jar ${server_path}
 
 bash ${work_path}/service.sh start ${args}
 
