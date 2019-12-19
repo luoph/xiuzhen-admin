@@ -51,10 +51,8 @@ yarn build
 logger "==> finish building"
 
 project=jeecg-vue
-# 编译目录
-output=dist
+
 # 压缩文件
-cd ${output}
 zip_file=${project}.zip
 
 # 删除旧文件
@@ -62,8 +60,8 @@ if [[ -f "$zip_file" ]]; then
     rm -rf $zip_file
 fi
 
-zip -qr ${zip_file} ${output}
-rm -rf ${output}
+zip -qr ${zip_file} dist
+rm -rf dist
 
 # 上传包和备份包路径
 package_path=${work_path}/package
