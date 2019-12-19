@@ -60,7 +60,7 @@ export default {
                     } else {
                         params.username = username;
                     }
-                    getAction("/sys/user/querySysUser", params).then(res => {
+                    getAction("sys/user/querySysUser", params).then(res => {
                         if (res.success) {
                             var userList = {
                                 username: res.result.username,

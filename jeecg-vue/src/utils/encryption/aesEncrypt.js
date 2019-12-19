@@ -6,7 +6,7 @@ import Vue from "vue";
  * 获取加密字符串，并对结果进行缓存
  */
 export function getEncryptedString() {
-    return getAction("/sys/getEncryptedString", {}).then(res => {
+    return getAction("sys/getEncryptedString", {}).then(res => {
         let encryptedString = {};
         encryptedString.key = res.result.key;
         encryptedString.iv = res.result.iv;
