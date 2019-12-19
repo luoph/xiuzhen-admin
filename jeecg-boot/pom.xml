@@ -39,7 +39,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mybatis-plus.version>3.1.2</mybatis-plus.version>
-        <druid.version>1.1.21</druid.version>
+        <druid.version>1.1.20</druid.version>
         <jwt.version>0.9.1</jwt.version>
         <commons.version>2.6</commons.version>
         <aliyun-java-sdk-core.version>3.2.3</aliyun-java-sdk-core.version>
