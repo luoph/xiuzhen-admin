@@ -35,7 +35,7 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    @Value("${jeecg.shiro.excludeUrls}")
+    @Value("${jeecg.shiro.exclude-urls}")
     private String excludeUrls;
 
     @Value("${spring.redis.port}")
@@ -59,7 +59,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // 拦截器
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         if (oConvertUtils.isNotEmpty(excludeUrls)) {
             String[] permissionUrl = excludeUrls.split(",");
             for (String url : permissionUrl) {

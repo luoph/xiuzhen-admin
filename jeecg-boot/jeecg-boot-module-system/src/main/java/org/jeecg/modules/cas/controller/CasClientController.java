@@ -48,7 +48,7 @@ public class CasClientController {
     @Autowired
     private RedisUtil redisUtil;
 
-    @Value("${cas.prefixUrl}")
+    @Value("${cas.prefix-url}")
     private String prefixUrl;
 
     @GetMapping("/validateLogin")

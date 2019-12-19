@@ -10,13 +10,13 @@ public class OssBootConfiguration {
 
     @Value("${jeecg.oss.endpoint}")
     private String endpoint;
-    @Value("${jeecg.oss.accessKey}")
+    @Value("${jeecg.oss.access-key}")
     private String accessKeyId;
-    @Value("${jeecg.oss.secretKey}")
+    @Value("${jeecg.oss.secret-key}")
     private String accessKeySecret;
-    @Value("${jeecg.oss.bucketName}")
+    @Value("${jeecg.oss.bucket-name}")
     private String bucketName;
-    @Value("${jeecg.oss.staticDomain}")
+    @Value("${jeecg.oss.static-domain}")
     private String staticDomain;
 
 
