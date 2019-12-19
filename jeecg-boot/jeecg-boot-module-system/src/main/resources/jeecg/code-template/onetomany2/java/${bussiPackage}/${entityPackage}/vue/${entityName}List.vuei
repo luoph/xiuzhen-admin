@@ -151,11 +151,11 @@
         //操作url
         type: "radio",
         url: {
-          list: "/${entityPackage}/${entityName?uncap_first}/list",
-          delete: "/${entityPackage}/${entityName?uncap_first}/delete",
-          deleteBatch: "/${entityPackage}/${entityName?uncap_first}/deleteBatch",
+          list: "${entityPackage}/${entityName?uncap_first}/list",
+          delete: "${entityPackage}/${entityName?uncap_first}/delete",
+          deleteBatch: "${entityPackage}/${entityName?uncap_first}/deleteBatch",
           exportXlsUrl: "${entityPackage}/${entityName?uncap_first}/exportXls",
-          importExcelUrl: "/${entityPackage}/${entityName?uncap_first}/importExcel",
+          importExcelUrl: "${entityPackage}/${entityName?uncap_first}/importExcel",
          },
       }
     },

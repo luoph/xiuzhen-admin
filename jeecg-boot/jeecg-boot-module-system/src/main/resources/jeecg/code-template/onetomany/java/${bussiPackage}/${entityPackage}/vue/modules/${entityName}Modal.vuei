@@ -119,8 +119,8 @@
         },
 </#list>
         url: {
-          add: "/${entityPackage}/${entityName?uncap_first}/add",
-          edit: "/${entityPackage}/${entityName?uncap_first}/edit",
+          add: "${entityPackage}/${entityName?uncap_first}/add",
+          edit: "${entityPackage}/${entityName?uncap_first}/edit",
 <#list subTables as sub><#rt/>
           ${sub.entityName?uncap_first}: {
             list: '/${entityPackage}/${entityName?uncap_first}/query${sub.entityName}ByMainId'

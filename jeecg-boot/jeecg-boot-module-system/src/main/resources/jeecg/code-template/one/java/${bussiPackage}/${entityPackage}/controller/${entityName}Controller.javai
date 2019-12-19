@@ -29,7 +29,7 @@ import java.util.Arrays;
 @Slf4j
 @RestController
 @Api(tags = "${tableVo.ftlDescription}")
-@RequestMapping("/${entityPackage}/${entityName?uncap_first}")
+@RequestMapping("${entityPackage}/${entityName?uncap_first}")
 public class ${entityName}Controller extends JeecgController<${entityName}, I${entityName}Service> {
 
 	@Autowired

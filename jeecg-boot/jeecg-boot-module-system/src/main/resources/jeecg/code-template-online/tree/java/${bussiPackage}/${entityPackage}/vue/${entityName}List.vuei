@@ -144,12 +144,12 @@ export default {
                 }
             ],
             url: {
-                list: "/${entityPackage}/${entityName?uncap_first}/rootList",
-                childList: "/${entityPackage}/${entityName?uncap_first}/childList",
-                delete: "/${entityPackage}/${entityName?uncap_first}/delete",
-                deleteBatch: "/${entityPackage}/${entityName?uncap_first}/deleteBatch",
-                exportXlsUrl: "/${entityPackage}/${entityName?uncap_first}/exportXls",
-                importExcelUrl: "/${entityPackage}/${entityName?uncap_first}/importExcel"
+                list: "${entityPackage}/${entityName?uncap_first}/rootList",
+                childList: "${entityPackage}/${entityName?uncap_first}/childList",
+                delete: "${entityPackage}/${entityName?uncap_first}/delete",
+                deleteBatch: "${entityPackage}/${entityName?uncap_first}/deleteBatch",
+                exportXlsUrl: "${entityPackage}/${entityName?uncap_first}/exportXls",
+                importExcelUrl: "${entityPackage}/${entityName?uncap_first}/importExcel"
             },
             expandedRowKeys: [],
             hasChildrenField: "${hasChildrenField}",

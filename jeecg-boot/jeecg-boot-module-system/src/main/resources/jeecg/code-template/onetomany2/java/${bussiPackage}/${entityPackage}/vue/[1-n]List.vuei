@@ -100,9 +100,9 @@
           scopedSlots: {customRender: 'action'},
         }],
         url: {
-          list: "/${entityPackage}/${entityName?uncap_first}/list${subTab.entityName}ByMainId",
-          delete: "/${entityPackage}/${entityName?uncap_first}/delete${subTab.entityName}",
-          deleteBatch: "/${entityPackage}/${entityName?uncap_first}/deleteBatch${subTab.entityName}",
+          list: "${entityPackage}/${entityName?uncap_first}/list${subTab.entityName}ByMainId",
+          delete: "${entityPackage}/${entityName?uncap_first}/delete${subTab.entityName}",
+          deleteBatch: "${entityPackage}/${entityName?uncap_first}/deleteBatch${subTab.entityName}",
         }
       }
     },
