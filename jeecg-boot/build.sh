@@ -72,7 +72,7 @@ logger "==> finish building"
 logger "==> start uploading:${server_name}.jar"
 
 upload_path=${package_path}/${server_name}
-bash /usr/local/bin/lofile-uploader.sh -h ${host} -f ${server_name}.jar -d ${upload_path}
+bash /usr/local/bin/file-uploader.sh -h ${host} -f ${server_name}.jar -d ${upload_path}
 
 logger "==> start deploying"
 backup_path=${work_path}/backup
