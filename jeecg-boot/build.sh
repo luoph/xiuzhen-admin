@@ -46,11 +46,11 @@ logger "==> server_name:[${server_name}]"
 logger "==> start building"
 mvn clean package -P${profile}
 
-if [[! -d target ]]; then
-    mkdir target
+if [[ ! -d "target" ]]; then
+    mkdir -p "target"
 fi
 
-mv ${module_name}-${version}.jar target/${server_name}.jar
+mv ${module_name}/target/${module_name}-${version}.jar target/${server_name}.jar
 
 logger "==> finish building"
 
