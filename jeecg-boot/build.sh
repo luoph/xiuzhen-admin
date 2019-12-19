@@ -72,7 +72,7 @@ logger "==> finish building"
 ssh_key="/var/lib/jenkins/.ssh/id_rsa"
 logger "==> start uploading:${server_name}.jar"
 logger "==> scp -i ${ssh_key} -o StrictHostKeyChecking=no ${server_name}.jar ${host}:${target_path}"
-scp -i ${ssh_key} -o StrictHostKeyChecking=no target/${server_name}.jar ${host}:${target_path}
+scp -i ${ssh_key} -o StrictHostKeyChecking=no ${server_name}.jar ${host}:${target_path}
 logger "==> finish uploading:${server_name}.jar"
 
 logger "==> start deploying"
