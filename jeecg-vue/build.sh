@@ -1,6 +1,7 @@
 #!/bin/bash
 # 编译目录
 output=dist
+project=jeecg-vue
 
 function logger() {
     time=$(date +'%Y-%m-%d %H:%M:%S')
@@ -58,9 +59,6 @@ yarn build
 
 logger "==> finish building"
 
-project=jeecg-vue
-
-# 压缩文件
 zip_file=${project}.zip
 
 # 删除旧文件
@@ -68,8 +66,9 @@ if [[ -f "$zip_file" ]]; then
     rm -rf $zip_file
 fi
 
+# 压缩文件
+logger "==> zip -qr ${zip_file} ${output}"
 zip -qr ${zip_file} ${output}
-rm -rf ${output}
 
 # 上传包和备份包路径
 package_path=${work_path}/package
@@ -77,7 +76,7 @@ backup_path=${work_path}/backup
 
 logger "==> start uploading:${zip_file}"
 upload_path=${package_path}/${project}
-bash /usr/local/bin/lofile-uploader.sh -h ${host} -f ${zip_file} -d ${upload_path}
+bash /usr/local/bin/file-uploader.sh -h ${host} -f ${zip_file} -d ${upload_path}
 
 logger "==> start deploying"
 frontend_parent="$(dirname "${frontend_path}")"
