@@ -13,32 +13,21 @@ function logger() {
 function usage() {
     cat << -EOF-
 Usage:
-$0 -p profile -n server_name -h host -s server_path
+$0 -p profile -n server_name
 profile -- 环境名, develop/production/stable
 server_name -- 服务名, eg: payservice
-host -- 远程服务器帐号ip, eg: root@10.21.210.70
-dir -- 服务器接收jar包文件夹
 -EOF-
     exit 1
 }
 
 [[ $# -eq 0 ]] && usage
-while getopts "p:n:h:s:w:" opt; do
+while getopts "p:n:" opt; do
     case ${opt} in
     p)
         profile=$OPTARG
         ;;
     n)
         server_name=$OPTARG
-        ;;
-    h)
-        host=$OPTARG
-        ;;
-    w)
-        work_path=$OPTARG
-        ;;
-    s)
-        server_path=$OPTARG
         ;;
     ?)
         usage
@@ -47,48 +36,22 @@ while getopts "p:n:h:s:w:" opt; do
 done
 
 if [[ -z "$profile" ]] \
-    || [[ -z "$server_name" ]] \
-    || [[ -z "$host" ]] \
-    || [[ -z "$work_path" ]] \
-    || [[ -z "$server_path" ]]; then
+    || [[ -z "$server_name" ]]; then
     usage
 fi
 
 logger "==> profile:[${profile}]"
 logger "==> server_name:[${server_name}]"
-logger "==> remote_host:[${host}]"
-logger "==> work_path:[${work_path}]"
-logger "==> server_path:[${server_path}]"
-
-package_path="${work_path}/package"
 
 logger "==> start building"
 mvn clean package -P${profile}
 
-cd ${module_name}/target
-mv ${module_name}-${version}.jar ${server_name}.jar
+if [[! -d target ]]; then
+    mkdir target
+fi
+
+mv ${module_name}-${version}.jar target/${server_name}.jar
+
 logger "==> finish building"
 
 logger "==> start uploading:${server_name}.jar"
-
-upload_path=${package_path}/${server_name}
-bash /usr/local/bin/file-uploader.sh -h ${host} -f ${server_name}.jar -d ${upload_path}
-
-logger "==> start deploying"
-backup_path=${work_path}/backup
-
-args="-p ${profile} -n ${server_name} -s ${server_path} -b ${backup_path}"
-logger "==> service.sh $args"
-
-ssh ${host} << ENDSSH
-
-bash ${work_path}/service.sh stop ${args}
-
-bash ${work_path}/service.sh backup ${args}
-cp ${upload_path}/${server_name}.jar ${server_path}
-
-bash ${work_path}/service.sh start ${args}
-
-ENDSSH
-
-logger "==> finish deploying"
