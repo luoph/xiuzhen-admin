@@ -7,29 +7,10 @@ function logger() {
     echo "["${time}"] "$1
 }
 
-function usage() {
-    cat << -EOF-
-Usage:
-$0 -p project
-project -- 工程名
--EOF-
-    exit 1
-}
-
-[[ $# -eq 0 ]] && usage
-while getopts "p:" opt; do
-    case ${opt} in
-    p)
-        project=$OPTARG
-        ;;
-    ?)
-        usage
-        ;;
-    esac
-done
-
+project=$1
 if [[ -z "${project}" ]]; then
-    usage
+    echo "project not set"
+    exit -1
 fi
 
 logger "==> project:[${project}]"
