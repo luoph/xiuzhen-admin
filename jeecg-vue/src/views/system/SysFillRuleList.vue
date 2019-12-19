@@ -145,12 +145,12 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/fillRule/list",
-                test: "/sys/fillRule/testFillRule",
-                delete: "/sys/fillRule/delete",
-                deleteBatch: "/sys/fillRule/deleteBatch",
-                exportXlsUrl: "/sys/fillRule/exportXls",
-                importExcelUrl: "/sys/fillRule/importExcel"
+                list: "sys/fillRule/list",
+                test: "sys/fillRule/testFillRule",
+                delete: "sys/fillRule/delete",
+                deleteBatch: "sys/fillRule/deleteBatch",
+                exportXlsUrl: "sys/fillRule/exportXls",
+                importExcelUrl: "sys/fillRule/importExcel"
             }
         };
     },

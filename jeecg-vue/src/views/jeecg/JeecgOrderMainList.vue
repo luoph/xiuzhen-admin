@@ -157,10 +157,10 @@ export default {
             ],
 
             url: {
-                list: "/test/jeecgOrderMain/list",
-                delete: "/test/jeecgOrderMain/delete",
-                deleteBatch: "/test/jeecgOrderMain/deleteBatch",
-                exportXlsUrl: "/test/jeecgOrderMain/exportXls"
+                list: "test/jeecgOrderMain/list",
+                delete: "test/jeecgOrderMain/delete",
+                deleteBatch: "test/jeecgOrderMain/deleteBatch",
+                exportXlsUrl: "test/jeecgOrderMain/exportXls"
             }
         };
     },

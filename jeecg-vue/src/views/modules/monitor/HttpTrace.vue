@@ -127,7 +127,7 @@ export default {
 
         fetch() {
             this.tableLoading = true;
-            getAction("/actuator/httptrace")
+            getAction("actuator/httptrace")
                 .then(data => {
                     let filterData = [];
                     for (let d of data.traces) {

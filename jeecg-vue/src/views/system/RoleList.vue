@@ -163,10 +163,10 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/role/list",
-                delete: "/sys/role/delete",
-                deleteBatch: "/sys/role/deleteBatch",
-                exportXlsUrl: "/sys/role/exportXls",
+                list: "sys/role/list",
+                delete: "sys/role/delete",
+                deleteBatch: "sys/role/deleteBatch",
+                exportXlsUrl: "sys/role/exportXls",
                 importExcelUrl: "sys/role/importExcel"
             }
         };

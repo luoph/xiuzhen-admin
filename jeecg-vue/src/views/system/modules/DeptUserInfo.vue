@@ -132,10 +132,10 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/user/departUserList",
-                edit: "/sys/user/editSysDepartWithUser",
-                delete: "/sys/user/deleteUserInDepart",
-                deleteBatch: "/sys/user/deleteUserInDepartBatch"
+                list: "sys/user/departUserList",
+                edit: "sys/user/editSysDepartWithUser",
+                delete: "sys/user/deleteUserInDepart",
+                deleteBatch: "sys/user/deleteUserInDepartBatch"
             }
         };
     },

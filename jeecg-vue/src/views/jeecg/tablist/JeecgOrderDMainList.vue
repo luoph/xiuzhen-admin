@@ -183,9 +183,9 @@ export default {
             // 分页参数
             type: "radio",
             url: {
-                list: "/test/order/orderList",
-                delete: "/test/order/delete",
-                deleteBatch: "/test/order/deleteBatch"
+                list: "test/order/orderList",
+                delete: "test/order/delete",
+                deleteBatch: "test/order/deleteBatch"
             }
         };
     },

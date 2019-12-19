@@ -77,7 +77,7 @@ export default {
             // 加载中
             spinning: false,
             url: {
-                pdfList: "/api/pdfList"
+                pdfList: "api/pdfList"
             }
         };
     },

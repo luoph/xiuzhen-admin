@@ -155,11 +155,11 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/position/list",
-                delete: "/sys/position/delete",
-                deleteBatch: "/sys/position/deleteBatch",
-                exportXlsUrl: "/sys/position/exportXls",
-                importExcelUrl: "/sys/position/importExcel"
+                list: "sys/position/list",
+                delete: "sys/position/delete",
+                deleteBatch: "sys/position/deleteBatch",
+                exportXlsUrl: "sys/position/exportXls",
+                importExcelUrl: "sys/position/importExcel"
             }
         };
     },

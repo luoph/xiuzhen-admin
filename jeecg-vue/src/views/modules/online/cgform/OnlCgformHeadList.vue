@@ -227,12 +227,12 @@ export default {
                 }
             ],
             url: {
-                list: "/online/cgform/head/list",
-                delete: "/online/cgform/head/delete",
-                deleteBatch: "/online/cgform/head/deleteBatch",
-                doDbSynch: "/online/cgform/api/doDbSynch/",
-                removeRecord: "/online/cgform/head/removeRecord",
-                copyOnline: "/online/cgform/head/copyOnline"
+                list: "online/cgform/head/list",
+                delete: "online/cgform/head/delete",
+                deleteBatch: "online/cgform/head/deleteBatch",
+                doDbSynch: "online/cgform/api/doDbSynch/",
+                removeRecord: "online/cgform/head/removeRecord",
+                copyOnline: "online/cgform/head/copyOnline"
             },
             tableTypeDictOptions: [],
             sexDictOptions: [],

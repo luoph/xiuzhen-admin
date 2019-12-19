@@ -177,11 +177,11 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/quartzJob/list",
-                delete: "/sys/quartzJob/delete",
-                deleteBatch: "/sys/quartzJob/deleteBatch",
-                pause: "/sys/quartzJob/pause",
-                resume: "/sys/quartzJob/resume",
+                list: "sys/quartzJob/list",
+                delete: "sys/quartzJob/delete",
+                deleteBatch: "sys/quartzJob/deleteBatch",
+                pause: "sys/quartzJob/pause",
+                resume: "sys/quartzJob/resume",
                 exportXlsUrl: "sys/quartzJob/exportXls",
                 importExcelUrl: "sys/quartzJob/importExcel"
             }

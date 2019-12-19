@@ -112,8 +112,8 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/user/queryByOrgCodeForAddressList",
-                listByPosition: "/sys/position/list"
+                list: "sys/user/queryByOrgCodeForAddressList",
+                listByPosition: "sys/position/list"
             }
         };
     },

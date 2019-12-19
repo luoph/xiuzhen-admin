@@ -84,11 +84,11 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/category/rootList",
-                childList: "/sys/category/childList",
-                delete: "/sys/category/delete",
-                deleteBatch: "/sys/category/deleteBatch",
-                exportXlsUrl: "/sys/category/exportXls",
+                list: "sys/category/rootList",
+                childList: "sys/category/childList",
+                delete: "sys/category/delete",
+                deleteBatch: "sys/category/deleteBatch",
+                exportXlsUrl: "sys/category/exportXls",
                 importExcelUrl: "sys/category/importExcel"
             },
             expandedRowKeys: [],

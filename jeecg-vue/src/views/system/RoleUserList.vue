@@ -265,12 +265,12 @@ export default {
             ],
 
             url: {
-                list: "/sys/role/list",
-                delete: "/sys/role/delete",
-                list2: "/sys/user/userRoleList",
-                addUserRole: "/sys/user/addSysUserRole",
-                delete2: "/sys/user/deleteUserRole",
-                deleteBatch2: "/sys/user/deleteUserRoleBatch",
+                list: "sys/role/list",
+                delete: "sys/role/delete",
+                list2: "sys/user/userRoleList",
+                addUserRole: "sys/user/addSysUserRole",
+                delete2: "sys/user/deleteUserRole",
+                deleteBatch2: "sys/user/deleteUserRoleBatch",
                 exportXlsUrl: "sys/role/exportXls",
                 importExcelUrl: "sys/role/importExcel"
             }

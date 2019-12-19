@@ -80,11 +80,11 @@ export default {
             this.tableLoading = true;
             this.time = moment().format("YYYY年MM月DD日 HH时mm分ss秒");
             Promise.all([
-                getAction("/actuator/metrics/system.cpu.count"),
-                getAction("/actuator/metrics/system.cpu.usage"),
-                getAction("/actuator/metrics/process.start.time"),
-                getAction("/actuator/metrics/process.uptime"),
-                getAction("/actuator/metrics/process.cpu.usage")
+                getAction("actuator/metrics/system.cpu.count"),
+                getAction("actuator/metrics/system.cpu.usage"),
+                getAction("actuator/metrics/process.start.time"),
+                getAction("actuator/metrics/process.uptime"),
+                getAction("actuator/metrics/process.cpu.usage")
             ])
                 .then(res => {
                     let info = [];

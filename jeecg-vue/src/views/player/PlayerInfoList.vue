@@ -196,12 +196,12 @@ export default {
                 }
             ],
             url: {
-                list: "/player/playerInfo/list",
-                delete: "/player/playerInfo/delete",
-                deleteBatch: "/player/playerInfo/deleteBatch",
-                exportXlsUrl: "/player/playerInfo/exportXls",
-                importExcelUrl: "/player/playerInfo/importExcel",
-                serverListUrl: "/game/gameServer/list"
+                list: "player/playerInfo/list",
+                delete: "player/playerInfo/delete",
+                deleteBatch: "player/playerInfo/deleteBatch",
+                exportXlsUrl: "player/playerInfo/exportXls",
+                importExcelUrl: "player/playerInfo/importExcel",
+                serverListUrl: "game/gameServer/list"
             },
             dictOptions: {}
         };

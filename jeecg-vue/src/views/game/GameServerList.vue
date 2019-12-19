@@ -261,13 +261,13 @@ export default {
                 }
             ],
             url: {
-                list: "/game/gameServer/list",
-                delete: "/game/gameServer/delete",
-                deleteBatch: "/game/gameServer/deleteBatch",
+                list: "game/gameServer/list",
+                delete: "game/gameServer/delete",
+                deleteBatch: "game/gameServer/deleteBatch",
                 // exportXlsUrl: "game/gameServer/exportXls",
                 // importExcelUrl: "game/gameServer/importExcel",
                 // 游戏列表
-                gameInfoListUrl: "/game/gameInfo/list"
+                gameInfoListUrl: "game/gameInfo/list"
             }
         };
     },

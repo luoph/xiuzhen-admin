@@ -144,9 +144,9 @@ export default {
             columns: columns,
             loading: false,
             url: {
-                list: "/sys/permission/list",
-                delete: "/sys/permission/delete",
-                deleteBatch: "/sys/permission/deleteBatch"
+                list: "sys/permission/list",
+                delete: "sys/permission/delete",
+                deleteBatch: "sys/permission/deleteBatch"
             }
         };
     },

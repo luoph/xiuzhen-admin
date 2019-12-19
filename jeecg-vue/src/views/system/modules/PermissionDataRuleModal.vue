@@ -62,9 +62,9 @@ export default {
                 ruleColumn: { rules: [] }
             },
             url: {
-                list: "/sys/dictItem/list",
-                add: "/sys/permission/addPermissionRule",
-                edit: "/sys/permission/editPermissionRule"
+                list: "sys/dictItem/list",
+                add: "sys/permission/addPermissionRule",
+                edit: "sys/permission/editPermissionRule"
             },
             showRuleColumn: true
         };

@@ -164,9 +164,9 @@ export default {
                 }
             ],
             url: {
-                list: "/game/gameInfo/list",
-                delete: "/game/gameInfo/delete",
-                deleteBatch: "/game/gameInfo/deleteBatch"
+                list: "game/gameInfo/list",
+                delete: "game/gameInfo/delete",
+                deleteBatch: "game/gameInfo/deleteBatch"
                 // exportXlsUrl: "game/gameInfo/exportXls",
                 // importExcelUrl: "game/gameInfo/importExcel"
             }

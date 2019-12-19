@@ -119,8 +119,8 @@ export default {
                 sm: { span: 19 }
             },
             url: {
-                list: "/sys/dict/list",
-                delete: "/sys/dict/delete",
+                list: "sys/dict/list",
+                delete: "sys/dict/delete",
                 exportXlsUrl: "sys/dict/exportXls",
                 importExcelUrl: "sys/dict/importExcel"
             }

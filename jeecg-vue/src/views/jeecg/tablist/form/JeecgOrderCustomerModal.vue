@@ -139,11 +139,11 @@ export default {
             confirmLoading: false,
             form: this.$form.createForm(this),
             url: {
-                add: "/test/order/addCustomer",
-                edit: "/test/order/editCustomer",
+                add: "test/order/addCustomer",
+                edit: "test/order/editCustomer",
                 fileUpload: window._CONFIG["domainURL"] + "/sys/common/upload",
                 imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
-                getOrderCustomerList: "/test/order/listOrderCustomerByMainId"
+                getOrderCustomerList: "test/order/listOrderCustomerByMainId"
             },
             validatorRules: {
                 telphone: { rules: [{ validator: this.validateMobile }] },

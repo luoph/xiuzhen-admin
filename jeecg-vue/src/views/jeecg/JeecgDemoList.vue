@@ -283,10 +283,10 @@ export default {
                 }
             ],
             url: {
-                list: "/test/jeecgDemo/list",
-                delete: "/test/jeecgDemo/delete",
-                deleteBatch: "/test/jeecgDemo/deleteBatch",
-                exportXlsUrl: "/test/jeecgDemo/exportXls"
+                list: "test/jeecgDemo/list",
+                delete: "test/jeecgDemo/delete",
+                deleteBatch: "test/jeecgDemo/deleteBatch",
+                exportXlsUrl: "test/jeecgDemo/exportXls"
             },
             fieldList: superQueryFieldList
         };
