@@ -108,7 +108,7 @@ export default {
                 orgCode: this.departSelected,
                 username: this.username
             };
-            putAction("/sys/selectDepart", obj).then(res => {
+            putAction("sys/selectDepart", obj).then(res => {
                 if (res.success) {
                     const userInfo = res.result.userInfo;
                     Vue.ls.set(USER_INFO, userInfo, 7 * 24 * 60 * 60 * 1000);

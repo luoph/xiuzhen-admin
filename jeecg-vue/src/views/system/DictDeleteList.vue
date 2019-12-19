@@ -81,7 +81,7 @@ export default {
             });
         },
         handleBack(id) {
-            putAction("/sys/dict/back/" + id).then(res => {
+            putAction("sys/dict/back/" + id).then(res => {
                 if (res.success) {
                     this.$message.success(res.message);
                     this.loadData();
@@ -91,7 +91,7 @@ export default {
             });
         },
         handleDelete(id) {
-            deleteAction("/sys/dict/deletePhysic/" + id).then(res => {
+            deleteAction("sys/dict/deletePhysic/" + id).then(res => {
                 if (res.success) {
                     this.$message.success(res.message);
                     this.loadData();
