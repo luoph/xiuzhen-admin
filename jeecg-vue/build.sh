@@ -1,7 +1,6 @@
 #!/bin/bash
 # 编译目录
 output=dist
-project=jeecg-vue
 
 function logger() {
     time=$(date +'%Y-%m-%d %H:%M:%S')
@@ -11,25 +10,17 @@ function logger() {
 function usage() {
     cat << -EOF-
 Usage:
-$0 -h host -w work_path -f frontend_path
-host -- 远程服务器帐号ip, eg: root@10.21.210.70
-work_path -- 前端项目备份和接收压缩包路径
-frontend_path -- 前端路径
+$0 -p project
+project -- 工程名
 -EOF-
     exit 1
 }
 
 [[ $# -eq 0 ]] && usage
-while getopts "h:w:f:" opt; do
+while getopts "p:" opt; do
     case ${opt} in
-    h)
-        host=$OPTARG
-        ;;
-    w)
-        work_path=$OPTARG
-        ;;
-    f)
-        frontend_path=$OPTARG
+    p)
+        project=$OPTARG
         ;;
     ?)
         usage
@@ -37,15 +28,11 @@ while getopts "h:w:f:" opt; do
     esac
 done
 
-if [[ -z "${host}" ]] ||
-    [[ -z "${work_path}" ]] ||
-    [[ -z "${frontend_path}" ]]; then
+if [[ -z "${project}" ]]; then
     usage
 fi
 
-logger "==> host:[${host}]"
-logger "==> work_path:[${work_path}]"
-logger "==> frontend_path:[${frontend_path}]"
+logger "==> project:[${project}]"
 
 logger "==> start building"
 
@@ -57,10 +44,7 @@ fi
 yarn install
 yarn build
 
-logger "==> finish building"
-
 zip_file=${project}.zip
-
 # 删除旧文件
 if [[ -f "$zip_file" ]]; then
     rm -rf $zip_file
@@ -70,27 +54,4 @@ fi
 logger "==> zip -qr ${zip_file} ${output}"
 zip -qr ${zip_file} ${output}
 
-# 上传包和备份包路径
-package_path=${work_path}/package
-backup_path=${work_path}/backup
-
-logger "==> start uploading:${zip_file}"
-upload_path=${package_path}/${project}
-bash /usr/local/bin/file-uploader.sh -h ${host} -f ${zip_file} -d ${upload_path}
-
-logger "==> start deploying"
-frontend_parent="$(dirname "${frontend_path}")"
-frontend_folder="$(basename "${frontend_path}")"
-
-logger "==> frontend_parent: ${frontend_parent}"
-logger "==> frontend_folder: ${frontend_folder}"
-
-ssh ${host} <<ENDSSH
-
-cd ${work_path}
-echo "bash frontend.sh -p ${project} -w ${work_path} -f ${frontend_path}"
-bash frontend.sh -p ${project} -w ${work_path} -f ${frontend_path}
-
-ENDSSH
-
-logger "==> finish deploying"
+logger "==> finish building"
