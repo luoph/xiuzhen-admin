@@ -261,7 +261,7 @@ export default {
                         phone: values.mobile,
                         smscode: values.captcha
                     };
-                    postAction("/sys/user/register", register).then(res => {
+                    postAction("sys/user/register", register).then(res => {
                         if (!res.success) {
                             this.registerFailed(res.message);
                         } else {
@@ -290,7 +290,7 @@ export default {
                         mobile: values.mobile,
                         smsmode: "1"
                     };
-                    postAction("/sys/sms", params)
+                    postAction("sys/sms", params)
                         .then(res => {
                             if (!res.success) {
                                 this.registerFailed(res.message);
