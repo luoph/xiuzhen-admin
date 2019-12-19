@@ -70,8 +70,8 @@
 	    </#list>
         },
         url: {
-          add: "/${entityPackage}/${entityName?uncap_first}/add",
-          edit: "/${entityPackage}/${entityName?uncap_first}/edit",
+          add: "${entityPackage}/${entityName?uncap_first}/add",
+          edit: "${entityPackage}/${entityName?uncap_first}/edit",
         },
       }
     },

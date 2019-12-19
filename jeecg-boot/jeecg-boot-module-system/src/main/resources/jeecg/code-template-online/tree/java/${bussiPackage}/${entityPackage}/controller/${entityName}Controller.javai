@@ -46,7 +46,7 @@ import com.alibaba.fastjson.JSON;
 </#if>
 </#list>
 @RestController
-@RequestMapping("/${entityPackage}/${entityName?uncap_first}")
+@RequestMapping("${entityPackage}/${entityName?uncap_first}")
 @Slf4j
 public class ${entityName}Controller extends JeecgController<${entityName}, I${entityName}Service>{
 	@Autowired
