@@ -17,7 +17,7 @@ public class TestController {
 
     @PostMapping("/sendAll")
     public Result<String> sendAll(@RequestBody JSONObject jsonObject) {
-        Result<String> result = new Result<String>();
+        Result<String> result = new Result<>();
         String message = jsonObject.getString("message");
         JSONObject obj = new JSONObject();
         obj.put("cmd", "topic");
@@ -30,7 +30,7 @@ public class TestController {
 
     @PostMapping("/sendUser")
     public Result<String> sendUser(@RequestBody JSONObject jsonObject) {
-        Result<String> result = new Result<String>();
+        Result<String> result = new Result<>();
         String userId = jsonObject.getString("userId");
         String message = jsonObject.getString("message");
         JSONObject obj = new JSONObject();
