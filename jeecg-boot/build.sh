@@ -53,5 +53,3 @@ fi
 mv ${module_name}/target/${module_name}-${version}.jar target/${server_name}.jar
 
 logger "==> finish building"
-
-logger "==> start uploading:${server_name}.jar"
