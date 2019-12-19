@@ -11,10 +11,10 @@ globalConfig:
   fileOverride: true
 
 dataSourceConfig:
-  url: jdbc:mysql://10.21.211.35:3306/jeecg-boot?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+  url: jdbc:mysql://10.21.211.35:3306/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true
   driverName: com.mysql.jdbc.Driver
-  username: jeecg-boot
-  password: A2@f93Y#L2
+  username: gamecenter
+  password: ubj8sf}xEpb&892P
 
 packageConfig:
   parent: org.jeecg.modules
