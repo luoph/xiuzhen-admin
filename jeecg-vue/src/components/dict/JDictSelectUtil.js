@@ -80,7 +80,7 @@ export async function ajaxFilterDictText(dictCode, key) {
         return "";
     }
     // 通过请求读取字典文本
-    const res = await getAction(`/sys/dict/getDictText/${dictCode}/${key}`);
+    const res = await getAction(`sys/dict/getDictText/${dictCode}/${key}`);
     if (res.success) {
         // console.log('result: '+ res.result);
         return res.result;

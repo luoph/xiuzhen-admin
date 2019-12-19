@@ -58,7 +58,7 @@ export default {
                     params.password = values.password;
                     params.smscode = this.userList.smscode;
                     params.phone = this.userList.phone;
-                    getAction("/sys/user/passwordChange", params).then(res => {
+                    getAction("sys/user/passwordChange", params).then(res => {
                         if (res.success) {
                             var userList = {
                                 username: this.userList.username

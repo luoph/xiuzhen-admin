@@ -71,7 +71,7 @@ export default {
         },
         loadData() {
             this.loading = true;
-            getAction("/sys/dict/deleteList").then(res => {
+            getAction("sys/dict/deleteList").then(res => {
                 this.loading = false;
                 if (res.success) {
                     this.dataSource = res.result;
