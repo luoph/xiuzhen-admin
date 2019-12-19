@@ -307,11 +307,11 @@ Jeecg-Boot快速开发平台，可以应用在任何J2EE项目的开发中，尤
 - 拉取项目代码
 ```bash
 git clone https://github.com/zhangdaiscott/jeecg-boot.git
-cd  jeecg-boot/ant-design-jeecg-vue
+cd  jeecg-boot/jeecg-vue
 ```
 
 1. 安装node.js
-2. 切换到ant-design-jeecg-vue文件夹下
+2. 切换到jeecg-vue文件夹下
 ```
 # 安装yarn
 npm install -g yarn
