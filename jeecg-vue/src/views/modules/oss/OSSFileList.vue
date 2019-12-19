@@ -97,9 +97,9 @@ export default {
                 }
             ],
             url: {
-                upload: "/oss/file/upload",
-                list: "/oss/file/list",
-                delete: "/oss/file/delete"
+                upload: "oss/file/upload",
+                list: "oss/file/list",
+                delete: "oss/file/delete"
             }
         };
     },

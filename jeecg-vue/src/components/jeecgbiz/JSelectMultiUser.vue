@@ -11,7 +11,7 @@ export default {
     props: ["value"],
     data() {
         return {
-            url: { list: "/sys/user/list" },
+            url: { list: "sys/user/list" },
             columns: [
                 { title: "姓名", align: "center", width: 100, dataIndex: "realname" },
                 { title: "账号", align: "center", width: 100, dataIndex: "username" },

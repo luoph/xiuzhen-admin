@@ -180,9 +180,9 @@ export default {
                 }
             ],
             url: {
-                list: "/message/sysMessage/list",
-                delete: "/message/sysMessage/delete",
-                deleteBatch: "/message/sysMessage/deleteBatch",
+                list: "message/sysMessage/list",
+                delete: "message/sysMessage/delete",
+                deleteBatch: "message/sysMessage/deleteBatch",
                 exportXlsUrl: "message/sysMessage/exportXls",
                 importExcelUrl: "message/sysMessage/importExcel"
             }

@@ -106,7 +106,7 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/dataLog/list"
+                list: "sys/dataLog/list"
             }
         };
     },

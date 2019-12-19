@@ -75,9 +75,9 @@ export default {
                 }
             ],
             url: {
-                keysSize: "/actuator/redis/keysSize",
-                memoryInfo: "/actuator/redis/memoryInfo",
-                info: "/actuator/redis/info"
+                keysSize: "actuator/redis/keysSize",
+                memoryInfo: "actuator/redis/memoryInfo",
+                info: "actuator/redis/info"
             },
             path: "/monitor/redis/info"
         };

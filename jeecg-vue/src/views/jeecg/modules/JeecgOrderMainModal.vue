@@ -177,10 +177,10 @@ export default {
             form: this.$form.createForm(this),
             validatorRules: {},
             url: {
-                add: "/test/jeecgOrderMain/add",
-                edit: "/test/jeecgOrderMain/edit",
-                orderCustomerList: "/test/jeecgOrderMain/queryOrderCustomerListByMainId",
-                orderTicketList: "/test/jeecgOrderMain/queryOrderTicketListByMainId"
+                add: "test/jeecgOrderMain/add",
+                edit: "test/jeecgOrderMain/edit",
+                orderCustomerList: "test/jeecgOrderMain/queryOrderCustomerListByMainId",
+                orderTicketList: "test/jeecgOrderMain/queryOrderTicketListByMainId"
             }
         };
     },

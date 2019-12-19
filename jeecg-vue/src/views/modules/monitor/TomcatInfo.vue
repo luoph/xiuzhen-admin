@@ -95,12 +95,12 @@ export default {
             this.tableLoading = true;
             this.time = moment().format("YYYY年MM月DD日 HH时mm分ss秒");
             Promise.all([
-                getAction("/actuator/metrics/tomcat.sessions.created"),
-                getAction("/actuator/metrics/tomcat.sessions.expired"),
-                getAction("/actuator/metrics/tomcat.sessions.rejected"),
-                getAction("/actuator/metrics/tomcat.sessions.active.current"),
-                getAction("/actuator/metrics/tomcat.sessions.alive.max"),
-                getAction("/actuator/metrics/tomcat.sessions.active.max"),
+                getAction("actuator/metrics/tomcat.sessions.created"),
+                getAction("actuator/metrics/tomcat.sessions.expired"),
+                getAction("actuator/metrics/tomcat.sessions.rejected"),
+                getAction("actuator/metrics/tomcat.sessions.active.current"),
+                getAction("actuator/metrics/tomcat.sessions.alive.max"),
+                getAction("actuator/metrics/tomcat.sessions.active.max"),
             ])
                 .then(res => {
                     let tomcatInfo = [];

@@ -235,10 +235,10 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/annountCement/list",
-                delete: "/sys/annountCement/delete",
-                deleteBatch: "/sys/annountCement/deleteBatch",
-                releaseDataUrl: "/sys/annountCement/doReleaseData",
+                list: "sys/annountCement/list",
+                delete: "sys/annountCement/delete",
+                deleteBatch: "sys/annountCement/deleteBatch",
+                releaseDataUrl: "sys/annountCement/doReleaseData",
                 revokeDataUrl: "sys/annountCement/doRevokeData",
                 exportXlsUrl: "sys/annountCement/exportXls",
                 importExcelUrl: "sys/annountCement/importExcel"

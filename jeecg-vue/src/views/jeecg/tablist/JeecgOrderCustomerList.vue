@@ -121,9 +121,9 @@ export default {
                 }
             ],
             url: {
-                list: "/test/order/listOrderCustomerByMainId",
-                delete: "/test/order/deleteCustomer",
-                deleteBatch: "/test/order/deleteBatchCustomer"
+                list: "test/order/listOrderCustomerByMainId",
+                delete: "test/order/deleteCustomer",
+                deleteBatch: "test/order/deleteBatchCustomer"
             }
         };
     },

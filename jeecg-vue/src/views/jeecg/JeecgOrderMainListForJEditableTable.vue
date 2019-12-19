@@ -109,9 +109,9 @@ export default {
             description: "订单管理页面",
             // 请求参数
             url: {
-                list: "/test/jeecgOrderMain/list",
-                delete: "/test/jeecgOrderMain/delete",
-                deleteBatch: "/test/jeecgOrderMain/deleteBatch"
+                list: "test/jeecgOrderMain/list",
+                delete: "test/jeecgOrderMain/delete",
+                deleteBatch: "test/jeecgOrderMain/deleteBatch"
             },
             // 表头
             columns: [

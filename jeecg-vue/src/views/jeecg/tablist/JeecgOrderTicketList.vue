@@ -116,9 +116,9 @@ export default {
                 }
             ],
             url: {
-                list: "/test/order/listOrderTicketByMainId",
-                delete: "/test/order/deleteTicket",
-                deleteBatch: "/test/order/deleteBatchTicket"
+                list: "test/order/listOrderTicketByMainId",
+                delete: "test/order/deleteTicket",
+                deleteBatch: "test/order/deleteBatchTicket"
             }
         };
     },

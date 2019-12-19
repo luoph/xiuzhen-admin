@@ -177,16 +177,6 @@ export default {
             description: "这是用户管理页面",
             queryParam: {},
             columns: [
-                /*{
-            title: '#',
-            dataIndex: '',
-            key:'rowIndex',
-            width:60,
-            align:"center",
-            customRender:function (t,r,index) {
-              return parseInt(index)+1;
-            }
-          },*/
                 {
                     title: "用户账号",
                     align: "center",
@@ -206,7 +196,6 @@ export default {
                     dataIndex: "avatar",
                     scopedSlots: { customRender: "avatarslot" }
                 },
-
                 {
                     title: "性别",
                     align: "center",
@@ -243,7 +232,7 @@ export default {
             width: 150,
             dataIndex: 'createTime',
             sorter: true
-          },*/
+            },*/
                 {
                     title: "操作",
                     dataIndex: "action",
@@ -254,11 +243,11 @@ export default {
             ],
             url: {
                 imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
-                syncUser: "/process/extActProcess/doSyncUser",
-                list: "/sys/user/list",
-                delete: "/sys/user/delete",
-                deleteBatch: "/sys/user/deleteBatch",
-                exportXlsUrl: "/sys/user/exportXls",
+                syncUser: "process/extActProcess/doSyncUser",
+                list: "sys/user/list",
+                delete: "sys/user/delete",
+                deleteBatch: "sys/user/deleteBatch",
+                exportXlsUrl: "sys/user/exportXls",
                 importExcelUrl: "sys/user/importExcel"
             }
         };

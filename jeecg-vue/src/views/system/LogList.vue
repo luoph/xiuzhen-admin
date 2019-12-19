@@ -164,7 +164,7 @@ export default {
                 sm: { span: 16 }
             },
             url: {
-                list: "/sys/log/list"
+                list: "sys/log/list"
             }
         };
     },

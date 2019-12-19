@@ -128,7 +128,7 @@ export default {
             selectedRowKeys: [],
             selectedRows: [],
             url: {
-                list: "/sys/user/list"
+                list: "sys/user/list"
             }
         };
     },

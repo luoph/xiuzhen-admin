@@ -205,14 +205,14 @@ export default {
                 }
             ],
             url: {
-                list: "/game/gameChannel/list",
-                delete: "/game/gameChannel/delete",
-                deleteBatch: "/game/gameChannel/deleteBatch",
-                writeServerFileUrl: "/game/gameChannel/writeServerFile",
+                list: "game/gameChannel/list",
+                delete: "game/gameChannel/delete",
+                deleteBatch: "game/gameChannel/deleteBatch",
+                writeServerFileUrl: "game/gameChannel/writeServerFile",
                 // exportXlsUrl: "game/gameChannel/exportXls",
                 // importExcelUrl: "game/gameChannel/importExcel",
                 // 游戏列表
-                gameInfoListUrl: "/game/gameInfo/list"
+                gameInfoListUrl: "game/gameInfo/list"
             }
         };
     },

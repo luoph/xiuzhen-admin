@@ -171,10 +171,10 @@ export default {
                 }
             ],
             url: {
-                list: "/online/cgform/head/list",
-                delete: "/online/cgform/head/delete",
-                deleteBatch: "/online/cgform/head/deleteBatch",
-                removeRecord: "/online/cgform/head/removeRecord"
+                list: "online/cgform/head/list",
+                delete: "online/cgform/head/delete",
+                deleteBatch: "online/cgform/head/deleteBatch",
+                removeRecord: "online/cgform/head/removeRecord"
             },
             tableTypeDictOptions: [],
             sexDictOptions: [],

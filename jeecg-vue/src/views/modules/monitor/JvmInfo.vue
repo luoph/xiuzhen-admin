@@ -93,21 +93,21 @@ export default {
             this.tableLoading = true;
             this.time = moment().format("YYYY年MM月DD日 HH时mm分ss秒");
             Promise.all([
-                getAction("/actuator/metrics/jvm.memory.max"),
-                getAction("/actuator/metrics/jvm.memory.committed"),
-                getAction("/actuator/metrics/jvm.memory.used"),
-                getAction("/actuator/metrics/jvm.buffer.memory.used"),
-                getAction("/actuator/metrics/jvm.buffer.count"),
-                getAction("/actuator/metrics/jvm.threads.daemon"),
-                getAction("/actuator/metrics/jvm.threads.live"),
-                getAction("/actuator/metrics/jvm.threads.peak"),
-                getAction("/actuator/metrics/jvm.classes.loaded"),
-                getAction("/actuator/metrics/jvm.classes.unloaded"),
-                getAction("/actuator/metrics/jvm.gc.memory.allocated"),
-                getAction("/actuator/metrics/jvm.gc.memory.promoted"),
-                getAction("/actuator/metrics/jvm.gc.max.data.size"),
-                getAction("/actuator/metrics/jvm.gc.live.data.size"),
-                getAction("/actuator/metrics/jvm.gc.pause")
+                getAction("actuator/metrics/jvm.memory.max"),
+                getAction("actuator/metrics/jvm.memory.committed"),
+                getAction("actuator/metrics/jvm.memory.used"),
+                getAction("actuator/metrics/jvm.buffer.memory.used"),
+                getAction("actuator/metrics/jvm.buffer.count"),
+                getAction("actuator/metrics/jvm.threads.daemon"),
+                getAction("actuator/metrics/jvm.threads.live"),
+                getAction("actuator/metrics/jvm.threads.peak"),
+                getAction("actuator/metrics/jvm.classes.loaded"),
+                getAction("actuator/metrics/jvm.classes.unloaded"),
+                getAction("actuator/metrics/jvm.gc.memory.allocated"),
+                getAction("actuator/metrics/jvm.gc.memory.promoted"),
+                getAction("actuator/metrics/jvm.gc.max.data.size"),
+                getAction("actuator/metrics/jvm.gc.live.data.size"),
+                getAction("actuator/metrics/jvm.gc.pause")
             ])
                 .then(res => {
                     let info = [];

@@ -132,7 +132,7 @@ export default {
                 }
             ],
             url: {
-                list: "/sys/sysAnnouncementSend/getMyAnnouncementSend",
+                list: "sys/sysAnnouncementSend/getMyAnnouncementSend",
                 editCementSend: "sys/sysAnnouncementSend/editByAnntIdAndUserId",
                 readAllMsg: "sys/sysAnnouncementSend/readAll"
             },

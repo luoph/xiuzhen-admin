@@ -124,9 +124,9 @@ export default {
                 itemValue: { rules: [{ required: true, message: "请输入数据值!" }] }
             },
             url: {
-                list: "/sys/dictItem/list",
-                delete: "/sys/dictItem/delete",
-                deleteBatch: "/sys/dictItem/deleteBatch"
+                list: "sys/dictItem/list",
+                delete: "sys/dictItem/delete",
+                deleteBatch: "sys/dictItem/deleteBatch"
             }
         };
     },

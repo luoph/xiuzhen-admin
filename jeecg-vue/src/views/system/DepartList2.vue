@@ -148,9 +148,9 @@ export default {
             selectedRowKeys: [],
             selectedRows: [],
             url: {
-                list: "/sys/sysDepart/list",
-                delete: "/sys/sysDepart/delete",
-                deleteBatch: "/sys/sysDepart/deleteBatch"
+                list: "sys/sysDepart/list",
+                delete: "sys/sysDepart/delete",
+                deleteBatch: "sys/sysDepart/deleteBatch"
             }
         };
     },

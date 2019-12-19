@@ -28,8 +28,8 @@ export default {
             model: {},
             confirmLoading: false,
             url: {
-                add: "/act/model/create",
-                list: "/sys/user/list"
+                add: "act/model/create",
+                list: "sys/user/list"
             },
             columns: [
                 {
