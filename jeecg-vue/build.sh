@@ -32,7 +32,14 @@ if [[ -f "$zip_file" ]]; then
 fi
 
 # 压缩文件
-logger "==> zip -qr ${zip_file} ${output}"
-zip -qr ${zip_file} ${output}
+cd ${output}
+logger "==> zip -qr ${zip_file} *"
+zip -qr ${zip_file} *
+
+cd ..
+if [[ ! -d "target" ]]; then
+    mkdir -p target
+fi
+mv ${output}/${zip_file} target
 
 logger "==> finish building"
