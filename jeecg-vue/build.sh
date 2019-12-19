@@ -86,8 +86,8 @@ logger "==> frontend_folder: ${frontend_folder}"
 ssh -i ${ssh_key} ${host} <<ENDSSH
 
 cd ${work_path}
-echo "bash deploy-client.sh -p ${project} -w ${work_path} -f ${frontend}"
-bash deploy-client.sh -p ${project} -w ${work_path} -f ${frontend}
+echo "bash frontend.sh -p ${project} -w ${work_path} -f ${frontend}"
+bash frontend.sh -p ${project} -w ${work_path} -f ${frontend}
 
 ENDSSH
 
