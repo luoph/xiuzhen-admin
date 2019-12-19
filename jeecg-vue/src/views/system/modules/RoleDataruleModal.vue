@@ -47,7 +47,7 @@ export default {
             ],
             activeTabKey: "1",
             url: {
-                datarule: "/sys/role/datarule"
+                datarule: "sys/role/datarule"
             },
             dataruleList: [],
             dataruleChecked: []

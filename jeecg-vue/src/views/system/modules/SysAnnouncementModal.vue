@@ -89,9 +89,9 @@ export default {
                 startTime: { rules: [{ validator: this.startTimeValidate }] }
             },
             url: {
-                queryByIds: "/sys/user/queryByIds",
-                add: "/sys/annountCement/add",
-                edit: "/sys/annountCement/edit"
+                queryByIds: "sys/user/queryByIds",
+                add: "sys/annountCement/add",
+                edit: "sys/annountCement/edit"
             },
             userType: false,
             userIds: [],

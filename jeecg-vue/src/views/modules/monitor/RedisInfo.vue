@@ -79,7 +79,7 @@ export default {
                 memoryInfo: "actuator/redis/memoryInfo",
                 info: "actuator/redis/info"
             },
-            path: "/monitor/redis/info"
+            path: "monitor/redis/info"
         };
     },
     mounted() {

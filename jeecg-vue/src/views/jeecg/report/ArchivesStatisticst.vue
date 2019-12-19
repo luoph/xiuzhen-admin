@@ -83,10 +83,10 @@ export default {
             // 统计图类型
             tabStatus: "bar",
             url: {
-                getYearCountInfo: "/api/report/getYearCountInfo",
-                getMonthCountInfo: "/api/report/getMonthCountInfo",
-                getCntrNoCountInfo: "/api/report/getCntrNoCountInfo",
-                getCabinetCountInfo: "/api/report/getCabinetCountInfo"
+                getYearCountInfo: "api/report/getYearCountInfo",
+                getMonthCountInfo: "api/report/getMonthCountInfo",
+                getCntrNoCountInfo: "api/report/getCntrNoCountInfo",
+                getCabinetCountInfo: "api/report/getCabinetCountInfo"
             }
         };
     },

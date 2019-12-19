@@ -65,7 +65,7 @@ export default {
             headers: {},
             form: this.$form.createForm(this),
             url: {
-                userId: "/sys/user/generateUserId" // 引入生成添加用户情况下的url
+                userId: "sys/user/generateUserId" // 引入生成添加用户情况下的url
             }
         };
     },

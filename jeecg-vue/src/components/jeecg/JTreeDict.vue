@@ -24,9 +24,9 @@ export default {
         return {
             treeData: [],
             treeValue: "",
-            url_root: "/sys/category/loadTreeRoot",
-            url_children: "/sys/category/loadTreeChildren",
-            url_view: "/sys/category/loadOne"
+            url_root: "sys/category/loadTreeRoot",
+            url_children: "sys/category/loadTreeChildren",
+            url_view: "sys/category/loadOne"
         };
     },
     props: {

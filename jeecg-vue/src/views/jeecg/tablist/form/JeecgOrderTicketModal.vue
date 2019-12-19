@@ -64,8 +64,8 @@ export default {
             form: this.$form.createForm(this),
             validatorRules: {},
             url: {
-                add: "/test/order/addTicket",
-                edit: "/test/order/editTicket"
+                add: "test/order/addTicket",
+                edit: "test/order/editTicket"
             }
         };
     },

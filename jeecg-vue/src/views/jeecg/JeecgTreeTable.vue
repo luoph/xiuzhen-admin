@@ -20,7 +20,7 @@ export default {
     components: { JTreeTable },
     data() {
         return {
-            url: "/api/asynTreeList",
+            url: "api/asynTreeList",
             columns: [
                 {
                     title: "菜单名称",

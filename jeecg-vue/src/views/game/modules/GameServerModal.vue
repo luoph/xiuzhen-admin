@@ -129,9 +129,9 @@ export default {
                 dbName: { rules: [{ required: true, message: "请输入数据库名称!" }] }
             },
             url: {
-                add: "/game/gameServer/add",
-                edit: "/game/gameServer/edit",
-                gameInfoListUrl: "/game/gameInfo/list"
+                add: "game/gameServer/add",
+                edit: "game/gameServer/edit",
+                gameInfoListUrl: "game/gameInfo/list"
             }
         };
     },

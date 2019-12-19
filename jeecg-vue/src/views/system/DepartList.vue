@@ -227,9 +227,9 @@ export default {
                 mobile: { rules: [{ validator: this.validateMobile }] }
             },
             url: {
-                delete: "/sys/sysDepart/delete",
-                edit: "/sys/sysDepart/edit",
-                deleteBatch: "/sys/sysDepart/deleteBatch",
+                delete: "sys/sysDepart/delete",
+                edit: "sys/sysDepart/edit",
+                deleteBatch: "sys/sysDepart/deleteBatch",
                 exportXlsUrl: "sys/sysDepart/exportXls",
                 importExcelUrl: "sys/sysDepart/importExcel"
             },

@@ -406,7 +406,7 @@ export default {
             dataSource1: [],
             dataSource2: [],
             url: {
-                analysis: "/sps/register/analysis",
+                analysis: "sps/register/analysis",
                 list: "sps/register/virtualList",
                 countSll: "sps/register/sllTenDaysCount",
                 countBjl: "sps/register/bjlTenDaysCount",
@@ -435,22 +435,22 @@ export default {
         goPage(index) {
             if (index == 0) {
                 this.$router.push({
-                    path: "/isps/registerStepForm",
+                    path: "isps/registerStepForm",
                     name: "isps-registerStepForm"
                 });
             } else if (index == 1) {
                 this.$router.push({
-                    path: "/isps/registerList",
+                    path: "isps/registerList",
                     name: "isps-registerList"
                 });
             } else if (index == 2) {
                 this.$router.push({
-                    path: "/isps/fileManage",
+                    path: "isps/fileManage",
                     name: "isps-fileManage"
                 });
             } else if (index == 3) {
                 this.$router.push({
-                    path: "/isps/infoSearch",
+                    path: "isps/infoSearch",
                     name: "isps-infoSearch"
                 });
             }

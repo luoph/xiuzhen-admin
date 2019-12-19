@@ -76,8 +76,8 @@ export default {
             validatorRules: {},
             disableSubmit: true,
             url: {
-                add: "/message/sysMessage/add",
-                edit: "/message/sysMessage/edit"
+                add: "message/sysMessage/add",
+                edit: "message/sysMessage/edit"
             }
         };
     },

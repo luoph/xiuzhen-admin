@@ -51,10 +51,10 @@ export default {
                 severId: { rules: [{ required: true, message: "请输入服务器id!" }] }
             },
             url: {
-                add: "/game/gameChannelServer/add",
-                edit: "/game/gameChannelServer/edit",
+                add: "game/gameChannelServer/add",
+                edit: "game/gameChannelServer/edit",
                 // 游戏服列表
-                serverListUrl: "/game/gameServer/list"
+                serverListUrl: "game/gameServer/list"
             }
         };
     },

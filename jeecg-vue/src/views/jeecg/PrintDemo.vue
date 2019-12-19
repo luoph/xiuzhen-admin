@@ -96,8 +96,8 @@ export default {
                 }
             ],
             url: {
-                loadApplicant: "/sps/register/loadApplicants",
-                loadRegisterFiles: "/sps/register/getRegisterFilesConfig"
+                loadApplicant: "sps/register/loadApplicants",
+                loadRegisterFiles: "sps/register/getRegisterFilesConfig"
             }
         };
     },

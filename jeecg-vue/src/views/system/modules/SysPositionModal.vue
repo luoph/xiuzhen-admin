@@ -83,8 +83,8 @@ export default {
                 postRank: { rules: [{ required: true, message: "请选择职级" }] }
             },
             url: {
-                add: "/sys/position/add",
-                edit: "/sys/position/edit"
+                add: "sys/position/add",
+                edit: "sys/position/edit"
             }
         };
     },

@@ -67,7 +67,7 @@ export default {
             headers: {},
             form: this.$form.createForm(this),
             url: {
-                queryDataVerListUrl: "/sys/dataLog/queryDataVerList"
+                queryDataVerListUrl: "sys/dataLog/queryDataVerList"
             },
             DataVersionList: []
         };

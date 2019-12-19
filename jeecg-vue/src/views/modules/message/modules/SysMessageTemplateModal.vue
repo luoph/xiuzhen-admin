@@ -66,8 +66,8 @@ export default {
                 templateType: { rules: [{ required: true, message: "请输入模板类型!" }] }
             },
             url: {
-                add: "/message/sysMessageTemplate/add",
-                edit: "/message/sysMessageTemplate/edit"
+                add: "message/sysMessageTemplate/add",
+                edit: "message/sysMessageTemplate/edit"
             },
             useEditor: false,
             templateEditorContent: ""
