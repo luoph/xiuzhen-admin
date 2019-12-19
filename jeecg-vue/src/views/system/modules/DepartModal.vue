@@ -104,7 +104,7 @@ export default {
                 mobile: { rules: [{ validator: this.validateMobile }] }
             },
             url: {
-                add: "/sys/sysDepart/add"
+                add: "sys/sysDepart/add"
             },
             dictDisabled: true
         };

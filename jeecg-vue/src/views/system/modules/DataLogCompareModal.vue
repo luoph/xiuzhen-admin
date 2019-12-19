@@ -76,7 +76,7 @@ export default {
             dataSource: [],
             loading: false,
             url: {
-                queryCompareUrl: "/sys/dataLog/queryCompareList"
+                queryCompareUrl: "sys/dataLog/queryCompareList"
             }
         };
     },

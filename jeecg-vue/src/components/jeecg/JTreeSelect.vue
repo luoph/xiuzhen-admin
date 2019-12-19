@@ -79,8 +79,8 @@ export default {
         return {
             treeValue: "",
             treeData: [],
-            url: "/sys/dict/loadTreeData",
-            view: "/sys/dict/loadDictItem/",
+            url: "sys/dict/loadTreeData",
+            view: "sys/dict/loadDictItem/",
             tableName: "",
             text: "",
             code: ""

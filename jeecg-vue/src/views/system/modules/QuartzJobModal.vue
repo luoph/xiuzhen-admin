@@ -72,8 +72,8 @@ export default {
                 }
             },
             url: {
-                add: "/sys/quartzJob/add",
-                edit: "/sys/quartzJob/edit"
+                add: "sys/quartzJob/add",
+                edit: "sys/quartzJob/edit"
             }
         };
     },

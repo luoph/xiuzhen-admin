@@ -69,8 +69,8 @@ export default {
                 initialized: { rules: [{ required: true, message: "请输入是否初始化!" }] }
             },
             url: {
-                add: "/player/playerInfo/add",
-                edit: "/player/playerInfo/edit"
+                add: "player/playerInfo/add",
+                edit: "player/playerInfo/edit"
             }
         };
     },

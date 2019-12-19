@@ -191,13 +191,13 @@ export default {
             description: "在线报表功能测试页面",
             currentTableName: "",
             url: {
-                getQueryInfo: "/online/cgform/api/getQueryInfo/",
-                getColumns: "/online/cgform/api/getColumns/",
-                getData: "/online/cgform/api/getData/",
-                optPre: "/online/cgform/api/form/",
-                exportXls: "/online/cgform/api/exportXls/",
-                buttonAction: "/online/cgform/api/doButton",
-                startProcess: "/process/extActProcess/startMutilProcess"
+                getQueryInfo: "online/cgform/api/getQueryInfo/",
+                getColumns: "online/cgform/api/getColumns/",
+                getData: "online/cgform/api/getData/",
+                optPre: "online/cgform/api/form/",
+                exportXls: "online/cgform/api/exportXls/",
+                buttonAction: "online/cgform/api/doButton",
+                startProcess: "process/extActProcess/startMutilProcess"
             },
             flowCodePre: "onl_",
             isorter: {

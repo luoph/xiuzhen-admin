@@ -43,7 +43,7 @@ export default {
 
             confirmLoading: false,
             url: {
-                send: "/message/sysMessageTemplate/sendMsg"
+                send: "message/sysMessageTemplate/sendMsg"
             },
             templateName: "",
             templateContent: "",

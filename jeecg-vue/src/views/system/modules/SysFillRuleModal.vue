@@ -68,8 +68,8 @@ export default {
                 }
             },
             url: {
-                add: "/sys/fillRule/add",
-                edit: "/sys/fillRule/edit"
+                add: "sys/fillRule/add",
+                edit: "sys/fillRule/edit"
             }
         };
     },

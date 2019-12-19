@@ -74,8 +74,8 @@ export default {
                 status: { rules: [{ required: true, message: "请选择状态!" }] }
             },
             url: {
-                add: "/game/gameNotice/add",
-                edit: "/game/gameNotice/edit"
+                add: "game/gameNotice/add",
+                edit: "game/gameNotice/edit"
             }
         };
     },

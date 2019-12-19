@@ -56,8 +56,8 @@ export default {
                 name: { rules: [{ required: true, message: "请输入游戏名称!" }] }
             },
             url: {
-                add: "/game/gameInfo/add",
-                edit: "/game/gameInfo/edit"
+                add: "game/gameInfo/add",
+                edit: "game/gameInfo/edit"
             }
         };
     },

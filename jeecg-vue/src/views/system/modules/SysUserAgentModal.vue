@@ -79,9 +79,9 @@ export default {
                 endTime: { rules: [{ required: true, message: "请输入代理结束时间!" }] }
             },
             url: {
-                add: "/sys/sysUserAgent/add",
-                edit: "/sys/sysUserAgent/edit",
-                queryByUserName: "/sys/sysUserAgent/queryByUserName"
+                add: "sys/sysUserAgent/add",
+                edit: "sys/sysUserAgent/edit",
+                queryByUserName: "sys/sysUserAgent/queryByUserName"
             }
         };
     },

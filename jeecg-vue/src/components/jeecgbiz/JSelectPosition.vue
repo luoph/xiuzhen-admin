@@ -15,7 +15,7 @@ export default {
                 name: "职务",
                 displayKey: "name",
                 returnKeys: ["id", "code"],
-                listUrl: "/sys/position/list",
+                listUrl: "sys/position/list",
                 queryParamText: "职务编码",
                 columns: [
                     { title: "职务名称", dataIndex: "name", align: "center", width: 100 },

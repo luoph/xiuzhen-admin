@@ -60,8 +60,8 @@ export default {
             form: this.$form.createForm(this),
             validatorRules: {},
             url: {
-                add: "/test/jeecgDemo/add",
-                edit: "/test/jeecgDemo/edit"
+                add: "test/jeecgDemo/add",
+                edit: "test/jeecgDemo/edit"
             }
         };
     },

@@ -69,8 +69,8 @@ export default {
                 groupName: {}
             },
             url: {
-                add: "/game/gameChannel/add",
-                edit: "/game/gameChannel/edit"
+                add: "game/gameChannel/add",
+                edit: "game/gameChannel/edit"
             }
         };
     },

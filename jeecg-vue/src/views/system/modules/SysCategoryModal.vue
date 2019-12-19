@@ -69,9 +69,9 @@ export default {
                 name: {}
             },
             url: {
-                add: "/sys/category/add",
-                edit: "/sys/category/edit",
-                checkCode: "/sys/category/checkCode"
+                add: "sys/category/add",
+                edit: "sys/category/edit",
+                checkCode: "sys/category/checkCode"
             },
             expandedRowKeys: [],
             pidField: "pid"

@@ -165,12 +165,12 @@ export default {
             },
 
             url: {
-                getColumns: "/online/cgform/api/getColumns/",
-                getTreeData: "/online/cgform/api/getTreeData/",
-                optPre: "/online/cgform/api/form/",
-                exportXls: "/online/cgform/api/exportXls/",
-                buttonAction: "/online/cgform/api/doButton",
-                startProcess: "/process/extActProcess/startMutilProcess"
+                getColumns: "online/cgform/api/getColumns/",
+                getTreeData: "online/cgform/api/getTreeData/",
+                optPre: "online/cgform/api/form/",
+                exportXls: "online/cgform/api/exportXls/",
+                buttonAction: "online/cgform/api/doButton",
+                startProcess: "process/extActProcess/startMutilProcess"
             },
             isorter: {
                 column: "create_time",

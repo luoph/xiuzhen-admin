@@ -94,9 +94,9 @@ export default {
         return {
             loadding: false,
             url: {
-                listCementByUser: "/sys/annountCement/listByUser",
-                editCementSend: "/sys/sysAnnouncementSend/editByAnntIdAndUserId",
-                queryById: "/sys/annountCement/queryById"
+                listCementByUser: "sys/annountCement/listByUser",
+                editCementSend: "sys/sysAnnouncementSend/editByAnntIdAndUserId",
+                queryById: "sys/annountCement/queryById"
             },
             hovered: false,
             announcement1: [],
@@ -183,7 +183,7 @@ export default {
         },
         toMyAnnouncement() {
             this.$router.push({
-                path: "/isps/userAnnouncement",
+                path: "isps/userAnnouncement",
                 name: "isps-userAnnouncement"
             });
         },
