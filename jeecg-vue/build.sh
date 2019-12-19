@@ -1,4 +1,6 @@
 #!/bin/bash
+# 编译目录
+output=dist
 
 function logger() {
     time=$(date +'%Y-%m-%d %H:%M:%S')
@@ -45,6 +47,12 @@ logger "==> work_path:[${work_path}]"
 logger "==> frontend_path:[${frontend_path}]"
 
 logger "==> start building"
+
+# 清空上次的目录
+if [[ -d "${output}" ]]; then
+    rm -rf "${output}"
+fi
+
 yarn install
 yarn build
 
@@ -60,8 +68,8 @@ if [[ -f "$zip_file" ]]; then
     rm -rf $zip_file
 fi
 
-zip -qr ${zip_file} dist
-rm -rf dist
+zip -qr ${zip_file} ${output}
+rm -rf ${output}
 
 # 上传包和备份包路径
 package_path=${work_path}/package
