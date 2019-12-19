@@ -243,6 +243,7 @@
             window._CONFIG = {};
             window._CONFIG["domainURL"] = "http://" + (document.location.hostname === "localhost" ? "localhost:8080" : document.location.host) + "/jeecg-boot";
             window._CONFIG["casPrefixUrl"] = "http://cas.example.org:8443/cas";
+            console("domainURL", window._CONFIG["domainURL"]);
             window._CONFIG["imgDomainURL"] = window._CONFIG["domainURL"] + "/sys/common/view";
             window._CONFIG["downloadUrl"] = window._CONFIG["domainURL"] + "/sys/common/download";
             window._CONFIG["pdfDomainURL"] = window._CONFIG["domainURL"] + "/sys/common/pdf/pdfPreviewIframe";
