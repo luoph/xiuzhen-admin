@@ -170,7 +170,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
                 String content = JSON.toJSONString(servers);
                 String fileName = channel.getSimpleName();
 
-                String filePath = serverFolder + fileName + ".json";
+                String filePath = serverFolder + "/" + fileName + ".json";
                 if (FileUtil.exist(filePath)) {
                     FileUtil.del(filePath);
                 }
