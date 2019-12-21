@@ -6,20 +6,29 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏名称">
                     <a-input placeholder="请输入游戏名称" v-decorator="['name', validatorRules.name]" />
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
+                    <a-input placeholder="请输入唯一标识" v-decorator="['yaSimpleName', validatorRules.yaSimpleName]" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPID">
-                    <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', {}]" />
+                    <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', validatorRules.yaAppId]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPKEY">
-                    <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
-                    <a-input placeholder="请输入唯一标识" v-decorator="['yaSimpleName', {}]" />
+                    <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', validatorRules.yaAppKey]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="gameAppKey">
-                    <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', {}]" />
+                    <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', validatorRules.yaGameKey]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="帐号登录地址">
+                    <a-input placeholder="请输入帐号登录地址" v-decorator="['loginUrl', validatorRules.loginUrl]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器列表地址">
+                    <a-input placeholder="请输入服务器列表地址" v-decorator="['serverUrl', validatorRules.serverUrl]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告列表地址">
+                    <a-input placeholder="请输入公告列表地址" v-decorator="['noticeUrl', validatorRules.noticeUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
-                    <a-input placeholder="请输入描述" v-decorator="['remark', {}]" />
+                    <a-input placeholder="请输入描述" v-decorator="['remark', validatorRules.remark]" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -53,7 +62,15 @@ export default {
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                name: { rules: [{ required: true, message: "请输入游戏名称!" }] }
+                name: { rules: [{ required: true, message: "请输入游戏名称!" }] },
+                yaAppId: { rules: [{ required: true, message: "请输入YA_APPID!" }] },
+                yaAppKey: { rules: [{ required: true, message: "请输入YA_APPKEY!" }] },
+                yaGameKey: { rules: [{ required: true, message: "请输入gameAppKey!" }] },
+                yaSimpleName: { rules: [{ required: true, message: "请输入gameSimpleName!" }] },
+                loginUrl: { rules: [{ required: true, message: "请输入帐号登录地址!" }] },
+                serverUrl: { rules: [{ required: true, message: "请输入服务器列表地址!" }] },
+                noticeUrl: { rules: [{ required: true, message: "请输入公告列表地址!" }] },
+                remark: { rules: [{ required: true, message: "请输入描述!" }] }
             },
             url: {
                 add: "game/gameInfo/add",
@@ -71,8 +88,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "remark"));
-                // 时间格式化
+                this.form.setFieldsValue(pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "loginUrl", "serverUrl", "noticeUrl", "remark"));
             });
         },
         close() {

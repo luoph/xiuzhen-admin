@@ -12,20 +12,29 @@
                 <a-form-item label="排序字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入排序字段" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="公告id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请输入公告id" style="width: 100%" />
+                <a-form-item label="公告Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请输入公告Id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="大渠道描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入大渠道描述"></a-input>
                 </a-form-item>
-                <a-form-item label="扩展字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['extra', validatorRules.extra]" placeholder="请输入扩展字段"></a-input>
-                </a-form-item>
                 <a-form-item label="游戏编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['gameId', validatorRules.gameId]" placeholder="请输入游戏编号" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="分组" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['groupName', validatorRules.groupName]" placeholder="请输入分组"></a-input>
+                <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入版本号" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="版本名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['versionName', validatorRules.versionName]" placeholder="请输入版本名"></a-input>
+                </a-form-item>
+                <a-form-item label="版本更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['versionUpdateTime', validatorRules.versionUpdateTime]" />
+                </a-form-item>
+                <a-form-item label="IP白名单" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['ipWhitelist', validatorRules.ipWhitelist]" placeholder="请输入IP白名单(使用半角,分割)"></a-input>
+                </a-form-item>
+                <a-form-item label="扩展字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['extra', validatorRules.extra]" placeholder="请输入扩展字段"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -38,6 +47,7 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import moment from "moment";
 
 export default {
     name: "GameChannelModal",
@@ -59,14 +69,17 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
+                gameId: { rules: [{ required: true, message: "请输入游戏编号!" }] },
                 name: { rules: [{ required: true, message: "请输入渠道名称!" }] },
-                simpleName: {},
-                position: {},
-                noticeId: {},
+                simpleName: { rules: [{ required: true, message: "请输入唯一标识!" }] },
+                position: { rules: [{ required: true, message: "请输入排序字段!" }] },
+                noticeId: { rules: [{ required: true, message: "请输入公告Id!" }] },
+                versionCode: { rules: [{ required: true, message: "请输入版本号!" }] },
+                versionName: { rules: [{ required: true, message: "请输入版本名!" }] },
+                versionUpdateTime: { rules: [{ required: true, message: "请选择版本更新时间!" }] },
+                ipWhitelist: {},
                 remark: {},
-                extra: {},
-                gameId: {},
-                groupName: {}
+                extra: {}
             },
             url: {
                 add: "game/gameChannel/add",
@@ -84,7 +97,9 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "name", "simpleName", "position", "noticeId", "remark", "extra", "gameId", "groupName"));
+                this.form.setFieldsValue(pick(this.model, "name", "position", "simpleName", "gameId", "noticeId", "versionCode", "versionName", "ipWhitelist", "remark", "extra"));
+                // 时间格式化
+                this.form.setFieldsValue({ versionUpdateTime: this.model.versionUpdateTime ? moment(this.model.versionUpdateTime) : null });
             });
         },
         close() {
@@ -107,6 +122,8 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.versionUpdateTime = formData.versionUpdateTime ? formData.versionUpdateTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
@@ -128,7 +145,9 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "name", "simpleName", "position", "noticeId", "remark", "extra", "gameId", "groupName"));
+            this.form.setFieldsValue(
+                pick(row, "name", "simpleName", "position", "gameId", "noticeId", "versionCode", "versionName", "versionUpdateTime", "ipWhitelist", "remark", "extra", "groupName")
+            );
         }
     }
 };
