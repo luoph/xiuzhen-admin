@@ -3,15 +3,16 @@ package org.jeecg.modules.game.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
-
-import java.util.Date;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * @author jeecg-boot
@@ -72,9 +73,12 @@ public class GameChannel extends BaseEntity {
     /**
      * 版本更新时间
      */
-    @Excel(name = "版本更新时间", width = 15)
+    @Excel(name = "版本更新时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @ApiModelProperty(value = "版本更新时间")
-    private Date versionUpdateTime;
+    private java.util.Date versionUpdateTime;
+
     /**
      * ip白名单
      */

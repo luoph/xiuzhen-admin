@@ -48,8 +48,8 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-popconfirm title="刷新服务器列表文件" @confirm="writeServerFileUrl()">
-                <a-button type="danger" icon="update">刷新服务器列表文件</a-button>
+            <a-popconfirm title="刷新服务器列表" @confirm="writeServerFileUrl()">
+                <a-button type="danger" icon="update">刷新服务器列表</a-button>
             </a-popconfirm>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -183,14 +183,29 @@ export default {
                     dataIndex: "noticeId"
                 },
                 {
+                    title: "版本号",
+                    align: "center",
+                    dataIndex: "versionCode"
+                },
+                {
+                    title: "版本名",
+                    align: "center",
+                    dataIndex: "versionName"
+                },
+                {
+                    title: "版本更新时间",
+                    align: "center",
+                    dataIndex: "versionUpdateTime"
+                },
+                {
+                    title: "IP白名单",
+                    align: "center",
+                    dataIndex: "ipWhitelist"
+                },
+                {
                     title: "大渠道描述",
                     align: "center",
                     dataIndex: "remark"
-                },
-                {
-                    title: "分组",
-                    align: "center",
-                    dataIndex: "groupName"
                 },
                 {
                     title: "扩展字段",
