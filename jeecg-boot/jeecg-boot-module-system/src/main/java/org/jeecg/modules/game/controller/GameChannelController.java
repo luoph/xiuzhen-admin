@@ -38,12 +38,20 @@ import java.util.List;
 @RequestMapping("/game/gameChannel")
 public class GameChannelController extends JeecgController<GameChannel, IGameChannelService> {
 
-    @Value("${app.server.folder}")
+    @Value("${app.folder.game}")
+    private String gameFolder;
+
+    @Value("${app.folder.server}")
     private String serverFolder;
+
+    @Value("${app.folder.notice}")
+    private String noticeFolder;
+
+    @Value("${app.folder.ipwhitelist}")
+    private String ipWhitelistFolder;
 
     @Autowired
     private IGameChannelService gameChannelService;
-
 
     /**
      * 分页列表查询
