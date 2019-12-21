@@ -88,11 +88,11 @@
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+            <!-- <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
                 <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
                 >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
+            </div> -->
 
             <a-table
                 ref="table"
@@ -103,7 +103,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <span slot="action" slot-scope="text, record">
