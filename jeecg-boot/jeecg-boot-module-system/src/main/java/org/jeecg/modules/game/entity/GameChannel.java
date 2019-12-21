@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
+import java.util.Date;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -54,6 +56,31 @@ public class GameChannel extends BaseEntity {
     @Excel(name = "公告id", width = 15)
     @ApiModelProperty(value = "公告id")
     private java.lang.Integer noticeId;
+
+    /**
+     * 版本号
+     */
+    @Excel(name = "版本号", width = 15)
+    @ApiModelProperty(value = "版本号")
+    private java.lang.Integer versionCode;
+    /**
+     * 版本名
+     */
+    @Excel(name = "版本名", width = 15)
+    @ApiModelProperty(value = "版本名")
+    private java.lang.String versionName;
+    /**
+     * 版本更新时间
+     */
+    @Excel(name = "版本更新时间", width = 15)
+    @ApiModelProperty(value = "版本更新时间")
+    private Date versionUpdateTime;
+    /**
+     * ip白名单
+     */
+    @Excel(name = "ip白名单", width = 15)
+    @ApiModelProperty(value = "ip白名单")
+    private java.lang.String ipWhitelist;
     /**
      * 大渠道描述
      */

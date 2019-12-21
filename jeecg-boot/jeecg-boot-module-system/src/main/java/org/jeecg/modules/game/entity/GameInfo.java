@@ -49,6 +49,18 @@ public class GameInfo extends BaseEntity {
     @ApiModelProperty(value = "YA_APPKEY")
     private java.lang.String yaAppKey;
     /**
+     * 服务器列表地址
+     */
+    @Excel(name = "服务器列表地址", width = 15)
+    @ApiModelProperty(value = "serverUrl")
+    private java.lang.String serverUrl;
+    /**
+     * 公告列表地址
+     */
+    @Excel(name = "公告列表地址", width = 15)
+    @ApiModelProperty(value = "noticeUrl")
+    private java.lang.String noticeUrl;
+    /**
      * gameSimpleName
      */
     @Excel(name = "gameSimpleName", width = 15)
