@@ -33,7 +33,7 @@ public class GameNotice extends BaseEntity {
      */
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "自增主键")
-    private java.lang.Integer id;
+    private java.lang.Long id;
     /**
      * 公告类型 1 - 渠道公告 2 - 滚动公告
      */

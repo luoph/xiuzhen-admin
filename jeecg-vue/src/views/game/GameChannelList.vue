@@ -48,8 +48,11 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-popconfirm title="刷新服务器列表" @confirm="writeServerFileUrl()">
-                <a-button type="danger" icon="update">刷新服务器列表</a-button>
+            <a-popconfirm title="刷新服务器列表" @confirm="updateServerConfig()">
+                <a-button type="primary" icon="update">刷新服务器列表</a-button>
+            </a-popconfirm>
+            <a-popconfirm title="刷新IP白名单配置" @confirm="updateIpWhitelistConfig()">
+                <a-button type="primary" icon="update">刷新IP白名单配置</a-button>
             </a-popconfirm>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -223,7 +226,8 @@ export default {
                 list: "game/gameChannel/list",
                 delete: "game/gameChannel/delete",
                 deleteBatch: "game/gameChannel/deleteBatch",
-                writeServerFileUrl: "game/gameChannel/writeServerFile",
+                updateServerConfigUrl: "game/gameChannel/updateServerConfig",
+                updateIpWhitelistConfigUrl: "game/gameChannel/updateIpWhitelist",
                 // exportXlsUrl: "game/gameChannel/exportXls",
                 // importExcelUrl: "game/gameChannel/importExcel",
                 // 游戏列表
@@ -265,16 +269,28 @@ export default {
         editChannelServer(record) {
             this.$refs.channelServerList.edit(record);
         },
-        writeServerFileUrl() {
+        updateServerConfig() {
             // 刷新服务器列表
             console.log("开始刷新服务器列表");
-            getAction(this.url.writeServerFileUrl).then(res => {
+            getAction(this.url.updateServerConfigUrl).then(res => {
                 if (res.success) {
                     this.$message.success("服务器列表刷新成功");
                 } else {
                     this.$message.success("服务器列表刷新失败");
                 }
                 console.log("刷新服务器列表完成", res);
+            });
+        },
+        updateIpWhitelistConfig() {
+            // 刷新IP白名单配置
+            console.log("开始刷新IP白名单配置");
+            getAction(this.url.updateIpWhitelistConfigUrl).then(res => {
+                if (res.success) {
+                    this.$message.success("IP白名单配置刷新成功");
+                } else {
+                    this.$message.success("IP白名单配置刷新失败");
+                }
+                console.log("刷新IP白名单配置完成", res);
             });
         }
     }

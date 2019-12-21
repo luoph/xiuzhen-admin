@@ -1,19 +1,21 @@
 package org.jeecg.modules.game.controller;
 
-import cn.hutool.core.io.FileUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
+import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.model.ChannelConfig;
+import org.jeecg.modules.game.model.UpdateConfig;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,9 +39,6 @@ import java.util.List;
 @Api(tags = "游戏渠道")
 @RequestMapping("/game/gameChannel")
 public class GameChannelController extends JeecgController<GameChannel, IGameChannelService> {
-
-    @Value("${app.folder.game}")
-    private String gameFolder;
 
     @Value("${app.folder.server}")
     private String serverFolder;
@@ -169,24 +168,44 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     }
 
 
-    @GetMapping(value = "/writeServerFile")
-    public Result<?> writeServerFile(HttpServletRequest req) {
+    @GetMapping(value = "/updateServerConfig")
+    public Result<?> updateServerConfig(HttpServletRequest req) {
         try {
             List<GameChannel> channelList = gameChannelService.list();
             for (GameChannel channel : channelList) {
                 List<GameServer> servers = gameChannelService.getServerListChannelId(channel.getId());
-                String content = JSON.toJSONString(servers);
-                String fileName = channel.getSimpleName();
 
-                String filePath = serverFolder + "/" + fileName + ".json";
-                if (FileUtil.exist(filePath)) {
-                    FileUtil.del(filePath);
-                }
+                UpdateConfig updateConfig = new UpdateConfig()
+                        .setVersionCode(channel.getVersionCode())
+                        .setVersionName(channel.getVersionName())
+                        .setVersionUpdateTime(channel.getVersionUpdateTime());
 
-                FileUtil.writeString(content, filePath, StandardCharsets.UTF_8);
+                JsonFileUtils.writeJsonFile(new ChannelConfig(channel.getNoticeId(), updateConfig, servers), serverFolder, channel.getSimpleName());
             }
         } catch (Exception e) {
-            log.error("writeServerFile error", e);
+            log.error("updateServerConfig error", e);
+            return Result.error(e.getMessage());
+        }
+        return Result.ok("刷新成功");
+    }
+
+    @GetMapping(value = "/updateIpWhitelist")
+    public Result<?> updateIpWhitelist(HttpServletRequest req) {
+        try {
+            List<GameChannel> channelList = gameChannelService.list();
+            for (GameChannel channel : channelList) {
+                if (StringUtils.isNotBlank(channel.getIpWhitelist())) {
+                    String[] array = channel.getIpWhitelist().split(",");
+                    List<String> ipList = new ArrayList<>();
+                    for (String s : array) {
+                        ipList.add(s.trim());
+                    }
+
+                    JsonFileUtils.writeJsonFile(ipList, ipWhitelistFolder, channel.getSimpleName());
+                }
+            }
+        } catch (Exception e) {
+            log.error("updateIpWhitelist error", e);
             return Result.error(e.getMessage());
         }
         return Result.ok("刷新成功");

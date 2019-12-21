@@ -6,19 +6,24 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameInfo;
+import org.jeecg.modules.game.model.GameConfig;
 import org.jeecg.modules.game.service.IGameInfoService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -31,6 +36,9 @@ import java.util.Arrays;
 @Api(tags = "游戏信息")
 @RequestMapping("/game/gameInfo")
 public class GameInfoController extends JeecgController<GameInfo, IGameInfoService> {
+
+    @Value("${app.folder.game}")
+    private String gameFolder;
 
     @Autowired
     private IGameInfoService gameInfoService;
@@ -148,5 +156,21 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameInfo.class);
+    }
+
+    @GetMapping(value = "/updateGameConfig")
+    public Result<?> updateServerConfig(HttpServletRequest req) {
+        try {
+            List<GameInfo> gameInfoList = gameInfoService.list();
+            for (GameInfo gameInfo : gameInfoList) {
+                GameConfig gameConfig = new GameConfig();
+                BeanUtils.copyProperties(gameInfo, gameConfig);
+                JsonFileUtils.writeJsonFile(gameConfig, gameFolder, gameInfo.getYaSimpleName());
+            }
+        } catch (Exception e) {
+            log.error("updateServerConfig error", e);
+            return Result.error(e.getMessage());
+        }
+        return Result.ok("刷新成功");
     }
 }

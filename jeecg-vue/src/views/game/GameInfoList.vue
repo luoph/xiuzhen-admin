@@ -38,6 +38,9 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+            <a-popconfirm title="刷新游戏配置" @confirm="updateGameConfig()">
+                <a-button type="primary" icon="update">刷新游戏配置</a-button>
+            </a-popconfirm>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏信息')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -174,7 +177,8 @@ export default {
             url: {
                 list: "game/gameInfo/list",
                 delete: "game/gameInfo/delete",
-                deleteBatch: "game/gameInfo/deleteBatch"
+                deleteBatch: "game/gameInfo/deleteBatch",
+                updateGameConfigUrl: "game/gameInfo/updateGameConfig"
                 // exportXlsUrl: "game/gameInfo/exportXls",
                 // importExcelUrl: "game/gameInfo/importExcel"
             }
@@ -185,7 +189,20 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    methods: {}
+    methods: {
+        updateGameConfig() {
+            // 开始刷新游戏配置
+            console.log("开始刷新游戏配置");
+            getAction(this.url.updateGameConfigUrl).then(res => {
+                if (res.success) {
+                    this.$message.success("游戏配置刷新成功");
+                } else {
+                    this.$message.success("游戏配置刷新失败");
+                }
+                console.log("刷新游戏配置完成", res);
+            });
+        }
+    }
 };
 </script>
 <style scoped>

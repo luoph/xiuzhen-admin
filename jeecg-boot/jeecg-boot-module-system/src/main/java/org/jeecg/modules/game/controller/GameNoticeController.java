@@ -6,19 +6,24 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameNotice;
+import org.jeecg.modules.game.model.NoticeConfig;
 import org.jeecg.modules.game.service.IGameNoticeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -31,6 +36,9 @@ import java.util.Arrays;
 @Api(tags = "游戏公告")
 @RequestMapping("/game/gameNotice")
 public class GameNoticeController extends JeecgController<GameNotice, IGameNoticeService> {
+
+    @Value("${app.folder.notice}")
+    private String noticeFolder;
 
     @Autowired
     private IGameNoticeService gameNoticeService;
@@ -148,5 +156,25 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameNotice.class);
+    }
+
+    @GetMapping(value = "/updateNoticeConfig")
+    public Result<?> updateServerConfig(HttpServletRequest req) {
+        try {
+            List<GameNotice> noticeList = gameNoticeService.list();
+            for (GameNotice gameNotice : noticeList) {
+                NoticeConfig notice = new NoticeConfig();
+                BeanUtils.copyProperties(gameNotice, notice);
+                if (gameNotice.getStatus() == 1) {
+                    JsonFileUtils.writeJsonFile(notice, noticeFolder, String.valueOf(gameNotice.getId()));
+                } else {
+                    JsonFileUtils.deleteJsonFile(noticeFolder, String.valueOf(gameNotice.getId()));
+                }
+            }
+        } catch (Exception e) {
+            log.error("updateServerConfig error", e);
+            return Result.error(e.getMessage());
+        }
+        return Result.ok("刷新成功");
     }
 }
