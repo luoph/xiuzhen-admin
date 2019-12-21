@@ -48,6 +48,9 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+            <a-popconfirm title="刷新公告配置列表" @confirm="updateNoticeConfig()">
+                <a-button type="primary" icon="update">刷新公告配置列表</a-button>
+            </a-popconfirm>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏公告')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -176,7 +179,8 @@ export default {
             url: {
                 list: "game/gameNotice/list",
                 delete: "game/gameNotice/delete",
-                deleteBatch: "game/gameNotice/deleteBatch"
+                deleteBatch: "game/gameNotice/deleteBatch",
+                updateNoticeConfigUrl: "game/gameNotice/updateNoticeConfig"
                 // exportXlsUrl: "game/gameNotice/exportXls",
                 // importExcelUrl: "game/gameNotice/importExcel"
             }
@@ -187,7 +191,20 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    methods: {}
+    methods: {
+        updateNoticeConfig() {
+            // 刷新公告配置
+            console.log("开始刷新公告配置");
+            getAction(this.url.updateNoticeConfigUrl).then(res => {
+                if (res.success) {
+                    this.$message.success("公告配置刷新成功");
+                } else {
+                    this.$message.success("公告配置刷新失败");
+                }
+                console.log("刷新公告配置完成", res);
+            });
+        }
+    }
 };
 </script>
 <style scoped>

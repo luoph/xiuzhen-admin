@@ -56,7 +56,7 @@ public class GameChannel extends BaseEntity {
      */
     @Excel(name = "公告id", width = 15)
     @ApiModelProperty(value = "公告id")
-    private java.lang.Integer noticeId;
+    private java.lang.Long noticeId;
 
     /**
      * 版本号
