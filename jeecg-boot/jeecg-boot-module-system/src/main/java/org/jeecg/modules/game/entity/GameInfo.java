@@ -61,6 +61,12 @@ public class GameInfo extends BaseEntity {
     @ApiModelProperty(value = "noticeUrl")
     private java.lang.String noticeUrl;
     /**
+     * 帐号登录地址
+     */
+    @Excel(name = "帐号登录地址", width = 15)
+    @ApiModelProperty(value = "loginUrl")
+    private java.lang.String loginUrl;
+    /**
      * gameSimpleName
      */
     @Excel(name = "gameSimpleName", width = 15)
