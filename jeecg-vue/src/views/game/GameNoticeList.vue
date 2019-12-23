@@ -199,7 +199,7 @@ export default {
                 if (res.success) {
                     this.$message.success("公告配置刷新成功");
                 } else {
-                    this.$message.success("公告配置刷新失败");
+                    this.$message.error("公告配置刷新失败");
                 }
                 console.log("刷新公告配置完成", res);
             });

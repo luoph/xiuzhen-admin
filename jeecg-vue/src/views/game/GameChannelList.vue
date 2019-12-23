@@ -276,7 +276,7 @@ export default {
                 if (res.success) {
                     this.$message.success("服务器列表刷新成功");
                 } else {
-                    this.$message.success("服务器列表刷新失败");
+                    this.$message.error("服务器列表刷新失败");
                 }
                 console.log("刷新服务器列表完成", res);
             });
@@ -288,7 +288,7 @@ export default {
                 if (res.success) {
                     this.$message.success("IP白名单配置刷新成功");
                 } else {
-                    this.$message.success("IP白名单配置刷新失败");
+                    this.$message.error("IP白名单配置刷新失败");
                 }
                 console.log("刷新IP白名单配置完成", res);
             });
