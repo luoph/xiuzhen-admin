@@ -1,6 +1,6 @@
 #!/bin/bash
 # 编译目录
-output=dist
+output="dist"
 
 function logger() {
     time=$(date +'%Y-%m-%d %H:%M:%S')
