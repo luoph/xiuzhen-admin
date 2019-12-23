@@ -13,7 +13,7 @@
                     <a-input placeholder="请输入标题" v-decorator="['title', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告内容">
-                    <j-editor v-model="model.content" />
+                    <j-editor v-decorator="['content', validatorRules.content]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开始时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]" />
