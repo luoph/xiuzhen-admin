@@ -197,7 +197,7 @@ export default {
                 if (res.success) {
                     this.$message.success("游戏配置刷新成功");
                 } else {
-                    this.$message.success("游戏配置刷新失败");
+                    this.$message.error("游戏配置刷新失败");
                 }
                 console.log("刷新游戏配置完成", res);
             });
