@@ -13,7 +13,7 @@
                     <a-input placeholder="请输入标题" v-decorator="['title', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告内容">
-                    <j-editor v-decorator="['content', validatorRules.content]" />
+                    <j-editor v-model="contentHtml" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开始时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]" />
@@ -55,6 +55,7 @@ export default {
             title: "操作",
             visible: false,
             model: {},
+            contentHtml: "",
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -63,7 +64,6 @@ export default {
                 xs: { span: 24 },
                 sm: { span: 16 }
             },
-
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
@@ -88,9 +88,12 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            if (this.model.content) {
+                this.contentHtml = this.model.content;
+            }
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "noticeType", "title", "content", "status", "intervalSeconds"));
+                this.form.setFieldsValue(pick(this.model, "noticeType", "title", "status", "intervalSeconds"));
                 // 时间格式化
                 this.form.setFieldsValue({ beginTime: this.model.beginTime ? moment(this.model.beginTime) : null });
                 this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
@@ -115,7 +118,9 @@ export default {
                         httpUrl += this.url.edit;
                         method = "put";
                     }
+                    this.model.content = this.contentHtml;
                     let formData = Object.assign(this.model, values);
+
                     // 时间格式化
                     formData.beginTime = formData.beginTime ? formData.beginTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;

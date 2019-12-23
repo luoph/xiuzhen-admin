@@ -11,13 +11,17 @@ import Editor from "@tinymce/tinymce-vue";
 import "tinymce/themes/silver";
 
 // plugins
-import "tinymce/plugins/image"; // 插入上传图片插件
-import "tinymce/plugins/media"; // 插入视频插件
-import "tinymce/plugins/table"; // 插入表格插件
-import "tinymce/plugins/lists"; // 列表插件
-import "tinymce/plugins/wordcount"; // 字数统计插件
-import "tinymce/plugins/colorpicker"; // 取色器
-import "tinymce/plugins/fullscreen"; // 全屏
+import "tinymce/plugins/autolink";
+import "tinymce/plugins/code";
+import "tinymce/plugins/colorpicker";
+import "tinymce/plugins/fullscreen";
+import "tinymce/plugins/image";
+import "tinymce/plugins/link";
+import "tinymce/plugins/lists";
+import "tinymce/plugins/media";
+import "tinymce/plugins/paste";
+import "tinymce/plugins/table";
+import "tinymce/plugins/wordcount";
 
 export default {
     components: {
@@ -43,12 +47,12 @@ export default {
         },
         plugins: {
             type: [String, Array],
-            default: "lists image media table wordcount fullscreen"
+            default: "autolink code fullscreen image link lists media paste table wordcount"
         },
         toolbar: {
             type: [String, Array],
             default:
-                "undo redo |  formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat | fullscreen"
+                "undo redo | formatselect removeformat | bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link lists image media table | fullscreen"
         }
     },
     data() {
