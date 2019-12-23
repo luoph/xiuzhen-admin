@@ -1,5 +1,8 @@
 const path = require("path");
 const debug = process.env.NODE_ENV !== "production";
+// 后台端口
+const serverPort = debug ? 8080 : 8800;
+const targetUrl = `http://localhost:${serverPort}`;
 
 function resolve(dir) {
     return path.join(__dirname, dir);
@@ -13,7 +16,7 @@ module.exports = {
     https://github.com/vuejs/vue-cli/issues/2463
    */
     // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
-    productionSourceMap: true,
+    productionSourceMap: debug ? true : false,
 
     // 打包app时放开该配置
     // publicPath:"./",
@@ -66,7 +69,7 @@ module.exports = {
             }
         },*/
             "/jeecg-boot": {
-                target: "http://localhost:8800", // 请求本地 需要jeecg-boot后台项目
+                target: targetUrl, // 请求本地 需要jeecg-boot后台项目
                 ws: false,
                 changeOrigin: true
             }
