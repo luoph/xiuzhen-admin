@@ -7,16 +7,18 @@
 <script>
 import tinymce from "tinymce/tinymce";
 import Editor from "@tinymce/tinymce-vue";
-import "tinymce/themes/silver/theme";
-import "tinymce/plugins/image";
-import "tinymce/plugins/media";
-import "tinymce/plugins/table";
-import "tinymce/plugins/lists";
-import "tinymce/plugins/contextmenu";
-import "tinymce/plugins/wordcount";
-import "tinymce/plugins/colorpicker";
-import "tinymce/plugins/textcolor";
-import "tinymce/plugins/fullscreen";
+// theme
+import "tinymce/themes/silver";
+
+// plugins
+import "tinymce/plugins/image"; // 插入上传图片插件
+import "tinymce/plugins/media"; // 插入视频插件
+import "tinymce/plugins/table"; // 插入表格插件
+import "tinymce/plugins/lists"; // 列表插件
+import "tinymce/plugins/wordcount"; // 字数统计插件
+import "tinymce/plugins/colorpicker"; // 取色器
+import "tinymce/plugins/fullscreen"; // 全屏
+
 export default {
     components: {
         Editor
@@ -25,6 +27,10 @@ export default {
         value: {
             type: String,
             required: false
+        },
+        baseUrl: {
+            type: String,
+            default: ""
         },
         triggerChange: {
             type: Boolean,
@@ -37,7 +43,7 @@ export default {
         },
         plugins: {
             type: [String, Array],
-            default: "lists image media table textcolor wordcount contextmenu fullscreen"
+            default: "lists image media table wordcount fullscreen"
         },
         toolbar: {
             type: [String, Array],
@@ -49,10 +55,13 @@ export default {
         return {
             // 初始化配置
             init: {
-                language_url: "/tinymce/langs/zh_CN.js",
+                language_url: `${this.baseUrl}/tinymce/langs/zh_CN.js`,
                 language: "zh_CN",
-                skin_url: "/tinymce/skins/lightgray",
-                height: 300,
+                skin_url: `${this.baseUrl}/tinymce/skins/ui/oxide`,
+                content_css: `${this.baseUrl}/tinymce/skins/content/default/content.css`,
+                // skin_url: `${this.baseUrl}/tinymce/skins/ui/oxide-dark`, // 暗色系
+                // content_css: `${this.baseUrl}/tinymce/skins/content/dark/content.css`, // 暗色系
+                height: 400,
                 plugins: this.plugins,
                 toolbar: this.toolbar,
                 branding: false,
@@ -70,6 +79,7 @@ export default {
         tinymce.init({});
     },
     methods: {
+        // 添加相关的事件，可用的事件参照文档=> https://github.com/tinymce/tinymce-vue => All available events
         onClick(e) {
             this.$emit("onClick", e, tinymce);
         },
