@@ -16,7 +16,7 @@ public class NoticeConfig {
     private Long id;
     private Date beginTime;
     private Date endTime;
-    private String content;
+    private Object content;
     private String title;
     private Integer noticeType;
     private Integer intervalSeconds;
