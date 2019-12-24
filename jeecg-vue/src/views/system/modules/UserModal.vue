@@ -173,8 +173,8 @@ export default {
                     rules: [
                         {
                             required: true,
-                            pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*()_+`\-={}:";'<>?,./]).{8,}$/,
-                            message: "密码由8位数字、大小写字母和特殊符号组成!"
+                            pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*).{8,}$/,
+                            message: "密码长度至少8位，需要包含数字和大小写字母!"
                         },
                         {
                             validator: this.validateToNextPassword
