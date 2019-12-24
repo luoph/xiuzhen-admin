@@ -360,7 +360,7 @@ export default {
         onCheck(checkedKeys, info) {
             console.log("onCheck", checkedKeys, info);
             this.hiding = false;
-            //this.checkedKeys = checkedKeys.checked
+            // this.checkedKeys = checkedKeys.checked
             // <!---- author:os_chengtgen -- date:20190827 --  for:切换父子勾选模式 =======------>
             if (this.checkStrictly) {
                 this.checkedKeys = checkedKeys.checked;
@@ -503,7 +503,7 @@ export default {
             this.checkedKeys = this.allTreeKeys;
         },
         cancelCheckALL() {
-            //this.checkedKeys = this.defaultCheckedKeys
+            // this.checkedKeys = this.defaultCheckedKeys
             this.checkedKeys = [];
         },
         switchCheckStrictly(v) {
