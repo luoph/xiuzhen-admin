@@ -21,11 +21,8 @@ server_name -- 服务名, eg: payservice
 }
 
 [[ $# -eq 0 ]] && usage
-while getopts "p:n:" opt; do
+while getopts "n:" opt; do
     case ${opt} in
-    p)
-        profile=$OPTARG
-        ;;
     n)
         server_name=$OPTARG
         ;;
@@ -35,16 +32,14 @@ while getopts "p:n:" opt; do
     esac
 done
 
-if [[ -z "$profile" ]] \
-    || [[ -z "$server_name" ]]; then
+if [[ -z "$server_name" ]]; then
     usage
 fi
 
-logger "==> profile:[${profile}]"
 logger "==> server_name:[${server_name}]"
 
 logger "==> start building"
-mvn clean package -P${profile}
+mvn clean package
 
 if [[ ! -d "target" ]]; then
     mkdir -p "target"
