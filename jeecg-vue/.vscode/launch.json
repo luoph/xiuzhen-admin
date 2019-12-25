@@ -22,6 +22,24 @@
             }
         },
         {
+            "type": "chrome",
+            "request": "attach",
+            "name": "chrome-attach",
+            "url": "http://localhost:3000",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/src",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "userDataDir": "${workspaceRoot}/out/chrome",
+            // "runtimeExecutable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+            "sourceMapPathOverrides": {
+                "webpack:///./src/*": "${webRoot}/*"
+            },
+            "pathMapping": {
+                "/": "${workspaceFolder}/src/views"
+            }
+        },
+        {
             "type": "firefox",
             "request": "attach",
             "name": "firefox-attach",
