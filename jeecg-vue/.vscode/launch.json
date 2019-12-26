@@ -5,9 +5,9 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome-launch",
+            "type": "chrome",
             "request": "launch",
-            "name": "chrome",
+            "name": "chrome-launch",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
