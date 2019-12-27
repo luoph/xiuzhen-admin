@@ -49,15 +49,9 @@ public class GameServer extends BaseEntity {
     /**
      * 服务器路径
      */
-    @Excel(name = "服务器路径", width = 15)
-    @ApiModelProperty(value = "服务器路径")
+    @Excel(name = "服务器Host", width = 15)
+    @ApiModelProperty(value = "服务器Host")
     private java.lang.String host;
-    /**
-     * 服务器端口
-     */
-    @Excel(name = "服务器端口", width = 15)
-    @ApiModelProperty(value = "服务器端口")
-    private java.lang.Integer port;
     /**
      * 登陆地址和端口
      */
@@ -67,15 +61,15 @@ public class GameServer extends BaseEntity {
     /**
      * 服务器状态 0-正常 1-流畅 2-火爆 3-维护
      */
-    @Excel(name = "服务器状态 0-正常 1-流畅 2-火爆 3-维护", width = 15)
-    @ApiModelProperty(value = "服务器状态 0-正常 1-流畅 2-火爆 3-维护")
+    @Excel(name = "服务器状态", width = 15)
+    @ApiModelProperty(value = "服务器状态")
     @Dict(dicCode = "server_status")
     private java.lang.Integer status;
     /**
      * 推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服
      */
-    @Excel(name = "推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服", width = 15)
-    @ApiModelProperty(value = "推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服")
+    @Excel(name = "推荐标识", width = 15)
+    @ApiModelProperty(value = "推荐标识")
     @Dict(dicCode = "recommend_status")
     private java.lang.Integer recommend;
     /**
@@ -126,13 +120,6 @@ public class GameServer extends BaseEntity {
     @Excel(name = "数据库名", width = 15)
     @ApiModelProperty(value = "数据库名")
     private java.lang.String dbName;
-    /**
-     * 后台HTTP端口
-     */
-    @Excel(name = "后台HTTP端口", width = 15)
-    @ApiModelProperty(value = "后台HTTP端口")
-    private java.lang.Integer httpPort;
-
     /**
      * GM地址
      */
