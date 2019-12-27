@@ -132,6 +132,13 @@ public class GameServer extends BaseEntity {
     @Excel(name = "后台HTTP端口", width = 15)
     @ApiModelProperty(value = "后台HTTP端口")
     private java.lang.Integer httpPort;
+
+    /**
+     * GM地址
+     */
+    @Excel(name = "GM地址", width = 15)
+    @ApiModelProperty(value = "GM地址")
+    private java.lang.String gmUrl;
     /**
      * 排序字段
      */
