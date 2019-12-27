@@ -27,8 +27,8 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="登录地址和端口">
-                                <a-input placeholder="登录地址和端口" v-model="queryParam.loginUrl"></a-input>
+                            <a-form-item label="Websocket地址">
+                                <a-input placeholder="Websocket地址" v-model="queryParam.loginUrl"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -42,8 +42,8 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="数据库地址">
-                                <a-input placeholder="数据库地址" v-model="queryParam.dbHost"></a-input>
+                            <a-form-item label="数据库Host">
+                                <a-input placeholder="数据库Host" v-model="queryParam.dbHost"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -188,17 +188,12 @@ export default {
                     }
                 },
                 {
-                    title: "地址",
+                    title: "服务器Host",
                     align: "center",
                     dataIndex: "host"
                 },
                 {
-                    title: "端口",
-                    align: "center",
-                    dataIndex: "port"
-                },
-                {
-                    title: "登录地址和端口",
+                    title: "Websocket地址",
                     align: "center",
                     dataIndex: "loginUrl"
                 },
@@ -213,14 +208,9 @@ export default {
                     dataIndex: "recommend_dictText"
                 },
                 {
-                    title: "出错提示信息",
+                    title: "GM地址",
                     align: "center",
-                    dataIndex: "warning"
-                },
-                {
-                    title: "后台HTTP端口",
-                    align: "center",
-                    dataIndex: "httpPort"
+                    dataIndex: "gmUrl"
                 },
                 {
                     title: "顺序",

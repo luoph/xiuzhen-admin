@@ -11,14 +11,14 @@
                         <a-select-option v-for="game in gameList" :key="game.id" :value="game.id"> {{ game.name }}({{ game.id }}) </a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器路径">
-                    <a-input placeholder="请输入服务器路径" v-decorator="['host', validatorRules.host]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器Host">
+                    <a-input placeholder="请输入服务器Host" v-decorator="['host', validatorRules.host]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器端口">
-                    <a-input-number v-decorator="['port', validatorRules.port]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="Websocket地址">
+                    <a-input placeholder="请输入Websocket地址" v-decorator="['loginUrl', validatorRules.loginUrl]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="登录地址和端口">
-                    <a-input placeholder="请输入登录地址和端口" v-decorator="['loginUrl', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="GM地址">
+                    <a-input v-decorator="['gmUrl', validatorRules.gmUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器状态">
                     <a-select placeholder="请选择服务器状态" v-decorator="['status', {}]">
@@ -29,7 +29,7 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识">
-                    <a-select placeholder="请选择推荐标识" v-decorator="['recommend', {}]">
+                    <a-select placeholder="请选择推荐标识" v-decorator="['recommend', validatorRules.recommend]">
                         <a-select-option :value="0">普遍</a-select-option>
                         <a-select-option :value="1">推荐</a-select-option>
                         <a-select-option :value="2">新服</a-select-option>
@@ -45,23 +45,20 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户端最大版本号">
                     <a-input-number v-decorator="['maxVersion', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库路径">
-                    <a-input placeholder="请输入数据库路径" v-decorator="['dbHost', {}]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库Host">
+                    <a-input placeholder="请输入数据库Host" v-decorator="['dbHost', validatorRules.dbHost]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库端口">
-                    <a-input-number v-decorator="['dbPort', {}]" />
+                    <a-input-number v-decorator="['dbPort', validatorRules.dbPort]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库用户名">
-                    <a-input placeholder="请输入数据库用户名" v-decorator="['dbUser', {}]" />
+                    <a-input placeholder="请输入数据库用户名" v-decorator="['dbUser', validatorRules.dbUser]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库密码">
-                    <a-input-password placeholder="请输入数据库密码" v-decorator="['dbPassword', {}]" />
+                    <a-input-password placeholder="请输入数据库密码" v-decorator="['dbPassword', validatorRules.dbPassword]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">
-                    <a-input placeholder="请输入数据库名" v-decorator="['dbName', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="后台HTTP端口">
-                    <a-input-number v-decorator="['httpPort', {}]" />
+                    <a-input placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="排序字段">
                     <a-input-number v-decorator="['position', {}]" />
@@ -119,14 +116,15 @@ export default {
             form: this.$form.createForm(this),
             validatorRules: {
                 name: { rules: [{ required: true, message: "请输入服务器名字!" }] },
-                host: { rules: [{ required: true, message: "请输入服务器路径!" }] },
-                port: { rules: [{ required: true, message: "请输入服务器端口!" }] },
+                host: { rules: [{ required: true, message: "请输入前端HOST!" }] },
+                loginUrl: { rules: [{ required: true, message: "请输入登录地址!" }] },
                 status: { rules: [{ required: true, message: "请输入服务器状态!" }] },
                 type: { rules: [{ required: true, message: "请输入服务器类型!" }] },
-                dbHost: { rules: [{ required: true, message: "请输入数据库地址!" }] },
+                dbHost: { rules: [{ required: true, message: "请输入数据库Host!" }] },
                 dbUser: { rules: [{ required: true, message: "请输入数据库帐号!" }] },
                 dbPassword: { rules: [{ required: true, message: "请输入数据库密码!" }] },
-                dbName: { rules: [{ required: true, message: "请输入数据库名称!" }] }
+                dbName: { rules: [{ required: true, message: "请输入数据库名称!" }] },
+                gmUrl: { rules: [{ required: true, message: "请输入GM地址!" }] }
             },
             url: {
                 add: "game/gameServer/add",
@@ -166,8 +164,8 @@ export default {
                         this.model,
                         "name",
                         "host",
-                        "port",
                         "loginUrl",
+                        "gmUrl",
                         "status",
                         "recommend",
                         "warning",
@@ -178,7 +176,6 @@ export default {
                         "dbUser",
                         "dbPassword",
                         "dbName",
-                        "httpPort",
                         "position",
                         "type",
                         "pid",
