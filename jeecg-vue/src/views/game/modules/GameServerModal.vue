@@ -7,8 +7,8 @@
                     <a-input placeholder="请输入服务器名字" v-decorator="['name', validatorRules.name]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
-                    <a-select placeholder="请选择游戏编号" v-decorator="['gameId', {}]">
-                        <a-select-option v-for="game in gameList" :key="game.id" :value="game.id"> {{ game.name }}({{ game.id }}) </a-select-option>
+                    <a-select placeholder="请选择游戏编号" v-model="model.gameId">
+                        <a-select-option v-for="game in gameList" :key="game.name" :value="game.id"> {{ game.name }}({{ game.id }}) </a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器Host">
@@ -115,6 +115,7 @@ export default {
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
+                gameId: { rules: [{ required: true, message: "请选择游戏Id!" }] },
                 name: { rules: [{ required: true, message: "请输入服务器名字!" }] },
                 host: { rules: [{ required: true, message: "请输入前端HOST!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入登录地址!" }] },
