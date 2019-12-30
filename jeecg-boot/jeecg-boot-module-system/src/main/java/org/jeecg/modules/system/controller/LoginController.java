@@ -49,9 +49,6 @@ public class LoginController {
     @Autowired
     private ISysDepartService sysDepartService;
 
-    //    private static final String BASE_CHECK_CODES = "qwertyuiplkjhgfdsazxcvbnmQWERTYUPLKJHGFDSAZXCVBNM1234567890";
-    private static final String BASE_CHECK_CODES = "1234567890";
-
     @ApiOperation("登录接口")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result<JSONObject> login(@RequestBody SysLoginModel sysLoginModel) {
@@ -376,7 +373,7 @@ public class LoginController {
         Result<Map<String, String>> result = new Result<>();
         Map<String, String> map = new HashMap<>();
         try {
-            String code = RandomUtil.randomString(BASE_CHECK_CODES, 4);
+            String code = RandomStringUtils.genCheckCode();
             String key = MD5Util.md5Encode(code + System.currentTimeMillis(), "utf-8");
             redisUtil.set(key, code, 60);
             map.put("key", key);
