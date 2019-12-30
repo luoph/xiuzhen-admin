@@ -49,7 +49,7 @@
         <shiro.version>1.4.2</shiro.version>
         <hutool.version>5.0.7</hutool.version>
         <httpclient.version>4.5.10</httpclient.version>
-        <sentry.version>1.7.28</sentry.version>
+        <sentry.version>1.7.29</sentry.version>
     </properties>
 
     <dependencies>
@@ -113,6 +113,11 @@
         <dependency>
             <groupId>io.sentry</groupId>
             <artifactId>sentry-log4j2</artifactId>
+            <version>${sentry.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-spring</artifactId>
             <version>${sentry.version}</version>
         </dependency>
 
