@@ -10,7 +10,7 @@
                     <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['severId', validatorRules.severId]" placeholder="请输入服务器id" style="width: 100%" />
+                    <a-input-number v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="出身id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['birthId', validatorRules.birthId]" placeholder="请输入出身id" style="width: 100%" />
@@ -92,7 +92,7 @@ export default {
             validatorRules: {
                 account: {},
                 playerId: { rules: [{ required: true, message: "请输入玩家id!" }] },
-                severId: { rules: [{ required: true, message: "请输入服务器id!" }] },
+                serverId: { rules: [{ required: true, message: "请输入服务器id!" }] },
                 birthId: { rules: [{ required: true, message: "请输入出身id!" }] },
                 name: { rules: [{ required: true, message: "请输入角色名称!" }] },
                 ip: {},
@@ -126,7 +126,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "account", "playerId", "severId", "birthId", "name", "ip", "channel", "imei", "mac", "idfa", "vendor", "model", "system", "systemVersion", "network", "versionName", "versionCode", "platform", "createDate"));
+                this.form.setFieldsValue(pick(this.model, "account", "playerId", "serverId", "birthId", "name", "ip", "channel", "imei", "mac", "idfa", "vendor", "model", "system", "systemVersion", "network", "versionName", "versionCode", "platform", "createDate"));
             });
         },
         close() {
@@ -170,7 +170,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "account", "playerId", "severId", "birthId", "name", "ip", "channel", "imei", "mac", "idfa", "vendor", "model", "system", "systemVersion", "network", "versionName", "versionCode", "platform", "createDate"));
+            this.form.setFieldsValue(pick(row, "account", "playerId", "serverId", "birthId", "name", "ip", "channel", "imei", "mac", "idfa", "vendor", "model", "system", "systemVersion", "network", "versionName", "versionCode", "platform", "createDate"));
         },
     }
 };

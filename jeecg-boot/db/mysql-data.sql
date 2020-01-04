@@ -75,7 +75,7 @@ UNLOCK TABLES;
 LOCK TABLES `game_channel_server` WRITE;
 /*!40000 ALTER TABLE `game_channel_server` DISABLE KEYS */;
 
-INSERT INTO `game_channel_server` (`id`, `sever_id`, `channel_id`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`)
+INSERT INTO `game_channel_server` (`id`, `server_id`, `channel_id`, `del_flag`, `create_by`, `create_time`, `update_by`, `update_time`)
 VALUES
 	(1000,1002,'1000',0,'admin','2019-12-12 22:31:03',NULL,NULL),
 	(1001,1010,'1000',0,'admin','2019-12-12 23:09:40',NULL,NULL);

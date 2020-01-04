@@ -7,7 +7,7 @@
                     <a-input :disabled="true" placeholder="请输入渠道id" v-decorator="['channelId', validatorRules.channelId]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器id">
-                    <a-select :disabled="isEdit" placeholder="请选择服务器id" v-decorator="['severId', {}]">
+                    <a-select :disabled="isEdit" placeholder="请选择服务器id" v-decorator="['serverId', {}]">
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
                     </a-select>
                 </a-form-item>
@@ -48,7 +48,7 @@ export default {
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                severId: { rules: [{ required: true, message: "请输入服务器id!" }] }
+                serverId: { rules: [{ required: true, message: "请输入服务器id!" }] }
             },
             url: {
                 add: "game/gameChannelServer/add",
@@ -72,7 +72,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "severId", "channelId", "delFlag"));
+                this.form.setFieldsValue(pick(this.model, "serverId", "channelId", "delFlag"));
             });
         },
         close() {

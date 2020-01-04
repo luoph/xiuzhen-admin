@@ -10,7 +10,7 @@
                         <a-row :gutter="10">
                             <a-col :md="6" :sm="8">
                                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器id">
-                                    <a-input placeholder="请输入服务器id" v-model="queryParam.severId"></a-input>
+                                    <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
                                 </a-form-item>
                             </a-col>
                             <a-col :md="12" :sm="8">
@@ -105,7 +105,7 @@ export default {
                 {
                     title: "服务器id",
                     align: "center",
-                    dataIndex: "severId",
+                    dataIndex: "serverId",
                     customRender: text => {
                         return filterServerIdText(this.serverList, text);
                     }
@@ -129,7 +129,7 @@ export default {
             ],
             queryParam: {
                 channelId: "",
-                severId: "",
+                serverId: "",
                 delFlag: "1"
             },
             title: "操作",
