@@ -90,10 +90,9 @@
 </template>
 
 <script>
-import { getAction, putAction, httpAction } from "@/api/manage";
+import { getAction, httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
-import { stringify } from "querystring";
 
 export default {
     name: "GameServerModal",
