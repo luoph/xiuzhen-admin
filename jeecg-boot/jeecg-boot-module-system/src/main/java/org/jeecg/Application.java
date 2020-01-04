@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.scan.StandardJarScanner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,12 +17,12 @@ import java.net.UnknownHostException;
 @Slf4j
 @EnableSwagger2
 @SpringBootApplication
-public class JeecgApplication {
+public class Application {
 
     public static void main(String[] args) throws UnknownHostException {
         //System.setProperty("spring.devtools.restart.enabled", "true");
 
-        ConfigurableApplicationContext application = SpringApplication.run(JeecgApplication.class, args);
+        ConfigurableApplicationContext application = SpringApplication.run(Application.class, args);
         Environment env = application.getEnvironment();
         String ip = InetAddress.getLocalHost().getHostAddress();
         String port = env.getProperty("server.port");
