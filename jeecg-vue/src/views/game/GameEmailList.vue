@@ -37,13 +37,6 @@
                     <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validStarTime_end"></j-date>
                 </a-form-item>
                 </a-col>
-                    <a-col :md="12" :sm="16">
-                    <a-form-item label="结束时间">
-                    <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validEndTime_begin"></j-date>
-                    <span class="query-group-split-cust"></span>
-                    <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validEndTime_end"></j-date>
-                </a-form-item>
-                </a-col>
         </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
