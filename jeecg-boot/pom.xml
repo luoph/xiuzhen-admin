@@ -50,6 +50,7 @@
         <hutool.version>5.0.7</hutool.version>
         <httpclient.version>4.5.10</httpclient.version>
         <sentry.version>1.7.29</sentry.version>
+        <okhttp3.version>3.14.4</okhttp3.version>
     </properties>
 
     <dependencies>
@@ -298,6 +299,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.youai</groupId>
+            <artifactId>commons</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <!-- aliyun oss -->

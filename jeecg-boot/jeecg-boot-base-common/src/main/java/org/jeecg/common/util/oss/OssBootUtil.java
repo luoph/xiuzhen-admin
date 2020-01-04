@@ -5,7 +5,6 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.PutObjectResult;
-import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -72,42 +71,6 @@ public class OssBootUtil {
             FILE_URL = "https://" + bucketName + "." + endPoint + "/" + fileUrl;
             //FILE_URL = staticDomain + "/" + fileUrl;
             PutObjectResult result = ossClient.putObject(bucketName, fileUrl.toString(), file.getInputStream());
-            // 设置权限(公开读)
-            ossClient.setBucketAcl(bucketName, CannedAccessControlList.PublicRead);
-            if (result != null) {
-                System.out.println("------OSS文件上传成功------" + fileUrl);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return FILE_URL;
-    }
-
-
-    /**
-     * 上传文件至阿里云 OSS
-     * 文件上传成功,返回文件完整访问路径
-     * 文件上传失败,返回 null
-     *
-     * @param file    待上传文件
-     * @param fileDir 文件保存目录
-     * @return oss 中的相对文件路径
-     */
-    public static String upload(FileItemStream file, String fileDir) {
-        initOSS(endPoint, accessKeyId, accessKeySecret);
-        StringBuilder fileUrl = new StringBuilder();
-        try {
-            String suffix = file.getName().substring(file.getName().lastIndexOf('.'));
-            String fileName = UUID.randomUUID().toString().replace("-", "") + suffix;
-            if (!fileDir.endsWith("/")) {
-                fileDir = fileDir.concat("/");
-            }
-            fileUrl = fileUrl.append(fileDir + fileName);
-
-            FILE_URL = "https://" + bucketName + "." + endPoint + "/" + fileUrl;
-            //FILE_URL = staticDomain + "/" + fileUrl;
-            PutObjectResult result = ossClient.putObject(bucketName, fileUrl.toString(), file.openStream());
             // 设置权限(公开读)
             ossClient.setBucketAcl(bucketName, CannedAccessControlList.PublicRead);
             if (result != null) {
