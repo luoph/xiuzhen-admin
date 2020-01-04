@@ -3,35 +3,35 @@
     <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入邮件标题"></a-input>
+                    <a-form-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"></a-input>
                 </a-form-item>
-                <a-form-item label="邮件描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['descri', validatorRules.descri]" placeholder="请输入邮件描述"></a-input>
+                <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['descri', validatorRules.descri]" placeholder="请输入描述"></a-input>
                 </a-form-item>
-                <a-form-item label="1有奖励附件content不为空 2无奖励附件contents是null" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['emailType', validatorRules.emailType]" placeholder="请输入1有奖励附件content不为空 2无奖励附件contents是null" style="width: 100%" />
+                <a-form-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['emailType', validatorRules.emailType]" placeholder="请输入类型" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="附件内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['content', validatorRules.content]" placeholder="请输入附件内容"></a-input>
+                <a-form-item label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['content', validatorRules.content]" placeholder="请输入附件"></a-input>
                 </a-form-item>
-                <a-form-item label="1有效 0无效" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-dict-select-tag type="list" v-decorator="['validState']" :trigger-change="true" dictCode="" placeholder="请选择1有效 0无效"/>
+                <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <j-search-select-tag v-decorator="['validState']" dict="" />
                 </a-form-item>
-                <a-form-item label="目标主体类型1玩家 2服务器" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['targetBodyType', validatorRules.targetBodyType]" placeholder="请输入目标主体类型1玩家 2服务器" style="width: 100%" />
+                <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <j-search-select-tag v-decorator="['targetBodyType']" dict="" />
                 </a-form-item>
-                <a-form-item label="目标主体id playerId serverId" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['targetBodyId', validatorRules.targetBodyId]" placeholder="请输入目标主体id playerId serverId" style="width: 100%" />
+                <a-form-item label="目标主体" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['targetBodyId', validatorRules.targetBodyId]" placeholder="请输入目标主体" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="向目标主体发送的时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择向目标主体发送的时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%" />
+                <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <j-date placeholder="请选择生效时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="有效日期开始" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择有效日期开始" v-decorator="['validStarTime', validatorRules.validStarTime]" :trigger-change="true" style="width: 100%" />
+                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <j-date placeholder="请选择开始时间" v-decorator="['validStarTime', validatorRules.validStarTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="有效日期结束" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择有效日期结束" v-decorator="['validEndTime', validatorRules.validEndTime]" :trigger-change="true" style="width: 100%" />
+                <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <j-date placeholder="请选择结束时间" v-decorator="['validEndTime', validatorRules.validEndTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -45,13 +45,13 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
-import JDictSelectTag from "@/components/dict/JDictSelectTag";
+import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
 
 export default {
     name: "GameEmailModal",
     components: {
         JDate,
-        JDictSelectTag,
+        JSearchSelectTag,
     },
     data() {
         return {
@@ -70,15 +70,15 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                title: { rules: [{ required: true, message: "请输入邮件标题!" }] },
-                descri: { rules: [{ required: true, message: "请输入邮件描述!" }] },
-                emailType: { rules: [{ required: true, message: "请输入1有奖励附件content不为空 2无奖励附件contents是null!" }] },
+                title: { rules: [{ required: true, message: "请输入标题!" }] },
+                descri: { rules: [{ required: true, message: "请输入描述!" }] },
+                emailType: { rules: [{ required: true, message: "请输入类型!" }] },
                 content: {},
-                validState: { rules: [{ required: true, message: "请输入1有效 0无效!" }] },
-                targetBodyType: { rules: [{ required: true, message: "请输入目标主体类型1玩家 2服务器!" }] },
-                targetBodyId: { rules: [{ required: true, message: "请输入目标主体id playerId serverId!" }] },
-                sendTime: { rules: [{ required: true, message: "请输入向目标主体发送的时间!" }] },
-                validStarTime: {},
+                validState: { rules: [{ required: true, message: "请输入状态!" }] },
+                targetBodyType: { rules: [{ required: true, message: "请输入目标类型!" }] },
+                targetBodyId: { rules: [{ required: true, message: "请输入目标主体!" }] },
+                sendTime: { rules: [{ required: true, message: "请输入生效时间!" }] },
+                validStarTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 validEndTime: {},
             },
             url: {
