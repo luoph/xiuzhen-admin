@@ -32,13 +32,13 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 	@Autowired
 	private IGameEmailService gameEmailService;
 
-    /**
+	/**
 	 * 分页列表查询
 	 *
 	 * @param gameEmail 数据实体
-     * @param pageNo 页码
-     * @param pageSize 分页大小
-     * @param req 请求
+	 * @param pageNo 页码
+	 * @param pageSize 分页大小
+	 * @param req 请求
 	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "游戏下发邮件-列表查询")
@@ -53,7 +53,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 		return Result.ok(pageList);
 	}
 
-    /**
+	/**
 	 * 添加
 	 *
 	 * @param gameEmail 数据实体
@@ -66,7 +66,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 		return Result.ok("添加成功！");
 	}
 
-    /**
+	/**
 	 * 编辑
 	 *
 	 * @param gameEmail 数据实体
@@ -79,7 +79,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 		return Result.ok("编辑成功!");
 	}
 
-    /**
+	/**
 	 * 通过id删除
 	 *
 	 * @param id 实体id
@@ -92,8 +92,8 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 		return Result.ok("删除成功!");
 	}
 
-    /**
-     *  批量删除
+	/**
+	 *  批量删除
 	 *
 	 * @param ids id列表，使用','分割的字符串
 	 * @return {@linkplain Result}
@@ -105,7 +105,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 		return Result.ok("批量删除成功！");
 	}
 
-    /**
+	/**
 	 * 通过id查询
 	 *
 	 * @param id 实体id
@@ -115,7 +115,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 	@GetMapping(value = "/queryById")
 	public Result<?> queryById(@RequestParam(name = "id") String id) {
 		GameEmail gameEmail = gameEmailService.getById(id);
-        if (gameEmail == null) {
+		if (gameEmail == null) {
 			return Result.error("未找到对应数据");
 		}
 		return Result.ok(gameEmail);
