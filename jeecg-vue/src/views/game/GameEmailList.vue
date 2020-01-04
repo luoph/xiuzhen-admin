@@ -4,37 +4,41 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="12" :sm="16">
-                <a-form-item label="邮件标题">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.title_begin"></a-input>
-                <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.title_end"></a-input>
+                    <a-col :md="6" :sm="8">
+                <a-form-item label="标题">
+                <a-input placeholder="请输入标题" v-model="queryParam.title"></a-input>
             </a-form-item>
-            </a-col>
-                <a-col :md="12" :sm="16">
-                <a-form-item label="1有效 0无效">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.validState_begin"></a-input>
-                <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.validState_end"></a-input>
-            </a-form-item>
-            </a-col>
-                <template v-if="toggleSearchStatus">
-                    <a-col :md="12" :sm="16">
-                    <a-form-item label="目标主体id playerId serverId">
-                    <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetBodyId_begin"></a-input>
-                    <span class="query-group-split-cust"></span>
-                    <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetBodyId_end"></a-input>
-                </a-form-item>
                 </a-col>
+                <a-col :md="6" :sm="8">
+                <a-form-item label="状态">
+                <a-input placeholder="请输入状态" v-model="queryParam.validState"></a-input>
+            </a-form-item>
+                </a-col>
+                <template v-if="toggleSearchStatus">
+                    <a-col :md="6" :sm="8">
+                    <a-form-item label="目标类型">
+                    <a-input placeholder="请输入目标类型" v-model="queryParam.targetBodyType"></a-input>
+                </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
+                    <a-form-item label="目标主体">
+                    <a-input placeholder="请输入目标主体" v-model="queryParam.targetBodyId"></a-input>
+                </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
+                    <a-form-item label="生效时间">
+                    <j-date placeholder="请选择生效时间" v-model="queryParam.sendTime"></j-date>
+                </a-form-item>
+                    </a-col>
                     <a-col :md="12" :sm="16">
-                    <a-form-item label="有效日期开始">
+                    <a-form-item label="开始时间">
                     <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validStarTime_begin"></j-date>
                     <span class="query-group-split-cust"></span>
                     <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validStarTime_end"></j-date>
                 </a-form-item>
                 </a-col>
                     <a-col :md="12" :sm="16">
-                    <a-form-item label="有效日期结束">
+                    <a-form-item label="结束时间">
                     <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validEndTime_begin"></j-date>
                     <span class="query-group-split-cust"></span>
                     <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validEndTime_end"></j-date>
@@ -151,27 +155,27 @@ export default {
                     }
                 },
                 {
-                    title: "邮件标题",
+                    title: "标题",
                     align: "center",
                     dataIndex: "title"
                 },
                 {
-                    title: "邮件描述",
+                    title: "描述",
                     align: "center",
                     dataIndex: "descri"
                 },
                 {
-                    title: "1有奖励附件content不为空 2无奖励附件contents是null",
+                    title: "类型",
                     align: "center",
                     dataIndex: "emailType"
                 },
                 {
-                    title: "附件内容",
+                    title: "附件",
                     align: "center",
                     dataIndex: "content"
                 },
                 {
-                    title: "1有效 0无效",
+                    title: "状态",
                     align: "center",
                     dataIndex: "validState",
                     customRender: (text) => {
@@ -182,17 +186,23 @@ export default {
                     }
                 },
                 {
-                    title: "目标主体类型1玩家 2服务器",
+                    title: "目标类型",
                     align: "center",
-                    dataIndex: "targetBodyType"
+                    dataIndex: "targetBodyType",
+                    customRender: (text) => {
+                        if (!text) {
+                            return "";
+                        }
+                        return filterMultiDictText(this.dictOptions["targetBodyType"], text + "");
+                    }
                 },
                 {
-                    title: "目标主体id playerId serverId",
+                    title: "目标主体",
                     align: "center",
                     dataIndex: "targetBodyId"
                 },
                 {
-                    title: "向目标主体发送的时间",
+                    title: "生效时间",
                     align: "center",
                     dataIndex: "sendTime",
                     customRender: function(text) {
@@ -200,7 +210,7 @@ export default {
                     }
                 },
                 {
-                    title: "有效日期开始",
+                    title: "开始时间",
                     align: "center",
                     dataIndex: "validStarTime",
                     customRender: function(text) {
@@ -208,7 +218,7 @@ export default {
                     }
                 },
                 {
-                    title: "有效日期结束",
+                    title: "结束时间",
                     align: "center",
                     dataIndex: "validEndTime",
                     customRender: function(text) {
@@ -256,7 +266,6 @@ export default {
                 importExcelUrl: "game/gameEmail/importExcel"
             },
             dictOptions: {
-                validState: [],
             }
         };
     },
@@ -270,6 +279,11 @@ export default {
             initDictOptions("").then((res) => {
                 if (res.success) {
                     this.$set(this.dictOptions, "validState", res.result);
+                }
+            })
+            initDictOptions("").then((res) => {
+                if (res.success) {
+                    this.$set(this.dictOptions, "targetBodyType", res.result);
                 }
             })
         }
