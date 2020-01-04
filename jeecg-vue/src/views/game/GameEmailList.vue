@@ -155,7 +155,7 @@ export default {
                 {
                     title: "描述",
                     align: "center",
-                    dataIndex: "descri"
+                    dataIndex: "remark"
                 },
                 {
                     title: "类型",
@@ -232,7 +232,7 @@ export default {
                     }
                 },
                 {
-                    title: "更新着",
+                    title: "更新者",
                     align: "center",
                     dataIndex: "updateBy"
                 },
