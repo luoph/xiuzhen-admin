@@ -14,6 +14,11 @@
                             <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="角色名称">
+                            <a-input placeholder="请输入角色名称" v-model="queryParam.name"></a-input>
+                        </a-form-item>
+                    </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
                             <a-form-item label="服务器id">
@@ -26,18 +31,8 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="角色名称">
-                                <a-input placeholder="请输入角色名称" v-model="queryParam.name"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
                             <a-form-item label="渠道">
                                 <a-input placeholder="请输入渠道" v-model="queryParam.ip"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="渠道">
-                                <a-input placeholder="请输入渠道" v-model="queryParam.channel"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -124,7 +119,7 @@
                 </template>
 
                 <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
+                    <a @click="handleEdit(record)">查看详情</a>
                     <!-- <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
