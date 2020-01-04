@@ -69,7 +69,7 @@ CREATE TABLE `game_channel` (
 DROP TABLE IF EXISTS `game_channel_server`;
 CREATE TABLE `game_channel_server` (
   `id` int(19) NOT NULL AUTO_INCREMENT COMMENT '自增主键',
-  `sever_id` int(19) NOT NULL COMMENT '服务器id',
+  `server_id` int(19) NOT NULL COMMENT '服务器id',
   `channel_id` varchar(50) NOT NULL COMMENT '渠道id',
   `del_flag` int(1) DEFAULT NULL COMMENT '删除状态',
   `create_by` varchar(32) DEFAULT NULL COMMENT '创建人',

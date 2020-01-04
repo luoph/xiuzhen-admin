@@ -17,7 +17,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
                             <a-form-item label="服务器id">
-                                <a-input placeholder="请输入服务器id" v-model="queryParam.severId"></a-input>
+                                <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -184,7 +184,7 @@ export default {
                 {
                     title: "服务器id",
                     align: "center",
-                    dataIndex: "severId"
+                    dataIndex: "serverId"
                 },
                 {
                     title: "出身id",

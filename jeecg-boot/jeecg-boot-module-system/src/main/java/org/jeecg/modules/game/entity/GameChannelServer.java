@@ -36,7 +36,7 @@ public class GameChannelServer extends BaseEntity {
      */
     @Excel(name = "服务器id", width = 15)
     @ApiModelProperty(value = "服务器id")
-    private java.lang.Integer severId;
+    private java.lang.Integer serverId;
     /**
      * 渠道id
      */
