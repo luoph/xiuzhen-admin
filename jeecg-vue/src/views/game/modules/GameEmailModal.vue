@@ -7,7 +7,7 @@
                     <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"></a-input>
                 </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['descri', validatorRules.descri]" placeholder="请输入描述"></a-input>
+                    <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入描述"></a-input>
                 </a-form-item>
                 <a-form-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['emailType', validatorRules.emailType]" placeholder="请输入类型" style="width: 100%" />
@@ -71,7 +71,7 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 title: { rules: [{ required: true, message: "请输入标题!" }] },
-                descri: { rules: [{ required: true, message: "请输入描述!" }] },
+                remark: { rules: [{ required: true, message: "请输入描述!" }] },
                 emailType: { rules: [{ required: true, message: "请输入类型!" }] },
                 content: {},
                 validState: { rules: [{ required: true, message: "请输入状态!" }] },
@@ -98,7 +98,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "title", "descri", "emailType", "content", "validState", "targetBodyType", "targetBodyId", "sendTime", "validStarTime", "validEndTime", "createBy", "createTime", "updateBy", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "title", "remark", "emailType", "content", "validState", "targetBodyType", "targetBodyId", "sendTime", "validStarTime", "validEndTime", "createBy", "createTime", "updateBy", "updateTime"));
             });
         },
         close() {
@@ -142,7 +142,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "title", "descri", "emailType", "content", "validState", "targetBodyType", "targetBodyId", "sendTime", "validStarTime", "validEndTime", "createBy", "createTime", "updateBy", "updateTime"));
+            this.form.setFieldsValue(pick(row, "title", "remark", "emailType", "content", "validState", "targetBodyType", "targetBodyId", "sendTime", "validStarTime", "validEndTime", "createBy", "createTime", "updateBy", "updateTime"));
         },
     }
 };
