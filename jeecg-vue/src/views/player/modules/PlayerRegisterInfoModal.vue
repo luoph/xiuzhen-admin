@@ -4,13 +4,13 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                     <a-form-item label="帐号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['account', validatorRules.account]" placeholder="请输入帐号"></a-input>
+                    <a-input :disabled="true" v-decorator="['account', validatorRules.account]" placeholder="请输入帐号"></a-input>
                 </a-form-item>
                 <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="出身id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['birthId', validatorRules.birthId]" placeholder="请输入出身id" style="width: 100%" />
@@ -60,7 +60,7 @@
             </a-form>
         </a-spin>
     <!-- </a-modal> -->
-        <a-button type="primary" @click="handleOk">确定</a-button>
+        <a-button type="primary" @click="handleCancel">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
     </a-drawer>
 </template>
