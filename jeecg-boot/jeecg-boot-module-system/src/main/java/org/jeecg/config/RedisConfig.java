@@ -22,8 +22,11 @@ import java.time.Duration;
 
 import static java.util.Collections.singletonMap;
 
+/**
+ * redis 配置
+ */
 @Configuration
-@EnableCaching // 开启缓存支持
+@EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Resource
