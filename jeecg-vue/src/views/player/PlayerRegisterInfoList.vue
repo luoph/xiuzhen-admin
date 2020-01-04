@@ -197,7 +197,7 @@ export default {
                     dataIndex: "name"
                 },
                 {
-                    title: "渠道",
+                    title: "注册ip",
                     align: "center",
                     dataIndex: "ip"
                 },

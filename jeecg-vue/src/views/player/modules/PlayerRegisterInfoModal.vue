@@ -18,8 +18,8 @@
                 <a-form-item label="角色名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入角色名称"></a-input>
                 </a-form-item>
-                <a-form-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['ip', validatorRules.ip]" placeholder="请输入渠道"></a-input>
+                <a-form-item label="IP" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['ip', validatorRules.ip]" placeholder="请输入IP"></a-input>
                 </a-form-item>
                 <a-form-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道"></a-input>
