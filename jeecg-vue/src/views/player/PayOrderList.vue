@@ -5,56 +5,51 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="帐号">
-                            <a-input placeholder="请输入帐号" v-model="queryParam.account"></a-input>
+                        <a-form-item label="己方单号">
+                            <a-input placeholder="请输入己方单号" v-model="queryParam.queryId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="玩家id">
-                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="角色名称">
-                            <a-input placeholder="请输入角色名称" v-model="queryParam.name"></a-input>
+                        <a-form-item label="平台方订单号">
+                            <a-input placeholder="请输入平台方订单号" v-model="queryParam.orderId"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="渠道key">
+                                <a-input placeholder="请输入渠道key" v-model="queryParam.channelKey"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="渠道id">
+                                <a-input placeholder="请输入渠道id" v-model="queryParam.channelId"></a-input>
+                            </a-form-item>
+                        </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="服务器id">
                                 <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="出身id">
-                                <a-input placeholder="请输入出身id" v-model="queryParam.birthId"></a-input>
+                            <a-form-item label="支付玩家id">
+                                <a-input placeholder="请输入支付玩家id" v-model="queryParam.playerId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="渠道">
-                                <a-input placeholder="请输入渠道" v-model="queryParam.ip"></a-input>
+                            <a-form-item label="商品id">
+                                <a-input placeholder="请输入商品id" v-model="queryParam.goodsId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="网络类型">
-                                <a-input placeholder="请输入网络类型" v-model="queryParam.network"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="version_name">
-                                <a-input placeholder="请输入version_name" v-model="queryParam.versionName"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="version_code">
-                                <a-input placeholder="请输入version_code" v-model="queryParam.versionCode"></a-input>
+                            <a-form-item label="订单状态">
+                                <a-input placeholder="请输入订单状态" v-model="queryParam.orderStatus"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :sm="16">
-                            <a-form-item label="创建日期">
-                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createDate_begin"></j-date>
+                            <a-form-item label="充值金额">
+                                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"></a-input>
                                 <span class="query-group-split-cust"></span>
-                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createDate_end"></j-date>
+                                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -75,7 +70,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <!-- <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button> -->
-            <a-button type="primary" icon="download" @click="handleExportXls('玩家注册信息')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('充值订单')">导出</a-button>
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload> -->
@@ -119,7 +114,7 @@
                 </template>
 
                 <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">查看详情</a>
+                    <a @click="handleEdit(record)">详情</a>
                     <!-- <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -135,25 +130,23 @@
             </a-table>
         </div>
 
-        <playerRegisterInfo-modal ref="modalForm" @ok="modalFormOk"></playerRegisterInfo-modal>
+        <payOrder-modal ref="modalForm" @ok="modalFormOk"></payOrder-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import PlayerRegisterInfoModal from "./modules/PlayerRegisterInfoModal";
-import JDate from "@/components/jeecg/JDate.vue";
+import PayOrderModal from "./modules/PayOrderModal";
 
 export default {
-    name: "PlayerRegisterInfoList",
+    name: "PayOrderList",
     mixins: [JeecgListMixin],
     components: {
-        JDate,
-        PlayerRegisterInfoModal
+        PayOrderModal
     },
     data() {
         return {
-            description: "玩家注册信息管理页面",
+            description: "充值订单管理页面",
             // 表头
             columns: [
                 {
@@ -167,14 +160,24 @@ export default {
                     }
                 },
                 {
-                    title: "帐号",
-                    align: "center",
-                    dataIndex: "account"
-                },
-                {
-                    title: "玩家id",
+                    title: "支付玩家id",
                     align: "center",
                     dataIndex: "playerId"
+                },
+                {
+                    title: "己方单号",
+                    align: "center",
+                    dataIndex: "queryId"
+                },
+                {
+                    title: "平台方订单号",
+                    align: "center",
+                    dataIndex: "orderId"
+                },
+                {
+                    title: "渠道id",
+                    align: "center",
+                    dataIndex: "channelId"
                 },
                 {
                     title: "服务器id",
@@ -182,79 +185,34 @@ export default {
                     dataIndex: "serverId"
                 },
                 {
-                    title: "出身id",
+                    title: "商品id",
                     align: "center",
-                    dataIndex: "birthId"
+                    dataIndex: "goodsId"
                 },
                 {
-                    title: "角色名称",
+                    title: "ip地址",
                     align: "center",
-                    dataIndex: "name"
+                    dataIndex: "remoteIp"
                 },
                 {
-                    title: "注册ip",
+                    title: "订单状态",
                     align: "center",
-                    dataIndex: "ip"
+                    dataIndex: "orderStatus"
                 },
                 {
-                    title: "渠道",
+                    title: "充值金额",
                     align: "center",
-                    dataIndex: "channel"
-                },
-                // {
-                //     title: "imei",
-                //     align: "center",
-                //     dataIndex: "imei"
-                // },
-                // {
-                //     title: "mac",
-                //     align: "center",
-                //     dataIndex: "mac"
-                // },
-                // {
-                //     title: "idfa",
-                //     align: "center",
-                //     dataIndex: "idfa"
-                // },
-                {
-                    title: "手机品牌",
-                    align: "center",
-                    dataIndex: "vendor"
+                    dataIndex: "payAmount"
                 },
                 {
-                    title: "手机型号",
+                    title: "充值货币",
                     align: "center",
-                    dataIndex: "model"
+                    dataIndex: "currency"
                 },
                 {
-                    title: "系统名字",
+                    title: "发货时间",
                     align: "center",
-                    dataIndex: "system"
-                },
-                {
-                    title: "系统版本",
-                    align: "center",
-                    dataIndex: "systemVersion"
-                },
-                {
-                    title: "网络类型",
-                    align: "center",
-                    dataIndex: "network"
-                },
-                {
-                    title: "版本名称",
-                    align: "center",
-                    dataIndex: "versionName"
-                },
-                {
-                    title: "版本号",
-                    align: "center",
-                    dataIndex: "versionCode"
-                },
-                {
-                    title: "平台",
-                    align: "center",
-                    dataIndex: "platform"
+                    dataIndex: "sendTime"
                 },
                 {
                     title: "创建时间",
@@ -269,8 +227,8 @@ export default {
                 }
             ],
             url: {
-                list: "player/playerRegisterInfo/list",
-                exportXlsUrl: "player/playerRegisterInfo/exportXls"
+                list: "player/payOrder/list",
+                exportXlsUrl: "player/payOrder/exportXls"
             },
             dictOptions: {}
         };
