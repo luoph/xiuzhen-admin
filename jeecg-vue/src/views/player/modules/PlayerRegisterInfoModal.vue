@@ -1,37 +1,37 @@
 <template>
     <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
-    <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+        <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="帐号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input :disabled="true" v-decorator="['account', validatorRules.account]" placeholder="请输入帐号"></a-input>
+                <a-form-item label="帐号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input :disabled="isEdit" v-decorator="['account', validatorRules.account]" placeholder="请输入帐号"></a-input>
                 </a-form-item>
                 <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
+                    <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
+                    <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="出身id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['birthId', validatorRules.birthId]" placeholder="请输入出身id" style="width: 100%" />
+                    <a-input-number :disabled="isEdit" v-decorator="['birthId', validatorRules.birthId]" placeholder="请输入出身id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="角色名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入角色名称"></a-input>
                 </a-form-item>
                 <a-form-item label="IP" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['ip', validatorRules.ip]" placeholder="请输入IP"></a-input>
+                    <a-input :disabled="isEdit" v-decorator="['ip', validatorRules.ip]" placeholder="请输入IP"></a-input>
                 </a-form-item>
                 <a-form-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道"></a-input>
+                    <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道"></a-input>
                 </a-form-item>
                 <a-form-item label="imei" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['imei', validatorRules.imei]" placeholder="请输入imei"></a-input>
+                    <a-input :disabled="isEdit" v-decorator="['imei', validatorRules.imei]" placeholder="请输入imei"></a-input>
                 </a-form-item>
                 <a-form-item label="mac" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['mac', validatorRules.mac]" placeholder="请输入mac"></a-input>
+                    <a-input :disabled="isEdit" v-decorator="['mac', validatorRules.mac]" placeholder="请输入mac"></a-input>
                 </a-form-item>
                 <a-form-item label="idfa" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['idfa', validatorRules.idfa]" placeholder="请输入idfa"></a-input>
+                    <a-input :disabled="isEdit" v-decorator="['idfa', validatorRules.idfa]" placeholder="请输入idfa"></a-input>
                 </a-form-item>
                 <a-form-item label="手机品牌" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['vendor', validatorRules.vendor]" placeholder="请输入手机品牌"></a-input>
@@ -59,7 +59,7 @@
                 </a-form-item>
             </a-form>
         </a-spin>
-    <!-- </a-modal> -->
+        <!-- </a-modal> -->
         <a-button type="primary" @click="handleCancel">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
     </a-drawer>
@@ -71,14 +71,14 @@ import pick from "lodash.pick";
 
 export default {
     name: "PlayerRegisterInfoModal",
-    components: {
-    },
+    components: {},
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
             width: 800,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -107,7 +107,7 @@ export default {
                 network: {},
                 versionName: {},
                 versionCode: {},
-                platform: {},
+                platform: {}
             },
             url: {
                 add: "player/playerRegisterInfo/add",
@@ -115,8 +115,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -125,8 +124,32 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
+            this.isEdit = this.model.id != null;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "account", "playerId", "serverId", "birthId", "name", "ip", "channel", "imei", "mac", "idfa", "vendor", "model", "system", "systemVersion", "network", "versionName", "versionCode", "platform", "createDate"));
+                this.form.setFieldsValue(
+                    pick(
+                        this.model,
+                        "account",
+                        "playerId",
+                        "serverId",
+                        "birthId",
+                        "name",
+                        "ip",
+                        "channel",
+                        "imei",
+                        "mac",
+                        "idfa",
+                        "vendor",
+                        "model",
+                        "system",
+                        "systemVersion",
+                        "network",
+                        "versionName",
+                        "versionCode",
+                        "platform",
+                        "createDate"
+                    )
+                );
             });
         },
         close() {
@@ -170,8 +193,31 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "account", "playerId", "serverId", "birthId", "name", "ip", "channel", "imei", "mac", "idfa", "vendor", "model", "system", "systemVersion", "network", "versionName", "versionCode", "platform", "createDate"));
-        },
+            this.form.setFieldsValue(
+                pick(
+                    row,
+                    "account",
+                    "playerId",
+                    "serverId",
+                    "birthId",
+                    "name",
+                    "ip",
+                    "channel",
+                    "imei",
+                    "mac",
+                    "idfa",
+                    "vendor",
+                    "model",
+                    "system",
+                    "systemVersion",
+                    "network",
+                    "versionName",
+                    "versionCode",
+                    "platform",
+                    "createDate"
+                )
+            );
+        }
     }
 };
 </script>
