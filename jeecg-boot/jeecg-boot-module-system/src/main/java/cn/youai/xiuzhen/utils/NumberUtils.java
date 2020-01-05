@@ -1,5 +1,8 @@
 package cn.youai.xiuzhen.utils;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,10 +11,6 @@ import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-
-import lombok.extern.slf4j.Slf4j;
 
 
 /**

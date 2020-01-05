@@ -625,14 +625,14 @@ public enum ConfigDataEnum {
      * 红点显示
      */
     RED_POINT("red_point", "cn.youai.xiuzhen.entity.conf.ConfRedPoint", 5100),
-	
-	/**
-	 * 引导
-	 */
-	GUIDE_STEP("guide_step", "cn.youai.xiuzhen.entity.conf.ConfGuideStep", 5200),
-	GUIDE_ITEM("guide_item", "cn.youai.xiuzhen.entity.pojo.FallItem", 5201),
-	GUIDE_REWARD("guide_reward", "cn.youai.xiuzhen.entity.pojo.Reward", 5202),
-	
+
+    /**
+     * 引导
+     */
+    GUIDE_STEP("guide_step", "cn.youai.xiuzhen.entity.conf.ConfGuideStep", 5200),
+    GUIDE_ITEM("guide_item", "cn.youai.xiuzhen.entity.pojo.FallItem", 5201),
+    GUIDE_REWARD("guide_reward", "cn.youai.xiuzhen.entity.pojo.Reward", 5202),
+
 //    end
     ;
 
