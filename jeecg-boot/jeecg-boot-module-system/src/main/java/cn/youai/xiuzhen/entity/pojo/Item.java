@@ -1,4 +1,4 @@
-package org.jeecg.modules.game.model;
+package cn.youai.xiuzhen.entity.pojo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.googlecode.cqengine.ConcurrentIndexedCollection;

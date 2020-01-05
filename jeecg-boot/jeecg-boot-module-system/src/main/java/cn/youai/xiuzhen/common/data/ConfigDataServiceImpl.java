@@ -65,7 +65,7 @@ public class ConfigDataServiceImpl implements ConfigDataService {
         for (ConfigDataEnum value : ConfigDataEnum.values()) {
             ClassPathResource classPathResource = new ClassPathResource(CONFIG_FOLDER + value.getTableName() + ".json");
             if (!classPathResource.exists()) {
-                log.warn("{}.json not exists", value.getTableName());
+//                log.warn("{}.json not exists", value.getTableName());
                 continue;
             }
 

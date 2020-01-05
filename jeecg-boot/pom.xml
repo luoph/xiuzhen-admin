@@ -51,6 +51,8 @@
         <httpclient.version>4.5.10</httpclient.version>
         <sentry.version>1.7.29</sentry.version>
         <okhttp3.version>3.14.4</okhttp3.version>
+        <cqengine.version>3.4.0</cqengine.version>
+        <concurrentlinkedhashmap.lru.version>1.4.2</concurrentlinkedhashmap.lru.version>
     </properties>
 
     <dependencies>
@@ -318,6 +320,32 @@
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>${aliyun.oss.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.cqengine</groupId>
+            <artifactId>cqengine</artifactId>
+            <version>${cqengine.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>javassist</artifactId>
+                    <groupId>org.javassist</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>objenesis</artifactId>
+                    <groupId>org.objenesis</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>sqlite-jdbc</artifactId>
+                    <groupId>org.xerial</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.concurrentlinkedhashmap</groupId>
+            <artifactId>concurrentlinkedhashmap-lru</artifactId>
+            <version>${concurrentlinkedhashmap.lru.version}</version>
         </dependency>
 
     </dependencies>

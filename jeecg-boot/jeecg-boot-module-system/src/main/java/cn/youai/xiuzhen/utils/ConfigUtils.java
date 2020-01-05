@@ -1,8 +1,5 @@
 package cn.youai.xiuzhen.utils;
 
-import cn.youai.xiuzhen.common.enums.RealmLevel;
-import cn.youai.xiuzhen.common.enums.RealmSubLevel;
-import cn.youai.xiuzhen.thirdparty.astar.Coordinate;
 import cn.youai.xiuzhen.entity.common.WeightValuable;
 import com.alibaba.fastjson.JSONArray;
 import lombok.extern.slf4j.Slf4j;
@@ -77,20 +74,6 @@ public final class ConfigUtils {
     }
 
     /**
-     * 解析坐标
-     *
-     * @param coord
-     * @return
-     */
-    public static Coordinate parseCoord(String coord) {
-        coord = StringUtils.substringBetween(coord, JSON_ARRAY_BRACKET_START, JSON_ARRAY_BRACKET_END);
-        String[] array = coord.split(",");
-        byte x = Byte.parseByte(array[0].trim());
-        byte y = Byte.parseByte(array[1].trim());
-        return new Coordinate((byte) (x - 1), (byte) (y - 1));
-    }
-
-    /**
      * 判断是否json数组
      *
      * @param input
@@ -128,17 +111,6 @@ public final class ConfigUtils {
         }
 
         return itemList.get(0);
-    }
-
-    /**
-     * 获取修为等级描述
-     *
-     * @param scale 阶数
-     * @param level 等级
-     * @return
-     */
-    public static String getRealmGrade(int scale, int level) {
-        return RealmLevel.getName(scale) + RealmSubLevel.getName(level);
     }
 
     public static boolean contains(JSONArray jsonArray, Integer id) {

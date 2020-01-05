@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 
 @Slf4j
 @EnableSwagger2
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.jeecg", "cn.youai.xiuzhen"})
 public class Application {
 
     public static void main(String[] args) throws UnknownHostException {
