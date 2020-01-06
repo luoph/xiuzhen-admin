@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.okhttp.OkHttpHelper;
@@ -20,8 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -71,7 +68,7 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameSetting gameSetting) {
         gameSettingService.save(gameSetting);
-        notifyGameSetting(gameSetting.getDictKey());
+        notifyGameSetting();
         return Result.ok("添加成功！");
     }
 
@@ -85,7 +82,7 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameSetting gameSetting) {
         gameSettingService.updateById(gameSetting);
-        notifyGameSetting(gameSetting.getDictKey());
+        notifyGameSetting();
         return Result.ok("编辑成功!");
     }
 
@@ -98,10 +95,8 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @AutoLog(value = "游戏设置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        GameSetting gameSetting = gameSettingService.getById(id);
         gameSettingService.removeById(id);
-        String key = gameSetting != null ? gameSetting.getDictKey() : null;
-        notifyGameSetting(key);
+        notifyGameSetting();
         return Result.ok("删除成功!");
     }
 
@@ -115,7 +110,7 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.gameSettingService.removeByIds(Arrays.asList(ids.split(",")));
-        notifyGameSetting(null);
+        notifyGameSetting();
         return Result.ok("批量删除成功！");
     }
 
@@ -158,11 +153,7 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
         return super.importExcel(request, response, GameSetting.class);
     }
 
-    private void notifyGameSetting(String key) {
-        Map<String, String> params = new HashMap<>();
-        if (StringUtils.isNotEmpty(key)) {
-            params.put("key", key);
-        }
-        OkHttpHelper.get(gameCenterUrl + "/setting/update", params);
+    private void notifyGameSetting() {
+        OkHttpHelper.get(gameCenterUrl + "/setting/update");
     }
 }
