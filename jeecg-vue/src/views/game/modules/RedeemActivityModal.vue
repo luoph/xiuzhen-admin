@@ -16,19 +16,19 @@
                     <a-input-number v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="限制渠道id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['channelIds', validatorRules.channelIds]" placeholder="请输入限制渠道id"></a-input>
+                    <a-textarea v-decorator="['channelIds', validatorRules.channelIds]" placeholder="请输入限制渠道id"></a-textarea>
                 </a-form-item>
                 <a-form-item label="限制区服id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入限制区服id"></a-input>
+                    <a-textarea v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入限制区服id"></a-textarea>
                 </a-form-item>
                 <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['status', validatorRules.status]" placeholder="请输入活动状态" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励"></a-input>
+                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励"></a-textarea>
                 </a-form-item>
                 <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
+                    <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-textarea>
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />

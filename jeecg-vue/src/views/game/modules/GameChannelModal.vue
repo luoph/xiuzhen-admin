@@ -31,7 +31,7 @@
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['versionUpdateTime', validatorRules.versionUpdateTime]" />
                 </a-form-item>
                 <a-form-item label="IP白名单" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['ipWhitelist', validatorRules.ipWhitelist]" placeholder="请输入IP白名单(使用半角,分割)"></a-input>
+                    <a-textarea v-decorator="['ipWhitelist', validatorRules.ipWhitelist]" placeholder="请输入IP白名单(使用半角,分割)"></a-textarea>
                 </a-form-item>
                 <a-form-item label="扩展字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['extra', validatorRules.extra]" placeholder="请输入扩展字段"></a-input>
