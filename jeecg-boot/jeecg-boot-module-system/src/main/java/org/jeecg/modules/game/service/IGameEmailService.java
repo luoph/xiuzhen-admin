@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service;
 
+import cn.youai.commons.model.Response;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameEmail;
 
@@ -11,6 +12,11 @@ import org.jeecg.modules.game.entity.GameEmail;
  */
 public interface IGameEmailService extends IService<GameEmail> {
 
-    @Override
-    boolean save(GameEmail gameEmail);
+    /**
+     * 存储邮件
+     *
+     * @param gameEmail
+     * @return
+     */
+    Response saveEmail(GameEmail gameEmail);
 }

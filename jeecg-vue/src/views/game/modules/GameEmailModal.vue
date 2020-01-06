@@ -44,7 +44,6 @@
                         style="width: 100%"
                     >
                         <a-radio-button :value="1">有效</a-radio-button>
-                        <a-radio-button :value="2">无效</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
                 <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
