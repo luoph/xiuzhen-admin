@@ -4,44 +4,88 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
-                <a-form-item label="标题">
-                <a-input placeholder="请输入标题" v-model="queryParam.title"></a-input>
-            </a-form-item>
-                </a-col>
-                <a-col :md="6" :sm="8">
-                <a-form-item label="状态">
-                <a-input placeholder="请输入状态" v-model="queryParam.validState"></a-input>
-            </a-form-item>
-                </a-col>
-                <template v-if="toggleSearchStatus">
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="目标类型">
-                    <a-input placeholder="请输入目标类型" v-model="queryParam.targetBodyType"></a-input>
-                </a-form-item>
+                    <a-col :md="4" :sm="6">
+                        <a-form-item label="标题">
+                            <a-input placeholder="请输入标题" v-model="queryParam.title"></a-input>
+                        </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="目标主体">
-                    <a-input placeholder="请输入目标主体" v-model="queryParam.targetBodyId"></a-input>
-                </a-form-item>
+                    <a-col :md="3" :sm="5">
+                        <a-form-item label="状态">
+                            <a-select placeholder="邮件状态" v-model="queryParam.validState"
+                             initialValue="0">
+                                <a-select-option :value="0">--请选择--</a-select-option>
+                                <a-select-option :value="1">有效</a-select-option>
+                                <a-select-option :value="2">无效</a-select-option>
+                            </a-select>
+                        </a-form-item>
                     </a-col>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="3" :sm="5">
+                            <a-form-item label="类型">
+                                <a-select
+                                    ref="targetSelector"
+                                    v-model="queryParam.targetBodyType"
+                                    defaultValue="0"
+                                    @change="selectTarget"
+                                     initialValue="0"
+                                >
+                                    <a-select-option :value="0">---请选择目标---</a-select-option>
+                                    <a-select-option :value="1">全服</a-select-option>
+                                    <a-select-option :value="2">玩家</a-select-option>
+                                </a-select>
+                            </a-form-item>
+                        </a-col>
+                        <a-col v-if="serverType" :md="6" :sm="8">
+                            <a-form-item label="服务器">
+                                <a-select
+                                ref="serverSelector"
+                                placeholder="请选择服务器ID"
+                                v-model="queryParam.targetBodyId"
+                                :initialValue="serverList && serverList.length > 0 ? serverList[0].name : null"
+                            >
+                             <a-select-option :value="0">---请选择目标---</a-select-option>
+                                <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
+                            </a-select>
+                            </a-form-item>
+                        </a-col>
+                        <a-col v-if="playerType" :md="6" :sm="8">
+                            <a-form-item label="玩家账号">
+                                <a-input placeholder="请输入玩家ID" v-model="queryParam.targetBodyId"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="生效时间">
+                                <j-date placeholder="请选择生效时间" v-model="queryParam.sendTime"></j-date>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="时间">
+                                <j-date
+                                    placeholder="请选择开始日期"
+                                    class="query-group-cust"
+                                    v-model="queryParam.validStarTime_begin"
+                                ></j-date>
+                                <span class="query-group-cust"></span>
+                                <j-date
+                                    placeholder="请选择结束日期"
+                                    class="query-group-cust"
+                                    v-model="queryParam.validStarTime_end"
+                                ></j-date>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
-                    <a-form-item label="生效时间">
-                    <j-date placeholder="请选择生效时间" v-model="queryParam.sendTime"></j-date>
-                </a-form-item>
-                    </a-col>
-                    <a-col :md="12" :sm="16">
-                    <a-form-item label="开始时间">
-                    <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validStarTime_begin"></j-date>
-                    <span class="query-group-split-cust"></span>
-                    <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validStarTime_end"></j-date>
-                </a-form-item>
-                </a-col>
-        </template>
-                    <a-col :md="6" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                        <span
+                            style="float: left;overflow: hidden;"
+                            class="table-page-search-submitButtons"
+                        >
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+                            <a-button
+                                type="primary"
+                                icon="reload"
+                                style="margin-left: 8px"
+                                @click="searchReset"
+                            >重置</a-button>
                             <a style="margin-left: 8px" @click="handleToggleSearch">
                                 {{ toggleSearchStatus ? "收起" : "展开" }}
                                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
@@ -55,25 +99,9 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('游戏下发邮件')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
         </div>
 
-        <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -85,33 +113,34 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img
+                        v-else
+                        :src="getImgView(text)"
+                        height="25px"
+                        alt="图片不存在"
+                        style="max-width:80px;font-size: 12px;font-style: italic;"
+                    />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+                    <a-button
+                        v-else
+                        :ghost="true"
+                        type="primary"
+                        icon="download"
+                        size="small"
+                        @click="uploadFile(text)"
+                    >下载</a-button>
                 </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
-                    <a-divider type="vertical" />
-                    <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown>
                 </span>
             </a-table>
         </div>
@@ -124,17 +153,24 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameEmailModal from "./modules/GameEmailModal";
 import JDate from "@/components/jeecg/JDate.vue";
+import { getAction } from "@/api/manage";
 
 export default {
     name: "GameEmailList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        GameEmailModal
+        GameEmailModal,
     },
     data() {
         return {
             description: "游戏下发邮件管理页面",
+            serverList: [],
+            queryParam:{
+                targetBodyId:0,
+                validState:0,
+                targetBodyType:0,
+            },
             // 表头
             columns: [
                 {
@@ -170,24 +206,12 @@ export default {
                 {
                     title: "状态",
                     align: "center",
-                    dataIndex: "validState",
-                    customRender: (text) => {
-                        if (!text) {
-                            return "";
-                        }
-                        return filterMultiDictText(this.dictOptions["validState"], text + "");
-                    }
+                    dataIndex: "validState"
                 },
                 {
                     title: "目标类型",
                     align: "center",
-                    dataIndex: "targetBodyType",
-                    customRender: (text) => {
-                        if (!text) {
-                            return "";
-                        }
-                        return filterMultiDictText(this.dictOptions["targetBodyType"], text + "");
-                    }
+                    dataIndex: "targetBodyType"
                 },
                 {
                     title: "目标主体",
@@ -199,7 +223,7 @@ export default {
                     align: "center",
                     dataIndex: "sendTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -207,7 +231,7 @@ export default {
                     align: "center",
                     dataIndex: "validStarTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -215,7 +239,7 @@ export default {
                     align: "center",
                     dataIndex: "validEndTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -228,7 +252,7 @@ export default {
                     align: "center",
                     dataIndex: "createTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -241,7 +265,7 @@ export default {
                     align: "center",
                     dataIndex: "updateTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -251,15 +275,13 @@ export default {
                     scopedSlots: { customRender: "action" }
                 }
             ],
+            serverType: false,
+            playerType: false,
             url: {
                 list: "game/gameEmail/list",
-                delete: "game/gameEmail/delete",
-                deleteBatch: "game/gameEmail/deleteBatch",
-                exportXlsUrl: "game/gameEmail/exportXls",
-                importExcelUrl: "game/gameEmail/importExcel"
+                serverListUrl: "game/gameServer/list"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -267,17 +289,29 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
+    mounted(){
+        this.getServerList();
+    },
     methods: {
-        initDictConfig() {
-            initDictOptions("").then((res) => {
-                if (res.success) {
-                    this.$set(this.dictOptions, "validState", res.result);
-                }
-            })
-            initDictOptions("").then((res) => {
-                if (res.success) {
-                    this.$set(this.dictOptions, "targetBodyType", res.result);
-                }
+        initDictConfig() {},
+        selectTarget(target) {
+            if (`${target}` == 1) {
+                this.serverType = true;
+                this.playerType = false;
+                this.getServerList();
+                this.queryParam.targetBodyId=0;
+            } else if (`${target}` == 2) {
+                this.serverType = false;
+                this.playerType = true;
+                this.queryParam.targetBodyId="";
+            } else {
+                this.serverType = false;
+                this.playerType = false;
+            }
+        },
+        getServerList:function(){
+            getAction(this.url.serverListUrl).then(res=>{
+                this.serverList = res.result.records;
             })
         }
     }
