@@ -184,10 +184,7 @@ export default {
                 {
                     title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    dataIndex: "createTime"
                 },
                 {
                     title: "操作",
