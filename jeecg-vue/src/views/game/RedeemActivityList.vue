@@ -133,6 +133,11 @@ export default {
                     }
                 },
                 {
+                    title: "活动Id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "激活码名称",
                     align: "center",
                     dataIndex: "name"
