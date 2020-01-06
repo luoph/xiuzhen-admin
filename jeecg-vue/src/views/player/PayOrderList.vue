@@ -200,7 +200,7 @@ export default {
                     dataIndex: "orderStatus"
                 },
                 {
-                    title: "金额",
+                    title: "订单金额",
                     align: "center",
                     dataIndex: "realAmount"
                 },
