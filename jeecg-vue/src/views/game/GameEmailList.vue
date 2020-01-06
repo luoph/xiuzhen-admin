@@ -137,9 +137,6 @@
                     >下载</a-button>
                 </template>
 
-                <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
-                </span>
             </a-table>
         </div>
 
