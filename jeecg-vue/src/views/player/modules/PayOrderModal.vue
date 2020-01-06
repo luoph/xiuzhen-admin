@@ -30,8 +30,8 @@
                 <a-form-item label="订单状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isEdit" v-decorator="['orderStatus', validatorRules.orderStatus]" placeholder="请输入订单状态" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="充值金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['payAmount', validatorRules.payAmount]" placeholder="请输入充值金额" style="width: 100%" />
+                <a-form-item label="金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['realAmount', validatorRules.realAmount]" placeholder="请输入充值金额" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="extra" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isEdit" v-decorator="['extra', validatorRules.extra]" placeholder="请输入extra" style="width: 100%" />
@@ -131,7 +131,7 @@ export default {
                 goodsId: {},
                 remoteIp: { rules: [{ required: true, message: "请输入ip地址!" }] },
                 orderStatus: { rules: [{ required: true, message: "请输入订单状态!" }] },
-                payAmount: { rules: [{ required: true, message: "请输入充值金额!" }] },
+                realAmount: { rules: [{ required: true, message: "请输入充值金额!" }] },
                 custom: {},
                 extra: {},
                 currency: {},
@@ -169,7 +169,7 @@ export default {
                         "goodsId",
                         "remoteIp",
                         "orderStatus",
-                        "payAmount",
+                        "realAmount",
                         "custom",
                         "extra",
                         "currency",
@@ -234,7 +234,7 @@ export default {
                     "goodsId",
                     "remoteIp",
                     "orderStatus",
-                    "payAmount",
+                    "realAmount",
                     "custom",
                     "extra",
                     "currency",

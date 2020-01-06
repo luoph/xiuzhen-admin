@@ -93,6 +93,12 @@ public class PayOrder implements Serializable {
     private java.math.BigDecimal payAmount;
 
     /**
+     * 实际金额
+     */
+    @Excel(name = "实际金额", width = 15)
+    private java.math.BigDecimal realAmount;
+
+    /**
      * 备注
      */
     @Excel(name = "备注", width = 15)

@@ -46,10 +46,10 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :sm="16">
-                            <a-form-item label="充值金额">
-                                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"></a-input>
+                            <a-form-item label="金额">
+                                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.realAmount_begin"></a-input>
                                 <span class="query-group-split-cust"></span>
-                                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end"></a-input>
+                                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.realAmount_end"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -200,9 +200,9 @@ export default {
                     dataIndex: "orderStatus"
                 },
                 {
-                    title: "充值金额",
+                    title: "金额",
                     align: "center",
-                    dataIndex: "payAmount"
+                    dataIndex: "realAmount"
                 },
                 {
                     title: "充值货币",
