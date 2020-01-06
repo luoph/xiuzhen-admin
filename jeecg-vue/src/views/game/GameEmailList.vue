@@ -12,8 +12,8 @@
                     <a-col :md="3" :sm="5">
                         <a-form-item label="状态">
                             <a-select placeholder="邮件状态" v-model="queryParam.validState"
-                             initialValue="0">
-                                <a-select-option :value="0">--请选择--</a-select-option>
+                           >
+                                <a-select-option value="">--请选择--</a-select-option>
                                 <a-select-option :value="1">有效</a-select-option>
                                 <a-select-option :value="2">无效</a-select-option>
                             </a-select>
@@ -25,13 +25,11 @@
                                 <a-select
                                     ref="targetSelector"
                                     v-model="queryParam.targetBodyType"
-                                    defaultValue="0"
                                     @change="selectTarget"
-                                     initialValue="0"
                                 >
-                                    <a-select-option :value="0">---请选择目标---</a-select-option>
-                                    <a-select-option :value="1">全服</a-select-option>
-                                    <a-select-option :value="2">玩家</a-select-option>
+                                    <a-select-option value="">---请选择目标---</a-select-option>
+                                    <a-select-option :value="1">玩家</a-select-option>
+                                    <a-select-option :value="2">全服</a-select-option>
                                 </a-select>
                             </a-form-item>
                         </a-col>
@@ -43,7 +41,7 @@
                                 v-model="queryParam.targetBodyId"
                                 :initialValue="serverList && serverList.length > 0 ? serverList[0].name : null"
                             >
-                             <a-select-option :value="0">---请选择目标---</a-select-option>
+                             <a-select-option value="">---请选择目标---</a-select-option>
                                 <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
                             </a-select>
                             </a-form-item>
@@ -167,9 +165,9 @@ export default {
             description: "游戏下发邮件管理页面",
             serverList: [],
             queryParam:{
-                targetBodyId:0,
-                validState:0,
-                targetBodyType:0,
+                targetBodyId:"",
+                validState:"",
+                targetBodyType:"",
             },
             // 表头
             columns: [
@@ -296,14 +294,14 @@ export default {
         initDictConfig() {},
         selectTarget(target) {
             if (`${target}` == 1) {
+                this.serverType = false;
+                this.playerType = true;
+                this.queryParam.targetBodyId="";
+            } else if (`${target}` == 2) {
                 this.serverType = true;
                 this.playerType = false;
                 this.getServerList();
                 this.queryParam.targetBodyId=0;
-            } else if (`${target}` == 2) {
-                this.serverType = false;
-                this.playerType = true;
-                this.queryParam.targetBodyId="";
             } else {
                 this.serverType = false;
                 this.playerType = false;
