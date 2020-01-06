@@ -11,4 +11,6 @@ import org.jeecg.modules.game.entity.GameEmail;
  */
 public interface IGameEmailService extends IService<GameEmail> {
 
+    @Override
+    boolean save(GameEmail gameEmail);
 }
