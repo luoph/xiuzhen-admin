@@ -262,12 +262,13 @@ export default {
             if (e.target.value == 1) {
                 this.serverType = false;
                 this.playerType = true;
-               
+                this.validatorRules.targetBodyId="";
             } else if (e.target.value == 2) {
                 this.serverType = true;
                 this.playerType = false;
                 this.getServerList();
             }
+            
         },
         contentType(e){
             if (e.target.value == 1) {

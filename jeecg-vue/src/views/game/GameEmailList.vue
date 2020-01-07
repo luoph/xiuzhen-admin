@@ -208,12 +208,6 @@ export default {
                     customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
-                },
-                {
-                    title: "操作",
-                    dataIndex: "action",
-                    align: "center",
-                    scopedSlots: { customRender: "action" }
                 }
             ],
             serverType: false,
