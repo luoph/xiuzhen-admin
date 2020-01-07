@@ -64,6 +64,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @AutoLog(value = "游戏下发邮件-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameEmail gameEmail) {
+        log.info("gameEmail:{}", gameEmail.toString());
         Response response = gameEmailService.saveEmail(gameEmail);
         if (response.getCode() == ErrorCode.SUCCESS.getCode()) {
             return Result.ok("添加成功！");
