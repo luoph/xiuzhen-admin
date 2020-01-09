@@ -47,7 +47,14 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="订单状态">
-                                <a-input placeholder="请输入订单状态" v-model="queryParam.orderStatus"></a-input>
+                                <a-select v-model="queryParam.orderStatus" placeholder="请选择订单状态">
+                                    <a-select-option value="">请选择订单状态</a-select-option>
+                                    <a-select-option value="0">待支付</a-select-option>
+                                    <a-select-option value="1">已支付</a-select-option>
+                                    <a-select-option value="2">已转发</a-select-option>
+                                    <a-select-option value="3">发放中</a-select-option>
+                                    <a-select-option value="4">已发放</a-select-option>
+                                </a-select>
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :sm="16">
