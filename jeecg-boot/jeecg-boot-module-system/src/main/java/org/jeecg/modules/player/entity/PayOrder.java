@@ -82,7 +82,7 @@ public class PayOrder implements Serializable {
 
     /**
      * 订单状态
-     * 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放
+     * 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-已发放
      */
     @Excel(name = "订单状态", width = 15)
     @Dict(dicCode = "order_status")

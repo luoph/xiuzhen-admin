@@ -27,8 +27,14 @@
                 <a-form-item label="ip地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]" placeholder="请输入ip地址"></a-input>
                 </a-form-item>
-                <a-form-item label="订单状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['orderStatus', validatorRules.orderStatus]" placeholder="请输入订单状态" style="width: 100%" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="订单状态">
+                    <a-select :disabled="isEdit" placeholder="请选择订单状态" v-decorator="['orderStatus', validatorRules.orderStatus]">
+                        <a-select-option value="0">待支付</a-select-option>
+                        <a-select-option value="1">已支付</a-select-option>
+                        <a-select-option value="2">已转发</a-select-option>
+                        <a-select-option value="3">发放中</a-select-option>
+                        <a-select-option value="4">已发放</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isEdit" v-decorator="['realAmount', validatorRules.realAmount]" placeholder="请输入充值金额" style="width: 100%" />
@@ -130,7 +136,7 @@ export default {
                 playerId: { rules: [{ required: true, message: "请输入玩家id!" }] },
                 goodsId: {},
                 remoteIp: { rules: [{ required: true, message: "请输入ip地址!" }] },
-                orderStatus: { rules: [{ required: true, message: "请输入订单状态!" }] },
+                orderStatus: { rules: [{ required: true, message: "请选择订单状态!" }] },
                 realAmount: { rules: [{ required: true, message: "请输入充值金额!" }] },
                 custom: {},
                 extra: {},
