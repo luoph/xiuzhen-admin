@@ -21,8 +21,8 @@
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="服务器id">
-                                <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
+                            <a-form-item label="区服Id">
+                                <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -35,26 +35,19 @@
                                 <a-input placeholder="请输入渠道" v-model="queryParam.ip"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="网络类型">
-                                <a-input placeholder="请输入网络类型" v-model="queryParam.network"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
+                        <!-- <a-col :md="6" :sm="8">
                             <a-form-item label="version_name">
                                 <a-input placeholder="请输入version_name" v-model="queryParam.versionName"></a-input>
                             </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
+                        </a-col> -->
+                        <!-- <a-col :md="6" :sm="8">
                             <a-form-item label="version_code">
                                 <a-input placeholder="请输入version_code" v-model="queryParam.versionCode"></a-input>
                             </a-form-item>
-                        </a-col>
-                        <a-col :md="12" :sm="16">
-                            <a-form-item label="创建日期">
-                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createDate_begin"></j-date>
-                                <span class="query-group-split-cust"></span>
-                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createDate_end"></j-date>
+                        </a-col> -->
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="创建时间">
+                                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                             </a-form-item>
                         </a-col>
                     </template>
@@ -143,6 +136,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import PlayerRegisterInfoModal from "./modules/PlayerRegisterInfoModal";
 import JDate from "@/components/jeecg/JDate.vue";
+import { filterObj } from "@/utils/util";
 
 export default {
     name: "PlayerRegisterInfoList",
@@ -177,7 +171,7 @@ export default {
                     dataIndex: "playerId"
                 },
                 {
-                    title: "服务器id",
+                    title: "区服Id",
                     align: "center",
                     dataIndex: "serverId"
                 },
@@ -251,11 +245,11 @@ export default {
                     align: "center",
                     dataIndex: "versionCode"
                 },
-                {
-                    title: "平台",
-                    align: "center",
-                    dataIndex: "platform"
-                },
+                // {
+                //     title: "平台",
+                //     align: "center",
+                //     dataIndex: "platform"
+                // },
                 {
                     title: "创建时间",
                     align: "center",
@@ -281,7 +275,24 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        getQueryParams() {
+            console.log(this.queryParam.createTimeRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.createTimeRange;
+            return filterObj(param);
+        },
+        onDateChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.createTime_begin = dateString[0];
+            this.queryParam.createTime_end = dateString[1];
+        },
+        onDateOk(value) {
+            console.log(value);
+        }
     }
 };
 </script>

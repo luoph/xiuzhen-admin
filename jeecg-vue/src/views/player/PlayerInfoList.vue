@@ -5,10 +5,10 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="服务器id">
+                        <a-form-item label="区服Id">
                             <a-select
                                 ref="serverSelector"
-                                placeholder="请选择服务器id"
+                                placeholder="请选择区服Id"
                                 v-model="queryParam.serverId"
                                 :initialValue="serverList && serverList.length > 0 ? serverList[0].name : null"
                             >

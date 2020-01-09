@@ -15,8 +15,8 @@
                 <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isEdit" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
+                <a-form-item label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="兑换ip" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]" placeholder="请输入兑换ip"></a-input>
@@ -67,7 +67,7 @@ export default {
                 channel: { rules: [{ required: true, message: "请输入渠道编码!" }] },
                 playerId: { rules: [{ required: true, message: "请输入玩家id!" }] },
                 groupId: {},
-                serverId: { rules: [{ required: true, message: "请输入服务器id!" }] },
+                serverId: { rules: [{ required: true, message: "请输入区服Id!" }] },
                 remoteIp: { rules: [{ required: true, message: "请输入兑换ip!" }] },
                 createTime: {},
                 createDate: {}

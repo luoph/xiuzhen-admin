@@ -57,9 +57,9 @@ public class PayOrder implements Serializable {
     private java.lang.Integer channelId;
 
     /**
-     * 服务器id
+     * 区服Id
      */
-    @Excel(name = "服务器id", width = 15)
+    @Excel(name = "区服Id", width = 15)
     private java.lang.Integer serverId;
 
     /**
