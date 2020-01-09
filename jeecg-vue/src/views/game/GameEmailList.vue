@@ -32,7 +32,7 @@
                             <a-form-item label="服务器">
                                 <a-select
                                     ref="serverSelector"
-                                    placeholder="请选择服务器ID"
+                                    placeholder="请选择区服Id"
                                     v-model="queryParam.targetBodyId"
                                     :initialValue="serverList && serverList.length > 0 ? serverList[0].name : null"
                                 >

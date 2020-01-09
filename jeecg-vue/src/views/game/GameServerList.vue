@@ -170,7 +170,7 @@ export default {
                     }
                 },
                 {
-                    title: "服务器Id",
+                    title: "区服Id",
                     align: "center",
                     dataIndex: "id"
                 },

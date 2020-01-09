@@ -55,7 +55,7 @@ export const JeecgListMixin = {
         };
     },
     created() {
-        // 服务器id
+        // 区服Id
         if (this.serverIdOption) {
             this.queryServerList();
         }
@@ -78,7 +78,7 @@ export const JeecgListMixin = {
             // 查询条件
             var params = this.getQueryParams();
             if (this.serverIdOption && !params.serverId || params.serverId < 0) {
-                this.$message.error("请选择服务器id");
+                this.$message.error("请选择区服Id");
                 return;
             }
             this.loading = true;

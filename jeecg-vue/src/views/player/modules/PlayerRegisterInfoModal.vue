@@ -9,8 +9,8 @@
                 <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
+                <a-form-item label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="出身id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isEdit" v-decorator="['birthId', validatorRules.birthId]" placeholder="请输入出身id" style="width: 100%" />
@@ -92,7 +92,7 @@ export default {
             validatorRules: {
                 account: {},
                 playerId: { rules: [{ required: true, message: "请输入玩家id!" }] },
-                serverId: { rules: [{ required: true, message: "请输入服务器id!" }] },
+                serverId: { rules: [{ required: true, message: "请输入区服Id!" }] },
                 birthId: { rules: [{ required: true, message: "请输入出身id!" }] },
                 name: { rules: [{ required: true, message: "请输入角色名称!" }] },
                 ip: {},

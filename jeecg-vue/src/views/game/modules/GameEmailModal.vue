@@ -58,7 +58,7 @@
                        
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item v-if="serverType" label="服务器ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item v-if="serverType" label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select
                         ref="serverSelector"
                         v-decorator="['targetBodyId',{'initialValue':0} ,validatorRules.targetBodyId]"
