@@ -14,6 +14,11 @@
                             <a-input placeholder="请输入平台方订单号" v-model="queryParam.orderId"></a-input>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="创建时间">
+                            <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                        </a-form-item>
+                    </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
                             <a-form-item label="渠道key">
@@ -22,17 +27,17 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="渠道id">
-                                <a-input placeholder="请输入渠道id" v-model="queryParam.channelId"></a-input>
+                                <a-input placeholder="请输入渠道Id" v-model="queryParam.channelId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="服务器id">
-                                <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
+                                <a-input placeholder="请输入服务器Id" v-model="queryParam.serverId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="支付玩家id">
-                                <a-input placeholder="请输入支付玩家id" v-model="queryParam.playerId"></a-input>
+                            <a-form-item label="玩家Id">
+                                <a-input placeholder="请输入玩家Id" v-model="queryParam.playerId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -137,6 +142,7 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import PayOrderModal from "./modules/PayOrderModal";
+import { filterObj } from "@/utils/util";
 
 export default {
     name: "PayOrderList",
@@ -160,7 +166,7 @@ export default {
                     }
                 },
                 {
-                    title: "支付玩家id",
+                    title: "玩家Id",
                     align: "center",
                     dataIndex: "playerId"
                 },
@@ -197,23 +203,18 @@ export default {
                 {
                     title: "订单状态",
                     align: "center",
-                    dataIndex: "orderStatus"
+                    dataIndex: "orderStatus_dictText"
                 },
                 {
                     title: "订单金额",
                     align: "center",
                     dataIndex: "realAmount"
                 },
-                {
-                    title: "充值货币",
-                    align: "center",
-                    dataIndex: "currency"
-                },
-                {
-                    title: "发货时间",
-                    align: "center",
-                    dataIndex: "sendTime"
-                },
+                // {
+                //     title: "充值货币",
+                //     align: "center",
+                //     dataIndex: "currency"
+                // },
                 {
                     title: "创建时间",
                     align: "center",
@@ -239,7 +240,24 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        getQueryParams() {
+            console.log(this.queryParam.createTimeRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.createTimeRange;
+            return filterObj(param);
+        },
+        onDateChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.createTime_begin = dateString[0];
+            this.queryParam.createTime_end = dateString[1];
+        },
+        onDateOk(value) {
+            console.log(value);
+        }
     }
 };
 </script>
