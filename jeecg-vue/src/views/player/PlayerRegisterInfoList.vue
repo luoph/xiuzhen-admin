@@ -161,14 +161,14 @@ export default {
                     }
                 },
                 {
-                    title: "帐号",
-                    align: "center",
-                    dataIndex: "account"
-                },
-                {
                     title: "玩家id",
                     align: "center",
                     dataIndex: "playerId"
+                },
+                {
+                    title: "帐号",
+                    align: "center",
+                    dataIndex: "account"
                 },
                 {
                     title: "区服Id",
@@ -176,7 +176,7 @@ export default {
                     dataIndex: "serverId"
                 },
                 {
-                    title: "出身id",
+                    title: "出身Id",
                     align: "center",
                     dataIndex: "birthId"
                 },
@@ -186,7 +186,7 @@ export default {
                     dataIndex: "name"
                 },
                 {
-                    title: "注册ip",
+                    title: "注册IP",
                     align: "center",
                     dataIndex: "ip"
                 },
@@ -240,11 +240,11 @@ export default {
                     align: "center",
                     dataIndex: "versionName"
                 },
-                {
-                    title: "版本号",
-                    align: "center",
-                    dataIndex: "versionCode"
-                },
+                // {
+                //     title: "版本号",
+                //     align: "center",
+                //     dataIndex: "versionCode"
+                // },
                 // {
                 //     title: "平台",
                 //     align: "center",
