@@ -2,16 +2,22 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.json.JSONTokener;
 import cn.youai.commons.model.Response;
+import cn.youai.xiuzhen.common.data.ConfigDataEnum;
+import cn.youai.xiuzhen.common.data.ConfigDataService;
+import cn.youai.xiuzhen.entity.pojo.Item;
 import cn.youai.xiuzhen.entity.pojo.ItemVo;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.googlecode.cqengine.query.QueryFactory;
+import com.googlecode.cqengine.query.option.QueryOptions;
 import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
 import org.jeecg.modules.game.service.IGameEmailService;
 import org.jeecg.modules.player.entity.PlayerRegisterInfo;
 import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +52,9 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     @Resource
     private PlayerRegisterInfoMapper registerInfoMapper;
 
+    @Autowired
+    private ConfigDataService configDataService;
+
     @Override
     public Response saveEmail(GameEmail gameEmail) {
         Response response = new Response();
@@ -56,11 +65,16 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
                 response.setFailure("附件内容不能为空！");
                 return response;
             }
-            Object typeObject = new JSONTokener(content).nextValue();
-            if (!(typeObject instanceof cn.hutool.json.JSONArray)) {
-                response.setFailure("附件格式错误！");
-                return response;
+            try {
+                Object typeObject = new JSONTokener(content).nextValue();
+                if (!(typeObject instanceof cn.hutool.json.JSONArray)) {
+                    response.setFailure("附件格式错误！");
+                    return response;
+                }
+            } catch (Exception e) {
+                log.error("gameEmail->" + gameEmail.toString(), e);
             }
+
             List<ItemVo> list = JSONArray.parseArray(content, ItemVo.class);
             if (list == null || list.size() == 0) {
                 response.setFailure("附件格式错误！");
@@ -94,5 +108,11 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
         QueryWrapper<PlayerRegisterInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.lambda().eq(PlayerRegisterInfo::getPlayerId, playerId);
         return registerInfoMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public List<Item> itemTree() {
+        QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(Item.ITEM_ID)));
+        return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, queryOptions);
     }
 }

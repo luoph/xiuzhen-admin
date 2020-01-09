@@ -1,8 +1,11 @@
 package org.jeecg.modules.game.service;
 
 import cn.youai.commons.model.Response;
+import cn.youai.xiuzhen.entity.pojo.Item;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameEmail;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -19,4 +22,11 @@ public interface IGameEmailService extends IService<GameEmail> {
      * @return
      */
     Response saveEmail(GameEmail gameEmail);
+
+    /**
+     * 获取道具树形菜案
+     *
+     * @return
+     */
+    List<Item> itemTree();
 }

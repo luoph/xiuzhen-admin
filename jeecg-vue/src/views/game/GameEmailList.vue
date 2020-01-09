@@ -155,7 +155,10 @@ export default {
                 {
                     title: "类型",
                     align: "center",
-                    dataIndex: "emailType"
+                    dataIndex: "emailType",
+                    customRender: function(text) {
+                        return text == 1?"无附件":"有附件"
+                    }
                 },
                 {
                     title: "附件",
@@ -165,12 +168,18 @@ export default {
                 {
                     title: "状态",
                     align: "center",
-                    dataIndex: "validState"
+                    dataIndex: "validState",
+                    customRender: function(text) {
+                        return text == 1?"有效":"无效"
+                    }
                 },
                 {
                     title: "目标类型",
                     align: "center",
-                    dataIndex: "targetBodyType"
+                    dataIndex: "targetBodyType",
+                    customRender: function(text) {
+                        return text == 1?"全服":"玩家"
+                    }
                 },
                 {
                     title: "目标主体",
