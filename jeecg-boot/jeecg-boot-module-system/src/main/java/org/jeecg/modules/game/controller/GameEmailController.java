@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.youai.commons.model.Response;
+import cn.youai.xiuzhen.entity.pojo.Item;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -148,6 +150,19 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameEmail.class);
+    }
+
+    /**
+     * 获取道具树
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/itemTree", method = RequestMethod.GET)
+    public Result<?> itemTree(HttpServletRequest request, HttpServletResponse response) {
+        List<Item> items = gameEmailService.itemTree();
+        return Result.ok(items);
     }
 
 }
