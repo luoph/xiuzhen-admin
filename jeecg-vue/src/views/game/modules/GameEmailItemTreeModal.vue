@@ -15,8 +15,8 @@
             </div>
             <div v-if="showError">
                 <a-alert
-                    message=""
-                    description="This is an error message about copywriting."
+                    message="错误选择"
+                    description="所选记录没有数量！"
                     type="error"
                     showIcon
                 />
@@ -135,7 +135,8 @@ export default {
             let Items = [];
             for (let i = 0; i < this.selectedRows.length; i++) {
                 let row = this.selectedRows[i];
-                if (row.num === undefined || row.num == null) {
+                if (row.num === undefined || row.num === null || row.num <= 0) {
+                    this.$message.error("第"+(i+1)+"行数量错误！");
                     this.showError = true;
                     return;
                 }
