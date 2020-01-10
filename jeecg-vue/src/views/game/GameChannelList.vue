@@ -4,34 +4,29 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="渠道名称">
                             <a-input placeholder="请输入渠道名称" v-model="queryParam.name"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="唯一标识">
                             <j-dict-select-tag v-model="queryParam.simpleName" placeholder="请选择唯一标识" dictCode="game_channel,simple_name,simple_name" />
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="排序字段">
-                                <a-input placeholder="请输入排序字段" v-model="queryParam.position"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="公告id">
                                 <a-input placeholder="请输入公告id" v-model="queryParam.noticeId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="大渠道描述">
                                 <a-input placeholder="请输入大渠道描述" v-model="queryParam.remark"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>

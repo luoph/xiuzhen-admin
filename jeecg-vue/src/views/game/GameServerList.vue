@@ -4,12 +4,12 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="游戏编号">
                             <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id" />
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="名字">
                             <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库，java接口：SysDictController#getDictItems-->
                             <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id" />
@@ -21,43 +21,43 @@
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="地址">
                                 <a-input placeholder="地址" v-model="queryParam.host"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="Websocket地址">
                                 <a-input placeholder="Websocket地址" v-model="queryParam.loginUrl"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="状态">
                                 <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status" />
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="类型">
                                 <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type" />
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="数据库Host">
                                 <a-input placeholder="数据库Host" v-model="queryParam.dbHost"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="数据库名">
                                 <a-input placeholder="数据库名" v-model="queryParam.dbName"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="顺序">
                                 <a-input placeholder="顺序" v-model="queryParam.position"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>

@@ -4,23 +4,23 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="激活码活动id">
                             <a-input placeholder="请输入激活码活动id" v-model="queryParam.activityId"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="激活码">
                             <a-input placeholder="请输入激活码" v-model="queryParam.code"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="状态">
                                 <a-input placeholder="请输入状态" v-model="queryParam.status"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="12" :sm="16">
+                        <a-col :md="6" :sm="16">
                             <a-form-item label="创建时间">
                                 <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
                                 <span class="query-group-split-cust"></span>
@@ -28,7 +28,7 @@
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>

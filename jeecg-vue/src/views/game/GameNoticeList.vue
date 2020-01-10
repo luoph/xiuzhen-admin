@@ -4,34 +4,34 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="公告类型">
                             <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type" />
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="标题">
                             <a-input placeholder="请输入标题" v-model="queryParam.title"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="开始时间">
                                 <a-input placeholder="请输入开始时间" v-model="queryParam.beginTime"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="结束时间">
                                 <a-input placeholder="请输入结束时间" v-model="queryParam.endTime"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="公告内容">
                                 <a-input placeholder="请输入公告内容" v-model="queryParam.content"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>

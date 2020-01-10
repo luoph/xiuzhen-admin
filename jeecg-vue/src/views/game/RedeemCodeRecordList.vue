@@ -4,38 +4,38 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="兑换码">
                             <a-input placeholder="请输入兑换码" v-model="queryParam.code"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="渠道编码">
                             <a-input placeholder="请输入渠道编码" v-model="queryParam.channel"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="玩家id">
                                 <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="分组id">
                                 <a-input placeholder="请输入分组id" v-model="queryParam.groupId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="区服Id">
                                 <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="兑换ip">
                                 <a-input placeholder="请输入兑换ip" v-model="queryParam.remoteIp"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="12" :sm="16">
+                        <a-col :md="6" :sm="16">
                             <a-form-item label="创建时间">
                                 <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
                                 <span class="query-group-split-cust"></span>
@@ -43,7 +43,7 @@
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
