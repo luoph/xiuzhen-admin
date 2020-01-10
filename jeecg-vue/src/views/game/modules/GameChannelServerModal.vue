@@ -1,14 +1,34 @@
 <template>
-    <a-modal :title="title" :width="600" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
+    <a-modal
+        :title="title"
+        :width="600"
+        :visible="visible"
+        :confirmLoading="confirmLoading"
+        @ok="handleOk"
+        @cancel="handleCancel"
+        cancelText="关闭"
+    >
         <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道id">
-                    <a-input :disabled="true" placeholder="请输入渠道id" v-decorator="['channelId', validatorRules.channelId]" />
+                    <a-input
+                        :disabled="true"
+                        placeholder="请输入渠道id"
+                        v-decorator="['channelId', validatorRules.channelId]"
+                    />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id">
-                    <a-select :disabled="isEdit" placeholder="请选择区服Id" v-decorator="['serverId', {}]">
-                        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
+                    <a-select
+                        :disabled="isEdit"
+                        placeholder="请选择区服Id"
+                        v-decorator="['serverId', {}]"
+                    >
+                        <a-select-option
+                            v-for="server in serverList"
+                            :key="server.name"
+                            :value="server.id"
+                        >{{ server.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">

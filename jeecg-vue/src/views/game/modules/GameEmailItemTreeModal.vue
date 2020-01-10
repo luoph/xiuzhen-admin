@@ -14,12 +14,7 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
             <div v-if="showError">
-                <a-alert
-                    message="错误选择"
-                    description="所选记录没有数量！"
-                    type="error"
-                    showIcon
-                />
+                <a-alert message="错误选择" description="所选记录没有数量！" type="error" showIcon />
             </div>
             <a-table
                 ref="table"
@@ -60,7 +55,7 @@ export default {
             visible: false,
             showError: false,
             treeData: [],
-            pageSize:20,
+            pageSize: 20,
             // 表头
             columns: [
                 {
@@ -136,16 +131,16 @@ export default {
             for (let i = 0; i < this.selectedRows.length; i++) {
                 let row = this.selectedRows[i];
                 if (row.num === undefined || row.num === null || row.num <= 0) {
-                    this.$message.error("第"+(i+1)+"行数量错误！");
+                    this.$message.error("第" + (i + 1) + "行数量错误！");
                     this.showError = true;
                     return;
                 }
                 let json = '{"itemId":' + row.itemId + ',"num":' + row.num + "}";
                 Items.push(json);
             }
-            let itemTreeResult = '['+Items+']';
+            let itemTreeResult = "[" + Items + "]";
             console.log(itemTreeResult);
-            this.$emit('func',itemTreeResult);
+            this.$emit("func", itemTreeResult);
             (this.showError = false), (this.showSuccess = true), (this.showWarning = false), this.close();
         },
         getItemTree: function() {

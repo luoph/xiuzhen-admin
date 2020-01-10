@@ -12,7 +12,7 @@
                     <a-col :md="3" :sm="5">
                         <a-form-item label="状态">
                             <a-select placeholder="邮件状态" v-model="queryParam.validState">
-                                <a-select-option value="">--请选择--</a-select-option>
+                                <a-select-option value>--请选择--</a-select-option>
                                 <a-select-option :value="1">有效</a-select-option>
                                 <a-select-option :value="2">无效</a-select-option>
                             </a-select>
@@ -21,8 +21,12 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="3" :sm="5">
                             <a-form-item label="类型">
-                                <a-select ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
-                                    <a-select-option value="">---请选择目标---</a-select-option>
+                                <a-select
+                                    ref="targetSelector"
+                                    v-model="queryParam.targetBodyType"
+                                    @change="selectTarget"
+                                >
+                                    <a-select-option value>---请选择目标---</a-select-option>
                                     <a-select-option :value="1">玩家</a-select-option>
                                     <a-select-option :value="2">全服</a-select-option>
                                 </a-select>
@@ -36,8 +40,12 @@
                                     v-model="queryParam.targetBodyId"
                                     :initialValue="serverList && serverList.length > 0 ? serverList[0].name : null"
                                 >
-                                    <a-select-option value="">---请选择目标---</a-select-option>
-                                    <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
+                                    <a-select-option value>---请选择目标---</a-select-option>
+                                    <a-select-option
+                                        v-for="server in serverList"
+                                        :key="server.name"
+                                        :value="server.id"
+                                    >{{ server.name }}</a-select-option>
                                 </a-select>
                             </a-form-item>
                         </a-col>
@@ -53,16 +61,32 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="时间">
-                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validStarTime_begin"></j-date>
+                                <j-date
+                                    placeholder="请选择开始日期"
+                                    class="query-group-cust"
+                                    v-model="queryParam.validStarTime_begin"
+                                ></j-date>
                                 <span class="query-group-cust"></span>
-                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validStarTime_end"></j-date>
+                                <j-date
+                                    placeholder="请选择结束日期"
+                                    class="query-group-cust"
+                                    v-model="queryParam.validStarTime_end"
+                                ></j-date>
                             </a-form-item>
                         </a-col>
                     </template>
                     <a-col :md="6" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                        <span
+                            style="float: left;overflow: hidden;"
+                            class="table-page-search-submitButtons"
+                        >
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+                            <a-button
+                                type="primary"
+                                icon="reload"
+                                style="margin-left: 8px"
+                                @click="searchReset"
+                            >重置</a-button>
                             <a style="margin-left: 8px" @click="handleToggleSearch">
                                 {{ toggleSearchStatus ? "收起" : "展开" }}
                                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
@@ -95,11 +119,24 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img
+                        v-else
+                        :src="getImgView(text)"
+                        height="25px"
+                        alt="图片不存在"
+                        style="max-width:80px;font-size: 12px;font-style: italic;"
+                    />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)">下载</a-button>
+                    <a-button
+                        v-else
+                        :ghost="true"
+                        type="primary"
+                        icon="download"
+                        size="small"
+                        @click="uploadFile(text)"
+                    >下载</a-button>
                 </template>
             </a-table>
         </div>
@@ -157,7 +194,7 @@ export default {
                     align: "center",
                     dataIndex: "emailType",
                     customRender: function(text) {
-                        return text == 1?"无附件":"有附件"
+                        return text == 1 ? "无附件" : "有附件";
                     }
                 },
                 {
@@ -170,7 +207,7 @@ export default {
                     align: "center",
                     dataIndex: "validState",
                     customRender: function(text) {
-                        return text == 1?"有效":"无效"
+                        return text == 1 ? "有效" : "无效";
                     }
                 },
                 {
@@ -178,7 +215,7 @@ export default {
                     align: "center",
                     dataIndex: "targetBodyType",
                     customRender: function(text) {
-                        return text == 1?"全服":"玩家"
+                        return text == 1 ? "玩家" : "全服";
                     }
                 },
                 {
