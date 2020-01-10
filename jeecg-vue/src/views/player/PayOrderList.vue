@@ -4,14 +4,26 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="己方单号">
-                            <a-input placeholder="请输入己方单号" v-model="queryParam.queryId"></a-input>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="玩家Id">
+                            <a-input placeholder="请输入玩家Id" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="平台方订单号">
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="订单号">
                             <a-input placeholder="请输入平台方订单号" v-model="queryParam.orderId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="订单状态">
+                            <a-select v-model="queryParam.orderStatus" placeholder="请选择订单状态">
+                                <a-select-option value="">请选择订单状态</a-select-option>
+                                <a-select-option value="0">待支付</a-select-option>
+                                <a-select-option value="1">已支付</a-select-option>
+                                <a-select-option value="2">已转发</a-select-option>
+                                <a-select-option value="3">发放中</a-select-option>
+                                <a-select-option value="4">已发放</a-select-option>
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -20,44 +32,22 @@
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="渠道key">
-                                <a-input placeholder="请输入渠道key" v-model="queryParam.channelKey"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="渠道id">
                                 <a-input placeholder="请输入渠道Id" v-model="queryParam.channelId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="区服Id">
                                 <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="玩家Id">
-                                <a-input placeholder="请输入玩家Id" v-model="queryParam.playerId"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="商品id">
                                 <a-input placeholder="请输入商品id" v-model="queryParam.goodsId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="订单状态">
-                                <a-select v-model="queryParam.orderStatus" placeholder="请选择订单状态">
-                                    <a-select-option value="">请选择订单状态</a-select-option>
-                                    <a-select-option value="0">待支付</a-select-option>
-                                    <a-select-option value="1">已支付</a-select-option>
-                                    <a-select-option value="2">已转发</a-select-option>
-                                    <a-select-option value="3">发放中</a-select-option>
-                                    <a-select-option value="4">已发放</a-select-option>
-                                </a-select>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="12" :sm="16">
+                        <a-col :md="6" :sm="16">
                             <a-form-item label="金额">
                                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.realAmount_begin"></a-input>
                                 <span class="query-group-split-cust"></span>
@@ -65,7 +55,7 @@
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
