@@ -4,54 +4,54 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="帐号">
                             <a-input placeholder="请输入帐号" v-model="queryParam.account"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="玩家id">
                             <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="角色名称">
                             <a-input placeholder="请输入角色名称" v-model="queryParam.name"></a-input>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="创建时间">
+                            <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                        </a-form-item>
+                    </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="区服Id">
                                 <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="出身id">
                                 <a-input placeholder="请输入出身id" v-model="queryParam.birthId"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="4" :sm="8">
                             <a-form-item label="渠道">
                                 <a-input placeholder="请输入渠道" v-model="queryParam.ip"></a-input>
                             </a-form-item>
                         </a-col>
-                        <!-- <a-col :md="6" :sm="8">
+                        <!-- <a-col :md="4" :sm="8">
                             <a-form-item label="version_name">
                                 <a-input placeholder="请输入version_name" v-model="queryParam.versionName"></a-input>
                             </a-form-item>
                         </a-col> -->
-                        <!-- <a-col :md="6" :sm="8">
+                        <!-- <a-col :md="4" :sm="8">
                             <a-form-item label="version_code">
                                 <a-input placeholder="请输入version_code" v-model="queryParam.versionCode"></a-input>
                             </a-form-item>
                         </a-col> -->
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="创建时间">
-                                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
-                            </a-form-item>
-                        </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
