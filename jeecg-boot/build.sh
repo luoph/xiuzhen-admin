@@ -41,10 +41,7 @@ fi
 logger "==> profile:[${profile}]"
 logger "==> server_name:[${server_name}]"
 
-if [[ ! -d "target" ]]; then
-    mkdir -p "target"
-fi
-
+# 拷贝对应环境的配置
 project_dir=$(pwd)
 cd ${module_name}/src/main/profile/${profile}/
 cp -Rf * ../../resources/
@@ -52,6 +49,10 @@ cd ${project_dir}
 
 logger "==> start building"
 mvn clean package -DskipTests
+
+if [[ ! -d "target" ]]; then
+    mkdir -p "target"
+fi
 
 mv ${module_name}/target/${module_name}-${version}.jar target/${server_name}-${profile}.jar
 logger "==> finish building"
