@@ -19,7 +19,7 @@
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="3" :sm="5">
+                        <a-col :md="3" :sm="5">l
                             <a-form-item label="类型">
                                 <a-select
                                     ref="targetSelector"
@@ -38,9 +38,9 @@
                                     ref="serverSelector"
                                     placeholder="请选择区服Id"
                                     v-model="queryParam.targetBodyId"
-                                    :initialValue="serverList && serverList.length > 0 ? serverList[0].name : null"
+                                    initialValue:queryParam.targetBodyId
                                 >
-                                    <a-select-option value>---请选择目标---</a-select-option>
+                                    <a-select-option value="">---请选择目标---</a-select-option>
                                     <a-select-option
                                         v-for="server in serverList"
                                         :key="server.name"
@@ -114,30 +114,6 @@
                 :loading="loading"
                 @change="handleTableChange"
             >
-                <template slot="htmlSlot" slot-scope="text">
-                    <div v-html="text"></div>
-                </template>
-                <template slot="imgSlot" slot-scope="text">
-                    <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img
-                        v-else
-                        :src="getImgView(text)"
-                        height="25px"
-                        alt="图片不存在"
-                        style="max-width:80px;font-size: 12px;font-style: italic;"
-                    />
-                </template>
-                <template slot="fileSlot" slot-scope="text">
-                    <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button
-                        v-else
-                        :ghost="true"
-                        type="primary"
-                        icon="download"
-                        size="small"
-                        @click="uploadFile(text)"
-                    >下载</a-button>
-                </template>
             </a-table>
         </div>
 
@@ -284,7 +260,7 @@ export default {
                 this.serverType = true;
                 this.playerType = false;
                 this.getServerList();
-                this.queryParam.targetBodyId = 0;
+                this.queryParam.targetBodyId = "";
             } else {
                 this.serverType = false;
                 this.playerType = false;
