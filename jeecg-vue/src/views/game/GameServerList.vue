@@ -15,6 +15,16 @@
                             <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id" />
                         </a-form-item>
                     </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="状态">
+                            <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="类型">
+                            <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type" />
+                        </a-form-item>
+                    </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="创建时间">
                             <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
@@ -29,16 +39,6 @@
                         <a-col :md="4" :sm="8">
                             <a-form-item label="Websocket地址">
                                 <a-input placeholder="Websocket地址" v-model="queryParam.loginUrl"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="状态">
-                                <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status" />
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="类型">
-                                <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type" />
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">
