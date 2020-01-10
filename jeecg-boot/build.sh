@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#bash build.sh -p stable -n payservice -h 10.21.210.70 -w "/data/1101studio" -s "/data/1101studio/server"
-
 module_name="jeecg-boot-module-system"
 version="2.1.2"
 
@@ -13,17 +11,20 @@ function logger() {
 function usage() {
     cat << -EOF-
 Usage:
-$0 -p profile -n server_name
+$0 -p profile -s server_name
 profile -- 环境名, develop/production/stable
-server_name -- 服务名, eg: payservice
+server_name -- 服务名, eg: xiuzhen-main
 -EOF-
     exit 1
 }
 
 [[ $# -eq 0 ]] && usage
-while getopts "n:" opt; do
+while getopts "p:s:" opt; do
     case ${opt} in
-    n)
+    p)
+        profile=$OPTARG
+        ;;
+    s)
         server_name=$OPTARG
         ;;
     ?)
@@ -32,19 +33,25 @@ while getopts "n:" opt; do
     esac
 done
 
-if [[ -z "$server_name" ]]; then
+if [[ -z "${profile}" ]] \
+    || [[ -z "${server_name}" ]] ; then
     usage
 fi
 
+logger "==> profile:[${profile}]"
 logger "==> server_name:[${server_name}]"
-
-logger "==> start building"
-mvn clean package
 
 if [[ ! -d "target" ]]; then
     mkdir -p "target"
 fi
 
-mv ${module_name}/target/${module_name}-${version}.jar target/${server_name}.jar
+project_dir=$(pwd)
+cd ${module_name}/src/main/profile/${profile}/
+cp -Rf * ../../resources/
+cd ${project_dir}
 
+logger "==> start building"
+mvn clean package -DskipTests
+
+mv ${module_name}/target/${module_name}-${version}.jar target/${server_name}-${profile}.jar
 logger "==> finish building"
