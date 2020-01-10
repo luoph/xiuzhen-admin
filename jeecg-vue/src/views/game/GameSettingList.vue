@@ -4,17 +4,17 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="key">
                             <a-input placeholder="请输入key" v-model="queryParam.dictKey"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="value">
                             <a-input placeholder="请输入value" v-model="queryParam.dictValue"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
