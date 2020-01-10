@@ -14,11 +14,11 @@
                     <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"></a-input>
                 </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                 <a-textarea
-                    v-decorator="['remark', validatorRules.remark]"
-      placeholder="请输入描述"
-      :autosize="{ minRows: 2, maxRows: 6 }"
-    />
+                    <a-textarea
+                        v-decorator="['remark', validatorRules.remark]"
+                        placeholder="请输入描述"
+                        :autosize="{ minRows: 2, maxRows: 6 }"
+                    />
                 </a-form-item>
                 <a-form-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-radio-group
@@ -26,19 +26,24 @@
                         v-decorator="['emailType',{'initialValue':1}, validatorRules.emailType]"
                         style="width: 100%"
                     >
-                    <a-radio-button :value="1">无附件</a-radio-button>
+                        <a-radio-button :value="1">无附件</a-radio-button>
                         <a-radio-button :value="2">有附件</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item v-if="contentData" label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                     <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
+                <a-form-item
+                    v-if="contentData"
+                    label="附件"
+                    :labelCol="labelCol"
+                    :wrapperCol="wrapperCol"
+                >
+                    <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
                     <a-textarea
-                 v-decorator="['content',{'initialValue':itemTree} ,validatorRules.content]"
-      placeholder="请输入附件"
-      :autosize="{ minRows: 2, maxRows: 6 }"
-    read-only
-    />
-    <gameEmailItemTree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson" ></gameEmailItemTree-modal>
+                        v-decorator="['content',{'initialValue':itemTree} ,validatorRules.content]"
+                        placeholder="请输入附件"
+                        :autosize="{ minRows: 2, maxRows: 6 }"
+                        read-only
+                    />
+                    <gameEmailItemTree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></gameEmailItemTree-modal>
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-radio-group
@@ -56,12 +61,16 @@
                         dict
                         style="width: 100%"
                     >
-                     <a-radio-button :value="1">玩家</a-radio-button>
+                        <a-radio-button :value="1">玩家</a-radio-button>
                         <a-radio-button :value="2">全服</a-radio-button>
-                       
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item v-if="serverType" label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item
+                    v-if="serverType"
+                    label="区服Id"
+                    :labelCol="labelCol"
+                    :wrapperCol="wrapperCol"
+                >
                     <a-select
                         ref="serverSelector"
                         v-decorator="['targetBodyId',{'initialValue':0} ,validatorRules.targetBodyId]"
@@ -75,7 +84,12 @@
                         >{{ server.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item
+                    v-if="playerType"
+                    label="玩家ID"
+                    :labelCol="labelCol"
+                    :wrapperCol="wrapperCol"
+                >
                     <a-input
                         v-decorator="['targetBodyId',{'initialValue':null}, validatorRules.targetBodyId]"
                         placeholder="请输入玩家ID"
@@ -120,7 +134,7 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
 import { getAction } from "@/api/manage";
-import { Button } from 'ant-design-vue';
+import { Button } from "ant-design-vue";
 import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
 
 export default {
@@ -129,7 +143,7 @@ export default {
         JDate,
         JSearchSelectTag,
         Button,
-        GameEmailItemTreeModal,
+        GameEmailItemTreeModal
     },
     data() {
         return {
@@ -138,7 +152,7 @@ export default {
             width: 800,
             visible: false,
             model: {},
-            itemTree:"",
+            itemTree: "",
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -152,7 +166,7 @@ export default {
                 title: { rules: [{ required: true, message: "请输入标题!" }] },
                 remark: { rules: [{ required: true, message: "请输入描述!" }] },
                 emailType: { rules: [{ required: true, message: "请选择类型!" }] },
-                content: { rules: [{ required: true, message: "请添加附件!" }]},
+                content: { rules: [{ required: true, message: "请添加附件!" }] },
                 validState: { rules: [{ required: true, message: "请选择状态!" }] },
                 targetBodyType: { rules: [{ required: true, message: "请选择目标类型!" }] },
                 targetBodyId: { rules: [{ required: true, message: "请输入目标主体ID!" }] },
@@ -163,7 +177,7 @@ export default {
             serverType: false,
             playerType: true,
             serverList: [],
-            contentData:false,
+            contentData: false,
             url: {
                 add: "game/gameEmail/add",
                 edit: "game/gameEmail/edit",
@@ -273,36 +287,34 @@ export default {
             if (e.target.value == 1) {
                 this.serverType = false;
                 this.playerType = true;
-                this.validatorRules.targetBodyId="";
+                this.validatorRules.targetBodyId = "";
             } else if (e.target.value == 2) {
                 this.serverType = true;
                 this.playerType = false;
                 this.getServerList();
             }
-            
         },
-        contentType(e){
+        contentType(e) {
             if (e.target.value == 1) {
                 this.contentData = false;
-                
             } else if (e.target.value == 2) {
                 this.contentData = true;
-                this.validatorRules.content={ rules: [{ required: true, message: "请添加附件!" }]};
+                this.validatorRules.content = { rules: [{ required: true, message: "请添加附件!" }] };
             }
         },
-        handleAddItem(){
+        handleAddItem() {
             this.$refs.gameEmailItemTreeModal.visible = true;
             this.$refs.gameEmailItemTreeModal.$emit("getItemTree");
             this.content = "";
         },
-        getItemTreeJson(item){
+        getItemTreeJson(item) {
             console.log(item);
             this.itemTree = item;
         },
-        getServerList:function(){
-            getAction(this.url.serverListUrl).then(res=>{
+        getServerList: function() {
+            getAction(this.url.serverListUrl).then(res => {
                 this.serverList = res.result.records;
-            })
+            });
         }
     }
 };
