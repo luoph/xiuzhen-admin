@@ -62,6 +62,7 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import moment from "moment";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
