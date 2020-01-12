@@ -17,7 +17,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="4" :sm="8">
                             <a-form-item label="公告id">
-                                <a-input placeholder="请输入公告id" v-model="queryParam.noticeId"></a-input>
+                                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId"></a-input-number>
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">
