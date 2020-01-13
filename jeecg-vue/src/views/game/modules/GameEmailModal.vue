@@ -36,7 +36,7 @@
                         <a-radio-button :value="2">全服</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item v-if="serverType" label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <server-select @select="change"></server-select>
                 </a-form-item>
                 <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
