@@ -1,15 +1,7 @@
 <template>
-    <a-select
-        v-model="queryParam.serverId"
-        :initialValue="queryParam.serverId"
-        @change="selectServer"
-    >
+    <a-select v-model="queryParam.serverId" :initialValue="queryParam.serverId" @change="selectServer">
         <a-select-option value>---请选择区服ID---</a-select-option>
-        <a-select-option
-            v-for="server in serverList"
-            :key="server.name"
-            :value="server.id"
-        >{{ server.name }}</a-select-option>
+        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.name }}</a-select-option>
     </a-select>
 </template>
 <script>
