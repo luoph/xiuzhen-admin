@@ -15,7 +15,7 @@
                         <a-radio-button :value="2">有附件</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item v-if="contentData" label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item v-if="contentData" :visible.sync="contentData" label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
                     <a-textarea
                         v-decorator="['content', { initialValue: itemTree }, validatorRules.content]"
@@ -153,8 +153,8 @@ export default {
             this.visible = false;
             this.serverType = false;
             this.playerType = true;
-            this.contentData = false;
             this.validatorRules.content = "";
+            this.contentData = false;
         },
         handleOk() {
             const that = this;
@@ -217,11 +217,11 @@ export default {
             if (e.target.value == 1) {
                 this.serverType = false;
                 this.playerType = true;
-                this.validatorRules.targetBodyId = "";
             } else if (e.target.value == 2) {
                 this.serverType = true;
                 this.playerType = false;
             }
+            this.validatorRules.targetBodyId = "";
         },
         contentType(e) {
             if (e.target.value == 1) {
@@ -229,6 +229,7 @@ export default {
             } else if (e.target.value == 2) {
                 this.contentData = true;
                 this.validatorRules.content = { rules: [{ required: true, message: "请添加附件!" }] };
+                this.validatorRules.content = "";
             }
         },
         handleAddItem() {
