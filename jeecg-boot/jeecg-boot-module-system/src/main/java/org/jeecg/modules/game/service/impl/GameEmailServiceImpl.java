@@ -10,7 +10,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.googlecode.cqengine.query.QueryFactory;
+import com.googlecode.cqengine.query.logical.And;
+import com.googlecode.cqengine.query.logical.Or;
 import com.googlecode.cqengine.query.option.QueryOptions;
+import com.googlecode.cqengine.query.simple.Equal;
 import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
@@ -111,8 +114,22 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     }
 
     @Override
-    public List<Item> itemTree() {
+    public List<Item> itemTree(Integer itemId, String itemName) {
         QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(Item.ITEM_ID)));
-        return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, queryOptions);
+        if (itemId != null && itemName != null) {
+            Equal<Item, Integer> query1 = QueryFactory.equal(Item.ITEM_ID, itemId);
+            Equal<Item, String> query2 = QueryFactory.equal(Item.NAME, itemName);
+            And<Item> and = QueryFactory.and(query1, query2);
+            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, and, queryOptions);
+        } else if (itemId != null) {
+            Equal<Item, Integer> query1 = QueryFactory.equal(Item.ITEM_ID, itemId);
+            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query1, queryOptions);
+        } else if (itemName != null) {
+            Equal<Item, String> query2 = QueryFactory.equal(Item.NAME, itemName);
+            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query2, queryOptions);
+        } else {
+            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, queryOptions);
+        }
+
     }
 }

@@ -1,12 +1,5 @@
 <template>
-    <a-drawer
-        :title="title"
-        :width="width"
-        placement="right"
-        :closable="false"
-        @close="close"
-        :visible="visible"
-    >
+    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
         <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
@@ -14,31 +7,18 @@
                     <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"></a-input>
                 </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea
-                        v-decorator="['remark', validatorRules.remark]"
-                        placeholder="请输入描述"
-                        :autosize="{ minRows: 2, maxRows: 6 }"
-                    />
+                    <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入描述" :autosize="{ minRows: 2, maxRows: 6 }" />
                 </a-form-item>
                 <a-form-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group
-                        @change="contentType"
-                        v-decorator="['emailType',{'initialValue':1}, validatorRules.emailType]"
-                        style="width: 100%"
-                    >
+                    <a-radio-group @change="contentType" v-decorator="['emailType', { initialValue: 1 }, validatorRules.emailType]" style="width: 100%">
                         <a-radio-button :value="1">无附件</a-radio-button>
                         <a-radio-button :value="2">有附件</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item
-                    v-if="contentData"
-                    label="附件"
-                    :labelCol="labelCol"
-                    :wrapperCol="wrapperCol"
-                >
+                <a-form-item v-if="contentData" label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
                     <a-textarea
-                        v-decorator="['content',{'initialValue':itemTree} ,validatorRules.content]"
+                        v-decorator="['content', { initialValue: itemTree }, validatorRules.content]"
                         placeholder="请输入附件"
                         :autosize="{ minRows: 2, maxRows: 6 }"
                         read-only
@@ -46,68 +26,30 @@
                     <gameEmailItemTree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></gameEmailItemTree-modal>
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group
-                        v-decorator="['validState',{'initialValue':1}]"
-                        dict
-                        style="width: 100%"
-                    >
+                    <a-radio-group v-decorator="['validState', { initialValue: 1 }]" dict style="width: 100%">
                         <a-radio-button :value="1">有效</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
                 <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group
-                        @change="selectTarget"
-                        v-decorator="['targetBodyType',{'initialValue':1}]"
-                        dict
-                        style="width: 100%"
-                    >
+                    <a-radio-group @change="selectTarget" v-decorator="['targetBodyType', { initialValue: 1 }]" dict style="width: 100%">
                         <a-radio-button :value="1">玩家</a-radio-button>
                         <a-radio-button :value="2">全服</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item
-                    v-if="serverType"
-                    label="区服Id"
-                    :labelCol="labelCol"
-                    :wrapperCol="wrapperCol"
-                >
-                     <server-select @select="change"></server-select>
+                <a-form-item v-if="serverType" label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <server-select @select="change"></server-select>
                 </a-form-item>
-                <a-form-item
-                    v-if="playerType"
-                    label="玩家ID"
-                    :labelCol="labelCol"
-                    :wrapperCol="wrapperCol"
-                >
-                    <a-input
-                        v-decorator="['targetBodyId',{'initialValue':null}, validatorRules.targetBodyId]"
-                        placeholder="请输入玩家ID"
-                        style="width: 100%"
-                    />
+                <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['targetBodyId', { initialValue: null }, validatorRules.targetBodyId]" placeholder="请输入玩家ID" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date
-                        placeholder="请选择生效时间"
-                        v-decorator="['sendTime', validatorRules.sendTime]"
-                        :trigger-change="true"
-                        style="width: 100%"
-                    />
+                    <j-date placeholder="请选择生效时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date
-                        placeholder="请选择开始时间"
-                        v-decorator="['validStarTime', validatorRules.validStarTime]"
-                        :trigger-change="true"
-                        style="width: 100%"
-                    />
+                    <j-date placeholder="请选择开始时间" v-decorator="['validStarTime', validatorRules.validStarTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date
-                        placeholder="请选择结束时间"
-                        v-decorator="['validEndTime', validatorRules.validEndTime]"
-                        :trigger-change="true"
-                        style="width: 100%"
-                    />
+                    <j-date placeholder="请选择结束时间" v-decorator="['validEndTime', validatorRules.validEndTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -131,7 +73,7 @@ export default {
         JDate,
         JSearchSelectTag,
         Button,
-        GameEmailItemTreeModal,
+        GameEmailItemTreeModal
     },
     data() {
         return {

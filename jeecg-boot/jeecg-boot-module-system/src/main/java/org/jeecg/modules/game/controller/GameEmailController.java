@@ -155,13 +155,14 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     /**
      * 获取道具树
      *
-     * @param request
-     * @param response
      * @return
      */
     @RequestMapping(value = "/itemTree", method = RequestMethod.GET)
-    public Result<?> itemTree(HttpServletRequest request, HttpServletResponse response) {
-        List<Item> items = gameEmailService.itemTree();
+    public Result<?> itemTree(
+            @RequestParam(name = "itemId", required = false) Integer itemId,
+            @RequestParam(name = "itemName", required = false) String itemName
+    ) {
+        List<Item> items = gameEmailService.itemTree(itemId, itemName);
         return Result.ok(items);
     }
 

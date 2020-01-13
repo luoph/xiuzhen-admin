@@ -42,11 +42,19 @@ public class Item implements Serializable {
         }
     };
 
+    public static final SimpleAttribute<Item, String> NAME = new SimpleAttribute<Item, String>("name") {
+        @Override
+        public String getValue(Item model, QueryOptions queryOptions) {
+            return model.name;
+        }
+    };
+
     public static IndexedCollection<Item> indexedCollection() {
         IndexedCollection<Item> indexedCollection = new ConcurrentIndexedCollection<>();
         indexedCollection.addIndex(HashIndex.onAttribute(ITEM_ID));
         indexedCollection.addIndex(NavigableIndex.onAttribute(TYPE));
         indexedCollection.addIndex(NavigableIndex.onAttribute(QUALITY));
+        indexedCollection.addIndex(NavigableIndex.onAttribute(NAME));
         return indexedCollection;
     }
 

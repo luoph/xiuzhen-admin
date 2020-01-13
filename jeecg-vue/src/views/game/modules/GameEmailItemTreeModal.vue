@@ -1,16 +1,38 @@
 <template>
-    <a-drawer
-        :title="title"
-        :width="width"
-        placement="right"
-        :closable="false"
-        @close="close"
-        :visible="visible"
-    >
+    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
+        <!-- 查询区域 -->
+        <div class="table-page-search-wrapper">
+            <a-form layout="inline" @keyup.enter.native="searchQuery">
+                <a-row :gutter="10">
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="道具ID">
+                            <a-input placeholder="请输入道具ID" v-model="queryParam.itemId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="道具名">
+                            <a-input placeholder="请输入道具名" v-model="queryParam.itemName"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-row :gutter="10">
+                        <a-col :md="4" :sm="8">
+                            <span style="float: right;" class="table-page-search-submitButtons">
+                                <a-button type="primary" @click="searchQuery">查询</a-button>
+                            </span>
+                        </a-col>
+                        <a-col :md="4" :sm="8">
+                            <span style="float: left;" class="table-page-search-submitButtons">
+                                <a-button type="primary" @click="searchReset">重置</a-button>
+                            </span>
+                        </a-col>
+                    </a-row>
+                </a-row>
+            </a-form>
+        </div>
         <div style="margin-bottom: 50px;">
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择
-                <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
             <div v-if="showError">
@@ -24,9 +46,9 @@
                 :columns="columns"
                 :dataSource="treeData"
                 :loading="loading"
-                :pagination="{pageSize:15}"
+                :pagination="{ pageSize: 15 }"
                 :scroll="{ y: 650 }"
-                :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <span slot="num" slot-scope="text, record">
