@@ -28,5 +28,5 @@ public interface IGameEmailService extends IService<GameEmail> {
      *
      * @return
      */
-    List<Item> itemTree();
+    List<Item> itemTree(Integer itemId, String itemName);
 }

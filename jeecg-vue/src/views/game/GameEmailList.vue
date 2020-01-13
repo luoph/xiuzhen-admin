@@ -21,11 +21,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="3" :sm="5">
                             <a-form-item label="类型">
-                                <a-select
-                                    ref="targetSelector"
-                                    v-model="queryParam.targetBodyType"
-                                    @change="selectTarget"
-                                >
+                                <a-select ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
                                     <a-select-option value>---请选择目标---</a-select-option>
                                     <a-select-option :value="1">玩家</a-select-option>
                                     <a-select-option :value="2">全服</a-select-option>
@@ -34,7 +30,7 @@
                         </a-col>
                         <a-col v-if="serverType" :md="6" :sm="8">
                             <a-form-item label="服务器">
-                                 <server-select @select="change"></server-select>
+                                <server-select @select="change"></server-select>
                             </a-form-item>
                         </a-col>
                         <a-col v-if="playerType" :md="6" :sm="8">
@@ -49,32 +45,16 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="时间">
-                                <j-date
-                                    placeholder="请选择开始日期"
-                                    class="query-group-cust"
-                                    v-model="queryParam.validStarTime_begin"
-                                ></j-date>
+                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validStarTime_begin"></j-date>
                                 <span class="query-group-cust"></span>
-                                <j-date
-                                    placeholder="请选择结束日期"
-                                    class="query-group-cust"
-                                    v-model="queryParam.validStarTime_end"
-                                ></j-date>
+                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validStarTime_end"></j-date>
                             </a-form-item>
                         </a-col>
                     </template>
                     <a-col :md="6" :sm="8">
-                        <span
-                            style="float: left;overflow: hidden;"
-                            class="table-page-search-submitButtons"
-                        >
+                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button
-                                type="primary"
-                                icon="reload"
-                                style="margin-left: 8px"
-                                @click="searchReset"
-                            >重置</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                             <a style="margin-left: 8px" @click="handleToggleSearch">
                                 {{ toggleSearchStatus ? "收起" : "展开" }}
                                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
@@ -221,7 +201,7 @@ export default {
             serverType: false,
             playerType: false,
             url: {
-                list: "game/gameEmail/list",
+                list: "game/gameEmail/list"
             },
             dictOptions: {}
         };
@@ -231,8 +211,7 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
         initDictConfig() {},
         selectTarget(target) {
