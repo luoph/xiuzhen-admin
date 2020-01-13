@@ -126,7 +126,8 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query1, queryOptions);
         } else if (itemName != null) {
             Equal<Item, String> query2 = QueryFactory.equal(Item.NAME, itemName);
-            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query2, queryOptions);
+            List<Item> items = configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query2, queryOptions);
+            return items;
         } else {
             return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, queryOptions);
         }

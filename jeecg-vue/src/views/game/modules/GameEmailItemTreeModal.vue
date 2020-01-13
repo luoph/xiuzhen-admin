@@ -3,7 +3,7 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="10">
+                <a-row :gutter="24">
                     <a-col :md="4" :sm="8">
                         <a-form-item label="道具ID">
                             <a-input placeholder="请输入道具ID" v-model="queryParam.itemId"></a-input>
@@ -14,18 +14,16 @@
                             <a-input placeholder="请输入道具名" v-model="queryParam.itemName"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-row :gutter="10">
-                        <a-col :md="4" :sm="8">
-                            <span style="float: right;" class="table-page-search-submitButtons">
-                                <a-button type="primary" @click="searchQuery">查询</a-button>
-                            </span>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
-                            <span style="float: left;" class="table-page-search-submitButtons">
-                                <a-button type="primary" @click="searchReset">重置</a-button>
-                            </span>
-                        </a-col>
-                    </a-row>
+                    <a-col :md="4" :sm="8">
+                        <span style="float: right;" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="search" @click="getItemTree">查询</a-button>
+                        </span>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <span style="float: left;" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+                        </span>
+                    </a-col>
                 </a-row>
             </a-form>
         </div>
@@ -78,6 +76,11 @@ export default {
             showError: false,
             treeData: [],
             pageSize: 20,
+            queryParam: {
+                itemId: null,
+                itemName: null
+            },
+            selectItems: [],
             // 表头
             columns: [
                 {
@@ -93,12 +96,14 @@ export default {
                 {
                     title: "道具ID",
                     align: "center",
-                    dataIndex: "itemId"
+                    dataIndex: "itemId",
+                    width: 60
                 },
                 {
                     title: "道具名",
                     align: "center",
-                    dataIndex: "name"
+                    dataIndex: "name",
+                    width: 100
                 },
                 {
                     title: "描述",
@@ -126,6 +131,7 @@ export default {
                 this.getItemTree();
             });
         });
+        this.queryParam = {};
     },
     methods: {
         initDictConfig() {},
@@ -142,16 +148,17 @@ export default {
         onSelectChange(selectedRowKeys, selectedRows) {
             this.selectedRowKeys = selectedRowKeys;
             this.selectedRows = selectedRows;
+            this.saveSelectItem();
         },
         handleOkGetItem() {
-            let itemSize = this.selectedRowKeys.length;
+            let itemSize = this.selectedRows.length;
             if (itemSize <= 0) {
                 this.close();
                 return;
             }
             let Items = [];
-            for (let i = 0; i < this.selectedRows.length; i++) {
-                let row = this.selectedRows[i];
+            for (let i = 0; i < this.selectItems.length; i++) {
+                let row = this.selectItems[i];
                 if (row.num === undefined || row.num === null || row.num <= 0) {
                     this.$message.error("第" + (i + 1) + "行数量错误！");
                     this.showError = true;
@@ -160,15 +167,24 @@ export default {
                 let json = '{"itemId":' + row.itemId + ',"num":' + row.num + "}";
                 Items.push(json);
             }
+
             let itemTreeResult = "[" + Items + "]";
             console.log(itemTreeResult);
             this.$emit("func", itemTreeResult);
             (this.showError = false), (this.showSuccess = true), (this.showWarning = false), this.close();
         },
         getItemTree: function() {
-            getAction(this.url.list).then(res => {
+            getAction(this.url.list, this.queryParam).then(res => {
                 this.treeData = res.result;
             });
+        },
+        saveSelectItem: function() {
+            let size = this.selectedRows.length;
+            if (size > 0) {
+                let index = size - 1;
+                let selectedItem = this.selectedRows[index];
+                this.selectItems.push(selectedItem);
+            }
         }
     }
 };
