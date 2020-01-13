@@ -20,7 +20,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="3" :sm="5">
                             <a-form-item label="类型">
-                                <a-select ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
+                                <a-select placeholder="目标类型" ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
                                     <a-select-option :value="1">玩家</a-select-option>
                                     <a-select-option :value="2">全服</a-select-option>
                                 </a-select>
@@ -104,8 +104,8 @@ export default {
             description: "游戏下发邮件管理页面",
             queryParam: {
                 targetBodyId: "",
-                validState: "",
-                targetBodyType: ""
+                validState: undefined,
+                targetBodyType: undefined
             },
             // 表头
             columns: [
