@@ -78,8 +78,7 @@
                 }
             ],
             "port": 6000,
-            "profile": "default",
-            // "firefoxExecutable": "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox",
+            //"firefoxExecutable": "C:\\Program Files\\Firefox Developer Edition",
             "firefoxArgs": ["-start-debugger-server", "-no-remote", "-devtools"],
             "reloadOnChange": {
                 "watch": ["${workspaceFolder}/**/*.js"],

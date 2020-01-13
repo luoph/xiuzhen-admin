@@ -6,14 +6,7 @@
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
                         <a-form-item label="区服Id">
-                            <a-select
-                                ref="serverSelector"
-                                placeholder="请选择区服Id"
-                                v-model="queryParam.serverId"
-                                :initialValue="serverList && serverList.length > 0 ? serverList[0].name : null"
-                            >
-                                <a-select-option v-for="server in serverList" :key="server.name" :value="server.id"> {{ server.name }} </a-select-option>
-                            </a-select>
+                            <server-select @select="change"></server-select>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -124,18 +117,19 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
 import PlayerInfoModal from "./modules/PlayerInfoModal";
-
 export default {
     name: "PlayerInfoList",
     mixins: [JeecgListMixin],
     components: {
-        PlayerInfoModal
+        PlayerInfoModal,
+        getAction
     },
     data() {
         return {
             description: "玩家信息管理页面",
-            serverList: [],
-            serverIdOption: true,
+            queryParam:{
+                serverId:""
+            },
             // 表头
             columns: [
                 {
@@ -206,13 +200,18 @@ export default {
             dictOptions: {}
         };
     },
+    created(){
+    },
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        change(serverId) {
+            this.queryParam.serverId = serverId;
+        }
     }
 };
 </script>

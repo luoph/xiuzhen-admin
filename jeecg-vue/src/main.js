@@ -43,6 +43,7 @@ import JDictSelectTag from "./components/dict/index.js";
 import hasPermission from "@/utils/hasPermission";
 import vueBus from "@/utils/vueBus";
 import JeecgComponents from "@/components/jeecg/index";
+import ServerSelect from "@/components/gameserver/index.js";
 
 Vue.config.productionTip = false;
 Vue.use(Storage, config.storageOptions);
@@ -57,6 +58,7 @@ Vue.component("apexchart", VueApexCharts);
 Vue.use(preview);
 Vue.use(vueBus);
 Vue.use(JeecgComponents);
+Vue.use(ServerSelect);
 
 new Vue({
     router,
