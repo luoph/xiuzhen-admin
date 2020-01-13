@@ -19,7 +19,7 @@
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="3" :sm="5">l
+                        <a-col :md="3" :sm="5">
                             <a-form-item label="类型">
                                 <a-select
                                     ref="targetSelector"
@@ -34,19 +34,7 @@
                         </a-col>
                         <a-col v-if="serverType" :md="6" :sm="8">
                             <a-form-item label="服务器">
-                                <a-select
-                                    ref="serverSelector"
-                                    placeholder="请选择区服Id"
-                                    v-model="queryParam.targetBodyId"
-                                    initialValue:queryParam.targetBodyId
-                                >
-                                    <a-select-option value="">---请选择目标---</a-select-option>
-                                    <a-select-option
-                                        v-for="server in serverList"
-                                        :key="server.name"
-                                        :value="server.id"
-                                    >{{ server.name }}</a-select-option>
-                                </a-select>
+                                 <server-select @select="change"></server-select>
                             </a-form-item>
                         </a-col>
                         <a-col v-if="playerType" :md="6" :sm="8">
@@ -125,7 +113,6 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameEmailModal from "./modules/GameEmailModal";
 import JDate from "@/components/jeecg/JDate.vue";
-import { getAction } from "@/api/manage";
 
 export default {
     name: "GameEmailList",
@@ -137,7 +124,6 @@ export default {
     data() {
         return {
             description: "游戏下发邮件管理页面",
-            serverList: [],
             queryParam: {
                 targetBodyId: "",
                 validState: "",
@@ -236,7 +222,6 @@ export default {
             playerType: false,
             url: {
                 list: "game/gameEmail/list",
-                serverListUrl: "game/gameServer/list"
             },
             dictOptions: {}
         };
@@ -247,7 +232,6 @@ export default {
         }
     },
     mounted() {
-        this.getServerList();
     },
     methods: {
         initDictConfig() {},
@@ -259,17 +243,14 @@ export default {
             } else if (`${target}` == 2) {
                 this.serverType = true;
                 this.playerType = false;
-                this.getServerList();
                 this.queryParam.targetBodyId = "";
             } else {
                 this.serverType = false;
                 this.playerType = false;
             }
         },
-        getServerList: function() {
-            getAction(this.url.serverListUrl).then(res => {
-                this.serverList = res.result.records;
-            });
+        change(serverId) {
+            this.queryParam.targetBodyId = serverId;
         }
     }
 };

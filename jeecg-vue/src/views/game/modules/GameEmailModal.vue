@@ -71,18 +71,7 @@
                     :labelCol="labelCol"
                     :wrapperCol="wrapperCol"
                 >
-                    <a-select
-                        ref="serverSelector"
-                        v-decorator="['targetBodyId',{'initialValue':0} ,validatorRules.targetBodyId]"
-                        style="width: 100%"
-                    >
-                        <a-select-option :value="0">---请选择服务器---</a-select-option>
-                        <a-select-option
-                            v-for="server in serverList"
-                            :key="server.name"
-                            :value="server.id"
-                        >{{ server.name }}</a-select-option>
-                    </a-select>
+                     <server-select @select="change"></server-select>
                 </a-form-item>
                 <a-form-item
                     v-if="playerType"
@@ -133,7 +122,6 @@ import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
-import { getAction } from "@/api/manage";
 import { Button } from "ant-design-vue";
 import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
 
@@ -143,7 +131,7 @@ export default {
         JDate,
         JSearchSelectTag,
         Button,
-        GameEmailItemTreeModal
+        GameEmailItemTreeModal,
     },
     data() {
         return {
@@ -186,7 +174,7 @@ export default {
         };
     },
     created() {
-        this.getServerList();
+        this.$form.createForm(this);
     },
     methods: {
         add() {
@@ -291,7 +279,6 @@ export default {
             } else if (e.target.value == 2) {
                 this.serverType = true;
                 this.playerType = false;
-                this.getServerList();
             }
         },
         contentType(e) {
@@ -311,10 +298,8 @@ export default {
             console.log(item);
             this.itemTree = item;
         },
-        getServerList: function() {
-            getAction(this.url.serverListUrl).then(res => {
-                this.serverList = res.result.records;
-            });
+        change(serverId) {
+            this.validatorRules.targetBodyId = serverId;
         }
     }
 };
