@@ -12,7 +12,6 @@
                     <a-col :md="3" :sm="5">
                         <a-form-item label="状态">
                             <a-select placeholder="邮件状态" v-model="queryParam.validState">
-                                <a-select-option value>--请选择--</a-select-option>
                                 <a-select-option :value="1">有效</a-select-option>
                                 <a-select-option :value="2">无效</a-select-option>
                             </a-select>
@@ -22,7 +21,6 @@
                         <a-col :md="3" :sm="5">
                             <a-form-item label="类型">
                                 <a-select ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
-                                    <a-select-option value>---请选择目标---</a-select-option>
                                     <a-select-option :value="1">玩家</a-select-option>
                                     <a-select-option :value="2">全服</a-select-option>
                                 </a-select>
