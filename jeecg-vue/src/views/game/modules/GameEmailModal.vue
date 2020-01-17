@@ -38,6 +38,7 @@
                 </a-form-item>
                 <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <server-select @select="change"></server-select>
+                    <a-input type="hidden" v-decorator="['targetBodyId', { initialValue: null }, validatorRules.targetBodyId]"></a-input>
                 </a-form-item>
                 <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['targetBodyId', { initialValue: null }, validatorRules.targetBodyId]" placeholder="请输入玩家ID" style="width: 100%" />
@@ -242,7 +243,11 @@ export default {
             this.itemTree = item;
         },
         change(serverId) {
-            this.validatorRules.targetBodyId = serverId;
+            console.log("serverId-->" + serverId);
+            /** 这里需要注意 form表单接收子组件值的问题 */
+            this.form.setFieldsValue({
+                targetBodyId: serverId
+            });
         }
     }
 };

@@ -162,6 +162,12 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
             @RequestParam(name = "itemId", required = false) Integer itemId,
             @RequestParam(name = "itemName", required = false) String itemName
     ) {
+
+        if (itemName != null) {
+            if ("".equals(itemName)) {
+                itemName = null;
+            }
+        }
         List<Item> items = gameEmailService.itemTree(itemId, itemName);
         return Result.ok(items);
     }
