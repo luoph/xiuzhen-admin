@@ -174,12 +174,6 @@ export default {
             (this.showError = false), (this.showSuccess = true), (this.showWarning = false), this.close();
         },
         getItemTree: function() {
-            if(this.queryParam.itemId == ' '){
-                this.queryParam.itemId == null;
-            }
-            if(this.queryParam.itemName == ' '){
-                this.queryParam.itemName == null;
-            }
             getAction(this.url.list, this.queryParam).then(res => {
                 this.treeData = res.result;
             });
