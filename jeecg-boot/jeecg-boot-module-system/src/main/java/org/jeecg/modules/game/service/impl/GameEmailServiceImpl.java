@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.logical.And;
-import com.googlecode.cqengine.query.logical.Or;
 import com.googlecode.cqengine.query.option.QueryOptions;
 import com.googlecode.cqengine.query.simple.Equal;
 import org.jeecg.common.okhttp.OkHttpHelper;
@@ -126,8 +125,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query1, queryOptions);
         } else if (itemName != null) {
             Equal<Item, String> query2 = QueryFactory.equal(Item.NAME, itemName);
-            List<Item> items = configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query2, queryOptions);
-            return items;
+            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query2, queryOptions);
         } else {
             return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, queryOptions);
         }
