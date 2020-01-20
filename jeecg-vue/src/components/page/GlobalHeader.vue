@@ -9,8 +9,8 @@
             <a-icon v-if="device === 'mobile'" class="trigger" :type="collapsed ? 'menu-fold' : 'menu-unfold'" @click.native="toggle"></a-icon>
             <a-icon v-else class="trigger" :type="collapsed ? 'menu-unfold' : 'menu-fold'" @click.native="toggle" />
 
-            <span v-if="device === 'desktop'">欢迎进入 Jeecg-Boot 企业级快速开发平台</span>
-            <span v-else>Jeecg-Boot</span>
+            <span v-if="device === 'desktop'">游戏管理后台</span>
+            <span v-else>游戏管理后台</span>
 
             <user-menu :theme="theme" />
         </div>

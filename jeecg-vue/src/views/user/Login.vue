@@ -1,75 +1,40 @@
 <template>
     <div class="main">
         <a-form :form="form" class="user-layout-login" ref="formLogin" id="formLogin">
-            <a-tabs :activeKey="customActiveKey" :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }" @change="handleTabClick">
-                <a-tab-pane key="tab1" tab="账号密码登录">
+            <a-form-item>
+                <a-input size="large" v-decorator="['username', validatorRules.username, { validator: handleUsernameOrEmail }]" type="text" placeholder="帐号">
+                    <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }" />
+                </a-input>
+            </a-form-item>
+
+            <a-form-item>
+                <a-input v-decorator="['password', validatorRules.password]" size="large" type="password" autocomplete="false" placeholder="密码">
+                    <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
+                </a-input>
+            </a-form-item>
+
+            <a-row :gutter="0">
+                <a-col :span="14">
                     <a-form-item>
-                        <a-input
-                            size="large"
-                            v-decorator="['username', validatorRules.username, { validator: handleUsernameOrEmail }]"
-                            type="text"
-                            placeholder="请输入帐户名 / jeecg"
-                        >
-                            <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }" />
+                        <a-input v-decorator="['inputCode', validatorRules.inputCode]" size="large" type="text" @change="inputCodeChange" placeholder="请输入验证码">
+                            <a-icon slot="prefix" v-if="inputCodeContent == verifiedCode" type="smile" :style="{ color: 'rgba(0,0,0,.25)' }" />
+                            <a-icon slot="prefix" v-else type="frown" :style="{ color: 'rgba(0,0,0,.25)' }" />
                         </a-input>
                     </a-form-item>
-
-                    <a-form-item>
-                        <a-input v-decorator="['password', validatorRules.password]" size="large" type="password" autocomplete="false" placeholder="密码 / 123456">
-                            <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
-                        </a-input>
-                    </a-form-item>
-
-                    <a-row :gutter="0">
-                        <a-col :span="14">
-                            <a-form-item>
-                                <a-input v-decorator="['inputCode', validatorRules.inputCode]" size="large" type="text" @change="inputCodeChange" placeholder="请输入验证码">
-                                    <a-icon slot="prefix" v-if="inputCodeContent == verifiedCode" type="smile" :style="{ color: 'rgba(0,0,0,.25)' }" />
-                                    <a-icon slot="prefix" v-else type="frown" :style="{ color: 'rgba(0,0,0,.25)' }" />
-                                </a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :span="10">
-                            <j-graphic-code @success="generateCode" ref="jgraphicCodeRef" style="float: right" remote></j-graphic-code>
-                        </a-col>
-                    </a-row>
-                </a-tab-pane>
-                <a-tab-pane key="tab2" tab="手机号登录">
-                    <a-form-item>
-                        <a-input v-decorator="['mobile', validatorRules.mobile]" size="large" type="text" placeholder="手机号">
-                            <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }" />
-                        </a-input>
-                    </a-form-item>
-
-                    <a-row :gutter="16">
-                        <a-col class="gutter-row" :span="16">
-                            <a-form-item>
-                                <a-input v-decorator="['captcha', validatorRules.captcha]" size="large" type="text" placeholder="请输入验证码">
-                                    <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }" />
-                                </a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col class="gutter-row" :span="8">
-                            <a-button
-                                class="getCaptcha"
-                                tabindex="-1"
-                                :disabled="state.smsSendBtn"
-                                @click.stop.prevent="getCaptcha"
-                                v-text="(!state.smsSendBtn && '获取验证码') || state.time + ' s'"
-                            ></a-button>
-                        </a-col>
-                    </a-row>
-                </a-tab-pane>
-            </a-tabs>
+                </a-col>
+                <a-col :span="10">
+                    <j-graphic-code @success="generateCode" ref="jgraphicCodeRef" style="float: right" remote></j-graphic-code>
+                </a-col>
+            </a-row>
 
             <a-form-item>
                 <a-checkbox v-decorator="['rememberMe', { initialValue: true, valuePropName: 'checked' }]">自动登录</a-checkbox>
                 <router-link :to="{ name: 'alteration' }" class="forge-password" style="float: right;">
                     忘记密码
                 </router-link>
-                <router-link :to="{ name: 'register' }" class="forge-password" style="float: right;margin-right: 10px">
+                <!-- <router-link :to="{ name: 'register' }" class="forge-password" style="float: right;margin-right: 10px">
                     注册账户
-                </router-link>
+                </router-link> -->
             </a-form-item>
 
             <a-form-item style="margin-top:24px">
@@ -136,7 +101,7 @@ export default {
     },
     data() {
         return {
-            customActiveKey: "tab1",
+            customActiveKey: "loginByAccount",
             loginBtn: false,
             // login type: 0 email, 1 username, 2 telephone
             loginType: 0,
@@ -197,7 +162,7 @@ export default {
             let loginParams = {};
             that.loginBtn = true;
             // 使用账户密码登录
-            if (that.customActiveKey === "tab1") {
+            if (that.customActiveKey === "loginByAccount") {
                 that.form.validateFields(["username", "password", "inputCode", "rememberMe"], { force: true }, (err, values) => {
                     if (!err) {
                         loginParams.username = values.username;

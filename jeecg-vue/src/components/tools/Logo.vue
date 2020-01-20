@@ -20,7 +20,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: "Jeecg-Boot Pro",
+            default: "1101 Studio",
             required: false
         },
         showTitle: {
