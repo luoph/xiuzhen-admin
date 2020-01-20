@@ -1,6 +1,7 @@
 package org.jeecg.modules.player.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -43,6 +44,12 @@ public class PayOrder implements Serializable {
      */
     @Excel(name = "平台方订单号", width = 15)
     private java.lang.String orderId;
+
+    /**
+     * 订单类型 1 - 正常 2 - 虚拟
+     */
+    @TableField(exist = false)
+    private Integer orderType;
 
     /**
      * 渠道key
