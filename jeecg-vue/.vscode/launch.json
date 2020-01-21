@@ -85,6 +85,22 @@
                 "watch": ["${workspaceFolder}/**/*.js"],
                 "ignore": ["${workspaceFolder}/node_modules/**"]
             }
+        },
+        {
+            "type": "edge",
+            "name": "edge-launch",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/src",
+            "userDataDir": "${workspaceRoot}/out/edge",
+            "breakOnLoad": true,
+            "sourceMaps": true,
+            "sourceMapPathOverrides": {
+                "webpack:///./src/*": "${webRoot}/*"
+            },
+            "pathMapping": {
+                "/": "${workspaceFolder}/src/views"
+            }
         }
     ]
 }
