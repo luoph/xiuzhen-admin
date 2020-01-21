@@ -88,9 +88,9 @@ export default {
                 });
             }
             // update-begin-author:taoyan date:20190510 for:online表单菜单点击展开的一级目录不对
-            if (!this.selectedKeys || this.selectedKeys[0].indexOf(":") < 0) {
-                this.collapsed ? (this.cachedOpenKeys = openKeys) : (this.openKeys = openKeys);
-            }
+            // if (!this.selectedKeys || this.selectedKeys[0].indexOf(":") < 0) {
+            //     this.collapsed ? (this.cachedOpenKeys = openKeys) : (this.openKeys = openKeys);
+            // }
             // update-end-author:taoyan date:20190510 for:online表单菜单点击展开的一级目录不对
         },
 

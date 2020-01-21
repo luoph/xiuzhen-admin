@@ -39,29 +39,6 @@
         },
         {
             "type": "firefox",
-            "request": "attach",
-            "name": "firefox-attach",
-            "url": "http://localhost:3000",
-            "port": 6080,
-            "webRoot": "${workspaceFolder}/src",
-            "reloadOnAttach": true,
-            "pathMappings": [
-                {
-                    "url": "webpack:///src/views",
-                    "path": "${workspaceFolder}/src/views"
-                },
-                {
-                    "url": "webpack:///src/",
-                    "path": "${webRoot}/"
-                }
-            ],
-            "reloadOnChange": {
-                "watch": ["${workspaceFolder}/**/*.js"],
-                "ignore": ["${workspaceFolder}/node_modules/**"]
-            }
-        },
-        {
-            "type": "firefox",
             "request": "launch",
             "reAttach": true,
             "name": "firefox-launch",
@@ -81,6 +58,29 @@
             "profile": "default",
             // "firefoxExecutable": "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox",
             "firefoxArgs": ["-start-debugger-server", "-no-remote", "-devtools"],
+            "reloadOnChange": {
+                "watch": ["${workspaceFolder}/**/*.js"],
+                "ignore": ["${workspaceFolder}/node_modules/**"]
+            }
+        },
+        {
+            "type": "firefox",
+            "request": "attach",
+            "name": "firefox-attach",
+            "url": "http://localhost:3000",
+            "port": 6080,
+            "webRoot": "${workspaceFolder}/src",
+            "reloadOnAttach": true,
+            "pathMappings": [
+                {
+                    "url": "webpack:///src/views",
+                    "path": "${workspaceFolder}/src/views"
+                },
+                {
+                    "url": "webpack:///src/",
+                    "path": "${webRoot}/"
+                }
+            ],
             "reloadOnChange": {
                 "watch": ["${workspaceFolder}/**/*.js"],
                 "ignore": ["${workspaceFolder}/node_modules/**"]
