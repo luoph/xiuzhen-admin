@@ -8,7 +8,7 @@
             </a-form-item>
 
             <a-form-item>
-                <a-input v-decorator="['password', validatorRules.password]" size="large" type="password" autocomplete="false" placeholder="密码">
+                <a-input size="large" v-decorator="['password', validatorRules.password]" type="password" autocomplete="false" placeholder="密码">
                     <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }" />
                 </a-input>
             </a-form-item>
@@ -16,7 +16,7 @@
             <a-row :gutter="0">
                 <a-col :span="14">
                     <a-form-item>
-                        <a-input v-decorator="['inputCode', validatorRules.inputCode]" size="large" type="text" @change="inputCodeChange" placeholder="请输入验证码">
+                        <a-input size="large" v-decorator="['inputCode', validatorRules.inputCode]" type="text" @change="inputCodeChange" placeholder="验证码">
                             <a-icon slot="prefix" v-if="inputCodeContent == verifiedCode" type="smile" :style="{ color: 'rgba(0,0,0,.25)' }" />
                             <a-icon slot="prefix" v-else type="frown" :style="{ color: 'rgba(0,0,0,.25)' }" />
                         </a-input>
@@ -49,9 +49,9 @@
         <a><a-icon class="item-icon" type="taobao-circle"></a-icon></a>
         <a><a-icon class="item-icon" type="weibo-circle"></a-icon></a>
         <router-link class="register" :to="{ name: 'register' }">
-          注册账户
+            注册账户
         </router-link>
-      </div>-->
+        </div>-->
         </a-form>
 
         <two-step-captcha v-if="requiredTwoStepCaptcha" :visible="stepCaptchaVisible" @success="stepCaptchaSuccess" @cancel="stepCaptchaCancel"></two-step-captcha>
