@@ -189,6 +189,12 @@ export default {
                         });
                 }
             });
+            if(this.validatorRules.content !== null){
+                this.form.setFieldsValue({
+                    content:null,
+                });
+            }
+
         },
         handleCancel() {
             this.close();
