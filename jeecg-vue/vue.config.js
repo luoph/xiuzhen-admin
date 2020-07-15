@@ -23,8 +23,8 @@ module.exports = {
     configureWebpack: config => {
         if (debug) {
             // 测试环境
-            // config.devtool = "cheap-module-eval-source-map";
-            config.devtool = "source-map";
+            config.devtool = "cheap-module-eval-source-map";
+            // config.devtool = "cheap-module-source-map";
         } else {
             config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
         }
