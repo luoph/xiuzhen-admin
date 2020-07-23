@@ -87,8 +87,8 @@ export default {
             getAction(this.url.syncLog, this.getQueryParams()).then(res => {
                 if (res.success) {
                     this.$message.success("日志同步成功!");
-                    that.confirmLoading = false;
                     that.close();
+                    that.confirmLoading = true;
                 } else {
                     this.$message.error("日志同步失败");
                 }

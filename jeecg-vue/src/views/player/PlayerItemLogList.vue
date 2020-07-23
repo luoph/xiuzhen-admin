@@ -40,7 +40,16 @@
 
         <!-- table区域-begin -->
         <div>
-            <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading"> </a-table>
+            <a-table 
+                ref="table" 
+                size="middle" 
+                bordered rowKey="id" 
+                :columns="columns" 
+                :dataSource="dataSource" 
+                :pagination="ipagination" 
+                :loading="loading"
+                @change="handleTableChange"> 
+            </a-table>
         </div>
 
         <playerItemLog-modal ref="playerItemLogModal" @ok="modalFormOk"></playerItemLog-modal>

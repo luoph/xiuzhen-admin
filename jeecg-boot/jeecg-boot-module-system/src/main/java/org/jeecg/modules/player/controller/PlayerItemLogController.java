@@ -1,5 +1,6 @@
 package org.jeecg.modules.player.controller;
 
+import cn.youai.commons.model.ResponseCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -79,7 +80,11 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
         if (gameServer == null) {
             return Result.error("所选服务器不存在！");
         }
-        backpackLogService.syncBackpackLog(backpackLog, serverId, req.getParameterMap(), syncTimeBegin, syncTimeEnd);
-        return Result.ok("同步成功!");
+        ResponseCode responseCode = backpackLogService.syncBackpackLog(backpackLog, serverId, req.getParameterMap(), syncTimeBegin, syncTimeEnd);
+        if (responseCode.isSuccess()) {
+            return Result.ok("同步成功!");
+        } else {
+            return Result.error(responseCode.getCode(), responseCode.getDesc());
+        }
     }
 }
