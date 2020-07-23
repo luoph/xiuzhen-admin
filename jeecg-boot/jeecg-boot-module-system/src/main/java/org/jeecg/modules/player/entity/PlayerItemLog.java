@@ -29,19 +29,19 @@ public class PlayerItemLog implements Serializable {
      * 自增id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 服务器id
      */
     @Excel(name = "服务器id", width = 15)
-    private java.lang.Integer serverId;
+    private java.lang.Long serverId;
 
     /**
      * 玩家id
      */
     @Excel(name = "玩家id", width = 15)
-    private java.lang.Integer playerId;
+    private java.lang.Long playerId;
 
     /**
      * 道具id
@@ -53,7 +53,7 @@ public class PlayerItemLog implements Serializable {
      * 数量
      */
     @Excel(name = "数量", width = 15)
-    private java.lang.Integer num;
+    private java.lang.Long num;
 
     /**
      * 途径

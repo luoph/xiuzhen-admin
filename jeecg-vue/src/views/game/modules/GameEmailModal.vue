@@ -249,7 +249,6 @@ export default {
             this.itemTree = item;
         },
         change(serverId) {
-            console.log("serverId-->" + serverId);
             /** 这里需要注意 form表单接收子组件值的问题 */
             this.form.setFieldsValue({
                 targetBodyId: serverId
