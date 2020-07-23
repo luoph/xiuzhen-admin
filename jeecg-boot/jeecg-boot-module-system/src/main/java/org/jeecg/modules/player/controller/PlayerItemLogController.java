@@ -85,7 +85,7 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
         if (responseCode.isSuccess()) {
             return Result.ok("同步成功!");
         } else {
-            return Result.error(responseCode.getCode(), responseCode.getDesc());
+            return Result.error(responseCode.getDesc());
         }
     }
 }
