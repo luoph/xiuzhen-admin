@@ -22,7 +22,7 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 
     @Override
     public PlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog) {
-        return new PlayerItemLog().setServerId(serverId).setPlayerId(backpacklog.getPlayerId())
+        return new PlayerItemLog().setServerId(serverId).setPlayerId(backpacklog.getPlayerId()).setType(backpacklog.getType())
                 .setWay(backpacklog.getWay()).setSyncTime(backpacklog.getCreateDate()).setItemId(backpacklog.getItemId())
                 .setNum(backpacklog.getNum()).setCreateTime(backpacklog.getCreateTime()).setUpdateTime(DateUtils.now());
     }
