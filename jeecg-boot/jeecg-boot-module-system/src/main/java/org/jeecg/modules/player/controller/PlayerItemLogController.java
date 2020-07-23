@@ -58,6 +58,7 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         QueryWrapper<PlayerItemLog> queryWrapper = QueryGenerator.initQueryWrapper(playerItemLog, req.getParameterMap());
+        queryWrapper.orderByDesc("create_time");
         Page<PlayerItemLog> page = new Page<>(pageNo, pageSize);
         IPage<PlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
         return Result.ok(pageList);
