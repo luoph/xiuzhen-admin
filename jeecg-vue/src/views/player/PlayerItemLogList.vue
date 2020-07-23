@@ -141,7 +141,9 @@ export default {
         initDictConfig() {},
         getQueryParams() {
             let param = Object.assign({}, this.queryParam, this.isorter);
-            // 范围参数不传递后台
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            
             delete param.syncTimeRange;
             return filterObj(param);
         },
