@@ -1,5 +1,6 @@
 package org.jeecg.config;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -85,11 +86,22 @@ public class DataSourceConfig {
         properties.put(DruidDataSourceFactory.PROP_PASSWORD, password);
         properties.put(DruidDataSourceFactory.PROP_DRIVERCLASSNAME, DRIVER_NAME);
         try {
-            return DruidDataSourceFactory.createDataSource(properties);
+            DruidDataSource dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
+            dataSource.setBreakAfterAcquireFailure(true);
+            dataSource.setRemoveAbandoned(false);
+            dataSource.setRemoveAbandonedTimeout(600);
+            dataSource.setLogAbandoned(true);
+            dataSource.setBreakAfterAcquireFailure(true);
+            dataSource.setTimeBetweenConnectErrorMillis(60);
+            dataSource.setConnectionErrorRetryAttempts(10);
+            dataSource.setMaxWait(3000);
+            // 这行代码很重要，如果不加不会立即建立数据库连接，也就无法检测连接是否正确
+            dataSource.getConnection();
+            return dataSource;
         } catch (Exception e) {
             log.error("createDataSource error, url:" + url, e);
+            throw new RuntimeException(e);
         }
-        return null;
     }
 }
 

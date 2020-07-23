@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
-import java.text.MessageFormat;
 
 /**
  * @author luopeihuan
