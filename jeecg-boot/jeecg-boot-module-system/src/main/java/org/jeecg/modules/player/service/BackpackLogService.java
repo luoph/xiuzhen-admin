@@ -1,6 +1,7 @@
 package org.jeecg.modules.player.service;
 
 
+import cn.youai.commons.model.ResponseCode;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.player.entity.BackpackLog;
 
@@ -23,5 +24,5 @@ public interface BackpackLogService extends IService<BackpackLog> {
      * @param syncTimeBegin
      * @param syncTimeEnd
      */
-    void syncBackpackLog(BackpackLog model, int serverId, Map<String, String[]> paramMap, String syncTimeBegin, String syncTimeEnd);
+    ResponseCode syncBackpackLog(BackpackLog model, int serverId, Map<String, String[]> paramMap, String syncTimeBegin, String syncTimeEnd);
 }

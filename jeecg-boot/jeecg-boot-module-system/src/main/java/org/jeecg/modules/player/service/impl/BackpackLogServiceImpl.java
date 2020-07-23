@@ -1,5 +1,6 @@
 package org.jeecg.modules.player.service.impl;
 
+import cn.youai.commons.model.ResponseCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, Backp
     private IPlayerItemLogService playerItemLogService;
 
     @Override
-    public void syncBackpackLog(BackpackLog model, int serverId, Map<String, String[]> paramMap, String syncTimeBegin, String syncTimeEnd) {
+    public ResponseCode syncBackpackLog(BackpackLog model, int serverId, Map<String, String[]> paramMap, String syncTimeBegin, String syncTimeEnd) {
         try {
             // 切换数据源设置查询器的初始查询条件
             DataSourceHelper.useServerDatabase(serverId);
@@ -48,12 +49,15 @@ public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, Backp
                     playerItemLogs.add(playerItemLog);
                 }
                 playerItemLogService.saveBatchLog(playerItemLogs);
+                return ResponseCode.SUCCESS;
             }
+            return new ResponseCode(303, "没有可同步的数据！");
         } catch (Exception e) {
             log.error("query error:" + e.getMessage());
         } finally {
             DataSourceHelper.useDefaultDatabase();
         }
+        return ResponseCode.SYS_ERROR;
     }
 
 }
