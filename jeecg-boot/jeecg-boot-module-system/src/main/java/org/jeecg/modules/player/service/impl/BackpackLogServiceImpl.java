@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,17 @@ public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, Backp
                     PlayerItemLog playerItemLog = playerItemLogService.writePlayerItemLog(serverId, log);
                     playerItemLogs.add(playerItemLog);
                 }
-                playerItemLogService.saveBatchLog(playerItemLogs);
+                Map<PlayerItemLog, PlayerItemLog> map = new HashMap<>(1);
+                for (PlayerItemLog playerItemLog : playerItemLogs) {
+                    PlayerItemLog log = map.get(playerItemLog);
+                    if (log == null) {
+                        map.put(playerItemLog, playerItemLog);
+                    } else {
+                        log.setNum(log.getNum() + playerItemLog.getNum());
+                    }
+                }
+                List<PlayerItemLog> logArrayList = new ArrayList<>(map.values());
+                playerItemLogService.saveBatchLog(logArrayList);
                 return ResponseCode.SUCCESS;
             } else {
                 return new ResponseCode(303, "没有可同步的数据！");
