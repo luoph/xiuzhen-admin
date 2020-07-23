@@ -68,14 +68,14 @@ export default {
             delete param.syncTimeRange;
             return filterObj(param);
         },
-        onDateChange: function(value, dateString) {
+        onDateChange: function (value, dateString) {
             this.queryParam.syncTimeBegin = dateString[0];
             this.queryParam.syncTimeEnd = dateString[1];
         },
         change(serverId) {
             this.queryParam.serverId = serverId;
         },
-        handleOkSyncLog: function() {
+        handleOkSyncLog: function () {
             const that = this;
             if (this.queryParam.serverId == null || this.queryParam.serverId <= 0) {
                 this.$message.error("请选择服务器");
@@ -84,15 +84,20 @@ export default {
                 this.$message.error("请选择同步的游戏日期");
                 return;
             }
-            getAction(this.url.syncLog, this.getQueryParams()).then(res => {
-                if (res.success) {
-                    this.$message.success("日志同步成功!");
+            that.confirmLoading = true;
+            getAction(this.url.syncLog, this.getQueryParams())
+                .then((res) => {
+                    if (res.success) {
+                        that.$message.success("日志同步成功!");
+                        that.$emit("ok");
+                    } else {
+                        that.$message.error(res.message);
+                    }
+                })
+                .finally(() => {
+                    that.confirmLoading = false;
                     that.close();
-                    that.confirmLoading = true;
-                } else {
-                    this.$message.error("日志同步失败");
-                }
-            });
+                });
         },
         close() {
             this.$emit("close");
