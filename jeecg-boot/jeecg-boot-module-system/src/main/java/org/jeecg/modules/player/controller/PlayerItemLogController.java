@@ -2,13 +2,18 @@ package org.jeecg.modules.player.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.service.IGameServerService;
+import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.PlayerItemLog;
+import org.jeecg.modules.player.service.BackpackLogService;
 import org.jeecg.modules.player.service.IPlayerItemLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +36,10 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
 
     @Autowired
     private IPlayerItemLogService playerItemLogService;
+    @Autowired
+    private IGameServerService gameServerService;
+    @Autowired
+    private BackpackLogService backpackLogService;
 
     /**
      * 分页列表查询
@@ -53,4 +62,24 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
         return Result.ok(pageList);
     }
 
+    /**
+     * 编辑
+     *
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "手动同步日志-编辑")
+    @GetMapping(value = "/sync")
+    public Result<?> edit(BackpackLog backpackLog,
+                          @RequestParam(name = "syncTimeBegin") String syncTimeBegin,
+                          @RequestParam(name = "syncTimeEnd") String syncTimeEnd,
+                          @RequestParam(name = "serverId") Integer serverId,
+                          HttpServletRequest req
+    ) {
+        GameServer gameServer = gameServerService.getOne(Wrappers.<GameServer>lambdaQuery().eq(GameServer::getId, serverId));
+        if (gameServer == null) {
+            return Result.error("所选服务器不存在！");
+        }
+        backpackLogService.syncBackpackLog(backpackLog, serverId, req.getParameterMap(), syncTimeBegin, syncTimeEnd);
+        return Result.ok("同步成功!");
+    }
 }

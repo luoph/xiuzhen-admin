@@ -10,7 +10,7 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="玩家Id">
+                        <a-form-item label="玩家ID">
                             <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
@@ -24,9 +24,13 @@
                             <a-range-picker v-model="queryParam.syncTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="8" :sm="10">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                        </span>
+                    
+                        <span style="float: left;overflow: hidden; margin-left:20px" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="plus" @click="handleAddSync">同步</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -38,6 +42,8 @@
         <div>
             <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading"> </a-table>
         </div>
+
+        <playerItemLog-modal ref="playerItemLogModal" @ok="modalFormOk"></playerItemLog-modal>
     </a-card>
 </template>
 
@@ -45,12 +51,14 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import { filterObj } from "@/utils/util";
+import PlayerItemLogModal from "./modules/PlayerItemLogModal";
 
 export default {
     name: "PlayerItemLogList",
     mixins: [JeecgListMixin],
     components: {
-        JDate
+        JDate,
+        PlayerItemLogModal
     },
     data() {
         return {
@@ -134,6 +142,9 @@ export default {
         },
         change(serverId) {
             this.queryParam.serverId = serverId;
+        },
+        handleAddSync() {
+            this.$refs.playerItemLogModal.visible = true;
         }
     }
 };
