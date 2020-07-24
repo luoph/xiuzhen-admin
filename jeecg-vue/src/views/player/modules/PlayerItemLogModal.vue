@@ -86,9 +86,9 @@ export default {
             if (this.queryParam.serverId == null || this.queryParam.serverId <= 0) {
                 this.$message.error("请选择服务器");
                 return;
-            } else if (this.queryParam.playerId == null || this.queryParam.playerId == "" || this.queryParam.playerId <= 0) {
-                this.$message.error("请输入玩家ID");
-                return;
+            // } else if (this.queryParam.playerId == null || this.queryParam.playerId == "" || this.queryParam.playerId <= 0) {
+            //     this.$message.error("请输入玩家ID");
+            //     return;
             }else if (this.queryParam.syncTimeBegin == null || this.queryParam.syncTimeEnd == null) {
                 this.$message.error("请选择同步的游戏日期");
                 return;
