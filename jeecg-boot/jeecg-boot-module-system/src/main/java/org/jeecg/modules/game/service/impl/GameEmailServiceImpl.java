@@ -36,7 +36,7 @@ import java.util.List;
 public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail> implements IGameEmailService {
 
     /**
-     * 有附件的邮件 1有附件 2无附件
+     * 有附件的邮件 1无附件 2有附件
      */
     private static final int EMAIL_CONTENT_TYPE = 2;
 

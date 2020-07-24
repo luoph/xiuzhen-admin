@@ -142,6 +142,7 @@ export default {
             this.showError = false;
             this.selectedRowKeys = [];
             this.selectedRows = [];
+            this.selectItems = [];
         },
         handleCancel() {
             this.close();
@@ -180,14 +181,13 @@ export default {
             });
         },
         saveSelectItem: function () {
+            this.selectItems = [];
             let size = this.selectedRows.length;
             if (size > 0) {
                 for (let index = 0; index < size; index++) {
                     let selectedItem = this.selectedRows[index];
                     this.selectItems.push(selectedItem);
                 }
-            } else {
-                this.selectItems=[];
             }
         }
     }
