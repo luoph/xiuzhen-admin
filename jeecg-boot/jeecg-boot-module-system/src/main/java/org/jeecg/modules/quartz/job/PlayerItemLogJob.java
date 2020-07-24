@@ -10,6 +10,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +35,11 @@ public class PlayerItemLogJob implements Job {
                 if (backpackLogService != null) {
                     BackpackLog backpackLog = new BackpackLog();
                     Map<String, String[]> paramMap = new HashMap<>(2);
-                    String syncStarDate = DateUtils.formatDateTimeStr(DateUtils.gameStartTimeOfDate(DateUtils.now()));
-                    String syncEndDate = DateUtils.formatDateTimeStr(DateUtils.gameEndTimeOfDate(DateUtils.now()));
+                    // 同步游戏日期的前一天
+                    Date gameDate = DateUtils.gameDate(DateUtils.addDays(DateUtils.now(), -1));
+                    String syncStarDate = DateUtils.formatDateTimeStr(DateUtils.startTimeOfDate(gameDate));
+                    String syncEndDate = DateUtils.formatDateTimeStr(DateUtils.endTimeOfDate(gameDate));
+
                     paramMap.put("syncTimeBegin", new String[]{syncStarDate});
                     paramMap.put("syncTimeEnd", new String[]{syncEndDate});
                     for (GameServer gameServer : gameServers) {
