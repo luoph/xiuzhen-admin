@@ -75,7 +75,7 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
                           @RequestParam(name = "syncTimeBegin") String syncTimeBegin,
                           @RequestParam(name = "syncTimeEnd") String syncTimeEnd,
                           @RequestParam(name = "serverId") Integer serverId,
-                          @RequestParam(name = "playerId") Integer playerId,
+                          @RequestParam(name = "playerId", defaultValue = "0", required = false) Integer playerId,
                           HttpServletRequest req
     ) {
         GameServer gameServer = gameServerService.getOne(Wrappers.<GameServer>lambdaQuery().eq(GameServer::getId, serverId));

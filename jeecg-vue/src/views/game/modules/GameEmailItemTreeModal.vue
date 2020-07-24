@@ -21,7 +21,7 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <span style="float: left;" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px;" @click="searchReset">重置</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -29,9 +29,9 @@
         </div>
         <div style="margin-bottom: 50px;">
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600;">{{ selectedRowKeys.length }}</a
                 >项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+                <a style="margin-left: 24px;" @click="onClearSelected">清空</a>
             </div>
             <div v-if="showError">
                 <a-alert message="错误选择" description="所选记录没有数量！" type="error" showIcon />
@@ -89,7 +89,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -125,8 +125,9 @@ export default {
         };
     },
     created() {
-        this.$nextTick(function() {
-            this.$on("getItemTree", function() {
+        this.$form.createForm(this);
+        this.$nextTick(function () {
+            this.$on("getItemTree", function () {
                 console.log("监听成功");
                 this.getItemTree();
             });
@@ -151,7 +152,7 @@ export default {
             this.saveSelectItem();
         },
         handleOkGetItem() {
-            let itemSize = this.selectedRows.length;
+            let itemSize = this.selectItems.length;
             if (itemSize <= 0) {
                 this.close();
                 return;
@@ -173,17 +174,20 @@ export default {
             this.$emit("func", itemTreeResult);
             (this.showError = false), (this.showSuccess = true), (this.showWarning = false), this.close();
         },
-        getItemTree: function() {
-            getAction(this.url.list, this.queryParam).then(res => {
+        getItemTree: function () {
+            getAction(this.url.list, this.queryParam).then((res) => {
                 this.treeData = res.result;
             });
         },
-        saveSelectItem: function() {
+        saveSelectItem: function () {
             let size = this.selectedRows.length;
             if (size > 0) {
-                let index = size - 1;
-                let selectedItem = this.selectedRows[index];
-                this.selectItems.push(selectedItem);
+                for (let index = 0; index < size; index++) {
+                    let selectedItem = this.selectedRows[index];
+                    this.selectItems.push(selectedItem);
+                }
+            } else {
+                this.selectItems=[];
             }
         }
     }
