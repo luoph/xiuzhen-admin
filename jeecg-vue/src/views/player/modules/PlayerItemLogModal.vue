@@ -9,6 +9,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="10" :sm="8">
+                        <a-form-item label="玩家ID">
+                            <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="10" :sm="8">
                         <a-form-item label="同步时间：" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-range-picker v-model="queryParam.syncTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                         </a-form-item>
@@ -50,7 +55,8 @@ export default {
             queryParam: {
                 serverId: null,
                 syncTimeBegin: null,
-                syncTimeEnd: null
+                syncTimeEnd: null,
+                playerId: null
             },
             url: {
                 syncLog: "player/playerItemLog/sync"
@@ -80,7 +86,10 @@ export default {
             if (this.queryParam.serverId == null || this.queryParam.serverId <= 0) {
                 this.$message.error("请选择服务器");
                 return;
-            } else if (this.queryParam.syncTimeBegin == null || this.queryParam.syncTimeEnd == null) {
+            } else if (this.queryParam.playerId == null || this.queryParam.playerId == "" || this.queryParam.playerId <= 0) {
+                this.$message.error("请输入玩家ID");
+                return;
+            }else if (this.queryParam.syncTimeBegin == null || this.queryParam.syncTimeEnd == null) {
                 this.$message.error("请选择同步的游戏日期");
                 return;
             }

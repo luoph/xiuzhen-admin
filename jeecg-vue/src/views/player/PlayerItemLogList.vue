@@ -25,11 +25,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="8" :sm="10">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                        <span style="float: left; overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                         </span>
-                    
-                        <span style="float: left;overflow: hidden; margin-left:20px" class="table-page-search-submitButtons">
+
+                        <span style="float: left; overflow: hidden; margin-left: 20px;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="plus" @click="handleAddSync">同步</a-button>
                         </span>
                     </a-col>
@@ -40,15 +40,17 @@
 
         <!-- table区域-begin -->
         <div>
-            <a-table 
-                ref="table" 
-                size="middle" 
-                bordered rowKey="id" 
-                :columns="columns" 
-                :dataSource="dataSource" 
-                :pagination="ipagination" 
+            <a-table
+                ref="table"
+                size="middle"
+                bordered
+                rowKey="id"
+                :columns="columns"
+                :dataSource="dataSource"
+                :pagination="ipagination"
                 :loading="loading"
-                @change="handleTableChange"> 
+                @change="handleTableChange"
+            >
             </a-table>
         </div>
 
@@ -80,7 +82,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -110,18 +112,28 @@ export default {
                     dataIndex: "way"
                 },
                 {
+                    title: "更新前数量",
+                    align: "center",
+                    dataIndex: "beforeNum"
+                },
+                {
+                    title: "更新后数量",
+                    align: "center",
+                    dataIndex: "afterNum"
+                },
+                {
                     title: "方式",
                     align: "center",
                     dataIndex: "type",
-                    customRender: function(text) {
-                        return text == 1 ? "获取" : "使用";
+                    customRender: function (text) {
+                        return text == 1 ? "存入" : "支出";
                     }
                 },
                 {
                     title: "同步时间",
                     align: "center",
                     dataIndex: "syncTime",
-                    customRender: function(text) {
+                    customRender: function (text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 }
@@ -133,7 +145,7 @@ export default {
         };
     },
     computed: {
-        importExcelUrl: function() {
+        importExcelUrl: function () {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
@@ -143,11 +155,11 @@ export default {
             let param = Object.assign({}, this.queryParam, this.isorter);
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
-            
+
             delete param.syncTimeRange;
             return filterObj(param);
         },
-        onDateChange: function(value, dateString) {
+        onDateChange: function (value, dateString) {
             this.queryParam.syncTime_begin = dateString[0];
             this.queryParam.syncTime_end = dateString[1];
         },

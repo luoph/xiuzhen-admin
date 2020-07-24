@@ -44,7 +44,7 @@ public class PlayerItemLogJob implements Job {
                     paramMap.put("syncTimeBegin", new String[]{syncStarDate});
                     paramMap.put("syncTimeEnd", new String[]{syncEndDate});
                     for (GameServer gameServer : gameServers) {
-                        backpackLogService.syncBackpackLog(backpackLog, gameServer.getId(), paramMap, syncStarDate, syncEndDate);
+                        backpackLogService.syncBackpackLog(backpackLog, gameServer.getId(), 0, paramMap, syncStarDate, syncEndDate);
                     }
                 }
             }
