@@ -11,13 +11,15 @@
         <result column="num" property="num"/>
         <result column="type" property="type"/>
         <result column="way" property="way"/>
+        <result column="before_num" property="beforeNum"/>
+        <result column="after_num" property="afterNum"/>
         <result column="create_date" property="createDate"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, player_id, item_id, num, `type`, way, create_date, create_time
+        id, player_id, item_id, num, `type`, way, before_num, after_num, create_date, create_time
     </sql>
 
 </mapper>

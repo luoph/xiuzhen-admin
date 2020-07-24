@@ -75,13 +75,14 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
                           @RequestParam(name = "syncTimeBegin") String syncTimeBegin,
                           @RequestParam(name = "syncTimeEnd") String syncTimeEnd,
                           @RequestParam(name = "serverId") Integer serverId,
+                          @RequestParam(name = "playerId") Integer playerId,
                           HttpServletRequest req
     ) {
         GameServer gameServer = gameServerService.getOne(Wrappers.<GameServer>lambdaQuery().eq(GameServer::getId, serverId));
         if (gameServer == null) {
             return Result.error("所选服务器不存在！");
         }
-        ResponseCode responseCode = backpackLogService.syncBackpackLog(backpackLog, serverId, req.getParameterMap(), syncTimeBegin, syncTimeEnd);
+        ResponseCode responseCode = backpackLogService.syncBackpackLog(backpackLog, playerId, serverId, req.getParameterMap(), syncTimeBegin, syncTimeEnd);
         if (responseCode.isSuccess()) {
             return Result.ok("同步成功!");
         } else {

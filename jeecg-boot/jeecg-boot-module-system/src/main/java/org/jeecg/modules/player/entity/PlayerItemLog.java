@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -78,6 +76,18 @@ public class PlayerItemLog implements Serializable {
     private java.util.Date syncTime;
 
     /**
+     * 同步时间
+     */
+    @Excel(name = "更新前数量", width = 15)
+    private java.lang.Long beforeNum;
+
+    /**
+     * 同步时间
+     */
+    @Excel(name = "更新后数量", width = 15)
+    private java.lang.Long afterNum;
+
+    /**
      * 创建时间
      */
     @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
@@ -93,37 +103,37 @@ public class PlayerItemLog implements Serializable {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date updateTime;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (!(o instanceof PlayerItemLog)) {
-            return false;
-        }
-
-        PlayerItemLog that = (PlayerItemLog) o;
-
-        return new EqualsBuilder()
-                .append(getServerId(), that.getServerId())
-                .append(getPlayerId(), that.getPlayerId())
-                .append(getItemId(), that.getItemId())
-                .append(getWay(), that.getWay())
-                .append(getType(), that.getType())
-                .append(getSyncTime(), that.getSyncTime())
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(getServerId())
-                .append(getPlayerId())
-                .append(getItemId())
-                .append(getWay())
-                .append(getType())
-                .append(getSyncTime())
-                .toHashCode();
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) {
+//            return true;
+//        }
+//
+//        if (!(o instanceof PlayerItemLog)) {
+//            return false;
+//        }
+//
+//        PlayerItemLog that = (PlayerItemLog) o;
+//
+//        return new EqualsBuilder()
+//                .append(getServerId(), that.getServerId())
+//                .append(getPlayerId(), that.getPlayerId())
+//                .append(getItemId(), that.getItemId())
+//                .append(getWay(), that.getWay())
+//                .append(getType(), that.getType())
+//                .append(getSyncTime(), that.getSyncTime())
+//                .isEquals();
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return new HashCodeBuilder(17, 37)
+//                .append(getServerId())
+//                .append(getPlayerId())
+//                .append(getItemId())
+//                .append(getWay())
+//                .append(getType())
+//                .append(getSyncTime())
+//                .toHashCode();
+//    }
 }
