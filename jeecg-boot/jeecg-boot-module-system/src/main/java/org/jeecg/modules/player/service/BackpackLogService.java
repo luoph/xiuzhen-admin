@@ -24,5 +24,5 @@ public interface BackpackLogService extends IService<BackpackLog> {
      * @param syncTimeBegin
      * @param syncTimeEnd
      */
-    ResponseCode syncBackpackLog(BackpackLog model, int serverId, Map<String, String[]> paramMap, String syncTimeBegin, String syncTimeEnd);
+    ResponseCode syncBackpackLog(BackpackLog model, long playerId, int serverId, Map<String, String[]> paramMap, String syncTimeBegin, String syncTimeEnd);
 }

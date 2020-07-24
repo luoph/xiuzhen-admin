@@ -1,6 +1,7 @@
 package org.jeecg.modules.quartz.job;
 
 import cn.youai.xiuzhen.utils.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.util.SpringContextUtils;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameServerService;
@@ -8,7 +9,6 @@ import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.service.BackpackLogService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -23,10 +23,11 @@ import java.util.Map;
  * @Since 1.0
  * @Date 2020-07-23 10:36
  */
+@Slf4j
 public class PlayerItemLogJob implements Job {
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         IGameServerService gameServerService = SpringContextUtils.getBean(IGameServerService.class);
         if (gameServerService != null) {
             List<GameServer> gameServers = gameServerService.list();

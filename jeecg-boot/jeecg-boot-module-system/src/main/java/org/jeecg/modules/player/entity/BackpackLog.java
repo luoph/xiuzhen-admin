@@ -46,6 +46,16 @@ public class BackpackLog implements Serializable {
      */
     private Integer way;
 
+    /**
+     * 变化前
+     */
+    private Long beforeNum;
+
+    /**
+     * 变化后
+     */
+    private Long afterNum;
+
     private Date createDate;
 
     private Date createTime;
