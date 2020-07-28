@@ -17,12 +17,7 @@
                 </a-form-item>
                 <a-form-item v-if="contentData" :visible.sync="contentData" label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
-                    <a-textarea
-                        v-decorator="['content', { initialValue: itemTree }, validatorRules.content]"
-                        placeholder="请输入附件"
-                        :autosize="{ minRows: 2, maxRows: 6 }"
-                        read-only
-                    />
+                    <a-textarea v-decorator="['content', { initialValue: itemTree }, validatorRules.content]" placeholder="请输入附件" :autoSize="{ minRows: 2, maxRows: 6 }" />
                     <gameEmailItemTree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></gameEmailItemTree-modal>
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -83,7 +78,7 @@ export default {
             width: 800,
             visible: false,
             model: {},
-            itemTree: [],
+            itemTree: null,
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -248,6 +243,9 @@ export default {
             console.log(item);
             this.itemTree = null;
             this.itemTree = item;
+            this.form.setFieldsValue({
+                content: item
+            });
         },
         change(serverId) {
             /** 这里需要注意 form表单接收子组件值的问题 */
