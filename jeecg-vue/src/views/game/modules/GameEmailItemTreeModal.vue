@@ -50,7 +50,7 @@
                 @change="handleTableChange"
             >
                 <span slot="num" slot-scope="text, record">
-                    <a-input v-model="record.num"></a-input>
+                    <a-input-number style="width: 100%" id="inputNumber" v-model="record.num" :min="1" />
                 </span>
             </a-table>
         </div>
