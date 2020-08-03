@@ -79,7 +79,6 @@ public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, Backp
                 return new ResponseCode(303, "没有可同步的数据！");
             }
         } catch (Exception e) {
-            log.error("query error:" + e.getMessage());
             return ResponseCode.SYS_ERROR;
         } finally {
             DataSourceHelper.useDefaultDatabase();
