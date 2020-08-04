@@ -31,11 +31,6 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">
-                            <a-form-item label="出身id">
-                                <a-input placeholder="请输入出身id" v-model="queryParam.birthId"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
                             <a-form-item label="渠道">
                                 <a-input placeholder="请输入渠道" v-model="queryParam.ip"></a-input>
                             </a-form-item>
@@ -174,11 +169,6 @@ export default {
                     title: "区服Id",
                     align: "center",
                     dataIndex: "serverId"
-                },
-                {
-                    title: "出身Id",
-                    align: "center",
-                    dataIndex: "birthId"
                 },
                 {
                     title: "角色名称",
