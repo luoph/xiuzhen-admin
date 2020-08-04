@@ -4,7 +4,7 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
+                    <a-input-number v-decorator="['id', validatorRules.id]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="角色昵称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['nickname', validatorRules.nickname]" placeholder="请输入角色昵称"></a-input>
@@ -20,9 +20,6 @@
                 </a-form-item>
                 <a-form-item label="音效开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['openSound', validatorRules.openSound]" placeholder="请输入音效开关" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="出身id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['birthId', validatorRules.birthId]" placeholder="请输入出身id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="是否初始化" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['initialized', validatorRules.initialized]" placeholder="请输入是否初始化" style="width: 100%" />
@@ -59,14 +56,12 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                playerId: {},
+                id: {},
                 nickname: {},
                 avatar: {},
                 sex: {},
                 openMusic: {},
-                openSound: {},
-                birthId: { rules: [{ required: true, message: "请输入出身id!" }] },
-                initialized: { rules: [{ required: true, message: "请输入是否初始化!" }] }
+                openSound: {}
             },
             url: {
                 add: "player/playerInfo/add",
@@ -84,7 +79,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "uuid", "playerId", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
+                this.form.setFieldsValue(pick(this.model, "id", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
             });
         },
         close() {
@@ -128,7 +123,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "uuid", "playerId", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
+            this.form.setFieldsValue(pick(row, "id", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
         }
     }
 };

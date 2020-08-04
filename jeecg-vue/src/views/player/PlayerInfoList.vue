@@ -11,7 +11,7 @@
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="玩家id">
-                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
+                            <a-input placeholder="请输入玩家id" v-model="queryParam.id"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -23,11 +23,6 @@
                         <a-col :md="6" :sm="8">
                             <a-form-item label="性别">
                                 <a-input placeholder="请输入性别" v-model="queryParam.sex"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="出身id">
-                                <a-input placeholder="请输入出身id" v-model="queryParam.birthId"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -127,8 +122,8 @@ export default {
     data() {
         return {
             description: "玩家信息管理页面",
-            queryParam:{
-                serverId:""
+            queryParam: {
+                serverId: ""
             },
             // 表头
             columns: [
@@ -145,7 +140,7 @@ export default {
                 {
                     title: "玩家id",
                     align: "center",
-                    dataIndex: "playerId"
+                    dataIndex: "id"
                 },
                 {
                     title: "角色昵称",
@@ -153,41 +148,71 @@ export default {
                     dataIndex: "nickname"
                 },
                 {
-                    title: "角色头像",
+                    title: "等级",
                     align: "center",
-                    dataIndex: "avatar"
+                    dataIndex: "level"
                 },
                 {
-                    title: "性别",
+                    title: "境界",
                     align: "center",
-                    dataIndex: "sex"
+                    dataIndex: "realm"
                 },
                 {
-                    title: "音乐开关",
+                    title: "背包大小",
                     align: "center",
-                    dataIndex: "openMusic"
+                    dataIndex: "backpackSize"
                 },
                 {
-                    title: "音效开关",
+                    title: "背包等级",
                     align: "center",
-                    dataIndex: "openSound"
+                    dataIndex: "backpackLevel"
                 },
                 {
-                    title: "出身id",
+                    title: "修为值",
                     align: "center",
-                    dataIndex: "birthId"
+                    dataIndex: "practiceValue"
                 },
                 {
-                    title: "是否初始化",
+                    title: "修炼年数",
                     align: "center",
-                    dataIndex: "initialized"
+                    dataIndex: "practiceYear"
                 },
                 {
-                    title: "操作",
-                    dataIndex: "action",
+                    title: "战力",
                     align: "center",
-                    scopedSlots: { customRender: "action" }
-                }
+                    dataIndex: "combatPower"
+                },
+                {
+                    title: "修为加持状态",
+                    align: "center",
+                    dataIndex: "practiceState"
+                },
+                {
+                    title: "渡劫增加成功率",
+                    align: "center",
+                    dataIndex: "successRate"
+                },
+                {
+                    title: "登录IP",
+                    align: "center",
+                    dataIndex: "loginIp"
+                },
+                {
+                    title: "登录时间",
+                    align: "center",
+                    dataIndex: "loginTime"
+                },
+                {
+                    title: "是否跳过战斗动画",
+                    align: "center",
+                    dataIndex: "skipCartoon"
+                },
+                // {
+                //     title: "操作",
+                //     dataIndex: "action",
+                //     align: "center",
+                //     scopedSlots: { customRender: "action" }
+                // }
             ],
             url: {
                 list: "player/playerInfo/list",
@@ -200,8 +225,7 @@ export default {
             dictOptions: {}
         };
     },
-    created(){
-    },
+    created() {},
     computed: {
         importExcelUrl: function() {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
