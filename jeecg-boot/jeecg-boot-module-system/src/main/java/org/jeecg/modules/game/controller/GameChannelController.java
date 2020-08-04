@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -174,6 +175,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
             List<GameChannel> channelList = gameChannelService.list();
             for (GameChannel channel : channelList) {
                 List<GameServer> servers = gameChannelService.getServerListChannelId(channel.getId());
+                // 增加排序
+                servers.sort(Comparator.comparing(GameServer::getPosition));
 
                 UpdateConfig updateConfig = new UpdateConfig()
                         .setVersionCode(channel.getVersionCode())
