@@ -3,17 +3,14 @@
         <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item label="己方单号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input :disabled="isEdit" v-decorator="['queryId', validatorRules.queryId]" placeholder="请输入己方单号"></a-input>
+                <a-form-item label="充值订单号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input :disabled="isEdit" v-decorator="['orderId', validatorRules.orderId]" placeholder="请输入充值订单号"></a-input>
                 </a-form-item>
-                <a-form-item label="平台方订单号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input :disabled="isEdit" v-decorator="['orderId', validatorRules.orderId]" placeholder="请输入平台方订单号"></a-input>
+                <a-form-item label="平台订单号" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input :disabled="isEdit" v-decorator="['queryId', validatorRules.queryId]" placeholder="请输入平台订单号"></a-input>
                 </a-form-item>
-                <a-form-item label="渠道key" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input :disabled="isEdit" v-decorator="['channelKey', validatorRules.channelKey]" placeholder="请输入渠道key"></a-input>
-                </a-form-item>
-                <a-form-item label="渠道id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['channelId', validatorRules.channelId]" placeholder="请输入渠道id" style="width: 100%" />
+                <a-form-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道"></a-input>
                 </a-form-item>
                 <a-form-item label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
@@ -22,7 +19,7 @@
                     <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="商品id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input :disabled="isEdit" v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品id"></a-input>
+                    <a-input :disabled="isEdit" v-decorator="['productId', validatorRules.productId]" placeholder="请输入商品id"></a-input>
                 </a-form-item>
                 <a-form-item label="ip地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input :disabled="isEdit" v-decorator="['remoteIp', validatorRules.remoteIp]" placeholder="请输入ip地址"></a-input>
@@ -36,20 +33,26 @@
                         <a-select-option value="4">已发放</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['realAmount', validatorRules.realAmount]" placeholder="请输入充值金额" style="width: 100%" />
+                <a-form-item label="支付金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['payAmount', validatorRules.payAmount]" placeholder="请输入支付金额" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="extra" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['extra', validatorRules.extra]" placeholder="请输入extra" style="width: 100%" />
+                <a-form-item label="订单金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['orderAmount', validatorRules.orderAmount]" placeholder="请输入订单金额" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="折扣金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['discountAmount', validatorRules.discountAmount]" placeholder="请输入折扣金额" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="custom" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['custom', validatorRules.custom]" placeholder="请输入透传参数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="充值货币" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input :disabled="isEdit" v-decorator="['currency', validatorRules.currency]" placeholder="请输入充值货币"></a-input>
                 </a-form-item>
-                <a-form-item label="回调时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="支付时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date
                         :disabled="isEdit"
-                        placeholder="请选择回调时间"
-                        v-decorator="['postTime', validatorRules.postTime]"
+                        placeholder="请选择支付时间"
+                        v-decorator="['payTime', validatorRules.payTime]"
                         :trigger-change="true"
                         :show-time="true"
                         date-format="YYYY-MM-DD HH:mm:ss"
@@ -89,9 +92,6 @@
                         style="width: 100%"
                     />
                 </a-form-item>
-                <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['custom', validatorRules.custom]" placeholder="请输入备注"></a-input>
-                </a-form-item>
             </a-form>
         </a-spin>
         <!-- </a-modal> -->
@@ -128,20 +128,19 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                queryId: { rules: [{ required: true, message: "请输入己方单号!" }] },
-                orderId: {},
-                channelKey: { rules: [{ required: true, message: "请输入渠道key!" }] },
-                channelId: {},
+                orderId: { rules: [{ required: true, message: "请输入充值订单号!" }] },
+                queryId: {},
+                channel: { rules: [{ required: true, message: "请输入渠道!" }] },
                 serverId: { rules: [{ required: true, message: "请输入区服Id!" }] },
                 playerId: { rules: [{ required: true, message: "请输入玩家id!" }] },
-                goodsId: {},
+                productId: {},
                 remoteIp: { rules: [{ required: true, message: "请输入ip地址!" }] },
                 orderStatus: { rules: [{ required: true, message: "请选择订单状态!" }] },
-                realAmount: { rules: [{ required: true, message: "请输入充值金额!" }] },
-                custom: {},
-                extra: {},
+                payAmount: { rules: [{ required: true, message: "请输入充值金额!" }] },
+                discountAmount: {},
+                orderAmount: {},
                 currency: {},
-                postTime: {},
+                payTime: {},
                 sendTime: {},
                 updateTime: {},
                 createTime: {}
@@ -166,20 +165,20 @@ export default {
                 this.form.setFieldsValue(
                     pick(
                         this.model,
-                        "queryId",
                         "orderId",
-                        "channelKey",
-                        "channelId",
+                        "queryId",
+                        "channel",
                         "serverId",
                         "playerId",
-                        "goodsId",
+                        "productId",
                         "remoteIp",
                         "orderStatus",
-                        "realAmount",
+                        "payAmount",
+                        "orderAmount",
+                        "discountAmount",
                         "custom",
-                        "extra",
                         "currency",
-                        "postTime",
+                        "payTime",
                         "sendTime",
                         "updateTime",
                         "createTime"
@@ -231,20 +230,20 @@ export default {
             this.form.setFieldsValue(
                 pick(
                     row,
-                    "queryId",
                     "orderId",
-                    "channelKey",
-                    "channelId",
+                    "queryId",
+                    "channel",
                     "serverId",
                     "playerId",
-                    "goodsId",
+                    "productId",
                     "remoteIp",
                     "orderStatus",
-                    "realAmount",
+                    "payAmount",
+                    "orderAmount",
+                    "discountAmount",
                     "custom",
-                    "extra",
                     "currency",
-                    "postTime",
+                    "payTime",
                     "sendTime",
                     "updateTime",
                     "createTime"

@@ -1,18 +1,18 @@
 package org.jeecg.modules.player.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author jeecg-boot
@@ -27,111 +27,101 @@ public class PayOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * id
-     */
-    @TableId(type = IdType.AUTO)
-    private java.lang.Long id;
-
-    /**
-     * 自己方订单号
-     */
-    @Excel(name = "自己方订单号", width = 15)
-    private java.lang.String queryId;
-
-    /**
-     * 平台方订单号
-     */
-    @Excel(name = "平台方订单号", width = 15)
-    private java.lang.String orderId;
-
-    /**
-     * 订单类型 1 - 正常 2 - 虚拟
-     */
-    @TableField(exist = false)
-    private Integer orderType;
-
-    /**
-     * 渠道key
-     */
-    @Excel(name = "渠道key", width = 15)
-    private java.lang.String channelKey;
-
-    /**
-     * 渠道id
-     */
-    @Excel(name = "渠道id", width = 15)
-    private java.lang.Integer channelId;
-
-    /**
-     * 区服Id
-     */
-    @Excel(name = "区服Id", width = 15)
-    private java.lang.Integer serverId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 支付玩家id
      */
-    @Excel(name = "支付玩家id", width = 15)
-    private java.lang.Long playerId;
+    @Excel(name = "玩家id", width = 15)
+    private Long playerId;
+
+    /**
+     * 己方订单号
+     */
+    @Excel(name = "支付订单号", width = 15)
+    private String orderId;
+
+    /**
+     * 平台SDK订单号
+     */
+    @Excel(name = "平台订单号", width = 15)
+    private String queryId;
+
+    /**
+     * 己方渠道id
+     */
+    @Excel(name = "渠道", width = 15)
+    private String channel;
+
+    /**
+     * SDK平台渠道key
+     */
+    @Excel(name = "渠道key", width = 15)
+    private String channelKey;
+
+    /**
+     * 服务器id
+     */
+    @Excel(name = "区服id", width = 15)
+    private Integer serverId;
 
     /**
      * 商品id
      */
     @Excel(name = "商品id", width = 15)
-    private java.lang.String goodsId;
+    private String productId;
 
     /**
      * ip地址
      */
     @Excel(name = "ip地址", width = 15)
-    private java.lang.String remoteIp;
+    private String remoteIp;
 
     /**
      * 订单状态
-     * 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-已发放
+     * 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放
      */
     @Excel(name = "订单状态", width = 15)
-    @Dict(dicCode = "order_status")
-    private java.lang.Integer orderStatus;
+    private Integer orderStatus;
 
     /**
-     * 充值金额(如有商品 ID,此值为商 品的金额, 单位元)
+     * 实际支付金额
      */
-    @Excel(name = "充值金额", width = 15)
-    private java.math.BigDecimal payAmount;
+    @Excel(name = "支付金额", width = 15)
+    private BigDecimal payAmount;
 
     /**
-     * 实际金额
+     * 订单金额，显示给用户看的
      */
-    @Excel(name = "实际金额", width = 15)
-    private java.math.BigDecimal realAmount;
+    @Excel(name = "订单金额", width = 15)
+    private BigDecimal orderAmount;
+
+    /**
+     * 折扣金额
+     */
+    @Excel(name = "折扣金额", width = 15)
+    private BigDecimal discountAmount;
 
     /**
      * 备注
      */
-    @Excel(name = "备注", width = 15)
-    private java.lang.String custom;
-
-    /**
-     * extra
-     */
-    @Excel(name = "extra", width = 15)
-    private java.math.BigDecimal extra;
+    @Excel(name = "透传参数", width = 15)
+    private String custom;
 
     /**
      * 充值货币(CNY:人民币)
      */
     @Excel(name = "充值货币", width = 15)
-    private java.lang.String currency;
+    private String currency;
 
     /**
-     * 回调给游戏服时间
+     * 订单创建时间戳
      */
-    @Excel(name = "回调时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @Excel(name = "支付时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date postTime;
+    private Date payTime;
 
     /**
      * 发货时间
@@ -139,7 +129,7 @@ public class PayOrder implements Serializable {
     @Excel(name = "发货时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date sendTime;
+    private Date sendTime;
 
     /**
      * 更新时间
@@ -147,13 +137,13 @@ public class PayOrder implements Serializable {
     @Excel(name = "更新时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date updateTime;
+    private Date updateTime;
 
     /**
      * 订单创建时间戳
      */
-    @Excel(name = "订单创建时间戳", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @Excel(name = "创建时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date createTime;
+    private Date createTime;
 }

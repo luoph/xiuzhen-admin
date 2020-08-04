@@ -5,17 +5,23 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="4" :sm="8">
-                        <a-form-item label="玩家Id">
-                            <a-input placeholder="请输入玩家Id" v-model="queryParam.playerId"></a-input>
+                        <a-form-item label="玩家id">
+                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
-                        <a-form-item label="订单号">
-                            <a-input placeholder="请输入平台方订单号" v-model="queryParam.orderId"></a-input>
+                        <a-form-item label="支付订单号">
+                            <a-input placeholder="请输入支付订单号" v-model="queryParam.orderId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="平台订单号">
+                            <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="订单状态">
+                            <!-- 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放 -->
                             <a-select v-model="queryParam.orderStatus" placeholder="请选择订单状态">
                                 <a-select-option value="">请选择订单状态</a-select-option>
                                 <a-select-option value="0">待支付</a-select-option>
@@ -33,8 +39,8 @@
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="4" :sm="8">
-                            <a-form-item label="渠道id">
-                                <a-input placeholder="请输入渠道Id" v-model="queryParam.channelId"></a-input>
+                            <a-form-item label="渠道">
+                                <a-input placeholder="请输入渠道Id" v-model="queryParam.channel"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">
@@ -44,14 +50,14 @@
                         </a-col>
                         <a-col :md="4" :sm="8">
                             <a-form-item label="商品id">
-                                <a-input placeholder="请输入商品id" v-model="queryParam.goodsId"></a-input>
+                                <a-input placeholder="请输入商品id" v-model="queryParam.productId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="16">
                             <a-form-item label="金额">
-                                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.realAmount_begin"></a-input>
+                                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"></a-input>
                                 <span class="query-group-split-cust"></span>
-                                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.realAmount_end"></a-input>
+                                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -103,19 +109,19 @@
                 :loading="loading"
                 @change="handleTableChange"
             >
-                <template slot="htmlSlot" slot-scope="text">
-                    <div v-html="text"></div>
+                <template slot="htmlSlot" slot-scope="status">
+                    <div v-html="status"></div>
                 </template>
-                <template slot="imgSlot" slot-scope="text">
-                    <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                <template slot="imgSlot" slot-scope="status">
+                    <span v-if="!status" style="font-size: 12px;font-style: italic;">无此图片</span>
+                    <img v-else :src="getImgView(status)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
-                <template slot="fileSlot" slot-scope="text">
-                    <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+                <template slot="fileSlot" slot-scope="status">
+                    <span v-if="!status" style="font-size: 12px;font-style: italic;">无此文件</span>
+                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载 </a-button>
                 </template>
 
-                <span slot="action" slot-scope="text, record">
+                <span slot="action" slot-scope="status, record">
                     <a @click="handleEdit(record)">详情</a>
                     <!-- <a-divider type="vertical" />
                     <a-dropdown>
@@ -163,24 +169,60 @@ export default {
                     }
                 },
                 {
-                    title: "玩家Id",
+                    title: "玩家id",
                     align: "center",
                     dataIndex: "playerId"
                 },
                 {
-                    title: "己方单号",
-                    align: "center",
-                    dataIndex: "queryId"
-                },
-                {
-                    title: "平台方订单号",
+                    title: "支付订单号",
                     align: "center",
                     dataIndex: "orderId"
                 },
                 {
-                    title: "渠道id",
+                    title: "平台订单号",
                     align: "center",
-                    dataIndex: "channelId"
+                    dataIndex: "queryId"
+                },
+                {
+                    title: "支付金额",
+                    align: "center",
+                    dataIndex: "payAmount"
+                },
+                {
+                    title: "订单金额",
+                    align: "center",
+                    dataIndex: "orderAmount"
+                },
+                {
+                    title: "折扣金额",
+                    align: "center",
+                    dataIndex: "discountAmount"
+                },
+                {
+                    title: "订单状态",
+                    align: "center",
+                    dataIndex: "orderStatus",
+                    // <!-- 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放 -->
+                    customRender: status => {
+                        let re = "未知";
+                        if (status === 0) {
+                            re = "待支付";
+                        } else if (status === 1) {
+                            re = "已支付";
+                        } else if (status === 2) {
+                            re = "已转发,未回复";
+                        } else if (status === 3) {
+                            re = "发放中";
+                        } else if (status === 4) {
+                            re = "已发放";
+                        }
+                        return re;
+                    }
+                },
+                {
+                    title: "渠道",
+                    align: "center",
+                    dataIndex: "channel"
                 },
                 {
                     title: "区服Id",
@@ -190,22 +232,27 @@ export default {
                 {
                     title: "商品id",
                     align: "center",
-                    dataIndex: "goodsId"
+                    dataIndex: "productId"
                 },
                 {
                     title: "ip地址",
                     align: "center",
                     dataIndex: "remoteIp"
                 },
+                // {
+                //     title: "透传参数",
+                //     align: "center",
+                //     dataIndex: "custom"
+                // },
                 {
-                    title: "订单状态",
+                    title: "支付时间",
                     align: "center",
-                    dataIndex: "orderStatus_dictText"
+                    dataIndex: "payTime"
                 },
                 {
-                    title: "订单金额",
+                    title: "发货时间",
                     align: "center",
-                    dataIndex: "realAmount"
+                    dataIndex: "sendTime"
                 },
                 // {
                 //     title: "充值货币",
