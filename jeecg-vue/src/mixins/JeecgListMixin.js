@@ -243,7 +243,7 @@ export const JeecgListMixin = {
                 fileName = "导出文件";
             }
             const param = {
-                ...this.queryParam
+                ...this.getQueryParams()
             };
             if (this.selectedRowKeys && this.selectedRowKeys.length > 0) {
                 param["selections"] = this.selectedRowKeys.join(",");
