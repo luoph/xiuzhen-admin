@@ -85,7 +85,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
         }
 
         if (gameEmail.getTargetBodyType() == TARGET_BODY_TYPE) {
-            Integer targetBodyId = gameEmail.getTargetBodyId();
+            Long targetBodyId = gameEmail.getTargetBodyId();
             PlayerRegisterInfo registerInfo = getPlayerRegisterInfo(targetBodyId);
             if (registerInfo == null) {
                 response.setFailure("玩家ID不存在！");
