@@ -10,6 +10,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
+                        <a-form-item label="区服id">
+                            <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="支付订单号">
                             <a-input placeholder="请输入支付订单号" v-model="queryParam.orderId"></a-input>
                         </a-form-item>
