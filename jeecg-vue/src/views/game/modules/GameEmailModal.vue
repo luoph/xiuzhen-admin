@@ -29,6 +29,7 @@
                     <a-radio-group @change="selectTarget" v-decorator="['targetBodyType', { initialValue: 1 }]" dict style="width: 100%;">
                         <a-radio-button :value="1">玩家</a-radio-button>
                         <a-radio-button :value="2">全服</a-radio-button>
+                         <a-radio-button :value="3">多个玩家</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
                 <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -37,6 +38,9 @@
                 </a-form-item>
                 <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['targetBodyId', { initialValue: null }, validatorRules.targetBodyId]" placeholder="请输入玩家ID" style="width: 100%;" />
+                </a-form-item>
+                 <a-form-item v-if="multiplePlayerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['targetBodyIds', { initialValue: null }, validatorRules.targetBodyId]" placeholder="请以英文“[,]”分割输入多个玩家ID" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择生效时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%;" />
@@ -95,13 +99,15 @@ export default {
                 content: { rules: [{ required: true, message: "请添加附件!" }] },
                 validState: { rules: [{ required: true, message: "请选择状态!" }] },
                 targetBodyType: { rules: [{ required: true, message: "请选择目标类型!" }] },
-                targetBodyId: { rules: [{ required: true, message: "请输入目标主体ID!" }] },
+                targetBodyId: { rules: [{ required: false, message: "请输入目标主体ID!" }] },
+                targetBodyIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
                 sendTime: { rules: [{ required: true, message: "请输入生效时间!" }] },
                 validStarTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 validEndTime: {}
             },
             serverType: false,
             playerType: true,
+            multiplePlayerType: false,
             serverList: [],
             contentData: false,
             url: {
@@ -133,6 +139,7 @@ export default {
                         "validState",
                         "targetBodyType",
                         "targetBodyId",
+                        "targetBodyIds",
                         "sendTime",
                         "validStarTime",
                         "validEndTime",
@@ -149,6 +156,7 @@ export default {
             this.visible = false;
             this.serverType = false;
             this.playerType = true;
+            this.multiplePlayerType = false;
             this.validatorRules.content = null;
             this.contentData = false;
             this.itemTree = null;
@@ -205,13 +213,15 @@ export default {
                     "validState",
                     "targetBodyType",
                     "targetBodyId",
+                    "targetBodyIds",
                     "sendTime",
                     "validStarTime",
                     "validEndTime",
                     "createBy",
                     "createTime",
                     "updateBy",
-                    "updateTime"
+                    "updateTime",
+                    "targetBodyIds"
                 )
             );
         },
@@ -219,9 +229,15 @@ export default {
             if (e.target.value == 1) {
                 this.serverType = false;
                 this.playerType = true;
+                this.multiplePlayerType = false;
             } else if (e.target.value == 2) {
                 this.serverType = true;
                 this.playerType = false;
+                this.multiplePlayerType = false;
+            }else if (e.target.value == 3){
+                this.serverType = false;
+                this.playerType = false;
+                this.multiplePlayerType = true;
             }
             this.validatorRules.targetBodyId = "";
         },
