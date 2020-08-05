@@ -15,19 +15,19 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
+                        <a-form-item label="区服Id">
+                            <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="角色名称">
                             <a-input placeholder="请输入角色名称" v-model="queryParam.name"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="创建时间">
-                            <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
-                        </a-form-item>
-                    </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="区服Id">
-                                <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="创建时间">
+                                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">

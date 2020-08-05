@@ -179,6 +179,11 @@ export default {
                     dataIndex: "playerId"
                 },
                 {
+                    title: "区服Id",
+                    align: "center",
+                    dataIndex: "serverId"
+                },
+                {
                     title: "支付订单号",
                     align: "center",
                     dataIndex: "orderId"
@@ -228,11 +233,6 @@ export default {
                     title: "渠道",
                     align: "center",
                     dataIndex: "channel"
-                },
-                {
-                    title: "区服Id",
-                    align: "center",
-                    dataIndex: "serverId"
                 },
                 {
                     title: "商品id",
