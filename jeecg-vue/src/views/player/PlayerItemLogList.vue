@@ -63,13 +63,15 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import { filterObj } from "@/utils/util";
 import PlayerItemLogModal from "./modules/PlayerItemLogModal";
+import ServerSelect from "@/components/gameserver/ServerSelect";
 
 export default {
     name: "PlayerItemLogList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        PlayerItemLogModal
+        PlayerItemLogModal,
+        ServerSelect,
     },
     data() {
         return {

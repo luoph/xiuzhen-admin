@@ -33,10 +33,13 @@
 import JDate from "@/components/jeecg/JDate.vue";
 import { getAction } from "@/api/manage";
 import { filterObj } from "@/utils/util";
+import ServerSelect from "@/components/gameserver/ServerSelect";
+
 export default {
     name: "PlayerItemLogModal",
     components: {
-        JDate
+        JDate,
+        ServerSelect
     },
     data() {
         return {

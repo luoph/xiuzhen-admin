@@ -66,6 +66,7 @@ import JDate from "@/components/jeecg/JDate";
 import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
 import { Button } from "ant-design-vue";
 import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
+import ServerSelect from "@/components/gameserver/ServerSelect";
 
 export default {
     name: "GameEmailModal",
@@ -73,7 +74,8 @@ export default {
         JDate,
         JSearchSelectTag,
         Button,
-        GameEmailItemTreeModal
+        GameEmailItemTreeModal,
+        ServerSelect
     },
     data() {
         return {
