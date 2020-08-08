@@ -91,13 +91,15 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameEmailModal from "./modules/GameEmailModal";
 import JDate from "@/components/jeecg/JDate.vue";
+import ServerSelect from "@/components/gameserver/ServerSelect";
 
 export default {
     name: "GameEmailList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        GameEmailModal
+        GameEmailModal,
+        ServerSelect,
     },
     data() {
         return {

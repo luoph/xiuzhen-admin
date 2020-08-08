@@ -112,12 +112,15 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
 import PlayerInfoModal from "./modules/PlayerInfoModal";
+import ServerSelect from "@/components/gameserver/ServerSelect";
+
 export default {
     name: "PlayerInfoList",
     mixins: [JeecgListMixin],
     components: {
         PlayerInfoModal,
-        getAction
+        getAction,
+        ServerSelect
     },
     data() {
         return {
