@@ -1,7 +1,7 @@
 <template>
     <a-select
     mode="multiple"
-    :default-value="[serverList[0]]"
+    :default-value="[]"
     style="width: 100%"
     placeholder="请选择指定的服务器"
     @change="handleChange"
