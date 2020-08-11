@@ -39,7 +39,8 @@ public class GameLampNoticeServiceImpl extends ServiceImpl<GameLampNoticeMapper,
                     OkHttpHelper.post(gameServer.getGmUrl() + sendLampNoticePath, gameLampNotice);
                 }
             }
-            updateById(new GameLampNotice().setId(gameLampNotice.getId()).setLastSendTime(DateUtils.now()));
+            gameLampNotice.setLastSendTime(DateUtils.now());
+            updateById(gameLampNotice);
         }
     }
 }

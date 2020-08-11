@@ -62,6 +62,12 @@ public class GameLampNotice implements Serializable {
     private java.lang.Integer cyclePeriod;
 
     /**
+     * 状态 0-关闭 1-开启
+     */
+    @Excel(name = "状态", width = 15)
+    private java.lang.Integer status;
+
+    /**
      * 开始时间
      */
     @Excel(name = "开始时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)

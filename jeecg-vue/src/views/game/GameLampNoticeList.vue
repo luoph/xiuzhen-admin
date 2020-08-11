@@ -98,6 +98,9 @@
                 </template>
 
                 <span slot="action" slot-scope="text, record">
+                    <a @click="resumeJob(record)" v-if="record.status == 1">已启动</a>
+                    <a @click="resumeJob(record)" v-if="record.status == 0">已关闭</a>
+                    <a-divider type="vertical" />
                     <a @click="handleEdit(record)">编辑</a>
                 </span>
             </a-table>
@@ -111,6 +114,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameLampNoticeModal from "./modules/GameLampNoticeModal";
 import JDate from "@/components/jeecg/JDate.vue";
+import { getAction } from "@/api/manage";
 import MultipleServerSelect from "@/components/gameserver/MultipleServerSelect";
 
 export default {
@@ -187,7 +191,8 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameLampNotice/list"
+                list: "game/gameLampNotice/list",
+                resume: "game/gameLampNotice/pauseOrOpen"
             }
         };
     },
@@ -197,6 +202,34 @@ export default {
         change(value) {
             console.log("value" + value);
             this.queryParam.gameServerList = "*" + value.join(",") + "*";
+        },
+        resumeJob: function (record) {
+            var that = this;
+            let res = {
+                title: "确认启动",
+                content: "是否启动选中消息?"
+            };
+            if (record.status == 1) {
+                res = {
+                    title: "确认关闭",
+                    content: "是否关闭选中消息?"
+                };
+            }
+            this.$confirm({
+                title:res.title,
+                content:res.content,
+                onOk: function() {
+                    getAction(that.url.resume, { id: record.id }).then((res) => {
+                        if (res.success) {
+                            that.$message.success(res.message);
+                            that.loadData();
+                            that.onClearSelected();
+                        } else {
+                            that.$message.warning(res.message);
+                        }
+                    });
+                }
+            });
         }
     }
 };
