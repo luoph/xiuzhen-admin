@@ -41,6 +41,11 @@ public class GameLampNoticeJob implements Job {
                 if (!validSendTime) {
                     continue;
                 }
+                // 判定消息状态 1-开启 0-关闭
+                int status = gameLampNotice.getStatus();
+                if (status != 1) {
+                    continue;
+                }
                 String gameServerList = gameLampNotice.getGameServerList();
                 if (StringUtils.isNoneBlank(gameServerList)) {
                     List<Integer> serverIds = JSONArray.parseArray(gameServerList, Integer.class);

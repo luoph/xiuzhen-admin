@@ -62,6 +62,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     @AutoLog(value = "game_lamp_notice-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameLampNotice gameLampNotice) {
+        gameLampNotice.setStatus(1);
         gameLampNoticeService.save(gameLampNotice);
         return Result.ok("添加成功！");
     }
@@ -144,4 +145,26 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
         return super.importExcel(request, response, GameLampNotice.class);
     }
 
+    /**
+     * 消息暂停或开启
+     *
+     * @param id 消息id
+     * @return
+     */
+    @GetMapping(value = "/pauseOrOpen")
+    public Result<Object> pauseLampNotice(@RequestParam(name = "id") int id) {
+        GameLampNotice gameLampNotice = gameLampNoticeService.getById(id);
+        if (gameLampNotice == null) {
+            return Result.error("跑马灯消息不存在！");
+        }
+        // 消息状态1-开启 0-暂定
+        int status = gameLampNotice.getStatus();
+        if (status == 1) {
+            gameLampNotice.setStatus(0);
+        } else {
+            gameLampNotice.setStatus(1);
+        }
+        gameLampNoticeService.updateById(gameLampNotice);
+        return Result.ok("消息状态更新成功！");
+    }
 }
