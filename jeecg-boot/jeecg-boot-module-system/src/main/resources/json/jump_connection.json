@@ -1,0 +1,1024 @@
+[
+    {
+        "id": 1,
+        "connectionid": 100,
+        "tips": "尚未开启修炼",
+        "note": "修炼",
+        "feature": 0
+    },
+    {
+        "id": 2,
+        "connectionid": 200,
+        "tips": "尚未开启功法",
+        "note": "功法",
+        "feature": 8
+    },
+    {
+        "id": 3,
+        "connectionid": 300,
+        "tips": "尚未开启灵根",
+        "note": "灵根",
+        "feature": 9
+    },
+    {
+        "id": 4,
+        "connectionid": 400,
+        "tips": "尚未开启洞府",
+        "note": "洞府",
+        "feature": 7
+    },
+    {
+        "id": 5,
+        "connectionid": 500,
+        "tips": "尚未开启宗门",
+        "note": "宗门",
+        "feature": 10
+    },
+    {
+        "id": 6,
+        "connectionid": 600,
+        "tips": "尚未开启历练",
+        "note": "历练",
+        "feature": ""
+    },
+    {
+        "id": 7,
+        "connectionid": 700,
+        "tips": "尚未开启天承州",
+        "note": "天承州",
+        "feature": 12
+    },
+    {
+        "id": 8,
+        "connectionid": 800,
+        "tips": "尚未开启地航州",
+        "note": "地航州",
+        "feature": 12
+    },
+    {
+        "id": 9,
+        "connectionid": 900,
+        "tips": "尚未开启南泽州",
+        "note": "南泽州",
+        "feature": 12
+    },
+    {
+        "id": 10,
+        "connectionid": 1000,
+        "tips": "尚未开启北阳州",
+        "note": "北阳州",
+        "feature": 12
+    },
+    {
+        "id": 11,
+        "connectionid": 10001,
+        "tips": "尚未开启坊市",
+        "note": "坊市",
+        "feature": 4
+    },
+    {
+        "id": 12,
+        "connectionid": 10002,
+        "tips": "尚未开启储物袋",
+        "note": "储物袋",
+        "feature": 11
+    },
+    {
+        "id": 13,
+        "connectionid": 10003,
+        "tips": "尚未开启日常",
+        "note": "日常",
+        "feature": 0
+    },
+    {
+        "id": 14,
+        "connectionid": 10004,
+        "tips": "尚未开启境界特权",
+        "note": "境界特权",
+        "feature": 0
+    },
+    {
+        "id": 15,
+        "connectionid": 10005,
+        "tips": "尚未开启设置",
+        "note": "设置",
+        "feature": 0
+    },
+    {
+        "id": 16,
+        "connectionid": 10006,
+        "tips": "尚未开启渡劫",
+        "note": "渡劫",
+        "feature": 0
+    },
+    {
+        "id": 17,
+        "connectionid": 50001,
+        "tips": "尚未开启大殿",
+        "note": "大殿",
+        "feature": 13
+    },
+    {
+        "id": 18,
+        "connectionid": 500011,
+        "tips": "尚未开启宗门兑换",
+        "note": "宗门兑换",
+        "feature": 10
+    },
+    {
+        "id": 19,
+        "connectionid": 50002,
+        "tips": "尚未开启任务阁",
+        "note": "任务阁",
+        "feature": 14
+    },
+    {
+        "id": 20,
+        "connectionid": 50003,
+        "tips": "尚未开启炼器坊",
+        "note": "炼器坊",
+        "feature": 2
+    },
+    {
+        "id": 21,
+        "connectionid": 50004,
+        "tips": "尚未开启炼丹房",
+        "note": "炼丹房",
+        "feature": 1
+    },
+    {
+        "id": 22,
+        "connectionid": 50005,
+        "tips": "尚未开启练功房",
+        "note": "练功房",
+        "feature": 15
+    },
+    {
+        "id": 23,
+        "connectionid": 50006,
+        "tips": "",
+        "note": "加宗门",
+        "feature": 0
+    },
+    {
+        "id": 24,
+        "connectionid": 50007,
+        "tips": "尚未开启合成功能",
+        "note": "合成",
+        "feature": 0
+    },
+    {
+        "id": 25,
+        "connectionid": 51001,
+        "tips": "尚未开启合成黑市",
+        "note": "黑市",
+        "feature": ""
+    },
+    {
+        "id": 26,
+        "connectionid": 60001,
+        "tips": "尚未开启传承",
+        "note": "传承",
+        "feature": 17
+    },
+    {
+        "id": 27,
+        "connectionid": 60002,
+        "tips": "尚未开启小灵山",
+        "note": "小灵山",
+        "feature": 18
+    },
+    {
+        "id": 28,
+        "connectionid": 60003,
+        "tips": "尚未开启首通奖励",
+        "note": "首通奖励",
+        "feature": 12
+    },
+    {
+        "id": 29,
+        "connectionid": 60004,
+        "tips": "尚未开启首通奖励",
+        "note": "首通奖励",
+        "feature": 12
+    },
+    {
+        "id": 30,
+        "connectionid": 60005,
+        "tips": "尚未开启首通奖励",
+        "note": "首通奖励",
+        "feature": 12
+    },
+    {
+        "id": 31,
+        "connectionid": 60006,
+        "tips": "尚未开启首通奖励",
+        "note": "首通奖励",
+        "feature": 12
+    },
+    {
+        "id": 32,
+        "connectionid": 60051,
+        "tips": "尚未通关赤月峰",
+        "note": "神游赤月峰",
+        "feature": 19
+    },
+    {
+        "id": 33,
+        "connectionid": 60052,
+        "tips": "尚未通关岱屿山",
+        "note": "神游岱屿山",
+        "feature": 19
+    },
+    {
+        "id": 34,
+        "connectionid": 60053,
+        "tips": "尚未通关无量崖",
+        "note": "神游无量崖",
+        "feature": 19
+    },
+    {
+        "id": 35,
+        "connectionid": 60054,
+        "tips": "尚未通关摩天崖",
+        "note": "神游摩天崖",
+        "feature": 19
+    },
+    {
+        "id": 36,
+        "connectionid": 60055,
+        "tips": "尚未通关东仙源",
+        "note": "神游东仙源",
+        "feature": 19
+    },
+    {
+        "id": 37,
+        "connectionid": 60056,
+        "tips": "尚未通关西仙墟",
+        "note": "神游西仙墟",
+        "feature": 19
+    },
+    {
+        "id": 38,
+        "connectionid": 60057,
+        "tips": "尚未通关轻语山",
+        "note": "神游轻语山",
+        "feature": 19
+    },
+    {
+        "id": 39,
+        "connectionid": 60058,
+        "tips": "尚未通关天渊城",
+        "note": "神游天渊城",
+        "feature": 19
+    },
+    {
+        "id": 40,
+        "connectionid": 60059,
+        "tips": "尚未通关幽桓山",
+        "note": "神游幽桓山",
+        "feature": 19
+    },
+    {
+        "id": 41,
+        "connectionid": 60060,
+        "tips": "尚未通关苍梧山",
+        "note": "神游苍梧山",
+        "feature": 19
+    },
+    {
+        "id": 42,
+        "connectionid": 60061,
+        "tips": "尚未通关隐雾泽",
+        "note": "神游隐雾泽",
+        "feature": 19
+    },
+    {
+        "id": 43,
+        "connectionid": 60062,
+        "tips": "尚未通关天阳山",
+        "note": "神游天阳山",
+        "feature": 19
+    },
+    {
+        "id": 44,
+        "connectionid": 60063,
+        "tips": "尚未通关云中堡",
+        "note": "神游云中堡",
+        "feature": 19
+    },
+    {
+        "id": 45,
+        "connectionid": 60064,
+        "tips": "尚未通关封石山",
+        "note": "神游封石山",
+        "feature": 19
+    },
+    {
+        "id": 46,
+        "connectionid": 60065,
+        "tips": "尚未通关断龙岭",
+        "note": "神游断龙岭",
+        "feature": 19
+    },
+    {
+        "id": 47,
+        "connectionid": 60066,
+        "tips": "尚未通关栖霞山",
+        "note": "神游栖霞山",
+        "feature": 19
+    },
+    {
+        "id": 48,
+        "connectionid": 60067,
+        "tips": "尚未通关九幽洞",
+        "note": "神游九幽洞",
+        "feature": 19
+    },
+    {
+        "id": 49,
+        "connectionid": 60068,
+        "tips": "尚未通关凤麟岛",
+        "note": "神游凤麟岛",
+        "feature": 19
+    },
+    {
+        "id": 50,
+        "connectionid": 60069,
+        "tips": "尚未通关梵音山",
+        "note": "神游梵音山",
+        "feature": 19
+    },
+    {
+        "id": 51,
+        "connectionid": 60070,
+        "tips": "尚未通关天琅山",
+        "note": "神游天琅山",
+        "feature": 19
+    },
+    {
+        "id": 52,
+        "connectionid": 60071,
+        "tips": "尚未通关牧云崖",
+        "note": "神游牧云崖",
+        "feature": 19
+    },
+    {
+        "id": 53,
+        "connectionid": 60072,
+        "tips": "尚未通关幻仙谷",
+        "note": "神游幻仙谷",
+        "feature": 19
+    },
+    {
+        "id": 54,
+        "connectionid": 60073,
+        "tips": "尚未通关百草园",
+        "note": "神游百草园",
+        "feature": 19
+    },
+    {
+        "id": 55,
+        "connectionid": 60074,
+        "tips": "尚未通关千森塚",
+        "note": "神游千森塚",
+        "feature": 19
+    },
+    {
+        "id": 56,
+        "connectionid": 60075,
+        "tips": "尚未通关化仙洞",
+        "note": "神游化仙洞",
+        "feature": 19
+    },
+    {
+        "id": 57,
+        "connectionid": 60076,
+        "tips": "尚未通关长溜山",
+        "note": "神游长溜山",
+        "feature": 19
+    },
+    {
+        "id": 58,
+        "connectionid": 60077,
+        "tips": "尚未通关玉衡山",
+        "note": "神游玉衡山",
+        "feature": 19
+    },
+    {
+        "id": 59,
+        "connectionid": 60078,
+        "tips": "尚未通关玉泉洞",
+        "note": "神游玉泉洞",
+        "feature": 19
+    },
+    {
+        "id": 60,
+        "connectionid": 60079,
+        "tips": "尚未通关乖离山",
+        "note": "神游乖离山",
+        "feature": 19
+    },
+    {
+        "id": 61,
+        "connectionid": 60080,
+        "tips": "尚未通关永夜墟",
+        "note": "神游永夜墟",
+        "feature": 19
+    },
+    {
+        "id": 62,
+        "connectionid": 60081,
+        "tips": "尚未通关天星崖",
+        "note": "神游天星崖",
+        "feature": 19
+    },
+    {
+        "id": 63,
+        "connectionid": 60082,
+        "tips": "尚未通关大荒泽",
+        "note": "神游大荒泽",
+        "feature": 19
+    },
+    {
+        "id": 64,
+        "connectionid": 60083,
+        "tips": "尚未通关摩耶窟",
+        "note": "神游摩耶窟",
+        "feature": 19
+    },
+    {
+        "id": 65,
+        "connectionid": 60084,
+        "tips": "尚未通关葬仙岭",
+        "note": "神游葬仙岭",
+        "feature": 19
+    },
+    {
+        "id": 66,
+        "connectionid": 60085,
+        "tips": "尚未通关清福山",
+        "note": "神游清福山",
+        "feature": 19
+    },
+    {
+        "id": 67,
+        "connectionid": 60086,
+        "tips": "尚未通关九仙山",
+        "note": "神游九仙山",
+        "feature": 19
+    },
+    {
+        "id": 68,
+        "connectionid": 60087,
+        "tips": "尚未通关升龙堡",
+        "note": "神游升龙堡",
+        "feature": 19
+    },
+    {
+        "id": 69,
+        "connectionid": 60088,
+        "tips": "尚未通关蓬莱岛",
+        "note": "神游蓬莱岛",
+        "feature": 19
+    },
+    {
+        "id": 70,
+        "connectionid": 60089,
+        "tips": "尚未通关天凰山",
+        "note": "神游天凰山",
+        "feature": 19
+    },
+    {
+        "id": 71,
+        "connectionid": 60090,
+        "tips": "尚未通关六圣墟",
+        "note": "神游六圣墟",
+        "feature": 19
+    },
+    {
+        "id": 72,
+        "connectionid": 610001,
+        "tips": "尚未开启灵兽",
+        "note": "灵兽",
+        "feature": 24
+    },
+    {
+        "id": 73,
+        "connectionid": 611001,
+        "tips": "尚未开启兽王庄",
+        "note": "兽王庄",
+        "feature": 26
+    },
+    {
+        "id": 74,
+        "connectionid": 620001,
+        "tips": "尚未开启除魔录",
+        "note": "除魔录",
+        "feature": 25
+    },
+    {
+        "id": 75,
+        "connectionid": 630001,
+        "tips": "尚未开启奇兽山",
+        "note": "奇兽山",
+        "feature": 25
+    },
+    {
+        "id": 76,
+        "connectionid": 630002,
+        "tips": "尚未开启器灵",
+        "note": "器灵",
+        "feature": 29
+    },
+    {
+        "id": 77,
+        "connectionid": 631001,
+        "tips": "尚未开启法宝",
+        "note": "法宝打磨",
+        "feature": 4
+    },
+    {
+        "id": 78,
+        "connectionid": 631002,
+        "tips": "尚未开启法宝",
+        "note": "法宝重铸",
+        "feature": 4
+    },
+    {
+        "id": 79,
+        "connectionid": 631003,
+        "tips": "尚未开启法宝",
+        "note": "法宝宝石",
+        "feature": 4
+    },
+    {
+        "id": 80,
+        "connectionid": 641001,
+        "tips": "尚未开启灵宝",
+        "note": "灵宝打磨",
+        "feature": 27
+    },
+    {
+        "id": 81,
+        "connectionid": 641002,
+        "tips": "尚未开启灵宝",
+        "note": "灵宝重铸",
+        "feature": 27
+    },
+    {
+        "id": 82,
+        "connectionid": 641003,
+        "tips": "尚未开启寻宝",
+        "note": "寻宝",
+        "feature": 27
+    },
+    {
+        "id": 83,
+        "connectionid": 1000101,
+        "tips": "尚未开启灵宝阁一楼",
+        "note": "灵宝阁一楼",
+        "feature": 4
+    },
+    {
+        "id": 84,
+        "connectionid": 1000102,
+        "tips": "尚未开启灵宝阁二楼",
+        "note": "灵宝阁二楼",
+        "feature": 4
+    },
+    {
+        "id": 85,
+        "connectionid": 1000103,
+        "tips": "尚未开启灵宝阁三楼",
+        "note": "灵宝阁三楼",
+        "feature": 4
+    },
+    {
+        "id": 86,
+        "connectionid": 1000104,
+        "tips": "尚未开启功法阁一楼",
+        "note": "功法阁一楼",
+        "feature": 4
+    },
+    {
+        "id": 87,
+        "connectionid": 1000105,
+        "tips": "尚未开启功法阁二楼",
+        "note": "功法阁二楼",
+        "feature": 4
+    },
+    {
+        "id": 88,
+        "connectionid": 1000106,
+        "tips": "尚未开启功法阁三楼",
+        "note": "功法阁三楼",
+        "feature": 4
+    },
+    {
+        "id": 89,
+        "connectionid": 1000107,
+        "tips": "尚未开启功法阁四楼",
+        "note": "功法阁四楼",
+        "feature": 4
+    },
+    {
+        "id": 90,
+        "connectionid": 1000201,
+        "tips": "尚未开启内观术",
+        "note": "内观术",
+        "feature": 3
+    },
+    {
+        "id": 91,
+        "connectionid": 700001,
+        "tips": "尚未通开启历练",
+        "note": "长柏峰1-1",
+        "feature": 12
+    },
+    {
+        "id": 92,
+        "connectionid": 700002,
+        "tips": "尚未通关黄埔山",
+        "note": "黄埔山1-2",
+        "feature": 12
+    },
+    {
+        "id": 93,
+        "connectionid": 700003,
+        "tips": "尚未通关无量崖",
+        "note": "无量崖1-3",
+        "feature": 12
+    },
+    {
+        "id": 94,
+        "connectionid": 700004,
+        "tips": "尚未通关猎人谷",
+        "note": "猎人谷1-4",
+        "feature": 12
+    },
+    {
+        "id": 95,
+        "connectionid": 700005,
+        "tips": "尚未通关东仙源",
+        "note": "东仙源1-5",
+        "feature": 12
+    },
+    {
+        "id": 96,
+        "connectionid": 700006,
+        "tips": "尚未通关西仙墟",
+        "note": "西仙墟1-6",
+        "feature": 12
+    },
+    {
+        "id": 97,
+        "connectionid": 700007,
+        "tips": "尚未通关轻语山",
+        "note": "轻语山1-7",
+        "feature": 12
+    },
+    {
+        "id": 98,
+        "connectionid": 700008,
+        "tips": "尚未通关未央山",
+        "note": "未央山1-8",
+        "feature": 12
+    },
+    {
+        "id": 99,
+        "connectionid": 700009,
+        "tips": "尚未通关幽桓山",
+        "note": "幽桓山1-9",
+        "feature": 12
+    },
+    {
+        "id": 100,
+        "connectionid": 700010,
+        "tips": "尚未通关不周山",
+        "note": "不周山1-10",
+        "feature": 12
+    },
+    {
+        "id": 101,
+        "connectionid": 800001,
+        "tips": "尚未通关隐雾泽",
+        "note": "隐雾泽2-1",
+        "feature": 12
+    },
+    {
+        "id": 102,
+        "connectionid": 800002,
+        "tips": "尚未通关天川岭",
+        "note": "天川岭2-2",
+        "feature": 12
+    },
+    {
+        "id": 103,
+        "connectionid": 800003,
+        "tips": "尚未通关江云墟",
+        "note": "江云墟2-3",
+        "feature": 12
+    },
+    {
+        "id": 104,
+        "connectionid": 800004,
+        "tips": "尚未通关石封墟",
+        "note": "石封墟2-4",
+        "feature": 12
+    },
+    {
+        "id": 105,
+        "connectionid": 800005,
+        "tips": "尚未通关安谷山",
+        "note": "安谷山2-5",
+        "feature": 12
+    },
+    {
+        "id": 106,
+        "connectionid": 800006,
+        "tips": "尚未通关栖霞山",
+        "note": "栖霞山2-6",
+        "feature": 12
+    },
+    {
+        "id": 107,
+        "connectionid": 800007,
+        "tips": "尚未通关万岚洞",
+        "note": "万岚洞2-7",
+        "feature": 12
+    },
+    {
+        "id": 108,
+        "connectionid": 800008,
+        "tips": "尚未通关紫盖墟",
+        "note": "紫盖墟2-8",
+        "feature": 12
+    },
+    {
+        "id": 109,
+        "connectionid": 800009,
+        "tips": "尚未通关宝夏阜",
+        "note": "宝夏阜2-9",
+        "feature": 12
+    },
+    {
+        "id": 110,
+        "connectionid": 800010,
+        "tips": "尚未通关逍遥岭",
+        "note": "逍遥岭2-10",
+        "feature": 12
+    },
+    {
+        "id": 111,
+        "connectionid": 900001,
+        "tips": "尚未通关牧云崖",
+        "note": "牧云崖3-1",
+        "feature": 12
+    },
+    {
+        "id": 112,
+        "connectionid": 900002,
+        "tips": "尚未通关太丰谷",
+        "note": "太丰谷3-2",
+        "feature": 12
+    },
+    {
+        "id": 113,
+        "connectionid": 900003,
+        "tips": "尚未通关绿萝洞",
+        "note": "绿萝洞3-3",
+        "feature": 12
+    },
+    {
+        "id": 114,
+        "connectionid": 900004,
+        "tips": "尚未通关始丰原",
+        "note": "始丰原3-4",
+        "feature": 12
+    },
+    {
+        "id": 115,
+        "connectionid": 900005,
+        "tips": "尚未通关化仙洞",
+        "note": "化仙洞3-5",
+        "feature": 12
+    },
+    {
+        "id": 116,
+        "connectionid": 900006,
+        "tips": "尚未通关玉溜山",
+        "note": "玉溜山3-6",
+        "feature": 12
+    },
+    {
+        "id": 117,
+        "connectionid": 900007,
+        "tips": "尚未通关落凤坡",
+        "note": "落凤坡3-7",
+        "feature": 12
+    },
+    {
+        "id": 118,
+        "connectionid": 900008,
+        "tips": "尚未通关通玉洞",
+        "note": "通玉洞3-8",
+        "feature": 12
+    },
+    {
+        "id": 119,
+        "connectionid": 900009,
+        "tips": "尚未通关乖离山",
+        "note": "乖离山3-9",
+        "feature": 12
+    },
+    {
+        "id": 120,
+        "connectionid": 900010,
+        "tips": "尚未通关永夜墟",
+        "note": "永夜墟3-10",
+        "feature": 12
+    },
+    {
+        "id": 121,
+        "connectionid": 1000001,
+        "tips": "尚未通关洞宫崖",
+        "note": "洞宫崖4-1",
+        "feature": 12
+    },
+    {
+        "id": 122,
+        "connectionid": 1000002,
+        "tips": "尚未通关清远泽",
+        "note": "清远泽4-2",
+        "feature": 12
+    },
+    {
+        "id": 123,
+        "connectionid": 1000003,
+        "tips": "尚未通关若耶洞",
+        "note": "若耶洞4-3",
+        "feature": 12
+    },
+    {
+        "id": 124,
+        "connectionid": 1000004,
+        "tips": "尚未通关盈清洞",
+        "note": "盈清洞4-4",
+        "feature": 12
+    },
+    {
+        "id": 125,
+        "connectionid": 1000005,
+        "tips": "尚未通关太清峰",
+        "note": "太清峰4-5",
+        "feature": 12
+    },
+    {
+        "id": 126,
+        "connectionid": 1000006,
+        "tips": "尚未通关鹤宁墟",
+        "note": "鹤宁墟4-6",
+        "feature": 12
+    },
+    {
+        "id": 127,
+        "connectionid": 1000007,
+        "tips": "尚未通关北龙峰",
+        "note": "北龙峰4-7",
+        "feature": 12
+    },
+    {
+        "id": 128,
+        "connectionid": 1000008,
+        "tips": "尚未通关光天坛",
+        "note": "光天坛4-8",
+        "feature": 12
+    },
+    {
+        "id": 129,
+        "connectionid": 1000009,
+        "tips": "尚未通关洞灵源",
+        "note": "洞灵源4-9",
+        "feature": 12
+    },
+    {
+        "id": 130,
+        "connectionid": 1000010,
+        "tips": "尚未通关大成山",
+        "note": "大成山4-10",
+        "feature": 12
+    },
+    {
+        "id": 131,
+        "connectionid": 1100,
+        "tips": "尚未开放剧情",
+        "note": "剧情",
+        "feature": ""
+    },
+    {
+        "id": 132,
+        "connectionid": 1200,
+        "tips": "尚未开放福地掠夺",
+        "note": "福地掠夺",
+        "feature": ""
+    },
+    {
+        "id": 133,
+        "connectionid": 60007,
+        "tips": "尚未开启游历",
+        "note": "游历",
+        "feature": 23
+    },
+    {
+        "id": 134,
+        "connectionid": 1001,
+        "tips": "尚未开启节日活动",
+        "note": "节日兑换",
+        "feature": ""
+    },
+    {
+        "id": 135,
+        "connectionid": 2300,
+        "tips": "尚未开启灵界",
+        "note": "灵界",
+        "feature": ""
+    },
+    {
+        "id": 136,
+        "connectionid": 230001,
+        "tips": "尚未开启灵尊",
+        "note": "灵尊",
+        "feature": ""
+    },
+    {
+        "id": 137,
+        "connectionid": 100020101,
+        "tips": "尚未开启灵气小宠",
+        "note": "灵气小宠",
+        "feature": ""
+    },
+    {
+        "id": 138,
+        "connectionid": 100020102,
+        "tips": "尚未开启修为小宠",
+        "note": "修为小宠",
+        "feature": ""
+    },
+    {
+        "id": 139,
+        "connectionid": 100020201,
+        "tips": "尚未开启饰品",
+        "note": "戒指",
+        "feature": ""
+    },
+    {
+        "id": 140,
+        "connectionid": 100020202,
+        "tips": "尚未开启饰品",
+        "note": "项链",
+        "feature": ""
+    },
+    {
+        "id": 141,
+        "connectionid": 651001,
+        "tips": "尚未开启成仙路",
+        "note": "成仙路",
+        "feature": ""
+    },
+    {
+        "id": 142,
+        "connectionid": 651002,
+        "tips": "尚未开启悬赏任务",
+        "note": "悬赏任务",
+        "feature": ""
+    },
+    {
+        "id": 143,
+        "connectionid": 1201,
+        "tips": "尚未开启神魔战场",
+        "note": "神魔战场",
+        "feature": ""
+    },
+    {
+        "id": 144,
+        "connectionid": 1300,
+        "tips": "尚未开启仙盟",
+        "note": "仙盟",
+        "feature": ""
+    },
+    {
+        "id": 145,
+        "connectionid": 40001,
+        "tips": "尚未开启仙榜",
+        "note": "仙榜",
+        "feature": ""
+    },
+    {
+        "id": 146,
+        "connectionid": 41001,
+        "tips": "尚未开启灵石大仙",
+        "note": "灵石大仙",
+        "feature": ""
+    }
+]
