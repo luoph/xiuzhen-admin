@@ -1,0 +1,132 @@
+/*
+ * create by mybatis-plus-generator  https://github.com/xiweile
+ */
+package org.jeecg.modules.game.entity;
+
+import java.math.BigDecimal;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.io.Serializable;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * <p>
+ * 每日数据统计
+ * </p>
+ *
+ * @author buliangliang
+ * @since 2020-08-22
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class GameDayDataCount implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 自增id
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
+
+    /**
+     * 每天登陆玩家数
+     */
+    private Integer loginPlayerNum;
+
+    /**
+     * 渠道标记
+     */
+    private String channel;
+
+    /**
+     * 服务器id
+     */
+    private Integer serverId;
+
+    /**
+     * 每天支付总额
+     */
+    private BigDecimal payAmount;
+
+    /**
+     * 每天支付玩家数
+     */
+    private Integer payPlayerNum;
+
+    /**
+     * 每天支付率
+     */
+    private BigDecimal payRate;
+
+    /**
+     * arpu
+     */
+    private BigDecimal arpu;
+
+    /**
+     * arppu
+     */
+    private BigDecimal arppu;
+
+    /**
+     * 新增注册玩家数
+     */
+    private Integer addPlayerNum;
+
+    /**
+     * 新增注册玩家支付总额
+     */
+    private BigDecimal addPayAmount;
+
+    /**
+     * 新增注册玩家支付数
+     */
+    private Integer addPayPlayerNum;
+
+    /**
+     * 新增注册玩家支付率
+     */
+    private BigDecimal addPayRate;
+
+    /**
+     * 新增注册arpu
+     */
+    private BigDecimal addArpu;
+
+    /**
+     * 新增注册arppu
+     */
+    private BigDecimal addArppu;
+
+    /**
+     * 新增注册二次付费玩家数
+     */
+    private Integer doublePayPlayer;
+
+    /**
+     * 二次付费率
+     */
+    private BigDecimal doublePayRate;
+
+    /**
+     * 统计日期
+     */
+    private Date countDate;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+
+}
