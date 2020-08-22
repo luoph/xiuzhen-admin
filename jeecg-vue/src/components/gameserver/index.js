@@ -1,22 +1,30 @@
-/**自定义全局组件 */
+/** 自定义全局组件 */
 import ServerSelect from './ServerSelect.vue'
 import MultipleServerSelect from './MultipleServerSelect.vue'
+import GameChannelServer from './GameChannelServer.vue'
 
 const ServerSelectList = {
-    install: function (Vue) {
+    install: function(Vue) {
         Vue.component('ServerSelect', ServerSelect);
     }
 };
 
 const MultipleServerSelectList = {
-    install:function(Vue){
+    install: function(Vue) {
         Vue.component('MultipleSeverSelect', MultipleServerSelect);
     }
 };
 
-export default ()=> {
-   return {
-       ServerSelectList, 
-       MultipleServerSelectList,
+const GameChannelServerList = {
+    install: function(Vue) {
+        Vue.component('GameChannelServer', GameChannelServer);
+    }
+}
+
+export default () => {
+    return {
+        ServerSelectList,
+        MultipleServerSelectList,
+        GameChannelServerList,
     };
 };

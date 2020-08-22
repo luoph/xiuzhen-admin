@@ -11,6 +11,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannelServer;
+import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameChannelServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -148,5 +150,17 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameChannelServer.class);
+    }
+
+    /**
+     * 通过渠道id 查询关联的服务器
+     *
+     * @param channelId 渠道id
+     * @return
+     */
+    @RequestMapping(value = "channelWithServer")
+    public Result<?> channelWithServer(@RequestParam(name = "channelId") Integer channelId) {
+        List<GameServer> gameServers = gameChannelServerService.gameServerByChannelId(channelId);
+        return Result.ok(gameServers);
     }
 }
