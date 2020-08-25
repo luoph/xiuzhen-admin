@@ -7,7 +7,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "chrome-launch",
+            "name": "chrome",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/src",
             "breakOnLoad": true,
@@ -22,26 +22,10 @@
             }
         },
         {
-            "type": "chrome",
-            "request": "attach",
-            "name": "chrome-attach",
-            "url": "http://localhost:3000",
-            "port": 9222,
-            "webRoot": "${workspaceFolder}/src",
-            "sourceMaps": true,
-            // "runtimeExecutable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-            "sourceMapPathOverrides": {
-                "webpack:///./src/*": "${webRoot}/*"
-            },
-            "pathMapping": {
-                "/": "${workspaceFolder}/src/views"
-            }
-        },
-        {
             "type": "firefox",
             "request": "launch",
             "reAttach": true,
-            "name": "firefox-launch",
+            "name": "firefox",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/src",
             "pathMappings": [
@@ -64,31 +48,8 @@
             }
         },
         {
-            "type": "firefox",
-            "request": "attach",
-            "name": "firefox-attach",
-            "url": "http://localhost:3000",
-            "port": 6080,
-            "webRoot": "${workspaceFolder}/src",
-            "reloadOnAttach": true,
-            "pathMappings": [
-                {
-                    "url": "webpack:///src/views",
-                    "path": "${workspaceFolder}/src/views"
-                },
-                {
-                    "url": "webpack:///src/",
-                    "path": "${webRoot}/"
-                }
-            ],
-            "reloadOnChange": {
-                "watch": ["${workspaceFolder}/**/*.js"],
-                "ignore": ["${workspaceFolder}/node_modules/**"]
-            }
-        },
-        {
             "type": "edge",
-            "name": "edge-launch",
+            "name": "edge",
             "request": "launch",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/src",
