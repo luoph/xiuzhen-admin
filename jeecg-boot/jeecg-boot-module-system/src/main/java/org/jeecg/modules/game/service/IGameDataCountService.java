@@ -2,6 +2,7 @@ package org.jeecg.modules.game.service;
 
 import cn.youai.commons.model.ResponseCode;
 import org.jeecg.modules.game.entity.GameChannel;
+import org.jeecg.modules.game.entity.GameDataRemain;
 import org.jeecg.modules.game.entity.GameDayDataCount;
 import org.jeecg.modules.game.entity.GameServer;
 
@@ -56,4 +57,15 @@ public interface IGameDataCountService {
      * @return
      */
     GameDayDataCount gameDataCount(GameChannel gameChannel, GameServer gameServer, String date);
+
+    /**
+     * 留存统计
+     *
+     * @param channelId
+     * @param serverId
+     * @param rangeDateBegin
+     * @param rangeDateEnd
+     * @return
+     */
+    List<GameDataRemain> queryDataRemainCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 }

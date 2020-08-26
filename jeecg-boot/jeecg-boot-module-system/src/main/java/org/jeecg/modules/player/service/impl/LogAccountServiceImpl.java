@@ -3,10 +3,11 @@
  */
 package org.jeecg.modules.player.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.player.entity.LogAccount;
 import org.jeecg.modules.player.mapper.LogAccountMapper;
 import org.jeecg.modules.player.service.ILogAccountService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,9 +26,12 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     @Resource
     private LogAccountMapper logAccountMapper;
 
+    @Value("${app.log.db.table}")
+    private String logTable;
+
     @Override
     public int loginRegisterPlayer(String channel, int serverId, String date, int type) {
-        return logAccountMapper.gerLoginRegisterPlayerNum(channel, serverId, date, type);
+        return logAccountMapper.gerLoginRegisterPlayerNum(channel, serverId, date, type, logTable);
     }
 
     @Override

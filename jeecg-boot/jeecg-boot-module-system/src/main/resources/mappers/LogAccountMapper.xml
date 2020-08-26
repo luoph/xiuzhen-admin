@@ -22,7 +22,7 @@
     </sql>
 
     <select id="gerLoginRegisterPlayerNum" resultType="int">
-        SELECT COUNT(a.`player_id`) AS counNum FROM xiuzhen_log_test.`log_account` a
+        SELECT COUNT(a.`player_id`) AS counNum FROM ${logTable} a
         WHERE a.`channel` = #{channel}
         AND a.`server_id` = #{serverId}
         AND a.`type` = #{type}
@@ -30,9 +30,11 @@
     </select>
 
     <select id="getRegisterPayAmount" resultType="double">
-        SELECT IFNULL (sum(a.`pay_amount`),0) AS payAmount FROM gamecenter.`pay_order` a
+        SELECT IFNULL (sum(a.`pay_amount`),0) AS payAmount FROM `pay_order` a
         JOIN xiuzhen_log_test.`log_account` b
         ON b.`player_id` = a.`player_id`
+        AND b.`channel` = a.`channel`
+        AND b.`server_id` = a.`server_id`
         WHERE  b.`channel` = #{channel}
         AND b.`server_id` = #{serverId}
         AND b.`type` = 0
@@ -43,9 +45,11 @@
     </select>
 
     <select id="getRegisterPayPlayer" resultType="int">
-        SELECT count(DISTINCT a.`player_id`) AS payAmount FROM gamecenter.`pay_order` a
+        SELECT count(DISTINCT a.`player_id`) AS payAmount FROM`pay_order` a
         JOIN xiuzhen_log_test.`log_account` b
         ON b.`player_id` = a.`player_id`
+        AND b.`channel` = a.`channel`
+        AND b.`server_id` = a.`server_id`
         WHERE  b.`channel` = #{channel}
         AND b.`server_id` = #{serverId}
         AND b.`type` = 0
@@ -57,9 +61,11 @@
 
     <select id="getDoublePayRegisterPlayer" resultType="int">
         SELECT count(1) FROM(
-          SELECT count(a.`player_id`) AS addPayPlayer FROM gamecenter.`pay_order` a
+          SELECT count(a.`player_id`) AS addPayPlayer FROM `pay_order` a
           LEFT JOIN xiuzhen_log_test.`log_account` b
           ON a.`player_id` = b.`player_id`
+          AND b.`channel` = a.`channel`
+          AND b.`server_id` = a.`server_id`
           WHERE  b.`channel` =  #{channel}
           AND b.`server_id` =  #{serverId}
           AND b.`type` = 0
