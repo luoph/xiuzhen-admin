@@ -217,7 +217,7 @@
                                IFNULL(@free_num, 0) AS free_num,
                                IFNULL(@free_remain, 0) AS free_remain,
                                IFNULL(@pay_remain, 0) AS  pay_remain,
-                               IFNULL(@serverId, 0) AS serverId,
+                               IFNULL(@serverId, 0) AS server_id,
                                IFNULL(@channel, 0) AS channel,
                                IFNULL(FORMAT(@pay_num / @register_num * 100, 2),0.00) AS pay_rate,
                                IFNULL(FORMAT(@d2_remain / @register_num * 100, 2),0.00) AS d2_remain,
