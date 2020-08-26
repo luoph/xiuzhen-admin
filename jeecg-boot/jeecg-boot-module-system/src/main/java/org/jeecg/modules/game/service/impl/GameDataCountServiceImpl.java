@@ -7,18 +7,19 @@ import cn.youai.xiuzhen.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.constant.ErrorCode;
-import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameChannelServer;
-import org.jeecg.modules.game.entity.GameDayDataCount;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.player.service.ILogAccountService;
 import org.jeecg.modules.player.service.IPayOrderService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -50,6 +51,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private ILogAccountService logAccountService;
     @Autowired
     private IGameDayDataCountService gameDayDataCountService;
+    @Autowired
+    private IGameDataRemainService gameDataRemainService;
+
+    @Value("${app.log.db.table}")
+    private String logTable;
 
     @Override
     public boolean isParamValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
@@ -150,7 +156,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         double doublePayRate = registerPayPlayer > 0 ? BigDecimalUtil.div(doublePayRegisterPlayer, registerPayPlayer, 2) : 0.00;
 
         return new GameDayDataCount().setPayAmount(BigDecimal.valueOf(sumPayAmount)).setLoginPlayerNum(loginPlayerNum)
-                .setPayPlayerNum(countPayPlayer).setArpu(BigDecimal.valueOf(arppu)).setArppu(BigDecimal.valueOf(arppu))
+                .setPayPlayerNum(countPayPlayer).setArpu(BigDecimal.valueOf(arpu)).setArppu(BigDecimal.valueOf(arppu))
                 .setPayRate(BigDecimal.valueOf(payRate)).setAddPlayerNum(registerPlayer).setAddPayPlayerNum(registerPayPlayer)
                 .setAddPayAmount(BigDecimal.valueOf(registerPayAmount)).setAddPayRate(BigDecimal.valueOf(registerPayRate))
                 .setDoublePayPlayer(doublePayRegisterPlayer).setDoublePayRate(BigDecimal.valueOf(doublePayRate))
@@ -159,7 +165,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 .setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
     }
 
-    public void doJob() {
+    public void doJobDataCount() {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0).collect(Collectors.toList());
         Date date = DateUtils.addDays(DateUtils.todayDate(), 1);
@@ -170,4 +176,55 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
     }
 
+    @Override
+    public List<GameDataRemain> queryDataRemainCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+        List<GameDataRemain> list = new ArrayList<>();
+        GameChannel gameChannel = gameChannelService.getById(channelId);
+        if (gameChannel == null) {
+            return list;
+        }
+        GameServer gameServer = gameServerService.getById(serverId);
+        if (gameServer == null) {
+            return list;
+        }
+        boolean channelWithServer = gameChannelServerService.isValidChannelWithServer(channelId, serverId);
+        if (!channelWithServer) {
+            return list;
+        }
+        Date dateBegin = DateUtils.parseDate(rangeDateBegin);
+        Date dateEnd = DateUtils.parseDate(rangeDateEnd);
+        // 数组第一个元素为开始统计的第一个日期
+        Date[] dates = dateBegin(dateBegin, dateEnd);
+        int dateRangeBetween = dateRangeBetween(dateBegin, dateEnd);
+        for (int i = 0; i <= dateRangeBetween; i++) {
+            String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
+            GameDataRemain gameDataRemain = getGameDataRemain(gameChannel, gameServer, dateOnly);
+            list.add(gameDataRemain);
+        }
+        return list;
+    }
+
+    private GameDataRemain getGameDataRemain(GameChannel gameChannel, GameServer gameServer, String date) {
+        GameDataRemain countRemain = gameDataRemainService.getCountRemain(gameChannel.getSimpleName(), gameServer.getId(), date);
+        GameDataRemain dataRemain = new GameDataRemain();
+        BeanUtils.copyProperties(countRemain, dataRemain);
+        int payNum = countRemain.getPayNum();
+        double payRemainRate = payNum > 0 ? BigDecimalUtil.div(countRemain.getPayRemain(), payNum, 2) : 0.00;
+        dataRemain.setPayRemainRate(BigDecimal.valueOf(payRemainRate));
+        int freeNum = countRemain.getFreeNum();
+        double freeRemainRate = freeNum > 0 ? BigDecimalUtil.div(countRemain.getFreeRemain(), freeNum, 2) : 0.00;
+        dataRemain.setFreeRemainRate(BigDecimal.valueOf(freeRemainRate));
+        return dataRemain;
+    }
+
+    public void doJobRemainCount() {
+        List<GameChannelServer> list = gameChannelServerService.list();
+        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0).collect(Collectors.toList());
+        Date date = DateUtils.addDays(DateUtils.todayDate(), 1);
+        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
+        for (GameChannelServer gameChannelServer : list) {
+            List<GameDataRemain> gameDataRemains = queryDataRemainCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
+            gameDataRemainService.saveBatch(gameDataRemains);
+        }
+    }
 }

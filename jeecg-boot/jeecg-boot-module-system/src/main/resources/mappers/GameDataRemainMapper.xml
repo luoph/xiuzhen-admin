@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.GameDataRemainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameDataRemain">
+        <id column="id" property="id"/>
+        <result column="channel" property="channel"/>
+        <result column="server_id" property="serverId"/>
+        <result column="register_num" property="registerNum"/>
+        <result column="pay_num" property="payNum"/>
+        <result column="pay_rate" property="payRate"/>
+        <result column="free_num" property="freeNum"/>
+        <result column="pay_remain" property="payRemain"/>
+        <result column="free_remain" property="freeRemain"/>
+        <result column="d2_remain" property="d2Remain"/>
+        <result column="d3_remain" property="d3Remain"/>
+        <result column="d4_remain" property="d4Remain"/>
+        <result column="d5_remain" property="d5Remain"/>
+        <result column="d6_remain" property="d6Remain"/>
+        <result column="d7_remain" property="d7Remain"/>
+        <result column="d15_remain" property="d15Remain"/>
+        <result column="d30_remain" property="d30Remain"/>
+        <result column="d60_remain" property="d60Remain"/>
+        <result column="d90_remain" property="d90Remain"/>
+        <result column="d120_remain" property="d120Remain"/>
+        <result column="count_date" property="countDate"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, channel, server_id, register_num, pay_num, pay_rate, free_num, pay_remain, free_remain, d2_remain, d3_remain, d4_remain, d5_remain, d6_remain, d7_remain, d15_remain, d30_remain, d60_remain, d90_remain, d120_remain, count_date, create_time
+    </sql>
+
+    <select id="gameRemainCount" resultMap="BaseResultMap">
+    <![CDATA[
+
+                       SELECT @register_date := #{date},
+                         @d1_start := CONCAT(@register_date, ' 00:00:00'),
+                         @d2_start := DATE_ADD(@d1_start, INTERVAL 1 DAY),
+                         @d3_start := DATE_ADD(@d1_start, INTERVAL 2 DAY),
+                         @d4_start := DATE_ADD(@d1_start, INTERVAL 3 DAY),
+                         @d5_start := DATE_ADD(@d1_start, INTERVAL 4 DAY),
+                         @d6_start := DATE_ADD(@d1_start, INTERVAL 5 DAY),
+                         @d7_start := DATE_ADD(@d1_start, INTERVAL 6 DAY),
+                         @d15_start := DATE_ADD(@d1_start, INTERVAL 14 DAY),
+                         @d30_start := DATE_ADD(@d1_start, INTERVAL 29 DAY),
+                         @d60_start := DATE_ADD(@d1_start, INTERVAL 59 DAY),
+                         @d90_start := DATE_ADD(@d1_start, INTERVAL 89 DAY),
+                         @d120_start := DATE_ADD(@d1_start, INTERVAL 119 DAY),
+                         @channel := #{channel},
+                         @serverId := #{serverId},
+
+                         @register_num := (SELECT COUNT(DISTINCT(a.`player_id`)) FROM `player_register_info` AS a
+                                WHERE a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                 AND a.`channel` =@channel AND a.`server_id` = @serverId),
+
+                         @pay_num := (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `pay_order` o
+                            LEFT JOIN `player_register_info` p ON o.`player_id` = p.`player_id`
+                            AND o.`channel` = p.`channel`
+                            AND o.`server_id` = p.`server_id`
+                            WHERE p.`create_time` >= @d1_start AND p.`create_time` < @d2_start
+                            AND o.`pay_time` >= @d1_start AND o.`pay_time` < @d2_start
+                            AND o.`channel` =@channel AND o.`server_id` = @serverId
+                            AND p.`channel` =@channel AND p.`server_id` = @serverId),
+
+                        @free_num = @register_num - @pay_num,
+
+                        @pay_remain := (SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` d ON l.`player_id` = d.`player_id`
+                            AND l.`channel` = d.`channel`
+                            AND l.`server_id` = d.`server_id`
+                            WHERE l.`create_date` >= @d2_start && l.`create_date` < DATE_ADD(@d2_start, INTERVAL 1 DAY)
+                            AND  d.`create_time` >= @d1_start AND d.`create_time` < @d2_start
+                            AND d.`channel` =@channel AND d.`server_id` = @serverId
+                            AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            AND EXISTS (SELECT * FROM `pay_order` b WHERE l.`player_id` = b.`player_id`
+                            AND b.`pay_time` >= @d1_start AND b.`pay_time` < @d2_start
+                            AND b.`channel` =@channel AND b.`server_id` = @serverId)),
+
+                        @free_remain := (SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d2_start && l.`create_date` < DATE_ADD(@d2_start, INTERVAL 1 DAY)
+                            AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                            AND a.`channel` =@channel AND a.`server_id` = @serverId
+                            AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            AND NOT EXISTS (SELECT * FROM `pay_order` b WHERE l.`create_date` = b.`player_id`
+                            AND b.`pay_time` >= @d1_start AND b.`pay_time` < @d2_start)),
+
+                         @d2_remain := IF (NOW() < DATE_ADD(@d2_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM  ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d2_start && l.`create_date` < DATE_ADD(@d2_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                        @d3_remain := IF (NOW() < DATE_ADD(@d3_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d3_start && l.`create_date` < DATE_ADD(@d3_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                        @d4_remain := IF (NOW() < DATE_ADD(@d4_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d4_start && l.`create_date` < DATE_ADD(@d4_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                         @d5_remain := IF (NOW() < DATE_ADD(@d5_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM  ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d5_start && l.`create_date` < DATE_ADD(@d5_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                         @d6_remain := IF (NOW() < DATE_ADD(@d6_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d6_start && l.`create_date` < DATE_ADD(@d6_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                            )),
+
+                         @d7_remain := IF (NOW() < DATE_ADD(@d7_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d7_start && l.`create_date` < DATE_ADD(@d7_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                          @d15_remain := IF (NOW() < DATE_ADD(@d15_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d15_start && l.`create_date` < DATE_ADD(@d15_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                         @d30_remain := IF (NOW() < DATE_ADD(@d30_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d30_start && l.`create_date` < DATE_ADD(@d30_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+
+                         @d60_remain := IF (NOW() < DATE_ADD(@d60_start, INTERVAL 1 DAY), NULL, (
+                            SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
+                            LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                            AND l.`channel` = a.`channel`
+                            AND l.`server_id` = a.`server_id`
+                            WHERE l.`create_date` >= @d60_start && l.`create_date` < DATE_ADD(@d60_start, INTERVAL 1 DAY)
+                                AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                         @d90_remain := IF (NOW() < DATE_ADD(@d90_start, INTERVAL 1 DAY), NULL, (
+                                SELECT count( DISTINCT (l. `player_id` )) FROM ${logTable} l
+                                LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                                AND l.`channel` = a.`channel`
+                                AND l.`server_id` = a.`server_id`
+                                WHERE l.`create_date` >= @d90_start && l.`create_date` < DATE_ADD(@d90_start, INTERVAL 1 DAY)
+                                    AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                    AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                    AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                            @d120_remain := IF (NOW() < DATE_ADD(@d120_start, INTERVAL 1 DAY), NULL, (
+                                SELECT count( DISTINCT (l. `player_id` )) FROM ${logTable} l
+                                LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                                AND l.`channel` = a.`channel`
+                                AND l.`server_id` = a.`server_id`
+                                WHERE l.`create_date` >= @d120_start && l.`create_date` < DATE_ADD(@d120_start, INTERVAL 1 DAY)
+                                    AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                    AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                    AND l.`channel` =@channel AND l.`server_id` = @serverId
+                            )),
+
+                             IFNULL(@register_date, now()) AS count_date,
+                               IFNULL(@register_num, 0) AS register_num,
+                               IFNULL(@pay_num, 0) AS pay_num,
+                               IFNULL(@free_num, 0) AS free_num,
+                               IFNULL(@free_remain, 0) AS free_remain,
+                               IFNULL(@pay_remain, 0) AS  pay_remain,
+                               IFNULL(@serverId, 0) AS serverId,
+                               IFNULL(@channel, 0) AS channel,
+                               IFNULL(FORMAT(@pay_num / @register_num * 100, 2),0.00) AS pay_rate,
+                               IFNULL(FORMAT(@d2_remain / @register_num * 100, 2),0.00) AS d2_remain,
+                               IFNUll(FORMAT(@d3_remain / @register_num * 100, 2),0.00) AS d3_remain,
+                               IFNULL(FORMAT(@d4_remain / @register_num * 100, 2),0.00) AS d4_remain,
+                               IFNULL(FORMAT(@d5_remain / @register_num * 100, 2),0.00) AS d5_remain,
+                               IFNULL(FORMAT(@d6_remain / @register_num * 100, 2),0.00) AS d6_remain,
+                               IFNULL(FORMAT(@d7_remain / @register_num * 100, 2),0.00) AS d7_remain,
+                               IFNULL(FORMAT(@d15_remain / @register_num * 100, 2),0.00) AS d15_remain,
+                               IFNULL(FORMAT(@d30_remain / @register_num * 100, 2),0.00) AS d30_remain,
+                               IFNULL(FORMAT(@d60_remain / @register_num * 100, 2),0.00) AS d60_remain,
+                               IFNULL(FORMAT(@d90_remain / @register_num * 100, 2),0.00) AS d90_remain,
+                               IFNULL(FORMAT(@d120_remain / @register_num * 100, 2),0.00) AS d120_remain;
+
+        ]]>
+   </select>
+
+</mapper>

@@ -33,8 +33,8 @@ import { filterObj } from '@/utils/util';
 import { getAction } from '@/api/manage';
 
 export default {
-    description: '日常数据',
-    name: 'GameDataCountList',
+    description: '留存率',
+    name: 'GameDataRemainList',
     mixins: [JeecgListMixin],
     components: {
         JDate,
@@ -67,98 +67,106 @@ export default {
                     width: 100
                 },
                 {
-                    title: '每天数据',
-                    children: [
-                        {
-                            title: '每天登陆角色数',
-                            dataIndex: 'loginPlayerNum',
-                            key: 'loginPlayerNum',
-                            width: 180
-                        },
-                        {
-                            title: '每天付费金额',
-                            dataIndex: 'payAmount',
-                            key: 'payAmount',
-                            width: 180
-                        },
-                        {
-                            title: '每天付费角色数',
-                            dataIndex: 'payPlayerNum',
-                            key: 'payPlayerNum',
-                            width: 180
-                        },
-                        {
-                            title: '每天付费率',
-                            dataIndex: 'payRate',
-                            key: 'payRate',
-                            width: 180
-                        },
-                        {
-                            title: 'ARPU',
-                            dataIndex: 'arpu',
-                            key: 'arpu',
-                            width: 180
-                        },
-                        {
-                            title: 'ARPPU',
-                            dataIndex: 'arppu',
-                            key: 'arppu',
-                            width: 180
-                        }
-                    ]
+                    title: '新增角色',
+                    dataIndex: 'registerNum',
+                    key: 'registerNum',
+                    width: 100
                 },
                 {
-                    title: '新增数据',
-                    children: [
-                        {
-                            title: '新增角色',
-                            dataIndex: 'addPlayerNum',
-                            key: 'addPlayerNum',
-                            width: 180
-                        },
-                        {
-                            title: '新增付费',
-                            dataIndex: 'addPayAmount',
-                            key: 'addPayAmount',
-                            width: 180
-                        },
-                        {
-                            title: '新增付费角色数',
-                            dataIndex: 'addPayPlayerNum',
-                            key: 'addPayPlayerNum',
-                            width: 180
-                        },
-                        {
-                            title: '新增付费率',
-                            dataIndex: 'addPayRate',
-                            key: 'addPayRate',
-                            width: 180
-                        },
-                        {
-                            title: '新增ARPU',
-                            dataIndex: 'addArpu',
-                            key: 'addArpu',
-                            width: 180
-                        },
-                        {
-                            title: '新增ARPPU',
-                            dataIndex: 'addArppu',
-                            key: 'addArppu',
-                            width: 180
-                        },
-                        {
-                            title: '二次付费角色数',
-                            dataIndex: 'doublePayPlayer',
-                            key: 'doublePayPlayer',
-                            width: 180
-                        },
-                        {
-                            title: '二次付费率',
-                            dataIndex: 'doublePayRate',
-                            key: 'doublePayRate',
-                            width: 180
-                        }
-                    ]
+                    title: '首日免费角色',
+                    dataIndex: 'freeNum',
+                    key: 'freeNum',
+                    width: 100
+                },
+                {
+                    title: '首日付费角色',
+                    dataIndex: 'payNum',
+                    key: 'payNum',
+                    width: 100
+                },
+                {
+                    title: '首日付费率',
+                    dataIndex: 'payRate',
+                    key: 'payRate',
+                    width: 100
+                },
+                {
+                    title: '免费角色次留率',
+                    dataIndex: 'freeRemainRate',
+                    key: 'freeRemainRate',
+                    width: 100
+                },
+                {
+                    title: '付费角色次留率',
+                    dataIndex: 'payRemainRate',
+                    key: 'payRemainRate',
+                    width: 100
+                },
+                {
+                    title: '次留率',
+                    dataIndex: 'd2Remain',
+                    key: 'd2Remain',
+                    width: 100
+                },
+                {
+                    title: '3留率',
+                    dataIndex: 'd3Remain',
+                    key: 'd3Remain',
+                    width: 100
+                },
+                {
+                    title: '4留率',
+                    dataIndex: 'd4Remain',
+                    key: 'd4Remain',
+                    width: 100
+                },
+                {
+                    title: '5留率',
+                    dataIndex: 'd5Remain',
+                    key: 'd5Remain',
+                    width: 100
+                },
+                {
+                    title: '6留率',
+                    dataIndex: 'd6Remain',
+                    key: 'd6Remain',
+                    width: 100
+                },
+                {
+                    title: '7留率',
+                    dataIndex: 'd7Remain',
+                    key: 'd7Remain',
+                    width: 100
+                },
+                {
+                    title: '15留率',
+                    dataIndex: 'd15Remain',
+                    key: 'd15Remain',
+                    width: 100
+                },
+                {
+                    title: '30留率',
+                    dataIndex: 'd30Remain',
+                    key: 'd30Remain',
+                    width: 100
+                },
+                {
+                    title: '60留率',
+                    dataIndex: 'd60Remain',
+                    key: 'd60Remain',
+                    width: 100
+                },
+                {
+                    title: '90留率',
+                    dataIndex: 'd90Remain',
+                    key: 'd90Remain',
+                    width: 100
+                },
+                {
+                    title: '120留率',
+                    dataIndex: 'd120Remain',
+                    key: 'd120Remain',
+                    width: 100
                 },
                 {
                     title: '日期',
@@ -172,7 +180,7 @@ export default {
                 }
             ],
             url: {
-                list: 'game/gameDataCountController/dayCount'
+                list: 'game/gameDataCountController/remainRate'
             },
             dictOptions: {}
         };

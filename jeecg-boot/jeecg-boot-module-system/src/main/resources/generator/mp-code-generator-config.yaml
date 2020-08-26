@@ -1,5 +1,5 @@
 globalConfig:
-  author: luopeihuan
+  author: buliangliang
   open: false
   idType: AUTO
   dateType: ONLY_DATE
@@ -24,7 +24,7 @@ packageConfig:
   serviceImpl: service.impl
   mapper: mapper
   xml: mapper
-  controller: controller
+  #controller: controller
 
   pathInfo:
     entity_path: src/main/java/org/jeecg/modules/game/entity
@@ -32,7 +32,7 @@ packageConfig:
     service_impl_path: src/main/java/org/jeecg/modules/game/service/impl
     mapper_path: src/main/java/org/jeecg/modules/game/mapper
     xml_path: src/main/resources/mappers
-    controller_path: src/main/java/org/jeecg/modules/game/controller
+    #controller_path: src/main/java/org/jeecg/modules/game/controller
 
 strategyConfig:
   naming: underline_to_camel
@@ -46,4 +46,4 @@ strategyConfig:
   tablePrefix:
   include:
     # 表名
-    - game_server
+    - game_data_remain

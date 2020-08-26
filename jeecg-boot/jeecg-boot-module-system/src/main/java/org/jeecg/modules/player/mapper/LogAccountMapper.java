@@ -3,9 +3,9 @@
  */
 package org.jeecg.modules.player.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.player.entity.LogAccount;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * <p>
@@ -25,7 +25,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @param type
      * @return
      */
-    int gerLoginRegisterPlayerNum(@Param("channel") String channel, @Param("serverId") int serverId, @Param("createTime") String createTime, @Param("type") int type);
+    int gerLoginRegisterPlayerNum(@Param("channel") String channel, @Param("serverId") int serverId, @Param("createTime") String createTime, @Param("type") int type, @Param("logTable") String logTable);
 
     /**
      * 新增注册付费总额

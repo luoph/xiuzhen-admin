@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.modules.game.entity.GameDataRemain;
 import org.jeecg.modules.game.entity.GameDayDataCount;
 import org.jeecg.modules.game.service.IGameDataCountService;
+import org.jeecg.modules.game.service.IGameDataRemainService;
 import org.jeecg.modules.game.service.IGameDayDataCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +40,11 @@ public class GameDataCountController {
     private IGameDataCountService gameDataCountService;
     @Autowired
     private IGameDayDataCountService gameDayDataCountService;
+    @Autowired
+    private IGameDataRemainService gameDataRemainService;
 
 
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/dayCount")
     public Result<?> queryGameDataCountList(
             @RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
             @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
@@ -64,5 +68,32 @@ public class GameDataCountController {
             IPage<GameDayDataCount> selectList = gameDayDataCountService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
             return Result.ok(selectList);
         }
+    }
+
+    @GetMapping(value = "/remainRate")
+    public Result<?> queryGameRemainCount(
+            @RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
+            @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
+            @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+            @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+            HttpServletRequest req) {
+        Page<GameDataRemain> page = new Page<>(pageNo, pageSize);
+        boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
+            // 验证通过
+            ResponseCode responseCode = gameDataCountService.dateRangeValid(rangeDateBegin, rangeDateEnd);
+            if (!responseCode.isSuccess()) {
+                return Result.error(responseCode.getDesc());
+            }
+            List<GameDataRemain> gameDataRemains = gameDataCountService.queryDataRemainCount(channelId, serverId, rangeDateBegin, rangeDateEnd);
+            page.setRecords(gameDataRemains).setTotal(gameDataRemains.size());
+            return Result.ok(page);
+        } else {
+            IPage<GameDataRemain> list = gameDataRemainService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
+            return Result.ok(list);
+        }
+
     }
 }
