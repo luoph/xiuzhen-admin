@@ -22,4 +22,5 @@ public interface IGameChannelService extends IService<GameChannel> {
      */
     List<GameServer> getServerListChannelId(Long channelId);
 
+
 }

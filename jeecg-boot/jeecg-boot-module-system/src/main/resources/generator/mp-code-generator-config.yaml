@@ -46,4 +46,4 @@ strategyConfig:
   tablePrefix:
   include:
     # 表名
-    - game_data_remain
+    - game_ltv_count

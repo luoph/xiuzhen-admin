@@ -11,7 +11,6 @@ import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.player.service.ILogAccountService;
 import org.jeecg.modules.player.service.IPayOrderService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -53,6 +52,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private IGameDayDataCountService gameDayDataCountService;
     @Autowired
     private IGameDataRemainService gameDataRemainService;
+    @Autowired
+    private IGameLtvCountService gameLtvCountService;
 
     @Value("${app.log.db.table}")
     private String logTable;
@@ -168,11 +169,15 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     public void doJobDataCount() {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0).collect(Collectors.toList());
-        Date date = DateUtils.addDays(DateUtils.todayDate(), 1);
+        Date date = DateUtils.addDays(DateUtils.todayDate(), -1);
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
         for (GameChannelServer gameChannelServer : list) {
             List<GameDayDataCount> gameDayDataCounts = queryDateRangeDataCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
             gameDayDataCountService.saveBatch(gameDayDataCounts);
+            List<GameDataRemain> gameDataRemains = queryDataRemainCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
+            gameDataRemainService.saveBatch(gameDataRemains);
+            List<GameLtvCount> gameLtvCounts = queryDataLtvCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
+            gameLtvCountService.saveBatch(gameLtvCounts);
         }
     }
 
@@ -198,33 +203,37 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int dateRangeBetween = dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            GameDataRemain gameDataRemain = getGameDataRemain(gameChannel, gameServer, dateOnly);
+            GameDataRemain gameDataRemain = gameDataRemainService.getCountRemain(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             list.add(gameDataRemain);
         }
         return list;
     }
 
-    private GameDataRemain getGameDataRemain(GameChannel gameChannel, GameServer gameServer, String date) {
-        GameDataRemain countRemain = gameDataRemainService.getCountRemain(gameChannel.getSimpleName(), gameServer.getId(), date);
-        GameDataRemain dataRemain = new GameDataRemain();
-        BeanUtils.copyProperties(countRemain, dataRemain);
-        int payNum = countRemain.getPayNum();
-        double payRemainRate = payNum > 0 ? BigDecimalUtil.div(countRemain.getPayRemain(), payNum, 2) : 0.00;
-        dataRemain.setPayRemainRate(BigDecimal.valueOf(payRemainRate));
-        int freeNum = countRemain.getFreeNum();
-        double freeRemainRate = freeNum > 0 ? BigDecimalUtil.div(countRemain.getFreeRemain(), freeNum, 2) : 0.00;
-        dataRemain.setFreeRemainRate(BigDecimal.valueOf(freeRemainRate));
-        return dataRemain;
-    }
-
-    public void doJobRemainCount() {
-        List<GameChannelServer> list = gameChannelServerService.list();
-        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0).collect(Collectors.toList());
-        Date date = DateUtils.addDays(DateUtils.todayDate(), 1);
-        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
-        for (GameChannelServer gameChannelServer : list) {
-            List<GameDataRemain> gameDataRemains = queryDataRemainCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
-            gameDataRemainService.saveBatch(gameDataRemains);
+    @Override
+    public List<GameLtvCount> queryDataLtvCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+        List<GameLtvCount> list = new ArrayList<>();
+        GameChannel gameChannel = gameChannelService.getById(channelId);
+        if (gameChannel == null) {
+            return list;
         }
+        GameServer gameServer = gameServerService.getById(serverId);
+        if (gameServer == null) {
+            return list;
+        }
+        boolean channelWithServer = gameChannelServerService.isValidChannelWithServer(channelId, serverId);
+        if (!channelWithServer) {
+            return list;
+        }
+        Date dateBegin = DateUtils.parseDate(rangeDateBegin);
+        Date dateEnd = DateUtils.parseDate(rangeDateEnd);
+        // 数组第一个元素为开始统计的第一个日期
+        Date[] dates = dateBegin(dateBegin, dateEnd);
+        int dateRangeBetween = dateRangeBetween(dateBegin, dateEnd);
+        for (int i = 0; i <= dateRangeBetween; i++) {
+            String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
+            GameLtvCount gameLtvCount = gameLtvCountService.getGameLtvCount(gameChannel.getSimpleName(), gameServer.getId(), dateOnly, logTable);
+            list.add(gameLtvCount);
+        }
+        return list;
     }
 }
