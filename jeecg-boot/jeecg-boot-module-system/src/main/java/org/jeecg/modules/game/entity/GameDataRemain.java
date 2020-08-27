@@ -4,7 +4,6 @@
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -140,13 +139,11 @@ public class GameDataRemain implements Serializable {
     /**
      * 免费呲溜率
      */
-    @TableField(exist = false)
     private BigDecimal freeRemainRate;
 
     /**
      * 付费次留率
      */
-    @TableField(exist = false)
     private BigDecimal payRemainRate;
 
 }
