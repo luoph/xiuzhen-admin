@@ -21,7 +21,7 @@
         </div>
         <!--查询区域结束-->
         <!-- table区域-begin -->
-        <div><a-table ref="table" size="middle" bordered  rowKey="id" :loading="loading" :columns="columns" :dataSource="dataSource" :pagination="ipagination" @change="handleTableChange"></a-table></div>
+        <div><a-table ref="table" size="middle" bordered rowKey="id" :loading="loading" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :scroll="{ x: 1500, y: 520 }" @change="handleTableChange"></a-table></div>
     </a-card>
 </template>
 
