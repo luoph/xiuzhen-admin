@@ -4,13 +4,11 @@
             <div class="top">
                 <div class="header">
                     <a href="/">
-                        <img src="~@/assets/logo.svg" class="logo" alt="logo" />
-                        <span class="title">1101 Studio</span>
+                        <img src="~@/assets/logo.png" class="logo" alt="logo" />
+                        <!-- <span class="title">1101 Studio</span> -->
                     </a>
                 </div>
-                <div class="desc">
-                    游戏管理后台
-                </div>
+                <!-- <div class="desc">游戏管理后台</div> -->
             </div>
 
             <route-view></route-view>
@@ -76,7 +74,7 @@ export default {
             text-align: center;
 
             .header {
-                height: 44px;
+                height: 240px;
                 line-height: 44px;
 
                 .badge {
@@ -90,7 +88,8 @@ export default {
                 }
 
                 .logo {
-                    height: 44px;
+                    width: 200px;
+                    height: 200px;
                     vertical-align: top;
                     margin-right: 16px;
                     border-style: none;
@@ -107,7 +106,7 @@ export default {
                 }
             }
             .desc {
-                font-size: 14px;
+                font-size: 16px;
                 color: rgba(0, 0, 0, 0.45);
                 margin-top: 12px;
                 margin-bottom: 40px;
