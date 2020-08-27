@@ -166,6 +166,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 .setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
     }
 
+    @Override
     public void doJobDataCount() {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0).collect(Collectors.toList());
