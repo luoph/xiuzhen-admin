@@ -144,6 +144,8 @@
                             AND l.`server_id` = a.`server_id`
                             WHERE l.`create_date` >= @d6_start && l.`create_date` < DATE_ADD(@d6_start, INTERVAL 1 DAY)
                                 AND  a.`create_time` >= @d1_start AND a.`create_time` < @d2_start
+                                AND a.`channel` =@channel AND a.`server_id` = @serverId
+                                AND l.`channel` =@channel AND l.`server_id` = @serverId
                             )),
 
                          @d7_remain := IF (NOW() < DATE_ADD(@d7_start, INTERVAL 1 DAY), NULL, (
