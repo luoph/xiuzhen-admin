@@ -21,7 +21,20 @@
         </div>
         <!--查询区域结束-->
         <!-- table区域-begin -->
-        <div><a-table ref="table" size="middle" bordered rowKey="id" :loading="loading" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :scroll="{ x: 1500, y: 520 }" @change="handleTableChange"></a-table></div>
+        <div>
+            <a-table
+                ref="table"
+                size="middle"
+                bordered
+                rowKey="id"
+                :loading="loading"
+                :columns="columns"
+                :dataSource="dataSource"
+                :pagination="ipagination"
+                :scroll="{ x: 1500, y: 520 }"
+                @change="handleTableChange"
+            ></a-table>
+        </div>
     </a-card>
 </template>
 
@@ -48,117 +61,119 @@ export default {
                     title: '序号',
                     dataIndex: '',
                     key: 'rowIndex',
-                    width: 100,
+                    width: 50,
                     align: 'center',
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
                 {
-                    title: '渠道',
-                    dataIndex: 'channel',
-                    key: 'channel',
-                    width: 100
-                },
-                {
-                    title: '服务器',
-                    dataIndex: 'serverId',
-                    key: 'serverId',
-                    width: 100
+                    title: '日期',
+                    dataIndex: 'countDate',
+                    key: 'countDate',
+                    width: 100,
+                    align: 'center',
+                    customRender: function(text) {
+                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+                    }
                 },
                 {
                     title: '新增角色',
                     dataIndex: 'registerNum',
                     key: 'registerNum',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV1',
                     dataIndex: 'd1Amount',
                     key: 'd1Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV2',
                     dataIndex: 'd2Amount',
                     key: 'd2Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV3',
                     dataIndex: 'd3Amount',
                     key: 'd3Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV4',
                     dataIndex: 'd4Amount',
                     key: 'd4Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV5',
                     dataIndex: 'd5Amount',
                     key: 'd5Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV6',
                     dataIndex: 'd6Amount',
                     key: 'd6Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV7',
                     dataIndex: 'd7Amount',
                     key: 'd7Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV14',
                     dataIndex: 'd14Amount',
                     key: 'd14Remain',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV21',
                     dataIndex: 'd21Amount',
                     key: 'd21Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV30',
                     dataIndex: 'd30Amount',
                     key: 'd30Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV60',
                     dataIndex: 'd60Amount',
                     key: 'd60Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV90',
                     dataIndex: 'd90Amount',
                     key: 'd90Amount',
-                    width: 100
+                    align: 'center',
+                    width: 80
                 },
                 {
                     title: 'LTV120',
                     dataIndex: 'd120Amount',
                     key: 'd120Amount',
-                    width: 100
-                },
-                {
-                    title: '日期',
-                    dataIndex: 'countDate',
-                    key: 'countDate',
-                    width: 220,
                     align: 'center',
-                    customRender: function(text) {
-                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    width: 80
                 }
             ],
             url: {

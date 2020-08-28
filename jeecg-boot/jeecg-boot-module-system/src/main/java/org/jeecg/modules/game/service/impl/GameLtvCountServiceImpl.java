@@ -42,6 +42,7 @@ public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, Gam
     @Override
     public IPage<GameLtvCount> selectList(Page<GameLtvCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         QueryWrapper<GameLtvCount> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("count_date");
         boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);

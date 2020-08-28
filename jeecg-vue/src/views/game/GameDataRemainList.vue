@@ -21,7 +21,20 @@
         </div>
         <!--查询区域结束-->
         <!-- table区域-begin -->
-        <div><a-table ref="table" size="middle" bordered rowKey="id" :loading="loading" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :scroll="{ x: 1500, y: 520 }" @change="handleTableChange"></a-table></div>
+        <div>
+            <a-table
+                ref="table"
+                size="middle"
+                bordered
+                rowKey="id"
+                :loading="loading"
+                :columns="columns"
+                :dataSource="dataSource"
+                :pagination="ipagination"
+                :scroll="{ x: 1500, y: 520 }"
+                @change="handleTableChange"
+            ></a-table>
+        </div>
     </a-card>
 </template>
 
@@ -48,135 +61,140 @@ export default {
                     title: '序号',
                     dataIndex: '',
                     key: 'rowIndex',
-                    width: 100,
+                    width: 50,
                     align: 'center',
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
                 {
-                    title: '渠道',
-                    dataIndex: 'channel',
-                    key: 'channel',
-                    width: 100
-                },
-                {
-                    title: '服务器',
-                    dataIndex: 'serverId',
-                    key: 'serverId',
-                    width: 100
+                    title: '日期',
+                    dataIndex: 'countDate',
+                    key: 'countDate',
+                    width: 120,
+                    align: 'center',
+                    customRender: function(text) {
+                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+                    }
                 },
                 {
                     title: '新增角色',
                     dataIndex: 'registerNum',
                     key: 'registerNum',
-                    width: 100
+                    align: 'center',
+                    width: 120
                 },
                 {
                     title: '首日免费角色',
                     dataIndex: 'freeNum',
                     key: 'freeNum',
-                    width: 100
+                    align: 'center',
+                    width: 120
                 },
                 {
                     title: '首日付费角色',
                     dataIndex: 'payNum',
                     key: 'payNum',
-                    width: 100
+                    align: 'center',
+                    width: 120
                 },
                 {
                     title: '首日付费率',
                     dataIndex: 'payRate',
                     key: 'payRate',
-                    width: 100
+                    align: 'center',
+                    width: 120
                 },
                 {
                     title: '免费角色次留率',
                     dataIndex: 'freeRemainRate',
                     key: 'freeRemainRate',
-                    width: 100
+                    align: 'center',
+                    width: 120
                 },
                 {
                     title: '付费角色次留率',
                     dataIndex: 'payRemainRate',
                     key: 'payRemainRate',
-                    width: 100
+                    align: 'center',
+                    width: 120
                 },
                 {
                     title: '次留率',
                     dataIndex: 'd2Remain',
                     key: 'd2Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '3留率',
                     dataIndex: 'd3Remain',
                     key: 'd3Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '4留率',
                     dataIndex: 'd4Remain',
                     key: 'd4Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '5留率',
                     dataIndex: 'd5Remain',
                     key: 'd5Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '6留率',
                     dataIndex: 'd6Remain',
                     key: 'd6Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '7留率',
                     dataIndex: 'd7Remain',
                     key: 'd7Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '15留率',
                     dataIndex: 'd15Remain',
                     key: 'd15Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '30留率',
                     dataIndex: 'd30Remain',
                     key: 'd30Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '60留率',
                     dataIndex: 'd60Remain',
                     key: 'd60Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '90留率',
                     dataIndex: 'd90Remain',
                     key: 'd90Remain',
+                    align: 'center',
                     width: 100
                 },
                 {
                     title: '120留率',
                     dataIndex: 'd120Remain',
                     key: 'd120Remain',
-                    width: 100
-                },
-                {
-                    title: '日期',
-                    dataIndex: 'countDate',
-                    key: 'countDate',
-                    width: 220,
                     align: 'center',
-                    customRender: function(text) {
-                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    width: 100
                 }
             ],
             url: {

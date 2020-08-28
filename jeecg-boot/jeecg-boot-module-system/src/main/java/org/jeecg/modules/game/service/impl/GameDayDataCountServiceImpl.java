@@ -35,6 +35,7 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
     @Override
     public IPage<GameDayDataCount> selectList(Page<GameDayDataCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         QueryWrapper<GameDayDataCount> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("count_date");
         boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);
