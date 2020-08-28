@@ -1,15 +1,12 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DatePattern;
-import cn.youai.commons.model.ResponseCode;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.jeecg.common.constant.ErrorCode;
-import org.jeecg.modules.game.controller.ParamValidUtil;
 import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.*;
+import org.jeecg.modules.game.util.ParamValidUtil;
 import org.jeecg.modules.player.service.ILogAccountService;
 import org.jeecg.modules.player.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,11 +51,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
     @Value("${app.log.db.table}")
     private String logTable;
-
-    @Override
-    public boolean isParamValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        return channelId <= 0 || serverId <= 0 || StringUtils.isBlank(rangeDateBegin) || StringUtils.isBlank(rangeDateEnd);
-    }
 
 
     @Override

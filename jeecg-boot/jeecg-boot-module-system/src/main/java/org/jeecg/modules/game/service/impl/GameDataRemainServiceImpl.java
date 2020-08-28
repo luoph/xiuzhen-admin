@@ -7,13 +7,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.modules.game.controller.ParamValidUtil;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameDataRemain;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
-import org.jeecg.modules.game.service.IGameDataCountService;
 import org.jeecg.modules.game.service.IGameDataRemainService;
+import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,7 +41,7 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     public IPage<GameDataRemain> selectList(Page<GameDataRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         QueryWrapper<GameDataRemain> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("count_date");
-        boolean paramValidCheck = ParamValidUtil.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);
             queryWrapper.ge("count_date", rangeDateBegin);
