@@ -64,7 +64,7 @@ public class GameDataCountController {
         boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
-            ResponseCode responseCode = gameDataCountService.dateRangeValid(rangeDateBegin, rangeDateEnd);
+            ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
             if (!responseCode.isSuccess()) {
                 return Result.error(responseCode.getDesc());
             }
@@ -105,7 +105,7 @@ public class GameDataCountController {
         boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
-            ResponseCode responseCode = gameDataCountService.dateRangeValid(rangeDateBegin, rangeDateEnd);
+            ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
             if (!responseCode.isSuccess()) {
                 return Result.error(responseCode.getDesc());
             }
@@ -146,7 +146,7 @@ public class GameDataCountController {
         boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
-            ResponseCode responseCode = gameDataCountService.dateRangeValid(rangeDateBegin, rangeDateEnd);
+            ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
             if (!responseCode.isSuccess()) {
                 return Result.error(responseCode.getDesc());
             }

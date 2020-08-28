@@ -26,15 +26,6 @@ public interface IGameDataCountService {
     boolean isParamValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
-     * 统计日期范围效验
-     *
-     * @param rangeDateBegin 开始日期
-     * @param rangeDateEnd   结束日期
-     * @return 状态
-     */
-    ResponseCode dateRangeValid(String rangeDateBegin, String rangeDateEnd);
-
-    /**
      * 统计数据列表
      *
      * @param channelId      渠道id

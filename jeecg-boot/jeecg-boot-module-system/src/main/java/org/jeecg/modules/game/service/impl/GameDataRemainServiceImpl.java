@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.modules.game.controller.ParamValidUtil;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameDataRemain;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
@@ -32,8 +33,6 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
 
     @Autowired
     private IGameChannelService gameChannelService;
-    @Autowired
-    private IGameDataCountService gameDataCountService;
     @Resource
     private GameDataRemainMapper gameDataRemainMapper;
     @Value("${app.log.db.table}")
@@ -43,7 +42,7 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     public IPage<GameDataRemain> selectList(Page<GameDataRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         QueryWrapper<GameDataRemain> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("count_date");
-        boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);
             queryWrapper.ge("count_date", rangeDateBegin);
