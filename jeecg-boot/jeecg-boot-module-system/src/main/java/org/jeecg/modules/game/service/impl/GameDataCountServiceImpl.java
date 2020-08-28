@@ -7,6 +7,7 @@ import cn.youai.xiuzhen.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.constant.ErrorCode;
+import org.jeecg.modules.game.controller.ParamValidUtil;
 import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.player.service.ILogAccountService;
@@ -33,10 +34,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GameDataCountServiceImpl implements IGameDataCountService {
 
-    /**
-     * 统计日期最大的日期跨度天数
-     */
-    private static final int MAX_DATE_RANGE = 30;
 
     @Autowired
     private IGameChannelService gameChannelService;
@@ -63,35 +60,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         return channelId <= 0 || serverId <= 0 || StringUtils.isBlank(rangeDateBegin) || StringUtils.isBlank(rangeDateEnd);
     }
 
-    @Override
-    public ResponseCode dateRangeValid(String rangeDateBegin, String rangeDateEnd) {
-        Date dateBegin = DateUtils.parseDate(rangeDateBegin);
-        Date dateEnd = DateUtils.parseDate(rangeDateEnd);
-        int daysBetween = dateRangeBetween(dateBegin, dateEnd);
-        if (daysBetween > MAX_DATE_RANGE) {
-            return new ErrorCode(1001, "查询日期只能在" + MAX_DATE_RANGE + "天之内");
-        }
-        return ErrorCode.SUCCESS;
-    }
-
-    private int dateRangeBetween(Date dateBegin, Date dateEnd) {
-        Date[] dates = dateBegin(dateBegin, dateEnd);
-        return DateUtils.daysBetween(dates[0], dates[1]);
-    }
-
-    private Date[] dateBegin(Date dateBegin, Date dateEnd) {
-        Date[] dates = new Date[2];
-        Date tmp;
-        if (dateEnd.before(dateBegin)) {
-            tmp = dateBegin;
-            dates[0] = dateEnd;
-            dates[1] = tmp;
-        } else {
-            dates[0] = dateBegin;
-            dates[1] = dateEnd;
-        }
-        return dates;
-    }
 
     @Override
     public List<GameDayDataCount> queryDateRangeDataCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
@@ -111,8 +79,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
-        Date[] dates = dateBegin(dateBegin, dateEnd);
-        int dateRangeBetween = dateRangeBetween(dateBegin, dateEnd);
+        Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
+        int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             GameDayDataCount gameDataCount = gameDataCount(gameChannel, gameServer, dateOnly);
@@ -200,8 +168,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
-        Date[] dates = dateBegin(dateBegin, dateEnd);
-        int dateRangeBetween = dateRangeBetween(dateBegin, dateEnd);
+        Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
+        int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             GameDataRemain gameDataRemain = gameDataRemainService.getCountRemain(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
@@ -228,8 +196,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
-        Date[] dates = dateBegin(dateBegin, dateEnd);
-        int dateRangeBetween = dateRangeBetween(dateBegin, dateEnd);
+        Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
+        int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             GameLtvCount gameLtvCount = gameLtvCountService.getGameLtvCount(gameChannel.getSimpleName(), gameServer.getId(), dateOnly, logTable);

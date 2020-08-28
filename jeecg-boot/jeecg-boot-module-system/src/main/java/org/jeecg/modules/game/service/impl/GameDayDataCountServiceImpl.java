@@ -6,6 +6,7 @@ package org.jeecg.modules.game.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.jeecg.modules.game.controller.ParamValidUtil;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameDayDataCount;
 import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
@@ -29,14 +30,12 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
 
     @Autowired
     private IGameChannelService gameChannelService;
-    @Autowired
-    private IGameDataCountService gameDataCountService;
 
     @Override
     public IPage<GameDayDataCount> selectList(Page<GameDayDataCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         QueryWrapper<GameDayDataCount> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("count_date");
-        boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);
             queryWrapper.ge("count_date", rangeDateBegin);
