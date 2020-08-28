@@ -1,4 +1,4 @@
-package org.jeecg.modules.game.controller;
+package org.jeecg.modules.game.util;
 
 import cn.youai.commons.model.ResponseCode;
 import cn.youai.xiuzhen.utils.DateUtils;
@@ -25,7 +25,7 @@ public final class ParamValidUtil {
      */
     private static final int MAX_DATE_RANGE = 30;
 
-    public static boolean isParamValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+    public static boolean isParamInValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         return channelId <= 0 || serverId <= 0 || StringUtils.isBlank(rangeDateBegin) || StringUtils.isBlank(rangeDateEnd);
     }
 

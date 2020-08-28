@@ -1,6 +1,5 @@
 package org.jeecg.modules.game.service;
 
-import cn.youai.commons.model.ResponseCode;
 import org.jeecg.modules.game.entity.*;
 
 import java.util.List;
@@ -14,16 +13,6 @@ import java.util.List;
  * @Date 2020-08-21 11:05
  */
 public interface IGameDataCountService {
-    /**
-     * 统计参数效验
-     *
-     * @param channelId      渠道id
-     * @param serverId       服务器id
-     * @param rangeDateBegin 统计开始时间
-     * @param rangeDateEnd   统计结束时间
-     * @return 状态
-     */
-    boolean isParamValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 统计数据列表

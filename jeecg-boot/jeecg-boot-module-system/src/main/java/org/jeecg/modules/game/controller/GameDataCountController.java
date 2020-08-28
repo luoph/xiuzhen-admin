@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.*;
+import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +62,7 @@ public class GameDataCountController {
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
             HttpServletRequest req) {
         Page<GameDayDataCount> page = new Page<>(pageNo, pageSize);
-        boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
             ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
@@ -102,7 +103,7 @@ public class GameDataCountController {
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
             HttpServletRequest req) {
         Page<GameDataRemain> page = new Page<>(pageNo, pageSize);
-        boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
             ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
@@ -143,7 +144,7 @@ public class GameDataCountController {
                                        HttpServletRequest req) {
 
         Page<GameLtvCount> page = new Page<>(pageNo, pageSize);
-        boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
             ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
