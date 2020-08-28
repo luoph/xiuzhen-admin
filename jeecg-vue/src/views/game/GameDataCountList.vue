@@ -21,7 +21,20 @@
         </div>
         <!--查询区域结束-->
         <!-- table区域-begin -->
-        <div><a-table ref="table" size="middle" bordered rowKey="id" :loading="loading" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :scroll="{ x: 1500, y: 520 }" @change="handleTableChange"></a-table></div>
+        <div>
+            <a-table
+                ref="table"
+                size="middle"
+                bordered
+                rowKey="id"
+                :loading="loading"
+                :columns="columns"
+                :dataSource="dataSource"
+                :pagination="ipagination"
+                :scroll="{ x: 1500, y: 520 }"
+                @change="handleTableChange"
+            ></a-table>
+        </div>
     </a-card>
 </template>
 
@@ -48,62 +61,66 @@ export default {
                     title: '序号',
                     dataIndex: '',
                     key: 'rowIndex',
-                    width: 100,
+                    width: 50,
                     align: 'center',
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
                 {
-                    title: '渠道',
-                    dataIndex: 'channel',
-                    key: 'channel',
-                    width: 100
-                },
-                {
-                    title: '服务器',
-                    dataIndex: 'serverId',
-                    key: 'serverId',
-                    width: 100
+                    title: '日期',
+                    dataIndex: 'countDate',
+                    key: 'countDate',
+                    width: 120,
+                    align: 'center',
+                    customRender: function(text) {
+                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+                    }
                 },
                 {
                     title: '每天数据',
                     children: [
                         {
-                            title: '每天登陆角色数',
+                            title: '当天登陆角色数',
                             dataIndex: 'loginPlayerNum',
                             key: 'loginPlayerNum',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
-                            title: '每天付费金额',
+                            title: '当天付费金额',
                             dataIndex: 'payAmount',
                             key: 'payAmount',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
-                            title: '每天付费角色数',
+                            title: '当天付费角色数',
                             dataIndex: 'payPlayerNum',
                             key: 'payPlayerNum',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
-                            title: '每天付费率',
+                            title: '当天付费率',
                             dataIndex: 'payRate',
                             key: 'payRate',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: 'ARPU',
                             dataIndex: 'arpu',
                             key: 'arpu',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: 'ARPPU',
                             dataIndex: 'arppu',
                             key: 'arppu',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         }
                     ]
                 },
@@ -114,61 +131,59 @@ export default {
                             title: '新增角色',
                             dataIndex: 'addPlayerNum',
                             key: 'addPlayerNum',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: '新增付费',
                             dataIndex: 'addPayAmount',
                             key: 'addPayAmount',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: '新增付费角色数',
                             dataIndex: 'addPayPlayerNum',
                             key: 'addPayPlayerNum',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: '新增付费率',
                             dataIndex: 'addPayRate',
                             key: 'addPayRate',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: '新增ARPU',
                             dataIndex: 'addArpu',
                             key: 'addArpu',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: '新增ARPPU',
                             dataIndex: 'addArppu',
                             key: 'addArppu',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: '二次付费角色数',
                             dataIndex: 'doublePayPlayer',
                             key: 'doublePayPlayer',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         },
                         {
                             title: '二次付费率',
                             dataIndex: 'doublePayRate',
                             key: 'doublePayRate',
-                            width: 180
+                            align: 'center',
+                            width: 120
                         }
                     ]
-                },
-                {
-                    title: '日期',
-                    dataIndex: 'countDate',
-                    key: 'countDate',
-                    width: 220,
-                    align: 'center',
-                    customRender: function(text) {
-                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-                    }
                 }
             ],
             url: {

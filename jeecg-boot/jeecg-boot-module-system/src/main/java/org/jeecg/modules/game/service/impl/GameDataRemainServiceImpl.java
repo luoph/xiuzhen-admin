@@ -42,6 +42,7 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     @Override
     public IPage<GameDataRemain> selectList(Page<GameDataRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         QueryWrapper<GameDataRemain> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("count_date");
         boolean paramValidCheck = gameDataCountService.isParamValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);
