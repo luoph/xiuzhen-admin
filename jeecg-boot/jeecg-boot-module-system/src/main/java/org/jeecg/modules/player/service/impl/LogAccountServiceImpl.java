@@ -36,16 +36,16 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
 
     @Override
     public double registerPayAmount(String channel, int serverId, String date) {
-        return logAccountMapper.getRegisterPayAmount(channel, serverId, date);
+        return logAccountMapper.getRegisterPayAmount(channel, serverId, date, logTable);
     }
 
     @Override
     public int registerPayPlayer(String channel, int serverId, String date) {
-        return logAccountMapper.getRegisterPayPlayer(channel, serverId, date);
+        return logAccountMapper.getRegisterPayPlayer(channel, serverId, date, logTable);
     }
 
     @Override
     public int doublePayRegisterPlayer(String channel, int serverId, String date) {
-        return logAccountMapper.getDoublePayRegisterPlayer(channel, serverId, date);
+        return logAccountMapper.getDoublePayRegisterPlayer(channel, serverId, date, logTable);
     }
 }
