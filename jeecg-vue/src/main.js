@@ -1,8 +1,6 @@
 import Vue from "vue";
 import Storage from "vue-ls";
 import store from "./store/";
-import App from "./App.vue";
-import router from "./router";
 
 import { VueAxios } from "@/utils/request";
 
@@ -23,6 +21,8 @@ import preview from "vue-photo-preview";
 import "vue-photo-preview/dist/skin.css";
 import "@jeecg/antd-online";
 import "@jeecg/antd-online/dist/OnlineForm.css";
+import App from "./App.vue";
+import router from "./router";
 
 import {
     ACCESS_TOKEN,
