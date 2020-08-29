@@ -52,11 +52,6 @@ public class GameDataRemain implements Serializable {
     private Integer payNum;
 
     /**
-     * 付费率
-     */
-    private BigDecimal payRate;
-
-    /**
      * 首日免费角色
      */
     private Integer freeNum;
@@ -135,15 +130,5 @@ public class GameDataRemain implements Serializable {
      * 创建时间
      */
     private Date createTime;
-
-    /**
-     * 免费呲溜率
-     */
-    private BigDecimal freeRemainRate;
-
-    /**
-     * 付费次留率
-     */
-    private BigDecimal payRemainRate;
 
 }

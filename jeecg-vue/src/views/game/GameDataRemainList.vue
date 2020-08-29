@@ -104,8 +104,8 @@ export default {
                     key: 'payRate',
                     align: 'center',
                     width: 120,
-                    customRender:(text,record)=>{
-                        return parseFloat(record.payRate).toFixed(2);
+                    customRender: (text, record) => {
+                        return this.countRate(record.payNum, record.registerNum);
                     }
                 },
                 {
@@ -114,8 +114,8 @@ export default {
                     key: 'freeRemainRate',
                     align: 'center',
                     width: 120,
-                    customRender:(text,record)=>{
-                        return parseFloat(record.freeRemainRate).toFixed(2);
+                    customRender: (text, record) => {
+                        return this.countRate(record.freeRemain, record.freeNum);
                     }
                 },
                 {
@@ -124,8 +124,8 @@ export default {
                     key: 'payRemainRate',
                     align: 'center',
                     width: 120,
-                    customRender:(text,record)=>{
-                        return parseFloat(record.payRemainRate).toFixed(2);
+                    customRender: (text, record) => {
+                        return this.countRate(record.payRemain, record.payNum);
                     }
                 },
                 {

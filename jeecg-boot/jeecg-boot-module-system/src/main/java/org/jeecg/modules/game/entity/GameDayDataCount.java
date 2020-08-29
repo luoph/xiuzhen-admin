@@ -41,7 +41,7 @@ public class GameDayDataCount implements Serializable {
     /**
      * 每天登陆玩家数
      */
-    private Integer loginPlayerNum;
+    private Integer loginNum;
 
     /**
      * 渠道标记
@@ -61,7 +61,7 @@ public class GameDayDataCount implements Serializable {
     /**
      * 每天支付玩家数
      */
-    private Integer payPlayerNum;
+    private Integer payNum;
 
     /**
      * 每天支付率
@@ -81,7 +81,7 @@ public class GameDayDataCount implements Serializable {
     /**
      * 新增注册玩家数
      */
-    private Integer addPlayerNum;
+    private Integer addNum;
 
     /**
      * 新增注册玩家支付总额
@@ -91,7 +91,7 @@ public class GameDayDataCount implements Serializable {
     /**
      * 新增注册玩家支付数
      */
-    private Integer addPayPlayerNum;
+    private Integer addPayNum;
 
     /**
      * 新增注册玩家支付率
@@ -111,7 +111,7 @@ public class GameDayDataCount implements Serializable {
     /**
      * 新增注册二次付费玩家数
      */
-    private Integer doublePayPlayer;
+    private Integer doublePay;
 
     /**
      * 二次付费率
