@@ -26,7 +26,7 @@
                 ref="table"
                 size="middle"
                 bordered
-                rowKey="id"
+                :rowKey="record => (record.id != null ? record.id : '0')"
                 :loading="loading"
                 :columns="columns"
                 :dataSource="dataSource"
@@ -228,11 +228,19 @@ export default {
                 pageSize: this.ipagination.pageSize
             };
             getAction(this.url.list, param).then(res => {
-                this.dataSource = res.result.records;
+                if (res.success) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.current = res.result.current;
+                    this.ipagination.size = res.result.size.toString();
+                    this.ipagination.total = res.result.total;
+                    this.ipagination.pages = res.result.pages;
+                } else {
+                    this.$message.error(res.message);
+                }
             });
         },
         countRate: function(n, r) {
-            return r > 0 ? parseFloat((n / r) * 100).toFixed(2) : parseFloat(0).toFixed(2);
+            return r > 0 ? parseFloat(n / r).toFixed(2) : parseFloat(0).toFixed(2);
         }
     }
 };
