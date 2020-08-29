@@ -226,17 +226,17 @@
                                IFNULL(FORMAT(@pay_remain / @pay_num * 100,2),0.00) AS pay_remain_rate,
                                IFNULL(FORMAT(@free_remain / @free_num * 100,2),0.00) AS free_remain_rate,
                                IFNULL(FORMAT(@pay_num / @register_num * 100, 2),0.00) AS pay_rate,
-                               IFNULL(FORMAT(@d2_remain / @register_num * 100, 2),0.00) AS d2_remain,
-                               IFNUll(FORMAT(@d3_remain / @register_num * 100, 2),0.00) AS d3_remain,
-                               IFNULL(FORMAT(@d4_remain / @register_num * 100, 2),0.00) AS d4_remain,
-                               IFNULL(FORMAT(@d5_remain / @register_num * 100, 2),0.00) AS d5_remain,
-                               IFNULL(FORMAT(@d6_remain / @register_num * 100, 2),0.00) AS d6_remain,
-                               IFNULL(FORMAT(@d7_remain / @register_num * 100, 2),0.00) AS d7_remain,
-                               IFNULL(FORMAT(@d15_remain / @register_num * 100, 2),0.00) AS d15_remain,
-                               IFNULL(FORMAT(@d30_remain / @register_num * 100, 2),0.00) AS d30_remain,
-                               IFNULL(FORMAT(@d60_remain / @register_num * 100, 2),0.00) AS d60_remain,
-                               IFNULL(FORMAT(@d90_remain / @register_num * 100, 2),0.00) AS d90_remain,
-                               IFNULL(FORMAT(@d120_remain / @register_num * 100, 2),0.00) AS d120_remain;
+                               IFNULL(@d2_remain,0.00) AS d2_remain,
+                               IFNUll(@d3_remain ,0.00) AS d3_remain,
+                               IFNULL(@d4_remain,0.00) AS d4_remain,
+                               IFNULL(@d5_remain ,0.00) AS d5_remain,
+                               IFNULL(@d6_remain,0.00) AS d6_remain,
+                               IFNULL(@d7_remain ,0.00) AS d7_remain,
+                               IFNULL(@d15_remain ,0.00) AS d15_remain,
+                               IFNULL(@d30_remain,0.00) AS d30_remain,
+                               IFNULL(@d60_remain ,0.00) AS d60_remain,
+                               IFNULL(@d90_remain,0.00) AS d90_remain,
+                               IFNULL(@d120_remain ,0.00) AS d120_remain;
 
         ]]>
    </select>

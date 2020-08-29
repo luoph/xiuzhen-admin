@@ -86,94 +86,133 @@ export default {
                 },
                 {
                     title: 'LTV1',
-                    dataIndex: 'd1Amount',
-                    key: 'd1Amount',
+                    dataIndex: 'd1AmountRate',
+                    key: 'd1AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d1Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV2',
-                    dataIndex: 'd2Amount',
-                    key: 'd2Amount',
+                    dataIndex: 'd2AmountRate',
+                    key: 'd2AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d2Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV3',
-                    dataIndex: 'd3Amount',
-                    key: 'd3Amount',
+                    dataIndex: 'd3AmountRate',
+                    key: 'd3AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d3Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV4',
-                    dataIndex: 'd4Amount',
-                    key: 'd4Amount',
+                    dataIndex: 'd4AmountRate',
+                    key: 'd4AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d4Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV5',
-                    dataIndex: 'd5Amount',
-                    key: 'd5Amount',
+                    dataIndex: 'd5AmountRate',
+                    key: 'd5AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d5Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV6',
-                    dataIndex: 'd6Amount',
-                    key: 'd6Amount',
+                    dataIndex: 'd6AmountRate',
+                    key: 'd6AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d6Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV7',
-                    dataIndex: 'd7Amount',
-                    key: 'd7Amount',
+                    dataIndex: 'd7AmountRate',
+                    key: 'd7AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d7Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV14',
-                    dataIndex: 'd14Amount',
-                    key: 'd14Remain',
+                    dataIndex: 'd14AmountRata',
+                    key: 'd14AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d14Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV21',
-                    dataIndex: 'd21Amount',
-                    key: 'd21Amount',
+                    dataIndex: 'd21AmountRate',
+                    key: 'd21AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d21Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV30',
-                    dataIndex: 'd30Amount',
-                    key: 'd30Amount',
+                    dataIndex: 'd30AmountRate',
+                    key: 'd30AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d30Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV60',
-                    dataIndex: 'd60Amount',
-                    key: 'd60Amount',
+                    dataIndex: 'd60AmountRate',
+                    key: 'd60AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d60Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV90',
-                    dataIndex: 'd90Amount',
-                    key: 'd90Amount',
+                    dataIndex: 'd90AmountRate',
+                    key: 'd90AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d90Amount, record.registerNum);
+                    }
                 },
                 {
                     title: 'LTV120',
-                    dataIndex: 'd120Amount',
-                    key: 'd120Amount',
+                    dataIndex: 'd120AmountRate',
+                    key: 'd120AmountRate',
                     align: 'center',
-                    width: 80
+                    width: 80,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d120Amount, record.registerNum);
+                    }
                 }
             ],
             url: {
@@ -207,6 +246,9 @@ export default {
             getAction(this.url.list, param).then(res => {
                 this.dataSource = res.result.records;
             });
+        },
+        countRate: function(n, r) {
+            return r > 0 ? parseFloat((n / r) * 100).toFixed(2) : parseFloat(0).toFixed(2);
         }
     }
 };

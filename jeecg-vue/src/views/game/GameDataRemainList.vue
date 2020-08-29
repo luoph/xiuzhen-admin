@@ -103,98 +103,140 @@ export default {
                     dataIndex: 'payRate',
                     key: 'payRate',
                     align: 'center',
-                    width: 120
+                    width: 120,
+                    customRender:(text,record)=>{
+                        return parseFloat(record.payRate).toFixed(2);
+                    }
                 },
                 {
                     title: '免费角色次留率',
                     dataIndex: 'freeRemainRate',
                     key: 'freeRemainRate',
                     align: 'center',
-                    width: 120
+                    width: 120,
+                    customRender:(text,record)=>{
+                        return parseFloat(record.freeRemainRate).toFixed(2);
+                    }
                 },
                 {
                     title: '付费角色次留率',
                     dataIndex: 'payRemainRate',
                     key: 'payRemainRate',
                     align: 'center',
-                    width: 120
+                    width: 120,
+                    customRender:(text,record)=>{
+                        return parseFloat(record.payRemainRate).toFixed(2);
+                    }
                 },
                 {
                     title: '次留率',
-                    dataIndex: 'd2Remain',
-                    key: 'd2Remain',
+                    dataIndex: 'd2RemainRate',
+                    key: 'd2RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d2Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '3留率',
-                    dataIndex: 'd3Remain',
-                    key: 'd3Remain',
+                    dataIndex: 'd3RemainRate',
+                    key: 'd3RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d3Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '4留率',
-                    dataIndex: 'd4Remain',
-                    key: 'd4Remain',
+                    dataIndex: 'd4RemainRate',
+                    key: 'd4RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d4Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '5留率',
-                    dataIndex: 'd5Remain',
-                    key: 'd5Remain',
+                    dataIndex: 'd5RemainRate',
+                    key: 'd5RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d5Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '6留率',
-                    dataIndex: 'd6Remain',
-                    key: 'd6Remain',
+                    dataIndex: 'd6RemainRate',
+                    key: 'd6RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d6Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '7留率',
-                    dataIndex: 'd7Remain',
-                    key: 'd7Remain',
+                    dataIndex: 'd7RemainRate',
+                    key: 'd7RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d7Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '15留率',
-                    dataIndex: 'd15Remain',
-                    key: 'd15Remain',
+                    dataIndex: 'd15RemainRate',
+                    key: 'd15RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d15Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '30留率',
-                    dataIndex: 'd30Remain',
-                    key: 'd30Remain',
+                    dataIndex: 'd30RemainRate',
+                    key: 'd30RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d30Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '60留率',
-                    dataIndex: 'd60Remain',
-                    key: 'd60Remain',
+                    dataIndex: 'd60RemainRate',
+                    key: 'd60RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d60Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '90留率',
-                    dataIndex: 'd90Remain',
-                    key: 'd90Remain',
+                    dataIndex: 'd90RemainRate',
+                    key: 'd90RemainRate',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d90Remain, record.registerNum);
+                    }
                 },
                 {
                     title: '120留率',
                     dataIndex: 'd120Remain',
                     key: 'd120Remain',
                     align: 'center',
-                    width: 100
+                    width: 100,
+                    customRender: (text, record) => {
+                        return this.countRate(record.d120Remain, record.registerNum);
+                    }
                 }
             ],
             url: {
@@ -228,6 +270,9 @@ export default {
             getAction(this.url.list, param).then(res => {
                 this.dataSource = res.result.records;
             });
+        },
+        countRate: function(n, r) {
+            return r > 0 ? parseFloat((n / r) * 100).toFixed(2) : parseFloat(0).toFixed(2);
         }
     }
 };
