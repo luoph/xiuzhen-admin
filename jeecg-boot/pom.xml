@@ -22,13 +22,15 @@
         <repository>
             <id>nexus-releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://10.21.211.35:8081/repository/maven-releases/</url>
+<!--            <url>http://10.21.211.35:8081/repository/maven-releases/</url>-->
+            <url>http://dev.1101stu.com:7781/repository/maven-releases/</url>
             <uniqueVersion>false</uniqueVersion>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://10.21.211.35:8081/repository/maven-snapshots/</url>
+<!--            <url>http://10.21.211.35:8081/repository/maven-snapshots/</url>-->
+            <url>http://dev.1101stu.com:7781/repository/maven-snapshots/</url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
     </distributionManagement>
