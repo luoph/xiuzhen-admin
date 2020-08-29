@@ -5,6 +5,9 @@ import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.entity.*;
+import org.jeecg.modules.game.mapper.GameDataRemainMapper;
+import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
+import org.jeecg.modules.game.mapper.GameLtvCountMapper;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.game.util.ParamValidUtil;
 import org.jeecg.modules.player.service.ILogAccountService;
@@ -12,7 +15,7 @@ import org.jeecg.modules.player.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,11 +46,15 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Autowired
     private ILogAccountService logAccountService;
     @Autowired
-    private IGameDayDataCountService gameDayDataCountService;
-    @Autowired
     private IGameDataRemainService gameDataRemainService;
     @Autowired
     private IGameLtvCountService gameLtvCountService;
+    @Resource
+    private GameDayDataCountMapper gameDayDataCountMapper;
+    @Resource
+    private GameLtvCountMapper gameLtvCountMapper;
+    @Resource
+    private GameDataRemainMapper gameDataRemainMapper;
 
     @Value("${app.log.db.table}")
     private String logTable;
@@ -134,11 +141,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
         for (GameChannelServer gameChannelServer : list) {
             List<GameDayDataCount> gameDayDataCounts = queryDateRangeDataCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
-            gameDayDataCountService.saveBatch(gameDayDataCounts);
+            gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
             List<GameDataRemain> gameDataRemains = queryDataRemainCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
-            gameDataRemainService.saveBatch(gameDataRemains);
+            gameDataRemainMapper.updateOrInsert(gameDataRemains);
             List<GameLtvCount> gameLtvCounts = queryDataLtvCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
-            gameLtvCountService.saveBatch(gameLtvCounts);
+            gameLtvCountMapper.updateOrInsert(gameLtvCounts);
         }
     }
 
