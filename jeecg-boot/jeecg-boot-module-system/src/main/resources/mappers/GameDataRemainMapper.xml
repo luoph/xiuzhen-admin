@@ -65,7 +65,7 @@
                             AND o.`channel` =@channel AND o.`server_id` = @serverId
                             AND p.`channel` =@channel AND p.`server_id` = @serverId),
 
-                        @free_num = @register_num - @pay_num,
+                        @free_num := @register_num - @pay_num,
 
                         @pay_remain := (SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
                             LEFT JOIN `player_register_info` d ON l.`player_id` = d.`player_id`
