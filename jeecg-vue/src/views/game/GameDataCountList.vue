@@ -58,9 +58,9 @@ export default {
         return {
             columns: [
                 {
-                    title: "序号",
+                    title: "#",
                     dataIndex: "",
-                    width: 50,
+                    width: "4%",
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -69,7 +69,7 @@ export default {
                 {
                     title: "日期",
                     dataIndex: "countDate",
-                    width: 100,
+                    width: "6%",
                     align: "center",
                     customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
@@ -82,13 +82,13 @@ export default {
                             title: "当天登录角色数",
                             dataIndex: "loginNum",
                             align: "center",
-                            width: 70
+                            width: "5%"
                         },
                         {
                             title: "当天付费金额",
                             dataIndex: "payAmount",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.payAmount).toFixed(2);
                             }
@@ -97,13 +97,13 @@ export default {
                             title: "当天付费角色数",
                             dataIndex: "payNum",
                             align: "center",
-                            width: 70
+                            width: "5%"
                         },
                         {
                             title: "当天付费率",
                             dataIndex: "payRate",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.payRate).toFixed(2);
                             }
@@ -112,7 +112,7 @@ export default {
                             title: "ARPU",
                             dataIndex: "arpu",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.arpu).toFixed(2);
                             }
@@ -121,7 +121,7 @@ export default {
                             title: "ARPPU",
                             dataIndex: "arppu",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.arppu).toFixed(2);
                             }
@@ -135,13 +135,13 @@ export default {
                             title: "新增角色",
                             dataIndex: "addNum",
                             align: "center",
-                            width: 70
+                            width: "5%"
                         },
                         {
                             title: "新增付费",
                             dataIndex: "addPayAmount",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.addPayAmount).toFixed(2);
                             }
@@ -150,13 +150,13 @@ export default {
                             title: "新增付费角色数",
                             dataIndex: "addPayNum",
                             align: "center",
-                            width: 70
+                            width: "5%"
                         },
                         {
                             title: "新增付费率",
                             dataIndex: "addPayRate",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.addPayRate).toFixed(2);
                             }
@@ -165,7 +165,7 @@ export default {
                             title: "新增ARPU",
                             dataIndex: "addArpu",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.addArpu).toFixed(2);
                             }
@@ -174,7 +174,7 @@ export default {
                             title: "新增ARPPU",
                             dataIndex: "addArppu",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.addArppu).toFixed(2);
                             }
@@ -183,13 +183,13 @@ export default {
                             title: "二次付费角色数",
                             dataIndex: "doublePay",
                             align: "center",
-                            width: 70
+                            width: "5%"
                         },
                         {
                             title: "二次付费率",
                             dataIndex: "doublePayRate",
                             align: "center",
-                            width: 70,
+                            width: "5%",
                             customRender: (text, record) => {
                                 return parseFloat(record.doublePayRate).toFixed(2);
                             }
