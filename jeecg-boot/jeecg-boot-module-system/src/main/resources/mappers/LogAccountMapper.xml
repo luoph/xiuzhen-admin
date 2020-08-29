@@ -31,7 +31,7 @@
 
     <select id="getRegisterPayAmount" resultType="double">
         SELECT IFNULL (sum(a.`pay_amount`),0) AS payAmount FROM `pay_order` a
-        JOIN xiuzhen_log_test.`log_account` b
+        JOIN  ${logTable}  b
         ON b.`player_id` = a.`player_id`
         AND b.`channel` = a.`channel`
         AND b.`server_id` = a.`server_id`
@@ -39,14 +39,14 @@
         AND b.`server_id` = #{serverId}
         AND b.`type` = 0
         AND DATE(b.`create_time`) =  DATE(#{date})
-        AND a.`channel` = 'xiuzhen-test'
+        AND a.`channel` = #{channel}
         AND a.`server_id`= #{serverId}
         AND DATE(a.`pay_time`) = DATE(#{date});
     </select>
 
     <select id="getRegisterPayPlayer" resultType="int">
         SELECT count(DISTINCT a.`player_id`) AS payAmount FROM`pay_order` a
-        JOIN xiuzhen_log_test.`log_account` b
+        JOIN  ${logTable}  b
         ON b.`player_id` = a.`player_id`
         AND b.`channel` = a.`channel`
         AND b.`server_id` = a.`server_id`
@@ -62,7 +62,7 @@
     <select id="getDoublePayRegisterPlayer" resultType="int">
         SELECT count(1) FROM(
           SELECT count(a.`player_id`) AS addPayPlayer FROM `pay_order` a
-          LEFT JOIN xiuzhen_log_test.`log_account` b
+          LEFT JOIN ${logTable} b
           ON a.`player_id` = b.`player_id`
           AND b.`channel` = a.`channel`
           AND b.`server_id` = a.`server_id`
