@@ -33,9 +33,8 @@
 
     <select id="getGameLtvCount" resultMap="BaseResultMap">
         <![CDATA[
-
-                         SELECT
-                       IFNULL(@register_date := #{date} ,now())AS count_date,
+                    SELECT
+                        IFNULL(@register_date := #{date} ,now())AS count_date,
                         @d1_start := CONCAT(@register_date, ' 00:00:00'),
                         @d2_start := DATE_ADD(@d1_start, INTERVAL 1 DAY),
                         @d3_start := DATE_ADD(@d1_start, INTERVAL 2 DAY),
@@ -64,7 +63,7 @@
                         ),0)AS register_num,
 
 
-                         IFNULL(FORMAT(@d1_amount := IF(NOW() < DATE_ADD(@d1_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d1_amount := IF(NOW() < DATE_ADD(@d1_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -74,10 +73,10 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d1_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        )) / @register_num * 100, 2),0.00)AS d1_amount,
+                        )),0.00) AS d1_amount,
 
 
-                         IFNULL(FORMAT(@d2_amount := IF(NOW() < DATE_ADD(@d2_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d2_amount := IF(NOW() < DATE_ADD(@d2_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -87,10 +86,10 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d2_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d2_amount,
+                        )),0.00) AS d2_amount,
 
 
-                         IFNULL(FORMAT(@d3_amount := IF(NOW() < DATE_ADD(@d3_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d3_amount := IF(NOW() < DATE_ADD(@d3_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -100,10 +99,10 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d3_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        )) / @register_num * 100, 2),0.00)AS d3_amount,
+                        )) ,0.00)AS d3_amount,
 
 
-                         IFNULL(FORMAT(@d4_amount := IF(NOW() < DATE_ADD(@d4_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d4_amount := IF(NOW() < DATE_ADD(@d4_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -113,10 +112,10 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d4_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d4_amount,
+                        )),0.00) AS d4_amount,
 
 
-                         IFNULL(FORMAT(@d5_amount := IF(NOW() < DATE_ADD(@d5_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d5_amount := IF(NOW() < DATE_ADD(@d5_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -126,10 +125,10 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d5_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d5_amount,
+                        )),0.00) AS d5_amount,
 
 
-                         IFNULL(FORMAT(@d6_amount := IF(NOW() < DATE_ADD(@d6_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d6_amount := IF(NOW() < DATE_ADD(@d6_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -139,10 +138,10 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d6_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d6_amount,
+                        )),0.00) AS d6_amount,
 
 
-                         IFNULL(FORMAT(@d7_amount := IF(NOW() < DATE_ADD(@d7_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d7_amount := IF(NOW() < DATE_ADD(@d7_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -152,9 +151,9 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d7_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d7_amount,
+                        )),0.00) AS d7_amount,
 
-                         IFNULL(FORMAT(@d14_amount := IF(NOW() < DATE_ADD(@d14_start, INTERVAL 1 DAY), NULL, (
+                         IFNULL(@d14_amount := IF(NOW() < DATE_ADD(@d14_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -164,9 +163,9 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d14_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d14_amount,
+                        )),0.00) AS d14_amount,
 
-                        IFNULL(FORMAT(@d21_amount := IF(NOW() < DATE_ADD(@d21_start, INTERVAL 1 DAY), NULL, (
+                        IFNULL(@d21_amount := IF(NOW() < DATE_ADD(@d21_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -176,9 +175,9 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d21_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d21_amount,
+                        )),0.00) AS d21_amount,
 
-                        IFNULL(FORMAT(@d30_amount := IF(NOW() < DATE_ADD(@d30_start, INTERVAL 1 DAY), NULL, (
+                        IFNULL(@d30_amount := IF(NOW() < DATE_ADD(@d30_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -188,9 +187,9 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d30_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d30_amount,
+                        )),0.00) AS d30_amount,
 
-                        IFNULL(FORMAT(@d60_amount := IF(NOW() < DATE_ADD(@d60_start, INTERVAL 1 DAY), NULL, (
+                        IFNULL(@d60_amount := IF(NOW() < DATE_ADD(@d60_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -200,9 +199,9 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d60_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d60_amount,
+                        )),0.00) AS d60_amount,
 
-                        IFNULL(FORMAT(@d90_amount := IF(NOW() < DATE_ADD(@d90_start, INTERVAL 1 DAY), NULL, (
+                        IFNULL(@d90_amount := IF(NOW() < DATE_ADD(@d90_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -212,9 +211,9 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d90_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        ))/ @register_num * 100, 2),0.00) AS d90_amount,
+                        )),0.00) AS d90_amount,
 
-                        IFNULL(FORMAT(@d120_amount := IF(NOW() < DATE_ADD(@d120_start, INTERVAL 1 DAY), NULL, (
+                        IFNULL(@d120_amount := IF(NOW() < DATE_ADD(@d120_start, INTERVAL 1 DAY), NULL, (
                             SELECT
                                 SUM(o.`pay_amount`) FROM `pay_order` o
                             LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
@@ -224,7 +223,7 @@
                             a.`create_time` >= @d1_start AND a.`create_time` < @d2_start AND o.`create_time` < DATE_ADD(@d120_start, INTERVAL 1 DAY)
                             AND a.`channel` = @channel AND a.`server_id` = @serverId
                             AND o.`channel` = @channel AND o.`server_id` = @serverId
-                        )) / @register_num * 100, 2),0.00) AS d120_amount;
+                        )),0.00) AS d120_amount;
 
         ]]>
     </select>
