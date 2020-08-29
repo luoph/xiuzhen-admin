@@ -60,7 +60,7 @@ export default {
                 {
                     title: "#",
                     dataIndex: "",
-                    width: 50,
+                    width: "4%",
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -69,7 +69,7 @@ export default {
                 {
                     title: "日期",
                     dataIndex: "countDate",
-                    width: 100,
+                    width: "6%",
                     align: "center",
                     customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
@@ -79,13 +79,13 @@ export default {
                     title: "新增角色",
                     dataIndex: "registerNum",
                     align: "center",
-                    width: 70
+                    width: "5%"
                 },
                 {
                     title: "LTV1",
                     dataIndex: "d1AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d1Amount, record.registerNum);
                     }
@@ -94,7 +94,7 @@ export default {
                     title: "LTV2",
                     dataIndex: "d2AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d2Amount, record.registerNum);
                     }
@@ -103,7 +103,7 @@ export default {
                     title: "LTV3",
                     dataIndex: "d3AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d3Amount, record.registerNum);
                     }
@@ -112,7 +112,7 @@ export default {
                     title: "LTV4",
                     dataIndex: "d4AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d4Amount, record.registerNum);
                     }
@@ -121,7 +121,7 @@ export default {
                     title: "LTV5",
                     dataIndex: "d5AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d5Amount, record.registerNum);
                     }
@@ -130,7 +130,7 @@ export default {
                     title: "LTV6",
                     dataIndex: "d6AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d6Amount, record.registerNum);
                     }
@@ -139,7 +139,7 @@ export default {
                     title: "LTV7",
                     dataIndex: "d7AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d7Amount, record.registerNum);
                     }
@@ -148,7 +148,7 @@ export default {
                     title: "LTV14",
                     dataIndex: "d14AmountRata",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d14Amount, record.registerNum);
                     }
@@ -157,7 +157,7 @@ export default {
                     title: "LTV21",
                     dataIndex: "d21AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d21Amount, record.registerNum);
                     }
@@ -166,7 +166,7 @@ export default {
                     title: "LTV30",
                     dataIndex: "d30AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d30Amount, record.registerNum);
                     }
@@ -175,7 +175,7 @@ export default {
                     title: "LTV60",
                     dataIndex: "d60AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d60Amount, record.registerNum);
                     }
@@ -184,7 +184,7 @@ export default {
                     title: "LTV90",
                     dataIndex: "d90AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d90Amount, record.registerNum);
                     }
@@ -193,7 +193,7 @@ export default {
                     title: "LTV120",
                     dataIndex: "d120AmountRate",
                     align: "center",
-                    width: 70,
+                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d120Amount, record.registerNum);
                     }

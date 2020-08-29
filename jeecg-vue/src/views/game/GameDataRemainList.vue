@@ -61,7 +61,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: 50,
+                    width: "4%",
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -71,7 +71,7 @@ export default {
                     title: "日期",
                     dataIndex: "countDate",
                     align: "center",
-                    width: 120,
+                    width: "6%",
                     customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
@@ -79,25 +79,25 @@ export default {
                 {
                     title: "新增角色",
                     dataIndex: "registerNum",
-                    width: 70,
+                    width: "5%",
                     align: "center"
                 },
                 {
                     title: "首日免费角色",
                     dataIndex: "freeNum",
-                    width: 70,
+                    width: "5%",
                     align: "center"
                 },
                 {
                     title: "首日付费角色",
                     dataIndex: "payNum",
-                    width: 70,
+                    width: "5%",
                     align: "center"
                 },
                 {
                     title: "首日付费率",
                     dataIndex: "payRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.payNum, record.registerNum);
@@ -106,7 +106,7 @@ export default {
                 {
                     title: "免费角色次留率",
                     dataIndex: "freeRemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.freeRemain, record.freeNum);
@@ -115,7 +115,7 @@ export default {
                 {
                     title: "付费角色次留率",
                     dataIndex: "payRemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.payRemain, record.payNum);
@@ -124,7 +124,7 @@ export default {
                 {
                     title: "次留率",
                     dataIndex: "d2RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d2Remain, record.registerNum);
@@ -133,7 +133,7 @@ export default {
                 {
                     title: "3留率",
                     dataIndex: "d3RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d3Remain, record.registerNum);
@@ -142,7 +142,7 @@ export default {
                 {
                     title: "4留率",
                     dataIndex: "d4RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d4Remain, record.registerNum);
@@ -151,7 +151,7 @@ export default {
                 {
                     title: "5留率",
                     dataIndex: "d5RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d5Remain, record.registerNum);
@@ -160,7 +160,7 @@ export default {
                 {
                     title: "6留率",
                     dataIndex: "d6RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d6Remain, record.registerNum);
@@ -169,7 +169,7 @@ export default {
                 {
                     title: "7留率",
                     dataIndex: "d7RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d7Remain, record.registerNum);
@@ -178,7 +178,7 @@ export default {
                 {
                     title: "15留率",
                     dataIndex: "d15RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d15Remain, record.registerNum);
@@ -187,7 +187,7 @@ export default {
                 {
                     title: "30留率",
                     dataIndex: "d30RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d30Remain, record.registerNum);
@@ -196,7 +196,7 @@ export default {
                 {
                     title: "60留率",
                     dataIndex: "d60RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d60Remain, record.registerNum);
@@ -205,7 +205,7 @@ export default {
                 {
                     title: "90留率",
                     dataIndex: "d90RemainRate",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d90Remain, record.registerNum);
@@ -214,7 +214,7 @@ export default {
                 {
                     title: "120留率",
                     dataIndex: "d120Remain",
-                    width: 70,
+                    width: "5%",
                     align: "center",
                     customRender: (text, record) => {
                         return this.countRate(record.d120Remain, record.registerNum);
