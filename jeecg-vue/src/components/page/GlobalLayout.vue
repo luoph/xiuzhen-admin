@@ -156,7 +156,7 @@ body {
     &.mobile {
         .ant-layout-content {
             .content {
-                margin: 24px 0 0;
+                margin: 12px 16px 0 !important;
             }
         }
 
