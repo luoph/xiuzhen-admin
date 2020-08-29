@@ -82,8 +82,8 @@ export default {
                     children: [
                         {
                             title: '当天登陆角色数',
-                            dataIndex: 'loginPlayerNum',
-                            key: 'loginPlayerNum',
+                            dataIndex: 'loginNum',
+                            key: 'loginNum',
                             align: 'center',
                             width: 120
                         },
@@ -92,12 +92,15 @@ export default {
                             dataIndex: 'payAmount',
                             key: 'payAmount',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.payAmount).toFixed(2);
+                            }
                         },
                         {
                             title: '当天付费角色数',
-                            dataIndex: 'payPlayerNum',
-                            key: 'payPlayerNum',
+                            dataIndex: 'payNum',
+                            key: 'payNum',
                             align: 'center',
                             width: 120
                         },
@@ -106,21 +109,30 @@ export default {
                             dataIndex: 'payRate',
                             key: 'payRate',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.payRate).toFixed(2);
+                            }
                         },
                         {
                             title: 'ARPU',
                             dataIndex: 'arpu',
                             key: 'arpu',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.arpu).toFixed(2);
+                            }
                         },
                         {
                             title: 'ARPPU',
                             dataIndex: 'arppu',
                             key: 'arppu',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.arppu).toFixed(2);
+                            }
                         }
                     ]
                 },
@@ -129,8 +141,8 @@ export default {
                     children: [
                         {
                             title: '新增角色',
-                            dataIndex: 'addPlayerNum',
-                            key: 'addPlayerNum',
+                            dataIndex: 'addNum',
+                            key: 'addNum',
                             align: 'center',
                             width: 120
                         },
@@ -139,12 +151,15 @@ export default {
                             dataIndex: 'addPayAmount',
                             key: 'addPayAmount',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.addPayAmount).toFixed(2);
+                            }
                         },
                         {
                             title: '新增付费角色数',
-                            dataIndex: 'addPayPlayerNum',
-                            key: 'addPayPlayerNum',
+                            dataIndex: 'addPayNum',
+                            key: 'addPayNum',
                             align: 'center',
                             width: 120
                         },
@@ -153,26 +168,35 @@ export default {
                             dataIndex: 'addPayRate',
                             key: 'addPayRate',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.addPayRate).toFixed(2);
+                            }
                         },
                         {
                             title: '新增ARPU',
                             dataIndex: 'addArpu',
                             key: 'addArpu',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.addArpu).toFixed(2);
+                            }
                         },
                         {
                             title: '新增ARPPU',
                             dataIndex: 'addArppu',
                             key: 'addArppu',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.addArppu).toFixed(2);
+                            }
                         },
                         {
                             title: '二次付费角色数',
-                            dataIndex: 'doublePayPlayer',
-                            key: 'doublePayPlayer',
+                            dataIndex: 'doublePay',
+                            key: 'doublePay',
                             align: 'center',
                             width: 120
                         },
@@ -181,7 +205,10 @@ export default {
                             dataIndex: 'doublePayRate',
                             key: 'doublePayRate',
                             align: 'center',
-                            width: 120
+                            width: 120,
+                            customRender: (text, record) => {
+                                return parseFloat(record.doublePayRate).toFixed(2);
+                            }
                         }
                     ]
                 }

@@ -10,12 +10,9 @@
         <result column="server_id" property="serverId"/>
         <result column="register_num" property="registerNum"/>
         <result column="pay_num" property="payNum"/>
-        <result column="pay_rate" property="payRate"/>
         <result column="free_num" property="freeNum"/>
         <result column="pay_remain" property="payRemain"/>
         <result column="free_remain" property="freeRemain"/>
-        <result column="pay_remain_rate" property="payRemainRate"/>
-        <result column="free_remain_rate" property="freeRemainRate"/>
         <result column="d2_remain" property="d2Remain"/>
         <result column="d3_remain" property="d3Remain"/>
         <result column="d4_remain" property="d4Remain"/>
@@ -33,7 +30,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, channel, server_id, register_num, pay_num, pay_rate, free_num, pay_remain, free_remain, free_remain_rate, pay_remain_rate, d2_remain, d3_remain, d4_remain, d5_remain, d6_remain, d7_remain, d15_remain, d30_remain, d60_remain, d90_remain, d120_remain, count_date, create_time
+        id, channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, d2_remain, d3_remain, d4_remain, d5_remain, d6_remain, d7_remain, d15_remain, d30_remain, d60_remain, d90_remain, d120_remain, count_date, create_time
     </sql>
 
     <select id="gameRemainCount" resultMap="BaseResultMap">
@@ -223,9 +220,6 @@
                                IFNULL(@pay_remain, 0) AS  pay_remain,
                                IFNULL(@serverId, 0) AS server_id,
                                IFNULL(@channel, 0) AS channel,
-                               IFNULL(FORMAT(@pay_remain / @pay_num * 100,2),0.00) AS pay_remain_rate,
-                               IFNULL(FORMAT(@free_remain / @free_num * 100,2),0.00) AS free_remain_rate,
-                               IFNULL(FORMAT(@pay_num / @register_num * 100, 2),0.00) AS pay_rate,
                                IFNULL(@d2_remain,0.00) AS d2_remain,
                                IFNUll(@d3_remain ,0.00) AS d3_remain,
                                IFNULL(@d4_remain,0.00) AS d4_remain,

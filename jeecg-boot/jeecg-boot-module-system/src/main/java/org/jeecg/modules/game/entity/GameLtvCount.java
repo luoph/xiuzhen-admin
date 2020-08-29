@@ -49,67 +49,67 @@ public class GameLtvCount implements Serializable {
     /**
      * 第1天充值
      */
-    private BigDecimal d1Amount;
+    private Integer d1Amount;
 
     /**
      * 第2天充值
      */
-    private BigDecimal d2Amount;
+    private Integer d2Amount;
 
     /**
      * 第3天充值
      */
-    private BigDecimal d3Amount;
+    private Integer d3Amount;
 
     /**
      * 第4天充值
      */
-    private BigDecimal d4Amount;
+    private Integer d4Amount;
 
     /**
      * 第5天充值
      */
-    private BigDecimal d5Amount;
+    private Integer d5Amount;
 
     /**
      * 第6天充值
      */
-    private BigDecimal d6Amount;
+    private Integer d6Amount;
 
     /**
      * 第7天充值
      */
-    private BigDecimal d7Amount;
+    private Integer d7Amount;
 
     /**
      * 第8天充值
      */
-    private BigDecimal d14Amount;
+    private Integer d14Amount;
 
     /**
      * 第9天充值
      */
-    private BigDecimal d21Amount;
+    private Integer d21Amount;
 
     /**
      * 第10天充值
      */
-    private BigDecimal d30Amount;
+    private Integer d30Amount;
 
     /**
      * 第11天充值
      */
-    private BigDecimal d60Amount;
+    private Integer d60Amount;
 
     /**
      * 第12天充值
      */
-    private BigDecimal d90Amount;
+    private Integer d90Amount;
 
     /**
      * 第13天充值
      */
-    private BigDecimal d120Amount;
+    private Integer d120Amount;
 
 
     /**

@@ -87,16 +87,16 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         //当天付费总金额
         double sumPayAmount = payOrderService.sumPayAmount(gameChannel.getSimpleName(), gameServer.getId(), date);
         // 支付玩家数
-        int countPayPlayer = payOrderService.countPayPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
+        int countPay = payOrderService.countPayPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
         // 当天登陆角色数
-        int loginPlayerNum = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 2);
+        int loginNum = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 2);
 
         // 当天付费率
-        double payRate = loginPlayerNum > 0 ? BigDecimalUtil.div(countPayPlayer, loginPlayerNum, 2) : 0.00;
+        double payRate = loginNum > 0 ? BigDecimalUtil.div(countPay, loginNum, 2) : 0.00;
         // arpu
-        double arpu = loginPlayerNum > 0 ? BigDecimalUtil.div(sumPayAmount, loginPlayerNum, 2) : 0.00;
+        double arpu = loginNum > 0 ? BigDecimalUtil.div(sumPayAmount, loginNum, 2) : 0.00;
         // arppu
-        double arppu = countPayPlayer > 0 ? BigDecimalUtil.div(sumPayAmount, countPayPlayer, 2) : 0.00;
+        double arppu = loginNum > 0 ? BigDecimalUtil.div(sumPayAmount, loginNum, 2) : 0.00;
 
         // 当天注册角色数
         int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 1);
@@ -105,7 +105,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         // 注册付费玩家
         int registerPayPlayer = logAccountService.registerPayPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
         // 注册二次付费玩家
-        int doublePayRegisterPlayer = logAccountService.doublePayRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
+        int doublePayPlayer = logAccountService.doublePayRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
 
         // 新增注册付费率
         double registerPayRate = registerPlayer > 0 ? BigDecimalUtil.div(registerPayPlayer, registerPlayer, 2) : 0.00;
@@ -114,13 +114,13 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         // 新增arppu
         double registerArppu = registerPayPlayer > 0 ? BigDecimalUtil.div(registerPayAmount, registerPayPlayer, 2) : 0.00;
         // 二次付费率
-        double doublePayRate = registerPayPlayer > 0 ? BigDecimalUtil.div(doublePayRegisterPlayer, registerPayPlayer, 2) : 0.00;
+        double doublePayRate = registerPayPlayer > 0 ? BigDecimalUtil.div(doublePayPlayer, registerPayPlayer, 2) : 0.00;
 
-        return new GameDayDataCount().setPayAmount(BigDecimal.valueOf(sumPayAmount)).setLoginPlayerNum(loginPlayerNum)
-                .setPayPlayerNum(countPayPlayer).setArpu(BigDecimal.valueOf(arpu)).setArppu(BigDecimal.valueOf(arppu))
-                .setPayRate(BigDecimal.valueOf(payRate)).setAddPlayerNum(registerPlayer).setAddPayPlayerNum(registerPayPlayer)
+        return new GameDayDataCount().setPayAmount(BigDecimal.valueOf(sumPayAmount)).setLoginNum(loginNum)
+                .setPayNum(countPay).setArpu(BigDecimal.valueOf(arpu)).setArppu(BigDecimal.valueOf(arppu))
+                .setPayRate(BigDecimal.valueOf(payRate)).setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
                 .setAddPayAmount(BigDecimal.valueOf(registerPayAmount)).setAddPayRate(BigDecimal.valueOf(registerPayRate))
-                .setDoublePayPlayer(doublePayRegisterPlayer).setDoublePayRate(BigDecimal.valueOf(doublePayRate))
+                .setDoublePay(doublePayPlayer).setDoublePayRate(BigDecimal.valueOf(doublePayRate))
                 .setAddArpu(BigDecimal.valueOf(registerArpu)).setAddArppu(BigDecimal.valueOf(registerArppu))
                 .setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId())
                 .setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
