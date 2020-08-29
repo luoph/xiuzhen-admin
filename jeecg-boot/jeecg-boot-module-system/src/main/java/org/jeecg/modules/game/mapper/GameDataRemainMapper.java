@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.GameDataRemain;
 
+import java.util.List;
+
 /**
  * <p>
  * 留存统计 Mapper 接口
@@ -26,5 +28,7 @@ public interface GameDataRemainMapper extends BaseMapper<GameDataRemain> {
      * @return
      */
     GameDataRemain gameRemainCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+
+    int updateOrInsert(List<GameDataRemain> list);
 
 }

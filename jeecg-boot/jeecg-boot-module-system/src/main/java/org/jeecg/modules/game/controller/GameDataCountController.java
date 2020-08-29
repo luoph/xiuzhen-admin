@@ -11,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.game.entity.*;
+import org.jeecg.modules.game.mapper.GameDataRemainMapper;
+import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
+import org.jeecg.modules.game.mapper.GameLtvCountMapper;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +54,12 @@ public class GameDataCountController {
     private IGameChannelServerService gameChannelServerService;
     @Autowired
     private IGameServerService gameServerService;
+    @Resource
+    private GameDayDataCountMapper gameDayDataCountMapper;
+    @Resource
+    private GameLtvCountMapper gameLtvCountMapper;
+    @Resource
+    private GameDataRemainMapper gameDataRemainMapper;
 
 
     @GetMapping(value = "/dayCount")
@@ -75,8 +85,7 @@ public class GameDataCountController {
         } else {
             IPage<GameDayDataCount> list = gameDayDataCountService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
-                // 同步
-                // 同步
+                //同步
                 List<GameChannelServer> channelServers = gameChannelServerService.list();
                 List<GameDayDataCount> allCount = new ArrayList<>();
                 for (GameChannelServer channelServer : channelServers) {
@@ -87,7 +96,7 @@ public class GameDataCountController {
                     allCount.addAll(gameDayCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
-                gameDayDataCountService.saveBatch(allCount);
+                gameDayDataCountMapper.updateOrInsert(allCount);
             }
             return Result.ok(list);
         }
@@ -127,7 +136,7 @@ public class GameDataCountController {
                     allCount.addAll(gameLtvCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
-                gameDataRemainService.saveBatch(allCount);
+                gameDataRemainMapper.updateOrInsert(allCount);
             }
             return Result.ok(list);
         }
@@ -168,7 +177,7 @@ public class GameDataCountController {
                     allCount.addAll(gameLtvCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
-                gameLtvCountService.saveBatch(allCount);
+                gameLtvCountMapper.updateOrInsert(allCount);
             }
             return Result.ok(list);
         }
