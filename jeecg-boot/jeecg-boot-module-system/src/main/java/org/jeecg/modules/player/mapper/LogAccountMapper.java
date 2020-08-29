@@ -35,7 +35,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @param date
      * @return
      */
-    double getRegisterPayAmount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date);
+    double getRegisterPayAmount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
     /**
      * 新增注册付费玩家
@@ -45,7 +45,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @param date
      * @return
      */
-    int getRegisterPayPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date);
+    int getRegisterPayPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
     /**
      * 注册二次付费玩家
@@ -55,5 +55,5 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @param date
      * @return
      */
-    int getDoublePayRegisterPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date);
+    int getDoublePayRegisterPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 }
