@@ -194,6 +194,12 @@ export default {
 };
 </script>
 
-<style scoped>
-@import "~@assets/less/common.less";
+// <style lang="less" scoped></style>
+<style lang="less" scoped>
+/** Button按钮间距 */
+.ant-btn {
+    margin-left: 30px;
+    margin-bottom: 30px;
+    float: right;
+}
 </style>
