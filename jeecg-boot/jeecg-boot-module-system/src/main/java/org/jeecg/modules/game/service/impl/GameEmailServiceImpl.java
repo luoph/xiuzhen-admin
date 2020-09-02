@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.json.JSONTokener;
 import cn.youai.commons.model.Response;
 import cn.youai.xiuzhen.common.data.ConfigDataEnum;
@@ -13,10 +14,13 @@ import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.logical.And;
 import com.googlecode.cqengine.query.option.QueryOptions;
 import com.googlecode.cqengine.query.simple.Equal;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameEmail;
+import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
 import org.jeecg.modules.game.service.IGameEmailService;
+import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.player.entity.PlayerRegisterInfo;
 import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +54,6 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
 
     @Value("${app.send-email-path}")
     private String path;
-
-    @Resource
-    private PlayerRegisterInfoMapper registerInfoMapper;
-
     @Autowired
     private ConfigDataService configDataService;
 
@@ -63,7 +63,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
         Integer emailType = gameEmail.getEmailType();
         if (emailType == EMAIL_CONTENT_TYPE) {
             String content = gameEmail.getContent();
-            if (content == null) {
+            if (StringUtils.isBlank(content)) {
                 response.setFailure("附件内容不能为空！");
                 return response;
             }
@@ -74,25 +74,21 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
                     return response;
                 }
             } catch (Exception e) {
-                log.error("gameEmail->" + gameEmail.toString(), e);
+                log.error("gameEmail:{}" + gameEmail.toString(), e);
             }
 
             List<ItemVo> list = JSONArray.parseArray(content, ItemVo.class);
-            if (list == null || list.size() == 0) {
+            if (CollUtil.isEmpty(list)) {
                 response.setFailure("附件格式错误！");
                 return response;
             }
         }
 
-        if (gameEmail.getTargetBodyType() == TARGET_BODY_TYPE) {
-            Long targetBodyId = gameEmail.getTargetBodyId();
-            PlayerRegisterInfo registerInfo = getPlayerRegisterInfo(targetBodyId);
-            if (registerInfo == null) {
-                response.setFailure("玩家ID不存在！");
-                return response;
-            }
+        List<Long> list = JSONArray.parseArray(gameEmail.getTargetBodyIds(), Long.class);
+        if (CollUtil.isEmpty(list)) {
+            response.setFailure("投放目标不存在！");
+            return response;
         }
-
         boolean state = super.save(gameEmail);
         if (state) {
             sendEmailToGameCenterServer(gameEmail);
@@ -104,12 +100,6 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
 
     private void sendEmailToGameCenterServer(GameEmail gameEmail) {
         OkHttpHelper.post(gameCenterUrl + path, gameEmail);
-    }
-
-    private PlayerRegisterInfo getPlayerRegisterInfo(long playerId) {
-        QueryWrapper<PlayerRegisterInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.lambda().eq(PlayerRegisterInfo::getPlayerId, playerId);
-        return registerInfoMapper.selectOne(queryWrapper);
     }
 
     @Override
