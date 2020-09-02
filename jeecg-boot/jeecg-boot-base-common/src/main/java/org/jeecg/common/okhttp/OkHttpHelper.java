@@ -1,12 +1,12 @@
 package org.jeecg.common.okhttp;
 
+import cn.hutool.http.HttpStatus;
 import cn.youai.commons.utils.ObjectReference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +23,7 @@ import java.util.Map;
 @Component
 public class OkHttpHelper {
 
-    private static final int HTTP_OK = HttpStatus.SC_OK;
+    private static final int HTTP_OK = HttpStatus.HTTP_OK;
     private static final MediaType MIME_JSON = MediaType.parse("application/json; charset=utf-8");
 
 
@@ -63,11 +63,11 @@ public class OkHttpHelper {
      * @param queries 请求参数，在浏览器？后面的数据，没有可以传null
      * @return 请求结果
      */
-    public static String get(String url, Map<String, String> queries) {
+    public static String get(String url, Map<String, Object> queries) {
         StringBuilder sb = new StringBuilder(url);
         if (queries != null && queries.keySet().size() > 0) {
             boolean firstFlag = true;
-            for (Map.Entry entry : queries.entrySet()) {
+            for (Map.Entry<String, Object> entry : queries.entrySet()) {
                 if (firstFlag) {
                     sb.append("?").append(entry.getKey()).append("=").append(entry.getValue());
                     firstFlag = false;
@@ -148,7 +148,7 @@ public class OkHttpHelper {
      * @param params post form 提交的参数
      * @return
      */
-    public String post(String url, Map<String, String> params) {
+    public static String post(String url, Map<String, String> params) {
         FormBody.Builder builder = new FormBody.Builder();
         //添加参数
         if (params != null && params.keySet().size() > 0) {
