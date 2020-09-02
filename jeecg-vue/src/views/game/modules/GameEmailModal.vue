@@ -21,26 +21,24 @@
                     <gameEmailItemTree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></gameEmailItemTree-modal>
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group v-decorator="['validState', { initialValue: 1 }]" dict style="width: 100%;">
-                        <a-radio-button :value="1">有效</a-radio-button>
-                    </a-radio-group>
+                    <a-radio-group v-decorator="['validState', { initialValue: 1 }]" dict style="width: 100%;"><a-radio-button :value="1">有效</a-radio-button></a-radio-group>
                 </a-form-item>
                 <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-radio-group @change="selectTarget" v-decorator="['targetBodyType', { initialValue: 1 }]" dict style="width: 100%;">
                         <a-radio-button :value="1">玩家</a-radio-button>
-                        <a-radio-button :value="2">全服</a-radio-button>
-                         <a-radio-button :value="3">多个玩家</a-radio-button>
+                        <a-radio-button :value="2">服务器</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
-                <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <server-select @select="change"></server-select>
-                    <a-input type="hidden" v-decorator="['targetBodyId', { initialValue: null }, validatorRules.targetBodyId]"></a-input>
-                </a-form-item>
                 <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['targetBodyId', { initialValue: null }, validatorRules.targetBodyId]" placeholder="请输入玩家ID" style="width: 100%;" />
+                    <a-textarea
+                        v-decorator="['targetBody', { initialValue: '' }]"
+                        placeholder="请以英文“[,]”分割输入多个玩家ID"
+                        style="width: 100%;"
+                        :autoSize="{ minRows: 2, maxRows: 6 }"
+                    />
                 </a-form-item>
-                 <a-form-item v-if="multiplePlayerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['targetBodyIds', { initialValue: null }, validatorRules.targetBodyId]" placeholder="请以英文“[,]”分割输入多个玩家ID" style="width: 100%;" />
+                <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <multiple-server-select v-decorator="['targetBodyIds', { initialValue: '' }]" @changeSelect="change"></multiple-server-select>
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择生效时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%;" />
@@ -60,27 +58,29 @@
 </template>
 
 <script>
-import { httpAction } from "@/api/manage";
-import pick from "lodash.pick";
-import JDate from "@/components/jeecg/JDate";
-import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
-import { Button } from "ant-design-vue";
-import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
-import ServerSelect from "@/components/gameserver/ServerSelect";
+import { httpAction } from '@/api/manage';
+import pick from 'lodash.pick';
+import JDate from '@/components/jeecg/JDate';
+import JSearchSelectTag from '@/components/dict/JSearchSelectTag';
+import { Button } from 'ant-design-vue';
+import GameEmailItemTreeModal from './GameEmailItemTreeModal';
+import ServerSelect from '@/components/gameserver/ServerSelect';
+import MultipleServerSelect from '@/components/gameserver/MultipleServerSelect';
 
 export default {
-    name: "GameEmailModal",
+    name: 'GameEmailModal',
     components: {
         JDate,
         JSearchSelectTag,
         Button,
         GameEmailItemTreeModal,
-        ServerSelect
+        ServerSelect,
+        MultipleServerSelect
     },
     data() {
         return {
             form: this.$form.createForm(this),
-            title: "操作",
+            title: '操作',
             width: 800,
             visible: false,
             model: {},
@@ -95,27 +95,23 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                title: { rules: [{ required: true, message: "请输入标题!" }] },
-                remark: { rules: [{ required: true, message: "请输入描述!" }] },
-                emailType: { rules: [{ required: true, message: "请选择类型!" }] },
-                content: { rules: [{ required: true, message: "请添加附件!" }] },
-                validState: { rules: [{ required: true, message: "请选择状态!" }] },
-                targetBodyType: { rules: [{ required: true, message: "请选择目标类型!" }] },
-                targetBodyId: { rules: [{ required: false, message: "请输入目标主体ID!" }] },
-                targetBodyIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
-                sendTime: { rules: [{ required: true, message: "请输入生效时间!" }] },
-                validStarTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
+                title: { rules: [{ required: true, message: '请输入标题!' }] },
+                remark: { rules: [{ required: true, message: '请输入描述!' }] },
+                emailType: { rules: [{ required: true, message: '请选择类型!' }] },
+                content: { rules: [{ required: true, message: '请添加附件!' }] },
+                validState: { rules: [{ required: true, message: '请选择状态!' }] },
+                targetBodyType: { rules: [{ required: true, message: '请选择目标类型!' }] },
+                targetBodyIds: { rules: [{ required: false, message: '请以英文“,”分割输入多个玩家ID！' }] },
+                sendTime: { rules: [{ required: true, message: '请输入生效时间!' }] },
+                validStarTime: { rules: [{ required: true, message: '请输入开始时间!' }] },
                 validEndTime: {}
             },
             serverType: false,
             playerType: true,
-            multiplePlayerType: false,
-            serverList: [],
             contentData: false,
             url: {
-                add: "game/gameEmail/add",
-                edit: "game/gameEmail/edit",
-                serverListUrl: "game/gameServer/list"
+                add: 'game/gameEmail/add',
+                edit: 'game/gameEmail/edit'
             }
         };
     },
@@ -134,34 +130,33 @@ export default {
                 this.form.setFieldsValue(
                     pick(
                         this.model,
-                        "title",
-                        "remark",
-                        "emailType",
-                        "content",
-                        "validState",
-                        "targetBodyType",
-                        "targetBodyId",
-                        "targetBodyIds",
-                        "sendTime",
-                        "validStarTime",
-                        "validEndTime",
-                        "createBy",
-                        "createTime",
-                        "updateBy",
-                        "updateTime"
+                        'title',
+                        'remark',
+                        'emailType',
+                        'content',
+                        'validState',
+                        'targetBodyType',
+                        'targetBodyIds',
+                        'sendTime',
+                        'validStarTime',
+                        'validEndTime',
+                        'createBy',
+                        'createTime',
+                        'updateBy',
+                        'updateTime'
                     )
                 );
             });
         },
         close() {
-            this.$emit("close");
+            this.$emit('close');
             this.visible = false;
             this.serverType = false;
             this.playerType = true;
-            this.multiplePlayerType = false;
             this.validatorRules.content = null;
             this.contentData = false;
             this.itemTree = null;
+            this.targetBody = '';
         },
         handleOk() {
             const that = this;
@@ -169,22 +164,23 @@ export default {
             this.form.validateFields((err, values) => {
                 if (!err) {
                     that.confirmLoading = true;
-                    let httpUrl = "";
-                    let method = "";
+                    let httpUrl = '';
+                    let method = '';
                     if (!this.model.id) {
                         httpUrl += this.url.add;
-                        method = "post";
+                        method = 'post';
                     } else {
                         httpUrl += this.url.edit;
-                        method = "put";
+                        method = 'put';
                     }
                     let formData = Object.assign(this.model, values);
-                    console.log("表单提交数据", formData);
+                    this.inputTargetBody(formData);
+                    console.log('表单提交数据', formData);
                     httpAction(httpUrl, formData, method)
-                        .then((res) => {
+                        .then(res => {
                             if (res.success) {
                                 that.$message.success(res.message);
-                                that.$emit("ok");
+                                that.$emit('ok');
                             } else {
                                 that.$message.warning(res.message);
                             }
@@ -208,53 +204,47 @@ export default {
             this.form.setFieldsValue(
                 pick(
                     row,
-                    "title",
-                    "remark",
-                    "emailType",
-                    "content",
-                    "validState",
-                    "targetBodyType",
-                    "targetBodyId",
-                    "targetBodyIds",
-                    "sendTime",
-                    "validStarTime",
-                    "validEndTime",
-                    "createBy",
-                    "createTime",
-                    "updateBy",
-                    "updateTime",
-                    "targetBodyIds"
+                    'title',
+                    'remark',
+                    'emailType',
+                    'content',
+                    'validState',
+                    'targetBodyType',
+                    'targetBodyIds',
+                    'sendTime',
+                    'validStarTime',
+                    'validEndTime',
+                    'createBy',
+                    'createTime',
+                    'updateBy',
+                    'updateTime'
                 )
             );
         },
         selectTarget(e) {
+            // 1-玩家 2-服务器
             if (e.target.value == 1) {
                 this.serverType = false;
                 this.playerType = true;
-                this.multiplePlayerType = false;
             } else if (e.target.value == 2) {
                 this.serverType = true;
                 this.playerType = false;
-                this.multiplePlayerType = false;
-            }else if (e.target.value == 3){
-                this.serverType = false;
-                this.playerType = false;
-                this.multiplePlayerType = true;
             }
-            this.validatorRules.targetBodyId = "";
+            this.validatorRules.targetBodyIds = '';
+            this.targetBody = '';
         },
         contentType(e) {
             if (e.target.value == 1) {
                 this.contentData = false;
             } else if (e.target.value == 2) {
                 this.contentData = true;
-                this.validatorRules.content = { rules: [{ required: true, message: "请添加附件!" }] };
-                this.validatorRules.content = "";
+                this.validatorRules.content = { rules: [{ required: true, message: '请添加附件!' }] };
+                this.validatorRules.content = '';
             }
         },
         handleAddItem() {
             this.$refs.gameEmailItemTreeModal.visible = true;
-            this.$refs.gameEmailItemTreeModal.$emit("getItemTree");
+            this.$refs.gameEmailItemTreeModal.$emit('getItemTree');
             this.content = null;
         },
         getItemTreeJson(item) {
@@ -265,17 +255,23 @@ export default {
                 content: item
             });
         },
-        change(serverId) {
-            /** 这里需要注意 form表单接收子组件值的问题 */
+        change(value) {
             this.form.setFieldsValue({
-                targetBodyId: serverId
+                targetBodyIds: '[' + value.join(',') + ']'
             });
+        },
+        inputTargetBody(formData) {
+            let a = this.form.getFieldValue('targetBody');
+            if (a !== null && a !== '') {
+                formData.targetBodyIds = a;
+            }
         }
     }
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

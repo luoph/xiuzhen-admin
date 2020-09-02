@@ -68,8 +68,8 @@ public class GameEmail extends BaseEntity {
     /**
      * 目标主体
      */
-    @Excel(name = "目标主体", width = 15)
-    private java.lang.Long targetBodyId;
+    @Excel(name = "目标主体:服务器id/玩家id", width = 15)
+    private java.lang.String targetBodyIds;
 
     /**
      * 生效时间
@@ -96,5 +96,5 @@ public class GameEmail extends BaseEntity {
     private java.util.Date validEndTime;
 
     @TableField(exist = false)
-    private String targetBodyIds;
+    private Long targetBodyId;
 }

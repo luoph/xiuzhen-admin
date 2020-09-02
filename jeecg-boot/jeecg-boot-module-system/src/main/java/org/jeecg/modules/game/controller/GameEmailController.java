@@ -1,8 +1,6 @@
 package org.jeecg.modules.game.controller;
 
-import cn.youai.commons.model.Response;
 import cn.youai.xiuzhen.entity.pojo.Item;
-import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
-import org.jeecg.common.constant.ErrorCode;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameEmail;
@@ -53,6 +50,11 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
+        String targetBodyIds = gameEmail.getTargetBodyIds();
+        if (StringUtils.isNotBlank(targetBodyIds)) {
+            targetBodyIds = "*" + targetBodyIds + "*";
+            gameEmail.setTargetBodyIds(targetBodyIds);
+        }
         QueryWrapper<GameEmail> queryWrapper = QueryGenerator.initQueryWrapper(gameEmail, req.getParameterMap());
         Page<GameEmail> page = new Page<>(pageNo, pageSize);
         IPage<GameEmail> pageList = gameEmailService.page(page, queryWrapper);
@@ -69,33 +71,12 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameEmail gameEmail) {
         log.info("gameEmail:{}", gameEmail.toString());
-        int targetBodyType = gameEmail.getTargetBodyType();
-        // targetBodyType = 1-单个玩家 2-单个服务器 3-多个玩家
-        if (targetBodyType == 1 || targetBodyType == 2) {
-            Long targetBodyId = gameEmail.getTargetBodyId();
-            if (targetBodyId == null || targetBodyId <= 0) {
-                return Result.error("所选目标对象不允许为空！");
-            }
-            Response response = gameEmailService.saveEmail(gameEmail);
-            if (response.getCode() == ErrorCode.SUCCESS.getCode()) {
-                return Result.ok("添加成功！");
-            }
-            return Result.error(response.getDesc());
-        } else {
-            String targetBodyIds = gameEmail.getTargetBodyIds();
-            if (StringUtils.isBlank(targetBodyIds)) {
-                return Result.error("所选目标对象不允许为空！");
-            }
-            List<Long> list = JSONArray.parseArray(targetBodyIds, Long.class);
-            if (list != null && !list.isEmpty()) {
-                gameEmail.setTargetBodyType(1);
-                for (Long playerId : list) {
-                    gameEmail.setTargetBodyId(playerId);
-                    gameEmailService.saveEmail(gameEmail);
-                }
-            }
-            return Result.ok("添加成功！");
+        String targetBodyIds = gameEmail.getTargetBodyIds();
+        if (StringUtils.isBlank(targetBodyIds)) {
+            return Result.error("所选投放对象不允许为空！");
         }
+        gameEmailService.saveEmail(gameEmail);
+        return Result.ok("添加成功！");
     }
 
     /**
