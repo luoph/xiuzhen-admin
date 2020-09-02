@@ -41,7 +41,7 @@ public class GameVirtualOrder implements Serializable {
      * 玩家id
      */
     @Excel(name = "玩家id", width = 15)
-    private java.lang.Integer playerId;
+    private java.lang.Long playerId;
 
     /**
      * 商品id
