@@ -29,6 +29,25 @@ public interface GameDataRemainMapper extends BaseMapper<GameDataRemain> {
      */
     GameDataRemain gameRemainCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
+
+    /**
+     * 批量插入更新
+     *
+     * @param list
+     * @return
+     */
     int updateOrInsert(List<GameDataRemain> list);
+
+    /**
+     * 从开服起统计留存
+     *
+     * @param channel
+     * @param serverId
+     * @param date
+     * @param logTable
+     * @param leftDay
+     * @return
+     */
+    int selectRemain(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable, @Param("leftDay") int leftDay);
 
 }

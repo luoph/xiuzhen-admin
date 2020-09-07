@@ -3,6 +3,8 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
@@ -15,6 +17,7 @@ import org.jeecg.modules.player.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -59,6 +62,17 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Value("${app.log.db.table}")
     private String logTable;
 
+    /**
+     * 留存间隔查询
+     * 统计间隔+1 = 统计天数
+     */
+    private static final int[] REMAIN = new int[]{1, 2, 3, 4, 5, 6, 14, 29, 59, 89, 119};
+
+    /**
+     * ltv统计间隔
+     * 统计间隔 = 统计天数
+     */
+    private static final int[] LTV = new int[]{1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 90, 120};
 
     @Override
     public List<GameDayDataCount> queryDateRangeDataCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
@@ -142,10 +156,16 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         for (GameChannelServer gameChannelServer : list) {
             List<GameDayDataCount> gameDayDataCounts = queryDateRangeDataCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
             gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
+
             List<GameDataRemain> gameDataRemains = queryDataRemainCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
             gameDataRemainMapper.updateOrInsert(gameDataRemains);
+            // 留存更新
+            updateRemainTask(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate);
+
             List<GameLtvCount> gameLtvCounts = queryDataLtvCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
             gameLtvCountMapper.updateOrInsert(gameLtvCounts);
+            // ltv更新
+            updateLtvTask(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate);
         }
     }
 
@@ -204,4 +224,137 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
         return list;
     }
+
+    public void updateRemainTask(int channelId, int serverId, String countDate) {
+        GameServer gameServer = gameServerService.getById(serverId);
+        if (gameServer == null) {
+            return;
+        }
+        GameChannel gameChannel = gameChannelService.getById(channelId);
+        if (gameChannel == null) {
+            return;
+        }
+        Date openTime = gameServer.getOpenTime();
+        Date date = DateUtils.parseDate(countDate);
+        if (openTime.after(date)) {
+            return;
+        }
+        int betweenNatural = DateUtils.daysBetweenNatural(openTime, date);
+        if (betweenNatural <= 0) {
+            return;
+        }
+        for (int i = 0; i < betweenNatural; i++) {
+            Date nextDate = DateUtils.addDays(date, i);
+            int leftDays = DateUtils.daysBetweenNatural(nextDate, date);
+            LambdaQueryWrapper<GameDataRemain> queryWrapper = Wrappers.<GameDataRemain>lambdaQuery().eq(GameDataRemain::getChannel, gameChannel.getSimpleName())
+                    .eq(GameDataRemain::getCountDate, countDate).eq(GameDataRemain::getServerId, serverId);
+            GameDataRemain gameDataRemain = gameDataRemainService.getOne(queryWrapper);
+            if (gameDataRemain != null && gameDataRemain.getD120Remain() != null) {
+                continue;
+            } else {
+                gameDataRemain = new GameDataRemain().setChannel(gameChannel.getSimpleName()).setServerId(serverId).setCountDate(nextDate);
+            }
+            for (int j = 1; j <= leftDays; j++) {
+                int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), serverId, DateUtils.formatDateTimeStr(nextDate), logTable, j);
+                updateRemainCountField(gameDataRemain, j, remain);
+            }
+            gameDataRemainMapper.update(gameDataRemain, queryWrapper);
+        }
+    }
+
+    private void updateRemainCountField(GameDataRemain gameDataRemain, int j, int remain) {
+        if (gameDataRemain != null) {
+            if (j > 0 && j <= REMAIN[0]) {
+                gameDataRemain.setD2Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[1] && j <= REMAIN[2]) {
+                gameDataRemain.setD3Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[2] && j <= REMAIN[3]) {
+                gameDataRemain.setD4Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[3] && j <= REMAIN[4]) {
+                gameDataRemain.setD5Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[4] && j <= REMAIN[5]) {
+                gameDataRemain.setD6Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[5] && j <= REMAIN[6]) {
+                gameDataRemain.setD7Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[6] && j <= REMAIN[7]) {
+                gameDataRemain.setD15Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[7] && j <= REMAIN[8]) {
+                gameDataRemain.setD30Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[8] && j <= REMAIN[9]) {
+                gameDataRemain.setD60Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[9] && j <= REMAIN[10]) {
+                gameDataRemain.setD90Remain(BigDecimal.valueOf(remain));
+            } else if (j > REMAIN[10] && j <= REMAIN[11]) {
+                gameDataRemain.setD120Remain(BigDecimal.valueOf(remain));
+            }
+        }
+    }
+
+    public void updateLtvTask(int channelId, int serverId, String countDate) {
+        GameServer gameServer = gameServerService.getById(serverId);
+        if (gameServer == null) {
+            return;
+        }
+        GameChannel gameChannel = gameChannelService.getById(channelId);
+        if (gameChannel == null) {
+            return;
+        }
+        Date openTime = gameServer.getOpenTime();
+        Date date = DateUtils.parseDate(countDate);
+        if (openTime.after(date)) {
+            return;
+        }
+        int betweenNatural = DateUtils.daysBetweenNatural(openTime, date);
+        if (betweenNatural <= 0) {
+            return;
+        }
+        for (int i = 0; i < betweenNatural; i++) {
+            Date nextDate = DateUtils.addDays(date, i);
+            int leftDays = DateUtils.daysBetweenNatural(nextDate, date);
+            LambdaQueryWrapper<GameLtvCount> queryWrapper = Wrappers.<GameLtvCount>lambdaQuery().eq(GameLtvCount::getChannel, gameChannel.getSimpleName())
+                    .eq(GameLtvCount::getCountDate, countDate).eq(GameLtvCount::getServerId, serverId);
+            GameLtvCount gameLtvCount = gameLtvCountService.getOne(queryWrapper);
+            if (gameLtvCount != null && gameLtvCount.getD120Amount() != null) {
+                continue;
+            } else {
+                gameLtvCount = new GameLtvCount().setChannel(gameChannel.getSimpleName()).setServerId(serverId).setCountDate(nextDate);
+            }
+            for (int j = 1; j <= leftDays; j++) {
+                double remain = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), serverId, DateUtils.formatDateTimeStr(nextDate), j);
+                updateLtvCountField(gameLtvCount, j, remain);
+            }
+            gameLtvCountMapper.update(gameLtvCount, queryWrapper);
+        }
+    }
+
+    private void updateLtvCountField(GameLtvCount gameLtvCount, int j, double remain) {
+        if (gameLtvCount != null) {
+            if (j > 0 && j <= LTV[0]) {
+                gameLtvCount.setD1Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[1] && j <= LTV[2]) {
+                gameLtvCount.setD2Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[2] && j <= LTV[3]) {
+                gameLtvCount.setD3Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[3] && j <= LTV[4]) {
+                gameLtvCount.setD4Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[4] && j <= LTV[5]) {
+                gameLtvCount.setD5Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[5] && j <= LTV[6]) {
+                gameLtvCount.setD6Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[6] && j <= LTV[7]) {
+                gameLtvCount.setD7Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[7] && j <= LTV[8]) {
+                gameLtvCount.setD14Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[8] && j <= LTV[9]) {
+                gameLtvCount.setD21Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[9] && j <= LTV[10]) {
+                gameLtvCount.setD30Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[10] && j <= LTV[11]) {
+                gameLtvCount.setD60Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[11] && j <= LTV[12]) {
+                gameLtvCount.setD90Amount(BigDecimal.valueOf(remain));
+            }
+        }
+    }
+
 }

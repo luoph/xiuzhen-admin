@@ -29,5 +29,22 @@ public interface GameLtvCountMapper extends BaseMapper<GameLtvCount> {
      */
     GameLtvCount getGameLtvCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
+    /**
+     * 插入或更新
+     *
+     * @param list
+     * @return
+     */
     int updateOrInsert(List<GameLtvCount> list);
+
+    /**
+     * 查询留存
+     *
+     * @param channel
+     * @param serverId
+     * @param date
+     * @param leftDays
+     * @return
+     */
+    double selectLtv(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("leftDays") int leftDays);
 }
