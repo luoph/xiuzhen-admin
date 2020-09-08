@@ -54,8 +54,8 @@
     </select>
 
     <insert id="updateOrInsert" useGeneratedKeys="true" keyProperty="id" parameterType="list">
-        replace into `game_ltv_count`
-        ( channel, server_id, count_date, register_num, create_time
+        replace into `game_ltv_count`(
+            channel, server_id, count_date, register_num, create_time
         )
         VALUES
         <foreach collection="list" item="it" separator=",">

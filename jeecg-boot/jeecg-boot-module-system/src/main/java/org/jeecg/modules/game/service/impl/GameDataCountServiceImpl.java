@@ -148,6 +148,23 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     }
 
     @Override
+    public void doJobDataCountUpdate() {
+        List<GameChannelServer> list = gameChannelServerService.list();
+        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getIsCountedData() == 0).collect(Collectors.toList());
+        Date date = DateUtils.addDays(DateUtils.todayDate(), -1);
+        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
+        for (GameChannelServer gameChannelServer : list) {
+            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
+            GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
+            // 留存更新
+            updateRemainTask(gameChannel, gameServer, formatDate);
+            // ltv更新
+            updateLtvTask(gameChannel, gameServer, formatDate);
+        }
+    }
+
+
+    @Override
     public List<GameDataRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
         List<GameDataRemain> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
@@ -209,7 +226,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), logTable, j);
                 updateRemainCountField(gameDataRemain, j, remain);
             }
-            gameDataRemainMapper.update(gameDataRemain, queryWrapper);
+            gameDataRemainService.update(gameDataRemain, queryWrapper);
         }
     }
 
@@ -217,25 +234,25 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         if (gameDataRemain != null) {
             if (j > 0 && j <= REMAIN[0]) {
                 gameDataRemain.setD2Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[1] && j <= REMAIN[2]) {
+            } else if (j > REMAIN[0] && j <= REMAIN[1]) {
                 gameDataRemain.setD3Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[2] && j <= REMAIN[3]) {
+            } else if (j > REMAIN[1] && j <= REMAIN[2]) {
                 gameDataRemain.setD4Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[3] && j <= REMAIN[4]) {
+            } else if (j > REMAIN[2] && j <= REMAIN[3]) {
                 gameDataRemain.setD5Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[4] && j <= REMAIN[5]) {
+            } else if (j > REMAIN[3] && j <= REMAIN[4]) {
                 gameDataRemain.setD6Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[5] && j <= REMAIN[6]) {
+            } else if (j > REMAIN[4] && j <= REMAIN[5]) {
                 gameDataRemain.setD7Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[6] && j <= REMAIN[7]) {
+            } else if (j > REMAIN[5] && j <= REMAIN[6]) {
                 gameDataRemain.setD15Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[7] && j <= REMAIN[8]) {
+            } else if (j > REMAIN[6] && j <= REMAIN[7]) {
                 gameDataRemain.setD30Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[8] && j <= REMAIN[9]) {
+            } else if (j > REMAIN[7] && j <= REMAIN[8]) {
                 gameDataRemain.setD60Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[9] && j <= REMAIN[10]) {
+            } else if (j > REMAIN[8] && j <= REMAIN[9]) {
                 gameDataRemain.setD90Remain(BigDecimal.valueOf(remain));
-            } else if (j > REMAIN[10] && j <= REMAIN[11]) {
+            } else if (j > REMAIN[9] && j <= REMAIN[10]) {
                 gameDataRemain.setD120Remain(BigDecimal.valueOf(remain));
             }
         }
@@ -267,28 +284,30 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         if (gameLtvCount != null) {
             if (j > 0 && j <= LTV[0]) {
                 gameLtvCount.setD1Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[1] && j <= LTV[2]) {
+            } else if (j > LTV[0] && j <= LTV[1]) {
                 gameLtvCount.setD2Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[2] && j <= LTV[3]) {
+            } else if (j > LTV[1] && j <= LTV[2]) {
                 gameLtvCount.setD3Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[3] && j <= LTV[4]) {
+            } else if (j > LTV[2] && j <= LTV[3]) {
                 gameLtvCount.setD4Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[4] && j <= LTV[5]) {
+            } else if (j > LTV[3] && j <= LTV[4]) {
                 gameLtvCount.setD5Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[5] && j <= LTV[6]) {
+            } else if (j > LTV[4] && j <= LTV[5]) {
                 gameLtvCount.setD6Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[6] && j <= LTV[7]) {
+            } else if (j > LTV[5] && j <= LTV[6]) {
                 gameLtvCount.setD7Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[7] && j <= LTV[8]) {
+            } else if (j > LTV[6] && j <= LTV[7]) {
                 gameLtvCount.setD14Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[8] && j <= LTV[9]) {
+            } else if (j > LTV[7] && j <= LTV[8]) {
                 gameLtvCount.setD21Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[9] && j <= LTV[10]) {
+            } else if (j > LTV[8] && j <= LTV[9]) {
                 gameLtvCount.setD30Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[10] && j <= LTV[11]) {
+            } else if (j > LTV[9] && j <= LTV[10]) {
                 gameLtvCount.setD60Amount(BigDecimal.valueOf(remain));
-            } else if (j > LTV[11] && j <= LTV[12]) {
+            } else if (j > LTV[10] && j <= LTV[11]) {
                 gameLtvCount.setD90Amount(BigDecimal.valueOf(remain));
+            } else if (j > LTV[11] && j <= LTV[12]) {
+                gameLtvCount.setD120Amount(BigDecimal.valueOf(remain));
             }
         }
     }

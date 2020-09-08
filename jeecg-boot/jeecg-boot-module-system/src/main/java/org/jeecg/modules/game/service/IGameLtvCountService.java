@@ -29,5 +29,14 @@ public interface IGameLtvCountService extends IService<GameLtvCount> {
      */
     IPage<GameLtvCount> selectList(Page<GameLtvCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 
+    /**
+     * 统计留存
+     *
+     * @param channel
+     * @param serverId
+     * @param date
+     * @param logTable
+     * @return
+     */
     GameLtvCount getGameLtvCount(String channel, int serverId, String date, String logTable);
 }
