@@ -75,20 +75,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private static final int[] LTV = new int[]{1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 90, 120};
 
     @Override
-    public List<GameDayDataCount> queryDateRangeDataCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+    public List<GameDayDataCount> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
         List<GameDayDataCount> list = new ArrayList<>();
-        GameChannel gameChannel = gameChannelService.getById(channelId);
-        if (gameChannel == null) {
-            return list;
-        }
-        GameServer gameServer = gameServerService.getById(serverId);
-        if (gameServer == null) {
-            return list;
-        }
-        boolean channelWithServer = gameChannelServerService.isValidChannelWithServer(channelId, serverId);
-        if (!channelWithServer) {
-            return list;
-        }
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
@@ -111,14 +99,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int countPay = payOrderService.countPayPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
         // 当天登陆角色数
         int loginNum = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 2);
-
-        // 当天付费率
-        double payRate = loginNum > 0 ? BigDecimalUtil.div(countPay, loginNum, 2) : 0.00;
-        // arpu
-        double arpu = loginNum > 0 ? BigDecimalUtil.div(sumPayAmount, loginNum, 2) : 0.00;
-        // arppu
-        double arppu = loginNum > 0 ? BigDecimalUtil.div(sumPayAmount, loginNum, 2) : 0.00;
-
         // 当天注册角色数
         int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 1);
         // 注册付费总金额
@@ -128,21 +108,17 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         // 注册二次付费玩家
         int doublePayPlayer = logAccountService.doublePayRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
 
-        // 新增注册付费率
-        double registerPayRate = registerPlayer > 0 ? BigDecimalUtil.div(registerPayPlayer, registerPlayer, 2) : 0.00;
-        // 新增arpu
-        double registerArpu = registerPlayer > 0 ? BigDecimalUtil.div(registerPayAmount, registerPlayer, 2) : 0.00;
-        // 新增arppu
-        double registerArppu = registerPayPlayer > 0 ? BigDecimalUtil.div(registerPayAmount, registerPayPlayer, 2) : 0.00;
-        // 二次付费率
-        double doublePayRate = registerPayPlayer > 0 ? BigDecimalUtil.div(doublePayPlayer, registerPayPlayer, 2) : 0.00;
 
         return new GameDayDataCount().setPayAmount(BigDecimal.valueOf(sumPayAmount)).setLoginNum(loginNum)
-                .setPayNum(countPay).setArpu(BigDecimal.valueOf(arpu)).setArppu(BigDecimal.valueOf(arppu))
-                .setPayRate(BigDecimal.valueOf(payRate)).setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
-                .setAddPayAmount(BigDecimal.valueOf(registerPayAmount)).setAddPayRate(BigDecimal.valueOf(registerPayRate))
-                .setDoublePay(doublePayPlayer).setDoublePayRate(BigDecimal.valueOf(doublePayRate))
-                .setAddArpu(BigDecimal.valueOf(registerArpu)).setAddArppu(BigDecimal.valueOf(registerArppu))
+                .setPayNum(countPay).setArpu(BigDecimal.valueOf(BigDecimalUtil.calcu(sumPayAmount, loginNum)))
+                .setArppu(BigDecimal.valueOf(BigDecimalUtil.calcu(sumPayAmount, loginNum)))
+                .setPayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(countPay, loginNum))).setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
+                .setAddPayAmount(BigDecimal.valueOf(registerPayAmount))
+                .setAddPayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(registerPayPlayer, registerPlayer)))
+                .setDoublePay(doublePayPlayer)
+                .setDoublePayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(doublePayPlayer, registerPayPlayer)))
+                .setAddArpu(BigDecimal.valueOf(BigDecimalUtil.calcu(registerPayAmount, registerPlayer)))
+                .setAddArppu(BigDecimal.valueOf(BigDecimalUtil.calcu(registerPayAmount, registerPayPlayer)))
                 .setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId())
                 .setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
     }
@@ -150,40 +126,30 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Override
     public void doJobDataCount() {
         List<GameChannelServer> list = gameChannelServerService.list();
-        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0).collect(Collectors.toList());
+        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getIsCountedData() == 0).collect(Collectors.toList());
         Date date = DateUtils.addDays(DateUtils.todayDate(), -1);
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
         for (GameChannelServer gameChannelServer : list) {
-            List<GameDayDataCount> gameDayDataCounts = queryDateRangeDataCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
+            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
+            GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
+            List<GameDayDataCount> gameDayDataCounts = queryDateRangeDataCount(gameChannel, gameServer, formatDate, formatDate);
             gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
 
-            List<GameDataRemain> gameDataRemains = queryDataRemainCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
+            List<GameDataRemain> gameDataRemains = queryDataRemainCount(gameChannel, gameServer, formatDate, formatDate);
             gameDataRemainMapper.updateOrInsert(gameDataRemains);
             // 留存更新
-            updateRemainTask(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate);
+            updateRemainTask(gameChannel, gameServer, formatDate);
 
-            List<GameLtvCount> gameLtvCounts = queryDataLtvCount(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate, formatDate);
+            List<GameLtvCount> gameLtvCounts = queryDataLtvCount(gameChannel, gameServer, formatDate, formatDate);
             gameLtvCountMapper.updateOrInsert(gameLtvCounts);
             // ltv更新
-            updateLtvTask(Integer.valueOf(gameChannelServer.getChannelId()), gameChannelServer.getServerId(), formatDate);
+            updateLtvTask(gameChannel, gameServer, formatDate);
         }
     }
 
     @Override
-    public List<GameDataRemain> queryDataRemainCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+    public List<GameDataRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
         List<GameDataRemain> list = new ArrayList<>();
-        GameChannel gameChannel = gameChannelService.getById(channelId);
-        if (gameChannel == null) {
-            return list;
-        }
-        GameServer gameServer = gameServerService.getById(serverId);
-        if (gameServer == null) {
-            return list;
-        }
-        boolean channelWithServer = gameChannelServerService.isValidChannelWithServer(channelId, serverId);
-        if (!channelWithServer) {
-            return list;
-        }
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
@@ -198,20 +164,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     }
 
     @Override
-    public List<GameLtvCount> queryDataLtvCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+    public List<GameLtvCount> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
         List<GameLtvCount> list = new ArrayList<>();
-        GameChannel gameChannel = gameChannelService.getById(channelId);
-        if (gameChannel == null) {
-            return list;
-        }
-        GameServer gameServer = gameServerService.getById(serverId);
-        if (gameServer == null) {
-            return list;
-        }
-        boolean channelWithServer = gameChannelServerService.isValidChannelWithServer(channelId, serverId);
-        if (!channelWithServer) {
-            return list;
-        }
+
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
@@ -225,37 +180,33 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         return list;
     }
 
-    public void updateRemainTask(int channelId, int serverId, String countDate) {
-        GameServer gameServer = gameServerService.getById(serverId);
-        if (gameServer == null) {
-            return;
-        }
-        GameChannel gameChannel = gameChannelService.getById(channelId);
-        if (gameChannel == null) {
-            return;
-        }
+    private int betweenNatural(GameServer gameServer, String countDate) {
         Date openTime = gameServer.getOpenTime();
         Date date = DateUtils.parseDate(countDate);
         if (openTime.after(date)) {
-            return;
+            return 0;
         }
         int betweenNatural = DateUtils.daysBetweenNatural(openTime, date);
-        if (betweenNatural <= 0) {
-            return;
-        }
-        for (int i = 0; i < betweenNatural; i++) {
-            Date nextDate = DateUtils.addDays(date, i);
-            int leftDays = DateUtils.daysBetweenNatural(nextDate, date);
+        return Math.max(betweenNatural, 0);
+    }
+
+
+    @Override
+    public void updateRemainTask(GameChannel gameChannel, GameServer gameServer, String countDate) {
+        int betweenNatural = betweenNatural(gameServer, countDate);
+        for (int i = 1; i <= betweenNatural; i++) {
+            Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
+            int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
             LambdaQueryWrapper<GameDataRemain> queryWrapper = Wrappers.<GameDataRemain>lambdaQuery().eq(GameDataRemain::getChannel, gameChannel.getSimpleName())
-                    .eq(GameDataRemain::getCountDate, countDate).eq(GameDataRemain::getServerId, serverId);
+                    .eq(GameDataRemain::getCountDate, nextDate).eq(GameDataRemain::getServerId, gameServer.getId());
             GameDataRemain gameDataRemain = gameDataRemainService.getOne(queryWrapper);
             if (gameDataRemain != null && gameDataRemain.getD120Remain() != null) {
                 continue;
             } else {
-                gameDataRemain = new GameDataRemain().setChannel(gameChannel.getSimpleName()).setServerId(serverId).setCountDate(nextDate);
+                gameDataRemain = new GameDataRemain().setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId()).setCountDate(nextDate);
             }
             for (int j = 1; j <= leftDays; j++) {
-                int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), serverId, DateUtils.formatDateTimeStr(nextDate), logTable, j);
+                int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), logTable, j);
                 updateRemainCountField(gameDataRemain, j, remain);
             }
             gameDataRemainMapper.update(gameDataRemain, queryWrapper);
@@ -290,37 +241,22 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
     }
 
-    public void updateLtvTask(int channelId, int serverId, String countDate) {
-        GameServer gameServer = gameServerService.getById(serverId);
-        if (gameServer == null) {
-            return;
-        }
-        GameChannel gameChannel = gameChannelService.getById(channelId);
-        if (gameChannel == null) {
-            return;
-        }
-        Date openTime = gameServer.getOpenTime();
-        Date date = DateUtils.parseDate(countDate);
-        if (openTime.after(date)) {
-            return;
-        }
-        int betweenNatural = DateUtils.daysBetweenNatural(openTime, date);
-        if (betweenNatural <= 0) {
-            return;
-        }
+    @Override
+    public void updateLtvTask(GameChannel gameChannel, GameServer gameServer, String countDate) {
+        int betweenNatural = betweenNatural(gameServer, countDate);
         for (int i = 0; i < betweenNatural; i++) {
-            Date nextDate = DateUtils.addDays(date, i);
-            int leftDays = DateUtils.daysBetweenNatural(nextDate, date);
+            Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
+            int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
             LambdaQueryWrapper<GameLtvCount> queryWrapper = Wrappers.<GameLtvCount>lambdaQuery().eq(GameLtvCount::getChannel, gameChannel.getSimpleName())
-                    .eq(GameLtvCount::getCountDate, countDate).eq(GameLtvCount::getServerId, serverId);
+                    .eq(GameLtvCount::getCountDate, nextDate).eq(GameLtvCount::getServerId, gameServer.getId());
             GameLtvCount gameLtvCount = gameLtvCountService.getOne(queryWrapper);
             if (gameLtvCount != null && gameLtvCount.getD120Amount() != null) {
                 continue;
             } else {
-                gameLtvCount = new GameLtvCount().setChannel(gameChannel.getSimpleName()).setServerId(serverId).setCountDate(nextDate);
+                gameLtvCount = new GameLtvCount().setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId()).setCountDate(nextDate);
             }
             for (int j = 1; j <= leftDays; j++) {
-                double remain = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), serverId, DateUtils.formatDateTimeStr(nextDate), j);
+                double remain = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
                 updateLtvCountField(gameLtvCount, j, remain);
             }
             gameLtvCountMapper.update(gameLtvCount, queryWrapper);
@@ -356,5 +292,4 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             }
         }
     }
-
 }

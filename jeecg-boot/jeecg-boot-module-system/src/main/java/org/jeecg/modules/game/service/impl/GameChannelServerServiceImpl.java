@@ -38,6 +38,6 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
                 .eq(GameChannelServer::getServerId, serverId);
         GameChannelServer channelServer = getOne(queryWrapper);
         // 绑定关系正常
-        return channelServer != null && channelServer.getDelFlag() == 0;
+        return channelServer != null && channelServer.getDelFlag() == 0 && channelServer.getIsCountedData() == 0;
     }
 }

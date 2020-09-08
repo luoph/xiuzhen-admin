@@ -50,4 +50,10 @@ public class GameChannelServer extends BaseEntity {
     @Dict(dicCode = "del_flag")
     @ApiModelProperty(value = "删除状态")
     private java.lang.Integer delFlag;
+
+
+    @Excel(name = "数据统计状态", width = 15)
+    @Dict(dicCode = "is_counted_data")
+    @ApiModelProperty(value = "数据统计状态")
+    private java.lang.Integer isCountedData;
 }

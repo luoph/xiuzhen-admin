@@ -17,13 +17,13 @@ public interface IGameDataCountService {
     /**
      * 统计数据列表
      *
-     * @param channelId      渠道id
-     * @param serverId       服务器id
+     * @param gameChannel      渠道id
+     * @param gameServer       服务器id
      * @param rangeDateBegin 开始日期
      * @param rangeDateEnd   结束日期
      * @return 统计列表
      */
-    List<GameDayDataCount> queryDateRangeDataCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    List<GameDayDataCount> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 按照日期统计每日数据
@@ -38,25 +38,47 @@ public interface IGameDataCountService {
     /**
      * 留存统计
      *
-     * @param channelId
-     * @param serverId
+     * @param gameChannel
+     * @param gameServer
      * @param rangeDateBegin
      * @param rangeDateEnd
      * @return
      */
-    List<GameDataRemain> queryDataRemainCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    List<GameDataRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * ltv 统计
      *
-     * @param channelId
-     * @param serverId
+     * @param gameChannel
+     * @param gameServer
      * @param rangeDateBegin
      * @param rangeDateEnd
      * @return
      */
-    List<GameLtvCount> queryDataLtvCount(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    List<GameLtvCount> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
 
+    /**
+     * 定时统计任务
+     */
     void doJobDataCount();
+
+    /**
+     * 留存更新
+     *
+     * @param gameChannel
+     * @param gameServer
+     * @param countDate
+     */
+    void updateRemainTask(GameChannel gameChannel, GameServer gameServer, String countDate);
+
+
+    /**
+     * ltv任务更新
+     *
+     * @param gameChannel
+     * @param gameServer
+     * @param countDate
+     */
+    void updateLtvTask(GameChannel gameChannel, GameServer gameServer, String countDate);
 }
