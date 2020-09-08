@@ -99,4 +99,18 @@ public final class BigDecimalUtil {
         BigDecimal one = new BigDecimal("1");
         return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
+
+    /**
+     * BigDecimal
+     *
+     * @param v 参数1
+     * @param d 参数2
+     * @return
+     */
+    public static double calcu(double v, double d) {
+        if (v > 0) {
+            return div(v, d, 2);
+        }
+        return 0.00;
+    }
 }
