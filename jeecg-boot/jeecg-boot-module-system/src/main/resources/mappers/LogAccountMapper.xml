@@ -37,7 +37,7 @@
         AND b.`server_id` = a.`server_id`
         WHERE  b.`channel` = #{channel}
         AND b.`server_id` = #{serverId}
-        AND b.`type` = 0
+        AND b.`type` = 1
         AND DATE(b.`create_time`) =  DATE(#{date})
         AND a.`channel` = #{channel}
         AND a.`server_id`= #{serverId}
@@ -52,7 +52,7 @@
         AND b.`server_id` = a.`server_id`
         WHERE  b.`channel` = #{channel}
         AND b.`server_id` = #{serverId}
-        AND b.`type` = 0
+        AND b.`type` = 1
         AND DATE(b.`create_time`) =  DATE(#{date})
         AND a.`channel` = #{channel}
         AND a.`server_id`= #{serverId}
@@ -68,7 +68,7 @@
           AND b.`server_id` = a.`server_id`
           WHERE  b.`channel` =  #{channel}
           AND b.`server_id` =  #{serverId}
-          AND b.`type` = 0
+          AND b.`type` = 1
           AND DATE(b.`create_time`) =  DATE(#{date})
           AND a.`channel` = #{channel}
           AND a.`server_id`= #{serverId}
