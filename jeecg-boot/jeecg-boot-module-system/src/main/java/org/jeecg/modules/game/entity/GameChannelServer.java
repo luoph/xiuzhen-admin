@@ -53,7 +53,7 @@ public class GameChannelServer extends BaseEntity {
 
 
     @Excel(name = "数据统计状态", width = 15)
-    @Dict(dicCode = "is_counted_data")
+    @Dict(dicCode = "no_need_count")
     @ApiModelProperty(value = "数据统计状态")
-    private java.lang.Integer isCountedData;
+    private java.lang.Integer noNeedCount;
 }

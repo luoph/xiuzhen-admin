@@ -84,7 +84,7 @@ public class GameDataCountController {
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 //同步
                 List<GameChannelServer> channelServers = gameChannelServerService.list();
-                channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getIsCountedData() == 0).collect(Collectors.toList());
+                channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
                 List<GameDayDataCount> allCount = new ArrayList<>();
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = gameServerService.getById(channelServer.getServerId());
@@ -120,7 +120,7 @@ public class GameDataCountController {
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 // 同步
                 List<GameChannelServer> channelServers = gameChannelServerService.list();
-                channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getIsCountedData() == 0).collect(Collectors.toList());
+                channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
                 List<GameDataRemain> allCount = new ArrayList<>();
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = gameServerService.getById(channelServer.getServerId());
@@ -157,7 +157,7 @@ public class GameDataCountController {
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 // 同步
                 List<GameChannelServer> channelServers = gameChannelServerService.list();
-                channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getIsCountedData() == 0).collect(Collectors.toList());
+                channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
                 List<GameLtvCount> allCount = new ArrayList<>();
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = gameServerService.getById(channelServer.getServerId());
