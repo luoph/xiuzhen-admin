@@ -17,8 +17,8 @@ public interface IGameDataCountService {
     /**
      * 统计数据列表
      *
-     * @param gameChannel      渠道id
-     * @param gameServer       服务器id
+     * @param gameChannel    渠道id
+     * @param gameServer     服务器id
      * @param rangeDateBegin 开始日期
      * @param rangeDateEnd   结束日期
      * @return 统计列表
@@ -81,4 +81,10 @@ public interface IGameDataCountService {
      * @param countDate
      */
     void updateLtvTask(GameChannel gameChannel, GameServer gameServer, String countDate);
+
+
+    /**
+     * 统计更新
+     */
+    void doJobDataCountUpdate();
 }

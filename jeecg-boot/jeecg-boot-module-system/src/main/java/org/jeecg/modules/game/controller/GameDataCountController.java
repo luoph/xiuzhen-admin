@@ -88,7 +88,7 @@ public class GameDataCountController {
                 List<GameDayDataCount> allCount = new ArrayList<>();
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = gameServerService.getById(channelServer.getServerId());
-                    GameChannel gameChannel = gameChannelService.getById(channelId);
+                    GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
                     List<GameDayDataCount> gameDayCounts = gameDataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
@@ -124,12 +124,11 @@ public class GameDataCountController {
                 List<GameDataRemain> allCount = new ArrayList<>();
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = gameServerService.getById(channelServer.getServerId());
-                    GameChannel gameChannel = gameChannelService.getById(channelId);
+                    GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
                     List<GameDataRemain> gameLtvCounts = gameDataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
                     allCount.addAll(gameLtvCounts);
-                    gameDataCountService.updateRemainTask(gameChannel, gameServer, rangeDateEnd);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
                 gameDataRemainMapper.updateOrInsert(allCount);
@@ -162,12 +161,11 @@ public class GameDataCountController {
                 List<GameLtvCount> allCount = new ArrayList<>();
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = gameServerService.getById(channelServer.getServerId());
-                    GameChannel gameChannel = gameChannelService.getById(channelId);
+                    GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
                     List<GameLtvCount> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
                     allCount.addAll(gameLtvCounts);
-                    gameDataCountService.updateLtvTask(gameChannel, gameServer, rangeDateEnd);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
                 gameLtvCountMapper.updateOrInsert(allCount);
