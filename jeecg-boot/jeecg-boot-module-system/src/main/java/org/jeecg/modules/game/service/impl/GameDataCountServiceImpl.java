@@ -126,7 +126,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Override
     public void doJobDataCount() {
         List<GameChannelServer> list = gameChannelServerService.list();
-        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getIsCountedData() == 0).collect(Collectors.toList());
+        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
         Date date = DateUtils.addDays(DateUtils.todayDate(), -1);
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
         for (GameChannelServer gameChannelServer : list) {
@@ -150,7 +150,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Override
     public void doJobDataCountUpdate() {
         List<GameChannelServer> list = gameChannelServerService.list();
-        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getIsCountedData() == 0).collect(Collectors.toList());
+        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
         Date date = DateUtils.addDays(DateUtils.todayDate(), -1);
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
         for (GameChannelServer gameChannelServer : list) {
