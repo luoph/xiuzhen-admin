@@ -7,12 +7,9 @@ import org.jeecg.modules.game.entity.GameChannelServer;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameChannelServerMapper;
 import org.jeecg.modules.game.service.IGameChannelServerService;
-import org.jeecg.modules.game.service.IGameChannelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Wrapper;
 import java.util.List;
 
 /**
@@ -38,6 +35,6 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
                 .eq(GameChannelServer::getServerId, serverId);
         GameChannelServer channelServer = getOne(queryWrapper);
         // 绑定关系正常
-        return channelServer != null && channelServer.getDelFlag() == 0 && channelServer.getIsCountedData() == 0;
+        return channelServer != null && channelServer.getDelFlag() == 0 && channelServer.getNoNeedCount() == 0;
     }
 }
