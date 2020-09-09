@@ -110,16 +110,16 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
 
         return new GameDayDataCount().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount)).setLoginNum(loginNum)
-                .setPayNum(countPay).setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum))
-                .setArppu(BigDecimalUtil.divideZero(sumPayAmount, loginNum))
-                .setPayRate(BigDecimalUtil.divideZero(countPay, loginNum))
+                .setPayNum(countPay).setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false))
+                .setArppu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false))
+                .setPayRate(BigDecimalUtil.divideZero(countPay, loginNum, true))
                 .setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
                 .setAddPayAmount(BigDecimalUtil.valueOf(registerPayAmount))
-                .setAddPayRate(BigDecimalUtil.divideZero(registerPayPlayer, registerPlayer))
+                .setAddPayRate(BigDecimalUtil.divideZero(registerPayPlayer, registerPlayer, true))
                 .setDoublePay(doublePayPlayer)
-                .setDoublePayRate(BigDecimalUtil.divideZero(doublePayPlayer, registerPayPlayer))
-                .setAddArpu(BigDecimalUtil.divideZero(registerPayAmount, registerPlayer))
-                .setAddArppu(BigDecimalUtil.divideZero(registerPayAmount, registerPayPlayer))
+                .setDoublePayRate(BigDecimalUtil.divideZero(doublePayPlayer, registerPayPlayer, true))
+                .setAddArpu(BigDecimalUtil.divideZero(registerPayAmount, registerPlayer, false))
+                .setAddArppu(BigDecimalUtil.divideZero(registerPayAmount, registerPayPlayer, false))
                 .setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId())
                 .setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
     }

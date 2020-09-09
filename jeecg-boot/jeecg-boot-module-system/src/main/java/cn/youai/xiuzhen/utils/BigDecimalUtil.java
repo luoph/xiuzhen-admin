@@ -102,13 +102,18 @@ public final class BigDecimalUtil {
     /**
      * 被除数==0时 不抛异常的除法计算
      *
-     * @param v1 除数
-     * @param v2 被除数0 不抛出异常判定
+     * @param v1        除数
+     * @param v2        被除数0 不抛出异常判定
+     * @param isPercent 计算类型 true-百分比类型 false-正常小数值
      * @return !0 被除数计算结果
      */
-    public static BigDecimal divideZero(double v1, double v2) {
+    public static BigDecimal divideZero(double v1, double v2, boolean isPercent) {
         if (v2 != 0) {
-            return divide(v1, v2, 2);
+            BigDecimal result = divide(v1, v2, 2);
+            if (isPercent) {
+                return result.multiply(BigDecimal.valueOf(100));
+            }
+            return result;
         }
         return BigDecimal.valueOf(0.00);
     }
