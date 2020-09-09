@@ -118,7 +118,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.arpu * 100).toFixed(2);
+                                return parseFloat(record.arpu).toFixed(2);
                             }
                         },
                         {
@@ -127,7 +127,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.arppu * 100).toFixed(2);
+                                return parseFloat(record.arppu).toFixed(2);
                             }
                         }
                     ]
@@ -171,7 +171,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addArpu * 100).toFixed(2);
+                                return parseFloat(record.addArpu).toFixed(2);
                             }
                         },
                         {
@@ -180,7 +180,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addArppu * 100).toFixed(2);
+                                return parseFloat(record.addArppu).toFixed(2);
                             }
                         },
                         {
