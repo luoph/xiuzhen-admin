@@ -93,9 +93,6 @@ export default {
                             dataIndex: "payAmount",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.payAmount).toFixed(2);
-                            }
                         },
                         {
                             title: "当天付费角色数",
@@ -108,27 +105,18 @@ export default {
                             dataIndex: "payRate",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.payRate * 100).toFixed(2);
-                            }
                         },
                         {
                             title: "ARPU",
                             dataIndex: "arpu",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.arpu).toFixed(2);
-                            }
                         },
                         {
                             title: "ARPPU",
                             dataIndex: "arppu",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.arppu).toFixed(2);
-                            }
                         }
                     ]
                 },
@@ -146,9 +134,6 @@ export default {
                             dataIndex: "addPayAmount",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.addPayAmount).toFixed(2);
-                            }
                         },
                         {
                             title: "新增付费角色数",
@@ -161,27 +146,18 @@ export default {
                             dataIndex: "addPayRate",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.addPayRate * 100).toFixed(2);
-                            }
                         },
                         {
                             title: "新增ARPU",
                             dataIndex: "addArpu",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.addArpu).toFixed(2);
-                            }
                         },
                         {
                             title: "新增ARPPU",
                             dataIndex: "addArppu",
                             align: "center",
-                            width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.addArppu).toFixed(2);
-                            }
+                            width: "5%"
                         },
                         {
                             title: "二次付费角色数",
@@ -194,9 +170,6 @@ export default {
                             dataIndex: "doublePayRate",
                             align: "center",
                             width: "5%",
-                            customRender: (text, record) => {
-                                return parseFloat(record.doublePayRate * 100).toFixed(2);
-                            }
                         }
                     ]
                 }
