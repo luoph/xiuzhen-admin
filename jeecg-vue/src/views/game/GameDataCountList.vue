@@ -6,10 +6,14 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @SelectChannel="selectChannel" @SelectServer="selectServer"></game-channel-server>
+                        <game-channel-server @SelectChannel="selectChannel"
+                                             @SelectServer="selectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="10" :sm="8">
-                        <a-form-item label="创建日期"><a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/></a-form-item>
+                        <a-form-item label="创建日期">
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']"
+                                            @change="onDateChange" />
+                        </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
@@ -105,7 +109,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.payRate).toFixed(2) * 100;
+                                return parseFloat(record.payRate * 100).toFixed(2);
                             }
                         },
                         {
@@ -114,7 +118,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.arpu).toFixed(2) * 100;
+                                return parseFloat(record.arpu * 100).toFixed(2);
                             }
                         },
                         {
@@ -123,7 +127,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.arppu).toFixed(2) * 100;
+                                return parseFloat(record.arppu * 100).toFixed(2);
                             }
                         }
                     ]
@@ -158,7 +162,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addPayRate).toFixed(2) * 100;
+                                return parseFloat(record.addPayRate * 100).toFixed(2);
                             }
                         },
                         {
@@ -167,7 +171,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addArpu).toFixed(2) * 100;
+                                return parseFloat(record.addArpu * 100).toFixed(2);
                             }
                         },
                         {
@@ -176,7 +180,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addArppu).toFixed(2) * 100;
+                                return parseFloat(record.addArppu * 100).toFixed(2);
                             }
                         },
                         {
@@ -191,7 +195,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.doublePayRate).toFixed(2) * 100;
+                                return parseFloat(record.doublePayRate * 100).toFixed(2);
                             }
                         }
                     ]
@@ -205,7 +209,8 @@ export default {
     },
     computed: {},
     methods: {
-        initDictConfig() {},
+        initDictConfig() {
+        },
         selectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },
