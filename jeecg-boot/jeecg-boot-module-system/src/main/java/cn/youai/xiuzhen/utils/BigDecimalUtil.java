@@ -24,10 +24,10 @@ public final class BigDecimalUtil {
      * @param v2 加数
      * @return 两个参数的和
      */
-    public static double add(double v1, double v2) {
+    public static BigDecimal add(double v1, double v2) {
         BigDecimal b1 = BigDecimal.valueOf(v1);
         BigDecimal b2 = BigDecimal.valueOf(v2);
-        return b1.add(b2).doubleValue();
+        return b1.add(b2);
     }
 
     /**
@@ -37,10 +37,10 @@ public final class BigDecimalUtil {
      * @param v2 减数
      * @return 两个参数的差
      */
-    public static double sub(double v1, double v2) {
+    public static BigDecimal subtract(double v1, double v2) {
         BigDecimal b1 = BigDecimal.valueOf(v1);
         BigDecimal b2 = BigDecimal.valueOf(v2);
-        return b1.subtract(b2).doubleValue();
+        return b1.subtract(b2);
     }
 
     /**
@@ -50,10 +50,10 @@ public final class BigDecimalUtil {
      * @param v2 乘数
      * @return 两个参数的积
      */
-    public static double mul(double v1, double v2) {
+    public static BigDecimal multiply(double v1, double v2) {
         BigDecimal b1 = BigDecimal.valueOf(v1);
         BigDecimal b2 = BigDecimal.valueOf(v2);
-        return b1.multiply(b2).doubleValue();
+        return b1.multiply(b2);
     }
 
     /**
@@ -63,8 +63,8 @@ public final class BigDecimalUtil {
      * @param v2 除数
      * @return 两个参数的商
      */
-    public static double div(double v1, double v2) {
-        return div(v1, v2, DEF_DIV_SCALE);
+    public static BigDecimal divide(double v1, double v2) {
+        return divide(v1, v2, DEF_DIV_SCALE);
     }
 
     /**
@@ -75,13 +75,13 @@ public final class BigDecimalUtil {
      * @param scale 表示表示需要精确到小数点以后几位。
      * @return 两个参数的商
      */
-    public static double div(double v1, double v2, int scale) {
+    public static BigDecimal divide(double v1, double v2, int scale) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
         BigDecimal b1 = BigDecimal.valueOf(v1);
         BigDecimal b2 = BigDecimal.valueOf(v2);
-        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP);
     }
 
     /**
@@ -91,26 +91,35 @@ public final class BigDecimalUtil {
      * @param scale 小数点后保留几位
      * @return 四舍五入后的结果
      */
-    public static double round(double v, int scale) {
+    public static BigDecimal round(double v, int scale) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
         BigDecimal b = BigDecimal.valueOf(v);
-        BigDecimal one = new BigDecimal("1");
-        return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return b.divide(BigDecimal.ONE, scale, BigDecimal.ROUND_HALF_UP);
     }
 
     /**
-     * BigDecimal
+     * 被除数==0时 不抛异常的除法计算
      *
-     * @param v 参数1
-     * @param d 参数2
-     * @return
+     * @param v1 除数
+     * @param v2 被除数0 不抛出异常判定
+     * @return !0 被除数计算结果
      */
-    public static double calcu(double v, double d) {
-        if (v > 0) {
-            return div(v, d, 2);
+    public static BigDecimal divideZero(double v1, double v2) {
+        if (v2 != 0) {
+            return divide(v1, v2, 2);
         }
-        return 0.00;
+        return BigDecimal.valueOf(0.00);
+    }
+
+    /**
+     * 获取对应数值的BigDecimal对象
+     *
+     * @param v 获取的数值
+     * @return 对应数值
+     */
+    public static BigDecimal valueOf(double v) {
+        return BigDecimal.valueOf(v);
     }
 }
