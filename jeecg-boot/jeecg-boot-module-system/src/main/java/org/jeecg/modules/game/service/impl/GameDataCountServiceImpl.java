@@ -109,17 +109,17 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int doublePayPlayer = logAccountService.doublePayRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
 
 
-        return new GameDayDataCount().setPayAmount(BigDecimal.valueOf(sumPayAmount)).setLoginNum(loginNum)
-                .setPayNum(countPay).setArpu(BigDecimal.valueOf(BigDecimalUtil.calcu(sumPayAmount, loginNum)))
-                .setArppu(BigDecimal.valueOf(BigDecimalUtil.calcu(sumPayAmount, loginNum)))
-                .setPayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(countPay, loginNum)))
+        return new GameDayDataCount().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount)).setLoginNum(loginNum)
+                .setPayNum(countPay).setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum))
+                .setArppu(BigDecimalUtil.divideZero(sumPayAmount, loginNum))
+                .setPayRate(BigDecimalUtil.divideZero(countPay, loginNum))
                 .setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
-                .setAddPayAmount(BigDecimal.valueOf(registerPayAmount))
-                .setAddPayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(registerPayPlayer, registerPlayer)))
+                .setAddPayAmount(BigDecimalUtil.valueOf(registerPayAmount))
+                .setAddPayRate(BigDecimalUtil.divideZero(registerPayPlayer, registerPlayer))
                 .setDoublePay(doublePayPlayer)
-                .setDoublePayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(doublePayPlayer, registerPayPlayer)))
-                .setAddArpu(BigDecimal.valueOf(BigDecimalUtil.calcu(registerPayAmount, registerPlayer)))
-                .setAddArppu(BigDecimal.valueOf(BigDecimalUtil.calcu(registerPayAmount, registerPayPlayer)))
+                .setDoublePayRate(BigDecimalUtil.divideZero(doublePayPlayer, registerPayPlayer))
+                .setAddArpu(BigDecimalUtil.divideZero(registerPayAmount, registerPlayer))
+                .setAddArppu(BigDecimalUtil.divideZero(registerPayAmount, registerPayPlayer))
                 .setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId())
                 .setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
     }
