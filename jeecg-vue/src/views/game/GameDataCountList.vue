@@ -105,7 +105,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.payRate).toFixed(2);
+                                return parseFloat(record.payRate).toFixed(2) * 100;
                             }
                         },
                         {
@@ -114,7 +114,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.arpu).toFixed(2);
+                                return parseFloat(record.arpu).toFixed(2) * 100;
                             }
                         },
                         {
@@ -123,7 +123,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.arppu).toFixed(2);
+                                return parseFloat(record.arppu).toFixed(2) * 100;
                             }
                         }
                     ]
@@ -158,7 +158,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addPayRate).toFixed(2);
+                                return parseFloat(record.addPayRate).toFixed(2) * 100;
                             }
                         },
                         {
@@ -167,7 +167,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addArpu).toFixed(2);
+                                return parseFloat(record.addArpu).toFixed(2) * 100;
                             }
                         },
                         {
@@ -176,7 +176,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.addArppu).toFixed(2);
+                                return parseFloat(record.addArppu).toFixed(2) * 100;
                             }
                         },
                         {
@@ -191,7 +191,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: (text, record) => {
-                                return parseFloat(record.doublePayRate).toFixed(2);
+                                return parseFloat(record.doublePayRate).toFixed(2) * 100;
                             }
                         }
                     ]
