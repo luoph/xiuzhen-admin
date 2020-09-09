@@ -22,7 +22,7 @@
     </sql>
 
     <select id="gerLoginRegisterPlayerNum" resultType="int">
-        SELECT COUNT(a.`player_id`) AS counNum FROM ${logTable} a
+        SELECT COUNT( DISTINCT a.`player_id`) AS counNum FROM ${logTable} a
         WHERE a.`channel` = #{channel}
         AND a.`server_id` = #{serverId}
         AND a.`type` = #{type}
