@@ -112,7 +112,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         return new GameDayDataCount().setPayAmount(BigDecimal.valueOf(sumPayAmount)).setLoginNum(loginNum)
                 .setPayNum(countPay).setArpu(BigDecimal.valueOf(BigDecimalUtil.calcu(sumPayAmount, loginNum)))
                 .setArppu(BigDecimal.valueOf(BigDecimalUtil.calcu(sumPayAmount, loginNum)))
-                .setPayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(countPay, loginNum))).setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
+                .setPayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(countPay, loginNum)))
+                .setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
                 .setAddPayAmount(BigDecimal.valueOf(registerPayAmount))
                 .setAddPayRate(BigDecimal.valueOf(BigDecimalUtil.calcu(registerPayPlayer, registerPlayer)))
                 .setDoublePay(doublePayPlayer)
@@ -137,13 +138,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
             List<GameDataRemain> gameDataRemains = queryDataRemainCount(gameChannel, gameServer, formatDate, formatDate);
             gameDataRemainMapper.updateOrInsert(gameDataRemains);
-            // 留存更新
-            updateRemainTask(gameChannel, gameServer, formatDate);
 
             List<GameLtvCount> gameLtvCounts = queryDataLtvCount(gameChannel, gameServer, formatDate, formatDate);
             gameLtvCountMapper.updateOrInsert(gameLtvCounts);
-            // ltv更新
-            updateLtvTask(gameChannel, gameServer, formatDate);
         }
     }
 
