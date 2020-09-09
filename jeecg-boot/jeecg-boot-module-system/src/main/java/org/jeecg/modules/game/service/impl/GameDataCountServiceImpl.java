@@ -211,7 +211,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Override
     public void updateRemainTask(GameChannel gameChannel, GameServer gameServer, String countDate) {
         int betweenNatural = betweenNatural(gameServer, countDate);
-        for (int i = 1; i <= betweenNatural; i++) {
+        for (int i = 0; i <= betweenNatural; i++) {
             Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
             int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
             LambdaQueryWrapper<GameDataRemain> queryWrapper = Wrappers.<GameDataRemain>lambdaQuery().eq(GameDataRemain::getChannel, gameChannel.getSimpleName())
