@@ -223,10 +223,10 @@ export default {
         },
         selectTarget(e) {
             // 1-玩家 2-服务器
-            if (e.target.value == 1) {
+            if (e.target.value === 1) {
                 this.serverType = false;
                 this.playerType = true;
-            } else if (e.target.value == 2) {
+            } else if (e.target.value === 2) {
                 this.serverType = true;
                 this.playerType = false;
             }
@@ -234,9 +234,9 @@ export default {
             this.targetBody = '';
         },
         contentType(e) {
-            if (e.target.value == 1) {
+            if (e.target.value === 1) {
                 this.contentData = false;
-            } else if (e.target.value == 2) {
+            } else if (e.target.value === 2) {
                 this.contentData = true;
                 this.validatorRules.content = { rules: [{ required: true, message: '请添加附件!' }] };
                 this.validatorRules.content = '';
@@ -261,9 +261,11 @@ export default {
             });
         },
         inputTargetBody(formData) {
-            let a = this.form.getFieldValue('targetBody');
-            if (a !== null && a !== '') {
-                formData.targetBodyIds = a;
+            if(this.playerType){
+                let a = this.form.getFieldValue('targetBody');
+                if (a !== null && a !== '' && a !== undefined) {
+                    formData.targetBodyIds = a;
+                }
             }
         }
     }
