@@ -24,13 +24,16 @@
         <result column="d60_remain" property="d60Remain"/>
         <result column="d90_remain" property="d90Remain"/>
         <result column="d120_remain" property="d120Remain"/>
+        <result column="d180_remain" property="d180Remain"/>
+        <result column="d360_remain" property="d360Remain"/>
         <result column="count_date" property="countDate"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, d2_remain, d3_remain, d4_remain, d5_remain, d6_remain, d7_remain, d15_remain, d30_remain, d60_remain, d90_remain, d120_remain, count_date, create_time
+        id, channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, d2_remain, d3_remain, d4_remain, d5_remain, d6_remain,
+        d7_remain, d15_remain, d30_remain, d60_remain, d90_remain, d120_remain, d180_remain, d360_remain, count_date, create_time
     </sql>
 
     <select id="gameRemainCount" resultMap="BaseResultMap">

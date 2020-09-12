@@ -47,4 +47,4 @@ strategyConfig:
   tablePrefix:
   include:
     # 表名
-    - game_ltv_count
+    - game_count_ongoing

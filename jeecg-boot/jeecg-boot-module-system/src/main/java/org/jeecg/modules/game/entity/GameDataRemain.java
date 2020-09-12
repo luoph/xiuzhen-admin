@@ -122,6 +122,16 @@ public class GameDataRemain implements Serializable {
     private BigDecimal d120Remain;
 
     /**
+     * 120日留存率
+     */
+    private BigDecimal d180Remain;
+
+    /**
+     * 120日留存率
+     */
+    private BigDecimal d360Remain;
+
+    /**
      * 统计日期
      */
     private Date countDate;
