@@ -39,7 +39,7 @@
                 :columns="columns"
                 :dataSource="dataSource"
                 :pagination="ipagination"
-                :scroll="{ x: 2300, y: 800 }"
+                :scroll="{ x: 3000, y: 800 }"
                 @change="handleTableChange"
             ></a-table>
         </div>
