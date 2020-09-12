@@ -180,6 +180,11 @@ export default {
                     dataIndex: "name"
                 },
                 {
+                    title: "备注",
+                    align: "center",
+                    dataIndex: "remark"
+                },
+                {
                     title: "游戏编号",
                     align: "center",
                     dataIndex: "gameId",
@@ -223,24 +228,9 @@ export default {
                     dataIndex: "type_dictText"
                 },
                 {
-                    title: "最小版本号",
-                    align: "center",
-                    dataIndex: "minVersion"
-                },
-                {
-                    title: "最大版本号",
-                    align: "center",
-                    dataIndex: "maxVersion"
-                },
-                {
                     title: "开服时间",
                     align: "center",
                     dataIndex: "openTime"
-                },
-                {
-                    title: "创建时间",
-                    align: "center",
-                    dataIndex: "createTime"
                 },
                 {
                     title: "操作",
