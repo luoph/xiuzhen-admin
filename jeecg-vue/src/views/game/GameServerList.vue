@@ -158,7 +158,7 @@ export default {
             description: "游戏服配置",
             gameList: [],
             isorter: {
-                column: "position",
+                column: "id",
                 order: "asc"
             },
             // 表头
