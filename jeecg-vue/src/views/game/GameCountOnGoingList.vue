@@ -39,7 +39,7 @@
                 :columns="columns"
                 :dataSource="dataSource"
                 :pagination="ipagination"
-                :scroll="{ x: 1500, y: 800 }"
+                :scroll="{ x: 2300, y: 800 }"
                 @change="handleTableChange"
             ></a-table>
         </div>
@@ -77,7 +77,7 @@ export default {
                 {
                     title: "日期",
                     dataIndex: "countDate",
-                    width: "6%",
+                    width: "8%",
                     align: "center",
                     customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
@@ -87,13 +87,13 @@ export default {
                     title: "新增角色",
                     dataIndex: "registerNum",
                     align: "center",
-                    width: "5%"
+                    width: "6%"
                 },
                 {
                     title: "类型",
                     dataIndex: "type",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: function(text) {
                         return text === 1 ? '留存' : 'LTV';
                     }
@@ -102,7 +102,7 @@ export default {
                     title: "留存/LTV 1",
                     dataIndex: "c1",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c1, record.registerNum);
                     }
@@ -111,7 +111,7 @@ export default {
                     title: "留存/LTV 2",
                     dataIndex: "c2",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c2, record.registerNum);
                     }
@@ -120,7 +120,7 @@ export default {
                     title: "留存/LTV 3",
                     dataIndex: "c3",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c3, record.registerNum);
                     }
@@ -129,7 +129,7 @@ export default {
                     title: "留存/LTV 4",
                     dataIndex: "c4",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c4, record.registerNum);
                     }
@@ -138,7 +138,7 @@ export default {
                     title: "留存/LTV 5",
                     dataIndex: "c5",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c5, record.registerNum);
                     }
@@ -147,7 +147,7 @@ export default {
                     title: "留存/LTV 6",
                     dataIndex: "c6",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c6, record.registerNum);
                     }
@@ -156,7 +156,7 @@ export default {
                     title: "留存/LTV 7",
                     dataIndex: "c7",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c7, record.registerNum);
                     }
@@ -165,7 +165,7 @@ export default {
                     title: "留存/LTV 8",
                     dataIndex: "c8",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c8, record.registerNum);
                     }
@@ -174,7 +174,7 @@ export default {
                     title: "留存/LTV 9",
                     dataIndex: "c9",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c9, record.registerNum);
                     }
@@ -183,7 +183,7 @@ export default {
                     title: "留存/LTV 10",
                     dataIndex: "c10",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c10, record.registerNum);
                     }
@@ -192,7 +192,7 @@ export default {
                     title: "留存/LTV 11",
                     dataIndex: "c11",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c12, record.registerNum);
                     }
@@ -201,7 +201,7 @@ export default {
                     title: "留存/LTV 12",
                     dataIndex: "c12",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c12, record.registerNum);
                     }
@@ -210,7 +210,7 @@ export default {
                     title: "留存/LTV 13",
                     dataIndex: "c13",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c13, record.registerNum);
                     }
@@ -219,7 +219,7 @@ export default {
                     title: "留存/LTV 14",
                     dataIndex: "c14",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c14, record.registerNum);
                     }
@@ -228,7 +228,7 @@ export default {
                     title: "留存/LTV 15",
                     dataIndex: "c15",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c15, record.registerNum);
                     }
@@ -237,7 +237,7 @@ export default {
                     title: "留存/LTV 16",
                     dataIndex: "c16",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c16, record.registerNum);
                     }
@@ -246,7 +246,7 @@ export default {
                     title: "留存/LTV 17",
                     dataIndex: "c17",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c17, record.registerNum);
                     }
@@ -255,7 +255,7 @@ export default {
                     title: "留存/LTV 18",
                     dataIndex: "c18",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c18, record.registerNum);
                     }
@@ -264,7 +264,7 @@ export default {
                     title: "留存/LTV 19",
                     dataIndex: "c19",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c19, record.registerNum);
                     }
@@ -273,7 +273,7 @@ export default {
                     title: "留存/LTV 20",
                     dataIndex: "c20",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c20, record.registerNum);
                     }
@@ -282,7 +282,7 @@ export default {
                     title: "留存/LTV 21",
                     dataIndex: "c21",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c21, record.registerNum);
                     }
@@ -291,7 +291,7 @@ export default {
                     title: "留存/LTV 22",
                     dataIndex: "c22",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c22, record.registerNum);
                     }
@@ -300,7 +300,7 @@ export default {
                     title: "留存/LTV 23",
                     dataIndex: "c23",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c23, record.registerNum);
                     }
@@ -309,7 +309,7 @@ export default {
                     title: "留存/LTV 24",
                     dataIndex: "c24",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c24, record.registerNum);
                     }
@@ -318,7 +318,7 @@ export default {
                     title: "留存/LTV 25",
                     dataIndex: "c25",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c25, record.registerNum);
                     }
@@ -327,7 +327,7 @@ export default {
                     title: "留存/LTV 26",
                     dataIndex: "c26",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c26, record.registerNum);
                     }
@@ -336,7 +336,7 @@ export default {
                     title: "留存/LTV 27",
                     dataIndex: "c27",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c27, record.registerNum);
                     }
@@ -345,7 +345,7 @@ export default {
                     title: "留存/LTV 28",
                     dataIndex: "c28",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c28, record.registerNum);
                     }
@@ -354,7 +354,7 @@ export default {
                     title: "留存/LTV 29",
                     dataIndex: "c29",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c29, record.registerNum);
                     }
@@ -363,7 +363,7 @@ export default {
                     title: "留存/LTV 30",
                     dataIndex: "c30",
                     align: "center",
-                    width: "5%",
+                    width: "6%",
                     customRender: (text, record) => {
                         return this.countRate(record.c30, record.registerNum);
                     }
