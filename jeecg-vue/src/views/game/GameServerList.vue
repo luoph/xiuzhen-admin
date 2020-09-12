@@ -157,6 +157,10 @@ export default {
         return {
             description: "游戏服配置",
             gameList: [],
+            isorter: {
+                column: "position",
+                order: "asc"
+            },
             // 表头
             columns: [
                 {
@@ -170,7 +174,7 @@ export default {
                     }
                 },
                 {
-                    title: "区服Id",
+                    title: "区服id",
                     align: "center",
                     dataIndex: "id"
                 },
