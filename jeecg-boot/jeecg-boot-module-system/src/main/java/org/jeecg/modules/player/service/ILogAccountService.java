@@ -16,7 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ILogAccountService extends IService<LogAccount> {
     /**
-     * 登陆注册角色数
+     * 登录注册角色数
      *
      * @param channel
      * @param serverId

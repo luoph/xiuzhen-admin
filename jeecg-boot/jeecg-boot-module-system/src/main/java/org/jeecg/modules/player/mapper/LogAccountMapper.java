@@ -17,7 +17,7 @@ import org.jeecg.modules.player.entity.LogAccount;
  */
 public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
-     * 当天登陆/注册玩家数
+     * 当天登录/注册玩家数
      *
      * @param channel
      * @param serverId

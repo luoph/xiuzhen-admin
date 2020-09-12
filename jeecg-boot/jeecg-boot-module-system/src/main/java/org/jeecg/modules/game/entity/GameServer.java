@@ -61,10 +61,10 @@ public class GameServer extends BaseEntity {
     @ApiModelProperty(value = "服务器Host")
     private java.lang.String host;
     /**
-     * 登陆地址和端口
+     * 登录地址和端口
      */
-    @Excel(name = "登陆地址和端口", width = 15)
-    @ApiModelProperty(value = "登陆地址和端口")
+    @Excel(name = "登录地址和端口", width = 15)
+    @ApiModelProperty(value = "登录地址和端口")
     private java.lang.String loginUrl;
     /**
      * 服务器状态 0-正常 1-流畅 2-火爆 3-维护

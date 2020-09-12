@@ -39,7 +39,7 @@ public class GameDayDataCount implements Serializable {
     private Long id;
 
     /**
-     * 每天登陆玩家数
+     * 每天登录玩家数
      */
     private Integer loginNum;
 

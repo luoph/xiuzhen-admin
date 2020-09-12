@@ -112,7 +112,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         double sumPayAmount = payOrderService.sumPayAmount(gameChannel.getSimpleName(), gameServer.getId(), date);
         // 支付玩家数
         int countPay = payOrderService.countPayPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
-        // 当天登陆角色数
+        // 当天登录角色数
         int loginNum = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 2);
         // 当天注册角色数
         int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 1);
