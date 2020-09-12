@@ -85,6 +85,9 @@ public class GameDataCountController {
             // 验证通过
             return rsp(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 1);
         } else {
+            if (paramValidCheck) {
+                return Result.ok(page);
+            }
             IPage<GameDayDataCount> list = gameDayDataCountService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 //同步
@@ -121,6 +124,9 @@ public class GameDataCountController {
             // 验证通过
             return rsp(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 2);
         } else {
+            if (paramValidCheck) {
+                return Result.ok(page);
+            }
             IPage<GameDataRemain> list = gameDataRemainService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 // 同步
@@ -158,6 +164,9 @@ public class GameDataCountController {
             // 验证通过
             return rsp(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 3);
         } else {
+            if (paramValidCheck) {
+                return Result.ok(page);
+            }
             IPage<GameLtvCount> list = gameLtvCountService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 // 同步
@@ -232,6 +241,9 @@ public class GameDataCountController {
             page.setRecords(ongoings).setTotal(ongoings.size());
             return Result.ok(page);
         } else {
+            if (paramValidCheck) {
+                return Result.ok(page);
+            }
             IPage<GameCountOngoing> list = gameCountOngoingService.selectList(page, channelId, serverId, type, rangeDateBegin, rangeDateEnd);
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 // 同步
