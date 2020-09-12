@@ -183,7 +183,7 @@ public class LoginController {
 
 
     /**
-     * 登陆成功选择用户当前部门
+     * 登录成功选择用户当前部门
      *
      * @param user
      * @return

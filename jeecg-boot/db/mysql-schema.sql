@@ -128,7 +128,7 @@ CREATE TABLE `game_server` (
   `name` varchar(30) NOT NULL COMMENT '服务器名字',
   `host` varchar(50) NOT NULL COMMENT '服务器路径',
   `port` int(8) NOT NULL COMMENT '服务器端口',
-  `login_url` varchar(200) DEFAULT NULL COMMENT '登陆地址和端口',
+  `login_url` varchar(200) DEFAULT NULL COMMENT '登录地址和端口',
   `status` int(3) NOT NULL COMMENT '服务器状态 0-正常 1-流畅 2-火爆 3-维护',
   `recommend` int(3) DEFAULT NULL COMMENT '推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服',
   `warning` varchar(50) DEFAULT '' COMMENT '出错提示信息',
