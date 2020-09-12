@@ -87,4 +87,24 @@ public interface IGameDataCountService {
      * 统计更新
      */
     void doJobDataCountUpdate();
+
+
+    /**
+     * 30天连续统计
+     *
+     * @return
+     */
+    List<GameCountOngoing> countOngoings();
+
+    /**
+     * 30日当天实时查询
+     *
+     * @param type
+     * @param gameChannel
+     * @param gameServer
+     * @param rangeDateBegin
+     * @param rangeDateEnd
+     * @return
+     */
+    List<GameCountOngoing> queryCountOnGoing(int type, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 }

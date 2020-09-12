@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.game.entity.*;
+import org.jeecg.modules.game.mapper.GameCountOngoingMapper;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
 import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
 import org.jeecg.modules.game.mapper.GameLtvCountMapper;
@@ -63,6 +64,10 @@ public class GameDataCountController {
     private GameDataRemainMapper gameDataRemainMapper;
     @Autowired
     private IGameChannelService gameChannelService;
+    @Autowired
+    private IGameCountOngoingService gameCountOngoingService;
+    @Resource
+    private GameCountOngoingMapper gameCountOngoingMapper;
 
 
     @GetMapping(value = "/dayCount")
@@ -201,5 +206,40 @@ public class GameDataCountController {
             page.setRecords(gameLtvCounts).setTotal(gameLtvCounts.size());
         }
         return Result.ok(page);
+    }
+
+    @GetMapping(value = "/ongoing")
+    public Result<?> queryGameCountOngoing(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
+                                           @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
+                                           @RequestParam(value = "type", defaultValue = "0") Integer type,
+                                           @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+                                           @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                                           @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+                                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                           HttpServletRequest req) {
+
+        Page<GameCountOngoing> page = new Page<>(pageNo, pageSize);
+        boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
+            // 直接取数据 实时的
+            GameServer gameServer = gameServerService.getById(serverId);
+            GameChannel gameChannel = gameChannelService.getById(channelId);
+            ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
+            if (!responseCode.isSuccess() || type <= 0) {
+                return Result.error(responseCode.getDesc());
+            }
+            List<GameCountOngoing> ongoings = gameDataCountService.queryCountOnGoing(type, gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+            page.setRecords(ongoings).setTotal(ongoings.size());
+            return Result.ok(page);
+        } else {
+            IPage<GameCountOngoing> list = gameCountOngoingService.selectList(page, channelId, serverId, type, rangeDateBegin, rangeDateEnd);
+            if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
+                // 同步
+                List<GameCountOngoing> countOngoings = gameDataCountService.countOngoings();
+                list.setRecords(countOngoings).setTotal(countOngoings.size());
+                gameCountOngoingMapper.insertOrUpdateList(countOngoings);
+            }
+            return Result.ok(list);
+        }
     }
 }

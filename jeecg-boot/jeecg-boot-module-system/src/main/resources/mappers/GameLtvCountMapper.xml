@@ -23,12 +23,15 @@
         <result column="d60_amount" property="d60Amount"/>
         <result column="d90_amount" property="d90Amount"/>
         <result column="d120_amount" property="d120Amount"/>
+        <result column="d180_amount" property="d180Amount"/>
+        <result column="d360_amount" property="d360Amount"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id,channel, server_id, count_date, register_num, d1_amount, d2_amount, d3_amount, d4_amount, d5_amount, d6_amount, d7_amount, d14_amount, d21_amount, d30_amount, d60_amount, d90_amount, d120_amount, create_time
+        id,channel, server_id, count_date, register_num, d1_amount, d2_amount, d3_amount, d4_amount, d5_amount, d6_amount, d7_amount,
+        d14_amount, d21_amount, d30_amount, d60_amount, d90_amount, d120_amount, d180_amount, d360_amount,  create_time
     </sql>
 
     <select id="getGameLtvCount" resultMap="BaseResultMap">

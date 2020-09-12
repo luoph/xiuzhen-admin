@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.GameCountOngoingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameCountOngoing">
+        <id column="id" property="id" />
+        <result column="count_date" property="countDate" />
+        <result column="type" property="type" />
+        <result column="register_num" property="registerNum" />
+        <result column="channel" property="channel" />
+        <result column="server_id" property="serverId" />
+        <result column="c1" property="c1" />
+        <result column="c2" property="c2" />
+        <result column="c3" property="c3" />
+        <result column="c4" property="c4" />
+        <result column="c5" property="c5" />
+        <result column="c6" property="c6" />
+        <result column="c7" property="c7" />
+        <result column="c8" property="c8" />
+        <result column="c9" property="c9" />
+        <result column="c10" property="c10" />
+        <result column="c11" property="c11" />
+        <result column="c12" property="c12" />
+        <result column="c13" property="c13" />
+        <result column="c14" property="c14" />
+        <result column="c15" property="c15" />
+        <result column="c16" property="c16" />
+        <result column="c17" property="c17" />
+        <result column="c18" property="c18" />
+        <result column="c19" property="c19" />
+        <result column="c20" property="c20" />
+        <result column="c21" property="c21" />
+        <result column="c22" property="c22" />
+        <result column="c23" property="c23" />
+        <result column="c24" property="c24" />
+        <result column="c25" property="c25" />
+        <result column="c26" property="c26" />
+        <result column="c27" property="c27" />
+        <result column="c28" property="c28" />
+        <result column="c29" property="c29" />
+        <result column="c30" property="c30" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, count_date, type, register_num, channel, server_id, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, create_time
+    </sql>
+
+    <insert id="insertOrUpdateList" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+        INSERT into `game_count_ongoing`
+        (count_date, `type`, register_num, channel, server_id, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, create_time)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.countDate},
+            #{item.type},
+            #{item.registerNum},
+            #{item.channel},
+            #{item.serverId},
+            #{item.c1},
+            #{item.c2},
+            #{item.c3},
+            #{item.c4},
+            #{item.c5},
+            #{item.c6},
+            #{item.c7},
+            #{item.c8},
+            #{item.c9},
+            #{item.c10},
+            #{item.c11},
+            #{item.c12},
+            #{item.c13},
+            #{item.c14},
+            #{item.c15},
+            #{item.c16},
+            #{item.c17},
+            #{item.c18},
+            #{item.c19},
+            #{item.c20},
+            #{item.c21},
+            #{item.c22},
+            #{item.c23},
+            #{item.c24},
+            #{item.c25},
+            #{item.c26},
+            #{item.c27},
+            #{item.c28},
+            #{item.c29},
+            #{item.c30},
+            now())
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        register_num = values(register_num),
+        c1 = values(c1),
+        c2 = values(c2),
+        c3 = values(c3),
+        c4 = values(c4),
+        c5 = values(c5),
+        c6 = values(c6),
+        c7 = values(c7),
+        c8 = values(c8),
+        c9 = values(c9),
+        c10 = values(c10),
+        c11 = values(c11),
+        c12 = values(c12),
+        c13 = values(c13),
+        c14 = values(c14),
+        c15 = values(c15),
+        c16 = values(c16),
+        c17 = values(c17),
+        c18 = values(c18),
+        c19 = values(c19),
+        c20 = values(c20),
+        c21 = values(c21),
+        c22 = values(c22),
+        c23 = values(c23),
+        c24 = values(c24),
+        c25 = values(c25),
+        c26 = values(c26),
+        c27 = values(c27),
+        c28 = values(c28),
+        c29 = values(c29),
+        c30 = values(c30)
+    </insert>
+</mapper>

@@ -111,6 +111,16 @@ public class GameLtvCount implements Serializable {
      */
     private BigDecimal d120Amount;
 
+    /**
+     * 第12天充值
+     */
+    private BigDecimal d180Amount;
+
+    /**
+     * 第13天充值
+     */
+    private BigDecimal d360Amount;
+
 
     /**
      * 创建时间
