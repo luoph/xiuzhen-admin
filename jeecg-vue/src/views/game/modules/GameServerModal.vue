@@ -3,16 +3,22 @@
         <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器名字">
-                    <a-input placeholder="请输入服务器名字" v-decorator="['name', validatorRules.name]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服id">
+                    <a-input-number :disabled="isEdit" placeholder="请输入区服id" v-decorator="['id', validatorRules.id]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服名字">
+                    <a-input placeholder="请输入区服名字" v-decorator="['name', validatorRules.name]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服备注">
+                    <a-input placeholder="请输入区服备注" v-decorator="['remark', validatorRules.remark]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
                     <a-select placeholder="请选择游戏编号" v-model="model.gameId">
                         <a-select-option v-for="game in gameList" :key="game.name" :value="game.id"> {{ game.name }}({{ game.id }}) </a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器Host">
-                    <a-input placeholder="请输入服务器Host" v-decorator="['host', validatorRules.host]" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Host">
+                    <a-input placeholder="请输入区服Host" v-decorator="['host', validatorRules.host]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="Websocket地址">
                     <a-input placeholder="请输入Websocket地址" v-decorator="['loginUrl', validatorRules.loginUrl]" />
@@ -20,8 +26,8 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="GM地址">
                     <a-input v-decorator="['gmUrl', validatorRules.gmUrl]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器状态">
-                    <a-select placeholder="请选择服务器状态" v-decorator="['status', {}]">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服状态">
+                    <a-select placeholder="请选择区服状态" v-decorator="['status', {}]">
                         <a-select-option :value="0">正常</a-select-option>
                         <a-select-option :value="1">流畅</a-select-option>
                         <a-select-option :value="2">火爆</a-select-option>
@@ -46,25 +52,25 @@
                     <a-input-number v-decorator="['maxVersion', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库Host">
-                    <a-input placeholder="请输入数据库Host" v-decorator="['dbHost', validatorRules.dbHost]" />
+                    <a-input :disabled="isEdit" placeholder="请输入数据库Host" v-decorator="['dbHost', validatorRules.dbHost]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库端口">
-                    <a-input-number v-decorator="['dbPort', validatorRules.dbPort]" />
+                    <a-input-number :disabled="isEdit" v-decorator="['dbPort', validatorRules.dbPort]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库用户名">
-                    <a-input placeholder="请输入数据库用户名" v-decorator="['dbUser', validatorRules.dbUser]" />
+                    <a-input :disabled="isEdit" placeholder="请输入数据库用户名" v-decorator="['dbUser', validatorRules.dbUser]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库密码">
-                    <a-input-password placeholder="请输入数据库密码" v-decorator="['dbPassword', validatorRules.dbPassword]" />
+                    <a-input-password :disabled="isEdit" placeholder="请输入数据库密码" v-decorator="['dbPassword', validatorRules.dbPassword]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">
-                    <a-input placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]" />
+                    <a-input :disabled="isEdit" placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="排序字段">
                     <a-input-number v-decorator="['position', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器类型">
-                    <a-select v-decorator="['type', {}]" placeholder="请选择服务器类型">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服类型">
+                    <a-select v-decorator="['type', {}]" placeholder="请选择区服类型">
                         <a-select-option :value="0">混服</a-select-option>
                         <a-select-option :value="1">专服</a-select-option>
                     </a-select>
@@ -78,8 +84,11 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
                     <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器开服时间">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['openTime', {}]" />
+                </a-form-item>
+                <a-form-item v-if="isEdit" :labelCol="labelCol" :wrapperCol="wrapperCol" label="创建时间">
+                    <a-date-picker :disabled="isEdit" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['createTime', {}]" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -100,6 +109,7 @@ export default {
         return {
             title: "操作",
             visible: false,
+            isEdit: false,
             model: {},
             gameList: [],
             labelCol: {
@@ -114,12 +124,14 @@ export default {
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                gameId: { rules: [{ required: true, message: "请选择游戏Id!" }] },
-                name: { rules: [{ required: true, message: "请输入服务器名字!" }] },
+                id: { rules: [{ required: true, message: "请输入区服id" }] },
+                gameId: { rules: [{ required: true, message: "请选择游戏id!" }] },
+                name: { rules: [{ required: true, message: "请输入区服名字!" }] },
+                remark: { rules: [{ required: true, message: "请输入区服备注!" }] },
                 host: { rules: [{ required: true, message: "请输入前端HOST!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入登录地址!" }] },
-                status: { rules: [{ required: true, message: "请输入服务器状态!" }] },
-                type: { rules: [{ required: true, message: "请输入服务器类型!" }] },
+                status: { rules: [{ required: true, message: "请输入区服状态!" }] },
+                type: { rules: [{ required: true, message: "请输入区服类型!" }] },
                 dbHost: { rules: [{ required: true, message: "请输入数据库Host!" }] },
                 dbUser: { rules: [{ required: true, message: "请输入数据库帐号!" }] },
                 dbPassword: { rules: [{ required: true, message: "请输入数据库密码!" }] },
@@ -158,11 +170,14 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
+            this.isEdit = this.model.id != null;
             this.$nextTick(() => {
                 this.form.setFieldsValue(
                     pick(
                         this.model,
+                        "id",
                         "name",
+                        "remark",
                         "host",
                         "loginUrl",
                         "gmUrl",
@@ -185,6 +200,7 @@ export default {
                 // 时间格式化
                 this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
+                this.form.setFieldsValue({ createTime: this.model.createTime ? moment(this.model.createTime) : null });
             });
         },
         close() {

@@ -46,6 +46,14 @@ public class GameServer extends BaseEntity {
     @Excel(name = "服务器名字", width = 15)
     @ApiModelProperty(value = "服务器名字")
     private java.lang.String name;
+
+    /**
+     * 服务器备注
+     */
+    @Excel(name = "服务器备注", width = 15)
+    @ApiModelProperty(value = "服务器备注")
+    private java.lang.String remark;
+
     /**
      * 服务器路径
      */
