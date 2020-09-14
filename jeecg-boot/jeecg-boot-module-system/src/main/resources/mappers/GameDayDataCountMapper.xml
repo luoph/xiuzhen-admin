@@ -31,15 +31,15 @@
         id, channel, server_id, login_num, pay_amount, pay_num, pay_rate, arpu, arppu, add_num, add_pay_amount, add_pay_num, add_pay_rate, add_arpu, add_arppu, double_pay, double_pay_rate, count_date, create_time
     </sql>
 
-    <insert id="updateOrInsert" useGeneratedKeys="true" keyProperty="id" parameterType="list">
+    <insert id="updateOrInsert" parameterType="list">
         replace into `game_day_data_count`
-        (id, channel, server_id, login_num, pay_amount, pay_num, pay_rate, arpu, arppu, add_num,
+        (channel, server_id, login_num, pay_amount, pay_num, pay_rate, arpu, arppu, add_num,
         add_pay_amount, add_pay_num, add_pay_rate, add_arpu, add_arppu, double_pay, double_pay_rate,
         count_date, create_time
         )
         VALUES
         <foreach collection="list" item="it" separator=",">
-            (#{it.id}, #{it.channel},#{it.serverId},#{it.loginNum},
+            (#{it.channel},#{it.serverId},#{it.loginNum},
             #{it.payAmount},#{it.payNum},#{it.payRate},#{it.arpu},#{it.arppu},#{it.addNum},
             #{it.addPayAmount},#{it.addPayNum},#{it.addPayRate},
             #{it.addArpu},#{it.addArppu},#{it.doublePay},
