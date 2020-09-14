@@ -86,14 +86,14 @@
         ]]>
    </select>
 
-    <insert id="updateOrInsert" useGeneratedKeys="true" keyProperty="id" parameterType="list">
+    <insert id="updateOrInsert" parameterType="list">
         replace into `game_data_remain`(
-        id, channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, count_date,
+        channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, count_date,
         create_time
         )
         VALUES
         <foreach collection="list" item="it" separator=",">
-            (#{it.id}, #{it.channel},#{it.serverId},#{it.registerNum},
+            ( #{it.channel},#{it.serverId},#{it.registerNum},
             #{it.payNum},#{it.freeNum},#{it.payRemain},
             #{it.freeRemain},#{it.countDate},now())
         </foreach>
