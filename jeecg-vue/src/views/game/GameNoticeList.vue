@@ -9,7 +9,7 @@
                             <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type" />
                         </a-form-item>
                     </a-col>
-                     <a-col :md="4" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="公告ID">
                             <a-input placeholder="请输入ID" v-model="queryParam.id"></a-input>
                         </a-form-item>

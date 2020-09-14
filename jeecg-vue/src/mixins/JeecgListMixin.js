@@ -77,7 +77,7 @@ export const JeecgListMixin = {
             }
             // 查询条件
             var params = this.getQueryParams();
-            if (this.serverIdOption && !params.serverId || params.serverId < 0) {
+            if ((this.serverIdOption && !params.serverId) || params.serverId < 0) {
                 this.$message.error("请选择区服Id");
                 return;
             }
@@ -126,7 +126,6 @@ export const JeecgListMixin = {
             });
             return str;
         },
-
         onSelectChange(selectedRowKeys, selectionRows) {
             this.selectedRowKeys = selectedRowKeys;
             this.selectionRows = selectionRows;
@@ -144,6 +143,51 @@ export const JeecgListMixin = {
         searchReset() {
             this.queryParam = {};
             this.loadData(1);
+        },
+        doBatch: function(batchUrl, ids) {
+            var that = this;
+            that.loading = true;
+            getAction(batchUrl, {
+                ids: ids
+            })
+                .then(res => {
+                    if (res.success) {
+                        that.$message.success(res.message);
+                        that.loadData();
+                        that.onClearSelected();
+                    } else {
+                        that.$message.warning(res.message);
+                    }
+                })
+                .finally(() => {
+                    that.loading = false;
+                });
+        },
+        batchAction: function(batchUrl, showAlert, alertTitle, alertMessage) {
+            if (!batchUrl) {
+                this.$message.error("请设置batchUrl属性!");
+                return;
+            }
+            if (this.selectedRowKeys.length <= 0) {
+                this.$message.warning("请选择一条记录！");
+                return;
+            }
+
+            var ids = "";
+            for (var a = 0; a < this.selectedRowKeys.length; a++) {
+                ids += this.selectedRowKeys[a] + ",";
+            }
+
+            var that = this;
+            if (showAlert) {
+                this.$confirm({
+                    title: alertTitle,
+                    content: alertMessage,
+                    onOk: that.doBatch(batchUrl, ids)
+                });
+            } else {
+                that.doBatch(batchUrl, ids);
+            }
         },
         batchDel: function() {
             if (!this.url.deleteBatch) {

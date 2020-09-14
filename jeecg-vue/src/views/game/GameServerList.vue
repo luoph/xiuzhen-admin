@@ -37,23 +37,8 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">
-                            <a-form-item label="Websocket地址">
-                                <a-input placeholder="Websocket地址" v-model="queryParam.loginUrl"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
                             <a-form-item label="数据库Host">
                                 <a-input placeholder="数据库Host" v-model="queryParam.dbHost"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="数据库名">
-                                <a-input placeholder="数据库名" v-model="queryParam.dbName"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="顺序">
-                                <a-input placeholder="顺序" v-model="queryParam.position"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -80,7 +65,11 @@
             </a-upload>-->
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"> <a-icon type="delete" />删除 </a-menu-item>
+                    <a-menu-item key="1" @click="updateActivity"> <a-icon type="sync" />刷新活动配置</a-menu-item>
+                    <a-menu-item key="2" @click="updateSetting"> <a-icon type="sync" />刷新游戏配置</a-menu-item>
+                    <a-menu-item key="3" @click="refreshOnline"> <a-icon type="sync" />刷新在线人数</a-menu-item>
+                    <a-menu-item key="4" @click="startMaintain"> <a-icon type="alert" />开启维护!!!</a-menu-item>
+                    <a-menu-item key="5" @click="stopMaintain"> <a-icon type="alert" />结束维护!!!</a-menu-item>
                 </a-menu>
                 <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
             </a-dropdown>
@@ -104,6 +93,7 @@
                 :pagination="ipagination"
                 :loading="loading"
                 @change="handleTableChange"
+                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -247,6 +237,10 @@ export default {
                 list: "game/gameServer/list",
                 delete: "game/gameServer/delete",
                 deleteBatch: "game/gameServer/deleteBatch",
+                updateActivity: "game/gameServer/updateActivity",
+                updateSetting: "game/gameServer/updateSetting",
+                startMaintain: "game/gameServer/startMaintain",
+                stopMaintain: "game/gameServer/stopMaintain",
                 // exportXlsUrl: "game/gameServer/exportXls",
                 // importExcelUrl: "game/gameServer/importExcel",
                 // 游戏列表
@@ -293,6 +287,21 @@ export default {
         },
         onDateOk(value) {
             console.log(value);
+        },
+        updateActivity: function() {
+            this.batchAction(this.url.updateActivity, false);
+        },
+        updateSetting: function() {
+            this.batchAction(this.url.updateSetting, false);
+        },
+        refreshOnline: function() {
+            this.batchAction(this.url.refreshOnline, false);
+        },
+        startMaintain: function() {
+            this.batchAction(this.url.startMaintain, true, "确定开启维护状态？", "开启维护状态将导致所有玩家掉线");
+        },
+        stopMaintain: function() {
+            this.batchAction(this.url.stopMaintain, true, "确定关闭维护状态？", "关闭维护状态将允许玩家上线");
         }
     }
 };
