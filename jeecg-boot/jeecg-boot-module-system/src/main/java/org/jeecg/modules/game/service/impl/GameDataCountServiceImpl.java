@@ -373,7 +373,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
     private void countOngoingsByDays(GameChannel gameChannel, GameServer gameServer, Date countDate,
                                      int betweenNatural, int type, Map<String, GameCountOngoing> ongoingMap) {
-        for (int i = 0; i < betweenNatural; i++) {
+        for (int i = 0; i <= betweenNatural; i++) {
             Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
             int leftDays = DateUtils.daysBetweenNatural(nextDate, countDate);
             GameCountOngoing keyObj = new GameCountOngoing().setChannel(gameChannel.getSimpleName())
