@@ -98,7 +98,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 1",
+                    title: "1日留存/LTV",
                     dataIndex: "c1",
                     align: "center",
                     width: "120",
@@ -107,7 +107,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 2",
+                    title: "2日留存/LTV",
                     dataIndex: "c2",
                     align: "center",
                     width: "120",
@@ -116,7 +116,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 3",
+                    title: "3日留存/LTV",
                     dataIndex: "c3",
                     align: "center",
                     width: "120",
@@ -125,7 +125,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 4",
+                    title: "4日留存/LTV",
                     dataIndex: "c4",
                     align: "center",
                     width: "120",
@@ -134,7 +134,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 5",
+                    title: "5日留存/LTV",
                     dataIndex: "c5",
                     align: "center",
                     width: "120",
@@ -143,7 +143,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 6",
+                    title: "6日留存/LTV",
                     dataIndex: "c6",
                     align: "center",
                     width: "120",
@@ -152,7 +152,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 7",
+                    title: "7日留存/LTV",
                     dataIndex: "c7",
                     align: "center",
                     width: "120",
@@ -161,7 +161,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 8",
+                    title: "8日留存/LTV",
                     dataIndex: "c8",
                     align: "center",
                     width: "120",
@@ -170,7 +170,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 9",
+                    title: "9日留存/LTV",
                     dataIndex: "c9",
                     align: "center",
                     width: "120",
@@ -179,7 +179,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 10",
+                    title: "10日留存/LTV",
                     dataIndex: "c10",
                     align: "center",
                     width: "120",
@@ -188,7 +188,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 11",
+                    title: "11日留存/LTV",
                     dataIndex: "c11",
                     align: "center",
                     width: "120",
@@ -197,7 +197,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 12",
+                    title: "12日留存/LTV",
                     dataIndex: "c12",
                     align: "center",
                     width: "120",
@@ -206,7 +206,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 13",
+                    title: "13日留存/LTV",
                     dataIndex: "c13",
                     align: "center",
                     width: "120",
@@ -215,7 +215,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 14",
+                    title: "14日留存/LTV",
                     dataIndex: "c14",
                     align: "center",
                     width: "120",
@@ -224,7 +224,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 15",
+                    title: "15日留存/LTV",
                     dataIndex: "c15",
                     align: "center",
                     width: "120",
@@ -233,7 +233,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 16",
+                    title: "16日留存/LTV",
                     dataIndex: "c16",
                     align: "center",
                     width: "120",
@@ -242,7 +242,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 17",
+                    title: "17日留存/LTV",
                     dataIndex: "c17",
                     align: "center",
                     width: "120",
@@ -251,7 +251,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 18",
+                    title: "18日留存/LTV",
                     dataIndex: "c18",
                     align: "center",
                     width: "120",
@@ -260,7 +260,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 19",
+                    title: "19日留存/LTV",
                     dataIndex: "c19",
                     align: "center",
                     width: "120",
@@ -269,7 +269,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 20",
+                    title: "20日留存/LTV",
                     dataIndex: "c20",
                     align: "center",
                     width: "120",
@@ -278,7 +278,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 21",
+                    title: "21日留存/LTV",
                     dataIndex: "c21",
                     align: "center",
                     width: "120",
@@ -287,7 +287,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 22",
+                    title: "22日留存/LTV",
                     dataIndex: "c22",
                     align: "center",
                     width: "120",
@@ -296,7 +296,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 23",
+                    title: "23日留存/LTV",
                     dataIndex: "c23",
                     align: "center",
                     width: "120",
@@ -305,7 +305,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 24",
+                    title: "24日留存/LTV",
                     dataIndex: "c24",
                     align: "center",
                     width: "120",
@@ -314,7 +314,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 25",
+                    title: "25日留存/LTV",
                     dataIndex: "c25",
                     align: "center",
                     width: "120",
@@ -323,7 +323,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 26",
+                    title: "26日留存/LTV",
                     dataIndex: "c26",
                     align: "center",
                     width: "120",
@@ -332,7 +332,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 27",
+                    title: "27日留存/LTV",
                     dataIndex: "c27",
                     align: "center",
                     width: "120",
@@ -341,7 +341,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 28",
+                    title: "28日留存/LTV",
                     dataIndex: "c28",
                     align: "center",
                     width: "120",
@@ -350,7 +350,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 29",
+                    title: "29日留存/LTV",
                     dataIndex: "c29",
                     align: "center",
                     width: "120",
@@ -359,7 +359,7 @@ export default {
                     }
                 },
                 {
-                    title: "留存/LTV 30",
+                    title: "30日留存/LTV",
                     dataIndex: "c30",
                     align: "center",
                     width: "120",

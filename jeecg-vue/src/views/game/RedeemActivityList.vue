@@ -135,56 +135,67 @@ export default {
                 {
                     title: "活动Id",
                     align: "center",
+                    width: 80,
                     dataIndex: "id"
                 },
                 {
                     title: "激活码名称",
-                    align: "center",
+                    align: "left",
+                    width: 120,
                     dataIndex: "name"
                 },
                 {
                     title: "礼包说明",
-                    align: "center",
+                    align: "left",
+                    width: 180,
                     dataIndex: "summary"
                 },
                 {
                     title: "限制类型",
                     align: "center",
+                    width: 80,
                     dataIndex: "limitType"
                 },
                 {
                     title: "分组id",
                     align: "center",
+                    width: 80,
                     dataIndex: "groupId"
                 },
                 {
                     title: "限制渠道id",
                     align: "center",
+                    width: 120,
                     dataIndex: "channelIds"
                 },
                 {
                     title: "限制区服id",
                     align: "center",
+                    width: 120,
                     dataIndex: "serverIds"
                 },
                 {
                     title: "活动状态",
                     align: "center",
+                    width: 80,
                     dataIndex: "status"
                 },
                 {
                     title: "奖励",
-                    align: "center",
+                    align: "left",
+                    width: 240,
                     dataIndex: "reward"
                 },
                 {
                     title: "开始时间",
                     align: "center",
+                    width: 180,
                     dataIndex: "startTime",
                 },
                 {
                     title: "结束时间",
                     align: "center",
+                    width: 180,
                     dataIndex: "endTime",
                 },
                 {

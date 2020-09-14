@@ -97,6 +97,9 @@
                         </a-menu>
                     </a-dropdown>
                 </span>
+                <span slot="ipTags" slot-scope="text, record">
+                    <a-tag v-for="tag in text.split(',')" :key="tag" color="green">{{ tag }}</a-tag>
+                </span>
             </a-table>
         </div>
         <!-- table区域-end -->
@@ -150,70 +153,72 @@ export default {
                 {
                     title: "渠道id",
                     align: "center",
+                    width: 80,
                     dataIndex: "id"
                 },
                 {
                     title: "渠道名称",
                     align: "center",
+                    width: 100,
                     dataIndex: "name"
                 },
                 {
                     title: "唯一标识",
                     align: "center",
+                    width: 100,
                     dataIndex: "simpleName"
                 },
                 {
                     title: "游戏编号",
                     align: "center",
+                    width: 120,
                     dataIndex: "gameId",
                     customRender: text => {
                         return filterGameIdText(this.gameList, text);
                     }
                 },
                 {
-                    title: "排序字段",
-                    align: "center",
-                    dataIndex: "position"
-                },
-                {
                     title: "公告id",
                     align: "center",
+                    width: 80,
                     dataIndex: "noticeId"
                 },
                 {
                     title: "版本号",
                     align: "center",
+                    width: 80,
                     dataIndex: "versionCode"
                 },
                 {
                     title: "版本名",
                     align: "center",
+                    width: 120,
                     dataIndex: "versionName"
                 },
                 {
                     title: "版本更新时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "versionUpdateTime"
                 },
                 {
                     title: "IP白名单",
-                    align: "center",
-                    dataIndex: "ipWhitelist"
+                    align: "left",
+                    width: 240,
+                    dataIndex: "ipWhitelist",
+                    scopedSlots: { customRender: "ipTags" }
                 },
                 {
                     title: "大渠道描述",
                     align: "center",
+                    width: 200,
                     dataIndex: "remark"
-                },
-                {
-                    title: "扩展字段",
-                    align: "center",
-                    dataIndex: "extra"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
+                    width: 200,
                     scopedSlots: { customRender: "action" }
                 }
             ],

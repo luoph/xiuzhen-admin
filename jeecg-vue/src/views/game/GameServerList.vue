@@ -180,12 +180,12 @@ export default {
                 },
                 {
                     title: "名字",
-                    align: "center",
+                    align: "left",
                     dataIndex: "name"
                 },
                 {
                     title: "备注",
-                    align: "center",
+                    align: "left",
                     dataIndex: "remark"
                 },
                 {
@@ -198,12 +198,12 @@ export default {
                 },
                 {
                     title: "服务器Host",
-                    align: "center",
+                    align: "left",
                     dataIndex: "host"
                 },
                 {
                     title: "Websocket地址",
-                    align: "center",
+                    align: "left",
                     dataIndex: "loginUrl"
                 },
                 {
@@ -218,12 +218,12 @@ export default {
                 },
                 {
                     title: "GM地址",
-                    align: "center",
+                    align: "left",
                     dataIndex: "gmUrl"
                 },
                 {
                     title: "顺序",
-                    align: "center",
+                    align: "left",
                     dataIndex: "position"
                 },
                 {

@@ -122,17 +122,17 @@ export default {
                 },
                 {
                     title: "key",
-                    align: "center",
+                    align: "left",
                     dataIndex: "dictKey"
                 },
                 {
                     title: "value",
-                    align: "center",
+                    align: "left",
                     dataIndex: "dictValue"
                 },
                 {
                     title: "描述",
-                    align: "center",
+                    align: "left",
                     dataIndex: "remark"
                 },
                 {

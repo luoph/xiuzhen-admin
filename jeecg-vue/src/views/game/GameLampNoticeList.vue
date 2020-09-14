@@ -142,17 +142,19 @@ export default {
                 },
                 {
                     title: "标题",
-                    align: "center",
+                    align: "left",
+                    width: 240,
                     dataIndex: "noticeTitle"
                 },
                 {
                     title: "正文",
-                    align: "center",
+                    align: "left",
+                    width: 400,
                     dataIndex: "noticeText"
                 },
                 {
                     title: "投放服务器",
-                    align: "center",
+                    align: "left",
                     dataIndex: "gameServerList"
                 },
                 {
@@ -186,7 +188,7 @@ export default {
                     dataIndex: "action",
                     align: "center",
                     fixed: "right",
-                    width: 147,
+                    width: 140,
                     scopedSlots: { customRender: "action" }
                 }
             ],

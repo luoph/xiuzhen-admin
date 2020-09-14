@@ -150,7 +150,7 @@ export default {
                 },
                 {
                     title: "活动名称",
-                    align: "center",
+                    align: "left",
                     dataIndex: "name"
                 },
                 {
