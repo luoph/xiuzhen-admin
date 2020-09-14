@@ -68,7 +68,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :scroll="{ x: 1500, y: 800 }"
+                :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
             ></a-table>
         </div>
@@ -114,17 +114,20 @@ export default {
                 },
                 {
                     title: '标题',
-                    align: 'center',
+                    align: 'left',
+                    width: 120,
                     dataIndex: 'title'
                 },
                 {
                     title: '描述',
-                    align: 'center',
+                    align: 'left',
+                    width: 360,
                     dataIndex: 'remark'
                 },
                 {
                     title: '类型',
                     align: 'center',
+                    width: 80,
                     dataIndex: 'emailType',
                     customRender: function(text) {
                         return text == 1 ? '无附件' : '有附件';
@@ -133,11 +136,13 @@ export default {
                 {
                     title: '附件',
                     align: 'center',
+                    width: 240,
                     dataIndex: 'content'
                 },
                 {
                     title: '状态',
                     align: 'center',
+                    width: 80,
                     dataIndex: 'validState',
                     customRender: function(text) {
                         return text == 1 ? '有效' : '无效';
@@ -146,6 +151,7 @@ export default {
                 {
                     title: '目标类型',
                     align: 'center',
+                    width: 80,
                     dataIndex: 'targetBodyType',
                     customRender: function(text) {
                         return text == 1 ? '玩家' : '全服';
@@ -153,40 +159,29 @@ export default {
                 },
                 {
                     title: '目标主体',
-                    align: 'center',
+                    align: 'left',
+                    width: 80,
                     dataIndex: 'targetBodyIds'
                 },
                 {
                     title: '生效时间',
                     align: 'center',
                     dataIndex: 'sendTime',
-                    customRender: function(text) {
-                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-                    }
                 },
                 {
                     title: '开始时间',
                     align: 'center',
                     dataIndex: 'validStarTime',
-                    customRender: function(text) {
-                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-                    }
                 },
                 {
                     title: '结束时间',
                     align: 'center',
                     dataIndex: 'validEndTime',
-                    customRender: function(text) {
-                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-                    }
                 },
                 {
                     title: '创建时间',
                     align: 'center',
                     dataIndex: 'createTime',
-                    customRender: function(text) {
-                        return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-                    }
                 }
             ],
             serverType: false,

@@ -175,42 +175,49 @@ export default {
                 },
                 {
                     title: "玩家id",
-                    align: "center",
+                    align: "left",
+                    width: 80,
                     dataIndex: "playerId"
                 },
                 {
                     title: "区服Id",
                     align: "center",
+                    width: 80,
                     dataIndex: "serverId"
                 },
                 {
                     title: "支付订单号",
                     align: "center",
+                    width: 200,
                     dataIndex: "orderId"
                 },
-                {
-                    title: "平台订单号",
-                    align: "center",
-                    dataIndex: "queryId"
-                },
+                // {
+                //     title: "平台订单号",
+                //     align: "center",
+                //     dataIndex: "queryId"
+                // },
                 {
                     title: "支付金额",
                     align: "center",
+                    width: 80,
                     dataIndex: "payAmount"
                 },
                 {
                     title: "订单金额",
                     align: "center",
+                    width: 80,
                     dataIndex: "orderAmount"
                 },
                 {
                     title: "折扣金额",
                     align: "center",
+                    width: 80,
                     dataIndex: "discountAmount"
                 },
                 {
                     title: "订单状态",
                     align: "center",
+                    width: 80,
                     dataIndex: "orderStatus",
                     // <!-- 0-已提交,未支付, 1-已支付, 2-已转发,未回复, 3-金币发放中, 4-充值成功,金币已发放 -->
                     customRender: status => {
@@ -232,18 +239,21 @@ export default {
                 {
                     title: "渠道",
                     align: "center",
+                    width: 80,
                     dataIndex: "channel"
                 },
                 {
                     title: "商品id",
                     align: "center",
+                    width: 80,
                     dataIndex: "productId"
                 },
-                {
-                    title: "ip地址",
-                    align: "center",
-                    dataIndex: "remoteIp"
-                },
+                // {
+                //     title: "ip地址",
+                //     align: "center",
+                //     width: 80,
+                //     dataIndex: "remoteIp"
+                // },
                 // {
                 //     title: "透传参数",
                 //     align: "center",
@@ -252,11 +262,13 @@ export default {
                 {
                     title: "支付时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "payTime"
                 },
                 {
                     title: "发货时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "sendTime"
                 },
                 // {
@@ -267,12 +279,14 @@ export default {
                 {
                     title: "创建时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "createTime"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
+                    width: 80,
                     scopedSlots: { customRender: "action" }
                 }
             ],

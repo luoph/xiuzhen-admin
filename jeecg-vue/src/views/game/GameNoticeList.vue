@@ -142,41 +142,49 @@ export default {
                 {
                     title: "公告ID",
                     align: "center",
+                    width: 80,
                     dataIndex: "id"
                 },
                 {
                     title: "公告类型",
                     align: "center",
+                    width: 80,
                     dataIndex: "noticeType_dictText"
                 },
                 {
                     title: "标题",
-                    align: "center",
+                    align: "left",
+                    width: 240,
                     dataIndex: "title"
                 },
                 {
                     title: "公告内容",
-                    align: "center",
+                    align: "left",
+                    width: 540,
                     dataIndex: "content"
                 },
                 {
                     title: "开始时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "beginTime"
                 },
                 {
                     title: "结束时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "endTime"
                 },
                 {
                     title: "状态",
                     align: "center",
+                    width: 80,
                     dataIndex: "status_dictText"
                 },
                 {
                     title: "滚动公告间隔(秒)",
                     align: "center",
+                    width: 80,
                     dataIndex: "intervalSeconds"
                 },
                 {
