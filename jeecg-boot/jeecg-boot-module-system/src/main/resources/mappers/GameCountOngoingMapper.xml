@@ -50,10 +50,13 @@
 
     <insert id="insertOrUpdateList" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
         INSERT into `game_count_ongoing`
-        (count_date, `type`, register_num, channel, server_id, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28, c29, c30, create_time)
+        (id, count_date, `type`, register_num, channel, server_id, c1, c2, c3, c4, c5, c6, c7, c8, c9,
+        c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28,
+        c29, c30, create_time)
         values
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.countDate},
+            (#{item.id},
+            #{item.countDate},
             #{item.type},
             #{item.registerNum},
             #{item.channel},

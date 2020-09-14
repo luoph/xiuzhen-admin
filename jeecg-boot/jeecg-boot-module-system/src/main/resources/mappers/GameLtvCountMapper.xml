@@ -58,11 +58,11 @@
 
     <insert id="updateOrInsert" useGeneratedKeys="true" keyProperty="id" parameterType="list">
         replace into `game_ltv_count`(
-            channel, server_id, count_date, register_num, create_time
+        id, channel, server_id, count_date, register_num, create_time
         )
         VALUES
         <foreach collection="list" item="it" separator=",">
-            ( #{it.channel},#{it.serverId},#{it.countDate},
+            (#{it.id}, #{it.channel},#{it.serverId},#{it.countDate},
             #{it.registerNum},now())
         </foreach>
     </insert>
