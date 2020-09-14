@@ -52,7 +52,7 @@ public class GameNotice extends BaseEntity {
      */
     @Excel(name = "公告内容", width = 15)
     @ApiModelProperty(value = "公告内容")
-    private java.lang.Object content;
+    private java.lang.String content;
     /**
      * 开始时间
      */

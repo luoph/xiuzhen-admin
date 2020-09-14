@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -89,6 +90,11 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @ApiOperation(value = "游戏公告-编辑", notes = "游戏公告-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameNotice gameNotice) {
+        // 验证html
+        if (StringUtils.containsIgnoreCase(gameNotice.getContent(), "<br>")
+                || StringUtils.containsIgnoreCase(gameNotice.getContent(), "<br />")) {
+            return Result.error("请清除<br>标签后重试");
+        }
         gameNoticeService.updateById(gameNotice);
         return Result.ok("编辑成功!");
     }
