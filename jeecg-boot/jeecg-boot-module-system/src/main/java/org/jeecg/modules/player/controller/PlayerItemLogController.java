@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * @author jeecg-boot
@@ -60,6 +61,10 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
         QueryWrapper<PlayerItemLog> queryWrapper = QueryGenerator.initQueryWrapper(playerItemLog, req.getParameterMap());
         queryWrapper.orderByDesc("create_time");
         Page<PlayerItemLog> page = new Page<>(pageNo, pageSize);
+        if (playerItemLog.getPlayerId() == null || playerItemLog.getServerId() == null || playerItemLog.getItemId() == null || playerItemLog.getSyncTime() == null) {
+            page.setRecords(new ArrayList<>()).setTotal(0);
+            return Result.ok(page);
+        }
         IPage<PlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
