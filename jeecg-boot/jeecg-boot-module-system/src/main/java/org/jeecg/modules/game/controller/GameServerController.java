@@ -84,7 +84,9 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
             // 增加在线人数统计
             if (record.getOnlineStat() == 1) {
                 DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(record.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
-                record.setOnlineNum(response.getData());
+                if (response != null) {
+                    record.setOnlineNum(response.getData());
+                }
             }
         }
         return Result.ok(pageList);
