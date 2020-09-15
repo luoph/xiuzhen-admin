@@ -6,8 +6,7 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @SelectChannel="selectChannel"
-                                             @SelectServer="selectServer"></game-channel-server>
+                        <game-channel-server @SelectChannel="selectChannel" @SelectServer="selectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="统计类型">
@@ -19,8 +18,7 @@
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']"
-                                            @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -43,7 +41,7 @@
                 :columns="columns"
                 :dataSource="dataSource"
                 :pagination="ipagination"
-                :scroll="{ x: 'max-content'}"
+                :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
             ></a-table>
         </div>
@@ -380,8 +378,7 @@ export default {
     },
     computed: {},
     methods: {
-        initDictConfig() {
-        },
+        initDictConfig() {},
         selectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },
@@ -420,10 +417,9 @@ export default {
             }
             let rate = r > 0 ? parseFloat(n / r).toFixed(4) : parseFloat(0).toFixed(2);
             if (t === 1) {
-                rate *= 100;
-                return rate + "%";
-            }else{
-                parseFloat(rate).toFixed(2)
+                return parseFloat(rate * 100).toFixed(2) + "%";
+            } else {
+                parseFloat(rate).toFixed(2);
                 return rate;
             }
         }
