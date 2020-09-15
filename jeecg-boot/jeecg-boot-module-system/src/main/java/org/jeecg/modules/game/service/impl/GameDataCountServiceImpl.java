@@ -3,8 +3,6 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.entity.*;
@@ -417,7 +415,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             if (betweenNatural <= 0) {
                 continue;
             }
-            int[] types = new int[]{1, 2};
+            int[] types = new int[]{1, 2}; // 1-留存 2-ltv
             for (int type : types) {
                 countOngoingsByDays(gameChannel, gameServer, countDate, betweenNatural, type, ongoingMap);
             }
