@@ -183,7 +183,9 @@ export const JeecgListMixin = {
                 this.$confirm({
                     title: alertTitle,
                     content: alertMessage,
-                    onOk: that.doBatch(batchUrl, ids)
+                    onOk: function() {
+                        that.doBatch(batchUrl, ids)
+                    }
                 });
             } else {
                 that.doBatch(batchUrl, ids);
