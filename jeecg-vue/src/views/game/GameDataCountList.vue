@@ -105,6 +105,9 @@ export default {
                             dataIndex: "payRate",
                             align: "center",
                             width: "5%",
+                            customRender: function(text) {
+                                return text + '%';
+                            }
                         },
                         {
                             title: "ARPU",
@@ -146,6 +149,9 @@ export default {
                             dataIndex: "addPayRate",
                             align: "center",
                             width: "5%",
+                            customRender: function(text) {
+                                return text + '%';
+                            }
                         },
                         {
                             title: "新增ARPU",
@@ -170,6 +176,9 @@ export default {
                             dataIndex: "doublePayRate",
                             align: "center",
                             width: "5%",
+                            customRender: function(text) {
+                                return text + '%';
+                            }
                         }
                     ]
                 }

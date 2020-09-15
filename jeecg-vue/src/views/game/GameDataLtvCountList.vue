@@ -240,7 +240,10 @@ export default {
             });
         },
         countRate: function(n, r) {
-            return r > 0 ? parseFloat(n / r).toFixed(2) : parseFloat(0).toFixed(2);
+            if(n === null || n === undefined){
+                return '--'
+            }
+            return  r > 0 ? parseFloat(n / r).toFixed(2) : parseFloat(0).toFixed(2);
         }
     }
 };
