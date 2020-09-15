@@ -206,7 +206,7 @@ export default {
                     width: 60,
                     dataIndex: "onlineNum",
                     customRender: text => {
-                        if (!text) {
+                        if (text === null || text === "" || text === undefined) {
                             return "N/A";
                         }
                         return text;
