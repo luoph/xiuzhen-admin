@@ -1,10 +1,16 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.youai.commons.model.Response;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -15,4 +21,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameServer> implements IGameServerService {
 
+    @Override
+    public Map<Long, Response> gameServerRequest(long[] serverIds, String requestUrl) {
+        Map<Long, Response> responseMap = new HashMap<>();
+        for (long serverId : serverIds) {
+            GameServer gameServer = getById(serverId);
+            try {
+                Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + requestUrl), Response.class);
+                responseMap.put(serverId, response);
+            } catch (Exception e) {
+                log.error("gameServerRequest error, serverId:" + serverId, e);
+            }
+        }
+        return responseMap;
+    }
 }

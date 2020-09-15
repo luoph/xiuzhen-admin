@@ -66,9 +66,6 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">
                     <a-input :disabled="isEdit" placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="排序字段">
-                    <a-input-number v-decorator="['position', {}]" />
-                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服类型">
                     <a-select v-decorator="['type', {}]" placeholder="请选择区服类型">
                         <a-select-option :value="0">混服</a-select-option>
@@ -192,7 +189,6 @@ export default {
                         "dbUser",
                         "dbPassword",
                         "dbName",
-                        "position",
                         "type",
                         "pid",
                         "extra"
