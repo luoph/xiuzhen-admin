@@ -415,12 +415,12 @@ export default {
             if (n === null || n === undefined) {
                 return "--";
             }
-            let rate = r > 0 ? parseFloat(n / r).toFixed(4) : parseFloat(0).toFixed(2);
+
+            let rate = r > 0 ? parseFloat(n / r) : 0;
             if (t === 1) {
-                return parseFloat(rate * 100).toFixed(2) + "%";
+                return Number(parseFloat(rate * 100).toFixed(2)) + "%";
             } else {
-                parseFloat(rate).toFixed(2);
-                return rate;
+                return Number(parseFloat(rate).toFixed(2));
             }
         }
     }
