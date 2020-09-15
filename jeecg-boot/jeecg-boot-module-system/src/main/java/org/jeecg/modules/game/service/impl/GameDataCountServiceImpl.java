@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
@@ -174,13 +175,19 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
             String f = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATETIME_PATTERN);
             List<GameDayDataCount> gameDayDataCounts = queryDateRangeDataCount(gameChannel, gameServer, f, formatDate);
-            gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
+            if (CollUtil.isNotEmpty(gameDayDataCounts)) {
+                gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
+            }
 
             List<GameDataRemain> gameDataRemains = queryDataRemainCount(gameChannel, gameServer, f, formatDate);
-            gameDataRemainMapper.updateOrInsert(gameDataRemains);
+            if (CollUtil.isNotEmpty(gameDataRemains)) {
+                gameDataRemainMapper.updateOrInsert(gameDataRemains);
+            }
 
             List<GameLtvCount> gameLtvCounts = queryDataLtvCount(gameChannel, gameServer, f, formatDate);
-            gameLtvCountMapper.updateOrInsert(gameLtvCounts);
+            if (CollUtil.isNotEmpty(gameLtvCounts)) {
+                gameLtvCountMapper.updateOrInsert(gameLtvCounts);
+            }
         }
         List<GameCountOngoing> gameCountOngoings = countOngoings();
         gameCountOngoingMapper.insertOrUpdateList(gameCountOngoings);

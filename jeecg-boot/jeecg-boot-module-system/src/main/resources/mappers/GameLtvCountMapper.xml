@@ -47,7 +47,7 @@
                         SELECT COUNT(DISTINCT(a.`player_id`)) FROM  ${logTable} AS a
                         WHERE a. `type` = 1
                         AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                        AND a.`channel` = @channel AND a.`server_id` = @serverId),0) AS register_num,
+                        AND a.`channel` = @channel AND a.`server_id` = @serverId),0) AS register_num
 
         ]]>
     </select>
