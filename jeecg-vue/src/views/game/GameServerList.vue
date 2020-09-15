@@ -67,7 +67,6 @@
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="updateActivity"> <a-icon type="sync" />刷新活动配置</a-menu-item>
                     <a-menu-item key="2" @click="updateSetting"> <a-icon type="sync" />刷新游戏配置</a-menu-item>
-                    <a-menu-item key="3" @click="refreshOnline"> <a-icon type="sync" />刷新在线人数</a-menu-item>
                     <a-menu-item key="4" @click="startMaintain"> <a-icon type="alert" />开启维护!!!</a-menu-item>
                     <a-menu-item key="5" @click="stopMaintain"> <a-icon type="alert" />结束维护!!!</a-menu-item>
                 </a-menu>
@@ -122,9 +121,8 @@
 <script>
 import GameServerModal from "./modules/GameServerModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { initDictOptions, filterDictText } from "@/components/dict/JDictSelectUtil";
 import { filterObj } from "@/utils/util";
-import { getAction, putAction, httpAction } from "@/api/manage";
+import { getAction } from "@/api/manage";
 
 function filterGameIdText(options, text) {
     if (options instanceof Array) {
@@ -157,7 +155,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: 60,
+                    width: 40,
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -166,21 +164,25 @@ export default {
                 {
                     title: "区服id",
                     align: "center",
+                    width: 80,
                     dataIndex: "id"
                 },
                 {
                     title: "名字",
                     align: "left",
+                    width: 100,
                     dataIndex: "name"
                 },
                 {
                     title: "备注",
                     align: "left",
+                    width: 100,
                     dataIndex: "remark"
                 },
                 {
                     title: "游戏编号",
                     align: "center",
+                    width: 100,
                     dataIndex: "gameId",
                     customRender: text => {
                         return filterGameIdText(this.gameList, text);
@@ -189,47 +191,62 @@ export default {
                 {
                     title: "服务器Host",
                     align: "left",
+                    width: 120,
                     dataIndex: "host"
                 },
                 {
                     title: "Websocket地址",
                     align: "left",
+                    width: 120,
                     dataIndex: "loginUrl"
+                },
+                {
+                    title: "在线人数",
+                    align: "center",
+                    width: 60,
+                    dataIndex: "onlineNum",
+                    customRender: text => {
+                        if (!text) {
+                            return "N/A";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "状态",
                     align: "center",
+                    width: 80,
                     dataIndex: "status_dictText"
                 },
                 {
                     title: "推荐标识",
                     align: "center",
+                    width: 80,
                     dataIndex: "recommend_dictText"
                 },
                 {
                     title: "GM地址",
                     align: "left",
+                    width: 120,
                     dataIndex: "gmUrl"
-                },
-                {
-                    title: "顺序",
-                    align: "left",
-                    dataIndex: "position"
                 },
                 {
                     title: "类型",
                     align: "center",
+                    width: 60,
                     dataIndex: "type_dictText"
                 },
                 {
                     title: "开服时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "openTime"
                 },
                 {
                     title: "操作",
-                    dataIndex: "action",
                     align: "center",
+                    width: 80,
+                    dataIndex: "action",
                     scopedSlots: { customRender: "action" }
                 }
             ],
@@ -239,6 +256,7 @@ export default {
                 deleteBatch: "game/gameServer/deleteBatch",
                 updateActivity: "game/gameServer/updateActivity",
                 updateSetting: "game/gameServer/updateSetting",
+                getOnlineNum: "game/gameServer/getOnlineNum",
                 startMaintain: "game/gameServer/startMaintain",
                 stopMaintain: "game/gameServer/stopMaintain",
                 // exportXlsUrl: "game/gameServer/exportXls",
@@ -293,9 +311,6 @@ export default {
         },
         updateSetting: function() {
             this.batchAction(this.url.updateSetting, false);
-        },
-        refreshOnline: function() {
-            this.batchAction(this.url.refreshOnline, false);
         },
         startMaintain: function() {
             this.batchAction(this.url.startMaintain, true, "确定开启维护状态？", "开启维护状态将导致所有玩家掉线");

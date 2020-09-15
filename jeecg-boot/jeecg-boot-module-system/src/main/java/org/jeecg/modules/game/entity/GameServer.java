@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -134,12 +135,22 @@ public class GameServer extends BaseEntity {
     @Excel(name = "GM地址", width = 15)
     @ApiModelProperty(value = "GM地址")
     private java.lang.String gmUrl;
+
     /**
-     * 排序字段
+     * 是否统计在线人数
      */
-    @Excel(name = "排序字段", width = 15)
-    @ApiModelProperty(value = "排序字段")
-    private java.lang.Integer position;
+    @Excel(name = "是否统计在线人数", width = 15)
+    @ApiModelProperty(value = "是否统计在线人数")
+    private java.lang.Integer onlineStat;
+
+    /**
+     * 在线人数
+     */
+    @TableField(exist = false)
+    @Excel(name = "在线人数", width = 15)
+    @ApiModelProperty(value = "在线人数")
+    private java.lang.Integer onlineNum;
+
     /**
      * 服务器类型 0-混服 1-专服
      */
