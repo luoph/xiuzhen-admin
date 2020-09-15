@@ -45,9 +45,11 @@
                         IFNULL(@channel := #{channel}, '') AS channel,
                         IFNULL(@serverId := #{serverId}, 0) AS server_id,
 
-                     IFNULL(@register_num := (SELECT COUNT(DISTINCT(a.`player_id`)) FROM `player_register_info` AS a
-                            WHERE a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                             AND a.`channel` =@channel AND a.`server_id` = @serverId),0) AS register_num,
+                     IFNULL(@register_num := (
+                        SELECT COUNT(DISTINCT(a.`player_id`)) FROM  ${logTable} AS a
+                        WHERE a. `type` = 1
+                        AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+                        AND a.`channel` = @channel AND a.`server_id` = @serverId),0) AS register_num,
 
                      IFNULL(@pay_num := (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `pay_order` o
                         LEFT JOIN `player_register_info` p ON o.`player_id` = p.`player_id`
