@@ -59,19 +59,15 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+            <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync">刷新活动配置</a-button>
+            <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">刷新游戏配置</a-button>
+            <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger" icon="alert">开启维护!!!</a-button>
+            <a-button :disabled="selectedRowKeys.length <= 0" @click="stopMaintain" v-has="'game:server:admin'" type="danger" icon="alert">结束维护!!!</a-button>
+
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏服配置')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload>-->
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="updateActivity"> <a-icon type="sync" />刷新活动配置</a-menu-item>
-                    <a-menu-item key="2" @click="updateSetting"> <a-icon type="sync" />刷新游戏配置</a-menu-item>
-                    <a-menu-item key="4" @click="startMaintain"> <a-icon type="alert" />开启维护!!!</a-menu-item>
-                    <a-menu-item key="5" @click="stopMaintain"> <a-icon type="alert" />结束维护!!!</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /> </a-button>
-            </a-dropdown>
         </div>
 
         <!-- table区域-begin -->
