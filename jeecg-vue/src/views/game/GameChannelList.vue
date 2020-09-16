@@ -43,12 +43,9 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-popconfirm title="刷新服务器列表" @confirm="updateServerConfig()">
-                <a-button type="primary" icon="update">刷新服务器列表</a-button>
-            </a-popconfirm>
-            <a-popconfirm title="刷新IP白名单配置" @confirm="updateIpWhitelistConfig()">
-                <a-button type="primary" icon="update">刷新IP白名单配置</a-button>
-            </a-popconfirm>
+            <a-button @click="updateServerConfig" type="primary" icon="sync">刷新服务器列表</a-button>
+            <a-button @click="updateIpWhitelistConfig" type="primary" icon="sync">刷新IP白名单配置</a-button>
+
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -196,12 +193,6 @@ export default {
                     dataIndex: "versionName"
                 },
                 {
-                    title: "版本更新时间",
-                    align: "center",
-                    width: 120,
-                    dataIndex: "versionUpdateTime"
-                },
-                {
                     title: "IP白名单",
                     align: "left",
                     width: 240,
@@ -213,6 +204,12 @@ export default {
                     align: "center",
                     width: 200,
                     dataIndex: "remark"
+                },
+                {
+                    title: "版本更新时间",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "versionUpdateTime"
                 },
                 {
                     title: "操作",
@@ -271,26 +268,36 @@ export default {
         },
         updateServerConfig() {
             // 刷新服务器列表
-            console.log("开始刷新服务器列表");
-            getAction(this.url.updateServerConfigUrl).then(res => {
-                if (res.success) {
-                    this.$message.success("服务器列表刷新成功");
-                } else {
-                    this.$message.error("服务器列表刷新失败");
+            let that = this;
+            this.$confirm({
+                title: "是否刷新区服列表？",
+                content: "点击确定刷新区服列表",
+                onOk: function() {
+                    getAction(that.url.updateServerConfigUrl).then(res => {
+                        if (res.success) {
+                            that.$message.success("刷新区服列表刷新成功");
+                        } else {
+                            that.$message.error("刷新区服列表刷新失败");
+                        }
+                    });
                 }
-                console.log("刷新服务器列表完成", res);
             });
         },
         updateIpWhitelistConfig() {
             // 刷新IP白名单配置
-            console.log("开始刷新IP白名单配置");
-            getAction(this.url.updateIpWhitelistConfigUrl).then(res => {
-                if (res.success) {
-                    this.$message.success("IP白名单配置刷新成功");
-                } else {
-                    this.$message.error("IP白名单配置刷新失败");
+            let that = this;
+            this.$confirm({
+                title: "是否IP白名单配置？",
+                content: "点击确定IP白名单配置",
+                onOk: function() {
+                    getAction(that.url.updateIpWhitelistConfigUrl).then(res => {
+                        if (res.success) {
+                            that.$message.success("IP白名单配置刷新成功");
+                        } else {
+                            that.$message.error("IP白名单配置刷新失败");
+                        }
+                    });
                 }
-                console.log("刷新IP白名单配置完成", res);
             });
         }
     }
