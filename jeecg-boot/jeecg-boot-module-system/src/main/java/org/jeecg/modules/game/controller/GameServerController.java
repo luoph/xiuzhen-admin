@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.okhttp.OkHttpHelper;
@@ -181,6 +182,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-开启维护状态")
     @ApiOperation(value = "游戏服配置-开启维护状态", notes = "游戏服配置-开启维护状态")
     @GetMapping(value = "/startMaintain")
+    @RequiresPermissions("game:server:admin")
     public Result<?> startMaintain(@RequestParam(name = "ids") String ids) {
         Map<Long, Response> responseMap = gameServerService.gameServerRequest(StrUtil.splitToLong(ids, ","), startMaintainUrl);
         log.info("startMaintain response:{}", responseMap);
@@ -189,6 +191,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     @AutoLog(value = "游戏服配置-关闭维护状态")
     @ApiOperation(value = "游戏服配置-关闭维护状态", notes = "游戏服配置-关闭维护状态")
+    @RequiresPermissions("game:server:admin")
     @GetMapping(value = "/stopMaintain")
     public Result<?> stopMaintain(@RequestParam(name = "ids") String ids) {
         Map<Long, Response> responseMap = gameServerService.gameServerRequest(StrUtil.splitToLong(ids, ","), stopMaintainUrl);
