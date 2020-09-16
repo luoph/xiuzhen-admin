@@ -195,7 +195,7 @@ export default {
                 {
                     title: "IP白名单",
                     align: "left",
-                    width: 240,
+                    width: 280,
                     dataIndex: "ipWhitelist",
                     scopedSlots: { customRender: "ipTags" }
                 },
