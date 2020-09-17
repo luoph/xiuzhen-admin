@@ -1,16 +1,16 @@
 <template>
     <div>
         <a-row :gutter="24">
-            <a-col :span="10">
+            <a-col :span="12">
                 <a-form-item label="渠道名称" :label-col="{ span: 10 }" :wrapper-col="{ span: 16 }">
-                    <a-select placeholder="请选择渠道" v-model="channelId" :initialValue="channelId" @change="selectChannel">
+                    <a-select placeholder="请选择渠道" v-model="channelId" :initialValue="channelId" @change="onSelectChannel">
                         <a-select-option v-for="channel in channelList" :key="channel.name" :value="channel.id">{{ channel.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
             </a-col>
-            <a-col :span="13">
+            <a-col :span="12">
                 <a-form-item label="服务器名" :label-col="{ span: 12 }" :wrapper-col="{ span: 16 }">
-                    <a-select placeholder="请选择区服" v-model="serverId" :initialValue="serverId" @change="selectServer">
+                    <a-select placeholder="请选择区服" v-model="serverId" :initialValue="serverId" @change="onSelectServer">
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import { getAction } from '@/api/manage';
+import { getAction } from "@/api/manage";
 
 export default {
-    name: 'GameChannelServer',
+    name: "GameChannelServer",
     components: {
         getAction
     },
@@ -41,8 +41,8 @@ export default {
             // 服务器数据
             serverList: [],
             url: {
-                channelUrl: 'game/gameChannel/list',
-                channelServerUrl: 'game/gameChannelServer/channelWithServer'
+                channelUrl: "game/gameChannel/list",
+                channelServerUrl: "game/gameChannelServer/channelWithServer"
             }
         };
     },
@@ -58,19 +58,21 @@ export default {
             });
         },
         // select的事件绑定
-        selectChannel(value) {
-            this.$emit('SelectChannel', value);
+        onSelectChannel(value) {
+            // 触发父容器的 selectChannel 方法
+            this.$emit("selectChannel", value);
             this.channelId = value;
         },
-        selectServer(value) {
-            this.$emit('SelectServer', value);
+        onSelectServer(value) {
+            // 触发父容器的 selectServer 方法
+            this.$emit("selectServer", value);
         }
     },
     watch: {
         channelId: function() {
             this.serverList = [];
             this.getChannelServerlist();
-            this.serverId = this.serverList.length > 0 ? this.serverList[0].id : '';
+            this.serverId = this.serverList.length > 0 ? this.serverList[0].id : "";
         }
     }
 };

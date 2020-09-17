@@ -6,7 +6,7 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @SelectChannel="selectChannel" @SelectServer="selectServer"></game-channel-server>
+                        <game-channel-server @onSelectChannel="onSelectChannel" @selectServer="onSelectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期"><a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/></a-form-item>
@@ -208,10 +208,10 @@ export default {
     computed: {},
     methods: {
         initDictConfig() {},
-        selectChannel: function(channelId) {
+        onSelectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },
-        selectServer: function(serverId) {
+        onSelectServer: function(serverId) {
             this.queryParam.serverId = serverId;
         },
         onDateChange: function(value, dateStr) {

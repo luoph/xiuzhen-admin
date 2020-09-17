@@ -1,15 +1,7 @@
 <template>
-    <a-select
-    mode="multiple"
-    :default-value="[]"
-    style="width: 100%"
-    placeholder="请选择指定的服务器"
-    @change="handleChange"
-    >
-    <a-select-option v-for="server in serverList" 
-        :key="server.name" :value="server.id">{{ server.name }}
-    </a-select-option>
-  </a-select>
+    <a-select mode="multiple" :default-value="[]" style="width: 100%" placeholder="请选择指定的服务器" @change="handleChange">
+        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.name }} </a-select-option>
+    </a-select>
 </template>
 <script>
 import { getAction } from "@/api/manage";
@@ -21,13 +13,13 @@ export default {
     mounted() {
         this.initServerList();
     },
-    data(){
+    data() {
         return {
             serverList: [],
             url: {
                 serverUrl: "game/gameServer/list"
             }
-        }
+        };
     },
     methods: {
         initServerList() {
@@ -40,6 +32,6 @@ export default {
             this.$emit("changeSelect", value);
         }
     }
-}
+};
 </script>
 <style lang="less" scoped></style>
