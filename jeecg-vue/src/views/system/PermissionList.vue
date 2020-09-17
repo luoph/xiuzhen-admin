@@ -20,6 +20,7 @@
                 :pagination="false"
                 :dataSource="dataSource"
                 :loading="loading"
+                @expand="expandSubmenu"
                 :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
                 <span slot="action" slot-scope="text, record">
@@ -66,7 +67,7 @@
 
 <script>
 import PermissionModal from "./modules/PermissionModal";
-import { getPermissionList } from "@/api/api";
+import { getSystemMenuList, getSystemSubmenu } from "@/api/api";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import PermissionDataRuleList from "./PermissionDataRuleList";
 import JEllipsis from "@/components/jeecg/JEllipsis";
@@ -152,12 +153,21 @@ export default {
     methods: {
         loadData() {
             this.dataSource = [];
-            getPermissionList().then(res => {
+            getSystemMenuList().then(res => {
                 if (res.success) {
                     console.log(res.result);
                     this.dataSource = res.result;
                 }
             });
+        },
+        expandSubmenu(expanded, record) {
+            if (expanded) {
+                getSystemSubmenu({ parentId: record.id }).then(res => {
+                    if (res.success) {
+                        record.children = res.result;
+                    }
+                });
+            }
         },
         // 打开数据规则编辑
         handleDataRule(record) {
