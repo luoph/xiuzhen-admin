@@ -6,13 +6,11 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @SelectChannel="selectChannel"
-                                             @SelectServer="selectServer"></game-channel-server>
+                        <game-channel-server @onSelectChannel="onSelectChannel" @selectServer="onSelectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']"
-                                            @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -92,7 +90,7 @@ export default {
                             title: "当天付费金额",
                             dataIndex: "payAmount",
                             align: "center",
-                            width: "5%",
+                            width: "5%"
                         },
                         {
                             title: "当天付费角色数",
@@ -106,20 +104,20 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: function(text) {
-                                return text + '%';
+                                return text + "%";
                             }
                         },
                         {
                             title: "ARPU",
                             dataIndex: "arpu",
                             align: "center",
-                            width: "5%",
+                            width: "5%"
                         },
                         {
                             title: "ARPPU",
                             dataIndex: "arppu",
                             align: "center",
-                            width: "5%",
+                            width: "5%"
                         }
                     ]
                 },
@@ -136,7 +134,7 @@ export default {
                             title: "新增付费",
                             dataIndex: "addPayAmount",
                             align: "center",
-                            width: "5%",
+                            width: "5%"
                         },
                         {
                             title: "新增付费角色数",
@@ -150,14 +148,14 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: function(text) {
-                                return text + '%';
+                                return text + "%";
                             }
                         },
                         {
                             title: "新增ARPU",
                             dataIndex: "addArpu",
                             align: "center",
-                            width: "5%",
+                            width: "5%"
                         },
                         {
                             title: "新增ARPPU",
@@ -177,7 +175,7 @@ export default {
                             align: "center",
                             width: "5%",
                             customRender: function(text) {
-                                return text + '%';
+                                return text + "%";
                             }
                         }
                     ]
@@ -191,12 +189,11 @@ export default {
     },
     computed: {},
     methods: {
-        initDictConfig() {
-        },
-        selectChannel: function(channelId) {
+        initDictConfig() {},
+        onSelectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },
-        selectServer: function(serverId) {
+        onSelectServer: function(serverId) {
             this.queryParam.serverId = serverId;
         },
         onDateChange: function(value, dateStr) {

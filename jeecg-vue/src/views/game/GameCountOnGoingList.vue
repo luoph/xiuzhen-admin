@@ -6,7 +6,7 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @SelectChannel="selectChannel" @SelectServer="selectServer"></game-channel-server>
+                        <game-channel-server @selectChannel="onSelectChannel" @selectServer="onSelectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="统计类型">
@@ -379,10 +379,10 @@ export default {
     computed: {},
     methods: {
         initDictConfig() {},
-        selectChannel: function(channelId) {
+        onSelectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },
-        selectServer: function(serverId) {
+        onSelectServer: function(serverId) {
             this.queryParam.serverId = serverId;
         },
         onDateChange: function(value, dateStr) {
