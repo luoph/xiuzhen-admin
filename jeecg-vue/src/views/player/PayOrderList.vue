@@ -180,6 +180,12 @@ export default {
                     dataIndex: "playerId"
                 },
                 {
+                    title: "渠道",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "channel"
+                },
+                {
                     title: "区服Id",
                     align: "center",
                     width: 80,
@@ -235,12 +241,6 @@ export default {
                         }
                         return re;
                     }
-                },
-                {
-                    title: "渠道",
-                    align: "center",
-                    width: 80,
-                    dataIndex: "channel"
                 },
                 {
                     title: "商品id",
