@@ -3,16 +3,16 @@
 <mapper namespace="org.jeecg.modules.game.mapper.PayOrderBillMapper">
 
     <select id="queryBillSumByDateRange" resultType="decimal">
-        select
+        SELECT
         SUM(pay_amount)
-        from pay_order
-        where
-        pay_time >= #{payTimeBeginDate} and pay_time &lt;=  #{payTimeEndDate}
+        FROM pay_order
+        WHERE
+        pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
         <if test="serverId != 0">
-            and server_id = #{serverId}
+            AND server_id = #{serverId}
         </if>
         <if test="channel != 0">
-            and channel = #{channel}
+            AND channel = #{channel}
         </if>
     </select>
 </mapper>
