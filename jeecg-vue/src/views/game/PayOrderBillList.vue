@@ -17,9 +17,9 @@
                 <template v-if="toggleSearchStatus">
                     <a-col :md="12" :sm="16">
                     <a-form-item label="订单创建时间戳">
-                    <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择开始时间" class="query-group-cust" v-model="queryParam.payTime_begin"></j-date>
+                    <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择开始时间" class="query-group-cust" v-model="queryParam.payTimeBegin"></j-date>
                     <span class="query-group-split-cust"></span>
-                    <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择结束时间" class="query-group-cust" v-model="queryParam.payTime_end"></j-date>
+                    <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" placeholder="请选择结束时间" class="query-group-cust" v-model="queryParam.payTimeEnd"></j-date>
                 </a-form-item>
                 </a-col>
         </template>
