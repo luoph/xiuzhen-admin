@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.PayOrderBill;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
@@ -27,18 +28,11 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
 
     @Override
     public BigDecimal queryBillSumByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, Integer channel) {
-        //String time = "2019-07-23";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//yyyy-MM-dd HH-mm-ss
-        Date payTimeBeginDate = null;
-        Date payTimeEndDate = null;
-        try {
-            payTimeBeginDate = simpleDateFormat.parse(payTimeBegin);
-            payTimeEndDate = simpleDateFormat.parse(payTimeEnd);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+        Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
+        Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);
+
         BigDecimal billSum = payOrderBillMapper.queryBillSumByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
-        System.out.println(billSum);
         return billSum;
     }
 }
