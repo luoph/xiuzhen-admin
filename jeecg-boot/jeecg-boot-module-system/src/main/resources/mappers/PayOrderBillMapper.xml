@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.PayOrderBillMapper">
+
+    <select id="queryBillSumByDateRange" resultType="decimal">
+        select
+        SUM(pay_amount)
+        from pay_order
+        where
+        pay_time >= #{payTimeBeginDate} and pay_time &lt;=  #{payTimeEndDate}
+        <if test="serverId != 0">
+            and server_id = #{serverId}
+        </if>
+        <if test="channel != 0">
+            and channel = #{channel}
+        </if>
+    </select>
+</mapper>
