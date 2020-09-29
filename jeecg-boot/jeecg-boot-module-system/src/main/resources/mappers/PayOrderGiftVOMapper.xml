@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.PayOrderGiftVOMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.PayOrderGiftVO">
+        <id column="id" property="id"/>
+        <result column="channel" property="channel"/>
+        <result column="server_id" property="serverId"/>
+        <result column="product_count" property="productCount"/>
+        <result column="product_count_ratio" property="productCountRatio"/>
+        <result column="pay_amount_sum" property="payAmountSum"/>
+        <result column="pay_amount_ratio" property="payAmountRatio"/>
+    </resultMap>
+
+    <select id="queryGiftByByDateRange" resultMap="BaseResultMap">
+        SELECT
+        id,
+        product_id,
+        COUNT(product_id) AS product_count,
+        COUNT(product_id)/(SELECT COUNT(*) FROM pay_order) AS product_count_ratio,
+        SUM(pay_amount) AS pay_amount_sum,
+        SUM(pay_amount)/(SELECT SUM(pay_amount) FROM pay_order) AS pay_amount_ratio
+        FROM
+        pay_order
+        WHERE
+        pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        <if test="channel != 0">
+            AND channel = #{channel}
+        </if>
+        GROUP BY product_id
+    </select>
+</mapper>
