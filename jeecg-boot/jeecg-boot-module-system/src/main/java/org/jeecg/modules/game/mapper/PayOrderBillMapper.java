@@ -16,8 +16,8 @@ import java.util.Date;
 public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
 
     BigDecimal queryBillSumByDateRange(@Param("payTimeBeginDate") Date payTimeBeginDate,
-                                       @Param("payTimeEndDate")Date payTimeEndDate,
-                                       @Param("serverId")Integer serverId,
-                                       @Param("channel")Integer channel);
+                                       @Param("payTimeEndDate") Date payTimeEndDate,
+                                       @Param("serverId") Integer serverId,
+                                       @Param("channel") Integer channel);
 
 }

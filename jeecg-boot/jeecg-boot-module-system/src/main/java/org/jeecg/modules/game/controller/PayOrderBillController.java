@@ -7,7 +7,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.modules.game.entity.PayOrderBill;
-import org.jeecg.modules.game.entity.PayOrderBillVo;
+import org.jeecg.modules.game.entity.PayOrderBillVO;
 import org.jeecg.modules.game.service.IPayOrderBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,15 +52,15 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
                                     ) {
-        Page<PayOrderBillVo> pageVo = new Page<>(pageNo, pageSize);
+        Page<PayOrderBillVO> pageVo = new Page<>(pageNo, pageSize);
         //没有传入查询参数返回空的数据
         if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channel == 0) {
             return Result.ok(pageVo);
         }
         BigDecimal billSum = payOrderBillService.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
         //封装自定义的list放入Page对象，list中只有一个对象
-        List listVo = new ArrayList<PayOrderBillVo>();
-        PayOrderBillVo payOrderBillVo = new PayOrderBillVo();
+        List<PayOrderBillVO> listVo = new ArrayList<>();
+        PayOrderBillVO payOrderBillVo = new PayOrderBillVO();
         payOrderBillVo.setBillSum(billSum).setBeginTime(payTimeBegin).setEndTime(payTimeEnd);
         listVo.add(payOrderBillVo);
         pageVo.setRecords(listVo).setTotal(listVo.size());
