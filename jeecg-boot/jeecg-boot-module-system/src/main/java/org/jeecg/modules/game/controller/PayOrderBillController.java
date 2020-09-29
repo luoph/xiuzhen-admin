@@ -45,8 +45,8 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
     @AutoLog(value = "pay_order-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(PayOrderBill payOrderBill,
-                                   @RequestParam(name = "payTime_begin", defaultValue = "") String payTimeBegin,
-                                   @RequestParam(name = "payTime_end", defaultValue = "") String payTimeEnd,
+                                   @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
+                                   @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                                    @RequestParam(name = "channel", defaultValue = "0") Integer channel,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
