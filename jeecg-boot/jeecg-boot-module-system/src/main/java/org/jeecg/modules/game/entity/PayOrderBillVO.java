@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PayOrderBillVo implements Serializable {
+public class PayOrderBillVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
