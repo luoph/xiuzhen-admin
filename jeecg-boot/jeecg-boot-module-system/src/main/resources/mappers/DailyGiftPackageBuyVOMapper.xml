@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.DailyGiftPackageBuyVOMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.DailyGiftPackageBuyVO">
+        <id column="id" property="id"/>
+        <result column="gift_package_id" property="giftPackageId"/>
+        <result column="gift_count" property="giftCount"/>
+        <result column="gift_count_ratio" property="giftCountRatio"/>
+        <result column="recharge_amount_sum" property="rechargeAmountSum"/>
+        <result column="recharge_amount_ratio" property="rechargeAmountRatio"/>
+    </resultMap>
+
+    <select id="queryGiftPackageByDateRange" resultMap="BaseResultMap">
+        SELECT
+        id,
+        gift_package_id,
+        COUNT(gift_package_id) AS gift_count,
+        COUNT(gift_package_id)/(SELECT COUNT(*) FROM daily_gift_package_buy) AS gift_count_ratio,
+        SUM(recharge_amount) AS recharge_amount_sum,
+        SUM(recharge_amount)/(SELECT SUM(recharge_amount) FROM daily_gift_package_buy) AS recharge_amount_ratio
+        FROM
+        daily_gift_package_buy
+        WHERE
+        create_time >= #{createTimeBeginDate} AND create_time &lt;= #{createTimeEndDate}
+        GROUP BY gift_package_id
+    </select>
+</mapper>
