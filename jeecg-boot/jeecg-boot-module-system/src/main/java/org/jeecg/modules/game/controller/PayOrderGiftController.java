@@ -1,16 +1,14 @@
 package org.jeecg.modules.game.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.PayOrderGift;
 import org.jeecg.modules.game.entity.PayOrderGiftVO;
+import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IPayOrderGiftService;
 import org.jeecg.modules.game.service.IPayOrderGiftVOService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 消费礼包数据统计
+ * @description 直充道具数据统计
  * @date 2020-09-29
  */
 @Slf4j
@@ -39,29 +37,32 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
     @Autowired
     private IPayOrderGiftVOService payOrderGiftVOService;
 
+    @Autowired
+    private IGameChannelService gameChannelService;
+
     /**
      * 分页列表查询
      *
      * @param payOrderGift 数据实体
      * @param pageNo       页码
      * @param pageSize     分页大小
-     * @param req          请求
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "消费礼包数据统计-列表查询")
+    @AutoLog(value = "直充道具-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(PayOrderGift payOrderGift,
                                    @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
                                    @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                   @RequestParam(name = "channel", defaultValue = "0") Integer channel,
+                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
                                     ) {
         Page<PayOrderGiftVO> pageVo = new Page<>(pageNo, pageSize);
-        if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channel == 0) {
+        if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
             return Result.ok(pageVo);
         }
+        String channel = gameChannelService.queryChannelNameById(channelId);
         List<PayOrderGiftVO> payOrderGiftVOList = payOrderGiftVOService.queryGiftByByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
         pageVo.setRecords(payOrderGiftVOList).setTotal(payOrderGiftVOList.size());
         return Result.ok(pageVo);
@@ -73,7 +74,7 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
      * @param payOrderGift 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "消费礼包数据统计-添加")
+    @AutoLog(value = "直充道具-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody PayOrderGift payOrderGift) {
         payOrderGiftService.save(payOrderGift);
@@ -86,7 +87,7 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
      * @param payOrderGift 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "消费礼包数据统计-编辑")
+    @AutoLog(value = "直充道具-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody PayOrderGift payOrderGift) {
         payOrderGiftService.updateById(payOrderGift);
@@ -99,7 +100,7 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "消费礼包数据统计-通过id删除")
+    @AutoLog(value = "直充道具-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         payOrderGiftService.removeById(id);
@@ -112,7 +113,7 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
      * @param ids id列表，使用','分割的字符串
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "消费礼包数据统计-批量删除")
+    @AutoLog(value = "直充道具-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.payOrderGiftService.removeByIds(Arrays.asList(ids.split(",")));
@@ -125,7 +126,7 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "消费礼包数据统计-通过id查询")
+    @AutoLog(value = "直充道具-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         PayOrderGift payOrderGift = payOrderGiftService.getById(id);

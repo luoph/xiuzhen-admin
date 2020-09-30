@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 消费礼包数据统计
+ * @description 直充道具数据统计
  * @date 2020-09-29
  */
 @Service
@@ -23,7 +23,7 @@ public class PayOrderGiftVOServiceImpl implements IPayOrderGiftVOService {
     private PayOrderGiftVOMapper payOrderGiftVOMapper;
 
     @Override
-    public List<PayOrderGiftVO> queryGiftByByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, Integer channel) {
+    public List<PayOrderGiftVO> queryGiftByByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
 
         Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
         Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);

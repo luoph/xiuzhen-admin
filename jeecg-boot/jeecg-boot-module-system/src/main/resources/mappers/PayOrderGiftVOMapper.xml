@@ -28,7 +28,7 @@
         <if test="serverId != 0">
             AND server_id = #{serverId}
         </if>
-        <if test="channel != 0">
+        <if test="channel != null">
             AND channel = #{channel}
         </if>
         GROUP BY product_id

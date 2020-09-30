@@ -27,4 +27,9 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     public List<GameServer> getServerListChannelId(Long channelId) {
         return gameChannelMapper.getServerListChannelId(channelId);
     }
+
+    @Override
+    public String queryChannelNameById(Integer channelId) {
+        return gameChannelMapper.queryChannelNameById(channelId);
+    }
 }

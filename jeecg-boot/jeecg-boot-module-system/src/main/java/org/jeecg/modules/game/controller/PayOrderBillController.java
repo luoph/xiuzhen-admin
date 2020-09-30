@@ -8,6 +8,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.modules.game.entity.PayOrderBill;
 import org.jeecg.modules.game.entity.PayOrderBillVO;
+import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IPayOrderBillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,9 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
     @Autowired
     private IPayOrderBillService payOrderBillService;
 
+    @Autowired
+    private IGameChannelService gameChannelService;
+
     /**
      * 分页列表查询
      *
@@ -48,16 +52,21 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
                                    @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
                                    @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                   @RequestParam(name = "channel", defaultValue = "0") Integer channel,
+                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
                                     ) {
         Page<PayOrderBillVO> pageVo = new Page<>(pageNo, pageSize);
         //没有传入查询参数返回空的数据
-        if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channel == 0) {
+        if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
             return Result.ok(pageVo);
         }
+        String channel= gameChannelService.queryChannelNameById(channelId);
         BigDecimal billSum = payOrderBillService.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
+        //查不到流水总额,设置流水总额为0
+        if (billSum == null){
+            billSum = new BigDecimal(0);
+        }
         //封装自定义的list放入Page对象，list中只有一个对象
         List<PayOrderBillVO> listVo = new ArrayList<>();
         PayOrderBillVO payOrderBillVo = new PayOrderBillVO();

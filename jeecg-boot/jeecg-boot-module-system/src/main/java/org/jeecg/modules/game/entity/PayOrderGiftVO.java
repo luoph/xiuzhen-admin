@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 消费礼包数据统计
+ * @description 直充道具数据统计
  * @date 2020-09-29
  */
 @Data
@@ -130,22 +130,22 @@ public class PayOrderGiftVO implements Serializable {
     private java.util.Date createTime;
 
 	/**
-	 * 礼包数量（这件商品的总数）
+	 * 道具数量（这件道具的总数）
 	 */
 	private Integer productCount;
 
 	/**
-	 * 该礼包消费次数占总数的比例
+	 * 该道具消费次数占总数的比例
 	 */
 	private Double productCountRatio;
 
 	/**
-	 * 该礼包的消费金额总数
+	 * 该道具的消费金额总数
 	 */
 	private BigDecimal payAmountSum;
 
 	/**
-	 * 改件礼包的消费金额占总消费金额的比例
+	 * 该件道具的消费金额占总消费金额的比例
 	 */
 	private Double payAmountRatio;
 }

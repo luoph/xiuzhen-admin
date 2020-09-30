@@ -27,4 +27,6 @@ public interface GameChannelMapper extends BaseMapper<GameChannel> {
             " WHERE c.`channel_id` = #{channel_id}  AND c.`del_flag` = 0 ORDER BY s.`position`")
     List<GameServer> getServerListChannelId(@Param("channel_id") Long channelId);
 
+    @Select("SELECT simple_name FROM game_channel WHERE id=#{channelId}")
+    String queryChannelNameById(@Param("channelId") Integer channelId);
 }
