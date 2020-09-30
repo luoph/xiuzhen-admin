@@ -22,5 +22,11 @@ public interface IGameChannelService extends IService<GameChannel> {
      */
     List<GameServer> getServerListChannelId(Long channelId);
 
-
+    /**
+     * 通过渠道id查询渠道名称
+     *
+     * @param channelId
+     * @return
+     */
+    String queryChannelNameById(Integer channelId);
 }

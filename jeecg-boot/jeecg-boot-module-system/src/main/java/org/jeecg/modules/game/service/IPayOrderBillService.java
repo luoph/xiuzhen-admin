@@ -13,5 +13,13 @@ import java.math.BigDecimal;
  */
 public interface IPayOrderBillService extends IService<PayOrderBill> {
 
-    BigDecimal queryBillSumByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, Integer channel);
+    /**
+     * 通过订单支付时间和服务器id和游戏渠道查询流水总额
+     * @param payTimeBegin  开始时间
+     * @param payTimeEnd    结束时间
+     * @param serverId      服务器id
+     * @param channel       游戏渠道
+     * @return
+     */
+    BigDecimal queryBillSumByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel);
 }

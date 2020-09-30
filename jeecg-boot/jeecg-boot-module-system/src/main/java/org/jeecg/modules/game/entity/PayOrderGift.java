@@ -15,7 +15,7 @@ import java.io.Serializable;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 消费礼包数据统计
+ * @description 直充道具数据统计
  * @date 2020-09-29
  */
 @Data

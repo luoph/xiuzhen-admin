@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 消费礼包数据统计
+ * @description 直充道具数据统计
  * @date 2020-09-29
  */
 public interface PayOrderGiftVOMapper extends BaseMapper<PayOrderGiftVO> {
@@ -18,5 +18,5 @@ public interface PayOrderGiftVOMapper extends BaseMapper<PayOrderGiftVO> {
     List<PayOrderGiftVO> queryGiftByByDateRange(@Param("payTimeBeginDate") Date payTimeBeginDate,
                                                 @Param("payTimeEndDate") Date payTimeEndDate,
                                                 @Param("serverId") Integer serverId,
-                                                @Param("channel") Integer channel);
+                                                @Param("channel") String channel);
 }
