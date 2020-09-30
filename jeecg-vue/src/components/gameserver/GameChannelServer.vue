@@ -3,15 +3,20 @@
         <a-row :gutter="24">
             <a-col :span="12">
                 <a-form-item label="渠道名称" :label-col="{ span: 10 }" :wrapper-col="{ span: 16 }">
-                    <a-select placeholder="请选择渠道" v-model="channelId" :initialValue="channelId" @change="onSelectChannel">
-                        <a-select-option v-for="channel in channelList" :key="channel.name" :value="channel.id">{{ channel.name }}</a-select-option>
+                    <a-select placeholder="请选择渠道" v-model="channelId" :initialValue="channelId"
+                              @change="onSelectChannel">
+                        <a-select-option v-for="channel in channelList" :key="channel.name" :value="channel.id">
+                            {{ channel.name }}
+                        </a-select-option>
                     </a-select>
                 </a-form-item>
             </a-col>
             <a-col :span="12">
                 <a-form-item label="服务器名" :label-col="{ span: 12 }" :wrapper-col="{ span: 16 }">
                     <a-select placeholder="请选择区服" v-model="serverId" :initialValue="serverId" @change="onSelectServer">
-                        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.name }}</a-select-option>
+                        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
+                            {{ server.name }}
+                        </a-select-option>
                     </a-select>
                 </a-form-item>
             </a-col>
@@ -52,7 +57,7 @@ export default {
                 this.channelList = res.result.records;
             });
         },
-        getChannelServerlist() {
+        getChannelServerList() {
             getAction(this.url.channelServerUrl, { channelId: this.channelId }).then(res => {
                 this.serverList = res.result;
             });
@@ -60,18 +65,18 @@ export default {
         // select的事件绑定
         onSelectChannel(value) {
             // 触发父容器的 selectChannel 方法
-            this.$emit("selectChannel", value);
+            this.$emit("onSelectChannel", value);
             this.channelId = value;
         },
         onSelectServer(value) {
             // 触发父容器的 selectServer 方法
-            this.$emit("selectServer", value);
+            this.$emit("onSelectServer", value);
         }
     },
     watch: {
         channelId: function() {
             this.serverList = [];
-            this.getChannelServerlist();
+            this.getChannelServerList();
             this.serverId = this.serverList.length > 0 ? this.serverList[0].id : "";
         }
     }
