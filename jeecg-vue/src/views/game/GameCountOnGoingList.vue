@@ -6,7 +6,7 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @selectChannel="onSelectChannel" @selectServer="onSelectServer"></game-channel-server>
+                        <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="统计类型">
