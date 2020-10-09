@@ -13,9 +13,10 @@ public interface IDailyGiftPackageBuyVOService {
 
     /**
      * 通过创建时间查询消费礼包
+     * @param serverId
      * @param createTimeBegin
      * @param createTimeEnd
      * @return
      */
-    List<DailyGiftPackageBuyVO> queryGiftPackageByDateRange(String createTimeBegin, String createTimeEnd);
+    List<DailyGiftPackageBuyVO> queryGiftPackageByDateRange(Integer serverId, String createTimeBegin, String createTimeEnd);
 }
