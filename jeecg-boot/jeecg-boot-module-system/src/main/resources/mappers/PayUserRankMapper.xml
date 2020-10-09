@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.PayUserRankMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.PayUserRank">
+        <id column="id" property="id"/>
+        <result column="channel" property="channel"/>
+        <result column="server_id" property="serverId"/>
+        <result column="player_id" property="playerId"/>
+        <result column="pay_amount_sum" property="payAmountSum"/>
+        <!-- 关联对象 -->
+        <association property="playerRegisterInfo" javaType="org.jeecg.modules.game.entity.PlayerRegisterInfo">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="queryUserRankByDateRange" resultMap="BaseResultMap">
+        SELECT
+        po.id,
+        po.player_id,
+        pri.name,
+        SUM(po.pay_amount) pay_amount_sum
+        FROM pay_order po
+        LEFT JOIN player_register_info pri
+        ON po.player_id = pri.player_id
+        WHERE
+        po.pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
+        AND po.order_status > 0
+        <if test="serverId != 0">
+            AND po.server_id = #{serverId}
+        </if>
+        <if test="channel != null">
+            AND po.channel = #{channel}
+        </if>
+        GROUP BY po.player_id
+        ORDER BY pay_amount_sum DESC
+        LIMIT 100
+    </select>
+</mapper>

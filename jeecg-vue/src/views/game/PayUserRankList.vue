@@ -21,10 +21,11 @@
                     </a-col>
                 </a-row>
             </a-form>
+
         </div>
         <!-- 查询区域-END -->
+        <!-- table区域-begin -->
         <div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -36,12 +37,10 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
             </a-table>
         </div>
 
-        <payOrderBill-modal ref="modalForm" @ok="modalFormOk"></payOrderBill-modal>
     </a-card>
 </template>
 
@@ -52,8 +51,9 @@ import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
 
+
 export default {
-    name: "PayOrderBillList",
+    name: "PayUserRankList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
@@ -62,7 +62,7 @@ export default {
     },
     data() {
         return {
-            description: "服务器流水",
+            description: "充值用户排行数据统计管理页面",
             // 表头
             columns: [
                 {
@@ -76,24 +76,34 @@ export default {
                     }
                 },
                 {
-                    title: "开始时间",
+                    title: "玩家id",
                     align: "center",
-                    dataIndex: "beginTime"
+                    dataIndex: "playerId"
                 },
                 {
-                    title: "结束时间",
+                    title: "玩家昵称",
                     align: "center",
-                    dataIndex: "endTime"
+                    dataIndex: "playerRegisterInfo.name"
                 },
                 {
-                    title: "流水总额",
+                    title: "排名",
+                    dataIndex: "",
+                    key: "rowIndex",
+                    width: 60,
                     align: "center",
-                    dataIndex: "billSum"
+                    customRender: function(t, r, index) {
+                        return parseInt(index) + 1;
+                    }
+                },
+                {
+                    title: "充值总金额",
+                    align: "center",
+                    dataIndex: "payAmountSum"
                 },
 
             ],
             url: {
-                list: "game/payOrderBill/list",
+                list: "game/payUserRank/list",
             },
             dictOptions: {
             }
@@ -105,8 +115,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        },
+        initDictConfig() {},
         onSelectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },
@@ -137,7 +146,6 @@ export default {
                     this.$message.error(res.message);
                 }
             });
-
         }
     }
 };

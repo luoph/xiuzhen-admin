@@ -23,11 +23,11 @@ public class PayOrderGiftVOServiceImpl implements IPayOrderGiftVOService {
     private PayOrderGiftVOMapper payOrderGiftVOMapper;
 
     @Override
-    public List<PayOrderGiftVO> queryGiftByByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
+    public List<PayOrderGiftVO> queryGiftByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
 
         Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
         Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);
 
-        return payOrderGiftVOMapper.queryGiftByByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
+        return payOrderGiftVOMapper.queryGiftByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
     }
 }

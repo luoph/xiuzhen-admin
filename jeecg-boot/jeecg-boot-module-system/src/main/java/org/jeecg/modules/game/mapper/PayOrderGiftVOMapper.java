@@ -15,8 +15,8 @@ import java.util.List;
  */
 public interface PayOrderGiftVOMapper extends BaseMapper<PayOrderGiftVO> {
 
-    List<PayOrderGiftVO> queryGiftByByDateRange(@Param("payTimeBeginDate") Date payTimeBeginDate,
-                                                @Param("payTimeEndDate") Date payTimeEndDate,
-                                                @Param("serverId") Integer serverId,
-                                                @Param("channel") String channel);
+    List<PayOrderGiftVO> queryGiftByDateRange(@Param("payTimeBeginDate") Date payTimeBeginDate,
+                                              @Param("payTimeEndDate") Date payTimeEndDate,
+                                              @Param("serverId") Integer serverId,
+                                              @Param("channel") String channel);
 }

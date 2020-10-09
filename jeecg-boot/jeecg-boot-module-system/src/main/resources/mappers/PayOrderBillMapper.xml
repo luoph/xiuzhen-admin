@@ -8,6 +8,7 @@
         FROM pay_order
         WHERE
         pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
+        AND order_status > 0
         <if test="serverId != 0">
             AND server_id = #{serverId}
         </if>
