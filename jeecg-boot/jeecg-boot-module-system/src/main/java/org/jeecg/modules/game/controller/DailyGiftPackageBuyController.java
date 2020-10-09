@@ -55,14 +55,12 @@ public class DailyGiftPackageBuyController extends JeecgController<DailyGiftPack
 								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
 								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
 								   ) {
-		//通过serverId切换数据源
 		// TODO:后面可能会拓展一个channelId可能绑定多个serverId,所以保留serverId字段
-		DataSourceHelper.useServerDatabase(serverId);
 		Page<DailyGiftPackageBuyVO> pageVo = new Page<>(pageNo, pageSize);
 		if (StringUtils.isEmpty(createTimeBegin) && StringUtils.isEmpty(createTimeEnd) && serverId == 0 && channelId == 0) {
 			return Result.ok(pageVo);
 		}
-		List<DailyGiftPackageBuyVO> dailyGiftPackageBuyVOList = dailyGiftPackageBuyVOService.queryGiftPackageByDateRange(createTimeBegin, createTimeEnd);
+		List<DailyGiftPackageBuyVO> dailyGiftPackageBuyVOList = dailyGiftPackageBuyVOService.queryGiftPackageByDateRange(serverId, createTimeBegin, createTimeEnd);
 		pageVo.setRecords(dailyGiftPackageBuyVOList).setTotal(dailyGiftPackageBuyVOList.size());
 		return Result.ok(pageVo);
 	}
