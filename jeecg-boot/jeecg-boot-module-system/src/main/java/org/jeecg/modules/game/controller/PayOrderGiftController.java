@@ -63,7 +63,7 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
             return Result.ok(pageVo);
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<PayOrderGiftVO> payOrderGiftVOList = payOrderGiftVOService.queryGiftByByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
+        List<PayOrderGiftVO> payOrderGiftVOList = payOrderGiftVOService.queryGiftByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
         pageVo.setRecords(payOrderGiftVOList).setTotal(payOrderGiftVOList.size());
         return Result.ok(pageVo);
     }

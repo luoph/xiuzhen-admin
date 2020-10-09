@@ -21,6 +21,6 @@ public interface IPayOrderGiftVOService {
      * @param channel       游戏渠道
      * @return
      */
-    List<PayOrderGiftVO> queryGiftByByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel);
+    List<PayOrderGiftVO> queryGiftByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel);
 
 }

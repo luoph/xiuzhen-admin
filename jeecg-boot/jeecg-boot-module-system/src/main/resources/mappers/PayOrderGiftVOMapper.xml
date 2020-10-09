@@ -13,7 +13,7 @@
         <result column="pay_amount_ratio" property="payAmountRatio"/>
     </resultMap>
 
-    <select id="queryGiftByByDateRange" resultMap="BaseResultMap">
+    <select id="queryGiftByDateRange" resultMap="BaseResultMap">
         SELECT
         id,
         product_id,
@@ -25,6 +25,7 @@
         pay_order
         WHERE
         pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
+        AND order_status > 0
         <if test="serverId != 0">
             AND server_id = #{serverId}
         </if>
