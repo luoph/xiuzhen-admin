@@ -62,14 +62,12 @@ public class GameDataReportCountController extends JeecgController<GameDataRepor
 								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
 								   ) {
 
-		/*QueryWrapper<GameDataReportCount> queryWrapper = QueryGenerator.initQueryWrapper(gameDataReportCount, req.getParameterMap());*/
 		Page<GameDataReportCount> page = new Page<>(pageNo, pageSize);
-		/*IPage<GameDataReportCount> pageList = gameDataReportCountService.page(page, queryWrapper);*/
 		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
 			return Result.ok(page);
 		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
-		List<GameDataReportCount> gameDataReportCountList = gameDataReportCountService.queryDataReportByDateRange(rangeDateBegin, rangeDateEnd,days, serverId, channel);
+		List<GameDataReportCount> gameDataReportCountList = gameDataReportCountService.queryDataReportByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
 		page.setRecords(gameDataReportCountList).setTotal(gameDataReportCountList.size());
 		return Result.ok(page);
 	}

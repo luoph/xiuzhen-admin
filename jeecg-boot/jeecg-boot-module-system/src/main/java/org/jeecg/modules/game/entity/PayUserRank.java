@@ -152,9 +152,18 @@ public class PayUserRank implements Serializable {
 	/**
 	 * 充值总金额
 	 */
+	@Excel(name = "充值总金额", width = 15)
 	private BigDecimal payAmountSum;
 	/**
 	 * 玩家注册信息
 	 */
 	private PlayerRegisterInfo playerRegisterInfo;
+
+	/**
+	 * 最后充值时间
+	 */
+	@Excel(name = "最后充值时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+	@DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+	private java.util.Date payTimeMax;
 }

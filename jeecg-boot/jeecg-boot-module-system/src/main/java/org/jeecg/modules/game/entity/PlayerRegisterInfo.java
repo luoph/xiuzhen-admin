@@ -1,8 +1,14 @@
 package org.jeecg.modules.game.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.common.constant.TimeConstant;
+import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * 玩家注册信息表的实体类,player_register_info
@@ -19,10 +25,46 @@ public class PlayerRegisterInfo {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 没有从player_register_info表中列出全部的属性,只写了两个,用于封装关联查询
-     * 后续如有其他需求可以补上其他的属性
+     * 自增id
      */
     private Integer id;
 
+    /**
+     *  角色名称
+     */
+    @Excel(name = "角色名称", width = 15)
     private String name;
+
+    /**
+     * 账号
+     */
+    @Excel(name = "账号", width = 15)
+    private String account;
+
+    /**
+     * 玩家id
+     */
+    @Excel(name = "玩家id", width = 15)
+    private Integer playerId;
+
+    /**
+     * 创建日期
+     */
+    @Excel(name = "创建日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    private Date createDate;
+
+    /**
+     * 充值预警天数
+     */
+    @Excel(name = "充值预警天数", width = 15)
+    private  int payWarningDays;
+
+    /**
+     * 充值预警天数
+     */
+    @Excel(name = "登录预警天数", width = 15)
+    private  int loginWarningDays;
+
 }
