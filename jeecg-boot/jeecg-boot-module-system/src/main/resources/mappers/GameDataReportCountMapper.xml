@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.GameDataReportCountMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameDataReportCount">
+        <id column="id" property="id"/>
+        <result column="count_date" property="countDate"/>
+        <result column="login_num" property="loginNum"/>
+        <result column="pay_num" property="payNum"/>
+        <result column="pay_rate" property="payRate"/>
+        <result column="pay_amount" property="payAmount"/>
+        <result column="arpu" property="arpu"/>
+        <result column="arppu" property="arppu"/>
+        <result column="add_num" property="addNum"/>
+        <result column="add_pay_num" property="addPayNum"/>
+        <result column="add_pay_rate" property="addPayRate"/>
+        <result column="add_pay_amount" property="addPayAmount"/>
+        <result column="add_arpu" property="addArpu"/>
+        <result column="add_arppu" property="addArppu"/>
+        <result column="old_num" property="oldNum"/>
+        <result column="old_pay_num" property="oldPayNum"/>
+        <result column="old_pay_rate" property="oldPayRate"/>
+        <result column="old_pay_amount" property="oldPayAmount"/>
+        <result column="old_arpu" property="oldArpu"/>
+        <result column="old_arppu" property="oldArppu"/>
+    </resultMap>
+
+    <select id="queryDataReportByDateRange" resultMap="BaseResultMap">
+        SELECT
+        id,
+        channel,
+        server_id,
+        count_date,
+        login_num,
+        pay_num,
+        pay_rate,
+        pay_amount,
+        arpu,
+        arppu,
+        add_num,
+        add_pay_num,
+        add_pay_rate,
+        add_pay_amount,
+        add_arpu,
+        add_arppu,
+        (login_num - add_num) old_num,
+        (pay_num - add_pay_num) old_pay_num,
+        ((pay_num - add_pay_num)/(login_num - add_num)) old_pay_rate,
+        (pay_amount - add_pay_amount) old_pay_amount,
+        ((pay_amount - add_pay_amount)/(login_num - add_num)) old_arpu,
+        ((pay_amount - add_pay_amount)/(pay_num - add_pay_num)) old_arppu
+        FROM game_day_data_count
+        WHERE count_date >= #{rangeDateBeginTime} AND count_date &lt;= #{rangeDateEndTime}
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        <if test="channel != null">
+            AND channel = #{channel}
+        </if>
+        GROUP BY count_date
+        ORDER BY count_date DESC
+    </select>
+</mapper>
