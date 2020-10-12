@@ -7,6 +7,7 @@ import org.joda.time.*;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -506,6 +507,22 @@ public final class DateUtils {
     public static Date hourToday(int plus, int hour) {
         DateTime currentDateTime = new DateTime(now());
         return currentDateTime.plusDays(plus).withTimeAtStartOfDay().withHourOfDay(hour).toDate();
+    }
+
+    /**
+     * 获取过去第几天的日期
+     *
+     * @param past      天数
+     * @param format    时间格式
+     * @return           日期
+     */
+    public static Date getPastDate(int past, SimpleDateFormat format) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+        Date today = calendar.getTime();
+        String result = format.format(today);
+        Date date = DateUtils.parseDate(result);
+        return date;
     }
 
     public static boolean isTimeBetween(LocalTime startTime, LocalTime endTime) {
