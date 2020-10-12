@@ -41,27 +41,54 @@ public class PayUserRankController extends JeecgController<PayUserRank, IPayUser
 	/**
 	 * 分页列表查询
 	 *
-	 * @param payUserRank 数据实体
 	 * @param pageNo 页码
 	 * @param pageSize 分页大小
 	 * @return {@linkplain Result}
 	 */
 	@AutoLog(value = "充值用户排行数据统计-列表查询")
 	@GetMapping(value = "/list")
-	public Result<?> queryPageList(PayUserRank payUserRank,
-								   @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
-								   @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
-								   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-								   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-								   ) {
+	public Result<?> queryPageList(@RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
+								    @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
+								    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+								    @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+								    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+								    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+								    ) {
 		Page<PayUserRank> page = new Page<>(pageNo, pageSize);
 		if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
 			return Result.ok(page);
 		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		List<PayUserRank> payUserRankList = payUserRankService.queryUserRankByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
+		page.setRecords(payUserRankList).setTotal(payUserRankList.size());
+		return Result.ok(page);
+	}
+
+
+	/**
+	 * 分页列表查询
+	 *
+	 * @param pageNo 页码
+	 * @param pageSize 分页大小
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "付费排行-列表查询")
+	@GetMapping(value = "/payRank")
+	public Result<?> payRank(PayUserRank payUserRank,
+								   @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+								   @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+								   @RequestParam(name = "days", defaultValue = "0") int days,
+								   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+								   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+									) {
+		Page<PayUserRank> page = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
+			return Result.ok(page);
+		}
+		String channel = gameChannelService.queryChannelNameById(channelId);
+		List<PayUserRank> payUserRankList = payUserRankService.queryPayRankByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
 		page.setRecords(payUserRankList).setTotal(payUserRankList.size());
 		return Result.ok(page);
 	}

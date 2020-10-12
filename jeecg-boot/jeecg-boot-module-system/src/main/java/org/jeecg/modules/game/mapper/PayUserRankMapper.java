@@ -19,4 +19,9 @@ public interface PayUserRankMapper extends BaseMapper<PayUserRank> {
                                                @Param("payTimeEndDate") Date payTimeEndDate,
                                                @Param("serverId") Integer serverId,
                                                @Param("channel") String channel);
+
+    List<PayUserRank> queryPayRankByDateRange(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                                              @Param("rangeDateEndTime") Date rangeDateEndTime,
+                                              @Param("serverId") Integer serverId,
+                                              @Param("channel") String channel);
 }
