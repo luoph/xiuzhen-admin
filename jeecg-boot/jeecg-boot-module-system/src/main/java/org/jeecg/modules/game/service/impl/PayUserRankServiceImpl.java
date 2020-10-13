@@ -42,29 +42,42 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
             list = payUserRankMapper.queryPayRankByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
-            for (PayUserRank payUserRank : list) {
-                //获取玩家注册信息
-                PlayerRegisterInfo playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
-                Date createDate = playerRegisterInfo.getCreateDate();
-                int payWarningDays = DateUtils.daysBetween(createDate, nowDate);
-                //设置充值预警天数
-                playerRegisterInfo.setPayWarningDays(payWarningDays);
-                payUserRank.setPlayerRegisterInfo(playerRegisterInfo);
-            }
-            return list;
+            return getDataTreating(list);
         }
         //如果有选天数,就使用就近天数查询
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //获取过去第几天的日期
         Date pastDate = DateUtils.getPastDate(days, sdf);
         list = payUserRankMapper.queryPayRankByDateRange(pastDate, nowDate, serverId, channel);
+        return getDataTreating(list);
+    }
+
+    /**
+     * 获取数据处理后的list
+     * @param list
+     * @return
+     */
+    public List<PayUserRank> getDataTreating(List<PayUserRank> list){
+        Date nowDate = new Date();
         for (PayUserRank payUserRank : list) {
             //获取玩家注册信息
             PlayerRegisterInfo playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
+
+            //获取玩家最后的充值时间
             Date createDate = playerRegisterInfo.getCreateDate();
             int payWarningDays = DateUtils.daysBetween(createDate, nowDate);
             //设置充值预警天数
             playerRegisterInfo.setPayWarningDays(payWarningDays);
+
+            //获取玩家最后登录时间
+            Date loginDate = payUserRankMapper.getPlayerLastLoginTime(payUserRank.getPlayerId());
+
+            int loginWarningDays = DateUtils.daysBetween(loginDate, nowDate);
+            //设置最后登录时间
+            playerRegisterInfo.setLoginDate(loginDate);
+            //设置登录预警天数
+            playerRegisterInfo.setLoginWarningDays(loginWarningDays);
+
             payUserRank.setPlayerRegisterInfo(playerRegisterInfo);
         }
         return list;

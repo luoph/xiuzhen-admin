@@ -11,17 +11,30 @@
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD HH:mm:ss" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="选择就近天数">
                             <a-select placeholder="天数" v-model="queryParam.days">
-                                <a-select-option :value="0">不选择天数</a-select-option>
-                                <a-select-option :value="7">近7天</a-select-option>
-                                <a-select-option :value="15">近15天</a-select-option>
-                                <a-select-option :value="30">近一个月</a-select-option>
-                                <a-select-option :value="60">近两个月</a-select-option>
+                                <a-select-option value="0">不选择天数</a-select-option>
+                                <a-select-option value="7">近7天</a-select-option>
+                                <a-select-option value="15">近15天</a-select-option>
+                                <a-select-option value="30">近一个月</a-select-option>
+                                <a-select-option value="60">近两个月</a-select-option>
+                            </a-select>
+                        </a-form-item>
+                        <a-form-item label="选择充值档位">
+                            <a-select placeholder="档位" v-model="queryParam.payRank">
+                                <a-select-option value="">不选择档位</a-select-option>
+                                <a-select-option value="0-6">0-6</a-select-option>
+                                <a-select-option value="7-29">7-29</a-select-option>
+                                <a-select-option value="30-67">30-67</a-select-option>
+                                <a-select-option value="68-97">68-97</a-select-option>
+                                <a-select-option value="98-197">98-197</a-select-option>
+                                <a-select-option value="198-327">198-327</a-select-option>
+                                <a-select-option value="328-647">328-647</a-select-option>
+                                <a-select-option value="648-9999">648-9999</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -35,14 +48,13 @@
             </a-form>
 
             <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('数据报表')">导出</a-button>
+                <a-button type="primary" icon="download" @click="handleExportXls('付费结构')">导出</a-button>
             </div>
 
         </div>
         <!-- 查询区域-END -->
         <!-- table区域-begin -->
         <div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -55,9 +67,9 @@
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
-
             </a-table>
         </div>
+
     </a-card>
 </template>
 
@@ -68,18 +80,18 @@ import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
 
+
 export default {
-    name: "GameDataReportCountList",
+    name: "PayUserRankList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
         GameChannelServer,
         getAction
-
     },
     data() {
         return {
-            description: "数据报表管理页面",
+            description: "付费结构管理页面",
             // 表头
             columns: [
                 {
@@ -93,116 +105,45 @@ export default {
                     }
                 },
                 {
-                    title: "日期",
+                    title: "充值档位",
                     align: "center",
-                    dataIndex: "dateStr"
+                    dataIndex: "payRank"
                 },
                 {
-                    title: "活跃玩家",
+                    title: "付费人数",
                     align: "center",
-                    dataIndex: "loginNum"
+                    dataIndex: "payNumSum"
                 },
                 {
-                    title: "活跃付费数",
+                    title: "人数占比",
                     align: "center",
-                    dataIndex: "payNum"
-                },
-                {
-                    title: "活跃付费率",
-                    align: "center",
-                    dataIndex: "payRate",
+                    dataIndex: "payNumSumRate",
                     customRender: function(text) {
                         return text + "%";
                     }
                 },
                 {
-                    title: "充值金额",
+                    title: "付费金额",
                     align: "center",
-                    dataIndex: "payAmount"
+                    dataIndex: "payAmountSum"
                 },
                 {
-                    title: "ARPU",
+                    title: "金额占比",
                     align: "center",
-                    dataIndex: "arpu"
+                    dataIndex: "payAmountSumRate",
+                    customRender: function(text) {
+                        return text + "%";
+                    }
                 },
                 {
                     title: "ARPPU",
                     align: "center",
                     dataIndex: "arppu"
                 },
-                {
-                    title: "新增玩家",
-                    align: "center",
-                    dataIndex: "addNum"
-                },
-                {
-                    title: "新增付费数",
-                    align: "center",
-                    dataIndex: "addPayNum"
-                },
-                {
-                    title: "新增付费率",
-                    align: "center",
-                    dataIndex: "addPayRate",
-                    customRender: function(text) {
-                        return text + "%";
-                    }
-                },
-                {
-                    title: "新增充值金额",
-                    align: "center",
-                    dataIndex: "addPayAmount"
-                },
-                {
-                    title: "新增ARPU",
-                    align: "center",
-                    dataIndex: "addArpu"
-                },
-                {
-                    title: "新增ARPPU",
-                    align: "center",
-                    dataIndex: "addArppu"
-                },
-                {
-                    title: "老玩家",
-                    align: "center",
-                    dataIndex: "oldNum"
-                },
-                {
-                    title: "老玩家付费数",
-                    align: "center",
-                    dataIndex: "oldPayNum"
-                },
-                {
-                    title: "老玩家付费率",
-                    align: "center",
-                    dataIndex: "oldPayRate",
-                    customRender: function(text) {
-                        return text + "%";
-                    }
-                },
-                {
-                    title: "老玩家充值金额",
-                    align: "center",
-                    dataIndex: "oldPayAmount"
-                },
-                {
-                    title: "老玩家ARPU",
-                    align: "center",
-                    dataIndex: "oldArpu"
-                },
-                {
-                    title: "老玩家ARPPU",
-                    align: "center",
-                    dataIndex: "oldArppu"
-                },
             ],
             url: {
-                list: "game/gameDataReportCount/list",
-                delete: "game/gameDataReportCount/delete",
-                deleteBatch: "game/gameDataReportCount/deleteBatch",
-                exportXlsUrl: "game/gameDataReportCount/exportXls",
-                importExcelUrl: "game/gameDataReportCount/importExcel"
+                list: "game/payOrderBill/payConstruction",
+                exportXlsUrl: "game/payOrderBill/exportXls",
             },
             dictOptions: {
             }
@@ -228,6 +169,7 @@ export default {
         searchQuery() {
             let param = {
                 days: this.queryParam.days,
+                payRank: this.queryParam.payRank,
                 channelId: this.queryParam.channelId,
                 serverId: this.queryParam.serverId,
                 rangeDateBegin: this.queryParam.rangeDateBegin,

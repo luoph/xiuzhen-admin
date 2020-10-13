@@ -22,4 +22,14 @@ public interface IPayOrderBillService extends IService<PayOrderBill> {
      * @return
      */
     BigDecimal queryBillSumByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel);
+
+    /**
+     * 查询充值档次
+     * @param rangeDateBegin
+     * @param rangeDateEnd
+     * @param serverId
+     * @param channel
+     * @return
+     */
+    PayOrderBill queryPaygGradeByDateRange(String rangeDateBegin, String rangeDateEnd, String payRank, int days, Integer serverId, String channel);
 }

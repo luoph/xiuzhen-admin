@@ -35,7 +35,7 @@
             </a-form>
 
             <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('数据报表')">导出</a-button>
+                <a-button type="primary" icon="download" @click="handleExportXls('付费排行')">导出</a-button>
             </div>
 
         </div>
@@ -124,7 +124,7 @@ export default {
                 {
                     title: "最后登录时间",
                     align: "center",
-                    dataIndex: "没有"
+                    dataIndex: "playerRegisterInfo.loginDate"
                 },
                 {
                     title: "充值预警天数",
@@ -134,12 +134,13 @@ export default {
                 {
                     title: "登录预警天数",
                     align: "center",
-                    dataIndex: "没有"
+                    dataIndex: "playerRegisterInfo.loginWarningDays"
                 },
 
             ],
             url: {
                 list: "game/payUserRank/payRank",
+                exportXlsUrl: "game/payUserRank/exportXls",
             },
             dictOptions: {
             }
