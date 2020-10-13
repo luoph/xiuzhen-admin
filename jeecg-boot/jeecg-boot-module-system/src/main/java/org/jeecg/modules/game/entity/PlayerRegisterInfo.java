@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,6 +9,7 @@ import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PlayerRegisterInfo {
+public class PlayerRegisterInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,25 +34,25 @@ public class PlayerRegisterInfo {
     /**
      *  角色名称
      */
-    @Excel(name = "角色名称", width = 15)
+    @Excel(name = "玩家昵称", width = 15)
     private String name;
 
     /**
      * 账号
      */
-    @Excel(name = "账号", width = 15)
+    @Excel(name = "玩家账号", width = 15)
     private String account;
 
     /**
      * 玩家id
      */
-    @Excel(name = "玩家id", width = 15)
+    @Excel(name = "玩家ID", width = 15)
     private Integer playerId;
 
     /**
      * 创建日期
      */
-    @Excel(name = "创建日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @Excel(name = "注册时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private Date createDate;
@@ -66,5 +68,11 @@ public class PlayerRegisterInfo {
      */
     @Excel(name = "登录预警天数", width = 15)
     private  int loginWarningDays;
+
+    /**
+     * 最后登录时间
+     */
+    @Excel(name = "最后登录时间", width = 15)
+    private Date loginDate;
 
 }

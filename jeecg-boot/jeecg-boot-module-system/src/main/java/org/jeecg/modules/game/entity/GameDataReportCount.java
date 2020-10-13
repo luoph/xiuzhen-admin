@@ -35,85 +35,85 @@ public class GameDataReportCount implements Serializable {
 	/**
 	 * 渠道
 	 */
-	@Excel(name = "渠道", width = 15)
+	//@Excel(name = "渠道", width = 15)
     private String channel;
 	
 	/**
 	 * 服务器id
 	 */
-	@Excel(name = "服务器id", width = 15)
+	//@Excel(name = "服务器id", width = 15)
     private Integer serverId;
 	
 	/**
 	 * 每天登陆玩家数
 	 */
-	@Excel(name = "每天登陆玩家数", width = 15)
+	@Excel(name = "活跃玩家", width = 15)
     private Integer loginNum;
 	
 	/**
 	 * 每天支付总额
 	 */
-	@Excel(name = "每天支付总额", width = 15)
+	@Excel(name = "充值金额", width = 15)
     private java.math.BigDecimal payAmount;
 	
 	/**
 	 * 每天支付玩家数
 	 */
-	@Excel(name = "每天支付玩家数", width = 15)
+	@Excel(name = "活跃付费数", width = 15)
     private Integer payNum;
 	
 	/**
 	 * 每天支付率
 	 */
-	@Excel(name = "每天支付率", width = 15)
+	@Excel(name = "活跃付费率", width = 15)
     private java.math.BigDecimal payRate;
 	
 	/**
 	 * arpu
 	 */
-	@Excel(name = "arpu", width = 15)
+	@Excel(name = "ARPU", width = 15)
     private java.math.BigDecimal arpu;
 	
 	/**
 	 * arppu
 	 */
-	@Excel(name = "arppu", width = 15)
+	@Excel(name = "ARPPU", width = 15)
     private java.math.BigDecimal arppu;
 	
 	/**
 	 * 新增注册玩家数
 	 */
-	@Excel(name = "新增注册玩家数", width = 15)
+	@Excel(name = "新增玩家", width = 15)
     private Integer addNum;
 	
 	/**
 	 * 新增注册玩家支付总额
 	 */
-	@Excel(name = "新增注册玩家支付总额", width = 15)
+	@Excel(name = "新增充值金额", width = 15)
     private java.math.BigDecimal addPayAmount;
 	
 	/**
 	 * 新增注册玩家支付数
 	 */
-	@Excel(name = "新增注册玩家支付数", width = 15)
+	@Excel(name = "新增付费数", width = 15)
     private Integer addPayNum;
 	
 	/**
 	 * 新增注册玩家支付率
 	 */
-	@Excel(name = "新增注册玩家支付率", width = 15)
+	@Excel(name = "新增付费率", width = 15)
     private java.math.BigDecimal addPayRate;
 	
 	/**
 	 * 新增注册arpu
 	 */
-	@Excel(name = "新增注册arpu", width = 15)
+	@Excel(name = "新增ARPU", width = 15)
     private java.math.BigDecimal addArpu;
 	
 	/**
 	 * 新增注册arppu
 	 */
-	@Excel(name = "新增注册arppu", width = 15)
+	@Excel(name = "新增ARPPU", width = 15)
     private java.math.BigDecimal addArppu;
 	
 	/**
@@ -184,5 +184,10 @@ public class GameDataReportCount implements Serializable {
 	 * 将总和统计到该字段中
 	 */
 	private GameDataReportCount child;
+
+	/**
+	 * 时间字符串
+	 */
+	private String dateStr;
 
 }
