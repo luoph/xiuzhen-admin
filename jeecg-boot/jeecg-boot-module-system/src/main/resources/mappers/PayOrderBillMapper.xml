@@ -29,7 +29,7 @@
         </if>
     </select>
 
-    <select id="queryPaygGradeByDateRange" resultMap="BaseResultMap">
+    <select id="queryPayGradeByDateRange" resultMap="BaseResultMap">
         SELECT
         COUNT(id) pay_num_sum,
         (COUNT(id) / (SELECT COUNT(*) FROM pay_order)) pay_num_sum_rate,
