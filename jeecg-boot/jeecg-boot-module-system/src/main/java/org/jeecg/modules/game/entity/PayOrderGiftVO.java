@@ -137,7 +137,7 @@ public class PayOrderGiftVO implements Serializable {
 	/**
 	 * 该道具消费次数占总数的比例
 	 */
-	private Double productCountRatio;
+	private BigDecimal productCountRatio;
 
 	/**
 	 * 该道具的消费金额总数
@@ -147,5 +147,5 @@ public class PayOrderGiftVO implements Serializable {
 	/**
 	 * 该件道具的消费金额占总消费金额的比例
 	 */
-	private Double payAmountRatio;
+	private BigDecimal payAmountRatio;
 }

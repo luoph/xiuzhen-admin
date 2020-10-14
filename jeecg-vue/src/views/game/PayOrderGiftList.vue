@@ -86,7 +86,10 @@ export default {
                 {
                     title: "消费次数比例",
                     align: "center",
-                    dataIndex: "productCountRatio"
+                    dataIndex: "productCountRatio",
+                    customRender: function(text) {
+                        return text + "%";
+                    }
                 },
                 {
                     title: "消费金额",
@@ -96,7 +99,10 @@ export default {
                 {
                     title: "消费金额比例",
                     align: "center",
-                    dataIndex: "payAmountRatio"
+                    dataIndex: "payAmountRatio",
+                    customRender: function(text) {
+                        return text + "%";
+                    }
                 },
 
             ],

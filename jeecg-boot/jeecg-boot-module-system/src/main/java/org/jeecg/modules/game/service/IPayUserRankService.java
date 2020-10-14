@@ -24,7 +24,7 @@ public interface IPayUserRankService extends IService<PayUserRank> {
     List<PayUserRank> queryUserRankByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel);
 
     /**
-     *  查询充值用户排行数据统计,取前100
+     *  查询充值用户排行数据统计
      * @param rangeDateBegin  开始时间
      * @param rangeDateEnd    结束时间
      * @param serverId      服务器id
