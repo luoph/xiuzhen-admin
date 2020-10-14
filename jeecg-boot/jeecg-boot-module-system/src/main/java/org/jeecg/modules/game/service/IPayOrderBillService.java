@@ -34,7 +34,7 @@ public interface IPayOrderBillService extends IService<PayOrderBill> {
      * @param channel
      * @return
      */
-    PayOrderBill queryPaygGradeByDateRange(String rangeDateBegin, String rangeDateEnd, String payRank, int days, Integer serverId, String channel);
+    PayOrderBill queryPayGradeByDateRange(String rangeDateBegin, String rangeDateEnd, String payRank, int days, Integer serverId, String channel);
 
     /**
      * 查询全部充值档次

@@ -20,7 +20,7 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
                                        @Param("serverId") Integer serverId,
                                        @Param("channel") String channel);
 
-    PayOrderBill queryPaygGradeByDateRange(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+    PayOrderBill queryPayGradeByDateRange(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
                                            @Param("rangeDateEndTime") Date rangeDateEndTime,
                                            @Param("payRankBegin") int payRankBegin,
                                            @Param("payRankEnd") int payRankEnd,

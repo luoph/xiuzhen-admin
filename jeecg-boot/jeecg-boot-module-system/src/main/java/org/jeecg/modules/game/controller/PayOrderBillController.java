@@ -115,7 +115,7 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
             return Result.ok(page);
         }
 
-        PayOrderBill payOrderBill = payOrderBillService.queryPaygGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
+        PayOrderBill payOrderBill = payOrderBillService.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
         list.add(payOrderBill);
         page.setRecords(list).setTotal(list.size());
         return Result.ok(page);
@@ -141,7 +141,7 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         List<PayOrderBill> list = new ArrayList<>();
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String channel = gameChannelService.queryChannelNameById(channelId);
-        PayOrderBill payOrderBill = payOrderBillService.queryPaygGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
+        PayOrderBill payOrderBill = payOrderBillService.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
         payOrderBill.setPayRank(payRank);
         list.add(payOrderBill);
         return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PayOrderBill.class, "付费结构");

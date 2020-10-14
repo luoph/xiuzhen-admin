@@ -104,15 +104,12 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
                 gameDataReportCount.setOldArppu(BigDecimal.ZERO);
             }
             // 数据格式处理
-            //BigDecimal payRate = BigDecimalUtil.divideFour(gameDataReportCount.getPayRate().doubleValue(), 1, true);
             BigDecimal payRate = BigDecimalUtil.dividePercent(gameDataReportCount.getPayRate().doubleValue());
             gameDataReportCount.setPayRate(payRate);
 
-            //BigDecimal addPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getAddPayRate().doubleValue(), 1, true);
             BigDecimal addPayRate = BigDecimalUtil.dividePercent(gameDataReportCount.getAddPayRate().doubleValue());
             gameDataReportCount.setAddPayRate(addPayRate);
 
-            //BigDecimal oldPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getOldPayRate().doubleValue(), 1, true);
             BigDecimal oldPayRate = BigDecimalUtil.dividePercent(gameDataReportCount.getOldPayRate().doubleValue());
             gameDataReportCount.setOldPayRate(oldPayRate);
 
