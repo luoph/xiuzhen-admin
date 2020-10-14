@@ -2,7 +2,7 @@
 package cn.youai.xiuzhen.entity.pojo;
 
 import cn.youai.xiuzhen.entity.common.ConfigData;
-import cn.youai.xiuzhen.entity.pojo.ItemVo;
+import cn.youai.xiuzhen.entity.pojo.ItemVO;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -25,7 +25,7 @@ public class ConfSimpleReward implements Serializable, ConfigData {
     private String reward;
 
     @JSONField(serialize = false, deserialize = false)
-    private List<ItemVo> rewardList;
+    private List<ItemVO> rewardList;
 
     /*@Override
     public void onload() {
@@ -34,6 +34,6 @@ public class ConfSimpleReward implements Serializable, ConfigData {
 
     @Override
     public void onload(JSONObject data) {
-        rewardList = JSON.parseArray(this.reward, ItemVo.class);
+        rewardList = JSON.parseArray(this.reward, ItemVO.class);
     }
 }

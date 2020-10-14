@@ -100,7 +100,6 @@ public class MapValue implements Serializable, ConfigData {
         values.putAll(mapValue.getValues());
     }
 
-
     @Override
     public void onload(JSONObject data) {
         for (RoleAttrType e : RoleAttrType.values()) {
