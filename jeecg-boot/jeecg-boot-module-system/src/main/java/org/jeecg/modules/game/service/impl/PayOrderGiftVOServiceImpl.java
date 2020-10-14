@@ -34,10 +34,10 @@ public class PayOrderGiftVOServiceImpl implements IPayOrderGiftVOService {
         for (PayOrderGiftVO payOrderGiftVO : payOrderGiftVOList) {
             // 数据处理
             BigDecimal productCountRatio = payOrderGiftVO.getProductCountRatio();
-            payOrderGiftVO.setProductCountRatio(BigDecimalUtil.divideFour(productCountRatio.doubleValue(), 1, true));
+            payOrderGiftVO.setProductCountRatio(BigDecimalUtil.dividePercent(productCountRatio.doubleValue()));
 
             BigDecimal payAmountRatio = payOrderGiftVO.getPayAmountRatio();
-            payOrderGiftVO.setPayAmountRatio(BigDecimalUtil.divideFour(payAmountRatio.doubleValue(), 1, true));
+            payOrderGiftVO.setPayAmountRatio(BigDecimalUtil.dividePercent(payAmountRatio.doubleValue()));
         }
 
         return payOrderGiftVOList;

@@ -53,7 +53,7 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
                                    @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-                                    ) {
+    ) {
         Page<PayOrderGiftVO> pageVo = new Page<>(pageNo, pageSize);
         if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
             return Result.ok(pageVo);
