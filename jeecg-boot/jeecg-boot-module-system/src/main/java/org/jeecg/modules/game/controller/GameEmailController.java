@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.controller;
 
-import cn.youai.xiuzhen.entity.pojo.Item;
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -173,7 +173,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
                 itemName = null;
             }
         }
-        List<Item> items = gameEmailService.itemTree(itemId, itemName);
+        List<ConfItem> items = gameEmailService.itemTree(itemId, itemName);
         return Result.ok(items);
     }
 

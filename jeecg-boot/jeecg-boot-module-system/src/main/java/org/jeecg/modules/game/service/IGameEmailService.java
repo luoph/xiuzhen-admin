@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.service;
 
 import cn.youai.commons.model.Response;
-import cn.youai.xiuzhen.entity.pojo.Item;
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameEmail;
 
@@ -28,5 +28,5 @@ public interface IGameEmailService extends IService<GameEmail> {
      *
      * @return
      */
-    List<Item> itemTree(Integer itemId, String itemName);
+    List<ConfItem> itemTree(Integer itemId, String itemName);
 }

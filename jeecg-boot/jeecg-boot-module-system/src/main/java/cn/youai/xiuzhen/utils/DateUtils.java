@@ -513,15 +513,16 @@ public final class DateUtils {
      * 获取过去第几天的日期
      *
      * @param past      天数
-     * @param format    时间格式
      * @return           日期
      */
-    public static Date getPastDate(int past, SimpleDateFormat format) {
+    public static Date getPastDate(int past) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
+
         Date today = calendar.getTime();
-        String result = format.format(today);
-        Date date = DateUtils.parseDate(result);
+        Date date = DateUtils.dateOnly(today);
+        //String result = format.format(today);
+        //Date date = DateUtils.parseDate(result);
         return date;
     }
 

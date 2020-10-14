@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.DailyGiftPackageBuy;
 import org.jeecg.modules.game.entity.DailyGiftPackageBuyVO;
 import org.jeecg.modules.game.service.IDailyGiftPackageBuyService;

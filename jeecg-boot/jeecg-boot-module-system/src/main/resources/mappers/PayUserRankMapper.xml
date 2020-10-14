@@ -11,7 +11,7 @@
         <result column="pay_amount_sum" property="payAmountSum"/>
         <result column="pay_time_max" property="payTimeMax"/>
         <!-- 关联对象 -->
-        <association property="playerRegisterInfo" javaType="org.jeecg.modules.game.entity.PlayerRegisterInfo">
+        <association property="playerRegisterInfo" javaType="org.jeecg.modules.game.entity.PlayerRegisterInfoVO">
             <id column="id" property="id"/>
             <result column="account" property="account"/>
             <result column="name" property="name"/>

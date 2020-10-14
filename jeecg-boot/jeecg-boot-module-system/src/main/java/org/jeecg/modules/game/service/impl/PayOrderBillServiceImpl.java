@@ -55,9 +55,9 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
 
         }
         // 如果有选天数,就使用就近天数查询
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         // 获取过去第几天的日期
-        Date pastDate = DateUtils.getPastDate(days, sdf);
+        Date pastDate = DateUtils.getPastDate(days);
         Date nowDate = new Date();
         payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
         payOrderBill.setPayRank(payRank);
@@ -81,9 +81,9 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 list.add(getDataTreating(payOrderBill));
             }else {
                 // 如果有选天数,就使用就近天数查询
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 // 获取过去第几天的日期
-                Date pastDate = DateUtils.getPastDate(days, sdf);
+                Date pastDate = DateUtils.getPastDate(days);
                 Date nowDate = new Date();
                 payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
                 payOrderBill.setPayRank(payRank);

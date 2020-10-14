@@ -66,7 +66,7 @@ public class PayOrderBill implements Serializable {
 	 * 支付玩家id
 	 */
 	//@Excel(name = "支付玩家id", width = 15)
-    private java.lang.Integer playerId;
+    private java.lang.Long playerId;
 	
 	/**
 	 * 商品id
