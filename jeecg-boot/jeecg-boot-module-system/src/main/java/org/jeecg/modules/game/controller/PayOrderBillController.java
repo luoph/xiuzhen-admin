@@ -106,9 +106,13 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
                 && serverId == 0 && channelId == 0 && days == 0 ) {
             return Result.ok(page);
         }
+        // 没有传入时间和天数返回空的数据
+        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0){
+            return Result.ok(page);
+        }
         String channel= gameChannelService.queryChannelNameById(channelId);
 
-        if (StringUtils.isBlank(payRank)){
+        if (StringUtils.isEmpty(payRank)){
             list = payOrderBillService.queryForList(rangeDateBegin, rangeDateEnd, days, serverId, channel);
             page.setRecords(list).setTotal(list.size());
             return Result.ok(page);

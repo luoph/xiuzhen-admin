@@ -3,6 +3,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.PayOrderBill;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
 import org.jeecg.modules.game.service.IPayOrderBillService;
@@ -78,18 +79,17 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel);
                 payOrderBill.setPayRank(payRank);
                 list.add(getDataTreating(payOrderBill));
+            }else {
+                // 如果有选天数,就使用就近天数查询
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                // 获取过去第几天的日期
+                Date pastDate = DateUtils.getPastDate(days, sdf);
+                Date nowDate = new Date();
+                payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
+                payOrderBill.setPayRank(payRank);
+                list.add(getDataTreating(payOrderBill));
             }
-
-            // 如果有选天数,就使用就近天数查询
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            // 获取过去第几天的日期
-            Date pastDate = DateUtils.getPastDate(days, sdf);
-            Date nowDate = new Date();
-            payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
-            payOrderBill.setPayRank(payRank);
-            list.add(getDataTreating(payOrderBill));
         }
-
         return list;
     }
 
@@ -123,7 +123,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         if (arppu == null){
             arppu = new BigDecimal(0);
         }
-        payOrderBill.setArppu(BigDecimalUtil.divideFour(arppu.doubleValue(),1,false));
+        payOrderBill.setArppu(BigDecimalUtil.divide(arppu.doubleValue(),1,3));
 
         return payOrderBill;
     }

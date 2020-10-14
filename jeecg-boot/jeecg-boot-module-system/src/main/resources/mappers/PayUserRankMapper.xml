@@ -17,6 +17,7 @@
             <result column="name" property="name"/>
             <result column="pri_player_id" property="playerId"/>
             <result column="create_date" property="createDate"/>
+            <result column="create_time" property="createTime"/>
             <result column="login_date" property="loginDate"/>
         </association>
     </resultMap>
@@ -54,7 +55,7 @@
         po.player_id,
         pri.name,
         SUM(po.pay_amount) pay_amount_sum,
-        pri.create_date,
+        pri.create_time,
         MAX(po.pay_time) pay_time_max
 
         FROM pay_order po

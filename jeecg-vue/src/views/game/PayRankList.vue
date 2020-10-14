@@ -114,7 +114,7 @@ export default {
                 {
                     title: "注册时间",
                     align: "center",
-                    dataIndex: "playerRegisterInfo.createDate"
+                    dataIndex: "playerRegisterInfo.createTime"
                 },
                 {
                     title: "最后充值时间",
