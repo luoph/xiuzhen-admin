@@ -61,7 +61,7 @@ public class PayOrderBillVO implements Serializable {
 	/**
 	 * 支付玩家id
 	 */
-    private Integer playerId;
+    private Long playerId;
 
 	/**
 	 * 商品id

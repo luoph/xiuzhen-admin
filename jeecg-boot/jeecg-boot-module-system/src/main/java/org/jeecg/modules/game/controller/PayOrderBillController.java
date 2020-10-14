@@ -9,7 +9,6 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
-import org.jeecg.modules.game.entity.GameDataReportCount;
 import org.jeecg.modules.game.entity.PayOrderBill;
 import org.jeecg.modules.game.entity.PayOrderBillVO;
 import org.jeecg.modules.game.service.IGameChannelService;
@@ -19,10 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

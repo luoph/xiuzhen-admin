@@ -5,8 +5,8 @@ import cn.hutool.json.JSONTokener;
 import cn.youai.commons.model.Response;
 import cn.youai.xiuzhen.common.data.ConfigDataEnum;
 import cn.youai.xiuzhen.common.data.ConfigDataService;
-import cn.youai.xiuzhen.entity.pojo.Item;
-import cn.youai.xiuzhen.entity.pojo.ItemVo;
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.xiuzhen.entity.pojo.ItemVO;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.googlecode.cqengine.query.QueryFactory;
@@ -71,7 +71,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
                 log.error("gameEmail:{}" + gameEmail.toString(), e);
             }
 
-            List<ItemVo> list = JSONArray.parseArray(content, ItemVo.class);
+            List<ItemVO> list = JSONArray.parseArray(content, ItemVO.class);
             if (CollUtil.isEmpty(list)) {
                 response.setFailure("附件格式错误！");
                 return response;
@@ -97,21 +97,21 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     }
 
     @Override
-    public List<Item> itemTree(Integer itemId, String itemName) {
-        QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(Item.ITEM_ID)));
+    public List<ConfItem> itemTree(Integer itemId, String itemName) {
+        QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfItem.ITEM_ID)));
         if (itemId != null && itemName != null) {
-            Equal<Item, Integer> query1 = QueryFactory.equal(Item.ITEM_ID, itemId);
-            Equal<Item, String> query2 = QueryFactory.equal(Item.NAME, itemName);
-            And<Item> and = QueryFactory.and(query1, query2);
-            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, and, queryOptions);
+            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
+            Equal<ConfItem, String> query2 = QueryFactory.equal(ConfItem.NAME, itemName);
+            And<ConfItem> and = QueryFactory.and(query1, query2);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, and, queryOptions);
         } else if (itemId != null) {
-            Equal<Item, Integer> query1 = QueryFactory.equal(Item.ITEM_ID, itemId);
-            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query1, queryOptions);
+            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, query1, queryOptions);
         } else if (itemName != null) {
-            Equal<Item, String> query2 = QueryFactory.equal(Item.NAME, itemName);
-            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, query2, queryOptions);
+            Equal<ConfItem, String> query2 = QueryFactory.equal(ConfItem.NAME, itemName);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, query2, queryOptions);
         } else {
-            return configDataService.selectList(ConfigDataEnum.ITEM, Item.class, queryOptions);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, queryOptions);
         }
 
     }

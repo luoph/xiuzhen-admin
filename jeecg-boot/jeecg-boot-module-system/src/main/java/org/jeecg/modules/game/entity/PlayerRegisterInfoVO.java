@@ -22,7 +22,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PlayerRegisterInfo implements Serializable {
+public class PlayerRegisterInfoVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

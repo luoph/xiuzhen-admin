@@ -158,7 +158,7 @@ public class PayUserRank implements Serializable {
 	/**
 	 * 玩家注册信息
 	 */
-	private PlayerRegisterInfo playerRegisterInfo;
+	private PlayerRegisterInfoVO playerRegisterInfo;
 
 	/**
 	 * 最后充值时间

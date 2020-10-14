@@ -65,7 +65,7 @@ public class PayOrderGift implements Serializable {
 	 * 支付玩家id
 	 */
 	@Excel(name = "支付玩家id", width = 15)
-    private Integer playerId;
+    private Long playerId;
 	
 	/**
 	 * 商品id

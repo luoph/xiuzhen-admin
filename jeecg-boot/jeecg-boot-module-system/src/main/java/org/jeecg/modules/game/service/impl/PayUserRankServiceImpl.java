@@ -3,13 +3,12 @@ package org.jeecg.modules.game.service.impl;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.PayUserRank;
-import org.jeecg.modules.game.entity.PlayerRegisterInfo;
+import org.jeecg.modules.game.entity.PlayerRegisterInfoVO;
 import org.jeecg.modules.game.mapper.PayUserRankMapper;
 import org.jeecg.modules.game.service.IPayUserRankService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,9 +44,9 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             return getDataTreating(list);
         }
         //如果有选天数,就使用就近天数查询
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //获取过去第几天的日期
-        Date pastDate = DateUtils.getPastDate(days, sdf);
+        Date pastDate = DateUtils.getPastDate(days);
         list = payUserRankMapper.queryPayRankByDateRange(pastDate, nowDate, serverId, channel);
         return getDataTreating(list);
     }
@@ -61,7 +60,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
         Date nowDate = new Date();
         for (PayUserRank payUserRank : list) {
             //获取玩家注册信息
-            PlayerRegisterInfo playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
+            PlayerRegisterInfoVO playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
 
             //获取玩家最后的充值时间
             Date createDate = playerRegisterInfo.getCreateDate();

@@ -37,9 +37,9 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
             return list;
         }
         // 如果有选天数,就使用就近天数查询
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         // 获取过去第几天的日期
-        Date pastDate = DateUtils.getPastDate(days, sdf);
+        Date pastDate = DateUtils.getPastDate(days);
         Date nowDate = new Date();
         list = getCompleteList(gameDataReportCountMapper.queryDataReportByDateRange(pastDate, nowDate, serverId, channel));
         return list;
