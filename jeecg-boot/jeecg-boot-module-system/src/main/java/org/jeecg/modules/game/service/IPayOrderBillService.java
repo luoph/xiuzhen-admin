@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.PayOrderBill;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -32,4 +33,15 @@ public interface IPayOrderBillService extends IService<PayOrderBill> {
      * @return
      */
     PayOrderBill queryPaygGradeByDateRange(String rangeDateBegin, String rangeDateEnd, String payRank, int days, Integer serverId, String channel);
+
+    /**
+     * 查询全部充值档次
+     * @param rangeDateBegin
+     * @param rangeDateEnd
+     * @param days
+     * @param serverId
+     * @param channel
+     * @return
+     */
+    List<PayOrderBill> queryForList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel);
 }

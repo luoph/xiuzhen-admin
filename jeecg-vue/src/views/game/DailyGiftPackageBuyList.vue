@@ -10,7 +10,7 @@
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD HH:mm:ss" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -87,7 +87,10 @@ export default {
                 {
                     title: "消费次数比例",
                     align: "center",
-                    dataIndex: "giftCountRatio"
+                    dataIndex: "giftCountRatio",
+                    customRender: function(text) {
+                        return text + "%";
+                    }
                 },
                 {
                     title: "消费金额",
@@ -97,7 +100,10 @@ export default {
                 {
                     title: "消费金额比例",
                     align: "center",
-                    dataIndex: "rechargeAmountRatio"
+                    dataIndex: "rechargeAmountRatio",
+                    customRender: function(text) {
+                        return text + "%";
+                    }
                 },
             ],
             url: {

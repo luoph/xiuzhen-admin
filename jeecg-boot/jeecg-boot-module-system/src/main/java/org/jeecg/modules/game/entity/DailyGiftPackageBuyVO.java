@@ -86,7 +86,7 @@ public class DailyGiftPackageBuyVO implements Serializable {
 	/**
 	 * 该道具消费礼包次数占总数的比例
 	 */
-	private Double giftCountRatio;
+	private BigDecimal giftCountRatio;
 
 	/**
 	 * 该消费礼包的金额总数
@@ -96,6 +96,6 @@ public class DailyGiftPackageBuyVO implements Serializable {
 	/**
 	 * 该件消费礼包的消费金额占总消费金额的比例
 	 */
-	private Double rechargeAmountRatio;
+	private BigDecimal rechargeAmountRatio;
 
 }

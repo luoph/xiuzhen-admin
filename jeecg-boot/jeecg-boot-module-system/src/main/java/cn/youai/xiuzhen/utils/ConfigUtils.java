@@ -156,5 +156,35 @@ public final class ConfigUtils {
         return result.toString();
     }
 
+    /**
+     * 获取随机值
+     *
+     * @param itemList 配置列表
+     * @param <T>      返回类型
+     * @return 随机值
+     */
+    public static <T> T random(List<T> itemList) {
+        if (itemList == null || itemList.size() == 0) {
+            return null;
+        }
+
+        int index = randomIndex(itemList.size());
+        return itemList.get(index);
+    }
+
+    /**
+     * 返回 [0, size-1] 的随机数
+     *
+     * @param size 大小
+     * @return 随机索引
+     */
+    public static int randomIndex(int size) {
+        if (size == 0) {
+            return 0;
+        }
+        int random = RandomUtils.nextInt(0, size * RANDOM_ROUND);
+        return random % size;
+    }
+
 
 }
