@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.RechargeOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.RechargeOrder">
+        <id column="id" property="id"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="goods_type" property="goodsType"/>
+    </resultMap>
+
+
+    <select id="queryTodayGift" resultMap="BaseResultMap">
+        SELECT
+        DISTINCT(goods_id),
+        goods_type
+        FROM recharge_order
+        WHERE
+        create_date >= #{rangeDateBeginTime} AND create_date &lt;= #{rangeDateEndTime}
+        WHERE goods_type= 0
+    </select>
+</mapper>

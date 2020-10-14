@@ -12,38 +12,16 @@ import lombok.Getter;
 @Getter
 public enum ConfigDataEnum {
 
-    /** =================== 以下是道具&修为相关 =================== */
-    /**
-     * 道具
-     */
-    /** =================== 以下是道具&修为相关 =================== */
     /**
      * 道具
      */
     ITEM("item", ConfItem.class),
-
     /**
-     * 每日礼包
+     * 充值
      */
-    DAILY_GIFT_PACKAGE("day_gift_type", ConfDailyGiftPackage.class),
-
-    DAILY_GIFT_TYPE("daily_gift_type", ConfDailyGiftType.class),
-
-    /**
-     * 月卡
-     */
-    MONTH_CARD("month_card_type", ConfMonthCardType.class),
-
-
-    /**
-     * ====================================== 仙职 ==========================================
-     */
-    IMMORTAL_TYPE("immortal_type", ConfImmortalType.class),
-
-    IMMORTAL_PRIVILEGE("immortal_privilege", ConfImmortalPrivilege.class),;
-
-
-
+    RECHARGE_GOODS("recharge_goods", ConfRechargeGoods.class),
+    //end
+    ;
 
     /**
      * json 表名，不含扩展名

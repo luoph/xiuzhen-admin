@@ -3,33 +3,44 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    </a-row>
-            </a-form>
-        </div>
-        <!-- 查询区域-END -->
-        <!-- 操作按钮区域 -->
-        <div class="table-operator">
-            <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('今日礼包')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
-        </div>
+                <a-row :gutter="45">
+                    <a-col :md="10" :sm="8">
+                        <!--@ = v-on:数据绑定 不是事件-->
+                        <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+                    </a-col>
+                    <a-col :md="10" :sm="8">
+                        <a-form-item label="创建日期">
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="5" :sm="5">
+                        <a-form-item label="选择就近天数">
+                            <a-select placeholder="天数" v-model="queryParam.days">
+                                <a-select-option :value="0">不选择天数</a-select-option>
+                                <a-select-option :value="7">近7天</a-select-option>
+                                <a-select-option :value="15">近15天</a-select-option>
+                                <a-select-option :value="30">近一个月</a-select-option>
+                                <a-select-option :value="60">近两个月</a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col>
 
-        <!-- table区域-begin -->
-        <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+                    <a-col :md="4" :sm="8">
+                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                        </span>
+                    </a-col>
+                </a-row>
+            </a-form>
+
+            <div class="table-operator">
+                <a-button type="primary" icon="download" @click="handleExportXls('每日礼包')">导出</a-button>
             </div>
 
+        </div>
+        <!-- 查询区域-END -->
+        <!-- table区域-begin -->
+        <div>
             <a-table
                 ref="table"
                 size="middle"
@@ -41,50 +52,28 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
-            >
-                <template slot="htmlSlot" slot-scope="text">
-                    <div v-html="text"></div>
-                </template>
-                <template slot="imgSlot" slot-scope="text">
-                    <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
-                </template>
-                <template slot="fileSlot" slot-scope="text">
-                    <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
-                </template>
 
-                <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
-                    <a-divider type="vertical" />
-                    <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown>
-                </span>
+            >
             </a-table>
         </div>
 
-        <rechargeOrder-modal ref="modalForm" @ok="modalFormOk"></rechargeOrder-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import RechargeOrderModal from "./modules/RechargeOrderModal";
+import JDate from "@/components/jeecg/JDate.vue";
+import GameChannelServer from "@/components/gameserver/GameChannelServer";
+import { filterObj } from "@/utils/util";
+import { getAction } from "@/api/manage";
 
 export default {
     name: "RechargeOrderList",
     mixins: [JeecgListMixin],
     components: {
-        RechargeOrderModal
+        JDate,
+        GameChannelServer,
+        getAction
     },
     data() {
         return {

@@ -47,7 +47,7 @@ public class PlayerRegisterInfoVO implements Serializable {
      * 玩家id
      */
     @Excel(name = "玩家ID", width = 15)
-    private Integer playerId;
+    private Long playerId;
 
     /**
      * 创建日期

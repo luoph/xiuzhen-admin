@@ -137,12 +137,12 @@ public class ConfItem implements Serializable, ConfigData {
     private Integer offerType;
 
     @JSONField(serialize = false, deserialize = false)
-    private ItemVo item;
+    private ItemVO item;
 
     @Override
     public void onload(JSONObject data) {
         if (StringUtils.isNotEmpty(this.quickBuy)) {
-            this.item = JSON.parseObject(this.quickBuy, ItemVo.class);
+            this.item = JSON.parseObject(this.quickBuy, ItemVO.class);
         }
     }
 }
