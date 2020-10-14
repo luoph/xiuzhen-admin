@@ -77,7 +77,7 @@
     <select id="getPlayerLastLoginTime" resultType="date">
         SELECT
         MAX(create_time) loginDate
-        FROM xiuzhen_log_test.log_account
+        FROM ${logTable}
         WHERE
         player_id = #{playerId}
     </select>

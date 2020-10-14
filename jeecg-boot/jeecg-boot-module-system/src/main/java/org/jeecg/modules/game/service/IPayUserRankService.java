@@ -14,21 +14,23 @@ import java.util.List;
 public interface IPayUserRankService extends IService<PayUserRank> {
 
     /**
-     *  查询充值用户排行数据统计,取前100
-     * @param payTimeBegin  开始时间
-     * @param payTimeEnd    结束时间
-     * @param serverId      服务器id
-     * @param channel       游戏渠道
+     * 查询充值用户排行数据统计,取前100
+     *
+     * @param payTimeBegin 开始时间
+     * @param payTimeEnd   结束时间
+     * @param serverId     服务器id
+     * @param channel      游戏渠道
      * @return
      */
     List<PayUserRank> queryUserRankByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel);
 
     /**
-     *  查询充值用户排行数据统计
-     * @param rangeDateBegin  开始时间
-     * @param rangeDateEnd    结束时间
-     * @param serverId      服务器id
-     * @param channel       游戏渠道
+     * 查询充值用户排行数据统计
+     *
+     * @param rangeDateBegin 开始时间
+     * @param rangeDateEnd   结束时间
+     * @param serverId       服务器id
+     * @param channel        游戏渠道
      * @return
      */
     List<PayUserRank> queryPayRankByDateRange(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel);
