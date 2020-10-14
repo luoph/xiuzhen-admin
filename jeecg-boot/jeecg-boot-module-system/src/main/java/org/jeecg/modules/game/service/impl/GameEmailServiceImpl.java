@@ -43,7 +43,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
      */
     private static final int TARGET_BODY_TYPE = 1;
 
-    @Value("${app.url.gamecenter}")
+    @Value("${app.url.game-center}")
     private String gameCenterUrl;
 
     @Value("${app.send-email-path}")

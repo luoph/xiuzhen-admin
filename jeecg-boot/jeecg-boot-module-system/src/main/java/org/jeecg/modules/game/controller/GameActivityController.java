@@ -31,7 +31,7 @@ import java.util.Arrays;
 @RequestMapping("game/gameActivity")
 public class GameActivityController extends JeecgController<GameActivity, IGameActivityService> {
 
-    @Value("${app.url.gamecenter}")
+    @Value("${app.url.game-center}")
     private String gameCenterUrl;
 
     @Autowired
