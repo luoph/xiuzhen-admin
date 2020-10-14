@@ -11,7 +11,7 @@
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD HH:mm:ss" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="5">

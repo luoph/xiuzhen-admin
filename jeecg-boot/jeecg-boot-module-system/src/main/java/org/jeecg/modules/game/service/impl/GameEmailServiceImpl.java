@@ -8,7 +8,6 @@ import cn.youai.xiuzhen.common.data.ConfigDataService;
 import cn.youai.xiuzhen.entity.pojo.Item;
 import cn.youai.xiuzhen.entity.pojo.ItemVo;
 import com.alibaba.fastjson.JSONArray;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.logical.And;
@@ -17,17 +16,12 @@ import com.googlecode.cqengine.query.simple.Equal;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameEmail;
-import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
 import org.jeecg.modules.game.service.IGameEmailService;
-import org.jeecg.modules.game.service.IGameServerService;
-import org.jeecg.modules.player.entity.PlayerRegisterInfo;
-import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**

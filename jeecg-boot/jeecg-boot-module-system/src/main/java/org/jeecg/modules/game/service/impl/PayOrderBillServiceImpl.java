@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -21,6 +23,8 @@ import java.util.Date;
  */
 @Service
 public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, PayOrderBill> implements IPayOrderBillService {
+
+    private static String [] PAYRANKS = {"0-6", "7-29", "30-67", "68-97", "98-197", "198-327", "328-647", "648-9999"};
 
     @Resource
     private PayOrderBillMapper payOrderBillMapper;
@@ -45,20 +49,52 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
             Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
             payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel);
+            payOrderBill.setPayRank(payRank);
             return  getDataTreating(payOrderBill);
 
         }
-        //如果有选天数,就使用就近天数查询
+        // 如果有选天数,就使用就近天数查询
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        //获取过去第几天的日期
+        // 获取过去第几天的日期
         Date pastDate = DateUtils.getPastDate(days, sdf);
         Date nowDate = new Date();
         payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
+        payOrderBill.setPayRank(payRank);
         return getDataTreating(payOrderBill);
     }
 
+    @Override
+    public List<PayOrderBill> queryForList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel) {
+        List<PayOrderBill> list = new ArrayList<>();
+        PayOrderBill payOrderBill= null;
+        for (String payRank : PAYRANKS) {
+            String[] payRanks = payRank.split("-");
+            int payRankBegin = Integer.parseInt(payRanks[0]);
+            int payRankEnd = Integer.parseInt(payRanks[1]);
+
+            if (days == 0){
+                Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
+                Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+                payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel);
+                payOrderBill.setPayRank(payRank);
+                list.add(getDataTreating(payOrderBill));
+            }
+
+            // 如果有选天数,就使用就近天数查询
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            // 获取过去第几天的日期
+            Date pastDate = DateUtils.getPastDate(days, sdf);
+            Date nowDate = new Date();
+            payOrderBill = payOrderBillMapper.queryPaygGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
+            payOrderBill.setPayRank(payRank);
+            list.add(getDataTreating(payOrderBill));
+        }
+
+        return list;
+    }
+
     /**
-     * 数据处理
+     *  数据处理
      * @param payOrderBill
      * @return
      */
@@ -77,17 +113,17 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         if (payNumSumRate == null){
             payNumSumRate = new BigDecimal(0);
         }
-        payOrderBill.setPayNumSumRate(BigDecimalUtil.divideZero(payNumSumRate.doubleValue(),1,true));
+        payOrderBill.setPayNumSumRate(BigDecimalUtil.divideFour(payNumSumRate.doubleValue(),1,true));
 
         if (payAmountSumRate == null){
             payAmountSumRate = new BigDecimal(0);
         }
-        payOrderBill.setPayAmountSumRate(BigDecimalUtil.divideZero(payAmountSumRate.doubleValue(),1,true));
+        payOrderBill.setPayAmountSumRate(BigDecimalUtil.divideFour(payAmountSumRate.doubleValue(),1,true));
 
         if (arppu == null){
             arppu = new BigDecimal(0);
         }
-        payOrderBill.setArppu(BigDecimalUtil.divideZero(arppu.doubleValue(),1,false));
+        payOrderBill.setArppu(BigDecimalUtil.divideFour(arppu.doubleValue(),1,false));
 
         return payOrderBill;
     }

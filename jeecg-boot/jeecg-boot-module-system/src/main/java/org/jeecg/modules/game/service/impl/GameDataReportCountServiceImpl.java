@@ -29,16 +29,16 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
     @Override
     public List<GameDataReportCount> queryDataReportByDateRange(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel) {
         List<GameDataReportCount> list = null;
-        //如果没有选天数,就使用传入的时间查询
+        // 如果没有选天数,就使用传入的时间查询
         if (days == 0){
             Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
             list = getCompleteList(gameDataReportCountMapper.queryDataReportByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel));
             return list;
         }
-        //如果有选天数,就使用就近天数查询
+        // 如果有选天数,就使用就近天数查询
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //获取过去第几天的日期
+        // 获取过去第几天的日期
         Date pastDate = DateUtils.getPastDate(days, sdf);
         Date nowDate = new Date();
         list = getCompleteList(gameDataReportCountMapper.queryDataReportByDateRange(pastDate, nowDate, serverId, channel));
@@ -46,14 +46,14 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
     }
 
     /**
-     * 获取处理好的list集合
+     *  获取处理好的list集合
      * @param list
      * @return
      */
     public List<GameDataReportCount> getCompleteList(List<GameDataReportCount> list){
-        //child 为汇总变量,需要单独对其进行计算
+        // child 为汇总变量,需要单独对其进行计算
         GameDataReportCount child = new GameDataReportCount();
-        //封装数据用于计算的临时变量
+        // 封装数据用于计算的临时变量
         double loginNumSum = 0;
         double payNumSum = 0;
 
@@ -86,14 +86,14 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
         BigDecimal oldArpuSum= null;
         BigDecimal oldArppuSum= null;
 
-        //数据处理
+        // 数据处理
         for (GameDataReportCount gameDataReportCount : list) {
-            //日期变为字符串显示
+            // 日期变为字符串显示
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String format = sdf.format(gameDataReportCount.getCountDate());
             gameDataReportCount.setDateStr(format);
 
-            //数据为空处理
+            // 数据为空处理
             if (gameDataReportCount.getOldPayRate() == null){
                 gameDataReportCount.setOldPayRate(new BigDecimal(0));
             }
@@ -103,79 +103,75 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
             if (gameDataReportCount.getOldArppu() == null){
                 gameDataReportCount.setOldArppu(new BigDecimal(0));
             }
-            //数据格式处理
-            BigDecimal payRate = BigDecimalUtil.divideZero(gameDataReportCount.getPayRate().doubleValue(), 1,true);
+            // 数据格式处理
+            BigDecimal payRate = BigDecimalUtil.divideFour(gameDataReportCount.getPayRate().doubleValue(), 1,true);
             gameDataReportCount.setPayRate(payRate);
 
-            BigDecimal addPayRate = BigDecimalUtil.divideZero(gameDataReportCount.getAddPayRate().doubleValue(), 1,true);
+            BigDecimal addPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getAddPayRate().doubleValue(), 1,true);
             gameDataReportCount.setAddPayRate(addPayRate);
 
-            BigDecimal oldPayRate = BigDecimalUtil.divideZero(gameDataReportCount.getOldPayRate().doubleValue(), 1,true);
+            BigDecimal oldPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getOldPayRate().doubleValue(), 1,true);
             gameDataReportCount.setOldPayRate(oldPayRate);
 
-            //计算child对象中的各属性值
-            //活跃玩家汇总
+            // 计算child对象中的各属性值
+            // 活跃玩家汇总
             loginNumSum = loginNumSum + gameDataReportCount.getLoginNum();
             //活跃付费数汇总
             payNumSum = payNumSum + gameDataReportCount.getPayNum();
-            //充值总金额
+            // 充值总金额
             BigDecimal payAmount = gameDataReportCount.getPayAmount();
             payAmountSum = payAmountSum + payAmount.doubleValue();
-            //新增玩家汇总
+            // 新增玩家汇总
             addNumSum = addNumSum + gameDataReportCount.getAddNum();
-            //新增付费数汇总
+            // 新增付费数汇总
             addPayNumSum = addPayNumSum = gameDataReportCount.getAddPayNum();
-            //新增充值金额汇总
+            // 新增充值金额汇总
             BigDecimal addPayAmount = gameDataReportCount.getAddPayAmount();
             addPayAmountSum = addPayAmountSum + addPayAmount.doubleValue();
 
         }
-        //活跃付费率汇总
-        //payRateSum = new BigDecimal(payNumSum / loginNumSum);
-        payRateSum = BigDecimalUtil.divideZero(payNumSum, loginNumSum, true);
+        // 活跃付费率汇总
+        payRateSum = BigDecimalUtil.divideFour(payNumSum, loginNumSum, true);
 
-        //充值金额
+        // 充值金额
         payAmountSumBigDecimal = new BigDecimal(payAmountSum);
 
-        //ARPU汇总
-        //arpuSum = new BigDecimal(payAmountSum / loginNumSum);
-        arpuSum = BigDecimalUtil.divideZero(payAmountSum, loginNumSum, true);
+        // ARPU汇总
+        arpuSum = BigDecimalUtil.divideFour(payAmountSum, loginNumSum, true);
 
-        //ARPPU汇总
+        // ARPPU汇总
         arppuSum = BigDecimalUtil.divideZero(payAmountSum, payNumSum,false);
 
-        //新增付费率汇总
-        //addPayRateSumBigDecimal = new BigDecimal(addPayNumSum / addNumSum);
-        addPayRateSumBigDecimal = BigDecimalUtil.divideZero(addPayNumSum, addNumSum, true);
+        // 新增付费率汇总
+        addPayRateSumBigDecimal = BigDecimalUtil.divideFour(addPayNumSum, addNumSum, true);
 
-        //新增充值金额
+        // 新增充值金额
         addPayAmountSumBigDecimal = new BigDecimal(addPayAmountSum);
 
-        //新增ARPU汇总
-        addArpuSum = BigDecimalUtil.divideZero(addPayAmountSum, addNumSum, true);
+        // 新增ARPU汇总
+        addArpuSum = BigDecimalUtil.divideFour(addPayAmountSum, addNumSum, true);
 
-        //新增ARPPU汇总
-        addArppuSum = BigDecimalUtil.divideZero(addPayAmountSum, addPayNumSum,false);
+        // 新增ARPPU汇总
+        addArppuSum = BigDecimalUtil.divideFour(addPayAmountSum, addPayNumSum,false);
 
-        //老玩家汇总
+        // 老玩家汇总
         oldNumSum = loginNumSum - addNumSum;
-        //老玩家付费数汇总
+        // 老玩家付费数汇总
         oldPayNumSum = payNumSum - addPayNumSum;
 
-        //老玩家付费率汇总
-        oldPayRateSumBigDecimal = BigDecimalUtil.divideZero(oldPayNumSum, oldNumSum, true);
+        // 老玩家付费率汇总
+        oldPayRateSumBigDecimal = BigDecimalUtil.divideFour(oldPayNumSum, oldNumSum, true);
 
-        //老玩家充值金额
+        // 老玩家充值金额
         oldPayAmountSumBigDecimal = new BigDecimal(payAmountSum - addPayAmountSum);
 
-        //老玩家ARPU汇总
-        oldArpuSum = BigDecimalUtil.divideZero((payAmountSum - addPayAmountSum), oldNumSum, false);
+        // 老玩家ARPU汇总
+        oldArpuSum = BigDecimalUtil.divideFour((payAmountSum - addPayAmountSum), oldNumSum, false);
 
+        // 老玩家ARPPU汇总
+        oldArppuSum = BigDecimalUtil.divideFour((payAmountSum - addPayAmountSum), oldPayNumSum,false);
 
-        //老玩家ARPPU汇总
-        oldArppuSum = BigDecimalUtil.divideZero((payAmountSum - addPayAmountSum), oldPayNumSum,false);
-
-        //封装child
+        // 封装child
         child.setLoginNum(new Double(loginNumSum).intValue());
         child.setPayNum(new Double(payNumSum).intValue());
         child.setPayRate(payRateSum);
@@ -197,7 +193,7 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
         child.setDateStr("汇总");
 
         //封装成list集合的第一个元素
-        list.add(0,child);
+        list.add(0, child);
 
         return list;
     }

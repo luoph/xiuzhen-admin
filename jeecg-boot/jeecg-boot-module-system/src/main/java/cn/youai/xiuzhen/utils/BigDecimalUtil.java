@@ -127,4 +127,23 @@ public final class BigDecimalUtil {
     public static BigDecimal valueOf(double v) {
         return BigDecimal.valueOf(v);
     }
+
+    /**
+     * 被除数==0时 不抛异常的除法计算
+     *
+     * @param v1        除数
+     * @param v2        被除数0 不抛出异常判定
+     * @param isPercent 计算类型 true-百分比类型 false-正常小数值
+     * @return !0 被除数计算结果, 返回结果为带有两位小数的百分数, 例: 12.34%
+     */
+    public static BigDecimal divideFour(double v1, double v2, boolean isPercent) {
+        if (v2 != 0) {
+            BigDecimal result = divide(v1, v2, 4);
+            if (isPercent) {
+                return result.multiply(BigDecimal.valueOf(100));
+            }
+            return result;
+        }
+        return BigDecimal.valueOf(0.0000);
+    }
 }
