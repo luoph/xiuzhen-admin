@@ -67,7 +67,7 @@ public class PayUserRank implements Serializable {
 	 * 支付玩家id
 	 */
 	@Excel(name = "玩家ID", width = 15)
-    private Integer playerId;
+    private Long playerId;
 	
 	/**
 	 * 商品id
