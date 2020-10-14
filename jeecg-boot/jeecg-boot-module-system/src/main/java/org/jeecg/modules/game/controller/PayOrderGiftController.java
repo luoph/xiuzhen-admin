@@ -12,7 +12,10 @@ import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IPayOrderGiftService;
 import org.jeecg.modules.game.service.IPayOrderGiftVOService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

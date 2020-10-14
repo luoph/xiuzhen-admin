@@ -24,44 +24,44 @@ import java.io.Serializable;
 public class RedeemCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	
-	/**
-	 * id
-	 */
-	@TableId(type = IdType.AUTO)
+
+    /**
+     * id
+     */
+    @TableId(type = IdType.AUTO)
     private java.lang.Long id;
-	
-	/**
-	 * 激活码活动id
-	 */
-	@Excel(name = "激活码活动id", width = 15)
+
+    /**
+     * 激活码活动id
+     */
+    @Excel(name = "激活码活动id", width = 15)
     private java.lang.Integer activityId;
-	
-	/**
-	 * 激活码
-	 */
-	@Excel(name = "激活码", width = 15)
+
+    /**
+     * 激活码
+     */
+    @Excel(name = "激活码", width = 15)
     private java.lang.String code;
-	
-	/**
-	 * 状态
-	 */
-	@Excel(name = "状态", width = 15)
+
+    /**
+     * 状态
+     */
+    @Excel(name = "状态", width = 15)
     private java.lang.Integer status;
-	
-	/**
-	 * 创建时间
-	 */
-	@Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+
+    /**
+     * 创建时间
+     */
+    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date createTime;
-	
-	/**
-	 * 更新时间
-	 */
-	@Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+
+    /**
+     * 更新时间
+     */
+    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date updateTime;
 }

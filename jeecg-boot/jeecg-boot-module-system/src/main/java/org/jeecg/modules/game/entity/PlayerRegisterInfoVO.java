@@ -1,6 +1,5 @@
 package org.jeecg.modules.game.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,6 +13,7 @@ import java.util.Date;
 
 /**
  * 玩家注册信息表的实体类,player_register_info
+ *
  * @author xubodong
  * @version 1.0.0
  * @date 2020/10/9 14:42
@@ -32,7 +32,7 @@ public class PlayerRegisterInfoVO implements Serializable {
     private Integer id;
 
     /**
-     *  角色名称
+     * 角色名称
      */
     @Excel(name = "玩家昵称", width = 15)
     private String name;
@@ -69,13 +69,13 @@ public class PlayerRegisterInfoVO implements Serializable {
      * 充值预警天数
      */
     @Excel(name = "充值预警天数", width = 15)
-    private  int payWarningDays;
+    private int payWarningDays;
 
     /**
      * 充值预警天数
      */
     @Excel(name = "登录预警天数", width = 15)
-    private  int loginWarningDays;
+    private int loginWarningDays;
 
     /**
      * 最后登录时间

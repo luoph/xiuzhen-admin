@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface DailyGiftPackageBuyVOMapper {
 
-    List<DailyGiftPackageBuyVO> queryGiftPackageByDateRange(@Param("createTimeBeginDate")Date createTimeBeginDate,
-                                                            @Param("createTimeEndDate")Date createTimeEndDate);
+    List<DailyGiftPackageBuyVO> queryGiftPackageByDateRange(@Param("createTimeBeginDate") Date createTimeBeginDate,
+                                                            @Param("createTimeEndDate") Date createTimeEndDate);
 }
