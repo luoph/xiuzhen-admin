@@ -29,103 +29,103 @@ import java.util.Arrays;
 @RequestMapping("game/redeemActivityGroup")
 public class RedeemActivityGroupController extends JeecgController<RedeemActivityGroup, IRedeemActivityGroupService> {
 
-	@Autowired
-	private IRedeemActivityGroupService redeemActivityGroupService;
-	
-	/**
-	 * 分页列表查询
-	 *
-	 * @param redeemActivityGroup 数据实体
-	 * @param pageNo 页码
-	 * @param pageSize 分页大小
-	 * @param req 请求
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "激活码活动分组-列表查询")
-	@GetMapping(value = "/list")
-	public Result<?> queryPageList(RedeemActivityGroup redeemActivityGroup,
-								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-								   HttpServletRequest req) {
-		QueryWrapper<RedeemActivityGroup> queryWrapper = QueryGenerator.initQueryWrapper(redeemActivityGroup, req.getParameterMap());
-		Page<RedeemActivityGroup> page = new Page<>(pageNo, pageSize);
-		IPage<RedeemActivityGroup> pageList = redeemActivityGroupService.page(page, queryWrapper);
-		return Result.ok(pageList);
-	}
-	
-	/**
-	 * 添加
-	 *
-	 * @param redeemActivityGroup 数据实体
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "激活码活动分组-添加")
-	@PostMapping(value = "/add")
-	public Result<?> add(@RequestBody RedeemActivityGroup redeemActivityGroup) {
-		redeemActivityGroupService.save(redeemActivityGroup);
-		return Result.ok("添加成功！");
-	}
-	
-	/**
-	 * 编辑
-	 *
-	 * @param redeemActivityGroup 数据实体
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "激活码活动分组-编辑")
-	@PutMapping(value = "/edit")
-	public Result<?> edit(@RequestBody RedeemActivityGroup redeemActivityGroup) {
-		redeemActivityGroupService.updateById(redeemActivityGroup);
-		return Result.ok("编辑成功!");
-	}
-	
-	/**
-	 * 通过id删除
-	 *
-	 * @param id 实体id
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "激活码活动分组-通过id删除")
-	@DeleteMapping(value = "/delete")
-	public Result<?> delete(@RequestParam(name = "id") String id) {
-		redeemActivityGroupService.removeById(id);
-		return Result.ok("删除成功!");
-	}
-	
-	/**
-	 *  批量删除
-	 *
-	 * @param ids id列表，使用','分割的字符串
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "激活码活动分组-批量删除")
-	@DeleteMapping(value = "/deleteBatch")
-	public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-		this.redeemActivityGroupService.removeByIds(Arrays.asList(ids.split(",")));
-		return Result.ok("批量删除成功！");
-	}
-	
-	/**
-	 * 通过id查询
-	 *
-	 * @param id 实体id
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "激活码活动分组-通过id查询")
-	@GetMapping(value = "/queryById")
-	public Result<?> queryById(@RequestParam(name = "id") String id) {
-		RedeemActivityGroup redeemActivityGroup = redeemActivityGroupService.getById(id);
-		if(redeemActivityGroup == null) {
-			return Result.error("未找到对应数据");
-		}
-		return Result.ok(redeemActivityGroup);
-	}
+    @Autowired
+    private IRedeemActivityGroupService redeemActivityGroupService;
+
+    /**
+     * 分页列表查询
+     *
+     * @param redeemActivityGroup 数据实体
+     * @param pageNo              页码
+     * @param pageSize            分页大小
+     * @param req                 请求
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "激活码活动分组-列表查询")
+    @GetMapping(value = "/list")
+    public Result<?> queryPageList(RedeemActivityGroup redeemActivityGroup,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
+        QueryWrapper<RedeemActivityGroup> queryWrapper = QueryGenerator.initQueryWrapper(redeemActivityGroup, req.getParameterMap());
+        Page<RedeemActivityGroup> page = new Page<>(pageNo, pageSize);
+        IPage<RedeemActivityGroup> pageList = redeemActivityGroupService.page(page, queryWrapper);
+        return Result.ok(pageList);
+    }
+
+    /**
+     * 添加
+     *
+     * @param redeemActivityGroup 数据实体
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "激活码活动分组-添加")
+    @PostMapping(value = "/add")
+    public Result<?> add(@RequestBody RedeemActivityGroup redeemActivityGroup) {
+        redeemActivityGroupService.save(redeemActivityGroup);
+        return Result.ok("添加成功！");
+    }
+
+    /**
+     * 编辑
+     *
+     * @param redeemActivityGroup 数据实体
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "激活码活动分组-编辑")
+    @PutMapping(value = "/edit")
+    public Result<?> edit(@RequestBody RedeemActivityGroup redeemActivityGroup) {
+        redeemActivityGroupService.updateById(redeemActivityGroup);
+        return Result.ok("编辑成功!");
+    }
+
+    /**
+     * 通过id删除
+     *
+     * @param id 实体id
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "激活码活动分组-通过id删除")
+    @DeleteMapping(value = "/delete")
+    public Result<?> delete(@RequestParam(name = "id") String id) {
+        redeemActivityGroupService.removeById(id);
+        return Result.ok("删除成功!");
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids id列表，使用','分割的字符串
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "激活码活动分组-批量删除")
+    @DeleteMapping(value = "/deleteBatch")
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
+        this.redeemActivityGroupService.removeByIds(Arrays.asList(ids.split(",")));
+        return Result.ok("批量删除成功！");
+    }
+
+    /**
+     * 通过id查询
+     *
+     * @param id 实体id
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "激活码活动分组-通过id查询")
+    @GetMapping(value = "/queryById")
+    public Result<?> queryById(@RequestParam(name = "id") String id) {
+        RedeemActivityGroup redeemActivityGroup = redeemActivityGroupService.getById(id);
+        if (redeemActivityGroup == null) {
+            return Result.error("未找到对应数据");
+        }
+        return Result.ok(redeemActivityGroup);
+    }
 
     /**
      * 导出excel
      *
-   * @param request 请求
-   * @param redeemActivityGroup 实体
+     * @param request             请求
+     * @param redeemActivityGroup 实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, RedeemActivityGroup redeemActivityGroup) {
@@ -135,9 +135,9 @@ public class RedeemActivityGroupController extends JeecgController<RedeemActivit
     /**
      * 通过excel导入数据
      *
-   * @param request 请求
-   * @param response 响应
-   * @return {@linkplain Result}
+     * @param request  请求
+     * @param response 响应
+     * @return {@linkplain Result}
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {

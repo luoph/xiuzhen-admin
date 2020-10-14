@@ -17,7 +17,8 @@ import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
-import static com.googlecode.cqengine.query.QueryFactory.*;
+import static com.googlecode.cqengine.query.QueryFactory.and;
+import static com.googlecode.cqengine.query.QueryFactory.equal;
 
 /**
  * @author jeecg-boot

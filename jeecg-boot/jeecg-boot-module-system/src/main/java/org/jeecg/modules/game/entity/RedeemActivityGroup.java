@@ -24,36 +24,36 @@ import java.io.Serializable;
 public class RedeemActivityGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	
-	/**
-	 * id
-	 */
-	@TableId(type = IdType.AUTO)
+
+    /**
+     * id
+     */
+    @TableId(type = IdType.AUTO)
     private java.lang.Integer id;
-	
-	/**
-	 * 名称
-	 */
-	@Excel(name = "名称", width = 15)
+
+    /**
+     * 名称
+     */
+    @Excel(name = "名称", width = 15)
     private java.lang.String name;
-	
-	/**
-	 * 分组说明
-	 */
-	@Excel(name = "分组说明", width = 15)
+
+    /**
+     * 分组说明
+     */
+    @Excel(name = "分组说明", width = 15)
     private java.lang.String summary;
-	
-	/**
-	 * 限制次数, 0表示不限制
-	 */
-	@Excel(name = "限制次数, 0表示不限制", width = 15)
+
+    /**
+     * 限制次数, 0表示不限制
+     */
+    @Excel(name = "限制次数, 0表示不限制", width = 15)
     private java.lang.Integer limitCount;
-	
-	/**
-	 * 创建时间
-	 */
-	@Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+
+    /**
+     * 创建时间
+     */
+    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date createTime;
 }

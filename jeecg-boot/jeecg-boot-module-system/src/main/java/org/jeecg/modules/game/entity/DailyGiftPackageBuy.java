@@ -24,64 +24,64 @@ import java.io.Serializable;
 public class DailyGiftPackageBuy implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	
-	/**
-	 * 自增id
-	 */
-	@TableId(type = IdType.AUTO)
+
+    /**
+     * 自增id
+     */
+    @TableId(type = IdType.AUTO)
     private Integer id;
-	
-	/**
-	 * 玩家id
-	 */
-	@Excel(name = "玩家id", width = 15)
+
+    /**
+     * 玩家id
+     */
+    @Excel(name = "玩家id", width = 15)
     private Long playerId;
-	
-	/**
-	 * 礼包id
-	 */
-	@Excel(name = "礼包id", width = 15)
+
+    /**
+     * 礼包id
+     */
+    @Excel(name = "礼包id", width = 15)
     private Integer giftPackageId;
-	
-	/**
-	 * 购买日期
-	 */
-	@Excel(name = "购买日期", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+
+    /**
+     * 购买日期
+     */
+    @Excel(name = "购买日期", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date buyDate;
-	
-	/**
-	 * buyTimes
-	 */
-	@Excel(name = "buyTimes", width = 15)
+
+    /**
+     * buyTimes
+     */
+    @Excel(name = "buyTimes", width = 15)
     private Integer buyTimes;
-	
-	/**
-	 * 奖励物品
-	 */
-	@Excel(name = "奖励物品", width = 15)
+
+    /**
+     * 奖励物品
+     */
+    @Excel(name = "奖励物品", width = 15)
     private String reward;
-	
-	/**
-	 * 充值金额
-	 */
-	@Excel(name = "充值金额", width = 15)
+
+    /**
+     * 充值金额
+     */
+    @Excel(name = "充值金额", width = 15)
     private java.math.BigDecimal rechargeAmount;
-	
-	/**
-	 * 创建时间
-	 */
-	@Excel(name = "创建时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+
+    /**
+     * 创建时间
+     */
+    @Excel(name = "创建时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date createTime;
-	
-	/**
-	 * 更新时间
-	 */
-	@Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+
+    /**
+     * 更新时间
+     */
+    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date updateTime;
 }

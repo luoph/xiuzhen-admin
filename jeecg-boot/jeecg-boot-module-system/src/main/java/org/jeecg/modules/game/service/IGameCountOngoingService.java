@@ -5,9 +5,8 @@ package org.jeecg.modules.game.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.jeecg.modules.game.entity.GameCountOngoing;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.game.entity.GameLtvCount;
+import org.jeecg.modules.game.entity.GameCountOngoing;
 
 /**
  * <p>

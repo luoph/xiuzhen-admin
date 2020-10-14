@@ -3,8 +3,8 @@
  */
 package org.jeecg.modules.game.mapper;
 
-import org.jeecg.modules.game.entity.GameDayDataCount;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.jeecg.modules.game.entity.GameDayDataCount;
 
 import java.util.List;
 
