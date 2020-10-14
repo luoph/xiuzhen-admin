@@ -47,7 +47,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @Value("${app.folder.notice}")
     private String noticeFolder;
 
-    @Value("${app.folder.ipwhitelist}")
+    @Value("${app.folder.ip-whitelist}")
     private String ipWhitelistFolder;
 
     @Autowired
