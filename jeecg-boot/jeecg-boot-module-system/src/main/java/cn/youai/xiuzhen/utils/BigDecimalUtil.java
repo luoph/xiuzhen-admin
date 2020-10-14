@@ -157,7 +157,7 @@ public final class BigDecimalUtil {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         BigDecimal multiply = multiply(v1, 100);
         String format = decimalFormat.format(multiply);
-        return BigDecimal.valueOf(Double.valueOf(format));
+        return new BigDecimal(format);
     }
 
 
