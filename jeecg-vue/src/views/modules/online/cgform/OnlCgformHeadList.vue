@@ -35,7 +35,7 @@
             <a-button @click="importOnlineForm" type="primary" icon="database" style="margin-left:8px">从数据库导入表单</a-button>
             <a-button @click="goGenerateCode" v-has="'online:goGenerateCode'" type="primary" icon="database" style="margin-left:8px">代码生成</a-button>
 
-            <a-dropdown v-if="selectedRowKeys.length > 0">
+            <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel">
                         <a-icon type="delete" />
@@ -46,7 +46,7 @@
                     批量操作
                     <a-icon type="down" />
                 </a-button>
-            </a-dropdown>
+            </a-dropdown> -->
         </div>
 
         <!-- table区域-begin -->
@@ -106,11 +106,11 @@
                                 <a @click="handleRemoveRecord(record.id)">移除</a>
                             </a-menu-item>
 
-                            <a-menu-item>
+                            <!-- <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                                     <a>删除</a>
                                 </a-popconfirm>
-                            </a-menu-item>
+                            </a-menu-item> -->
                         </a-menu>
                     </a-dropdown>
                 </template>
@@ -228,8 +228,8 @@ export default {
             ],
             url: {
                 list: "online/cgform/head/list",
-                delete: "online/cgform/head/delete",
-                deleteBatch: "online/cgform/head/deleteBatch",
+                // delete: "online/cgform/head/delete",
+                // deleteBatch: "online/cgform/head/deleteBatch",
                 doDbSynch: "online/cgform/api/doDbSynch/",
                 removeRecord: "online/cgform/head/removeRecord",
                 copyOnline: "online/cgform/head/copyOnline"
