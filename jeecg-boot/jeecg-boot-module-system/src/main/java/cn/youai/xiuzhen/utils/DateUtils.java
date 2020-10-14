@@ -509,22 +509,6 @@ public final class DateUtils {
         return currentDateTime.plusDays(plus).withTimeAtStartOfDay().withHourOfDay(hour).toDate();
     }
 
-    /**
-     * 获取过去第几天的日期
-     *
-     * @param past      天数
-     * @return           日期
-     */
-    public static Date getPastDate(int past) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - past);
-
-        Date today = calendar.getTime();
-        Date date = DateUtils.dateOnly(today);
-        //String result = format.format(today);
-        //Date date = DateUtils.parseDate(result);
-        return date;
-    }
 
     public static boolean isTimeBetween(LocalTime startTime, LocalTime endTime) {
         return isTimeBetween(DateUtils.currentTime(), startTime, endTime);

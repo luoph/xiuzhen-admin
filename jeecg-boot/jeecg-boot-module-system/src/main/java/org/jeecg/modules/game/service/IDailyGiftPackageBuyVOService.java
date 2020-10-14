@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.service;
 
 import org.jeecg.modules.game.entity.DailyGiftPackageBuyVO;
+
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ public interface IDailyGiftPackageBuyVOService {
 
     /**
      * 通过创建时间查询消费礼包
+     *
      * @param serverId
      * @param createTimeBegin
      * @param createTimeEnd

@@ -30,27 +30,27 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
     public List<GameDataReportCount> queryDataReportByDateRange(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel) {
         List<GameDataReportCount> list = null;
         // 如果没有选天数,就使用传入的时间查询
-        if (days == 0){
+        if (days == 0) {
             Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
             list = getCompleteList(gameDataReportCountMapper.queryDataReportByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel));
             return list;
         }
         // 如果有选天数,就使用就近天数查询
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         // 获取过去第几天的日期
-        Date pastDate = DateUtils.getPastDate(days);
         Date nowDate = new Date();
+        Date pastDate = DateUtils.addDays(nowDate, days * (-1));
         list = getCompleteList(gameDataReportCountMapper.queryDataReportByDateRange(pastDate, nowDate, serverId, channel));
         return list;
     }
 
     /**
-     *  获取处理好的list集合
+     * 获取处理好的list集合
+     *
      * @param list
      * @return
      */
-    public List<GameDataReportCount> getCompleteList(List<GameDataReportCount> list){
+    private List<GameDataReportCount> getCompleteList(List<GameDataReportCount> list) {
         // child 为汇总变量,需要单独对其进行计算
         GameDataReportCount child = new GameDataReportCount();
         // 封装数据用于计算的临时变量
@@ -68,23 +68,23 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
         double addNumSum = 0;
         double addPayNumSum = 0;
 
-        BigDecimal addPayRateSumBigDecimal= null;
+        BigDecimal addPayRateSumBigDecimal = null;
 
         double addPayAmountSum = 0;
         BigDecimal addPayAmountSumBigDecimal = null;
 
-        BigDecimal addArpuSum= null;
-        BigDecimal addArppuSum= null;
+        BigDecimal addArpuSum = null;
+        BigDecimal addArppuSum = null;
 
         double oldNumSum = 0;
         double oldPayNumSum = 0;
 
-        BigDecimal oldPayRateSumBigDecimal= null;
+        BigDecimal oldPayRateSumBigDecimal = null;
 
         BigDecimal oldPayAmountSumBigDecimal = null;
 
-        BigDecimal oldArpuSum= null;
-        BigDecimal oldArppuSum= null;
+        BigDecimal oldArpuSum = null;
+        BigDecimal oldArppuSum = null;
 
         // 数据处理
         for (GameDataReportCount gameDataReportCount : list) {
@@ -94,23 +94,26 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
             gameDataReportCount.setDateStr(format);
 
             // 数据为空处理
-            if (gameDataReportCount.getOldPayRate() == null){
-                gameDataReportCount.setOldPayRate(new BigDecimal(0));
+            if (gameDataReportCount.getOldPayRate() == null) {
+                gameDataReportCount.setOldPayRate(BigDecimal.ZERO);
             }
-            if (gameDataReportCount.getOldArpu() == null){
-                gameDataReportCount.setOldArpu(new BigDecimal(0));
+            if (gameDataReportCount.getOldArpu() == null) {
+                gameDataReportCount.setOldArpu(BigDecimal.ZERO);
             }
-            if (gameDataReportCount.getOldArppu() == null){
-                gameDataReportCount.setOldArppu(new BigDecimal(0));
+            if (gameDataReportCount.getOldArppu() == null) {
+                gameDataReportCount.setOldArppu(BigDecimal.ZERO);
             }
             // 数据格式处理
-            BigDecimal payRate = BigDecimalUtil.divideFour(gameDataReportCount.getPayRate().doubleValue(), 1,true);
+            //BigDecimal payRate = BigDecimalUtil.divideFour(gameDataReportCount.getPayRate().doubleValue(), 1, true);
+            BigDecimal payRate = BigDecimalUtil.dividePercent(gameDataReportCount.getPayRate().doubleValue());
             gameDataReportCount.setPayRate(payRate);
 
-            BigDecimal addPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getAddPayRate().doubleValue(), 1,true);
+            //BigDecimal addPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getAddPayRate().doubleValue(), 1, true);
+            BigDecimal addPayRate = BigDecimalUtil.dividePercent(gameDataReportCount.getAddPayRate().doubleValue());
             gameDataReportCount.setAddPayRate(addPayRate);
 
-            BigDecimal oldPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getOldPayRate().doubleValue(), 1,true);
+            //BigDecimal oldPayRate = BigDecimalUtil.divideFour(gameDataReportCount.getOldPayRate().doubleValue(), 1, true);
+            BigDecimal oldPayRate = BigDecimalUtil.dividePercent(gameDataReportCount.getOldPayRate().doubleValue());
             gameDataReportCount.setOldPayRate(oldPayRate);
 
             // 计算child对象中的各属性值
@@ -140,7 +143,7 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
         arpuSum = BigDecimalUtil.divideFour(payAmountSum, loginNumSum, true);
 
         // ARPPU汇总
-        arppuSum = BigDecimalUtil.divideZero(payAmountSum, payNumSum,false);
+        arppuSum = BigDecimalUtil.divideZero(payAmountSum, payNumSum, false);
 
         // 新增付费率汇总
         addPayRateSumBigDecimal = BigDecimalUtil.divideFour(addPayNumSum, addNumSum, true);
@@ -152,7 +155,7 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
         addArpuSum = BigDecimalUtil.divideFour(addPayAmountSum, addNumSum, true);
 
         // 新增ARPPU汇总
-        addArppuSum = BigDecimalUtil.divideFour(addPayAmountSum, addPayNumSum,false);
+        addArppuSum = BigDecimalUtil.divideFour(addPayAmountSum, addPayNumSum, false);
 
         // 老玩家汇总
         oldNumSum = loginNumSum - addNumSum;
@@ -169,7 +172,7 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
         oldArpuSum = BigDecimalUtil.divideFour((payAmountSum - addPayAmountSum), oldNumSum, false);
 
         // 老玩家ARPPU汇总
-        oldArppuSum = BigDecimalUtil.divideFour((payAmountSum - addPayAmountSum), oldPayNumSum,false);
+        oldArppuSum = BigDecimalUtil.divideFour((payAmountSum - addPayAmountSum), oldPayNumSum, false);
 
         // 封装child
         child.setLoginNum(new Double(loginNumSum).intValue());

@@ -20,7 +20,6 @@ public class DateTest {
 
     public static void main(String[] args) {
         /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date pastDate = DateUtils.getPastDate(7, sdf);
         System.out.println(pastDate);*/
         BigDecimal a =null;
         BigDecimal b =null;
@@ -29,7 +28,7 @@ public class DateTest {
         a = BigDecimal.valueOf(0.123456987);
         b = BigDecimal.valueOf(0.323456987);
 
-        System.out.println("开始是"+a);
+        //System.out.println("开始是"+a);
         //BigDecimal  b =a.setScale(2, RoundingMode.HALF_UP);//保留两位小数
        //System.out.println("结果是"+b);
         //下面将结果转化成百分比
@@ -38,7 +37,7 @@ public class DateTest {
         //String xx = percent.format(b.doubleValue());
         BigDecimal cc = BigDecimalUtil.divideZero(a.doubleValue(), b.doubleValue(),true);
         //System.out.println(percent.format(b.doubleValue()));
-        System.out.println(cc);
+        //System.out.println(cc);
 
 
 

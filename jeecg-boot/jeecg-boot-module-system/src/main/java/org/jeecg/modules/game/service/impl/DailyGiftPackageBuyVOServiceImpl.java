@@ -43,13 +43,15 @@ public class DailyGiftPackageBuyVOServiceImpl implements IDailyGiftPackageBuyVOS
                 if (giftCountRatio == null) {
                     giftCountRatio = BigDecimal.ZERO;
                 }
-                dailyGiftPackageBuyVO.setGiftCountRatio(BigDecimalUtil.divideFour(giftCountRatio.doubleValue(), 1, true));
+                //dailyGiftPackageBuyVO.setGiftCountRatio(BigDecimalUtil.divideFour(giftCountRatio.doubleValue(), 1, true));
+                dailyGiftPackageBuyVO.setGiftCountRatio(BigDecimalUtil.dividePercent(giftCountRatio.doubleValue()));
 
                 BigDecimal rechargeAmountRatio = dailyGiftPackageBuyVO.getRechargeAmountRatio();
                 if (rechargeAmountRatio == null) {
                     rechargeAmountRatio = BigDecimal.ZERO;
                 }
-                dailyGiftPackageBuyVO.setRechargeAmountRatio(BigDecimalUtil.divideFour(rechargeAmountRatio.doubleValue(), 1, true));
+                //dailyGiftPackageBuyVO.setRechargeAmountRatio(BigDecimalUtil.divideFour(rechargeAmountRatio.doubleValue(), 1, true));
+                dailyGiftPackageBuyVO.setRechargeAmountRatio(BigDecimalUtil.dividePercent(rechargeAmountRatio.doubleValue()));
             }
         } catch (Exception e) {
             log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
