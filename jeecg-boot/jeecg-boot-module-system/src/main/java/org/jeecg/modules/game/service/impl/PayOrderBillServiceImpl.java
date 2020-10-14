@@ -25,6 +25,9 @@ import java.util.List;
 @Service
 public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, PayOrderBill> implements IPayOrderBillService {
 
+    /**
+     * 充值档位
+     */
     private final static String[] PAYRANKS = {"0-6", "7-29", "30-67", "68-97", "98-197", "198-327", "328-647", "648-9999"};
 
     @Resource
@@ -112,12 +115,12 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         if (payNumSumRate == null) {
             payNumSumRate = BigDecimal.ZERO;
         }
-        payOrderBill.setPayNumSumRate(BigDecimalUtil.divideFour(payNumSumRate.doubleValue(), 1, true));
+        payOrderBill.setPayNumSumRate(BigDecimalUtil.dividePercent(payNumSumRate.doubleValue()));
 
         if (payAmountSumRate == null) {
             payAmountSumRate = BigDecimal.ZERO;
         }
-        payOrderBill.setPayAmountSumRate(BigDecimalUtil.divideFour(payAmountSumRate.doubleValue(), 1, true));
+        payOrderBill.setPayAmountSumRate(BigDecimalUtil.dividePercent(payAmountSumRate.doubleValue()));
 
         if (arppu == null) {
             arppu = BigDecimal.ZERO;

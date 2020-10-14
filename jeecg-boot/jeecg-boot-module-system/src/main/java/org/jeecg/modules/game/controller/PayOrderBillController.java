@@ -56,16 +56,16 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
                                    @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-                                    ) {
+    ) {
         Page<PayOrderBillVO> pageVo = new Page<>(pageNo, pageSize);
         // 没有传入查询参数返回空的数据
         if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
             return Result.ok(pageVo);
         }
-        String channel= gameChannelService.queryChannelNameById(channelId);
+        String channel = gameChannelService.queryChannelNameById(channelId);
         BigDecimal billSum = payOrderBillService.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
         // 查不到流水总额,设置流水总额为0
-        if (billSum == null){
+        if (billSum == null) {
             billSum = new BigDecimal(0);
         }
         // 封装自定义的list放入Page对象，list中只有一个对象
@@ -81,35 +81,35 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
     /**
      * 分页列表查询
      *
-     * @param pageNo       页码
-     * @param pageSize     分页大小
+     * @param pageNo   页码
+     * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
     @AutoLog(value = "付费结构-列表查询")
     @GetMapping(value = "/payConstruction")
     public Result<?> queryPayConstruction(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                           @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                           @RequestParam(name = "payRank", defaultValue = "") String payRank,
-                                           @RequestParam(name = "days", defaultValue = "0") int days,
-                                           @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                           @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-                                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-                                    ) {
+                                          @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                                          @RequestParam(name = "payRank", defaultValue = "") String payRank,
+                                          @RequestParam(name = "days", defaultValue = "0") int days,
+                                          @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                                          @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                                          @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                          @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
         Page<PayOrderBill> page = new Page<>(pageNo, pageSize);
         List<PayOrderBill> list = new ArrayList<>();
         // 没有传入查询参数返回空的数据
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && StringUtils.isEmpty(payRank)
-                && serverId == 0 && channelId == 0 && days == 0 ) {
+                && serverId == 0 && channelId == 0 && days == 0) {
             return Result.ok(page);
         }
         // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0){
+        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
             return Result.ok(page);
         }
-        String channel= gameChannelService.queryChannelNameById(channelId);
+        String channel = gameChannelService.queryChannelNameById(channelId);
 
-        if (StringUtils.isEmpty(payRank)){
+        if (StringUtils.isEmpty(payRank)) {
             list = payOrderBillService.queryForList(rangeDateBegin, rangeDateEnd, days, serverId, channel);
             page.setRecords(list).setTotal(list.size());
             return Result.ok(page);
@@ -124,19 +124,18 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
 
     /**
      * 导出excel
-     *
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                   @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                   @RequestParam(name = "payRank", defaultValue = "") String payRank,
-                                   @RequestParam(name = "days", defaultValue = "0") int days,
-                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                                   HttpServletRequest request
-                                    ) {
+                                  @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                                  @RequestParam(name = "payRank", defaultValue = "") String payRank,
+                                  @RequestParam(name = "days", defaultValue = "0") int days,
+                                  @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                                  @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                                  @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                  @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                  HttpServletRequest request
+    ) {
         // 获取导出数据
         List<PayOrderBill> list = new ArrayList<>();
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
