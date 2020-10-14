@@ -10,7 +10,7 @@ import lombok.Data;
  * @Version 1.0
  */
 @Data
-public class ItemVo {
+public class ItemVO {
     private Integer itemId;
     private Integer num;
 }
