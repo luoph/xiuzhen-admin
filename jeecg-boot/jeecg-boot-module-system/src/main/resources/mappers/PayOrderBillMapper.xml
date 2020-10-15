@@ -12,6 +12,10 @@
         <result column="pay_amount_sum" property="payAmountSum"/>
         <result column="pay_amount_sum_rate" property="payAmountSumRate"/>
         <result column="arppu" property="arppu"/>
+        <result column="order_amount" property="orderAmount"/>
+        <result column="consume_rank" property="consumeRank"/>
+        <result column="pay_count" property="payCount"/>
+        <result column="chalcedony" property="chalcedony"/>
     </resultMap>
 
     <select id="queryBillSumByDateRange" resultType="decimal">
@@ -31,8 +35,8 @@
 
     <select id="queryPayGradeByDateRange" resultMap="BaseResultMap">
         SELECT
-        COUNT(id) pay_num_sum,
-        (COUNT(id) / (SELECT COUNT(*) FROM pay_order)) pay_num_sum_rate,
+        COUNT(DISTINCT(player_id)) pay_num_sum,
+        (COUNT(DISTINCT(player_id)) / (SELECT COUNT(DISTINCT(player_id)) FROM pay_order)) pay_num_sum_rate,
         SUM(pay_amount) pay_amount_sum,
         (SUM(pay_amount) / (SELECT SUM(pay_amount) FROM pay_order)) pay_amount_sum_rate,
         (SUM(pay_amount) / COUNT(id)) arppu
@@ -47,5 +51,26 @@
             AND channel = #{channel}
         </if>
         AND order_amount >= #{payRankBegin} AND order_amount &lt;= #{payRankEnd}
+    </select>
+
+    <select id="queryPayOrderList" resultMap="BaseResultMap">
+        SELECT
+        (SELECT COUNT(DISTINCT(player_id)) FROM pay_order WHERE product_id = #{goodsId}) pay_num_sum,
+        (SELECT COUNT(player_id) FROM pay_order WHERE product_id = #{goodsId}) pay_count,
+        ((SELECT COUNT(DISTINCT(player_id)) FROM pay_order WHERE product_id = #{goodsId}) / #{dau}) pay_num_sum_rate,
+        ((SELECT COUNT(player_id) FROM pay_order WHERE product_id = #{goodsId}) * order_amount) pay_amount_sum,
+        order_amount,
+        SUM(pay_amount) consume_rank,
+        SUM(pay_amount) * (SELECT COUNT(player_id) FROM pay_order WHERE product_id = #{goodsId}) chalcedony
+        FROM pay_order
+        WHERE product_id = #{goodsId}
+        AND pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
+        AND order_status > 0
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        <if test="channel != null">
+            AND channel = #{channel}
+        </if>
     </select>
 </mapper>

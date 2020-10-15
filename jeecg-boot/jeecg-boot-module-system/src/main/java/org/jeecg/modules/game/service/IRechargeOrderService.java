@@ -14,14 +14,15 @@ import java.util.List;
 public interface IRechargeOrderService extends IService<RechargeOrder> {
 
     /**
-     * 查询今日礼包
+     * 查询礼包
      *
      * @param rangeDateBegin
      * @param rangeDateEnd
      * @param days
      * @param serverId
      * @param channel
+     * @param goodsType
      * @return
      */
-    List<RechargeOrder> queryTodayGift(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel);
+    List<RechargeOrder> queryGiftList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, int goodsType);
 }
