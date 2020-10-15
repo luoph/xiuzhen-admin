@@ -104,7 +104,6 @@ public class PayUserRankController extends JeecgController<PayUserRank, IPayUser
                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
                                   HttpServletRequest request) {
-        //HttpServletRequest request
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<PayUserRank> payUserRankList = payUserRankService.queryPayRankByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
