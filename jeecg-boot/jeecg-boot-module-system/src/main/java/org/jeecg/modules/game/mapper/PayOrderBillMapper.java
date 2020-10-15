@@ -15,15 +15,22 @@ import java.util.Date;
  */
 public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
 
-    BigDecimal queryBillSumByDateRange(@Param("payTimeBeginDate") Date payTimeBeginDate,
-                                       @Param("payTimeEndDate") Date payTimeEndDate,
-                                       @Param("serverId") Integer serverId,
-                                       @Param("channel") String channel);
+	BigDecimal queryBillSumByDateRange(@Param("payTimeBeginDate") Date payTimeBeginDate,
+	                                   @Param("payTimeEndDate") Date payTimeEndDate,
+	                                   @Param("serverId") Integer serverId,
+	                                   @Param("channel") String channel);
 
-    PayOrderBill queryPayGradeByDateRange(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-                                           @Param("rangeDateEndTime") Date rangeDateEndTime,
-                                           @Param("payRankBegin") int payRankBegin,
-                                           @Param("payRankEnd") int payRankEnd,
-                                           @Param("serverId") Integer serverId,
-                                           @Param("channel") String channel);
+	PayOrderBill queryPayGradeByDateRange(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                                      @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                                      @Param("payRankBegin") int payRankBegin,
+	                                      @Param("payRankEnd") int payRankEnd,
+	                                      @Param("serverId") Integer serverId,
+	                                      @Param("channel") String channel);
+
+	PayOrderBill queryPayOrderList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                               @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                               @Param("serverId") Integer serverId,
+	                               @Param("channel") String channel,
+	                               @Param("dau") Long dau,
+	                               @Param("goodsId") Integer goodsId);
 }
