@@ -4,42 +4,39 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="4" :sm="8">
-                        <a-form-item label="唯一标识">
-                            <a-input placeholder="请输入唯一标识" v-model="queryParam.activity"></a-input>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="活动id">
+                            <a-input placeholder="请输入活动id" v-model="queryParam.campaignId"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="8">
-                        <a-form-item label="活动名称">
-                            <a-input placeholder="请输入活动名称" v-model="queryParam.name"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="4" :sm="8">
-                        <a-form-item label="活动状态">
-                            <a-select placeholder="活动状态" v-model="queryParam.status">
-                                <a-select-option :value="1">有效</a-select-option>
-                                <a-select-option :value="0">无效</a-select-option>
-                            </a-select>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="typeIds">
+                            <a-input placeholder="请输入typeIds" v-model="queryParam.typeId"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="活动标语">
-                                <a-input placeholder="请输入活动标语" v-model="queryParam.slogan"></a-input>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="活动项类型">
+                                <a-input placeholder="请输入活动项类型" v-model="queryParam.type"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="16">
-                            <a-form-item label="开始时间">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="buff id">
+                                <a-input placeholder="请输入buff id" v-model="queryParam.buffId"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="12" :sm="16">
+                            <a-form-item label="加成开始时间">
                                 <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="16">
-                            <a-form-item label="结束时间">
+                        <a-col :md="12" :sm="16">
+                            <a-form-item label="加成结束时间">
                                 <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
@@ -56,11 +53,26 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('活动')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('Buff活动')">导出</a-button>
+            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+                <a-button type="primary" icon="import">导入</a-button>
+            </a-upload>
+            <a-dropdown v-if="selectedRowKeys.length > 0">
+                <a-menu slot="overlay">
+                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+                </a-menu>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+            </a-dropdown>
         </div>
 
         <!-- table区域-begin -->
         <div>
+            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
+                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+            </div>
+
             <a-table
                 ref="table"
                 size="middle"
@@ -70,6 +82,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
+                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <template slot="htmlSlot" slot-scope="text">
@@ -101,26 +114,25 @@
             </a-table>
         </div>
 
-        <gameActivity-modal ref="modalForm" @ok="modalFormOk"></gameActivity-modal>
+        <gameCampaignTypeBuff-modal ref="modalForm" @ok="modalFormOk"></gameCampaignTypeBuff-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameActivityModal from "./modules/GameActivityModal";
+import GameCampaignTypeBuffModal from "./modules/GameCampaignTypeBuffModal";
 import JDate from "@/components/jeecg/JDate.vue";
-import { filterObj } from "@/utils/util";
 
 export default {
-    name: "GameActivityList",
+    name: "GameCampaignTypeBuffList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        GameActivityModal
+        GameCampaignTypeBuffModal
     },
     data() {
         return {
-            description: "活动管理页面",
+            description: "Buff活动管理页面",
             // 表头
             columns: [
                 {
@@ -134,77 +146,34 @@ export default {
                     }
                 },
                 {
-                    title: "活动Id",
+                    title: "活动id",
                     align: "center",
-                    dataIndex: "id"
+                    dataIndex: "campaignId"
                 },
                 {
-                    title: "活动名称",
-                    align: "left",
-                    dataIndex: "name"
-                },
-                {
-                    title: "唯一标识",
+                    title: "typeIds",
                     align: "center",
-                    dataIndex: "activity"
+                    dataIndex: "typeId"
                 },
                 {
-                    title: "活动标语",
+                    title: "活动项类型",
                     align: "center",
-                    dataIndex: "slogan"
+                    dataIndex: "type"
                 },
                 {
-                    title: "活动图标",
+                    title: "描述",
                     align: "center",
-                    dataIndex: "icon"
+                    dataIndex: "description"
                 },
                 {
-                    title: "活动状态",
+                    title: "加成",
                     align: "center",
-                    dataIndex: "status",
-                    customRender: value => {
-                        let re = "--";
-                        if (value === 0) {
-                            re = "无效";
-                        } else if (value === 1) {
-                            re = "有效";
-                        }
-                        return re;
-                    }
+                    dataIndex: "addition"
                 },
                 {
-                    title: "开始时的传闻id",
+                    title: "buff id",
                     align: "center",
-                    dataIndex: "startRumor"
-                },
-                {
-                    title: "结束时的传闻id",
-                    align: "center",
-                    dataIndex: "endRumor"
-                },
-                {
-                    title: "图标显示类型",
-                    align: "left",
-                    dataIndex: "iconDisplay",
-                    customRender: value => {
-                        let re = "--";
-                        if (value === 0) {
-                            re = "图标常驻";
-                        } else if (value === 1) {
-                            re = "预告时才显示，平时隐藏";
-                        }
-                        return re;
-                    }
-                },
-                {
-                    title: "提前预告时间(秒)",
-                    align: "center",
-                    dataIndex: "noticeTime"
-                },
-                {
-                    title: "跑马灯显示周期(秒)",
-                    align: "center",
-                    dataIndex: "noticePeriod"
+                    dataIndex: "buffId"
                 },
                 {
                     title: "开始时间",
@@ -222,6 +191,11 @@ export default {
                     dataIndex: "createTime"
                 },
                 {
+                    title: "更新时间",
+                    align: "center",
+                    dataIndex: "updateTime"
+                },
+                {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
@@ -229,11 +203,11 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameActivity/list",
-                delete: "game/gameActivity/delete",
-                deleteBatch: "game/gameActivity/deleteBatch",
-                exportXlsUrl: "game/gameActivity/exportXls",
-                importExcelUrl: "game/gameActivity/importExcel"
+                list: " game/gameCampaignTypeBuff/list",
+                delete: " game/gameCampaignTypeBuff/delete",
+                deleteBatch: " game/gameCampaignTypeBuff/deleteBatch",
+                exportXlsUrl: " game/gameCampaignTypeBuff/exportXls",
+                importExcelUrl: " game/gameCampaignTypeBuff/importExcel"
             },
             dictOptions: {}
         };
@@ -245,16 +219,6 @@ export default {
     },
     methods: {
         initDictConfig() {},
-        getQueryParams() {
-            console.log(this.queryParam.createTimeRange);
-            var param = Object.assign({}, this.queryParam, this.isorter);
-            param.pageNo = this.ipagination.current;
-            param.pageSize = this.ipagination.pageSize;
-            // 范围参数不传递后台
-            delete param.startTimeRange;
-            delete param.endTimeRange;
-            return filterObj(param);
-        },
         onStartTimeChange: function(value, dateString) {
             console.log(dateString[0], dateString[1]);
             this.queryParam.startTime_begin = dateString[0];
