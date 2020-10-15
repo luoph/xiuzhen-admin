@@ -4,43 +4,43 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameCountOngoing">
-        <id column="id" property="id" />
-        <result column="count_date" property="countDate" />
-        <result column="type" property="type" />
-        <result column="register_num" property="registerNum" />
-        <result column="channel" property="channel" />
-        <result column="server_id" property="serverId" />
-        <result column="c1" property="c1" />
-        <result column="c2" property="c2" />
-        <result column="c3" property="c3" />
-        <result column="c4" property="c4" />
-        <result column="c5" property="c5" />
-        <result column="c6" property="c6" />
-        <result column="c7" property="c7" />
-        <result column="c8" property="c8" />
-        <result column="c9" property="c9" />
-        <result column="c10" property="c10" />
-        <result column="c11" property="c11" />
-        <result column="c12" property="c12" />
-        <result column="c13" property="c13" />
-        <result column="c14" property="c14" />
-        <result column="c15" property="c15" />
-        <result column="c16" property="c16" />
-        <result column="c17" property="c17" />
-        <result column="c18" property="c18" />
-        <result column="c19" property="c19" />
-        <result column="c20" property="c20" />
-        <result column="c21" property="c21" />
-        <result column="c22" property="c22" />
-        <result column="c23" property="c23" />
-        <result column="c24" property="c24" />
-        <result column="c25" property="c25" />
-        <result column="c26" property="c26" />
-        <result column="c27" property="c27" />
-        <result column="c28" property="c28" />
-        <result column="c29" property="c29" />
-        <result column="c30" property="c30" />
-        <result column="create_time" property="createTime" />
+        <id column="id" property="id"/>
+        <result column="count_date" property="countDate"/>
+        <result column="type" property="type"/>
+        <result column="register_num" property="registerNum"/>
+        <result column="channel" property="channel"/>
+        <result column="server_id" property="serverId"/>
+        <result column="c1" property="c1"/>
+        <result column="c2" property="c2"/>
+        <result column="c3" property="c3"/>
+        <result column="c4" property="c4"/>
+        <result column="c5" property="c5"/>
+        <result column="c6" property="c6"/>
+        <result column="c7" property="c7"/>
+        <result column="c8" property="c8"/>
+        <result column="c9" property="c9"/>
+        <result column="c10" property="c10"/>
+        <result column="c11" property="c11"/>
+        <result column="c12" property="c12"/>
+        <result column="c13" property="c13"/>
+        <result column="c14" property="c14"/>
+        <result column="c15" property="c15"/>
+        <result column="c16" property="c16"/>
+        <result column="c17" property="c17"/>
+        <result column="c18" property="c18"/>
+        <result column="c19" property="c19"/>
+        <result column="c20" property="c20"/>
+        <result column="c21" property="c21"/>
+        <result column="c22" property="c22"/>
+        <result column="c23" property="c23"/>
+        <result column="c24" property="c24"/>
+        <result column="c25" property="c25"/>
+        <result column="c26" property="c26"/>
+        <result column="c27" property="c27"/>
+        <result column="c28" property="c28"/>
+        <result column="c29" property="c29"/>
+        <result column="c30" property="c30"/>
+        <result column="create_time" property="createTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
