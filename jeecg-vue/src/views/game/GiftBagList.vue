@@ -34,7 +34,7 @@
             </a-form>
 
             <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('普通礼包')">导出</a-button>
+                <a-button type="primary" icon="download" @click="handleExportXls('月卡')">导出</a-button>
             </div>
 
         </div>
@@ -77,7 +77,7 @@ export default {
     },
     data() {
         return {
-            description: "普通礼包管理页面",
+            description: "月卡管理页面",
             // 表头
             columns: [
                 {
@@ -96,14 +96,9 @@ export default {
                     dataIndex: "rangeTimeDate"
                 },
                 {
-                    title: "礼包名",
+                    title: "消耗档位",
                     align: "center",
-                    dataIndex: "goodsName"
-                },
-                {
-                    title: "商品ID",
-                    align: "center",
-                    dataIndex: "goodsId"
+                    dataIndex: "consumeRank"
                 },
                 {
                     title: "当天DAU",
@@ -116,6 +111,11 @@ export default {
                     dataIndex: "payNum"
                 },
                 {
+                    title: "购买次数",
+                    align: "center",
+                    dataIndex: "payCount"
+                },
+                {
                     title: "购买率",
                     align: "center",
                     dataIndex: "payNumRate",
@@ -124,22 +124,15 @@ export default {
                     }
                 },
                 {
-                    title: "礼包价格",
+                    title: "消耗玉髓",
                     align: "center",
-                    dataIndex: "goodsPrice"
-                },
-                {
-                    title: "总金额",
-                    align: "center",
-                    dataIndex: "payAccountSum"
+                    dataIndex: "chalcedony"
                 },
             ],
             url: {
-                list: "game/rechargeOrder/list",
-                delete: "game/rechargeOrder/delete",
-                deleteBatch: "game/rechargeOrder/deleteBatch",
+                list: "game/rechargeOrder/giftBagList",
                 exportXlsUrl: "game/rechargeOrder/exportXls",
-                importExcelUrl: "game/rechargeOrder/importExcel"
+
             },
             dictOptions: {
             }

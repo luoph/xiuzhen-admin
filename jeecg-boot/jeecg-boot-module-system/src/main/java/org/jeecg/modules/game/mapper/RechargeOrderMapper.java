@@ -15,6 +15,13 @@ import java.util.List;
  */
 public interface RechargeOrderMapper extends BaseMapper<RechargeOrder> {
 
-    List<RechargeOrder> queryTodayGift(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-                                       @Param("rangeDateEndTime") Date rangeDateEndTime);
+	List<RechargeOrder> queryGiftList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                                  @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                                  @Param("goodsType") int goodsType);
+
+	Long queryDAU(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	              @Param("rangeDateEndTime") Date rangeDateEndTime,
+	              @Param("serverId") Integer serverId,
+	              @Param("channel") String channel,
+	              @Param("logTable") String logTable);
 }

@@ -34,7 +34,7 @@
             </a-form>
 
             <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('普通礼包')">导出</a-button>
+                <a-button type="primary" icon="download" @click="handleExportXls('月卡')">导出</a-button>
             </div>
 
         </div>
@@ -77,7 +77,7 @@ export default {
     },
     data() {
         return {
-            description: "普通礼包管理页面",
+            description: "月卡管理页面",
             // 表头
             columns: [
                 {
@@ -135,11 +135,8 @@ export default {
                 },
             ],
             url: {
-                list: "game/rechargeOrder/list",
-                delete: "game/rechargeOrder/delete",
-                deleteBatch: "game/rechargeOrder/deleteBatch",
+                list: "game/rechargeOrder/monthCard",
                 exportXlsUrl: "game/rechargeOrder/exportXls",
-                importExcelUrl: "game/rechargeOrder/importExcel"
             },
             dictOptions: {
             }

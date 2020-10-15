@@ -7,16 +7,28 @@
         <id column="id" property="id"/>
         <result column="goods_id" property="goodsId"/>
         <result column="goods_type" property="goodsType"/>
+        <result column="dau" property="dau"/>
     </resultMap>
 
 
-    <select id="queryTodayGift" resultMap="BaseResultMap">
+    <select id="queryGiftList" resultMap="BaseResultMap">
         SELECT
         DISTINCT(goods_id),
         goods_type
         FROM recharge_order
         WHERE
-        create_date >= #{rangeDateBeginTime} AND create_date &lt;= #{rangeDateEndTime}
-        WHERE goods_type= 0
+        create_date >= DATE (#{rangeDateBeginTime}) AND create_date &lt;= DATE (#{rangeDateEndTime})
+        AND goods_type= #{goodsType}
+    </select>
+
+    <select id="queryDAU" resultType="Long">
+        SELECT
+        COUNT(DISTINCT(player_id)) dau
+        FROM ${logTable}
+        WHERE
+        create_date >= DATE (#{rangeDateBeginTime}) AND create_date &lt;= DATE (#{rangeDateEndTime})
+        AND server_id = #{serverId}
+        AND channel = #{channel}
+        AND type = 2
     </select>
 </mapper>

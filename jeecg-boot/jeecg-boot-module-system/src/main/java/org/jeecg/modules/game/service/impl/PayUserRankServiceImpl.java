@@ -67,8 +67,9 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             PlayerRegisterInfoVO playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
 
             //获取玩家最后的充值时间
-            Date createDate = playerRegisterInfo.getCreateDate();
-            int payWarningDays = DateUtils.daysBetween(createDate, nowDate);
+	        Date payTimeMax = payUserRank.getPayTimeMax();
+	        //Date createDate = playerRegisterInfo.getCreateDate();
+            int payWarningDays = DateUtils.daysBetween(payTimeMax, nowDate);
             //设置充值预警天数
             playerRegisterInfo.setPayWarningDays(payWarningDays);
 
