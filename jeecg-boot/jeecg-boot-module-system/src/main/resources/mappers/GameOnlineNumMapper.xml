@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.GameOnlineNumMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameOnlineNum">
+        <id column="id" property="id"/>
+        <result column="channel" property="channel"/>
+        <result column="server_id" property="serverId"/>
+        <result column="online_num" property="onlineNum"/>
+        <result column="get_time" property="getTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="dau" property="dau"/>
+        <result column="pcu" property="pcu"/>
+        <result column="acu" property="acu"/>
+    </resultMap>
+
+    <select id="queryGameOnlineNumByRangDate" resultMap="BaseResultMap">
+        SELECT
+        id,
+        channel,
+        server_id,
+        online_num,
+        get_time,
+        update_time,
+        create_time
+        FROM game_online_num
+        WHERE
+        get_time >= #{rangeDateBeginTime} AND get_time &lt;= #{rangeDateEndTime}
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        <if test="channel != null">
+            AND channel = #{channel}
+        </if>
+    </select>
+
+    <select id="queryGameOnlineCollectByRangDate" resultMap="BaseResultMap">
+        SELECT
+        get_time,
+        MAX(online_num) pcu,
+        (SUM(online_num) / COUNT(online_num)) acu
+        FROM game_online_num
+        WHERE
+        get_time >= #{rangeDateBeginTime} AND get_time &lt;= #{rangeDateEndTime}
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        <if test="channel != null">
+            AND channel = #{channel}
+        </if>
+        GROUP BY get_time DESC
+    </select>
+    <select id="queryDau" resultType="decimal">
+        SELECT
+        COUNT(DISTINCT(player_id)) dau
+        FROM ${logTable}
+        WHERE
+        create_date = #{getTime}
+        AND type = 2
+    </select>
+
+</mapper>

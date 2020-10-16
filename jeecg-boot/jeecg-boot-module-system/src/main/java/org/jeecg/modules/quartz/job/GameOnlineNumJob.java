@@ -1,0 +1,26 @@
+package org.jeecg.modules.quartz.job;
+import lombok.extern.slf4j.Slf4j;
+import org.jeecg.modules.game.service.IGameOnlineNumService;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * @author xubodong
+ * @version 1.0.0
+ * @date 2020/10/15 20:20
+ */
+@Slf4j
+public class GameOnlineNumJob implements Job {
+
+	@Autowired
+	private IGameOnlineNumService gameOnlineNumService;
+
+
+	@Override
+	public void execute(JobExecutionContext context) throws JobExecutionException {
+
+		gameOnlineNumService.doGameOnlineNumSave();
+	}
+}
