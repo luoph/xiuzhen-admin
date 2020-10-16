@@ -151,7 +151,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
         return new GameDayDataCount().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount)).setLoginNum(loginNum)
                 .setPayNum(countPay).setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false))
-                .setArppu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false))
+                .setArppu(BigDecimalUtil.divideZero(sumPayAmount, countPay, false))
                 .setPayRate(BigDecimalUtil.divideZero(countPay, loginNum, true))
                 .setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
                 .setAddPayAmount(BigDecimalUtil.valueOf(registerPayAmount))
