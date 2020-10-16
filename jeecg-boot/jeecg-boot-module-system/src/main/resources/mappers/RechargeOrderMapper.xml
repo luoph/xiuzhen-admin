@@ -29,6 +29,6 @@
         create_date >= DATE (#{rangeDateBeginTime}) AND create_date &lt;= DATE (#{rangeDateEndTime})
         AND server_id = #{serverId}
         AND channel = #{channel}
-        AND type = 2
+
     </select>
 </mapper>

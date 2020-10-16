@@ -9,7 +9,9 @@ import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +22,9 @@ import java.util.Map;
  */
 @Service
 public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameServer> implements IGameServerService {
+
+    @Resource
+    private GameServerMapper gameServerMapper;
 
     @Override
     public Map<Long, Response> gameServerRequest(long[] serverIds, String requestUrl) {
@@ -35,4 +40,5 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         }
         return responseMap;
     }
+
 }
