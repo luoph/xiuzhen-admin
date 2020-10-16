@@ -149,14 +149,31 @@ public final class BigDecimalUtil {
     }
 
     /**
-     * 被除数==0时 不抛异常的除法计算
+     * 返回百分数
      *
      * @return 返回结果为带有两位小数的百分数, 例: 12.34%
      */
     public static BigDecimal dividePercent(double v1) {
+    	if (v1 == 0){
+    		return BigDecimal.ZERO;
+	    }
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         BigDecimal multiply = multiply(v1, 100);
         String format = decimalFormat.format(multiply);
+        return new BigDecimal(format);
+    }
+    /**
+     * 返回百分数
+     *
+     * @return 返回结果保留两位小数
+     */
+    public static BigDecimal divideTwo(double v1) {
+	    if (v1 == 0){
+		    return BigDecimal.ZERO;
+	    }
+        DecimalFormat decimalFormat = new DecimalFormat("#.00");
+	    BigDecimal bigDecimal = valueOf(v1);
+	    String format = decimalFormat.format(bigDecimal);
         return new BigDecimal(format);
     }
 
