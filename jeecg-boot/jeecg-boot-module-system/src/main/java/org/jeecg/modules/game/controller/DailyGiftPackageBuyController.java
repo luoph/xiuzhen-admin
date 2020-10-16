@@ -59,6 +59,11 @@ public class DailyGiftPackageBuyController extends JeecgController<DailyGiftPack
         if (StringUtils.isEmpty(createTimeBegin) && StringUtils.isEmpty(createTimeEnd) && serverId == 0 && channelId == 0) {
             return Result.ok(pageVo);
         }
+	    // 如果选择开始时间和结束时间是同一天
+	    if (createTimeBegin.equals(createTimeEnd)){
+		    createTimeBegin = createTimeBegin + " 00:00:00";
+		    createTimeEnd = createTimeEnd + " 23:59:59";
+	    }
         List<DailyGiftPackageBuyVO> dailyGiftPackageBuyVOList = dailyGiftPackageBuyVOService.queryGiftPackageByDateRange(serverId, createTimeBegin, createTimeEnd);
         pageVo.setRecords(dailyGiftPackageBuyVOList).setTotal(dailyGiftPackageBuyVOList.size());
         return Result.ok(pageVo);

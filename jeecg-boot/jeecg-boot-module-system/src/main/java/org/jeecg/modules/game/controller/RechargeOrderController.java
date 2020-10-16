@@ -68,6 +68,11 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
 		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
 			return Result.ok(page);
 		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
+		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[0]);
 		page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
@@ -99,6 +104,11 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
 		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
 			return Result.ok(page);
 		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
+		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[3]);
 		page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
@@ -129,6 +139,11 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
 		// 没有传入时间和天数返回空的数据
 		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
 			return Result.ok(page);
+		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
 		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[4]);
@@ -162,6 +177,11 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
 		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
 			return Result.ok(page);
 		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
+		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[1]);
 		page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
@@ -192,6 +212,11 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
 		// 没有传入时间和天数返回空的数据
 		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
 			return Result.ok(page);
+		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
 		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[2]);
