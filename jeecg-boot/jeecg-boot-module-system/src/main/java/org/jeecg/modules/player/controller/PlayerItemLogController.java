@@ -46,8 +46,6 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
 	private IGameServerService gameServerService;
 	@Autowired
 	private BackpackLogService backpackLogService;
-	@Autowired
-	private IGameChannelService gameChannelService;
 
 	/**
 	 * 分页列表查询
@@ -128,8 +126,42 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
 			rangeDateBegin = rangeDateBegin + " 00:00:00";
 			rangeDateEnd = rangeDateEnd + " 23:59:59";
 		}
-		String channel = gameChannelService.queryChannelNameById(channelId);
-		List<PlayerItemLog> playerItemLogs = playerItemLogService.queryCurrencyPayIncomeList(rangeDateBegin, rangeDateEnd, days, serverId, channel, itemId);
+		List<PlayerItemLog> playerItemLogs = playerItemLogService.queryCurrencyPayIncomeList(rangeDateBegin, rangeDateEnd, days, serverId, itemId);
+		page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
+		return Result.ok(page);
+	}
+
+
+	/**
+	 * 分页列表查询
+	 *
+	 * @param pageNo   页码
+	 * @param pageSize 分页大小
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "途径分布-列表查询")
+	@GetMapping(value = "/wayDistributeList")
+	public Result<?> wayDistributeList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+	                                       @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+	                                       @RequestParam(name = "days", defaultValue = "0") int days,
+	                                       @RequestParam(name = "itemId", defaultValue = "0") int itemId,
+	                                       @RequestParam(name = "type", defaultValue = "0") int type,
+	                                       @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+	                                       @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+	                                       @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+	                                       @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+	) {
+		Page<PlayerItemLog> page = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0
+				&& channelId == 0 && days == 0 && itemId == 0 && type == 0) {
+			return Result.ok(page);
+		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
+		}
+		List<PlayerItemLog> playerItemLogs = playerItemLogService.queryWayDistributeList(rangeDateBegin, rangeDateEnd, days, serverId, itemId, type);
 		page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
 		return Result.ok(page);
 	}

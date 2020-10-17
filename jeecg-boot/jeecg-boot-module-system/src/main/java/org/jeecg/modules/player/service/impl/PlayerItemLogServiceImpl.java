@@ -1,5 +1,6 @@
 package org.jeecg.modules.player.service.impl;
 
+import cn.youai.xiuzhen.entity.pojo.ItemReduce;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -44,7 +45,7 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 	}
 
 	@Override
-	public List<PlayerItemLog> queryCurrencyPayIncomeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, int itemId) {
+	public List<PlayerItemLog> queryCurrencyPayIncomeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId) {
 		// 汇总对象
 		PlayerItemLog playerItemLog = new PlayerItemLog();
 		// 统计临时变量
@@ -68,7 +69,7 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 		// 新增 type
 		int pay = 2;
 		// 查询道具新增的数量汇总
-		List<PlayerItemLog> incomeList = playerItemLogMapper.queryCurrencyPayIncomeList(rangeDateBeginTime, rangeDateEndTime, serverId, channel, income, itemId);
+		List<PlayerItemLog> incomeList = playerItemLogMapper.queryCurrencyPayIncomeList(rangeDateBeginTime, rangeDateEndTime, serverId, income, itemId);
 		for (PlayerItemLog incomeItemLog : incomeList) {
 			// 遍历新增的list
 			BigDecimal addItemNum = incomeItemLog.getAddItemNum();
@@ -112,5 +113,44 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 		incomeList.add(0, playerItemLog);
 
 		return incomeList;
+	}
+
+	@Override
+	public List<PlayerItemLog> queryWayDistributeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId, int type) {
+		Date rangeDateBeginTime = null;
+		Date rangeDateEndTime = null;
+
+		if (days == 0) {
+			rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
+			rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+		} else {
+			rangeDateEndTime = new Date();
+			rangeDateBeginTime = DateUtils.addDays(rangeDateEndTime, days * (-1));
+		}
+
+		List<PlayerItemLog> list = playerItemLogMapper.queryWayDistributeList(rangeDateBeginTime, rangeDateEndTime, serverId, itemId, type);
+		for (PlayerItemLog playerItemLog : list) {
+			Integer way = playerItemLog.getWay();
+
+			// 该途径下的道具数
+			BigDecimal itemNum = playerItemLog.getItemNum();
+
+			// 全途径下的道具次数总和
+			BigDecimal itemNumSum = playerItemLogMapper.queryItemSum(rangeDateBeginTime, rangeDateEndTime, serverId, type);
+			// 次数
+			BigDecimal itemCount = playerItemLogMapper.queryItemCount(rangeDateBeginTime, rangeDateEndTime, serverId, type, itemId);
+
+			// 占比
+			BigDecimal itemNumRate = BigDecimalUtil.divideFour(itemNum.doubleValue(), itemNumSum.doubleValue(), true);
+
+			playerItemLog.setItemCount(itemCount);
+			playerItemLog.setItemNumRate(itemNumRate);
+			//设置产销点名字
+			ItemReduce itemReduce = ItemReduce.valueOf(way);
+			playerItemLog.setWayName(itemReduce.getName());
+
+		}
+
+		return list;
 	}
 }

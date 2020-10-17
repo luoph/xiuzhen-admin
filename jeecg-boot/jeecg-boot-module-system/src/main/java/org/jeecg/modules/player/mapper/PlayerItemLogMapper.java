@@ -19,7 +19,6 @@ public interface PlayerItemLogMapper extends BaseMapper<PlayerItemLog> {
 	List<PlayerItemLog> queryCurrencyPayIncomeList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
 	                                               @Param("rangeDateEndTime") Date rangeDateEndTime,
 	                                               @Param("serverId") Integer serverId,
-	                                               @Param("channel") String channel,
 	                                               @Param("type") int type,
 	                                               @Param("itemId") int itemId);
 
@@ -27,4 +26,21 @@ public interface PlayerItemLogMapper extends BaseMapper<PlayerItemLog> {
 	                         @Param("itemId") int itemId,
 	                         @Param("type") int pay,
 	                         @Param("serverId") Integer serverId);
+
+	List<PlayerItemLog> queryWayDistributeList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                                           @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                                           @Param("serverId") Integer serverId,
+	                                           @Param("itemId") int itemId,
+	                                           @Param("type") int type);
+
+	BigDecimal queryItemSum(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                             @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                             @Param("serverId") Integer serverId,
+	                             @Param("type") int type);
+
+	BigDecimal queryItemCount(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                             @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                             @Param("serverId") Integer serverId,
+	                             @Param("itemId") int itemId,
+	                             @Param("type") int type);
 }
