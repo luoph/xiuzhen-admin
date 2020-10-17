@@ -18,9 +18,9 @@
         id,
         product_id,
         COUNT(product_id) AS product_count,
-        COUNT(product_id)/(SELECT COUNT(*) FROM pay_order) AS product_count_ratio,
+        COUNT(product_id) / #{productCount} AS product_count_ratio,
         SUM(pay_amount) AS pay_amount_sum,
-        SUM(pay_amount)/(SELECT SUM(pay_amount) FROM pay_order) AS pay_amount_ratio
+        SUM(pay_amount)/ #{payAmountSum} AS pay_amount_ratio
         FROM
         pay_order
         WHERE
@@ -33,5 +33,21 @@
             AND channel = #{channel}
         </if>
         GROUP BY product_id
+    </select>
+
+    <select id="queryGiftConsume" resultMap="BaseResultMap">
+        SELECT
+        COUNT(*) product_count,
+        SUM(pay_amount) pay_amount_sum
+        FROM pay_order
+        WHERE
+        pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
+        AND order_status > 0
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        <if test="channel != null">
+            AND channel = #{channel}
+        </if>
     </select>
 </mapper>
