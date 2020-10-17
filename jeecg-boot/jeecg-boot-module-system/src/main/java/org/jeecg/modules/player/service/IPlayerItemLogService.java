@@ -28,4 +28,15 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
      * @param logs
      */
     void saveBatchLog(List<PlayerItemLog> logs);
+
+	/**
+	 * 查询货币产销
+	 * @param rangeDateBegin
+	 * @param rangeDateEnd
+	 * @param days
+	 * @param serverId
+	 * @param channel
+	 * @return
+	 */
+	List<PlayerItemLog> queryCurrencyPayIncomeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, int itemId);
 }

@@ -1,5 +1,6 @@
 package org.jeecg.modules.player.entity;
 
+import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -11,6 +12,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author jeecg-boot
@@ -102,6 +104,31 @@ public class PlayerItemLog implements Serializable {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date updateTime;
+
+    /**
+     * 道具的数量汇总
+     */
+    private BigDecimal itemNum;
+
+    /**
+     * 新增道具的数量汇总
+     */
+    private BigDecimal addItemNum;
+
+    /**
+     * 消耗道具的数量汇总
+     */
+    private BigDecimal consumeItemNum;
+
+    /**
+     * 消耗比 (新增/消耗)
+     */
+    private BigDecimal consumeRate;
+
+    /**
+     * 滞留 (新增-消耗)
+     */
+    private BigDecimal retention;
 
 //    @Override
 //    public boolean equals(Object o) {
