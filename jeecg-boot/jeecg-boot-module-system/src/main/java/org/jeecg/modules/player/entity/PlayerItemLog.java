@@ -130,6 +130,11 @@ public class PlayerItemLog implements Serializable {
      */
     private BigDecimal retention;
 
+    /**
+     * 时间字符串
+     */
+    private String dateStr;
+
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) {
