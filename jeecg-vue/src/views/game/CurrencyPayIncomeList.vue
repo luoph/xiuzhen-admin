@@ -105,7 +105,10 @@ export default {
                 {
                     title: "日期",
                     align: "center",
-                    dataIndex: "syncTime"
+                    dataIndex: "dateStr",
+                    customRender: function(text) {
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
+                    }
                 },
                 {
                     title: "新增",
@@ -120,7 +123,10 @@ export default {
                 {
                     title: "消耗比",
                     align: "center",
-                    dataIndex: "consumeRate"
+                    dataIndex: "consumeRate",
+                    customRender: function(text) {
+                        return text + "%";
+                    }
                 },
                 {
                     title: "滞留",

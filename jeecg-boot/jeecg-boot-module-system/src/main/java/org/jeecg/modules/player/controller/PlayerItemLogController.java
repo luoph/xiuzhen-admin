@@ -123,6 +123,11 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
 		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0 && itemId == 0) {
 			return Result.ok(page);
 		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
+		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		List<PlayerItemLog> playerItemLogs = playerItemLogService.queryCurrencyPayIncomeList(rangeDateBegin, rangeDateEnd, days, serverId, channel, itemId);
 		page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
