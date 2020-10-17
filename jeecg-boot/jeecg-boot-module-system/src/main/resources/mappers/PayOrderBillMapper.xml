@@ -36,7 +36,7 @@
     <select id="queryPayGradeByDateRange" resultMap="BaseResultMap">
         SELECT
         COUNT(DISTINCT(player_id)) pay_num_sum,
-        (COUNT(DISTINCT(player_id)) / (SELECT COUNT(DISTINCT(player_id)) FROM pay_order)) pay_num_sum_rate,
+        (COUNT(DISTINCT(player_id)) / (#{payNumSum})) pay_num_sum_rate,
         SUM(pay_amount) pay_amount_sum,
         (SUM(pay_amount) / (SELECT SUM(pay_amount) FROM pay_order)) pay_amount_sum_rate,
         (SUM(pay_amount) / COUNT(id)) arppu
@@ -63,8 +63,24 @@
         SUM(pay_amount) consume_rank,
         SUM(pay_amount) * (SELECT COUNT(player_id) FROM pay_order WHERE product_id = #{goodsId}) chalcedony
         FROM pay_order
-        WHERE product_id = #{goodsId}
+        WHERE
+        product_id = #{goodsId}
         AND pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
+        AND order_status > 0
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        <if test="channel != null">
+            AND channel = #{channel}
+        </if>
+    </select>
+
+    <select id="queryPayNumSum" resultType="Integer">
+        SELECT
+        COUNT(DISTINCT(player_id))
+        FROM pay_order
+        WHERE
+        pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
         AND order_status > 0
         <if test="serverId != 0">
             AND server_id = #{serverId}

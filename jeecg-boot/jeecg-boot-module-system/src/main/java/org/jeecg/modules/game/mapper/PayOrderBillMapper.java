@@ -25,7 +25,8 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
 	                                      @Param("payRankBegin") int payRankBegin,
 	                                      @Param("payRankEnd") int payRankEnd,
 	                                      @Param("serverId") Integer serverId,
-	                                      @Param("channel") String channel);
+	                                      @Param("channel") String channel,
+	                                      @Param("payNumSum") Integer payNumSum);
 
 	PayOrderBill queryPayOrderList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
 	                               @Param("rangeDateEndTime") Date rangeDateEndTime,
@@ -33,4 +34,9 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
 	                               @Param("channel") String channel,
 	                               @Param("dau") Long dau,
 	                               @Param("goodsId") Integer goodsId);
+
+	Integer queryPayNumSum(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                       @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                       @Param("serverId") Integer serverId,
+	                       @Param("channel") String channel);
 }

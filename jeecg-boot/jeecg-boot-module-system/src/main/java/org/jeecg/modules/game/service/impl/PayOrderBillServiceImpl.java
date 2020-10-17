@@ -49,7 +49,9 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         if (days == 0) {
             Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
-            payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel);
+            // 查询该档位下付费人数和
+            Integer payNumSum = payOrderBillMapper.queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
+            payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
             payOrderBill.setPayRank(payRank);
             return getDataTreating(payOrderBill);
 
@@ -58,8 +60,8 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         // 获取过去第几天的日期
         Date nowDate = new Date();
         Date pastDate = DateUtils.addDays(nowDate, days * (-1));
-
-        payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
+        Integer payNumSum = payOrderBillMapper.queryPayNumSum(pastDate, nowDate, serverId, channel);
+        payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel, payNumSum);
         payOrderBill.setPayRank(payRank);
         return getDataTreating(payOrderBill);
     }
@@ -76,7 +78,8 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
             if (days == 0) {
                 Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
                 Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
-                payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel);
+                Integer payNumSum = payOrderBillMapper.queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
+                payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
                 payOrderBill.setPayRank(payRank);
                 list.add(getDataTreating(payOrderBill));
             } else {
@@ -84,7 +87,8 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 // 获取过去第几天的日期
                 Date nowDate = new Date();
                 Date pastDate = DateUtils.addDays(nowDate, days * (-1));
-                payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel);
+                Integer payNumSum = payOrderBillMapper.queryPayNumSum(pastDate, nowDate, serverId, channel);
+                payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel, payNumSum);
                 payOrderBill.setPayRank(payRank);
                 list.add(getDataTreating(payOrderBill));
             }
