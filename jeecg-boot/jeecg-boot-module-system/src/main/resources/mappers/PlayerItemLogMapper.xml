@@ -10,6 +10,11 @@
         <result column="item_num" property="itemNum"/>
         <result column="add_item_num" property="addItemNum"/>
         <result column="consume_item_num" property="consumeItemNum"/>
+        <result column="way_name" property="wayName"/>
+        <result column="player_num" property="playerNum"/>
+        <result column="item_count" property="itemCount"/>
+        <result column="item_num_rate" property="itemNumRate"/>
+        <result column="item_num_sum" property="itemNumSum"/>
     </resultMap>
 
     <select id="queryCurrencyPayIncomeList" resultMap="BaseResultMap">
@@ -36,6 +41,50 @@
         item_id = #{itemId}
         AND type = #{type}
         AND sync_time = #{syncTime}
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+    </select>
+
+    <select id="queryWayDistributeList" resultMap="BaseResultMap">
+        SELECT
+        way,
+        SUM(num) item_num,
+        COUNT(DISTINCT(player_id)) player_num
+        FROM
+        player_item_log
+        WHERE
+        item_id = #{itemId}
+        AND type = #{type}
+        AND sync_time >= #{rangeDateBeginTime} AND sync_time &lt;= #{rangeDateEndTime}
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+        GROUP BY way
+    </select>
+
+    <select id="queryItemSum" resultType="BigDecimal">
+        SELECT
+        SUM(num) item_num_sum
+        FROM
+        player_item_log
+        WHERE
+        type = #{type}
+        AND sync_time >= #{rangeDateBeginTime} AND sync_time &lt;= #{rangeDateEndTime}
+        <if test="serverId != 0">
+            AND server_id = #{serverId}
+        </if>
+    </select>
+
+    <select id="queryItemCount" resultType="BigDecimal">
+        SELECT
+        COUNT(way) item_count
+        FROM
+        player_item_log
+        WHERE
+        item_id = #{itemId}
+        AND type = #{type}
+        AND sync_time >= #{rangeDateBeginTime} AND sync_time &lt;= #{rangeDateEndTime}
         <if test="serverId != 0">
             AND server_id = #{serverId}
         </if>

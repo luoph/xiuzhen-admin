@@ -35,8 +35,19 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 	 * @param rangeDateEnd
 	 * @param days
 	 * @param serverId
-	 * @param channel
 	 * @return
 	 */
-	List<PlayerItemLog> queryCurrencyPayIncomeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, int itemId);
+	List<PlayerItemLog> queryCurrencyPayIncomeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId);
+
+	/**
+	 * 查询途径分布
+	 * @param rangeDateBegin
+	 * @param rangeDateEnd
+	 * @param days
+	 * @param serverId
+	 * @param itemId
+	 * @param type
+	 * @return
+	 */
+	List<PlayerItemLog> queryWayDistributeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId, int type);
 }

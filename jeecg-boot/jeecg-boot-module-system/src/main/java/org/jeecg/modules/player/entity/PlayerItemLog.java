@@ -135,6 +135,31 @@ public class PlayerItemLog implements Serializable {
      */
     private String dateStr;
 
+    /**
+     * 途径类型对应的名称 (产销点)
+     */
+    private String wayName;
+
+    /**
+     * 玩家数量
+     */
+    private BigDecimal playerNum;
+
+    /**
+     * 对应途径下货币产销次数
+     */
+    private BigDecimal itemCount;
+
+    /**
+     * 对应途径下货币产销数量占比
+     */
+    private BigDecimal itemNumRate;
+
+    /**
+     * 全途径下的道具数量总和
+     */
+    private BigDecimal itemNumSum;
+
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) {
