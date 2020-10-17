@@ -30,45 +30,45 @@ import java.util.List;
 @RequestMapping("game/payOrderGift")
 public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOrderGiftService> {
 
-    @Autowired
-    private IPayOrderGiftService payOrderGiftService;
+	@Autowired
+	private IPayOrderGiftService payOrderGiftService;
 
-    @Autowired
-    private IPayOrderGiftVOService payOrderGiftVOService;
+	@Autowired
+	private IPayOrderGiftVOService payOrderGiftVOService;
 
-    @Autowired
-    private IGameChannelService gameChannelService;
+	@Autowired
+	private IGameChannelService gameChannelService;
 
-    /**
-     * 分页列表查询
-     *
-     * @param payOrderGift 数据实体
-     * @param pageNo       页码
-     * @param pageSize     分页大小
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "直充道具-列表查询")
-    @GetMapping(value = "/list")
-    public Result<?> queryPageList(PayOrderGift payOrderGift,
-                                   @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
-                                   @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
-                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-    ) {
-        Page<PayOrderGiftVO> pageVo = new Page<>(pageNo, pageSize);
-        if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
-            return Result.ok(pageVo);
-        }
-        if (payTimeBegin.equals(payTimeEnd)){
-            payTimeBegin = payTimeBegin + " 00:00:00";
-            payTimeEnd = payTimeEnd + " 23:59:59";
-        }
-        String channel = gameChannelService.queryChannelNameById(channelId);
-        List<PayOrderGiftVO> payOrderGiftVOList = payOrderGiftVOService.queryGiftByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
-        pageVo.setRecords(payOrderGiftVOList).setTotal(payOrderGiftVOList.size());
-        return Result.ok(pageVo);
-    }
+	/**
+	 * 分页列表查询
+	 *
+	 * @param payOrderGift 数据实体
+	 * @param pageNo       页码
+	 * @param pageSize     分页大小
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "直充道具-列表查询")
+	@GetMapping(value = "/list")
+	public Result<?> queryPageList(PayOrderGift payOrderGift,
+	                               @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
+	                               @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
+	                               @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+	                               @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+	                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+	                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+	) {
+		Page<PayOrderGiftVO> pageVo = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
+			return Result.ok(pageVo);
+		}
+		if (payTimeBegin.equals(payTimeEnd)) {
+			payTimeBegin = payTimeBegin + " 00:00:00";
+			payTimeEnd = payTimeEnd + " 23:59:59";
+		}
+		String channel = gameChannelService.queryChannelNameById(channelId);
+		List<PayOrderGiftVO> payOrderGiftVOList = payOrderGiftVOService.queryGiftByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
+		pageVo.setRecords(payOrderGiftVOList).setTotal(payOrderGiftVOList.size());
+		return Result.ok(pageVo);
+	}
 
 }

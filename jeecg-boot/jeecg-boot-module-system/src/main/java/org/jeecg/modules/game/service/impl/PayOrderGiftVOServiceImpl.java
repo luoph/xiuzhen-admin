@@ -21,25 +21,30 @@ import java.util.List;
 @Service
 public class PayOrderGiftVOServiceImpl implements IPayOrderGiftVOService {
 
-    @Resource
-    private PayOrderGiftVOMapper payOrderGiftVOMapper;
+	@Resource
+	private PayOrderGiftVOMapper payOrderGiftVOMapper;
 
-    @Override
-    public List<PayOrderGiftVO> queryGiftByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
+	@Override
+	public List<PayOrderGiftVO> queryGiftByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
 
-        Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
-        Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);
+		Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
+		Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);
 
-        List<PayOrderGiftVO> payOrderGiftVOList = payOrderGiftVOMapper.queryGiftByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
-        for (PayOrderGiftVO payOrderGiftVO : payOrderGiftVOList) {
-            // 数据处理
-            BigDecimal productCountRatio = payOrderGiftVO.getProductCountRatio();
-            payOrderGiftVO.setProductCountRatio(BigDecimalUtil.dividePercent(productCountRatio.doubleValue()));
+		// 查询礼包消费的次数和消费的总金额
+		PayOrderGiftVO giftConsume = payOrderGiftVOMapper.queryGiftConsume(payTimeBeginDate, payTimeEndDate, serverId, channel);
+		Integer productCount = giftConsume.getProductCount();
+		double payAmountSum = giftConsume.getPayAmountSum().doubleValue();
+		List<PayOrderGiftVO> payOrderGiftVOList = payOrderGiftVOMapper.queryGiftByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel, productCount, payAmountSum);
 
-            BigDecimal payAmountRatio = payOrderGiftVO.getPayAmountRatio();
-            payOrderGiftVO.setPayAmountRatio(BigDecimalUtil.dividePercent(payAmountRatio.doubleValue()));
-        }
+		for (PayOrderGiftVO payOrderGiftVO : payOrderGiftVOList) {
+			// 数据处理
+			BigDecimal productCountRatio = payOrderGiftVO.getProductCountRatio();
+			payOrderGiftVO.setProductCountRatio(BigDecimalUtil.dividePercent(productCountRatio.doubleValue()));
 
-        return payOrderGiftVOList;
-    }
+			BigDecimal payAmountRatio = payOrderGiftVO.getPayAmountRatio();
+			payOrderGiftVO.setPayAmountRatio(BigDecimalUtil.dividePercent(payAmountRatio.doubleValue()));
+		}
+
+		return payOrderGiftVOList;
+	}
 }
