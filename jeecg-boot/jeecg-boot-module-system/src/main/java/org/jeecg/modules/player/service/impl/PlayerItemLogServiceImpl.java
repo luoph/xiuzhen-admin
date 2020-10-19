@@ -1,6 +1,7 @@
 package org.jeecg.modules.player.service.impl;
 
 import cn.youai.xiuzhen.entity.pojo.ItemReduce;
+import cn.youai.xiuzhen.entity.pojo.OperationType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -60,23 +61,22 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 			rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
 			rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
 		} else {
-			rangeDateEndTime = new Date();
-			rangeDateBeginTime = DateUtils.addDays(rangeDateEndTime, days * (-1));
+			rangeDateEndTime = DateUtils.dateOnly(new Date());
+			rangeDateBeginTime = DateUtils.dateOnly(DateUtils.addDays(rangeDateEndTime, days * (-1)));
 		}
-		// todo 先写死,后面通过枚举来区分拿值
-		// 消耗 type
-		int income = 1;
 		// 新增 type
-		int pay = 2;
+		int increase = OperationType.INCREASE.getType();
+		// 消耗 type
+		int reduce = OperationType.REDUCE.getType();
 		// 查询道具新增的数量汇总
-		List<PlayerItemLog> incomeList = playerItemLogMapper.queryCurrencyPayIncomeList(rangeDateBeginTime, rangeDateEndTime, serverId, income, itemId);
+		List<PlayerItemLog> incomeList = playerItemLogMapper.queryCurrencyPayIncomeList(rangeDateBeginTime, rangeDateEndTime, serverId, increase, itemId);
 		for (PlayerItemLog incomeItemLog : incomeList) {
 			// 遍历新增的list
 			BigDecimal addItemNum = incomeItemLog.getAddItemNum();
 			Date syncTime = incomeItemLog.getSyncTime();
 
 			// 查单条获取消耗道具数
-			BigDecimal consumeItemNum = playerItemLogMapper.getBySyncTime(syncTime, itemId, pay, serverId);
+			BigDecimal consumeItemNum = playerItemLogMapper.getBySyncTime(syncTime, itemId, reduce, serverId);
 			if (consumeItemNum == null) {
 				consumeItemNum = BigDecimal.ZERO;
 			}
@@ -97,8 +97,6 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 			// 计算统计对象
 			addItemNumSum = addItemNumSum + addItemNum.doubleValue();
 			consumeItemNumSum = consumeItemNumSum + consumeItemNum.doubleValue();
-			addItemNumSum = addItemNumSum + addItemNum.doubleValue();
-
 		}
 		consumeRateSumBigDecimal = BigDecimalUtil.divideFour(addItemNumSum, consumeItemNumSum, true);
 		retentionSumBigDecimal = BigDecimalUtil.subtract(addItemNumSum, consumeItemNumSum);
@@ -124,8 +122,8 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 			rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
 			rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
 		} else {
-			rangeDateEndTime = new Date();
-			rangeDateBeginTime = DateUtils.addDays(rangeDateEndTime, days * (-1));
+			rangeDateEndTime = DateUtils.dateOnly(new Date());
+			rangeDateBeginTime = DateUtils.dateOnly(DateUtils.addDays(rangeDateEndTime, days * (-1)));
 		}
 
 		List<PlayerItemLog> list = playerItemLogMapper.queryWayDistributeList(rangeDateBeginTime, rangeDateEndTime, serverId, itemId, type);

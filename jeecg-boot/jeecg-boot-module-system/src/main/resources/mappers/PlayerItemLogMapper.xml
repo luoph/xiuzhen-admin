@@ -30,7 +30,7 @@
             AND server_id = #{serverId}
         </if>
         GROUP BY sync_time
-        ORDER BY sync_time DESC
+        ORDER BY add_item_num DESC
     </select>
 
     <select id="getBySyncTime" resultType="BigDecimal">
@@ -61,6 +61,7 @@
             AND server_id = #{serverId}
         </if>
         GROUP BY way
+        ORDER BY item_num DESC
     </select>
 
     <select id="queryItemSum" resultType="BigDecimal">
