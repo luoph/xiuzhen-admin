@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.ShopMallLogMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.ShopMallLog">
+        <id column="id" property="id" />
+        <result column="player_id" property="playerId" />
+        <result column="goods_id" property="goodsId" />
+        <result column="item_id" property="itemId" />
+        <result column="state" property="state"/>
+        <result column="num" property="num" />
+        <result column="total_price" property="totalPrice" />
+        <result column="price_item" property="priceItem" />
+        <result column="buy_type" property="buyType"/>
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="item_num" property="itemNum" />
+        <result column="player_num" property="playerNum"/>
+        <result column="item_count" property="itemCount"/>
+        <result column="item_num_rate" property="itemNumRate"/>
+        <result column="item_num_sum" property="itemNumSum"/>
+    </resultMap>
+
+    <select id="queryShopMallList" resultMap="BaseResultMap">
+        SELECT
+        item_id,
+        SUM(num) item_num,
+        COUNT(DISTINCT(player_id)) player_num
+        FROM
+        shop_mall_log
+        WHERE
+        type = #{type}
+        AND create_time >= #{rangeDateBeginTime} AND create_time &lt;= #{rangeDateEndTime}
+        GROUP BY item_id
+        ORDER BY item_num DESC
+    </select>
+
+    <select id="queryItemSum" resultType="decimal">
+        SELECT
+        SUM(num) item_num
+        FROM
+        shop_mall_log
+        WHERE
+        type = #{type}
+        AND create_time >= #{rangeDateBeginTime} AND create_time &lt;= #{rangeDateEndTime}
+    </select>
+
+    <select id="queryItemCount" resultType="decimal">
+        SELECT
+        COUNT(item_id) item_count
+        FROM
+        shop_mall_log
+        WHERE
+        item_id = #{itemId}
+        AND type = #{type}
+        AND create_time >= #{rangeDateBeginTime} AND create_time &lt;= #{rangeDateEndTime}
+    </select>
+</mapper>
