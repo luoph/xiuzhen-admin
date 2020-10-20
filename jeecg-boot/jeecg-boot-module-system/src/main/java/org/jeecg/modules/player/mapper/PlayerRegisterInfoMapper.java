@@ -1,7 +1,12 @@
 package org.jeecg.modules.player.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.jeecg.modules.player.entity.PlayerRegisterInfo;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -11,4 +16,12 @@ import org.jeecg.modules.player.entity.PlayerRegisterInfo;
  */
 public interface PlayerRegisterInfoMapper extends BaseMapper<PlayerRegisterInfo> {
 
+	List<PlayerRegisterInfo> queryLoginList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                                        @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                                        @Param("playerId") Long playerId);
+
+
+	String queryPlayerIp(@Param("playerId") Long playerId,
+	                     @Param("createDate") Date createDate,
+	                     @Param("logTable") String logTable);
 }

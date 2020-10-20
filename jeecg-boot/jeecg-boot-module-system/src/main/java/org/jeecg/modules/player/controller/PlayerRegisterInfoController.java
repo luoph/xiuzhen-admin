@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -30,29 +32,29 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("player/playerRegisterInfo")
 public class PlayerRegisterInfoController extends JeecgController<PlayerRegisterInfo, IPlayerRegisterInfoService> {
 
-    @Autowired
-    private IPlayerRegisterInfoService playerRegisterInfoService;
+	@Autowired
+	private IPlayerRegisterInfoService playerRegisterInfoService;
 
-    /**
-     * 分页列表查询
-     *
-     * @param playerRegisterInfo 数据实体
-     * @param pageNo             页码
-     * @param pageSize           分页大小
-     * @param req                请求
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "玩家注册信息-列表查询")
-    @GetMapping(value = "/list")
-    public Result<?> queryPageList(PlayerRegisterInfo playerRegisterInfo,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                                   HttpServletRequest req) {
-        QueryWrapper<PlayerRegisterInfo> queryWrapper = QueryGenerator.initQueryWrapper(playerRegisterInfo, req.getParameterMap());
-        Page<PlayerRegisterInfo> page = new Page<>(pageNo, pageSize);
-        IPage<PlayerRegisterInfo> pageList = playerRegisterInfoService.page(page, queryWrapper);
-        return Result.ok(pageList);
-    }
+	/**
+	 * 分页列表查询
+	 *
+	 * @param playerRegisterInfo 数据实体
+	 * @param pageNo             页码
+	 * @param pageSize           分页大小
+	 * @param req                请求
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "玩家注册信息-列表查询")
+	@GetMapping(value = "/list")
+	public Result<?> queryPageList(PlayerRegisterInfo playerRegisterInfo,
+	                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+	                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+	                               HttpServletRequest req) {
+		QueryWrapper<PlayerRegisterInfo> queryWrapper = QueryGenerator.initQueryWrapper(playerRegisterInfo, req.getParameterMap());
+		Page<PlayerRegisterInfo> page = new Page<>(pageNo, pageSize);
+		IPage<PlayerRegisterInfo> pageList = playerRegisterInfoService.page(page, queryWrapper);
+		return Result.ok(pageList);
+	}
 
 //    /**
 //     * 添加
@@ -106,34 +108,34 @@ public class PlayerRegisterInfoController extends JeecgController<PlayerRegister
 //        return Result.ok("批量删除成功！");
 //    }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "玩家注册信息-通过id查询")
-    @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id") String id) {
-        PlayerRegisterInfo playerRegisterInfo = playerRegisterInfoService.getById(id);
-        if (playerRegisterInfo == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(playerRegisterInfo);
-    }
+	/**
+	 * 通过id查询
+	 *
+	 * @param id 实体id
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "玩家注册信息-通过id查询")
+	@GetMapping(value = "/queryById")
+	public Result<?> queryById(@RequestParam(name = "id") String id) {
+		PlayerRegisterInfo playerRegisterInfo = playerRegisterInfoService.getById(id);
+		if (playerRegisterInfo == null) {
+			return Result.error("未找到对应数据");
+		}
+		return Result.ok(playerRegisterInfo);
+	}
 
-    /**
-     * 导出excel
-     *
-     * @param request            请求
-     * @param playerRegisterInfo 实体
-     */
-    @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, PlayerRegisterInfo playerRegisterInfo) {
-        return super.exportXls(request, playerRegisterInfo, PlayerRegisterInfo.class, "玩家注册信息");
-    }
+	/**
+	 * 导出excel
+	 *
+	 * @param request            请求
+	 * @param playerRegisterInfo 实体
+	 */
+	@RequestMapping(value = "/exportXls")
+	public ModelAndView exportXls(HttpServletRequest request, PlayerRegisterInfo playerRegisterInfo) {
+		return super.exportXls(request, playerRegisterInfo, PlayerRegisterInfo.class, "玩家注册信息");
+	}
 
-//    /**
+	//    /**
 //     * 通过excel导入数据
 //     *
 //     * @param request  请求
@@ -144,5 +146,28 @@ public class PlayerRegisterInfoController extends JeecgController<PlayerRegister
 //    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
 //        return super.importExcel(request, response, PlayerRegisterInfo.class);
 //    }
+
+	@AutoLog(value = "登录流水-列表查询")
+	@GetMapping(value = "/loginList")
+	public Result<?> loginList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+	                           @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+	                           @RequestParam(name = "playerId", defaultValue = "0") Long playerId,
+	                           @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+	                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+	                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+		Page<PlayerRegisterInfo> page = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && playerId == 0) {
+			return Result.ok(page);
+		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
+		}
+		List<PlayerRegisterInfo> list = playerRegisterInfoService.queryLoginList(rangeDateBegin, rangeDateEnd, playerId, serverId);
+		page.setRecords(list).setTotal(list.size());
+		return Result.ok(page);
+	}
+
 
 }
