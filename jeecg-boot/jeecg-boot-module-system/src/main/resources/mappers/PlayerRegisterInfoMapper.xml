@@ -2,4 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper">
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.player.entity.PlayerRegisterInfo">
+        <id column="id" property="id"/>
+        <result column="account" property="account"/>
+        <result column="player_id" property="playerId"/>
+        <result column="name" property="name"/>
+        <result column="network" property="network"/>
+        <result column="model" property="model"/>
+        <association property="userOnlineRecord" javaType="org.jeecg.modules.player.entity.UserOnlineRecord">
+            <id column="uor_id" property="id"/>
+            <result column="uor_duration" property="duration"/>
+            <result column="uor_create_time" property="createTime"/>
+            <result column="uor_create_date" property="createDate"/>
+        </association>
+    </resultMap>
+
+    <select id="queryLoginList" resultMap="BaseResultMap">
+        SELECT
+        pri.id,
+        pri.account,
+        pri.name,
+        pri.network,
+        pri.model,
+        pri.player_id,
+        uor.duration uor_duration,
+        uor.create_time uor_create_time,
+        uor.create_date uor_create_date
+        FROM
+        player_register_info pri
+        LEFT JOIN user_online_record uor ON pri.player_id = uor.player_id
+        WHERE
+        pri.player_id = #{playerId}
+        <if test="rangeDateBeginTime !=null ">
+            AND uor.create_time >= #{rangeDateBeginTime}
+        </if>
+        <if test="rangeDateEndTime !=null ">
+            AND uor.create_time &lt;= #{rangeDateEndTime}
+        </if>
+    </select>
+
+    <select id="queryPlayerIp" resultType="string">
+        SELECT
+        ip
+        FROM
+        ${logTable}
+        WHERE
+        player_id = #{playerId}
+        AND create_date = #{createDate}
+        ORDER BY create_time DESC
+        LIMIT 1
+    </select>
 </mapper>

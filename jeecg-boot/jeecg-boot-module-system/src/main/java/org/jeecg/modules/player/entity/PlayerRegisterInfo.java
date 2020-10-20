@@ -154,4 +154,9 @@ public class PlayerRegisterInfo implements Serializable {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date createTime;
+
+    /**
+     * 用户在线时长统计对象
+     */
+    private UserOnlineRecord userOnlineRecord;
 }
