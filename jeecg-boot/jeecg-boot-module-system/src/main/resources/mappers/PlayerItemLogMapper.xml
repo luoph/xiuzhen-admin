@@ -6,6 +6,11 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.jeecg.modules.player.entity.PlayerItemLog">
         <id column="id" property="id"/>
+        <result column="player_id" property="playerId"/>
+        <result column="item_id" property="itemId"/>
+        <result column="num" property="num"/>
+        <result column="way" property="way"/>
+        <result column="type" property="type"/>
         <result column="sync_time" property="syncTime"/>
         <result column="item_num" property="itemNum"/>
         <result column="add_item_num" property="addItemNum"/>
@@ -88,6 +93,31 @@
         AND sync_time >= #{rangeDateBeginTime} AND sync_time &lt;= #{rangeDateEndTime}
         <if test="serverId != 0">
             AND server_id = #{serverId}
+        </if>
+    </select>
+
+    <select id="queryItemBillList" resultMap="BaseResultMap">
+        SELECT
+        player_id,
+        item_id,
+        way,
+        type,
+        before_num,
+        num,
+        after_num,
+        sync_time
+        FROM
+        player_item_log
+        WHERE
+        player_id = #{playerId}
+        AND item_id = #{itemId}
+        AND type = #{type}
+        AND way = #{way}
+        <if test="rangeDateBeginTime !=null ">
+            AND sync_time >= #{rangeDateBeginTime}
+        </if>
+        <if test="rangeDateEndTime !=null ">
+            AND sync_time &lt;= #{rangeDateEndTime}
         </if>
     </select>
 </mapper>

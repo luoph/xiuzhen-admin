@@ -2,4 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.player.mapper.PlayerMapper">
 
+    <select id="queryForList" resultType="org.jeecg.modules.player.entity.Player"
+            parameterType="org.jeecg.modules.player.entity.PlayerDTO">
+        SELECT
+        id,
+        account,
+        nickname,
+        level,
+        backpack_size,
+        practice_value,
+        practice_year,
+        combat_power,
+        create_time,
+        login_time,
+        login_ip
+        FROM
+        player
+        WHERE
+        id = #{playerId}
+        AND nickname = #{nickName}
+        <if test="createDateBegin != null">
+            AND create_time >= #{createDateBegin}
+        </if>
+        <if test="createDateEnd !=null">
+            AND create_time &lt;= #{createDateEnd}
+        </if>
+        <if test="loginDateBegin !=null">
+            AND login_time >= #{loginDateBegin}
+        </if>
+        <if test="loginDateEnd !=null">
+            AND login_time &lt;= #{loginDateEnd}
+        </if>
+        <if test="levelBegin != null">
+            AND level >= #{levelBegin}
+        </if>
+        <if test="levelEnd != null">
+            AND level &lt;= #{levelEnd}
+        </if>
+    </select>
+
 </mapper>

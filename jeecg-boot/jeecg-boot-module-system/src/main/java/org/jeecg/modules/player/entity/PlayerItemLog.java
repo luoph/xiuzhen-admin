@@ -106,6 +106,11 @@ public class PlayerItemLog implements Serializable {
     private java.util.Date updateTime;
 
     /**
+     * 道具名称
+     */
+    private String itemName;
+
+    /**
      * 道具的数量汇总
      */
     private BigDecimal itemNum;
@@ -159,6 +164,17 @@ public class PlayerItemLog implements Serializable {
      * 全途径下的道具数量总和
      */
     private BigDecimal itemNumSum;
+
+    /**
+     * 产销类型名
+     */
+    private String typeName;
+
+    /**
+     * 玩家名字
+     */
+    private String playerName;
+
 
 //    @Override
 //    public boolean equals(Object o) {

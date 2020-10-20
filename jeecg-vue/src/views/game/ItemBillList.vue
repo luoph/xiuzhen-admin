@@ -8,28 +8,35 @@
                         <!--@ = v-on:数据绑定 不是事件-->
                         <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
+                    <a-col :md="4" :sm="4">
+                        <a-form-item label="玩家id">
+                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="4">
+                        <a-form-item label="物品id">
+                            <a-input placeholder="请输入物品id" v-model="queryParam.itemId"></a-input>
+                        </a-form-item>
+                    </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
                             <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
-                    <a-col :md="5" :sm="5">
-                        <a-form-item label="选择就近天数">
-                            <a-select placeholder="天数" v-model="queryParam.days">
-                                <a-select-option :value="0">不选择天数</a-select-option>
-                                <a-select-option :value="7">近7天</a-select-option>
-                                <a-select-option :value="15">近15天</a-select-option>
-                                <a-select-option :value="30">近一个月</a-select-option>
-                                <a-select-option :value="60">近两个月</a-select-option>
+                    <a-col :md="3" :sm="3">
+                        <a-form-item label="产销类型">
+                            <a-select placeholder="产销" v-model="queryParam.type">
+                                <a-select-option :value="1">产出</a-select-option>
+                                <a-select-option :value="2">消耗</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="5">
-                        <a-form-item label="商店类型">
-                            <a-select placeholder="商店类型" v-model="queryParam.type">
-                                <a-select-option :value="0">灵石坊</a-select-option>
-                                <a-select-option :value="1">仙石堂</a-select-option>
-                                <a-select-option :value="2">玉髓阁</a-select-option>
+                        <a-form-item label="产销点">
+                            <a-select placeholder="产销点" v-model="queryParam.way">
+                                <a-select-option :value="0">缺省默认系统</a-select-option>
+                                <a-select-option :value="1">洞府-灵田-生产</a-select-option>
+                                <a-select-option :value="2">洞府-灵田-升级</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -43,7 +50,7 @@
             </a-form>
 
             <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('商店销售')">导出</a-button>
+                <a-button type="primary" icon="download" @click="handleExportXls('物品流水')">导出</a-button>
             </div>
         </div>
         <!-- 查询区域-END -->
@@ -76,10 +83,11 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
+import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
 
 export default {
-    name: "ShopMallLogList",
+    name: "ItemBillList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
@@ -88,7 +96,7 @@ export default {
     },
     data() {
         return {
-            description: "商店销售管理页面",
+            description: "物品流水管理页面",
             // 表头
             columns: [
                 {
@@ -102,36 +110,58 @@ export default {
                     }
                 },
                 {
-                    title: "道具",
+                    title: "玩家ID",
+                    align: "center",
+                    dataIndex: "playerId"
+                },
+                {
+                    title: "玩家名",
+                    align: "center",
+                    dataIndex: "playerName"
+                },
+                {
+                    title: "物品ID",
+                    align: "center",
+                    dataIndex: "itemId"
+                },
+                {
+                    title: "物品名称",
+                    align: "center",
+                    dataIndex: "itemName"
+                },
+                {
+                    title: "产销类型",
+                    align: "center",
+                    dataIndex: "typeName"
+                },
+                {
+                    title: "产销点",
                     align: "center",
                     dataIndex: "wayName"
                 },
                 {
-                    title: "货币数量",
+                    title: "变更数量",
                     align: "center",
-                    dataIndex: "itemNum"
+                    dataIndex: "num"
                 },
                 {
-                    title: "人数",
+                    title: "原数量",
                     align: "center",
-                    dataIndex: "playerNum"
+                    dataIndex: "beforeNum"
                 },
                 {
-                    title: "次数",
+                    title: "现数量",
                     align: "center",
-                    dataIndex: "itemCount"
+                    dataIndex: "afterNum"
                 },
                 {
-                    title: "占比",
+                    title: "操作时间",
                     align: "center",
-                    dataIndex: "itemNumRate",
-                    customRender: function(text) {
-                        return text + "%";
-                    }
+                    dataIndex: "syncTime"
                 },
             ],
             url: {
-                list: "game/shopMallLog/list",
+                list: "player/playerItemLog/itemBillList",
             },
             dictOptions: {
             }
@@ -156,10 +186,11 @@ export default {
         },
         searchQuery() {
             let param = {
-                days: this.queryParam.days,
+                way: this.queryParam.way,
+                itemId: this.queryParam.itemId,
                 type: this.queryParam.type,
-                channelId: this.queryParam.channelId,
                 serverId: this.queryParam.serverId,
+                playerId: this.queryParam.playerId,
                 rangeDateBegin: this.queryParam.rangeDateBegin,
                 rangeDateEnd: this.queryParam.rangeDateEnd,
                 pageNo: this.ipagination.current,

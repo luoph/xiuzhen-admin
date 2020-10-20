@@ -165,4 +165,40 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
 		page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
 		return Result.ok(page);
 	}
+
+	/**
+	 * 分页列表查询
+	 *
+	 * @param pageNo   页码
+	 * @param pageSize 分页大小
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "物品流水-列表查询")
+	@GetMapping(value = "/itemBillList")
+	public Result<?> itemBillList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+	                                       @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+	                                       @RequestParam(name = "way", defaultValue = "0") int way,
+	                                       @RequestParam(name = "itemId", defaultValue = "0") int itemId,
+	                                       @RequestParam(name = "type", defaultValue = "0") int type,
+	                                       @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+	                                       @RequestParam(name = "playerId", defaultValue = "0") Long playerId,
+	                                       @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+	                                       @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+	) {
+		Page<PlayerItemLog> page = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0
+				&& playerId == 0 && way == 0 && itemId == 0 && type == 0) {
+			return Result.ok(page);
+		}
+		// 如果选择开始时间和结束时间是同一天
+		if (rangeDateBegin.equals(rangeDateEnd)){
+			rangeDateBegin = rangeDateBegin + " 00:00:00";
+			rangeDateEnd = rangeDateEnd + " 23:59:59";
+		}
+		List<PlayerItemLog> playerItemLogs = playerItemLogService.queryItemBillList(rangeDateBegin, rangeDateEnd, way, serverId, itemId, type, playerId);
+		page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
+		return Result.ok(page);
+	}
+
+
 }

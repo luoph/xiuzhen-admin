@@ -1,15 +1,24 @@
 package org.jeecg.modules.player.service.impl;
 
+import cn.youai.xiuzhen.common.data.ConfigDataEnum;
+import cn.youai.xiuzhen.common.data.ConfigDataService;
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.xiuzhen.entity.pojo.ConfRechargeGoods;
 import cn.youai.xiuzhen.entity.pojo.ItemReduce;
 import cn.youai.xiuzhen.entity.pojo.OperationType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.googlecode.cqengine.query.logical.And;
+import com.googlecode.cqengine.query.simple.Equal;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.player.entity.BackpackLog;
+import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerItemLog;
 import org.jeecg.modules.player.mapper.PlayerItemLogMapper;
 import org.jeecg.modules.player.service.IPlayerItemLogService;
+import org.jeecg.modules.player.service.IPlayerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.googlecode.cqengine.query.QueryFactory.and;
+import static com.googlecode.cqengine.query.QueryFactory.equal;
 
 /**
  * @author jeecg-boot
@@ -30,6 +42,12 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 
 	@Resource
 	private PlayerItemLogMapper playerItemLogMapper;
+
+	@Autowired
+	private ConfigDataService configDataService;
+
+	@Autowired
+	private IPlayerService playerService;
 
 	@Override
 	public PlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog) {
@@ -143,12 +161,61 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 
 			playerItemLog.setItemCount(itemCount);
 			playerItemLog.setItemNumRate(itemNumRate);
-			//设置产销点名字
+			// 设置产销点名字
 			ItemReduce itemReduce = ItemReduce.valueOf(way);
 			playerItemLog.setWayName(itemReduce.getName());
 
 		}
 
 		return list;
+	}
+
+	@Override
+	public List<PlayerItemLog> queryItemBillList(String rangeDateBegin, String rangeDateEnd, int way, Integer serverId, int itemId, int type, Long playerId) {
+		List<PlayerItemLog> list = new ArrayList<>();
+		try {
+			Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
+			Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
+
+			list = playerItemLogMapper.queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
+			DataSourceHelper.useServerDatabase(serverId);
+			String nickName = playerService.getNameById(playerId);
+			for (PlayerItemLog playerItemLog : list) {
+				// 玩家名
+				playerItemLog.setPlayerName(nickName);
+				// 通过道具获取物品名称
+				ConfItem confItem = itemTree(itemId);
+				if (confItem == null) {
+					playerItemLog.setItemName("该物品不存在");
+				} else {
+					playerItemLog.setItemName(confItem.getName());
+				}
+				// 设置物品名称
+				ItemReduce itemReduce = ItemReduce.valueOf(way);
+				String itemReduceName = itemReduce.getName();
+				// 产销点
+				playerItemLog.setWayName(itemReduceName);
+				String typeName = OperationType.getName(type);
+				// 产销类型
+				playerItemLog.setTypeName(typeName);
+			}
+		} catch (Exception e) {
+			log.error("切换数据源异常, serverId :" + serverId, e);
+		} finally {
+			DataSourceHelper.useDefaultDatabase();
+		}
+
+		return list;
+	}
+
+	/**
+	 * 通物品id获取充值商品(策划表中的数据)
+	 *
+	 * @param itemId
+	 * @return
+	 */
+	private ConfItem itemTree(Integer itemId) {
+		Equal<ConfItem, Integer> equal = equal(ConfItem.ITEM_ID, itemId);
+		return configDataService.selectOne(ConfigDataEnum.ITEM, ConfItem.class, equal);
 	}
 }

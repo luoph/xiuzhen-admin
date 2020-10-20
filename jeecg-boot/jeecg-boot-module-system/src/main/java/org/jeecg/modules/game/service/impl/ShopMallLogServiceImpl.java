@@ -45,10 +45,9 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
 				rangeDateBeginTime = DateUtils.dateOnly(DateUtils.addDays(rangeDateEndTime, days * (-1)));
 			}
 			DataSourceHelper.useServerDatabase(serverId);
-			// todo: type理解为商店id
+
 			// 全途径下的道具次数总和
 			BigDecimal itemNumSum = shopMallLogMapper.queryItemSum(rangeDateBeginTime, rangeDateEndTime, type);
-
 
 			list = shopMallLogMapper.queryShopMallList(rangeDateBeginTime, rangeDateEndTime, type);
 

@@ -14,23 +14,24 @@ import java.util.List;
  */
 public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 
-    /**
-     * 设置日志属性
-     *
-     * @param serverId
-     * @param backpacklog
-     */
-    PlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog);
+	/**
+	 * 设置日志属性
+	 *
+	 * @param serverId
+	 * @param backpacklog
+	 */
+	PlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog);
 
-    /**
-     * 保存日志
-     *
-     * @param logs
-     */
-    void saveBatchLog(List<PlayerItemLog> logs);
+	/**
+	 * 保存日志
+	 *
+	 * @param logs
+	 */
+	void saveBatchLog(List<PlayerItemLog> logs);
 
 	/**
 	 * 查询货币产销
+	 *
 	 * @param rangeDateBegin
 	 * @param rangeDateEnd
 	 * @param days
@@ -41,6 +42,7 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 
 	/**
 	 * 查询途径分布
+	 *
 	 * @param rangeDateBegin
 	 * @param rangeDateEnd
 	 * @param days
@@ -50,4 +52,17 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 	 * @return
 	 */
 	List<PlayerItemLog> queryWayDistributeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId, int type);
+
+	/**
+	 * 查询物品流水
+	 *
+	 * @param rangeDateBegin
+	 * @param rangeDateEnd
+	 * @param way
+	 * @param serverId
+	 * @param itemId
+	 * @param type
+	 * @return
+	 */
+	List<PlayerItemLog> queryItemBillList(String rangeDateBegin, String rangeDateEnd, int way, Integer serverId, int itemId, int type, Long playerId);
 }

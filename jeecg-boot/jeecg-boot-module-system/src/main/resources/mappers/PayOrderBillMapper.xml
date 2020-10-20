@@ -89,4 +89,13 @@
             AND channel = #{channel}
         </if>
     </select>
+
+    <select id="getPayAmountSum" resultType="decimal">
+        SELECT
+        SUM(pay_amount)
+        FROM
+        pay_order
+        WHERE
+        player_id = #{playerId}
+    </select>
 </mapper>
