@@ -34,13 +34,20 @@ public interface PlayerItemLogMapper extends BaseMapper<PlayerItemLog> {
 	                                           @Param("type") int type);
 
 	BigDecimal queryItemSum(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                             @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                             @Param("serverId") Integer serverId,
-	                             @Param("type") int type);
+	                        @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                        @Param("serverId") Integer serverId,
+	                        @Param("type") int type);
 
 	BigDecimal queryItemCount(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                             @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                             @Param("serverId") Integer serverId,
-	                             @Param("itemId") int itemId,
-	                             @Param("type") int type);
+	                          @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                          @Param("serverId") Integer serverId,
+	                          @Param("itemId") int itemId,
+	                          @Param("type") int type);
+
+	List<PlayerItemLog> queryItemBillList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+	                                      @Param("rangeDateEndTime") Date rangeDateEndTime,
+	                                      @Param("way") int way,
+	                                      @Param("playerId") Long playerId,
+	                                      @Param("itemId") int itemId,
+	                                      @Param("type") int type);
 }

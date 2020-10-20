@@ -25,8 +25,8 @@ public class DateTest {
         BigDecimal b =null;
         //Integer faultRate = 1;
         //a = BigDecimal.valueOf(faultRate.doubleValue()/2);
-        a = BigDecimal.valueOf(0.123456987);
-        b = BigDecimal.valueOf(0.323456987);
+        a = BigDecimal.valueOf(0.8000);
+        b = BigDecimal.valueOf(0.4000);
 
         //System.out.println("开始是"+a);
         //BigDecimal  b =a.setScale(2, RoundingMode.HALF_UP);//保留两位小数
@@ -36,7 +36,9 @@ public class DateTest {
         //percent.setMaximumFractionDigits(2);
         //String xx = percent.format(b.doubleValue());
         BigDecimal cc = BigDecimalUtil.divideZero(a.doubleValue(), b.doubleValue(),true);
-        //System.out.println(percent.format(b.doubleValue()));
+	    BigDecimal bigDecimal = BigDecimalUtil.divideFour(1,10,false);
+	    System.out.println(bigDecimal);
+	    //System.out.println(percent.format(b.doubleValue()));
         //System.out.println(cc);
 
 

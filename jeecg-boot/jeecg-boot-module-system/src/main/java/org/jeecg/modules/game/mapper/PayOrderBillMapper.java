@@ -39,4 +39,6 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
 	                       @Param("rangeDateEndTime") Date rangeDateEndTime,
 	                       @Param("serverId") Integer serverId,
 	                       @Param("channel") String channel);
+
+	BigDecimal getPayAmountSum(@Param("playerId") Long playerId);
 }

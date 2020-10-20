@@ -10,8 +10,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
-
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -183,4 +183,9 @@ public class Player implements Serializable {
     @Excel(name = "更新时间", width = 15)
     @TableField(update = "now()")
     private Date updateTime;
+
+    /**
+     * 玩家累充金额
+     */
+    private BigDecimal payAmountSum;
 }
