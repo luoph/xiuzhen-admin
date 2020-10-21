@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.FriendChatChannelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.FriendChatChannel">
+        <id column="id" property="id"/>
+        <result column="channel_id" property="channelId"/>
+        <result column="send_player_id" property="playerId"/>
+        <result column="status" property="status"/>
+        <result column="type" property="type"/>
+        <result column="reset_time" property="resetTime"/>
+        <result column="send_time" property="sendTime"/>
+        <result column="read_time" property="readTime"/>
+        <result column="update_time" property="updateTime"/>
+        <association property="player" javaType="org.jeecg.modules.player.entity.Player">
+            <id column="p_id" property="id"/>
+            <result column="p_nickname" property="nickname"/>
+        </association>
+        <association property="friendChatMessage" javaType="org.jeecg.modules.game.entity.FriendChatMessage">
+            <id column="fcm_id" property="id"/>
+            <result column="receive_player_id" property="playerId"/>
+            <result column="fcm_message" property="message"/>
+            <result column="fcm_create_time" property="createTime"/>
+        </association>
+
+    </resultMap>
+
+    <select id="queryListBySender" resultMap="BaseResultMap">
+        SELECT
+        fcc.channel_id,
+        fcc.player_id AS send_player_id,
+        fcm.player_id AS receive_player_id,
+        fcm.message fcm_message,
+        p.nickname p_nickname,
+        fcm.create_time fcm_create_time
+        FROM friend_chat_channel fcc
+        LEFT JOIN friend_chat_message fcm ON fcc.channel_id = fcm.channel_id
+        LEFT JOIN player p ON fcm.player_id = p.id
+        WHERE
+        fcc.status = 1
+        AND fcc.type = 1
+        AND fcc.player_id != fcm.player_id
+        <if test="playerId !=null ">
+            AND fcc.player_id = #{playerId}
+        </if>
+        <if test="nickname !=null ">
+            AND p.nickname LIKE CONCAT('%',#{nickname},'%')
+        </if>
+        <if test="rangeTimeBeginDate !=null ">
+            AND fcm.create_time >= #{rangeTimeBeginDate}
+        </if>
+        <if test="rangeTimeEndDate !=null ">
+            AND fcm.create_time &lt;= #{rangeTimeEndDate}
+        </if>
+        <if test="message !=null ">
+            AND fcm.message LIKE CONCAT('%',#{message},'%')
+        </if>
+    </select>
+
+
+
+</mapper>

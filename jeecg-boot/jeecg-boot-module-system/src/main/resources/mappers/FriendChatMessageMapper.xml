@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.FriendChatMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.FriendChatMessage">
+        <id column="id" property="id"/>
+        <result column="channel_id" property="channelId"/>
+        <result column="player_id" property="playerId"/>
+        <result column="message" property="message"/>
+        <result column="message_channel" property="messageChannel"/>
+        <result column="create_time" property="createTime"/>
+        <association property="player" javaType="org.jeecg.modules.player.entity.Player">
+            <id column="p_id" property="id"/>
+            <result column="p_nickname" property="nickname"/>
+        </association>
+        <association property="friendChatChannel" javaType="org.jeecg.modules.game.entity.FriendChatChannel">
+            <id column="fcc_id" property="id"/>
+            <result column="sender_player_id" property="playerId"/>
+        </association>
+    </resultMap>
+
+    <select id="queryListByReceive" resultMap="BaseResultMap">
+        SELECT
+        fcm.channel_id,
+        fcm.player_id AS receive_player_id,
+        fcm.message,
+        fcm.create_time,
+        fcc.player_id AS sender_player_id,
+        p.nickname p_nickname
+        FROM
+        friend_chat_message fcm
+        LEFT JOIN friend_chat_channel fcc ON fcm.channel_id = fcc.channel_id
+        LEFT JOIN player p ON fcm.player_id = p.id
+        WHERE
+        fcc.status = 1
+        AND fcc.type = 1
+        AND fcc.player_id != fcm.player_id
+        <if test="playerId !=null ">
+            AND fcm.player_id = #{playerId}
+        </if>
+        <if test="nickname !=null ">
+            AND p.nickname LIKE CONCAT('%',#{nickname},'%')
+        </if>
+        <if test="rangeTimeBeginDate !=null ">
+            AND fcm.create_time >= #{rangeTimeBeginDate}
+        </if>
+        <if test="rangeTimeEndDate !=null ">
+            AND fcm.create_time &lt;= #{rangeTimeEndDate}
+        </if>
+        <if test="message !=null ">
+            AND fcm.message LIKE CONCAT('%',#{message},'%')
+        </if>
+    </select>
+
+
+</mapper>
