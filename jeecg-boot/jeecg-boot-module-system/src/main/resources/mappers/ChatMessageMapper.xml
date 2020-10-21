@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.ChatMessageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.ChatMessage">
+        <id column="id" property="id"/>
+        <result column="player_id" property="playerId"/>
+        <result column="message" property="message"/>
+        <result column="channel" property="channel"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <association property="player" javaType="org.jeecg.modules.player.entity.Player">
+            <id column="p_id" property="id"/>
+            <result column="p_nickname" property="nickname"/>
+        </association>
+    </resultMap>
+
+    <select id="queryForList" resultMap="BaseResultMap">
+        SELECT
+        cm.id,
+        cm.player_id,
+        cm.message,
+        cm.channel,
+        cm.create_time,
+        cm.update_time,
+        p.nickname p_nickname
+        FROM
+        chat_message cm
+        LEFT JOIN player p ON cm.player_id = p.id
+        WHERE
+        <if test="playerId !=null ">
+            cm.player_id = #{playerId}
+        </if>
+        <if test="nickname !=null ">
+            AND p.nickname LIKE CONCAT('%',#{nickname},'%')
+        </if>
+        <if test="rangeTimeBeginDate !=null ">
+            AND cm.create_time >= #{rangeTimeBeginDate}
+        </if>
+        <if test="rangeTimeEndDate !=null ">
+            AND cm.create_time &lt;= #{rangeTimeEndDate}
+        </if>
+        <if test="message !=null ">
+            AND cm.message LIKE CONCAT('%',#{message},'%')
+        </if>
+    </select>
+
+</mapper>
