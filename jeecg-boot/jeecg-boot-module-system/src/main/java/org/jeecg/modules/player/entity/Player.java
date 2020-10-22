@@ -187,5 +187,6 @@ public class Player implements Serializable {
     /**
      * 玩家累充金额
      */
+    @TableField(exist = false)
     private BigDecimal payAmountSum;
 }
