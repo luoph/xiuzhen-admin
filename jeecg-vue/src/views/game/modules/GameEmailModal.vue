@@ -32,7 +32,7 @@
                 <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea
                         v-decorator="['targetBody', { initialValue: '' }]"
-                        placeholder="请以英文“[,]”分割输入多个玩家ID"
+                        placeholder="请以英文“,”分割输入多个玩家ID"
                         style="width: 100%;"
                         :autoSize="{ minRows: 2, maxRows: 6 }"
                     />
@@ -257,7 +257,7 @@ export default {
         },
         change(value) {
             this.form.setFieldsValue({
-                targetBodyIds: '[' + value.join(',') + ']'
+                targetBodyIds: value.join(',')
             });
         },
         inputTargetBody(formData) {
