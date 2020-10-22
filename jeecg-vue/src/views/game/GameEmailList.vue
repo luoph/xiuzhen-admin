@@ -28,7 +28,7 @@
                             <a-form-item label="服务器"><multiple-server-select v-model="queryParam.targetBodyIds" @changeSelect="change"></multiple-server-select></a-form-item>
                         </a-col>
                         <a-col v-if="playerType" :md="6" :sm="8">
-                            <a-form-item label="玩家账号"><a-input placeholder="请以英文“[,]”分割输入多个玩家ID" v-model="queryParam.targetBodyIds"></a-input></a-form-item>
+                            <a-form-item label="玩家账号"><a-input placeholder="请以英文“[,]”分割输入多个玩家ID" v-model="queryParam.targetBodyIds" @input="inputChange($event)"></a-input></a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="生效时间"><j-date placeholder="请选择生效时间" v-model="queryParam.sendTime"></j-date></a-form-item>
@@ -212,7 +212,10 @@ export default {
         },
         change(value) {
             this.queryParam.targetBodyIds = value.join(',').toString();
-        }
+        },
+        inputChange(e) {
+            this.$forceUpdate()
+        },
     }
 };
 </script>
