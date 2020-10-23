@@ -16,13 +16,10 @@ import java.util.List;
  */
 public interface PlayerMapper extends BaseMapper<Player> {
 
-	/**
-	 * 玩家查询
-	 *
-	 * @param playerDTO
-	 * @return
-	 */
+
 	List<Player> queryForList(PlayerDTO playerDTO);
+
+
 
 	@Select("select nickname from player where id = #{playerId}")
 	String getNameById(@Param("playerId") Long playerId);
