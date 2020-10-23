@@ -1,6 +1,9 @@
 package org.jeecg.modules.player.controller;
 
+import cn.youai.commons.model.DataResponse;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
@@ -19,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +38,9 @@ import java.util.List;
 @RestController
 @RequestMapping("player/playerBanInfo")
 public class PlayerBanInfoController extends JeecgController<PlayerBanInfo, IPlayerBanInfoService> {
+
+	private static final Type RESPONSE_ONLINE_NUM = new TypeReference<DataResponse<Integer>>() {
+	}.getType();
 
 	@Autowired
 	private IPlayerBanInfoService playerBanInfoService;
@@ -84,6 +92,7 @@ public class PlayerBanInfoController extends JeecgController<PlayerBanInfo, IPla
 		LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 		playerBanInfo.setOperator(sysUser.getUsername());
 		playerBanInfoService.save(playerBanInfo);
+		// DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(record.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
 		return Result.ok("添加成功！");
 	}
 
