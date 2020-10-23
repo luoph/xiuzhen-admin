@@ -8,10 +8,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
 import org.jeecg.modules.game.mapper.PayOrderGiftMapper;
+import org.jeecg.modules.game.mapper.PayUserRankMapper;
 import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerDTO;
+import org.jeecg.modules.player.entity.PlayerRegisterInfo;
 import org.jeecg.modules.player.mapper.PlayerMapper;
+import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
 import org.jeecg.modules.player.service.IPlayerService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,14 +32,20 @@ import java.util.*;
 @Service
 public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> implements IPlayerService {
 
-	private static final String[] LEVEL = {"0-30", "30-60", "60-100"};
-	private static final String[] RECHARGE = {"0-6", "6-30", "30-100"};
-
 	@Resource
 	private PlayerMapper playerMapper;
 
 	@Resource
 	private PayOrderBillMapper payOrderBillMapper;
+
+	@Resource
+	private PlayerRegisterInfoMapper playerRegisterInfoMapper;
+
+	@Resource
+	private PayUserRankMapper payUserRankMapper;
+
+	@Value("${app.log.db.table}")
+	private String logTable;
 
 	@Override
 	public List<Player> queryForList(PlayerDTO playerDTO) {
@@ -53,15 +63,15 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 				createBegin = createBegin + " 00:00:00";
 				createEnd = createEnd + " 23:59:59";
 			}
-			playerDTO.setCreateDateBegin(DateUtils.dateOnly(DateUtils.parseDate(createBegin)));
-			playerDTO.setCreateDateEnd(DateUtils.dateOnly(DateUtils.parseDate(createEnd)));
+			playerDTO.setCreateDateBegin(DateUtils.parseDate(createBegin));
+			playerDTO.setCreateDateEnd(DateUtils.parseDate(createEnd));
 
 			if (loginBegin != null && loginEnd != null && loginBegin.equals(loginEnd)) {
 				loginBegin = loginBegin + " 00:00:00";
 				loginEnd = loginEnd + " 23:59:59";
 			}
-			playerDTO.setLoginDateBegin(DateUtils.dateOnly(DateUtils.parseDate(loginBegin)));
-			playerDTO.setLoginDateEnd(DateUtils.dateOnly(DateUtils.parseDate(loginEnd)));
+			playerDTO.setLoginDateBegin(DateUtils.parseDate(loginBegin));
+			playerDTO.setLoginDateEnd(DateUtils.parseDate(loginEnd));
 
 			// 获取等级范围
 			if (playerDTO.getLevel() != null) {
@@ -81,15 +91,32 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 			while (iterator.hasNext()) {
 				Player player = iterator.next();
 				Long playerId = player.getId();
+				System.out.println(player.getCombatPower());
 				// 通过玩家id获取玩家累充金额
 				BigDecimal payAmountSum = payOrderBillMapper.getPayAmountSum(playerId);
 				if (payAmountSum == null) {
 					payAmountSum = BigDecimal.ZERO;
 				}
-				double rechargeBegin = playerDTO.getRechargeBegin();
-				double rechargeEnd = playerDTO.getRechargeEnd();
+				double rechargeBegin = 0;
+				double rechargeEnd = 0;
+				if (playerDTO.getRechargeBegin() != null){
+					rechargeBegin = playerDTO.getRechargeBegin();;
+				}
+				if (playerDTO.getRechargeEnd() != null){
+					rechargeEnd = playerDTO.getRechargeEnd();
+				}
 				double payAmountSumDouble = payAmountSum.doubleValue();
-				if (payAmountSumDouble > rechargeBegin && payAmountSumDouble < rechargeEnd) {
+				PlayerRegisterInfo playerRegisterInfo = playerRegisterInfoMapper.getByPlayerId(playerId);
+				if (playerRegisterInfo != null){
+					player.setRegisterTime(playerRegisterInfo.getCreateTime());
+				}
+				// 获取玩家最后登录时间
+				Date loginDate = payUserRankMapper.getPlayerLastLoginTime(playerId, logTable);
+				if (loginDate != null){
+					player.setLastLoginTime(loginDate);
+				}
+				// 充值金额不在这个充值档位范围内,就剔除这条记录
+				if (payAmountSumDouble >= rechargeBegin && payAmountSumDouble <= rechargeEnd) {
 					player.setPayAmountSum(payAmountSum);
 				} else {
 					iterator.remove();

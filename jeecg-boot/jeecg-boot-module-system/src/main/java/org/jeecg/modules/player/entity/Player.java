@@ -189,4 +189,16 @@ public class Player implements Serializable {
      */
     @TableField(exist = false)
     private BigDecimal payAmountSum;
+
+    /**
+     * 玩家注册时间
+     */
+    @TableField(exist = false)
+    private Date registerTime;
+
+    /**
+     * 玩家最后登录时间
+     */
+    @TableField(exist = false)
+    private Date lastLoginTime;
 }

@@ -75,9 +75,12 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
+                 <!--<span slot="roleAttr" slot-scope="text, record">
+                    <a-tag v-for="tag in text.split(',')" :key="tag" color="green">{{ tag }}</a-tag>
+                </span>-->
             </a-table>
+
         </div>
 
     </a-card>
@@ -85,10 +88,8 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import PlayerModal from "./modules/PlayerModal";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
-import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
 
 export default {
@@ -118,6 +119,7 @@ export default {
                     title: "玩家ID",
                     align: "center",
                     dataIndex: "id"
+                    //scopedSlots: { customRender: "roleAttr" }
                 },
                 {
                     title: "玩家账号",
@@ -160,28 +162,18 @@ export default {
                     dataIndex: "payAmountSum"
                 },
                 {
-                    title: "创建时间",
+                    title: "注册时间",
                     align: "center",
-                    dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
+                    dataIndex: "registerTime"
                 },
                 {
-                    title: "登录时间",
+                    title: "最后登录时间",
                     align: "center",
-                    dataIndex: "loginTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
-                },
+                    dataIndex: "lastLoginTime"
+                }
             ],
             url: {
-                list: "game/player/list",
-                delete: "game/player/delete",
-                deleteBatch: "game/player/deleteBatch",
-                exportXlsUrl: "game/player/exportXls",
-                importExcelUrl: "game/player/importExcel"
+                list: "game/player/list"
             },
             dictOptions: {
             }

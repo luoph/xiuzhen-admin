@@ -24,4 +24,7 @@ public interface PlayerRegisterInfoMapper extends BaseMapper<PlayerRegisterInfo>
 	String queryPlayerIp(@Param("playerId") Long playerId,
 	                     @Param("createDate") Date createDate,
 	                     @Param("logTable") String logTable);
+
+	@Select("SELECT * FROM player_register_info WHERE player_id = #{playerId}")
+	PlayerRegisterInfo getByPlayerId(@Param("playerId") Long playerId);
 }

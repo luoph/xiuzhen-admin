@@ -20,7 +20,9 @@
         player
         WHERE
         id = #{playerId}
-        AND nickname = #{nickName}
+        <if test="nickName != null">
+            AND nickname = #{nickName}
+        </if>
         <if test="createDateBegin != null">
             AND create_time >= #{createDateBegin}
         </if>
@@ -39,6 +41,7 @@
         <if test="levelEnd != null">
             AND level &lt;= #{levelEnd}
         </if>
+
     </select>
 
 </mapper>
