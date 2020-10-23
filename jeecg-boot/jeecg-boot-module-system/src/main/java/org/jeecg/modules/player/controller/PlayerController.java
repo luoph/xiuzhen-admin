@@ -1,13 +1,16 @@
 package org.jeecg.modules.player.controller;
 
 import cn.youai.commons.model.DataResponse;
+import cn.youai.commons.model.Response;
 import cn.youai.xiuzhen.entity.pojo.RoleAttr;
 import cn.youai.xiuzhen.entity.pojo.RoleAttrType;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -88,12 +91,13 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 			return Result.error("玩家信息不存在");
 		}
 		int serverId = registerInfo.getServerId();
-		GameServer byId = gameServerService.getById(serverId);
+		GameServer gameServer = gameServerService.getById(serverId);
 		// http调用查询玩家详情
-		DataResponse<RoleAttr> response = JSON.parseObject(OkHttpHelper.get(byId.getGmUrl() + "/player/info?playerId=" + playerId), RESPONSE_ONLINE_NUM);
-		RoleAttr data = response.getData();
-		// RoleAttrType
-		return Result.ok(data);
+		String str = OkHttpHelper.get(gameServer.getGmUrl() + "/player/info?playerId=" + playerId);
+		JSONObject jsonObject = JSONObject.parseObject(JSONObject.toJSONString( JSON.parseObject(str, DataResponse.class).getData()));
+		String roleAttrStr = jsonObject.getString("roleAttr");
+		RoleAttr roleAttr = JSONObject.parseObject(roleAttrStr, RoleAttr.class);
+		return Result.ok(roleAttr);
 	}
 
 }

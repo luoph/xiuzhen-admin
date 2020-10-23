@@ -76,13 +76,14 @@
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
-                 <!--<span slot="roleAttr" slot-scope="text, record">
-                    <a-tag v-for="tag in text.split(',')" :key="tag" color="green">{{ tag }}</a-tag>
-                </span>-->
+                <span slot="action" slot-scope="text, record">
+                       <a @click="editChannelServer(record)"><a-icon type="setting" /> 游戏服</a>
+                </span>
             </a-table>
-
         </div>
 
+        <!-- 字典类型 -->
+        <player-modal ref="playerModal"></player-modal>
     </a-card>
 </template>
 
@@ -90,6 +91,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
+import PlayerModal from "./modules/PlayerModal";
 import { getAction } from "@/api/manage";
 
 export default {
@@ -98,6 +100,7 @@ export default {
     components: {
         JDate,
         GameChannelServer,
+        PlayerModal,
         getAction
     },
     data() {
@@ -170,6 +173,13 @@ export default {
                     title: "最后登录时间",
                     align: "center",
                     dataIndex: "lastLoginTime"
+                },
+                {
+                    title: "操作",
+                    dataIndex: "action",
+                    align: "center",
+                    width: 200,
+                    scopedSlots: { customRender: "action" }
                 }
             ],
             url: {
@@ -225,7 +235,10 @@ export default {
                     this.$message.error(res.message);
                 }
             });
-        }
+        },
+        editChannelServer(record) {
+            this.$refs.playerModal.edit(record);
+        },
     }
 };
 </script>

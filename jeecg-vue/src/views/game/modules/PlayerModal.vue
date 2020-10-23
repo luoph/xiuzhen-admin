@@ -4,86 +4,69 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="生命" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['hp', validatorRules.hp]" placeholder="生命"></a-input>
+                    <a-input v-decorator="['hp']" style="width: 100%"></a-input>
                 </a-form-item>
                 <a-form-item label="防御" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['def', validatorRules.def]" placeholder="请输入角色昵称"></a-input>
+                    <a-input v-decorator="['def']" style="width: 100%"></a-input>
                 </a-form-item>
                 <a-form-item label="闪避" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['dodge', validatorRules.dodge]" placeholder="请输入角色头像"></a-input>
+                    <a-input v-decorator="['dodge']" style="width: 100%"></a-input>
                 </a-form-item>
                 <a-form-item label="命中" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['hit', validatorRules.hit]" placeholder="请输入性别" style="width: 100%"/>
+                    <a-input-number v-decorator="['hit']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="速度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['speed', validatorRules.speed]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['speed']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="暴击" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['crit', validatorRules.crit]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['crit']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="暴抗" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['critDef', validatorRules.critDef]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['critDef']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="暴击率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['critPct', validatorRules.critPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['critPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="命中率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['hitPct', validatorRules.hitPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['hitPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="闪避率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['dodgePct', validatorRules.dodgePct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['dodgePct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="暴抗率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['critDefPct', validatorRules.critDefPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['critDefPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="破军率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['breakAttPct', validatorRules.breakAttPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['breakAttPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="破军免伤率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['breakDrPct', validatorRules.breakDrPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['breakDrPct']" style="width: 100%"/>
                 </a-form-item>
 
                 <a-form-item label="卓越率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['excelAttPct', validatorRules.excelAttPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['excelAttPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="卓越抵抗" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['excelDelPct', validatorRules.excelDelPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['excelDelPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="卓越伤害" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['excelDmgPct', validatorRules.excelDmgPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['excelDmgPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="卓越免伤" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['excelDrPct', validatorRules.excelDrPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['excelDrPct']" style="width: 100%"/>
                 </a-form-item>
 
                 <a-form-item label="会心率" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['insightAttPct', validatorRules.insightAttPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['insightAttPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="会心抵抗" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['insightDefPct', validatorRules.insightDefPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['insightDefPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="会心伤害" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['insightDmgPct', validatorRules.insightDmgPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['insightDmgPct']" style="width: 100%"/>
                 </a-form-item>
                 <a-form-item label="会心免伤" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['insightDrPct', validatorRules.insightDrPct]" placeholder="请输入性别"
-                                    style="width: 100%"/>
+                    <a-input-number v-decorator="['insightDrPct']" style="width: 100%"/>
                 </a-form-item>
 
             </a-form>
@@ -98,11 +81,13 @@
     import {httpAction} from "@/api/manage";
     import pick from "lodash.pick";
     import JDate from "@/components/jeecg/JDate";
+    import {getAction} from "@/api/manage";
 
     export default {
         name: "PlayerModal",
         components: {
             JDate,
+            getAction
         },
         data() {
             return {
@@ -120,83 +105,26 @@
                     sm: {span: 16}
                 },
                 confirmLoading: false,
-                validatorRules: { //dodge hit speed crit critDef
-                    hp: {},
-                    def: {},
-                    dodge: {},
-                    hit: {},
-                    speed: {},
-                    crit: {},//critPct hitPct dodgePct critDefPct breakAttPct breakDrPct
-                    critDef: {},
-                    critPct: {},
-                    hitPct: {},
-                    dodgePct: {},
-                    critDefPct: {},
-                    breakAttPct: {},
-                    breakDrPct: {},//excelAttPct excelDelPct excelDmgPct excelDrPct
-
-                    excelAttPct: {},
-                    excelDelPct: {},
-                    excelDmgPct: {},
-                    excelDrPct: {},
-
-                    insightAttPct: {},//insightAttPct insightDefPct insightDmgPct insightDrPct
-                    insightDefPct: {},
-                    insightDmgPct: {},
-                    insightDrPct: {}
-                },
                 url: {
-                    detail: "game/player/detail"
+                    list: "game/player/detail"
                 }
             };
         },
         created() {
-
+            this.$form.createForm(this);
         },
         methods: {
-            /*add() {
-                this.edit({});
-            },
-            edit(record) {
-                this.loadData(record.playerId)
-            },*/
             close() {
                 this.$emit("close");
                 this.visible = false;
             },
-            /*handleOk() {
-                const that = this;
-                // 触发表单验证
-                this.form.validateFields((err, values) => {
-                    if (!err) {
-                        that.confirmLoading = true;
-                        let httpUrl = "";
-                        let method = "";
-                        if (!this.model.id) {
-                            httpUrl += this.url.add;
-                            method = "post";
-                        } else {
-                            httpUrl += this.url.edit;
-                            method = "put";
-                        }
-                        let formData = Object.assign(this.model, values);
-                        console.log("表单提交数据", formData);
-                        httpAction(httpUrl, formData, method)
-                            .then(res => {
-                                if (res.success) {
-                                    that.$message.success(res.message);
-                                    that.$emit("ok");
-                                } else {
-                                    that.$message.warning(res.message);
-                                }
-                            })
-                            .finally(() => {
-                                that.confirmLoading = false;
-                                that.close();
-                            });
-                    }
-                });
-            },*/
+            edit(record) {
+                if (record.id) {
+                    this.playerId = record.id;
+                }
+                this.queryServerList();
+                this.visible = true;
+            },
             handleCancel() {
                 this.close();
             },
@@ -204,8 +132,13 @@
                 this.form.setFieldsValue(pick(row, "hp", "def", "dodge", "hit", "speed", "crit", "critDef", "critPct", "hitPct", "dodgePct", "critDefPct", "breakAttPct", "breakDrPct",
                     "excelAttPct", "excelDelPct", "excelDmgPct", "excelDrPct", "insightAttPct", "insightDefPct", "insightDmgPct", "insightDrPct"));
             },
-            loadData: function (playerId) {
-                getAction()
+            queryServerList() {
+                let that = this;
+                getAction(that.url.list + "?playerId=" + this.playerId).then(res => {
+                    if (res.success) {
+                        this.popupCallback(res.result);
+                    }
+                });
             }
         }
     };
