@@ -108,16 +108,26 @@
         sync_time
         FROM
         player_item_log
-        WHERE
-        player_id = #{playerId}
-        AND item_id = #{itemId}
-        AND type = #{type}
-        AND way = #{way}
-        <if test="rangeDateBeginTime !=null ">
-            AND sync_time >= #{rangeDateBeginTime}
-        </if>
-        <if test="rangeDateEndTime !=null ">
-            AND sync_time &lt;= #{rangeDateEndTime}
-        </if>
+        <where>
+            <if test="playerId !=0 ">
+                AND player_id = #{playerId}
+            </if>
+            <if test="itemId !=0 ">
+                AND item_id = #{itemId}
+            </if>
+            <if test="type !=0 ">
+                AND type = #{type}
+            </if>
+            <if test="way !=0 ">
+                AND way = #{way}
+            </if>
+            <if test="rangeDateBeginTime !=null ">
+                AND sync_time >= #{rangeDateBeginTime}
+            </if>
+            <if test="rangeDateEndTime !=null ">
+                AND sync_time &lt;= #{rangeDateEndTime}
+            </if>
+        </where>
+
     </select>
 </mapper>
