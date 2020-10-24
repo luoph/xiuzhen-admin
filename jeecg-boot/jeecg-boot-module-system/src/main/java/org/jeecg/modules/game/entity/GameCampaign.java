@@ -81,18 +81,6 @@ public class GameCampaign extends BaseEntity {
     private java.lang.Integer autoOpen;
 
     /**
-     * 支持全部渠道
-     */
-    @Excel(name = "支持全部渠道", width = 15)
-    private java.lang.Integer allChannel;
-
-    /**
-     * 支持全部服务器
-     */
-    @Excel(name = "支持全部服务器", width = 15)
-    private java.lang.Integer allServer;
-
-    /**
      * 开始时间
      */
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
