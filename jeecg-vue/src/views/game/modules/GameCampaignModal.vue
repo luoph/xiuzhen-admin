@@ -39,10 +39,10 @@
                         <a-select-option :value="0">关闭</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
                 </a-form-item>
-                <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="活动结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
                 </a-form-item>
             </a-form>
@@ -53,6 +53,7 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import moment from "moment";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
@@ -125,6 +126,9 @@ export default {
                         "updateTime"
                     )
                 );
+                // 时间格式化
+                this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+                this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
             });
         },
         close() {
