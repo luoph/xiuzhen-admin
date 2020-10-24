@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.player.mapper.PlayerMapper">
 
+
+    <!-- 玩家日志查询映射结果 -->
+    <resultMap id="PlayerLogResultMap" type="org.jeecg.modules.player.entity.PlayerBehavior">
+        <id column="id" property="id"/>
+        <result column="server_id" property="serverId"/>
+        <result column="player_id" property="playerId"/>
+        <result column="type" property="type"/>
+        <result column="value" property="value"/>
+        <result column="create_date" property="createDate"/>
+    </resultMap>
+
     <select id="queryForList" resultType="org.jeecg.modules.player.entity.Player"
             parameterType="org.jeecg.modules.player.entity.PlayerDTO">
         SELECT
@@ -41,7 +52,31 @@
         <if test="levelEnd != null">
             AND level &lt;= #{levelEnd}
         </if>
+    </select>
 
+    <select id="queryPlayerBehavior" resultMap="PlayerLogResultMap">
+        SELECT
+        player_id,
+        server_id,
+        type,
+        value,
+        create_date
+        FROM
+        ${logTable}
+        <where>
+            <if test="playerId != null ">
+                AND player_id = #{playerId}
+            </if>
+            <if test="serverId != 0">
+                AND server_id = #{serverId}
+            </if>
+            <if test="rangeDateBeginTime != null">
+                AND create_date >= #{rangeDateBeginTime}
+            </if>
+            <if test="rangeDateEndTime !=null">
+                AND create_date &lt;= #{rangeDateEndTime}
+            </if>
+        </where>
     </select>
 
 </mapper>

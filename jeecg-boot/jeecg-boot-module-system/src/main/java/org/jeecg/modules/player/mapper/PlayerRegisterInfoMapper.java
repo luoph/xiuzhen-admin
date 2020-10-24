@@ -27,4 +27,10 @@ public interface PlayerRegisterInfoMapper extends BaseMapper<PlayerRegisterInfo>
 
 	@Select("SELECT * FROM player_register_info WHERE player_id = #{playerId}")
 	PlayerRegisterInfo getByPlayerId(@Param("playerId") Long playerId);
+
+	@Select("SELECT player_id, name FROM player_register_info WHERE name LIKE CONCAT('%',#{nickname},'%')")
+	List<PlayerRegisterInfo> getPlayerByNickname(@Param("nickname") String nickname);
+
+	@Select("SELECT name FROM player_register_info WHERE player_id = #{playerId}")
+	String getNameByPlayerId(@Param("playerId") Long playerId);
 }

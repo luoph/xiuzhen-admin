@@ -2,6 +2,7 @@ package org.jeecg.modules.player.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.player.entity.Player;
+import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.entity.PlayerDTO;
 
 import java.util.List;
@@ -29,4 +30,16 @@ public interface IPlayerService extends IService<Player> {
 	 * @return
 	 */
 	String getNameById(Long playerId);
+
+	/**
+	 * 查询玩家行为
+	 *
+	 * @param rangeDateBegin
+	 * @param rangeDateEnd
+	 * @param nickname
+	 * @param days
+	 * @param serverId
+	 * @return
+	 */
+	List<PlayerBehavior> queryPlayerBehavior(String rangeDateBegin, String rangeDateEnd, String nickname, int days, int serverId);
 }
