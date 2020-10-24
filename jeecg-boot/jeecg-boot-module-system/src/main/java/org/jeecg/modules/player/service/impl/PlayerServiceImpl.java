@@ -47,7 +47,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 	@Resource
 	private PayUserRankMapper payUserRankMapper;
 
-	@Value("${app.playerLog.db.table}")
+	@Value("${app.log.db.table_log_player}")
 	private String logTable;
 
 	@Override
