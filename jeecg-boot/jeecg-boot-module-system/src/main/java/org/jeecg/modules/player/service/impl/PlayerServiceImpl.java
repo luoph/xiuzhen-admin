@@ -186,24 +186,25 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 			List<PlayerBehavior> list = playerMapper.queryPlayerBehavior(rangeDateBeginTime, rangeDateEndTime, playerId, serverId, logTable);
 
 			// 将list以流的方式通过createDate进行分组变为map
-			Map<Date, List<PlayerBehavior>> map = list.stream().collect(Collectors.groupingBy(PlayerBehavior::getCreateDate));
-			// 遍历map
-			//PlayerBehavior playerBehavior = new PlayerBehavior();
-			for (List<PlayerBehavior> mqtts : map.values()) {
-				PlayerBehavior playerBehavior = new PlayerBehavior();
-				// 数据筛选计算
-				PlayerBehavior behavior = getBehaviorTreating(mqtts, playerBehavior);
-				// 设置日期
-				behavior.setCreateDate(mqtts.get(0).getCreateDate());
-				behavior.setServerId(serverId);
-				behavior.setPlayerId(mqtts.get(0).getPlayerId());
-				String name = playerRegisterInfoMapper.getNameByPlayerId(mqtts.get(0).getPlayerId());
-				behavior.setNickname(name);
-				behaviorList.add(behavior);
-			}
+			Map<Long, List<PlayerBehavior>> map1 = list.stream().collect(Collectors.groupingBy(PlayerBehavior::getPlayerId));
+			map1.forEach((k, v) -> {
+				Map<Date, List<PlayerBehavior>> map2 = v.stream().collect(Collectors.groupingBy(PlayerBehavior::getCreateDate));
+				map2.forEach((k2, v2) -> {
+					PlayerBehavior playerBehavior = new PlayerBehavior();
+					// 数据筛选计算
+					PlayerBehavior behavior = getBehaviorTreating(v2, playerBehavior);
+					// 设置日期
+					behavior.setCreateDate(v2.get(0).getCreateDate());
+					behavior.setServerId(serverId);
+					behavior.setPlayerId(v2.get(0).getPlayerId());
+					String name = playerRegisterInfoMapper.getNameByPlayerId(v2.get(0).getPlayerId());
+					behavior.setNickname(name);
+					behaviorList.add(behavior);
+				});
+			});
 		}
 
-		// todo 最后 behaviorList 还需要通过时间做一个排序,map.values()总是一样,查全部和查时间范围内的
+		// todo 最后 behaviorList 还需要通过时间做一个排序
 		return behaviorList;
 	}
 
