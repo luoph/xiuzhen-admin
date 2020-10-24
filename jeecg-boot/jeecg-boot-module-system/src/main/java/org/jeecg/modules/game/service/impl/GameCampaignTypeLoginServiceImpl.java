@@ -2,7 +2,7 @@ package org.jeecg.modules. game.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules. game.entity.GameCampaignTypeLogin;
-import org.jeecg.modules. game.mapper.GameCampaignTypeLoginMapper;
+import org.jeecg.modules.game.mapper.GameCampaignTypeLoginMapper;
 import org.jeecg.modules. game.service.IGameCampaignTypeLoginService;
 import org.springframework.stereotype.Service;
 
