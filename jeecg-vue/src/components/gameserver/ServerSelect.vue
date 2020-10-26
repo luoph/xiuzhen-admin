@@ -1,6 +1,6 @@
 <template>
     <a-select placeholder="请选择区服ID" v-model="queryParam.serverId" :initialValue="queryParam.serverId" @change="selectServer">
-        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.name }}</a-select-option>
+        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + "-" + server.name }}</a-select-option>
     </a-select>
 </template>
 <script>
@@ -40,4 +40,3 @@ export default {
 </script>
 
 <style lang="less" scoped></style>
-

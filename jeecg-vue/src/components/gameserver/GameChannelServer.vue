@@ -3,8 +3,7 @@
         <a-row :gutter="24">
             <a-col :span="12">
                 <a-form-item label="渠道名称" :label-col="{ span: 10 }" :wrapper-col="{ span: 16 }">
-                    <a-select placeholder="请选择渠道" v-model="channelId" :initialValue="channelId"
-                              @change="onSelectChannel">
+                    <a-select placeholder="请选择渠道" v-model="channelId" :initialValue="channelId" @change="onSelectChannel">
                         <a-select-option v-for="channel in channelList" :key="channel.name" :value="channel.id">
                             {{ channel.name }}
                         </a-select-option>
@@ -15,7 +14,7 @@
                 <a-form-item label="服务器名" :label-col="{ span: 12 }" :wrapper-col="{ span: 16 }">
                     <a-select placeholder="请选择区服" v-model="serverId" :initialValue="serverId" @change="onSelectServer">
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
-                            {{ server.name }}
+                            {{ server.id + "-" + server.name }}
                         </a-select-option>
                     </a-select>
                 </a-form-item>

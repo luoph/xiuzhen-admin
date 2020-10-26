@@ -136,7 +136,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function (t, r, index) {
+                    customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -171,7 +171,7 @@ export default {
                     title: "开始时间",
                     align: "center",
                     dataIndex: "beginTime",
-                    customRender: function (text) {
+                    customRender: function(text) {
                         return !text ? "" : text.length > 20 ? text.substr(0, 20) : text;
                     }
                 },
@@ -179,7 +179,7 @@ export default {
                     title: "结束时间",
                     align: "center",
                     dataIndex: "endTime",
-                    customRender: function (text) {
+                    customRender: function(text) {
                         return !text ? "" : text.length > 20 ? text.substr(0, 20) : text;
                     }
                 },
@@ -205,7 +205,7 @@ export default {
             console.log("value" + value);
             this.queryParam.gameServerList = "*" + value.join(",") + "*";
         },
-        resumeJob: function (record) {
+        resumeJob: function(record) {
             var that = this;
             let res = {
                 title: "确认启动",
@@ -218,10 +218,10 @@ export default {
                 };
             }
             this.$confirm({
-                title:res.title,
-                content:res.content,
+                title: res.title,
+                content: res.content,
                 onOk: function() {
-                    getAction(that.url.resume, { id: record.id }).then((res) => {
+                    getAction(that.url.resume, { id: record.id }).then(res => {
                         if (res.success) {
                             that.$message.success(res.message);
                             that.loadData();

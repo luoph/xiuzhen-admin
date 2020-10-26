@@ -1,23 +1,8 @@
 <template>
-  <div>
-    <a-date-picker
-      v-model="startValue"
-      :disabled-date="disabledStartDate"
-      show-time
-      format="YYYY-MM-DD"
-      placeholder="Start"
-      @openChange="handleStartOpenChange"
-    />
-    <a-date-picker
-      v-model="endValue"
-      :disabled-date="disabledEndDate"
-      show-time
-      format="YYYY-MM-DD"
-      placeholder="End"
-      :open="endOpen"
-      @openChange="handleEndOpenChange"
-    />
-  </div>
+    <div>
+        <a-date-picker v-model="startValue" :disabled-date="disabledStartDate" show-time format="YYYY-MM-DD" placeholder="Start" @openChange="handleStartOpenChange" />
+        <a-date-picker v-model="endValue" :disabled-date="disabledEndDate" show-time format="YYYY-MM-DD" placeholder="End" :open="endOpen" @openChange="handleEndOpenChange" />
+    </div>
 </template>
 <script>
 export default {
@@ -25,17 +10,17 @@ export default {
         return {
             startValue: null,
             endValue: null,
-            endOpen: false,
+            endOpen: false
         };
     },
     watch: {
         startValue(val) {
-            console.log('startValue', val);
+            console.log("startValue", val);
             // 这里监听变化前后的值
         },
         endValue(val) {
-            console.log('endValue', val);
-        },
+            console.log("endValue", val);
+        }
     },
     methods: {
         disabledStartDate(startValue) {
@@ -59,8 +44,8 @@ export default {
         },
         handleEndOpenChange(open) {
             this.endOpen = open;
-        },
-    },
+        }
+    }
 };
 </script>
 <style lang="less" scoped></style>
