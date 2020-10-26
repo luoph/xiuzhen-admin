@@ -25,10 +25,14 @@
                             </a-form-item>
                         </a-col>
                         <a-col v-if="serverType" :md="6" :sm="8">
-                            <a-form-item label="服务器"><multiple-server-select v-model="queryParam.targetBodyIds" @changeSelect="change"></multiple-server-select></a-form-item>
+                            <a-form-item label="服务器">
+                                <multiple-server-select v-model="queryParam.targetBodyIds" @changeSelect="change"></multiple-server-select>
+                            </a-form-item>
                         </a-col>
                         <a-col v-if="playerType" :md="6" :sm="8">
-                            <a-form-item label="玩家账号"><a-input placeholder="请以英文“[,]”分割输入多个玩家ID" v-model="queryParam.targetBodyIds" @input="inputChange($event)"></a-input></a-form-item>
+                            <a-form-item label="玩家账号">
+                                <a-input placeholder="请以英文“[,]”分割输入多个玩家ID" v-model="queryParam.targetBodyIds" @input="inputChange($event)"></a-input>
+                            </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="生效时间"><j-date placeholder="请选择生效时间" v-model="queryParam.sendTime"></j-date></a-form-item>
@@ -46,7 +50,7 @@
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                             <a style="margin-left: 8px" @click="handleToggleSearch">
-                                {{ toggleSearchStatus ? '收起' : '展开' }}
+                                {{ toggleSearchStatus ? "收起" : "展开" }}
                                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
                             </a>
                         </span>
@@ -78,14 +82,14 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import GameEmailModal from './modules/GameEmailModal';
-import JDate from '@/components/jeecg/JDate.vue';
-import ServerSelect from '@/components/gameserver/ServerSelect';
-import MultipleServerSelect from '@/components/gameserver/MultipleServerSelect';
+import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import GameEmailModal from "./modules/GameEmailModal";
+import JDate from "@/components/jeecg/JDate.vue";
+import ServerSelect from "@/components/gameserver/ServerSelect";
+import MultipleServerSelect from "@/components/gameserver/MultipleServerSelect";
 
 export default {
-    name: 'GameEmailList',
+    name: "GameEmailList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
@@ -95,7 +99,7 @@ export default {
     },
     data() {
         return {
-            description: '游戏下发邮件管理页面',
+            description: "游戏下发邮件管理页面",
             queryParam: {
                 validState: undefined,
                 targetBodyType: undefined
@@ -103,98 +107,98 @@ export default {
             // 表头
             columns: [
                 {
-                    title: '#',
-                    dataIndex: '',
-                    key: 'rowIndex',
+                    title: "#",
+                    dataIndex: "",
+                    key: "rowIndex",
                     width: 60,
-                    align: 'center',
+                    align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
                 {
-                    title: '标题',
-                    align: 'left',
+                    title: "标题",
+                    align: "left",
                     width: 120,
-                    dataIndex: 'title'
+                    dataIndex: "title"
                 },
                 {
-                    title: '描述',
-                    align: 'left',
+                    title: "描述",
+                    align: "left",
                     width: 360,
-                    dataIndex: 'remark'
+                    dataIndex: "remark"
                 },
                 {
-                    title: '类型',
-                    align: 'center',
+                    title: "类型",
+                    align: "center",
                     width: 80,
-                    dataIndex: 'emailType',
+                    dataIndex: "emailType",
                     customRender: function(text) {
-                        return text == 1 ? '无附件' : '有附件';
+                        return text == 1 ? "无附件" : "有附件";
                     }
                 },
                 {
-                    title: '附件',
-                    align: 'center',
+                    title: "附件",
+                    align: "center",
                     width: 240,
-                    dataIndex: 'content'
+                    dataIndex: "content"
                 },
                 {
-                    title: '状态',
-                    align: 'center',
+                    title: "状态",
+                    align: "center",
                     width: 80,
-                    dataIndex: 'validState',
+                    dataIndex: "validState",
                     customRender: function(text) {
-                        return text == 1 ? '有效' : '无效';
+                        return text == 1 ? "有效" : "无效";
                     }
                 },
                 {
-                    title: '目标类型',
-                    align: 'center',
+                    title: "目标类型",
+                    align: "center",
                     width: 80,
-                    dataIndex: 'targetBodyType',
+                    dataIndex: "targetBodyType",
                     customRender: function(text) {
-                        return text == 1 ? '玩家' : '全服';
+                        return text == 1 ? "玩家" : "全服";
                     }
                 },
                 {
-                    title: '目标主体',
-                    align: 'left',
+                    title: "目标主体",
+                    align: "left",
                     width: 80,
-                    dataIndex: 'targetBodyIds'
+                    dataIndex: "targetBodyIds"
                 },
                 {
-                    title: '生效时间',
-                    align: 'center',
-                    dataIndex: 'sendTime',
+                    title: "生效时间",
+                    align: "center",
+                    dataIndex: "sendTime"
                 },
                 {
-                    title: '开始时间',
-                    align: 'center',
-                    dataIndex: 'validStarTime',
+                    title: "开始时间",
+                    align: "center",
+                    dataIndex: "validStarTime"
                 },
                 {
-                    title: '结束时间',
-                    align: 'center',
-                    dataIndex: 'validEndTime',
+                    title: "结束时间",
+                    align: "center",
+                    dataIndex: "validEndTime"
                 },
                 {
-                    title: '创建时间',
-                    align: 'center',
-                    dataIndex: 'createTime',
+                    title: "创建时间",
+                    align: "center",
+                    dataIndex: "createTime"
                 }
             ],
             serverType: false,
             playerType: false,
             url: {
-                list: 'game/gameEmail/list'
+                list: "game/gameEmail/list"
             },
             dictOptions: {}
         };
     },
     computed: {
         importExcelUrl: function() {
-            return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
     mounted() {},
@@ -208,18 +212,18 @@ export default {
                 this.serverType = true;
                 this.playerType = false;
             }
-            this.queryParam.targetBodyIds = '';
+            this.queryParam.targetBodyIds = "";
         },
         change(value) {
-            this.queryParam.targetBodyIds = value.join(',').toString();
+            this.queryParam.targetBodyIds = value.join(",").toString();
         },
         inputChange(e) {
-            this.$forceUpdate()
-        },
+            this.$forceUpdate();
+        }
     }
 };
 </script>
 
 <style scoped>
-@import '~@assets/less/common.less';
+@import "~@assets/less/common.less";
 </style>

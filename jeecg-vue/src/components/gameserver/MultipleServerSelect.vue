@@ -1,6 +1,6 @@
 <template>
     <a-select mode="multiple" :default-value="[]" style="width: 100%" placeholder="请选择指定的服务器" @change="handleChange">
-        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.name }} </a-select-option>
+        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + "-" + server.name }} </a-select-option>
     </a-select>
 </template>
 <script>
