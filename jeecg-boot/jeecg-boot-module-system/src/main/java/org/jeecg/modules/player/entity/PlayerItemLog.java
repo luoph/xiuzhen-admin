@@ -175,6 +175,11 @@ public class PlayerItemLog implements Serializable {
      */
     private String playerName;
 
+    /**
+     * 关联玩家注册信息
+     */
+    private PlayerRegisterInfo playerRegisterInfo;
+
 
 //    @Override
 //    public boolean equals(Object o) {

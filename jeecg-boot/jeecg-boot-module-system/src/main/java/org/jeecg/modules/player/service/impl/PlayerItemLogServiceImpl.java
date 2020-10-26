@@ -16,7 +16,9 @@ import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerItemLog;
 import org.jeecg.modules.player.mapper.PlayerItemLogMapper;
+import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
 import org.jeecg.modules.player.service.IPlayerItemLogService;
+import org.jeecg.modules.player.service.IPlayerRegisterInfoService;
 import org.jeecg.modules.player.service.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,11 +45,15 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 	@Resource
 	private PlayerItemLogMapper playerItemLogMapper;
 
+	@Resource
+	private PlayerRegisterInfoMapper playerRegisterInfoMapper;
+
 	@Autowired
 	private ConfigDataService configDataService;
 
 	@Autowired
 	private IPlayerService playerService;
+
 
 	@Override
 	public PlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog) {
@@ -172,37 +178,27 @@ public class PlayerItemLogServiceImpl extends ServiceImpl<PlayerItemLogMapper, P
 
 	@Override
 	public List<PlayerItemLog> queryItemBillList(String rangeDateBegin, String rangeDateEnd, int way, Integer serverId, int itemId, int type, Long playerId) {
-		List<PlayerItemLog> list = new ArrayList<>();
-		try {
-			Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
-			Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
-
-			list = playerItemLogMapper.queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
-			DataSourceHelper.useServerDatabase(serverId);
-			String nickName = playerService.getNameById(playerId);
-			for (PlayerItemLog playerItemLog : list) {
-				// 玩家名
-				playerItemLog.setPlayerName(nickName);
-				// 通过道具获取物品名称
-				ConfItem confItem = itemTree(itemId);
-				if (confItem == null) {
-					playerItemLog.setItemName("该物品不存在");
-				} else {
-					playerItemLog.setItemName(confItem.getName());
-				}
-				// 设置物品名称
-				ItemReduce itemReduce = ItemReduce.valueOf(way);
-				String itemReduceName = itemReduce.getName();
-				// 产销点
-				playerItemLog.setWayName(itemReduceName);
-				String typeName = OperationType.getName(type);
-				// 产销类型
-				playerItemLog.setTypeName(typeName);
+		Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
+		Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
+		List<PlayerItemLog> list = playerItemLogMapper.queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
+		for (PlayerItemLog playerItemLog : list) {
+			// 玩家名
+			playerItemLog.setPlayerName(playerItemLog.getPlayerRegisterInfo().getName());
+			// 通过道具获取物品名称
+			ConfItem confItem = itemTree(playerItemLog.getItemId());
+			if (confItem == null) {
+				playerItemLog.setItemName("该物品不存在");
+			} else {
+				playerItemLog.setItemName(confItem.getName());
 			}
-		} catch (Exception e) {
-			log.error("切换数据源异常, serverId :" + serverId, e);
-		} finally {
-			DataSourceHelper.useDefaultDatabase();
+			// 设置物品名称
+			ItemReduce itemReduce = ItemReduce.valueOf(playerItemLog.getWay());
+			String itemReduceName = itemReduce.getName();
+			// 产销点
+			playerItemLog.setWayName(itemReduceName);
+			String typeName = OperationType.getName(playerItemLog.getType());
+			// 产销类型
+			playerItemLog.setTypeName(typeName);
 		}
 
 		return list;
