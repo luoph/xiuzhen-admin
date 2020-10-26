@@ -27,6 +27,9 @@
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动宣传图"></a-input>
                 </a-form-item>
+                <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <game-server-selector v-decorator="['serverIds', { initialValue: '' }]" @changeSelect="changeSelect" />
+                </a-form-item>
                 <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
                         <a-select-option :value="1">有效</a-select-option>
@@ -55,11 +58,13 @@ import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
 import JDate from "@/components/jeecg/JDate";
+import GameServerSelector from "@/components/gameserver/GameServerSelector";
 
 export default {
     name: "GameCampaignModal",
     components: {
-        JDate
+        JDate,
+        GameServerSelector
     },
     data() {
         return {
@@ -86,8 +91,6 @@ export default {
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
                 status: { rules: [{ required: true, message: "请输入活动状态!" }] },
                 autoOpen: { rules: [{ required: true, message: "请输入自动开启!" }] },
-                allChannel: {},
-                allServer: {},
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
             },
@@ -118,8 +121,6 @@ export default {
                         "banner",
                         "status",
                         "autoOpen",
-                        "allChannel",
-                        "allServer",
                         "startTime",
                         "endTime",
                         "createTime",
@@ -183,14 +184,17 @@ export default {
                     "banner",
                     "status",
                     "autoOpen",
-                    "allChannel",
-                    "allServer",
                     "startTime",
                     "endTime",
                     "createTime",
                     "updateTime"
                 )
             );
+        },
+        changeSelect(value) {
+            this.form.setFieldsValue({
+                serverIds: value.join(",")
+            });
         }
     }
 };
