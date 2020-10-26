@@ -11,6 +11,10 @@
         <result column="num" property="num"/>
         <result column="way" property="way"/>
         <result column="type" property="type"/>
+        <result column="before_num" property="beforeNum"/>
+        <result column="after_num" property="afterNum"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
         <result column="sync_time" property="syncTime"/>
         <result column="item_num" property="itemNum"/>
         <result column="add_item_num" property="addItemNum"/>
@@ -20,6 +24,10 @@
         <result column="item_count" property="itemCount"/>
         <result column="item_num_rate" property="itemNumRate"/>
         <result column="item_num_sum" property="itemNumSum"/>
+        <association property="playerRegisterInfo" javaType="org.jeecg.modules.player.entity.PlayerRegisterInfo">
+            <id column="pri_id" property="id"/>
+            <result column="pri_name" property="name"/>
+        </association>
     </resultMap>
 
     <select id="queryCurrencyPayIncomeList" resultMap="BaseResultMap">
@@ -98,35 +106,38 @@
 
     <select id="queryItemBillList" resultMap="BaseResultMap">
         SELECT
-        player_id,
-        item_id,
-        way,
-        type,
-        before_num,
-        num,
-        after_num,
-        sync_time
+        pil.player_id,
+        pil.item_id,
+        pil.way,
+        pil.type,
+        pil.before_num,
+        pil.num,
+        pil.after_num,
+        pil.sync_time,
+        pri.name pri_name
         FROM
-        player_item_log
+        player_item_log pil
+        LEFT JOIN  player_register_info pri ON pil.player_id = pri.player_id
         <where>
             <if test="playerId !=0 ">
-                AND player_id = #{playerId}
+                AND pil.player_id = #{playerId}
             </if>
             <if test="itemId !=0 ">
-                AND item_id = #{itemId}
+                AND pil.item_id = #{itemId}
             </if>
             <if test="type !=0 ">
-                AND type = #{type}
+                AND pil.type = #{type}
             </if>
             <if test="way !=0 ">
-                AND way = #{way}
+                AND pil.way = #{way}
             </if>
             <if test="rangeDateBeginTime !=null ">
-                AND sync_time >= #{rangeDateBeginTime}
+                AND pil.sync_time >= #{rangeDateBeginTime}
             </if>
             <if test="rangeDateEndTime !=null ">
-                AND sync_time &lt;= #{rangeDateEndTime}
+                AND pil.sync_time &lt;= #{rangeDateEndTime}
             </if>
+            ORDER BY pil.sync_time DESC
         </where>
 
     </select>

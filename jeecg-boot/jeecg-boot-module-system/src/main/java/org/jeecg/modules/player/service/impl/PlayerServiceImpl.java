@@ -104,7 +104,6 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 				double rechargeEnd = 0;
 				if (playerDTO.getRechargeBegin() != null) {
 					rechargeBegin = playerDTO.getRechargeBegin();
-					;
 				}
 				if (playerDTO.getRechargeEnd() != null) {
 					rechargeEnd = playerDTO.getRechargeEnd();
