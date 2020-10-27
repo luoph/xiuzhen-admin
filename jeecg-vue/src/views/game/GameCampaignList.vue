@@ -105,7 +105,11 @@
                 </template>
 
                 <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
+                    <a @click="handleEdit(record)">活动信息</a>
+                    <a-divider type="vertical" />
+                    <a @click="handleEdit(record)">参数配置</a>
+                    <a-divider type="vertical" />
+                    <a @click="handleServerList(record)">活动状态</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -121,13 +125,15 @@
             </a-table>
         </div>
 
-        <gameCampaign-modal ref="modalForm" @ok="modalFormOk"></gameCampaign-modal>
+        <GameCampaignModal ref="modalForm" @ok="modalFormOk"></GameCampaignModal>
+        <GameCampaignServerList ref="serverListModal"></GameCampaignServerList>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameCampaignModal from "./modules/GameCampaignModal";
+import GameCampaignServerList from "./modules/GameCampaignServerList";
 import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
@@ -135,7 +141,8 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        GameCampaignModal
+        GameCampaignModal,
+        GameCampaignServerList
     },
     data() {
         return {
@@ -271,6 +278,15 @@ export default {
             console.log(dateString[0], dateString[1]);
             this.queryParam.endTime_begin = dateString[0];
             this.queryParam.endTime_end = dateString[1];
+        },
+        handleEdit: function(record) {
+            this.$refs.modalForm.edit(record);
+            this.$refs.modalForm.title = "编辑";
+            this.$refs.modalForm.disableSubmit = false;
+        },
+        handleServerList: function(record) {
+            this.$refs.serverListModal.edit(record);
+            this.$refs.serverListModal.title = "活动信息";
         }
     }
 };
