@@ -12,25 +12,9 @@
                         <a-form-item label="活动名称（备注）" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）"></a-input>
                         </a-form-item>
-                        <!-- <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <a-select placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
-                                <a-select-option :value="1">1-登录礼包</a-select-option>
-                                <a-select-option :value="2">2-累计充值</a-select-option>
-                                <a-select-option :value="3">3-兑换</a-select-option>
-                                <a-select-option :value="4">4-节日任务</a-select-option>
-                                <a-select-option :value="5">5-Buff-修为加成</a-select-option>
-                                <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
-                            </a-select>
-                        </a-form-item> -->
                         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <game-server-selector v-decorator="['serverIds', { initialValue: '' }]" @changeSelect="changeSelect" />
                         </a-form-item>
-                        <!-- <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <a-select placeholder="选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
-                                <a-select-option :value="1">有效</a-select-option>
-                                <a-select-option :value="0">无效</a-select-option>
-                            </a-select>
-                        </a-form-item> -->
                         <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-col :md="7" :sm="8">
                                 <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
@@ -67,7 +51,7 @@
                                     <a-col :span="3">页签顺序</a-col>
                                     <a-col :span="2">操作</a-col>
                                 </a-row>
-                                <a-row type="flex" :gutter="16" v-for="(item, index) in campaignTypeList" :key="index">
+                                <a-row :gutter="16" v-for="(item, index) in campaignTypeList" :key="index">
                                     <a-col :span="5">
                                         <a-form-item>
                                             <a-select placeholder="活动类型" v-decorator="['campaignTypeList[' + index + '].type', { initialValue: 1 }]">
@@ -120,8 +104,6 @@
                             </div>
                         </a-form-item>
                     </a-tab-pane>
-
-                    <a-tab-pane tab="活动状态" key="3" forceRender> </a-tab-pane>
                 </a-tabs>
             </a-form>
         </a-spin>
