@@ -8,12 +8,12 @@
                 <div class="table-page-search-wrapper">
                     <a-form layout="inline" :form="form" @keyup.enter.native="searchQuery">
                         <a-row :gutter="10">
-                            <a-col :md="4" :sm="8">
+                            <a-col :md="10" :sm="8">
                                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id">
                                     <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
                                 </a-form-item>
                             </a-col>
-                            <a-col :md="4" :sm="8">
+                            <a-col :md="6" :sm="8">
                                 <span style="float: left;" class="table-page-search-submitButtons">
                                     <a-button type="primary" @click="searchQuery">查询</a-button>
                                     <a-button type="primary" @click="searchReset">重置</a-button>
@@ -58,7 +58,7 @@
         <!-- table区域-end -->
 
         <!-- 表单区域 -->
-        <gameChannelServer-modal ref="modalForm" @ok="modalFormOk"></gameChannelServer-modal>
+        <GameChannelServerModal ref="modalForm" @ok="modalFormOk"></GameChannelServerModal>
     </a-card>
 </template>
 
