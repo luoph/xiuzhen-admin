@@ -101,10 +101,8 @@
         </div>
         <!-- table区域-end -->
 
-        <!-- 表单区域 -->
-        <gameChannel-modal ref="modalForm" @ok="modalFormOk"></gameChannel-modal>
-        <!-- 字典类型 -->
-        <gameChannel-serverList ref="channelServerList"></gameChannel-serverList>
+        <GameChannelModal ref="modalForm" @ok="modalFormOk"></GameChannelModal>
+        <GameChannelServerList ref="channelServerList"></GameChannelServerList>
     </a-card>
 </template>
 
@@ -113,8 +111,7 @@ import { filterObj } from "@/utils/util";
 import GameChannelModal from "./modules/GameChannelModal";
 import GameChannelServerList from "./GameChannelServerList";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction, putAction, httpAction } from "@/api/manage";
-import Vue from "vue";
+import { getAction } from "@/api/manage";
 
 function filterGameIdText(options, text) {
     if (options instanceof Array) {
