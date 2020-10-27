@@ -1,11 +1,13 @@
 <template>
     <div>
+        <span> 渠道 </span>
         <a-select placeholder="请选择渠道" v-model="channelId" initialValue="all" @change="handleChannelChange">
             <a-select-option value="all">所有</a-select-option>
             <a-select-option v-for="channel in channelList" :key="channel.name" :value="channel.id">
                 {{ channel.name }}
             </a-select-option>
         </a-select>
+        <span> 区服 </span>
         <a-select mode="multiple" allowClear show-search :default-value="[]" style="width: 100%" placeholder="请选择区服" @change="handleServerChange">
             <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + "-" + server.name }} </a-select-option>
         </a-select>
