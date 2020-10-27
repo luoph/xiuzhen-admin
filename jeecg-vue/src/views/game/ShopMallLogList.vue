@@ -16,20 +16,23 @@
                     <a-col :md="5" :sm="5">
                         <a-form-item label="选择就近天数">
                             <a-select placeholder="天数" v-model="queryParam.days">
-                                <a-select-option :value="0">不选择天数</a-select-option>
-                                <a-select-option :value="7">近7天</a-select-option>
-                                <a-select-option :value="15">近15天</a-select-option>
-                                <a-select-option :value="30">近一个月</a-select-option>
-                                <a-select-option :value="60">近两个月</a-select-option>
+                                <a-select-option value="0">不选择天数</a-select-option>
+                                <a-select-option value="7">近7天</a-select-option>
+                                <a-select-option value="15">近15天</a-select-option>
+                                <a-select-option value="30">近一个月</a-select-option>
+                                <a-select-option value="60">近两个月</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="商店类型">
                             <a-select placeholder="商店类型" v-model="queryParam.type">
-                                <a-select-option :value="0">灵石坊</a-select-option>
-                                <a-select-option :value="1">仙石堂</a-select-option>
-                                <a-select-option :value="2">玉髓阁</a-select-option>
+                                <a-select-option value="1001">优惠坊市</a-select-option>
+                                <a-select-option value="100201">时装坊市--头像</a-select-option>
+                                <a-select-option value="100202">时装坊市--聊天</a-select-option>
+                                <a-select-option value="100203">时装坊市--名帖</a-select-option>
+                                <a-select-option value="1003">荣誉坊市</a-select-option>
+                                <a-select-option value="3001">成仙路</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>

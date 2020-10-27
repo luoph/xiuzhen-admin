@@ -22,6 +22,13 @@
         </association>
     </resultMap>
 
+    <!-- 通用查询映射结果 -->
+    <resultMap id="PlayerResultMap" type="org.jeecg.modules.player.entity.Player">
+        <id column="player_id" property="id"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+    </resultMap>
+
     <select id="queryUserRankByDateRange" resultMap="BaseResultMap">
         SELECT
         po.id,
@@ -80,5 +87,19 @@
         FROM ${logTable}
         WHERE
         player_id = #{playerId}
+    </select>
+
+    <select id="getPlayerLastLoginAndRegisterTime" resultMap="PlayerResultMap">
+        SELECT
+        a.player_id player_id,
+        a.create_time register_time,
+        MAX(b.create_time) last_login_time
+        FROM ${logTable} a LEFT JOIN ${logTable} b ON a.player_id = b.player_id
+        WHERE
+        a.type = 1 AND b.type = 2
+        <if test="serverId !=null ">
+            AND a.server_id = #{serverId}
+        </if>
+        GROUP BY a.player_id
     </select>
 </mapper>

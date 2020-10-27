@@ -15,6 +15,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -72,7 +73,7 @@ public class DateTest {
 		list.add(new Mqtt(3, 1, 6));
 		list.add(new Mqtt(3, 4, 6));
 
-		Map<Integer, List<Mqtt>> map = list.stream().collect(Collectors.groupingBy(Mqtt::getGroupNo));
+		/*Map<Integer, List<Mqtt>> map = list.stream().collect(Collectors.groupingBy(Mqtt::getGroupNo));
 		for (List<Mqtt> mqtts : map.values()) {
 			long count = mqtts.stream().filter(i -> i.getKey() == 2).count();
 			Integer max = mqtts.stream().filter(i -> i.getKey() == 2).max(Comparator.comparing(Mqtt::getValue)).map(Mqtt::getValue).orElse(0);
@@ -83,8 +84,9 @@ public class DateTest {
 			System.out.println("该组的最大值"+ max);
 			System.out.println("该组的count个数" + count);
 			System.out.println("该组的sum和" + sum);
-		}
-
+		}*/
+		List<Mqtt> collect = list.stream().filter(t -> t.getKey() >= 3 && t.getKey() <= 5).collect(Collectors.toList());
+		System.out.println(collect);
 	}
 }
 
