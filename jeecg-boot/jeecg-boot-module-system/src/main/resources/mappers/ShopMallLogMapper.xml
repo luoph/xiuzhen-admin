@@ -7,6 +7,7 @@
         <result column="player_id" property="playerId" />
         <result column="goods_id" property="goodsId" />
         <result column="item_id" property="itemId" />
+        <result column="type" property="type" />
         <result column="state" property="state"/>
         <result column="num" property="num" />
         <result column="total_price" property="totalPrice" />
@@ -24,13 +25,22 @@
     <select id="queryShopMallList" resultMap="BaseResultMap">
         SELECT
         item_id,
+        type,
         SUM(num) item_num,
         COUNT(DISTINCT(player_id)) player_num
         FROM
         shop_mall_log
-        WHERE
-        type = #{type}
-        AND create_time >= #{rangeDateBeginTime} AND create_time &lt;= #{rangeDateEndTime}
+        <where>
+            <if test="type !=0">
+                AND type = #{type}
+            </if>
+            <if test="rangeDateBeginTime !=null">
+                AND create_time >= #{rangeDateBeginTime}
+            </if>
+            <if test="rangeDateEndTime !=null">
+                AND create_time &lt;= #{rangeDateEndTime}
+            </if>
+        </where>
         GROUP BY item_id
         ORDER BY item_num DESC
     </select>
@@ -42,7 +52,12 @@
         shop_mall_log
         WHERE
         type = #{type}
-        AND create_time >= #{rangeDateBeginTime} AND create_time &lt;= #{rangeDateEndTime}
+        <if test="rangeDateBeginTime !=null">
+            AND create_time >= #{rangeDateBeginTime}
+        </if>
+        <if test="rangeDateEndTime !=null">
+            AND create_time &lt;= #{rangeDateEndTime}
+        </if>
     </select>
 
     <select id="queryItemCount" resultType="decimal">

@@ -10,10 +10,7 @@ import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
 import org.jeecg.modules.game.mapper.PayOrderGiftMapper;
 import org.jeecg.modules.game.mapper.PayUserRankMapper;
-import org.jeecg.modules.player.entity.Player;
-import org.jeecg.modules.player.entity.PlayerBehavior;
-import org.jeecg.modules.player.entity.PlayerDTO;
-import org.jeecg.modules.player.entity.PlayerRegisterInfo;
+import org.jeecg.modules.player.entity.*;
 import org.jeecg.modules.player.mapper.PlayerMapper;
 import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
 import org.jeecg.modules.player.service.IPlayerService;
@@ -23,7 +20,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author jeecg-boot
@@ -53,8 +52,13 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 	@Override
 	public List<Player> queryForList(PlayerDTO playerDTO) {
 		List<Player> list = new ArrayList<>();
+
+		List<Player> collect1 = null;
+		List<Player> collect2 = null;
+		List<Player> collect3 = null;
+		List<Player> collect4 = null;
+
 		try {
-			DataSourceHelper.useServerDatabase(playerDTO.getServerId());
 			// 如果选择开始时间和结束时间是同一天
 			String createBegin = playerDTO.getCreateBegin();
 			String createEnd = playerDTO.getCreateEnd();
@@ -77,65 +81,90 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 			playerDTO.setLoginDateEnd(DateUtils.parseDate(loginEnd));
 
 			// 获取等级范围
-			if (playerDTO.getLevel() != null) {
+			if (playerDTO.getLevel() != null && !"".equals(playerDTO.getLevel())) {
 				String[] level = playerDTO.getLevel().split("-");
 				playerDTO.setLevelBegin(Integer.valueOf(level[0]));
 				playerDTO.setLevelEnd(Integer.valueOf(level[1]));
 			}
 			// 获取充值范围
-			if (playerDTO.getRecharge() != null) {
+			if (playerDTO.getRecharge() != null && !"".equals(playerDTO.getRecharge())) {
 				String[] recharge = playerDTO.getRecharge().split("-");
 				playerDTO.setRechargeBegin(Double.valueOf(recharge[0]));
 				playerDTO.setRechargeEnd(Double.valueOf(recharge[1]));
 			}
+			DataSourceHelper.useServerDatabase(playerDTO.getServerId());
 			list = playerMapper.queryForList(playerDTO);
 			DataSourceHelper.useDefaultDatabase();
-			Iterator<Player> iterator = list.iterator();
-			while (iterator.hasNext()) {
-				Player player = iterator.next();
+			// 通过玩家id获取玩家累充金额
+			List<PayOrder> payOrders = payOrderBillMapper.getPayAmountSum(playerDTO.getServerId());
+			List<Player> playerTimes = payUserRankMapper.getPlayerLastLoginAndRegisterTime(playerDTO.getServerId(), logTable);
+
+			for (Player player : list) {
 				Long playerId = player.getId();
-				System.out.println(player.getCombatPower());
-				// 通过玩家id获取玩家累充金额
-				BigDecimal payAmountSum = payOrderBillMapper.getPayAmountSum(playerId);
-				if (payAmountSum == null) {
-					payAmountSum = BigDecimal.ZERO;
-				}
-				double rechargeBegin = 0;
-				double rechargeEnd = 0;
-				if (playerDTO.getRechargeBegin() != null) {
-					rechargeBegin = playerDTO.getRechargeBegin();
-				}
-				if (playerDTO.getRechargeEnd() != null) {
-					rechargeEnd = playerDTO.getRechargeEnd();
-				}
-				double payAmountSumDouble = payAmountSum.doubleValue();
-				PlayerRegisterInfo playerRegisterInfo = playerRegisterInfoMapper.getByPlayerId(playerId);
-				if (playerRegisterInfo != null) {
-					player.setRegisterTime(playerRegisterInfo.getCreateTime());
-				}
-				// 获取玩家最后登录时间
-				Date loginDate = payUserRankMapper.getPlayerLastLoginTime(playerId, logTable);
-				if (loginDate != null) {
-					player.setLastLoginTime(loginDate);
-				}
-				// 充值金额不在这个充值档位范围内,就剔除这条记录
-				if (payAmountSumDouble >= rechargeBegin && payAmountSumDouble <= rechargeEnd) {
-					player.setPayAmountSum(payAmountSum);
-				} else {
-					iterator.remove();
+				BigDecimal orderSum = getOrderSum(player, payOrders);
+				// 设置支付总金额
+				player.setPayAmountSum(orderSum);
+				// 获取玩家注册时间,获取玩家最后登录时间
+				for (Player playerTime : playerTimes) {
+					if (playerId.equals(playerTime.getId())) {
+						if (playerTime.getRegisterTime() != null) {
+							player.setRegisterTime(playerTime.getRegisterTime());
+						}
+						if (playerTime.getLastLoginTime() != null) {
+							player.setLastLoginTime(playerTime.getLastLoginTime());
+						}
+						break;
+					}
 				}
 			}
+
+			if (playerDTO.getCreateDateBegin() != null && playerDTO.getCreateDateEnd() != null && list != null) {
+
+				collect1 = list.stream().filter(t -> t.getRegisterTime() != null && t.getRegisterTime().getTime() >= playerDTO.getCreateDateBegin().getTime()
+						&& t.getRegisterTime().getTime() <= playerDTO.getCreateDateEnd().getTime()).collect(Collectors.toList());
+			} else {
+				collect1 = list;
+			}
+
+			if (playerDTO.getLoginDateBegin() != null && playerDTO.getLoginDateEnd() != null && collect1 != null) {
+				collect2 = collect1.stream().filter(t -> t.getLastLoginTime() != null && t.getLastLoginTime().getTime() >= playerDTO.getLoginDateBegin().getTime()
+						&& t.getRegisterTime().getTime() <= playerDTO.getLoginDateEnd().getTime()).collect(Collectors.toList());
+			} else {
+				collect2 = collect1;
+			}
+
+			if (playerDTO.getLevelBegin() != null && playerDTO.getLevelEnd() != null && collect2 != null) {
+				collect3 = collect2.stream().filter(t -> t.getPayAmountSum() != null && t.getPayAmountSum().doubleValue() >= playerDTO.getLevelBegin()
+						&& t.getPayAmountSum().doubleValue() <= playerDTO.getLevelEnd()).collect(Collectors.toList());
+			} else {
+				collect3 = collect2;
+			}
+
+			if (playerDTO.getRechargeBegin() != null && playerDTO.getRechargeEnd() != null && collect3 != null) {
+				collect4 = collect3.stream().filter(t -> t.getRealm() != null && t.getRealm() >= playerDTO.getRechargeBegin()
+						&& t.getRealm() <= playerDTO.getRechargeEnd()).collect(Collectors.toList());
+				// todo : collect4总是空
+				collect4 = collect3;
+			} else {
+				collect4 = collect3;
+			}
+
 		} catch (Exception e) {
 			log.error("切换数据源异常,serverId: " + playerDTO.getServerId(), e);
 		} finally {
 			DataSourceHelper.useDefaultDatabase();
 		}
-		return list;
+		return collect4;
 	}
+
+	private BigDecimal getOrderSum(Player player, List<PayOrder> payOrders) {
+		double sum = payOrders.stream().filter(o -> o.getPlayerId().equals(player.getId())).mapToDouble(o -> o.getPayAmount().doubleValue()).sum();
+		return BigDecimal.valueOf(sum);
+	}
+
 
 	@Override
 	public String getNameById(Long playerId) {
-
 		return playerMapper.getNameById(playerId);
 	}
 
@@ -202,7 +231,6 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 				});
 			});
 		}
-
 		// todo 最后 behaviorList 还需要通过时间做一个排序
 		return behaviorList;
 	}

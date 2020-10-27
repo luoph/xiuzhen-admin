@@ -77,7 +77,7 @@
                 @change="handleTableChange"
             >
                 <span slot="action" slot-scope="text, record">
-                       <a @click="editChannelServer(record)"><a-icon type="setting" /> 游戏服</a>
+                       <a @click="editPlayerDetail(record)">玩家详情</a>
                 </span>
             </a-table>
         </div>
@@ -236,7 +236,7 @@ export default {
                 }
             });
         },
-        editChannelServer(record) {
+        editPlayerDetail(record) {
             this.$refs.playerModal.edit(record);
         },
     }

@@ -55,7 +55,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
 
 				Integer itemId = shopMallLog.getItemId();
 				// 次数
-				BigDecimal itemCount = shopMallLogMapper.queryItemCount(rangeDateBeginTime, rangeDateEndTime, type, itemId);
+				BigDecimal itemCount = shopMallLogMapper.queryItemCount(rangeDateBeginTime, rangeDateEndTime, shopMallLog.getType(), itemId);
 
 				BigDecimal itemNum = shopMallLog.getItemNum();
 				shopMallLog.setItemCount(itemCount);

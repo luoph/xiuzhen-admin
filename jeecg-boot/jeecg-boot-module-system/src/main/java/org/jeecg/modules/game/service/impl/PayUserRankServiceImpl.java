@@ -76,7 +76,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
 			//设置充值预警天数
 			playerRegisterInfo.setPayWarningDays(payWarningDays);
 
-			//获取玩家最后登录时间
+			//获取玩家最后登录时间和注册时间
 			Date loginDate = payUserRankMapper.getPlayerLastLoginTime(payUserRank.getPlayerId(), logTable);
 
 			int loginWarningDays = DateUtils.daysBetween(loginDate, nowDate);

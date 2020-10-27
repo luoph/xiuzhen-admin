@@ -100,7 +100,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 	 *
 	 * @return {@linkplain Result}
 	 */
-	@AutoLog(value = "玩家详情-查询")
+	@AutoLog(value = "玩家行为分析-查询")
 	@GetMapping(value = "/behavior")
 	public Result<?> queryBehavior(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
 	                               @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,

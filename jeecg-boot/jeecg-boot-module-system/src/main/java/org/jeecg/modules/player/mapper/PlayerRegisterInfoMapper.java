@@ -33,4 +33,7 @@ public interface PlayerRegisterInfoMapper extends BaseMapper<PlayerRegisterInfo>
 
 	@Select("SELECT name FROM player_register_info WHERE player_id = #{playerId}")
 	String getNameByPlayerId(@Param("playerId") Long playerId);
+
+	@Select("SELECT create_time FROM player_register_info WHERE player_id = #{playerId}")
+	Date getCreateTimeByplayerId(Long playerId);
 }

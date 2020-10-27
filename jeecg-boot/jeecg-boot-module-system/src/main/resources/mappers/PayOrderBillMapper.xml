@@ -75,7 +75,7 @@
         </if>
     </select>
 
-    <select id="queryPayNumSum" resultType="Integer">
+    <select id="queryPayNumSum">
         SELECT
         COUNT(DISTINCT(player_id))
         FROM pay_order
@@ -90,12 +90,12 @@
         </if>
     </select>
 
-    <select id="getPayAmountSum" resultType="decimal">
-        SELECT
-        SUM(pay_amount)
-        FROM
-        pay_order
-        WHERE
-        player_id = #{playerId}
+    <select id="getPayAmountSum" resultType="org.jeecg.modules.player.entity.PayOrder">
+        SELECT a.player_id, a.pay_amount  FROM  `pay_order` a
+        <where>
+            <if test="serverId != null">
+                a.`server_id`  = #{serverId}
+            </if>
+        </where>
     </select>
 </mapper>

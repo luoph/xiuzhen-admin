@@ -36,6 +36,11 @@ public class ShopMallLog implements Serializable {
     private Long playerId;
 
     /**
+     * 所属商城类型
+     */
+    private Integer type;
+
+    /**
      * 货架id
      */
     private Integer goodsId;
