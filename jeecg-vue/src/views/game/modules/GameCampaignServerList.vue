@@ -1,7 +1,7 @@
 <template>
     <a-card :bordered="false">
         <a-modal :title="title" :width="1200" :visible="visible" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
-            <a-tabs :defaultActiveKey="tabIndex" @change="handleTabChange">
+            <a-tabs :activeKey="tabIndex" @change="handleTabChange">
                 <!-- 查询区域 -->
                 <a-tab-pane v-for="(row, index) in model.typeList" :key="index" :tab="row.name">
                     <div class="table-page-search-wrapper">
@@ -28,7 +28,7 @@
                             ref="table"
                             size="middle"
                             bordered
-                            rowKey="id"
+                            rowKey="serverId"
                             :columns="columns"
                             :dataSource="dataSource"
                             :pagination="ipagination"
@@ -166,9 +166,9 @@ export default {
             }
             this.queryParam = {};
             this.form.resetFields();
-            this.tabIndex = 0;
             this.model = Object.assign({}, record);
             this.model.campaignId = this.campaignId;
+            this.tabIndex = 0;
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "serverId"));
@@ -208,11 +208,8 @@ export default {
             var params = { typeId: record.typeId, campaignId: record.campaignId, serverId: record.serverId, status: status };
             let that = this;
             getAction(that.url.switch, params).then(res => {
-                if (res.code === 510) {
-                    that.$message.warning(res.message);
-                }
+                that.loadData();
             });
-            that.loadData();
         }
     }
 };
