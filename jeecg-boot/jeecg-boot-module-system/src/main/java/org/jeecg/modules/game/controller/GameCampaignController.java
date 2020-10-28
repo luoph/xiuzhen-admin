@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,8 +11,12 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.constant.CampaignStatus;
+import org.jeecg.modules.game.constant.SwitchStatus;
 import org.jeecg.modules.game.entity.GameCampaign;
+import org.jeecg.modules.game.entity.GameCampaignServer;
 import org.jeecg.modules.game.entity.GameCampaignType;
+import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameCampaignService;
 import org.jeecg.modules.game.service.IGameCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @author jeecg-boot
@@ -63,6 +69,36 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                     .eq(GameCampaignType::getCampaignId, record.getId())
                     .orderByAsc(GameCampaignType::getSort);
             record.setTypeList(gameCampaignTypeService.list(query));
+        }
+        return Result.ok(pageList);
+    }
+
+    @GetMapping(value = "/serverList")
+    public Result<?> queryServerList(GameCampaignServer campaignServer,
+                                     @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                     @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                     HttpServletRequest req) {
+
+        Page<GameServer> page = new Page<>(pageNo, pageSize);
+        Date now = DateUtils.now();
+
+        GameCampaignType campaignType = gameCampaignTypeService.getById(campaignServer.getTypeId());
+        IPage<GameCampaignServer> pageList = gameCampaignService.serverList(page, campaignServer.getCampaignId(),
+                campaignServer.getTypeId(), campaignServer.getServer());
+        for (GameCampaignServer record : pageList.getRecords()) {
+            if (record.getStatus() == SwitchStatus.OFF.getValue()) {
+                record.setCampaignStatus(CampaignStatus.CLOSED.getValue());
+            } else if (record.getStatus() == SwitchStatus.ON.getValue()) {
+                if (now.before(campaignType.getStartTime())) {
+                    record.setCampaignStatus(CampaignStatus.NOT_STARTED.getValue());
+                } else if (now.after(campaignType.getEndTime())) {
+                    record.setCampaignStatus(CampaignStatus.COMPLETED.getValue());
+                } else {
+                    record.setCampaignStatus(CampaignStatus.IN_PROGRESS.getValue());
+                }
+            } else {
+                record.setCampaignStatus(CampaignStatus.NONE.getValue());
+            }
         }
         return Result.ok(pageList);
     }

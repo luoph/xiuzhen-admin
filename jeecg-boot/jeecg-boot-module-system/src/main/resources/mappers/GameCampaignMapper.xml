@@ -2,4 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.game.mapper.GameCampaignMapper">
 
+    <select id="serverList" resultType="org.jeecg.modules.game.entity.GameCampaignServer">
+        SELECT s.`id` AS `server_id`, s.`name` AS `server_name`, s.`open_time`,
+        IFNULL(cs.`campaign_id`, #{campaignId}) AS `campaign_id`,
+        IFNULL(cs.`type_id`, #{typeId}) AS `type_id`,
+        IFNULL(cs.`status`, '-1') AS `status`
+        FROM `game_server` s
+        LEFT JOIN `game_campaign_support` cs ON s.`id` = cs.`server_id` AND cs.`type_id` = #{typeId} AND
+        cs.`campaign_id` = #{campaignId}
+        <if test="server != null and server != '' ">
+            AND (s.`id` LIKE concat('%', #{server}, '%') OR s.`name` LIKE concat('%', #{server}, '%'))
+        </if>
+        ORDER BY s.`id`
+    </select>
+
 </mapper>
