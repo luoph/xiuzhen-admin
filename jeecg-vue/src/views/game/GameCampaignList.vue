@@ -103,7 +103,9 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
-
+                <span slot="serverIdTags" slot-scope="text, record">
+                    <a-tag v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                </span>
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
@@ -215,6 +217,12 @@ export default {
                         }
                         return re;
                     }
+                },
+                {
+                    title: "区服id",
+                    align: "center",
+                    dataIndex: "serverIds",
+                    scopedSlots: { customRender: "serverIdTags" }
                 },
                 {
                     title: "自动开启",

@@ -35,13 +35,13 @@ public class GameCampaign extends BaseEntity {
     /**
      * 活动类型: 1.节日活动
      */
-    @Excel(name = "活动类型: 1.节日活动", width = 15)
+    @Excel(name = "活动类型", width = 15)
     private java.lang.Integer type;
 
     /**
      * 活动名称，后台显示
      */
-    @Excel(name = "活动名称，后台显示", width = 15)
+    @Excel(name = "活动名称（后台显示）", width = 15)
     private java.lang.String name;
 
     /**
@@ -53,7 +53,7 @@ public class GameCampaign extends BaseEntity {
     /**
      * 活动名称，游戏中显示
      */
-    @Excel(name = "活动名称，游戏中显示", width = 15)
+    @Excel(name = "活动名称（游戏中显示）", width = 15)
     private java.lang.String showName;
 
     /**
@@ -71,14 +71,20 @@ public class GameCampaign extends BaseEntity {
     /**
      * 活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）
      */
-    @Excel(name = "活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）", width = 15)
+    @Excel(name = "活动状态", width = 15)
     private java.lang.Integer status;
 
     /**
      * 到达活动时间后自动开启
      */
-    @Excel(name = "到达活动时间后自动开启", width = 15)
+    @Excel(name = "自动开启", width = 15)
     private java.lang.Integer autoOpen;
+
+    /**
+     * 区服Id 使用,分割
+     */
+    @Excel(name = "区服Id", width = 15)
+    private java.lang.String serverIds;
 
     /**
      * 开始时间
