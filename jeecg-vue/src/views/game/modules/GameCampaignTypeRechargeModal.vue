@@ -57,8 +57,8 @@ export default {
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
             },
             url: {
-                add: " game/gameCampaignTypeRecharge/add",
-                edit: " game/gameCampaignTypeRecharge/edit"
+                add: "game/gameCampaignTypeRecharge/add",
+                edit: "game/gameCampaignTypeRecharge/edit"
             }
         };
     },

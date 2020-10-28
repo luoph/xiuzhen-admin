@@ -79,8 +79,8 @@ export default {
                 addition: { rules: [{ required: true, message: "请输入加成!" }] }
             },
             url: {
-                add: " game/gameCampaignTypeBuff/add",
-                edit: " game/gameCampaignTypeBuff/edit"
+                add: "game/gameCampaignTypeBuff/add",
+                edit: "game/gameCampaignTypeBuff/edit"
             }
         };
     },

@@ -128,7 +128,7 @@
         </div>
 
         <GameCampaignModal ref="modalForm" @ok="modalFormOk"></GameCampaignModal>
-        <GameCampaignServerList ref="serverListModal"></GameCampaignServerList>
+        <!-- <GameCampaignServerList ref="serverListModal"></GameCampaignServerList> -->
     </a-card>
 </template>
 
@@ -261,11 +261,11 @@ export default {
                 }
             ],
             url: {
-                list: " game/gameCampaign/list",
-                delete: " game/gameCampaign/delete",
-                deleteBatch: " game/gameCampaign/deleteBatch",
-                exportXlsUrl: " game/gameCampaign/exportXls",
-                importExcelUrl: " game/gameCampaign/importExcel"
+                list: "game/gameCampaign/list",
+                delete: "game/gameCampaign/delete",
+                deleteBatch: "game/gameCampaign/deleteBatch",
+                exportXlsUrl: "game/gameCampaign/exportXls",
+                importExcelUrl: "game/gameCampaign/importExcel"
             },
             dictOptions: {}
         };

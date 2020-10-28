@@ -67,8 +67,8 @@ export default {
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
             },
             url: {
-                add: " game/gameCampaignType/add",
-                edit: " game/gameCampaignType/edit"
+                add: "game/gameCampaignType/add",
+                edit: "game/gameCampaignType/edit"
             }
         };
     },

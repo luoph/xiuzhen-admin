@@ -203,11 +203,11 @@ export default {
                 }
             ],
             url: {
-                list: " game/gameCampaignTypeBuff/list",
-                delete: " game/gameCampaignTypeBuff/delete",
-                deleteBatch: " game/gameCampaignTypeBuff/deleteBatch",
-                exportXlsUrl: " game/gameCampaignTypeBuff/exportXls",
-                importExcelUrl: " game/gameCampaignTypeBuff/importExcel"
+                list: "game/gameCampaignTypeBuff/list",
+                delete: "game/gameCampaignTypeBuff/delete",
+                deleteBatch: "game/gameCampaignTypeBuff/deleteBatch",
+                exportXlsUrl: "game/gameCampaignTypeBuff/exportXls",
+                importExcelUrl: "game/gameCampaignTypeBuff/importExcel"
             },
             dictOptions: {}
         };

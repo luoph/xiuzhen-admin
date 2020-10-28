@@ -49,8 +49,8 @@ export default {
                 typeIds: { rules: [{ required: true, message: "请输入开启typeIds" }] }
             },
             url: {
-                add: " game/gameCampaignSupport/add",
-                edit: " game/gameCampaignSupport/edit"
+                add: "game/gameCampaignSupport/add",
+                edit: "game/gameCampaignSupport/edit"
             }
         };
     },
