@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -108,16 +109,22 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @GetMapping(value = "/serverSwitch")
     public Result<?> switchServer(GameCampaignServer model, HttpServletRequest req) {
         log.debug("switchServer {}", model);
-        if (model.getId() == null) {
-            GameCampaignSupport campaignSupport = new GameCampaignSupport()
+
+        Wrapper<GameCampaignSupport> query = Wrappers.<GameCampaignSupport>lambdaQuery()
+                .eq(GameCampaignSupport::getCampaignId, model.getCampaignId())
+                .eq(GameCampaignSupport::getTypeId, model.getTypeId())
+                .eq(GameCampaignSupport::getServerId, model.getServerId());
+
+        GameCampaignSupport campaignSupport = gameCampaignSupportService.getOne(query);
+        if (campaignSupport == null) {
+            campaignSupport = new GameCampaignSupport()
                     .setStatus(model.getStatus())
                     .setCampaignId(model.getCampaignId())
                     .setTypeId(model.getTypeId())
                     .setServerId(model.getServerId());
             gameCampaignSupportService.save(campaignSupport);
         } else {
-            GameCampaignSupport campaignSupport = gameCampaignSupportService.getById(model.getId());
-            if (campaignSupport.getStatus() == null || Objects.equals(campaignSupport.getStatus(), model.getStatus())) {
+            if (!Objects.equals(campaignSupport.getStatus(), model.getStatus())) {
                 campaignSupport.setStatus(model.getStatus());
                 gameCampaignSupportService.updateById(campaignSupport);
             }
