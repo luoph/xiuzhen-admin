@@ -128,7 +128,7 @@
         </div>
 
         <GameCampaignModal ref="modalForm" @ok="modalFormOk"></GameCampaignModal>
-        <!-- <GameCampaignServerList ref="serverListModal"></GameCampaignServerList> -->
+        <GameCampaignServerList ref="serverListModal"></GameCampaignServerList>
     </a-card>
 </template>
 
