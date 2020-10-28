@@ -40,10 +40,15 @@ public class GameCampaignSupport extends BaseEntity {
      */
     @Excel(name = "渠道id/服务器id", width = 15)
     private java.lang.Integer serverId;
+    /**
+     * 状态
+     */
+    @Excel(name = "状态", width = 15)
+    private java.lang.Integer status;
 
     /**
      * 开启game_campaign_type.id
      */
     @Excel(name = "开启game_campaign_type.id", width = 15)
-    private java.lang.String typeIds;
+    private java.lang.Long typeId;
 }

@@ -19,9 +19,11 @@ public class GameCampaignServer {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     private String server;
 
-    private Long serverId;
+    private Integer serverId;
     private String serverName;
     private Date openTime;
 

@@ -13,11 +13,9 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.constant.CampaignStatus;
 import org.jeecg.modules.game.constant.SwitchStatus;
-import org.jeecg.modules.game.entity.GameCampaign;
-import org.jeecg.modules.game.entity.GameCampaignServer;
-import org.jeecg.modules.game.entity.GameCampaignType;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.IGameCampaignService;
+import org.jeecg.modules.game.service.IGameCampaignSupportService;
 import org.jeecg.modules.game.service.IGameCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author jeecg-boot
@@ -44,6 +43,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
     @Autowired
     private IGameCampaignTypeService gameCampaignTypeService;
+
+    @Autowired
+    private IGameCampaignSupportService gameCampaignSupportService;
 
     /**
      * 分页列表查询
@@ -101,6 +103,26 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             }
         }
         return Result.ok(pageList);
+    }
+
+    @GetMapping(value = "/serverSwitch")
+    public Result<?> switchServer(GameCampaignServer model, HttpServletRequest req) {
+        log.debug("switchServer {}", model);
+        if (model.getId() == null) {
+            GameCampaignSupport campaignSupport = new GameCampaignSupport()
+                    .setStatus(model.getStatus())
+                    .setCampaignId(model.getCampaignId())
+                    .setTypeId(model.getTypeId())
+                    .setServerId(model.getServerId());
+            gameCampaignSupportService.save(campaignSupport);
+        } else {
+            GameCampaignSupport campaignSupport = gameCampaignSupportService.getById(model.getId());
+            if (campaignSupport.getStatus() == null || Objects.equals(campaignSupport.getStatus(), model.getStatus())) {
+                campaignSupport.setStatus(model.getStatus());
+                gameCampaignSupportService.updateById(campaignSupport);
+            }
+        }
+        return Result.ok("修改成功！");
     }
 
     /**

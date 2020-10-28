@@ -8,8 +8,8 @@
                         <a-form layout="inline" :form="form" @keyup.enter.native="searchQuery">
                             <a-row :gutter="10">
                                 <a-col :md="10" :sm="8">
-                                    <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id">
-                                        <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
+                                    <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服">
+                                        <a-input placeholder="搜索区服Id或名称" v-model="queryParam.server"></a-input>
                                     </a-form-item>
                                 </a-col>
                                 <a-col :md="6" :sm="8">
@@ -36,8 +36,17 @@
                             @change="handleTableChange"
                         >
                             <span slot="action" slot-scope="text, record">
-                                <a @click="handleEdit(record)">编辑</a>
+                                <a v-if="record.status === 1" @click="switchServer(record, 0)">关闭</a>
+                                <a v-else @click="switchServer(record, 1)">开启</a>
                             </span>
+                            <template slot="statusSlot" slot-scope="text">
+                                <a-tag v-if="text === -1" color="#f1ab52">未开启</a-tag>
+                                <a-tag v-else-if="text === 0" color="#f50">已关闭</a-tag>
+                                <a-tag v-else-if="text === 1" color="#aaaaaa">未开始</a-tag>
+                                <a-tag v-else-if="text === 2" color="#87d068">进行中</a-tag>
+                                <a-tag v-else-if="text === 3" color="#595959">已结束</a-tag>
+                                <span v-else>{{ text }}</span>
+                            </template>
                         </a-table>
                     </div>
                 </a-tab-pane>
@@ -85,20 +94,37 @@ export default {
                 {
                     title: "区服Id",
                     align: "center",
-                    dataIndex: "serverId",
-                    customRender: text => {
-                        return filterServerIdText(this.serverList, text);
+                    dataIndex: "serverId"
+                },
+                {
+                    title: "区服名",
+                    align: "center",
+                    dataIndex: "serverName"
+                },
+                {
+                    title: "开服时间",
+                    align: "center",
+                    dataIndex: "openTime"
+                },
+                {
+                    title: "活动开关",
+                    align: "center",
+                    dataIndex: "status",
+                    customRender: function(text) {
+                        if (text === -1) {
+                            return "未设置";
+                        } else if (text === 0) {
+                            return "关闭";
+                        } else if (text === 1) {
+                            return "开启";
+                        }
                     }
                 },
                 {
-                    title: "渠道id",
+                    title: "活动状态",
                     align: "center",
-                    dataIndex: "channelId"
-                },
-                {
-                    title: "状态",
-                    align: "center",
-                    dataIndex: "delFlag_dictText"
+                    dataIndex: "campaignStatus",
+                    scopedSlots: { customRender: "statusSlot" }
                 },
                 {
                     title: "操作",
@@ -108,9 +134,7 @@ export default {
                 }
             ],
             // 查询参数
-            queryParam: {
-                campaignId: ""
-            },
+            queryParam: {},
             title: "操作",
             visible: false,
             model: {},
@@ -118,7 +142,6 @@ export default {
             campaignId: "",
             // 页签信息
             tabIndex: 0,
-            serverList: [],
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -129,8 +152,8 @@ export default {
             },
             form: this.$form.createForm(this),
             url: {
-                list: "game/gameChannelServer/list",
-                serverListUrl: "game/gameServer/list"
+                list: "game/gameCampaign/serverList",
+                switch: "game/gameCampaign/serverSwitch"
             }
         };
     },
@@ -163,6 +186,9 @@ export default {
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
             param.campaignId = this.campaignId;
+            if (this.model && this.model.typeList) {
+                param.typeId = this.model.typeList[this.tabIndex].id;
+            }
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
@@ -175,22 +201,18 @@ export default {
             this.close();
         },
         handleTabChange(tab) {
-            console.log(tab + "-" + this.typeList[tab].name);
+            this.tabIndex = tab;
             this.loadData();
         },
-        queryServerList() {
-            // let that = this;
-            // getAction(that.url.serverListUrl).then(res => {
-            //     if (res.success) {
-            //         if (res.result instanceof Array) {
-            //             this.serverList = res.result;
-            //         } else if (res.result.records instanceof Array) {
-            //             this.serverList = res.result.records;
-            //         }
-            //     } else {
-            //         this.serverList = [];
-            //     }
-            // });
+        switchServer(record, status) {
+            var params = { typeId: record.typeId, campaignId: record.campaignId, serverId: record.serverId, status: status };
+            let that = this;
+            getAction(that.url.switch, params).then(res => {
+                if (res.code === 510) {
+                    that.$message.warning(res.message);
+                }
+            });
+            that.loadData();
         }
     }
 };
