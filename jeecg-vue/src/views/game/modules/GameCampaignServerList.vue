@@ -118,12 +118,7 @@ export default {
             campaignId: "",
             // 页签信息
             tabIndex: 0,
-            typeList: [
-                { typeId: 1, name: "登录有礼" },
-                { typeId: 2, name: "累计充值" },
-                { typeId: 3, name: "兑换" },
-                { typeId: 4, name: "节日任务" }
-            ],
+            typeList: [],
             serverList: [],
             labelCol: {
                 xs: { span: 24 },
@@ -136,14 +131,13 @@ export default {
             form: this.$form.createForm(this),
             url: {
                 list: "game/gameChannelServer/list",
+                typeList: "game/gameCampaignType/list",
                 serverListUrl: "game/gameServer/list"
             }
         };
     },
     computed: {},
-    created() {
-        // TODO 通过 campaignId 查询 typeList
-    },
+    created() {},
     methods: {
         edit(record) {
             if (record.id) {
@@ -157,6 +151,8 @@ export default {
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "serverId"));
             });
+            // 通过 campaignId 查询 typeList
+            this.queryTypeList();
             // 当其它模块调用该模块时,调用此方法加载字典数据
             this.loadData();
         },
@@ -183,6 +179,19 @@ export default {
         handleTabChange(tab) {
             console.log(tab + "-" + this.typeList[tab].name);
             this.loadData();
+        },
+        queryTypeList() {
+            let that = this;
+            this.loading = true;
+            getAction(this.url.typeList, { campaignId: that.campaignId }).then(res => {
+                if (res.success) {
+                    this.typeList = res.result.records;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
         },
         queryServerList() {
             // let that = this;

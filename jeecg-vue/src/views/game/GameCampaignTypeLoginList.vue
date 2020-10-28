@@ -171,11 +171,11 @@ export default {
                 }
             ],
             url: {
-                list: " game/gameCampaignTypeLogin/list",
-                delete: " game/gameCampaignTypeLogin/delete",
-                deleteBatch: " game/gameCampaignTypeLogin/deleteBatch",
-                exportXlsUrl: " game/gameCampaignTypeLogin/exportXls",
-                importExcelUrl: " game/gameCampaignTypeLogin/importExcel"
+                list: "game/gameCampaignTypeLogin/list",
+                delete: "game/gameCampaignTypeLogin/delete",
+                deleteBatch: "game/gameCampaignTypeLogin/deleteBatch",
+                exportXlsUrl: "game/gameCampaignTypeLogin/exportXls",
+                importExcelUrl: "game/gameCampaignTypeLogin/importExcel"
             },
             dictOptions: {}
         };

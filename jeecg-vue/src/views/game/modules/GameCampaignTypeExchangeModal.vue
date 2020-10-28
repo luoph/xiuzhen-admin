@@ -65,8 +65,8 @@ export default {
                 consume: { rules: [{ required: true, message: "请输入消耗列表!" }] }
             },
             url: {
-                add: " game/gameCampaignTypeExchange/add",
-                edit: " game/gameCampaignTypeExchange/edit"
+                add: "game/gameCampaignTypeExchange/add",
+                edit: "game/gameCampaignTypeExchange/edit"
             }
         };
     },

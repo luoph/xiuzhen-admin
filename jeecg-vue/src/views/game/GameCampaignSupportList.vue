@@ -167,11 +167,11 @@ export default {
                 }
             ],
             url: {
-                list: " game/gameCampaignSupport/list",
-                delete: " game/gameCampaignSupport/delete",
-                deleteBatch: " game/gameCampaignSupport/deleteBatch",
-                exportXlsUrl: " game/gameCampaignSupport/exportXls",
-                importExcelUrl: " game/gameCampaignSupport/importExcel"
+                list: "game/gameCampaignSupport/list",
+                delete: "game/gameCampaignSupport/delete",
+                deleteBatch: "game/gameCampaignSupport/deleteBatch",
+                exportXlsUrl: "game/gameCampaignSupport/exportXls",
+                importExcelUrl: "game/gameCampaignSupport/importExcel"
             },
             dictOptions: {}
         };

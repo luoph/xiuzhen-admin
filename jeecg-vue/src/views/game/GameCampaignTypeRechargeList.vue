@@ -183,11 +183,11 @@ export default {
                 }
             ],
             url: {
-                list: " game/gameCampaignTypeRecharge/list",
-                delete: " game/gameCampaignTypeRecharge/delete",
-                deleteBatch: " game/gameCampaignTypeRecharge/deleteBatch",
-                exportXlsUrl: " game/gameCampaignTypeRecharge/exportXls",
-                importExcelUrl: " game/gameCampaignTypeRecharge/importExcel"
+                list: "game/gameCampaignTypeRecharge/list",
+                delete: "game/gameCampaignTypeRecharge/delete",
+                deleteBatch: "game/gameCampaignTypeRecharge/deleteBatch",
+                exportXlsUrl: "game/gameCampaignTypeRecharge/exportXls",
+                importExcelUrl: "game/gameCampaignTypeRecharge/importExcel"
             },
             dictOptions: {}
         };

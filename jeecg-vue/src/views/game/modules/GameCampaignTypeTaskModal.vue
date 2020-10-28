@@ -76,8 +76,8 @@ export default {
                 updateTime: {}
             },
             url: {
-                add: " game/gameCampaignTypeTask/add",
-                edit: " game/gameCampaignTypeTask/edit"
+                add: "game/gameCampaignTypeTask/add",
+                edit: "game/gameCampaignTypeTask/edit"
             }
         };
     },
