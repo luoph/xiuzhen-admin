@@ -1,7 +1,9 @@
 package org.jeecg.modules.game.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -9,7 +11,9 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameCampaign;
+import org.jeecg.modules.game.entity.GameCampaignType;
 import org.jeecg.modules.game.service.IGameCampaignService;
+import org.jeecg.modules.game.service.IGameCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +36,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @Autowired
     private IGameCampaignService gameCampaignService;
 
+    @Autowired
+    private IGameCampaignTypeService gameCampaignTypeService;
+
     /**
      * 分页列表查询
      *
@@ -50,6 +57,13 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         QueryWrapper<GameCampaign> queryWrapper = QueryGenerator.initQueryWrapper(gameCampaign, req.getParameterMap());
         Page<GameCampaign> page = new Page<>(pageNo, pageSize);
         IPage<GameCampaign> pageList = gameCampaignService.page(page, queryWrapper);
+        // 查询子页签列表
+        for (GameCampaign record : pageList.getRecords()) {
+            LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
+                    .eq(GameCampaignType::getCampaignId, record.getId())
+                    .orderByAsc(GameCampaignType::getSort);
+            record.setTypeList(gameCampaignTypeService.list(query));
+        }
         return Result.ok(pageList);
     }
 
