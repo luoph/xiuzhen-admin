@@ -80,18 +80,17 @@ export default {
             this.edit({});
         },
         edit(record) {
+            this.form.resetFields();
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.visible = true;
-
-            this.form.resetFields();
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
+                // 此处不可包含时间类型的数据
+                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort"));
+                // 时间格式化
+                this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+                this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
             });
-
-            // 时间格式化
-            this.form.setFieldsValue({ startTime: record.startTime ? moment(record.startTime) : null });
-            this.form.setFieldsValue({ endTime: record.endTime ? moment(record.endTime) : null });
         },
         close() {
             this.$emit("close");
