@@ -174,6 +174,9 @@ export default {
                     model.startTimeMoment = model.startTime ? moment(model.startTime) : null;
                     model.endTimeMoment = model.endTime ? moment(model.endTime) : null;
                 }
+            } else {
+                this.isAutoOpen = false;
+                this.typeList = [];
             }
 
             this.form.resetFields();
@@ -196,6 +199,7 @@ export default {
                         "updateTime"
                     )
                 );
+
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
                 this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
