@@ -129,9 +129,19 @@ export default {
                     }
                 },
                 {
+                    title: "id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "活动id",
                     align: "center",
                     dataIndex: "campaignId"
+                },
+                {
+                    title: "页签id",
+                    align: "center",
+                    dataIndex: "typeId"
                 },
                 {
                     title: "服务器id",
@@ -139,25 +149,23 @@ export default {
                     dataIndex: "serverId"
                 },
                 {
-                    title: "开启typeIds",
+                    title: "状态",
                     align: "center",
-                    dataIndex: "typeIds"
+                    dataIndex: "status",
+                    customRender: function(text) {
+                        var value = "未设置";
+                        if (text == "1") {
+                            value = "已开启";
+                        } else if (text == "0") {
+                            value = "已关闭";
+                        }
+                        return value;
+                    }
                 },
                 {
                     title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
-                },
-                {
-                    title: "更新时间",
-                    align: "center",
-                    dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    dataIndex: "createTime"
                 },
                 {
                     title: "操作",
