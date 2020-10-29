@@ -3,10 +3,10 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="isEdit" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
+                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
                         <a-select-option :value="1">1-登录礼包</a-select-option>
                         <a-select-option :value="2">2-累计充值</a-select-option>
                         <a-select-option :value="3">3-兑换</a-select-option>
@@ -21,10 +21,10 @@
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
                 </a-form-item>
-                <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="活动结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
                 </a-form-item>
             </a-form>
@@ -36,6 +36,7 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import moment from "moment";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -47,6 +48,7 @@ export default {
             form: this.$form.createForm(this),
             title: "操作",
             width: 800,
+            isEdit: false,
             visible: false,
             model: {},
             labelCol: {
@@ -78,12 +80,18 @@ export default {
             this.edit({});
         },
         edit(record) {
-            this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+
+            this.form.resetFields();
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "type", "typeImage", "sort", "startTime", "endTime", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
             });
+
+            // 时间格式化
+            this.form.setFieldsValue({ startTime: record.startTime ? moment(record.startTime) : null });
+            this.form.setFieldsValue({ endTime: record.endTime ? moment(record.endTime) : null });
         },
         close() {
             this.$emit("close");
@@ -105,6 +113,10 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
