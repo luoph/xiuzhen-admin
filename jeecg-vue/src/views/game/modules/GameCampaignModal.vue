@@ -179,7 +179,6 @@ export default {
                 this.typeList = [];
             }
 
-            this.form.resetFields();
             this.$nextTick(() => {
                 this.form.setFieldsValue(
                     pick(
