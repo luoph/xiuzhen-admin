@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -297,13 +298,13 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     }
 
     private void updateGameCampaignTypeList(List<GameCampaignType> addList, List<GameCampaignType> updateList, List<Long> removeList) {
-        if (addList.size() > 0) {
+        if (CollUtil.isNotEmpty(addList)) {
             gameCampaignTypeService.saveBatch(addList);
         }
-        if (updateList.size() > 0) {
+        if (CollUtil.isNotEmpty(updateList)) {
             gameCampaignTypeService.updateBatchById(updateList);
         }
-        if (removeList.size() > 0) {
+        if (CollUtil.isNotEmpty(removeList)) {
             gameCampaignTypeService.removeByIds(removeList);
         }
     }
@@ -334,7 +335,12 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             }
         }
 
-        gameCampaignSupportService.saveBatch(addList);
-        gameCampaignSupportService.updateBatchById(updateList);
+        if (CollUtil.isNotEmpty(addList)) {
+            gameCampaignSupportService.saveBatch(addList);
+        }
+
+        if (CollUtil.isNotEmpty(updateList)) {
+            gameCampaignSupportService.updateBatchById(updateList);
+        }
     }
 }
