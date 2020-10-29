@@ -7,12 +7,7 @@
                     <a-col :md="6" :sm="8">
                         <a-form-item label="活动类型">
                             <a-select placeholder="选择活动类型" v-model="queryParam.type" default-value="1">
-                                <a-select-option :value="1">1-登录礼包</a-select-option>
-                                <a-select-option :value="2">2-累计充值</a-select-option>
-                                <a-select-option :value="3">3-兑换</a-select-option>
-                                <a-select-option :value="4">4-节日任务</a-select-option>
-                                <a-select-option :value="5">5-Buff-修为加成</a-select-option>
-                                <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
+                                <a-select-option :value="1">1-节日活动</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -165,21 +160,10 @@ export default {
                     title: "活动类型",
                     align: "center",
                     dataIndex: "type",
-                    // <!-- 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵所加成' -->
                     customRender: value => {
                         let re = "--";
                         if (value === 1) {
-                            re = "1-登录礼包";
-                        } else if (value === 2) {
-                            re = "2-累计充值";
-                        } else if (value === 3) {
-                            re = "3-兑换";
-                        } else if (value === 4) {
-                            re = "4-节日任务";
-                        } else if (value === 5) {
-                            re = "5-Buff-修为加成";
-                        } else if (value === 6) {
-                            re = "6-Buff-灵气加成";
+                            re = "节日活动";
                         }
                         return re;
                     }
