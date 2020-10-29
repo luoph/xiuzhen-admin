@@ -22,6 +22,12 @@
                         </a-form>
                     </div>
 
+                    <!-- 操作按钮区域 -->
+                    <div class="table-operator">
+                        <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(1)" type="primary">批量开启</a-button>
+                        <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(0)" type="danger">批量关闭</a-button>
+                    </div>
+
                     <!-- table区域-begin -->
                     <div>
                         <a-table
@@ -34,6 +40,7 @@
                             :pagination="ipagination"
                             :loading="loading"
                             @change="handleTableChange"
+                            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                         >
                             <span slot="action" slot-scope="text, record">
                                 <a v-if="record.status === 1" @click="switchServer(record, 0)">关闭</a>
@@ -153,7 +160,8 @@ export default {
             form: this.$form.createForm(this),
             url: {
                 list: "game/gameCampaign/serverList",
-                switch: "game/gameCampaign/serverSwitch"
+                switch: "game/gameCampaign/serverSwitch",
+                batch: "game/gameCampaign/switchBatch"
             }
         };
     },
@@ -209,6 +217,26 @@ export default {
             let that = this;
             getAction(that.url.switch, params).then(res => {
                 that.loadData();
+            });
+        },
+        batchSwitchServer(status) {
+            var ids = "";
+            for (var a = 0; a < this.selectedRowKeys.length; a++) {
+                ids += this.selectedRowKeys[a] + ",";
+            }
+
+            var that = this;
+            that.loading = true;
+
+            var params = { typeId: that.model.typeList[this.tabIndex].id, campaignId: that.campaignId, server: ids, status: status };
+            getAction(that.url.batch, params).then(res => {
+                that.onClearSelected();
+                if (res.success) {
+                    that.$message.success(res.message);
+                    that.loadData();
+                } else {
+                    that.$message.warning(res.message);
+                }
             });
         }
     }

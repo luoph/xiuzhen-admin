@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -24,9 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author jeecg-boot
@@ -81,6 +80,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                                      @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                      @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                      HttpServletRequest req) {
+        if (campaignServer.getTypeId() == null) {
+            return Result.ok();
+        }
 
         Page<GameServer> page = new Page<>(pageNo, pageSize);
         Date now = DateUtils.now();
@@ -130,6 +132,40 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             }
         }
         return Result.ok("修改成功！");
+    }
+
+    @GetMapping(value = "/switchBatch")
+    public Result<?> batchSwitch(GameCampaignServer model, HttpServletRequest req) {
+        int[] ids = StrUtil.splitToInt(model.getServer(), ",");
+        List<GameCampaignSupport> addList = new ArrayList<>();
+        List<GameCampaignSupport> updateList = new ArrayList<>();
+        for (int serverId : ids) {
+
+            Wrapper<GameCampaignSupport> query = Wrappers.<GameCampaignSupport>lambdaQuery()
+                    .eq(GameCampaignSupport::getCampaignId, model.getCampaignId())
+                    .eq(GameCampaignSupport::getTypeId, model.getTypeId())
+                    .eq(GameCampaignSupport::getServerId, serverId);
+
+            GameCampaignSupport campaignSupport = gameCampaignSupportService.getOne(query);
+            if (campaignSupport == null) {
+                campaignSupport = new GameCampaignSupport()
+                        .setStatus(model.getStatus())
+                        .setCampaignId(model.getCampaignId())
+                        .setTypeId(model.getTypeId())
+                        .setServerId(serverId);
+                addList.add(campaignSupport);
+                gameCampaignSupportService.save(campaignSupport);
+            } else {
+                if (!Objects.equals(campaignSupport.getStatus(), model.getStatus())) {
+                    campaignSupport.setStatus(model.getStatus());
+                    updateList.add(campaignSupport);
+                }
+            }
+        }
+
+        gameCampaignSupportService.saveBatch(addList);
+        gameCampaignSupportService.updateBatchById(updateList);
+        return Result.ok("切换成功！");
     }
 
     /**
