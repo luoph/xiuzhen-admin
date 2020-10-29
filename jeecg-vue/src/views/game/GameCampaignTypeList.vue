@@ -118,7 +118,7 @@
             </a-table>
         </div>
 
-        <gameCampaignType-modal ref="modalForm" @ok="modalFormOk"></gameCampaignType-modal>
+        <GameCampaignTypeModal ref="modalForm" @ok="modalFormOk"></GameCampaignTypeModal>
     </a-card>
 </template>
 
@@ -150,9 +150,19 @@ export default {
                     }
                 },
                 {
+                    title: "页签id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "活动id",
                     align: "center",
                     dataIndex: "campaignId"
+                },
+                {
+                    title: "页签标题",
+                    align: "center",
+                    dataIndex: "name"
                 },
                 {
                     title: "活动项类型",
@@ -188,12 +198,12 @@ export default {
                     dataIndex: "sort"
                 },
                 {
-                    title: "开始时间",
+                    title: "活动开始时间",
                     align: "center",
                     dataIndex: "startTime"
                 },
                 {
-                    title: "结束时间",
+                    title: "活动结束时间",
                     align: "center",
                     dataIndex: "endTime"
                 },
@@ -201,11 +211,6 @@ export default {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime"
-                },
-                {
-                    title: "更新时间",
-                    align: "center",
-                    dataIndex: "updateTime"
                 },
                 {
                     title: "操作",
