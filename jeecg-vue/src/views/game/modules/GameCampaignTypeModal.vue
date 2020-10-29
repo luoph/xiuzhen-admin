@@ -85,8 +85,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                // 此处不可包含时间类型的数据
-                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
                 this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
@@ -137,7 +136,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "type", "typeImage", "sort", "startTime", "endTime", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "type", "typeImage", "sort", "startTime", "endTime"));
         }
     }
 };
