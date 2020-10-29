@@ -228,6 +228,7 @@ export default {
                     let formData = Object.assign(this.model, values);
                     // 子页签列表
                     formData.typeList = this.typeList ? this.typeList : [];
+                    formData.autoOpen = this.isAutoOpen ? 1 : 0;
                     // 时间格式化
                     formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
