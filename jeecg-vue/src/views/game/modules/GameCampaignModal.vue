@@ -14,7 +14,7 @@
                         </a-form-item>
                         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-input v-if="isEdit" :disabled="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
-                            <game-server-selector v-else v-decorator="['serverIds', { initialValue: '' }]" @changeSelect="changeSelect" />
+                            <game-server-selector v-else v-decorator="['serverIds', { initialValue: '' }]" @onSelectServer="changeSelect" />
                         </a-form-item>
                         <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-col :md="7" :sm="8">
@@ -226,9 +226,11 @@ export default {
                     }
 
                     let formData = Object.assign(this.model, values);
+                    // 子页签列表
+                    formData.typeList = this.typeList ? this.typeList : [];
                     // 时间格式化
-                    formData.startTime = formData.mergeTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.endTime = formData.openTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     // 创建时间参数不传递后台
                     delete formData.createTime;
                     delete formData.updateTime;

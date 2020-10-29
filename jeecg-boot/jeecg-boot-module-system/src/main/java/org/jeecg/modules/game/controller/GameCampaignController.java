@@ -177,6 +177,11 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaign gameCampaign) {
         gameCampaignService.save(gameCampaign);
+        for (GameCampaignType model : gameCampaign.getTypeList()) {
+            model.setCampaignId(gameCampaign.getId());
+        }
+
+        updateTypeList(gameCampaign);
         return Result.ok("添加成功！");
     }
 
@@ -190,34 +195,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
         gameCampaignService.updateById(gameCampaign);
-
-        // 过滤空的新增页签
-        List<GameCampaignType> nowList = gameCampaign.getTypeList().stream().filter(t -> t.getType() != null).collect(Collectors.toList());
-
-        List<GameCampaignType> addList = new ArrayList<>();
-        List<GameCampaignType> updateList = new ArrayList<>();
-        List<Long> removeList = new ArrayList<>();
-        for (GameCampaignType model : nowList) {
-            if (model.getId() == null) {
-                addList.add(model);
-            }
-        }
-
-        nowList.removeAll(addList);
-        Map<Long, GameCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(GameCampaignType::getId, Function.identity()));
-
-        // 更新子页签
-        List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign.getId());
-        for (GameCampaignType model : typeList) {
-            if (typeMap.containsKey(model.getId())) {
-                updateList.add(model);
-            } else {
-                removeList.add(model.getId());
-            }
-        }
-
-        log.debug("addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
-        updateGameCampaignTypeList(addList, updateList, removeList);
+        updateTypeList(gameCampaign);
         return Result.ok("编辑成功!");
     }
 
@@ -291,6 +269,36 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                 .eq(GameCampaignType::getCampaignId, campaignId)
                 .orderByAsc(GameCampaignType::getSort);
         return gameCampaignTypeService.list(query);
+    }
+
+    private void updateTypeList(GameCampaign gameCampaign) {
+        // 过滤空的新增页签
+        List<GameCampaignType> nowList = gameCampaign.getTypeList().stream().filter(t -> t.getType() != null).collect(Collectors.toList());
+
+        List<GameCampaignType> addList = new ArrayList<>();
+        List<GameCampaignType> updateList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+        for (GameCampaignType model : nowList) {
+            if (model.getId() == null) {
+                addList.add(model);
+            }
+        }
+
+        nowList.removeAll(addList);
+        Map<Long, GameCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(GameCampaignType::getId, Function.identity()));
+
+        // 更新子页签
+        List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign.getId());
+        for (GameCampaignType model : typeList) {
+            if (typeMap.containsKey(model.getId())) {
+                updateList.add(model);
+            } else {
+                removeList.add(model.getId());
+            }
+        }
+
+        log.debug("addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        updateGameCampaignTypeList(addList, updateList, removeList);
     }
 
     private void updateGameCampaignTypeList(List<GameCampaignType> addList, List<GameCampaignType> updateList, List<Long> removeList) {
