@@ -26,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -67,10 +69,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         IPage<GameCampaign> pageList = gameCampaignService.page(page, queryWrapper);
         // 查询子页签列表
         for (GameCampaign record : pageList.getRecords()) {
-            LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
-                    .eq(GameCampaignType::getCampaignId, record.getId())
-                    .orderByAsc(GameCampaignType::getSort);
-            record.setTypeList(gameCampaignTypeService.list(query));
+            record.setTypeList(getGameCampaignTypeList(record.getId()));
         }
         return Result.ok(pageList);
     }
@@ -191,6 +190,34 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
         gameCampaignService.updateById(gameCampaign);
+
+        // 过滤空的新增页签
+        List<GameCampaignType> nowList = gameCampaign.getTypeList().stream().filter(t -> t.getType() != null).collect(Collectors.toList());
+
+        List<GameCampaignType> addList = new ArrayList<>();
+        List<GameCampaignType> updateList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+        for (GameCampaignType model : nowList) {
+            if (model.getId() == null) {
+                addList.add(model);
+            }
+        }
+
+        nowList.removeAll(addList);
+        Map<Long, GameCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(GameCampaignType::getId, Function.identity()));
+
+        // 更新子页签
+        List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign.getId());
+        for (GameCampaignType model : typeList) {
+            if (typeMap.containsKey(model.getId())) {
+                updateList.add(model);
+            } else {
+                removeList.add(model.getId());
+            }
+        }
+
+        log.debug("addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        updateGameCampaignTypeList(addList, updateList, removeList);
         return Result.ok("编辑成功!");
     }
 
@@ -257,5 +284,24 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaign.class);
+    }
+
+    private List<GameCampaignType> getGameCampaignTypeList(long campaignId) {
+        LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
+                .eq(GameCampaignType::getCampaignId, campaignId)
+                .orderByAsc(GameCampaignType::getSort);
+        return gameCampaignTypeService.list(query);
+    }
+
+    private void updateGameCampaignTypeList(List<GameCampaignType> addList, List<GameCampaignType> updateList, List<Long> removeList) {
+        if (addList.size() > 0) {
+            gameCampaignTypeService.saveBatch(addList);
+        }
+        if (updateList.size() > 0) {
+            gameCampaignTypeService.updateBatchById(updateList);
+        }
+        if (removeList.size() > 0) {
+            gameCampaignTypeService.removeByIds(removeList);
+        }
     }
 }

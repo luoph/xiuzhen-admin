@@ -13,7 +13,8 @@
                             <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）"></a-input>
                         </a-form-item>
                         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <game-server-selector v-decorator="['serverIds', { initialValue: '' }]" @changeSelect="changeSelect" />
+                            <a-input v-if="isEdit" :disabled="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
+                            <game-server-selector v-else v-decorator="['serverIds', { initialValue: '' }]" @changeSelect="changeSelect" />
                         </a-form-item>
                         <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-col :md="7" :sm="8">
@@ -45,16 +46,17 @@
                             <div>
                                 <a-row :gutter="16">
                                     <a-col :span="5">活动类型</a-col>
+                                    <a-col :span="5">页签名</a-col>
                                     <a-col :span="5">活动图片</a-col>
-                                    <a-col :span="4">开始时间</a-col>
-                                    <a-col :span="4">结束时间</a-col>
+                                    <!-- <a-col :span="4">开始时间</a-col>
+                                    <a-col :span="4">结束时间</a-col> -->
                                     <a-col :span="3">页签顺序</a-col>
                                     <a-col :span="2">操作</a-col>
                                 </a-row>
-                                <a-row :gutter="16" v-for="(item, index) in campaignTypeList" :key="index">
+                                <a-row :gutter="16" v-for="(item, index) in typeList" :key="index">
                                     <a-col :span="5">
                                         <a-form-item>
-                                            <a-select placeholder="活动类型" v-decorator="['campaignTypeList[' + index + '].type', { initialValue: 1 }]">
+                                            <a-select placeholder="活动类型" v-model="item.type">
                                                 <a-select-option :value="1">1-登录礼包</a-select-option>
                                                 <a-select-option :value="2">2-累计充值</a-select-option>
                                                 <a-select-option :value="3">3-兑换</a-select-option>
@@ -66,34 +68,27 @@
                                     </a-col>
                                     <a-col :span="5">
                                         <a-form-item>
-                                            <a-input v-decorator="['typeImage', item.typeImage]" placeholder="活动图片"></a-input>
+                                            <a-input v-model="item.name" placeholder="页签名"></a-input>
+                                        </a-form-item>
+                                    </a-col>
+                                    <a-col :span="5">
+                                        <a-form-item>
+                                            <a-input v-model="item.typeImage" placeholder="活动图片"></a-input>
+                                        </a-form-item>
+                                    </a-col>
+                                    <!-- <a-col :span="4">
+                                        <a-form-item>
+                                            <a-date-picker style="width: 100%;" placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-model="item.startTimeMoment" />
                                         </a-form-item>
                                     </a-col>
                                     <a-col :span="4">
                                         <a-form-item>
-                                            <a-date-picker
-                                                style="width: 100%;"
-                                                placeholder="开始时间"
-                                                showTime
-                                                format="YYYY-MM-DD HH:mm:ss"
-                                                v-decorator="['startTime', item.startTime]"
-                                            />
+                                            <a-date-picker style="width: 100%;" placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-model="item.endTimeMoment" />
                                         </a-form-item>
-                                    </a-col>
-                                    <a-col :span="4">
-                                        <a-form-item>
-                                            <a-date-picker
-                                                style="width: 100%;"
-                                                placeholder="结束时间"
-                                                showTime
-                                                format="YYYY-MM-DD HH:mm:ss"
-                                                v-decorator="['endTime', item.endTime]"
-                                            />
-                                        </a-form-item>
-                                    </a-col>
+                                    </a-col> -->
                                     <a-col :span="3">
                                         <a-form-item>
-                                            <a-input-number v-decorator="['sort', item.sort]" placeholder="页签顺序"></a-input-number>
+                                            <a-input-number v-model="item.sort" placeholder="页签顺序"></a-input-number>
                                         </a-form-item>
                                     </a-col>
                                     <a-col :span="2">
@@ -129,9 +124,10 @@ export default {
             title: "操作",
             width: 800,
             visible: false,
+            isEdit: false,
             model: {},
             // 活动子类型列表
-            campaignTypeList: [],
+            typeList: [],
             isAutoOpen: false,
             labelCol: {
                 xs: { span: 24 },
@@ -146,6 +142,7 @@ export default {
                 type: { rules: [{ required: true, message: "请输入活动类型!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称（备注）!" }] },
                 description: { rules: [{ required: true, message: "请输入活动标语（描述）!" }] },
+                serverIds: { rules: [{ required: true, message: "请选择区服id！" }] },
                 showName: { rules: [{ required: true, message: "请输入活动展示名称!" }] },
                 icon: { rules: [{ required: true, message: "请输入活动图标!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
@@ -164,12 +161,40 @@ export default {
             this.edit({});
         },
         edit(record) {
-            this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+
+            if (this.isEdit) {
+                this.isAutoOpen = this.model.autoOpen === 1;
+                this.typeList = this.model.typeList;
+                var model;
+                // 处理时间类型的回显
+                for (model of this.typeList) {
+                    model.startTimeMoment = model.startTime ? moment(model.startTime) : null;
+                    model.endTimeMoment = model.endTime ? moment(model.endTime) : null;
+                }
+            }
+
+            this.form.resetFields();
             this.$nextTick(() => {
                 this.form.setFieldsValue(
-                    pick(this.model, "type", "name", "description", "showName", "icon", "banner", "status", "autoOpen", "startTime", "endTime", "createTime", "updateTime")
+                    pick(
+                        this.model,
+                        "type",
+                        "name",
+                        "description",
+                        "showName",
+                        "serverIds",
+                        "icon",
+                        "banner",
+                        "status",
+                        "autoOpen",
+                        "startTime",
+                        "endTime",
+                        "createTime",
+                        "updateTime"
+                    )
                 );
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
@@ -195,7 +220,15 @@ export default {
                         httpUrl += this.url.edit;
                         method = "put";
                     }
+
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.startTime = formData.mergeTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.openTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    // 创建时间参数不传递后台
+                    delete formData.createTime;
+                    delete formData.updateTime;
+
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
@@ -230,12 +263,12 @@ export default {
             console.log(value);
         },
         addRowCustom() {
-            this.campaignTypeList.push({});
+            this.typeList.push({});
             this.$forceUpdate();
         },
         delRowCustom(index) {
             console.log(index);
-            this.campaignTypeList.splice(index, 1);
+            this.typeList.splice(index, 1);
             this.$forceUpdate();
         }
     }
