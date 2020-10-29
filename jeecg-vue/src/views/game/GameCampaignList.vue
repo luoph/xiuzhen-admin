@@ -157,6 +157,11 @@ export default {
                     }
                 },
                 {
+                    title: "活动Id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "活动类型",
                     align: "center",
                     dataIndex: "type",
