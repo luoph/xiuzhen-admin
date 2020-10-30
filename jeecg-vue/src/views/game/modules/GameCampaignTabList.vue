@@ -36,11 +36,11 @@
                             <a-form-item label="页签顺序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                                 <a-input-number class="input-number" v-decorator="['sort', validatorRules.sort]" placeholder="请输入页签顺序"></a-input-number>
                             </a-form-item>
-                            <a-form-item v-if="tabModel.type == 5 || tabModel.type == 6" label="加成效率" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                            <a-form-item v-show="tabModel.type == 5 || tabModel.type == 6" label="加成效率" :labelCol="labelCol" :wrapperCol="wrapperCol">
                                 <a-input-number class="input-number" v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成效率"></a-input-number>
                             </a-form-item>
-                            <a-form-item v-if="tabModel.type == 5 || tabModel.type == 6" label="buff描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                                <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入buff描述"></a-input>
+                            <a-form-item v-show="tabModel.type == 5 || tabModel.type == 6" label="buff描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input v-decorator="['buffDesc', validatorRules.buffDesc]" placeholder="请输入buff描述"></a-input>
                             </a-form-item>
                             <div class="config-card">
                                 <!-- 1-登录礼包 -->
@@ -327,7 +327,9 @@ export default {
                 typeImage: { rules: [{ required: true, message: "请输入活动类型图片!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
+                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
+                buffDesc: { rules: [{ required: false, message: "请输入buff描述!" }] },
+                addition: { rules: [{ required: false, message: "请输入buff加成!" }] }
             },
             url: {
                 saveTab: "game/gameCampaignType/edit"
