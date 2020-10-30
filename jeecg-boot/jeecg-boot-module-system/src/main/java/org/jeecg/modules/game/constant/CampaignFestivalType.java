@@ -1,7 +1,10 @@
 package org.jeecg.modules.game.constant;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import org.jeecg.modules.game.entity.*;
+
+import java.util.List;
 
 /**
  * 节日活动类型
