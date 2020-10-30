@@ -435,6 +435,20 @@ export default {
             this.removeEmptyItems();
             const that = this;
 
+            if (that.tabModel.type == 5 || that.tabModel.type == 6) {
+                if (that.tabModel.details != null && that.tabModel.details.length > 0) {
+                    if (!that.addition) {
+                        that.$message.warning("请输入Buff加成！");
+                        return;
+                    }
+
+                    if (!that.buffDesc) {
+                        that.$message.warning("请输入Buff描述！");
+                        return;
+                    }
+                }
+            }
+
             // 触发表单验证
             this.form.validateFields((err, values) => {
                 if (!err) {
