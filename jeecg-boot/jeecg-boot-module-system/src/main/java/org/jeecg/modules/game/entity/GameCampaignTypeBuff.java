@@ -45,7 +45,7 @@ public class GameCampaignTypeBuff extends BaseEntity {
     private java.lang.Long typeId;
 
     /**
-     * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换 4.节日任务, 5.buff-修为加成, 6.buff-灵所加成
+     * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成
      */
     @Excel(name = "活动项类型", width = 15)
     private java.lang.Integer type;
