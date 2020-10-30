@@ -1,6 +1,6 @@
 <template>
     <a-card :bordered="false">
-        <a-modal :title="title" :width="1200" :visible="visible" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
+        <a-modal :title="title" :width="1200" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
             <a-tabs :activeKey="tabIndex" @change="handleTabChange">
                 <!-- 查询区域 -->
                 <a-tab-pane v-for="(row, index) in model.typeList" :key="index" :tab="row.name">
@@ -306,6 +306,7 @@ export default {
             title: "操作",
             visible: false,
             isEdit: false,
+            confirmLoading: false,
             model: {},
             tabModel: {},
             detailList: [],
@@ -332,7 +333,8 @@ export default {
                 addition: { rules: [{ required: false, message: "请输入buff加成!" }] }
             },
             url: {
-                saveTab: "game/gameCampaignType/edit"
+                saveTab: "game/gameCampaignType/edit",
+                queryTab: "game/gameCampaignType/queryById"
             }
         };
     },
@@ -413,6 +415,21 @@ export default {
                 }
             }
         },
+        refreshTabData() {
+            const that = this;
+            that.confirmLoading = true;
+            getAction(this.url.queryTab, { id: that.tabModel.id })
+                .then(res => {
+                    if (res.success) {
+                        that.model.typeList[that.tabIndex] = res.result;
+                        that.tabModel = res.result;
+                    }
+                })
+                .finally(() => {
+                    that.confirmLoading = false;
+                    that.pickFormValues();
+                });
+        },
         saveTab() {
             console.log("saveTab:" + this.tabIndex);
             this.removeEmptyItems();
@@ -421,7 +438,7 @@ export default {
             // 触发表单验证
             this.form.validateFields((err, values) => {
                 if (!err) {
-                    that.loading = true;
+                    that.confirmLoading = true;
                     let formData = Object.assign(that.tabModel, values);
                     // 创建时间参数不传递后台
                     delete formData.createTime;
@@ -438,13 +455,15 @@ export default {
                         .then(res => {
                             if (res.success) {
                                 that.$message.success(res.message);
+                                that.$emit("ok");
                             } else {
                                 that.$message.warning(res.message);
                             }
                             that.loading = false;
                         })
                         .finally(() => {
-                            this.pickFormValues();
+                            that.confirmLoading = false;
+                            that.refreshTabData();
                         });
                 }
             });

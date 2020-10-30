@@ -14,11 +14,12 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.constant.CampaignFestivalType;
 import org.jeecg.modules.game.constant.CampaignStatus;
 import org.jeecg.modules.game.constant.SwitchStatus;
 import org.jeecg.modules.game.entity.*;
-import org.jeecg.modules.game.service.*;
+import org.jeecg.modules.game.service.IGameCampaignService;
+import org.jeecg.modules.game.service.IGameCampaignSupportService;
+import org.jeecg.modules.game.service.IGameCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,21 +49,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
     @Autowired
     private IGameCampaignSupportService campaignSupportService;
-
-    @Autowired
-    private IGameCampaignTypeLoginService campaignTypeLoginService;
-
-    @Autowired
-    private IGameCampaignTypeTaskService campaignTypeTaskService;
-
-    @Autowired
-    private IGameCampaignTypeRechargeService campaignTypeRechargeService;
-
-    @Autowired
-    private IGameCampaignTypeBuffService campaignTypeBuffService;
-
-    @Autowired
-    private IGameCampaignTypeExchangeService campaignTypeExchangeService;
 
     /**
      * 分页列表查询
@@ -363,59 +349,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
         List<GameCampaignType> list = campaignTypeService.list(query);
         for (GameCampaignType model : list) {
-            CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
-            if (festivalType != null) {
-                switch (festivalType) {
-                    case LOGIN: {
-                        Wrapper<GameCampaignTypeLogin> detailQuery = Wrappers.<GameCampaignTypeLogin>lambdaQuery()
-                                .eq(GameCampaignTypeLogin::getCampaignId, campaignId)
-                                .eq(GameCampaignTypeLogin::getTypeId, model.getId());
-                        model.setDetails(campaignTypeLoginService.list(detailQuery));
-                    }
-                    break;
-
-                    case TASK: {
-                        Wrapper<GameCampaignTypeTask> detailQuery = Wrappers.<GameCampaignTypeTask>lambdaQuery()
-                                .eq(GameCampaignTypeTask::getCampaignId, campaignId)
-                                .eq(GameCampaignTypeTask::getTypeId, model.getId());
-                        model.setDetails(campaignTypeTaskService.list(detailQuery));
-                    }
-                    break;
-
-                    case EXCHANGE: {
-                        Wrapper<GameCampaignTypeExchange> detailQuery = Wrappers.<GameCampaignTypeExchange>lambdaQuery()
-                                .eq(GameCampaignTypeExchange::getCampaignId, campaignId)
-                                .eq(GameCampaignTypeExchange::getTypeId, model.getId());
-                        model.setDetails(campaignTypeExchangeService.list(detailQuery));
-                    }
-                    break;
-
-                    case RECHARGE: {
-                        Wrapper<GameCampaignTypeRecharge> detailQuery = Wrappers.<GameCampaignTypeRecharge>lambdaQuery()
-                                .eq(GameCampaignTypeRecharge::getCampaignId, campaignId)
-                                .eq(GameCampaignTypeRecharge::getTypeId, model.getId());
-                        model.setDetails(campaignTypeRechargeService.list(detailQuery));
-                    }
-                    break;
-
-                    case BUFF_ANIMA:
-                    case BUFF_PRACTICE: {
-                        Wrapper<GameCampaignTypeBuff> detailQuery = Wrappers.<GameCampaignTypeBuff>lambdaQuery()
-                                .eq(GameCampaignTypeBuff::getCampaignId, campaignId)
-                                .eq(GameCampaignTypeBuff::getTypeId, model.getId());
-                        List<GameCampaignTypeBuff> buffList = campaignTypeBuffService.list(detailQuery);
-                        if (CollUtil.isNotEmpty(buffList)) {
-                            GameCampaignTypeBuff first = buffList.get(0);
-                            model.setAddition(first.getAddition()).setBuffDesc(first.getDescription());
-                        }
-                        model.setDetails(buffList);
-                    }
-                    break;
-
-                    default:
-                        break;
-                }
-            }
+            campaignTypeService.fillTabDetail(model);
         }
         gameCampaign.setTypeList(list);
         return list;
