@@ -1,10 +1,23 @@
-package org.jeecg.modules. game.service.impl;
+package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.modules. game.entity.GameCampaignType;
+import lombok.extern.slf4j.Slf4j;
+import org.jeecg.modules.game.constant.CampaignFestivalType;
+import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.mapper.GameCampaignTypeMapper;
-import org.jeecg.modules. game.service.IGameCampaignTypeService;
+import org.jeecg.modules.game.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -12,7 +25,337 @@ import org.springframework.stereotype.Service;
  * @description 活动类型配置
  * @date 2020-10-15
  */
+@Slf4j
 @Service
 public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMapper, GameCampaignType> implements IGameCampaignTypeService {
 
+
+    @Autowired
+    private IGameCampaignTypeLoginService campaignTypeLoginService;
+
+    @Autowired
+    private IGameCampaignTypeTaskService campaignTypeTaskService;
+
+    @Autowired
+    private IGameCampaignTypeRechargeService campaignTypeRechargeService;
+
+    @Autowired
+    private IGameCampaignTypeBuffService campaignTypeBuffService;
+
+    @Autowired
+    private IGameCampaignTypeExchangeService campaignTypeExchangeService;
+
+    @Override
+    public void fillTabDetail(GameCampaignType model) {
+        long campaignId = model.getCampaignId();
+        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
+        if (festivalType != null) {
+            switch (festivalType) {
+                case LOGIN: {
+                    Wrapper<GameCampaignTypeLogin> detailQuery = Wrappers.<GameCampaignTypeLogin>lambdaQuery()
+                            .eq(GameCampaignTypeLogin::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeLogin::getTypeId, model.getId());
+                    model.setDetails(campaignTypeLoginService.list(detailQuery));
+                }
+                break;
+
+                case TASK: {
+                    Wrapper<GameCampaignTypeTask> detailQuery = Wrappers.<GameCampaignTypeTask>lambdaQuery()
+                            .eq(GameCampaignTypeTask::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeTask::getTypeId, model.getId());
+                    model.setDetails(campaignTypeTaskService.list(detailQuery));
+                }
+                break;
+
+                case EXCHANGE: {
+                    Wrapper<GameCampaignTypeExchange> detailQuery = Wrappers.<GameCampaignTypeExchange>lambdaQuery()
+                            .eq(GameCampaignTypeExchange::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeExchange::getTypeId, model.getId());
+                    model.setDetails(campaignTypeExchangeService.list(detailQuery));
+                }
+                break;
+
+                case RECHARGE: {
+                    Wrapper<GameCampaignTypeRecharge> detailQuery = Wrappers.<GameCampaignTypeRecharge>lambdaQuery()
+                            .eq(GameCampaignTypeRecharge::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeRecharge::getTypeId, model.getId());
+                    model.setDetails(campaignTypeRechargeService.list(detailQuery));
+                }
+                break;
+
+                case BUFF_ANIMA:
+                case BUFF_PRACTICE: {
+                    Wrapper<GameCampaignTypeBuff> detailQuery = Wrappers.<GameCampaignTypeBuff>lambdaQuery()
+                            .eq(GameCampaignTypeBuff::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeBuff::getTypeId, model.getId());
+                    List<GameCampaignTypeBuff> buffList = campaignTypeBuffService.list(detailQuery);
+                    if (CollUtil.isNotEmpty(buffList)) {
+                        GameCampaignTypeBuff first = buffList.get(0);
+                        model.setAddition(first.getAddition()).setBuffDesc(first.getDescription());
+                    }
+                    model.setDetails(buffList);
+                }
+                break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public void updateTabDetail(GameCampaignType model) {
+        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
+        fillTabDetail(model);
+
+        if (festivalType != null) {
+            List detailList = JSON.parseArray(model.getDetailsData(), festivalType.getTableClass());
+            log.info("detailList:{}", detailList);
+            switch (festivalType) {
+                case LOGIN:
+                    handleLoginTab(model, detailList);
+                    break;
+
+                case TASK:
+                    handleTaskTab(model, detailList);
+                    break;
+
+                case EXCHANGE:
+                    handleExchangeTab(model, detailList);
+                    break;
+
+                case RECHARGE:
+                    handleRechargeTab(model, detailList);
+                    break;
+
+                case BUFF_ANIMA:
+                case BUFF_PRACTICE:
+                    handleBuffTab(model, detailList);
+                    break;
+
+                default:
+                    break;
+            }
+            log.info("detailList:{}", detailList);
+        }
+    }
+
+
+    @SuppressWarnings("unchecked")
+    private void handleLoginTab(GameCampaignType model, List<GameCampaignTypeLogin> list) {
+        List<GameCampaignTypeLogin> addList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+
+        for (GameCampaignTypeLogin item : list) {
+            item.setCampaignId(model.getCampaignId());
+            item.setTypeId(model.getId());
+
+            if (item.getId() == null) {
+                addList.add(item);
+            }
+        }
+        list.removeAll(addList);
+
+        // 更新子页签
+        List<GameCampaignTypeLogin> updateList = new ArrayList<>(list);
+
+        // 查找已经删除的数据
+        if (!list.isEmpty()) {
+            Map<Long, GameCampaignTypeLogin> typeMap = list.stream().collect(Collectors.toMap(GameCampaignTypeLogin::getId, Function.identity()));
+            List<GameCampaignTypeLogin> dbList = (List<GameCampaignTypeLogin>) model.getDetails();
+            for (GameCampaignTypeLogin item : dbList) {
+                if (typeMap.containsKey(item.getId())) {
+                    updateList.remove(item);
+                } else {
+                    removeList.add(item.getId());
+                }
+            }
+        }
+
+        log.debug("handleLoginTab addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        if (CollUtil.isNotEmpty(addList)) {
+            campaignTypeLoginService.saveBatch(addList);
+        }
+        if (CollUtil.isNotEmpty(updateList)) {
+            campaignTypeLoginService.updateBatchById(updateList);
+        }
+        if (CollUtil.isNotEmpty(removeList)) {
+            campaignTypeLoginService.removeByIds(removeList);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void handleRechargeTab(GameCampaignType model, List<GameCampaignTypeRecharge> list) {
+        List<GameCampaignTypeRecharge> addList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+
+        for (GameCampaignTypeRecharge item : list) {
+            item.setCampaignId(model.getCampaignId());
+            item.setTypeId(model.getId());
+
+            if (item.getId() == null) {
+                addList.add(item);
+            }
+        }
+        list.removeAll(addList);
+
+        // 更新子页签
+        List<GameCampaignTypeRecharge> updateList = new ArrayList<>(list);
+
+        // 查找已经删除的数据
+        if (!list.isEmpty()) {
+            Map<Long, GameCampaignTypeRecharge> typeMap = list.stream().collect(Collectors.toMap(GameCampaignTypeRecharge::getId, Function.identity()));
+            List<GameCampaignTypeRecharge> dbList = (List<GameCampaignTypeRecharge>) model.getDetails();
+            for (GameCampaignTypeRecharge item : dbList) {
+                if (typeMap.containsKey(item.getId())) {
+                    updateList.remove(item);
+                } else {
+                    removeList.add(item.getId());
+                }
+            }
+        }
+
+        log.debug("handleRechargeTab addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        if (CollUtil.isNotEmpty(addList)) {
+            campaignTypeRechargeService.saveBatch(addList);
+        }
+        if (CollUtil.isNotEmpty(updateList)) {
+            campaignTypeRechargeService.updateBatchById(updateList);
+        }
+        if (CollUtil.isNotEmpty(removeList)) {
+            campaignTypeRechargeService.removeByIds(removeList);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void handleExchangeTab(GameCampaignType model, List<GameCampaignTypeExchange> list) {
+        List<GameCampaignTypeExchange> addList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+
+        for (GameCampaignTypeExchange item : list) {
+            item.setCampaignId(model.getCampaignId());
+            item.setTypeId(model.getId());
+
+            if (item.getId() == null) {
+                addList.add(item);
+            }
+        }
+        list.removeAll(addList);
+
+        // 更新子页签
+        List<GameCampaignTypeExchange> updateList = new ArrayList<>(list);
+
+        // 查找已经删除的数据
+        if (!list.isEmpty()) {
+            Map<Long, GameCampaignTypeExchange> typeMap = list.stream().collect(Collectors.toMap(GameCampaignTypeExchange::getId, Function.identity()));
+            List<GameCampaignTypeExchange> dbList = (List<GameCampaignTypeExchange>) model.getDetails();
+            for (GameCampaignTypeExchange item : dbList) {
+                if (typeMap.containsKey(item.getId())) {
+                    updateList.remove(item);
+                } else {
+                    removeList.add(item.getId());
+                }
+            }
+        }
+
+        log.debug("handleExchangeTab addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        if (CollUtil.isNotEmpty(addList)) {
+            campaignTypeExchangeService.saveBatch(addList);
+        }
+        if (CollUtil.isNotEmpty(updateList)) {
+            campaignTypeExchangeService.updateBatchById(updateList);
+        }
+        if (CollUtil.isNotEmpty(removeList)) {
+            campaignTypeExchangeService.removeByIds(removeList);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void handleTaskTab(GameCampaignType model, List<GameCampaignTypeTask> list) {
+        List<GameCampaignTypeTask> addList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+
+        for (GameCampaignTypeTask item : list) {
+            item.setCampaignId(model.getCampaignId());
+            item.setTypeId(model.getId());
+
+            if (item.getId() == null) {
+                addList.add(item);
+            }
+        }
+        list.removeAll(addList);
+
+        // 更新子页签
+        List<GameCampaignTypeTask> updateList = new ArrayList<>(list);
+
+        // 查找已经删除的数据
+        if (!list.isEmpty()) {
+            Map<Long, GameCampaignTypeTask> typeMap = list.stream().collect(Collectors.toMap(GameCampaignTypeTask::getId, Function.identity()));
+            List<GameCampaignTypeTask> dbList = (List<GameCampaignTypeTask>) model.getDetails();
+            for (GameCampaignTypeTask item : dbList) {
+                if (typeMap.containsKey(item.getId())) {
+                    updateList.remove(item);
+                } else {
+                    removeList.add(item.getId());
+                }
+            }
+        }
+
+        log.debug("handleTaskTab addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        if (CollUtil.isNotEmpty(addList)) {
+            campaignTypeTaskService.saveBatch(addList);
+        }
+        if (CollUtil.isNotEmpty(updateList)) {
+            campaignTypeTaskService.updateBatchById(updateList);
+        }
+        if (CollUtil.isNotEmpty(removeList)) {
+            campaignTypeTaskService.removeByIds(removeList);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void handleBuffTab(GameCampaignType model, List<GameCampaignTypeBuff> list) {
+        List<GameCampaignTypeBuff> addList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+
+        for (GameCampaignTypeBuff item : list) {
+            item.setTypeId(model.getId());
+            item.setCampaignId(model.getCampaignId());
+            item.setDescription(model.getBuffDesc());
+            item.setAddition(model.getAddition());
+
+            if (item.getId() == null) {
+                addList.add(item);
+            }
+        }
+        list.removeAll(addList);
+
+        // 更新子页签
+        List<GameCampaignTypeBuff> updateList = new ArrayList<>(list);
+
+        // 查找已经删除的数据
+        if (!list.isEmpty()) {
+            Map<Long, GameCampaignTypeBuff> typeMap = list.stream().collect(Collectors.toMap(GameCampaignTypeBuff::getId, Function.identity()));
+            List<GameCampaignTypeBuff> dbList = (List<GameCampaignTypeBuff>) model.getDetails();
+            for (GameCampaignTypeBuff item : dbList) {
+                if (typeMap.containsKey(item.getId())) {
+                    updateList.remove(item);
+                } else {
+                    removeList.add(item.getId());
+                }
+            }
+        }
+
+        log.debug("handleBuffTab addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        if (CollUtil.isNotEmpty(addList)) {
+            campaignTypeBuffService.saveBatch(addList);
+        }
+        if (CollUtil.isNotEmpty(updateList)) {
+            campaignTypeBuffService.updateBatchById(updateList);
+        }
+        if (CollUtil.isNotEmpty(removeList)) {
+            campaignTypeBuffService.removeByIds(removeList);
+        }
+    }
 }
