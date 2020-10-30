@@ -109,7 +109,7 @@
             </a-table>
         </div>
 
-        <gameCampaignTypeRecharge-modal ref="modalForm" @ok="modalFormOk"></gameCampaignTypeRecharge-modal>
+        <game-campaign-type-recharge-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-recharge-modal>
     </a-card>
 </template>
 

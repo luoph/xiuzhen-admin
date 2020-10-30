@@ -58,7 +58,7 @@
         <!-- table区域-end -->
 
         <!-- 表单区域 -->
-        <GameChannelServerModal ref="modalForm" @ok="modalFormOk"></GameChannelServerModal>
+        <game-channel-server-modal ref="modalForm" @ok="modalFormOk"></game-channel-server-modal>
     </a-card>
 </template>
 

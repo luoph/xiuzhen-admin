@@ -77,7 +77,7 @@
             ></a-table>
         </div>
 
-        <gameEmail-modal ref="modalForm" @ok="modalFormOk"></gameEmail-modal>
+        <game-email-modal ref="modalForm" @ok="modalFormOk"></game-email-modal>
     </a-card>
 </template>
 

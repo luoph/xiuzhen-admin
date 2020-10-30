@@ -99,7 +99,7 @@
             </a-table>
         </div>
 
-        <gameCampaignSupport-modal ref="modalForm" @ok="modalFormOk"></gameCampaignSupport-modal>
+        <game-campaign-support-modal ref="modalForm" @ok="modalFormOk"></game-campaign-support-modal>
     </a-card>
 </template>
 

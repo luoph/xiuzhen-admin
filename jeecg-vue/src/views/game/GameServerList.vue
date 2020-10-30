@@ -110,7 +110,7 @@
         <!-- table区域-end -->
 
         <!-- 表单区域 -->
-        <gameServer-modal ref="modalForm" @ok="modalFormOk"></gameServer-modal>
+        <game-server-modal ref="modalForm" @ok="modalFormOk"></game-server-modal>
     </a-card>
 </template>
 

@@ -18,7 +18,7 @@
                 <a-form-item v-if="contentData" :visible.sync="contentData" label="附件" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
                     <a-textarea v-decorator="['content', { initialValue: itemTree }, validatorRules.content]" placeholder="请输入附件" :autoSize="{ minRows: 2, maxRows: 6 }" />
-                    <gameEmailItemTree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></gameEmailItemTree-modal>
+                    <game-email-item-tree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></game-email-item-tree-modal>
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-radio-group v-decorator="['validState', { initialValue: 1 }]" dict style="width: 100%;"><a-radio-button :value="1">有效</a-radio-button></a-radio-group>
