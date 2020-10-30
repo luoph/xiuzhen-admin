@@ -275,13 +275,14 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             }
 
             nowList.removeAll(addList);
+            updateList.addAll(nowList);
             Map<Long, GameCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(GameCampaignType::getId, Function.identity()));
 
             // 更新子页签
             List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign.getId());
             for (GameCampaignType model : typeList) {
                 if (typeMap.containsKey(model.getId())) {
-                    updateList.add(model);
+                    updateList.remove(model);
                 } else {
                     removeList.add(model.getId());
                 }
