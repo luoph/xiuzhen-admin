@@ -1,12 +1,9 @@
 package org.jeecg.modules.game.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -19,27 +16,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @TableName("game_campaign_type_task")
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeTask extends BaseEntity {
+public class GameCampaignTypeTask extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * id
-     */
-    @TableId(type = IdType.AUTO)
-    private java.lang.Long id;
-
-    /**
-     * campaign.id, 活动id
-     */
-    @Excel(name = "活动id", width = 15)
-    private java.lang.Long campaignId;
-
-    /**
-     * game_campaign_type.id
-     */
-    @Excel(name = "typeId", width = 15)
-    private java.lang.Long typeId;
 
     /**
      * 任务id

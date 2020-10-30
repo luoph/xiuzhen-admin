@@ -92,4 +92,24 @@ public class GameCampaignType extends BaseEntity {
      */
     @TableField(exist = false)
     private List<?> details;
+
+    /**
+     * 页面更新过来的数据
+     */
+    @TableField(exist = false)
+    private String detailsData;
+
+
+    //--------------------- 以下的字段为了方便页面处理 ---------------------//
+    /**
+     * 加成效率
+     */
+    @TableField(exist = false)
+    private Integer addition;
+
+    /**
+     * buff 描述
+     */
+    @TableField(exist = false)
+    private String buffDesc;
 }

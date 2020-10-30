@@ -84,7 +84,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         IPage<GameCampaign> pageList = campaignService.page(page, queryWrapper);
         // 查询子页签列表
         for (GameCampaign record : pageList.getRecords()) {
-            record.setTypeList(getGameCampaignTypeList(record.getId()));
+            getGameCampaignTypeList(record);
         }
         return Result.ok(pageList);
     }
@@ -276,15 +276,18 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
             nowList.removeAll(addList);
             updateList.addAll(nowList);
-            Map<Long, GameCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(GameCampaignType::getId, Function.identity()));
 
-            // 更新子页签
-            List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign.getId());
-            for (GameCampaignType model : typeList) {
-                if (typeMap.containsKey(model.getId())) {
-                    updateList.remove(model);
-                } else {
-                    removeList.add(model.getId());
+            if (!nowList.isEmpty()) {
+                Map<Long, GameCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(GameCampaignType::getId, Function.identity()));
+
+                // 更新子页签
+                List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign);
+                for (GameCampaignType model : typeList) {
+                    if (typeMap.containsKey(model.getId())) {
+                        updateList.remove(model);
+                    } else {
+                        removeList.add(model.getId());
+                    }
                 }
             }
         }
@@ -352,7 +355,8 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         }
     }
 
-    private List<GameCampaignType> getGameCampaignTypeList(long campaignId) {
+    private List<GameCampaignType> getGameCampaignTypeList(GameCampaign gameCampaign) {
+        long campaignId = gameCampaign.getId();
         LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
                 .eq(GameCampaignType::getCampaignId, campaignId)
                 .orderByAsc(GameCampaignType::getSort);
@@ -399,7 +403,12 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                         Wrapper<GameCampaignTypeBuff> detailQuery = Wrappers.<GameCampaignTypeBuff>lambdaQuery()
                                 .eq(GameCampaignTypeBuff::getCampaignId, campaignId)
                                 .eq(GameCampaignTypeBuff::getTypeId, model.getId());
-                        model.setDetails(campaignTypeBuffService.list(detailQuery));
+                        List<GameCampaignTypeBuff> buffList = campaignTypeBuffService.list(detailQuery);
+                        if (CollUtil.isNotEmpty(buffList)) {
+                            GameCampaignTypeBuff first = buffList.get(0);
+                            model.setAddition(first.getAddition()).setBuffDesc(first.getDescription());
+                        }
+                        model.setDetails(buffList);
                     }
                     break;
 
@@ -408,6 +417,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                 }
             }
         }
+        gameCampaign.setTypeList(list);
         return list;
     }
 }

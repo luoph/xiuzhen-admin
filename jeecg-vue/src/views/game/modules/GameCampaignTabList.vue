@@ -290,7 +290,7 @@
 </template>
 
 <script>
-import { getAction } from "@/api/manage";
+import { getAction, putAction } from "@/api/manage";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
 import moment from "moment";
@@ -330,9 +330,7 @@ export default {
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
             },
             url: {
-                // list: "game/gameCampaign/serverList",
-                // switch: "game/gameCampaign/serverSwitch",
-                // batch: "game/gameCampaign/switchBatch"
+                saveTab: "game/gameCampaignType/edit"
             }
         };
     },
@@ -373,9 +371,12 @@ export default {
             return filterObj(param);
         },
         handleCancel() {
+            this.removeEmptyItems();
             this.close();
         },
         handleOk() {
+            this.removeEmptyItems();
+            // 保存所有页签
             this.close();
         },
         handleTabChange(tab) {
@@ -384,10 +385,8 @@ export default {
         },
         pickFormValues() {
             this.tabModel = this.model.typeList[this.tabIndex];
-            // 拷贝处理，取消编辑仍然存在空白项的问题
-            this.detailList = [...this.tabModel.details];
-
-            this.form.setFieldsValue(pick(this.tabModel, "id", "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
+            this.detailList = this.tabModel.details;
+            this.form.setFieldsValue(pick(this.tabModel, "id", "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime", "addition", "buffDesc"));
             // 时间格式化
             this.form.setFieldsValue({ startTime: this.tabModel.startTime ? moment(this.tabModel.startTime) : null });
             this.form.setFieldsValue({ endTime: this.tabModel.endTime ? moment(this.tabModel.endTime) : null });
@@ -401,9 +400,52 @@ export default {
             this.detailList.splice(index, 1);
             this.$forceUpdate();
         },
+        removeEmptyItems() {
+            for (let index = 0; index < this.model.typeList.length; index++) {
+                const element = this.model.typeList[index];
+                if (element.details == null) {
+                    element.details = [];
+                } else {
+                    var newArray = element.details.filter(value => Object.keys(value).length !== 0);
+                    element.details = newArray;
+                }
+            }
+        },
         saveTab() {
             console.log("saveTab:" + this.tabIndex);
-            this.$forceUpdate();
+            this.removeEmptyItems();
+            const that = this;
+
+            // 触发表单验证
+            this.form.validateFields((err, values) => {
+                if (!err) {
+                    that.loading = true;
+                    let formData = Object.assign(that.tabModel, values);
+                    // 创建时间参数不传递后台
+                    delete formData.createTime;
+
+                    // 使用 json 包装数组，避免 springboot 无法直接映射到对象
+                    formData.detailsData = JSON.stringify(formData.details != null ? formData.details : []);
+                    delete formData.details;
+
+                    // 时间格式化
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+
+                    putAction(that.url.saveTab, formData)
+                        .then(res => {
+                            if (res.success) {
+                                that.$message.success(res.message);
+                            } else {
+                                that.$message.warning(res.message);
+                            }
+                            that.loading = false;
+                        })
+                        .finally(() => {
+                            this.pickFormValues();
+                        });
+                }
+            });
         }
     }
 };
