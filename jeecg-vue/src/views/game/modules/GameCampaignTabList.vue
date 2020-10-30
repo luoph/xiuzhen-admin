@@ -69,12 +69,12 @@ import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
 
 export default {
-    name: "GameChannelServerList",
+    name: "GameCampaignTabList",
     mixins: [JeecgListMixin],
     components: {},
     data() {
         return {
-            description: "活动状态",
+            description: "页签配置",
             // 表头
             columns: [
                 {
