@@ -104,7 +104,7 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
-                    <a @click="handleEdit(record)">参数配置</a>
+                    <a @click="handleTabList(record)">页签配置</a>
                     <a-divider type="vertical" />
                     <a @click="handleServerList(record)">活动状态</a>
                     <a-divider type="vertical" />
@@ -122,8 +122,9 @@
             </a-table>
         </div>
 
-        <GameCampaignModal ref="modalForm" @ok="modalFormOk"></GameCampaignModal>
-        <GameCampaignServerList ref="serverListModal"></GameCampaignServerList>
+        <game-campaign-modal ref="modalForm" @ok="modalFormOk"></game-campaign-modal>
+        <game-campaign-server-list ref="serverListModal"></game-campaign-server-list>
+        <game-campaign-tab-list ref="tabListModal"></game-campaign-tab-list>
     </a-card>
 </template>
 
@@ -131,6 +132,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameCampaignModal from "./modules/GameCampaignModal";
 import GameCampaignServerList from "./modules/GameCampaignServerList";
+import GameCampaignTabList from "./modules/GameCampaignTabList";
 import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
@@ -139,7 +141,8 @@ export default {
     components: {
         JDate,
         GameCampaignModal,
-        GameCampaignServerList
+        GameCampaignServerList,
+        GameCampaignTabList
     },
     data() {
         return {
@@ -284,6 +287,11 @@ export default {
         handleServerList: function(record) {
             this.$refs.serverListModal.edit(record);
             this.$refs.serverListModal.title = "活动信息";
+        },
+        handleTabList: function(record) {
+            this.$refs.tabListModal.edit(record);
+            this.$refs.tabListModal.title = "编辑";
+            this.$refs.tabListModal.disableSubmit = false;
         }
     }
 };
