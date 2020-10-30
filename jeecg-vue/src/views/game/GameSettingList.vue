@@ -91,7 +91,7 @@
             </a-table>
         </div>
 
-        <gameSetting-modal ref="modalForm" @ok="modalFormOk"></gameSetting-modal>
+        <game-setting-modal ref="modalForm" @ok="modalFormOk"></game-setting-modal>
     </a-card>
 </template>
 

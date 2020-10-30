@@ -108,7 +108,7 @@
         <!-- table区域-end -->
 
         <!-- 表单区域 -->
-        <gameNotice-modal ref="modalForm" @ok="modalFormOk"></gameNotice-modal>
+        <game-notice-modal ref="modalForm" @ok="modalFormOk"></game-notice-modal>
     </a-card>
 </template>
 

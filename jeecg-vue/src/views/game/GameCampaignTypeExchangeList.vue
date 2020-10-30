@@ -109,7 +109,7 @@
             </a-table>
         </div>
 
-        <gameCampaignTypeExchange-modal ref="modalForm" @ok="modalFormOk"></gameCampaignTypeExchange-modal>
+        <game-campaign-type-exchange-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-exchange-modal>
     </a-card>
 </template>
 

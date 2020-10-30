@@ -104,7 +104,7 @@
             </a-table>
         </div>
 
-        <gameCampaignTypeTask-modal ref="modalForm" @ok="modalFormOk"></gameCampaignTypeTask-modal>
+        <game-campaign-type-task-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-task-modal>
     </a-card>
 </template>
 

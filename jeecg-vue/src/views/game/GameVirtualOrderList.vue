@@ -105,7 +105,7 @@
             </a-table>
         </div>
 
-        <gameVirtualOrder-modal ref="modalForm" @ok="modalFormOk"></gameVirtualOrder-modal>
+        <game-virtual-order-modal ref="modalForm" @ok="modalFormOk"></game-virtual-order-modal>
     </a-card>
 </template>
 

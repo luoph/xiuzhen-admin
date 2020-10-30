@@ -101,7 +101,7 @@
             </a-table>
         </div>
 
-        <gameActivity-modal ref="modalForm" @ok="modalFormOk"></gameActivity-modal>
+        <game-activity-modal ref="modalForm" @ok="modalFormOk"></game-activity-modal>
     </a-card>
 </template>
 

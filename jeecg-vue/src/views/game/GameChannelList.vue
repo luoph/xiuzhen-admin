@@ -101,8 +101,8 @@
         </div>
         <!-- table区域-end -->
 
-        <GameChannelModal ref="modalForm" @ok="modalFormOk"></GameChannelModal>
-        <GameChannelServerList ref="channelServerList"></GameChannelServerList>
+        <game-channel-modal ref="modalForm" @ok="modalFormOk"></game-channel-modal>
+        <game-channel-server-list ref="channelServerList"></game-channel-server-list>
     </a-card>
 </template>
 

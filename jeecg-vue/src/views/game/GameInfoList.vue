@@ -86,7 +86,7 @@
         <!-- table区域-end -->
 
         <!-- 表单区域 -->
-        <gameInfo-modal ref="modalForm" @ok="modalFormOk"></gameInfo-modal>
+        <game-info-modal ref="modalForm" @ok="modalFormOk"></game-info-modal>
     </a-card>
 </template>
 
