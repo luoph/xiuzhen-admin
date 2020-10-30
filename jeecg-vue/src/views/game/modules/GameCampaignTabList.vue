@@ -5,56 +5,283 @@
                 <!-- 查询区域 -->
                 <a-tab-pane v-for="(row, index) in model.typeList" :key="index" :tab="row.name">
                     <div class="table-page-search-wrapper">
-                        <a-form layout="inline" :form="form" @keyup.enter.native="searchQuery">
-                            <a-row :gutter="10">
-                                <a-col :md="10" :sm="8">
-                                    <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服">
-                                        <a-input placeholder="搜索区服Id或名称" v-model="queryParam.server"></a-input>
-                                    </a-form-item>
+                        <a-form :form="form">
+                            <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input :disabled="isEdit" v-decorator="['id', validatorRules.id]" placeholder="请输入页签id"></a-input>
+                            </a-form-item>
+                            <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
+                                    <a-select-option :value="1">1-登录礼包</a-select-option>
+                                    <a-select-option :value="2">2-累计充值</a-select-option>
+                                    <a-select-option :value="3">3-兑换</a-select-option>
+                                    <a-select-option :value="4">4-节日任务</a-select-option>
+                                    <a-select-option :value="5">5-Buff-修为加成</a-select-option>
+                                    <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
+                                </a-select>
+                            </a-form-item>
+                            <a-form-item label="页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名称"></a-input>
+                            </a-form-item>
+                            <a-form-item label="活动图片" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input v-decorator="['typeImage', validatorRules.typeImage]" placeholder="请输入活动图片"></a-input>
+                            </a-form-item>
+                            <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-col :md="7" :sm="8">
+                                    <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
                                 </a-col>
-                                <a-col :md="6" :sm="8">
-                                    <span style="float: left;" class="table-page-search-submitButtons">
-                                        <a-button type="primary" @click="searchQuery">查询</a-button>
-                                        <a-button type="primary" @click="searchReset">重置</a-button>
-                                    </span>
+                                <a-col :md="7" :sm="8">
+                                    <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
                                 </a-col>
-                            </a-row>
+                            </a-form-item>
+                            <a-form-item label="页签顺序" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input-number class="input-number" v-decorator="['sort', validatorRules.sort]" placeholder="请输入页签顺序"></a-input-number>
+                            </a-form-item>
+                            <a-form-item v-if="tabModel.type == 5 || tabModel.type == 6" label="加成效率" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input-number class="input-number" v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成效率"></a-input-number>
+                            </a-form-item>
+                            <a-form-item v-if="tabModel.type == 5 || tabModel.type == 6" label="buff描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入buff描述"></a-input>
+                            </a-form-item>
+                            <div class="config-card">
+                                <!-- 1-登录礼包 -->
+                                <div v-if="tabModel.type == 1">
+                                    <a-card v-for="(item, index) in detailList" :key="index">
+                                        <a-row type="flex" justify="space-around" align="middle">
+                                            <a-col span="22">
+                                                <a-row class="ant-row">
+                                                    {{ "配置：" + (index + 1) }}
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        登录天数
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.loginDay" placeholder="请输入登录天数" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        描述
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input v-model="item.description" placeholder="请输入描述" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        奖励列表
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-textarea v-model="item.reward" placeholder="请输入奖励列表" :auto-size="{ minRows: 2, maxRows: 5 }" />
+                                                    </a-col>
+                                                </a-row>
+                                            </a-col>
+                                            <a-col span="2">
+                                                <a-button class="del-btn" @click="delRowCustom(index)" icon="minus" type="danger">删除</a-button>
+                                            </a-col>
+                                        </a-row>
+                                    </a-card>
+                                </div>
+                                <!-- 2-累计充值 -->
+                                <div v-else-if="tabModel.type == 2">
+                                    <a-card v-for="(item, index) in detailList" :key="index">
+                                        <a-row type="flex" justify="space-around" align="middle">
+                                            <a-col span="22">
+                                                <a-row class="ant-row">
+                                                    {{ "配置：" + (index + 1) }}
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        礼包id
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.rechargeId" placeholder="请输入礼包id" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        累计充值额度
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.rechargeAmount" placeholder="请输入累计充值额度" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        奖励列表
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-textarea v-model="item.reward" placeholder="请输入奖励列表" :auto-size="{ minRows: 2, maxRows: 5 }" />
+                                                    </a-col>
+                                                </a-row>
+                                            </a-col>
+                                            <a-col span="2">
+                                                <a-button class="del-btn" @click="delRowCustom(index)" icon="minus" type="danger">删除</a-button>
+                                            </a-col>
+                                        </a-row>
+                                    </a-card>
+                                </div>
+                                <!-- 3-兑换 -->
+                                <div v-else-if="tabModel.type == 3">
+                                    <a-card v-for="(item, index) in detailList" :key="index">
+                                        <a-row type="flex" justify="space-around" align="middle">
+                                            <a-col span="22">
+                                                <a-row class="ant-row">
+                                                    {{ "配置：" + (index + 1) }}
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        兑换id
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.exchangeId" placeholder="请输入兑换id" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        道具名称
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input v-model="item.itemName" placeholder="请输入道具名称" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        最大兑换数量
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.maxExchangeNum" placeholder="请输入最大兑换数量" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        奖励列表
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-textarea v-model="item.reward" placeholder="请输入奖励列表" :auto-size="{ minRows: 2, maxRows: 5 }" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        消耗列表
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-textarea v-model="item.consume" placeholder="请输入消耗列表" :auto-size="{ minRows: 2, maxRows: 5 }" />
+                                                    </a-col>
+                                                </a-row>
+                                            </a-col>
+                                            <a-col span="2">
+                                                <a-button class="del-btn" @click="delRowCustom(index)" icon="minus" type="danger">删除</a-button>
+                                            </a-col>
+                                        </a-row>
+                                    </a-card>
+                                </div>
+                                <!-- 4-节日任务 -->
+                                <div v-else-if="tabModel.type == 4">
+                                    <a-card v-for="(item, index) in detailList" :key="index">
+                                        <a-row type="flex" justify="space-around" align="middle">
+                                            <a-col span="22">
+                                                <a-row class="ant-row">
+                                                    {{ "配置：" + (index + 1) }}
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        任务id
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.taskId" placeholder="请输入任务id" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        任务描述
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input v-model="item.description" placeholder="请输入任务描述" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        模块id
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.moduleId" placeholder="请输入模块id(task_module_type.module_id)" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        任务完成条件
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.target" placeholder="请输入任务完成条件" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        奖励列表
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-textarea v-model="item.reward" placeholder="请输入奖励列表" :auto-size="{ minRows: 2, maxRows: 5 }" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        跳转id
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.jumpId" placeholder="请输入跳转id" />
+                                                    </a-col>
+                                                </a-row>
+                                            </a-col>
+                                            <a-col span="2">
+                                                <a-button class="del-btn" @click="delRowCustom(index)" icon="minus" type="danger">删除</a-button>
+                                            </a-col>
+                                        </a-row>
+                                    </a-card>
+                                </div>
+                                <!-- 5-Buff-修为加成 、6-Buff-灵气加成-->
+                                <div v-else-if="tabModel.type == 5 || tabModel.type == 6">
+                                    <a-card v-for="(item, index) in detailList" :key="index">
+                                        <a-row type="flex" justify="space-around" align="middle">
+                                            <a-col span="22">
+                                                <a-row class="ant-row">
+                                                    {{ "配置：" + (index + 1) }}
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        buffId
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.buffId" placeholder="请输入buffId" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        加成开始时间
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input v-model="item.startTime" placeholder="请输入加成开始时间" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        加成结束时间
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input v-model="item.endTime" placeholder="请输入加成结束时间" />
+                                                    </a-col>
+                                                </a-row>
+                                            </a-col>
+                                            <a-col span="2">
+                                                <a-button class="del-btn" @click="delRowCustom(index)" icon="minus" type="danger">删除</a-button>
+                                            </a-col>
+                                        </a-row>
+                                    </a-card>
+                                </div>
+                                <a-button class="add-btn" type="dashed" icon="plus" @click="addRowCustom">添加</a-button>
+                                <a-button class="add-btn" type="primary" icon="save" @click="saveTab">保存当前页签</a-button>
+                            </div>
                         </a-form>
-                    </div>
-
-                    <!-- 操作按钮区域 -->
-                    <div class="table-operator">
-                        <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(1)" type="primary">批量开启</a-button>
-                        <a-button :disabled="selectedRowKeys.length <= 0" @click="batchSwitchServer(0)" type="danger">批量关闭</a-button>
-                    </div>
-
-                    <!-- table区域-begin -->
-                    <div>
-                        <a-table
-                            ref="table"
-                            size="middle"
-                            bordered
-                            rowKey="serverId"
-                            :columns="columns"
-                            :dataSource="dataSource"
-                            :pagination="ipagination"
-                            :loading="loading"
-                            @change="handleTableChange"
-                            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-                        >
-                            <span slot="action" slot-scope="text, record">
-                                <a v-if="record.status === 1" @click="switchServer(record, 0)">关闭</a>
-                                <a v-else @click="switchServer(record, 1)">开启</a>
-                            </span>
-                            <template slot="statusSlot" slot-scope="text">
-                                <a-tag v-if="text === -1" color="#f1ab52">未开启</a-tag>
-                                <a-tag v-else-if="text === 0" color="#f50">已关闭</a-tag>
-                                <a-tag v-else-if="text === 1" color="#aaaaaa">未开始</a-tag>
-                                <a-tag v-else-if="text === 2" color="#87d068">进行中</a-tag>
-                                <a-tag v-else-if="text === 3" color="#595959">已结束</a-tag>
-                                <span v-else>{{ text }}</span>
-                            </template>
-                        </a-table>
                     </div>
                 </a-tab-pane>
             </a-tabs>
@@ -64,77 +291,24 @@
 
 <script>
 import { getAction } from "@/api/manage";
-import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
+import moment from "moment";
 
 export default {
     name: "GameCampaignTabList",
-    mixins: [JeecgListMixin],
     components: {},
     data() {
         return {
             description: "页签配置",
-            // 表头
-            columns: [
-                {
-                    title: "#",
-                    dataIndex: "",
-                    key: "rowIndex",
-                    width: 60,
-                    align: "center",
-                    customRender: function(t, r, index) {
-                        return parseInt(index) + 1;
-                    }
-                },
-                {
-                    title: "区服Id",
-                    align: "center",
-                    dataIndex: "serverId"
-                },
-                {
-                    title: "区服名",
-                    align: "center",
-                    dataIndex: "serverName"
-                },
-                {
-                    title: "开服时间",
-                    align: "center",
-                    dataIndex: "openTime"
-                },
-                {
-                    title: "活动开关",
-                    align: "center",
-                    dataIndex: "status",
-                    customRender: function(text) {
-                        if (text === -1) {
-                            return "未设置";
-                        } else if (text === 0) {
-                            return "关闭";
-                        } else if (text === 1) {
-                            return "开启";
-                        }
-                    }
-                },
-                {
-                    title: "活动状态",
-                    align: "center",
-                    dataIndex: "campaignStatus",
-                    scopedSlots: { customRender: "statusSlot" }
-                },
-                {
-                    title: "操作",
-                    dataIndex: "action",
-                    align: "center",
-                    scopedSlots: { customRender: "action" }
-                }
-            ],
             // 查询参数
             queryParam: {},
             title: "操作",
             visible: false,
+            isEdit: false,
             model: {},
-
+            tabModel: {},
+            detailList: [],
             campaignId: "",
             // 页签信息
             tabIndex: 0,
@@ -147,10 +321,18 @@ export default {
                 sm: { span: 16 }
             },
             form: this.$form.createForm(this),
+            validatorRules: {
+                campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
+                type: { rules: [{ required: true, message: "请输入活动项类型" }] },
+                typeImage: { rules: [{ required: true, message: "请输入活动类型图片!" }] },
+                sort: { rules: [{ required: true, message: "请输入排序!" }] },
+                startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
+                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
+            },
             url: {
-                list: "game/gameCampaign/serverList",
-                switch: "game/gameCampaign/serverSwitch",
-                batch: "game/gameCampaign/switchBatch"
+                // list: "game/gameCampaign/serverList",
+                // switch: "game/gameCampaign/serverSwitch",
+                // batch: "game/gameCampaign/switchBatch"
             }
         };
     },
@@ -165,14 +347,12 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.model.campaignId = this.campaignId;
+            this.isEdit = this.model.id != null;
             this.tabIndex = 0;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "serverId"));
+                this.pickFormValues();
             });
-
-            // 当其它模块调用该模块时,调用此方法加载字典数据
-            this.loadData();
         },
         close() {
             this.$emit("close");
@@ -184,7 +364,8 @@ export default {
             var param = Object.assign({}, this.queryParam);
             param.campaignId = this.campaignId;
             if (this.model && this.model.typeList) {
-                param.typeId = this.model.typeList[this.tabIndex].id;
+                this.tabModel = this.model.typeList[this.tabIndex];
+                param.typeId = this.tabModel.id;
             }
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
@@ -199,34 +380,30 @@ export default {
         },
         handleTabChange(tab) {
             this.tabIndex = tab;
-            this.loadData();
+            this.pickFormValues();
         },
-        switchServer(record, status) {
-            var params = { typeId: record.typeId, campaignId: record.campaignId, serverId: record.serverId, status: status };
-            let that = this;
-            getAction(that.url.switch, params).then(res => {
-                that.loadData();
-            });
+        pickFormValues() {
+            this.tabModel = this.model.typeList[this.tabIndex];
+            // 拷贝处理，取消编辑仍然存在空白项的问题
+            this.detailList = [...this.tabModel.details];
+
+            this.form.setFieldsValue(pick(this.tabModel, "id", "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
+            // 时间格式化
+            this.form.setFieldsValue({ startTime: this.tabModel.startTime ? moment(this.tabModel.startTime) : null });
+            this.form.setFieldsValue({ endTime: this.tabModel.endTime ? moment(this.tabModel.endTime) : null });
         },
-        batchSwitchServer(status) {
-            var ids = "";
-            for (var a = 0; a < this.selectedRowKeys.length; a++) {
-                ids += this.selectedRowKeys[a] + ",";
-            }
-
-            var that = this;
-            that.loading = true;
-
-            var params = { typeId: that.model.typeList[this.tabIndex].id, campaignId: that.campaignId, server: ids, status: status };
-            getAction(that.url.batch, params).then(res => {
-                that.onClearSelected();
-                if (res.success) {
-                    that.$message.success(res.message);
-                    that.loadData();
-                } else {
-                    that.$message.warning(res.message);
-                }
-            });
+        addRowCustom() {
+            this.detailList.push({});
+            this.$forceUpdate();
+        },
+        delRowCustom(index) {
+            console.log(index);
+            this.detailList.splice(index, 1);
+            this.$forceUpdate();
+        },
+        saveTab() {
+            console.log("saveTab:" + this.tabIndex);
+            this.$forceUpdate();
         }
     }
 };
@@ -237,5 +414,31 @@ export default {
 .ant-btn {
     margin-left: 30px;
     margin-bottom: 30px;
+}
+
+.ant-row {
+    margin: 10px 0;
+}
+
+.del-btn {
+    height: 50px;
+    margin: 0px 10px 0px -10px;
+}
+
+.input-number {
+    width: 100%;
+}
+
+.config-card {
+    margin: auto;
+    width: 80%;
+    // border: 1px solid green;
+    padding: 5px;
+}
+
+.add-btn {
+    margin: auto;
+    width: 100%;
+    margin: 20px 0;
 }
 </style>
