@@ -230,7 +230,7 @@ export default {
             picUrl: "",
             url: {
                 fileUpload: window._CONFIG["domainURL"] + "/sys/common/upload",
-                imgerver: window._CONFIG["domainURL"] + "/sys/common/view",
+                imgServer: window._CONFIG["domainURL"] + "/sys/common/view",
                 userWithDepart: "sys/user/userDepartList", // 引入为指定用户查看部门信息需要的url
                 userId: "sys/user/generateUserId", // 引入生成添加用户情况下的url
                 syncUserByUserName: "process/extActProcess/doSyncUserByUserName" // 同步用户到工作流
@@ -529,7 +529,7 @@ export default {
             }
         },
         getAvatarView() {
-            return this.url.imgerver + "/" + this.model.avatar;
+            return this.url.imgServer + "/" + this.model.avatar;
         },
         // 搜索用户对应的部门API
         onSearch() {
