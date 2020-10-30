@@ -14,12 +14,11 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.constant.CampaignFestivalType;
 import org.jeecg.modules.game.constant.CampaignStatus;
 import org.jeecg.modules.game.constant.SwitchStatus;
 import org.jeecg.modules.game.entity.*;
-import org.jeecg.modules.game.service.IGameCampaignService;
-import org.jeecg.modules.game.service.IGameCampaignSupportService;
-import org.jeecg.modules.game.service.IGameCampaignTypeService;
+import org.jeecg.modules.game.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,13 +41,28 @@ import java.util.stream.Collectors;
 public class GameCampaignController extends JeecgController<GameCampaign, IGameCampaignService> {
 
     @Autowired
-    private IGameCampaignService gameCampaignService;
+    private IGameCampaignService campaignService;
 
     @Autowired
-    private IGameCampaignTypeService gameCampaignTypeService;
+    private IGameCampaignTypeService campaignTypeService;
 
     @Autowired
-    private IGameCampaignSupportService gameCampaignSupportService;
+    private IGameCampaignSupportService campaignSupportService;
+
+    @Autowired
+    private IGameCampaignTypeLoginService campaignTypeLoginService;
+
+    @Autowired
+    private IGameCampaignTypeTaskService campaignTypeTaskService;
+
+    @Autowired
+    private IGameCampaignTypeRechargeService campaignTypeRechargeService;
+
+    @Autowired
+    private IGameCampaignTypeBuffService campaignTypeBuffService;
+
+    @Autowired
+    private IGameCampaignTypeExchangeService campaignTypeExchangeService;
 
     /**
      * 分页列表查询
@@ -67,7 +81,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                                    HttpServletRequest req) {
         QueryWrapper<GameCampaign> queryWrapper = QueryGenerator.initQueryWrapper(gameCampaign, req.getParameterMap());
         Page<GameCampaign> page = new Page<>(pageNo, pageSize);
-        IPage<GameCampaign> pageList = gameCampaignService.page(page, queryWrapper);
+        IPage<GameCampaign> pageList = campaignService.page(page, queryWrapper);
         // 查询子页签列表
         for (GameCampaign record : pageList.getRecords()) {
             record.setTypeList(getGameCampaignTypeList(record.getId()));
@@ -87,8 +101,8 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         Page<GameServer> page = new Page<>(pageNo, pageSize);
         Date now = DateUtils.now();
 
-        GameCampaignType campaignType = gameCampaignTypeService.getById(campaignServer.getTypeId());
-        IPage<GameCampaignServer> pageList = gameCampaignService.serverList(page, campaignServer.getCampaignId(),
+        GameCampaignType campaignType = campaignTypeService.getById(campaignServer.getTypeId());
+        IPage<GameCampaignServer> pageList = campaignService.serverList(page, campaignServer.getCampaignId(),
                 campaignServer.getTypeId(), campaignServer.getServer());
         for (GameCampaignServer record : pageList.getRecords()) {
             if (record.getStatus() == SwitchStatus.OFF.getValue()) {
@@ -117,18 +131,18 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                 .eq(GameCampaignSupport::getTypeId, model.getTypeId())
                 .eq(GameCampaignSupport::getServerId, model.getServerId());
 
-        GameCampaignSupport campaignSupport = gameCampaignSupportService.getOne(query);
+        GameCampaignSupport campaignSupport = campaignSupportService.getOne(query);
         if (campaignSupport == null) {
             campaignSupport = new GameCampaignSupport()
                     .setStatus(model.getStatus())
                     .setCampaignId(model.getCampaignId())
                     .setTypeId(model.getTypeId())
                     .setServerId(model.getServerId());
-            gameCampaignSupportService.save(campaignSupport);
+            campaignSupportService.save(campaignSupport);
         } else {
             if (!Objects.equals(campaignSupport.getStatus(), model.getStatus())) {
                 campaignSupport.setStatus(model.getStatus());
-                gameCampaignSupportService.updateById(campaignSupport);
+                campaignSupportService.updateById(campaignSupport);
             }
         }
         return Result.ok("修改成功！");
@@ -149,7 +163,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaign gameCampaign) {
-        gameCampaignService.save(gameCampaign);
+        campaignService.save(gameCampaign);
         updateTypeList(true, gameCampaign);
         return Result.ok("添加成功！");
     }
@@ -163,7 +177,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
-        gameCampaignService.updateById(gameCampaign);
+        campaignService.updateById(gameCampaign);
         updateTypeList(false, gameCampaign);
         return Result.ok("编辑成功!");
     }
@@ -177,7 +191,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameCampaignService.removeById(id);
+        campaignService.removeById(id);
         return Result.ok("删除成功!");
     }
 
@@ -190,7 +204,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameCampaignService.removeByIds(Arrays.asList(ids.split(",")));
+        this.campaignService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
 
@@ -203,7 +217,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameCampaign gameCampaign = gameCampaignService.getById(id);
+        GameCampaign gameCampaign = campaignService.getById(id);
         if (gameCampaign == null) {
             return Result.error("未找到对应数据");
         }
@@ -231,13 +245,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaign.class);
-    }
-
-    private List<GameCampaignType> getGameCampaignTypeList(long campaignId) {
-        LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
-                .eq(GameCampaignType::getCampaignId, campaignId)
-                .orderByAsc(GameCampaignType::getSort);
-        return gameCampaignTypeService.list(query);
     }
 
     private void updateTypeList(boolean isAdd, GameCampaign gameCampaign) {
@@ -299,13 +306,13 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
     private void updateGameCampaignTypeList(List<GameCampaignType> addList, List<GameCampaignType> updateList, List<Long> removeList) {
         if (CollUtil.isNotEmpty(addList)) {
-            gameCampaignTypeService.saveBatch(addList);
+            campaignTypeService.saveBatch(addList);
         }
         if (CollUtil.isNotEmpty(updateList)) {
-            gameCampaignTypeService.updateBatchById(updateList);
+            campaignTypeService.updateBatchById(updateList);
         }
         if (CollUtil.isNotEmpty(removeList)) {
-            gameCampaignTypeService.removeByIds(removeList);
+            campaignTypeService.removeByIds(removeList);
         }
     }
 
@@ -319,7 +326,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                     .eq(GameCampaignSupport::getTypeId, model.getTypeId())
                     .eq(GameCampaignSupport::getServerId, serverId);
 
-            GameCampaignSupport campaignSupport = gameCampaignSupportService.getOne(query);
+            GameCampaignSupport campaignSupport = campaignSupportService.getOne(query);
             if (campaignSupport == null) {
                 campaignSupport = new GameCampaignSupport()
                         .setStatus(model.getStatus())
@@ -336,11 +343,70 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         }
 
         if (CollUtil.isNotEmpty(addList)) {
-            gameCampaignSupportService.saveBatch(addList);
+            campaignSupportService.saveBatch(addList);
         }
 
         if (CollUtil.isNotEmpty(updateList)) {
-            gameCampaignSupportService.updateBatchById(updateList);
+            campaignSupportService.updateBatchById(updateList);
         }
+    }
+
+    private List<GameCampaignType> getGameCampaignTypeList(long campaignId) {
+        LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
+                .eq(GameCampaignType::getCampaignId, campaignId)
+                .orderByAsc(GameCampaignType::getSort);
+
+        List<GameCampaignType> list = campaignTypeService.list(query);
+        for (GameCampaignType model : list) {
+            CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
+            if (festivalType != null) {
+                switch (festivalType) {
+                    case LOGIN: {
+                        Wrapper<GameCampaignTypeLogin> detailQuery = Wrappers.<GameCampaignTypeLogin>lambdaQuery()
+                                .eq(GameCampaignTypeLogin::getCampaignId, campaignId)
+                                .eq(GameCampaignTypeLogin::getTypeId, model.getId());
+                        model.setDetails(campaignTypeLoginService.list(detailQuery));
+                    }
+                    break;
+
+                    case TASK: {
+                        Wrapper<GameCampaignTypeTask> detailQuery = Wrappers.<GameCampaignTypeTask>lambdaQuery()
+                                .eq(GameCampaignTypeTask::getCampaignId, campaignId)
+                                .eq(GameCampaignTypeTask::getTypeId, model.getId());
+                        model.setDetails(campaignTypeTaskService.list(detailQuery));
+                    }
+                    break;
+
+                    case EXCHANGE: {
+                        Wrapper<GameCampaignTypeExchange> detailQuery = Wrappers.<GameCampaignTypeExchange>lambdaQuery()
+                                .eq(GameCampaignTypeExchange::getCampaignId, campaignId)
+                                .eq(GameCampaignTypeExchange::getTypeId, model.getId());
+                        model.setDetails(campaignTypeExchangeService.list(detailQuery));
+                    }
+                    break;
+
+                    case RECHARGE: {
+                        Wrapper<GameCampaignTypeRecharge> detailQuery = Wrappers.<GameCampaignTypeRecharge>lambdaQuery()
+                                .eq(GameCampaignTypeRecharge::getCampaignId, campaignId)
+                                .eq(GameCampaignTypeRecharge::getTypeId, model.getId());
+                        model.setDetails(campaignTypeRechargeService.list(detailQuery));
+                    }
+                    break;
+
+                    case BUFF_ANIMA:
+                    case BUFF_PRACTICE: {
+                        Wrapper<GameCampaignTypeBuff> detailQuery = Wrappers.<GameCampaignTypeBuff>lambdaQuery()
+                                .eq(GameCampaignTypeBuff::getCampaignId, campaignId)
+                                .eq(GameCampaignTypeBuff::getTypeId, model.getId());
+                        model.setDetails(campaignTypeBuffService.list(detailQuery));
+                    }
+                    break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+        return list;
     }
 }

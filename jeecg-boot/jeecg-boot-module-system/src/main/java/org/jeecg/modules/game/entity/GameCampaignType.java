@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,6 +12,8 @@ import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -45,7 +48,7 @@ public class GameCampaignType extends BaseEntity {
     private java.lang.String name;
 
     /**
-     * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵所加成
+     * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成
      */
     @Excel(name = "活动项类型", width = 15)
     private java.lang.Integer type;
@@ -77,4 +80,16 @@ public class GameCampaignType extends BaseEntity {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date endTime;
+
+    /**
+     * 页签详细配置
+     * 1.登录礼包 - GameCampaignTypeLogin
+     * 2.累计充值 - GameCampaignTypeRecharge
+     * 3.兑换 - GameCampaignTypeExchange
+     * 4.节日任务 - GameCampaignTypeTask
+     * 5.buff-修为加成 - GameCampaignTypeBuff
+     * 6.buff-灵气加成 - GameCampaignTypeBuff
+     */
+    @TableField(exist = false)
+    private List<?> details;
 }
