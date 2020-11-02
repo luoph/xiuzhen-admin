@@ -1,7 +1,8 @@
 <template>
-    <a-card :bordered="false">
-        <!-- 抽屉 -->
-        <a-drawer :title="title" :width="800" placement="right" :closable="false" @close="close" :visible="visible">
+    <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
+        <a-card :bordered="false">
+            <!-- 抽屉 -->
+            <!-- <a-drawer :title="title" :width="1000" placement="right" :closable="false" @close="close" :visible="visible"> -->
             <!-- 抽屉内容的border -->
             <div :style="{ padding: '20px', border: '1px solid #e9e9e9', background: '#fff' }">
                 <!-- 查询区域 -->
@@ -54,17 +55,18 @@
                     </a-table>
                 </div>
             </div>
-        </a-drawer>
-        <!-- table区域-end -->
+            <!-- </a-drawer> -->
+            <!-- table区域-end -->
 
-        <!-- 表单区域 -->
-        <game-channel-server-modal ref="modalForm" @ok="modalFormOk"></game-channel-server-modal>
-    </a-card>
+            <!-- 表单区域 -->
+            <game-channel-server-modal ref="modalForm" @ok="modalFormOk"></game-channel-server-modal>
+        </a-card>
+    </a-modal>
 </template>
 
 <script>
 import GameChannelServerModal from "./modules/GameChannelServerModal";
-import { getAction, putAction, httpAction } from "@/api/manage";
+import { getAction } from "@/api/manage";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
@@ -73,7 +75,7 @@ function filterServerIdText(options, text) {
     if (options instanceof Array) {
         for (let server of options) {
             if (text === server.id) {
-                return server.name + "(" + server.id + ")";
+                return server.id + " - " + server.name;
             }
         }
     }
@@ -201,6 +203,9 @@ export default {
             this.$refs.modalForm.title = "新增";
         },
         handleCancel() {
+            this.close();
+        },
+        handleOk() {
             this.close();
         },
         queryServerList() {

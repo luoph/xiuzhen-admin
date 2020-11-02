@@ -1,74 +1,41 @@
 <template>
-    <a-drawer
-        :title="title"
-        :width="800"
-        placement="right"
-        :closable="false"
-        @close="close"
-        :visible="visible"
-    >
-        <!-- <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+    <!-- <a-drawer :title="title" :width="1000" placement="right" :closable="false" @close="close" :visible="visible"> -->
+    <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏名称">
                     <a-input placeholder="请输入游戏名称" v-decorator="['name', validatorRules.name]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
-                    <a-input
-                        :disabled="isEdit"
-                        placeholder="请输入唯一标识"
-                        v-decorator="['yaSimpleName', validatorRules.yaSimpleName]"
-                    />
+                    <a-input :disabled="isEdit" placeholder="请输入唯一标识" v-decorator="['yaSimpleName', validatorRules.yaSimpleName]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPID">
-                    <a-input
-                        placeholder="请输入YA_APPID"
-                        v-decorator="['yaAppId', validatorRules.yaAppId]"
-                    />
+                    <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', validatorRules.yaAppId]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPKEY">
-                    <a-input
-                        placeholder="请输入YA_APPKEY"
-                        v-decorator="['yaAppKey', validatorRules.yaAppKey]"
-                    />
+                    <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', validatorRules.yaAppKey]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="gameAppKey">
-                    <a-input
-                        placeholder="请输入gameAppKey"
-                        v-decorator="['yaGameKey', validatorRules.yaGameKey]"
-                    />
+                    <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', validatorRules.yaGameKey]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="帐号登录地址">
-                    <a-input
-                        placeholder="请输入帐号登录地址(不包含域名)"
-                        v-decorator="['loginUrl', validatorRules.loginUrl]"
-                    />
+                    <a-input placeholder="请输入帐号登录地址(不包含域名)" v-decorator="['loginUrl', validatorRules.loginUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器列表地址">
-                    <a-input
-                        placeholder="请输入服务器列表地址(不包含域名)"
-                        v-decorator="['serverUrl', validatorRules.serverUrl]"
-                    />
+                    <a-input placeholder="请输入服务器列表地址(不包含域名)" v-decorator="['serverUrl', validatorRules.serverUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告列表地址">
-                    <a-input
-                        placeholder="请输入公告列表地址(不包含域名)"
-                        v-decorator="['noticeUrl', validatorRules.noticeUrl]"
-                    />
+                    <a-input placeholder="请输入公告列表地址(不包含域名)" v-decorator="['noticeUrl', validatorRules.noticeUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
-                    <a-textarea
-                        rows="4"
-                        placeholder="请输入描述"
-                        v-decorator="['remark', validatorRules.remark]"
-                    />
+                    <a-textarea rows="4" placeholder="请输入描述" v-decorator="['remark', validatorRules.remark]" />
                 </a-form-item>
             </a-form>
         </a-spin>
-        <!-- </a-modal> -->
-        <a-button type="primary" @click="handleOk">确定</a-button>
+    </a-modal>
+    <!-- <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer>
+    </a-drawer> -->
 </template>
 
 <script>

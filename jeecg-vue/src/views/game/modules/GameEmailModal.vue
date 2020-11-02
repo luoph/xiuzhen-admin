@@ -1,6 +1,6 @@
 <template>
-    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
-        <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+    <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -51,24 +51,24 @@
                 </a-form-item>
             </a-form>
         </a-spin>
-        <!-- </a-modal> -->
-        <a-button type="primary" @click="handleOk">确定</a-button>
+    </a-modal>
+    <!-- <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer>
+    </a-drawer> -->
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
-import pick from 'lodash.pick';
-import JDate from '@/components/jeecg/JDate';
-import JSearchSelectTag from '@/components/dict/JSearchSelectTag';
-import { Button } from 'ant-design-vue';
-import GameEmailItemTreeModal from './GameEmailItemTreeModal';
-import ServerSelect from '@/components/gameserver/ServerSelect';
-import MultipleServerSelect from '@/components/gameserver/MultipleServerSelect';
+import { httpAction } from "@/api/manage";
+import pick from "lodash.pick";
+import JDate from "@/components/jeecg/JDate";
+import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
+import { Button } from "ant-design-vue";
+import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
+import ServerSelect from "@/components/gameserver/ServerSelect";
+import MultipleServerSelect from "@/components/gameserver/MultipleServerSelect";
 
 export default {
-    name: 'GameEmailModal',
+    name: "GameEmailModal",
     components: {
         JDate,
         JSearchSelectTag,
@@ -80,7 +80,7 @@ export default {
     data() {
         return {
             form: this.$form.createForm(this),
-            title: '操作',
+            title: "操作",
             width: 800,
             visible: false,
             model: {},
@@ -95,23 +95,23 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                title: { rules: [{ required: true, message: '请输入标题!' }] },
-                remark: { rules: [{ required: true, message: '请输入描述!' }] },
-                emailType: { rules: [{ required: true, message: '请选择类型!' }] },
-                content: { rules: [{ required: true, message: '请添加附件!' }] },
-                validState: { rules: [{ required: true, message: '请选择状态!' }] },
-                targetBodyType: { rules: [{ required: true, message: '请选择目标类型!' }] },
-                targetBodyIds: { rules: [{ required: false, message: '请以英文“,”分割输入多个玩家ID！' }] },
-                sendTime: { rules: [{ required: true, message: '请输入生效时间!' }] },
-                validStarTime: { rules: [{ required: true, message: '请输入开始时间!' }] },
+                title: { rules: [{ required: true, message: "请输入标题!" }] },
+                remark: { rules: [{ required: true, message: "请输入描述!" }] },
+                emailType: { rules: [{ required: true, message: "请选择类型!" }] },
+                content: { rules: [{ required: true, message: "请添加附件!" }] },
+                validState: { rules: [{ required: true, message: "请选择状态!" }] },
+                targetBodyType: { rules: [{ required: true, message: "请选择目标类型!" }] },
+                targetBodyIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
+                sendTime: { rules: [{ required: true, message: "请输入生效时间!" }] },
+                validStarTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 validEndTime: {}
             },
             serverType: false,
             playerType: true,
             contentData: false,
             url: {
-                add: 'game/gameEmail/add',
-                edit: 'game/gameEmail/edit'
+                add: "game/gameEmail/add",
+                edit: "game/gameEmail/edit"
             }
         };
     },
@@ -130,33 +130,33 @@ export default {
                 this.form.setFieldsValue(
                     pick(
                         this.model,
-                        'title',
-                        'remark',
-                        'emailType',
-                        'content',
-                        'validState',
-                        'targetBodyType',
-                        'targetBodyIds',
-                        'sendTime',
-                        'validStarTime',
-                        'validEndTime',
-                        'createBy',
-                        'createTime',
-                        'updateBy',
-                        'updateTime'
+                        "title",
+                        "remark",
+                        "emailType",
+                        "content",
+                        "validState",
+                        "targetBodyType",
+                        "targetBodyIds",
+                        "sendTime",
+                        "validStarTime",
+                        "validEndTime",
+                        "createBy",
+                        "createTime",
+                        "updateBy",
+                        "updateTime"
                     )
                 );
             });
         },
         close() {
-            this.$emit('close');
+            this.$emit("close");
             this.visible = false;
             this.serverType = false;
             this.playerType = true;
             this.validatorRules.content = null;
             this.contentData = false;
             this.itemTree = null;
-            this.targetBody = '';
+            this.targetBody = "";
         },
         handleOk() {
             const that = this;
@@ -164,23 +164,23 @@ export default {
             this.form.validateFields((err, values) => {
                 if (!err) {
                     that.confirmLoading = true;
-                    let httpUrl = '';
-                    let method = '';
+                    let httpUrl = "";
+                    let method = "";
                     if (!this.model.id) {
                         httpUrl += this.url.add;
-                        method = 'post';
+                        method = "post";
                     } else {
                         httpUrl += this.url.edit;
-                        method = 'put';
+                        method = "put";
                     }
                     let formData = Object.assign(this.model, values);
                     this.inputTargetBody(formData);
-                    console.log('表单提交数据', formData);
+                    console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
                             if (res.success) {
                                 that.$message.success(res.message);
-                                that.$emit('ok');
+                                that.$emit("ok");
                             } else {
                                 that.$message.warning(res.message);
                             }
@@ -204,20 +204,20 @@ export default {
             this.form.setFieldsValue(
                 pick(
                     row,
-                    'title',
-                    'remark',
-                    'emailType',
-                    'content',
-                    'validState',
-                    'targetBodyType',
-                    'targetBodyIds',
-                    'sendTime',
-                    'validStarTime',
-                    'validEndTime',
-                    'createBy',
-                    'createTime',
-                    'updateBy',
-                    'updateTime'
+                    "title",
+                    "remark",
+                    "emailType",
+                    "content",
+                    "validState",
+                    "targetBodyType",
+                    "targetBodyIds",
+                    "sendTime",
+                    "validStarTime",
+                    "validEndTime",
+                    "createBy",
+                    "createTime",
+                    "updateBy",
+                    "updateTime"
                 )
             );
         },
@@ -230,21 +230,21 @@ export default {
                 this.serverType = true;
                 this.playerType = false;
             }
-            this.validatorRules.targetBodyIds = '';
-            this.targetBody = '';
+            this.validatorRules.targetBodyIds = "";
+            this.targetBody = "";
         },
         contentType(e) {
             if (e.target.value === 1) {
                 this.contentData = false;
             } else if (e.target.value === 2) {
                 this.contentData = true;
-                this.validatorRules.content = { rules: [{ required: true, message: '请添加附件!' }] };
-                this.validatorRules.content = '';
+                this.validatorRules.content = { rules: [{ required: true, message: "请添加附件!" }] };
+                this.validatorRules.content = "";
             }
         },
         handleAddItem() {
             this.$refs.gameEmailItemTreeModal.visible = true;
-            this.$refs.gameEmailItemTreeModal.$emit('getItemTree');
+            this.$refs.gameEmailItemTreeModal.$emit("getItemTree");
             this.content = null;
         },
         getItemTreeJson(item) {
@@ -257,13 +257,13 @@ export default {
         },
         change(value) {
             this.form.setFieldsValue({
-                targetBodyIds: value.join(',')
+                targetBodyIds: value.join(",")
             });
         },
         inputTargetBody(formData) {
-            if(this.playerType){
-                let a = this.form.getFieldValue('targetBody');
-                if (a !== null && a !== '' && a !== undefined) {
+            if (this.playerType) {
+                let a = this.form.getFieldValue("targetBody");
+                if (a !== null && a !== "" && a !== undefined) {
                     formData.targetBodyIds = a;
                 }
             }
