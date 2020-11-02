@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,8 +66,10 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 		if (playerDTO == null) {
 			return Result.ok(page);
 		}
-		// 如果选择开始时间和结束时间是同一天
 		List<Player> list = playerService.queryForList(playerDTO);
+		if (list == null){
+			list = new ArrayList<>();
+		}
 		page.setRecords(list).setTotal(list.size());
 		return Result.ok(page);
 	}

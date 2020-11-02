@@ -51,12 +51,13 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
 	@Override
 	public List<Player> queryForList(PlayerDTO playerDTO) {
-		List<Player> list = new ArrayList<>();
+		List<Player> list = new ArrayList<Player>();
 
-		List<Player> collect1 = null;
-		List<Player> collect2 = null;
-		List<Player> collect3 = null;
-		List<Player> collect4 = null;
+		// 四个stream流临时转换变量
+		List<Player> collect1 = new ArrayList<Player>();
+		List<Player> collect2 = new ArrayList<Player>();
+		List<Player> collect3 = new ArrayList<Player>();
+		List<Player> collect4 = new ArrayList<Player>();
 
 		try {
 			// 如果选择开始时间和结束时间是同一天
@@ -65,7 +66,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 			String loginBegin = playerDTO.getLoginBegin();
 			String loginEnd = playerDTO.getLoginEnd();
 			// 时间不为空
-			// 时间为同一天
+			// todo 时间为同一天,之后需要把这种时间代码替换成工具类的方法
 			if (createBegin != null && createEnd != null && createBegin.equals(createEnd)) {
 				createBegin = createBegin + " 00:00:00";
 				createEnd = createEnd + " 23:59:59";
@@ -133,17 +134,16 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 				collect2 = collect1;
 			}
 
-			if (playerDTO.getLevelBegin() != null && playerDTO.getLevelEnd() != null && collect2 != null) {
-				collect3 = collect2.stream().filter(t -> t.getPayAmountSum() != null && t.getPayAmountSum().doubleValue() >= playerDTO.getLevelBegin()
-						&& t.getPayAmountSum().doubleValue() <= playerDTO.getLevelEnd()).collect(Collectors.toList());
+			if (playerDTO.getRechargeBegin() != null && playerDTO.getRechargeEnd() != null && collect2 != null) {
+				collect3 = collect2.stream().filter(t -> t.getPayAmountSum() != null && t.getPayAmountSum().doubleValue() >= playerDTO.getRechargeBegin()
+						&& t.getPayAmountSum().doubleValue() <= playerDTO.getRechargeEnd()).collect(Collectors.toList());
 			} else {
 				collect3 = collect2;
 			}
 
-			if (playerDTO.getRechargeBegin() != null && playerDTO.getRechargeEnd() != null && collect3 != null) {
-				collect4 = collect3.stream().filter(t -> t.getRealm() != null && t.getRealm() >= playerDTO.getRechargeBegin()
-						&& t.getRealm() <= playerDTO.getRechargeEnd()).collect(Collectors.toList());
-				// todo : collect4总是空
+			if (playerDTO.getLevelBegin() != null && playerDTO.getLevelEnd() != null && collect3 != null) {
+				collect4 = collect3.stream().filter(t -> t.getLevel() != null && t.getLevel() >= playerDTO.getLevelBegin()
+						&& t.getLevel() <= playerDTO.getLevelEnd()).collect(Collectors.toList());
 				collect4 = collect3;
 			} else {
 				collect4 = collect3;
