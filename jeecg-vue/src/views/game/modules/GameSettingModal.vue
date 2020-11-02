@@ -1,9 +1,9 @@
 <template>
-    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
-    <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+    <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="key" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="key" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input :disabled="isEdit" v-decorator="['dictKey', validatorRules.dictKey]" placeholder="请输入key"></a-input>
                 </a-form-item>
                 <a-form-item label="value" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -14,10 +14,10 @@
                 </a-form-item>
             </a-form>
         </a-spin>
-    <!-- </a-modal> -->
-        <a-button type="primary" @click="handleOk">确定</a-button>
+    </a-modal>
+    <!-- <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer>
+    </a-drawer> -->
 </template>
 
 <script>
@@ -26,8 +26,7 @@ import pick from "lodash.pick";
 
 export default {
     name: "GameSettingModal",
-    components: {
-    },
+    components: {},
     data() {
         return {
             form: this.$form.createForm(this),
@@ -48,7 +47,7 @@ export default {
             validatorRules: {
                 dictKey: { rules: [{ required: true, message: "请输入key!" }] },
                 dictValue: { rules: [{ required: true, message: "请输入value!" }] },
-                remark: { rules: [{ required: true, message: "请输入描述!" }] },
+                remark: { rules: [{ required: true, message: "请输入描述!" }] }
             },
             url: {
                 add: "game/gameSetting/add",
@@ -56,8 +55,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -113,7 +111,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "dictKey", "dictValue", "remark"));
-        },
+        }
     }
 };
 </script>
