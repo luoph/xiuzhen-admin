@@ -436,13 +436,16 @@ export default {
             const that = this;
 
             if (that.tabModel.type == 5 || that.tabModel.type == 6) {
+                let addition = that.form.getFieldValue("addition");
+                let buffDesc = that.form.getFieldValue("buffDesc");
+
                 if (that.tabModel.details != null && that.tabModel.details.length > 0) {
-                    if (!that.tabModel.addition) {
+                    if (!addition) {
                         that.$message.warning("请输入Buff加成！");
                         return;
                     }
 
-                    if (!that.tabModel.buffDesc) {
+                    if (!buffDesc) {
                         that.$message.warning("请输入Buff描述！");
                         return;
                     }
