@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
+import java.math.BigDecimal;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -24,17 +26,17 @@ public class GameCampaignTypeRecharge extends GameCampaignTypeBase {
      * 礼包id
      */
     @Excel(name = "礼包id", width = 15)
-    private java.lang.Integer rechargeId;
+    private Integer rechargeId;
 
     /**
      * 累计充值额度
      */
     @Excel(name = "累计充值额度", width = 15)
-    private java.math.BigDecimal rechargeAmount;
+    private BigDecimal rechargeAmount;
 
     /**
      * 奖励列表
      */
     @Excel(name = "奖励列表", width = 15)
-    private java.lang.String reward;
+    private String reward;
 }

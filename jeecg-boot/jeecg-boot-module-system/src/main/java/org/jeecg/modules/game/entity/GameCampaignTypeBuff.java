@@ -9,6 +9,8 @@ import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -27,13 +29,13 @@ public class GameCampaignTypeBuff extends GameCampaignTypeBase {
      * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成
      */
     @Excel(name = "活动项类型", width = 15)
-    private java.lang.Integer type;
+    private Integer type;
 
     /**
      * buff id
      */
     @Excel(name = "buff id", width = 15)
-    private java.lang.Integer buffId;
+    private Integer buffId;
 
     /**
      * 开始时间
@@ -41,7 +43,7 @@ public class GameCampaignTypeBuff extends GameCampaignTypeBase {
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date startTime;
+    private Date startTime;
 
     /**
      * 结束时间
@@ -49,17 +51,17 @@ public class GameCampaignTypeBuff extends GameCampaignTypeBase {
     @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date endTime;
+    private Date endTime;
 
     /**
      * 描述
      */
     @Excel(name = "描述", width = 15)
-    private java.lang.String description;
+    private String description;
 
     /**
      * 加成
      */
     @Excel(name = "加成", width = 15)
-    private java.lang.Integer addition;
+    private Integer addition;
 }

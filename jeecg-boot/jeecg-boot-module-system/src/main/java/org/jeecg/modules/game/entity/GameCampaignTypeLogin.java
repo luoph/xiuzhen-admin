@@ -24,17 +24,17 @@ public class GameCampaignTypeLogin extends GameCampaignTypeBase {
      * 登录天数
      */
     @Excel(name = "登录天数", width = 15)
-    private java.lang.Integer loginDay;
+    private Integer loginDay;
 
     /**
      * 描述
      */
     @Excel(name = "描述", width = 15)
-    private java.lang.String description;
+    private String description;
 
     /**
      * 奖励列表
      */
     @Excel(name = "奖励列表", width = 15)
-    private java.lang.String reward;
+    private String reward;
 }

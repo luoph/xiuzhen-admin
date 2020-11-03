@@ -24,34 +24,34 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
      * 任务id
      */
     @Excel(name = "任务id", width = 15)
-    private java.lang.Integer taskId;
+    private Integer taskId;
 
     /**
      * 描述
      */
     @Excel(name = "描述", width = 15)
-    private java.lang.String description;
+    private String description;
 
     /**
      * task_module_type.json.module_id
      */
     @Excel(name = "task_module_type.json.module_id", width = 15)
-    private java.lang.Integer moduleId;
+    private Integer moduleId;
 
     /**
      * 任务完成条件
      */
     @Excel(name = "任务完成条件", width = 15)
-    private java.lang.Integer target;
+    private Integer target;
 
     /**
      * 奖励列表
      */
     @Excel(name = "奖励列表", width = 15)
-    private java.lang.String reward;
+    private String reward;
     /**
      * 跳转 id
      */
     @Excel(name = "跳转 id", width = 15)
-    private java.lang.Integer jumpId;
+    private Integer jumpId;
 }

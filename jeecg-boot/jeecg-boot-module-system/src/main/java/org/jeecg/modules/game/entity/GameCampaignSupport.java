@@ -27,28 +27,28 @@ public class GameCampaignSupport extends BaseEntity {
      * id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Long id;
+    private Long id;
 
     /**
      * campaign.id, 活动id
      */
     @Excel(name = "campaign.id, 活动id", width = 15)
-    private java.lang.Long campaignId;
+    private Long campaignId;
 
     /**
      * 渠道id/服务器id
      */
     @Excel(name = "渠道id/服务器id", width = 15)
-    private java.lang.Integer serverId;
+    private Integer serverId;
     /**
      * 状态
      */
     @Excel(name = "状态", width = 15)
-    private java.lang.Integer status;
+    private Integer status;
 
     /**
      * 开启game_campaign_type.id
      */
     @Excel(name = "开启game_campaign_type.id", width = 15)
-    private java.lang.Long typeId;
+    private Long typeId;
 }

@@ -139,7 +139,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "buffId", "startTime", "endTime", "description", "addition", "createTime", "updateTime"));
-        }
+        },
     }
 };
 </script>
