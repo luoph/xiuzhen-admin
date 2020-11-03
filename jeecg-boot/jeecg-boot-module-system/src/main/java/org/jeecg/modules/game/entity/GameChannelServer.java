@@ -43,6 +43,10 @@ public class GameChannelServer extends BaseEntity {
     @Excel(name = "渠道id", width = 15)
     @ApiModelProperty(value = "渠道id")
     private java.lang.String channelId;
+
+    @Excel(name = "排序", width = 15)
+    @ApiModelProperty(value = "排序")
+    private java.lang.Integer position;
     /**
      * 删除状态
      */
@@ -51,9 +55,9 @@ public class GameChannelServer extends BaseEntity {
     @ApiModelProperty(value = "删除状态")
     private java.lang.Integer delFlag;
 
-
     @Excel(name = "数据统计状态", width = 15)
     @Dict(dicCode = "no_need_count")
     @ApiModelProperty(value = "数据统计状态")
     private java.lang.Integer noNeedCount;
+
 }

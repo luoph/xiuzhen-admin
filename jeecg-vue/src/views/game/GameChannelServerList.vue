@@ -105,6 +105,11 @@ export default {
                     }
                 },
                 {
+                    title: "排序",
+                    align: "center",
+                    dataIndex: "position"
+                },
+                {
                     title: "区服Id",
                     align: "center",
                     dataIndex: "serverId",

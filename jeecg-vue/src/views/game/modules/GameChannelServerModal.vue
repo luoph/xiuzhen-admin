@@ -11,6 +11,9 @@
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + " - " + server.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="顺序">
+                    <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入顺序" style="width: 100%" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
                     <a-select v-decorator="['delFlag', {}]" placeholder="请选择状态" :initialValue="0">
                         <a-select-option :value="0">正常</a-select-option>
@@ -47,7 +50,8 @@ export default {
             confirmLoading: false,
             form: this.$form.createForm(this),
             validatorRules: {
-                serverId: { rules: [{ required: true, message: "请输入区服Id!" }] }
+                serverId: { rules: [{ required: true, message: "请输入区服Id!" }] },
+                position: { rules: [{ required: true, message: "请输入顺序!" }] }
             },
             url: {
                 add: "game/gameChannelServer/add",
@@ -71,7 +75,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "serverId", "channelId", "delFlag"));
+                this.form.setFieldsValue(pick(this.model, "serverId", "channelId", "delFlag", "position"));
             });
         },
         close() {
