@@ -54,6 +54,7 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         QueryWrapper<GameChannelServer> queryWrapper = QueryGenerator.initQueryWrapper(gameChannelServer, req.getParameterMap());
+        queryWrapper.orderByAsc("position");
         Page<GameChannelServer> page = new Page<>(pageNo, pageSize);
         IPage<GameChannelServer> pageList = gameChannelServerService.page(page, queryWrapper);
         return Result.ok(pageList);
