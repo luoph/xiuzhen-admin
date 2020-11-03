@@ -24,7 +24,7 @@ public class GameCampaignTypeExchange extends GameCampaignTypeBase {
      * 兑换id
      */
     @Excel(name = "兑换id", width = 15)
-    private java.lang.Integer exchangeId;
+    private Integer exchangeId;
 
     /**
      * 道具名称
@@ -36,7 +36,7 @@ public class GameCampaignTypeExchange extends GameCampaignTypeBase {
      * 最大兑换数量
      */
     @Excel(name = "最大兑换数量", width = 15)
-    private java.lang.Integer maxExchangeNum;
+    private Integer maxExchangeNum;
 
     /**
      * 奖励列表

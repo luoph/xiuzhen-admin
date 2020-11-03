@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jeecg.common.system.base.entity.BaseEntity;
-import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
  * @author jeecg-boot
@@ -28,12 +27,10 @@ public class GameCampaignTypeBase extends BaseEntity {
     /**
      * campaign.id, 活动id
      */
-    @Excel(name = "活动id", width = 15)
     private Long campaignId;
 
     /**
      * game_campaign_type.id
      */
-    @Excel(name = "typeId", width = 15)
     private Long typeId;
 }

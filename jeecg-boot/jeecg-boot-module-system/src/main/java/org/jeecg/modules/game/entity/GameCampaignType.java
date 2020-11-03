@@ -13,6 +13,7 @@ import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,37 +34,37 @@ public class GameCampaignType extends BaseEntity {
      * id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Long id;
+    private Long id;
 
     /**
      * campaign.id, 活动id
      */
     @Excel(name = "活动id", width = 15)
-    private java.lang.Long campaignId;
+    private Long campaignId;
 
     /**
      * 活动页签名
      */
     @Excel(name = "活动页签名", width = 15)
-    private java.lang.String name;
+    private String name;
 
     /**
      * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成
      */
     @Excel(name = "活动项类型", width = 15)
-    private java.lang.Integer type;
+    private Integer type;
 
     /**
      * 活动类型图片
      */
     @Excel(name = "活动类型图片", width = 15)
-    private java.lang.String typeImage;
+    private String typeImage;
 
     /**
      * 排序
      */
     @Excel(name = "排序", width = 15)
-    private java.lang.Integer sort;
+    private Integer sort;
 
     /**
      * 开始时间
@@ -71,7 +72,7 @@ public class GameCampaignType extends BaseEntity {
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date startTime;
+    private Date startTime;
 
     /**
      * 结束时间
@@ -79,7 +80,7 @@ public class GameCampaignType extends BaseEntity {
     @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date endTime;
+    private Date endTime;
 
     /**
      * 页签详细配置
