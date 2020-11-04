@@ -46,7 +46,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     private IGameCampaignTypeExchangeService campaignTypeExchangeService;
 
     @Override
-    public void fillTabDetail(GameCampaignType model) {
+    public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
         CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
         if (festivalType != null) {
@@ -89,7 +89,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                             .eq(GameCampaignTypeBuff::getCampaignId, campaignId)
                             .eq(GameCampaignTypeBuff::getTypeId, model.getId());
                     List<GameCampaignTypeBuff> buffList = campaignTypeBuffService.list(detailQuery);
-                    if (CollUtil.isNotEmpty(buffList)) {
+                    if (merge && CollUtil.isNotEmpty(buffList)) {
                         GameCampaignTypeBuff first = buffList.get(0);
                         model.setAddition(first.getAddition()).setBuffDesc(first.getDescription());
                     }
@@ -107,7 +107,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Override
     public void updateTabDetail(GameCampaignType model) {
         CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
-        fillTabDetail(model);
+        fillTabDetail(model, false);
 
         if (festivalType != null) {
             List detailList = JSON.parseArray(model.getDetailsData(), festivalType.getTableClass());
