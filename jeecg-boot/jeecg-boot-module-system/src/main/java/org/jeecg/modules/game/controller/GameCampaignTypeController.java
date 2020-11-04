@@ -52,7 +52,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
         Page<GameCampaignType> page = new Page<>(pageNo, pageSize);
         IPage<GameCampaignType> pageList = gameCampaignTypeService.page(page, queryWrapper);
         for (GameCampaignType record : pageList.getRecords()) {
-            gameCampaignTypeService.fillTabDetail(record);
+            gameCampaignTypeService.fillTabDetail(record, true);
         }
         return Result.ok(pageList);
     }
@@ -131,7 +131,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
         if (record == null) {
             return Result.error("未找到对应数据");
         }
-        gameCampaignTypeService.fillTabDetail(record);
+        gameCampaignTypeService.fillTabDetail(record, true);
         return Result.ok(record);
     }
 

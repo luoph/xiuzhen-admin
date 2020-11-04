@@ -349,7 +349,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
         List<GameCampaignType> list = campaignTypeService.list(query);
         for (GameCampaignType model : list) {
-            campaignTypeService.fillTabDetail(model);
+            campaignTypeService.fillTabDetail(model, true);
         }
         gameCampaign.setTypeList(list);
         return list;
