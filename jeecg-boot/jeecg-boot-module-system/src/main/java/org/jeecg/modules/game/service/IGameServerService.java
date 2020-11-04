@@ -1,9 +1,11 @@
 package org.jeecg.modules.game.service;
 
 import cn.youai.commons.model.Response;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameServer;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -17,9 +19,59 @@ public interface IGameServerService extends IService<GameServer> {
     /**
      * 批量请求 http 接口
      *
-     * @param serverIds  服务器 id
-     * @param requestUrl 请求地址
+     * @param serverIds 服务器 id
+     * @param path      请求地址
      * @return 响应列表
      */
-    Map<Long, Response> gameServerRequest(long[] serverIds, String requestUrl);
+    Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path);
+
+    /**
+     * 批量请求 http 接口
+     *
+     * @param serverIds 服务器 id
+     * @param path      请求地址
+     * @return 响应列表
+     */
+    Map<Integer, Response> gameServerGet(String serverIds, String path);
+
+    /**
+     * 批量请求 http 接口
+     *
+     * @param serverIds 服务器 id
+     * @param path      请求地址
+     * @return 响应列表
+     */
+    Map<Integer, Response> gameServerGet(int[] serverIds, String path);
+
+    /**
+     * 批量请求 http 接口
+     *
+     * @param serverIds 服务器 id
+     * @param path      请求地址
+     * @param data      请求数据
+     * @return 响应列表
+     */
+    Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, JSONObject data);
+
+
+    /**
+     * 批量请求 http 接口
+     *
+     * @param serverIds 服务器 id
+     * @param path      请求地址
+     * @param data      请求数据
+     * @return 响应列表
+     */
+    Map<Integer, Response> gameServerPost(int[] serverIds, String path, JSONObject data);
+
+
+    /**
+     * 批量请求 http 接口
+     *
+     * @param serverIds 服务器 id
+     * @param path      请求地址
+     * @param data      请求数据
+     * @return 响应列表
+     */
+    Map<Integer, Response> gameServerPost(String serverIds, String path, JSONObject data);
 }

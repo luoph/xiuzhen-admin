@@ -2,6 +2,7 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.youai.commons.model.Response;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -20,7 +21,9 @@ import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.IGameCampaignService;
 import org.jeecg.modules.game.service.IGameCampaignSupportService;
 import org.jeecg.modules.game.service.IGameCampaignTypeService;
+import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -49,6 +52,12 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
     @Autowired
     private IGameCampaignSupportService campaignSupportService;
+
+    @Autowired
+    private IGameServerService gameServerService;
+
+    @Value("${app.campaign-update-url:/campaign/update}")
+    private String campaignUpdateUrl;
 
     /**
      * 分页列表查询
@@ -165,6 +174,35 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
         campaignService.updateById(gameCampaign);
         updateTypeList(false, gameCampaign);
+        return Result.ok("编辑成功!");
+    }
+
+    /**
+     * 同步游戏配置
+     *
+     * @param id 实体 id
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "活动配置-同步到区服")
+    @GetMapping(value = "/sync")
+    public Result<?> sync(@RequestParam(name = "id") String id) {
+        GameCampaign gameCampaign = campaignService.getById(id);
+        if (gameCampaign == null) {
+            return Result.error("找不到对应活动配置!");
+        }
+
+        Wrapper<GameCampaignSupport> query = Wrappers.<GameCampaignSupport>lambdaQuery()
+                .eq(GameCampaignSupport::getCampaignId, id)
+                .groupBy(GameCampaignSupport::getServerId);
+
+        List<Integer> serverIds = new ArrayList<>();
+        List<GameCampaignSupport> supports = campaignSupportService.list(query);
+        supports.forEach(t -> {
+            serverIds.add(t.getServerId());
+        });
+
+        Map<Integer, Response> response = gameServerService.gameServerGet(serverIds, campaignUpdateUrl);
+        log.info("sync id:{} response:{}", id, response);
         return Result.ok("编辑成功!");
     }
 
