@@ -20,11 +20,6 @@
                                 <a-input placeholder="请输入活动项类型" v-model="queryParam.type"></a-input>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="buff id">
-                                <a-input placeholder="请输入buff id" v-model="queryParam.buffId"></a-input>
-                            </a-form-item>
-                        </a-col>
                         <a-col :md="12" :sm="16">
                             <a-form-item label="加成开始时间">
                                 <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
@@ -146,6 +141,11 @@ export default {
                     }
                 },
                 {
+                    title: "id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "活动id",
                     align: "center",
                     dataIndex: "campaignId"
@@ -169,11 +169,6 @@ export default {
                     title: "加成",
                     align: "center",
                     dataIndex: "addition"
-                },
-                {
-                    title: "buff id",
-                    align: "center",
-                    dataIndex: "buffId"
                 },
                 {
                     title: "开始时间",

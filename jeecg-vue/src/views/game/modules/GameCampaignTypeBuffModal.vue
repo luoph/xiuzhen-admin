@@ -19,9 +19,6 @@
                         <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="buff id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['buffId', validatorRules.buffId]" placeholder="请输入buff id" style="width: 100%" />
-                </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
@@ -72,7 +69,6 @@ export default {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
                 typeId: { rules: [{ required: true, message: "请输入game_campaign_type.id!" }] },
                 type: { rules: [{ required: true, message: "请输入活动项类型!" }] },
-                buffId: { rules: [{ required: true, message: "请输入buff id!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
@@ -94,7 +90,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "type", "buffId", "startTime", "endTime", "description", "addition", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
             });
         },
         close() {
@@ -138,7 +134,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "buffId", "startTime", "endTime", "description", "addition", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
         },
     }
 };
