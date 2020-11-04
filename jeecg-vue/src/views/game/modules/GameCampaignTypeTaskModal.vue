@@ -21,6 +21,9 @@
                 <a-form-item label="任务完成条件" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['target', validatorRules.target]" placeholder="请输入任务完成条件" style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="任务参数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['args', validatorRules.args]" placeholder="请输入任务参数" style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
                 </a-form-item>
@@ -71,6 +74,7 @@ export default {
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
                 moduleId: { rules: [{ required: true, message: "请输入task_module_type.json.module_id!" }] },
                 target: { rules: [{ required: true, message: "请输入任务完成条件!" }] },
+                args: { rules: [{ required: true, message: "请输入任务参数!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
                 createTime: {},
                 updateTime: {}
@@ -91,7 +95,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "reward", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "args", "reward"));
             });
         },
         close() {
@@ -135,7 +139,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "reward", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "reward"));
         }
     }
 };

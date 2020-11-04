@@ -32,12 +32,6 @@ public class GameCampaignTypeBuff extends GameCampaignTypeBase {
     private Integer type;
 
     /**
-     * buff id
-     */
-    @Excel(name = "buff id", width = 15)
-    private Integer buffId;
-
-    /**
      * 开始时间
      */
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)

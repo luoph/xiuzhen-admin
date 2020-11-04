@@ -164,6 +164,11 @@ export default {
                     dataIndex: "target"
                 },
                 {
+                    title: "任务参数",
+                    align: "center",
+                    dataIndex: "args"
+                },
+                {
                     title: "奖励列表",
                     align: "center",
                     dataIndex: "reward"

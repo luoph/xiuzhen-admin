@@ -45,6 +45,12 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
     private Integer target;
 
     /**
+     * 任务参数
+     */
+    @Excel(name = "任务参数", width = 15)
+    private Integer args;
+
+    /**
      * 奖励列表
      */
     @Excel(name = "奖励列表", width = 15)

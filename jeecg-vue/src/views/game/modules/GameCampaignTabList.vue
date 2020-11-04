@@ -186,7 +186,7 @@
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
                                                     <a-col :span="4">
-                                                        任务id
+                                                        任务id（task_id）
                                                     </a-col>
                                                     <a-col :span="18">
                                                         <a-input-number class="input-number" v-model="item.taskId" placeholder="请输入任务id" />
@@ -202,7 +202,7 @@
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
                                                     <a-col :span="4">
-                                                        模块id
+                                                        模块id （module_id）
                                                     </a-col>
                                                     <a-col :span="18">
                                                         <a-input-number class="input-number" v-model="item.moduleId" placeholder="请输入模块id(task_module_type.module_id)" />
@@ -210,10 +210,18 @@
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
                                                     <a-col :span="4">
-                                                        任务完成条件
+                                                        完成条件（target）
                                                     </a-col>
                                                     <a-col :span="18">
                                                         <a-input-number class="input-number" v-model="item.target" placeholder="请输入任务完成条件" />
+                                                    </a-col>
+                                                </a-row>
+                                                <a-row type="flex" align="middle" class="ant-row">
+                                                    <a-col :span="4">
+                                                        任务参数（args）
+                                                    </a-col>
+                                                    <a-col :span="18">
+                                                        <a-input-number class="input-number" v-model="item.args" placeholder="请输入任务参数" />
                                                     </a-col>
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
@@ -226,7 +234,7 @@
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
                                                     <a-col :span="4">
-                                                        跳转id
+                                                        跳转id（jump_id）
                                                     </a-col>
                                                     <a-col :span="18">
                                                         <a-input-number class="input-number" v-model="item.jumpId" placeholder="请输入跳转id" />
@@ -246,14 +254,6 @@
                                             <a-col span="22">
                                                 <a-row class="ant-row">
                                                     {{ "配置：" + (index + 1) }}
-                                                </a-row>
-                                                <a-row type="flex" align="middle" class="ant-row">
-                                                    <a-col :span="4">
-                                                        buffId
-                                                    </a-col>
-                                                    <a-col :span="18">
-                                                        <a-input-number class="input-number" v-model="item.buffId" placeholder="请输入buffId" />
-                                                    </a-col>
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
                                                     <a-col :span="4">
