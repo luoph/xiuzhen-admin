@@ -108,6 +108,7 @@
                     <a-divider type="vertical" />
                     <a @click="handleServerList(record)">活动状态</a>
                     <a-divider type="vertical" />
+                    <a @click="handleSyncCampaign(record)">同步到区服</a>
                     <!-- <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
@@ -130,6 +131,7 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction } from "@/api/manage";
 import GameCampaignModal from "./modules/GameCampaignModal";
 import GameCampaignServerList from "./modules/GameCampaignServerList";
 import GameCampaignTabList from "./modules/GameCampaignTabList";
@@ -255,6 +257,7 @@ export default {
             url: {
                 list: "game/gameCampaign/list",
                 delete: "game/gameCampaign/delete",
+                sync: "game/gameCampaign/sync",
                 deleteBatch: "game/gameCampaign/deleteBatch",
                 exportXlsUrl: "game/gameCampaign/exportXls",
                 importExcelUrl: "game/gameCampaign/importExcel"
@@ -281,7 +284,7 @@ export default {
         },
         handleEdit: function(record) {
             this.$refs.modalForm.edit(record);
-            this.$refs.modalForm.title = "编辑";
+            this.$refs.modalForm.title = "活动信息";
             this.$refs.modalForm.disableSubmit = false;
         },
         handleServerList: function(record) {
@@ -290,8 +293,23 @@ export default {
         },
         handleTabList: function(record) {
             this.$refs.tabListModal.edit(record);
-            this.$refs.tabListModal.title = "编辑";
+            this.$refs.tabListModal.title = "页签配置";
             this.$refs.tabListModal.disableSubmit = false;
+        },
+        handleSyncCampaign: function(record) {
+            const that = this;
+            that.confirmLoading = true;
+            getAction(that.url.sync, { id: record.id })
+                .then(res => {
+                    if (res.success) {
+                        that.$message.success("同步成功");
+                    } else {
+                        that.$message.error("同步失败");
+                    }
+                })
+                .finally(() => {
+                    that.confirmLoading = false;
+                });
         }
     }
 };

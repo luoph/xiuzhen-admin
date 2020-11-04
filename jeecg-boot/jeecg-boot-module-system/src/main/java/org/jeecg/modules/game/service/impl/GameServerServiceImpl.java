@@ -1,17 +1,19 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.Response;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.primitives.Ints;
 import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,22 +25,54 @@ import java.util.Map;
 @Service
 public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameServer> implements IGameServerService {
 
-    @Resource
-    private GameServerMapper gameServerMapper;
-
     @Override
-    public Map<Long, Response> gameServerRequest(long[] serverIds, String requestUrl) {
-        Map<Long, Response> responseMap = new HashMap<>();
-        for (long serverId : serverIds) {
+    public Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path) {
+        Map<Integer, Response> responseMap = new HashMap<>();
+        for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
             try {
-                Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + requestUrl), Response.class);
+                Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path), Response.class);
                 responseMap.put(serverId, response);
             } catch (Exception e) {
-                log.error("gameServerRequest error, serverId:" + serverId, e);
+                log.error("gameServerGet error, serverId:" + serverId, e);
             }
         }
         return responseMap;
+    }
+
+    @Override
+    public Map<Integer, Response> gameServerGet(String serverIds, String path) {
+        return gameServerGet(StrUtil.splitToInt(serverIds, ","), path);
+    }
+
+    @Override
+    public Map<Integer, Response> gameServerGet(int[] serverIds, String path) {
+        return gameServerGet(Ints.asList(serverIds), path);
+    }
+
+    @Override
+    public Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, JSONObject data) {
+        Map<Integer, Response> responseMap = new HashMap<>();
+        for (Integer serverId : serverIds) {
+            GameServer gameServer = getById(serverId);
+            try {
+                Response response = JSON.parseObject(OkHttpHelper.post(gameServer.getGmUrl() + path, data), Response.class);
+                responseMap.put(serverId, response);
+            } catch (Exception e) {
+                log.error("gameServerPost error, serverId:" + serverId, e);
+            }
+        }
+        return responseMap;
+    }
+
+    @Override
+    public Map<Integer, Response> gameServerPost(int[] serverIds, String path, JSONObject data) {
+        return gameServerPost(Ints.asList(serverIds), path, data);
+    }
+
+    @Override
+    public Map<Integer, Response> gameServerPost(String serverIds, String path, JSONObject data) {
+        return gameServerPost(StrUtil.splitToInt(serverIds, ","), path, data);
     }
 
 }

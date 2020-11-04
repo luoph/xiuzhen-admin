@@ -1,6 +1,5 @@
 package org.jeecg.modules.game.controller;
 
-import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.DataResponse;
 import cn.youai.commons.model.Response;
 import com.alibaba.fastjson.JSON;
@@ -153,7 +152,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-刷新活动配置", notes = "游戏服配置-刷新活动配置")
     @GetMapping(value = "/updateActivity")
     public Result<?> updateActivity(@RequestParam(name = "ids") String ids) {
-        Map<Long, Response> responseMap = gameServerService.gameServerRequest(StrUtil.splitToLong(ids, ","), updateActivityUrl);
+        Map<Integer, Response> responseMap = gameServerService.gameServerGet(ids, updateActivityUrl);
         log.info("updateActivity response:{}", responseMap);
         return Result.ok("刷新活动配置成功！");
     }
@@ -162,7 +161,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-刷新游戏配置", notes = "游戏服配置-刷新游戏配置")
     @GetMapping(value = "/updateSetting")
     public Result<?> updateSetting(@RequestParam(name = "ids") String ids) {
-        Map<Long, Response> responseMap = gameServerService.gameServerRequest(StrUtil.splitToLong(ids, ","), updateSettingUrl);
+        Map<Integer, Response> responseMap = gameServerService.gameServerGet(ids, updateSettingUrl);
         log.info("updateSetting response:{}", responseMap);
         return Result.ok("刷新游戏配置成功！");
     }
@@ -184,7 +183,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @GetMapping(value = "/startMaintain")
     @RequiresPermissions("game:server:admin")
     public Result<?> startMaintain(@RequestParam(name = "ids") String ids) {
-        Map<Long, Response> responseMap = gameServerService.gameServerRequest(StrUtil.splitToLong(ids, ","), startMaintainUrl);
+        Map<Integer, Response> responseMap = gameServerService.gameServerGet(ids, startMaintainUrl);
         log.info("startMaintain response:{}", responseMap);
         return Result.ok("开启维护状态成功！");
     }
@@ -194,7 +193,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @RequiresPermissions("game:server:admin")
     @GetMapping(value = "/stopMaintain")
     public Result<?> stopMaintain(@RequestParam(name = "ids") String ids) {
-        Map<Long, Response> responseMap = gameServerService.gameServerRequest(StrUtil.splitToLong(ids, ","), stopMaintainUrl);
+        Map<Integer, Response> responseMap = gameServerService.gameServerGet(ids, stopMaintainUrl);
         log.info("stopMaintain response:{}", responseMap);
         return Result.ok("关闭维护状态成功！");
     }
