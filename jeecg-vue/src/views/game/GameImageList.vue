@@ -20,6 +20,11 @@
                                 <a-input placeholder="请输入相对路径" v-model="queryParam.url"></a-input>
                             </a-form-item>
                         </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="备注">
+                                <a-input placeholder="请输入备注" v-model="queryParam.remark"></a-input>
+                            </a-form-item>
+                        </a-col>
                     </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
@@ -132,6 +137,15 @@ export default {
                     title: "图片类型",
                     align: "center",
                     dataIndex: "type",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 1) {
+                            text = "icon";
+                        } else if (value === 2) {
+                            text = "banner";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "图片名",
@@ -144,12 +158,12 @@ export default {
                     dataIndex: "url"
                 },
                 {
-                    title: "图片宽px",
+                    title: "图片宽（px）",
                     align: "center",
                     dataIndex: "width"
                 },
                 {
-                    title: "图片高px",
+                    title: "图片高（px）",
                     align: "center",
                     dataIndex: "height"
                 },
@@ -159,14 +173,9 @@ export default {
                     dataIndex: "remark"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime"
-                },
-                {
-                    title: "创建人",
-                    align: "center",
-                    dataIndex: "createBy"
                 },
                 {
                     title: "操作",
