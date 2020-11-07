@@ -9,6 +9,24 @@
                         <a-select-option :value="2">2-banner</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-upload
+                        listType="picture-card"
+                        class="image-uploader"
+                        :showUploadList="false"
+                        :action="uploadAction"
+                        :data="{ isup: 1 }"
+                        :headers="headers"
+                        :beforeUpload="beforeUpload"
+                        @change="handleChange"
+                    >
+                        <img v-if="picUrl" :src="getImageView()" alt="图片" style="height:104px;max-width:300px" />
+                        <div v-else>
+                            <a-icon :type="uploadLoading ? 'loading' : 'plus'" />
+                            <div class="ant-upload-text">上传</div>
+                        </div>
+                    </a-upload>
+                </a-form-item>
                 <a-form-item label="图片名" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入图片名"></a-input>
                 </a-form-item>
@@ -29,6 +47,9 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import moment from "moment";
+import Vue from "vue";
+import { ACCESS_TOKEN } from "@/store/mutation-types";
 
 export default {
     name: "GameImageModal",
@@ -50,6 +71,9 @@ export default {
                 sm: { span: 16 }
             },
             confirmLoading: false,
+            uploadLoading: false,
+            picUrl: "",
+            headers: {},
             validatorRules: {
                 type: { rules: [{ required: true, message: "请输入图片类型!" }] },
                 name: { rules: [{ required: true, message: "请输入图片名!" }] },
@@ -60,13 +84,24 @@ export default {
             },
             url: {
                 add: "game/gameImage/add",
-                edit: "game/gameImage/edit"
+                edit: "game/gameImage/edit",
+                fileUpload: window._CONFIG["domainURL"] + "/game/gameImage/upload",
+                imgServer: window._CONFIG["domainURL"] + "/sys/common/view"
             }
         };
     },
-    created() {},
+    created() {
+        const token = Vue.ls.get(ACCESS_TOKEN);
+        this.headers = { "X-Access-Token": token };
+    },
+    computed: {
+        uploadAction: function() {
+            return this.url.fileUpload;
+        }
+    },
     methods: {
         add() {
+            this.picUrl = "";
             this.edit({});
         },
         edit(record) {
@@ -119,6 +154,35 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "type", "name", "url", "width", "height", "remark"));
+        },
+        beforeUpload: function(file) {
+            var fileType = file.type;
+            if (fileType.indexOf("image") < 0) {
+                this.$message.warning("请上传图片");
+                return false;
+            }
+            return true;
+        },
+        handleChange(info) {
+            this.picUrl = "";
+            if (info.file.status === "uploading") {
+                this.uploadLoading = true;
+                return;
+            }
+            if (info.file.status === "done") {
+                var response = info.file.response;
+                this.uploadLoading = false;
+                console.log(response);
+                if (response.success) {
+                    this.model.avatar = response.message;
+                    this.picUrl = "Has no pic url yet";
+                } else {
+                    this.$message.warning(response.message);
+                }
+            }
+        },
+        getImageView() {
+            return this.url.imgServer + "/" + this.model.avatar;
         }
     }
 };
@@ -131,5 +195,9 @@ export default {
     margin-left: 30px;
     margin-bottom: 30px;
     float: right;
+}
+.image-uploader > .ant-upload {
+    width: 104px;
+    height: 104px;
 }
 </style>
