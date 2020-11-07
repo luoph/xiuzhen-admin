@@ -33,10 +33,17 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
 
 	@Override
 	public List<PayUserRank> queryUserRankByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
+		// 如果选择开始时间和结束时间是同一天
+		Date payTimeBeginDate = null;
+		Date payTimeEndDate = null;
+		payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
+		payTimeEndDate = DateUtils.parseDate(payTimeEnd);
 
-		Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
-		Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);
-
+		if (payTimeBegin.equals(payTimeEnd)){
+			Date[] dates = DateUtils.dateStartAndEnd(payTimeBeginDate);
+			payTimeBeginDate = dates[0];
+			payTimeEndDate = dates[1];
+		}
 		return payUserRankMapper.queryUserRankByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
 	}
 
@@ -45,8 +52,16 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
 		List<PayUserRank> list = null;
 		Date nowDate = new Date();
 		if (days == 0) {
-			Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
-			Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+			// 如果选择开始时间和结束时间是同一天
+			Date rangeDateBeginTime = null;
+			Date rangeDateEndTime = null;
+			rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
+			rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+			if (rangeDateBegin.equals(rangeDateEnd)){
+				Date[] dates = DateUtils.dateStartAndEnd(rangeDateBeginTime);
+				rangeDateBeginTime = dates[0];
+				rangeDateEndTime = dates[1];
+			}
 			list = payUserRankMapper.queryPayRankByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
 			return getDataTreating(list);
 		}
@@ -102,9 +117,10 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
 		String issuing = OrderStatus.ISSUING.getName();
 		String complete = OrderStatus.COMPLETE.getName();
 		map.put(paid, OrderStatus.PAID.getType());
-		map.put(forward, OrderStatus.PAID.getType());
-		map.put(issuing, OrderStatus.PAID.getType());
-		map.put(complete, OrderStatus.PAID.getType());
+		map.put(forward, OrderStatus.FORWARD.getType());
+		map.put(issuing, OrderStatus.ISSUING.getType());
+		map.put(complete, OrderStatus.COMPLETE.getType());
 		return map;
 	}
+
 }

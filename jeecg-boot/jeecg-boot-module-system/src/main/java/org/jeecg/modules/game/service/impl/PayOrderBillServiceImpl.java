@@ -34,9 +34,17 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
 
     @Override
     public BigDecimal queryBillSumByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
-        Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
-        Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);
+        // 如果选择开始时间和结束时间是同一天
+        Date payTimeBeginDate = null;
+        Date payTimeEndDate = null;
+        payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
+        payTimeEndDate = DateUtils.parseDate(payTimeEnd);
 
+        if (payTimeBegin.equals(payTimeEnd)){
+            Date[] dates = DateUtils.dateStartAndEnd(payTimeBeginDate);
+            payTimeBeginDate = dates[0];
+            payTimeEndDate = dates[1];
+        }
         return payOrderBillMapper.queryBillSumByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
     }
 
@@ -47,11 +55,19 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         int payRankBegin = Integer.parseInt(payRanks[0]);
         int payRankEnd = Integer.parseInt(payRanks[1]);
         if (days == 0) {
-            Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
-            Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+            // 如果选择开始时间和结束时间是同一天
+            Date rangeDateBeginTime = null;
+            Date rangeDateEndTime = null;
+            rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
+            rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+            if (rangeDateBegin.equals(rangeDateEnd)){
+                Date[] dates = DateUtils.dateStartAndEnd(rangeDateBeginTime);
+                rangeDateBeginTime = dates[0];
+                rangeDateEndTime = dates[1];
+            }
             // 查询该档位下付费人数和
             Integer payNumSum = payOrderBillMapper.queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
-            payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
+	        payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
             payOrderBill.setPayRank(payRank);
             return getDataTreating(payOrderBill);
 
@@ -74,7 +90,6 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
             String[] payRanks = payRank.split("-");
             int payRankBegin = Integer.parseInt(payRanks[0]);
             int payRankEnd = Integer.parseInt(payRanks[1]);
-
             if (days == 0) {
                 Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
                 Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);

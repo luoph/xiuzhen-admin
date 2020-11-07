@@ -59,10 +59,6 @@ public class PayUserRankController extends JeecgController<PayUserRank, IPayUser
         if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
             return Result.ok(page);
         }
-	    if (payTimeBegin.equals(payTimeEnd)){
-		    payTimeBegin = payTimeBegin + " 00:00:00";
-		    payTimeEnd = payTimeEnd + " 23:59:59";
-	    }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<PayUserRank> payUserRankList = payUserRankService.queryUserRankByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
         page.setRecords(payUserRankList).setTotal(payUserRankList.size());
@@ -91,14 +87,8 @@ public class PayUserRankController extends JeecgController<PayUserRank, IPayUser
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
             return Result.ok(page);
         }
-	    // 如果选择开始时间和结束时间是同一天
-	    if (rangeDateBegin.equals(rangeDateEnd)){
-		    rangeDateBegin = rangeDateBegin + " 00:00:00";
-		    rangeDateEnd = rangeDateEnd + " 23:59:59";
-	    }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<PayUserRank> payUserRankList = payUserRankService.queryPayRankByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
-
         page.setRecords(payUserRankList).setTotal(payUserRankList.size());
         return Result.ok(page);
     }

@@ -26,9 +26,17 @@ public class PayOrderGiftVOServiceImpl implements IPayOrderGiftVOService {
 
 	@Override
 	public List<PayOrderGiftVO> queryGiftByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
+		// 如果选择开始时间和结束时间是同一天
+		Date payTimeBeginDate = null;
+		Date payTimeEndDate = null;
+		payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
+		payTimeEndDate = DateUtils.parseDate(payTimeEnd);
 
-		Date payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
-		Date payTimeEndDate = DateUtils.parseDate(payTimeEnd);
+		if (payTimeBegin.equals(payTimeEnd)){
+			Date[] dates = DateUtils.dateStartAndEnd(payTimeBeginDate);
+			payTimeBeginDate = dates[0];
+			payTimeEndDate = dates[1];
+		}
 
 		// 查询礼包消费的次数和消费的总金额
 		PayOrderGiftVO giftConsume = payOrderGiftVOMapper.queryGiftConsume(payTimeBeginDate, payTimeEndDate, serverId, channel);
