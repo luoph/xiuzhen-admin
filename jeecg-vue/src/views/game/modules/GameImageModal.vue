@@ -3,7 +3,7 @@
         <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item label="图片类型: 1.icon, 2.banner" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="图片类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select :disabled="isEdit" placeholder="选择图片类型" v-decorator="['type', validatorRules.type]" initialValue="1">
                         <a-select-option :value="1">1-icon</a-select-option>
                         <a-select-option :value="2">2-banner</a-select-option>
@@ -53,9 +53,9 @@ export default {
             validatorRules: {
                 type: { rules: [{ required: true, message: "请输入图片类型!" }] },
                 name: { rules: [{ required: true, message: "请输入图片名!" }] },
-                url: { rules: [{ required: true, message: "请输入相对路径!" }] },
-                width: { rules: [{ required: true, message: "请输入图片宽px!" }] },
-                height: { rules: [{ required: true, message: "请输入图片高px!" }] },
+                url: { rules: [{ required: false, message: "请输入相对路径!" }] },
+                width: { rules: [{ required: false, message: "请输入图片宽px!" }] },
+                height: { rules: [{ required: false, message: "请输入图片高px!" }] },
                 remark: { rules: [{ required: true, message: "请输入备注!" }] }
             },
             url: {
