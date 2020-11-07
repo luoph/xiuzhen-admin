@@ -75,7 +75,7 @@
         </if>
     </select>
 
-    <select id="queryPayNumSum">
+    <select id="queryPayNumSum" resultType="Integer">
         SELECT
         COUNT(DISTINCT(player_id))
         FROM pay_order

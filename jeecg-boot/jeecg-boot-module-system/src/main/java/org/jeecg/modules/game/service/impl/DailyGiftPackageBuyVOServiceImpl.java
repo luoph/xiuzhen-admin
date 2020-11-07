@@ -29,10 +29,17 @@ public class DailyGiftPackageBuyVOServiceImpl implements IDailyGiftPackageBuyVOS
 
     @Override
     public List<DailyGiftPackageBuyVO> queryGiftPackageByDateRange(Integer serverId, String createTimeBegin, String createTimeEnd) {
-
+        // 如果选择开始时间和结束时间是同一天
+        Date createTimeBeginDate = null;
+        Date createTimeEndDate = null;
+        createTimeBeginDate = DateUtils.parseDate(createTimeBegin);
+        createTimeEndDate = DateUtils.parseDate(createTimeEnd);
+        if (createTimeBegin.equals(createTimeEnd)){
+            Date[] dates = DateUtils.dateStartAndEnd(createTimeBeginDate);
+            createTimeBeginDate = dates[0];
+            createTimeEndDate = dates[1];
+        }
         List<DailyGiftPackageBuyVO> dailyGiftPackageBuyVOList = null;
-        Date createTimeBeginDate = DateUtils.parseDate(createTimeBegin);
-        Date createTimeEndDate = DateUtils.parseDate(createTimeEnd);
         try {
             // 通过serverId切换数据源
             DataSourceHelper.useServerDatabase(serverId);

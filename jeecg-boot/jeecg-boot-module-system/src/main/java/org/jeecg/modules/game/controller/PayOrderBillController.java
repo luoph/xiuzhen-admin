@@ -65,11 +65,6 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
 		if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
 			return Result.ok(pageVo);
 		}
-		// 如果选择开始时间和结束时间是同一天
-		if (payTimeBegin.equals(payTimeEnd)){
-			payTimeBegin = payTimeBegin + " 00:00:00";
-			payTimeEnd = payTimeEnd + " 23:59:59";
-		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
 		BigDecimal billSum = payOrderBillService.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
 		// 查不到流水总额,设置流水总额为0
@@ -116,12 +111,6 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
 			return Result.ok(page);
 		}
 		String channel = gameChannelService.queryChannelNameById(channelId);
-
-		// 如果选择开始时间和结束时间是同一天
-		if (rangeDateBegin.equals(rangeDateEnd)){
-			rangeDateBegin = rangeDateBegin + " 00:00:00";
-			rangeDateEnd = rangeDateEnd + " 23:59:59";
-		}
 		if (StringUtils.isEmpty(payRank)) {
 			list = payOrderBillService.queryForList(rangeDateBegin, rangeDateEnd, days, serverId, channel);
 			page.setRecords(list).setTotal(list.size());

@@ -12,11 +12,7 @@ import org.jeecg.modules.game.service.IDailyGiftPackageBuyService;
 import org.jeecg.modules.game.service.IDailyGiftPackageBuyVOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -59,11 +55,6 @@ public class DailyGiftPackageBuyController extends JeecgController<DailyGiftPack
         if (StringUtils.isEmpty(createTimeBegin) && StringUtils.isEmpty(createTimeEnd) && serverId == 0 && channelId == 0) {
             return Result.ok(pageVo);
         }
-	    // 如果选择开始时间和结束时间是同一天
-	    if (createTimeBegin.equals(createTimeEnd)){
-		    createTimeBegin = createTimeBegin + " 00:00:00";
-		    createTimeEnd = createTimeEnd + " 23:59:59";
-	    }
         List<DailyGiftPackageBuyVO> dailyGiftPackageBuyVOList = dailyGiftPackageBuyVOService.queryGiftPackageByDateRange(serverId, createTimeBegin, createTimeEnd);
         pageVo.setRecords(dailyGiftPackageBuyVOList).setTotal(dailyGiftPackageBuyVOList.size());
         return Result.ok(pageVo);
