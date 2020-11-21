@@ -20,13 +20,18 @@ public interface GameChannelMapper extends BaseMapper<GameChannel> {
      * 查询渠道服
      *
      * @param channelId 渠道id
-     * @return
+     * @return List Of {@linkplain GameServer}
      */
-    @Select("SELECT s.`id`, s.`game_id`, s.`name`, s.`host`, s.`login_url`, s.`status`, s.`recommend`, s.`warning`, s.`min_version`, s.`max_version`" +
+    @Select("SELECT s.`id`, s.`game_id`, s.`name`, s.`host`, s.`open_time`, s.`login_url`, s.`status`, s.`recommend`, s.`warning`, s.`min_version`, s.`max_version`" +
             " FROM `game_server` s LEFT JOIN `game_channel_server` c ON c.`server_id` = s.`id`" +
             " WHERE c.`channel_id` = #{channel_id}  AND c.`del_flag` = 0 ORDER BY c.`position`")
     List<GameServer> getServerListChannelId(@Param("channel_id") Long channelId);
 
+    /**
+     * 超找渠道名
+     *
+     * @return 渠道名
+     */
     @Select("SELECT simple_name FROM game_channel WHERE id=#{channelId}")
     String queryChannelNameById(@Param("channelId") Integer channelId);
 }
