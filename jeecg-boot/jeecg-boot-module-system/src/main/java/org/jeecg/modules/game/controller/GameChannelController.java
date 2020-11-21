@@ -13,7 +13,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.GameServerVO;
 import org.jeecg.modules.game.model.ChannelConfig;
 import org.jeecg.modules.game.model.UpdateConfig;
 import org.jeecg.modules.game.service.IGameChannelService;
@@ -173,7 +173,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
         try {
             List<GameChannel> channelList = gameChannelService.list();
             for (GameChannel channel : channelList) {
-                List<GameServer> servers = gameChannelService.getServerListChannelId(channel.getId());
+                List<GameServerVO> servers = gameChannelService.getServerListChannelId(channel.getId());
 
                 UpdateConfig updateConfig = new UpdateConfig()
                         .setVersionCode(channel.getVersionCode())

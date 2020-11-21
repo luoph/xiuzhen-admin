@@ -2,7 +2,7 @@ package org.jeecg.modules.game.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.GameServerVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,9 @@ import java.util.List;
 public class ChannelConfig {
     private Long noticeId;
     private UpdateConfig updateConfig;
-    private List<GameServer> serverList = new ArrayList<>();
+    private List<GameServerVO> serverList = new ArrayList<>();
 
-    public ChannelConfig(Long noticeId, UpdateConfig updateConfig, List<GameServer> serverList) {
+    public ChannelConfig(Long noticeId, UpdateConfig updateConfig, List<GameServerVO> serverList) {
         this.noticeId = noticeId;
         this.updateConfig = updateConfig;
         this.serverList.addAll(serverList);
