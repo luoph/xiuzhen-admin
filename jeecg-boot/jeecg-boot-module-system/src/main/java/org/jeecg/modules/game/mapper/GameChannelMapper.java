@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.GameServerVO;
 
 import java.util.List;
 
@@ -22,10 +23,11 @@ public interface GameChannelMapper extends BaseMapper<GameChannel> {
      * @param channelId 渠道id
      * @return List Of {@linkplain GameServer}
      */
-    @Select("SELECT s.`id`, s.`game_id`, s.`name`, s.`host`, s.`open_time`, s.`login_url`, s.`status`, s.`recommend`, s.`warning`, s.`min_version`, s.`max_version`" +
+    @Select("SELECT s.`id`, s.`game_id`, s.`name`, s.`host`, UNIX_TIMESTAMP(s.`open_time`) as `open_time`, " +
+            " s.`login_url`, s.`status`, s.`recommend`, s.`warning`, s.`min_version`, s.`max_version`" +
             " FROM `game_server` s LEFT JOIN `game_channel_server` c ON c.`server_id` = s.`id`" +
             " WHERE c.`channel_id` = #{channel_id}  AND c.`del_flag` = 0 ORDER BY c.`position`")
-    List<GameServer> getServerListChannelId(@Param("channel_id") Long channelId);
+    List<GameServerVO> getServerListChannelId(@Param("channel_id") Long channelId);
 
     /**
      * 超找渠道名

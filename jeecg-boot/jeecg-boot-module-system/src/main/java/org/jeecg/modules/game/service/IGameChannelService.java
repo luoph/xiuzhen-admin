@@ -2,7 +2,7 @@ package org.jeecg.modules.game.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.GameServerVO;
 
 import java.util.List;
 
@@ -17,16 +17,16 @@ public interface IGameChannelService extends IService<GameChannel> {
     /**
      * 查询某个渠道的服务器
      *
-     * @param channelId
-     * @return
+     * @param channelId 渠道 id
+     * @return 服务器信息
      */
-    List<GameServer> getServerListChannelId(Long channelId);
+    List<GameServerVO> getServerListChannelId(Long channelId);
 
     /**
      * 通过渠道id查询渠道名称
      *
-     * @param channelId
-     * @return
+     * @param channelId 渠道 id
+     * @return 渠道名称
      */
     String queryChannelNameById(Integer channelId);
 }
