@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.player.mapper.PlayerMapper">
 
     <!-- 玩家日志查询映射结果 -->
@@ -42,7 +43,8 @@
         <result column="create_date" property="createDate"/>
     </resultMap>
 
-    <select id="queryForList" resultMap="BaseResultMap" parameterType="org.jeecg.modules.player.entity.PlayerDTO">
+    <select id="queryForList" resultMap="BaseResultMap"
+            parameterType="org.jeecg.modules.player.entity.PlayerDTO">
         SELECT
         id,
         account,
@@ -95,11 +97,8 @@
         FROM
         ${logTable}
         <where>
-            <if test="playerId != null ">
+            <if test="playerId > 0 ">
                 AND player_id = #{playerId}
-            </if>
-            <if test="serverId != 0">
-                AND server_id = #{serverId}
             </if>
             <if test="rangeDateBeginTime != null">
                 AND create_date >= #{rangeDateBeginTime}
