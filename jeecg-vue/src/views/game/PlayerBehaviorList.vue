@@ -93,7 +93,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: 60,
+                    width: "4%",
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -102,11 +102,13 @@ export default {
                 {
                     title: "日期",
                     align: "center",
+                    width: "6%",
                     dataIndex: "createDate"
                 },
                 {
                     title: "区服ID",
                     align: "center",
+                    width: "5%",
                     dataIndex: "serverId"
                 },
                 {
@@ -117,81 +119,97 @@ export default {
                 {
                     title: "玩家名字",
                     align: "center",
+                    width: "5%",
                     dataIndex: "nickname"
                 },
                 {
                     title: "修炼年数",
                     align: "center",
+                    width: "5%",
                     dataIndex: "practiceYear"
                 },
                 {
                     title: "境界等级",
                     align: "center",
+                    width: "5%",
                     dataIndex: "reamLevel"
                 },
                 {
                     title: "福地夺宝/斗法",
                     align: "center",
+                    width: "5%",
                     dataIndex: "arenaBattle"
                 },
                 {
                     title: "仙兽秘境",
                     align: "center",
+                    width: "5%",
                     dataIndex: "mapExplore"
                 },
                 {
                     title: "上古遗迹",
                     align: "center",
+                    width: "5%",
                     dataIndex: "travelHill"
                 },
                 {
                     title: "剧情关数",
                     align: "center",
+                    width: "5%",
                     dataIndex: "mainStoryLevel"
                 },
                 {
                     title: "蛇陵魔窟（灵界器灵）",
                     align: "center",
+                    width: "5%",
                     dataIndex: "spiritualWorldBoss"
                 },
                 {
                     title: "魔王入侵（世界boss）",
                     align: "center",
+                    width: "5%",
                     dataIndex: "worldBoss"
                 },
                 {
                     title: "北冥魔海",
                     align: "center",
+                    width: "5%",
                     dataIndex: "mainStoryBoss"
                 },
                 {
                     title: "不死魔巢",
                     align: "center",
+                    width: "5%",
                     dataIndex: "petBoss"
                 },
                 {
                     title: "仙盟仙宴",
                     align: "center",
+                    width: "5%",
                     dataIndex: "factionBanquet"
                 },
                 {
                     title: "当天充值",
                     align: "center",
+                    width: "5%",
                     dataIndex: "recharge"
                 },
                 {
                     title: "玉髓消耗",
                     align: "center",
+                    width: "5%",
                     dataIndex: "consumeMoney"
                 },
                 {
                     title: "阅历值",
                     align: "center",
+                    width: "5%",
                     dataIndex: "experience"
                 },
                 {
                     title: "在线时长",
                     align: "center",
+                    width: "5%",
                     dataIndex: "onlineTime"
                 }
 
