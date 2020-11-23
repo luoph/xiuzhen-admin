@@ -102,7 +102,7 @@ export default {
                 {
                     title: "日期",
                     align: "center",
-                    width: "6%",
+                    width: "8%",
                     dataIndex: "createDate"
                 },
                 {
@@ -114,7 +114,7 @@ export default {
                 {
                     title: "玩家ID",
                     align: "center",
-                    width: "5%",
+                    width: "8%",
                     dataIndex: "playerId"
                 },
                 {
