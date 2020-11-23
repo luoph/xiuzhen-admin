@@ -7,7 +7,8 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+                        <game-channel-server @onSelectChannel="onSelectChannel"
+                                             @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="4" :sm="4">
                         <a-form-item label="角色昵称">
@@ -16,7 +17,8 @@
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']"
+                                            @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="5">
@@ -56,6 +58,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
+                :scroll="{ x: 1500, y: 800 }"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
@@ -137,22 +140,37 @@ export default {
                     dataIndex: "mapExplore"
                 },
                 {
+                    title: "上古遗迹",
+                    align: "center",
+                    dataIndex: "travelHill"
+                },
+                {
                     title: "剧情关数",
                     align: "center",
                     dataIndex: "mainStoryLevel"
                 },
                 {
-                    title: "灵界器灵",
+                    title: "蛇陵魔窟（灵界器灵）",
                     align: "center",
-                    dataIndex: "spiritualWorldoss"
+                    dataIndex: "spiritualWorldBoss"
                 },
                 {
-                    title: "魔王入侵",
+                    title: "魔王入侵（世界boss）",
                     align: "center",
                     dataIndex: "worldBoss"
                 },
                 {
-                    title: "仙魔仙宴",
+                    title: "北冥魔海",
+                    align: "center",
+                    dataIndex: "mainStoryBoss"
+                },
+                {
+                    title: "不死魔巢",
+                    align: "center",
+                    dataIndex: "petBoss"
+                },
+                {
+                    title: "仙盟仙宴",
                     align: "center",
                     dataIndex: "factionBanquet"
                 },
@@ -167,17 +185,21 @@ export default {
                     dataIndex: "consumeMoney"
                 },
                 {
+                    title: "阅历值",
+                    align: "center",
+                    dataIndex: "experience"
+                },
+                {
                     title: "在线时长",
                     align: "center",
                     dataIndex: "onlineTime"
-                },
+                }
 
             ],
             url: {
-                list: "game/player/behavior",
+                list: "game/player/behavior"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -186,7 +208,8 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {},
+        initDictConfig() {
+        },
         onSelectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },

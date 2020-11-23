@@ -29,7 +29,6 @@ public interface PlayerMapper extends BaseMapper<Player> {
 	List<PlayerBehavior> queryPlayerBehavior(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
 	                                         @Param("rangeDateEndTime") Date rangeDateEndTime,
 	                                         @Param("playerId") Long playerId,
-	                                         @Param("serverId") int serverId,
 	                                         @Param("logTable") String logTable);
 
 
