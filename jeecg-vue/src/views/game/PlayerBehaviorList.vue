@@ -114,6 +114,7 @@ export default {
                 {
                     title: "玩家ID",
                     align: "center",
+                    width: "5%",
                     dataIndex: "playerId"
                 },
                 {
