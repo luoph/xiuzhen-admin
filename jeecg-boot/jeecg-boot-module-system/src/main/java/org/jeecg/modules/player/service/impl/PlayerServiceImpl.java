@@ -2,16 +2,17 @@ package org.jeecg.modules.player.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
-import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
-import org.jeecg.modules.game.mapper.PayOrderGiftMapper;
 import org.jeecg.modules.game.mapper.PayUserRankMapper;
-import org.jeecg.modules.player.entity.*;
+import org.jeecg.modules.player.entity.PayOrder;
+import org.jeecg.modules.player.entity.Player;
+import org.jeecg.modules.player.entity.PlayerBehavior;
+import org.jeecg.modules.player.entity.PlayerDTO;
 import org.jeecg.modules.player.mapper.PlayerMapper;
 import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
 import org.jeecg.modules.player.service.IPlayerService;
@@ -21,9 +22,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author jeecg-boot
@@ -190,42 +189,39 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             rangeDateEndTime = DateUtils.now();
         }
 
-        List<PlayerRegisterInfo> playerRegisterInfos = null;
-        if (StringUtils.isNoneBlank(nickname) && serverId >= 0) {
-            // 通过玩家昵称模糊匹配获取对应的玩家id
-            playerRegisterInfos = playerRegisterInfoMapper.getPlayerByNickname(nickname, serverId);
-        }
+        List<PlayerBehavior> playerBehaviorList = playerRegisterInfoMapper.selectBehaviorCount(serverId, nickname, rangeDateBeginTime, rangeDateEndTime, logTable);
 
-        return getPlayerBehaviorList(serverId, rangeDateBeginTime, rangeDateEndTime, playerRegisterInfos);
+        return getPlayerBehaviorList(playerBehaviorList);
     }
 
 
-    private List<PlayerBehavior> getPlayerBehaviorList(int serverId, Date rangeDateBeginTime, Date rangeDateEndTime, List<PlayerRegisterInfo> list) {
+    private List<PlayerBehavior> getPlayerBehaviorList(List<PlayerBehavior> list) {
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyList();
         }
         List<PlayerBehavior> voList = new ArrayList<>();
-        for (PlayerRegisterInfo playerRegisterInfo : list) {
-            long playerId = playerRegisterInfo.getPlayerId();
-            String name = playerRegisterInfo.getName();
 
-            // 通过玩家id获取玩家日志信息
-            List<PlayerBehavior> playerBehaviors = playerMapper.queryPlayerBehavior(rangeDateBeginTime, rangeDateEndTime, playerId, logTable);
+        Map<Long, List<PlayerBehavior>> map = list.stream().collect(Collectors.groupingBy(PlayerBehavior::getPlayerId));
+        for (Map.Entry<Long, List<PlayerBehavior>> v : map.entrySet()) {
+            Long playerId = v.getKey();
+            List<PlayerBehavior> behaviorList = v.getValue();
+            Map<Date, List<PlayerBehavior>> dateListMap = behaviorList.stream().collect(Collectors.groupingBy(PlayerBehavior::getCreateDate));
 
-            // 将list以流的方式通过createDate进行分组变为map
-            Map<Date, List<PlayerBehavior>> map = playerBehaviors.stream().collect(Collectors.groupingBy(PlayerBehavior::getCreateDate));
+            int serverId = behaviorList.get(0).getServerId();
+            String nickname = behaviorList.get(0).getNickname();
             // 遍历map
-            for (Map.Entry<Date, List<PlayerBehavior>> vo : map.entrySet()) {
+            for (Map.Entry<Date, List<PlayerBehavior>> vo : dateListMap.entrySet()) {
                 Date key = vo.getKey();
-                List<PlayerBehavior> behaviorList = vo.getValue();
+                List<PlayerBehavior> behaviorListOne = vo.getValue();
                 PlayerBehavior playerBehavior = new PlayerBehavior();
+                playerBehavior.setPlayerId(playerId);
                 // 数据筛选计算
-                getBehaviorTreating(behaviorList, playerBehavior);
+                getBehaviorTreating(behaviorListOne, playerBehavior);
                 // 设置日期
                 playerBehavior.setCreateDate(key);
                 playerBehavior.setServerId(serverId);
                 playerBehavior.setPlayerId(playerId);
-                playerBehavior.setNickname(name);
+                playerBehavior.setNickname(nickname);
                 voList.add(playerBehavior);
             }
         }
