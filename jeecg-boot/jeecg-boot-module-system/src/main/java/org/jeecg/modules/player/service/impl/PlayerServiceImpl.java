@@ -251,6 +251,9 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         long travelHill = list.stream().filter(i -> i.getType() == PlayerLogType.TRAVEL_HILL.getType()).count();
         behavior.setTravelHill(travelHill);
 
+        long travelTimes = list.stream().filter(i -> i.getType() == PlayerLogType.AUTO_EXPLORE.getType()).count();
+        behavior.setTravelTimes(travelTimes);
+
         long mainStoryLevel = list.stream().filter(i -> i.getType() == PlayerLogType.STORY_LEVEL.getType())
                 .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
         behavior.setMainStoryLevel(mainStoryLevel);
@@ -263,16 +266,41 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
                 .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
         behavior.setWorldBoss(worldBoss);
 
-        long mainStoryBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MAIN_STORY_BOSS.getType())
+        long playerLevel = list.stream().filter(i -> i.getType() == PlayerLogType.PLAYER_LEVEL.getType())
                 .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
+        behavior.setPlayerLevel(playerLevel);
+
+        long combatPower = list.stream().filter(i -> i.getType() == PlayerLogType.COMBAT_POWER.getType())
+                .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
+        behavior.setCombatPower(combatPower);
+
+        long mapLevel = list.stream().filter(i -> i.getType() == PlayerLogType.MAP_LEVEL.getType())
+                .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
+        behavior.setMapLevel(mapLevel);
+
+        long lingShanLevel = list.stream().filter(i -> i.getType() == PlayerLogType.LINGSHAN_CHECKPOINT.getType())
+                .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
+        behavior.setLingShanLevel(lingShanLevel);
+
+        long mainStoryCheck = list.stream().filter(i -> i.getType() == PlayerLogType.MAIN_STORY_LEVEL.getType()).count();
+        behavior.setMainStoryCheck(mainStoryCheck);
+
+        long ghostWar = list.stream().filter(i -> i.getType() == PlayerLogType.GHOST_WAR.getType()).count();
+        behavior.setGhostWar(ghostWar);
+
+        long mainStoryBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MAIN_STORY_BOSS.getType()).count();
         behavior.setMainStoryBoss(mainStoryBoss);
 
-        long petBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MAIN_STORY_BOSS.getType())
-                .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
+        long tierMapExplore = list.stream().filter(i -> i.getType() == PlayerLogType.TIER_MAP_EXPLORE.getType()).count();
+        behavior.setTierMapExplore(tierMapExplore);
+
+        long godRoad = list.stream().filter(i -> i.getType() == PlayerLogType.GOD_ROAD.getType()).count();
+        behavior.setGodRoad(godRoad);
+
+        long petBoss = list.stream().filter(i -> i.getType() == PlayerLogType.PET_BOSS.getType()).count();
         behavior.setPetBoss(petBoss);
 
-        long factionBanquet = list.stream().filter(i -> i.getType() == PlayerLogType.FACTION_BANQUET.getType())
-                .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
+        long factionBanquet = list.stream().filter(i -> i.getType() == PlayerLogType.FACTION_BANQUET.getType()).count();
         behavior.setFactionBanquet(factionBanquet);
 
         long recharge = list.stream().filter(i -> i.getType() == PlayerLogType.RECHARGE.getType()).mapToLong(PlayerBehavior::getValue).sum();
