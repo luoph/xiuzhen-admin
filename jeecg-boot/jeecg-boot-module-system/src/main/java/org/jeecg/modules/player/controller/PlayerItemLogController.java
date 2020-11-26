@@ -12,11 +12,9 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameServer;
-import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.PlayerItemLog;
-import org.jeecg.modules.player.entity.PlayerRegisterInfo;
 import org.jeecg.modules.player.service.BackpackLogService;
 import org.jeecg.modules.player.service.IPlayerItemLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,11 +79,11 @@ public class PlayerItemLogController extends JeecgController<PlayerItemLog, IPla
 	@AutoLog(value = "手动同步日志-编辑")
 	@GetMapping(value = "/sync")
 	public Result<?> edit(BackpackLog backpackLog,
-	                      @RequestParam(name = "syncTimeBegin") String syncTimeBegin,
-	                      @RequestParam(name = "syncTimeEnd") String syncTimeEnd,
-	                      @RequestParam(name = "serverId") Integer serverId,
-	                      @RequestParam(name = "playerId", defaultValue = "0", required = false) Integer playerId,
-	                      HttpServletRequest req
+						  @RequestParam(name = "syncTimeBegin") String syncTimeBegin,
+						  @RequestParam(name = "syncTimeEnd") String syncTimeEnd,
+						  @RequestParam(name = "serverId") Integer serverId,
+						  @RequestParam(name = "playerId", defaultValue = "0", required = false) Long playerId,
+						  HttpServletRequest req
 	) {
 		GameServer gameServer = gameServerService.getOne(Wrappers.<GameServer>lambdaQuery().eq(GameServer::getId, serverId));
 		if (gameServer == null) {
