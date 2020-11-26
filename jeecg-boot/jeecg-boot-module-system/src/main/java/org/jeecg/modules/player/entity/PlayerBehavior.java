@@ -129,6 +129,50 @@ public class PlayerBehavior implements Serializable {
      * 不死魔巢
      */
     private Long petBoss;
+
+    /**
+     * 神游次数
+     */
+    private Long travelTimes;
+
+    /**
+     * 玩家等级
+     */
+    private Long playerLevel;
+
+    /**
+     * 战力
+     */
+    private Long combatPower;
+
+    /**
+     * 冒险等级
+     */
+    private Long mapLevel;
+
+    /**
+     * 符文秘境-小灵山
+     */
+    private Long lingShanLevel;
+
+    /**
+     * 剧情小关卡
+     */
+    private Long mainStoryCheck;
+
+    /**
+     * 神魔战场
+     */
+    private Long ghostWar;
+
+    /**
+     * 丹药秘境
+     */
+    private Long godRoad;
+    /**
+     * 仙器秘境
+     */
+    private Long tierMapExplore;
     /**
      * 日期
      */

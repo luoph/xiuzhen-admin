@@ -124,6 +124,18 @@ export default {
                     dataIndex: "nickname"
                 },
                 {
+                    title: "玩家等级",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "playerLevel"
+                },
+                {
+                    title: "战力",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "combatPower"
+                },
+                {
                     title: "修炼年数",
                     align: "center",
                     width: "5%",
@@ -176,6 +188,42 @@ export default {
                     align: "center",
                     width: "5%",
                     dataIndex: "mainStoryBoss"
+                },
+                {
+                    title: "冒险等级",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "mapLevel"
+                },
+                {
+                    title: "符文秘境-小灵山",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "lingShanLevel"
+                },
+                {
+                    title: "剧情小关卡",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "mainStoryCheck"
+                },
+                {
+                    title: "神魔战场",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "ghostWar"
+                },
+                {
+                    title: "丹药秘境",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "godRoad"
+                },
+                {
+                    title: "仙器秘境",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "tierMapExplore"
                 },
                 {
                     title: "不死魔巢",
