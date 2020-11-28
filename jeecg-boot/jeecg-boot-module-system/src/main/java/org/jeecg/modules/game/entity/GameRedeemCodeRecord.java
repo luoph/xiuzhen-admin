@@ -15,13 +15,13 @@ import java.io.Serializable;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 激活码
+ * @description 激活码领取记录
  * @date 2020-01-07
  */
 @Data
-@TableName("redeem_code")
+@TableName("game_redeem_code_record")
 @Accessors(chain = true)
-public class RedeemCode implements Serializable {
+public class GameRedeemCodeRecord implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,22 +32,40 @@ public class RedeemCode implements Serializable {
     private java.lang.Long id;
 
     /**
-     * 激活码活动id
+     * 兑换码
      */
-    @Excel(name = "激活码活动id", width = 15)
-    private java.lang.Integer activityId;
-
-    /**
-     * 激活码
-     */
-    @Excel(name = "激活码", width = 15)
+    @Excel(name = "兑换码", width = 15)
     private java.lang.String code;
 
     /**
-     * 状态
+     * 渠道编码
      */
-    @Excel(name = "状态", width = 15)
-    private java.lang.Integer status;
+    @Excel(name = "渠道编码", width = 15)
+    private java.lang.String channel;
+
+    /**
+     * 玩家id
+     */
+    @Excel(name = "玩家id", width = 15)
+    private java.lang.Long playerId;
+
+    /**
+     * 分组id
+     */
+    @Excel(name = "分组id", width = 15)
+    private java.lang.Integer groupId;
+
+    /**
+     * 服务器id
+     */
+    @Excel(name = "服务器id", width = 15)
+    private java.lang.Integer serverId;
+
+    /**
+     * 兑换ip
+     */
+    @Excel(name = "兑换ip", width = 15)
+    private java.lang.String remoteIp;
 
     /**
      * 创建时间
@@ -58,10 +76,10 @@ public class RedeemCode implements Serializable {
     private java.util.Date createTime;
 
     /**
-     * 更新时间
+     * 创建日期
      */
-    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @Excel(name = "创建日期", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date updateTime;
+    private java.util.Date createDate;
 }

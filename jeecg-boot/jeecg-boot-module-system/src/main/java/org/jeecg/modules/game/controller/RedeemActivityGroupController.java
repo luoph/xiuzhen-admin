@@ -8,8 +8,8 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.RedeemActivityGroup;
-import org.jeecg.modules.game.service.IRedeemActivityGroupService;
+import org.jeecg.modules.game.entity.GameRedeemActivityGroup;
+import org.jeecg.modules.game.service.IGameRedeemActivityGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,10 +27,10 @@ import java.util.Arrays;
 @Slf4j
 @RestController
 @RequestMapping("game/redeemActivityGroup")
-public class RedeemActivityGroupController extends JeecgController<RedeemActivityGroup, IRedeemActivityGroupService> {
+public class RedeemActivityGroupController extends JeecgController<GameRedeemActivityGroup, IGameRedeemActivityGroupService> {
 
     @Autowired
-    private IRedeemActivityGroupService redeemActivityGroupService;
+    private IGameRedeemActivityGroupService redeemActivityGroupService;
 
     /**
      * 分页列表查询
@@ -43,13 +43,13 @@ public class RedeemActivityGroupController extends JeecgController<RedeemActivit
      */
     @AutoLog(value = "激活码活动分组-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(RedeemActivityGroup redeemActivityGroup,
+    public Result<?> queryPageList(GameRedeemActivityGroup redeemActivityGroup,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<RedeemActivityGroup> queryWrapper = QueryGenerator.initQueryWrapper(redeemActivityGroup, req.getParameterMap());
-        Page<RedeemActivityGroup> page = new Page<>(pageNo, pageSize);
-        IPage<RedeemActivityGroup> pageList = redeemActivityGroupService.page(page, queryWrapper);
+        QueryWrapper<GameRedeemActivityGroup> queryWrapper = QueryGenerator.initQueryWrapper(redeemActivityGroup, req.getParameterMap());
+        Page<GameRedeemActivityGroup> page = new Page<>(pageNo, pageSize);
+        IPage<GameRedeemActivityGroup> pageList = redeemActivityGroupService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
 
@@ -61,7 +61,7 @@ public class RedeemActivityGroupController extends JeecgController<RedeemActivit
      */
     @AutoLog(value = "激活码活动分组-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody RedeemActivityGroup redeemActivityGroup) {
+    public Result<?> add(@RequestBody GameRedeemActivityGroup redeemActivityGroup) {
         redeemActivityGroupService.save(redeemActivityGroup);
         return Result.ok("添加成功！");
     }
@@ -74,7 +74,7 @@ public class RedeemActivityGroupController extends JeecgController<RedeemActivit
      */
     @AutoLog(value = "激活码活动分组-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody RedeemActivityGroup redeemActivityGroup) {
+    public Result<?> edit(@RequestBody GameRedeemActivityGroup redeemActivityGroup) {
         redeemActivityGroupService.updateById(redeemActivityGroup);
         return Result.ok("编辑成功!");
     }
@@ -114,7 +114,7 @@ public class RedeemActivityGroupController extends JeecgController<RedeemActivit
     @AutoLog(value = "激活码活动分组-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        RedeemActivityGroup redeemActivityGroup = redeemActivityGroupService.getById(id);
+        GameRedeemActivityGroup redeemActivityGroup = redeemActivityGroupService.getById(id);
         if (redeemActivityGroup == null) {
             return Result.error("未找到对应数据");
         }
@@ -128,8 +128,8 @@ public class RedeemActivityGroupController extends JeecgController<RedeemActivit
      * @param redeemActivityGroup 实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, RedeemActivityGroup redeemActivityGroup) {
-        return super.exportXls(request, redeemActivityGroup, RedeemActivityGroup.class, "激活码活动分组");
+    public ModelAndView exportXls(HttpServletRequest request, GameRedeemActivityGroup redeemActivityGroup) {
+        return super.exportXls(request, redeemActivityGroup, GameRedeemActivityGroup.class, "激活码活动分组");
     }
 
     /**
@@ -141,7 +141,7 @@ public class RedeemActivityGroupController extends JeecgController<RedeemActivit
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, RedeemActivityGroup.class);
+        return super.importExcel(request, response, GameRedeemActivityGroup.class);
     }
 
 }
