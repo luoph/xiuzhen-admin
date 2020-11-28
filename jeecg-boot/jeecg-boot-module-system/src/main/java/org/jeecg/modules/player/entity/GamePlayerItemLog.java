@@ -177,7 +177,7 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 关联玩家注册信息
      */
-    private PlayerRegisterInfo playerRegisterInfo;
+    private GameRegisterInfo registerInfo;
 
 
 //    @Override

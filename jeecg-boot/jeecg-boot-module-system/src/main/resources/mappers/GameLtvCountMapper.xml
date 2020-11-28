@@ -84,7 +84,7 @@
 
                  IFNULL(IF(NOW() < DATE_ADD(@d_start, INTERVAL #{leftDays} DAY), NULL, (
                     SELECT SUM(o.`pay_amount`) FROM `pay_order` o
-                    LEFT JOIN `player_register_info` a ON o.`player_id` = a.`player_id`
+                    LEFT JOIN `game_register_info` a ON o.`player_id` = a.`player_id`
                     AND o.`channel` = a.`channel`
                     AND o.`server_id` = a.`server_id`
                     WHERE

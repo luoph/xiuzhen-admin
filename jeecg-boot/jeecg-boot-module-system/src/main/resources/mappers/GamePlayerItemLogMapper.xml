@@ -25,7 +25,7 @@
         <result column="item_num_rate" property="itemNumRate"/>
         <result column="item_num_sum" property="itemNumSum"/>
 
-        <association property="playerRegisterInfo" javaType="org.jeecg.modules.player.entity.PlayerRegisterInfo">
+        <association property="registerInfo" javaType="org.jeecg.modules.player.entity.GameRegisterInfo">
             <id column="pri_id" property="id"/>
             <result column="pri_name" property="name"/>
         </association>
@@ -36,7 +36,7 @@
         SELECT
         sync_time,
         SUM(num) add_item_num
-        FROM player_item_log
+        FROM game_player_item_log
         WHERE
         item_id = #{itemId}
         AND type = #{type}
@@ -51,7 +51,7 @@
     <select id="getBySyncTime" resultType="java.math.BigDecimal">
         SELECT
         SUM(num) consume_item_num
-        FROM player_item_log
+        FROM game_player_item_log
         WHERE
         item_id = #{itemId}
         AND type = #{type}
@@ -67,7 +67,7 @@
         SUM(num) item_num,
         COUNT(DISTINCT(player_id)) player_num
         FROM
-        player_item_log
+        game_player_item_log
         WHERE
         item_id = #{itemId}
         AND type = #{type}
@@ -83,7 +83,7 @@
         SELECT
         SUM(num) item_num_sum
         FROM
-        player_item_log
+        game_player_item_log
         WHERE
         type = #{type}
         AND sync_time >= #{rangeDateBeginTime} AND sync_time &lt;= #{rangeDateEndTime}
@@ -96,7 +96,7 @@
         SELECT
         COUNT(way) item_count
         FROM
-        player_item_log
+        game_player_item_log
         WHERE
         item_id = #{itemId}
         AND type = #{type}
@@ -118,8 +118,8 @@
         pil.sync_time,
         pri.name pri_name
         FROM
-        player_item_log pil
-        LEFT JOIN player_register_info pri ON pil.player_id = pri.player_id
+        game_player_item_log pil
+        LEFT JOIN game_register_info pri ON pil.player_id = pri.player_id
         <where>
             <if test="playerId !=0 ">
                 AND pil.player_id = #{playerId}

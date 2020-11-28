@@ -54,7 +54,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
      * @param req           请求
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "player_item_log-列表查询")
+    @AutoLog(value = "game_player_item_log-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GamePlayerItemLog playerItemLog,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,

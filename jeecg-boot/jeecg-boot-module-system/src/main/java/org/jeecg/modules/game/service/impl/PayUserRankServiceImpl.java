@@ -4,7 +4,7 @@ import cn.youai.xiuzhen.entity.pojo.OrderStatus;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.PayUserRank;
-import org.jeecg.modules.game.entity.PlayerRegisterInfoVO;
+import org.jeecg.modules.game.entity.GameRegisterInfoVO;
 import org.jeecg.modules.game.mapper.PayUserRankMapper;
 import org.jeecg.modules.game.service.IPayUserRankService;
 import org.springframework.beans.factory.annotation.Value;
@@ -82,7 +82,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
 		Date nowDate = new Date();
 		for (PayUserRank payUserRank : list) {
 			//获取玩家注册信息
-			PlayerRegisterInfoVO playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
+			GameRegisterInfoVO playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
 
 			//获取玩家最后的充值时间
 			Date payTimeMax = payUserRank.getPayTimeMax();

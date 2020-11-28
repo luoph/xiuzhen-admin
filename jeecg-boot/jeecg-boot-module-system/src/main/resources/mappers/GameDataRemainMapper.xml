@@ -53,7 +53,7 @@
                         AND a.`channel` = @channel AND a.`server_id` = @serverId),0) AS register_num,
 
                      IFNULL(@pay_num := (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `pay_order` o
-                        LEFT JOIN `player_register_info` p ON o.`player_id` = p.`player_id`
+                        LEFT JOIN `game_register_info` p ON o.`player_id` = p.`player_id`
                         AND o.`channel` = p.`channel`
                         AND o.`server_id` = p.`server_id`
                         WHERE p.`create_time` >= @d_start AND p.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
@@ -64,7 +64,7 @@
                     IFNULL(@free_num := @register_num - @pay_num, 0) AS free_num,
 
                     IFNULL(@pay_remain := (SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
-                        LEFT JOIN `player_register_info` d ON l.`player_id` = d.`player_id`
+                        LEFT JOIN `game_register_info` d ON l.`player_id` = d.`player_id`
                         AND l.`channel` = d.`channel`
                         AND l.`server_id` = d.`server_id`
                         WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
@@ -76,7 +76,7 @@
                         AND b.`channel` =@channel AND b.`server_id` = @serverId)),0) AS pay_remain,
 
                     IFNULL(@free_remain := (SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
-                        LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                        LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id`
                         AND l.`channel` = a.`channel`
                         AND l.`server_id` = a.`server_id`
                         WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
@@ -119,7 +119,7 @@
 
                 IFNULL(IF (NOW() < DATE_ADD(@d_start, INTERVAL #{leftDay} DAY), NULL, (
                     SELECT count( DISTINCT ( l.`player_id` )) FROM  ${logTable} l
-                    LEFT JOIN `player_register_info` a ON l.`player_id` = a.`player_id`
+                    LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id`
                     AND l.`channel` = a.`channel` AND l.`server_id` = a.`server_id`
                     WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL #{leftDay} DAY)
                     AND l.`create_date` < DATE_ADD(@d_start,INTERVAL (#{leftDay} + 1) DAY)

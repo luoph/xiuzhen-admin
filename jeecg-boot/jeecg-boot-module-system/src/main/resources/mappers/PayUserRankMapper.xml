@@ -11,7 +11,7 @@
         <result column="pay_amount_sum" property="payAmountSum"/>
         <result column="pay_time_max" property="payTimeMax"/>
         <!-- 关联对象 -->
-        <association property="playerRegisterInfo" javaType="org.jeecg.modules.game.entity.PlayerRegisterInfoVO">
+        <association property="registerInfo" javaType="org.jeecg.modules.game.entity.GameRegisterInfoVO">
             <id column="id" property="id"/>
             <result column="account" property="account"/>
             <result column="name" property="name"/>
@@ -36,7 +36,7 @@
         pri.name,
         SUM(po.pay_amount) pay_amount_sum
         FROM pay_order po
-        LEFT JOIN player_register_info pri
+        LEFT JOIN game_register_info pri
         ON po.player_id = pri.player_id
         WHERE
         po.pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
@@ -66,7 +66,7 @@
         MAX(po.pay_time) pay_time_max
 
         FROM pay_order po
-        LEFT JOIN player_register_info pri
+        LEFT JOIN game_register_info pri
         ON po.player_id = pri.player_id
         WHERE
         po.pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
