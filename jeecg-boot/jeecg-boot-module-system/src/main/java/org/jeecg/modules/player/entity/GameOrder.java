@@ -21,9 +21,9 @@ import java.util.Date;
  * @date 2020-01-05
  */
 @Data
-@TableName("pay_order")
+@TableName("game_order")
 @Accessors(chain = true)
-public class PayOrder implements Serializable {
+public class GameOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -2,7 +2,7 @@ package org.jeecg.modules.player.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.modules.player.entity.PayOrder;
+import org.jeecg.modules.player.entity.GameOrder;
 
 /**
  * @author jeecg-boot
@@ -10,7 +10,7 @@ import org.jeecg.modules.player.entity.PayOrder;
  * @description 充值订单
  * @date 2020-01-05
  */
-public interface PayOrderMapper extends BaseMapper<PayOrder> {
+public interface GameOrderMapper extends BaseMapper<GameOrder> {
     /**
      * 计算当天支付金额
      *

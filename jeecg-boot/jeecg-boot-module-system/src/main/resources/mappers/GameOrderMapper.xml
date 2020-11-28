@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.player.mapper.PayOrderMapper">
+<mapper namespace="org.jeecg.modules.player.mapper.GameOrderMapper">
 
     <select id="getSumPayAmount" resultType="double">
-        SELECT IFNULL(SUM(a.`pay_amount`),0) AS payAmount FROM `pay_order` a
+        SELECT IFNULL(SUM(a.`pay_amount`),0) AS payAmount FROM `game_order` a
         WHERE a.`channel` = #{channel}
         AND a.`server_id` = #{serverId}
         AND DATE(a.`pay_time`) =  DATE(#{payDate});
     </select>
 
     <select id="getCountPayPlayer" resultType="int">
-        SELECT COUNT(DISTINCT a.`player_id`) AS payPlayer FROM `pay_order` a
+        SELECT COUNT(DISTINCT a.`player_id`) AS payPlayer FROM `game_order` a
         WHERE a.`channel` = #{channel}
         AND a.`server_id` = #{serverId}
         AND DATE(a.`pay_time`) =  DATE(#{payDate});

@@ -2,6 +2,8 @@ package org.jeecg.common.util;
 
 import cn.hutool.core.util.RandomUtil;
 
+import java.util.HashSet;
+
 /**
  * @author luopeihuan
  * @version 1.0
@@ -10,7 +12,7 @@ import cn.hutool.core.util.RandomUtil;
 public class RandomStringUtils {
 
     private static final int CHECK_CODE_LENGTH = 4;
-    private static final int CD_KEY_LENGTH = 8;
+    private static final int CD_KEY_LENGTH = 6;
 
     private static final String BASE_CHECK_CODES = "1234567890";
 
@@ -26,5 +28,15 @@ public class RandomStringUtils {
 
     public static String genCdKeyCode() {
         return RandomUtil.randomString(BASE_CD_KEYS, CD_KEY_LENGTH);
+    }
+
+    public static void main(String[] args) {
+        HashSet<String> keys = new HashSet<>();
+        while (keys.size() < 1100) {
+            keys.add(genCdKeyCode());
+        }
+        for (String key : keys) {
+            System.out.println(key);
+        }
     }
 }

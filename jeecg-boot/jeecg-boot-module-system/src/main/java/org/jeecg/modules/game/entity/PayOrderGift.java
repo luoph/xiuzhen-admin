@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @date 2020-09-29
  */
 @Data
-@TableName("pay_order")
+@TableName("game_order")
 @Accessors(chain = true)
 public class PayOrderGift implements Serializable {
 

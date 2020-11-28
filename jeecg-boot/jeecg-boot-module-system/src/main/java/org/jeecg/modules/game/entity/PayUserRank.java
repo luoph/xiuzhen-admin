@@ -20,7 +20,7 @@ import java.math.BigDecimal;
  * @date 2020-10-09
  */
 @Data
-@TableName("pay_order")
+@TableName("game_order")
 @Accessors(chain = true)
 public class PayUserRank implements Serializable {
 

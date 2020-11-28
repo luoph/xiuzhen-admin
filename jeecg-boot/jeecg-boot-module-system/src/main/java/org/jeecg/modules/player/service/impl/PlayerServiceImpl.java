@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
 import org.jeecg.modules.game.mapper.PayUserRankMapper;
-import org.jeecg.modules.player.entity.PayOrder;
+import org.jeecg.modules.player.entity.GameOrder;
 import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.entity.PlayerDTO;
@@ -97,12 +97,12 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             list = playerMapper.queryForList(playerDTO);
             DataSourceHelper.useDefaultDatabase();
             // 通过玩家id获取玩家累充金额
-            List<PayOrder> payOrders = payOrderBillMapper.getPayAmountSum(playerDTO.getServerId());
+            List<GameOrder> gameOrders = payOrderBillMapper.getPayAmountSum(playerDTO.getServerId());
             List<Player> playerTimes = payUserRankMapper.getPlayerLastLoginAndRegisterTime(playerDTO.getServerId(), logTable);
 
             for (Player player : list) {
                 Long playerId = player.getId();
-                BigDecimal orderSum = getOrderSum(player, payOrders);
+                BigDecimal orderSum = getOrderSum(player, gameOrders);
                 // 设置支付总金额
                 player.setPayAmountSum(orderSum);
                 // 获取玩家注册时间,获取玩家最后登录时间
@@ -157,8 +157,8 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         return collect4;
     }
 
-    private BigDecimal getOrderSum(Player player, List<PayOrder> payOrders) {
-        double sum = payOrders.stream().filter(o -> o.getPlayerId().equals(player.getId())).mapToDouble(o -> o.getPayAmount().doubleValue()).sum();
+    private BigDecimal getOrderSum(Player player, List<GameOrder> gameOrders) {
+        double sum = gameOrders.stream().filter(o -> o.getPlayerId().equals(player.getId())).mapToDouble(o -> o.getPayAmount().doubleValue()).sum();
         return BigDecimal.valueOf(sum);
     }
 

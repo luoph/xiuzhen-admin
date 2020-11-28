@@ -8,7 +8,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.player.entity.PayOrder;
+import org.jeecg.modules.player.entity.GameOrder;
 import org.jeecg.modules.player.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 @RequestMapping("player/payOrder")
-public class PayOrderController extends JeecgController<PayOrder, IPayOrderService> {
+public class PayOrderController extends JeecgController<GameOrder, IPayOrderService> {
 
     @Autowired
     private IPayOrderService payOrderService;
@@ -36,21 +36,21 @@ public class PayOrderController extends JeecgController<PayOrder, IPayOrderServi
     /**
      * 分页列表查询
      *
-     * @param payOrder 数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
+     * @param gameOrder 数据实体
+     * @param pageNo    页码
+     * @param pageSize  分页大小
+     * @param req       请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "充值订单-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(PayOrder payOrder,
+    public Result<?> queryPageList(GameOrder gameOrder,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<PayOrder> queryWrapper = QueryGenerator.initQueryWrapper(payOrder, req.getParameterMap());
-        Page<PayOrder> page = new Page<>(pageNo, pageSize);
-        IPage<PayOrder> pageList = payOrderService.page(page, queryWrapper);
+        QueryWrapper<GameOrder> queryWrapper = QueryGenerator.initQueryWrapper(gameOrder, req.getParameterMap());
+        Page<GameOrder> page = new Page<>(pageNo, pageSize);
+        IPage<GameOrder> pageList = payOrderService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
 
@@ -76,21 +76,21 @@ public class PayOrderController extends JeecgController<PayOrder, IPayOrderServi
     @AutoLog(value = "充值订单-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        PayOrder payOrder = payOrderService.getById(id);
-        if (payOrder == null) {
+        GameOrder gameOrder = payOrderService.getById(id);
+        if (gameOrder == null) {
             return Result.error("未找到对应数据");
         }
-        return Result.ok(payOrder);
+        return Result.ok(gameOrder);
     }
 
     /**
      * 导出excel
      *
-     * @param request  请求
-     * @param payOrder 实体
+     * @param request   请求
+     * @param gameOrder 实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, PayOrder payOrder) {
-        return super.exportXls(request, payOrder, PayOrder.class, "充值订单");
+    public ModelAndView exportXls(HttpServletRequest request, GameOrder gameOrder) {
+        return super.exportXls(request, gameOrder, GameOrder.class, "充值订单");
     }
 }
