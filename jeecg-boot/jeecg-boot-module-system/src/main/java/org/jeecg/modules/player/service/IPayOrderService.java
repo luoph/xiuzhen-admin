@@ -1,7 +1,7 @@
 package org.jeecg.modules.player.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.player.entity.PayOrder;
+import org.jeecg.modules.player.entity.GameOrder;
 
 /**
  * @author jeecg-boot
@@ -9,7 +9,7 @@ import org.jeecg.modules.player.entity.PayOrder;
  * @description 充值订单
  * @date 2020-01-05
  */
-public interface IPayOrderService extends IService<PayOrder> {
+public interface IPayOrderService extends IService<GameOrder> {
     /**
      * 付费金额总和
      *

@@ -16,11 +16,11 @@ import java.math.BigDecimal;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description pay_order
+ * @description game_order
  * @date 2020-09-29
  */
 @Data
-@TableName("pay_order")
+@TableName("game_order")
 @Accessors(chain = true)
 public class PayOrderBill implements Serializable {
 

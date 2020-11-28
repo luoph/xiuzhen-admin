@@ -30,7 +30,7 @@
     </select>
 
     <select id="getRegisterPayAmount" resultType="double">
-        SELECT IFNULL (sum(a.`pay_amount`),0) AS payAmount FROM `pay_order` a
+        SELECT IFNULL (sum(a.`pay_amount`),0) AS payAmount FROM `game_order` a
         JOIN  ${logTable}  b
         ON b.`player_id` = a.`player_id`
         AND b.`channel` = a.`channel`
@@ -45,7 +45,7 @@
     </select>
 
     <select id="getRegisterPayPlayer" resultType="int">
-        SELECT count(DISTINCT a.`player_id`) AS payAmount FROM`pay_order` a
+        SELECT count(DISTINCT a.`player_id`) AS payAmount FROM`game_order` a
         JOIN  ${logTable}  b
         ON b.`player_id` = a.`player_id`
         AND b.`channel` = a.`channel`
@@ -61,7 +61,7 @@
 
     <select id="getDoublePayRegisterPlayer" resultType="int">
         SELECT count(1) FROM(
-          SELECT count(a.`player_id`) AS addPayPlayer FROM `pay_order` a
+          SELECT count(a.`player_id`) AS addPayPlayer FROM `game_order` a
           LEFT JOIN ${logTable} b
           ON a.`player_id` = b.`player_id`
           AND b.`channel` = a.`channel`

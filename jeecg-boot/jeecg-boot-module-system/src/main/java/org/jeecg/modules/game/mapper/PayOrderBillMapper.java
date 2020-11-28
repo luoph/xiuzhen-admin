@@ -3,7 +3,7 @@ package org.jeecg.modules.game.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.PayOrderBill;
-import org.jeecg.modules.player.entity.PayOrder;
+import org.jeecg.modules.player.entity.GameOrder;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description pay_order
+ * @description game_order
  * @date 2020-09-29
  */
 public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
@@ -42,5 +42,5 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
 	                       @Param("serverId") Integer serverId,
 	                       @Param("channel") String channel);
 
-	List<PayOrder> getPayAmountSum(@Param("serverId") int serverId);
+	List<GameOrder> getPayAmountSum(@Param("serverId") int serverId);
 }

@@ -35,7 +35,7 @@
         po.player_id,
         pri.name,
         SUM(po.pay_amount) pay_amount_sum
-        FROM pay_order po
+        FROM game_order po
         LEFT JOIN game_register_info pri
         ON po.player_id = pri.player_id
         WHERE
@@ -65,7 +65,7 @@
         pri.create_time,
         MAX(po.pay_time) pay_time_max
 
-        FROM pay_order po
+        FROM game_order po
         LEFT JOIN game_register_info pri
         ON po.player_id = pri.player_id
         WHERE

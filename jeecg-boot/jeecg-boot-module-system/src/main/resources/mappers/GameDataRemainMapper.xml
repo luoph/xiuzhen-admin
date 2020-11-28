@@ -52,7 +52,7 @@
                         AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
                         AND a.`channel` = @channel AND a.`server_id` = @serverId),0) AS register_num,
 
-                     IFNULL(@pay_num := (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `pay_order` o
+                     IFNULL(@pay_num := (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
                         LEFT JOIN `game_register_info` p ON o.`player_id` = p.`player_id`
                         AND o.`channel` = p.`channel`
                         AND o.`server_id` = p.`server_id`
@@ -71,7 +71,7 @@
                         AND  d.`create_time` >= @d_start AND d.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
                         AND d.`channel` =@channel AND d.`server_id` = @serverId
                         AND l.`channel` =@channel AND l.`server_id` = @serverId
-                        AND EXISTS (SELECT * FROM `pay_order` b WHERE l.`player_id` = b.`player_id`
+                        AND EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
                         AND b.`pay_time` >= @d_start AND b.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
                         AND b.`channel` =@channel AND b.`server_id` = @serverId)),0) AS pay_remain,
 
@@ -83,7 +83,7 @@
                         AND  a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
                         AND a.`channel` = @channel AND a.`server_id` = @serverId
                         AND l.`channel` = @channel AND l.`server_id` = @serverId
-                        AND NOT EXISTS (SELECT * FROM `pay_order` b WHERE l.`player_id` = b.`player_id`
+                        AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
                         AND b.`pay_time` >= @d_start AND b.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
                         AND b.`channel` = @channel AND b.`server_id` = @serverId)),0) AS free_remain;
 

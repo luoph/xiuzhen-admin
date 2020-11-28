@@ -22,7 +22,7 @@
         SUM(pay_amount) AS pay_amount_sum,
         SUM(pay_amount)/ #{payAmountSum} AS pay_amount_ratio
         FROM
-        pay_order
+        game_order
         WHERE
         pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
         AND order_status > 0
@@ -39,7 +39,7 @@
         SELECT
         COUNT(*) product_count,
         SUM(pay_amount) pay_amount_sum
-        FROM pay_order
+        FROM game_order
         WHERE
         pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
         AND order_status > 0

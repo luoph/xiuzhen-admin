@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description pay_order
+ * @description game_order
  * @date 2020-09-29
  */
 public interface IPayOrderBillService extends IService<PayOrderBill> {

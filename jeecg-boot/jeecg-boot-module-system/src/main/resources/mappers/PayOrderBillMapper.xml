@@ -21,7 +21,7 @@
     <select id="queryBillSumByDateRange" resultType="decimal">
         SELECT
         SUM(pay_amount)
-        FROM pay_order
+        FROM game_order
         WHERE
         pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
         AND order_status > 0
@@ -38,9 +38,9 @@
         COUNT(DISTINCT(player_id)) pay_num_sum,
         (COUNT(DISTINCT(player_id)) / (#{payNumSum})) pay_num_sum_rate,
         SUM(pay_amount) pay_amount_sum,
-        (SUM(pay_amount) / (SELECT SUM(pay_amount) FROM pay_order)) pay_amount_sum_rate,
+        (SUM(pay_amount) / (SELECT SUM(pay_amount) FROM game_order)) pay_amount_sum_rate,
         (SUM(pay_amount) / COUNT(id)) arppu
-        FROM pay_order
+        FROM game_order
         WHERE
         pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
         AND order_status > 0
@@ -55,14 +55,14 @@
 
     <select id="queryPayOrderList" resultMap="BaseResultMap">
         SELECT
-        (SELECT COUNT(DISTINCT(player_id)) FROM pay_order WHERE product_id = #{goodsId}) pay_num_sum,
-        (SELECT COUNT(player_id) FROM pay_order WHERE product_id = #{goodsId}) pay_count,
-        ((SELECT COUNT(DISTINCT(player_id)) FROM pay_order WHERE product_id = #{goodsId}) / #{dau}) pay_num_sum_rate,
-        ((SELECT COUNT(player_id) FROM pay_order WHERE product_id = #{goodsId}) * order_amount) pay_amount_sum,
+        (SELECT COUNT(DISTINCT(player_id)) FROM game_order WHERE product_id = #{goodsId}) pay_num_sum,
+        (SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId}) pay_count,
+        ((SELECT COUNT(DISTINCT(player_id)) FROM game_order WHERE product_id = #{goodsId}) / #{dau}) pay_num_sum_rate,
+        ((SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId}) * order_amount) pay_amount_sum,
         order_amount,
         SUM(pay_amount) consume_rank,
-        SUM(pay_amount) * (SELECT COUNT(player_id) FROM pay_order WHERE product_id = #{goodsId}) chalcedony
-        FROM pay_order
+        SUM(pay_amount) * (SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId}) chalcedony
+        FROM game_order
         WHERE
         product_id = #{goodsId}
         AND pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
@@ -78,7 +78,7 @@
     <select id="queryPayNumSum" resultType="Integer">
         SELECT
         COUNT(DISTINCT(player_id))
-        FROM pay_order
+        FROM game_order
         WHERE
         pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
         AND order_status > 0
@@ -90,8 +90,8 @@
         </if>
     </select>
 
-    <select id="getPayAmountSum" resultType="org.jeecg.modules.player.entity.PayOrder">
-        SELECT a.player_id, a.pay_amount  FROM  `pay_order` a
+    <select id="getPayAmountSum" resultType="org.jeecg.modules.player.entity.GameOrder">
+        SELECT a.player_id, a.pay_amount  FROM  `game_order` a
         <where>
             <if test="serverId != null">
                 a.`server_id`  = #{serverId}
