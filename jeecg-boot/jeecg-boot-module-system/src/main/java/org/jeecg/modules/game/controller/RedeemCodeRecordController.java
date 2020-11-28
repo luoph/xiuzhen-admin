@@ -8,8 +8,8 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.RedeemCodeRecord;
-import org.jeecg.modules.game.service.IRedeemCodeRecordService;
+import org.jeecg.modules.game.entity.GameRedeemCodeRecord;
+import org.jeecg.modules.game.service.IGameRedeemCodeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,10 +27,10 @@ import java.util.Arrays;
 @Slf4j
 @RestController
 @RequestMapping("game/redeemCodeRecord")
-public class RedeemCodeRecordController extends JeecgController<RedeemCodeRecord, IRedeemCodeRecordService> {
+public class RedeemCodeRecordController extends JeecgController<GameRedeemCodeRecord, IGameRedeemCodeRecordService> {
 
     @Autowired
-    private IRedeemCodeRecordService redeemCodeRecordService;
+    private IGameRedeemCodeRecordService redeemCodeRecordService;
 
     /**
      * 分页列表查询
@@ -43,13 +43,13 @@ public class RedeemCodeRecordController extends JeecgController<RedeemCodeRecord
      */
     @AutoLog(value = "激活码领取记录-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(RedeemCodeRecord redeemCodeRecord,
+    public Result<?> queryPageList(GameRedeemCodeRecord redeemCodeRecord,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<RedeemCodeRecord> queryWrapper = QueryGenerator.initQueryWrapper(redeemCodeRecord, req.getParameterMap());
-        Page<RedeemCodeRecord> page = new Page<>(pageNo, pageSize);
-        IPage<RedeemCodeRecord> pageList = redeemCodeRecordService.page(page, queryWrapper);
+        QueryWrapper<GameRedeemCodeRecord> queryWrapper = QueryGenerator.initQueryWrapper(redeemCodeRecord, req.getParameterMap());
+        Page<GameRedeemCodeRecord> page = new Page<>(pageNo, pageSize);
+        IPage<GameRedeemCodeRecord> pageList = redeemCodeRecordService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
 
@@ -61,7 +61,7 @@ public class RedeemCodeRecordController extends JeecgController<RedeemCodeRecord
      */
     @AutoLog(value = "激活码领取记录-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody RedeemCodeRecord redeemCodeRecord) {
+    public Result<?> add(@RequestBody GameRedeemCodeRecord redeemCodeRecord) {
         redeemCodeRecordService.save(redeemCodeRecord);
         return Result.ok("添加成功！");
     }
@@ -74,7 +74,7 @@ public class RedeemCodeRecordController extends JeecgController<RedeemCodeRecord
      */
     @AutoLog(value = "激活码领取记录-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody RedeemCodeRecord redeemCodeRecord) {
+    public Result<?> edit(@RequestBody GameRedeemCodeRecord redeemCodeRecord) {
         redeemCodeRecordService.updateById(redeemCodeRecord);
         return Result.ok("编辑成功!");
     }
@@ -114,7 +114,7 @@ public class RedeemCodeRecordController extends JeecgController<RedeemCodeRecord
     @AutoLog(value = "激活码领取记录-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        RedeemCodeRecord redeemCodeRecord = redeemCodeRecordService.getById(id);
+        GameRedeemCodeRecord redeemCodeRecord = redeemCodeRecordService.getById(id);
         if (redeemCodeRecord == null) {
             return Result.error("未找到对应数据");
         }
@@ -128,8 +128,8 @@ public class RedeemCodeRecordController extends JeecgController<RedeemCodeRecord
      * @param redeemCodeRecord 实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, RedeemCodeRecord redeemCodeRecord) {
-        return super.exportXls(request, redeemCodeRecord, RedeemCodeRecord.class, "激活码领取记录");
+    public ModelAndView exportXls(HttpServletRequest request, GameRedeemCodeRecord redeemCodeRecord) {
+        return super.exportXls(request, redeemCodeRecord, GameRedeemCodeRecord.class, "激活码领取记录");
     }
 
     /**
@@ -141,7 +141,7 @@ public class RedeemCodeRecordController extends JeecgController<RedeemCodeRecord
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, RedeemCodeRecord.class);
+        return super.importExcel(request, response, GameRedeemCodeRecord.class);
     }
 
 }

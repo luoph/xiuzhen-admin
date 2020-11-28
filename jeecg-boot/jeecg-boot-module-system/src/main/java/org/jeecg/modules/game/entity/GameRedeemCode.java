@@ -15,13 +15,13 @@ import java.io.Serializable;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 激活码领取记录
+ * @description 激活码
  * @date 2020-01-07
  */
 @Data
-@TableName("redeem_code_record")
+@TableName("game_redeem_code")
 @Accessors(chain = true)
-public class RedeemCodeRecord implements Serializable {
+public class GameRedeemCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,40 +32,22 @@ public class RedeemCodeRecord implements Serializable {
     private java.lang.Long id;
 
     /**
-     * 兑换码
+     * 激活码活动id
      */
-    @Excel(name = "兑换码", width = 15)
+    @Excel(name = "激活码活动id", width = 15)
+    private java.lang.Integer activityId;
+
+    /**
+     * 激活码
+     */
+    @Excel(name = "激活码", width = 15)
     private java.lang.String code;
 
     /**
-     * 渠道编码
+     * 状态
      */
-    @Excel(name = "渠道编码", width = 15)
-    private java.lang.String channel;
-
-    /**
-     * 玩家id
-     */
-    @Excel(name = "玩家id", width = 15)
-    private java.lang.Long playerId;
-
-    /**
-     * 分组id
-     */
-    @Excel(name = "分组id", width = 15)
-    private java.lang.Integer groupId;
-
-    /**
-     * 服务器id
-     */
-    @Excel(name = "服务器id", width = 15)
-    private java.lang.Integer serverId;
-
-    /**
-     * 兑换ip
-     */
-    @Excel(name = "兑换ip", width = 15)
-    private java.lang.String remoteIp;
+    @Excel(name = "状态", width = 15)
+    private java.lang.Integer status;
 
     /**
      * 创建时间
@@ -76,10 +58,10 @@ public class RedeemCodeRecord implements Serializable {
     private java.util.Date createTime;
 
     /**
-     * 创建日期
+     * 更新时间
      */
-    @Excel(name = "创建日期", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date createDate;
+    private java.util.Date updateTime;
 }

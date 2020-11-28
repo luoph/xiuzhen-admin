@@ -19,9 +19,9 @@ import java.io.Serializable;
  * @date 2020-01-07
  */
 @Data
-@TableName("redeem_activity_group")
+@TableName("game_redeem_activity_group")
 @Accessors(chain = true)
-public class RedeemActivityGroup implements Serializable {
+public class GameRedeemActivityGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
