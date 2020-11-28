@@ -2,7 +2,7 @@ package org.jeecg.modules.player.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.player.entity.BackpackLog;
-import org.jeecg.modules.player.entity.PlayerItemLog;
+import org.jeecg.modules.player.entity.GamePlayerItemLog;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @description player_item_log
  * @date 2020-07-21
  */
-public interface IPlayerItemLogService extends IService<PlayerItemLog> {
+public interface IGamePlayerItemLogService extends IService<GamePlayerItemLog> {
 
 	/**
 	 * 设置日志属性
@@ -20,14 +20,14 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 	 * @param serverId
 	 * @param backpacklog
 	 */
-	PlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog);
+	GamePlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog);
 
 	/**
 	 * 保存日志
 	 *
 	 * @param logs
 	 */
-	void saveBatchLog(List<PlayerItemLog> logs);
+	void saveBatchLog(List<GamePlayerItemLog> logs);
 
 	/**
 	 * 查询货币产销
@@ -38,7 +38,7 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 	 * @param serverId
 	 * @return
 	 */
-	List<PlayerItemLog> queryCurrencyPayIncomeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId);
+	List<GamePlayerItemLog> queryCurrencyPayIncomeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId);
 
 	/**
 	 * 查询途径分布
@@ -51,7 +51,7 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 	 * @param type
 	 * @return
 	 */
-	List<PlayerItemLog> queryWayDistributeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId, int type);
+	List<GamePlayerItemLog> queryWayDistributeList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int itemId, int type);
 
 	/**
 	 * 查询物品流水
@@ -64,5 +64,5 @@ public interface IPlayerItemLogService extends IService<PlayerItemLog> {
 	 * @param type
 	 * @return
 	 */
-	List<PlayerItemLog> queryItemBillList(String rangeDateBegin, String rangeDateEnd, int way, Integer serverId, int itemId, int type, Long playerId);
+	List<GamePlayerItemLog> queryItemBillList(String rangeDateBegin, String rangeDateEnd, int way, Integer serverId, int itemId, int type, Long playerId);
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.player.mapper.PlayerItemLogMapper">
+<mapper namespace="org.jeecg.modules.player.mapper.GamePlayerItemLogMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.player.entity.PlayerItemLog">
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.player.entity.GamePlayerItemLog">
         <id column="id" property="id"/>
         <result column="player_id" property="playerId"/>
         <result column="item_id" property="itemId"/>
@@ -24,10 +24,12 @@
         <result column="item_count" property="itemCount"/>
         <result column="item_num_rate" property="itemNumRate"/>
         <result column="item_num_sum" property="itemNumSum"/>
+
         <association property="playerRegisterInfo" javaType="org.jeecg.modules.player.entity.PlayerRegisterInfo">
             <id column="pri_id" property="id"/>
             <result column="pri_name" property="name"/>
         </association>
+
     </resultMap>
 
     <select id="queryCurrencyPayIncomeList" resultMap="BaseResultMap">
@@ -46,7 +48,7 @@
         ORDER BY add_item_num DESC
     </select>
 
-    <select id="getBySyncTime" resultType="BigDecimal">
+    <select id="getBySyncTime" resultType="java.math.BigDecimal">
         SELECT
         SUM(num) consume_item_num
         FROM player_item_log
@@ -77,7 +79,7 @@
         ORDER BY item_num DESC
     </select>
 
-    <select id="queryItemSum" resultType="BigDecimal">
+    <select id="queryItemSum" resultType="java.math.BigDecimal">
         SELECT
         SUM(num) item_num_sum
         FROM
@@ -90,7 +92,7 @@
         </if>
     </select>
 
-    <select id="queryItemCount" resultType="BigDecimal">
+    <select id="queryItemCount" resultType="java.math.BigDecimal">
         SELECT
         COUNT(way) item_count
         FROM
@@ -117,7 +119,7 @@
         pri.name pri_name
         FROM
         player_item_log pil
-        LEFT JOIN  player_register_info pri ON pil.player_id = pri.player_id
+        LEFT JOIN player_register_info pri ON pil.player_id = pri.player_id
         <where>
             <if test="playerId !=0 ">
                 AND pil.player_id = #{playerId}
