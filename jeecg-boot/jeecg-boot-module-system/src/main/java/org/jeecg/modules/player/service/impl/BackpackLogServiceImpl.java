@@ -8,10 +8,10 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.Player;
-import org.jeecg.modules.player.entity.PlayerItemLog;
+import org.jeecg.modules.player.entity.GamePlayerItemLog;
 import org.jeecg.modules.player.mapper.BackpackLogMapper;
 import org.jeecg.modules.player.service.BackpackLogService;
-import org.jeecg.modules.player.service.IPlayerItemLogService;
+import org.jeecg.modules.player.service.IGamePlayerItemLogService;
 import org.jeecg.modules.player.service.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ import java.util.Map;
 public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, BackpackLog> implements BackpackLogService {
 
     @Autowired
-    private IPlayerItemLogService playerItemLogService;
+    private IGamePlayerItemLogService playerItemLogService;
 
     @Autowired
     private IPlayerService playerService;
@@ -56,9 +56,9 @@ public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, Backp
             // 根据条件查询列表
             List<BackpackLog> list = list(queryWrapper);
             if (list != null && !list.isEmpty()) {
-                List<PlayerItemLog> playerItemLogs = new ArrayList<>(list.size());
+                List<GamePlayerItemLog> playerItemLogs = new ArrayList<>(list.size());
                 for (BackpackLog log : list) {
-                    PlayerItemLog playerItemLog = playerItemLogService.writePlayerItemLog(serverId, log);
+                    GamePlayerItemLog playerItemLog = playerItemLogService.writePlayerItemLog(serverId, log);
                     playerItemLogs.add(playerItemLog);
                 }
 

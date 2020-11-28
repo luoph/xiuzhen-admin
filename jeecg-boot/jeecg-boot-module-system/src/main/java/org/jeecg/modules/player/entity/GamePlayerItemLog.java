@@ -1,6 +1,5 @@
 package org.jeecg.modules.player.entity;
 
-import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -21,9 +20,9 @@ import java.math.BigDecimal;
  * @date 2020-07-21
  */
 @Data
-@TableName("player_item_log")
 @Accessors(chain = true)
-public class PlayerItemLog implements Serializable {
+@TableName("game_player_item_log")
+public class GamePlayerItemLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

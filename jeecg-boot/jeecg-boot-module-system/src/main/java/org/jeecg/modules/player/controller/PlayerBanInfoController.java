@@ -12,7 +12,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.vo.LoginUser;
-import org.jeecg.modules.player.entity.PlayerBanInfo;
+import org.jeecg.modules.player.entity.GamePlayerBanInfo;
 import org.jeecg.modules.player.service.IPlayerBanInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +31,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("player/playerBanInfo")
-public class PlayerBanInfoController extends JeecgController<PlayerBanInfo, IPlayerBanInfoService> {
+public class PlayerBanInfoController extends JeecgController<GamePlayerBanInfo, IPlayerBanInfoService> {
 
 	private static final Type RESPONSE_ONLINE_NUM = new TypeReference<DataResponse<Integer>>() {
 	}.getType();
@@ -50,15 +50,15 @@ public class PlayerBanInfoController extends JeecgController<PlayerBanInfo, IPla
 	 */
 	@AutoLog(value = "封禁管理-列表查询")
 	@GetMapping(value = "/list")
-	public Result<?> queryPageList(PlayerBanInfo playerBanInfo,
-	                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-	                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-	                               HttpServletRequest req) {
-		QueryWrapper<PlayerBanInfo> queryWrapper = QueryGenerator.initQueryWrapper(playerBanInfo, req.getParameterMap());
-		Page<PlayerBanInfo> page = new Page<>(pageNo, pageSize);
-		IPage<PlayerBanInfo> pageList = playerBanInfoService.page(page, queryWrapper);
-		List<PlayerBanInfo> records = pageList.getRecords();
-		for (PlayerBanInfo record : records) {
+	public Result<?> queryPageList(GamePlayerBanInfo playerBanInfo,
+								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+								   HttpServletRequest req) {
+		QueryWrapper<GamePlayerBanInfo> queryWrapper = QueryGenerator.initQueryWrapper(playerBanInfo, req.getParameterMap());
+		Page<GamePlayerBanInfo> page = new Page<>(pageNo, pageSize);
+		IPage<GamePlayerBanInfo> pageList = playerBanInfoService.page(page, queryWrapper);
+		List<GamePlayerBanInfo> records = pageList.getRecords();
+		for (GamePlayerBanInfo record : records) {
 			if (record.getIpBan() == null && record.getPlayerIdBan() == null && record.getIdentifierBan() == null) {
 				record.setAllBan(true);
 			} else {
@@ -77,7 +77,7 @@ public class PlayerBanInfoController extends JeecgController<PlayerBanInfo, IPla
 	 */
 	@AutoLog(value = "封禁管理-添加")
 	@PostMapping(value = "/add")
-	public Result<?> add(@RequestBody PlayerBanInfo playerBanInfo) {
+	public Result<?> add(@RequestBody GamePlayerBanInfo playerBanInfo) {
 		Date date = new Date();
 		playerBanInfo.setCreateDate(date);
 		playerBanInfo.setCreateTime(date);
