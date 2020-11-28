@@ -1,9 +1,7 @@
 package org.jeecg.modules.player.controller;
 
 import cn.youai.commons.model.DataResponse;
-import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
 import cn.youai.xiuzhen.entity.pojo.RoleAttr;
-import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -16,18 +14,16 @@ import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.base.MultiDataSourceController;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameServerService;
+import org.jeecg.modules.player.entity.GameRegisterInfo;
 import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.entity.PlayerDTO;
-import org.jeecg.modules.player.entity.PlayerRegisterInfo;
-import org.jeecg.modules.player.service.IPlayerRegisterInfoService;
+import org.jeecg.modules.player.service.IGameRegisterInfoService;
 import org.jeecg.modules.player.service.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -48,7 +44,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 	private IGameServerService gameServerService;
 
 	@Autowired
-	private IPlayerRegisterInfoService playerRegisterInfoService;
+	private IGameRegisterInfoService playerRegisterInfoService;
 
 	/**
 	 * 分页列表查询
@@ -82,8 +78,8 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 	@AutoLog(value = "玩家详情-查询")
 	@GetMapping(value = "/detail")
 	public Result<?> queryDetai(@RequestParam(name = "playerId", defaultValue = "0") Integer playerId) {
-		LambdaQueryWrapper<PlayerRegisterInfo> queryWrapper = Wrappers.<PlayerRegisterInfo>lambdaQuery().eq(PlayerRegisterInfo::getPlayerId, playerId);
-		PlayerRegisterInfo registerInfo = playerRegisterInfoService.getOne(queryWrapper);
+		LambdaQueryWrapper<GameRegisterInfo> queryWrapper = Wrappers.<GameRegisterInfo>lambdaQuery().eq(GameRegisterInfo::getPlayerId, playerId);
+		GameRegisterInfo registerInfo = playerRegisterInfoService.getOne(queryWrapper);
 		if (null == registerInfo) {
 			return Result.error("玩家信息不存在");
 		}

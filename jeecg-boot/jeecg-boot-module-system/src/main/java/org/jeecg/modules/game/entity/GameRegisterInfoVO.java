@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 玩家注册信息表的实体类,player_register_info
+ * 玩家注册信息表的实体类,game_register_info
  *
  * @author xubodong
  * @version 1.0.0
@@ -22,7 +22,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class PlayerRegisterInfoVO implements Serializable {
+public class GameRegisterInfoVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -168,7 +168,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
         List<GamePlayerItemLog> list = playerItemLogMapper.queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
         for (GamePlayerItemLog playerItemLog : list) {
             // 玩家名
-            playerItemLog.setPlayerName(playerItemLog.getPlayerRegisterInfo().getName());
+            playerItemLog.setPlayerName(playerItemLog.getRegisterInfo().getName());
             // 通过道具获取物品名称
             ConfItem confItem = itemTree(playerItemLog.getItemId());
             if (confItem == null) {

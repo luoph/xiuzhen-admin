@@ -20,9 +20,9 @@ import java.io.Serializable;
  * @date 2020-01-04
  */
 @Data
-@TableName("player_register_info")
 @Accessors(chain = true)
-public class PlayerRegisterInfo implements Serializable {
+@TableName("game_register_info")
+public class GameRegisterInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

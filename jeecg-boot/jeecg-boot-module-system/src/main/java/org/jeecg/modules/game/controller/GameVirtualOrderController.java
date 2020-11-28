@@ -18,8 +18,8 @@ import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameVirtualOrder;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IGameVirtualOrderService;
-import org.jeecg.modules.player.entity.PlayerRegisterInfo;
-import org.jeecg.modules.player.service.IPlayerRegisterInfoService;
+import org.jeecg.modules.player.entity.GameRegisterInfo;
+import org.jeecg.modules.player.service.IGameRegisterInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +44,7 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
     private IGameVirtualOrderService gameVirtualOrderService;
 
     @Autowired
-    private IPlayerRegisterInfoService playerRegisterInfoService;
+    private IGameRegisterInfoService playerRegisterInfoService;
 
     @Autowired
     private IGameServerService gameServerService;
@@ -85,16 +85,16 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
         if (gameVirtualOrder.getPlayerId() == null) {
             return Result.error("请输入玩家id");
         }
-        Wrapper<PlayerRegisterInfo> query = Wrappers.<PlayerRegisterInfo>lambdaQuery().eq(PlayerRegisterInfo::getPlayerId, gameVirtualOrder.getPlayerId());
-        PlayerRegisterInfo playerRegisterInfo = playerRegisterInfoService.getOne(query);
-        if (playerRegisterInfo == null) {
+        Wrapper<GameRegisterInfo> query = Wrappers.<GameRegisterInfo>lambdaQuery().eq(GameRegisterInfo::getPlayerId, gameVirtualOrder.getPlayerId());
+        GameRegisterInfo registerInfo = playerRegisterInfoService.getOne(query);
+        if (registerInfo == null) {
             return Result.error("找不到玩家信息:" + gameVirtualOrder.getPlayerId());
         }
-        gameVirtualOrder.setServerId(playerRegisterInfo.getServerId());
+        gameVirtualOrder.setServerId(registerInfo.getServerId());
 
-        GameServer gameServer = gameServerService.getById(playerRegisterInfo.getServerId());
+        GameServer gameServer = gameServerService.getById(registerInfo.getServerId());
         if (gameServer == null) {
-            return Result.error("找不到区服信息:" + playerRegisterInfo.getServerId());
+            return Result.error("找不到区服信息:" + registerInfo.getServerId());
         }
 
         ImmutableMap<String, Object> params = ImmutableMap.of("playerId", gameVirtualOrder.getPlayerId(),

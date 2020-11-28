@@ -14,7 +14,7 @@ import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.entity.PlayerDTO;
 import org.jeecg.modules.player.mapper.PlayerMapper;
-import org.jeecg.modules.player.mapper.PlayerRegisterInfoMapper;
+import org.jeecg.modules.player.mapper.GameRegisterInfoMapper;
 import org.jeecg.modules.player.service.IPlayerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     private PayOrderBillMapper payOrderBillMapper;
 
     @Resource
-    private PlayerRegisterInfoMapper playerRegisterInfoMapper;
+    private GameRegisterInfoMapper playerRegisterInfoMapper;
 
     @Resource
     private PayUserRankMapper payUserRankMapper;
