@@ -6,7 +6,7 @@ package org.jeecg.modules.game.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.game.entity.GameCountOngoing;
+import org.jeecg.modules.game.entity.GameStatCountOngoing;
 
 /**
  * <p>
@@ -16,7 +16,7 @@ import org.jeecg.modules.game.entity.GameCountOngoing;
  * @author buliangliang
  * @since 2020-09-12
  */
-public interface IGameCountOngoingService extends IService<GameCountOngoing> {
+public interface IGameCountOngoingService extends IService<GameStatCountOngoing> {
     /**
      * 查询三十天统计
      *
@@ -28,5 +28,5 @@ public interface IGameCountOngoingService extends IService<GameCountOngoing> {
      * @param type           1-留存 2-ltv
      * @return
      */
-    IPage<GameCountOngoing> selectList(Page<GameCountOngoing> page, int channelId, int serverId, int type, String rangeDateBegin, String rangeDateEnd);
+    IPage<GameStatCountOngoing> selectList(Page<GameStatCountOngoing> page, int channelId, int serverId, int type, String rangeDateBegin, String rangeDateEnd);
 }

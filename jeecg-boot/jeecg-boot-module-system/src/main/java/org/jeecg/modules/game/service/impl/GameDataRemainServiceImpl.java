@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameDataRemain;
+import org.jeecg.modules.game.entity.GameStatDataRemain;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameDataRemainService;
@@ -28,7 +28,7 @@ import javax.annotation.Resource;
  * @since 2020-08-26
  */
 @Service
-public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper, GameDataRemain> implements IGameDataRemainService {
+public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper, GameStatDataRemain> implements IGameDataRemainService {
 
     @Autowired
     private IGameChannelService gameChannelService;
@@ -38,8 +38,8 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     private String logTable;
 
     @Override
-    public IPage<GameDataRemain> selectList(Page<GameDataRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameDataRemain> queryWrapper = new QueryWrapper<>();
+    public IPage<GameStatDataRemain> selectList(Page<GameStatDataRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+        QueryWrapper<GameStatDataRemain> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("count_date");
         boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
@@ -55,7 +55,7 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     }
 
     @Override
-    public GameDataRemain getCountRemain(String channel, int serverId, String date) {
+    public GameStatDataRemain getCountRemain(String channel, int serverId, String date) {
         return gameDataRemainMapper.gameRemainCount(channel, serverId, date, logTable);
     }
 }
