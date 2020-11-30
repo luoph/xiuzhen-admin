@@ -1,7 +1,7 @@
 <template>
     <a-select :placeholder="tips" @change="handlerSelect">
-        <a-select-option v-for="select in selectArray" :key="select.name" :value="select.id">
-            {{ select.name }}
+        <a-select-option v-for="s in selectArray" :key="s.name" :value="s.id">
+            {{ s.name }}
         </a-select-option>
     </a-select>
 </template>
@@ -19,8 +19,7 @@ export default {
         },
         placeholder: {
             type: String,
-            required: true,
-            default: "下拉选择"
+            default: "请选择"
         }
     },
     data() {
@@ -37,7 +36,7 @@ export default {
             this.$emit("onSelectOption", v);
         },
         readJson() {
-            let jsonUrl = "/" + this.jsonFile + ".json";
+            let jsonUrl = "/json/" + this.jsonFile + ".json";
             axios.get(jsonUrl).then(res => {
                 if (this.selectArray !== null && this.selectArray.length > 0) {
                     this.selectArray.splice(0);
@@ -50,5 +49,5 @@ export default {
 </script>
 
 <style scoped>
-
+@import "~@assets/less/common.less";
 </style>
