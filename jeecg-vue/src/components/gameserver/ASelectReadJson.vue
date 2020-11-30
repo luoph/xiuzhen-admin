@@ -7,14 +7,10 @@
 </template>
 
 <script>
-import { getAction } from "@/api/manage";
 import axios from "axios";
 
 export default {
     name: "ASelectReadJson",
-    components: {
-        getAction
-    },
     props: {
         jsonFile: {
             type: String,

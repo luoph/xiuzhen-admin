@@ -32,11 +32,6 @@
                             </a-select>
                         </a-form-item>
                     </a-col>
-
-                    <a-col :md="5" :sm="5">
-                        <a-select-read-json placeholder="测试选项" json-file="select_item"></a-select-read-json>
-                    </a-col>
-
                     <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -76,10 +71,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
-import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
-import ASelectReadJson from "@comp/gameserver/ASelectReadJson";
-
 
 export default {
     name: "PlayerBehaviorList",
@@ -87,8 +79,7 @@ export default {
     components: {
         JDate,
         GameChannelServer,
-        getAction,
-        ASelectReadJson
+        getAction
     },
     data() {
         return {
