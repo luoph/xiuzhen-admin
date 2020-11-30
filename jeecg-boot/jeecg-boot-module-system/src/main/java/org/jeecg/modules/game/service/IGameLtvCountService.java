@@ -6,7 +6,7 @@ package org.jeecg.modules.game.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.game.entity.GameStatLtvCount;
+import org.jeecg.modules.game.entity.GameStatLtv;
 
 /**
  * <p>
@@ -16,7 +16,7 @@ import org.jeecg.modules.game.entity.GameStatLtvCount;
  * @author buliangliang
  * @since 2020-08-26
  */
-public interface IGameLtvCountService extends IService<GameStatLtvCount> {
+public interface IGameLtvCountService extends IService<GameStatLtv> {
     /**
      * 留存统计
      *
@@ -27,7 +27,7 @@ public interface IGameLtvCountService extends IService<GameStatLtvCount> {
      * @param rangeDateEnd
      * @return
      */
-    IPage<GameStatLtvCount> selectList(Page<GameStatLtvCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    IPage<GameStatLtv> selectList(Page<GameStatLtv> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 统计留存
@@ -38,5 +38,5 @@ public interface IGameLtvCountService extends IService<GameStatLtvCount> {
      * @param logTable
      * @return
      */
-    GameStatLtvCount getGameLtvCount(String channel, int serverId, String date, String logTable);
+    GameStatLtv getGameLtvCount(String channel, int serverId, String date, String logTable);
 }

@@ -4,7 +4,7 @@
 <mapper namespace="org.jeecg.modules.game.mapper.GameDayDataCountMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStatDayDataCount">
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStatDaily">
         <id column="id" property="id"/>
         <result column="channel" property="channel"/>
         <result column="server_id" property="serverId"/>
@@ -32,7 +32,7 @@
     </sql>
 
     <insert id="updateOrInsert" parameterType="list">
-        replace into `game_stat_day_data_count`
+        replace into `game_stat_daily`
         (channel, server_id, login_num, pay_amount, pay_num, pay_rate, arpu, arppu, add_num,
         add_pay_amount, add_pay_num, add_pay_rate, add_arpu, add_arppu, double_pay, double_pay_rate,
         count_date, create_time

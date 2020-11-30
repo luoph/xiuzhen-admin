@@ -4,7 +4,7 @@
 <mapper namespace="org.jeecg.modules.game.mapper.GameDataRemainMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStatDataRemain">
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStatRemain">
         <id column="id" property="id"/>
         <result column="channel" property="channel"/>
         <result column="server_id" property="serverId"/>
@@ -91,7 +91,7 @@
    </select>
 
     <insert id="updateOrInsert" parameterType="list">
-        replace into `game_stat_data_remain`(
+        replace into `game_stat_remain`(
         channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, count_date,
         create_time
         )

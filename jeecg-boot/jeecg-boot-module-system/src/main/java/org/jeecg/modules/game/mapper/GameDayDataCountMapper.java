@@ -4,7 +4,7 @@
 package org.jeecg.modules.game.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeecg.modules.game.entity.GameStatDayDataCount;
+import org.jeecg.modules.game.entity.GameStatDaily;
 
 import java.util.List;
 
@@ -16,6 +16,6 @@ import java.util.List;
  * @author buliangliang
  * @since 2020-08-22
  */
-public interface GameDayDataCountMapper extends BaseMapper<GameStatDayDataCount> {
-    int updateOrInsert(List<GameStatDayDataCount> list);
+public interface GameDayDataCountMapper extends BaseMapper<GameStatDaily> {
+    int updateOrInsert(List<GameStatDaily> list);
 }

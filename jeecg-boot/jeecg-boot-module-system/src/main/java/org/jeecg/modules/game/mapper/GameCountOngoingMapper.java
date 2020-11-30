@@ -4,7 +4,7 @@
 package org.jeecg.modules.game.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeecg.modules.game.entity.GameStatCountOngoing;
+import org.jeecg.modules.game.entity.GameStatOngoing;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ import java.util.List;
  * @author buliangliang
  * @since 2020-09-12
  */
-public interface GameCountOngoingMapper extends BaseMapper<GameStatCountOngoing> {
+public interface GameCountOngoingMapper extends BaseMapper<GameStatOngoing> {
     /**
      * 批量更新或插入
      *
      * @param list
      * @return
      */
-    Boolean insertOrUpdateList(List<GameStatCountOngoing> list);
+    Boolean insertOrUpdateList(List<GameStatOngoing> list);
 }

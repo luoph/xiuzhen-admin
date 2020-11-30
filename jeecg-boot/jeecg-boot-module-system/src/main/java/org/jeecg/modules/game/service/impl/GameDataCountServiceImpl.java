@@ -91,9 +91,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private static final int[] LTV = new int[]{1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 90, 120, 180, 360};
 
     @Override
-    public List<GameStatDayDataCount> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
-        Map<String, GameStatDayDataCount> map = dailyCountMap();
-        List<GameStatDayDataCount> list = new ArrayList<>();
+    public List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+        Map<String, GameStatDaily> map = dailyCountMap();
+        List<GameStatDaily> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
@@ -102,21 +102,21 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             String dailyCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
-            GameStatDayDataCount gameDayDataCount = map.get(dailyCountKey);
+            GameStatDaily gameDayDataCount = map.get(dailyCountKey);
             if (gameDayDataCount != null) {
                 continue;
             }
-            GameStatDayDataCount gameDataCount = gameDataCount(gameChannel, gameServer, dateOnly);
+            GameStatDaily gameDataCount = gameDataCount(gameChannel, gameServer, dateOnly);
             list.add(gameDataCount);
             map.put(dailyCountKey, gameDataCount);
         }
         return list;
     }
 
-    private Map<String, GameStatDayDataCount> dailyCountMap() {
-        List<GameStatDayDataCount> dataCounts = gameDayDataCountService.list();
-        Map<String, GameStatDayDataCount> map = new HashMap<>(dataCounts.size());
-        for (GameStatDayDataCount dataCount : dataCounts) {
+    private Map<String, GameStatDaily> dailyCountMap() {
+        List<GameStatDaily> dataCounts = gameDayDataCountService.list();
+        Map<String, GameStatDaily> map = new HashMap<>(dataCounts.size());
+        for (GameStatDaily dataCount : dataCounts) {
             String formatDate = DateUtils.formatDate(dataCount.getCountDate(), DatePattern.NORM_DATE_PATTERN);
             String countKey = dailyCountKey(dataCount.getChannel(), dataCount.getServerId(), formatDate);
             map.put(countKey, dataCount);
@@ -131,7 +131,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
 
     @Override
-    public GameStatDayDataCount gameDataCount(GameChannel gameChannel, GameServer gameServer, String date) {
+    public GameStatDaily gameDataCount(GameChannel gameChannel, GameServer gameServer, String date) {
 
         //当天付费总金额
         double sumPayAmount = payOrderService.sumPayAmount(gameChannel.getSimpleName(), gameServer.getId(), date);
@@ -149,7 +149,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int doublePayPlayer = logAccountService.doublePayRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
 
 
-        return new GameStatDayDataCount().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount)).setLoginNum(loginNum)
+        return new GameStatDaily().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount)).setLoginNum(loginNum)
                 .setPayNum(countPay).setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false))
                 .setArppu(BigDecimalUtil.divideZero(sumPayAmount, countPay, false))
                 .setPayRate(BigDecimalUtil.divideZero(countPay, loginNum, true))
@@ -174,22 +174,22 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
             GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
             String f = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATETIME_PATTERN);
-            List<GameStatDayDataCount> gameDayDataCounts = queryDateRangeDataCount(gameChannel, gameServer, f, formatDate);
+            List<GameStatDaily> gameDayDataCounts = queryDateRangeDataCount(gameChannel, gameServer, f, formatDate);
             if (CollUtil.isNotEmpty(gameDayDataCounts)) {
                 gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
             }
 
-            List<GameStatDataRemain> gameDataRemains = queryDataRemainCount(gameChannel, gameServer, f, formatDate);
+            List<GameStatRemain> gameDataRemains = queryDataRemainCount(gameChannel, gameServer, f, formatDate);
             if (CollUtil.isNotEmpty(gameDataRemains)) {
                 gameDataRemainMapper.updateOrInsert(gameDataRemains);
             }
 
-            List<GameStatLtvCount> gameLtvCounts = queryDataLtvCount(gameChannel, gameServer, f, formatDate);
+            List<GameStatLtv> gameLtvCounts = queryDataLtvCount(gameChannel, gameServer, f, formatDate);
             if (CollUtil.isNotEmpty(gameLtvCounts)) {
                 gameLtvCountMapper.updateOrInsert(gameLtvCounts);
             }
         }
-        List<GameStatCountOngoing> gameCountOngoings = countOngoings();
+        List<GameStatOngoing> gameCountOngoings = countOngoings();
         gameCountOngoingMapper.insertOrUpdateList(gameCountOngoings);
     }
 
@@ -211,9 +211,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
 
     @Override
-    public List<GameStatDataRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
-        Map<String, GameStatDataRemain> map = remainCountMap();
-        List<GameStatDataRemain> list = new ArrayList<>();
+    public List<GameStatRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+        Map<String, GameStatRemain> map = remainCountMap();
+        List<GameStatRemain> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
@@ -222,21 +222,21 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             String remainCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
-            GameStatDataRemain dataRemain = map.get(remainCountKey);
+            GameStatRemain dataRemain = map.get(remainCountKey);
             if (dataRemain != null) {
                 continue;
             }
-            GameStatDataRemain gameDataRemain = gameDataRemainService.getCountRemain(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
+            GameStatRemain gameDataRemain = gameDataRemainService.getCountRemain(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             list.add(gameDataRemain);
             map.put(remainCountKey, gameDataRemain);
         }
         return list;
     }
 
-    private Map<String, GameStatDataRemain> remainCountMap() {
-        List<GameStatDataRemain> dataCounts = gameDataRemainService.list();
-        Map<String, GameStatDataRemain> map = new HashMap<>(dataCounts.size());
-        for (GameStatDataRemain remainCount : dataCounts) {
+    private Map<String, GameStatRemain> remainCountMap() {
+        List<GameStatRemain> dataCounts = gameDataRemainService.list();
+        Map<String, GameStatRemain> map = new HashMap<>(dataCounts.size());
+        for (GameStatRemain remainCount : dataCounts) {
             String formatDate = DateUtils.formatDate(remainCount.getCountDate(), DatePattern.NORM_DATE_PATTERN);
             String countKey = dailyCountKey(remainCount.getChannel(), remainCount.getServerId(), formatDate);
             map.put(countKey, remainCount);
@@ -246,9 +246,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
 
     @Override
-    public List<GameStatLtvCount> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
-        Map<String, GameStatLtvCount> map = ltvCountMap();
-        List<GameStatLtvCount> list = new ArrayList<>();
+    public List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+        Map<String, GameStatLtv> map = ltvCountMap();
+        List<GameStatLtv> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
@@ -257,21 +257,21 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             String ltvCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
-            GameStatLtvCount ltvCount = map.get(ltvCountKey);
+            GameStatLtv ltvCount = map.get(ltvCountKey);
             if (ltvCount != null) {
                 continue;
             }
-            GameStatLtvCount gameLtvCount = gameLtvCountService.getGameLtvCount(gameChannel.getSimpleName(), gameServer.getId(), dateOnly, logTable);
+            GameStatLtv gameLtvCount = gameLtvCountService.getGameLtvCount(gameChannel.getSimpleName(), gameServer.getId(), dateOnly, logTable);
             list.add(gameLtvCount);
             map.put(ltvCountKey, gameLtvCount);
         }
         return list;
     }
 
-    private Map<String, GameStatLtvCount> ltvCountMap() {
-        List<GameStatLtvCount> dataCounts = gameLtvCountService.list();
-        Map<String, GameStatLtvCount> map = new HashMap<>(dataCounts.size());
-        for (GameStatLtvCount ltvCount : dataCounts) {
+    private Map<String, GameStatLtv> ltvCountMap() {
+        List<GameStatLtv> dataCounts = gameLtvCountService.list();
+        Map<String, GameStatLtv> map = new HashMap<>(dataCounts.size());
+        for (GameStatLtv ltvCount : dataCounts) {
             String formatDate = DateUtils.formatDate(ltvCount.getCountDate(), DatePattern.NORM_DATE_PATTERN);
             String countKey = dailyCountKey(ltvCount.getChannel(), ltvCount.getServerId(), formatDate);
             map.put(countKey, ltvCount);
@@ -293,14 +293,14 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
     @Override
     public void updateRemainTask(GameChannel gameChannel, GameServer gameServer, String countDate) {
-        Map<String, GameStatDataRemain> map = remainCountMap();
+        Map<String, GameStatRemain> map = remainCountMap();
         int betweenNatural = betweenNatural(gameServer, countDate);
         for (int i = 0; i <= betweenNatural; i++) {
             Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
             int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
             String formatDate = DateUtils.formatDate(nextDate, DatePattern.NORM_DATE_PATTERN);
             String remainCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), formatDate);
-            GameStatDataRemain gameRemainCount = map.get(remainCountKey);
+            GameStatRemain gameRemainCount = map.get(remainCountKey);
             if (gameRemainCount == null || gameRemainCount.getD360Remain() != null) {
                 continue;
             }
@@ -311,11 +311,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             }
             map.put(remainCountKey, gameRemainCount);
         }
-        List<GameStatDataRemain> remains = Lists.newArrayList(map.values());
+        List<GameStatRemain> remains = Lists.newArrayList(map.values());
         gameDataRemainService.updateBatchById(remains);
     }
 
-    private void updateRemainCountField(GameStatDataRemain gameDataRemain, int j, int remain) {
+    private void updateRemainCountField(GameStatRemain gameDataRemain, int j, int remain) {
         if (gameDataRemain != null) {
             if (j > 0 && j <= REMAIN[0]) {
                 gameDataRemain.setD2Remain(BigDecimal.valueOf(remain));
@@ -349,14 +349,14 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
     @Override
     public void updateLtvTask(GameChannel gameChannel, GameServer gameServer, String countDate) {
-        Map<String, GameStatLtvCount> map = ltvCountMap();
+        Map<String, GameStatLtv> map = ltvCountMap();
         int betweenNatural = betweenNatural(gameServer, countDate);
         for (int i = 0; i < betweenNatural; i++) {
             Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
             int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
             String formatDate = DateUtils.formatDate(nextDate, DatePattern.NORM_DATE_PATTERN);
             String ltvCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), formatDate);
-            GameStatLtvCount gameLtvCount = map.get(ltvCountKey);
+            GameStatLtv gameLtvCount = map.get(ltvCountKey);
             if (gameLtvCount == null || gameLtvCount.getD360Amount() != null) {
                 continue;
             }
@@ -368,11 +368,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             map.put(ltvCountKey, gameLtvCount);
         }
         // 批量更新
-        List<GameStatLtvCount> ltvCounts = Lists.newArrayList(map.values());
+        List<GameStatLtv> ltvCounts = Lists.newArrayList(map.values());
         gameLtvCountService.updateBatchById(ltvCounts);
     }
 
-    private void updateLtvCountField(GameStatLtvCount gameLtvCount, int j, double remain) {
+    private void updateLtvCountField(GameStatLtv gameLtvCount, int j, double remain) {
         if (gameLtvCount != null) {
             if (j > 0 && j <= LTV[0]) {
                 gameLtvCount.setD1Amount(BigDecimal.valueOf(remain));
@@ -409,12 +409,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     }
 
     @Override
-    public List<GameStatCountOngoing> countOngoings() {
+    public List<GameStatOngoing> countOngoings() {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0
                 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
         Date countDate = DateUtils.addDays(DateUtils.todayDate(), -1);
-        Map<String, GameStatCountOngoing> ongoingMap = countOngoingMap();
+        Map<String, GameStatOngoing> ongoingMap = countOngoingMap();
         for (GameChannelServer gameChannelServer : list) {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
             GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
@@ -430,30 +430,30 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         return Lists.newArrayList(ongoingMap.values());
     }
 
-    private Map<String, GameStatCountOngoing> countOngoingMap() {
-        Map<String, GameStatCountOngoing> map = new HashMap<>();
-        List<GameStatCountOngoing> list = gameCountOngoingService.list();
-        for (GameStatCountOngoing gameCountOngoing : list) {
+    private Map<String, GameStatOngoing> countOngoingMap() {
+        Map<String, GameStatOngoing> map = new HashMap<>();
+        List<GameStatOngoing> list = gameCountOngoingService.list();
+        for (GameStatOngoing gameCountOngoing : list) {
             String mapKey = mapKey(gameCountOngoing);
             map.put(mapKey, gameCountOngoing);
         }
         return map;
     }
 
-    private String mapKey(GameStatCountOngoing m) {
+    private String mapKey(GameStatOngoing m) {
         return m.getChannel() + "_" + m.getServerId() + "_" + m.getType() + "_"
                 + DateUtils.formatDate(m.getCountDate(), DatePattern.NORM_DATE_PATTERN);
     }
 
     private void countOngoingsByDays(GameChannel gameChannel, GameServer gameServer, Date countDate,
-                                     int betweenNatural, int type, Map<String, GameStatCountOngoing> ongoingMap) {
+                                     int betweenNatural, int type, Map<String, GameStatOngoing> ongoingMap) {
         for (int i = 0; i <= betweenNatural; i++) {
             Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
             int leftDays = DateUtils.daysBetweenNatural(nextDate, countDate);
-            GameStatCountOngoing keyObj = new GameStatCountOngoing().setChannel(gameChannel.getSimpleName())
+            GameStatOngoing keyObj = new GameStatOngoing().setChannel(gameChannel.getSimpleName())
                     .setServerId(gameServer.getId()).setCountDate(nextDate).setType(type);
             String mapKey = mapKey(keyObj);// 留存
-            GameStatCountOngoing gameCountOngoing = ongoingMap.get(mapKey);
+            GameStatOngoing gameCountOngoing = ongoingMap.get(mapKey);
             if (gameCountOngoing == null) {
                 // 插入新纪录
                 int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDate(nextDate, DatePattern.NORM_DATE_PATTERN), 1);
@@ -486,8 +486,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     }
 
     @Override
-    public List<GameStatCountOngoing> queryCountOnGoing(int type, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
-        List<GameStatCountOngoing> list = new ArrayList<>();
+    public List<GameStatOngoing> queryCountOnGoing(int type, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+        List<GameStatOngoing> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
@@ -497,7 +497,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), dateOnly, 1);
 
-            GameStatCountOngoing gameCountOngoing = new GameStatCountOngoing().setChannel(gameChannel.getSimpleName())
+            GameStatOngoing gameCountOngoing = new GameStatOngoing().setChannel(gameChannel.getSimpleName())
                     .setServerId(gameServer.getId()).setCountDate(DateUtils.parseDate(dateOnly))
                     .setRegisterNum((long) registerPlayer).setType(type).setC1(BigDecimal.valueOf(100));
             list.add(gameCountOngoing);

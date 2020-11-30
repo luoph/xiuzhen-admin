@@ -5,7 +5,7 @@ package org.jeecg.modules.game.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.modules.game.entity.GameStatLtvCount;
+import org.jeecg.modules.game.entity.GameStatLtv;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author buliangliang
  * @since 2020-08-26
  */
-public interface GameLtvCountMapper extends BaseMapper<GameStatLtvCount> {
+public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
     /**
      * 统计ltv
      *
@@ -27,7 +27,7 @@ public interface GameLtvCountMapper extends BaseMapper<GameStatLtvCount> {
      * @param logTable
      * @return
      */
-    GameStatLtvCount getGameLtvCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    GameStatLtv getGameLtvCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
     /**
      * 插入或更新
@@ -35,7 +35,7 @@ public interface GameLtvCountMapper extends BaseMapper<GameStatLtvCount> {
      * @param list
      * @return
      */
-    int updateOrInsert(List<GameStatLtvCount> list);
+    int updateOrInsert(List<GameStatLtv> list);
 
     /**
      * 查询留存
