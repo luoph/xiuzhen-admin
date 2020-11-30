@@ -6,7 +6,7 @@ package org.jeecg.modules.game.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.game.entity.GameStatDataRemain;
+import org.jeecg.modules.game.entity.GameStatRemain;
 
 /**
  * <p>
@@ -16,7 +16,7 @@ import org.jeecg.modules.game.entity.GameStatDataRemain;
  * @author buliangliang
  * @since 2020-08-26
  */
-public interface IGameDataRemainService extends IService<GameStatDataRemain> {
+public interface IGameDataRemainService extends IService<GameStatRemain> {
     /**
      * 留存统计
      *
@@ -27,7 +27,7 @@ public interface IGameDataRemainService extends IService<GameStatDataRemain> {
      * @param rangeDateEnd
      * @return
      */
-    IPage<GameStatDataRemain> selectList(Page<GameStatDataRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 留存统计
@@ -37,5 +37,5 @@ public interface IGameDataRemainService extends IService<GameStatDataRemain> {
      * @param date
      * @return
      */
-    GameStatDataRemain getCountRemain(String channel, int serverId, String date);
+    GameStatRemain getCountRemain(String channel, int serverId, String date);
 }

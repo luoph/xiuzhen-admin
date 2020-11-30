@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameStatLtvCount;
+import org.jeecg.modules.game.entity.GameStatLtv;
 import org.jeecg.modules.game.mapper.GameLtvCountMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameLtvCountService;
@@ -28,7 +28,7 @@ import javax.annotation.Resource;
  * @since 2020-08-26
  */
 @Service
-public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, GameStatLtvCount> implements IGameLtvCountService {
+public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, GameStatLtv> implements IGameLtvCountService {
 
     @Autowired
     private IGameChannelService gameChannelService;
@@ -38,8 +38,8 @@ public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, Gam
     private String logTable;
 
     @Override
-    public IPage<GameStatLtvCount> selectList(Page<GameStatLtvCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameStatLtvCount> queryWrapper = new QueryWrapper<>();
+    public IPage<GameStatLtv> selectList(Page<GameStatLtv> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+        QueryWrapper<GameStatLtv> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("count_date");
         boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
@@ -55,7 +55,7 @@ public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, Gam
     }
 
     @Override
-    public GameStatLtvCount getGameLtvCount(String channel, int serverId, String date, String logTable) {
+    public GameStatLtv getGameLtvCount(String channel, int serverId, String date, String logTable) {
         return gameLtvCountMapper.getGameLtvCount(channel, serverId, date, logTable);
     }
 }

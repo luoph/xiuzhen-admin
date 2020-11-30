@@ -23,7 +23,7 @@ public interface IGameDataCountService {
      * @param rangeDateEnd   结束日期
      * @return 统计列表
      */
-    List<GameStatDayDataCount> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 按照日期统计每日数据
@@ -33,7 +33,7 @@ public interface IGameDataCountService {
      * @param date
      * @return
      */
-    GameStatDayDataCount gameDataCount(GameChannel gameChannel, GameServer gameServer, String date);
+    GameStatDaily gameDataCount(GameChannel gameChannel, GameServer gameServer, String date);
 
     /**
      * 留存统计
@@ -44,7 +44,7 @@ public interface IGameDataCountService {
      * @param rangeDateEnd
      * @return
      */
-    List<GameStatDataRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * ltv 统计
@@ -55,7 +55,7 @@ public interface IGameDataCountService {
      * @param rangeDateEnd
      * @return
      */
-    List<GameStatLtvCount> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
 
     /**
@@ -94,7 +94,7 @@ public interface IGameDataCountService {
      *
      * @return
      */
-    List<GameStatCountOngoing> countOngoings();
+    List<GameStatOngoing> countOngoings();
 
     /**
      * 30日当天实时查询
@@ -106,5 +106,5 @@ public interface IGameDataCountService {
      * @param rangeDateEnd
      * @return
      */
-    List<GameStatCountOngoing> queryCountOnGoing(int type, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatOngoing> queryCountOnGoing(int type, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 }

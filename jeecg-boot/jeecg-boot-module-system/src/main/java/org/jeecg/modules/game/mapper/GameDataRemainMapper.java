@@ -5,7 +5,7 @@ package org.jeecg.modules.game.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.modules.game.entity.GameStatDataRemain;
+import org.jeecg.modules.game.entity.GameStatRemain;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @author buliangliang
  * @since 2020-08-26
  */
-public interface GameDataRemainMapper extends BaseMapper<GameStatDataRemain> {
+public interface GameDataRemainMapper extends BaseMapper<GameStatRemain> {
     /**
      * 留存统计
      *
@@ -27,7 +27,7 @@ public interface GameDataRemainMapper extends BaseMapper<GameStatDataRemain> {
      * @param logTable
      * @return
      */
-    GameStatDataRemain gameRemainCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    GameStatRemain gameRemainCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
 
     /**
@@ -36,7 +36,7 @@ public interface GameDataRemainMapper extends BaseMapper<GameStatDataRemain> {
      * @param list
      * @return
      */
-    int updateOrInsert(List<GameStatDataRemain> list);
+    int updateOrInsert(List<GameStatRemain> list);
 
     /**
      * 从开服起统计留存
