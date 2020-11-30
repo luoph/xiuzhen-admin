@@ -6,7 +6,7 @@ package org.jeecg.modules.game.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.game.entity.GameDayDataCount;
+import org.jeecg.modules.game.entity.GameStatDayDataCount;
 
 /**
  * <p>
@@ -16,7 +16,7 @@ import org.jeecg.modules.game.entity.GameDayDataCount;
  * @author buliangliang
  * @since 2020-08-22
  */
-public interface IGameDayDataCountService extends IService<GameDayDataCount> {
+public interface IGameDayDataCountService extends IService<GameStatDayDataCount> {
     /**
      * 分页查询
      *
@@ -27,5 +27,5 @@ public interface IGameDayDataCountService extends IService<GameDayDataCount> {
      * @param rangeDateEnd
      * @return
      */
-    IPage<GameDayDataCount> selectList(Page<GameDayDataCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    IPage<GameStatDayDataCount> selectList(Page<GameStatDayDataCount> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 }

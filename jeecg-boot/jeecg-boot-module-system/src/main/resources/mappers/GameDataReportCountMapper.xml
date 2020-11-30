@@ -50,7 +50,7 @@
         (pay_amount - add_pay_amount) old_pay_amount,
         ((pay_amount - add_pay_amount)/(login_num - add_num)) old_arpu,
         ((pay_amount - add_pay_amount)/(pay_num - add_pay_num)) old_arppu
-        FROM game_day_data_count
+        FROM game_stat_day_data_count
         WHERE count_date >= #{rangeDateBeginTime} AND count_date &lt;= #{rangeDateEndTime}
         <if test="serverId != 0">
             AND server_id = #{serverId}

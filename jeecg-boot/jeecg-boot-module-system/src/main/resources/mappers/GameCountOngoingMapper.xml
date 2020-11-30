@@ -3,7 +3,7 @@
 <mapper namespace="org.jeecg.modules.game.mapper.GameCountOngoingMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameCountOngoing">
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStatCountOngoing">
         <id column="id" property="id"/>
         <result column="count_date" property="countDate"/>
         <result column="type" property="type"/>
@@ -49,7 +49,7 @@
     </sql>
 
     <insert id="insertOrUpdateList" parameterType="java.util.List">
-        INSERT into `game_count_ongoing`
+        INSERT into `game_stat_count_ongoing`
         (count_date, `type`, register_num, channel, server_id, c1, c2, c3, c4, c5, c6, c7, c8, c9,
         c10, c11, c12, c13, c14, c15, c16, c17, c18, c19, c20, c21, c22, c23, c24, c25, c26, c27, c28,
         c29, c30, create_time)

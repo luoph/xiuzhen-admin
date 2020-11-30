@@ -24,7 +24,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class GameDayDataCount implements Serializable {
+public class GameStatDayDataCount implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameCountOngoing;
+import org.jeecg.modules.game.entity.GameStatCountOngoing;
 import org.jeecg.modules.game.mapper.GameCountOngoingMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameCountOngoingService;
@@ -25,15 +25,15 @@ import org.springframework.stereotype.Service;
  * @since 2020-09-12
  */
 @Service
-public class GameCountOngoingServiceImpl extends ServiceImpl<GameCountOngoingMapper, GameCountOngoing> implements IGameCountOngoingService {
+public class GameCountOngoingServiceImpl extends ServiceImpl<GameCountOngoingMapper, GameStatCountOngoing> implements IGameCountOngoingService {
 
     @Autowired
     private IGameChannelService gameChannelService;
 
 
     @Override
-    public IPage<GameCountOngoing> selectList(Page<GameCountOngoing> page, int channelId, int serverId, int type, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameCountOngoing> queryWrapper = new QueryWrapper<>();
+    public IPage<GameStatCountOngoing> selectList(Page<GameStatCountOngoing> page, int channelId, int serverId, int type, String rangeDateBegin, String rangeDateEnd) {
+        QueryWrapper<GameStatCountOngoing> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("count_date");
         if (type > 0) {
             queryWrapper.eq("type", type);

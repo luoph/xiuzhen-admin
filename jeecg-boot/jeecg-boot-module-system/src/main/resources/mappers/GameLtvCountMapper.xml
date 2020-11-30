@@ -4,7 +4,7 @@
 <mapper namespace="org.jeecg.modules.game.mapper.GameLtvCountMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameLtvCount">
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStatLtvCount">
         <id column="id" property="id"/>
         <result column="count_date" property="countDate"/>
         <result column="register_num" property="registerNum"/>
@@ -57,7 +57,7 @@
     </select>
 
     <insert id="updateOrInsert" parameterType="list">
-        replace into `game_ltv_count`(
+        replace into `game_stat_ltv_count`(
         channel, server_id, count_date, register_num, create_time
         )
         VALUES
