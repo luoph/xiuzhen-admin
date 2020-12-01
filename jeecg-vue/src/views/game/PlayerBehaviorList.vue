@@ -24,11 +24,11 @@
                     <a-col :md="5" :sm="5">
                         <a-form-item label="选择就近天数">
                             <a-select placeholder="天数" v-model="queryParam.days">
-                                <a-select-option :value="0">不选择天数</a-select-option>
-                                <a-select-option :value="7">近7天</a-select-option>
-                                <a-select-option :value="15">近15天</a-select-option>
-                                <a-select-option :value="30">近一个月</a-select-option>
-                                <a-select-option :value="60">近两个月</a-select-option>
+                                <a-select-option value="0">不选择天数</a-select-option>
+                                <a-select-option value="7">近7天</a-select-option>
+                                <a-select-option value="15">近15天</a-select-option>
+                                <a-select-option value="30">近一个月</a-select-option>
+                                <a-select-option value="60">近两个月</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -57,7 +57,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :scroll="{ x: 1600, y: 800 }"
+                :scroll="{ x:true }"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
@@ -185,12 +185,6 @@ export default {
                     align: "center",
                     width: "5%",
                     dataIndex: "mainStoryBoss"
-                },
-                {
-                    title: "冒险等级",
-                    align: "center",
-                    width: "5%",
-                    dataIndex: "mapLevel"
                 },
                 {
                     title: "符文秘境-小灵山",
