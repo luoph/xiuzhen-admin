@@ -11,6 +11,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.player.entity.BackpackLog;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,8 +49,6 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
      * 分页列表查询
      *
      * @param playerItemLog 数据实体
-     * @param pageNo        页码
-     * @param pageSize      分页大小
      * @param req           请求
      * @return {@linkplain Result}
      */
@@ -60,15 +58,23 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
+
+        if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
+            return Result.error("请选择服务器！");
+        }
+        int serverId = playerItemLog.getServerId();
+
+        playerItemLog.setServerId(null);
         QueryWrapper<GamePlayerItemLog> queryWrapper = QueryGenerator.initQueryWrapper(playerItemLog, req.getParameterMap());
         queryWrapper.orderByDesc("create_time");
         Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
-        if (playerItemLog.getPlayerId() == null || playerItemLog.getServerId() == null || playerItemLog.getItemId() == null || playerItemLog.getSyncTime() == null) {
-            page.setRecords(new ArrayList<>()).setTotal(0);
-            return Result.ok(page);
+        try {
+            DataSourceHelper.useServerDatabase(serverId);
+            IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
+            return Result.ok(pageList);
+        } finally {
+            DataSourceHelper.useDefaultDatabase();
         }
-        IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
-        return Result.ok(pageList);
     }
 
     /**

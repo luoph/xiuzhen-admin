@@ -1,6 +1,7 @@
 package org.jeecg.modules.player.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -21,7 +22,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Accessors(chain = true)
-@TableName("game_player_item_log")
+@TableName("backpack_log")
 public class GamePlayerItemLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,8 +36,8 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 服务器id
      */
-    @Excel(name = "服务器id", width = 15)
-    private java.lang.Long serverId;
+    @TableField(exist = false)
+    private java.lang.Integer serverId;
 
     /**
      * 玩家id
@@ -71,6 +72,7 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 同步时间
      */
+    @TableField(exist = false)
     @Excel(name = "同步时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
@@ -99,84 +101,109 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 更新时间
      */
+    @TableField(exist = false)
     @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date updateTime;
 
+
+    /**
+     * 同步时间
+     */
+    @Excel(name = "统计日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    private java.util.Date createDate;
+
     /**
      * 道具名称
      */
+    @TableField(exist = false)
     private String itemName;
 
     /**
      * 道具的数量汇总
      */
+    @TableField(exist = false)
     private BigDecimal itemNum;
 
     /**
      * 新增道具的数量汇总
      */
+    @TableField(exist = false)
     private BigDecimal addItemNum;
 
     /**
      * 消耗道具的数量汇总
      */
+    @TableField(exist = false)
     private BigDecimal consumeItemNum;
 
     /**
      * 消耗比 (新增/消耗)
      */
+    @TableField(exist = false)
     private BigDecimal consumeRate;
 
     /**
      * 滞留 (新增-消耗)
      */
+    @TableField(exist = false)
     private BigDecimal retention;
 
     /**
      * 时间字符串
      */
+    @TableField(exist = false)
     private String dateStr;
 
     /**
      * 途径类型对应的名称 (产销点)
      */
+    @TableField(exist = false)
     private String wayName;
 
     /**
      * 玩家数量
      */
+    @TableField(exist = false)
     private BigDecimal playerNum;
 
     /**
      * 对应途径下货币产销次数
      */
+    @TableField(exist = false)
     private BigDecimal itemCount;
 
     /**
      * 对应途径下货币产销数量占比
      */
+    @TableField(exist = false)
     private BigDecimal itemNumRate;
 
     /**
      * 全途径下的道具数量总和
      */
+    @TableField(exist = false)
     private BigDecimal itemNumSum;
 
     /**
      * 产销类型名
      */
+    @TableField(exist = false)
     private String typeName;
 
     /**
      * 玩家名字
      */
+    @TableField(exist = false)
     private String playerName;
 
     /**
      * 关联玩家注册信息
      */
+    @TableField(exist = false)
     private GameRegisterInfo registerInfo;
 
 
