@@ -41,7 +41,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
     private ConfigDataService configDataService;
 
     @Override
-    public GamePlayerItemLog writePlayerItemLog(long serverId, BackpackLog backpacklog) {
+    public GamePlayerItemLog writePlayerItemLog(Integer serverId, BackpackLog backpacklog) {
         return new GamePlayerItemLog().setServerId(serverId).setPlayerId(backpacklog.getPlayerId()).setType(backpacklog.getType())
                 .setWay(backpacklog.getWay()).setSyncTime(backpacklog.getCreateDate()).setItemId(backpacklog.getItemId())
                 .setBeforeNum(backpacklog.getBeforeNum()).setAfterNum(backpacklog.getAfterNum())
