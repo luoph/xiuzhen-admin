@@ -2,6 +2,7 @@ package org.jeecg.modules.player.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
+import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -304,7 +305,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         behavior.setFactionBanquet(factionBanquet);
 
         long recharge = list.stream().filter(i -> i.getType() == PlayerLogType.RECHARGE.getType()).mapToLong(PlayerBehavior::getValue).sum();
-        behavior.setRecharge(recharge);
+        behavior.setRecharge(BigDecimalUtil.divide(recharge, 100, 2).doubleValue());
 
         long consumeMoney = list.stream().filter(i -> i.getType() == PlayerLogType.CONSUME_MONEY.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setConsumeMoney(consumeMoney);
