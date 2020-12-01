@@ -20,17 +20,14 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="同步时间">
-                            <a-range-picker v-model="queryParam.syncTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                        <a-form-item label="统计日期">
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']"
+                                            @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="8" :sm="10">
                         <span style="float: left; overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                        </span>
-
-                        <span style="float: left; overflow: hidden; margin-left: 20px;" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="plus" @click="handleAddSync">同步</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -54,7 +51,6 @@
             </a-table>
         </div>
 
-        <playerItemLog-modal ref="playerItemLogModal" @ok="modalFormOk"></playerItemLog-modal>
     </a-card>
 </template>
 
@@ -62,7 +58,6 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import { filterObj } from "@/utils/util";
-import PlayerItemLogModal from "./modules/PlayerItemLogModal";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 
 export default {
@@ -70,8 +65,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        PlayerItemLogModal,
-        ServerSelect,
+        ServerSelect
     },
     data() {
         return {
@@ -84,14 +78,9 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function (t, r, index) {
+                    customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
-                },
-                {
-                    title: "服务器id",
-                    align: "center",
-                    dataIndex: "serverId"
                 },
                 {
                     title: "玩家id",
@@ -127,15 +116,15 @@ export default {
                     title: "方式",
                     align: "center",
                     dataIndex: "type",
-                    customRender: function (text) {
-                        return text == 1 ? "存入" : "支出";
+                    customRender: function(text) {
+                        return text === 1 ? "存入" : "支出";
                     }
                 },
                 {
-                    title: "同步时间",
+                    title: "统计日期",
                     align: "center",
-                    dataIndex: "syncTime",
-                    customRender: function (text) {
+                    dataIndex: "createDate",
+                    customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 }
@@ -146,30 +135,19 @@ export default {
             dictOptions: {}
         };
     },
-    computed: {
-        importExcelUrl: function () {
-            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        }
-    },
     methods: {
-        initDictConfig() {},
+        initDictConfig() {
+        },
         getQueryParams() {
             let param = Object.assign({}, this.queryParam, this.isorter);
-            param.pageNo = this.ipagination.current;
-            param.pageSize = this.ipagination.pageSize;
-
-            delete param.syncTimeRange;
             return filterObj(param);
         },
-        onDateChange: function (value, dateString) {
-            this.queryParam.syncTime_begin = dateString[0];
-            this.queryParam.syncTime_end = dateString[1];
+        onDateChange: function(value, dateString) {
+            this.queryParam.createDate_begin = dateString[0];
+            this.queryParam.createDate_end = dateString[1];
         },
         change(serverId) {
             this.queryParam.serverId = serverId;
-        },
-        handleAddSync() {
-            this.$refs.playerItemLogModal.visible = true;
         }
     }
 };
