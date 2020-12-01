@@ -39,11 +39,6 @@
                     </a-col>
                 </a-row>
             </a-form>
-
-            <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('行为分析')">导出</a-button>
-            </div>
-
         </div>
         <!-- 查询区域-END -->
         <!-- table区域-begin -->
