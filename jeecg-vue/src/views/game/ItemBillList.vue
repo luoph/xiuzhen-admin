@@ -35,11 +35,11 @@
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item v-if="queryParam.type === '1'" key='1' label="产销点">
-                            <a-select-read-json json-file="item_fall_rule" placeholder="获得"
+                            <a-select-read-json json-file="item_fall_rule" placeholder="途径"
                                                 @onSelectOption="change"></a-select-read-json>
                         </a-form-item>
                         <a-form-item v-if="queryParam.type === '2'" key='2' label="产销点">
-                            <a-select-read-json json-file="item_expend" placeholder="消耗"
+                            <a-select-read-json json-file="item_expend" placeholder="途径"
                                                 @onSelectOption="change"></a-select-read-json>
                         </a-form-item>
                     </a-col>
