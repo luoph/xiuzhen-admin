@@ -1,10 +1,14 @@
 <template>
-    <a-select placeholder="请选择区服ID" v-model="queryParam.serverId" :initialValue="queryParam.serverId" @change="selectServer">
-        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + "-" + server.name }}</a-select-option>
+    <a-select placeholder="请选择区服ID" v-model="queryParam.serverId" :initialValue="queryParam.serverId"
+              @change="selectServer">
+        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
+            {{ server.id + "-" + server.name }}
+        </a-select-option>
     </a-select>
 </template>
 <script>
 import { getAction } from "@/api/manage";
+
 export default {
     name: "ServerSelect",
     components: {
@@ -13,7 +17,6 @@ export default {
     mounted() {
         this.initServerList();
     },
-
     data() {
         return {
             queryParam: {
@@ -33,7 +36,6 @@ export default {
         },
         selectServer() {
             this.$emit("select", this.queryParam.serverId);
-            console.log(this.queryParam.serverId);
         }
     }
 };
