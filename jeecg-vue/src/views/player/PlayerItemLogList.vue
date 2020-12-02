@@ -27,16 +27,18 @@
                             </a-select>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="5">
-                        <a-form-item v-if="queryParam.type === '1'" key='1' label="产出途径">
-                            <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径"
-                                                @onSelectOption="selectWay"></a-select-read-json>
-                        </a-form-item>
-                        <a-form-item v-if="queryParam.type === '2'" key='2' label="消耗途径">
-                            <a-select-read-json json-file="item_expend" placeholder="请选择途径"
-                                                @onSelectOption="selectWay"></a-select-read-json>
-                        </a-form-item>
-                    </a-col>
+                    <template>
+                        <a-col :md="4" :sm="5">
+                            <a-form-item v-if="queryParam.type === '1'" key='1' label="产出途径">
+                                <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径"
+                                                    @onSelectOption="selectWay"></a-select-read-json>
+                            </a-form-item>
+                            <a-form-item v-if="queryParam.type === '2'" key='2' label="消耗途径">
+                                <a-select-read-json json-file="item_expend" placeholder="请选择途径"
+                                                    @onSelectOption="selectWay"></a-select-read-json>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="统计日期">
                             <a-range-picker format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']"
@@ -50,6 +52,9 @@
                     </a-col>
                 </a-row>
             </a-form>
+        </div>
+        <div class="table-operator">
+            <a-button type="primary" icon="download" @click="handleExportXls('玩家道具日志')">导出</a-button>
         </div>
         <!-- 查询区域-END -->
 
@@ -150,16 +155,20 @@ export default {
                 }
             ],
             url: {
-                list: "player/playerItemLog/list"
+                list: "player/playerItemLog/list",
+                exportXlsUrl: "player/playerItemLog/exportXls"
             },
             dictOptions: {}
         };
     },
     methods: {
         initDictConfig() {
+            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         },
         getQueryParams() {
             let param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
             return filterObj(param);
         },
         onDateChange: function(value, dateString) {

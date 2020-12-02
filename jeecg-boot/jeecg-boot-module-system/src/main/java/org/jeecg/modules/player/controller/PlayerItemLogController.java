@@ -9,15 +9,19 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.util.ExcelUtils;
+import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.GamePlayerItemLog;
+import org.jeecg.modules.player.entity.GameRegisterInfo;
 import org.jeecg.modules.player.service.BackpackLogService;
 import org.jeecg.modules.player.service.IGamePlayerItemLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -64,7 +69,20 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
         if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
             return Result.error("请选择服务器！");
         }
+        LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog);
 
+        Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
+        try {
+            DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
+            IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
+            return Result.ok(pageList);
+        } finally {
+            DataSourceHelper.useDefaultDatabase();
+        }
+    }
+
+
+    private LambdaQueryWrapper<GamePlayerItemLog> getQueryWrapper(GamePlayerItemLog playerItemLog) {
         LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = Wrappers.lambdaQuery();
         if (playerItemLog.getPlayerId() != null && playerItemLog.getPlayerId() > 0) {
             queryWrapper.eq(GamePlayerItemLog::getPlayerId, playerItemLog.getPlayerId());
@@ -85,15 +103,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
             queryWrapper.between(GamePlayerItemLog::getCreateDate, DateUtils.dateOnly(DateUtils.parseDate(playerItemLog.getStartDate())),
                     DateUtils.dateOnly(DateUtils.parseDate(playerItemLog.getEndDate()))).orderByDesc(GamePlayerItemLog::getCreateTime);
         }
-
-        Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
-        try {
-            DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
-            IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
-            return Result.ok(pageList);
-        } finally {
-            DataSourceHelper.useDefaultDatabase();
-        }
+        return queryWrapper;
     }
 
     /**
@@ -223,5 +233,28 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
         return Result.ok(page);
     }
 
+
+    @RequestMapping(value = "/exportXls")
+    public ModelAndView exportXls(
+            @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+            HttpServletRequest request, GamePlayerItemLog gamePlayerItemLog) {
+        if (gamePlayerItemLog.getServerId() == null || gamePlayerItemLog.getServerId() <= 0) {
+            return new ModelAndView();
+        }
+        LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(gamePlayerItemLog);
+        try {
+            DataSourceHelper.useServerDatabase(gamePlayerItemLog.getServerId());
+            LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+
+            Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
+            IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
+            List<GamePlayerItemLog> records = pageList.getRecords();
+
+            return ExcelUtils.exportXls(sysUser.getRealname(), records, request.getParameter("selections"), GamePlayerItemLog.class, "玩家道具产销日志");
+        } finally {
+            DataSourceHelper.useDefaultDatabase();
+        }
+    }
 
 }
