@@ -28,12 +28,12 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="5">
-                        <a-form-item v-if="queryParam.type === '1'" key='1' label="产销点">
-                            <a-select-read-json json-file="item_fall_rule" placeholder="途径"
+                        <a-form-item v-if="queryParam.type === '1'" key='1' label="产出途径">
+                            <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径"
                                                 @onSelectOption="selectWay"></a-select-read-json>
                         </a-form-item>
-                        <a-form-item v-if="queryParam.type === '2'" key='2' label="产销点">
-                            <a-select-read-json json-file="item_expend" placeholder="途径"
+                        <a-form-item v-if="queryParam.type === '2'" key='2' label="消耗途径">
+                            <a-select-read-json json-file="item_expend" placeholder="请选择途径"
                                                 @onSelectOption="selectWay"></a-select-read-json>
                         </a-form-item>
                     </a-col>
