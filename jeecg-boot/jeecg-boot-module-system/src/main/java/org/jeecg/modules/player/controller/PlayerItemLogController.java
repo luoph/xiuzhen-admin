@@ -1,6 +1,8 @@
 package org.jeecg.modules.player.controller;
 
 import cn.youai.commons.model.ResponseCode;
+import cn.youai.xiuzhen.utils.DateUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -62,14 +64,31 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
         if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
             return Result.error("请选择服务器！");
         }
-        int serverId = playerItemLog.getServerId();
 
-        playerItemLog.setServerId(null);
-        QueryWrapper<GamePlayerItemLog> queryWrapper = QueryGenerator.initQueryWrapper(playerItemLog, req.getParameterMap());
-        queryWrapper.orderByDesc("create_time");
+        LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = Wrappers.lambdaQuery();
+        if (playerItemLog.getPlayerId() != null && playerItemLog.getPlayerId() > 0) {
+            queryWrapper.eq(GamePlayerItemLog::getPlayerId, playerItemLog.getPlayerId());
+        }
+        if (playerItemLog.getItemId() != null && playerItemLog.getItemId() > 0) {
+            queryWrapper.eq(GamePlayerItemLog::getItemId, playerItemLog.getItemId());
+        }
+
+        if (playerItemLog.getWay() != null && playerItemLog.getWay() > 0) {
+            queryWrapper.eq(GamePlayerItemLog::getWay, playerItemLog.getWay());
+        }
+
+        if (playerItemLog.getType() != null && playerItemLog.getType() > 0) {
+            queryWrapper.eq(GamePlayerItemLog::getType, playerItemLog.getType());
+        }
+
+        if (StringUtils.isAllBlank(playerItemLog.getStartDate(), playerItemLog.getEndDate())) {
+            queryWrapper.between(GamePlayerItemLog::getCreateDate, DateUtils.dateOnly(DateUtils.parseDate(playerItemLog.getStartDate())),
+                    DateUtils.dateOnly(DateUtils.parseDate(playerItemLog.getEndDate()))).orderByDesc(GamePlayerItemLog::getCreateTime);
+        }
+
         Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
         try {
-            DataSourceHelper.useServerDatabase(serverId);
+            DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
             IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
             return Result.ok(pageList);
         } finally {

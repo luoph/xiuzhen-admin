@@ -206,6 +206,12 @@ public class GamePlayerItemLog implements Serializable {
     @TableField(exist = false)
     private GameRegisterInfo registerInfo;
 
+    @TableField(exist = false)
+    private String startDate;
+
+    @TableField(exist = false)
+    private String endDate;
+
 
 //    @Override
 //    public boolean equals(Object o) {
