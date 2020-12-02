@@ -40,6 +40,9 @@
                 </a-row>
             </a-form>
         </div>
+        <div class="table-operator">
+            <a-button type="primary" icon="download" @click="handleExportXls('玩家行为分析')">导出</a-button>
+        </div>
         <!-- 查询区域-END -->
         <!-- table区域-begin -->
         <div>
@@ -47,13 +50,14 @@
                 ref="table"
                 size="middle"
                 bordered
-                rowKey="id"
+                :rowKey="function(t, r, index) {
+                        return parseInt(index) + 1;
+                }"
                 :columns="columns"
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
                 :scroll="{ x:true }"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
             </a-table>
@@ -250,7 +254,8 @@ export default {
 
             ],
             url: {
-                list: "game/player/behavior"
+                list: "game/player/behavior",
+                exportXlsUrl: "game/player/exportXls"
             },
             dictOptions: {}
         };

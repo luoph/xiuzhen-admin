@@ -23,7 +23,6 @@ public class PlayerBehavior implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Excel(name = "自增id", width = 15)
     private Long id;
 
     /**
@@ -41,7 +40,6 @@ public class PlayerBehavior implements Serializable {
     /**
      * 玩家相关信息分类类型
      */
-    @Excel(name = "统计类型", width = 15)
     private Integer type;
 
     /**
@@ -127,13 +125,7 @@ public class PlayerBehavior implements Serializable {
      */
     @Excel(name = "在线时长", width = 15)
     private Long onlineTime;
-
-    /**
-     * 修炼等级
-     */
-    @Excel(name = "修炼等级", width = 15)
-    private Integer practiceLevel;
-
+    
     /**
      * 上古遗迹
      */
