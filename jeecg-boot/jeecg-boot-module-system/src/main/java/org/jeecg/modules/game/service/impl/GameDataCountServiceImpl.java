@@ -351,7 +351,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     public void updateLtvTask(GameChannel gameChannel, GameServer gameServer, String countDate) {
         Map<String, GameStatLtv> map = ltvCountMap();
         int betweenNatural = betweenNatural(gameServer, countDate);
-        for (int i = 0; i < betweenNatural; i++) {
+        for (int i = 0; i <= betweenNatural; i++) {
             Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
             int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
             String formatDate = DateUtils.formatDate(nextDate, DatePattern.NORM_DATE_PATTERN);
@@ -463,8 +463,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             if (gameCountOngoing.getC30() == null) {
                 leftDays = Math.min(leftDays, DAYS_BETWEEN);
                 // 更新统计
-                for (int j = 1; j <= leftDays; j++) {
-                    String countField = FIELD + j;
+                for (int j = 0; j <= leftDays; j++) {
+                    String countField = FIELD + j + 1;
                     BigDecimal getField = (BigDecimal) ReflectUtils.invokeGetField(gameCountOngoing, countField);
                     if (getField == null) {
                         double countValue;

@@ -19,6 +19,24 @@
                             <a-input placeholder="请输入道具ID" v-model="queryParam.itemId"></a-input>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="3" :sm="3">
+                        <a-form-item label="产销类型">
+                            <a-select placeholder="产销类型" v-model="queryParam.type">
+                                <a-select-option value="1">产出</a-select-option>
+                                <a-select-option value="2">消耗</a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="5">
+                        <a-form-item v-if="queryParam.type === '1'" key='1' label="产销点">
+                            <a-select-read-json json-file="item_fall_rule" placeholder="途径"
+                                                @onSelectOption="selectWay"></a-select-read-json>
+                        </a-form-item>
+                        <a-form-item v-if="queryParam.type === '2'" key='2' label="产销点">
+                            <a-select-read-json json-file="item_expend" placeholder="途径"
+                                                @onSelectOption="selectWay"></a-select-read-json>
+                        </a-form-item>
+                    </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="统计日期">
                             <a-range-picker format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']"
@@ -59,13 +77,15 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import { filterObj } from "@/utils/util";
 import ServerSelect from "@/components/gameserver/ServerSelect";
+import ASelectReadJson from "@comp/gameserver/ASelectReadJson";
 
 export default {
     name: "PlayerItemLogList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        ServerSelect
+        ServerSelect,
+        ASelectReadJson
     },
     data() {
         return {
@@ -143,11 +163,14 @@ export default {
             return filterObj(param);
         },
         onDateChange: function(value, dateString) {
-            this.queryParam.createDate_begin = dateString[0];
-            this.queryParam.createDate_end = dateString[1];
+            this.queryParam.startDate = dateString[0];
+            this.queryParam.endDate = dateString[1];
         },
         change(serverId) {
             this.queryParam.serverId = serverId;
+        },
+        selectWay(way) {
+            this.queryParam.way = way;
         }
     }
 };

@@ -229,7 +229,7 @@ public class GameDataCountController {
 
         Page<GameStatOngoing> page = new Page<>(pageNo, pageSize);
         boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
-        if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
+        if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(DateUtils.now()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(DateUtils.now()), DateUtils.parseDate(rangeDateEnd))) {
             // 直接取数据 实时的
             GameServer gameServer = gameServerService.getById(serverId);
             GameChannel gameChannel = gameChannelService.getById(channelId);
