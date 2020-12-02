@@ -66,14 +66,13 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 方式：1-获取 2-使用
      */
-    @Excel(name = "方式：1-获取 2-使用", width = 15)
+    @Excel(name = "产销类型：1-获取 2-使用", width = 20)
     private java.lang.Integer type;
 
     /**
      * 同步时间
      */
     @TableField(exist = false)
-    @Excel(name = "同步时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date syncTime;
@@ -93,8 +92,8 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 创建时间
      */
-    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @Excel(name = "创建时间", width = 15)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date createTime;
 
@@ -102,7 +101,6 @@ public class GamePlayerItemLog implements Serializable {
      * 更新时间
      */
     @TableField(exist = false)
-    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date updateTime;
