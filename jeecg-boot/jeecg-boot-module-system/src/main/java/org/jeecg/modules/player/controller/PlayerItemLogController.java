@@ -3,7 +3,6 @@ package org.jeecg.modules.player.controller;
 import cn.youai.commons.model.ResponseCode;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,7 +12,6 @@ import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.database.DataSourceHelper;
@@ -21,7 +19,6 @@ import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.GamePlayerItemLog;
-import org.jeecg.modules.player.entity.GameRegisterInfo;
 import org.jeecg.modules.player.service.BackpackLogService;
 import org.jeecg.modules.player.service.IGamePlayerItemLogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -236,8 +233,6 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(
-            @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
             HttpServletRequest request, GamePlayerItemLog gamePlayerItemLog) {
         if (gamePlayerItemLog.getServerId() == null || gamePlayerItemLog.getServerId() <= 0) {
             return new ModelAndView();
@@ -247,11 +242,8 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
             DataSourceHelper.useServerDatabase(gamePlayerItemLog.getServerId());
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-            Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
-            IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
-            List<GamePlayerItemLog> records = pageList.getRecords();
-
-            return ExcelUtils.exportXls(sysUser.getRealname(), records, request.getParameter("selections"), GamePlayerItemLog.class, "玩家道具产销日志");
+            List<GamePlayerItemLog> list = playerItemLogService.list(queryWrapper);
+            return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), GamePlayerItemLog.class, "玩家道具产销日志");
         } finally {
             DataSourceHelper.useDefaultDatabase();
         }
