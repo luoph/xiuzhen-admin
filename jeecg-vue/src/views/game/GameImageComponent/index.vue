@@ -1,6 +1,6 @@
 <template>
     <a-row class="j-select-biz-component-box" type="flex" :gutter="8">
-        <a-col class="left" :class="{ full: !buttons }">
+        <a-col class="full" :class="{ full: !buttons }">
             <a-input :placeholder="placeholder" :disabled="disabled" style="width: 100%;" v-model="selectValue" allowClear>
                 <a-icon slot="addonAfter" type="setting" @click="visible = true" />
             </a-input>

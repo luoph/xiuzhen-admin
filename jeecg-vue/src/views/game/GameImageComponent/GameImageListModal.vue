@@ -9,7 +9,7 @@
                             <a-form-item label="图片类型">
                                 <a-select placeholder="请选择图片类型" v-model="queryParam.type" default-value="1">
                                     <a-select-option :value="1">图标</a-select-option>
-                                    <a-select-option :value="2">广告图</a-select-option>
+                                    <a-select-option :value="2">宣传图</a-select-option>
                                 </a-select>
                             </a-form-item>
                         </a-col>
@@ -95,7 +95,7 @@ export default {
                         if (value === 1) {
                             text = "图标";
                         } else if (value === 2) {
-                            text = "广告图";
+                            text = "宣传图";
                         }
                         return text;
                     }
@@ -170,7 +170,11 @@ export default {
         /** 完成选择 */
         handleOk() {
             let value = this.selectedTable.dataSource.map(data => data[this.valueKey]);
-            this.$emit("input", value);
+            if (value && value[0]) {
+                this.$emit("input", value[0]);
+            } else {
+                this.$emit("input", "");
+            }
             this.close();
         },
         customRowFn(record) {
