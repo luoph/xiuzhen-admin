@@ -83,7 +83,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:200px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -143,32 +143,30 @@ export default {
                     customRender: value => {
                         let text = "--";
                         if (value === 1) {
-                            text = "icon";
+                            text = "图标";
                         } else if (value === 2) {
-                            text = "banner";
+                            text = "广告图";
                         }
                         return text;
                     }
                 },
                 {
-                    title: "图片名",
+                    title: "图片",
+                    align: "center",
+                    dataIndex: "imgUrl",
+                    scopedSlots: { customRender: "imgSlot" }
+                },
+                {
+                    title: "文件名",
                     align: "center",
                     dataIndex: "name"
                 },
                 {
-                    title: "相对路径",
+                    title: "图片尺寸",
                     align: "center",
-                    dataIndex: "imgUrl"
-                },
-                {
-                    title: "图片宽（px）",
-                    align: "center",
-                    dataIndex: "width"
-                },
-                {
-                    title: "图片高（px）",
-                    align: "center",
-                    dataIndex: "height"
+                    customRender: function(t, r) {
+                        return r.width + "x" + r.height;
+                    }
                 },
                 {
                     title: "备注",
@@ -176,7 +174,7 @@ export default {
                     dataIndex: "remark"
                 },
                 {
-                    title: "创建时间",
+                    title: "上传时间",
                     align: "center",
                     dataIndex: "createTime"
                 },
@@ -203,7 +201,13 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return window._CONFIG["gameImgUrl"] + text;
+        }
     }
 };
 </script>

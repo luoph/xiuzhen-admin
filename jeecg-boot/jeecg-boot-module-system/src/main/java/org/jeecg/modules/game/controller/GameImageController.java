@@ -215,8 +215,7 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
                 imgPath = imgPath.substring(0, imgPath.length() - 1);
             }
             response.setContentType("image/jpeg;charset=utf-8");
-            String localPath = uploadPath;
-            String imgUrl = localPath + File.separator + imgPath;
+            String imgUrl = uploadPath + File.separator + imgPath;
             inputStream = new BufferedInputStream(new FileInputStream(imgUrl));
             outputStream = response.getOutputStream();
             byte[] buf = new byte[1024];
