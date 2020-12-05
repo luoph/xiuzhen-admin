@@ -14,18 +14,14 @@
         </a-col>
 
         <a-col v-if="buttons" class="right">
-            <a-button type="primary" icon="search" :disabled="disabled" @click="visible = true">{{ selectButtonText }}</a-button>
+            <a-button icon="setting" :disabled="disabled" @click="visible = true"></a-button>
         </a-col>
 
-        <game-list-component-modal
+        <game-image-list-modal
             v-model="selectValue"
             :name="name"
-            :listUrl="listUrl"
             :returnKeys="returnKeys"
             :displayKey="displayKey"
-            :propColumns="columns"
-            :queryParamText="queryParamText"
-            :multiple="multiple"
             :visible.sync="visible"
             :valueKey="valueKey"
             @ok="selectOptions = $event"
@@ -34,11 +30,11 @@
 </template>
 
 <script>
-import GameListComponentModal from "./GameListComponentModal";
+import GameImageListModal from "./GameImageListModal";
 
 export default {
     name: "GameImageComponent",
-    components: { GameListComponentModal },
+    components: { GameImageListModal },
     props: {
         value: {
             type: String,
@@ -57,26 +53,14 @@ export default {
             type: Boolean,
             default: false
         },
-        // 是否支持多选，默认 true
-        multiple: {
-            type: Boolean,
-            default: true
-        },
         // 是否显示按钮，默认 true
         buttons: {
             type: Boolean,
             default: true
         },
-
         /* 可复用属性 */
         name: {
             type: String,
-            default: ""
-        },
-        // list 接口地址
-        listUrl: {
-            type: String,
-            required: true,
             default: ""
         },
         // 显示的 Key
@@ -93,16 +77,6 @@ export default {
         selectButtonText: {
             type: String,
             default: "选择"
-        },
-        // 查询条件文字
-        queryParamText: {
-            type: String,
-            default: null
-        },
-        // columns
-        columns: {
-            type: Array,
-            default: () => []
         }
     },
     data() {
@@ -150,7 +124,7 @@ export default {
 </style>
 <style lang="scss" scoped>
 .j-select-biz-component-box {
-    $width: 82px;
+    $width: 40px;
 
     .left {
         width: calc(100% - #{$width} - 8px);
