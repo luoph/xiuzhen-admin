@@ -155,7 +155,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: 60,
+                    width: "3%",
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -164,12 +164,14 @@ export default {
                 {
                     title: "活动Id",
                     align: "center",
+                    width: "5%",
                     dataIndex: "id"
                 },
                 {
                     title: "活动类型",
                     align: "center",
                     dataIndex: "type",
+                    width: "5%",
                     customRender: value => {
                         let re = "--";
                         if (value === 1) {
@@ -181,23 +183,27 @@ export default {
                 {
                     title: "活动名称",
                     align: "center",
+                    width: "8%",
                     dataIndex: "name"
                 },
                 {
                     title: "活动标语（描述）",
                     align: "left",
+                    width: "8%",
                     dataIndex: "description"
                 },
                 {
                     title: "活动图标",
                     align: "center",
                     dataIndex: "icon",
+                    width: "5%",
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner",
+                    width: "15%",
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
@@ -217,6 +223,7 @@ export default {
                 {
                     title: "区服id",
                     align: "center",
+                    width: "8%",
                     dataIndex: "serverIds",
                     scopedSlots: { customRender: "serverIdTags" }
                 },
@@ -237,16 +244,19 @@ export default {
                 {
                     title: "活动开始时间",
                     align: "center",
+                    width: "8%",
                     dataIndex: "startTime"
                 },
                 {
                     title: "活动结束时间",
                     align: "center",
+                    width: "8%",
                     dataIndex: "endTime"
                 },
                 {
                     title: "创建时间",
                     align: "center",
+                    width: "8%",
                     dataIndex: "createTime"
                 },
                 {
