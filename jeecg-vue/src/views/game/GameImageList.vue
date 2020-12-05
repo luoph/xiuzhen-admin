@@ -7,8 +7,8 @@
                     <a-col :md="6" :sm="8">
                         <a-form-item label="图片类型">
                             <a-select placeholder="请选择图片类型" v-model="queryParam.type" default-value="1">
-                                <a-select-option :value="1">1-icon</a-select-option>
-                                <a-select-option :value="2">2-banner</a-select-option>
+                                <a-select-option :value="1">图标</a-select-option>
+                                <a-select-option :value="2">广告图</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
