@@ -15,7 +15,6 @@ export default {
                 name: "图片",
                 valueKey: "imgUrl",
                 returnKeys: ["id", "imgUrl"],
-                listUrl: "game/gameImage/list",
                 multiple: false
             }
         };

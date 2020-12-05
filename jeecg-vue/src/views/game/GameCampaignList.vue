@@ -92,7 +92,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -191,12 +191,14 @@ export default {
                 {
                     title: "活动图标",
                     align: "center",
-                    dataIndex: "icon"
+                    dataIndex: "icon",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动宣传图",
                     align: "center",
-                    dataIndex: "banner"
+                    dataIndex: "banner",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动状态",
@@ -310,6 +312,12 @@ export default {
                 .finally(() => {
                     that.confirmLoading = false;
                 });
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return window._CONFIG["gameImgUrl"] + text;
         }
     }
 };

@@ -37,17 +37,17 @@
                             <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称"></a-input>
                         </a-form-item>
                         <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <game-image-selector placeholder="请输入活动图标" :multiple="false" v-decorator="['icon', validatorRules.icon]" />
+                            <game-image-selector placeholder="请选择活动图标" v-decorator="['icon', validatorRules.icon]" />
                         </a-form-item>
                         <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <game-image-selector placeholder="请输入活动宣传图" :multiple="false" v-decorator="['banner', validatorRules.banner]" />
+                            <game-image-selector placeholder="请选择活动宣传图" v-decorator="['banner', validatorRules.banner]" />
                         </a-form-item>
                         <a-form-item label="节日活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <div>
                                 <a-row :gutter="16">
                                     <a-col :span="5">活动类型</a-col>
-                                    <a-col :span="5">页签名</a-col>
-                                    <a-col :span="5">活动图片</a-col>
+                                    <a-col :span="4">页签名</a-col>
+                                    <a-col :span="8">活动图片</a-col>
                                     <!-- <a-col :span="4">开始时间</a-col>
                                     <a-col :span="4">结束时间</a-col> -->
                                     <a-col :span="3">页签顺序</a-col>
@@ -66,14 +66,14 @@
                                             </a-select>
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :span="5">
+                                    <a-col :span="4">
                                         <a-form-item>
                                             <a-input v-model="item.name" placeholder="页签名"></a-input>
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :span="5">
+                                    <a-col :span="8">
                                         <a-form-item>
-                                            <a-input v-model="item.typeImage" placeholder="活动图片"></a-input>
+                                            <game-image-selector placeholder="活动图片" v-model="item.typeImage" />
                                         </a-form-item>
                                     </a-col>
                                     <!-- <a-col :span="4">
