@@ -159,7 +159,14 @@ export default {
                 {
                     title: "文件名",
                     align: "center",
+                    width: 180,
                     dataIndex: "name"
+                },
+                {
+                    title: "图片地址",
+                    align: "center",
+                    width: 180,
+                    dataIndex: "imgUrl"
                 },
                 {
                     title: "图片尺寸",
