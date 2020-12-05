@@ -2,6 +2,7 @@ package org.jeecg.common.util;
 
 import cn.hutool.core.util.RandomUtil;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 /**
@@ -31,10 +32,16 @@ public class RandomStringUtils {
     }
 
     public static void main(String[] args) {
+        String existCode = "";
+        HashSet<String> existSet = new HashSet<>(Arrays.asList(existCode.split(",")));
         HashSet<String> keys = new HashSet<>();
-        while (keys.size() < 1100) {
-            keys.add(genCdKeyCode());
+        while (keys.size() < 5000) {
+            String s = "vip888" + genCdKeyCode();
+            if (!existSet.contains(s)) {
+                keys.add(s);
+            }
         }
+
         for (String key : keys) {
             System.out.println(key);
         }
