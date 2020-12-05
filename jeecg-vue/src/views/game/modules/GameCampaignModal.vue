@@ -37,10 +37,10 @@
                             <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称"></a-input>
                         </a-form-item>
                         <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <game-image-selector placeholder="请输入活动图标" :multiple="false" v-decorator="['post', {}]" />
+                            <game-image-selector placeholder="请输入活动图标" :multiple="false" v-decorator="['icon', validatorRules.icon]" />
                         </a-form-item>
                         <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动宣传图"></a-input>
+                            <game-image-selector placeholder="请输入活动宣传图" :multiple="false" v-decorator="['banner', validatorRules.banner]" />
                         </a-form-item>
                         <a-form-item label="节日活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <div>

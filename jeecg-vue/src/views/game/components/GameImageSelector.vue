@@ -13,7 +13,6 @@ export default {
         return {
             settings: {
                 name: "图片",
-                displayKey: "name",
                 valueKey: "imgUrl",
                 returnKeys: ["id", "imgUrl"],
                 listUrl: "game/gameImage/list",

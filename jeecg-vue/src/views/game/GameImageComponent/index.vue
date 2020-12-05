@@ -1,20 +1,9 @@
 <template>
     <a-row class="j-select-biz-component-box" type="flex" :gutter="8">
         <a-col class="left" :class="{ full: !buttons }">
-            <a-select
-                :placeholder="placeholder"
-                v-model="selectValue"
-                :options="selectOptions"
-                allowClear
-                :disabled="disabled"
-                :open="false"
-                style="width: 100%;"
-                @click.native="visible = buttons ? visible : true"
-            />
-        </a-col>
-
-        <a-col v-if="buttons" class="right">
-            <a-button icon="setting" :disabled="disabled" @click="visible = true"></a-button>
+            <a-input :placeholder="placeholder" :disabled="disabled" style="width: 100%;" v-model="selectValue" allowClear>
+                <a-icon slot="addonAfter" type="setting" @click="visible = true" />
+            </a-input>
         </a-col>
 
         <game-image-list-modal
@@ -81,7 +70,7 @@ export default {
     },
     data() {
         return {
-            selectValue: [],
+            selectValue: "",
             selectOptions: [],
             visible: false
         };
@@ -96,16 +85,16 @@ export default {
             immediate: true,
             handler(val) {
                 if (val) {
-                    this.selectValue = val.split(",");
+                    this.selectValue = val;
                 } else {
-                    this.selectValue = [];
+                    this.selectValue = "";
                 }
             }
         },
         selectValue: {
             deep: true,
             handler(val) {
-                const data = val.join(",");
+                const data = val;
                 this.$emit("input", data);
                 this.$emit("change", data);
             }
