@@ -2,8 +2,8 @@ package org.jeecg.common.system.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.util.BrowserUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,14 +82,11 @@ public class CommonController {
     /**
      * 预览图片
      * 请求地址：http://localhost:8080/common/view/{user/20190119/e1fe9925bc315c60addea1b98eb1cb1349547719_1547866868179.jpg}
-     *
-     * @param request
-     * @param response
      */
     @GetMapping(value = "/view/**")
     public void view(HttpServletRequest request, HttpServletResponse response) {
         // ISO-8859-1 ==> UTF-8 进行编码转换
-        String imgPath = extractPathFromPattern(request);
+        String imgPath = BrowserUtils.extractPathFromPattern(request);
         // 其余处理略
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -101,8 +97,8 @@ public class CommonController {
             }
             response.setContentType("image/jpeg;charset=utf-8");
             String localPath = uploadpath;
-            String imgurl = localPath + File.separator + imgPath;
-            inputStream = new BufferedInputStream(new FileInputStream(imgurl));
+            String imgUrl = localPath + File.separator + imgPath;
+            inputStream = new BufferedInputStream(new FileInputStream(imgUrl));
             outputStream = response.getOutputStream();
             byte[] buf = new byte[1024];
             int len;
@@ -142,7 +138,7 @@ public class CommonController {
     @GetMapping(value = "/download/**")
     public void download(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // ISO-8859-1 ==> UTF-8 进行编码转换
-        String filePath = extractPathFromPattern(request);
+        String filePath = BrowserUtils.extractPathFromPattern(request);
         // 其余处理略
         InputStream inputStream = null;
         OutputStream outputStream = null;
@@ -155,7 +151,7 @@ public class CommonController {
             String downloadFilePath = localPath + File.separator + filePath;
             File file = new File(downloadFilePath);
             if (file.exists()) {
-                response.setContentType("application/force-download");// 设置强制下载不打开            
+                response.setContentType("application/force-download");// 设置强制下载不打开
                 response.addHeader("Content-Disposition", "attachment;fileName=" + new String(file.getName().getBytes("UTF-8"), "iso-8859-1"));
                 inputStream = new BufferedInputStream(new FileInputStream(file));
                 outputStream = response.getOutputStream();
@@ -198,19 +194,6 @@ public class CommonController {
     public ModelAndView pdfPreviewIframe(ModelAndView modelAndView) {
         modelAndView.setViewName("pdfPreviewIframe");
         return modelAndView;
-    }
-
-    /**
-     * 把指定URL后的字符串全部截断当成参数
-     * 这么做是为了防止URL中包含中文或者特殊字符（/等）时，匹配不了的问题
-     *
-     * @param request
-     * @return
-     */
-    private static String extractPathFromPattern(final HttpServletRequest request) {
-        String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE);
-        String bestMatchPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
-        return new AntPathMatcher().extractPathWithinPattern(bestMatchPattern, path);
     }
 
 }
