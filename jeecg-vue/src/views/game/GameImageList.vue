@@ -6,7 +6,10 @@
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
                         <a-form-item label="图片类型">
-                            <a-input placeholder="请输入图片类型" v-model="queryParam.type"></a-input>
+                            <a-select placeholder="请选择图片类型" v-model="queryParam.type" default-value="1">
+                                <a-select-option :value="1">1-icon</a-select-option>
+                                <a-select-option :value="2">2-banner</a-select-option>
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -17,7 +20,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
                             <a-form-item label="相对路径">
-                                <a-input placeholder="请输入相对路径" v-model="queryParam.url"></a-input>
+                                <a-input placeholder="请输入相对路径" v-model="queryParam.imgUrl"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -155,7 +158,7 @@ export default {
                 {
                     title: "相对路径",
                     align: "center",
-                    dataIndex: "url"
+                    dataIndex: "imgUrl"
                 },
                 {
                     title: "图片宽（px）",
@@ -200,7 +203,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {},
+        initDictConfig() {}
     }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
-        <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+    <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="图片类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -31,17 +31,21 @@
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入图片名"></a-input>
                 </a-form-item>
                 <a-form-item label="相对路径" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['url', validatorRules.url]" placeholder="请输入相对路径"></a-input>
+                    <a-input :disabled="true" v-decorator="['imgUrl', validatorRules.imgUrl]" placeholder="请输入相对路径"></a-input>
+                </a-form-item>
+                <a-form-item label="图片宽（px）" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input :disabled="true" v-decorator="['width', validatorRules.width]" placeholder="请输入图片宽"></a-input>
+                </a-form-item>
+                <a-form-item label="图片高（px）" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input :disabled="true" v-decorator="['height', validatorRules.height]" placeholder="请输入图片高"></a-input>
                 </a-form-item>
                 <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
-        <!-- </a-modal> -->
-        <a-button type="primary" @click="handleOk">确定</a-button>
-        <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer>
+    </a-modal>
+    <!-- </a-drawer> -->
 </template>
 
 <script>
@@ -75,18 +79,14 @@ export default {
             picUrl: "",
             headers: {},
             validatorRules: {
-                type: { rules: [{ required: true, message: "请输入图片类型!" }] },
-                name: { rules: [{ required: true, message: "请输入图片名!" }] },
-                url: { rules: [{ required: false, message: "请输入相对路径!" }] },
-                width: { rules: [{ required: false, message: "请输入图片宽px!" }] },
-                height: { rules: [{ required: false, message: "请输入图片高px!" }] },
-                remark: { rules: [{ required: true, message: "请输入备注!" }] }
+                type: { rules: [{ required: true, message: "请输入图片类型!" }] }
+                // remark: { rules: [{ required: true, message: "请输入备注!" }] }
             },
             url: {
                 add: "game/gameImage/add",
                 edit: "game/gameImage/edit",
-                fileUpload: window._CONFIG["domainURL"] + "/game/gameImage/upload",
-                imgServer: window._CONFIG["domainURL"] + "/sys/common/view"
+                imageUpload: window._CONFIG["domainURL"] + "/game/gameImage/upload",
+                imgServer: window._CONFIG["domainURL"] + "/game/gameImage/view"
             }
         };
     },
@@ -96,7 +96,7 @@ export default {
     },
     computed: {
         uploadAction: function() {
-            return this.url.fileUpload;
+            return this.url.imageUpload;
         }
     },
     methods: {
@@ -109,7 +109,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "type", "name", "url", "width", "height", "remark"));
+                this.form.setFieldsValue(pick(this.model, "type", "name", "imgUrl", "width", "height", "remark"));
             });
         },
         close() {
@@ -153,7 +153,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "type", "name", "url", "width", "height", "remark"));
+            this.form.setFieldsValue(pick(row, "type", "name", "imgUrl", "width", "height", "remark"));
         },
         beforeUpload: function(file) {
             var fileType = file.type;
@@ -169,20 +169,26 @@ export default {
                 this.uploadLoading = true;
                 return;
             }
+
             if (info.file.status === "done") {
                 var response = info.file.response;
                 this.uploadLoading = false;
                 console.log(response);
-                if (response.success) {
-                    this.model.avatar = response.message;
-                    this.picUrl = "Has no pic url yet";
+                if (response.success && response.result) {
+                    this.model.imgUrl = response.result.imgUrl;
+                    this.model.name = response.result.name;
+                    this.model.width = response.result.width;
+                    this.model.height = response.result.height;
+                    this.picUrl = this.model.imgUrl;
+
+                    this.form.setFieldsValue(pick(this.model, "type", "name", "imgUrl", "width", "height", "remark"));
                 } else {
                     this.$message.warning(response.message);
                 }
             }
         },
         getImageView() {
-            return this.url.imgServer + "/" + this.model.avatar;
+            return this.url.imgServer + "/" + this.model.imgUrl;
         }
     }
 };
@@ -190,14 +196,34 @@ export default {
 
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
+.avatar-uploader > .ant-upload {
+    width: 104px;
+    height: 104px;
+}
+.ant-upload-select-picture-card i {
+    font-size: 49px;
+    color: #999;
+}
+
+.ant-upload-select-picture-card .ant-upload-text {
+    margin-top: 8px;
+    color: #666;
+}
+
+.ant-table-tbody .ant-table-row td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 /** Button按钮间距 */
 .ant-btn {
     margin-left: 30px;
     margin-bottom: 30px;
     float: right;
 }
-.image-uploader > .ant-upload {
-    width: 104px;
-    height: 104px;
+
+ant-upload-text {
+    margin-top: 8px;
+    color: #666;
 }
 </style>

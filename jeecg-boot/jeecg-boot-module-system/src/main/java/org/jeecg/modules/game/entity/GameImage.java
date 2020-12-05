@@ -45,7 +45,7 @@ public class GameImage extends BaseEntity {
      * 相对路径
      */
     @Excel(name = "相对路径", width = 15)
-    private java.lang.String url;
+    private java.lang.String imgUrl;
 
     /**
      * 图片宽px
