@@ -14,15 +14,10 @@ export default {
             settings: {
                 name: "图片",
                 displayKey: "name",
+                valueKey: "imgUrl",
                 returnKeys: ["id", "imgUrl"],
                 listUrl: "game/gameImage/list",
-                queryParamText: "图片地址",
-                multiple: false,
-                columns: [
-                    { title: "图片名", dataIndex: "name", align: "center", width: 100 },
-                    { title: "图片类型", dataIndex: "type", align: "center", width: 100 },
-                    { title: "图片地址", dataIndex: "imgUrl", align: "center", width: 100 }
-                ]
+                multiple: false
             }
         };
     },
