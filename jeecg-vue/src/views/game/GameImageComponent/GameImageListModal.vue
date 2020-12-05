@@ -1,5 +1,5 @@
 <template>
-    <a-modal centered :title="name + '选择'" :width="1000" :visible="visible" @ok="handleOk" @cancel="close" cancelText="关闭">
+    <a-modal centered :title="name + '选择'" :width="1200" :visible="visible" @ok="handleOk" @cancel="close" cancelText="关闭">
         <a-row :gutter="18">
             <!-- 查询区域 -->
             <div class="table-page-search-wrapper">
@@ -37,7 +37,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :scroll="{ y: 480 }"
                 :rowSelection="{ selectedRowKeys, onChange: onSelectChange, type: 'radio' }"
                 :customRow="customRowFn"
                 @change="handleTableChange"
@@ -80,7 +79,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: 60,
+                    width: "5%",
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -90,6 +89,7 @@ export default {
                     title: "图片类型",
                     align: "center",
                     dataIndex: "type",
+                    width: "10%",
                     customRender: value => {
                         let text = "--";
                         if (value === 1) {
@@ -104,16 +104,19 @@ export default {
                     title: "图片",
                     align: "center",
                     dataIndex: "imgUrl",
+                    width: "40%",
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "文件名",
                     align: "center",
+                    width: "20%",
                     dataIndex: "name"
                 },
                 {
                     title: "图片尺寸",
                     align: "center",
+                    width: "10%",
                     customRender: function(t, r) {
                         return r.width + "x" + r.height;
                     }
@@ -121,6 +124,7 @@ export default {
                 {
                     title: "备注",
                     align: "center",
+                    width: "15%",
                     dataIndex: "remark"
                 }
             ],
