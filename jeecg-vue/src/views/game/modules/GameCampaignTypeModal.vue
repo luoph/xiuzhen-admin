@@ -16,6 +16,13 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <img
+                        v-if="model.typeImage"
+                        :src="getImgView(model.typeImage)"
+                        height="100px"
+                        :alt="getImgView(model.typeImage)"
+                        style="max-width:100%;font-size: 12px;font-style: italic;"
+                    />
                     <game-image-selector placeholder="请输入活动宣传图" v-decorator="['typeImage', validatorRules.typeImage]" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -139,6 +146,12 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "campaignId", "type", "typeImage", "sort", "startTime", "endTime"));
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return window._CONFIG["gameImgUrl"] + text;
         }
     }
 };
