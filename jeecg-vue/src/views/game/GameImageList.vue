@@ -166,7 +166,9 @@ export default {
                     title: "图片地址",
                     align: "center",
                     width: 180,
-                    dataIndex: "imgUrl"
+                    customRender: function(t, r) {
+                        return r.imgUrl;
+                    }
                 },
                 {
                     title: "图片尺寸",
