@@ -9,6 +9,12 @@
                                 <a-select-option :value="1">1-节日活动</a-select-option>
                             </a-select>
                         </a-form-item>
+                        <a-form-item label="活动展示名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                            <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称"></a-input>
+                        </a-form-item>
+                        <a-form-item label="活动标语（描述）" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                            <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入活动标语（描述）"></a-input>
+                        </a-form-item>
                         <a-form-item label="活动名称（备注）" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）"></a-input>
                         </a-form-item>
@@ -30,16 +36,24 @@
                     </a-tab-pane>
 
                     <a-tab-pane tab="参数配置" key="2" forceRender>
-                        <a-form-item label="活动标语（描述）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入活动标语（描述）"></a-input>
-                        </a-form-item>
-                        <a-form-item label="活动展示名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称"></a-input>
-                        </a-form-item>
                         <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                            <img
+                                v-if="model.icon"
+                                :src="getImgView(model.icon)"
+                                height="80px"
+                                :alt="getImgView(model.icon)"
+                                style="max-width:100%;font-size: 12px;font-style: italic;"
+                            />
                             <game-image-selector placeholder="请选择活动图标" v-decorator="['icon', validatorRules.icon]" />
                         </a-form-item>
                         <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                            <img
+                                v-if="model.banner"
+                                :src="getImgView(model.banner)"
+                                height="100px"
+                                :alt="getImgView(model.banner)"
+                                style="max-width:100%;font-size: 12px;font-style: italic;"
+                            />
                             <game-image-selector placeholder="请选择活动宣传图" v-decorator="['banner', validatorRules.banner]" />
                         </a-form-item>
                         <a-form-item label="节日活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -278,6 +292,12 @@ export default {
             console.log(index);
             this.typeList.splice(index, 1);
             this.$forceUpdate();
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return window._CONFIG["gameImgUrl"] + text;
         }
     }
 };
