@@ -15,8 +15,8 @@
                         <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="活动类型图片" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['typeImage', validatorRules.typeImage]" placeholder="请输入活动类型图片"></a-input>
+                <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <game-image-selector placeholder="请输入活动宣传图" v-decorator="['typeImage', validatorRules.typeImage]" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
@@ -37,11 +37,13 @@ import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import moment from "moment";
+import GameImageSelector from "../components/GameImageSelector";
 
 export default {
     name: "GameCampaignTypeModal",
     components: {
-        JDate
+        JDate,
+        GameImageSelector
     },
     data() {
         return {
