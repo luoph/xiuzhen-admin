@@ -94,7 +94,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:280px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -150,14 +150,14 @@ export default {
                     }
                 },
                 {
-                    title: "页签id",
-                    align: "center",
-                    dataIndex: "id"
-                },
-                {
                     title: "活动id",
                     align: "center",
                     dataIndex: "campaignId"
+                },
+                {
+                    title: "页签id",
+                    align: "center",
+                    dataIndex: "id"
                 },
                 {
                     title: "页签标题",
@@ -188,9 +188,11 @@ export default {
                     }
                 },
                 {
-                    title: "活动类型图片",
+                    title: "活动宣传图",
                     align: "center",
-                    dataIndex: "typeImage"
+                    dataIndex: "typeImage",
+                    width: "15%",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "排序",
@@ -245,6 +247,12 @@ export default {
             console.log(dateString[0], dateString[1]);
             this.queryParam.endTime_begin = dateString[0];
             this.queryParam.endTime_end = dateString[1];
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return window._CONFIG["gameImgUrl"] + text;
         }
     }
 };

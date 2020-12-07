@@ -5,8 +5,8 @@
             <a-form :form="form">
                 <a-form-item label="图片类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select :disabled="isEdit" placeholder="选择图片类型" v-decorator="['type', validatorRules.type]" initialValue="1">
-                        <a-select-option :value="1">1-icon</a-select-option>
-                        <a-select-option :value="2">2-banner</a-select-option>
+                        <a-select-option :value="1">图标</a-select-option>
+                        <a-select-option :value="2">宣传图</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol">
