@@ -1,5 +1,7 @@
 const path = require("path");
 const debug = process.env.NODE_ENV !== "production";
+console.log(`=========== process.env.NODE_ENV:${process.env.NODE_ENV} debug:${debug} ===========`);
+
 // 后台端口
 const serverPort = debug ? 8080 : 8800;
 const targetUrl = `http://localhost:${serverPort}`;
@@ -23,7 +25,9 @@ module.exports = {
     configureWebpack: config => {
         if (debug) {
             // 测试环境
-            config.devtool = "cheap-module-eval-source-map";
+            config.devtool = "source-map";
+            // config.devtool = "eval-source-map";
+            // config.devtool = "cheap-module-eval-source-map";
             // config.devtool = "cheap-module-source-map";
         } else {
             config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true;
