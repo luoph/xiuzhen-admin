@@ -23,6 +23,13 @@
                                 <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名称"></a-input>
                             </a-form-item>
                             <a-form-item label="活动图片" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <img
+                                    v-if="tabModel.typeImage"
+                                    :src="getImgView(tabModel.typeImage)"
+                                    height="100px"
+                                    :alt="getImgView(tabModel.typeImage)"
+                                    style="max-width:100%;font-size: 12px;font-style: italic;"
+                                />
                                 <a-input v-decorator="['typeImage', validatorRules.typeImage]" placeholder="请输入活动图片"></a-input>
                             </a-form-item>
                             <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -291,13 +298,14 @@
 
 <script>
 import { getAction, putAction } from "@/api/manage";
+import GameImageComponent from "../GameImageComponent";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
 import moment from "moment";
 
 export default {
     name: "GameCampaignTabList",
-    components: {},
+    components: { GameImageComponent },
     data() {
         return {
             description: "页签配置",
@@ -429,6 +437,12 @@ export default {
                     that.confirmLoading = false;
                     that.pickFormValues();
                 });
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return window._CONFIG["gameImgUrl"] + text;
         },
         saveTab() {
             console.log("saveTab:" + this.tabIndex);
