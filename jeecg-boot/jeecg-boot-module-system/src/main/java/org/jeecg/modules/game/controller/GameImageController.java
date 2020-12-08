@@ -159,20 +159,24 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
     }
 
     @PostMapping(value = "/upload")
-    public Result<GameImage> upload(HttpServletRequest request, HttpServletResponse response) {
+    public Result<?> upload(HttpServletRequest request, HttpServletResponse response) {
         Result<GameImage> result = new Result<>();
         try {
             Date now = new Date();
             String today = DateUtil.format(now, "yyyyMMdd");
-            String time = DateUtil.format(now, "HHmmss");
             String imageFolder = uploadPath + File.separator + today;
 
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             // 获取上传文件对象
             MultipartFile mf = multipartRequest.getFile("file");
+            if (mf == null) {
+                return Result.error("上传错误");
+            }
+
             // 获取文件名
             String orgName = mf.getOriginalFilename();
-            String newName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + time + orgName.substring(orgName.indexOf("."));
+            String time = DateUtil.format(now, "HHmmss");
+            String newName = FileUtil.mainName(orgName) + "_" + time + FileUtil.extName(orgName);
             String savePath = imageFolder + File.separator + newName;
             // 创建文件根目录
             FileUtil.mkParentDirs(savePath);
@@ -181,7 +185,7 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
             FileCopyUtils.copy(mf.getBytes(), saveFile);
 
             BufferedImage bufferedImage = ImageIO.read(saveFile);
-            String dbpath = File.separator + today + File.separator + newName;
+            String dbpath = FileUtil.getName(uploadPath) + File.separator + today + File.separator + newName;
             dbpath = dbpath.replace("\\", "/");
 
             GameImage gameImage = new GameImage()
@@ -215,7 +219,7 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
                 imgPath = imgPath.substring(0, imgPath.length() - 1);
             }
             response.setContentType("image/jpeg;charset=utf-8");
-            String imgUrl = uploadPath + File.separator + imgPath;
+            String imgUrl = FileUtil.getName(uploadPath) + File.separator + imgPath;
             inputStream = new BufferedInputStream(new FileInputStream(imgUrl));
             outputStream = response.getOutputStream();
             byte[] buf = new byte[1024];
@@ -243,5 +247,11 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
                 }
             }
         }
+    }
+
+    public static void main(String[] args) {
+        String name = "/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/jeecg-boot/image.png";
+//        FileUtil.mainName(name);
+        System.out.println(FileUtil.mainName(name));
     }
 }
