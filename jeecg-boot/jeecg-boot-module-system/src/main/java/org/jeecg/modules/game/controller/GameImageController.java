@@ -176,7 +176,7 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
             // 获取文件名
             String orgName = mf.getOriginalFilename();
             String time = DateUtil.format(now, "HHmmss");
-            String newName = FileUtil.mainName(orgName) + "_" + time + FileUtil.extName(orgName);
+            String newName = FileUtil.mainName(orgName) + "_" + time + "." + FileUtil.extName(orgName);
             String savePath = imageFolder + File.separator + newName;
             // 创建文件根目录
             FileUtil.mkParentDirs(savePath);
