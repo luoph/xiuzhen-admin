@@ -20,7 +20,7 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                                <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
+                                <a-input v-decorator="['remark', queryParam.remark]" placeholder="请输入备注"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
