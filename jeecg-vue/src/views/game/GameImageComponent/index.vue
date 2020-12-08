@@ -10,7 +10,6 @@
             v-model="selectValue"
             :name="name"
             :returnKeys="returnKeys"
-            :displayKey="displayKey"
             :visible.sync="visible"
             :valueKey="valueKey"
             @ok="selectOptions = $event"
