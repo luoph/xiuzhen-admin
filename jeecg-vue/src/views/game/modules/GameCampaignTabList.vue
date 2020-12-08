@@ -442,7 +442,7 @@ export default {
             if (text && text.indexOf(",") > 0) {
                 text = text.substring(0, text.indexOf(","));
             }
-            return window._CONFIG["domainURL"] + text;
+            return `${window._CONFIG["domainURL"]}/${text}`;
         },
         saveTab() {
             console.log("saveTab:" + this.tabIndex);
