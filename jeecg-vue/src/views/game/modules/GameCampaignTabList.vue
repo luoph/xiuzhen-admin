@@ -298,14 +298,14 @@
 
 <script>
 import { getAction, putAction } from "@/api/manage";
-import GameImageComponent from "../GameImageComponent";
+import GameImageSelector from "../components/GameImageSelector";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
 import moment from "moment";
 
 export default {
     name: "GameCampaignTabList",
-    components: { GameImageComponent },
+    components: { GameImageSelector },
     data() {
         return {
             description: "页签配置",
