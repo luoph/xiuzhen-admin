@@ -30,7 +30,7 @@
                                     :alt="getImgView(tabModel.typeImage)"
                                     style="max-width:100%;font-size: 12px;font-style: italic;"
                                 />
-                                <a-input v-decorator="['typeImage', validatorRules.typeImage]" placeholder="请输入活动图片"></a-input>
+                                <game-image-selector placeholder="活动图片" v-model="tabModel.typeImage" />
                             </a-form-item>
                             <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                                 <a-col :md="7" :sm="8">
