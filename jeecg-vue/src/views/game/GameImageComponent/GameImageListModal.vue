@@ -19,6 +19,11 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
+                            <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
                             <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                                 <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                                 <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
