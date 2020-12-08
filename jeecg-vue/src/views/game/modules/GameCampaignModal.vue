@@ -56,7 +56,7 @@
                             />
                             <game-image-selector placeholder="请选择活动宣传图" v-decorator="['banner', validatorRules.banner]" />
                         </a-form-item>
-                        <a-form-item label="节日活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                        <a-form-item label="活动页签" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <div>
                                 <a-row :gutter="16">
                                     <a-col :span="5">活动类型</a-col>
