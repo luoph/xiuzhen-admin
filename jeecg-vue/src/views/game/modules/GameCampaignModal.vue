@@ -44,7 +44,7 @@
                                 :alt="getImgView(model.icon)"
                                 style="max-width:100%;font-size: 12px;font-style: italic;"
                             />
-                            <game-image-selector placeholder="请选择活动图标" v-decorator="['icon', validatorRules.icon]" />
+                            <game-image-selector placeholder="请选择活动图标" v-model="model.icon" />
                         </a-form-item>
                         <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <img
@@ -54,7 +54,7 @@
                                 :alt="getImgView(model.banner)"
                                 style="max-width:100%;font-size: 12px;font-style: italic;"
                             />
-                            <game-image-selector placeholder="请选择活动宣传图" v-decorator="['banner', validatorRules.banner]" />
+                            <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                         </a-form-item>
                         <a-form-item label="活动页签" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <div>

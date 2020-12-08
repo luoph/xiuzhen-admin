@@ -23,7 +23,7 @@
                         :alt="getImgView(model.typeImage)"
                         style="max-width:100%;font-size: 12px;font-style: italic;"
                     />
-                    <game-image-selector placeholder="请输入活动宣传图" v-decorator="['typeImage', validatorRules.typeImage]" />
+                    <game-image-selector placeholder="请输入活动宣传图" v-model="model.typeImage" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
