@@ -57,6 +57,10 @@ export default {
     name: "GameListComponentModal",
     mixins: [JeecgListMixin],
     props: {
+        value: {
+            type: String,
+            default: ""
+        },
         visible: {
             type: Boolean,
             default: false
@@ -138,6 +142,20 @@ export default {
         };
     },
     watch: {
+        value: {
+            immediate: true,
+            handler(val) {
+                this.valueWatchHandler(val);
+            }
+        },
+        dataSource: {
+            deep: true,
+            handler(val) {
+                let options = val.map(data => ({ label: data[this.valueKey], value: data[this.valueKey] }));
+                this.$emit("ok", options);
+                this.valueWatchHandler(this.value);
+            }
+        },
         selectionRows: {
             immediate: true,
             deep: true,
@@ -145,6 +163,9 @@ export default {
                 this.selectedTable.dataSource = val;
             }
         }
+    },
+    created() {
+        this.valueWatchHandler(this.value);
     },
     methods: {
         /** 关闭弹窗 */
@@ -160,14 +181,14 @@ export default {
         valueWatchHandler(val) {
             let dataSource = [];
             let selectedRowKeys = [];
-            val.forEach(item => {
-                this.dataSource.forEach(data => {
-                    if (data[this.valueKey] === item) {
-                        dataSource.push(data);
-                        selectedRowKeys.push(data.id);
-                    }
-                });
+            this.dataSource.forEach(data => {
+                if (data[this.valueKey] === val) {
+                    dataSource.push(data);
+                    selectedRowKeys.push(data.id);
+                    return;
+                }
             });
+
             this.selectedTable.dataSource = dataSource;
             this.selectedRowKeys = selectedRowKeys;
         },
