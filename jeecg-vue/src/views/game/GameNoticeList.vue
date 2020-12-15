@@ -101,7 +101,10 @@
                 </template>
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
-
+                    <a-divider type="vertical" />
+                    <a @click="handlePreview(record)">公告预览</a>
+                    <a-divider type="vertical" />
+                    <a @click="refreshNotice(record)">刷新公告</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -120,12 +123,16 @@
 
         <!-- 表单区域 -->
         <game-notice-modal ref="modalForm" @ok="modalFormOk"></game-notice-modal>
+        <!-- html预览 -->
+        <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"></game-html-preview-modal>
     </a-card>
 </template>
 
 <script>
 import { filterObj } from "@/utils/util";
 import { getAction, putAction, httpAction } from "@/api/manage";
+import GameHtmlPreviewModal from "./modules/GameHtmlPreviewModal";
+
 import GameNoticeModal from "./modules/GameNoticeModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 
@@ -133,7 +140,8 @@ export default {
     name: "GameNoticeList",
     mixins: [JeecgListMixin],
     components: {
-        GameNoticeModal
+        GameNoticeModal,
+        GameHtmlPreviewModal
     },
     data() {
         return {
@@ -165,7 +173,7 @@ export default {
                 {
                     title: "标题",
                     align: "left",
-                    width: 240,
+                    width: 180,
                     dataIndex: "title"
                 },
                 {
@@ -210,7 +218,9 @@ export default {
                 list: "game/gameNotice/list",
                 delete: "game/gameNotice/delete",
                 deleteBatch: "game/gameNotice/deleteBatch",
-                updateNoticeConfigUrl: "game/gameNotice/updateNoticeConfig"
+                updateNoticeConfigUrl: "game/gameNotice/updateNoticeConfig",
+                // 刷新渠道公告
+                noticeRefresh: "game/gameNotice/refreshById"
                 // exportXlsUrl: "game/gameNotice/exportXls",
                 // importExcelUrl: "game/gameNotice/importExcel"
             }
@@ -233,6 +243,29 @@ export default {
                 }
                 console.log("刷新公告配置完成", res);
             });
+        },
+        // 刷新公告
+        refreshNotice(record) {
+            let that = this;
+            this.$confirm({
+                title: "是否刷新渠道公告？",
+                content: "点击刷新渠道公告",
+                onOk: function() {
+                    getAction(that.url.noticeRefresh, { id: record.id }).then(res => {
+                        if (res.success) {
+                            that.$message.success("公告刷新成功");
+                        } else {
+                            that.$message.error("公告刷新失败");
+                        }
+                    });
+                }
+            });
+        },
+        // 预览渠道公告
+        handlePreview(record) {
+            let that = this;
+            that.$refs.htmlModal.title = "公告预览";
+            that.$refs.htmlModal.edit(record.content);
         }
     }
 };
@@ -241,7 +274,7 @@ export default {
 @import "~@assets/less/common.less";
 
 .noticeContent {
-    max-height: 480px;
+    max-height: 240px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
