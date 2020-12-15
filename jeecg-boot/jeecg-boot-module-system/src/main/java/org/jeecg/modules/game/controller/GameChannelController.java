@@ -168,25 +168,32 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     }
 
 
-    @GetMapping(value = "/updateServerConfig")
-    public Result<?> updateServerConfig(HttpServletRequest req) {
+    @AutoLog(value = "游戏渠道-刷新所有渠道区服json")
+    @ApiOperation(value = "游戏渠道-刷新所有渠道区服json", notes = "游戏渠道-刷新所有渠道区服json")
+    @GetMapping(value = "/updateAllServer")
+    public Result<?> updateAllServer(HttpServletRequest req) {
         try {
             List<GameChannel> channelList = gameChannelService.list();
             for (GameChannel channel : channelList) {
-                List<GameServerVO> servers = gameChannelService.getServerListChannelId(channel.getId());
-
-                UpdateConfig updateConfig = new UpdateConfig()
-                        .setVersionCode(channel.getVersionCode())
-                        .setVersionName(channel.getVersionName())
-                        .setVersionUpdateTime(channel.getVersionUpdateTime());
-
-                JsonFileUtils.writeJsonFile(new ChannelConfig(channel.getNoticeId(), updateConfig, servers), serverFolder, channel.getSimpleName());
+                refreshChannelServerJson(channel);
             }
         } catch (Exception e) {
             log.error("updateServerConfig error", e);
             return Result.error(e.getMessage());
         }
         return Result.ok("刷新成功");
+    }
+
+    @AutoLog(value = "游戏渠道-刷新指定渠道区服json")
+    @ApiOperation(value = "游戏渠道-刷新指定渠道区服json", notes = "游戏渠道-刷新指定渠道区服json")
+    @GetMapping(value = "/updateChannelServer")
+    public Result<?> updateChannelServer(@RequestParam(name = "id") String id) {
+        GameChannel channel = gameChannelService.getById(id);
+        if (channel == null) {
+            return Result.ok("找不到指定渠道");
+        }
+        refreshChannelServerJson(channel);
+        return Result.ok("区服配置刷新成功");
     }
 
     @GetMapping(value = "/updateIpWhitelist")
@@ -209,5 +216,16 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
             return Result.error(e.getMessage());
         }
         return Result.ok("刷新成功");
+    }
+
+    private void refreshChannelServerJson(GameChannel channel) {
+        List<GameServerVO> servers = gameChannelService.getServerListChannelId(channel.getId());
+        UpdateConfig updateConfig = new UpdateConfig()
+                .setVersionCode(channel.getVersionCode())
+                .setVersionName(channel.getVersionName())
+                .setVersionUpdateTime(channel.getVersionUpdateTime());
+
+        JsonFileUtils.writeJsonFile(new ChannelConfig(channel.getNoticeId(), updateConfig, servers),
+                serverFolder, channel.getSimpleName());
     }
 }
