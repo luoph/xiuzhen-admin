@@ -25,8 +25,8 @@ module.exports = {
     configureWebpack: config => {
         if (debug) {
             // 测试环境
-            config.devtool = "source-map";
-            // config.devtool = "eval-source-map";
+            // config.devtool = "source-map";
+            config.devtool = "eval-source-map";
             // config.devtool = "cheap-module-eval-source-map";
             // config.devtool = "cheap-module-source-map";
         } else {
