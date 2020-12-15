@@ -181,8 +181,9 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     }
 
     private static String formatNoticeHtml(String input) {
-        input = input.replace("\r\n", "<br/>");
-        input = input.replace("\n", "<br/>");
+        input = input.replace("<br/>", "<br />");
+        input = input.replace("\r\n", "<br />");
+        input = input.replace("\n", "<br />");
         input = input.replace("<p>", "");
         input = input.replace("</p>", "");
         return input;
