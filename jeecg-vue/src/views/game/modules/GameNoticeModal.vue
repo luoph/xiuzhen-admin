@@ -3,13 +3,16 @@
     <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
+                <a-form-item v-if="isEdit" :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告id">
+                    <a-input :disabled="isEdit" placeholder="公告id" v-model="model.id" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告类型">
-                    <a-select placeholder="请选择公告类型" v-decorator="['noticeType', validatorRules.noticeType]">
+                    <a-select :disabled="isEdit" placeholder="请选择公告类型" v-decorator="['noticeType', validatorRules.noticeType]">
                         <a-select-option :value="1">渠道公告</a-select-option>
                         <a-select-option :value="2">滚动公告</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="标题">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告标题">
                     <a-input placeholder="请输入标题" v-decorator="['title', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告内容">
@@ -54,6 +57,7 @@ export default {
         return {
             title: "操作",
             visible: false,
+            isEdit: false,
             model: {},
             contentHtml: "",
             labelCol: {
@@ -88,6 +92,7 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             if (this.model.content) {
                 this.contentHtml = this.model.content;
             }
