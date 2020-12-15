@@ -87,6 +87,8 @@
                     <a-divider type="vertical" />
                     <a @click="editChannelNotice(record)">编辑公告</a>
                     <a-divider type="vertical" />
+                    <a @click="viewChannelNotice(record)">预览公告</a>
+                    <a-divider type="vertical" />
                     <a @click="refreshChannelNotice(record)">刷新公告</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
@@ -110,6 +112,8 @@
         <game-channel-modal ref="modalForm" @ok="modalFormOk"></game-channel-modal>
         <!-- 编辑公告 -->
         <game-notice-modal ref="noticeModal" @ok="modalFormOk"></game-notice-modal>
+        <!-- html预览 -->
+        <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"></game-html-preview-modal>
         <game-channel-server-list ref="channelServerList"></game-channel-server-list>
     </a-card>
 </template>
@@ -118,6 +122,7 @@
 import { filterObj } from "@/utils/util";
 import GameChannelModal from "./modules/GameChannelModal";
 import GameNoticeModal from "./modules/GameNoticeModal";
+import GameHtmlPreviewModal from "./modules/GameHtmlPreviewModal";
 import GameChannelServerList from "./GameChannelServerList";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
@@ -136,7 +141,7 @@ function filterGameIdText(options, text) {
 export default {
     name: "GameChannelList",
     mixins: [JeecgListMixin],
-    components: { GameChannelModal, GameNoticeModal, GameChannelServerList },
+    components: { GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList },
     data() {
         return {
             description: "游戏渠道管理页面",
@@ -283,8 +288,20 @@ export default {
         editChannelNotice(record) {
             let that = this;
             getAction(that.url.noticeUrl, { id: record.noticeId }).then(res => {
-                if (res.success) {
+                if (res.success && res.result) {
                     that.$refs.noticeModal.edit(res.result);
+                } else {
+                    that.$message.error("公告不存在，请检查公告设置");
+                }
+            });
+        },
+        // 预览渠道公告
+        viewChannelNotice(record) {
+            let that = this;
+            getAction(that.url.noticeUrl, { id: record.noticeId }).then(res => {
+                if (res.success && res.result) {
+                    that.$refs.htmlModal.title = "公告预览"
+                    that.$refs.htmlModal.edit(res.result.content);
                 } else {
                     that.$message.error("公告不存在，请检查公告设置");
                 }
