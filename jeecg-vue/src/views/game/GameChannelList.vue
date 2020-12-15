@@ -43,8 +43,8 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-            <a-button @click="updateServerConfig" type="primary" icon="sync">刷新服务器列表</a-button>
-            <a-button @click="updateIpWhitelistConfig" type="primary" icon="sync">刷新IP白名单配置</a-button>
+            <a-button @click="updateAllServer" type="primary" icon="sync">刷新服务器列表</a-button>
+            <a-button @click="updateIpWhitelist" type="primary" icon="sync">刷新IP白名单配置</a-button>
 
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -81,7 +81,13 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
-                    <a @click="editChannelServer(record)"><a-icon type="setting" /> 游戏服</a>
+                    <a @click="editChannelServer(record)">区服列表</a>
+                    <a-divider type="vertical" />
+                    <a @click="updateChannelServer(record)">刷新区服</a>
+                    <a-divider type="vertical" />
+                    <a @click="editChannelNotice(record)">编辑公告</a>
+                    <a-divider type="vertical" />
+                    <a @click="refreshChannelNotice(record)">刷新公告</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -95,13 +101,15 @@
                     </a-dropdown>
                 </span>
                 <span slot="ipTags" slot-scope="text, record">
-                    <a-tag v-for="tag in text.split(',')" :key="tag" color="green">{{ tag }}</a-tag>
+                    <a-tag v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
             </a-table>
         </div>
         <!-- table区域-end -->
 
         <game-channel-modal ref="modalForm" @ok="modalFormOk"></game-channel-modal>
+        <!-- 编辑公告 -->
+        <game-notice-modal ref="noticeModal" @ok="modalFormOk"></game-notice-modal>
         <game-channel-server-list ref="channelServerList"></game-channel-server-list>
     </a-card>
 </template>
@@ -109,6 +117,7 @@
 <script>
 import { filterObj } from "@/utils/util";
 import GameChannelModal from "./modules/GameChannelModal";
+import GameNoticeModal from "./modules/GameNoticeModal";
 import GameChannelServerList from "./GameChannelServerList";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
@@ -127,7 +136,7 @@ function filterGameIdText(options, text) {
 export default {
     name: "GameChannelList",
     mixins: [JeecgListMixin],
-    components: { GameChannelModal, GameChannelServerList },
+    components: { GameChannelModal, GameNoticeModal, GameChannelServerList },
     data() {
         return {
             description: "游戏渠道管理页面",
@@ -220,12 +229,19 @@ export default {
                 list: "game/gameChannel/list",
                 delete: "game/gameChannel/delete",
                 deleteBatch: "game/gameChannel/deleteBatch",
-                updateServerConfigUrl: "game/gameChannel/updateServerConfig",
-                updateIpWhitelistConfigUrl: "game/gameChannel/updateIpWhitelist",
+                // 刷新所有渠道区服
+                updateAllServerUrl: "game/gameChannel/updateAllServer",
+                // 刷新渠道区服
+                updateChannelServerUrl: "game/gameChannel/updateChannelServer",
+                updateIpWhitelistUrl: "game/gameChannel/updateIpWhitelist",
                 // exportXlsUrl: "game/gameChannel/exportXls",
                 // importExcelUrl: "game/gameChannel/importExcel",
                 // 游戏列表
-                gameInfoListUrl: "game/gameInfo/list"
+                gameInfoListUrl: "game/gameInfo/list",
+                // 公告id
+                noticeUrl: "game/gameNotice/queryById",
+                // 刷新渠道公告
+                noticeRefresh: "game/gameNotice/refreshById"
             }
         };
     },
@@ -263,31 +279,76 @@ export default {
         editChannelServer(record) {
             this.$refs.channelServerList.edit(record);
         },
-        updateServerConfig() {
+        // 编辑渠道公告
+        editChannelNotice(record) {
+            let that = this;
+            getAction(that.url.noticeUrl, { id: record.noticeId }).then(res => {
+                if (res.success) {
+                    that.$refs.noticeModal.edit(res.result);
+                } else {
+                    that.$message.error("公告不存在，请检查公告设置");
+                }
+            });
+        },
+        // 刷新渠道公告
+        refreshChannelNotice(record) {
+            let that = this;
+            this.$confirm({
+                title: "是否刷新渠道公告？",
+                content: "点击刷新渠道公告",
+                onOk: function() {
+                    getAction(that.url.noticeRefresh, { id: record.noticeId }).then(res => {
+                        if (res.success) {
+                            that.$message.success("公告刷新成功");
+                        } else {
+                            that.$message.error("公告刷新失败");
+                        }
+                    });
+                }
+            });
+        },
+        updateChannelServer(record) {
             // 刷新服务器列表
             let that = this;
             this.$confirm({
                 title: "是否刷新区服列表？",
                 content: "点击确定刷新区服列表",
                 onOk: function() {
-                    getAction(that.url.updateServerConfigUrl).then(res => {
+                    getAction(that.url.updateChannelServerUrl, { id: record.id }).then(res => {
                         if (res.success) {
-                            that.$message.success("刷新区服列表刷新成功");
+                            that.$message.success("区服刷新成功");
                         } else {
-                            that.$message.error("刷新区服列表刷新失败");
+                            that.$message.error("区服刷新失败");
                         }
                     });
                 }
             });
         },
-        updateIpWhitelistConfig() {
+        updateAllServer() {
+            // 刷新服务器列表
+            let that = this;
+            this.$confirm({
+                title: "是否刷新所有区服列表？",
+                content: "点击确定刷新所有区服列表",
+                onOk: function() {
+                    getAction(that.url.updateAllServerUrl).then(res => {
+                        if (res.success) {
+                            that.$message.success("所有区服列表刷新成功");
+                        } else {
+                            that.$message.error("所有区服列表刷新失败");
+                        }
+                    });
+                }
+            });
+        },
+        updateIpWhitelist() {
             // 刷新IP白名单配置
             let that = this;
             this.$confirm({
                 title: "是否IP白名单配置？",
                 content: "点击确定IP白名单配置",
                 onOk: function() {
-                    getAction(that.url.updateIpWhitelistConfigUrl).then(res => {
+                    getAction(that.url.updateIpWhitelistUrl).then(res => {
                         if (res.success) {
                             that.$message.success("IP白名单配置刷新成功");
                         } else {

@@ -165,18 +165,24 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
         try {
             List<GameNotice> noticeList = gameNoticeService.list();
             for (GameNotice gameNotice : noticeList) {
-                NoticeConfig notice = new NoticeConfig();
-                BeanUtils.copyProperties(gameNotice, notice);
-                if (gameNotice.getStatus() == 1) {
-                    JsonFileUtils.writeJsonFile(notice, noticeFolder, String.valueOf(gameNotice.getId()));
-                } else {
-                    JsonFileUtils.deleteJsonFile(noticeFolder, String.valueOf(gameNotice.getId()));
-                }
+                updateNoticeJson(gameNotice);
             }
         } catch (Exception e) {
             log.error("updateServerConfig error", e);
             return Result.error(e.getMessage());
         }
+        return Result.ok("刷新成功");
+    }
+
+    @AutoLog(value = "游戏公告-通过id刷新公告")
+    @ApiOperation(value = "游戏公告-通过id刷新公告", notes = "游戏公告-通过id刷新公告")
+    @GetMapping(value = "/refreshById")
+    public Result<?> refreshById(@RequestParam(name = "id") String id) {
+        GameNotice gameNotice = gameNoticeService.getById(id);
+        if (gameNotice == null) {
+            return Result.error("找不到对应的公告");
+        }
+        updateNoticeJson(gameNotice);
         return Result.ok("刷新成功");
     }
 
@@ -191,6 +197,16 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
         input = input.replace("<strong>", "");
         input = input.replace("</strong>", "");
         return input;
+    }
+
+    private void updateNoticeJson(GameNotice gameNotice) {
+        NoticeConfig notice = new NoticeConfig();
+        BeanUtils.copyProperties(gameNotice, notice);
+        if (gameNotice.getStatus() == 1) {
+            JsonFileUtils.writeJsonFile(notice, noticeFolder, String.valueOf(gameNotice.getId()));
+        } else {
+            JsonFileUtils.deleteJsonFile(noticeFolder, String.valueOf(gameNotice.getId()));
+        }
     }
 
 //    public static void main(String[] args) {
