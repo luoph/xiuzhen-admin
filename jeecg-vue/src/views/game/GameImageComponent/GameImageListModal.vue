@@ -82,6 +82,14 @@ export default {
     data() {
         return {
             description: "游戏图片列表",
+            labelCol: {
+                xs: { span: 24 },
+                sm: { span: 5 }
+            },
+            wrapperCol: {
+                xs: { span: 24 },
+                sm: { span: 16 }
+            },
             // 表头
             columns: [
                 {
