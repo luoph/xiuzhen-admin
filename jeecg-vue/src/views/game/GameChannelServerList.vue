@@ -92,6 +92,7 @@ export default {
         return {
             description: "游戏渠道服配置管理页面",
             serverList: [],
+            confirmLoading: false,
             // 表头
             columns: [
                 {
