@@ -172,8 +172,46 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
+        GameCampaign dbEntity = campaignService.getById(gameCampaign.getId());
+        Set<String> dbServerIds = new HashSet<>(StrUtil.splitTrim(dbEntity.getServerIds(), ","));
+        Set<String> newServerIds = new HashSet<>(StrUtil.splitTrim(gameCampaign.getServerIds(), ","));
+
+        // 去重处理
+        gameCampaign.setServerIds(StrUtil.join(",", newServerIds));
+        List<Integer> addList = new ArrayList<>();
+        List<Integer> removeList = new ArrayList<>();
+        for (String serverId : newServerIds) {
+            if (!dbServerIds.contains(serverId)) {
+                addList.add(Integer.valueOf(serverId));
+            }
+        }
+
+        for (String serverId : dbServerIds) {
+            if (!newServerIds.contains(serverId)) {
+                removeList.add(Integer.valueOf(serverId));
+            }
+        }
+
         campaignService.updateById(gameCampaign);
         updateTypeList(false, gameCampaign);
+
+        // 批量关闭
+        batchSwitchOff(gameCampaign.getId(), removeList);
+
+        // 处理新增区服id
+        if (CollUtil.isNotEmpty(addList)) {
+            String serverIds = StrUtil.join(",", addList);
+            List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign);
+            for (GameCampaignType model : typeList) {
+                GameCampaignServer campaignServer = new GameCampaignServer()
+                        .setCampaignId(gameCampaign.getId())
+                        .setServer(serverIds)
+                        .setTypeId(model.getId())
+                        .setStatus(SwitchStatus.ON.getValue());
+                batchSwitch(campaignServer);
+            }
+        }
+
         return Result.ok("编辑成功!");
     }
 
@@ -341,6 +379,16 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         }
         if (CollUtil.isNotEmpty(removeList)) {
             campaignTypeService.removeByIds(removeList);
+        }
+    }
+
+    private void batchSwitchOff(long campaignId, List<Integer> serverList) {
+        if (CollUtil.isNotEmpty(serverList)) {
+            Wrapper<GameCampaignSupport> updateWrapper = Wrappers.<GameCampaignSupport>lambdaUpdate()
+                    .set(GameCampaignSupport::getStatus, SwitchStatus.OFF.getValue())
+                    .eq(GameCampaignSupport::getCampaignId, campaignId)
+                    .in(GameCampaignSupport::getServerId, serverList);
+            campaignSupportService.update(updateWrapper);
         }
     }
 
