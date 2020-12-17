@@ -9,15 +9,21 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.util.ExcelUtils;
+import org.jeecg.modules.game.constant.CampaignFestivalType;
 import org.jeecg.modules.game.entity.GameCampaignType;
 import org.jeecg.modules.game.service.IGameCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -153,9 +159,33 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
      * @param response 响应
      * @return {@linkplain Result}
      */
+    @SuppressWarnings({"unchecked"})
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameCampaignType.class);
+    public Result<?> importExcel(@RequestParam(name = "type") Integer type,
+                                 HttpServletRequest request, HttpServletResponse response) {
+        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(type);
+        if (festivalType == null) {
+            return Result.error("活动类型错误");
+        }
+
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
+        // 获取上传文件对象∂∂
+        MultipartFile mf = multipartRequest.getFile("file");
+        if (mf == null) {
+            return Result.error("上传错误");
+        }
+
+        try {
+            Result<List<?>> result = new Result<>();
+            List<?> dataList = ExcelUtils.readExcel(mf.getInputStream(), festivalType.getName(), festivalType.getExcelClass());
+            result.setResult(dataList);
+            result.setSuccess(true);
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.error("文件导入失败！");
+        }
     }
 
 }

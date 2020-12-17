@@ -221,7 +221,7 @@ export default {
     float: right;
 }
 
-ant-upload-text {
+.ant-upload-text {
     margin-top: 8px;
     color: #666;
 }
