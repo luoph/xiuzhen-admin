@@ -8,7 +8,7 @@
             </a-select-option>
         </a-select>
         <span> 区服 </span>
-        <a-select mode="multiple" allowClear show-search :default-value="[]" style="width: 100%" placeholder="请选择区服" @change="handleServerChange">
+        <a-select mode="multiple" allowClear show-search :default-value="defaultValue" style="width: 100%" placeholder="请选择区服" @change="handleServerChange">
             <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + "-" + server.name }} </a-select-option>
         </a-select>
     </div>
@@ -17,6 +17,12 @@
 import { getAction } from "@/api/manage";
 export default {
     name: "GameServerSelector",
+    props: {
+        value: {
+            type: String,
+            default: ""
+        }
+    },
     components: {
         getAction
     },
@@ -25,9 +31,11 @@ export default {
     },
     data() {
         return {
-            channelId: undefined,
+            channelId: "all",
             // 渠道列表
             channelList: [],
+            defaultValue: [],
+            initValue: [],
             // 服务器数据
             serverList: [],
             allServerList: [],
@@ -40,19 +48,24 @@ export default {
     },
     methods: {
         loadServerList() {
-            getAction(this.url.channelUrl).then(res => {
-                this.channelList = res.result.records;
+            let that = this;
+            getAction(that.url.channelUrl).then(res => {
+                that.channelList = res.result.records;
             });
-            getAction(this.url.serverUrl).then(res => {
-                this.allServerList = res.result.records;
+            getAction(that.url.serverUrl).then(res => {
+                that.allServerList = res.result.records;
+                if (that.channelId === "all") {
+                    that.serverList = that.allServerList;
+                }
             });
         },
         getServerList() {
-            if (this.channelId === "all") {
-                this.serverList = this.allServerList;
+            let that = this;
+            if (that.channelId === "all") {
+                that.serverList = that.allServerList;
             } else {
-                getAction(this.url.channelServerUrl + this.channelId).then(res => {
-                    this.serverList = res.result;
+                getAction(that.url.channelServerUrl + that.channelId).then(res => {
+                    that.serverList = res.result;
                 });
             }
         },
@@ -64,12 +77,32 @@ export default {
             console.log(value);
             // 触发父容器的 selectServer 方法
             this.$emit("onSelectServer", value);
+        },
+        updateSelected() {
+            this.defaultValue = [];
+            for (let index = 0; index < this.initValue.length; index++) {
+                for (const element of this.serverList) {
+                    console.log(element);
+                    if (element.id == this.initValue[index]) {
+                        this.defaultValue.push(this.initValue[index]);
+                    }
+                }
+            }
         }
     },
     watch: {
+        value: {
+            immediate: true,
+            handler(val) {
+                this.initValue = value.split(",");
+                this.getServerList();
+            }
+        },
         channelId: function() {
-            this.serverList = [];
             this.getServerList();
+        },
+        serverList: function () {
+            updateSelected();
         }
     }
 };
