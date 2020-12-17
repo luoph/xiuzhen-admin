@@ -19,8 +19,8 @@
                             <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）"></a-input>
                         </a-form-item>
                         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                            <a-input v-if="isEdit" :disabled="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
-                            <game-server-selector v-else v-decorator="['serverIds', { initialValue: '' }]" @onSelectServer="changeSelect" />
+                            <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
+                            <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
                         </a-form-item>
                         <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <a-col :md="7" :sm="8">
