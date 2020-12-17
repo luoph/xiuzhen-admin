@@ -8,7 +8,7 @@
             </a-select-option>
         </a-select>
         <span> 区服 </span>
-        <a-select mode="multiple" allowClear show-search :default-value="defaultValue" style="width: 100%" placeholder="请选择区服" @change="handleServerChange">
+        <a-select mode="multiple" allowClear show-search v-model="selectValue" style="width: 100%" placeholder="请选择区服" @change="handleServerChange">
             <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + "-" + server.name }} </a-select-option>
         </a-select>
     </div>
@@ -34,8 +34,7 @@ export default {
             channelId: "all",
             // 渠道列表
             channelList: [],
-            defaultValue: [],
-            initValue: [],
+            selectValue: [],
             // 服务器数据
             serverList: [],
             allServerList: [],
@@ -93,15 +92,15 @@ export default {
     watch: {
         value: {
             immediate: true,
-            handler(val) {
-                this.initValue = value.split(",");
+            handler(value) {
+                this.selectValue = value.split(",");
                 this.getServerList();
             }
         },
         channelId: function() {
             this.getServerList();
         },
-        serverList: function () {
+        serverList: function() {
             updateSelected();
         }
     }
