@@ -4,6 +4,20 @@
             <a-tabs :activeKey="tabIndex" @change="handleTabChange">
                 <!-- 查询区域 -->
                 <a-tab-pane v-for="(row, index) in model.typeList" :key="index" :tab="row.name">
+                    <a-form-item label="上传" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                        <a-upload
+                            name="file"
+                            accept=".xls,.xlsx"
+                            :multiple="false"
+                            :showUploadList="false"
+                            :headers="tokenHeader"
+                            :action="importExcelUrl"
+                            @change="handleImportExcel"
+                        >
+                            <a-button type="primary" icon="import">上传Excel</a-button>
+                        </a-upload>
+                    </a-form-item>
+
                     <div class="table-page-search-wrapper">
                         <a-form :form="form">
                             <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -217,7 +231,7 @@
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
                                                     <a-col :span="4">
-                                                        完成条件（target）
+                                                        条件（target）
                                                     </a-col>
                                                     <a-col :span="18">
                                                         <a-input-number class="input-number" v-model="item.target" placeholder="请输入任务完成条件" />
@@ -225,7 +239,7 @@
                                                 </a-row>
                                                 <a-row type="flex" align="middle" class="ant-row">
                                                     <a-col :span="4">
-                                                        任务参数（args）
+                                                        参数（args）
                                                     </a-col>
                                                     <a-col :span="18">
                                                         <a-input-number class="input-number" v-model="item.args" placeholder="请输入任务参数" />
@@ -302,12 +316,18 @@ import GameImageSelector from "../components/GameImageSelector";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
 import moment from "moment";
+import Vue from "vue";
+import { ACCESS_TOKEN } from "@/store/mutation-types";
 
 export default {
     name: "GameCampaignTabList",
     components: { GameImageSelector },
     data() {
         return {
+            // token header
+            tokenHeader: {
+                "X-Access-Token": Vue.ls.get(ACCESS_TOKEN)
+            },
             description: "页签配置",
             // 查询参数
             queryParam: {},
@@ -315,6 +335,7 @@ export default {
             visible: false,
             isEdit: false,
             confirmLoading: false,
+            uploadLoading: false,
             model: {},
             tabModel: {},
             detailList: [],
@@ -342,7 +363,8 @@ export default {
             },
             url: {
                 saveTab: "game/gameCampaignType/edit",
-                queryTab: "game/gameCampaignType/queryById"
+                queryTab: "game/gameCampaignType/queryById",
+                importExcelUrl: "game/gameCampaignType/importExcel"
             }
         };
     },
@@ -406,6 +428,32 @@ export default {
         addRowCustom() {
             this.detailList.push({});
             this.$forceUpdate();
+        },
+        importExcelUrl: function() {
+            let domainURL = window._CONFIG["domainURL"];
+            return `${domainURL}/${this.url.importExcelUrl}?type=${this.tabModel.type}`;
+        },
+        /* 导入 */
+        handleImportExcel(info) {
+            if (info.file.status !== "uploading") {
+                console.log(info.file, info.fileList);
+            }
+
+            if (info.file.status === "done") {
+                let response = info.file.response;
+                if (response) {
+                    // 添加到详情后面
+                    for (let index = 0; index < response.result.length; index++) {
+                        const element = response.result[index];
+                        this.detailList.push(element);
+                    }
+                } else {
+                    this.$message.error(`${info.file.name} ${response.message}.`);
+                }
+                this.$forceUpdate();
+            } else if (info.file.status === "error") {
+                this.$message.error(`文件上传失败: ${info.file.msg} `);
+            }
         },
         delRowCustom(index) {
             console.log(index);
@@ -531,7 +579,6 @@ export default {
 }
 
 .add-btn {
-    margin: auto;
     width: 100%;
     margin: 20px 0;
 }

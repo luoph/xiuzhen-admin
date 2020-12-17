@@ -1,10 +1,7 @@
 package org.jeecg.modules.game.constant;
 
-import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import org.jeecg.modules.game.entity.*;
-
-import java.util.List;
 
 /**
  * 节日活动类型
@@ -19,22 +16,24 @@ public enum CampaignFestivalType {
     /**
      * 活动状态
      */
-    LOGIN("登录礼包", 1, GameCampaignTypeLogin.class),
-    RECHARGE("累计充值", 2, GameCampaignTypeRecharge.class),
-    EXCHANGE("兑换", 3, GameCampaignTypeExchange.class),
-    TASK("节日任务", 4, GameCampaignTypeTask.class),
-    BUFF_PRACTICE("修为加成", 5, GameCampaignTypeBuff.class),
-    BUFF_ANIMA("灵气加成", 6, GameCampaignTypeBuff.class),
+    LOGIN("登录礼包", 1, GameCampaignTypeLogin.class, GameCampaignTypeLoginVO.class),
+    RECHARGE("累计充值", 2, GameCampaignTypeRecharge.class, GameCampaignTypeRechargeVO.class),
+    EXCHANGE("兑换", 3, GameCampaignTypeExchange.class, GameCampaignTypeExchangeVO.class),
+    TASK("节日任务", 4, GameCampaignTypeTask.class, GameCampaignTypeTaskVO.class),
+    BUFF_PRACTICE("修为加成", 5, GameCampaignTypeBuff.class, GameCampaignTypeBuffVO.class),
+    BUFF_ANIMA("灵气加成", 6, GameCampaignTypeBuff.class, GameCampaignTypeBuffVO.class),
     ;
 
     private final String name;
     private final int value;
     private final Class tableClass;
+    private final Class excelClass;
 
-    CampaignFestivalType(String name, int value, Class tableClass) {
+    CampaignFestivalType(String name, int value, Class tableClass, Class excelClass) {
         this.name = name;
         this.value = value;
         this.tableClass = tableClass;
+        this.excelClass = excelClass;
     }
 
     public static CampaignFestivalType valueOf(int type) {

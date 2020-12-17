@@ -1,5 +1,6 @@
 package org.jeecg.common.system.util;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +118,34 @@ public class ExcelUtils {
             }
         }
         return Result.error("文件导入失败！");
+    }
+
+    public static <T> List<T> readExcel(String filename, Class<T> clazz) {
+        return EasyExcel.read(filename).head(clazz).sheet().doReadSync();
+    }
+
+    public static <T> List<T> readExcel(String filename, String sheetName, Class<T> clazz) {
+        return EasyExcel.read(filename).head(clazz).sheet(sheetName).doReadSync();
+    }
+
+    public static <T> List<T> readExcel(InputStream inputStream, String sheetName, Class<T> clazz) {
+        return EasyExcel.read(inputStream).head(clazz).sheet(sheetName).doReadSync();
+    }
+
+    public static <T> List<T> readExcel(InputStream inputStream, Class<T> clazz) {
+        return EasyExcel.read(inputStream).head(clazz).sheet().doReadSync();
+    }
+
+    private static <T> List<T> readExcel(String filename, Class<T> clazz, int headRowCount) {
+        return EasyExcel.read(filename).head(clazz).sheet().headRowNumber(headRowCount).doReadSync();
+    }
+
+    private static <T> List<T> readExcel(InputStream inputStream, Class<T> clazz, int headRowCount) {
+        return EasyExcel.read(inputStream).head(clazz).sheet().headRowNumber(headRowCount).doReadSync();
+    }
+
+    private static <T> List<T> readExcel(InputStream inputStream, String sheetName, Class<T> clazz, int headRowCount) {
+        return EasyExcel.read(inputStream).head(clazz).sheet(sheetName).headRowNumber(headRowCount).doReadSync();
     }
 
 }
