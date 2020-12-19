@@ -68,14 +68,14 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             String loginEnd = playerDTO.getLoginEnd();
             // 时间不为空
             // todo 时间为同一天,之后需要把这种时间代码替换成工具类的方法
-            if (createBegin != null && createEnd != null && createBegin.equals(createEnd)) {
+            if (!StringUtils.isEmpty(createBegin) && !StringUtils.isEmpty(createEnd) && createBegin.equals(createEnd)) {
                 createBegin = createBegin + " 00:00:00";
                 createEnd = createEnd + " 23:59:59";
             }
             playerDTO.setCreateDateBegin(DateUtils.parseDate(createBegin));
             playerDTO.setCreateDateEnd(DateUtils.parseDate(createEnd));
 
-            if (loginBegin != null && loginEnd != null && loginBegin.equals(loginEnd)) {
+            if (!StringUtils.isEmpty(loginBegin) && !StringUtils.isEmpty(loginEnd) && loginBegin.equals(loginEnd)) {
                 loginBegin = loginBegin + " 00:00:00";
                 loginEnd = loginEnd + " 23:59:59";
             }
