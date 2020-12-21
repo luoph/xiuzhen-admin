@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -8,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -64,4 +67,7 @@ public class OpenServiceCampaign extends BaseEntity {
      */
     @Excel(name = "活动备注", width = 15)
     private java.lang.String remark;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignType> typeList;
 }

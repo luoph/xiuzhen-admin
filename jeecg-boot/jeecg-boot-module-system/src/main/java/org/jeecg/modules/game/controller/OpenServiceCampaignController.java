@@ -1,7 +1,10 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -9,14 +12,21 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.OpenServiceCampaign;
+import org.jeecg.modules.game.entity.OpenServiceCampaignType;
 import org.jeecg.modules.game.service.IOpenServiceCampaignService;
+import org.jeecg.modules.game.service.IOpenServiceCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -30,7 +40,10 @@ import java.util.Arrays;
 public class OpenServiceCampaignController extends JeecgController<OpenServiceCampaign, IOpenServiceCampaignService> {
 
     @Autowired
-    private IOpenServiceCampaignService gameOpenServiceCampaignService;
+    private IOpenServiceCampaignService campaignService;
+
+    @Autowired
+    private IOpenServiceCampaignTypeService campaignTypeService;
 
     /**
      * 分页列表查询
@@ -49,33 +62,40 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
                                    HttpServletRequest req) {
         QueryWrapper<OpenServiceCampaign> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaign, req.getParameterMap());
         Page<OpenServiceCampaign> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaign> pageList = gameOpenServiceCampaignService.page(page, queryWrapper);
+        IPage<OpenServiceCampaign> pageList = campaignService.page(page, queryWrapper);
+        // 查询子页签列表
+        for (OpenServiceCampaign record : pageList.getRecords()) {
+            List<OpenServiceCampaignType> typeList = getCampaignTypeList(record);
+            record.setTypeList(typeList);
+        }
         return Result.ok(pageList);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaign 数据实体
+     * @param model 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动(1级)-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaign openServiceCampaign) {
-        gameOpenServiceCampaignService.save(openServiceCampaign);
+    public Result<?> add(@RequestBody OpenServiceCampaign model) {
+        campaignService.save(model);
+        updateTypeList(true, model);
         return Result.ok("添加成功！");
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaign 数据实体
+     * @param model 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动(1级)-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaign openServiceCampaign) {
-        gameOpenServiceCampaignService.updateById(openServiceCampaign);
+    public Result<?> edit(@RequestBody OpenServiceCampaign model) {
+        campaignService.updateById(model);
+        updateTypeList(false, model);
         return Result.ok("编辑成功!");
     }
 
@@ -88,7 +108,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "开服活动(1级)-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameOpenServiceCampaignService.removeById(id);
+        campaignService.removeById(id);
         return Result.ok("删除成功!");
     }
 
@@ -101,7 +121,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "开服活动(1级)-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameOpenServiceCampaignService.removeByIds(Arrays.asList(ids.split(",")));
+        this.campaignService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
 
@@ -114,7 +134,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "开服活动(1级)-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaign openServiceCampaign = gameOpenServiceCampaignService.getById(id);
+        OpenServiceCampaign openServiceCampaign = campaignService.getById(id);
         if (openServiceCampaign == null) {
             return Result.error("未找到对应数据");
         }
@@ -124,12 +144,12 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     /**
      * 导出excel
      *
-     * @param request             请求
-     * @param openServiceCampaign 实体
+     * @param request 请求
+     * @param model   实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaign openServiceCampaign) {
-        return super.exportXls(request, openServiceCampaign, OpenServiceCampaign.class, "开服活动(1级)");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaign model) {
+        return super.exportXls(request, model, OpenServiceCampaign.class, "开服活动(1级)");
     }
 
     /**
@@ -142,6 +162,77 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaign.class);
+    }
+
+    private void updateTypeList(boolean isAdd, OpenServiceCampaign model) {
+        // 过滤空的新增页签
+        List<OpenServiceCampaignType> nowList = model.getTypeList().stream().filter(t -> t.getType() != null).collect(Collectors.toList());
+        for (OpenServiceCampaignType item : nowList) {
+            item.setCampaignId(item.getId());
+        }
+
+        List<OpenServiceCampaignType> addList = new ArrayList<>();
+        List<OpenServiceCampaignType> updateList = new ArrayList<>();
+        List<Long> removeList = new ArrayList<>();
+
+        if (isAdd) {
+            addList.addAll(nowList);
+        } else {
+            for (OpenServiceCampaignType item : nowList) {
+                if (item.getId() == null) {
+                    addList.add(item);
+                }
+            }
+
+            nowList.removeAll(addList);
+            updateList.addAll(nowList);
+
+            if (!nowList.isEmpty()) {
+                Map<Long, OpenServiceCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(OpenServiceCampaignType::getId, Function.identity()));
+
+                // 更新子页签
+                List<OpenServiceCampaignType> typeList = getCampaignTypeList(model);
+                model.setTypeList(typeList);
+
+                for (OpenServiceCampaignType item : typeList) {
+                    if (typeMap.containsKey(item.getId())) {
+                        updateList.remove(item);
+                    } else {
+                        removeList.add(item.getId());
+                    }
+                }
+            }
+        }
+
+        log.debug("addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
+        updateCampaignTypeList(addList, updateList, removeList);
+    }
+
+    private void updateCampaignTypeList(List<OpenServiceCampaignType> addList, List<OpenServiceCampaignType> updateList, List<Long> removeList) {
+        if (CollUtil.isNotEmpty(addList)) {
+            campaignTypeService.saveBatch(addList);
+        }
+
+        if (CollUtil.isNotEmpty(updateList)) {
+            campaignTypeService.updateBatchById(updateList);
+        }
+
+        if (CollUtil.isNotEmpty(removeList)) {
+            campaignTypeService.removeByIds(removeList);
+        }
+    }
+
+    private List<OpenServiceCampaignType> getCampaignTypeList(OpenServiceCampaign openServiceCampaign) {
+        long campaignId = openServiceCampaign.getId();
+        LambdaQueryWrapper<OpenServiceCampaignType> query = Wrappers.<OpenServiceCampaignType>lambdaQuery()
+                .eq(OpenServiceCampaignType::getCampaignId, campaignId)
+                .orderByAsc(OpenServiceCampaignType::getSort);
+
+        List<OpenServiceCampaignType> list = campaignTypeService.list(query);
+        for (OpenServiceCampaignType model : list) {
+            campaignTypeService.fillTabDetail(model, true);
+        }
+        return list;
     }
 
 }
