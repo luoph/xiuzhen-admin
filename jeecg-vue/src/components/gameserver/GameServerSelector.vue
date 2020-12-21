@@ -79,6 +79,9 @@ export default {
         },
         updateSelected() {
             this.defaultValue = [];
+            if (!this.initValue) {
+                return;
+            }
             for (let index = 0; index < this.initValue.length; index++) {
                 for (const element of this.serverList) {
                     console.log(element);
@@ -101,7 +104,7 @@ export default {
             this.getServerList();
         },
         serverList: function() {
-            updateSelected();
+            this.updateSelected();
         }
     }
 };
