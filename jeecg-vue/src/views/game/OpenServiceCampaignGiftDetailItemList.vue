@@ -28,7 +28,7 @@
                         <a-col :md="6" :sm="8">
                             <a-form-item label="礼包类型">
                                 <!-- 0.普通礼包, 1.大奖礼包 -->
-                                <a-select placeholder="请选择礼包类型" v-model="queryParam.giftType" defaultValue="1">
+                                <a-select placeholder="请选择礼包类型" v-model="queryParam.giftType" initialValue="1">
                                     <a-select-option :value="0">普通礼包</a-select-option>
                                     <a-select-option :value="1">大奖礼包</a-select-option>
                                 </a-select>

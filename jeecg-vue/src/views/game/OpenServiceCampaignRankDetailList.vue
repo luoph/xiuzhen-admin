@@ -27,7 +27,7 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="排行类型">
-                                <a-select placeholder="请选择排行类型" model="queryParam.rankType" defaultValue="1">
+                                <a-select placeholder="请选择排行类型" model="queryParam.rankType" initialValue="1">
                                     <a-select-option :value="1">1-境界冲榜</a-select-option>
                                     <a-select-option :value="2">2-功法冲榜</a-select-option>
                                 </a-select>

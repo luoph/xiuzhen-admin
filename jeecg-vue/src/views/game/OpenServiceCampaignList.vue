@@ -11,7 +11,7 @@
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="活动状态">
-                            <a-select placeholder="请选择活动状态" v-model="queryParam.status" defaultValue="1">
+                            <a-select placeholder="请选择活动状态" v-model="queryParam.status" initialValue="1">
                                 <a-select-option :value="0">无效</a-select-option>
                                 <a-select-option :value="1">有效</a-select-option>
                             </a-select>
@@ -20,7 +20,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
                             <a-form-item label="自动开启">
-                                <a-select placeholder="请选择自动开启状态" v-model="queryParam.autoOpen" defaultValue="0">
+                                <a-select placeholder="请选择自动开启状态" v-model="queryParam.autoOpen" initialValue="0">
                                     <a-select-option :value="0">关闭</a-select-option>
                                     <a-select-option :value="1">开启</a-select-option>
                                 </a-select>
@@ -102,8 +102,11 @@
                 </span>
 
                 <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
+                    <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
+                    <a @click="handleTabList(record)">页签配置</a>
+                    <a-divider type="vertical" />
+                    <a @click="handleSyncCampaign(record)">同步到区服</a>
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
@@ -118,7 +121,9 @@
             </a-table>
         </div>
 
-        <openServiceCampaign-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaign-modal>
+        <open-service-campaign-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-modal>
+        <!-- <open-service-campaign-server-list ref="serverListModal" @ok="modalFormOk"></open-service-campaign-server-list> -->
+        <!-- <open-service-tab-list ref="tabListModal"></open-service-tab-list> -->
     </a-card>
 </template>
 

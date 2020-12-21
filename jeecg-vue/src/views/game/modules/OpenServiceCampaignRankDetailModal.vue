@@ -16,7 +16,7 @@
                     <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
                 </a-form-item>
                 <a-form-item label="排行类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" defaultValue="1">
+                    <a-select placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" initialValue="1">
                         <a-select-option :value="1">1-境界冲榜</a-select-option>
                         <a-select-option :value="2">2-功法冲榜</a-select-option>
                     </a-select>
