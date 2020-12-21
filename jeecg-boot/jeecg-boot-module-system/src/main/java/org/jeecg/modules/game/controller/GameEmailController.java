@@ -50,10 +50,10 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        String targetBodyIds = gameEmail.getTargetBodyIds();
-        if (StringUtils.isNotBlank(targetBodyIds)) {
-            targetBodyIds = "*" + targetBodyIds + "*";
-            gameEmail.setTargetBodyIds(targetBodyIds);
+        String targetIds = gameEmail.getTargetIds();
+        if (StringUtils.isNotBlank(targetIds)) {
+            targetIds = "*" + targetIds + "*";
+            gameEmail.setTargetIds(targetIds);
         }
         QueryWrapper<GameEmail> queryWrapper = QueryGenerator.initQueryWrapper(gameEmail, req.getParameterMap());
         Page<GameEmail> page = new Page<>(pageNo, pageSize);
@@ -71,7 +71,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameEmail gameEmail) {
         log.info("gameEmail:{}", gameEmail.toString());
-        String targetBodyIds = gameEmail.getTargetBodyIds();
+        String targetBodyIds = gameEmail.getTargetIds();
         if (StringUtils.isBlank(targetBodyIds)) {
             return Result.error("所选投放对象不允许为空！");
         }

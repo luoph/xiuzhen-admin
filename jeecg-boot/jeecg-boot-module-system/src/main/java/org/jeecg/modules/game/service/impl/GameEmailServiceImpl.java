@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -79,7 +78,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             }
         }
 
-        String[] targetBodyStr = StringUtils.split(gameEmail.getTargetBodyIds(), ",");
+        String[] targetBodyStr = StringUtils.split(gameEmail.getTargetIds(), ",");
         if (targetBodyStr == null || targetBodyStr.length <= 0) {
             response.setFailure("投放目标不存在！");
             return response;
