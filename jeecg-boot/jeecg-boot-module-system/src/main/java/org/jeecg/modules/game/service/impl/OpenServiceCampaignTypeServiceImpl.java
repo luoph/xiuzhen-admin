@@ -1,4 +1,4 @@
-package org.jeecg.modules. game.service.impl;
+package org.jeecg.modules.game.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.OpenServiceCampaignType;
@@ -15,4 +15,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class OpenServiceCampaignTypeServiceImpl extends ServiceImpl<GameOpenServiceCampaignTypeMapper, OpenServiceCampaignType> implements IOpenServiceCampaignTypeService {
 
+    @Override
+    public void fillTabDetail(OpenServiceCampaignType model, boolean merge) {
+
+    }
+
+    @Override
+    public void updateTabDetail(OpenServiceCampaignType model) {
+
+    }
 }
