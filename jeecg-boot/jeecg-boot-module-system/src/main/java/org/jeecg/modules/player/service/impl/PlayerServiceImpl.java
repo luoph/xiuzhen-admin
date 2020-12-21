@@ -42,7 +42,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     private PayOrderBillMapper payOrderBillMapper;
 
     @Resource
-    private GameRegisterInfoMapper playerRegisterInfoMapper;
+    private GameRegisterInfoMapper registerInfoMapper;
 
     @Resource
     private PayUserRankMapper payUserRankMapper;
@@ -190,7 +190,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             rangeDateEndTime = DateUtils.now();
         }
 
-        List<PlayerBehavior> playerBehaviorList = playerRegisterInfoMapper.selectBehaviorCount(serverId, nickname, rangeDateBeginTime, rangeDateEndTime, logTable);
+        List<PlayerBehavior> playerBehaviorList = registerInfoMapper.selectBehaviorCount(serverId, nickname, rangeDateBeginTime, rangeDateEndTime, logTable);
 
         return getPlayerBehaviorList(playerBehaviorList);
     }
