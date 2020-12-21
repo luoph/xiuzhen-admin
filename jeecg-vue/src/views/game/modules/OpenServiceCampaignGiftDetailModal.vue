@@ -3,38 +3,26 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id, open_service_campaign.id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="open_service_campaign_type.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入open_service_campaign_type.id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_campaign_rank_detail.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['rankDetailId', validatorRules.rankDetailId]" placeholder="请输入open_service_campaign_rank_detail.id" style="width: 100%" />
+                <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
                 </a-form-item>
-                <a-form-item label="排名最小值" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['minRank', validatorRules.minRank]" placeholder="请输入排名最小值" style="width: 100%" />
+                <a-form-item label="活动页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
                 </a-form-item>
-                <a-form-item label="排名最大值" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['maxRank', validatorRules.maxRank]" placeholder="请输入排名最大值" style="width: 100%" />
+                <a-form-item label="活动宣传背景图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动宣传背景图"></a-input>
                 </a-form-item>
-                <a-form-item label="上榜最低积分" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入上榜最低积分" style="width: 100%" />
+                <a-form-item label="开始时间(开服第n天, e.g. 0表示开服第1天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天, e.g. 0表示开服第1天)" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="奖励列表 e.g. [{"itemId":1001,"num":"1"}]" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表 e.g. [{"itemId":1001,"num":"1"}]"></a-input>
-                </a-form-item>
-                <a-form-item label="稀有奖励列表 e.g. [{"itemId":1001,"num":"1"}]" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['rareReward', validatorRules.rareReward]" placeholder="请输入稀有奖励列表 e.g. [{"itemId":1001,"num":"1"}]"></a-input>
-                </a-form-item>
-                <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-input>
-                </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
+                <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -52,9 +40,9 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameOpenServiceCampaignRankDetailRankingModal",
+    name: "OpenServiceCampaignGiftDetailModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -75,24 +63,19 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id, open_service_campaign.id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入open_service_campaign_type.id!" }] },
-                rankDetailId: { rules: [{ required: true, message: "请输入open_service_campaign_rank_detail.id!" }] },
-                minRank: { rules: [{ required: true, message: "请输入排名最小值!" }] },
-                maxRank: { rules: [{ required: true, message: "请输入排名最大值!" }] },
-                score: { rules: [{ required: true, message: "请输入上榜最低积分!" }] },
-                reward: { rules: [{ required: true, message: "请输入奖励列表 e.g. [{"itemId":1001,"num":"1"}]!" }] },
-                rareReward: { rules: [{ required: true, message: "请输入稀有奖励列表 e.g. [{"itemId":1001,"num":"1"}]!" }] },
-                message: { rules: [{ required: true, message: "请输入传闻内容!" }] },
-                createTime: {},
-                updateTime: {},
+                name: { rules: [{ required: true, message: "请输入活动名称!" }] },
+                tabName: { rules: [{ required: true, message: "请输入活动页签名称!" }] },
+                banner: { rules: [{ required: true, message: "请输入活动宣传背景图!" }] },
+                startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天, e.g. 0表示开服第1天)!" }] },
+                duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
             },
             url: {
-                add: "game/openServiceCampaignRankDetailRanking/add",
-                edit: "game/openServiceCampaignRankDetailRanking/edit"
+                add: "game/openServiceCampaignGiftDetail/add",
+                edit: "game/openServiceCampaignGiftDetail/edit"
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -102,7 +85,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "banner", "startDay", "duration"));
             });
         },
         close() {
@@ -146,8 +129,8 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message", "createTime", "updateTime"));
-        },
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "banner", "startDay", "duration"));
+        }
     }
 };
 </script>

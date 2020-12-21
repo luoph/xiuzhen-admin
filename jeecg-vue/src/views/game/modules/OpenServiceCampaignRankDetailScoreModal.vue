@@ -3,35 +3,29 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id, open_service_campaign.id" style="width: 100%" />
+                <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="open_service_campaign_type.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入open_service_campaign_type.id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_campaign_gift_detail.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入open_service_campaign_gift_detail.id" style="width: 100%" />
+                <a-form-item label="open_service_campaign_rank_detail.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['rankDetailId', validatorRules.rankDetailId]" placeholder="请输入open_service_campaign_rank_detail.id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
+                <a-form-item label="排行消耗道具id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['itemId', validatorRules.itemId]" placeholder="请输入排行消耗道具id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="礼包类型 0.普通礼包, 1.大奖礼包" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['giftType', validatorRules.giftType]" placeholder="请输入礼包类型 0.普通礼包, 1.大奖礼包" style="width: 100%" />
+                <a-form-item label="排行消耗道具数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入排行消耗道具数量" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣" style="width: 100%" />
+                <a-form-item label="消耗对应积分" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入消耗对应积分" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="价格 e.g. [{"itemId":1001,"num":"1"}]" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['price', validatorRules.price]" placeholder="请输入价格 e.g. [{"itemId":1001,"num":"1"}]"></a-input>
+                <a-form-item label="道具积分分类" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['itemType', validatorRules.itemType]" placeholder="请输入道具积分分类" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="奖励列表 e.g. [{"itemId":1001,"num":"1"}]" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表 e.g. [{"itemId":1001,"num":"1"}]"></a-input>
-                </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
+                <a-form-item label="道具积分分类名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['itemTypeName', validatorRules.itemTypeName]" placeholder="请输入道具积分分类名称"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -49,9 +43,9 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameOpenServiceCampaignGiftDetailItemModal",
+    name: "OpenServiceCampaignRankDetailScoreModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -70,25 +64,22 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                campaignId: { rules: [{ required: true, message: "请输入开服活动id, open_service_campaign.id!" }] },
+                campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入open_service_campaign_type.id!" }] },
-                giftDetailId: { rules: [{ required: true, message: "请输入open_service_campaign_gift_detail.id!" }] },
-                sort: { rules: [{ required: true, message: "请输入排序!" }] },
-                giftType: { rules: [{ required: true, message: "请输入礼包类型 0.普通礼包, 1.大奖礼包!" }] },
-                discount: { rules: [{ required: true, message: "请输入折扣!" }] },
-                price: { rules: [{ required: true, message: "请输入价格 e.g. [{"itemId":1001,"num":"1"}]!" }] },
-                reward: { rules: [{ required: true, message: "请输入奖励列表 e.g. [{"itemId":1001,"num":"1"}]!" }] },
-                createTime: {},
-                updateTime: {},
+                rankDetailId: { rules: [{ required: true, message: "请输入open_service_campaign_rank_detail.id!" }] },
+                itemId: { rules: [{ required: true, message: "请输入排行消耗道具id!" }] },
+                num: { rules: [{ required: true, message: "请输入排行消耗道具数量!" }] },
+                score: { rules: [{ required: true, message: "请输入消耗对应积分!" }] },
+                itemType: { rules: [{ required: true, message: "请输入道具积分分类!" }] },
+                itemTypeName: { rules: [{ required: true, message: "请输入道具积分分类名称!" }] },
             },
             url: {
-                add: "game/openServiceCampaignGiftDetailItem/add",
-                edit: "game/openServiceCampaignGiftDetailItem/edit"
+                add: "game/openServiceCampaignRankDetailScore/add",
+                edit: "game/openServiceCampaignRankDetailScore/edit"
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -98,7 +89,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "sort", "giftType", "discount", "price", "reward", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "itemId", "num", "score", "itemType", "itemTypeName"));
             });
         },
         close() {
@@ -142,8 +133,8 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "giftDetailId", "sort", "giftType", "discount", "price", "reward", "createTime", "updateTime"));
-        },
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "rankDetailId", "itemId", "num", "score", "itemType", "itemTypeName"));
+        }
     }
 };
 </script>

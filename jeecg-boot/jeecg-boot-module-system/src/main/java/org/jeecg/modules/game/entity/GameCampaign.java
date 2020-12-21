@@ -79,7 +79,7 @@ public class GameCampaign extends BaseEntity {
     private Integer status;
 
     /**
-     * 到达活动时间后自动开启
+     * 自动开启
      */
     @Excel(name = "自动开启", width = 15)
     private Integer autoOpen;

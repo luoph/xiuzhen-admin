@@ -5,39 +5,39 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                <a-form-item label="开服活动id, open_service_campaign.id">
-                <a-input placeholder="请输入开服活动id, open_service_campaign.id" v-model="queryParam.campaignId"></a-input>
-            </a-form-item>
-                </a-col>
-                <a-col :md="6" :sm="8">
-                <a-form-item label="open_service_campaign_type.id">
-                <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
-            </a-form-item>
-                </a-col>
-                <template v-if="toggleSearchStatus">
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="open_service_campaign_rank_detail.id">
-                    <a-input placeholder="请输入open_service_campaign_rank_detail.id" v-model="queryParam.rankDetailId"></a-input>
-                </a-form-item>
-                    </a-col>
-                    <a-col :md="12" :sm="16">
-                    <a-form-item label="传闻推送时间">
-                    <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.sendTime_begin"></j-date>
-                    <span class="query-group-split-cust"></span>
-                    <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.sendTime_end"></j-date>
-                </a-form-item>
-                </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="传闻内容">
-                    <a-input placeholder="请输入传闻内容" v-model="queryParam.message"></a-input>
-                </a-form-item>
+                        <a-form-item label="开服活动id, open_service_campaign.id">
+                            <a-input placeholder="请输入开服活动id, open_service_campaign.id" v-model="queryParam.campaignId"></a-input>
+                        </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                    <a-form-item label="是否发送邮件">
-                    <a-input placeholder="请输入是否发送邮件" v-model="queryParam.email"></a-input>
-                </a-form-item>
+                        <a-form-item label="open_service_campaign_type.id">
+                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        </a-form-item>
                     </a-col>
-        </template>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="open_service_campaign_rank_detail.id">
+                                <a-input placeholder="请输入open_service_campaign_rank_detail.id" v-model="queryParam.rankDetailId"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="12" :sm="16">
+                            <a-form-item label="传闻推送时间">
+                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.sendTime_begin"></j-date>
+                                <span class="query-group-split-cust"></span>
+                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.sendTime_end"></j-date>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="传闻内容">
+                                <a-input placeholder="请输入传闻内容" v-model="queryParam.message"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="是否发送邮件">
+                                <a-input placeholder="请输入是否发送邮件" v-model="queryParam.email"></a-input>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -70,7 +70,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -85,7 +86,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -116,21 +116,21 @@
             </a-table>
         </div>
 
-        <gameOpenServiceCampaignRankDetailMessage-modal ref="modalForm" @ok="modalFormOk"></gameOpenServiceCampaignRankDetailMessage-modal>
+        <openServiceCampaignRankDetailMessage-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignRankDetailMessage-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameOpenServiceCampaignRankDetailMessageModal from "./modules/GameOpenServiceCampaignRankDetailMessageModal";
+import OpenServiceCampaignRankDetailMessageModal from "./modules/OpenServiceCampaignRankDetailMessageModal";
 import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
-    name: "GameOpenServiceCampaignRankDetailMessageList",
+    name: "OpenServiceCampaignRankDetailMessageList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        GameOpenServiceCampaignRankDetailMessageModal
+        OpenServiceCampaignRankDetailMessageModal
     },
     data() {
         return {
@@ -167,7 +167,7 @@ export default {
                     align: "center",
                     dataIndex: "sendTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -186,20 +186,14 @@ export default {
                     dataIndex: "email"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
                 },
                 {
-                    title: "updateTime",
+                    title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
                 },
                 {
                     title: "操作",
@@ -215,8 +209,7 @@ export default {
                 exportXlsUrl: "game/openServiceCampaignRankDetailMessage/exportXls",
                 importExcelUrl: "game/openServiceCampaignRankDetailMessage/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -225,8 +218,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>

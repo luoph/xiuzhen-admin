@@ -3,17 +3,14 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="排行类型 e.g. 1.境界冲榜, 2.功法冲榜" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['rankType', validatorRules.rankType]" placeholder="请输入排行类型 e.g. 1.境界冲榜, 2.功法冲榜" style="width: 100%" />
+                <a-form-item label="排行类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" defaultValue="1">
+                        <a-select-option :value="1">1-境界冲榜</a-select-option>
+                        <a-select-option :value="2">2-功法冲榜</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="排行类型名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['rankTypeName', validatorRules.rankTypeName]" placeholder="请输入排行类型名称"></a-input>
-                </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -31,9 +28,9 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameOpenServiceCampaignRankTypeModal",
+    name: "OpenServiceCampaignRankTypeModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -52,10 +49,8 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                rankType: { rules: [{ required: true, message: "请输入排行类型 e.g. 1.境界冲榜, 2.功法冲榜!" }] },
-                rankTypeName: { rules: [{ required: true, message: "请输入排行类型名称!" }] },
-                createTime: {},
-                updateTime: {},
+                rankType: { rules: [{ required: true, message: "请输入排行类型!" }] },
+                rankTypeName: { rules: [{ required: true, message: "请输入排行类型名称!" }] }
             },
             url: {
                 add: "game/openServiceCampaignRankType/add",
@@ -63,8 +58,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -74,7 +68,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "rankType", "rankTypeName", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "rankType", "rankTypeName"));
             });
         },
         close() {
@@ -118,8 +112,8 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "rankType", "rankTypeName", "createTime", "updateTime"));
-        },
+            this.form.setFieldsValue(pick(row, "rankType", "rankTypeName"));
+        }
     }
 };
 </script>

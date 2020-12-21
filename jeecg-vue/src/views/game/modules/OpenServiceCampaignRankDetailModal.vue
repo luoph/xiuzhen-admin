@@ -3,7 +3,7 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id, open_service_campaign.id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="open_service_campaign_type.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -15,11 +15,14 @@
                 <a-form-item label="活动页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
                 </a-form-item>
-                <a-form-item label="排行类型 open_service_campaign_rank_type.rank_type e.g. 1.境界冲榜, 2.功法冲榜" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['rankType', validatorRules.rankType]" placeholder="请输入排行类型 open_service_campaign_rank_type.rank_type e.g. 1.境界冲榜, 2.功法冲榜" style="width: 100%" />
+                <a-form-item label="排行类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" defaultValue="1">
+                        <a-select-option :value="1">1-境界冲榜</a-select-option>
+                        <a-select-option :value="2">2-功法冲榜</a-select-option>
+                    </a-select>
                 </a-form-item>
-                <a-form-item label="开始时间(开服第n天, e.g. 0表示开服第1天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天, e.g. 0表示开服第1天)" style="width: 100%" />
+                <a-form-item label="开始时间(开服第n天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天)" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
@@ -42,12 +45,6 @@
                 <a-form-item label="达标奖励邮件id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['standardRewardEmail', validatorRules.standardRewardEmail]" placeholder="请输入达标奖励邮件id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -64,9 +61,9 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameOpenServiceCampaignRankDetailModal",
+    name: "OpenServiceCampaignRankDetailModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -85,21 +82,19 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                campaignId: { rules: [{ required: true, message: "请输入开服活动id, open_service_campaign.id!" }] },
-                campaignTypeId: { rules: [{ required: true, message: "请输入open_service_campaign_type.id!" }] },
+                campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
+                campaignTypeId: { rules: [{ required: true, message: "请输入typeId!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 tabName: { rules: [{ required: true, message: "请输入活动页签名称!" }] },
-                rankType: { rules: [{ required: true, message: "请输入排行类型 open_service_campaign_rank_type.rank_type e.g. 1.境界冲榜, 2.功法冲榜!" }] },
-                startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天, e.g. 0表示开服第1天)!" }] },
+                rankType: { rules: [{ required: true, message: "请输入排行类型!" }] },
+                startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天)!" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传背景图!" }] },
                 rewardImg: { rules: [{ required: true, message: "请输入活动宣传奖励图!" }] },
                 combatPower: { rules: [{ required: true, message: "请输入活动宣传仙力!" }] },
                 rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
                 rankRewardEmail: { rules: [{ required: true, message: "请输入排名奖励邮件id!" }] },
-                standardRewardEmail: { rules: [{ required: true, message: "请输入达标奖励邮件id!" }] },
-                createTime: {},
-                updateTime: {},
+                standardRewardEmail: { rules: [{ required: true, message: "请输入达标奖励邮件id!" }] }
             },
             url: {
                 add: "game/openServiceCampaignRankDetail/add",
@@ -107,8 +102,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -118,7 +112,24 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "rankType", "startDay", "duration", "banner", "rewardImg", "combatPower", "rankNum", "rankRewardEmail", "standardRewardEmail", "createTime", "updateTime"));
+                this.form.setFieldsValue(
+                    pick(
+                        this.model,
+                        "campaignId",
+                        "campaignTypeId",
+                        "name",
+                        "tabName",
+                        "rankType",
+                        "startDay",
+                        "duration",
+                        "banner",
+                        "rewardImg",
+                        "combatPower",
+                        "rankNum",
+                        "rankRewardEmail",
+                        "standardRewardEmail"
+                    )
+                );
             });
         },
         close() {
@@ -162,8 +173,25 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "rankType", "startDay", "duration", "banner", "rewardImg", "combatPower", "rankNum", "rankRewardEmail", "standardRewardEmail", "createTime", "updateTime"));
-        },
+            this.form.setFieldsValue(
+                pick(
+                    row,
+                    "campaignId",
+                    "campaignTypeId",
+                    "name",
+                    "tabName",
+                    "rankType",
+                    "startDay",
+                    "duration",
+                    "banner",
+                    "rewardImg",
+                    "combatPower",
+                    "rankNum",
+                    "rankRewardEmail",
+                    "standardRewardEmail"
+                )
+            );
+        }
     }
 };
 </script>

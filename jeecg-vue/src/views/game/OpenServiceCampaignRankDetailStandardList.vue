@@ -5,15 +5,37 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                <a-form-item label="排行类型 e.g. 1.境界冲榜, 2.功法冲榜">
-                <a-input placeholder="请输入排行类型 e.g. 1.境界冲榜, 2.功法冲榜" v-model="queryParam.rankType"></a-input>
-            </a-form-item>
-                </a-col>
-                <a-col :md="6" :sm="8">
-                <a-form-item label="排行类型名称">
-                <a-input placeholder="请输入排行类型名称" v-model="queryParam.rankTypeName"></a-input>
-            </a-form-item>
-                </a-col>
+                        <a-form-item label="开服活动id">
+                            <a-input placeholder="请输入开服活动id" v-model="queryParam.campaignId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="open_service_campaign_type.id">
+                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="open_service_campaign_rank_detail.id">
+                                <a-input placeholder="请输入open_service_campaign_rank_detail.id" v-model="queryParam.rankDetailId"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="达标奖励积分">
+                                <a-input placeholder="请输入达标奖励积分" v-model="queryParam.score"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="描述">
+                                <a-input placeholder="请输入描述" v-model="queryParam.description"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="传闻内容">
+                                <a-input placeholder="请输入传闻内容" v-model="queryParam.message"></a-input>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -31,7 +53,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服活动-开服排行-类型库')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('开服活动-开服排行-活动明细-达标奖励')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload>
@@ -46,7 +68,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -61,7 +84,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -92,23 +114,23 @@
             </a-table>
         </div>
 
-        <gameOpenServiceCampaignRankType-modal ref="modalForm" @ok="modalFormOk"></gameOpenServiceCampaignRankType-modal>
+        <openServiceCampaignRankDetailStandard-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignRankDetailStandard-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameOpenServiceCampaignRankTypeModal from "./modules/GameOpenServiceCampaignRankTypeModal";
+import OpenServiceCampaignRankDetailStandardModal from "./modules/OpenServiceCampaignRankDetailStandardModal";
 
 export default {
-    name: "GameOpenServiceCampaignRankTypeList",
+    name: "OpenServiceCampaignRankDetailStandardList",
     mixins: [JeecgListMixin],
     components: {
-        GameOpenServiceCampaignRankTypeModal
+        OpenServiceCampaignRankDetailStandardModal
     },
     data() {
         return {
-            description: "开服活动-开服排行-类型库管理页面",
+            description: "开服活动-开服排行-活动明细-达标奖励管理页面",
             // 表头
             columns: [
                 {
@@ -122,30 +144,49 @@ export default {
                     }
                 },
                 {
-                    title: "排行类型 e.g. 1.境界冲榜, 2.功法冲榜",
+                    title: "开服活动id",
                     align: "center",
-                    dataIndex: "rankType"
+                    dataIndex: "campaignId"
                 },
                 {
-                    title: "排行类型名称",
+                    title: "open_service_campaign_type.id",
                     align: "center",
-                    dataIndex: "rankTypeName"
+                    dataIndex: "campaignTypeId"
                 },
                 {
-                    title: "createTime",
+                    title: "open_service_campaign_rank_detail.id",
+                    align: "center",
+                    dataIndex: "rankDetailId"
+                },
+                {
+                    title: "达标奖励积分",
+                    align: "center",
+                    dataIndex: "score"
+                },
+                {
+                    title: "描述",
+                    align: "center",
+                    dataIndex: "description"
+                },
+                {
+                    title: "奖励列表",
+                    align: "center",
+                    dataIndex: "reward"
+                },
+                {
+                    title: "传闻内容",
+                    align: "center",
+                    dataIndex: "message"
+                },
+                {
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
                 },
                 {
-                    title: "updateTime",
+                    title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
                 },
                 {
                     title: "操作",
@@ -155,14 +196,13 @@ export default {
                 }
             ],
             url: {
-                list: "game/openServiceCampaignRankType/list",
-                delete: "game/openServiceCampaignRankType/delete",
-                deleteBatch: "game/openServiceCampaignRankType/deleteBatch",
-                exportXlsUrl: "game/openServiceCampaignRankType/exportXls",
-                importExcelUrl: "game/openServiceCampaignRankType/importExcel"
+                list: "game/openServiceCampaignRankDetailStandard/list",
+                delete: "game/openServiceCampaignRankDetailStandard/delete",
+                deleteBatch: "game/openServiceCampaignRankDetailStandard/deleteBatch",
+                exportXlsUrl: "game/openServiceCampaignRankDetailStandard/exportXls",
+                importExcelUrl: "game/openServiceCampaignRankDetailStandard/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -171,8 +211,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>

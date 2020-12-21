@@ -3,23 +3,24 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id, open_service_campaign.id" style="width: 100%" />
+                <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['type', validatorRules.type]" placeholder="请输入开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)" style="width: 100%" />
+                <a-form-item label="开服活动项类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请选择开服活动项类型" v-decorator="['type', validatorRules.type]" defaultValue="1">
+                        <!-- 1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗 -->
+                        <a-select-option :value="1">1-开服排行</a-select-option>
+                        <a-select-option :value="2">2-开服礼包</a-select-option>
+                        <a-select-option :value="3">3-单笔充值</a-select-option>
+                        <a-select-option :value="4">4-寻宝</a-select-option>
+                        <a-select-option :value="5">5-道具消耗</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入活动备注"></a-input>
-                </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -37,9 +38,9 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameOpenServiceCampaignTypeModal",
+    name: "OpenServiceCampaignTypeModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -58,12 +59,10 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                campaignId: { rules: [{ required: true, message: "请输入开服活动id, open_service_campaign.id!" }] },
-                type: { rules: [{ required: true, message: "请输入开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)!" }] },
+                campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
+                type: { rules: [{ required: true, message: "请输入开服活动项类型!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
-                remark: { rules: [{ required: true, message: "请输入活动备注!" }] },
-                createTime: {},
-                updateTime: {},
+                remark: { rules: [{ required: true, message: "请输入活动备注!" }] }
             },
             url: {
                 add: "game/openServiceCampaignType/add",
@@ -71,8 +70,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -82,7 +80,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "type", "sort", "remark", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "type", "sort", "remark"));
             });
         },
         close() {
@@ -126,8 +124,8 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "type", "sort", "remark", "createTime", "updateTime"));
-        },
+            this.form.setFieldsValue(pick(row, "campaignId", "type", "sort", "remark"));
+        }
     }
 };
 </script>

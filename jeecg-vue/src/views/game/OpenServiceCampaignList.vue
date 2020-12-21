@@ -5,27 +5,37 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                <a-form-item label="开服活动id, open_service_campaign.id">
-                <a-input placeholder="请输入开服活动id, open_service_campaign.id" v-model="queryParam.campaignId"></a-input>
-            </a-form-item>
-                </a-col>
-                <a-col :md="6" :sm="8">
-                <a-form-item label="开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)">
-                <a-input placeholder="请输入开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)" v-model="queryParam.type"></a-input>
-            </a-form-item>
-                </a-col>
-                <template v-if="toggleSearchStatus">
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="排序">
-                    <a-input placeholder="请输入排序" v-model="queryParam.sort"></a-input>
-                </a-form-item>
+                        <a-form-item label="活动名称">
+                            <a-input placeholder="请输入活动名称" v-model="queryParam.name"></a-input>
+                        </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                    <a-form-item label="活动备注">
-                    <a-input placeholder="请输入活动备注" v-model="queryParam.remark"></a-input>
-                </a-form-item>
+                        <a-form-item label="活动状态">
+                            <a-input placeholder="请输入活动状态" v-model="queryParam.status"></a-input>
+                        </a-form-item>
                     </a-col>
-        </template>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="自动开启">
+                                <a-select placeholder="请选择自动开启状态" v-model="queryParam.autoOpen" defaultValue="0">
+                                    <a-select-option :value="0">关闭</a-select-option>
+                                    <a-select-option :value="1">开启</a-select-option>
+                                </a-select>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="活动备注">
+                                <a-input placeholder="请输入活动备注" v-model="queryParam.remark"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="12" :sm="16">
+                            <a-form-item label="创建时间">
+                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
+                                <span class="query-group-split-cust"></span>
+                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -43,7 +53,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服活动-类型(2级)')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('开服活动(1级)')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload>
@@ -58,7 +68,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -73,7 +84,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -104,23 +114,25 @@
             </a-table>
         </div>
 
-        <gameOpenServiceCampaignType-modal ref="modalForm" @ok="modalFormOk"></gameOpenServiceCampaignType-modal>
+        <openServiceCampaign-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaign-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameOpenServiceCampaignTypeModal from "./modules/GameOpenServiceCampaignTypeModal";
+import OpenServiceCampaignModal from "./modules/OpenServiceCampaignModal";
+import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
-    name: "GameOpenServiceCampaignTypeList",
+    name: "OpenServiceCampaignList",
     mixins: [JeecgListMixin],
     components: {
-        GameOpenServiceCampaignTypeModal
+        JDate,
+        OpenServiceCampaignModal
     },
     data() {
         return {
-            description: "开服活动-类型(2级)管理页面",
+            description: "开服活动(1级)管理页面",
             // 表头
             columns: [
                 {
@@ -134,19 +146,38 @@ export default {
                     }
                 },
                 {
-                    title: "开服活动id, open_service_campaign.id",
+                    title: "活动名称",
                     align: "center",
-                    dataIndex: "campaignId"
+                    dataIndex: "name"
                 },
                 {
-                    title: "开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)",
+                    title: "服务器id",
                     align: "center",
-                    dataIndex: "type"
+                    dataIndex: "serverIds"
                 },
                 {
-                    title: "排序",
+                    title: "活动图标",
                     align: "center",
-                    dataIndex: "sort"
+                    dataIndex: "icon"
+                },
+                {
+                    title: "活动状态",
+                    align: "center",
+                    dataIndex: "status"
+                },
+                {
+                    title: "自动开启",
+                    align: "center",
+                    dataIndex: "autoOpen",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "关闭";
+                        } else if (value === 1) {
+                            text = "开启";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "活动备注",
@@ -154,20 +185,30 @@ export default {
                     dataIndex: "remark"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
-                    title: "updateTime",
+                    title: "创建人",
+                    align: "center",
+                    dataIndex: "createBy"
+                },
+                {
+                    title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
+                },
+                {
+                    title: "修改人",
+                    align: "center",
+                    dataIndex: "updateBy"
                 },
                 {
                     title: "操作",
@@ -177,14 +218,13 @@ export default {
                 }
             ],
             url: {
-                list: "game/openServiceCampaignType/list",
-                delete: "game/openServiceCampaignType/delete",
-                deleteBatch: "game/openServiceCampaignType/deleteBatch",
-                exportXlsUrl: "game/openServiceCampaignType/exportXls",
-                importExcelUrl: "game/openServiceCampaignType/importExcel"
+                list: "game/openServiceCampaign/list",
+                delete: "game/openServiceCampaign/delete",
+                deleteBatch: "game/openServiceCampaign/deleteBatch",
+                exportXlsUrl: "game/openServiceCampaign/exportXls",
+                importExcelUrl: "game/openServiceCampaign/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -193,8 +233,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>
