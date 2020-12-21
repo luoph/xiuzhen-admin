@@ -43,10 +43,10 @@
                         <a-form-item label="开服活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                             <div>
                                 <a-row :gutter="24">
-                                    <a-col :span="4">#</a-col>
-                                    <a-col :span="8">活动类型</a-col>
-                                    <a-col :span="6">页签顺序</a-col>
-                                    <a-col :span="4">操作</a-col>
+                                    <a-col :span="4" style="text-align:center;">#</a-col>
+                                    <a-col :span="8" style="text-align:center;">活动类型</a-col>
+                                    <a-col :span="6" style="text-align:center;">页签顺序</a-col>
+                                    <a-col :span="6" style="text-align:center;">操作</a-col>
                                 </a-row>
                                 <a-row :gutter="24" v-for="(item, index) in typeList" :key="index">
                                     <a-col :span="4">{{ "活动类型" + (index + 1) }} </a-col>
@@ -66,8 +66,9 @@
                                             <a-input-number v-model="item.sort" placeholder="页签顺序" style="width: 100%;"></a-input-number>
                                         </a-form-item>
                                     </a-col>
-                                    <a-col :span="4">
-                                        <a-button style="width: 100%; margin: 3px 10px" @click="delRowCustom(index)" icon="minus"></a-button>
+                                    <a-col :span="6">
+                                        <a-button style="width: 50px; margin: 3px" @click="delRowCustom(index)" icon="minus"></a-button>
+                                        <a-button style="width: 50px; margin: 3px" @click="editRowCustom(index)" icon="setting"></a-button>
                                     </a-col>
                                 </a-row>
                                 <a-button style="width: 100%; margin-top: 8px; margin-bottom: 8px" type="dashed" icon="plus" @click="addRowCustom">添加</a-button>
@@ -225,6 +226,10 @@ export default {
         delRowCustom(index) {
             console.log(index);
             this.typeList.splice(index, 1);
+            this.$forceUpdate();
+        },
+        editRowCustom(index) {
+            console.log(this.typeList[index]);
             this.$forceUpdate();
         },
         getImgView(text) {
