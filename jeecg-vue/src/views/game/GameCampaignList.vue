@@ -132,6 +132,7 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
+import { filterObj } from "@/utils/util";
 import GameCampaignModal from "./modules/GameCampaignModal";
 import GameCampaignServerList from "./modules/GameCampaignServerList";
 import GameCampaignTabList from "./modules/GameCampaignTabList";
@@ -284,6 +285,16 @@ export default {
     },
     methods: {
         initDictConfig() {},
+        getQueryParams() {
+            console.log(this.queryParam.createTimeRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.startTimeRange;
+            delete param.endTimeRange;
+            return filterObj(param);
+        },
         onStartTimeChange: function(value, dateString) {
             console.log(dateString[0], dateString[1]);
             this.queryParam.startTime_begin = dateString[0];
