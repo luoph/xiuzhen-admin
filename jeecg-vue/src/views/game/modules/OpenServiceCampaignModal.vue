@@ -142,7 +142,9 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+
             if (this.isEdit) {
                 this.isAutoOpen = this.model.autoOpen === 1;
                 this.typeList = this.model.typeList;
@@ -217,7 +219,7 @@ export default {
             console.log(value);
         },
         addRowCustom() {
-            this.typeList.push({});
+            this.typeList.push({ type: 1, sort: this.typeList.length + 1 });
             this.$forceUpdate();
         },
         delRowCustom(index) {

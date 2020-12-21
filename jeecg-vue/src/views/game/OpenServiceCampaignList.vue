@@ -210,27 +210,11 @@ export default {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
-                },
-                {
-                    title: "创建人",
-                    align: "center",
-                    dataIndex: "createBy"
                 },
                 {
                     title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
-                },
-                {
-                    title: "修改人",
-                    align: "center",
-                    dataIndex: "updateBy"
                 },
                 {
                     title: "操作",
