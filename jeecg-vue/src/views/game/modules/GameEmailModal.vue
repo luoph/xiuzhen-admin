@@ -41,13 +41,13 @@
                     <multiple-server-select v-decorator="['targetIds', { initialValue: '' }]" @changeSelect="change"></multiple-server-select>
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择生效时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%;" />
+                    <a-date-picker placeholder="请选择生效时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%;" />
+                    <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%;" />
+                    <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%;" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -66,6 +66,7 @@ import { Button } from "ant-design-vue";
 import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 import MultipleServerSelect from "@/components/gameserver/MultipleServerSelect";
+import moment from "moment";
 
 export default {
     name: "GameEmailModal",
@@ -146,6 +147,11 @@ export default {
                         "updateTime"
                     )
                 );
+
+                // 时间格式化
+                this.form.setFieldsValue({ startTime: this.model.sendTime ? moment(this.model.sendTime) : null });
+                this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+                this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
             });
         },
         close() {
@@ -174,6 +180,12 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+
+                    // 时间格式化
+                    formData.sendTime = formData.sendTime ? formData.sendTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+
                     this.inputTargetBody(formData);
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
