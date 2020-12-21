@@ -72,7 +72,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
             >
                 <template slot="largeText" slot-scope="text">
