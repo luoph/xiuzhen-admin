@@ -87,7 +87,7 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
      * 活动宣传仙力
      */
     @Excel(name = "活动宣传仙力", width = 15)
-    private java.lang.Integer combatPower;
+    private java.lang.Long combatPower;
 
     /**
      * 排行玩家数量
@@ -99,11 +99,11 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
      * 排名奖励邮件id
      */
     @Excel(name = "排名奖励邮件id", width = 15)
-    private java.lang.Integer rankRewardEmail;
+    private java.lang.Long rankRewardEmail;
 
     /**
      * 达标奖励邮件id
      */
     @Excel(name = "达标奖励邮件id", width = 15)
-    private java.lang.Integer standardRewardEmail;
+    private java.lang.Long standardRewardEmail;
 }
