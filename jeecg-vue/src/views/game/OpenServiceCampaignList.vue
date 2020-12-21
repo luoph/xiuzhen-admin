@@ -104,9 +104,10 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
-                    <a @click="handleTabList(record)">页签配置</a>
-                    <a-divider type="vertical" />
+                    <!-- <a @click="handleTabList(record)">页签配置</a>
+                    <a-divider type="vertical" /> -->
                     <a @click="handleSyncCampaign(record)">同步到区服</a>
+                    <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
@@ -123,7 +124,7 @@
 
         <open-service-campaign-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-modal>
         <!-- <open-service-campaign-server-list ref="serverListModal" @ok="modalFormOk"></open-service-campaign-server-list> -->
-        <!-- <open-service-tab-list ref="tabListModal"></open-service-tab-list> -->
+        <!-- <open-service-campaign-tab-list ref="tabListModal"></open-service-campaign-tab-list> -->
     </a-card>
 </template>
 
@@ -132,6 +133,7 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignModal from "./modules/OpenServiceCampaignModal";
+// import OpenServiceCampaignTabList from "./modules/OpenServiceCampaignTabList";
 import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
@@ -209,12 +211,12 @@ export default {
                 {
                     title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
+                    dataIndex: "createTime"
                 },
                 {
                     title: "更新时间",
                     align: "center",
-                    dataIndex: "updateTime",
+                    dataIndex: "updateTime"
                 },
                 {
                     title: "操作",

@@ -52,7 +52,8 @@
                                     <a-col :span="4">{{ "活动类型" + (index + 1) }} </a-col>
                                     <a-col :span="8">
                                         <a-form-item>
-                                            <a-select placeholder="活动类型" v-model="item.type">
+                                            <!-- 已经存在的type不允许修改活动类型 -->
+                                            <a-select :disabled="isEdit && item.id" placeholder="活动类型" v-model="item.type">
                                                 <a-select-option :value="1">1-开服排行</a-select-option>
                                                 <a-select-option :value="2">2-开服礼包</a-select-option>
                                                 <a-select-option :value="3">3-单笔充值</a-select-option>
@@ -78,6 +79,8 @@
                 </a-tabs>
             </a-form>
         </a-spin>
+
+        <open-service-campaign-tab-list ref="tabListModal"></open-service-campaign-tab-list>
     </a-modal>
     <!--
         <a-button type="primary" @click="handleOk">确定</a-button>
@@ -93,13 +96,15 @@ import JDate from "@/components/jeecg/JDate";
 import moment from "moment";
 import GameServerSelector from "@/components/gameserver/GameServerSelector";
 import GameImageSelector from "../components/GameImageSelector";
+import OpenServiceCampaignTabList from "./OpenServiceCampaignTabList";
 
 export default {
     name: "OpenServiceCampaignModal",
     components: {
         JDate,
         GameServerSelector,
-        GameImageSelector
+        GameImageSelector,
+        OpenServiceCampaignTabList
     },
     data() {
         return {
@@ -230,6 +235,9 @@ export default {
         },
         editRowCustom(index) {
             console.log(this.typeList[index]);
+            this.$refs.tabListModal.edit(this.typeList[index]);
+            this.$refs.tabListModal.title = "页签配置";
+            this.$refs.tabListModal.disableSubmit = false;
             this.$forceUpdate();
         },
         getImgView(text) {
