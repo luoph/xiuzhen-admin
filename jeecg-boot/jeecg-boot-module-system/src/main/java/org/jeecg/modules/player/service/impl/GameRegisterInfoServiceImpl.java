@@ -25,13 +25,13 @@ public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMap
 	private String logTable;
 
 	@Resource
-	private GameRegisterInfoMapper playerRegisterInfoMapper;
+	private GameRegisterInfoMapper registerInfoMapper;
 
 	@Override
 	public List<GameRegisterInfo> queryLoginList(String rangeDateBegin, String rangeDateEnd, Long playerId, Integer serverId) {
 		Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
 		Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
-		List<GameRegisterInfo> list = playerRegisterInfoMapper.queryLoginList(rangeDateBeginTime, rangeDateEndTime, playerId);
+		List<GameRegisterInfo> list = registerInfoMapper.queryLoginList(rangeDateBeginTime, rangeDateEndTime, playerId);
 		for (GameRegisterInfo registerInfo : list) {
 			Date createDate = registerInfo.getUserOnlineRecord().getCreateDate();
 			Long duration = registerInfo.getUserOnlineRecord().getDuration();
@@ -41,7 +41,7 @@ public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMap
 				registerInfo.getUserOnlineRecord().setDurationMinutes((long) 0);
 			}
 			// 查询ip
-			String ip = playerRegisterInfoMapper.queryPlayerIp(playerId, DateUtils.dateOnly(createDate), logTable);
+			String ip = registerInfoMapper.queryPlayerIp(playerId, DateUtils.dateOnly(createDate), logTable);
 			registerInfo.setIp(ip);
 
 		}
