@@ -168,7 +168,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         // 过滤空的新增页签
         List<OpenServiceCampaignType> nowList = model.getTypeList().stream().filter(t -> t.getType() != null).collect(Collectors.toList());
         for (OpenServiceCampaignType item : nowList) {
-            item.setCampaignId(item.getId());
+            item.setCampaignId(model.getId());
         }
 
         List<OpenServiceCampaignType> addList = new ArrayList<>();
