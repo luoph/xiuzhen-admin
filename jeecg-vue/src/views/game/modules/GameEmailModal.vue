@@ -24,7 +24,7 @@
                     <a-radio-group v-decorator="['validState', { initialValue: 1 }]" dict style="width: 100%;"><a-radio-button :value="1">有效</a-radio-button></a-radio-group>
                 </a-form-item>
                 <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group @change="selectTarget" v-decorator="['targetBodyType', { initialValue: 1 }]" dict style="width: 100%;">
+                    <a-radio-group @change="selectTarget" v-decorator="['targetType', { initialValue: 1 }]" dict style="width: 100%;">
                         <a-radio-button :value="1">玩家</a-radio-button>
                         <a-radio-button :value="2">服务器</a-radio-button>
                     </a-radio-group>
@@ -38,16 +38,16 @@
                     />
                 </a-form-item>
                 <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <multiple-server-select v-decorator="['targetBodyIds', { initialValue: '' }]" @changeSelect="change"></multiple-server-select>
+                    <multiple-server-select v-decorator="['targetIds', { initialValue: '' }]" @changeSelect="change"></multiple-server-select>
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择生效时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择开始时间" v-decorator="['validStarTime', validatorRules.validStarTime]" :trigger-change="true" style="width: 100%;" />
+                    <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择结束时间" v-decorator="['validEndTime', validatorRules.validEndTime]" :trigger-change="true" style="width: 100%;" />
+                    <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%;" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -100,11 +100,11 @@ export default {
                 emailType: { rules: [{ required: true, message: "请选择类型!" }] },
                 content: { rules: [{ required: true, message: "请添加附件!" }] },
                 validState: { rules: [{ required: true, message: "请选择状态!" }] },
-                targetBodyType: { rules: [{ required: true, message: "请选择目标类型!" }] },
-                targetBodyIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
+                targetType: { rules: [{ required: true, message: "请选择目标类型!" }] },
+                targetIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
                 sendTime: { rules: [{ required: true, message: "请输入生效时间!" }] },
-                validStarTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                validEndTime: {}
+                startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
+                endTime: {}
             },
             serverType: false,
             playerType: true,
@@ -135,11 +135,11 @@ export default {
                         "emailType",
                         "content",
                         "validState",
-                        "targetBodyType",
-                        "targetBodyIds",
+                        "targetType",
+                        "targetIds",
                         "sendTime",
-                        "validStarTime",
-                        "validEndTime",
+                        "startTime",
+                        "endTime",
                         "createBy",
                         "createTime",
                         "updateBy",
@@ -209,11 +209,11 @@ export default {
                     "emailType",
                     "content",
                     "validState",
-                    "targetBodyType",
-                    "targetBodyIds",
+                    "targetType",
+                    "targetIds",
                     "sendTime",
-                    "validStarTime",
-                    "validEndTime",
+                    "startTime",
+                    "endTime",
                     "createBy",
                     "createTime",
                     "updateBy",
@@ -230,7 +230,7 @@ export default {
                 this.serverType = true;
                 this.playerType = false;
             }
-            this.validatorRules.targetBodyIds = "";
+            this.validatorRules.targetIds = "";
             this.targetBody = "";
         },
         contentType(e) {
@@ -257,14 +257,14 @@ export default {
         },
         change(value) {
             this.form.setFieldsValue({
-                targetBodyIds: value.join(",")
+                targetIds: value.join(",")
             });
         },
         inputTargetBody(formData) {
             if (this.playerType) {
                 let a = this.form.getFieldValue("targetBody");
                 if (a !== null && a !== "" && a !== undefined) {
-                    formData.targetBodyIds = a;
+                    formData.targetIds = a;
                 }
             }
         }

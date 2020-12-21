@@ -63,37 +63,37 @@ public class GameEmail extends BaseEntity {
      * 目标类型
      */
     @Excel(name = "目标类型", width = 15)
-    private java.lang.Integer targetBodyType;
+    private java.lang.Integer targetType;
 
     /**
-     * 目标主体
+     * 目标主体::服务器id/玩家id
      */
-    @Excel(name = "目标主体:服务器id/玩家id", width = 15)
-    private java.lang.String targetBodyIds;
+    @Excel(name = "目标主体", width = 15)
+    private java.lang.String targetIds;
 
     /**
      * 生效时间
      */
-    @Excel(name = "生效时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @Excel(name = "生效时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date sendTime;
 
     /**
      * 开始时间
      */
-    @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    private java.util.Date validStarTime;
+    @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    private java.util.Date startTime;
 
     /**
      * 结束时间
      */
-    @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    private java.util.Date validEndTime;
+    @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    private java.util.Date endTime;
 
     @TableField(exist = false)
     private Long targetBodyId;
