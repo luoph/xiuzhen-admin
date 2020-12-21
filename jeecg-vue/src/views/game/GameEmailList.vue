@@ -18,7 +18,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="3" :sm="5">
                             <a-form-item label="类型">
-                                <a-select placeholder="目标类型" ref="targetSelector" v-model="queryParam.targetType" @change="selectTarget">
+                                <a-select placeholder="目标类型" ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
                                     <a-select-option :value="1">玩家</a-select-option>
                                     <a-select-option :value="2">全服</a-select-option>
                                 </a-select>
@@ -26,12 +26,12 @@
                         </a-col>
                         <a-col v-if="serverType" :md="6" :sm="8">
                             <a-form-item label="服务器">
-                                <multiple-server-select v-model="queryParam.targetIds" @changeSelect="change"></multiple-server-select>
+                                <multiple-server-select v-model="queryParam.targetBodyIds" @changeSelect="change"></multiple-server-select>
                             </a-form-item>
                         </a-col>
                         <a-col v-if="playerType" :md="6" :sm="8">
                             <a-form-item label="玩家账号">
-                                <a-input placeholder="请以英文“[,]”分割输入多个玩家ID" v-model="queryParam.targetIds" @input="inputChange($event)"></a-input>
+                                <a-input placeholder="请以英文“[,]”分割输入多个玩家ID" v-model="queryParam.targetBodyIds" @input="inputChange($event)"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -39,9 +39,9 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="时间">
-                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.startTime_begin"></j-date>
+                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validStarTime_begin"></j-date>
                                 <span class="query-group-cust"></span>
-                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.startTime_end"></j-date>
+                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validStarTime_end"></j-date>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -72,14 +72,9 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
+                :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
-            >
-                <template slot="largeText" slot-scope="text">
-                    <div class="largeTextContainer">
-                        <span class="largeText">{{ text }}</span>
-                    </div>
-                </template>
-            </a-table>
+            ></a-table>
         </div>
 
         <game-email-modal ref="modalForm" @ok="modalFormOk"></game-email-modal>
@@ -107,7 +102,7 @@ export default {
             description: "游戏下发邮件管理页面",
             queryParam: {
                 validState: undefined,
-                targetType: undefined
+                targetBodyType: undefined
             },
             // 表头
             columns: [
@@ -130,9 +125,8 @@ export default {
                 {
                     title: "描述",
                     align: "left",
-                    width: 240,
-                    dataIndex: "remark",
-                    scopedSlots: { customRender: "largeText" }
+                    width: 360,
+                    dataIndex: "remark"
                 },
                 {
                     title: "类型",
@@ -147,8 +141,7 @@ export default {
                     title: "附件",
                     align: "center",
                     width: 240,
-                    dataIndex: "content",
-                    scopedSlots: { customRender: "largeText" }
+                    dataIndex: "content"
                 },
                 {
                     title: "状态",
@@ -163,7 +156,7 @@ export default {
                     title: "目标类型",
                     align: "center",
                     width: 80,
-                    dataIndex: "targetType",
+                    dataIndex: "targetBodyType",
                     customRender: function(text) {
                         return text == 1 ? "玩家" : "全服";
                     }
@@ -171,9 +164,8 @@ export default {
                 {
                     title: "目标主体",
                     align: "left",
-                    width: 210,
-                    dataIndex: "targetIds",
-                    scopedSlots: { customRender: "largeText" }
+                    width: 80,
+                    dataIndex: "targetBodyIds"
                 },
                 {
                     title: "生效时间",
@@ -183,12 +175,12 @@ export default {
                 {
                     title: "开始时间",
                     align: "center",
-                    dataIndex: "startTime"
+                    dataIndex: "validStarTime"
                 },
                 {
                     title: "结束时间",
                     align: "center",
-                    dataIndex: "endTime"
+                    dataIndex: "validEndTime"
                 },
                 {
                     title: "创建时间",
@@ -220,10 +212,10 @@ export default {
                 this.serverType = true;
                 this.playerType = false;
             }
-            this.queryParam.targetIds = "";
+            this.queryParam.targetBodyIds = "";
         },
         change(value) {
-            this.queryParam.targetIds = value.join(",").toString();
+            this.queryParam.targetBodyIds = value.join(",").toString();
         },
         inputChange(e) {
             this.$forceUpdate();
@@ -234,16 +226,4 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
-
-.largeTextContainer {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    white-space: nowrap;
-    max-height: 200px;
-}
-
-.largeText {
-    white-space: normal;
-    word-break: break-word;
-}
 </style>
