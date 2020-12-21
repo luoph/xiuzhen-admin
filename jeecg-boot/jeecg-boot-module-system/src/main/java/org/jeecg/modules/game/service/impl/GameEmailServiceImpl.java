@@ -78,7 +78,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             }
         }
 
-        String[] targetBodyStr = StringUtils.split(gameEmail.getTargetIds(), ",");
+        String[] targetBodyStr = StringUtils.split(gameEmail.getTargetBodyIds(), ",");
         if (targetBodyStr == null || targetBodyStr.length <= 0) {
             response.setFailure("投放目标不存在！");
             return response;

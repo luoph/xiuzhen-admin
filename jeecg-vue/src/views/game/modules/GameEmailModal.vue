@@ -24,7 +24,7 @@
                     <a-radio-group v-decorator="['validState', { initialValue: 1 }]" dict style="width: 100%;"><a-radio-button :value="1">有效</a-radio-button></a-radio-group>
                 </a-form-item>
                 <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group @change="selectTarget" v-decorator="['targetType', { initialValue: 1 }]" dict style="width: 100%;">
+                    <a-radio-group @change="selectTarget" v-decorator="['targetBodyType', { initialValue: 1 }]" dict style="width: 100%;">
                         <a-radio-button :value="1">玩家</a-radio-button>
                         <a-radio-button :value="2">服务器</a-radio-button>
                     </a-radio-group>
@@ -38,16 +38,28 @@
                     />
                 </a-form-item>
                 <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <multiple-server-select v-decorator="['targetIds', { initialValue: '' }]" @changeSelect="change"></multiple-server-select>
+                    <multiple-server-select v-decorator="['targetBodyIds', { initialValue: '' }]" @changeSelect="change"></multiple-server-select>
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker placeholder="请选择生效时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%;" />
+                    <a-date-picker
+                        placeholder="请选择开始时间"
+                        showTime
+                        format="YYYY-MM-DD HH:mm:ss"
+                        v-decorator="['validStarTime', validatorRules.validStarTime]"
+                        style="width: 100%;"
+                    />
                 </a-form-item>
                 <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%;" />
+                    <a-date-picker
+                        placeholder="请选择结束时间"
+                        showTime
+                        format="YYYY-MM-DD HH:mm:ss"
+                        v-decorator="['validEndTime', validatorRules.validEndTime]"
+                        style="width: 100%;"
+                    />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -101,11 +113,11 @@ export default {
                 emailType: { rules: [{ required: true, message: "请选择类型!" }] },
                 content: { rules: [{ required: true, message: "请添加附件!" }] },
                 validState: { rules: [{ required: true, message: "请选择状态!" }] },
-                targetType: { rules: [{ required: true, message: "请选择目标类型!" }] },
-                targetIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
+                targetBodyType: { rules: [{ required: true, message: "请选择目标类型!" }] },
+                targetBodyIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
                 sendTime: { rules: [{ required: true, message: "请输入生效时间!" }] },
-                startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                endTime: {}
+                validStarTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
+                validEndTime: { rules: [{ required: false, message: "请输入结束时间!" }] }
             },
             serverType: false,
             playerType: true,
@@ -136,11 +148,11 @@ export default {
                         "emailType",
                         "content",
                         "validState",
-                        "targetType",
-                        "targetIds",
+                        "targetBodyType",
+                        "targetBodyIds",
                         "sendTime",
-                        "startTime",
-                        "endTime",
+                        "validStarTime",
+                        "validEndTime",
                         "createBy",
                         "createTime",
                         "updateBy",
@@ -150,8 +162,8 @@ export default {
 
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.sendTime ? moment(this.model.sendTime) : null });
-                this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
-                this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
+                this.form.setFieldsValue({ validStarTime: this.model.validStarTime ? moment(this.model.validStarTime) : null });
+                this.form.setFieldsValue({ validEndTime: this.model.validEndTime ? moment(this.model.validEndTime) : null });
             });
         },
         close() {
@@ -180,11 +192,10 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-
                     // 时间格式化
                     formData.sendTime = formData.sendTime ? formData.sendTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.validStarTime = formData.validStarTime ? formData.validStarTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.validEndTime = formData.validEndTime ? formData.validEndTime.format("YYYY-MM-DD HH:mm:ss") : null;
 
                     this.inputTargetBody(formData);
                     console.log("表单提交数据", formData);
@@ -221,11 +232,11 @@ export default {
                     "emailType",
                     "content",
                     "validState",
-                    "targetType",
-                    "targetIds",
+                    "targetBodyType",
+                    "targetBodyIds",
                     "sendTime",
-                    "startTime",
-                    "endTime",
+                    "validStarTime",
+                    "validEndTime",
                     "createBy",
                     "createTime",
                     "updateBy",
@@ -242,7 +253,7 @@ export default {
                 this.serverType = true;
                 this.playerType = false;
             }
-            this.validatorRules.targetIds = "";
+            this.validatorRules.targetBodyIds = "";
             this.targetBody = "";
         },
         contentType(e) {
@@ -269,14 +280,14 @@ export default {
         },
         change(value) {
             this.form.setFieldsValue({
-                targetIds: value.join(",")
+                targetBodyIds: value.join(",")
             });
         },
         inputTargetBody(formData) {
             if (this.playerType) {
                 let a = this.form.getFieldValue("targetBody");
                 if (a !== null && a !== "" && a !== undefined) {
-                    formData.targetIds = a;
+                    formData.targetBodyIds = a;
                 }
             }
         }

@@ -63,13 +63,13 @@ public class GameEmail extends BaseEntity {
      * 目标类型
      */
     @Excel(name = "目标类型", width = 15)
-    private java.lang.Integer targetType;
+    private java.lang.Integer targetBodyType;
 
     /**
-     * 目标主体::服务器id/玩家id
+     * 目标主体
      */
-    @Excel(name = "目标主体", width = 15)
-    private java.lang.String targetIds;
+    @Excel(name = "目标主体:服务器id/玩家id", width = 15)
+    private java.lang.String targetBodyIds;
 
     /**
      * 生效时间
@@ -85,7 +85,7 @@ public class GameEmail extends BaseEntity {
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date startTime;
+    private java.util.Date validStarTime;
 
     /**
      * 结束时间
@@ -93,7 +93,7 @@ public class GameEmail extends BaseEntity {
     @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date endTime;
+    private java.util.Date validEndTime;
 
     @TableField(exist = false)
     private Long targetBodyId;
