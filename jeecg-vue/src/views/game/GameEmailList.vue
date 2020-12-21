@@ -74,7 +74,13 @@
                 :loading="loading"
                 :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
-            ></a-table>
+            >
+                <template slot="largeText" slot-scope="text">
+                    <div class="largeTextContainer">
+                        <span class="largeText">{{ text }}</span>
+                    </div>
+                </template>
+            </a-table>
         </div>
 
         <game-email-modal ref="modalForm" @ok="modalFormOk"></game-email-modal>
@@ -126,7 +132,8 @@ export default {
                     title: "描述",
                     align: "left",
                     width: 360,
-                    dataIndex: "remark"
+                    dataIndex: "remark",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "类型",
@@ -141,7 +148,8 @@ export default {
                     title: "附件",
                     align: "center",
                     width: 240,
-                    dataIndex: "content"
+                    dataIndex: "content",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "状态",
@@ -164,8 +172,9 @@ export default {
                 {
                     title: "目标主体",
                     align: "left",
-                    width: 80,
-                    dataIndex: "targetBodyIds"
+                    width: 200,
+                    dataIndex: "targetBodyIds",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "生效时间",
@@ -226,4 +235,16 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+
+.largeTextContainer {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: nowrap;
+    max-height: 200px;
+}
+
+.largeText {
+    white-space: normal;
+    word-break: break-word;
+}
 </style>
