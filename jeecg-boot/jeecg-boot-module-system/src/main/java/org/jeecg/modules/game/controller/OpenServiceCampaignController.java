@@ -26,7 +26,7 @@ import java.util.Arrays;
  */
 @Slf4j
 @RestController
-@RequestMapping(" game/openServiceCampaign")
+@RequestMapping("game/openServiceCampaign")
 public class OpenServiceCampaignController extends JeecgController<OpenServiceCampaign, IOpenServiceCampaignService> {
 
     @Autowired

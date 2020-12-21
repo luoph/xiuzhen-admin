@@ -5,42 +5,42 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                <a-form-item label="开服活动id, open_service_campaign.id">
-                <a-input placeholder="请输入开服活动id, open_service_campaign.id" v-model="queryParam.campaignId"></a-input>
-            </a-form-item>
-                </a-col>
-                <a-col :md="6" :sm="8">
-                <a-form-item label="open_service_campaign_type.id">
-                <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
-            </a-form-item>
-                </a-col>
-                <template v-if="toggleSearchStatus">
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="活动名称">
-                    <a-input placeholder="请输入活动名称" v-model="queryParam.name"></a-input>
-                </a-form-item>
+                        <a-form-item label="开服活动id">
+                            <a-input placeholder="请输入开服活动id" v-model="queryParam.campaignId"></a-input>
+                        </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                    <a-form-item label="活动页签名称">
-                    <a-input placeholder="请输入活动页签名称" v-model="queryParam.tabName"></a-input>
-                </a-form-item>
+                        <a-form-item label="open_service_campaign_type.id">
+                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="活动宣传背景图">
-                    <a-input placeholder="请输入活动宣传背景图" v-model="queryParam.banner"></a-input>
-                </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="开始时间(开服第n天, e.g. 0表示开服第1天)">
-                    <a-input placeholder="请输入开始时间(开服第n天, e.g. 0表示开服第1天)" v-model="queryParam.startDay"></a-input>
-                </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="持续时间(天)">
-                    <a-input placeholder="请输入持续时间(天)" v-model="queryParam.duration"></a-input>
-                </a-form-item>
-                    </a-col>
-        </template>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="活动名称">
+                                <a-input placeholder="请输入活动名称" v-model="queryParam.name"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="活动页签名称">
+                                <a-input placeholder="请输入活动页签名称" v-model="queryParam.tabName"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="活动宣传背景图">
+                                <a-input placeholder="请输入活动宣传背景图" v-model="queryParam.banner"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="开始时间(开服第n天)">
+                                <a-input placeholder="请输入开始时间(开服第n天)" v-model="queryParam.startDay"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="持续时间(天)">
+                                <a-input placeholder="请输入持续时间(天)" v-model="queryParam.duration"></a-input>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -73,7 +73,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -88,7 +89,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -119,19 +119,19 @@
             </a-table>
         </div>
 
-        <gameOpenServiceCampaignGiftDetail-modal ref="modalForm" @ok="modalFormOk"></gameOpenServiceCampaignGiftDetail-modal>
+        <openServiceCampaignGiftDetail-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignGiftDetail-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameOpenServiceCampaignGiftDetailModal from "./modules/GameOpenServiceCampaignGiftDetailModal";
+import OpenServiceCampaignGiftDetailModal from "./modules/OpenServiceCampaignGiftDetailModal";
 
 export default {
-    name: "GameOpenServiceCampaignGiftDetailList",
+    name: "OpenServiceCampaignGiftDetailList",
     mixins: [JeecgListMixin],
     components: {
-        GameOpenServiceCampaignGiftDetailModal
+        OpenServiceCampaignGiftDetailModal
     },
     data() {
         return {
@@ -149,7 +149,7 @@ export default {
                     }
                 },
                 {
-                    title: "开服活动id, open_service_campaign.id",
+                    title: "开服活动id",
                     align: "center",
                     dataIndex: "campaignId"
                 },
@@ -174,7 +174,7 @@ export default {
                     dataIndex: "banner"
                 },
                 {
-                    title: "开始时间(开服第n天, e.g. 0表示开服第1天)",
+                    title: "开始时间(开服第n天)",
                     align: "center",
                     dataIndex: "startDay"
                 },
@@ -184,20 +184,14 @@ export default {
                     dataIndex: "duration"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
                 },
                 {
-                    title: "updateTime",
+                    title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
                 },
                 {
                     title: "操作",
@@ -213,8 +207,7 @@ export default {
                 exportXlsUrl: "game/openServiceCampaignGiftDetail/exportXls",
                 importExcelUrl: "game/openServiceCampaignGiftDetail/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -223,8 +216,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>

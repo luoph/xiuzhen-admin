@@ -5,34 +5,37 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                <a-form-item label="活动名称">
-                <a-input placeholder="请输入活动名称" v-model="queryParam.name"></a-input>
-            </a-form-item>
-                </a-col>
-                <a-col :md="6" :sm="8">
-                <a-form-item label="活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）">
-                <a-input placeholder="请输入活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）" v-model="queryParam.status"></a-input>
-            </a-form-item>
-                </a-col>
-                <template v-if="toggleSearchStatus">
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="到达活动时间后自动开启">
-                    <a-input placeholder="请输入到达活动时间后自动开启" v-model="queryParam.autoOpen"></a-input>
-                </a-form-item>
+                        <a-form-item label="开服活动id">
+                            <a-input placeholder="请输入开服活动id" v-model="queryParam.campaignId"></a-input>
+                        </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                    <a-form-item label="活动备注">
-                    <a-input placeholder="请输入活动备注" v-model="queryParam.remark"></a-input>
-                </a-form-item>
+                        <a-form-item label="open_service_campaign_type.id">
+                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        </a-form-item>
                     </a-col>
-                    <a-col :md="12" :sm="16">
-                    <a-form-item label="创建时间">
-                    <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
-                    <span class="query-group-split-cust"></span>
-                    <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date>
-                </a-form-item>
-                </a-col>
-        </template>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="open_service_campaign_rank_detail.id">
+                                <a-input placeholder="请输入open_service_campaign_rank_detail.id" v-model="queryParam.rankDetailId"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="排名最小值">
+                                <a-input placeholder="请输入排名最小值" v-model="queryParam.minRank"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="排名最大值">
+                                <a-input placeholder="请输入排名最大值" v-model="queryParam.maxRank"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="上榜最低积分">
+                                <a-input placeholder="请输入上榜最低积分" v-model="queryParam.score"></a-input>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -50,7 +53,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服活动(1级)')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('开服活动-开服排行-活动明细-排行上榜、奖励')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload>
@@ -65,7 +68,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -80,7 +84,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -111,25 +114,23 @@
             </a-table>
         </div>
 
-        <gameOpenServiceCampaign-modal ref="modalForm" @ok="modalFormOk"></gameOpenServiceCampaign-modal>
+        <openServiceCampaignRankDetailRanking-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignRankDetailRanking-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameOpenServiceCampaignModal from "./modules/GameOpenServiceCampaignModal";
-import JDate from "@/components/jeecg/JDate.vue";
+import OpenServiceCampaignRankDetailRankingModal from "./modules/OpenServiceCampaignRankDetailRankingModal";
 
 export default {
-    name: "GameOpenServiceCampaignList",
+    name: "OpenServiceCampaignRankDetailRankingList",
     mixins: [JeecgListMixin],
     components: {
-        JDate,
-        GameOpenServiceCampaignModal
+        OpenServiceCampaignRankDetailRankingModal
     },
     data() {
         return {
-            description: "开服活动(1级)管理页面",
+            description: "开服活动-开服排行-活动明细-排行上榜、奖励管理页面",
             // 表头
             columns: [
                 {
@@ -143,60 +144,59 @@ export default {
                     }
                 },
                 {
-                    title: "活动名称",
+                    title: "开服活动id",
                     align: "center",
-                    dataIndex: "name"
+                    dataIndex: "campaignId"
                 },
                 {
-                    title: "服务器id，使用,分割",
+                    title: "open_service_campaign_type.id",
                     align: "center",
-                    dataIndex: "serverIds"
+                    dataIndex: "campaignTypeId"
                 },
                 {
-                    title: "活动图标",
+                    title: "open_service_campaign_rank_detail.id",
                     align: "center",
-                    dataIndex: "icon"
+                    dataIndex: "rankDetailId"
                 },
                 {
-                    title: "活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）",
+                    title: "排名最小值",
                     align: "center",
-                    dataIndex: "status"
+                    dataIndex: "minRank"
                 },
                 {
-                    title: "到达活动时间后自动开启",
+                    title: "排名最大值",
                     align: "center",
-                    dataIndex: "autoOpen"
+                    dataIndex: "maxRank"
                 },
                 {
-                    title: "活动备注",
+                    title: "上榜最低积分",
                     align: "center",
-                    dataIndex: "remark"
+                    dataIndex: "score"
+                },
+                {
+                    title: "奖励列表",
+                    align: "center",
+                    dataIndex: "reward"
+                },
+                {
+                    title: "稀有奖励列表",
+                    align: "center",
+                    dataIndex: "rareReward"
+                },
+                {
+                    title: "传闻内容",
+                    align: "center",
+                    dataIndex: "message"
                 },
                 {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
-                },
-                {
-                    title: "创建人",
-                    align: "center",
-                    dataIndex: "createBy"
                 },
                 {
                     title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
-                },
-                {
-                    title: "修改人",
-                    align: "center",
-                    dataIndex: "updateBy"
                 },
                 {
                     title: "操作",
@@ -206,11 +206,11 @@ export default {
                 }
             ],
             url: {
-                list: "game/openServiceCampaign/list",
-                delete: "game/openServiceCampaign/delete",
-                deleteBatch: "game/openServiceCampaign/deleteBatch",
-                exportXlsUrl: "game/openServiceCampaign/exportXls",
-                importExcelUrl: "game/openServiceCampaign/importExcel"
+                list: "game/openServiceCampaignRankDetailRanking/list",
+                delete: "game/openServiceCampaignRankDetailRanking/delete",
+                deleteBatch: "game/openServiceCampaignRankDetailRanking/deleteBatch",
+                exportXlsUrl: "game/openServiceCampaignRankDetailRanking/exportXls",
+                importExcelUrl: "game/openServiceCampaignRankDetailRanking/importExcel"
             },
             dictOptions: {
             }

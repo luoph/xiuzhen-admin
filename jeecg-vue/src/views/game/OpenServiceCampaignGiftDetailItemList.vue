@@ -5,47 +5,51 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                <a-form-item label="开服活动id, open_service_campaign.id">
-                <a-input placeholder="请输入开服活动id, open_service_campaign.id" v-model="queryParam.campaignId"></a-input>
-            </a-form-item>
-                </a-col>
-                <a-col :md="6" :sm="8">
-                <a-form-item label="open_service_campaign_type.id">
-                <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
-            </a-form-item>
-                </a-col>
-                <template v-if="toggleSearchStatus">
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="open_service_campaign_gift_detail.id">
-                    <a-input placeholder="请输入open_service_campaign_gift_detail.id" v-model="queryParam.giftDetailId"></a-input>
-                </a-form-item>
+                        <a-form-item label="开服活动id">
+                            <a-input placeholder="请输入开服活动id" v-model="queryParam.campaignId"></a-input>
+                        </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                    <a-form-item label="排序">
-                    <a-input placeholder="请输入排序" v-model="queryParam.sort"></a-input>
-                </a-form-item>
+                        <a-form-item label="open_service_campaign_type.id">
+                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="礼包类型 0.普通礼包, 1.大奖礼包">
-                    <a-input placeholder="请输入礼包类型 0.普通礼包, 1.大奖礼包" v-model="queryParam.giftType"></a-input>
-                </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="折扣">
-                    <a-input placeholder="请输入折扣" v-model="queryParam.discount"></a-input>
-                </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="价格 e.g. [{"itemId":1001,"num":"1"}]">
-                    <a-input placeholder="请输入价格 e.g. [{"itemId":1001,"num":"1"}]" v-model="queryParam.price"></a-input>
-                </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                    <a-form-item label="奖励列表 e.g. [{"itemId":1001,"num":"1"}]">
-                    <a-input placeholder="请输入奖励列表 e.g. [{"itemId":1001,"num":"1"}]" v-model="queryParam.reward"></a-input>
-                </a-form-item>
-                    </a-col>
-        </template>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="open_service_campaign_gift_detail.id">
+                                <a-input placeholder="请输入open_service_campaign_gift_detail.id" v-model="queryParam.giftDetailId"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="排序">
+                                <a-input placeholder="请输入排序" v-model="queryParam.sort"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="礼包类型">
+                                <!-- 0.普通礼包, 1.大奖礼包 -->
+                                <a-select placeholder="请选择礼包类型" v-model="queryParam.giftType" defaultValue="1">
+                                    <a-select-option :value="0">普通礼包</a-select-option>
+                                    <a-select-option :value="1">大奖礼包</a-select-option>
+                                </a-select>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="折扣">
+                                <a-input placeholder="请输入折扣" v-model="queryParam.discount"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="价格">
+                                <a-input placeholder="请输入价格" v-model="queryParam.price"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="奖励列表">
+                                <a-input placeholder="请输入奖励列表" v-model="queryParam.reward"></a-input>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -78,7 +82,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -93,7 +98,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -124,19 +128,19 @@
             </a-table>
         </div>
 
-        <gameOpenServiceCampaignGiftDetailItem-modal ref="modalForm" @ok="modalFormOk"></gameOpenServiceCampaignGiftDetailItem-modal>
+        <openServiceCampaignGiftDetailItem-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignGiftDetailItem-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameOpenServiceCampaignGiftDetailItemModal from "./modules/GameOpenServiceCampaignGiftDetailItemModal";
+import OpenServiceCampaignGiftDetailItemModal from "./modules/OpenServiceCampaignGiftDetailItemModal";
 
 export default {
-    name: "GameOpenServiceCampaignGiftDetailItemList",
+    name: "OpenServiceCampaignGiftDetailItemList",
     mixins: [JeecgListMixin],
     components: {
-        GameOpenServiceCampaignGiftDetailItemModal
+        OpenServiceCampaignGiftDetailItemModal
     },
     data() {
         return {
@@ -154,7 +158,7 @@ export default {
                     }
                 },
                 {
-                    title: "开服活动id, open_service_campaign.id",
+                    title: "开服活动id",
                     align: "center",
                     dataIndex: "campaignId"
                 },
@@ -174,9 +178,18 @@ export default {
                     dataIndex: "sort"
                 },
                 {
-                    title: "礼包类型 0.普通礼包, 1.大奖礼包",
+                    title: "礼包类型",
                     align: "center",
-                    dataIndex: "giftType"
+                    dataIndex: "giftType",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "普通礼包";
+                        } else if (value === 1) {
+                            text = "大奖礼包";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "折扣",
@@ -184,30 +197,24 @@ export default {
                     dataIndex: "discount"
                 },
                 {
-                    title: "价格 e.g. [{"itemId":1001,"num":"1"}]",
+                    title: "价格",
                     align: "center",
                     dataIndex: "price"
                 },
                 {
-                    title: "奖励列表 e.g. [{"itemId":1001,"num":"1"}]",
+                    title: "奖励列表",
                     align: "center",
                     dataIndex: "reward"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
+                    dataIndex: "createTime"
                 },
                 {
-                    title: "updateTime",
+                    title: "更新时间",
                     align: "center",
-                    dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
+                    dataIndex: "updateTime"
                 },
                 {
                     title: "操作",
@@ -223,8 +230,7 @@ export default {
                 exportXlsUrl: "game/openServiceCampaignGiftDetailItem/exportXls",
                 importExcelUrl: "game/openServiceCampaignGiftDetailItem/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -233,8 +239,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>

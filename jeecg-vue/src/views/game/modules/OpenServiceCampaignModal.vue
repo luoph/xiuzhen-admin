@@ -3,35 +3,26 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
                 </a-form-item>
-                <a-form-item label="服务器id，使用,分割" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入服务器id，使用,分割"></a-input>
+                <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入服务器id"></a-input>
                 </a-form-item>
                 <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['icon', validatorRules.icon]" placeholder="请输入活动图标"></a-input>
                 </a-form-item>
-                <a-form-item label="活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['status', validatorRules.status]" placeholder="请输入活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）" style="width: 100%" />
+                <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['status', validatorRules.status]" placeholder="请输入活动状态" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="到达活动时间后自动开启" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['autoOpen', validatorRules.autoOpen]" placeholder="请输入到达活动时间后自动开启" style="width: 100%" />
+                <a-form-item label="自动开启" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请选择自动开启状态" v-decorator="['autoOpen', validatorRules.autoOpen]" defaultValue="0">
+                        <a-select-option :value="0">关闭</a-select-option>
+                        <a-select-option :value="1">开启</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="活动备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入活动备注"></a-input>
-                </a-form-item>
-                <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="创建人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入创建人"></a-input>
-                </a-form-item>
-                <a-form-item label="更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择更新时间" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="修改人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['updateBy', validatorRules.updateBy]" placeholder="请输入修改人"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -49,9 +40,9 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameOpenServiceCampaignModal",
+    name: "OpenServiceCampaignModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -71,15 +62,11 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
-                serverIds: { rules: [{ required: true, message: "请输入服务器id，使用,分割!" }] },
+                serverIds: { rules: [{ required: true, message: "请输入服务器id!" }] },
                 icon: { rules: [{ required: true, message: "请输入活动图标!" }] },
-                status: { rules: [{ required: true, message: "请输入活动状态: 0.关闭, 1.开启（备用字段，默认全部为开启）!" }] },
-                autoOpen: { rules: [{ required: true, message: "请输入到达活动时间后自动开启!" }] },
-                remark: { rules: [{ required: true, message: "请输入活动备注!" }] },
-                createTime: { rules: [{ required: true, message: "请输入创建时间!" }] },
-                createBy: { rules: [{ required: true, message: "请输入创建人!" }] },
-                updateTime: { rules: [{ required: true, message: "请输入更新时间!" }] },
-                updateBy: { rules: [{ required: true, message: "请输入修改人!" }] },
+                status: { rules: [{ required: true, message: "请输入活动状态!" }] },
+                autoOpen: { rules: [{ required: true, message: "请输入自动开启!" }] },
+                remark: { rules: [{ required: true, message: "请输入活动备注!" }] }
             },
             url: {
                 add: "game/openServiceCampaign/add",
@@ -87,8 +74,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -98,7 +84,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "name", "serverIds", "icon", "status", "autoOpen", "remark", "createTime", "createBy", "updateTime", "updateBy"));
+                this.form.setFieldsValue(pick(this.model, "name", "serverIds", "icon", "status", "autoOpen", "remark"));
             });
         },
         close() {
@@ -142,8 +128,8 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "name", "serverIds", "icon", "status", "autoOpen", "remark", "createTime", "createBy", "updateTime", "updateBy"));
-        },
+            this.form.setFieldsValue(pick(row, "name", "serverIds", "icon", "status", "autoOpen", "remark"));
+        }
     }
 };
 </script>
