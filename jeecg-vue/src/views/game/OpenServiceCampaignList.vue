@@ -11,7 +11,10 @@
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="活动状态">
-                            <a-input placeholder="请输入活动状态" v-model="queryParam.status"></a-input>
+                            <a-select placeholder="请选择活动状态" v-model="queryParam.status" defaultValue="1">
+                                <a-select-option :value="0">无效</a-select-option>
+                                <a-select-option :value="1">有效</a-select-option>
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -30,9 +33,7 @@
                         </a-col>
                         <a-col :md="12" :sm="16">
                             <a-form-item label="创建时间">
-                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
-                                <span class="query-group-split-cust"></span>
-                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date>
+                                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onCreateTimeChange" />
                             </a-form-item>
                         </a-col>
                     </template>
@@ -96,6 +97,9 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
+                <span slot="serverIdTags" slot-scope="text, record">
+                    <a-tag v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                </span>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -120,6 +124,8 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction } from "@/api/manage";
+import { filterObj } from "@/utils/util";
 import OpenServiceCampaignModal from "./modules/OpenServiceCampaignModal";
 import JDate from "@/components/jeecg/JDate.vue";
 
@@ -153,17 +159,28 @@ export default {
                 {
                     title: "服务器id",
                     align: "center",
-                    dataIndex: "serverIds"
+                    dataIndex: "serverIds",
+                    scopedSlots: { customRender: "serverIdTags" }
                 },
                 {
                     title: "活动图标",
                     align: "center",
-                    dataIndex: "icon"
+                    dataIndex: "icon",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动状态",
                     align: "center",
-                    dataIndex: "status"
+                    dataIndex: "status",
+                    customRender: value => {
+                        let re = "--";
+                        if (value === 0) {
+                            re = "无效";
+                        } else if (value === 1) {
+                            re = "有效";
+                        }
+                        return re;
+                    }
                 },
                 {
                     title: "自动开启",
@@ -220,6 +237,7 @@ export default {
             url: {
                 list: "game/openServiceCampaign/list",
                 delete: "game/openServiceCampaign/delete",
+                sync: "game/openServiceCampaign/sync",
                 deleteBatch: "game/openServiceCampaign/deleteBatch",
                 exportXlsUrl: "game/openServiceCampaign/exportXls",
                 importExcelUrl: "game/openServiceCampaign/importExcel"
@@ -233,7 +251,56 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        getQueryParams() {
+            console.log(this.queryParam.createTimeRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.createTimeRange;
+            return filterObj(param);
+        },
+        onCreateTimeChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.createTime_begin = dateString[0];
+            this.queryParam.createTime_end = dateString[1];
+        },
+        handleEdit: function(record) {
+            this.$refs.modalForm.edit(record);
+            this.$refs.modalForm.title = "活动信息";
+            this.$refs.modalForm.disableSubmit = false;
+        },
+        handleServerList: function(record) {
+            this.$refs.serverListModal.edit(record);
+            this.$refs.serverListModal.title = "活动信息";
+        },
+        handleTabList: function(record) {
+            this.$refs.tabListModal.edit(record);
+            this.$refs.tabListModal.title = "页签配置";
+            this.$refs.tabListModal.disableSubmit = false;
+        },
+        handleSyncCampaign: function(record) {
+            const that = this;
+            that.confirmLoading = true;
+            getAction(that.url.sync, { id: record.id })
+                .then(res => {
+                    if (res.success) {
+                        that.$message.success("同步成功");
+                    } else {
+                        that.$message.error("同步失败");
+                    }
+                })
+                .finally(() => {
+                    that.confirmLoading = false;
+                });
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
+        }
     }
 };
 </script>
