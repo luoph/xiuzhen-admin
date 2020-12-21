@@ -27,7 +27,7 @@ public class GameImage extends BaseEntity {
      * 活动id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 图片类型: 1.icon, 2.banner

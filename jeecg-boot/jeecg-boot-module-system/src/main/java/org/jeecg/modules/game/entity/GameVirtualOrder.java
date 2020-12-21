@@ -29,7 +29,7 @@ public class GameVirtualOrder implements Serializable {
      * 自增主键
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 区服id

@@ -27,7 +27,7 @@ public class OpenServiceCampaignRankType extends BaseEntity {
      * id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 排行类型 e.g. 1.境界冲榜, 2.功法冲榜

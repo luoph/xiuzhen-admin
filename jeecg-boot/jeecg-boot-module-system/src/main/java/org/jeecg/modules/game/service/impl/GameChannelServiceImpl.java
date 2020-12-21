@@ -2,7 +2,6 @@ package org.jeecg.modules.game.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameServerVO;
 import org.jeecg.modules.game.mapper.GameChannelMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
@@ -24,7 +23,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     private GameChannelMapper gameChannelMapper;
 
     @Override
-    public List<GameServerVO> getServerListChannelId(Long channelId) {
+    public List<GameServerVO> getServerListChannelId(Integer channelId) {
         return gameChannelMapper.getServerListChannelId(channelId);
     }
 

@@ -29,7 +29,7 @@ public class GameRegisterInfoVO implements Serializable {
     /**
      * 自增id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 角色名称

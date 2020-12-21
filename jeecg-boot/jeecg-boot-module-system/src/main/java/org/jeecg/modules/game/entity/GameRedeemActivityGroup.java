@@ -29,7 +29,7 @@ public class GameRedeemActivityGroup implements Serializable {
      * id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 名称
