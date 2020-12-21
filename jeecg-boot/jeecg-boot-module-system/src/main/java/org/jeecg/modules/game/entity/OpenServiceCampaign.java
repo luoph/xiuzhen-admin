@@ -27,7 +27,7 @@ public class OpenServiceCampaign extends BaseEntity {
      * 活动id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 活动名称

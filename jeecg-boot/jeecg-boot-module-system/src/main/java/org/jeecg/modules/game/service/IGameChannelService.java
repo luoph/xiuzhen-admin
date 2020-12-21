@@ -20,7 +20,7 @@ public interface IGameChannelService extends IService<GameChannel> {
      * @param channelId 渠道 id
      * @return 服务器信息
      */
-    List<GameServerVO> getServerListChannelId(Long channelId);
+    List<GameServerVO> getServerListChannelId(Integer channelId);
 
     /**
      * 通过渠道id查询渠道名称

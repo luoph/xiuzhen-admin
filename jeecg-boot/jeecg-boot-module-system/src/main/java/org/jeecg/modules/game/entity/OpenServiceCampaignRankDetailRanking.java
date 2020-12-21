@@ -27,25 +27,25 @@ public class OpenServiceCampaignRankDetailRanking extends BaseEntity {
      * id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 开服活动id
      */
     @Excel(name = "开服活动id", width = 15)
-    private java.lang.Integer campaignId;
+    private java.lang.Long campaignId;
 
     /**
      * open_service_campaign_type.id
      */
     @Excel(name = "open_service_campaign_type.id", width = 15)
-    private java.lang.Integer campaignTypeId;
+    private java.lang.Long campaignTypeId;
 
     /**
      * open_service_campaign_rank_detail.id
      */
     @Excel(name = "open_service_campaign_rank_detail.id", width = 15)
-    private java.lang.Integer rankDetailId;
+    private java.lang.Long rankDetailId;
 
     /**
      * 排名最小值

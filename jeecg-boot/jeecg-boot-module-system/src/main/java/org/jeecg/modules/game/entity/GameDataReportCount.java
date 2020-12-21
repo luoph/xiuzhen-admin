@@ -30,7 +30,7 @@ public class GameDataReportCount implements Serializable {
      * 自增id
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 渠道

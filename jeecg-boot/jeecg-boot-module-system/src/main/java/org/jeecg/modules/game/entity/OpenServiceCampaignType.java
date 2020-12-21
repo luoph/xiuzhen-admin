@@ -27,13 +27,13 @@ public class OpenServiceCampaignType extends BaseEntity {
      * id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 开服活动id
      */
     @Excel(name = "开服活动id", width = 15)
-    private java.lang.Integer campaignId;
+    private java.lang.Long campaignId;
 
     /**
      * 开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)

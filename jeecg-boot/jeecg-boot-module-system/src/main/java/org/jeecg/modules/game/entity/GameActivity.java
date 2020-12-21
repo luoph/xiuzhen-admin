@@ -30,7 +30,7 @@ public class GameActivity implements Serializable {
      * 活动id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 活动唯一标识, e.g. "buff", "worldboss"

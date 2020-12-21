@@ -29,7 +29,7 @@ public class GameLampNotice implements Serializable {
      * 公告id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 标题
