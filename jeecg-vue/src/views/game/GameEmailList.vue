@@ -171,7 +171,7 @@ export default {
                 {
                     title: "目标主体",
                     align: "left",
-                    width: 80,
+                    width: 210,
                     dataIndex: "targetIds",
                     scopedSlots: { customRender: "largeText" }
                 },
@@ -244,5 +244,6 @@ export default {
 
 .largeText {
     white-space: normal;
+    word-break: break-word;
 }
 </style>
