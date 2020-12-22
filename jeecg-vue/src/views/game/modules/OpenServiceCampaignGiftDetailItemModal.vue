@@ -55,7 +55,7 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
             isEdit: false,
             model: {},
@@ -95,6 +95,7 @@ export default {
             this.isEdit = this.model.id != null;
             console.log("OpenServiceCampaignGiftDetailListModal, model:", JSON.stringify(this.model));
             this.visible = true;
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "sort", "giftType", "discount", "price", "reward"));
             });
