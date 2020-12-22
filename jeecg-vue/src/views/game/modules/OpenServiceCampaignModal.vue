@@ -53,7 +53,7 @@
                                     <a-col :span="8">
                                         <a-form-item>
                                             <!-- 已经存在的type不允许修改活动类型 -->
-                                            <a-select :disabled="isEdit && item.id" placeholder="活动类型" v-model="item.type">
+                                            <a-select :disabled="isEdit && item.id != null" placeholder="活动类型" v-model="item.type">
                                                 <a-select-option :value="1">1-开服排行</a-select-option>
                                                 <a-select-option :value="2">2-开服礼包</a-select-option>
                                                 <a-select-option :value="3">3-单笔充值</a-select-option>
@@ -80,7 +80,7 @@
             </a-form>
         </a-spin>
 
-        <open-service-campaign-tab-list ref="tabListModal"></open-service-campaign-tab-list>
+        <open-service-campaign-gift-detail-list-modal ref="giftDetailListModal"></open-service-campaign-gift-detail-list-modal>
     </a-modal>
     <!--
         <a-button type="primary" @click="handleOk">确定</a-button>
@@ -93,10 +93,9 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
-import moment from "moment";
 import GameServerSelector from "@/components/gameserver/GameServerSelector";
 import GameImageSelector from "../components/GameImageSelector";
-import OpenServiceCampaignTabList from "./OpenServiceCampaignTabList";
+import OpenServiceCampaignGiftDetailListModal from "./OpenServiceCampaignGiftDetailListModal";
 
 export default {
     name: "OpenServiceCampaignModal",
@@ -104,7 +103,7 @@ export default {
         JDate,
         GameServerSelector,
         GameImageSelector,
-        OpenServiceCampaignTabList
+        OpenServiceCampaignGiftDetailListModal
     },
     data() {
         return {
@@ -235,9 +234,21 @@ export default {
         },
         editRowCustom(index) {
             console.log(this.typeList[index]);
-            this.$refs.tabListModal.edit(this.typeList[index]);
-            this.$refs.tabListModal.title = "页签配置";
-            this.$refs.tabListModal.disableSubmit = false;
+            let typeInfo = this.typeList[index];
+            if (typeInfo.type === 1) {
+                // 1-开服排行
+            } else if (typeInfo.type === 2) {
+                // 2-开服礼包
+                this.$refs.giftDetailListModal.title = "开服礼包配置";
+                this.$refs.giftDetailListModal.visible = true;
+                this.$refs.giftDetailListModal.edit(typeInfo);
+            } else if (typeInfo.type === 3) {
+                // 3-单笔充值
+            } else if (typeInfo.type === 4) {
+                // 4-寻宝
+            } else if (typeInfo.type === 5) {
+                // 5-道具消耗
+            }
             this.$forceUpdate();
         },
         getImgView(text) {

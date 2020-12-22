@@ -10,8 +10,8 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="open_service_campaign_type.id">
-                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        <a-form-item label="页签id">
+                            <a-input placeholder="请输入页签id" v-model="queryParam.campaignTypeId"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -149,7 +149,7 @@ export default {
                     dataIndex: "campaignId"
                 },
                 {
-                    title: "open_service_campaign_type.id",
+                    title: "页签id",
                     align: "center",
                     dataIndex: "campaignTypeId"
                 },

@@ -60,6 +60,12 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
     private java.lang.Integer rankType;
 
     /**
+     * 排序
+     */
+    @Excel(name = "排序", width = 15)
+    private java.lang.Integer sort;
+
+    /**
      * 开始时间(开服第n天, e.g. 0表示开服第1天)
      */
     @Excel(name = "开始时间", width = 15)

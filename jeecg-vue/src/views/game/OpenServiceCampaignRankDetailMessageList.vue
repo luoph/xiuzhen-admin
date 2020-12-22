@@ -5,13 +5,13 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="开服活动id, open_service_campaign.id">
-                            <a-input placeholder="请输入开服活动id, open_service_campaign.id" v-model="queryParam.campaignId"></a-input>
+                        <a-form-item label="开服活动id">
+                            <a-input placeholder="请输入开服活动id" v-model="queryParam.campaignId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="open_service_campaign_type.id">
-                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        <a-form-item label="页签id">
+                            <a-input placeholder="请输入页签id" v-model="queryParam.campaignTypeId"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -148,12 +148,12 @@ export default {
                     }
                 },
                 {
-                    title: "开服活动id, open_service_campaign.id",
+                    title: "开服活动id",
                     align: "center",
                     dataIndex: "campaignId"
                 },
                 {
-                    title: "open_service_campaign_type.id",
+                    title: "页签id",
                     align: "center",
                     dataIndex: "campaignTypeId"
                 },
