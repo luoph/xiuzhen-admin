@@ -111,6 +111,8 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
+            console.log("OpenServiceCampaignRankDetailModal, mode:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(
                     pick(

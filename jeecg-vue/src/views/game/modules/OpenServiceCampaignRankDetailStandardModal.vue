@@ -19,10 +19,10 @@
                     <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
+                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
                 <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-input>
+                    <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-textarea>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -84,6 +84,8 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
+            console.log("OpenServiceCampaignRankDetailStandardModal, mode:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "score", "description", "reward", "message"));
             });
