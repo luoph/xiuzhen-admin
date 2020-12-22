@@ -119,7 +119,7 @@
             </a-table>
         </div>
 
-        <openServiceCampaignGiftDetail-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignGiftDetail-modal>
+        <open-service-campaign-gift-detail-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-gift-detail-modal>
     </a-card>
 </template>
 

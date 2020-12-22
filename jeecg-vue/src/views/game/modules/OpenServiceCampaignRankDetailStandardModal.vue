@@ -4,13 +4,13 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_campaign_rank_detail.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['rankDetailId', validatorRules.rankDetailId]" placeholder="请输入open_service_campaign_rank_detail.id" style="width: 100%" />
+                <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['rankDetailId', validatorRules.rankDetailId]" placeholder="请输入详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="达标奖励积分" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入达标奖励积分" style="width: 100%" />
@@ -48,8 +48,9 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -63,11 +64,11 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                rankDetailId: { rules: [{ required: true, message: "请输入open_service_campaign_rank_detail.id!" }] },
+                rankDetailId: { rules: [{ required: true, message: "请输入详情id!" }] },
                 score: { rules: [{ required: true, message: "请输入达标奖励积分!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
-                message: { rules: [{ required: true, message: "请输入传闻内容!" }] },
+                message: { rules: [{ required: true, message: "请输入传闻内容!" }] }
             },
             url: {
                 add: "game/openServiceCampaignRankDetailStandard/add",
@@ -83,8 +84,9 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
-            this.visible = true;
+            this.isEdit = this.model.id != null;
             console.log("OpenServiceCampaignRankDetailStandardModal, model:", JSON.stringify(this.model));
+            this.visible = true;
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "score", "description", "reward", "message"));
