@@ -84,7 +84,7 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
-            console.log("OpenServiceCampaignRankDetailStandardModal, mode:", JSON.stringify(this.model));
+            console.log("OpenServiceCampaignRankDetailStandardModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "score", "description", "reward", "message"));
