@@ -4,10 +4,10 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
@@ -16,22 +16,36 @@
                     <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
                 </a-form-item>
                 <a-form-item label="排行类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" initialValue="1">
+                    <a-select :disabled="isEdit" placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" initialValue="1">
                         <a-select-option :value="1">1-境界冲榜</a-select-option>
                         <a-select-option :value="2">2-功法冲榜</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="开始时间(开服第n天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天)" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动宣传图"></a-input>
+                    <img
+                        v-if="model.banner"
+                        :src="getImgView(model.banner)"
+                        height="100px"
+                        :alt="getImgView(model.banner)"
+                        style="max-width:100%;font-size: 12px;font-style: italic;"
+                    />
+                    <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
-                <a-form-item label="活动宣传奖励图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['rewardImg', validatorRules.rewardImg]" placeholder="请输入活动宣传奖励图"></a-input>
+                <a-form-item label="奖励图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <img
+                        v-if="model.rewardImg"
+                        :src="getImgView(model.rewardImg)"
+                        height="100px"
+                        :alt="getImgView(model.rewardImg)"
+                        style="max-width:100%;font-size: 12px;font-style: italic;"
+                    />
+                    <game-image-selector placeholder="请选择活动宣传图" v-model="model.rewardImg" />
                 </a-form-item>
                 <a-form-item label="活动宣传仙力" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['combatPower', validatorRules.combatPower]" placeholder="请输入活动宣传仙力" style="width: 100%" />
@@ -46,6 +60,21 @@
                     <a-input-number v-decorator="['standardRewardEmail', validatorRules.standardRewardEmail]" placeholder="请输入达标奖励邮件id" style="width: 100%" />
                 </a-form-item>
             </a-form>
+
+            <a-tabs v-if="isEdit" defaultActiveKey="1">
+                <a-tab-pane tab="传闻消息" key="1">
+                    <open-service-campaign-rank-detail-message-list ref="messageList"></open-service-campaign-rank-detail-message-list>
+                </a-tab-pane>
+                <a-tab-pane tab="达标奖励" key="2">
+                    <open-service-campaign-rank-detail-standard-list ref="standardList"></open-service-campaign-rank-detail-standard-list>
+                </a-tab-pane>
+                <a-tab-pane tab="消耗道具" key="3">
+                    <open-service-campaign-rank-detail-score-list ref="scoreList"></open-service-campaign-rank-detail-score-list>
+                </a-tab-pane>
+                <a-tab-pane tab="榜单配置" key="4">
+                    <open-service-campaign-rank-detail-ranking-list ref="rankingList"></open-service-campaign-rank-detail-ranking-list>
+                </a-tab-pane>
+            </a-tabs>
         </a-spin>
     </a-modal>
     <!--
@@ -58,19 +87,31 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import GameImageSelector from "../components/GameImageSelector";
 import JDate from "@/components/jeecg/JDate";
+
+import OpenServiceCampaignRankDetailMessageList from "../OpenServiceCampaignRankDetailMessageList";
+import OpenServiceCampaignRankDetailRankingList from "../OpenServiceCampaignRankDetailRankingList";
+import OpenServiceCampaignRankDetailScoreList from "../OpenServiceCampaignRankDetailScoreList";
+import OpenServiceCampaignRankDetailStandardList from "../OpenServiceCampaignRankDetailStandardList";
 
 export default {
     name: "OpenServiceCampaignRankDetailModal",
     components: {
-        JDate
+        JDate,
+        GameImageSelector,
+        OpenServiceCampaignRankDetailMessageList,
+        OpenServiceCampaignRankDetailRankingList,
+        OpenServiceCampaignRankDetailScoreList,
+        OpenServiceCampaignRankDetailStandardList
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -104,16 +145,24 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
             console.log("OpenServiceCampaignRankDetailModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
+                if (this.isEdit) {
+                    this.$refs.messageList.edit(record);
+                    this.$refs.rankingList.edit(record);
+                    this.$refs.scoreList.edit(record);
+                    this.$refs.standardList.edit(record);
+                }
+
                 this.form.setFieldsValue(
                     pick(
                         this.model,
@@ -193,6 +242,12 @@ export default {
                     "standardRewardEmail"
                 )
             );
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
         }
     }
 };
