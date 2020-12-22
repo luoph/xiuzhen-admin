@@ -201,7 +201,7 @@ export default {
         },
         handleAdd() {
             this.$refs.modalForm.add({
-                giftDetailId: this.model.id,
+                rankDetailId: this.model.id,
                 campaignTypeId: this.model.campaignTypeId,
                 campaignId: this.model.campaignId
             });
