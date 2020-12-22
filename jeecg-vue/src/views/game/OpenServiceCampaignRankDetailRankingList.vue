@@ -123,7 +123,12 @@ export default {
                     dataIndex: "rareReward"
                 },
                 {
-                    title: "传闻内容",
+                    title: "广告引导显示时长(秒)",
+                    align: "center",
+                    dataIndex: "adShowTime"
+                },
+                {
+                    title: "广告引导内容",
                     align: "center",
                     dataIndex: "message"
                 },

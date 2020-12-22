@@ -71,6 +71,7 @@ export default {
     data() {
         return {
             description: "开服活动-开服排行-活动明细-传闻管理页面",
+            model: {},
             // 表头
             columns: [
                 {

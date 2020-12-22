@@ -60,6 +60,12 @@ public class OpenServiceCampaignGiftDetailItem extends BaseEntity {
     private java.lang.Integer giftType;
 
     /**
+     * 购买数量
+     */
+    @Excel(name = "购买数量", width = 15)
+    private java.lang.Integer buyNum;
+
+    /**
      * 折扣
      */
     @Excel(name = "折扣", width = 15)

@@ -80,6 +80,12 @@ public class OpenServiceCampaignRankDetailRanking extends BaseEntity {
     /**
      * 传闻内容
      */
-    @Excel(name = "传闻内容", width = 15)
+    @Excel(name = "广告引导内容", width = 15)
     private java.lang.String message;
+
+    /**
+     * 广告引导显示时长(秒)
+     */
+    @Excel(name = "广告引导显示时长(秒)，0表示一直显示直到玩家点击", width = 15)
+    private java.lang.Integer adShowTime;
 }

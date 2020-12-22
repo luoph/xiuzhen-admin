@@ -27,8 +27,11 @@
                 <a-form-item label="稀有奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['rareReward', validatorRules.rareReward]" placeholder="请输入稀有奖励列表"></a-textarea>
                 </a-form-item>
-                <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-textarea>
+                <a-form-item label="广告引导显示时长(秒)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['adShowTime', validatorRules.adShowTime]" placeholder="请输入广告引导显示时长(秒)"></a-input-number>
+                </a-form-item>
+                <a-form-item label="广告引导内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入广告引导内容"></a-textarea>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -76,7 +79,8 @@ export default {
                 score: { rules: [{ required: true, message: "请输入上榜最低积分!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
                 rareReward: { rules: [{ required: true, message: "请输入稀有奖励列表!" }] },
-                message: { rules: [{ required: true, message: "请输入传闻内容!" }] }
+                adShowTime: { rules: [{ required: true, message: "请输入广告引导显示时长(秒)!" }] },
+                message: { rules: [{ required: true, message: "请输入广告引导内容!" }] }
             },
             url: {
                 add: "game/openServiceCampaignRankDetailRanking/add",

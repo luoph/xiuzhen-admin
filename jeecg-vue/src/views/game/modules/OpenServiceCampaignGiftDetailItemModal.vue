@@ -15,6 +15,9 @@
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="购买数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['buyNum', validatorRules.buyNum]" placeholder="请输入购买数量" style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="礼包类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <!-- 0.普通礼包, 1.大奖礼包 -->
                     <a-select placeholder="请选择礼包类型" v-decorator="['giftType', validatorRules.giftType]" initialValue="1">
@@ -72,6 +75,7 @@ export default {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 giftDetailId: { rules: [{ required: true, message: "请输入页签详情id!" }] },
+                buyNum: { rules: [{ required: true, message: "请输入购买数量" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 giftType: { rules: [{ required: true, message: "请选择礼包类型!" }] },
                 discount: { rules: [{ required: true, message: "请输入折扣!" }] },
@@ -97,7 +101,7 @@ export default {
             this.visible = true;
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "sort", "giftType", "discount", "price", "reward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "sort", "buyNum", "giftType", "discount", "price", "reward"));
             });
         },
         close() {
@@ -141,7 +145,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "giftDetailId", "sort", "giftType", "discount", "price", "reward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "giftDetailId", "sort", "buyNum", "giftType", "discount", "price", "reward"));
         }
     }
 };

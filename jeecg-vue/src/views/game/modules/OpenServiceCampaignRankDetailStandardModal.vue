@@ -15,14 +15,21 @@
                 <a-form-item label="达标奖励积分" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入达标奖励积分" style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="请输入广告引导显示时长(秒)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number
+                        v-decorator="['adShowTime', validatorRules.adShowTime]"
+                        placeholder="请输入广告引导显示时长(秒)，0表示一直显示直到玩家点击"
+                        style="width: 100%"
+                    />
+                </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
-                <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-textarea>
+                <a-form-item label="广告引导内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入广告引导内容"></a-textarea>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -66,9 +73,10 @@ export default {
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 rankDetailId: { rules: [{ required: true, message: "请输入详情id!" }] },
                 score: { rules: [{ required: true, message: "请输入达标奖励积分!" }] },
+                adShowTime: { rules: [{ required: true, message: "请输入广告引导显示时长(秒)" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
-                message: { rules: [{ required: true, message: "请输入传闻内容!" }] }
+                message: { rules: [{ required: true, message: "请输入广告引导内容!" }] }
             },
             url: {
                 add: "game/openServiceCampaignRankDetailStandard/add",
@@ -89,7 +97,7 @@ export default {
             this.visible = true;
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "score", "description", "reward", "message"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "score", "description", "reward", "message", "adShowTime"));
             });
         },
         close() {
@@ -133,7 +141,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "rankDetailId", "score", "description", "reward", "message"));
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "rankDetailId", "score", "description", "reward", "message", "adShowTime"));
         }
     }
 };

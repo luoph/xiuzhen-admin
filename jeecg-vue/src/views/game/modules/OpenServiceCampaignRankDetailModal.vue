@@ -62,16 +62,16 @@
             </a-form>
 
             <a-tabs v-if="isEdit" defaultActiveKey="1">
-                <a-tab-pane tab="传闻消息" key="1">
+                <a-tab-pane tab="传闻消息" forceRender key="1">
                     <open-service-campaign-rank-detail-message-list ref="messageList"></open-service-campaign-rank-detail-message-list>
                 </a-tab-pane>
-                <a-tab-pane tab="达标奖励" key="2">
+                <a-tab-pane tab="达标奖励" forceRender key="2">
                     <open-service-campaign-rank-detail-standard-list ref="standardList"></open-service-campaign-rank-detail-standard-list>
                 </a-tab-pane>
-                <a-tab-pane tab="消耗道具" key="3">
+                <a-tab-pane tab="消耗道具" forceRender key="3">
                     <open-service-campaign-rank-detail-score-list ref="scoreList"></open-service-campaign-rank-detail-score-list>
                 </a-tab-pane>
-                <a-tab-pane tab="榜单配置" key="4">
+                <a-tab-pane tab="榜单配置" forceRender key="4">
                     <open-service-campaign-rank-detail-ranking-list ref="rankingList"></open-service-campaign-rank-detail-ranking-list>
                 </a-tab-pane>
             </a-tabs>

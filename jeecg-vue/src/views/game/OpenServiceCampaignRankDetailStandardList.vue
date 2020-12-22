@@ -103,6 +103,11 @@ export default {
                     dataIndex: "score"
                 },
                 {
+                    title: "广告引导显示时长(秒)",
+                    align: "center",
+                    dataIndex: "adShowTime"
+                },
+                {
                     title: "描述",
                     align: "center",
                     dataIndex: "description"
