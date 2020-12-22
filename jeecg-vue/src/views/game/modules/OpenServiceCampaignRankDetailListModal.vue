@@ -98,7 +98,7 @@ export default {
                     dataIndex: "name"
                 },
                 {
-                    title: "活动页签名称",
+                    title: "页签名称",
                     align: "center",
                     dataIndex: "tabName"
                 },
@@ -129,12 +129,16 @@ export default {
                 {
                     title: "宣传图",
                     align: "center",
-                    dataIndex: "banner"
+                    dataIndex: "banner",
+                    width: "120",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "奖励图",
                     align: "center",
-                    dataIndex: "rewardImg"
+                    dataIndex: "rewardImg",
+                    width: "80",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "仙力",
