@@ -36,9 +36,9 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
     private java.lang.Long campaignId;
 
     /**
-     * open_service_campaign_type.id
+     * typeId
      */
-    @Excel(name = "open_service_campaign_type.id", width = 15)
+    @Excel(name = "typeId", width = 15)
     private java.lang.Long campaignTypeId;
 
     /**

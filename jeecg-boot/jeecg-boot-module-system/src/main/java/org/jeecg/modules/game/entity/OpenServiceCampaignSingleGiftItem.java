@@ -3,23 +3,28 @@ package org.jeecg.modules.game.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 开服活动-开服排行-活动明细-达标奖励
- * @date 2020-12-21
+ * @description 开服活动-单比好礼-任务明细
+ * @date 2020-12-23
  */
 @Data
-@TableName("game_open_service_campaign_rank_detail_standard")
 @EqualsAndHashCode(callSuper = true)
+@TableName("game_open_service_campaign_single_gift_item")
 @Accessors(chain = true)
-public class OpenServiceCampaignRankDetailStandard extends BaseEntity {
+public class OpenServiceCampaignSingleGiftItem extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,38 +47,32 @@ public class OpenServiceCampaignRankDetailStandard extends BaseEntity {
     private java.lang.Long campaignTypeId;
 
     /**
-     * open_service_campaign_rank_detail.id
+     * open_service_single_recharge_gift_detail.id
      */
-    @Excel(name = "rankDetailId", width = 15)
-    private java.lang.Long rankDetailId;
+    @Excel(name = "giftDetailId", width = 15)
+    private java.lang.Long giftDetailId;
 
     /**
-     * 达标奖励积分
+     * 任务金额
      */
-    @Excel(name = "达标奖励积分", width = 15)
-    private java.lang.Integer score;
+    @Excel(name = "任务金额", width = 15)
+    private java.math.BigDecimal amount;
 
     /**
-     * 描述
+     * 领取上限次数
      */
-    @Excel(name = "描述", width = 15)
-    private java.lang.String description;
+    @Excel(name = "领取上限次数", width = 15)
+    private java.lang.Integer limitTimes;
 
     /**
-     * 奖励列表
+     * 任务描述
+     */
+    @Excel(name = "任务描述", width = 15)
+    private java.lang.String remark;
+
+    /**
+     * 奖励json
      */
     @Excel(name = "奖励列表", width = 15)
     private java.lang.String reward;
-
-    /**
-     * 传闻内容
-     */
-    @Excel(name = "广告引导内容", width = 15)
-    private java.lang.String message;
-    
-    /**
-     * 广告引导显示时长(秒)
-     */
-    @Excel(name = "广告引导显示时长(秒)，0表示一直显示直到玩家点击", width = 15)
-    private java.lang.Integer adShowTime;
 }
