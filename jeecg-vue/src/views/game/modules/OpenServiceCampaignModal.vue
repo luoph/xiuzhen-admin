@@ -68,6 +68,7 @@
         </a-spin>
 
         <open-service-campaign-gift-detail-list-modal ref="giftDetailListModal"></open-service-campaign-gift-detail-list-modal>
+        <open-service-campaign-rank-detail-list-modal ref="rankDetailListModal"></open-service-campaign-rank-detail-list-modal>
     </a-modal>
     <!--
         <a-button type="primary" @click="handleOk">确定</a-button>
@@ -82,6 +83,7 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import GameServerSelector from "@/components/gameserver/GameServerSelector";
 import GameImageSelector from "../components/GameImageSelector";
+import OpenServiceCampaignRankDetailListModal from "./OpenServiceCampaignRankDetailListModal";
 import OpenServiceCampaignGiftDetailListModal from "./OpenServiceCampaignGiftDetailListModal";
 
 export default {
@@ -90,13 +92,14 @@ export default {
         JDate,
         GameServerSelector,
         GameImageSelector,
-        OpenServiceCampaignGiftDetailListModal
+        OpenServiceCampaignGiftDetailListModal,
+        OpenServiceCampaignRankDetailListModal
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 1000,
+            width: 1200,
             visible: false,
             isEdit: false,
             isAutoOpen: false,
@@ -136,7 +139,7 @@ export default {
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.visible = true;
-            console.log("OpenServiceCampaignModal, mode:", JSON.stringify(this.model));
+            console.log("OpenServiceCampaignModal, model:", JSON.stringify(this.model));
 
             if (this.isEdit) {
                 this.isAutoOpen = this.model.autoOpen === 1;
@@ -225,6 +228,9 @@ export default {
             let typeInfo = this.typeList[index];
             if (typeInfo.type === 1) {
                 // 1-开服排行
+                this.$refs.rankDetailListModal.title = "开服排行配置";
+                this.$refs.rankDetailListModal.visible = true;
+                this.$refs.rankDetailListModal.edit(typeInfo);
             } else if (typeInfo.type === 2) {
                 // 2-开服礼包
                 this.$refs.giftDetailListModal.title = "开服礼包配置";

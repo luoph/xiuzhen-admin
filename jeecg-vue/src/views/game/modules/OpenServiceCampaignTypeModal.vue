@@ -79,7 +79,7 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
-            console.log("OpenServiceCampaignTypeModal, mode:", JSON.stringify(this.model));
+            console.log("OpenServiceCampaignTypeModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "type", "sort", "remark"));

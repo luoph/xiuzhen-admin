@@ -111,7 +111,7 @@ export default {
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.visible = true;
-            console.log("OpenServiceCampaignGiftDetailModal, mode:", JSON.stringify(this.model));
+            console.log("OpenServiceCampaignGiftDetailModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
                 if (this.isEdit) {

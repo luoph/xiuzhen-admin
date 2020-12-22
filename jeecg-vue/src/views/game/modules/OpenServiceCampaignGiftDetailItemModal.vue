@@ -93,7 +93,7 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
-            console.log("OpenServiceCampaignGiftDetailListModal, mode:", JSON.stringify(this.model));
+            console.log("OpenServiceCampaignGiftDetailListModal, model:", JSON.stringify(this.model));
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "sort", "giftType", "discount", "price", "reward"));
