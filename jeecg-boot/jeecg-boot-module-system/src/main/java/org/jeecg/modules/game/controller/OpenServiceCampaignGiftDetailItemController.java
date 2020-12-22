@@ -48,6 +48,7 @@ public class OpenServiceCampaignGiftDetailItemController extends JeecgController
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         QueryWrapper<OpenServiceCampaignGiftDetailItem> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignGiftDetailItem, req.getParameterMap());
+        queryWrapper.orderByAsc("sort");
         Page<OpenServiceCampaignGiftDetailItem> page = new Page<>(pageNo, pageSize);
         IPage<OpenServiceCampaignGiftDetailItem> pageList = gameOpenServiceCampaignGiftDetailItemService.page(page, queryWrapper);
         return Result.ok(pageList);

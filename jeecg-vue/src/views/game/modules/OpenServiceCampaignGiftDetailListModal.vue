@@ -16,7 +16,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <template slot="htmlSlot" slot-scope="text">
@@ -55,8 +54,8 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
-import OpenServiceCampaignGiftDetailModal from "./OpenServiceCampaignGiftDetailModal";
 import { getAction } from "../../../api/manage";
+import OpenServiceCampaignGiftDetailModal from "./OpenServiceCampaignGiftDetailModal";
 
 export default {
     name: "OpenServiceCampaignGiftDetailList",
@@ -83,11 +82,11 @@ export default {
                         return parseInt(index) + 1;
                     }
                 },
-                {
-                    title: "开服活动id",
-                    align: "center",
-                    dataIndex: "campaignId"
-                },
+                // {
+                //     title: "开服活动id",
+                //     align: "center",
+                //     dataIndex: "campaignId"
+                // },
                 {
                     title: "活动名称",
                     align: "center",

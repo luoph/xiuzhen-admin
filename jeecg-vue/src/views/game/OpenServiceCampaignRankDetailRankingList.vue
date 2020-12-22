@@ -191,12 +191,12 @@ export default {
                 {
                     title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
+                    dataIndex: "createTime"
                 },
                 {
                     title: "更新时间",
                     align: "center",
-                    dataIndex: "updateTime",
+                    dataIndex: "updateTime"
                 },
                 {
                     title: "操作",
@@ -212,8 +212,7 @@ export default {
                 exportXlsUrl: "game/openServiceCampaignRankDetailRanking/exportXls",
                 importExcelUrl: "game/openServiceCampaignRankDetailRanking/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -222,8 +221,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>

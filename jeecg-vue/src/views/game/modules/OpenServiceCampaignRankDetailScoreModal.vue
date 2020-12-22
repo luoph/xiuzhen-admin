@@ -71,7 +71,7 @@ export default {
                 num: { rules: [{ required: true, message: "请输入排行消耗道具数量!" }] },
                 score: { rules: [{ required: true, message: "请输入消耗对应积分!" }] },
                 itemType: { rules: [{ required: true, message: "请输入道具积分分类!" }] },
-                itemTypeName: { rules: [{ required: true, message: "请输入道具积分分类名称!" }] },
+                itemTypeName: { rules: [{ required: true, message: "请输入道具积分分类名称!" }] }
             },
             url: {
                 add: "game/openServiceCampaignRankDetailScore/add",
@@ -88,6 +88,8 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
+            console.log("OpenServiceCampaignRankDetailScoreModal, mode:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "itemId", "num", "score", "itemType", "itemTypeName"));
             });

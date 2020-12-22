@@ -38,6 +38,12 @@
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
                 </a-form-item>
             </a-form>
+
+            <a-tabs v-if="isEdit" defaultActiveKey="1">
+                <a-tab-pane tab="礼包配置" key="1">
+                    <open-service-campaign-gift-detail-item-list ref="detailList"></open-service-campaign-gift-detail-item-list>
+                </a-tab-pane>
+            </a-tabs>
         </a-spin>
     </a-modal>
     <!--
@@ -52,12 +58,14 @@ import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import GameImageSelector from "../components/GameImageSelector";
+import OpenServiceCampaignGiftDetailItemList from "../OpenServiceCampaignGiftDetailItemList";
 
 export default {
     name: "OpenServiceCampaignGiftDetailModal",
     components: {
         JDate,
-        GameImageSelector
+        GameImageSelector,
+        OpenServiceCampaignGiftDetailItemList
     },
     data() {
         return {
@@ -65,6 +73,7 @@ export default {
             title: "操作",
             width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -100,9 +109,16 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("OpenServiceCampaignGiftDetailModal, mode:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "sort", "banner", "startDay", "duration"));
+                if (this.isEdit) {
+                    this.$refs.detailList.edit(record);
+                }
+
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration"));
             });
         },
         close() {
@@ -146,7 +162,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "sort", "banner", "startDay", "duration"));
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration"));
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {

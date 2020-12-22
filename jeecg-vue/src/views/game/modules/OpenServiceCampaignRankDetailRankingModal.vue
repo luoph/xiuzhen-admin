@@ -22,13 +22,13 @@
                     <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入上榜最低积分" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
+                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
                 <a-form-item label="稀有奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['rareReward', validatorRules.rareReward]" placeholder="请输入稀有奖励列表"></a-input>
+                    <a-textarea v-decorator="['rareReward', validatorRules.rareReward]" placeholder="请输入稀有奖励列表"></a-textarea>
                 </a-form-item>
                 <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-input>
+                    <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-textarea>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -75,7 +75,7 @@ export default {
                 score: { rules: [{ required: true, message: "请输入上榜最低积分!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
                 rareReward: { rules: [{ required: true, message: "请输入稀有奖励列表!" }] },
-                message: { rules: [{ required: true, message: "请输入传闻内容!" }] },
+                message: { rules: [{ required: true, message: "请输入传闻内容!" }] }
             },
             url: {
                 add: "game/openServiceCampaignRankDetailRanking/add",
@@ -92,10 +92,10 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
+            console.log("OpenServiceCampaignRankDetailRankingModal, mode:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
-                this.form.setFieldsValue(
-                    pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message")
-                );
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message"));
             });
         },
         close() {
@@ -139,9 +139,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(
-                pick(row, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message")
-            );
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message"));
         }
     }
 };

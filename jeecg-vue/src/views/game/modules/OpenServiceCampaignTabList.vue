@@ -382,6 +382,8 @@ export default {
             this.isEdit = this.model.id != null;
             this.tabIndex = 0;
             this.visible = true;
+            console.log("OpenServiceCampaignTabList, mode:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 this.pickFormValues();
             });
