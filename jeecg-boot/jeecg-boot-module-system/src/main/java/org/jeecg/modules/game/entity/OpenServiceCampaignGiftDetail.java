@@ -60,10 +60,22 @@ public class OpenServiceCampaignGiftDetail extends BaseEntity {
     private java.lang.String banner;
 
     /**
+     * 骨骼动画资源
+     */
+    @Excel(name = "骨骼动画资源", width = 15)
+    private java.lang.String skeleton;
+
+    /**
      * 开始时间(开服第n天, e.g. 0表示开服第1天)
      */
     @Excel(name = "开始时间", width = 15)
     private java.lang.Integer startDay;
+
+    /**
+     * 排序
+     */
+    @Excel(name = "排序", width = 15)
+    private java.lang.Integer sort;
 
     /**
      * 持续时间(天)

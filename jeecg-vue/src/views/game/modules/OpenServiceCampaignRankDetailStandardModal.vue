@@ -6,8 +6,8 @@
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_campaign_type.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入open_service_campaign_type.id" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="open_service_campaign_rank_detail.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['rankDetailId', validatorRules.rankDetailId]" placeholder="请输入open_service_campaign_rank_detail.id" style="width: 100%" />
@@ -62,7 +62,7 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
-                campaignTypeId: { rules: [{ required: true, message: "请输入open_service_campaign_type.id!" }] },
+                campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 rankDetailId: { rules: [{ required: true, message: "请输入open_service_campaign_rank_detail.id!" }] },
                 score: { rules: [{ required: true, message: "请输入达标奖励积分!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },

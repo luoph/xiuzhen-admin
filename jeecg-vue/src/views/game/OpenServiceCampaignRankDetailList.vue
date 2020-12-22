@@ -10,8 +10,8 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="open_service_campaign_type.id">
-                            <a-input placeholder="请输入open_service_campaign_type.id" v-model="queryParam.campaignTypeId"></a-input>
+                        <a-form-item label="页签id">
+                            <a-input placeholder="请输入页签id" v-model="queryParam.campaignTypeId"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -34,7 +34,7 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="开始时间(开服第n天)">
+                            <a-form-item label="开始时间">
                                 <a-input placeholder="请输入开始时间(开服第n天)" v-model="queryParam.startDay"></a-input>
                             </a-form-item>
                         </a-col>
@@ -44,8 +44,8 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="活动宣传背景图">
-                                <a-input placeholder="请输入活动宣传背景图" v-model="queryParam.banner"></a-input>
+                            <a-form-item label="活动宣传图">
+                                <a-input placeholder="请输入活动宣传图" v-model="queryParam.banner"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -187,7 +187,7 @@ export default {
                     dataIndex: "campaignId"
                 },
                 {
-                    title: "open_service_campaign_type.id",
+                    title: "页签id",
                     align: "center",
                     dataIndex: "campaignTypeId"
                 },
@@ -216,7 +216,7 @@ export default {
                     }
                 },
                 {
-                    title: "开始时间(开服第n天)",
+                    title: "开始时间",
                     align: "center",
                     dataIndex: "startDay"
                 },
@@ -226,7 +226,7 @@ export default {
                     dataIndex: "duration"
                 },
                 {
-                    title: "活动宣传背景图",
+                    title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner"
                 },

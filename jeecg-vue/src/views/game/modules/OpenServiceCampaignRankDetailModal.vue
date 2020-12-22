@@ -3,11 +3,11 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id, open_service_campaign.id" style="width: 100%" />
+                <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_campaign_type.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入open_service_campaign_type.id" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
@@ -27,8 +27,8 @@
                 <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="活动宣传背景图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动宣传背景图"></a-input>
+                <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动宣传图"></a-input>
                 </a-form-item>
                 <a-form-item label="活动宣传奖励图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['rewardImg', validatorRules.rewardImg]" placeholder="请输入活动宣传奖励图"></a-input>
@@ -89,7 +89,7 @@ export default {
                 rankType: { rules: [{ required: true, message: "请输入排行类型!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天)!" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
-                banner: { rules: [{ required: true, message: "请输入活动宣传背景图!" }] },
+                banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
                 rewardImg: { rules: [{ required: true, message: "请输入活动宣传奖励图!" }] },
                 combatPower: { rules: [{ required: true, message: "请输入活动宣传仙力!" }] },
                 rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
