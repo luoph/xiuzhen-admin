@@ -9,22 +9,23 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.OpenServiceCampaign;
 import org.jeecg.modules.game.entity.OpenServiceCampaignType;
+import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IOpenServiceCampaignService;
 import org.jeecg.modules.game.service.IOpenServiceCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -40,10 +41,16 @@ import java.util.stream.Collectors;
 public class OpenServiceCampaignController extends JeecgController<OpenServiceCampaign, IOpenServiceCampaignService> {
 
     @Autowired
+    private IGameServerService gameServerService;
+
+    @Autowired
     private IOpenServiceCampaignService campaignService;
 
     @Autowired
     private IOpenServiceCampaignTypeService campaignTypeService;
+
+    @Value("${app.campaign-reload-url:/campaign/reload}")
+    private String campaignReloadUrl;
 
     /**
      * 分页列表查询
@@ -162,6 +169,33 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaign.class);
+    }
+
+    /**
+     * 同步游戏配置
+     *
+     * @param id 实体 id
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "活动配置-同步到区服")
+    @GetMapping(value = "/sync")
+    public Result<?> sync(@RequestParam(name = "id") String id) {
+        OpenServiceCampaign campaign = campaignService.getById(id);
+        if (campaign == null) {
+            return Result.error("找不到对应活动配置!");
+        }
+
+        List<GameServer> list = gameServerService.list();
+        // 同步到所有区服
+        for (GameServer gameServer : list) {
+            Map<String, Object> params = new HashMap<>();
+            params.put("id", id);
+            params.put("name", "OpenService");
+            String result = OkHttpHelper.get(gameServer.getGmUrl() + campaignReloadUrl, params);
+            log.info("call url:{} result:{}", campaignReloadUrl, result);
+        }
+
+        return Result.ok("同步成功!");
     }
 
     private void updateTypeList(boolean isAdd, OpenServiceCampaign model) {
