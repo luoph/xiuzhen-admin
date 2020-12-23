@@ -1,5 +1,7 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.xiuzhen.utils.DateUtils;
+import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +15,7 @@ import org.jeecg.modules.game.entity.GameForbiddenRecord;
 import org.jeecg.modules.game.mapper.GameForbiddenMapper;
 import org.jeecg.modules.game.service.IGameForbiddenRecordService;
 import org.jeecg.modules.game.service.IGameForbiddenService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +27,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,12 +58,40 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
 	@AutoLog(value = "game_forbidden-列表查询")
 	@GetMapping(value = "/list")
 	public Result<?> queryPageList(GameForbidden gameForbidden,
+								   @RequestParam(name = "channelId", defaultValue = "") Integer channelId,
+								   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+								   @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+								   @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+								   @RequestParam(name = "type", defaultValue = "") String type,
+								   @RequestParam(name = "banValue", defaultValue = "") String banValue,
+								   @RequestParam(name = "isForever", defaultValue = "") String isForever,
 								   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
 								   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
 								   HttpServletRequest req) {
-		gameForbidden.setDelFlag(1);
+		Date rangeDateBeginDate = new Date();
+		Date rangeDateEndDate = new Date();
+		if(0 == serverId){
+			return Result.error("请选择服务器！");
+		}
+		if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
+			return Result.error("请输入时间！");
+		}else{
+			rangeDateBeginDate = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
+			rangeDateEndDate = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
+		}
+		gameForbidden.setDelFlag(0);
+		gameForbidden.setServerId(serverId);
+		if(!StringUtils.isEmpty(type)){
+			gameForbidden.setType(Integer.parseInt(type));
+		}
+		gameForbidden.setBanValue(banValue);
+		if(!StringUtils.isEmpty(isForever)){
+			gameForbidden.setIsForever(Integer.parseInt(isForever));
+		}
 		QueryWrapper<GameForbidden> queryWrapper = QueryGenerator.initQueryWrapper(gameForbidden, req.getParameterMap());
 		Page<GameForbidden> page = new Page<>(pageNo, pageSize);
+		queryWrapper.ge("create_time", rangeDateBeginDate);
+		queryWrapper.le("create_time", rangeDateEndDate);
 		IPage<GameForbidden> pageList = gameForbiddenService.page(page, queryWrapper);
 		return Result.ok(pageList);
 	}
@@ -73,24 +105,11 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
 	@AutoLog(value = "game_forbidden-添加")
 	@PostMapping(value = "/add")
 	public Result<?> add(@RequestBody GameForbidden gameForbidden) {
+		gameForbidden.setDelFlag(0);
 		if(gameForbiddenService.save(gameForbidden)){
-			GameForbiddenRecord gameForbiddenRecord = new GameForbiddenRecord();
-			gameForbiddenRecord.setUpdateTime(gameForbidden.getUpdateTime());
-			gameForbiddenRecord.setUpdateBy(gameForbidden.getUpdateBy());
-			gameForbiddenRecord.setGameForbiddenId(gameForbidden.getId());
-			gameForbiddenRecord.setType(gameForbidden.getType());
-			gameForbiddenRecord.setStartTime(gameForbidden.getStartTime());
-			gameForbiddenRecord.setServerId(gameForbidden.getServerId());
-			gameForbiddenRecord.setReason(gameForbidden.getReason());
-			gameForbiddenRecord.setIsForever(gameForbidden.getIsForever());
-			gameForbiddenRecord.setEndTime(gameForbidden.getEndTime());
-			gameForbiddenRecord.setDelFlag(gameForbidden.getDelFlag());
-			gameForbiddenRecord.setCreateTime(gameForbidden.getCreateTime());
-			gameForbiddenRecord.setCreateBy(gameForbidden.getCreateBy());
-			gameForbiddenRecord.setBanValue(gameForbidden.getBanValue());
-			gameForbiddenRecord.setBanKey(gameForbidden.getBanKey());
-			gameForbiddenRecord.setOperation("新增");
-			gameForbiddenRecordService.save(gameForbiddenRecord);
+			gameForbidden.setDelFlag(1);
+			gameForbiddenService.save(gameForbidden);
+			return Result.ok("添加成功！");
 		}
 		return Result.ok("添加成功！");
 	}
@@ -105,23 +124,8 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
 	@PutMapping(value = "/edit")
 	public Result<?> edit(@RequestBody GameForbidden gameForbidden) {
 		if(gameForbiddenService.updateById(gameForbidden)){
-			GameForbiddenRecord gameForbiddenRecord = new GameForbiddenRecord();
-			gameForbiddenRecord.setUpdateTime(gameForbidden.getUpdateTime());
-			gameForbiddenRecord.setUpdateBy(gameForbidden.getUpdateBy());
-			gameForbiddenRecord.setGameForbiddenId(gameForbidden.getId());
-			gameForbiddenRecord.setType(gameForbidden.getType());
-			gameForbiddenRecord.setStartTime(gameForbidden.getStartTime());
-			gameForbiddenRecord.setServerId(gameForbidden.getServerId());
-			gameForbiddenRecord.setReason(gameForbidden.getReason());
-			gameForbiddenRecord.setIsForever(gameForbidden.getIsForever());
-			gameForbiddenRecord.setEndTime(gameForbidden.getEndTime());
-			gameForbiddenRecord.setDelFlag(gameForbidden.getDelFlag());
-			gameForbiddenRecord.setCreateTime(gameForbidden.getCreateTime());
-			gameForbiddenRecord.setCreateBy(gameForbidden.getCreateBy());
-			gameForbiddenRecord.setBanValue(gameForbidden.getBanValue());
-			gameForbiddenRecord.setBanKey(gameForbidden.getBanKey());
-			gameForbiddenRecord.setOperation("更新");
-			gameForbiddenRecordService.save(gameForbiddenRecord);
+			gameForbidden.setDelFlag(1);
+			gameForbiddenService.save(gameForbidden);
 			return Result.ok("编辑成功!");
 		}
 		return Result.error("编辑失败!");
