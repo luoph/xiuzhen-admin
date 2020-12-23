@@ -3,33 +3,17 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    </a-row>
+                <a-row :gutter="24"> </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服活动-单比好礼-任务明细')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
         </div>
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -39,9 +23,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -72,12 +54,14 @@
             </a-table>
         </div>
 
-        <openServiceCampaignSingleGiftItem-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignSingleGiftItem-modal>
+        <open-service-campaign-single-gift-item-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-single-gift-item-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction, httpAction } from "../../api/manage";
+import { filterObj } from "@/utils/util";
 import OpenServiceCampaignSingleGiftItemModal from "./modules/OpenServiceCampaignSingleGiftItemModal";
 
 export default {
@@ -89,6 +73,7 @@ export default {
     data() {
         return {
             description: "开服活动-单比好礼-任务明细管理页面",
+            model: {},
             // 表头
             columns: [
                 {
@@ -101,21 +86,21 @@ export default {
                         return parseInt(index) + 1;
                     }
                 },
-                {
-                    title: "开服活动id",
-                    align: "center",
-                    dataIndex: "campaignId"
-                },
-                {
-                    title: "typeId",
-                    align: "center",
-                    dataIndex: "campaignTypeId"
-                },
-                {
-                    title: "open_service_single_recharge_gift_detail.id",
-                    align: "center",
-                    dataIndex: "giftDetailId"
-                },
+                // {
+                //     title: "开服活动id",
+                //     align: "center",
+                //     dataIndex: "campaignId"
+                // },
+                // {
+                //     title: "活动TypeId",
+                //     align: "center",
+                //     dataIndex: "campaignTypeId"
+                // },
+                // {
+                //     title: "页签详情id",
+                //     align: "center",
+                //     dataIndex: "giftDetailId"
+                // },
                 {
                     title: "任务金额",
                     align: "center",
@@ -132,36 +117,20 @@ export default {
                     dataIndex: "remark"
                 },
                 {
-                    title: "奖励json",
+                    title: "奖励列表",
                     align: "center",
                     dataIndex: "reward"
                 },
                 {
                     title: "createTime",
                     align: "center",
-                    dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
+                    dataIndex: "createTime"
                 },
-                {
-                    title: "updateTime",
-                    align: "center",
-                    dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
-                },
-                {
-                    title: "创建者",
-                    align: "center",
-                    dataIndex: "createBy"
-                },
-                {
-                    title: "更新者",
-                    align: "center",
-                    dataIndex: "updateBy"
-                },
+                // {
+                //     title: "updateTime",
+                //     align: "center",
+                //     dataIndex: "updateTime"
+                // },
                 {
                     title: "操作",
                     dataIndex: "action",
@@ -176,8 +145,7 @@ export default {
                 exportXlsUrl: "game/openServiceCampaignSingleGiftItem/exportXls",
                 importExcelUrl: "game/openServiceCampaignSingleGiftItem/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -186,7 +154,58 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
+        initDictConfig() {},
+        loadData(arg) {
+            if (!this.model.id) {
+                return;
+            }
+
+            if (!this.url.list) {
+                this.$message.error("请设置url.list属性!");
+                return;
+            }
+
+            // 加载数据 若传入参数1则加载第一页的内容
+            if (arg === 1) {
+                this.ipagination.current = 1;
+            }
+
+            // 查询条件
+            var params = this.getQueryParams();
+            this.loading = true;
+            getAction(this.url.list, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.total = res.result.total;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
+        },
+        edit(record) {
+            this.model = record;
+            this.loadData();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({
+                giftDetailId: this.model.id,
+                campaignTypeId: this.model.campaignTypeId,
+                campaignId: this.model.campaignId
+            });
+            this.$refs.modalForm.title = "新增礼包配置";
+        },
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam);
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // typeId、活动id、页签详情id
+            param.campaignId = this.model.campaignId;
+            param.campaignTypeId = this.model.campaignTypeId;
+            param.giftDetailId = this.model.id;
+            return filterObj(param);
         }
     }
 };

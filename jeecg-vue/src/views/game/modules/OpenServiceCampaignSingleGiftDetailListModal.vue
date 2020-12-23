@@ -1,11 +1,9 @@
 <template>
-    <a-card :bordered="false">
-        <!-- 查询区域 -->
-        <div class="table-page-search-wrapper"></div>
+    <a-modal centered :title="title" :width="width" :visible="visible" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
-            <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
+            <a-button type="primary" icon="plus" @click="handleAdd">新增页签</a-button>
         </div>
 
         <!-- table区域-begin -->
@@ -50,25 +48,27 @@
             </a-table>
         </div>
 
-        <open-service-campaign-single-gift-notice-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-single-gift-notice-modal>
-    </a-card>
+        <open-service-campaign-single-gift-detail-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-single-gift-detail-modal>
+    </a-modal>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction, httpAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
-import OpenServiceCampaignSingleGiftNoticeModal from "./modules/OpenServiceCampaignSingleGiftNoticeModal";
+import { getAction } from "../../../api/manage";
+import OpenServiceCampaignSingleGiftDetailModal from "./modules/OpenServiceCampaignSingleGiftDetailModal";
 
 export default {
-    name: "OpenServiceCampaignSingleGiftNoticeList",
+    name: "OpenServiceCampaignSingleGiftDetailList",
     mixins: [JeecgListMixin],
     components: {
-        OpenServiceCampaignSingleGiftNoticeModal
+        OpenServiceCampaignSingleGiftDetailModal
     },
     data() {
         return {
-            description: "开服活动-单比好礼-传闻消息管理页面",
+            description: "开服活动-单笔好礼活动参数管理页面",
+            title: "单笔好礼配置",
+            width: 1200,
             model: {},
             // 表头
             columns: [
@@ -92,39 +92,46 @@ export default {
                 //     align: "center",
                 //     dataIndex: "campaignTypeId"
                 // },
-                // {
-                //     title: "giftDetailId",
-                //     align: "center",
-                //     dataIndex: "giftDetailId"
-                // },
                 {
-                    title: "消息内容",
+                    title: "活动名称",
                     align: "center",
-                    dataIndex: "message"
+                    dataIndex: "name"
                 },
                 {
-                    title: "播放次数",
+                    title: "页签名称",
                     align: "center",
-                    dataIndex: "num"
+                    dataIndex: "tabName"
                 },
                 {
-                    title: "发送邮件",
+                    title: "排序",
                     align: "center",
-                    dataIndex: "email",
-                    customRender: value => {
-                        let text = "--";
-                        if (value === 0) {
-                            text = "否";
-                        } else if (value === 1) {
-                            text = "是";
-                        }
-                        return text;
-                    }
+                    dataIndex: "sort"
                 },
                 {
-                    title: "发送时间",
+                    title: "开始时间",
                     align: "center",
-                    dataIndex: "sendTime"
+                    dataIndex: "startDay"
+                },
+                {
+                    title: "持续时间(天)",
+                    align: "center",
+                    dataIndex: "duration"
+                },
+                {
+                    title: "活动背景图",
+                    align: "center",
+                    dataIndex: "banner",
+                    scopedSlots: { customRender: "imgSlot" }
+                },
+                {
+                    title: "邮件标题",
+                    align: "center",
+                    dataIndex: "emailTitle"
+                },
+                {
+                    title: "邮件描述",
+                    align: "center",
+                    dataIndex: "emailRemark"
                 },
                 {
                     title: "createTime",
@@ -144,11 +151,11 @@ export default {
                 }
             ],
             url: {
-                list: "game/openServiceCampaignSingleGiftNotice/list",
-                delete: "game/openServiceCampaignSingleGiftNotice/delete",
-                deleteBatch: "game/openServiceCampaignSingleGiftNotice/deleteBatch",
-                exportXlsUrl: "game/openServiceCampaignSingleGiftNotice/exportXls",
-                importExcelUrl: "game/openServiceCampaignSingleGiftNotice/importExcel"
+                list: "game/openServiceCampaignSingleGiftDetail/list",
+                delete: "game/openServiceCampaignSingleGiftDetail/delete",
+                deleteBatch: "game/openServiceCampaignSingleGiftDetail/deleteBatch",
+                exportXlsUrl: "game/openServiceCampaignSingleGiftDetail/exportXls",
+                importExcelUrl: "game/openServiceCampaignSingleGiftDetail/importExcel"
             },
             dictOptions: {}
         };
@@ -160,6 +167,11 @@ export default {
     },
     methods: {
         initDictConfig() {},
+        close() {
+            this.$emit("close");
+            this.visible = false;
+            this.dataSource = [];
+        },
         loadData(arg) {
             if (!this.model.id) {
                 return;
@@ -193,30 +205,43 @@ export default {
             this.model = record;
             this.loadData();
         },
-        handleAdd() {
-            this.$refs.modalForm.add({
-                giftDetailId: this.model.id,
-                campaignTypeId: this.model.campaignTypeId,
-                campaignId: this.model.campaignId
-            });
-            this.$refs.modalForm.title = "新增传闻配置";
-        },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
-            // typeId、活动id、页签详情id
+            // 页签id、活动id
+            param.campaignTypeId = this.model.id;
             param.campaignId = this.model.campaignId;
-            param.campaignTypeId = this.model.campaignTypeId;
-            param.giftDetailId = this.model.id;
             return filterObj(param);
+        },
+        /** 关闭弹窗 */
+        handleCancel() {
+            this.close();
+        },
+        handleOk() {
+            this.close();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({ campaignTypeId: this.model.id, campaignId: this.model.campaignId });
+            this.$refs.modalForm.title = "新增页签";
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
         }
-    }
     }
 };
 </script>
 
 <style scoped>
 @import "~@assets/less/common.less";
+
+/** Button按钮间距 */
+.ant-btn {
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
 </style>

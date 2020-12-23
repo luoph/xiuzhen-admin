@@ -3,49 +3,53 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="typeId" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="开始时间(开服第n天, e.g. 0表示开服第1天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天, e.g. 0表示开服第1天)" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="活动页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
-                </a-form-item>
-                <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
                 </a-form-item>
-                <a-form-item label="活动背景图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动背景图"></a-input>
+                <a-form-item label="页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称"></a-input>
+                </a-form-item>
+                <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天)" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <img
+                        v-if="model.banner"
+                        :src="getImgView(model.banner)"
+                        height="100px"
+                        :alt="getImgView(model.banner)"
+                        style="max-width:100%;font-size: 12px;font-style: italic;"
+                    />
+                    <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
                 <a-form-item label="邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['emailTitle', validatorRules.emailTitle]" placeholder="请输入邮件标题"></a-input>
                 </a-form-item>
                 <a-form-item label="邮件描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['emailRemark']" rows="4" placeholder="请输入邮件描述"/>
-                </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="创建者" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入创建者"></a-input>
-                </a-form-item>
-                <a-form-item label="更新者" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['updateBy', validatorRules.updateBy]" placeholder="请输入更新者"></a-input>
+                    <a-textarea v-decorator="['emailRemark']" rows="4" placeholder="请输入邮件描述" />
                 </a-form-item>
             </a-form>
+
+            <a-tabs v-if="isEdit" defaultActiveKey="1">
+                <a-tab-pane tab="任务配置" forceRender key="1">
+                    <open-service-campaign-single-gift-item-list ref="itemList" />
+                </a-tab-pane>
+                <a-tab-pane tab="传闻配置" forceRender key="2">
+                    <open-service-campaign-single-gift-notice-list ref="noticeList" />
+                </a-tab-pane>
+            </a-tabs>
         </a-spin>
     </a-modal>
     <!--
@@ -59,18 +63,25 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import GameImageSelector from "../components/GameImageSelector";
+import OpenServiceCampaignSingleGiftItemList from "../OpenServiceCampaignSingleGiftItemList";
+import OpenServiceCampaignSingleGiftNoticeList from "../OpenServiceCampaignSingleGiftNoticeList";
 
 export default {
     name: "OpenServiceCampaignSingleGiftDetailModal",
     components: {
         JDate,
+        GameImageSelector,
+        OpenServiceCampaignSingleGiftItemList,
+        OpenServiceCampaignSingleGiftNoticeList
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -83,19 +94,15 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 campaignId: {},
-                campaignTypeId: { rules: [{ required: true, message: "请输入typeId!" }] },
-                startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天, e.g. 0表示开服第1天)!" }] },
+                campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
+                startDay: { rules: [{ required: true, message: "请输入开始时间" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
                 tabName: { rules: [{ required: true, message: "请输入活动页签名称!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动背景图!" }] },
                 emailTitle: { rules: [{ required: true, message: "请输入邮件标题!" }] },
-                emailRemark: { rules: [{ required: true, message: "请输入邮件描述!" }] },
-                createTime: {},
-                updateTime: {},
-                createBy: {},
-                updateBy: {},
+                emailRemark: { rules: [{ required: true, message: "请输入邮件描述!" }] }
             },
             url: {
                 add: "game/openServiceCampaignSingleGiftDetail/add",
@@ -103,18 +110,22 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("OpenServiceCampaignSingleGiftDetailModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark", "createTime", "updateTime", "createBy", "updateBy"));
+                this.form.setFieldsValue(
+                    pick(this.model, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark")
+                );
             });
         },
         close() {
@@ -158,8 +169,14 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark", "createTime", "updateTime", "createBy", "updateBy"));
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark"));
         },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
+        }
     }
 };
 </script>
