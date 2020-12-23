@@ -19,7 +19,7 @@
                     <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入播放次数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="是否发送邮件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="是否发送邮件" v-decorator="['type', validatorRules.email]" initialValue="1">
+                    <a-select placeholder="是否发送邮件" v-decorator="['email', validatorRules.email]" initialValue="1">
                         <a-select-option :value="0">否</a-select-option>
                         <a-select-option :value="1">是</a-select-option>
                     </a-select>

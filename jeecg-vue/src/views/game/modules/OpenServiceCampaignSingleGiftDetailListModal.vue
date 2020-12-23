@@ -69,6 +69,7 @@ export default {
             description: "开服活动-单笔好礼活动参数管理页面",
             title: "单笔好礼配置",
             width: 1200,
+            visible: false,
             model: {},
             // 表头
             columns: [
