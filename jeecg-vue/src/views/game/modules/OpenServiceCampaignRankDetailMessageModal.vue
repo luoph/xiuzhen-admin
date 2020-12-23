@@ -13,7 +13,7 @@
                     <a-input-number :disabled="true" v-decorator="['rankDetailId', validatorRules.rankDetailId]" placeholder="请输入详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="传闻推送时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择传闻推送时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%" />
+                    <a-date-picker placeholder="传闻推送时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-input>
@@ -41,6 +41,7 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import moment from "moment";
 
 export default {
     name: "OpenServiceCampaignRankDetailMessageModal",
@@ -92,7 +93,8 @@ export default {
             this.visible = true;
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "sendTime", "message", "num", "email"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "message", "num", "email", "sendTime"));
+                this.form.setFieldsValue({ sendTime: this.model.sendTime ? moment(this.model.sendTime) : null });
             });
         },
         close() {
@@ -115,6 +117,8 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.sendTime = formData.sendTime ? formData.sendTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {

@@ -6,7 +6,7 @@
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="typeId" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -25,7 +25,7 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item label="发送时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择发送时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%" />
+                    <a-date-picker placeholder="传闻推送时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%;" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -41,6 +41,7 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import moment from "moment";
 
 export default {
     name: "OpenServiceCampaignSingleGiftNoticeModal",
@@ -93,6 +94,7 @@ export default {
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "num", "message", "email", "sendTime"));
+                this.form.setFieldsValue({ sendTime: this.model.sendTime ? moment(this.model.sendTime) : null });
             });
         },
         close() {
@@ -115,6 +117,8 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.sendTime = formData.sendTime ? formData.sendTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
