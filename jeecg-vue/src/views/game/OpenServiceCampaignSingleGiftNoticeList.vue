@@ -213,7 +213,6 @@ export default {
             return filterObj(param);
         }
     }
-    }
 };
 </script>
 
