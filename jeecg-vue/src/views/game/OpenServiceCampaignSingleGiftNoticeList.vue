@@ -108,7 +108,7 @@ export default {
                     dataIndex: "num"
                 },
                 {
-                    title: "发送邮件",
+                    title: "是否发送邮件",
                     align: "center",
                     dataIndex: "email",
                     customRender: value => {
