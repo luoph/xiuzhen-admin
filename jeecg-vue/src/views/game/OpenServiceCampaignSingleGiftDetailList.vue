@@ -1,35 +1,15 @@
 <template>
     <a-card :bordered="false">
         <!-- 查询区域 -->
-        <div class="table-page-search-wrapper">
-            <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24"> </a-row>
-            </a-form>
-        </div>
+        <div class="table-page-search-wrapper"></div>
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服活动-单笔好礼活动参数')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
         </div>
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -39,7 +19,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <template slot="htmlSlot" slot-scope="text">
@@ -77,6 +56,8 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction, httpAction } from "../../api/manage";
+import { filterObj } from "@/utils/util";
 import OpenServiceCampaignSingleGiftDetailModal from "./modules/OpenServiceCampaignSingleGiftDetailModal";
 
 export default {
@@ -88,6 +69,7 @@ export default {
     data() {
         return {
             description: "开服活动-单笔好礼活动参数管理页面",
+            model: {},
             // 表头
             columns: [
                 {
@@ -100,30 +82,31 @@ export default {
                         return parseInt(index) + 1;
                     }
                 },
+                // {
+                //     title: "开服活动id",
+                //     align: "center",
+                //     dataIndex: "campaignId"
+                // },
+                // {
+                //     title: "typeId",
+                //     align: "center",
+                //     dataIndex: "campaignTypeId"
+                // },
                 {
-                    title: "开服活动id",
+                    title: "活动名称",
                     align: "center",
-                    dataIndex: "campaignId"
+                    dataIndex: "name"
                 },
                 {
-                    title: "typeId",
-                    align: "center",
-                    dataIndex: "campaignTypeId"
-                },
-                {
-                    title: "开始时间(开服第n天, e.g. 0表示开服第1天)",
-                    align: "center",
-                    dataIndex: "startDay"
-                },
-                {
-                    title: "持续时间(天)",
-                    align: "center",
-                    dataIndex: "duration"
-                },
-                {
-                    title: "活动页签名称",
+                    title: "页签名称",
                     align: "center",
                     dataIndex: "tabName"
+                },
+                {
+                    title: "活动背景图",
+                    align: "center",
+                    dataIndex: "banner",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "排序",
@@ -131,14 +114,14 @@ export default {
                     dataIndex: "sort"
                 },
                 {
-                    title: "活动名称",
+                    title: "开始时间",
                     align: "center",
-                    dataIndex: "name"
+                    dataIndex: "startDay"
                 },
                 {
-                    title: "活动背景图",
+                    title: "持续时间(天)",
                     align: "center",
-                    dataIndex: "banner"
+                    dataIndex: "duration"
                 },
                 {
                     title: "邮件标题",
@@ -183,7 +166,60 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        loadData(arg) {
+            if (!this.model.id) {
+                return;
+            }
+
+            if (!this.url.list) {
+                this.$message.error("请设置url.list属性!");
+                return;
+            }
+
+            // 加载数据 若传入参数1则加载第一页的内容
+            if (arg === 1) {
+                this.ipagination.current = 1;
+            }
+
+            // 查询条件
+            var params = this.getQueryParams();
+            this.loading = true;
+            getAction(this.url.list, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.total = res.result.total;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
+        },
+        edit(record) {
+            this.model = record;
+            this.loadData();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({ campaignTypeId: this.model.id, campaignId: this.model.campaignId });
+            this.$refs.modalForm.title = "新增单笔充值配置";
+        },
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam);
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // typeId、活动id
+            param.campaignId = this.model.campaignId;
+            param.campaignTypeId = this.model.id;
+            return filterObj(param);
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
+        }
     }
 };
 </script>
