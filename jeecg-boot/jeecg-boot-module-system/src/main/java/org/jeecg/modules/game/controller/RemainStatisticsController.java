@@ -10,7 +10,6 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.GameChalcedonyOrder;
 import org.jeecg.modules.game.entity.GameRemainStatistisc;
 import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.service.IGameChannelService;
