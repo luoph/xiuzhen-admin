@@ -9,6 +9,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.entity.GameChalcedonyOrder;
 import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IRechargeOrderService;
@@ -86,7 +87,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
 	 * @param pageSize 分页大小
 	 * @return {@linkplain Result}
 	 */
-	@AutoLog(value = "特惠礼包-列表查询")
+	@AutoLog(value = "今日礼包-列表查询")
 	@GetMapping(value = "/giftBagList")
 	public Result<?> giftBagList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
 	                              @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
@@ -223,6 +224,115 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
 		page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
 		return Result.ok(page);
 	}
+
+	/**
+	 * 分页列表查询
+	 *
+	 * @param pageNo   页码
+	 * @param pageSize 分页大小
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "特惠礼包-列表查询")
+	@GetMapping(value = "/preference")
+	public Result<?> preferenceGiftList (@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+							   @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+							   @RequestParam(name = "days", defaultValue = "0") int days,
+							   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+							   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+							   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+							   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+	) {
+		Page<GameChalcedonyOrder> page = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
+			return Result.ok(page);
+		}
+		// 没有传入时间和天数返回空的数据
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
+			return Result.ok(page);
+		}
+//		// 如果选择开始时间和结束时间是同一天
+//		if (rangeDateBegin.equals(rangeDateEnd)){
+//			rangeDateBegin = rangeDateBegin;
+//			rangeDateEnd = rangeDateEnd + " 23:59:59";
+//		}
+		String channel = gameChannelService.queryChannelNameById(channelId);
+		List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, "特惠礼包");
+		page.setRecords(GameChalcedonyOrders).setTotal(GameChalcedonyOrders.size());
+		return Result.ok(page);
+	}
+
+	/**
+	 * 分页列表查询
+	 *
+	 * @param pageNo   页码
+	 * @param pageSize 分页大小
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "冲榜礼包-列表查询")
+	@GetMapping(value = "/atList")
+	public Result<?> atListGiftList (@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+										 @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+										 @RequestParam(name = "days", defaultValue = "0") int days,
+										 @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+										 @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+										 @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+										 @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+	) {
+		Page<GameChalcedonyOrder> page = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
+			return Result.ok(page);
+		}
+		// 没有传入时间和天数返回空的数据
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
+			return Result.ok(page);
+		}
+//		// 如果选择开始时间和结束时间是同一天
+//		if (rangeDateBegin.equals(rangeDateEnd)){
+//			rangeDateBegin = rangeDateBegin;
+//			rangeDateEnd = rangeDateEnd + " 23:59:59";
+//		}
+		String channel = gameChannelService.queryChannelNameById(channelId);
+		List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, "冲榜礼包");
+		page.setRecords(GameChalcedonyOrders).setTotal(GameChalcedonyOrders.size());
+		return Result.ok(page);
+	}
+
+	/**
+	 * 分页列表查询
+	 *
+	 * @param pageNo   页码
+	 * @param pageSize 分页大小
+	 * @return {@linkplain Result}
+	 */
+	@AutoLog(value = "0元购-列表查询")
+	@GetMapping(value = "/zeroBuy")
+	public Result<?> zeroBuyGiftList (@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+									 @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+									 @RequestParam(name = "days", defaultValue = "0") int days,
+									 @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+									 @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+									 @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+									 @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+	) {
+		Page<GameChalcedonyOrder> page = new Page<>(pageNo, pageSize);
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
+			return Result.ok(page);
+		}
+		// 没有传入时间和天数返回空的数据
+		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
+			return Result.ok(page);
+		}
+//		// 如果选择开始时间和结束时间是同一天
+//		if (rangeDateBegin.equals(rangeDateEnd)){
+//			rangeDateBegin = rangeDateBegin;
+//			rangeDateEnd = rangeDateEnd + " 23:59:59";
+//		}
+		String channel = gameChannelService.queryChannelNameById(channelId);
+		List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, "0元购");
+		page.setRecords(GameChalcedonyOrders).setTotal(GameChalcedonyOrders.size());
+		return Result.ok(page);
+	}
+
 
 	/**
 	 * 导出excel
