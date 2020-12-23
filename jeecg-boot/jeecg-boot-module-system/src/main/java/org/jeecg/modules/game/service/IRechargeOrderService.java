@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.modules.game.entity.GameChalcedonyOrder;
 import org.jeecg.modules.game.entity.RechargeOrder;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface IRechargeOrderService extends IService<RechargeOrder> {
 
     /**
-     * 查询礼包
+     * 查询充值礼包
      *
      * @param rangeDateBegin
      * @param rangeDateEnd
@@ -25,4 +26,18 @@ public interface IRechargeOrderService extends IService<RechargeOrder> {
      * @return
      */
     List<RechargeOrder> queryGiftList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, int goodsType);
+
+    /**
+     * 查询消耗礼包
+     *
+     * @param rangeDateBegin
+     * @param rangeDateEnd
+     * @param days
+     * @param serverId
+     * @param channel
+     * @param goodsType
+     * @return
+     */
+    List<GameChalcedonyOrder> queryExpendGiftList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, String goodsType);
+
 }
