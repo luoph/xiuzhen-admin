@@ -1,75 +1,15 @@
 <template>
     <a-card :bordered="false">
         <!-- 查询区域 -->
-        <div class="table-page-search-wrapper">
-            <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="开服活动id">
-                            <a-input placeholder="请输入开服活动id" v-model="queryParam.campaignId"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="开服活动项类型">
-                            <a-select placeholder="请选择开服活动项类型" v-model="queryParam.type" initialValue="1">
-                                <!-- 1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗 -->
-                                <a-select-option :value="1">1-开服排行</a-select-option>
-                                <a-select-option :value="2">2-开服礼包</a-select-option>
-                                <a-select-option :value="3">3-单笔充值</a-select-option>
-                                <a-select-option :value="4">4-寻宝</a-select-option>
-                                <a-select-option :value="5">5-道具消耗</a-select-option>
-                            </a-select>
-                        </a-form-item>
-                    </a-col>
-                    <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="排序">
-                                <a-input placeholder="请输入排序" v-model="queryParam.sort"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="活动备注">
-                                <a-input placeholder="请输入活动备注" v-model="queryParam.remark"></a-input>
-                            </a-form-item>
-                        </a-col>
-                    </template>
-                    <a-col :md="6" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-                            <a style="margin-left: 8px" @click="handleToggleSearch">
-                                {{ toggleSearchStatus ? "收起" : "展开" }}
-                                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
-                            </a>
-                        </span>
-                    </a-col>
-                </a-row>
-            </a-form>
-        </div>
+        <div class="table-page-search-wrapper"></div>
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服活动-类型(2级)')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
         </div>
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -79,7 +19,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <template slot="htmlSlot" slot-scope="text">
@@ -97,6 +36,8 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
+                    <a @click="handleEditDetail(record)">活动配置</a>
+                    <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
@@ -111,23 +52,37 @@
             </a-table>
         </div>
 
-        <openServiceCampaignType-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignType-modal>
+        <open-service-campaign-type-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-type-modal>
+
+        <!-- 不同的类型开服活动对应不同的弹窗 -->
+        <open-service-campaign-gift-detail-list-modal ref="giftDetailListModal"></open-service-campaign-gift-detail-list-modal>
+        <open-service-campaign-rank-detail-list-modal ref="rankDetailListModal"></open-service-campaign-rank-detail-list-modal>
+        <open-service-campaign-single-gift-detail-list-modal ref="singleGiftDetailListModal"></open-service-campaign-single-gift-detail-list-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction, httpAction } from "../../api/manage";
+import { filterObj } from "@/utils/util";
 import OpenServiceCampaignTypeModal from "./modules/OpenServiceCampaignTypeModal";
+import OpenServiceCampaignRankDetailListModal from "./modules/OpenServiceCampaignRankDetailListModal";
+import OpenServiceCampaignGiftDetailListModal from "./modules/OpenServiceCampaignGiftDetailListModal";
+import OpenServiceCampaignSingleGiftDetailListModal from "./modules/OpenServiceCampaignSingleGiftDetailListModal";
 
 export default {
     name: "OpenServiceCampaignTypeList",
     mixins: [JeecgListMixin],
     components: {
-        OpenServiceCampaignTypeModal
+        OpenServiceCampaignTypeModal,
+        OpenServiceCampaignGiftDetailListModal,
+        OpenServiceCampaignRankDetailListModal,
+        OpenServiceCampaignSingleGiftDetailListModal
     },
     data() {
         return {
             description: "开服活动-类型(2级)管理页面",
+            model: {},
             // 表头
             columns: [
                 {
@@ -209,7 +164,77 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        loadData(arg) {
+            if (!this.model.id) {
+                return;
+            }
+
+            if (!this.url.list) {
+                this.$message.error("请设置url.list属性!");
+                return;
+            }
+
+            // 加载数据 若传入参数1则加载第一页的内容
+            if (arg === 1) {
+                this.ipagination.current = 1;
+            }
+
+            // 查询条件
+            var params = this.getQueryParams();
+            this.loading = true;
+            getAction(this.url.list, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.total = res.result.total;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
+        },
+        edit(record) {
+            this.model = record;
+            this.loadData();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({
+                campaignId: this.model.id
+            });
+            this.$refs.modalForm.title = "新增礼包配置";
+        },
+        handleEditDetail(record) {
+            if (record.type === 1) {
+                // 1-开服排行
+                this.$refs.rankDetailListModal.title = "开服排行配置";
+                this.$refs.rankDetailListModal.visible = true;
+                this.$refs.rankDetailListModal.edit(record);
+            } else if (record.type === 2) {
+                // 2-开服礼包
+                this.$refs.giftDetailListModal.title = "开服礼包配置";
+                this.$refs.giftDetailListModal.visible = true;
+                this.$refs.giftDetailListModal.edit(record);
+            } else if (record.type === 3) {
+                // 3-单笔充值
+                this.$refs.singleGiftDetailListModal.title = "单笔充值配置";
+                this.$refs.singleGiftDetailListModal.visible = true;
+                this.$refs.singleGiftDetailListModal.edit(record);
+            } else if (record.type === 4) {
+                // 4-寻宝
+            } else if (record.type === 5) {
+                // 5-道具消耗
+            }
+        },
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam);
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // typeId、活动id、页签详情id
+            param.campaignId = this.model.id;
+            return filterObj(param);
+        }
     }
 };
 </script>

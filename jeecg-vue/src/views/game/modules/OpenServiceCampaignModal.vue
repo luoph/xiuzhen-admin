@@ -29,47 +29,14 @@
                         <a-select-option :value="1">开启</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="开服活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <div>
-                        <a-row :gutter="24">
-                            <a-col :span="4" style="text-align:center;">#</a-col>
-                            <a-col :span="8" style="text-align:center;">活动类型</a-col>
-                            <a-col :span="6" style="text-align:center;">页签顺序</a-col>
-                            <a-col :span="6" style="text-align:center;">操作</a-col>
-                        </a-row>
-                        <a-row :gutter="24" v-for="(item, index) in typeList" :key="index">
-                            <a-col :span="4">{{ "活动类型" + (index + 1) }} </a-col>
-                            <a-col :span="8">
-                                <a-form-item>
-                                    <!-- 已经存在的type不允许修改活动类型 -->
-                                    <a-select :disabled="isEdit && item.id != null" placeholder="活动类型" v-model="item.type">
-                                        <a-select-option :value="1">1-开服排行</a-select-option>
-                                        <a-select-option :value="2">2-开服礼包</a-select-option>
-                                        <a-select-option :value="3">3-单笔充值</a-select-option>
-                                        <a-select-option :value="4">4-寻宝</a-select-option>
-                                        <a-select-option :value="5">5-道具消耗</a-select-option>
-                                    </a-select>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="6">
-                                <a-form-item>
-                                    <a-input-number v-model="item.sort" placeholder="页签顺序" style="width: 100%;"></a-input-number>
-                                </a-form-item>
-                            </a-col>
-                            <a-col :span="6">
-                                <a-button style="width: 50px; margin: 3px" @click="delRowCustom(index)" icon="minus"></a-button>
-                                <a-button style="width: 50px; margin: 3px" @click="editRowCustom(index)" icon="setting"></a-button>
-                            </a-col>
-                        </a-row>
-                        <a-button style="width: 100%; margin-top: 8px; margin-bottom: 8px" type="dashed" icon="plus" @click="addRowCustom">添加</a-button>
-                    </div>
-                </a-form-item>
             </a-form>
-        </a-spin>
 
-        <open-service-campaign-gift-detail-list-modal ref="giftDetailListModal"></open-service-campaign-gift-detail-list-modal>
-        <open-service-campaign-rank-detail-list-modal ref="rankDetailListModal"></open-service-campaign-rank-detail-list-modal>
-        <open-service-campaign-single-gift-detail-list-modal ref="singleGiftDetailListModal"></open-service-campaign-single-gift-detail-list-modal>
+            <a-tabs v-if="isEdit" defaultActiveKey="1">
+                <a-tab-pane tab="活动类型配置" key="1">
+                    <open-service-campaign-type-list ref="typeList"></open-service-campaign-type-list>
+                </a-tab-pane>
+            </a-tabs>
+        </a-spin>
     </a-modal>
     <!--
         <a-button type="primary" @click="handleOk">确定</a-button>
@@ -84,19 +51,15 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import GameServerSelector from "@/components/gameserver/GameServerSelector";
 import GameImageSelector from "../components/GameImageSelector";
-import OpenServiceCampaignRankDetailListModal from "./OpenServiceCampaignRankDetailListModal";
-import OpenServiceCampaignGiftDetailListModal from "./OpenServiceCampaignGiftDetailListModal";
-import OpenServiceCampaignSingleGiftDetailListModal from "./OpenServiceCampaignSingleGiftDetailListModal";
+import OpenServiceCampaignTypeList from "../OpenServiceCampaignTypeList";
 
 export default {
     name: "OpenServiceCampaignModal",
     components: {
         JDate,
-        GameServerSelector,
         GameImageSelector,
-        OpenServiceCampaignGiftDetailListModal,
-        OpenServiceCampaignRankDetailListModal,
-        OpenServiceCampaignSingleGiftDetailListModal
+        GameServerSelector,
+        OpenServiceCampaignTypeList
     },
     data() {
         return {
@@ -107,8 +70,6 @@ export default {
             isEdit: false,
             isAutoOpen: false,
             model: {},
-            // 活动子类型列表
-            typeList: [],
             labelCol: {
                 xs: { span: 24 },
                 sm: { span: 5 }
@@ -146,15 +107,16 @@ export default {
 
             if (this.isEdit) {
                 this.isAutoOpen = this.model.autoOpen === 1;
-                this.typeList = this.model.typeList;
             } else {
                 this.isAutoOpen = false;
                 this.model.status = 1;
                 this.model.autoOpen = 0;
-                this.typeList = [];
             }
 
             this.$nextTick(() => {
+                if (this.isEdit) {
+                    this.$refs.typeList.edit(record);
+                }
                 this.form.setFieldsValue(pick(this.model, "name", "serverIds", "icon", "status", "autoOpen", "remark"));
             });
         },
@@ -180,7 +142,6 @@ export default {
                     let formData = Object.assign(this.model, values);
 
                     // 子页签列表
-                    formData.typeList = this.typeList ? this.typeList : [];
                     formData.autoOpen = this.isAutoOpen ? 1 : 0;
                     // 创建时间参数不传递后台
                     delete formData.createTime;
@@ -216,40 +177,6 @@ export default {
         },
         onAutoOpenChose(value) {
             console.log(value);
-        },
-        addRowCustom() {
-            this.typeList.push({ type: 1, sort: this.typeList.length + 1 });
-            this.$forceUpdate();
-        },
-        delRowCustom(index) {
-            console.log(index);
-            this.typeList.splice(index, 1);
-            this.$forceUpdate();
-        },
-        editRowCustom(index) {
-            console.log(this.typeList[index]);
-            let typeInfo = this.typeList[index];
-            if (typeInfo.type === 1) {
-                // 1-开服排行
-                this.$refs.rankDetailListModal.title = "开服排行配置";
-                this.$refs.rankDetailListModal.visible = true;
-                this.$refs.rankDetailListModal.edit(typeInfo);
-            } else if (typeInfo.type === 2) {
-                // 2-开服礼包
-                this.$refs.giftDetailListModal.title = "开服礼包配置";
-                this.$refs.giftDetailListModal.visible = true;
-                this.$refs.giftDetailListModal.edit(typeInfo);
-            } else if (typeInfo.type === 3) {
-                // 3-单笔充值
-                this.$refs.singleGiftDetailListModal.title = "单笔充值配置";
-                this.$refs.singleGiftDetailListModal.visible = true;
-                this.$refs.singleGiftDetailListModal.edit(typeInfo);
-            } else if (typeInfo.type === 4) {
-                // 4-寻宝
-            } else if (typeInfo.type === 5) {
-                // 5-道具消耗
-            }
-            this.$forceUpdate();
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {
