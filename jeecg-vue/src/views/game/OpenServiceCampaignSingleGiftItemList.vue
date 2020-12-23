@@ -194,7 +194,7 @@ export default {
                 campaignTypeId: this.model.campaignTypeId,
                 campaignId: this.model.campaignId
             });
-            this.$refs.modalForm.title = "新增礼包配置";
+            this.$refs.modalForm.title = "新增充值任务";
         },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
