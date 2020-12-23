@@ -106,7 +106,7 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner",
-                    width: "25%",
+                    width: 200,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
