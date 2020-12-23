@@ -134,7 +134,7 @@ export default {
                     dataIndex: "emailRemark"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime"
                 },
