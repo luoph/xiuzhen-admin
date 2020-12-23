@@ -3,38 +3,29 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="typeId" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_single_recharge_gift_detail.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入open_service_single_recharge_gift_detail.id" style="width: 100%" />
+                <a-form-item label="giftDetailId" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入giftDetailId" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="消息内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['message']" rows="4" placeholder="请输入消息内容" />
                 </a-form-item>
                 <a-form-item label="播放次数" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入播放次数" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="消息内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['message']" rows="4" placeholder="请输入消息内容"/>
-                </a-form-item>
-                <a-form-item label="发送方式 0-非邮件 1-邮件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['email', validatorRules.email]" placeholder="请输入发送方式 0-非邮件 1-邮件" style="width: 100%" />
+                <a-form-item label="是否发送邮件" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="是否发送邮件" v-decorator="['type', validatorRules.email]" initialValue="1">
+                        <a-select-option :value="0">否</a-select-option>
+                        <a-select-option :value="1">是</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="发送时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择发送时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="创建者" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入创建者"></a-input>
-                </a-form-item>
-                <a-form-item label="修改者" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['updateBy', validatorRules.updateBy]" placeholder="请输入修改者"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -54,14 +45,15 @@ import JDate from "@/components/jeecg/JDate";
 export default {
     name: "OpenServiceCampaignSingleGiftNoticeModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -73,17 +65,13 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                campaignId: {},
-                campaignTypeId: { rules: [{ required: true, message: "请输入typeId!" }] },
-                giftDetailId: { rules: [{ required: true, message: "请输入open_service_single_recharge_gift_detail.id!" }] },
+                campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
+                campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
+                giftDetailId: { rules: [{ required: true, message: "请输入页签详情id!" }] },
                 num: { rules: [{ required: true, message: "请输入播放次数!" }] },
-                message: {},
-                email: { rules: [{ required: true, message: "请输入发送方式 0-非邮件 1-邮件!" }] },
-                sendTime: {},
-                createTime: {},
-                updateTime: {},
-                createBy: {},
-                updateBy: {},
+                message: { rules: [{ required: true, message: "请输入传闻内容!" }] },
+                email: { rules: [{ required: true, message: "请输入是否发送邮件!" }] },
+                sendTime: { rules: [{ required: true, message: "请输入是否发送邮件!" }] }
             },
             url: {
                 add: "game/openServiceCampaignSingleGiftNotice/add",
@@ -91,18 +79,20 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
+            console.log("OpenServiceCampaignSingleGiftNoticeModal, model:", JSON.stringify(this.model));
             this.visible = true;
+
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "num", "message", "email", "sendTime", "createTime", "updateTime", "createBy", "updateBy"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "num", "message", "email", "sendTime"));
             });
         },
         close() {
@@ -146,8 +136,8 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "giftDetailId", "num", "message", "email", "sendTime", "createTime", "updateTime", "createBy", "updateBy"));
-        },
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "giftDetailId", "num", "message", "email", "sendTime"));
+        }
     }
 };
 </script>

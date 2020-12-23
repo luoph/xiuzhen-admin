@@ -69,6 +69,7 @@
 
         <open-service-campaign-gift-detail-list-modal ref="giftDetailListModal"></open-service-campaign-gift-detail-list-modal>
         <open-service-campaign-rank-detail-list-modal ref="rankDetailListModal"></open-service-campaign-rank-detail-list-modal>
+        <open-service-campaign-single-gift-detail-list-modal ref="singleGiftDetailListModal"></open-service-campaign-single-gift-detail-list-modal>
     </a-modal>
     <!--
         <a-button type="primary" @click="handleOk">确定</a-button>
@@ -85,6 +86,7 @@ import GameServerSelector from "@/components/gameserver/GameServerSelector";
 import GameImageSelector from "../components/GameImageSelector";
 import OpenServiceCampaignRankDetailListModal from "./OpenServiceCampaignRankDetailListModal";
 import OpenServiceCampaignGiftDetailListModal from "./OpenServiceCampaignGiftDetailListModal";
+import OpenServiceCampaignSingleGiftDetailListModal from "./OpenServiceCampaignSingleGiftDetailListModal";
 
 export default {
     name: "OpenServiceCampaignModal",
@@ -93,7 +95,8 @@ export default {
         GameServerSelector,
         GameImageSelector,
         OpenServiceCampaignGiftDetailListModal,
-        OpenServiceCampaignRankDetailListModal
+        OpenServiceCampaignRankDetailListModal,
+        OpenServiceCampaignSingleGiftDetailListModal
     },
     data() {
         return {
@@ -238,6 +241,9 @@ export default {
                 this.$refs.giftDetailListModal.edit(typeInfo);
             } else if (typeInfo.type === 3) {
                 // 3-单笔充值
+                this.$refs.singleGiftDetailListModal.title = "单笔充值配置";
+                this.$refs.singleGiftDetailListModal.visible = true;
+                this.$refs.singleGiftDetailListModal.edit(typeInfo);
             } else if (typeInfo.type === 4) {
                 // 4-寻宝
             } else if (typeInfo.type === 5) {

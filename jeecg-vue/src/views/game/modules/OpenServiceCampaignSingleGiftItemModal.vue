@@ -3,14 +3,14 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="typeId" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_single_recharge_gift_detail.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入open_service_single_recharge_gift_detail.id" style="width: 100%" />
+                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入页签详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="任务金额" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['amount', validatorRules.amount]" placeholder="请输入任务金额" style="width: 100%" />
@@ -21,20 +21,8 @@
                 <a-form-item label="任务描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入任务描述"></a-input>
                 </a-form-item>
-                <a-form-item label="奖励json" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励json"></a-input>
-                </a-form-item>
-                <a-form-item label="createTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择createTime" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="updateTime" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择updateTime" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="创建者" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入创建者"></a-input>
-                </a-form-item>
-                <a-form-item label="更新者" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['updateBy', validatorRules.updateBy]" placeholder="请输入更新者"></a-input>
+                <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -54,14 +42,15 @@ import JDate from "@/components/jeecg/JDate";
 export default {
     name: "OpenServiceCampaignSingleGiftItemModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -73,17 +62,13 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                campaignId: {},
+                campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入typeId!" }] },
-                giftDetailId: { rules: [{ required: true, message: "请输入open_service_single_recharge_gift_detail.id!" }] },
+                giftDetailId: { rules: [{ required: true, message: "请输入页签详情id" }] },
                 amount: { rules: [{ required: true, message: "请输入任务金额!" }] },
-                limitTimes: {},
-                remark: {},
-                reward: { rules: [{ required: true, message: "请输入奖励json!" }] },
-                createTime: {},
-                updateTime: {},
-                createBy: {},
-                updateBy: {},
+                limitTimes: { rules: [{ required: true, message: "请输入领取上限次数!" }] },
+                remark: { rules: [{ required: true, message: "请输入任务描述!" }] },
+                reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
             },
             url: {
                 add: "game/openServiceCampaignSingleGiftItem/add",
@@ -91,18 +76,20 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
+            console.log("OpenServiceCampaignSingleGiftItemModal, model:", JSON.stringify(this.model));
             this.visible = true;
+
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "amount", "limitTimes", "remark", "reward", "createTime", "updateTime", "createBy", "updateBy"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "giftDetailId", "amount", "limitTimes", "remark", "reward"));
             });
         },
         close() {
@@ -146,8 +133,8 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "giftDetailId", "amount", "limitTimes", "remark", "reward", "createTime", "updateTime", "createBy", "updateBy"));
-        },
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "giftDetailId", "amount", "limitTimes", "remark", "reward"));
+        }
     }
 };
 </script>
