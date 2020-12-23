@@ -9,7 +9,7 @@
                 <a-form-item label="typeId" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="giftDetailId" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入giftDetailId" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="消息内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
