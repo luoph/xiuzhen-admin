@@ -158,9 +158,9 @@ export default {
             this.$nextTick(() => {
                 if (this.isEdit) {
                     this.$refs.messageList.edit(record);
-                    this.$refs.rankingList.edit(record);
-                    this.$refs.scoreList.edit(record);
                     this.$refs.standardList.edit(record);
+                    this.$refs.scoreList.edit(record);
+                    this.$refs.rankingList.edit(record);
                 }
 
                 this.form.setFieldsValue(

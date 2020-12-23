@@ -215,7 +215,7 @@ export default {
             // typeId、活动id、页签详情id
             param.campaignId = this.model.campaignId;
             param.campaignTypeId = this.model.campaignTypeId;
-            param.giftDetailId = this.model.id;
+            param.rankDetailId = this.model.id;
             return filterObj(param);
         }
     }
