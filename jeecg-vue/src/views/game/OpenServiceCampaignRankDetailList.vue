@@ -130,12 +130,14 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner",
+                    width: 200,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动宣传奖励图",
                     align: "center",
                     dataIndex: "rewardImg",
+                    width: 50,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
