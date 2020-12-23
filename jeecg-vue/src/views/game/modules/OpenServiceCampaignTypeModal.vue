@@ -6,8 +6,8 @@
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="开服活动项类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select :disabled="isEdit" placeholder="请选择开服活动项类型" v-decorator="['type', validatorRules.type]" initialValue="1">
+                <a-form-item label="开服活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select :disabled="isEdit" placeholder="请选择开服活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
                         <!-- 1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗 -->
                         <a-select-option :value="1">1-开服排行</a-select-option>
                         <a-select-option :value="2">2-开服礼包</a-select-option>
@@ -80,7 +80,7 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
-                type: { rules: [{ required: true, message: "请输入开服活动项类型!" }] },
+                type: { rules: [{ required: true, message: "请输入开服活动类型!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 remark: { rules: [{ required: true, message: "请输入活动备注!" }] }
             },

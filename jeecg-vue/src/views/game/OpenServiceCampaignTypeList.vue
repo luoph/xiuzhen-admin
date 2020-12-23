@@ -101,7 +101,7 @@ export default {
                     dataIndex: "campaignId"
                 },
                 {
-                    title: "开服活动项类型",
+                    title: "开服活动类型",
                     align: "center",
                     dataIndex: "type",
                     // <!-- 1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗 -->
