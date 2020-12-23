@@ -181,11 +181,11 @@ export default {
                     align: "center",
                     dataIndex: "createTime"
                 },
-                {
-                    title: "更新时间",
-                    align: "center",
-                    dataIndex: "updateTime"
-                },
+                // {
+                //     title: "更新时间",
+                //     align: "center",
+                //     dataIndex: "updateTime"
+                // },
                 {
                     title: "操作",
                     dataIndex: "action",

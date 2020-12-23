@@ -3,8 +3,7 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    </a-row>
+                <a-row :gutter="24"> </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
@@ -26,7 +25,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -41,7 +41,6 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -152,31 +151,15 @@ export default {
                     dataIndex: "emailRemark"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
+                    dataIndex: "createTime"
                 },
-                {
-                    title: "updateTime",
-                    align: "center",
-                    dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
-                },
-                {
-                    title: "创建者",
-                    align: "center",
-                    dataIndex: "createBy"
-                },
-                {
-                    title: "更新者",
-                    align: "center",
-                    dataIndex: "updateBy"
-                },
+                // {
+                //     title: "更新时间",
+                //     align: "center",
+                //     dataIndex: "updateTime"
+                // },
                 {
                     title: "操作",
                     dataIndex: "action",
@@ -191,8 +174,7 @@ export default {
                 exportXlsUrl: "game/openServiceCampaignSingleGiftDetail/exportXls",
                 importExcelUrl: "game/openServiceCampaignSingleGiftDetail/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -201,8 +183,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        }
+        initDictConfig() {}
     }
 };
 </script>

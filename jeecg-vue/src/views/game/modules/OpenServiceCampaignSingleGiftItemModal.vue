@@ -19,10 +19,10 @@
                     <a-input-number v-decorator="['limitTimes', validatorRules.limitTimes]" placeholder="请输入领取上限次数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="任务描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入任务描述"></a-input>
+                    <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入任务描述"></a-textarea>
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
+                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
             </a-form>
         </a-spin>
