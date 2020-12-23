@@ -123,6 +123,11 @@ export default {
             console.log("OpenServiceCampaignSingleGiftDetailModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
+                if (this.isEdit) {
+                    this.$refs.itemList.edit(record);
+                    this.$refs.noticeList.edit(record);
+                }
+
                 this.form.setFieldsValue(
                     pick(this.model, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark")
                 );
