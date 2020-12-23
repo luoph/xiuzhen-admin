@@ -28,7 +28,7 @@
                     <a-textarea v-decorator="['rareReward', validatorRules.rareReward]" placeholder="请输入稀有奖励列表"></a-textarea>
                 </a-form-item>
                 <a-form-item label="广告引导显示时长(秒)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['adShowTime', validatorRules.adShowTime]" placeholder="请输入广告引导显示时长(秒)"></a-input-number>
+                    <a-input-number v-decorator="['adShowTime', validatorRules.adShowTime]" placeholder="请输入广告引导显示时长(秒)" style="width: 100%"></a-input-number>
                 </a-form-item>
                 <a-form-item label="广告引导内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入广告引导内容"></a-textarea>
@@ -101,7 +101,9 @@ export default {
             this.visible = true;
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message"));
+                this.form.setFieldsValue(
+                    pick(this.model, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message", "adShowTime")
+                );
             });
         },
         close() {
@@ -145,7 +147,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message"));
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "rankDetailId", "minRank", "maxRank", "score", "reward", "rareReward", "message", "adShowTime"));
         }
     }
 };
