@@ -129,6 +129,7 @@ export default {
                 {
                     title: "奖励列表",
                     align: "center",
+                    width: 240,
                     dataIndex: "reward"
                 },
                 {

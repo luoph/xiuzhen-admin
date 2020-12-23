@@ -119,10 +119,11 @@ export default {
                 {
                     title: "奖励列表",
                     align: "center",
+                    width: 240,
                     dataIndex: "reward"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime"
                 },
