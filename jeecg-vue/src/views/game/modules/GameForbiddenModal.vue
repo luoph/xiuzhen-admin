@@ -25,9 +25,9 @@
                 <a-form-item label="封禁原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因"></a-input>
                 </a-form-item>
-                <a-form-item label="数据状态	" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['delFlag', validatorRules.delFlag]" placeholder="请输入删除状态：0-未删除 1-已删除	" style="width: 100%" />
-                </a-form-item>
+                <!-- <a-form-item label="数据状态	" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input disabled v-decorator="['delFlag', validatorRules.delFlag]" placeholder="请输入删除状态：0-未删除 1-已删除	" initialValue="0" style="width: 100%" />
+                </a-form-item> -->
                 <a-form-item label="封禁时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="请选择状态" v-decorator="['isForever', validatorRules.isForever]">
                         <a-select-option :value="0">临时</a-select-option>
@@ -40,7 +40,7 @@
                 <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <!-- <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -51,7 +51,7 @@
                 </a-form-item>
                 <a-form-item label="操作人" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['updateBy', validatorRules.updateBy]" placeholder="请输入操作人"></a-input>
-                </a-form-item>
+                </a-form-item> -->
             </a-form>
         </a-spin>
     </a-modal>
@@ -95,7 +95,7 @@ export default {
                 banKey: { rules: [{ required: true, message: "请输入playerId/ip/deviceId!" }] },
                 banValue: { rules: [{ required: true, message: "请输入对应 ban_type 的值!" }] },
                 reason: { rules: [{ required: true, message: "请输入封禁原因!" }] },
-                delFlag: { rules: [{ required: true, message: "请输入删除状态：0-未删除 1-已删除	!" }] },
+                // delFlag: { rules: [{ required: true, message: "请输入删除状态：0-未删除 1-已删除	!" }] },
                 isForever: { rules: [{ required: true, message: "请输入0-临时 1-永久!" }] },
                 startTime: {},
                 endTime: {},
