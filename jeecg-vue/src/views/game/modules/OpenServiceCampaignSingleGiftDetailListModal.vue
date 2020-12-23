@@ -56,7 +56,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
 import { getAction } from "../../../api/manage";
-import OpenServiceCampaignSingleGiftDetailModal from "./modules/OpenServiceCampaignSingleGiftDetailModal";
+import OpenServiceCampaignSingleGiftDetailModal from "./OpenServiceCampaignSingleGiftDetailModal";
 
 export default {
     name: "OpenServiceCampaignSingleGiftDetailList",
