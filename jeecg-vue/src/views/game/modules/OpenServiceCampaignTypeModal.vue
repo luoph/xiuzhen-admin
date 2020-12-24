@@ -24,18 +24,9 @@
                 </a-form-item>
             </a-form>
 
-            <a-tabs v-if="isEdit" defaultActiveKey="1">
-                <!-- 1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗 -->
-                <a-tab-pane v-if="model.type === 1" tab="开服排行配置" key="1">
-                    <open-service-campaign-rank-detail-list ref="rankList" />
-                </a-tab-pane>
-                <a-tab-pane v-if="model.type === 2" tab="开服礼包配置" key="2">
-                    <open-service-campaign-gift-detail-list ref="giftList" />
-                </a-tab-pane>
-                <a-tab-pane v-if="model.type === 3" tab="单笔充值配置" key="3">
-                    <open-service-campaign-single-gift-detail-list ref="singleGiftList" />
-                </a-tab-pane>
-            </a-tabs>
+            <open-service-campaign-rank-detail-list v-if="isEdit && model.type === 1" ref="rankList" />
+            <open-service-campaign-gift-detail-list v-if="isEdit && model.type === 2" ref="giftList" />
+            <open-service-campaign-single-gift-detail-list v-if="isEdit && model.type === 3" ref="singleGiftList" />
         </a-spin>
     </a-modal>
     <!--
