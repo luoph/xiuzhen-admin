@@ -14,7 +14,7 @@
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="备注">
-                            <a-input placeholder="请输入备注" v-model="queryParam.remark"></a-input>
+                            <j-input placeholder="请输入备注模糊查询" v-model="queryParam.remark"></j-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
