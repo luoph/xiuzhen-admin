@@ -87,7 +87,7 @@ public class OpenServiceCampaignSingleGiftDetail extends BaseEntity {
      * 邮件描述
      */
     @Excel(name = "邮件描述", width = 15)
-    private java.lang.String emailRemark;
+    private java.lang.String emailContent;
 
     /**
      * 帮助信息

@@ -132,7 +132,7 @@ export default {
                 {
                     title: "邮件描述",
                     align: "center",
-                    dataIndex: "emailRemark"
+                    dataIndex: "emailContent"
                 },
                 {
                     title: "帮助信息",
