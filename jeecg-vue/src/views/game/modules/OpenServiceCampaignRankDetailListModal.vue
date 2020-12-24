@@ -163,7 +163,9 @@ export default {
                 {
                     title: "帮助信息",
                     align: "center",
-                    dataIndex: "helpMsg"
+                    width: 180,
+                    dataIndex: "helpMsg",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "创建时间",
@@ -270,5 +272,16 @@ export default {
 .ant-btn {
     margin-left: 30px;
     margin-bottom: 30px;
+}
+.largeTextContainer {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: nowrap;
+    max-height: 200px;
+}
+
+.largeText {
+    white-space: normal;
+    word-break: break-word;
 }
 </style>
