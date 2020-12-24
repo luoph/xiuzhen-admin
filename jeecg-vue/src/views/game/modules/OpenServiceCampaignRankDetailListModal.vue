@@ -145,11 +145,11 @@ export default {
                     align: "center",
                     dataIndex: "combatPower"
                 },
-                {
-                    title: "排行玩家数量",
-                    align: "center",
-                    dataIndex: "rankNum"
-                },
+                // {
+                //     title: "排行玩家数量",
+                //     align: "center",
+                //     dataIndex: "rankNum"
+                // },
                 {
                     title: "奖励邮件id",
                     align: "center",

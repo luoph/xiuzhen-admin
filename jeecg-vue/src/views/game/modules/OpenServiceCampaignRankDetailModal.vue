@@ -50,9 +50,9 @@
                 <a-form-item label="活动宣传仙力" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['combatPower', validatorRules.combatPower]" placeholder="请输入活动宣传仙力" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="排行玩家数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <!-- <a-form-item label="排行玩家数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['rankNum', validatorRules.rankNum]" placeholder="请输入排行玩家数量" style="width: 100%" />
-                </a-form-item>
+                </a-form-item> -->
                 <a-form-item label="排名奖励邮件id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['rankRewardEmail', validatorRules.rankRewardEmail]" placeholder="请输入排名奖励邮件id" style="width: 100%" />
                 </a-form-item>
@@ -136,7 +136,7 @@ export default {
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
                 rewardImg: { rules: [{ required: true, message: "请输入活动宣传奖励图!" }] },
                 combatPower: { rules: [{ required: true, message: "请输入活动宣传仙力!" }] },
-                rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
+                // rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
                 helpMsg: { rules: [{ required: true, message: "请输入帮助信息!" }] },
                 rankRewardEmail: { rules: [{ required: true, message: "请输入排名奖励邮件id!" }] },
                 standardRewardEmail: { rules: [{ required: true, message: "请输入达标奖励邮件id!" }] }
