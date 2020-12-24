@@ -114,12 +114,14 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameImageModal from "./modules/GameImageModal";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "GameImageList",
     mixins: [JeecgListMixin],
     components: {
-        GameImageModal
+        GameImageModal,
+        JInput
     },
     data() {
         return {
