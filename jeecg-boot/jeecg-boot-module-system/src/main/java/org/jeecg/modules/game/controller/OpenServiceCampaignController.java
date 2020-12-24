@@ -1,6 +1,8 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.youai.commons.model.Response;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -9,10 +11,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
-import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.OpenServiceCampaign;
 import org.jeecg.modules.game.entity.OpenServiceCampaignType;
 import org.jeecg.modules.game.service.IGameServerService;
@@ -88,6 +88,10 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaign model) {
         campaignService.save(model);
+        List<String> serverIds = StrUtil.splitTrim(model.getServerIds(), ",");
+        // 排序区服id
+        Collections.sort(serverIds);
+        model.setServerIds(StrUtil.join(",", serverIds));
         updateTypeList(true, model);
         return Result.ok("添加成功！");
     }
@@ -185,15 +189,20 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
             return Result.error("找不到对应活动配置!");
         }
 
-        List<GameServer> list = gameServerService.list();
-        // 同步到所有区服
-        for (GameServer gameServer : list) {
-            Map<String, Object> params = new HashMap<>();
-            params.put("id", id);
-            params.put("name", "OpenService");
-            String result = OkHttpHelper.get(gameServer.getGmUrl() + campaignReloadUrl, params);
-            log.info("call url:{} result:{}", campaignReloadUrl, result);
-        }
+        List<String> lastIds = StrUtil.splitTrim(campaign.getLastServerIds(), ",");
+        List<String> currentIds = StrUtil.splitTrim(campaign.getServerIds(), ",");
+        Set<String> allIds = new HashSet<>(lastIds);
+        allIds.addAll(currentIds);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        params.put("name", "OpenService");
+        Map<String, Response> response = gameServerService.gameServerGet(allIds, campaignReloadUrl, params);
+        log.info("sync id:{} response:{}", id, response);
+
+        // 更新已刷新的服务器id
+        campaign.setLastServerIds(StrUtil.join(",", currentIds));
+        campaignService.updateById(new OpenServiceCampaign().setId(campaign.getId()).setServerIds(campaign.getServerIds()));
 
         return Result.ok("同步成功!");
     }

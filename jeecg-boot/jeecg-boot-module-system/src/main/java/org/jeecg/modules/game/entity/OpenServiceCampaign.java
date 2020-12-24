@@ -45,6 +45,12 @@ public class OpenServiceCampaign extends BaseEntity {
     private java.lang.String serverIds;
 
     /**
+     * 已刷新的服务器id，使用,分割
+     */
+    @Excel(name = "已刷新的服务器id", width = 15)
+    private java.lang.String lastServerIds;
+
+    /**
      * 活动图标
      */
     @Excel(name = "活动图标", width = 15)
