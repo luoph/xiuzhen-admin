@@ -14,13 +14,13 @@
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="图片名">
-                                <a-input placeholder="请输入图片名" v-model="queryParam.name"></a-input>
+                            <a-form-item label="备注">
+                                <j-input placeholder="请输入备注模糊查询" v-model="queryParam.remark"></j-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
-                            <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                                <a-input v-decorator="['remark', queryParam.remark]" placeholder="请输入备注"></a-input>
+                            <a-form-item label="图片名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                                <j-input placeholder="请输入图片名" v-model="queryParam.name"></j-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
@@ -57,10 +57,14 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "GameListComponentModal",
     mixins: [JeecgListMixin],
+    components: {
+        JInput
+    },
     props: {
         value: {
             type: String,
