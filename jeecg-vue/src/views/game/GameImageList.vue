@@ -21,11 +21,11 @@
                         <a-col :md="6" :sm="8">
                             <a-col :md="6" :sm="8">
                                 <a-form-item label="图片名">
-                                    <a-input placeholder="请输入图片名" v-model="queryParam.name"></a-input>
+                                    <j-input placeholder="请输入图片名" v-model="queryParam.name"></j-input>
                                 </a-form-item>
                             </a-col>
                             <a-form-item label="相对路径">
-                                <a-input placeholder="请输入相对路径" v-model="queryParam.imgUrl"></a-input>
+                                <j-input placeholder="请输入相对路径" v-model="queryParam.imgUrl"></j-input>
                             </a-form-item>
                         </a-col>
                     </template>
