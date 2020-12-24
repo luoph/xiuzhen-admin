@@ -194,7 +194,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         Set<String> allIds = new HashSet<>(lastIds);
         allIds.addAll(currentIds);
 
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>(allIds.size());
         params.put("id", id);
         params.put("name", "OpenService");
         Map<String, Response> response = gameServerService.gameServerGet(allIds, campaignReloadUrl, params);
