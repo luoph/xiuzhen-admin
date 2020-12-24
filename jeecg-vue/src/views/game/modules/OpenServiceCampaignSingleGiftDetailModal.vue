@@ -40,6 +40,9 @@
                 <a-form-item label="邮件描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['emailRemark']" rows="4" placeholder="请输入邮件描述" />
                 </a-form-item>
+                <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+                </a-form-item>
             </a-form>
 
             <a-tabs v-if="isEdit" defaultActiveKey="1">
@@ -102,7 +105,8 @@ export default {
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动背景图!" }] },
                 emailTitle: { rules: [{ required: true, message: "请输入邮件标题!" }] },
-                emailRemark: { rules: [{ required: true, message: "请输入邮件描述!" }] }
+                emailRemark: { rules: [{ required: true, message: "请输入邮件描述!" }] },
+                helpMsg: { rules: [{ required: true, message: "请输入帮助信息!" }] }
             },
             url: {
                 add: "game/openServiceCampaignSingleGiftDetail/add",
@@ -129,7 +133,7 @@ export default {
                 }
 
                 this.form.setFieldsValue(
-                    pick(this.model, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark")
+                    pick(this.model, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark", "helpMsg")
                 );
             });
         },
@@ -174,7 +178,9 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark"));
+            this.form.setFieldsValue(
+                pick(row, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark", "helpMsg")
+            );
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {

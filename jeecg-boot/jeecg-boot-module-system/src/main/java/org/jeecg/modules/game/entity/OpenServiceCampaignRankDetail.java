@@ -112,4 +112,10 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
      */
     @Excel(name = "达标奖励邮件id", width = 15)
     private java.lang.Long standardRewardEmail;
+
+    /**
+     * 帮助信息
+     */
+    @Excel(name = "帮助信息", width = 15)
+    private java.lang.String helpMsg;
 }

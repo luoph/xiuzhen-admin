@@ -161,6 +161,11 @@ export default {
                     dataIndex: "standardRewardEmail"
                 },
                 {
+                    title: "帮助信息",
+                    align: "center",
+                    dataIndex: "helpMsg"
+                },
+                {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime"

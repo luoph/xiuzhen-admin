@@ -83,4 +83,10 @@ public class OpenServiceCampaignGiftDetail extends BaseEntity {
     @Excel(name = "持续时间(天)", width = 15)
     private java.lang.Integer duration;
 
+    /**
+     * 帮助信息
+     */
+    @Excel(name = "帮助信息", width = 15)
+    private java.lang.String helpMsg;
+
 }

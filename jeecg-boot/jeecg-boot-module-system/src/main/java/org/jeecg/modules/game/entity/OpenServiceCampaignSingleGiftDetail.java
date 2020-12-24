@@ -3,16 +3,11 @@ package org.jeecg.modules.game.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @author jeecg-boot
@@ -94,4 +89,9 @@ public class OpenServiceCampaignSingleGiftDetail extends BaseEntity {
     @Excel(name = "邮件描述", width = 15)
     private java.lang.String emailRemark;
 
+    /**
+     * 帮助信息
+     */
+    @Excel(name = "帮助信息", width = 15)
+    private java.lang.String helpMsg;
 }

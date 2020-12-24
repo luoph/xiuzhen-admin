@@ -37,6 +37,9 @@
                 <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+                </a-form-item>
             </a-form>
 
             <a-tabs v-if="isEdit" defaultActiveKey="1">
@@ -93,6 +96,7 @@ export default {
                 skeleton: { rules: [{ required: true, message: "请输入骨骼动画资源!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天)!" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
+                helpMsg: { rules: [{ required: true, message: "请输入帮助信息!" }] },
                 sort: { rules: [{ required: true, message: "请输入页签顺序!" }] }
             },
             url: {
@@ -118,7 +122,7 @@ export default {
                     this.$refs.detailList.edit(record);
                 }
 
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration", "helpMsg"));
             });
         },
         close() {
@@ -162,7 +166,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration"));
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration", "helpMsg"));
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {
