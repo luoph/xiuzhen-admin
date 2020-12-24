@@ -59,6 +59,9 @@
                 <a-form-item label="达标奖励邮件id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['standardRewardEmail', validatorRules.standardRewardEmail]" placeholder="请输入达标奖励邮件id" style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+                </a-form-item>
             </a-form>
 
             <a-tabs v-if="isEdit" defaultActiveKey="1">
@@ -134,6 +137,7 @@ export default {
                 rewardImg: { rules: [{ required: true, message: "请输入活动宣传奖励图!" }] },
                 combatPower: { rules: [{ required: true, message: "请输入活动宣传仙力!" }] },
                 rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
+                helpMsg: { rules: [{ required: true, message: "请输入帮助信息!" }] },
                 rankRewardEmail: { rules: [{ required: true, message: "请输入排名奖励邮件id!" }] },
                 standardRewardEmail: { rules: [{ required: true, message: "请输入达标奖励邮件id!" }] }
             },
@@ -178,7 +182,8 @@ export default {
                         "combatPower",
                         "rankNum",
                         "rankRewardEmail",
-                        "standardRewardEmail"
+                        "standardRewardEmail",
+                        "helpMsg"
                     )
                 );
             });
@@ -239,7 +244,8 @@ export default {
                     "combatPower",
                     "rankNum",
                     "rankRewardEmail",
-                    "standardRewardEmail"
+                    "standardRewardEmail",
+                    "helpMsg"
                 )
             );
         },
