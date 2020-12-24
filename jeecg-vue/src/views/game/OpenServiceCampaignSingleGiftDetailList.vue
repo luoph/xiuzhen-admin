@@ -32,6 +32,11 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
+                <template slot="largeText" slot-scope="text">
+                    <div class="largeTextContainer">
+                        <span class="largeText">{{ text }}</span>
+                    </div>
+                </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -131,12 +136,15 @@ export default {
                 {
                     title: "邮件描述",
                     align: "center",
+                    width: 180,
                     dataIndex: "emailContent"
                 },
                 {
                     title: "帮助信息",
                     align: "center",
-                    dataIndex: "helpMsg"
+                    width: 180,
+                    dataIndex: "helpMsg",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "创建时间",
@@ -231,4 +239,15 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+.largeTextContainer {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    white-space: nowrap;
+    max-height: 200px;
+}
+
+.largeText {
+    white-space: normal;
+    word-break: break-word;
+}
 </style>
