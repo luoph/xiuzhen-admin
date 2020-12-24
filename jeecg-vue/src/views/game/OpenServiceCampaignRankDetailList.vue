@@ -135,7 +135,7 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner",
-                    width: 200,
+                    width: 160,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
