@@ -122,6 +122,11 @@ export default {
                     dataIndex: "discount"
                 },
                 {
+                    title: "购买次数",
+                    align: "center",
+                    dataIndex: "buyNum"
+                },
+                {
                     title: "价格",
                     align: "center",
                     dataIndex: "price"
