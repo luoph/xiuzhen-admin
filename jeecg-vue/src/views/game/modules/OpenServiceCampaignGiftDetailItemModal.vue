@@ -79,7 +79,7 @@ export default {
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 giftType: { rules: [{ required: true, message: "请选择礼包类型!" }] },
                 discount: { rules: [{ required: true, message: "请输入折扣!" }] },
-                price: { rules: [{ required: true, message: "请输入价格!" }] },
+                price: { rules: [{ required: false, message: "请输入价格!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
             },
             url: {
