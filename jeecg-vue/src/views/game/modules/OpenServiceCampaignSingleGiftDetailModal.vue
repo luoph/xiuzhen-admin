@@ -38,7 +38,7 @@
                     <a-input v-decorator="['emailTitle', validatorRules.emailTitle]" placeholder="请输入邮件标题"></a-input>
                 </a-form-item>
                 <a-form-item label="邮件描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['emailRemark']" rows="4" placeholder="请输入邮件描述" />
+                    <a-textarea v-decorator="['emailContent']" rows="4" placeholder="请输入邮件描述" />
                 </a-form-item>
                 <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
@@ -105,7 +105,7 @@ export default {
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动背景图!" }] },
                 emailTitle: { rules: [{ required: true, message: "请输入邮件标题!" }] },
-                emailRemark: { rules: [{ required: true, message: "请输入邮件描述!" }] },
+                emailContent: { rules: [{ required: true, message: "请输入邮件描述!" }] },
                 helpMsg: { rules: [{ required: true, message: "请输入帮助信息!" }] }
             },
             url: {
@@ -133,7 +133,7 @@ export default {
                 }
 
                 this.form.setFieldsValue(
-                    pick(this.model, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark", "helpMsg")
+                    pick(this.model, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailContent", "helpMsg")
                 );
             });
         },
@@ -179,7 +179,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(
-                pick(row, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailRemark", "helpMsg")
+                pick(row, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "sort", "name", "banner", "emailTitle", "emailContent", "helpMsg")
             );
         },
         getImgView(text) {
