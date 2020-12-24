@@ -6,7 +6,7 @@
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
                         <a-form-item label="活动名称">
-                            <a-input placeholder="请输入活动名称" v-model="queryParam.name"></a-input>
+                            <j-input placeholder="请输入活动名称模糊查询" v-model="queryParam.name"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -28,7 +28,7 @@
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="活动备注">
-                                <a-input placeholder="请输入活动备注" v-model="queryParam.remark"></a-input>
+                                <j-input placeholder="请输入活动备注模糊查询" v-model="queryParam.remark"></j-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="12" :sm="16">
@@ -135,12 +135,14 @@ import { filterObj } from "@/utils/util";
 import OpenServiceCampaignModal from "./modules/OpenServiceCampaignModal";
 // import OpenServiceCampaignTabList from "./modules/OpenServiceCampaignTabList";
 import JDate from "@/components/jeecg/JDate.vue";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "OpenServiceCampaignList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         OpenServiceCampaignModal
     },
     data() {

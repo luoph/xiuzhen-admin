@@ -13,7 +13,7 @@
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="活动展示名称">
-                            <a-input placeholder="活动展示名称" v-model="queryParam.showName"></a-input>
+                            <j-input placeholder="请输入活动展示名称模糊查询" v-model="queryParam.showName"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -23,7 +23,10 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="活动状态">
-                            <j-dict-select-tag v-model="queryParam.type" placeholder="请选择状态" dictCode="valid_type" />
+                            <a-select placeholder="请选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
+                                <a-select-option :value="0">无效</a-select-option>
+                                <a-select-option :value="1">有效</a-select-option>
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -137,12 +140,14 @@ import GameCampaignModal from "./modules/GameCampaignModal";
 import GameCampaignServerList from "./modules/GameCampaignServerList";
 import GameCampaignTabList from "./modules/GameCampaignTabList";
 import JDate from "@/components/jeecg/JDate.vue";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "GameCampaignList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         GameCampaignModal,
         GameCampaignServerList,
         GameCampaignTabList
