@@ -27,14 +27,14 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path) {
-        Map<Integer, Response> responseMap = new HashMap<>();
+        Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
             try {
                 Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path), Response.class);
                 responseMap.put(serverId, response);
             } catch (Exception e) {
-                log.error("gameServerGet error, serverId:" + serverId, e);
+                log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
             }
         }
         return responseMap;
@@ -46,13 +46,28 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
+    public Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params) {
+        Map<String, Response> responseMap = new HashMap<>(serverIds.size());
+        for (String serverId : serverIds) {
+            GameServer gameServer = getById(serverId);
+            try {
+                Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
+                responseMap.put(serverId, response);
+            } catch (Exception e) {
+                log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
+            }
+        }
+        return responseMap;
+    }
+
+    @Override
     public Map<Integer, Response> gameServerGet(int[] serverIds, String path) {
         return gameServerGet(Ints.asList(serverIds), path);
     }
 
     @Override
     public Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, JSONObject data) {
-        Map<Integer, Response> responseMap = new HashMap<>();
+        Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
             try {
