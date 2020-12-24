@@ -119,6 +119,11 @@ export default {
                     dataIndex: "duration"
                 },
                 {
+                    title: "帮助信息",
+                    align: "center",
+                    dataIndex: "helpMsg"
+                },
+                {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime"
