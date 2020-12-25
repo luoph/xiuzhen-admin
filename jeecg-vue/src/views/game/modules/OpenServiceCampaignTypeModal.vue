@@ -27,6 +27,7 @@
             <open-service-campaign-rank-detail-list v-if="isEdit && model.type === 1" ref="rankList" />
             <open-service-campaign-gift-detail-list v-if="isEdit && model.type === 2" ref="giftList" />
             <open-service-campaign-single-gift-detail-list v-if="isEdit && model.type === 3" ref="singleGiftList" />
+            <open-service-campaign-lottery-detail-list v-if="isEdit && model.type === 4" ref="lotteryList" />
         </a-spin>
     </a-modal>
     <!--
@@ -43,6 +44,7 @@ import JDate from "@/components/jeecg/JDate";
 import OpenServiceCampaignGiftDetailList from "../OpenServiceCampaignGiftDetailList";
 import OpenServiceCampaignRankDetailList from "../OpenServiceCampaignRankDetailList";
 import OpenServiceCampaignSingleGiftDetailList from "../OpenServiceCampaignSingleGiftDetailList";
+import OpenServiceCampaignLotteryDetailList from "../OpenServiceCampaignLotteryDetailList";
 
 export default {
     name: "OpenServiceCampaignTypeModal",
@@ -50,7 +52,8 @@ export default {
         JDate,
         OpenServiceCampaignRankDetailList,
         OpenServiceCampaignGiftDetailList,
-        OpenServiceCampaignSingleGiftDetailList
+        OpenServiceCampaignSingleGiftDetailList,
+        OpenServiceCampaignLotteryDetailList
     },
     data() {
         return {
@@ -97,12 +100,12 @@ export default {
                 if (this.isEdit) {
                     if (this.$refs.rankList) {
                         this.$refs.rankList.edit(record);
-                    }
-                    if (this.$refs.giftList) {
+                    } else if (this.$refs.giftList) {
                         this.$refs.giftList.edit(record);
-                    }
-                    if (this.$refs.singleGiftList) {
+                    } else if (this.$refs.singleGiftList) {
                         this.$refs.singleGiftList.edit(record);
+                    } else if (this.$refs.lotteryList) {
+                        this.$refs.lotteryList.edit(record);
                     }
                 }
 

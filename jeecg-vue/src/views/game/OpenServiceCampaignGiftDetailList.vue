@@ -111,6 +111,7 @@ export default {
                     title: "宣传图",
                     align: "center",
                     dataIndex: "banner",
+                    width: 160,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {

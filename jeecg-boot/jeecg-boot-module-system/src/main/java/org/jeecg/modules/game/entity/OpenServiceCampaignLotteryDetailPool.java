@@ -16,7 +16,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2020-12-25
  */
 @Data
-@TableName("open_service_campaign_lottery_detail_pool")
+@TableName("game_open_service_campaign_lottery_detail_pool")
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 public class OpenServiceCampaignLotteryDetailPool extends BaseEntity {

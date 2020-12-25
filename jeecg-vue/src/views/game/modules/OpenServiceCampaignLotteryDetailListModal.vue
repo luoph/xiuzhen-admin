@@ -1,11 +1,5 @@
 <template>
-    <a-card :bordered="false">
-        <!-- 查询区域 -->
-        <div class="table-page-search-wrapper">
-            <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24"> </a-row>
-            </a-form>
-        </div>
+    <a-modal centered :title="title" :width="width" :visible="visible" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
@@ -24,7 +18,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
             >
                 <template slot="htmlSlot" slot-scope="text">
@@ -37,11 +30,6 @@
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
-                </template>
-                <template slot="largeText" slot-scope="text">
-                    <div class="largeTextContainer">
-                        <span class="largeText">{{ text }}</span>
-                    </div>
                 </template>
 
                 <span slot="action" slot-scope="text, record">
@@ -62,14 +50,14 @@
         </div>
 
         <open-service-campaign-lottery-detail-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-lottery-detail-modal>
-    </a-card>
+    </a-modal>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
-import OpenServiceCampaignLotteryDetailModal from "./modules/OpenServiceCampaignLotteryDetailModal";
+import { getAction } from "../../../api/manage";
+import OpenServiceCampaignLotteryDetailModal from "./OpenServiceCampaignLotteryDetailModal";
 
 export default {
     name: "OpenServiceCampaignLotteryDetailList",
@@ -80,6 +68,9 @@ export default {
     data() {
         return {
             description: "开服夺宝详情管理页面",
+            visible: false,
+            title: "开服夺宝详情管理页面",
+            width: 1200,
             model: {},
             // 表头
             columns: [
@@ -104,25 +95,23 @@ export default {
                 //     dataIndex: "campaignTypeId"
                 // },
                 {
-                    title: "活动页签名称",
-                    align: "center",
-                    dataIndex: "tabName"
-                },
-                {
                     title: "活动名称",
                     align: "center",
                     dataIndex: "name"
                 },
                 {
+                    title: "活动页签名称",
+                    align: "center",
+                    dataIndex: "tabName"
+                },
+                {
                     title: "开始时间",
                     align: "center",
-                    width: 60,
                     dataIndex: "startDay"
                 },
                 {
                     title: "持续时间(天)",
                     align: "center",
-                    width: 60,
                     dataIndex: "duration"
                 },
                 {
@@ -146,13 +135,11 @@ export default {
                 {
                     title: "获奖记录内容",
                     align: "center",
-                    width: 180,
                     dataIndex: "rewardRecordMsg"
                 },
                 {
                     title: "获奖传闻内容",
                     align: "center",
-                    width: 180,
                     dataIndex: "rewardMsg"
                 },
                 {
@@ -163,25 +150,21 @@ export default {
                 {
                     title: "抽奖设置(单抽/多抽)",
                     align: "center",
-                    width: 180,
                     dataIndex: "lotteryType"
                 },
                 {
                     title: "展示特奖",
                     align: "center",
-                    width: 180,
                     dataIndex: "ssrShowReward"
                 },
                 {
                     title: "展示大奖",
                     align: "center",
-                    width: 180,
                     dataIndex: "srShowReward"
                 },
                 {
                     title: "展示奖励",
                     align: "center",
-                    width: 180,
                     dataIndex: "showReward"
                 },
                 {
@@ -193,15 +176,12 @@ export default {
                 {
                     title: "奖池",
                     align: "center",
-                    width: 180,
                     dataIndex: "rewardPool"
                 },
                 {
                     title: "帮助信息",
                     align: "center",
-                    width: 180,
-                    dataIndex: "helpMsg",
-                    scopedSlots: { customRender: "largeText" }
+                    dataIndex: "helpMsg"
                 },
                 {
                     title: "创建时间",
@@ -233,6 +213,11 @@ export default {
     },
     methods: {
         initDictConfig() {},
+        close() {
+            this.$emit("close");
+            this.visible = false;
+            this.dataSource = [];
+        },
         loadData(arg) {
             if (!this.model.id) {
                 return;
@@ -266,19 +251,26 @@ export default {
             this.model = record;
             this.loadData();
         },
-        handleAdd() {
-            this.$refs.modalForm.add({ campaignTypeId: this.model.id, campaignId: this.model.campaignId });
-            this.$refs.modalForm.title = "新增开服夺宝配置";
-        },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
-            // typeId、活动id
-            param.campaignId = this.model.campaignId;
+            // 页签id、活动id
             param.campaignTypeId = this.model.id;
+            param.campaignId = this.model.campaignId;
             return filterObj(param);
+        },
+        /** 关闭弹窗 */
+        handleCancel() {
+            this.close();
+        },
+        handleOk() {
+            this.close();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({ campaignTypeId: this.model.id, campaignId: this.model.campaignId });
+            this.$refs.modalForm.title = "新增页签";
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {
@@ -292,6 +284,13 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+
+/** Button按钮间距 */
+.ant-btn {
+    margin-left: 30px;
+    margin-bottom: 30px;
+}
+
 .largeTextContainer {
     overflow-x: hidden;
     overflow-y: scroll;

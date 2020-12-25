@@ -4,13 +4,13 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['lotteryDetailId', validatorRules.lotteryDetailId]" placeholder="请输入页签详情id" style="width: 100%" />
+                <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['lotteryDetailId', validatorRules.lotteryDetailId]" placeholder="请输入详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="排名最小值" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['minRank', validatorRules.minRank]" placeholder="请输入排名最小值" style="width: 100%" />
@@ -48,8 +48,9 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -77,13 +78,16 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
+            console.log("OpenServiceCampaignLotteryDetailRankingModal, model:", JSON.stringify(this.model));
             this.visible = true;
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "lotteryDetailId", "minRank", "maxRank", "score", "reward"));
             });
