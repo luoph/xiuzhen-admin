@@ -24,96 +24,96 @@ import java.io.Serializable;
 public class GameForbidden implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	
-	/**
-	 * id
-	 */
-	@TableId(type = IdType.AUTO)
+
+    /**
+     * id
+     */
+    @TableId(type = IdType.AUTO)
     private java.lang.Long id;
-	
-	/**
-	 * 服务器id
-	 */
-	@Excel(name = "服务器id", width = 15)
+
+    /**
+     * 服务器id
+     */
+    @Excel(name = "服务器id", width = 15)
     private java.lang.Integer serverId;
-	
-	/**
-	 * 1-登录 2-聊天
-	 */
-	@Excel(name = "1-登录 2-聊天", width = 15)
+
+    /**
+     * 1-登录 2-聊天
+     */
+    @Excel(name = "1-登录 2-聊天", width = 15)
     private java.lang.Integer type;
-	
-	/**
-	 * playerId/ip/deviceId
-	 */
-	@Excel(name = "playerId/ip/deviceId", width = 15)
+
+    /**
+     * playerId/ip/deviceId
+     */
+    @Excel(name = "playerId/ip/deviceId", width = 15)
     private java.lang.String banKey;
-	
-	/**
-	 * 对应 ban_type 的值
-	 */
-	@Excel(name = "对应 ban_type 的值", width = 15)
+
+    /**
+     * 对应 ban_type 的值
+     */
+    @Excel(name = "对应 ban_type 的值", width = 15)
     private java.lang.String banValue;
-	
-	/**
-	 * 封禁原因
-	 */
-	@Excel(name = "封禁原因", width = 15)
+
+    /**
+     * 封禁原因
+     */
+    @Excel(name = "封禁原因", width = 15)
     private java.lang.String reason;
-	
-	/**
-	 * 删除状态：0-未删除 1-已删除	
-	 */
-	@Excel(name = "删除状态：0-未删除 1-已删除	", width = 15)
+
+    /**
+     * 删除状态：0-未删除 1-已删除
+     */
+    @Excel(name = "删除状态：0-未删除 1-已删除	", width = 15)
     private java.lang.Integer delFlag;
-	
-	/**
-	 * 0-临时 1-永久
-	 */
-	@Excel(name = "0-临时 1-永久", width = 15)
+
+    /**
+     * 0-临时 1-永久
+     */
+    @Excel(name = "0-临时 1-永久", width = 15)
     private java.lang.Integer isForever;
-	
-	/**
-	 * 开始时间
-	 */
-	@Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+
+    /**
+     * 开始时间
+     */
+    @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date startTime;
-	
-	/**
-	 * 结束时间
-	 */
-	@Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+
+    /**
+     * 结束时间
+     */
+    @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date endTime;
-	
-	/**
-	 * 创建时间
-	 */
-	@Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+
+    /**
+     * 创建时间
+     */
+    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date createTime;
-	
-	/**
-	 * 更新时间
-	 */
-	@Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+
+    /**
+     * 更新时间
+     */
+    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date updateTime;
-	
-	/**
-	 * 操作人
-	 */
-	@Excel(name = "操作人", width = 15)
+
+    /**
+     * 操作人
+     */
+    @Excel(name = "操作人", width = 15)
     private java.lang.String createBy;
-	
-	/**
-	 * 操作人
-	 */
-	@Excel(name = "操作人", width = 15)
+
+    /**
+     * 操作人
+     */
+    @Excel(name = "操作人", width = 15)
     private java.lang.String updateBy;
 }

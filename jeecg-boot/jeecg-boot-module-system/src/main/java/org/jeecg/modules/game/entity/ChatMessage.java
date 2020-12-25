@@ -18,37 +18,37 @@ import java.util.Date;
 @Accessors(chain = true)
 public class ChatMessage implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	/**
-	 * 玩家id
-	 */
-	private Long playerId;
+    /**
+     * 玩家id
+     */
+    private Long playerId;
 
-	/**
-	 * 消息内容
-	 */
-	private String message;
+    /**
+     * 消息内容
+     */
+    private String message;
 
-	/**
-	 * 渠道
-	 */
-	private Integer channel;
+    /**
+     * 渠道
+     */
+    private Integer channel;
 
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
-	/**
-	 * 更新时间
-	 */
-	private Date updateTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
-	/**
-	 * 玩家
-	 */
-	private Player player;
+    /**
+     * 玩家
+     */
+    private Player player;
 }

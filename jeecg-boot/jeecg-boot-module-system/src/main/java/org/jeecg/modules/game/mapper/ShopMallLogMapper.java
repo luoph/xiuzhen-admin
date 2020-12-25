@@ -18,16 +18,16 @@ import java.util.List;
  */
 public interface ShopMallLogMapper extends BaseMapper<ShopMallLog> {
 
-	List<ShopMallLog> queryShopMallList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                                    @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                                    @Param("type") int type);
+    List<ShopMallLog> queryShopMallList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                                        @Param("rangeDateEndTime") Date rangeDateEndTime,
+                                        @Param("type") int type);
 
-	BigDecimal queryItemSum(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                        @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                        @Param("type") int type);
+    BigDecimal queryItemSum(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                            @Param("rangeDateEndTime") Date rangeDateEndTime,
+                            @Param("type") int type);
 
-	BigDecimal queryItemCount(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                          @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                          @Param("type") int type,
-	                          @Param("itemId") int itemId);
+    BigDecimal queryItemCount(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                              @Param("rangeDateEndTime") Date rangeDateEndTime,
+                              @Param("type") int type,
+                              @Param("itemId") int itemId);
 }

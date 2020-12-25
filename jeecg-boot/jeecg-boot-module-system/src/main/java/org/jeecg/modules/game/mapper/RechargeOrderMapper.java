@@ -17,21 +17,21 @@ import java.util.Map;
  */
 public interface RechargeOrderMapper extends BaseMapper<RechargeOrder> {
 
-	List<RechargeOrder> queryGiftList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                                  @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                                  @Param("goodsType") int goodsType);
+    List<RechargeOrder> queryGiftList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                                      @Param("rangeDateEndTime") Date rangeDateEndTime,
+                                      @Param("goodsType") int goodsType);
 
-	Long queryDAU(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	              @Param("rangeDateEndTime") Date rangeDateEndTime,
-	              @Param("serverId") Integer serverId,
-	              @Param("channel") String channel,
-	              @Param("logTable") String logTable);
+    Long queryDAU(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                  @Param("rangeDateEndTime") Date rangeDateEndTime,
+                  @Param("serverId") Integer serverId,
+                  @Param("channel") String channel,
+                  @Param("logTable") String logTable);
 
-	/**
-	 * 查询时间范围内消耗玉髓明细
-	 */
-	@Select("select player_id, type, config_id, num, price, create_time from fairy_jade_buy_log where type = #{type} and create_time between STR_TO_DATE(#{rangeDateBeginTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s') and STR_TO_DATE(#{rangeDateEndTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s')  order by create_time desc")
-	List<Map> queryFairyJadeBuyInfo(@Param("rangeDateBeginTime") String rangeDateBeginTime,
-								   @Param("rangeDateEndTime") String rangeDateEndTime,
-									@Param("type") Integer type);
+    /**
+     * 查询时间范围内消耗玉髓明细
+     */
+    @Select("select player_id, type, config_id, num, price, create_time from fairy_jade_buy_log where type = #{type} and create_time between STR_TO_DATE(#{rangeDateBeginTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s') and STR_TO_DATE(#{rangeDateEndTime,jdbcType=VARCHAR},'%Y-%m-%d %H:%i:%s')  order by create_time desc")
+    List<Map> queryFairyJadeBuyInfo(@Param("rangeDateBeginTime") String rangeDateBeginTime,
+                                    @Param("rangeDateEndTime") String rangeDateEndTime,
+                                    @Param("type") Integer type);
 }

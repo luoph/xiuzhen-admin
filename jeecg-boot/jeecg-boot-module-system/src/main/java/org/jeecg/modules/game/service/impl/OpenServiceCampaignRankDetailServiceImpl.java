@@ -1,4 +1,4 @@
-package org.jeecg.modules. game.service.impl;
+package org.jeecg.modules.game.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetail;

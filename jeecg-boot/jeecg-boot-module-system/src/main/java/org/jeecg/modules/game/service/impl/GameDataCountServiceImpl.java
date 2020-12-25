@@ -38,6 +38,24 @@ import java.util.stream.Collectors;
 public class GameDataCountServiceImpl implements IGameDataCountService {
 
 
+    /**
+     * 统计时长30天
+     */
+    private static final int DAYS_BETWEEN = 30;
+    /**
+     * 连续统计字段前缀
+     */
+    private static final String FIELD = "c";
+    /**
+     * 留存间隔查询
+     * 统计间隔+1 = 统计天数
+     */
+    private static final int[] REMAIN = new int[]{1, 2, 3, 4, 5, 6, 14, 29, 59, 89, 119, 179, 359};
+    /**
+     * ltv统计间隔
+     * 统计间隔 = 统计天数
+     */
+    private static final int[] LTV = new int[]{1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 90, 120, 180, 360};
     @Autowired
     private IGameChannelService gameChannelService;
     @Autowired
@@ -64,31 +82,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private GameCountOngoingMapper gameCountOngoingMapper;
     @Autowired
     private IGameDayDataCountService gameDayDataCountService;
-
     @Value("${app.log.db.table}")
     private String logTable;
-
-    /**
-     * 统计时长30天
-     */
-    private static final int DAYS_BETWEEN = 30;
-
-    /**
-     * 连续统计字段前缀
-     */
-    private static final String FIELD = "c";
-
-    /**
-     * 留存间隔查询
-     * 统计间隔+1 = 统计天数
-     */
-    private static final int[] REMAIN = new int[]{1, 2, 3, 4, 5, 6, 14, 29, 59, 89, 119, 179, 359};
-
-    /**
-     * ltv统计间隔
-     * 统计间隔 = 统计天数
-     */
-    private static final int[] LTV = new int[]{1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 90, 120, 180, 360};
 
     @Override
     public List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {

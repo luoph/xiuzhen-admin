@@ -12,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * @author jeecg-boot
@@ -129,54 +128,54 @@ public class RechargeOrder implements Serializable {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date createTime;
 
-	/**
-	 * 礼包名
-	 */
-	private String goodsName;
+    /**
+     * 礼包名
+     */
+    private String goodsName;
 
-	/**
-	 * 当天DAU
-	 */
-	private Long dau;
+    /**
+     * 当天DAU
+     */
+    private Long dau;
 
-	/**
-	 * 购买人数
-	 */
-	private Integer payNum;
+    /**
+     * 购买人数
+     */
+    private Integer payNum;
 
-	/**
-	 * 礼包购买率
-	 */
-	private BigDecimal payNumRate;
+    /**
+     * 礼包购买率
+     */
+    private BigDecimal payNumRate;
 
-	/**
-	 * 礼包价格
-	 */
-	private BigDecimal goodsPrice;
+    /**
+     * 礼包价格
+     */
+    private BigDecimal goodsPrice;
 
-	/**
-	 * 总金额
-	 */
-	private BigDecimal payAccountSum;
+    /**
+     * 总金额
+     */
+    private BigDecimal payAccountSum;
 
-	/**
-	 * 时间段日期展示
-	 */
-	private String rangeTimeDate;
+    /**
+     * 时间段日期展示
+     */
+    private String rangeTimeDate;
 
-	/**
-	 * 消耗档位
-	 */
-	private BigDecimal consumeRank;
+    /**
+     * 消耗档位
+     */
+    private BigDecimal consumeRank;
 
-	/**
-	 * 购买次数
-	 */
-	private Integer payCount;
+    /**
+     * 购买次数
+     */
+    private Integer payCount;
 
-	/**
-	 * 消耗玉髓
-	 */
-	private BigDecimal chalcedony;
+    /**
+     * 消耗玉髓
+     */
+    private BigDecimal chalcedony;
 
 }

@@ -17,13 +17,13 @@ import java.util.Date;
  */
 public final class ParamValidUtil {
 
-    private ParamValidUtil() {
-    }
-
     /**
      * 统计日期最大的日期跨度天数
      */
     private static final int MAX_DATE_RANGE = 30;
+
+    private ParamValidUtil() {
+    }
 
     public static boolean isParamInValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         return channelId <= 0 || serverId <= 0 || StringUtils.isBlank(rangeDateBegin) || StringUtils.isBlank(rangeDateEnd);

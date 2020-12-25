@@ -13,12 +13,13 @@ import org.jeecg.modules.game.entity.GameDataReportCount;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameDataReportCountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -62,11 +63,11 @@ public class GameDataReportCountController extends JeecgController<GameDataRepor
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
             return Result.ok(page);
         }
-	    // 如果选择开始时间和结束时间是同一天
-	    if (rangeDateBegin.equals(rangeDateEnd)){
-		    rangeDateBegin = rangeDateBegin + " 00:00:00";
-		    rangeDateEnd = rangeDateEnd + " 23:59:59";
-	    }
+        // 如果选择开始时间和结束时间是同一天
+        if (rangeDateBegin.equals(rangeDateEnd)) {
+            rangeDateBegin = rangeDateBegin + " 00:00:00";
+            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<GameDataReportCount> gameDataReportCountList = gameDataReportCountService.queryDataReportByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
         page.setRecords(gameDataReportCountList).setTotal(gameDataReportCountList.size());

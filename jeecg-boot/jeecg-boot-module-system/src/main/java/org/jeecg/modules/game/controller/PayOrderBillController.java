@@ -36,117 +36,117 @@ import java.util.List;
 @RequestMapping("game/payOrderBill")
 public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOrderBillService> {
 
-	@Autowired
-	private IPayOrderBillService payOrderBillService;
+    @Autowired
+    private IPayOrderBillService payOrderBillService;
 
-	@Autowired
-	private IGameChannelService gameChannelService;
+    @Autowired
+    private IGameChannelService gameChannelService;
 
-	/**
-	 * 分页列表查询
-	 *
-	 * @param payOrderBill 数据实体
-	 * @param pageNo       页码
-	 * @param pageSize     分页大小
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "服务器流水-列表查询")
-	@GetMapping(value = "/list")
-	public Result<?> queryPageList(PayOrderBill payOrderBill,
-	                               @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
-	                               @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
-	                               @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-	                               @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-	                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-	                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-	) {
-		Page<PayOrderBillVO> pageVo = new Page<>(pageNo, pageSize);
-		// 没有传入查询参数返回空的数据
-		if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
-			return Result.ok(pageVo);
-		}
-		String channel = gameChannelService.queryChannelNameById(channelId);
-		BigDecimal billSum = payOrderBillService.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
-		// 查不到流水总额,设置流水总额为0
-		if (billSum == null) {
-			billSum = new BigDecimal(0);
-		}
-		// 封装自定义的list放入Page对象，list中只有一个对象
-		List<PayOrderBillVO> listVo = new ArrayList<>();
-		PayOrderBillVO payOrderBillVo = new PayOrderBillVO();
-		payOrderBillVo.setBillSum(billSum).setBeginTime(payTimeBegin).setEndTime(payTimeEnd);
-		listVo.add(payOrderBillVo);
-		pageVo.setRecords(listVo).setTotal(listVo.size());
-		return Result.ok(pageVo);
-	}
-
-
-	/**
-	 * 分页列表查询
-	 *
-	 * @param pageNo   页码
-	 * @param pageSize 分页大小
-	 * @return {@linkplain Result}
-	 */
-	@AutoLog(value = "付费结构-列表查询")
-	@GetMapping(value = "/payConstruction")
-	public Result<?> queryPayConstruction(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-	                                      @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-	                                      @RequestParam(name = "payRank", defaultValue = "") String payRank,
-	                                      @RequestParam(name = "days", defaultValue = "0") int days,
-	                                      @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-	                                      @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-	                                      @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-	                                      @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-	) {
-		Page<PayOrderBill> page = new Page<>(pageNo, pageSize);
-		List<PayOrderBill> list = new ArrayList<>();
-		// 没有传入查询参数返回空的数据
-		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && StringUtils.isEmpty(payRank)
-				&& serverId == 0 && channelId == 0 && days == 0) {
-			return Result.ok(page);
-		}
-		// 没有传入时间和天数返回空的数据
-		if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
-			return Result.ok(page);
-		}
-		String channel = gameChannelService.queryChannelNameById(channelId);
-		if (StringUtils.isEmpty(payRank)) {
-			list = payOrderBillService.queryForList(rangeDateBegin, rangeDateEnd, days, serverId, channel);
-			page.setRecords(list).setTotal(list.size());
-			return Result.ok(page);
-		}
-
-		PayOrderBill payOrderBill = payOrderBillService.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
-		list.add(payOrderBill);
-		page.setRecords(list).setTotal(list.size());
-		return Result.ok(page);
-	}
+    /**
+     * 分页列表查询
+     *
+     * @param payOrderBill 数据实体
+     * @param pageNo       页码
+     * @param pageSize     分页大小
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "服务器流水-列表查询")
+    @GetMapping(value = "/list")
+    public Result<?> queryPageList(PayOrderBill payOrderBill,
+                                   @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
+                                   @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
+                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+        Page<PayOrderBillVO> pageVo = new Page<>(pageNo, pageSize);
+        // 没有传入查询参数返回空的数据
+        if (StringUtils.isEmpty(payTimeBegin) && StringUtils.isEmpty(payTimeEnd) && serverId == 0 && channelId == 0) {
+            return Result.ok(pageVo);
+        }
+        String channel = gameChannelService.queryChannelNameById(channelId);
+        BigDecimal billSum = payOrderBillService.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
+        // 查不到流水总额,设置流水总额为0
+        if (billSum == null) {
+            billSum = new BigDecimal(0);
+        }
+        // 封装自定义的list放入Page对象，list中只有一个对象
+        List<PayOrderBillVO> listVo = new ArrayList<>();
+        PayOrderBillVO payOrderBillVo = new PayOrderBillVO();
+        payOrderBillVo.setBillSum(billSum).setBeginTime(payTimeBegin).setEndTime(payTimeEnd);
+        listVo.add(payOrderBillVo);
+        pageVo.setRecords(listVo).setTotal(listVo.size());
+        return Result.ok(pageVo);
+    }
 
 
-	/**
-	 * 导出excel
-	 */
-	@RequestMapping(value = "/exportXls")
-	public ModelAndView exportXls(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-	                              @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-	                              @RequestParam(name = "payRank", defaultValue = "") String payRank,
-	                              @RequestParam(name = "days", defaultValue = "0") int days,
-	                              @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-	                              @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-	                              @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-	                              @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-	                              HttpServletRequest request
-	) {
-		// 获取导出数据
-		List<PayOrderBill> list = new ArrayList<>();
-		LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-		String channel = gameChannelService.queryChannelNameById(channelId);
-		PayOrderBill payOrderBill = payOrderBillService.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
-		payOrderBill.setPayRank(payRank);
-		list.add(payOrderBill);
-		return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PayOrderBill.class, "付费结构");
-	}
+    /**
+     * 分页列表查询
+     *
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "付费结构-列表查询")
+    @GetMapping(value = "/payConstruction")
+    public Result<?> queryPayConstruction(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+                                          @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                                          @RequestParam(name = "payRank", defaultValue = "") String payRank,
+                                          @RequestParam(name = "days", defaultValue = "0") int days,
+                                          @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                                          @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                                          @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                          @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+        Page<PayOrderBill> page = new Page<>(pageNo, pageSize);
+        List<PayOrderBill> list = new ArrayList<>();
+        // 没有传入查询参数返回空的数据
+        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && StringUtils.isEmpty(payRank)
+                && serverId == 0 && channelId == 0 && days == 0) {
+            return Result.ok(page);
+        }
+        // 没有传入时间和天数返回空的数据
+        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
+            return Result.ok(page);
+        }
+        String channel = gameChannelService.queryChannelNameById(channelId);
+        if (StringUtils.isEmpty(payRank)) {
+            list = payOrderBillService.queryForList(rangeDateBegin, rangeDateEnd, days, serverId, channel);
+            page.setRecords(list).setTotal(list.size());
+            return Result.ok(page);
+        }
+
+        PayOrderBill payOrderBill = payOrderBillService.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
+        list.add(payOrderBill);
+        page.setRecords(list).setTotal(list.size());
+        return Result.ok(page);
+    }
+
+
+    /**
+     * 导出excel
+     */
+    @RequestMapping(value = "/exportXls")
+    public ModelAndView exportXls(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+                                  @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                                  @RequestParam(name = "payRank", defaultValue = "") String payRank,
+                                  @RequestParam(name = "days", defaultValue = "0") int days,
+                                  @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                                  @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                                  @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                  @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                  HttpServletRequest request
+    ) {
+        // 获取导出数据
+        List<PayOrderBill> list = new ArrayList<>();
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        String channel = gameChannelService.queryChannelNameById(channelId);
+        PayOrderBill payOrderBill = payOrderBillService.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
+        payOrderBill.setPayRank(payRank);
+        list.add(payOrderBill);
+        return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PayOrderBill.class, "付费结构");
+    }
 
 
 }

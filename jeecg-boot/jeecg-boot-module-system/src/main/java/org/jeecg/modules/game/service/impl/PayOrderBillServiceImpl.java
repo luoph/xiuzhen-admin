@@ -40,7 +40,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         payTimeBeginDate = DateUtils.parseDate(payTimeBegin);
         payTimeEndDate = DateUtils.parseDate(payTimeEnd);
 
-        if (payTimeBegin.equals(payTimeEnd)){
+        if (payTimeBegin.equals(payTimeEnd)) {
             Date[] dates = DateUtils.dateStartAndEnd(payTimeBeginDate);
             payTimeBeginDate = dates[0];
             payTimeEndDate = dates[1];
@@ -60,14 +60,14 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
             Date rangeDateEndTime = null;
             rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
-            if (rangeDateBegin.equals(rangeDateEnd)){
+            if (rangeDateBegin.equals(rangeDateEnd)) {
                 Date[] dates = DateUtils.dateStartAndEnd(rangeDateBeginTime);
                 rangeDateBeginTime = dates[0];
                 rangeDateEndTime = dates[1];
             }
             // 查询该档位下付费人数和
             Integer payNumSum = payOrderBillMapper.queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
-	        payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
+            payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
             payOrderBill.setPayRank(payRank);
             return getDataTreating(payOrderBill);
 
