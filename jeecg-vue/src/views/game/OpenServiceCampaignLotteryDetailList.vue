@@ -149,13 +149,15 @@ export default {
                     title: "获奖记录内容",
                     align: "center",
                     width: 180,
-                    dataIndex: "rewardRecordMsg"
+                    dataIndex: "rewardRecordMsg",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "获奖传闻内容",
                     align: "center",
                     width: 180,
-                    dataIndex: "rewardMsg"
+                    dataIndex: "rewardMsg",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "概率公示",
@@ -168,37 +170,43 @@ export default {
                     title: "抽奖设置(单抽/多抽)",
                     align: "center",
                     width: 180,
-                    dataIndex: "lotteryType"
+                    dataIndex: "lotteryType",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "展示特奖",
                     align: "center",
                     width: 180,
-                    dataIndex: "ssrShowReward"
+                    dataIndex: "ssrShowReward",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "展示大奖",
                     align: "center",
                     width: 180,
-                    dataIndex: "srShowReward"
+                    dataIndex: "srShowReward",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "展示奖励",
                     align: "center",
                     width: 180,
-                    dataIndex: "showReward"
+                    dataIndex: "showReward",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "重置大奖",
                     align: "center",
                     width: 120,
-                    dataIndex: "resetReward"
+                    dataIndex: "resetReward",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "奖池",
                     align: "center",
                     width: 180,
-                    dataIndex: "rewardPool"
+                    dataIndex: "rewardPool",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "帮助信息",
@@ -301,7 +309,7 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
     white-space: nowrap;
-    max-height: 100px;
+    max-height: 200px;
 }
 
 .largeText {
