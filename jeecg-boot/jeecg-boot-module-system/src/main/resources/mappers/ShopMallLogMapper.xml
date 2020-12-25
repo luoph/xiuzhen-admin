@@ -3,19 +3,19 @@
 <mapper namespace="org.jeecg.modules.game.mapper.ShopMallLogMapper">
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.ShopMallLog">
-        <id column="id" property="id" />
-        <result column="player_id" property="playerId" />
-        <result column="goods_id" property="goodsId" />
-        <result column="item_id" property="itemId" />
-        <result column="type" property="type" />
+        <id column="id" property="id"/>
+        <result column="player_id" property="playerId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="item_id" property="itemId"/>
+        <result column="type" property="type"/>
         <result column="state" property="state"/>
-        <result column="num" property="num" />
-        <result column="total_price" property="totalPrice" />
-        <result column="price_item" property="priceItem" />
+        <result column="num" property="num"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="price_item" property="priceItem"/>
         <result column="buy_type" property="buyType"/>
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="item_num" property="itemNum" />
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="item_num" property="itemNum"/>
         <result column="player_num" property="playerNum"/>
         <result column="item_count" property="itemCount"/>
         <result column="item_num_rate" property="itemNumRate"/>
