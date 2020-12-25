@@ -109,7 +109,7 @@ export default {
                     align: "center",
                     fixed: "left",
                     dataIndex: "name",
-                    scopedSlots: { customRender: "imgSlot" }
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "活动页签名称",
