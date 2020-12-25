@@ -99,7 +99,28 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             DataSourceHelper.useDefaultDatabase();
             // 通过玩家id获取玩家累充金额
             List<GameOrder> gameOrders = payOrderBillMapper.getPayAmountSum(playerDTO.getServerId());
-            List<Player> playerTimes = payUserRankMapper.getPlayerLastLoginAndRegisterTime(playerDTO.getServerId(), logTable);
+//            List<Player> playerTimes = payUserRankMapper.getPlayerLastLoginAndRegisterTime(playerDTO.getServerId(), logTable);
+
+            List<Player> playerTimes = new ArrayList<>();
+            //查询所有用户注册信息（唯一不重复）
+            List<Map> allPlayerInfoList = playerMapper.selectAllPlayerInfo(playerDTO.getServerId());
+            //查询所有用户登录信息
+            List<Map> allLoginInfoList = playerMapper.selectAllLoginInfo(playerDTO.getServerId());
+            //登录信息按照plaer_id分组
+            Map<String, List<Map>> allLoginInfoListMap_playerId = allLoginInfoList.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
+            for (Map map : allPlayerInfoList) {
+                Player player = new Player();
+                player.setId(Long.parseLong(map.get("player_id").toString()));
+                List<Map> OnePlayerLoginInfoList = allLoginInfoListMap_playerId.get(map.get("player_id").toString()) ;
+                player.setRegisterTime(DateUtils.parseDate(map.get("create_time").toString()));
+                //注册过不一定登录过
+                if(null == OnePlayerLoginInfoList){break;}
+                player.setLastLoginTime(DateUtils.parseDate(OnePlayerLoginInfoList.get(0).get("create_time").toString()));
+                playerTimes.add(player);
+            }
+
+
+
 
             for (Player player : list) {
                 Long playerId = player.getId();
