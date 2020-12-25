@@ -68,7 +68,7 @@ import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
 
 export default {
-    name: "PreferenceList",
+    name: "ZeroBuyList",
     mixins: [JeecgListMixin],
     components: {
         JDate,

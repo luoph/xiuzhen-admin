@@ -26,6 +26,11 @@
                             </a-select>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="10" :sm="8">
+                        <a-form-item label="天数">
+                            <a-input v-model="showColumn" placeholder="多个数据用英文，隔开" style="width: 100%" />
+                        </a-form-item>
+                    </a-col>
                     <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -70,7 +75,9 @@ export default {
     },
     data() {
         return {
-            columns: [
+            showColumn: "",
+            columns:
+             [
                 {
                     title: "#",
                     dataIndex: "",
@@ -215,6 +222,279 @@ export default {
             this.queryParam.rangeDateEnd = dateStr[1];
         },
         searchQuery() {
+// 动态改变表头start---------------------------------------------------------
+            let a = this.showColumn.split(",");
+            if (a[0] == "") {
+                this.columns = [
+                    {
+                        title: "#",
+                        dataIndex: "",
+                        width: "100",
+                        align: "center",
+                        customRender: function (t, r, index) {
+                            return parseInt(index) + 1;
+                        }
+                    },
+                    {
+                        title: "日期",
+                        dataIndex: "countDate",
+                        width: "120",
+                        align: "center",
+                        customRender: function (text) {
+                            return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
+                        }
+                    },
+                    {
+                        title: "新增玩家",
+                        dataIndex: "registerNum",
+                        align: "center",
+                        width: "120"
+                    },
+                    {
+                        title: "2日留存",
+                        dataIndex: "c2",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c2, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "3日留存",
+                        dataIndex: "c3",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c3, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "4日留存",
+                        dataIndex: "c4",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c4, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "5日留存",
+                        dataIndex: "c5",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c5, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "6日留存",
+                        dataIndex: "c6",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c6, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "7日留存",
+                        dataIndex: "c7",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c7, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "15日留存",
+                        dataIndex: "c15",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c15, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "30日留存",
+                        dataIndex: "c30",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c30, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "60日留存",
+                        dataIndex: "c60",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c60, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "90日留存",
+                        dataIndex: "c90",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c90, record.registerNum);
+                        }
+                    },
+                    {
+                        title: "120日留存",
+                        dataIndex: "c120",
+                        align: "center",
+                        width: "0",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c120, record.registerNum);
+                        }
+                    }
+                ];
+            } else {
+                this.columns = [
+                    {
+                        title: "#",
+                        dataIndex: "",
+                        width: "100",
+                        align: "center",
+                        customRender: function (t, r, index) {
+                            return parseInt(index) + 1;
+                        }
+                    },
+                    {
+                        title: "日期",
+                        dataIndex: "countDate",
+                        width: "120",
+                        align: "center",
+                        customRender: function (text) {
+                            return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
+                        }
+                    }
+                ];
+            }
+            for (var j = 0; j < a.length; j++) {
+                let b = a[j].split("-");
+                if (b.length > 1) {
+                    this.columns.push({
+                        title: "新增玩家",
+                        dataIndex: "registerNum",
+                        align: "center",
+                        width: "120"
+                    });
+
+                    this.columns.push({
+                        title: "2日留存",
+                        dataIndex: "c2",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c2, record.registerNum);
+                        }
+                    });
+
+                    this.columns.push({
+                        title: "3日留存",
+                        dataIndex: "c3",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c3, record.registerNum);
+                        }
+                    });
+
+                    this.columns.push({
+                        title: "4日留存",
+                        dataIndex: "c4",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c4, record.registerNum);
+                        }
+                    });
+
+                    this.columns.push({
+                        title: "5日留存",
+                        dataIndex: "c5",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c5, record.registerNum);
+                        }
+                    });
+
+                    this.columns.push({
+                        title: "6日留存",
+                        dataIndex: "c6",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c6, record.registerNum);
+                        }
+                    });
+
+                    this.columns.push({
+                        title: "7日留存",
+                        dataIndex: "c7",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c7, record.registerNum);
+                        }
+                    });
+                } else if (a[j] == 15) {
+                    this.columns.push({
+                        title: "15日留存",
+                        dataIndex: "c15",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c15, record.registerNum);
+                        }
+                    });
+                } else if (a[j] == 30) {
+                    this.columns.push({
+                        title: "30日留存",
+                        dataIndex: "c30",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c30, record.registerNum);
+                        }
+                    });
+                } else if (a[j] == 60) {
+                    this.columns.push({
+                        title: "60日留存",
+                        dataIndex: "c60",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c60, record.registerNum);
+                        }
+                    });
+                } else if (a[j] == 90) {
+                    this.columns.push({
+                        title: "90日留存",
+                        dataIndex: "c90",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c90, record.registerNum);
+                        }
+                    });
+                } else if (a[j] == 120) {
+                    this.columns.push({
+                        title: "120日留存",
+                        dataIndex: "c120",
+                        align: "center",
+                        width: "120",
+                        customRender: (text, record) => {
+                            return this.countRate(record.c120, record.registerNum);
+                        }
+                    });
+                }
+            }
+
+// 动态改变表头end---------------------------------------------------------
             let param = {
                 days: this.queryParam.days,
                 channelId: this.queryParam.channelId,
