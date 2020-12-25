@@ -124,7 +124,6 @@ export default {
                 {
                     title: "持续时间(天)",
                     align: "center",
-                    width: 60,
                     dataIndex: "duration"
                 },
                 {
@@ -142,7 +141,6 @@ export default {
                 {
                     title: "获奖记录显示数量",
                     align: "center",
-                    width: 80,
                     dataIndex: "rewardRecordNum"
                 },
                 {
