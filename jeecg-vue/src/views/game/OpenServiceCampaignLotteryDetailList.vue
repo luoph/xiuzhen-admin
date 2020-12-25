@@ -118,7 +118,6 @@ export default {
                 {
                     title: "开始时间",
                     align: "center",
-                    width: 60,
                     dataIndex: "startDay"
                 },
                 {
