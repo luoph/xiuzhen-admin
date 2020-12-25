@@ -90,8 +90,8 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
-import GameImageSelector from "../components/GameImageSelector";
 import JDate from "@/components/jeecg/JDate";
+import GameImageSelector from "../components/GameImageSelector";
 
 import OpenServiceCampaignRankDetailMessageList from "../OpenServiceCampaignRankDetailMessageList";
 import OpenServiceCampaignRankDetailRankingList from "../OpenServiceCampaignRankDetailRankingList";
