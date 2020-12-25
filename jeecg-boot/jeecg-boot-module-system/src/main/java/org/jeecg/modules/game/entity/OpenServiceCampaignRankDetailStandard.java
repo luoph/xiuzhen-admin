@@ -70,7 +70,7 @@ public class OpenServiceCampaignRankDetailStandard extends BaseEntity {
      */
     @Excel(name = "广告引导内容", width = 15)
     private java.lang.String message;
-    
+
     /**
      * 广告引导显示时长(秒)
      */

@@ -12,8 +12,6 @@ import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
-
 /**
  * @author jeecg-boot
  * @version V1.0

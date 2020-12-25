@@ -16,16 +16,16 @@ import java.util.List;
  */
 public interface GameOnlineNumMapper extends BaseMapper<GameOnlineNum> {
 
-	List<GameOnlineNum> queryGameOnlineNumByRangDate(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                                                 @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                                                 @Param("serverId") Integer serverId,
-	                                                 @Param("channel") String channel);
+    List<GameOnlineNum> queryGameOnlineNumByRangDate(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                                                     @Param("rangeDateEndTime") Date rangeDateEndTime,
+                                                     @Param("serverId") Integer serverId,
+                                                     @Param("channel") String channel);
 
-	List<GameOnlineNum> queryGameOnlineCollectByRangDate(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-	                                                     @Param("rangeDateEndTime") Date rangeDateEndTime,
-	                                                     @Param("serverId") Integer serverId,
-	                                                     @Param("channel") String channel);
+    List<GameOnlineNum> queryGameOnlineCollectByRangDate(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                                                         @Param("rangeDateEndTime") Date rangeDateEndTime,
+                                                         @Param("serverId") Integer serverId,
+                                                         @Param("channel") String channel);
 
-	BigDecimal queryDau(@Param("getTime") Date getTime,
-	                    @Param("logTable") String logTable);
+    BigDecimal queryDau(@Param("getTime") Date getTime,
+                        @Param("logTable") String logTable);
 }

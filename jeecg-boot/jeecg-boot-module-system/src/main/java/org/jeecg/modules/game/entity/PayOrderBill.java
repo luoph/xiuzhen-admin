@@ -184,24 +184,24 @@ public class PayOrderBill implements Serializable {
     @Excel(name = "ARPPU", width = 15)
     private BigDecimal arppu;
 
-	/**
-	 * 消费档位
-	 */
-	private BigDecimal consumeRank;
+    /**
+     * 消费档位
+     */
+    private BigDecimal consumeRank;
 
-	/**
-	 * 商品名
-	 */
-	private String goodsName;
+    /**
+     * 商品名
+     */
+    private String goodsName;
 
-	/**
-	 * 购买次数
-	 */
-	private Integer payCount;
+    /**
+     * 购买次数
+     */
+    private Integer payCount;
 
-	/**
-	 * 消耗玉髓
-	 */
-	private BigDecimal chalcedony;
+    /**
+     * 消耗玉髓
+     */
+    private BigDecimal chalcedony;
 
 }

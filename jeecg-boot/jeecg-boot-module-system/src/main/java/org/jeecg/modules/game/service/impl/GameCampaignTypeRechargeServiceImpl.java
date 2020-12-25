@@ -1,9 +1,9 @@
-package org.jeecg.modules. game.service.impl;
+package org.jeecg.modules.game.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.modules. game.entity.GameCampaignTypeRecharge;
+import org.jeecg.modules.game.entity.GameCampaignTypeRecharge;
 import org.jeecg.modules.game.mapper.GameCampaignTypeRechargeMapper;
-import org.jeecg.modules. game.service.IGameCampaignTypeRechargeService;
+import org.jeecg.modules.game.service.IGameCampaignTypeRechargeService;
 import org.springframework.stereotype.Service;
 
 /**

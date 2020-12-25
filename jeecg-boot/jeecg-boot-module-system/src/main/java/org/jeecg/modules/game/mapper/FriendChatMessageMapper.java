@@ -1,7 +1,6 @@
 package org.jeecg.modules.game.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.modules.game.entity.ChatMessage;
 import org.jeecg.modules.game.entity.FriendChatMessage;
 
 import java.util.Date;
@@ -15,10 +14,10 @@ import java.util.List;
 public interface FriendChatMessageMapper {
 
 
-	List<FriendChatMessage> queryListByReceive(@Param("rangeTimeBeginDate") Date rangeTimeBeginDate,
-	                                           @Param("rangeTimeEndDate") Date rangeTimeEndDate,
-	                                           @Param("channelId") Integer channelId,
-	                                           @Param("nickname") String nickname,
-	                                           @Param("playerId") Long playerId,
-	                                           @Param("message") String message);
+    List<FriendChatMessage> queryListByReceive(@Param("rangeTimeBeginDate") Date rangeTimeBeginDate,
+                                               @Param("rangeTimeEndDate") Date rangeTimeEndDate,
+                                               @Param("channelId") Integer channelId,
+                                               @Param("nickname") String nickname,
+                                               @Param("playerId") Long playerId,
+                                               @Param("message") String message);
 }

@@ -43,6 +43,19 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @Autowired
     private IGameNoticeService gameNoticeService;
 
+    private static String formatNoticeHtml(String input) {
+        input = input.replace("\n<p>", "<br />&nbsp;<br />");
+        input = input.replace("<br/>", "<br />");
+        input = input.replace("\r\n", "<br />");
+        input = input.replace("\n", "<br />");
+        input = input.replace("<p>", "");
+        input = input.replace("</p>", "");
+        // strong 标签无效
+        input = input.replace("<strong>", "");
+        input = input.replace("</strong>", "");
+        return input;
+    }
+
     /**
      * 分页列表查询
      *
@@ -184,19 +197,6 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
         }
         updateNoticeJson(gameNotice);
         return Result.ok("刷新成功");
-    }
-
-    private static String formatNoticeHtml(String input) {
-        input = input.replace("\n<p>", "<br />&nbsp;<br />");
-        input = input.replace("<br/>", "<br />");
-        input = input.replace("\r\n", "<br />");
-        input = input.replace("\n", "<br />");
-        input = input.replace("<p>", "");
-        input = input.replace("</p>", "");
-        // strong 标签无效
-        input = input.replace("<strong>", "");
-        input = input.replace("</strong>", "");
-        return input;
     }
 
     private void updateNoticeJson(GameNotice gameNotice) {

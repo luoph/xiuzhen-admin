@@ -34,7 +34,7 @@ public class DailyGiftPackageBuyVOServiceImpl implements IDailyGiftPackageBuyVOS
         Date createTimeEndDate = null;
         createTimeBeginDate = DateUtils.parseDate(createTimeBegin);
         createTimeEndDate = DateUtils.parseDate(createTimeEnd);
-        if (createTimeBegin.equals(createTimeEnd)){
+        if (createTimeBegin.equals(createTimeEnd)) {
             Date[] dates = DateUtils.dateStartAndEnd(createTimeBeginDate);
             createTimeBeginDate = dates[0];
             createTimeEndDate = dates[1];

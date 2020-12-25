@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.jeecg.modules. game.entity.GameCampaignSupport;
+import org.jeecg.modules.game.entity.GameCampaignSupport;
 
 /**
  * @author jeecg-boot

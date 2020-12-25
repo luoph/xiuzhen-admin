@@ -46,6 +46,12 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
     @Autowired
     private IGameImageService gameImageService;
 
+    public static void main(String[] args) {
+        String name = "/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/jeecg-boot/image.png";
+//        FileUtil.mainName(name);
+        System.out.println(FileUtil.mainName(name));
+    }
+
     /**
      * 分页列表查询
      *
@@ -247,11 +253,5 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        String name = "/Users/luopeihuan/workspace/gitlab/xiuzhen-admin/jeecg-boot/image.png";
-//        FileUtil.mainName(name);
-        System.out.println(FileUtil.mainName(name));
     }
 }

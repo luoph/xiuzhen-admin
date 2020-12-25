@@ -15,14 +15,15 @@ import java.util.List;
  */
 public interface IShopMallLogService extends IService<ShopMallLog> {
 
-	/**
-	 * 查询商店购买记录统计
-	 * @param rangeDateBegin
-	 * @param rangeDateEnd
-	 * @param days
-	 * @param serverId
-	 * @param type
-	 * @return
-	 */
-	List<ShopMallLog> queryShopMallList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int type);
+    /**
+     * 查询商店购买记录统计
+     *
+     * @param rangeDateBegin
+     * @param rangeDateEnd
+     * @param days
+     * @param serverId
+     * @param type
+     * @return
+     */
+    List<ShopMallLog> queryShopMallList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int type);
 }

@@ -2,9 +2,7 @@ package org.jeecg.modules.game.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import org.jeecg.modules.game.entity.FriendChatChannel;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +17,7 @@ public interface GameChatLogMapper {
      * param:时间段、玩家id、发送的信息
      */
     @Select({
-            "<script>" ,
+            "<script>",
             "SELECT player_id,message,create_time FROM chat_message where 1=1 ",
             "<if test='playerId != null and playerId != \" \" and playerId != \"\"'>",
             " and player_id = #{playerId}",
@@ -41,21 +39,21 @@ public interface GameChatLogMapper {
                                             @Param("rangeTimeEnd") String rangeTimeEnd);
 
     /**
-     *  查询所有用户信息
+     * 查询所有用户信息
      * 【需要根据服务器切换数据源】
      */
     @Select("select id,account,nickname from player")
     List<Map> selectPlayerInfoByPlayerId();
 
     /**
-     *  查询所有仙盟群聊会话配置
+     * 查询所有仙盟群聊会话配置
      * 【需要根据服务器切换数据源】
      */
     @Select("select channel_id, player_id from friend_chat_channel where status = 1 and type = 2")
     List<Map> selectAllImmortalChatChannel();
 
     /**
-     *  查询所有私聊会话配置
+     * 查询所有私聊会话配置
      * 【需要根据服务器切换数据源】
      */
     @Select("select channel_id, player_id from friend_chat_channel where status = 1 and type = 1")
@@ -67,7 +65,7 @@ public interface GameChatLogMapper {
      * param:时间段、玩家id、发送的信息
      */
     @Select({
-            "<script>" ,
+            "<script>",
             "SELECT channel_id,player_id,message,create_time FROM friend_chat_message where 1=1 ",
             "<if test='playerId != null and playerId != \" \" and playerId != \"\"'>",
             " and player_id = #{playerId}",
@@ -84,9 +82,9 @@ public interface GameChatLogMapper {
             "</script>"
     })
     List<Map> selectImmortalMessageByAllKindOf(@Param("playerId") Long playerId,
-                                            @Param("message") String message,
-                                            @Param("rangeTimeBegin") String rangeTimeBegin,
-                                            @Param("rangeTimeEnd") String rangeTimeEnd);
+                                               @Param("message") String message,
+                                               @Param("rangeTimeBegin") String rangeTimeBegin,
+                                               @Param("rangeTimeEnd") String rangeTimeEnd);
 
     /**
      * 私聊：根据条件查询 用户发送的私聊信息信息
@@ -94,7 +92,7 @@ public interface GameChatLogMapper {
      * param:时间段、玩家id、发送的信息
      */
     @Select({
-            "<script>" ,
+            "<script>",
             "SELECT channel_id,player_id,message,create_time FROM friend_chat_message where 1=1 ",
             "<if test='playerId != null and playerId != \" \" and playerId != \"\"'>",
             " and player_id = #{playerId}",
@@ -111,7 +109,7 @@ public interface GameChatLogMapper {
             "</script>"
     })
     List<Map> selectSelfMessageByAllKindOf(@Param("playerId") Long playerId,
-                                        @Param("message") String message,
-                                        @Param("rangeTimeBegin") String rangeTimeBegin,
-                                        @Param("rangeTimeEnd") String rangeTimeEnd);
+                                           @Param("message") String message,
+                                           @Param("rangeTimeBegin") String rangeTimeBegin,
+                                           @Param("rangeTimeEnd") String rangeTimeEnd);
 }

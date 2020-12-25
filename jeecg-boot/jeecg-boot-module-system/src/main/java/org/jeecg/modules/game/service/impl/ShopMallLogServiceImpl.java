@@ -27,50 +27,50 @@ import java.util.List;
 @Service
 @Slf4j
 public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopMallLog> implements IShopMallLogService {
-	@Resource
-	private ShopMallLogMapper shopMallLogMapper;
+    @Resource
+    private ShopMallLogMapper shopMallLogMapper;
 
 
-	@Override
-	public List<ShopMallLog> queryShopMallList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int type) {
-		List<ShopMallLog> list = null;
-		try {
-			Date rangeDateBeginTime = null;
-			Date rangeDateEndTime = null;
-			if (days == 0) {
-				rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
-				rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
-			} else {
-				rangeDateEndTime = DateUtils.dateOnly(new Date());
-				rangeDateBeginTime = DateUtils.dateOnly(DateUtils.addDays(rangeDateEndTime, days * (-1)));
-			}
-			DataSourceHelper.useServerDatabase(serverId);
+    @Override
+    public List<ShopMallLog> queryShopMallList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int type) {
+        List<ShopMallLog> list = null;
+        try {
+            Date rangeDateBeginTime = null;
+            Date rangeDateEndTime = null;
+            if (days == 0) {
+                rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
+                rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+            } else {
+                rangeDateEndTime = DateUtils.dateOnly(new Date());
+                rangeDateBeginTime = DateUtils.dateOnly(DateUtils.addDays(rangeDateEndTime, days * (-1)));
+            }
+            DataSourceHelper.useServerDatabase(serverId);
 
-			// 全途径下的道具次数总和
-			BigDecimal itemNumSum = shopMallLogMapper.queryItemSum(rangeDateBeginTime, rangeDateEndTime, type);
+            // 全途径下的道具次数总和
+            BigDecimal itemNumSum = shopMallLogMapper.queryItemSum(rangeDateBeginTime, rangeDateEndTime, type);
 
-			list = shopMallLogMapper.queryShopMallList(rangeDateBeginTime, rangeDateEndTime, type);
+            list = shopMallLogMapper.queryShopMallList(rangeDateBeginTime, rangeDateEndTime, type);
 
-			for (ShopMallLog shopMallLog : list) {
+            for (ShopMallLog shopMallLog : list) {
 
-				Integer itemId = shopMallLog.getItemId();
-				// 次数
-				BigDecimal itemCount = shopMallLogMapper.queryItemCount(rangeDateBeginTime, rangeDateEndTime, shopMallLog.getType(), itemId);
+                Integer itemId = shopMallLog.getItemId();
+                // 次数
+                BigDecimal itemCount = shopMallLogMapper.queryItemCount(rangeDateBeginTime, rangeDateEndTime, shopMallLog.getType(), itemId);
 
-				BigDecimal itemNum = shopMallLog.getItemNum();
-				shopMallLog.setItemCount(itemCount);
-				shopMallLog.setItemNumRate(BigDecimalUtil.divideFour(itemNum.doubleValue(), itemNumSum.doubleValue(), true));
-				// 设置道具名字
-				ItemReduce itemReduce = ItemReduce.valueOf(shopMallLog.getItemId());
-				shopMallLog.setWayName(itemReduce.getName());
-			}
+                BigDecimal itemNum = shopMallLog.getItemNum();
+                shopMallLog.setItemCount(itemCount);
+                shopMallLog.setItemNumRate(BigDecimalUtil.divideFour(itemNum.doubleValue(), itemNumSum.doubleValue(), true));
+                // 设置道具名字
+                ItemReduce itemReduce = ItemReduce.valueOf(shopMallLog.getItemId());
+                shopMallLog.setWayName(itemReduce.getName());
+            }
 
-		} catch (Exception e) {
-			log.error("数据源切换异常,serverId:" + serverId, e);
-		} finally {
-			DataSourceHelper.useDefaultDatabase();
-		}
+        } catch (Exception e) {
+            log.error("数据源切换异常,serverId:" + serverId, e);
+        } finally {
+            DataSourceHelper.useDefaultDatabase();
+        }
 
-		return list;
-	}
+        return list;
+    }
 }

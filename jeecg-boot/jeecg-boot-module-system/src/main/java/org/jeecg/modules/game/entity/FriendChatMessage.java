@@ -18,39 +18,39 @@ import java.util.Date;
 @Accessors(chain = true)
 public class FriendChatMessage implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	/**
-	 * 会话渠道id
-	 */
-	private Long channelId;
+    /**
+     * 会话渠道id
+     */
+    private Long channelId;
 
-	/**
-	 * 玩家id
-	 */
-	private Long playerId;
+    /**
+     * 玩家id
+     */
+    private Long playerId;
 
-	/**
-	 * 私聊内容
-	 */
-	private String message;
+    /**
+     * 私聊内容
+     */
+    private String message;
 
-	/**
-	 * 消息分发频道
-	 */
-	private Integer messageChannel;
+    /**
+     * 消息分发频道
+     */
+    private Integer messageChannel;
 
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
-	/**
-	 * 玩家
-	 */
-	private Player player;
+    /**
+     * 玩家
+     */
+    private Player player;
 
-	private FriendChatChannel friendChatChannel;
+    private FriendChatChannel friendChatChannel;
 }

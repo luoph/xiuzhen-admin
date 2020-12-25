@@ -1,7 +1,6 @@
 package org.jeecg.modules.game.entity;
 
 import lombok.Data;
-import org.jeecgframework.poi.excel.annotation.Excel;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

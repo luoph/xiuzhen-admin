@@ -18,63 +18,63 @@ import java.util.Date;
 @Accessors(chain = true)
 public class FriendChatChannel implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	/**
-	 * 渠道id
-	 */
-	private Long channelId;
+    /**
+     * 渠道id
+     */
+    private Long channelId;
 
-	/**
-	 * 玩家id
-	 */
-	private Long playerId;
+    /**
+     * 玩家id
+     */
+    private Long playerId;
 
-	/**
-	 * 状态 0 - 无效 1 - 有效
-	 */
-	private int status;
+    /**
+     * 状态 0 - 无效 1 - 有效
+     */
+    private int status;
 
-	/**
-	 * 聊天类型 1 - 私聊 2 - 群聊
-	 */
-	private int type;
+    /**
+     * 聊天类型 1 - 私聊 2 - 群聊
+     */
+    private int type;
 
-	/**
-	 * 玩家重置时间
-	 */
-	private Date resetTime;
+    /**
+     * 玩家重置时间
+     */
+    private Date resetTime;
 
-	/**
-	 * 玩家消息发送时间
-	 */
-	private Date sendTime;
+    /**
+     * 玩家消息发送时间
+     */
+    private Date sendTime;
 
-	/**
-	 * 玩家读取时间
-	 */
-	private Date readTime;
+    /**
+     * 玩家读取时间
+     */
+    private Date readTime;
 
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
-	/**
-	 * 更新时间
-	 */
-	private Date updateTime;
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
-	/**
-	 * 关联私聊消息对象
-	 */
-	private FriendChatMessage friendChatMessage;
+    /**
+     * 关联私聊消息对象
+     */
+    private FriendChatMessage friendChatMessage;
 
-	/**
-	 * 关联玩家
-	 */
-	private Player player;
+    /**
+     * 关联玩家
+     */
+    private Player player;
 
 }

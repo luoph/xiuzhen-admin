@@ -2,7 +2,6 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * @author jeecg-boot

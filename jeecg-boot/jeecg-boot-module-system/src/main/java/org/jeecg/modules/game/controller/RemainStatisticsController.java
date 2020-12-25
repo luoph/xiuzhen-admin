@@ -9,7 +9,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameRemainStatistisc;
 import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.service.IGameChannelService;
@@ -17,17 +16,14 @@ import org.jeecg.modules.game.service.IRechargeOrderService;
 import org.jeecg.modules.game.service.IRemainStatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author huli
@@ -43,15 +39,16 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
      * 礼包类型
      */
     private static final int[] GOODS_TYPE = {0, 1, 2, 3, 4,};
-
-    @Autowired
-    private IRemainStatisticsService remainStatisticsService;
     @Autowired
     IGameChannelService gameChannelService;
+    @Autowired
+    private IRemainStatisticsService remainStatisticsService;
     @Value("${app.log.db.table}")
     private String logTable;
+
     /**
      * 新增留存查询
+     *
      * @param pageNo   页码
      * @param pageSize 分页大小
      * @return {@linkplain Result}
@@ -68,14 +65,14 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
-        if(0 == serverId){
+        if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
         //时间相关参数校验和转换
-        if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
-            if(days == 0){
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if (days == 0) {
                 return Result.error("时间不能为空！");
-            }else {
+            } else {
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
                 rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
             }
@@ -108,6 +105,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
     /**
      * 首付留存查询
+     *
      * @param pageNo   页码
      * @param pageSize 分页大小
      * @return {@linkplain Result}
@@ -115,22 +113,22 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @AutoLog(value = "首付留存查询-列表查询")
     @GetMapping(value = "/downPayment")
     public Result<?> downPayment(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                   @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                   @RequestParam(name = "days", defaultValue = "0") int days,
-                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+                                 @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                                 @RequestParam(name = "days", defaultValue = "0") int days,
+                                 @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                                 @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                                 @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                 @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
-        if(0 == serverId){
+        if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
         //时间相关参数校验和转换
-        if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
-            if(days == 0){
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if (days == 0) {
                 return Result.error("时间不能为空！");
-            }else {
+            } else {
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
                 rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
             }
@@ -163,6 +161,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
     /**
      * 免费留存查询
+     *
      * @param pageNo   页码
      * @param pageSize 分页大小
      * @return {@linkplain Result}
@@ -170,22 +169,22 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @AutoLog(value = "免费留存-列表查询")
     @GetMapping(value = "/free")
     public Result<?> free(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                 @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                 @RequestParam(name = "days", defaultValue = "0") int days,
-                                 @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                 @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-                                 @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                 @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+                          @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                          @RequestParam(name = "days", defaultValue = "0") int days,
+                          @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                          @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                          @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                          @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
-        if(0 == serverId){
+        if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
         //时间相关参数校验和转换
-        if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
-            if(days == 0){
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if (days == 0) {
                 return Result.error("时间不能为空！");
-            }else {
+            } else {
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
                 rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
             }
@@ -218,6 +217,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
     /**
      * 分档留存
+     *
      * @param pageNo   页码
      * @param pageSize 分页大小
      * @return {@linkplain Result}
@@ -225,27 +225,29 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @AutoLog(value = "分档留存-列表查询")
     @GetMapping(value = "/grade")
     public Result<?> grade(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                          @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                          @RequestParam(name = "days", defaultValue = "0") int days,
-                          @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                          @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-                          @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                          @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+                           @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                           @RequestParam(name = "days", defaultValue = "0") int days,
+                           @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                           @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
+                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
-        if(0 == serverId){
+        if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
         //时间相关参数校验和转换
-        if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
-            if(days == 0){
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if (days == 0) {
                 return Result.error("时间不能为空！");
-            }else {
+            } else {
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
                 rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
             }
         }
-        if(!rangeDateBegin.equals(rangeDateEnd)){return  Result.error("请选择同一天的时间");}
+        if (!rangeDateBegin.equals(rangeDateEnd)) {
+            return Result.error("请选择同一天的时间");
+        }
         String channelName = gameChannelService.queryChannelNameById(channelId);
         //查询并计算新增留存
         List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfGradeList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);

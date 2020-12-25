@@ -3,7 +3,6 @@ package org.jeecg.modules.game.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.modules.player.entity.Player;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,43 +17,43 @@ import java.util.Date;
 @Accessors(chain = true)
 public class ChatMessageVO implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	/**
-	 * 聊天频道
-	 */
-	private String chatChannel;
+    /**
+     * 聊天频道
+     */
+    private String chatChannel;
 
-	/**
-	 * 发送方玩家id
-	 */
-	private Long sendPlayerId;
+    /**
+     * 发送方玩家id
+     */
+    private Long sendPlayerId;
 
-	/**
-	 * 发送方玩家名字
-	 */
-	private String sendPlayerName;
+    /**
+     * 发送方玩家名字
+     */
+    private String sendPlayerName;
 
-	/**
-	 * 接收方玩家id
-	 */
-	private Long receivePlayerId;
+    /**
+     * 接收方玩家id
+     */
+    private Long receivePlayerId;
 
-	/**
-	 * 接收方玩家名字
-	 */
-	private String receivePlayerName;
+    /**
+     * 接收方玩家名字
+     */
+    private String receivePlayerName;
 
-	/**
-	 * 消息内容
-	 */
-	private String message;
+    /**
+     * 消息内容
+     */
+    private String message;
 
-	/**
-	 * 消息发送时间
-	 */
-	private Date messageTime;
+    /**
+     * 消息发送时间
+     */
+    private Date messageTime;
 
 }
