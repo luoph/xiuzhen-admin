@@ -158,7 +158,9 @@ export default {
                 {
                     title: "概率公示",
                     align: "center",
-                    dataIndex: "probabilityMsg"
+                    width: 180,
+                    dataIndex: "probabilityMsg",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "抽奖设置(单抽/多抽)",
