@@ -91,10 +91,10 @@
     </select>
 
     <select id="getPayAmountSum" resultType="org.jeecg.modules.player.entity.GameOrder">
-        SELECT a.player_id, a.pay_amount  FROM  `game_order` a
+        SELECT a.player_id, a.pay_amount FROM `game_order` a
         <where>
             <if test="serverId != null">
-                a.`server_id`  = #{serverId}
+                a.`server_id` = #{serverId}
             </if>
         </where>
     </select>
