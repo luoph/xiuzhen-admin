@@ -36,7 +36,6 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
-                    <!-- <a @click="handleEditDetail(record)">活动配置</a> -->
                     <!-- <a-divider type="vertical" /> -->
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -53,12 +52,6 @@
         </div>
 
         <open-service-campaign-type-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-type-modal>
-
-        <!-- 不同的类型开服活动对应不同的弹窗 -->
-        <open-service-campaign-gift-detail-list-modal ref="giftDetailListModal"></open-service-campaign-gift-detail-list-modal>
-        <open-service-campaign-rank-detail-list-modal ref="rankDetailListModal"></open-service-campaign-rank-detail-list-modal>
-        <open-service-campaign-single-gift-detail-list-modal ref="singleGiftDetailListModal"></open-service-campaign-single-gift-detail-list-modal>
-        <open-service-campaign-lottery-detail-list-modal ref="lotteryDetailListModal"></open-service-campaign-lottery-detail-list-modal>
     </a-card>
 </template>
 
@@ -67,20 +60,12 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignTypeModal from "./modules/OpenServiceCampaignTypeModal";
-import OpenServiceCampaignRankDetailListModal from "./modules/OpenServiceCampaignRankDetailListModal";
-import OpenServiceCampaignGiftDetailListModal from "./modules/OpenServiceCampaignGiftDetailListModal";
-import OpenServiceCampaignSingleGiftDetailListModal from "./modules/OpenServiceCampaignSingleGiftDetailListModal";
-import OpenServiceCampaignLotteryDetailListModal from "./modules/OpenServiceCampaignLotteryDetailListModal";
 
 export default {
     name: "OpenServiceCampaignTypeList",
     mixins: [JeecgListMixin],
     components: {
-        OpenServiceCampaignTypeModal,
-        OpenServiceCampaignGiftDetailListModal,
-        OpenServiceCampaignRankDetailListModal,
-        OpenServiceCampaignSingleGiftDetailListModal,
-        OpenServiceCampaignLotteryDetailListModal
+        OpenServiceCampaignTypeModal
     },
     data() {
         return {
@@ -206,31 +191,6 @@ export default {
                 campaignId: this.model.id
             });
             this.$refs.modalForm.title = "新增礼包配置";
-        },
-        handleEditDetail(record) {
-            if (record.type === 1) {
-                // 1-开服排行
-                this.$refs.rankDetailListModal.title = "开服排行配置";
-                this.$refs.rankDetailListModal.visible = true;
-                this.$refs.rankDetailListModal.edit(record);
-            } else if (record.type === 2) {
-                // 2-开服礼包
-                this.$refs.giftDetailListModal.title = "开服礼包配置";
-                this.$refs.giftDetailListModal.visible = true;
-                this.$refs.giftDetailListModal.edit(record);
-            } else if (record.type === 3) {
-                // 3-单笔充值
-                this.$refs.singleGiftDetailListModal.title = "单笔充值配置";
-                this.$refs.singleGiftDetailListModal.visible = true;
-                this.$refs.singleGiftDetailListModal.edit(record);
-            } else if (record.type === 4) {
-                // 4-寻宝
-                this.$refs.lotteryDetailListModal.title = "开服夺宝配置";
-                this.$refs.lotteryDetailListModal.visible = true;
-                this.$refs.lotteryDetailListModal.edit(record);
-            } else if (record.type === 5) {
-                // 5-道具消耗
-            }
         },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);

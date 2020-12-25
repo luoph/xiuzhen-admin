@@ -44,7 +44,7 @@
                     <a-input v-decorator="['rewardMsg', validatorRules.rewardMsg]" placeholder="请输入获奖传闻内容"></a-input>
                 </a-form-item>
                 <a-form-item label="概率公示" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['probabilityMsg', validatorRules.probabilityMsg]" placeholder="请输入概率公示"></a-input>
+                    <a-textarea v-decorator="['probabilityMsg', validatorRules.probabilityMsg]" placeholder="请输入概率公示"></a-textarea>
                 </a-form-item>
                 <a-form-item label="抽奖设置(单抽/多抽)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input
