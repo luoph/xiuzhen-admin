@@ -59,6 +59,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @AutoLog(value = "新增留存-列表查询")
     @GetMapping(value = "/newUserlist")
     public Result<?> queryPageList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+                                   @RequestParam(name = "showColumn", defaultValue = "120") int showColumn,
                                    @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                                    @RequestParam(name = "days", defaultValue = "0") int days,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
@@ -67,6 +68,9 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
+        if(0 == serverId){
+            return Result.error("请选择服务器!");
+        }
         //时间相关参数校验和转换
         if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
             if(days == 0){
@@ -119,6 +123,9 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
+        if(0 == serverId){
+            return Result.error("请选择服务器!");
+        }
         //时间相关参数校验和转换
         if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
             if(days == 0){
@@ -171,6 +178,9 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
                                  @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
+        if(0 == serverId){
+            return Result.error("请选择服务器!");
+        }
         //时间相关参数校验和转换
         if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
             if(days == 0){
@@ -223,6 +233,9 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
+        if(0 == serverId){
+            return Result.error("请选择服务器!");
+        }
         //时间相关参数校验和转换
         if(StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)){
             if(days == 0){
