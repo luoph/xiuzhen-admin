@@ -3,11 +3,17 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item label="开服活动id, open_service_campaign.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="open_service_campaign_type.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
+                </a-form-item>
+                <a-form-item label="活动页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
                 </a-form-item>
                 <a-form-item label="开始时间(开服第n天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天, e.g. 0表示开服第1天)" style="width: 100%" />
@@ -15,14 +21,15 @@
                 <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="活动页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
-                </a-form-item>
-                <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
-                </a-form-item>
-                <a-form-item label="活动宣传背景图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['banner', validatorRules.banner]" placeholder="请输入活动宣传背景图"></a-input>
+                <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <img
+                        v-if="model.banner"
+                        :src="getImgView(model.banner)"
+                        height="100px"
+                        :alt="getImgView(model.banner)"
+                        style="max-width:100%;font-size: 12px;font-style: italic;"
+                    />
+                    <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
                 <a-form-item label="骨骼动画资源图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['skeleton', validatorRules.skeleton]" placeholder="请输入骨骼动画资源图"></a-input>
@@ -54,7 +61,7 @@
                 <a-form-item label="展示奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['showReward', validatorRules.showReward]" placeholder='请输入展示奖励 e.g. [{"itemId":1001, "num":1}]'></a-input>
                 </a-form-item>
-                <a-form-item label="重置大奖 e.g. [1002, 1010, 1021, 1031]" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="重置大奖" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['resetReward', validatorRules.resetReward]" placeholder="请输入重置大奖 e.g. [1002, 1010, 1021, 1031]"></a-input>
                 </a-form-item>
                 <a-form-item label="奖池" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -64,9 +71,21 @@
                     ></a-input>
                 </a-form-item>
                 <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['helpMsg']" rows="4" placeholder="请输入帮助信息" />
+                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
                 </a-form-item>
             </a-form>
+
+            <a-tabs v-if="isEdit" defaultActiveKey="1">
+                <a-tab-pane tab="奖池配置" forceRender key="1">
+                    <open-service-campaign-lottery-detail-pool-list ref="poolList"></open-service-campaign-lottery-detail-pool-list>
+                </a-tab-pane>
+                <a-tab-pane tab="积分道具" forceRender key="2">
+                    <open-service-campaign-lottery-detail-score-list ref="scoreList"></open-service-campaign-lottery-detail-score-list>
+                </a-tab-pane>
+                <a-tab-pane tab="榜单配置" forceRender key="3">
+                    <open-service-campaign-lottery-detail-ranking-list ref="rankingList"></open-service-campaign-lottery-detail-ranking-list>
+                </a-tab-pane>
+            </a-tabs>
         </a-spin>
     </a-modal>
     <!--
@@ -80,18 +99,28 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import GameImageSelector from "../components/GameImageSelector";
+
+import OpenServiceCampaignLotteryDetailPoolList from "../OpenServiceCampaignLotteryDetailPoolList";
+import OpenServiceCampaignLotteryDetailScoreList from "../OpenServiceCampaignLotteryDetailScoreList";
+import OpenServiceCampaignLotteryDetailRankingList from "../OpenServiceCampaignLotteryDetailRankingList";
 
 export default {
     name: "OpenServiceCampaignLotteryDetailModal",
     components: {
-        JDate
+        JDate,
+        GameImageSelector,
+        OpenServiceCampaignLotteryDetailPoolList,
+        OpenServiceCampaignLotteryDetailScoreList,
+        OpenServiceCampaignLotteryDetailRankingList
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -131,14 +160,23 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("OpenServiceCampaignLotteryDetailModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
+                if (this.isEdit) {
+                    this.$refs.poolList.edit(record);
+                    this.$refs.scoreList.edit(record);
+                    this.$refs.rankingList.edit(record);
+                }
+
                 this.form.setFieldsValue(
                     pick(
                         this.model,
@@ -230,6 +268,12 @@ export default {
                     "helpMsg"
                 )
             );
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
         }
     }
 };

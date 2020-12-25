@@ -4,13 +4,13 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['lotteryDetailId', validatorRules.lotteryDetailId]" placeholder="请输入页签详情id" style="width: 100%" />
+                <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['lotteryDetailId', validatorRules.lotteryDetailId]" placeholder="请输入详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="奖池id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['poolId', validatorRules.poolId]" placeholder="请输入奖池id" style="width: 100%" />
@@ -22,7 +22,10 @@
                     <a-input-number v-decorator="['weight', validatorRules.weight]" placeholder="请输入掉落权重" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="是否记录" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['record', validatorRules.record]" placeholder="请输入是否记录" style="width: 100%" />
+                    <a-select placeholder="是否记录" v-decorator="['type', validatorRules.record]" initialValue="1">
+                        <a-select-option :value="0">否</a-select-option>
+                        <a-select-option :value="1">是</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="是否传闻" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="是否传闻" v-decorator="['message', validatorRules.message]" initialValue="0">
@@ -91,13 +94,16 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
+            console.log("OpenServiceCampaignLotteryDetailPoolModal, model:", JSON.stringify(this.model));
             this.visible = true;
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "lotteryDetailId", "poolId", "reward", "weight", "record", "message", "showReward"));
             });

@@ -1,35 +1,16 @@
 <template>
     <a-card :bordered="false">
         <!-- 查询区域 -->
-        <div class="table-page-search-wrapper">
-            <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24"> </a-row>
-            </a-form>
-        </div>
+        <div class="table-page-search-wrapper"></div>
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服夺宝奖池')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
+            <!-- <a-button type="primary" icon="download" @click="handleExportXls('开服夺宝奖池')">导出</a-button> -->
         </div>
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -39,7 +20,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <template slot="htmlSlot" slot-scope="text">
@@ -47,7 +27,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:180px;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -71,12 +51,14 @@
             </a-table>
         </div>
 
-        <openServiceCampaignLotteryDetailPool-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignLotteryDetailPool-modal>
+        <open-service-campaign-lottery-detail-pool-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-lottery-detail-pool-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction } from "../../api/manage";
+import { filterObj } from "@/utils/util";
 import OpenServiceCampaignLotteryDetailPoolModal from "./modules/OpenServiceCampaignLotteryDetailPoolModal";
 
 export default {
@@ -101,19 +83,19 @@ export default {
                     }
                 },
                 // {
-                //     title: "开服活动id",  title: "开服活动id, open_service_campaign.id",
-                //     align: "center",  align: "center",
-                //     dataIndex: "campaignId"  dataIndex: "campaignId"
+                //     title: "开服活动id",
+                //     align: "center",
+                //     dataIndex: "campaignId"
                 // },
                 // {
-                //     title: "活动TypeId",  title: "open_service_campaign_type.id",
-                //     align: "center",  align: "center",
-                //     dataIndex: "campaignTypeId"  dataIndex: "campaignTypeId"
+                //     title: "页签id",
+                //     align: "center",
+                //     dataIndex: "campaignTypeId"
                 // },
                 // {
-                //     title: "页签详情id",  title: "open_service_campaign_lottery_detail.id",
-                //     align: "center",  align: "center",
-                //     dataIndex: "giftDetailId"  dataIndex: "lotteryDetailId"
+                //     title: "页签详情id",
+                //     align: "center",
+                //     dataIndex: "lotteryDetailId"
                 // },
                 {
                     title: "奖池id",
@@ -200,7 +182,59 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        loadData(arg) {
+            if (!this.model.id) {
+                return;
+            }
+
+            if (!this.url.list) {
+                this.$message.error("请设置url.list属性!");
+                return;
+            }
+
+            // 加载数据 若传入参数1则加载第一页的内容
+            if (arg === 1) {
+                this.ipagination.current = 1;
+            }
+
+            // 查询条件
+            var params = this.getQueryParams();
+            this.loading = true;
+            getAction(this.url.list, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.total = res.result.total;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
+        },
+        edit(record) {
+            this.model = record;
+            this.loadData();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({
+                lotteryDetailId: this.model.id,
+                campaignTypeId: this.model.campaignTypeId,
+                campaignId: this.model.campaignId
+            });
+            this.$refs.modalForm.title = "新增消耗配置";
+        },
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam);
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // typeId、活动id、页签详情id
+            param.campaignId = this.model.campaignId;
+            param.campaignTypeId = this.model.campaignTypeId;
+            param.lotteryDetailId = this.model.id;
+            return filterObj(param);
+        }
     }
 };
 </script>
