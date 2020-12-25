@@ -87,6 +87,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
+                    fixed: "left",
                     width: 60,
                     align: "center",
                     customRender: function(t, r, index) {
@@ -104,14 +105,15 @@ export default {
                 //     dataIndex: "campaignTypeId"
                 // },
                 {
+                    title: "活动名称",
+                    align: "center",
+                    fixed: "left",
+                    dataIndex: "name"
+                },
+                {
                     title: "活动页签名称",
                     align: "center",
                     dataIndex: "tabName"
-                },
-                {
-                    title: "活动名称",
-                    align: "center",
-                    dataIndex: "name"
                 },
                 {
                     title: "开始时间",
@@ -215,6 +217,7 @@ export default {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
+                    fixed: "right",
                     scopedSlots: { customRender: "action" }
                 }
             ],
