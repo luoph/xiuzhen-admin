@@ -108,7 +108,8 @@ export default {
                     title: "活动名称",
                     align: "center",
                     fixed: "left",
-                    dataIndex: "name"
+                    dataIndex: "name",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动页签名称",
