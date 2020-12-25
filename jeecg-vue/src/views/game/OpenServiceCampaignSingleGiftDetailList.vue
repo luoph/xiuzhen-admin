@@ -111,6 +111,7 @@ export default {
                     title: "活动背景图",
                     align: "center",
                     dataIndex: "banner",
+                    width: 160,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {

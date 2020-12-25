@@ -56,7 +56,7 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction, httpAction } from "../../api/manage";
+import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignRankDetailScoreModal from "./modules/OpenServiceCampaignRankDetailScoreModal";
 

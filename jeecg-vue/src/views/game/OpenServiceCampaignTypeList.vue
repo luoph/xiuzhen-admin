@@ -58,17 +58,19 @@
         <open-service-campaign-gift-detail-list-modal ref="giftDetailListModal"></open-service-campaign-gift-detail-list-modal>
         <open-service-campaign-rank-detail-list-modal ref="rankDetailListModal"></open-service-campaign-rank-detail-list-modal>
         <open-service-campaign-single-gift-detail-list-modal ref="singleGiftDetailListModal"></open-service-campaign-single-gift-detail-list-modal>
+        <open-service-campaign-lottery-detail-list-modal ref="lotteryDetailListModal"></open-service-campaign-lottery-detail-list-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction, httpAction } from "../../api/manage";
+import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignTypeModal from "./modules/OpenServiceCampaignTypeModal";
 import OpenServiceCampaignRankDetailListModal from "./modules/OpenServiceCampaignRankDetailListModal";
 import OpenServiceCampaignGiftDetailListModal from "./modules/OpenServiceCampaignGiftDetailListModal";
 import OpenServiceCampaignSingleGiftDetailListModal from "./modules/OpenServiceCampaignSingleGiftDetailListModal";
+import OpenServiceCampaignLotteryDetailListModal from "./modules/OpenServiceCampaignLotteryDetailListModal";
 
 export default {
     name: "OpenServiceCampaignTypeList",
@@ -77,7 +79,8 @@ export default {
         OpenServiceCampaignTypeModal,
         OpenServiceCampaignGiftDetailListModal,
         OpenServiceCampaignRankDetailListModal,
-        OpenServiceCampaignSingleGiftDetailListModal
+        OpenServiceCampaignSingleGiftDetailListModal,
+        OpenServiceCampaignLotteryDetailListModal
     },
     data() {
         return {
@@ -222,6 +225,9 @@ export default {
                 this.$refs.singleGiftDetailListModal.edit(record);
             } else if (record.type === 4) {
                 // 4-寻宝
+                this.$refs.lotteryDetailListModal.title = "开服夺宝配置";
+                this.$refs.lotteryDetailListModal.visible = true;
+                this.$refs.lotteryDetailListModal.edit(record);
             } else if (record.type === 5) {
                 // 5-道具消耗
             }
