@@ -301,7 +301,7 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
     white-space: nowrap;
-    max-height: 200px;
+    max-height: 100px;
 }
 
 .largeText {
