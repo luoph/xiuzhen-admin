@@ -100,7 +100,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: "5%",
+                    width: 60,
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -110,7 +110,7 @@ export default {
                     title: "图片类型",
                     align: "center",
                     dataIndex: "type",
-                    width: "10%",
+                    width: 100,
                     customRender: value => {
                         let text = "--";
                         if (value === 1) {
@@ -125,19 +125,19 @@ export default {
                     title: "图片",
                     align: "center",
                     dataIndex: "imgUrl",
-                    width: "40%",
+                    width: 300,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "文件名",
                     align: "center",
-                    width: "20%",
+                    width: 200,
                     dataIndex: "name"
                 },
                 {
                     title: "图片尺寸",
                     align: "center",
-                    width: "10%",
+                    width: 160,
                     customRender: function(t, r) {
                         return r.width + "x" + r.height;
                     }
@@ -145,7 +145,6 @@ export default {
                 {
                     title: "备注",
                     align: "center",
-                    width: "15%",
                     dataIndex: "remark"
                 }
             ],

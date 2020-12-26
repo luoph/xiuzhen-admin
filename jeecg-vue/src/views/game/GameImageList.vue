@@ -141,6 +141,7 @@ export default {
                 {
                     title: "图片类型",
                     align: "center",
+                    width: 100,
                     dataIndex: "type",
                     customRender: value => {
                         let text = "--";
@@ -155,6 +156,7 @@ export default {
                 {
                     title: "图片",
                     align: "center",
+                    width: 300,
                     dataIndex: "imgUrl",
                     scopedSlots: { customRender: "imgSlot" }
                 },
@@ -231,5 +233,4 @@ export default {
     height: 100px;
     object-fit: contain;
 }
-
 </style>
