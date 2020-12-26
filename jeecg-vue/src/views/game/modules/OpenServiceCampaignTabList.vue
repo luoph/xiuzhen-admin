@@ -557,7 +557,7 @@ export default {
 .image {
     width: 100%;
     height: 100px;
-    object-fit: contain;
+    object-fit: scale-down;
 }
 
 /** Button按钮间距 */

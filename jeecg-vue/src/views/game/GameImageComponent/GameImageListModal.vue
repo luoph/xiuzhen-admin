@@ -240,6 +240,6 @@ export default {
 .image {
     width: 100%;
     height: 120px;
-    object-fit: contain;
+    object-fit: scale-down;
 }
 </style>
