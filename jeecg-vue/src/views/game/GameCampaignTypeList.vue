@@ -10,6 +10,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
+                        <a-form-item label="页签名称">
+                            <j-input placeholder="请输入页签名称" v-model="queryParam.name"></j-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="活动类型">
                             <a-select placeholder="选择活动类型" v-model="queryParam.type" default-value="1">
                                 <a-select-option :value="1">1-登录礼包</a-select-option>
@@ -126,12 +131,14 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameCampaignTypeModal from "./modules/GameCampaignTypeModal";
 import JDate from "@/components/jeecg/JDate.vue";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "GameCampaignTypeList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         GameCampaignTypeModal
     },
     data() {
@@ -191,7 +198,7 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "typeImage",
-                    width: "15%",
+                    width: 200,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
