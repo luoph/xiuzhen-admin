@@ -16,12 +16,17 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="支付订单号">
-                            <a-input placeholder="请输入支付订单号" v-model="queryParam.orderId"></a-input>
+                            <j-input placeholder="请输入支付订单号" v-model="queryParam.orderId"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="平台订单号">
-                            <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId"></a-input>
+                            <j-input placeholder="请输入平台订单号" v-model="queryParam.queryId"></j-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="商品id">
+                            <a-input placeholder="请输入商品id" v-model="queryParam.productId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -46,16 +51,6 @@
                         <a-col :md="4" :sm="8">
                             <a-form-item label="渠道">
                                 <a-input placeholder="请输入渠道Id" v-model="queryParam.channel"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="区服Id">
-                                <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="商品id">
-                                <a-input placeholder="请输入商品id" v-model="queryParam.productId"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="16">
@@ -149,13 +144,15 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import PayOrderModal from "./modules/PayOrderModal";
 import { filterObj } from "@/utils/util";
+import JInput from "@/components/jeecg/JInput";
+import PayOrderModal from "./modules/PayOrderModal";
 
 export default {
     name: "PayOrderList",
     mixins: [JeecgListMixin],
     components: {
+        JInput,
         PayOrderModal
     },
     data() {
