@@ -275,7 +275,7 @@ export default {
 
 .noticeContent {
     max-height: 240px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 </style>
