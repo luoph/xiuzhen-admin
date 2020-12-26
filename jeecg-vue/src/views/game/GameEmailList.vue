@@ -4,48 +4,45 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="4" :sm="6">
-                        <a-form-item label="标题"><a-input placeholder="请输入标题" v-model="queryParam.title"></a-input></a-form-item>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="标题">
+                            <j-input placeholder="请输入标题模糊查询" v-model="queryParam.title"></j-input>
+                        </a-form-item>
                     </a-col>
-                    <a-col :md="3" :sm="5">
-                        <a-form-item label="状态">
-                            <a-select placeholder="邮件状态" v-model="queryParam.validState">
-                                <a-select-option :value="1">有效</a-select-option>
-                                <a-select-option :value="2">无效</a-select-option>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="描述">
+                            <j-input placeholder="请输入描述模糊查询" v-model="queryParam.remark"></j-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="5" :sm="8">
+                        <a-form-item label="目标主体">
+                            <j-input placeholder="请输入玩家id/区服id模糊查询" v-model="queryParam.targetBodyIds"></j-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="类型">
+                            <a-select placeholder="目标类型" ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
+                                <a-select-option :value="1">玩家</a-select-option>
+                                <a-select-option :value="2">全服</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="3" :sm="5">
-                            <a-form-item label="类型">
-                                <a-select placeholder="目标类型" ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">
-                                    <a-select-option :value="1">玩家</a-select-option>
-                                    <a-select-option :value="2">全服</a-select-option>
+                        <a-col :md="4" :sm="8">
+                            <a-form-item label="状态">
+                                <a-select placeholder="邮件状态" v-model="queryParam.validState">
+                                    <a-select-option :value="1">有效</a-select-option>
+                                    <a-select-option :value="2">无效</a-select-option>
                                 </a-select>
                             </a-form-item>
                         </a-col>
-                        <a-col v-if="serverType" :md="6" :sm="8">
-                            <a-form-item label="服务器">
-                                <multiple-server-select v-model="queryParam.targetBodyIds" @changeSelect="change"></multiple-server-select>
-                            </a-form-item>
-                        </a-col>
-                        <a-col v-if="playerType" :md="6" :sm="8">
-                            <a-form-item label="玩家账号">
-                                <a-input placeholder="请以英文“[,]”分割输入多个玩家ID" v-model="queryParam.targetBodyIds" @input="inputChange($event)"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="生效时间"><j-date placeholder="请选择生效时间" v-model="queryParam.sendTime"></j-date></a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
+                        <a-col :md="10" :sm="8">
                             <a-form-item label="时间">
-                                <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.validStarTime_begin"></j-date>
-                                <span class="query-group-cust"></span>
-                                <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.validStarTime_end"></j-date>
+                                <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
@@ -92,12 +89,14 @@ import GameEmailModal from "./modules/GameEmailModal";
 import JDate from "@/components/jeecg/JDate.vue";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 import MultipleServerSelect from "@/components/gameserver/MultipleServerSelect";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "GameEmailList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         GameEmailModal,
         ServerSelect,
         MultipleServerSelect
@@ -212,21 +211,10 @@ export default {
     mounted() {},
     methods: {
         initDictConfig() {},
-        selectTarget(target) {
-            if (`${target}` == 1) {
-                this.serverType = false;
-                this.playerType = true;
-            } else if (`${target}` == 2) {
-                this.serverType = true;
-                this.playerType = false;
-            }
-            this.queryParam.targetBodyIds = "";
-        },
-        change(value) {
-            this.queryParam.targetBodyIds = value.join(",").toString();
-        },
-        inputChange(e) {
-            this.$forceUpdate();
+        onDateChange: function(value, dateStr) {
+            console.log(dateStr[0], dateStr[1]);
+            this.queryParam.validStarTime_begin = dateStr[0];
+            this.queryParam.validStarTime_end = dateStr[1];
         }
     }
 };

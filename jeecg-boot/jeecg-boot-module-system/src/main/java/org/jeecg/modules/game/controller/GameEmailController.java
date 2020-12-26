@@ -50,11 +50,6 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        String targetBodyIds = gameEmail.getTargetBodyIds();
-        if (StringUtils.isNotBlank(targetBodyIds)) {
-            targetBodyIds = "*" + targetBodyIds + "*";
-            gameEmail.setTargetBodyIds(targetBodyIds);
-        }
         QueryWrapper<GameEmail> queryWrapper = QueryGenerator.initQueryWrapper(gameEmail, req.getParameterMap());
         Page<GameEmail> page = new Page<>(pageNo, pageSize);
         IPage<GameEmail> pageList = gameEmailService.page(page, queryWrapper);
