@@ -159,23 +159,26 @@ export default {
                 {
                     title: "活动id",
                     align: "center",
-                    dataIndex: "campaignId"
+                    dataIndex: "campaignId",
+                    width: 100
                 },
                 {
                     title: "页签id",
                     align: "center",
-                    dataIndex: "id"
+                    dataIndex: "id",
+                    width: 100
                 },
                 {
                     title: "页签标题",
                     align: "center",
-                    dataIndex: "name"
+                    dataIndex: "name",
+                    width: 180
                 },
                 {
                     title: "活动项类型",
                     align: "center",
                     dataIndex: "type",
-                    width: 100,
+                    width: 180,
                     // <!-- 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵所加成' -->
                     customRender: value => {
                         let re = "--";
@@ -199,7 +202,7 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "typeImage",
-                    width: 240,
+                    width: 280,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
