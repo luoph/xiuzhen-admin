@@ -306,7 +306,7 @@ export default {
 .largeTextContainer {
     display: flex;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     white-space: nowrap;
     align-items: center;
     height: 160px;
