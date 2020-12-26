@@ -44,20 +44,22 @@
                     </div>
                 </template>
 
-                <span slot="action" slot-scope="text, record" class="largeTextContainer">
-                    <a @click="handleEdit(record)">编辑</a>
-                    <a-divider type="vertical" />
-                    <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown>
-                </span>
+                <template slot="action" slot-scope="text, record">
+                    <div class="action">
+                        <a @click="handleEdit(record)">编辑</a>
+                        <a-divider type="vertical" />
+                        <a-dropdown>
+                            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+                            <a-menu slot="overlay">
+                                <a-menu-item>
+                                    <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                                        <a>删除</a>
+                                    </a-popconfirm>
+                                </a-menu-item>
+                            </a-menu>
+                        </a-dropdown>
+                    </div>
+                </template>
             </a-table>
         </div>
 
@@ -305,11 +307,19 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
     height: 160px;
 }
 
 .largeText {
     white-space: normal;
     word-break: break-word;
+}
+
+.action {
+    height: 160px;
+    display: flex;
+    align-items: center;
 }
 </style>
