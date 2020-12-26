@@ -50,7 +50,7 @@ export default {
                 serverId: {},
                 playerId: { rules: [{ required: true, message: "请输入玩家id!" }] },
                 goodsId: { rules: [{ required: true, message: "请输入商品id!" }] },
-                remark: {}
+                remark: { rules: [{ required: true, message: "请输入备注!" }] }
             },
             url: {
                 add: "game/gameVirtualOrder/add",
