@@ -4,24 +4,24 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="游戏名称">
-                            <a-input placeholder="请输入游戏名称" v-model="queryParam.name"></a-input>
+                            <j-input placeholder="请输入游戏名称" v-model="queryParam.name"></j-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="唯一标识">
                             <j-dict-select-tag v-model="queryParam.yaAppId" placeholder="唯一标识" dictCode="game_info,ya_simple_name,ya_app_id" />
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="4" :sm="8">
+                        <a-col :md="6" :sm="8">
                             <a-form-item label="gameAppKey">
                                 <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
@@ -93,13 +93,16 @@
 <script>
 import GameInfoModal from "./modules/GameInfoModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction, putAction, httpAction } from "@/api/manage";
+import { getAction } from "@/api/manage";
+import JInput from "@/components/jeecg/JInput";
+
 import Vue from "vue";
 
 export default {
     name: "GameInfoList",
     mixins: [JeecgListMixin],
     components: {
+        JInput,
         GameInfoModal
     },
     data() {

@@ -6,7 +6,7 @@
                 <a-row :gutter="24">
                     <a-col :md="4" :sm="8">
                         <a-form-item label="渠道名称">
-                            <a-input placeholder="请输入渠道名称" v-model="queryParam.name"></a-input>
+                            <j-input placeholder="请输入渠道名称" v-model="queryParam.name"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -17,16 +17,16 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="4" :sm="8">
                             <a-form-item label="公告id">
-                                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId"></a-input-number>
+                                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId" style="width: 100%"></a-input-number>
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">
                             <a-form-item label="大渠道描述">
-                                <a-input placeholder="请输入大渠道描述" v-model="queryParam.remark"></a-input>
+                                <j-input placeholder="请输入大渠道描述" v-model="queryParam.remark"></j-input>
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
@@ -120,6 +120,7 @@
 
 <script>
 import { filterObj } from "@/utils/util";
+import JInput from "@/components/jeecg/JInput";
 import GameChannelModal from "./modules/GameChannelModal";
 import GameNoticeModal from "./modules/GameNoticeModal";
 import GameHtmlPreviewModal from "./modules/GameHtmlPreviewModal";
@@ -141,7 +142,7 @@ function filterGameIdText(options, text) {
 export default {
     name: "GameChannelList",
     mixins: [JeecgListMixin],
-    components: { GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList },
+    components: { JInput, GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList },
     data() {
         return {
             description: "游戏渠道管理页面",
@@ -300,7 +301,7 @@ export default {
             let that = this;
             getAction(that.url.noticeUrl, { id: record.noticeId }).then(res => {
                 if (res.success && res.result) {
-                    that.$refs.htmlModal.title = "公告预览"
+                    that.$refs.htmlModal.title = "公告预览";
                     that.$refs.htmlModal.edit(res.result.content);
                 } else {
                     that.$message.error("公告不存在，请检查公告设置");

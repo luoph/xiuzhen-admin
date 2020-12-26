@@ -26,19 +26,24 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="创建时间">
-                            <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                        <a-form-item label="开服时间">
+                            <a-range-picker v-model="queryParam.openTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onOpenDateChange" />
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="创建时间">
+                                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange" />
+                            </a-form-item>
+                        </a-col>
                         <a-col :md="4" :sm="8">
                             <a-form-item label="地址">
-                                <a-input placeholder="地址" v-model="queryParam.host"></a-input>
+                                <j-input placeholder="请输入地址" v-model="queryParam.host"></j-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="4" :sm="8">
                             <a-form-item label="数据库Host">
-                                <a-input placeholder="数据库Host" v-model="queryParam.dbHost"></a-input>
+                                <j-input placeholder="请输入数据库Host" v-model="queryParam.dbHost"></j-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -119,6 +124,7 @@ import GameServerModal from "./modules/GameServerModal";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
+import JInput from "@/components/jeecg/JInput";
 
 function filterGameIdText(options, text) {
     if (options instanceof Array) {
@@ -135,6 +141,7 @@ export default {
     name: "GameServerList",
     mixins: [JeecgListMixin],
     components: {
+        JInput,
         GameServerModal
     },
     data() {
@@ -287,17 +294,26 @@ export default {
         },
         getQueryParams() {
             console.log(this.queryParam.createTimeRange);
+            console.log(this.queryParam.openTimeRange);
+
             var param = Object.assign({}, this.queryParam, this.isorter);
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
+
             // 范围参数不传递后台
             delete param.createTimeRange;
+            delete param.openTimeRange;
             return filterObj(param);
         },
-        onDateChange: function(value, dateString) {
+        onCreateDateChange: function(value, dateString) {
             console.log(dateString[0], dateString[1]);
             this.queryParam.createTime_begin = dateString[0];
             this.queryParam.createTime_end = dateString[1];
+        },
+        onOpenDateChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.openTime_begin = dateString[0];
+            this.queryParam.openTime_end = dateString[1];
         },
         onDateOk(value) {
             console.log(value);
