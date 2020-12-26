@@ -5,23 +5,23 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="4" :sm="8">
-                        <a-form-item label="帐号">
-                            <a-input placeholder="请输入帐号" v-model="queryParam.account"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="4" :sm="8">
                         <a-form-item label="玩家id">
                             <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
-                        <a-form-item label="区服Id">
-                            <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
+                        <a-form-item label="角色名">
+                            <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
-                        <a-form-item label="角色名称">
-                            <a-input placeholder="请输入角色名称" v-model="queryParam.name"></a-input>
+                        <a-form-item label="帐号">
+                            <j-input placeholder="请输入帐号模糊查询" v-model="queryParam.account"></j-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="区服Id">
+                            <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -123,7 +123,7 @@
             </a-table>
         </div>
 
-        <playerRegisterInfo-modal ref="modalForm" @ok="modalFormOk"></playerRegisterInfo-modal>
+        <player-register-info-modal ref="modalForm" @ok="modalFormOk"></player-register-info-modal>
     </a-card>
 </template>
 
@@ -131,6 +131,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import PlayerRegisterInfoModal from "./modules/PlayerRegisterInfoModal";
 import JDate from "@/components/jeecg/JDate.vue";
+import JInput from "@/components/jeecg/JInput";
 import { filterObj } from "@/utils/util";
 
 export default {
@@ -138,6 +139,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         PlayerRegisterInfoModal
     },
     data() {
@@ -161,6 +163,11 @@ export default {
                     dataIndex: "playerId"
                 },
                 {
+                    title: "角色名",
+                    align: "center",
+                    dataIndex: "name"
+                },
+                {
                     title: "帐号",
                     align: "center",
                     dataIndex: "account"
@@ -169,11 +176,6 @@ export default {
                     title: "区服Id",
                     align: "center",
                     dataIndex: "serverId"
-                },
-                {
-                    title: "角色名称",
-                    align: "center",
-                    dataIndex: "name"
                 },
                 {
                     title: "注册IP",
