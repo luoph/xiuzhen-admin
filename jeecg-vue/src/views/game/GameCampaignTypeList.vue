@@ -202,7 +202,7 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "typeImage",
-                    width: 280,
+                    width: 320,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
@@ -278,7 +278,7 @@ export default {
 
 .image {
     width: 100%;
-    height: 160px;
+    height: 100px;
     object-fit: scale-down;
 }
 </style>
