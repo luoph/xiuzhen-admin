@@ -6,12 +6,12 @@
                 <a-row :gutter="24">
                     <a-col :md="4" :sm="8">
                         <a-form-item label="key">
-                            <a-input placeholder="请输入key" v-model="queryParam.dictKey"></a-input>
+                            <j-input placeholder="请输入key" v-model="queryParam.dictKey"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="value">
-                            <a-input placeholder="请输入value" v-model="queryParam.dictValue"></a-input>
+                            <j-input placeholder="请输入value" v-model="queryParam.dictValue"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import JInput from "@/components/jeecg/JInput";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameSettingModal from "./modules/GameSettingModal";
 
@@ -103,6 +104,7 @@ export default {
     name: "GameSettingList",
     mixins: [JeecgListMixin],
     components: {
+        JInput,
         GameSettingModal
     },
     data() {

@@ -16,7 +16,7 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="标题">
-                            <a-input placeholder="请输入标题" v-model="queryParam.title"></a-input>
+                            <j-input placeholder="请输入标题" v-model="queryParam.title"></j-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -130,7 +130,8 @@
 
 <script>
 import { filterObj } from "@/utils/util";
-import { getAction, putAction, httpAction } from "@/api/manage";
+import JInput from "@/components/jeecg/JInput";
+import { getAction } from "@/api/manage";
 import GameHtmlPreviewModal from "./modules/GameHtmlPreviewModal";
 
 import GameNoticeModal from "./modules/GameNoticeModal";
@@ -140,6 +141,7 @@ export default {
     name: "GameNoticeList",
     mixins: [JeecgListMixin],
     components: {
+        JInput,
         GameNoticeModal,
         GameHtmlPreviewModal
     },

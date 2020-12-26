@@ -6,7 +6,7 @@
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
                         <a-form-item label="标题">
-                            <a-input placeholder="请输入标题" v-model="queryParam.noticeTitle"></a-input>
+                            <j-input placeholder="请输入标题" v-model="queryParam.noticeTitle"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -111,10 +111,12 @@
 </template>
 
 <script>
+import JInput from "@/components/jeecg/JInput";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameLampNoticeModal from "./modules/GameLampNoticeModal";
 import JDate from "@/components/jeecg/JDate.vue";
 import { getAction } from "@/api/manage";
+
 import MultipleServerSelect from "@/components/gameserver/MultipleServerSelect";
 
 export default {
@@ -122,6 +124,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         GameLampNoticeModal,
         MultipleServerSelect
     },
