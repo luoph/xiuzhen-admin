@@ -226,9 +226,11 @@ export default {
 @import "~@assets/less/common.less";
 
 .largeTextContainer {
+    display: flex;
     overflow-x: hidden;
     overflow-y: scroll;
     white-space: nowrap;
+    align-items: center;
     max-height: 200px;
 }
 
