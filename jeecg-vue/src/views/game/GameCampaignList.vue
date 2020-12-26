@@ -205,14 +205,14 @@ export default {
                     title: "活动图标",
                     align: "center",
                     dataIndex: "icon",
-                    width: 50,
+                    width: 80,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner",
-                    width: 200,
+                    width: 240,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
@@ -357,7 +357,7 @@ export default {
 
 .image {
     width: 100%;
-    height: 100%;
+    height: 100px;
     object-fit: contain;
 }
 </style>
