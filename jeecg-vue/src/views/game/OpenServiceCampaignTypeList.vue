@@ -33,7 +33,7 @@
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
 
-                <span slot="action" slot-scope="text, record">
+                <span slot="action" style="height: 200px;" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
                     <!-- <a-divider type="vertical" /> -->
