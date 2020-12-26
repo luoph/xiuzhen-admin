@@ -304,10 +304,10 @@ export default {
 <style scoped>
 @import "~@assets/less/common.less";
 .largeTextContainer {
+    display: flex;
     overflow-x: hidden;
     overflow-y: scroll;
     white-space: nowrap;
-    display: flex;
     align-items: center;
     height: 160px;
 }
