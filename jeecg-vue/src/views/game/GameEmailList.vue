@@ -124,13 +124,13 @@ export default {
                 {
                     title: "标题",
                     align: "left",
-                    width: 120,
+                    width: 180,
                     dataIndex: "title"
                 },
                 {
                     title: "描述",
                     align: "left",
-                    width: 360,
+                    width: 240,
                     dataIndex: "remark",
                     scopedSlots: { customRender: "largeText" }
                 },
