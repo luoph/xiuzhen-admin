@@ -219,6 +219,7 @@ export default {
                     title: "活动状态",
                     align: "center",
                     dataIndex: "status",
+                    width: 80,
                     customRender: value => {
                         let re = "--";
                         if (value === 0) {
@@ -240,6 +241,7 @@ export default {
                     title: "自动开启",
                     align: "center",
                     dataIndex: "autoOpen",
+                    width: 80,
                     customRender: value => {
                         let re = "--";
                         if (value === 0) {
