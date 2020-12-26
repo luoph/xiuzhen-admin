@@ -175,6 +175,7 @@ export default {
                     title: "活动项类型",
                     align: "center",
                     dataIndex: "type",
+                    width: 100,
                     // <!-- 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵所加成' -->
                     customRender: value => {
                         let re = "--";
@@ -198,27 +199,31 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "typeImage",
-                    width: 200,
+                    width: 240,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "排序",
                     align: "center",
+                    width: 80,
                     dataIndex: "sort"
                 },
                 {
                     title: "活动开始时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "startTime"
                 },
                 {
                     title: "活动结束时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "endTime"
                 },
                 {
                     title: "创建时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "createTime"
                 },
                 {
