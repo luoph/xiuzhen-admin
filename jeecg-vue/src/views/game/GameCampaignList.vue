@@ -18,12 +18,18 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="自动开启">
-                            <j-dict-select-tag v-model="queryParam.autoOpen" placeholder="请选择自动开启" dictCode="yn" />
+                            <a-select placeholder="请选择自动开启" v-model="queryParam.autoOpen" initialValue="1">
+                                <a-select-option :value="1">开启</a-select-option>
+                                <a-select-option :value="0">关闭</a-select-option>
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="活动状态">
-                            <j-dict-select-tag v-model="queryParam.type" placeholder="请选择状态" dictCode="valid_type" />
+                            <a-select placeholder="请选择状态" v-model="queryParam.status" initialValue="1">
+                                <a-select-option :value="1">有效</a-select-option>
+                                <a-select-option :value="0">无效</a-select-option>
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -92,7 +98,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:200px;" />
+                    <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -206,7 +212,7 @@ export default {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner",
-                    width: 160,
+                    width: 200,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
@@ -348,4 +354,10 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 </style>
