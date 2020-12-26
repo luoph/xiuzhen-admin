@@ -278,7 +278,7 @@ export default {
 
 .image {
     width: 100%;
-    height: 100px;
+    height: 160px;
     object-fit: scale-down;
 }
 </style>
