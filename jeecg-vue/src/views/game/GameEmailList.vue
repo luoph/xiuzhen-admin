@@ -171,7 +171,7 @@ export default {
                 {
                     title: "目标主体",
                     align: "left",
-                    width: 200,
+                    width: 220,
                     dataIndex: "targetBodyIds",
                     scopedSlots: { customRender: "largeText" }
                 },
@@ -239,8 +239,6 @@ export default {
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
-    white-space: nowrap;
-    align-items: center;
     max-height: 200px;
 }
 
