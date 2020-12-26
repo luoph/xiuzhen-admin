@@ -265,12 +265,11 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+
 .largeTextContainer {
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
-    white-space: nowrap;
-    align-items: center;
     max-height: 200px;
 }
 
