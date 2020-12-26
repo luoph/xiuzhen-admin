@@ -87,7 +87,6 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    fixed: "left",
                     width: 60,
                     align: "center",
                     customRender: function(t, r, index) {
@@ -107,7 +106,6 @@ export default {
                 {
                     title: "活动名称",
                     align: "center",
-                    fixed: "left",
                     dataIndex: "name"
                 },
                 {
@@ -313,9 +311,5 @@ export default {
 .largeText {
     white-space: normal;
     word-break: break-word;
-}
-
-.ant-table-row {
-    height: 160px;
 }
 </style>
