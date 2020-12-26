@@ -108,8 +108,7 @@ export default {
                     title: "活动名称",
                     align: "center",
                     fixed: "left",
-                    dataIndex: "name",
-                    scopedSlots: { customRender: "largeText" }
+                    dataIndex: "name"
                 },
                 {
                     title: "活动页签名称",
@@ -308,7 +307,7 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
     white-space: nowrap;
-    max-height: 200px;
+    height: 160px;
 }
 
 .largeText {
@@ -317,6 +316,6 @@ export default {
 }
 
 .ant-table-row {
-    height: 200px;
+    height: 160px;
 }
 </style>
