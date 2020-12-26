@@ -44,7 +44,7 @@
                     </div>
                 </template>
 
-                <span slot="action" slot-scope="text, record">
+                <span slot="action" slot-scope="text, record" class="largeTextContainer">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
