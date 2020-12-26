@@ -190,6 +190,13 @@ export default {
 
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
+
+.image {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
+
 /** Button按钮间距 */
 .ant-btn {
     margin-left: 30px;

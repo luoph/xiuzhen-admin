@@ -48,7 +48,7 @@
             >
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:280px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
                 </template>
             </a-table>
         </a-row>
@@ -232,4 +232,10 @@ export default {
     }
 };
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.image {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+}
+</style>
