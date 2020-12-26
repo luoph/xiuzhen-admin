@@ -4,16 +4,16 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
+                    <!-- <a-col :md="6" :sm="8">
                         <a-form-item label="活动类型">
                             <a-select placeholder="选择活动类型" v-model="queryParam.type" default-value="1">
                                 <a-select-option :value="1">1-节日活动</a-select-option>
                             </a-select>
                         </a-form-item>
-                    </a-col>
+                    </a-col> -->
                     <a-col :md="6" :sm="8">
                         <a-form-item label="活动展示名称">
-                            <a-input placeholder="活动展示名称" v-model="queryParam.showName"></a-input>
+                            <j-input placeholder="活动展示名称" v-model="queryParam.showName"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -92,7 +92,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:280px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width:200px;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -130,6 +130,7 @@
 </template>
 
 <script>
+import JInput from "@/components/jeecg/JInput";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
 import { filterObj } from "@/utils/util";
@@ -143,6 +144,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         GameCampaignModal,
         GameCampaignServerList,
         GameCampaignTabList
@@ -156,7 +158,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: "3%",
+                    width: 60,
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -165,14 +167,14 @@ export default {
                 {
                     title: "活动Id",
                     align: "center",
-                    width: "5%",
+                    width: 100,
                     dataIndex: "id"
                 },
                 {
                     title: "活动类型",
                     align: "center",
                     dataIndex: "type",
-                    width: "5%",
+                    width: 100,
                     customRender: value => {
                         let re = "--";
                         if (value === 1) {
@@ -184,27 +186,27 @@ export default {
                 {
                     title: "活动名称",
                     align: "center",
-                    width: "8%",
+                    width: 120,
                     dataIndex: "name"
                 },
                 {
                     title: "活动标语（描述）",
                     align: "left",
-                    width: "8%",
+                    width: 120,
                     dataIndex: "description"
                 },
                 {
                     title: "活动图标",
                     align: "center",
                     dataIndex: "icon",
-                    width: "5%",
+                    width: 50,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "活动宣传图",
                     align: "center",
                     dataIndex: "banner",
-                    width: "15%",
+                    width: 160,
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
@@ -224,7 +226,7 @@ export default {
                 {
                     title: "区服id",
                     align: "center",
-                    width: "8%",
+                    width: 100,
                     dataIndex: "serverIds",
                     scopedSlots: { customRender: "serverIdTags" }
                 },
@@ -245,19 +247,19 @@ export default {
                 {
                     title: "活动开始时间",
                     align: "center",
-                    width: "8%",
+                    width: 120,
                     dataIndex: "startTime"
                 },
                 {
                     title: "活动结束时间",
                     align: "center",
-                    width: "8%",
+                    width: 120,
                     dataIndex: "endTime"
                 },
                 {
                     title: "创建时间",
                     align: "center",
-                    width: "8%",
+                    width: 120,
                     dataIndex: "createTime"
                 },
                 {
