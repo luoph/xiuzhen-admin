@@ -292,10 +292,11 @@ export default {
             return filterObj(param);
         },
         getImgView(text) {
-            if (text && text.indexOf(",") > 0) {
-                text = text.substring(0, text.indexOf(","));
-            }
-            return `${window._CONFIG["domainURL"]}/${text}`;
+            return "http://10.21.211.35:8888/jeecg-boot/image/20201222/jierihuodongdi6_105402.jpg";
+            // if (text && text.indexOf(",") > 0) {
+            //     text = text.substring(0, text.indexOf(","));
+            // }
+            // return `${window._CONFIG["domainURL"]}/${text}`;
         }
     }
 };
@@ -315,9 +316,7 @@ export default {
     word-break: break-word;
 }
 
-td {
-    display: table-cell;
-    vertical-align: inherit;
+.ant-table-row {
     height: 200px;
 }
 </style>
