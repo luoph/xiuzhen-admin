@@ -177,6 +177,7 @@ export default {
                 {
                     title: "图片尺寸",
                     align: "center",
+                    width: 120,
                     customRender: function(t, r) {
                         return r.width + "x" + r.height;
                     }

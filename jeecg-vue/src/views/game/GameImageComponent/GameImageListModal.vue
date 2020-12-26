@@ -137,7 +137,7 @@ export default {
                 {
                     title: "图片尺寸",
                     align: "center",
-                    width: 160,
+                    width: 120,
                     customRender: function(t, r) {
                         return r.width + "x" + r.height;
                     }
@@ -146,6 +146,11 @@ export default {
                     title: "备注",
                     align: "center",
                     dataIndex: "remark"
+                },
+                {
+                    title: "上传时间",
+                    align: "center",
+                    dataIndex: "createTime"
                 }
             ],
             url: {
