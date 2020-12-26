@@ -314,4 +314,10 @@ export default {
     white-space: normal;
     word-break: break-word;
 }
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+    height: 200px;
+}
 </style>
