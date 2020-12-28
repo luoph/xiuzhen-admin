@@ -88,17 +88,20 @@ export default {
                 {
                     title: "活动id",
                     align: "center",
+                    width: 80,
                     dataIndex: "campaignId"
                 },
                 {
                     title: "页签id",
                     align: "center",
+                    width: 80,
                     dataIndex: "id"
                 },
                 {
                     title: "活动类型",
                     align: "center",
                     dataIndex: "type",
+                    width: 120,
                     customRender: value => {
                         let text = "--";
                         if (value === 1) {
@@ -120,27 +123,32 @@ export default {
                 {
                     title: "活动宣传图",
                     align: "center",
+                    width: 400,
                     dataIndex: "typeImage",
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "排序",
                     align: "center",
+                    width: 80,
                     dataIndex: "sort"
                 },
                 {
                     title: "开始时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "startTime"
                 },
                 {
                     title: "结束时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "endTime"
                 },
                 {
                     title: "创建时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "createTime"
                 },
                 {
