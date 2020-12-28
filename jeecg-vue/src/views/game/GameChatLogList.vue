@@ -9,16 +9,6 @@
                         <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="4" :sm="4">
-                        <a-form-item label="玩家id">
-                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="4" :sm="4">
-                        <a-form-item label="玩家名">
-                            <a-input placeholder="请输入玩家名" v-model="queryParam.nickname"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="4" :sm="4">
                         <a-form-item label="聊天频道">
                             <a-select placeholder="聊天频道" v-model="queryParam.type">
                                 <a-select-option value="4">全部</a-select-option>
@@ -26,6 +16,16 @@
                                 <a-select-option value="2">仙盟聊天</a-select-option>
                                 <a-select-option value="3">私聊</a-select-option>
                             </a-select>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="4">
+                        <a-form-item label="玩家id">
+                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="4">
+                        <a-form-item label="玩家名">
+                            <a-input placeholder="请输入玩家名" v-model="queryParam.nickname"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="8" :sm="8">
