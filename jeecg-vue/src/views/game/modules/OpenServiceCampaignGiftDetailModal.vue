@@ -12,8 +12,8 @@
                 <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
                 </a-form-item>
-                <a-form-item label="活动页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
+                <a-form-item label="页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称"></a-input>
                 </a-form-item>
                 <a-form-item label="页签顺序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入页签顺序" style="width: 100%" />
@@ -85,7 +85,7 @@ export default {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
-                tabName: { rules: [{ required: true, message: "请输入活动页签名称!" }] },
+                tabName: { rules: [{ required: true, message: "请输入页签名称!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
                 skeleton: { rules: [{ required: true, message: "请输入骨骼动画资源!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天)!" }] },

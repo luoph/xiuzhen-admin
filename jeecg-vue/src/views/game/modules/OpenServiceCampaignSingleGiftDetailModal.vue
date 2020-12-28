@@ -94,7 +94,7 @@ export default {
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
-                tabName: { rules: [{ required: true, message: "请输入活动页签名称!" }] },
+                tabName: { rules: [{ required: true, message: "请输入页签名称!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动背景图!" }] },
