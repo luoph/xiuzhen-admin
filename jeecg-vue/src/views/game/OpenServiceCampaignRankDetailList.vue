@@ -145,7 +145,7 @@ export default {
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
-                    title: "活动宣传奖励图",
+                    title: "奖励图",
                     align: "center",
                     dataIndex: "rewardImg",
                     width: 50,
