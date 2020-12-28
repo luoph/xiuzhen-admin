@@ -22,7 +22,7 @@
                     <a-input-number v-decorator="['weight', validatorRules.weight]" placeholder="请输入掉落权重" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="是否记录" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="是否记录" v-decorator="['type', validatorRules.record]" initialValue="1">
+                    <a-select placeholder="是否记录" v-decorator="['record', validatorRules.record]" initialValue="1">
                         <a-select-option :value="0">否</a-select-option>
                         <a-select-option :value="1">是</a-select-option>
                     </a-select>
