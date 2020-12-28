@@ -95,20 +95,20 @@ export default {
                     align: "center",
                     dataIndex: "typeId"
                 },
-                {
-                    title: "活动类型",
-                    align: "center",
-                    dataIndex: "type",
-                    customRender: value => {
-                        let re = "--";
-                        if (value === 5) {
-                            re = "Buff-修为加成";
-                        } else if (value === 6) {
-                            re = "Buff-灵气加成";
-                        }
-                        return re;
-                    }
-                },
+                // {
+                //     title: "活动类型",
+                //     align: "center",
+                //     dataIndex: "type",
+                //     customRender: value => {
+                //         let re = "--";
+                //         if (value === 5) {
+                //             re = "Buff-修为加成";
+                //         } else if (value === 6) {
+                //             re = "Buff-灵气加成";
+                //         }
+                //         return re;
+                //     }
+                // },
                 {
                     title: "描述",
                     align: "center",

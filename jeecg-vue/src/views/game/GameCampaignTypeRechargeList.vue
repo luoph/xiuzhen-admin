@@ -88,26 +88,31 @@ export default {
                 {
                     title: "活动id",
                     align: "center",
+                    width: 80,
                     dataIndex: "campaignId"
                 },
                 {
                     title: "页签id",
                     align: "center",
+                    width: 80,
                     dataIndex: "typeId"
                 },
                 {
                     title: "礼包id",
                     align: "center",
+                    width: 80,
                     dataIndex: "rechargeId"
                 },
                 {
                     title: "累计充值额度",
                     align: "center",
+                    width: 80,
                     dataIndex: "rechargeAmount"
                 },
                 {
                     title: "奖励列表",
                     align: "center",
+                    width: 300,
                     dataIndex: "reward",
                     scopedSlots: { customRender: "largeText" }
                 },

@@ -86,28 +86,33 @@ export default {
                 {
                     title: "活动id",
                     align: "center",
+                    width: 80,
                     dataIndex: "campaignId"
                 },
                 {
                     title: "页签id",
                     align: "center",
+                    width: 80,
                     dataIndex: "typeId"
                 },
                 {
                     title: "登录天数",
                     align: "center",
+                    width: 80,
                     dataIndex: "loginDay"
                 },
                 {
                     title: "描述",
                     align: "center",
                     dataIndex: "description",
+                    width: 200,
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "奖励列表",
                     align: "center",
                     dataIndex: "reward",
+                    width: 280,
                     scopedSlots: { customRender: "largeText" }
                 },
                 {

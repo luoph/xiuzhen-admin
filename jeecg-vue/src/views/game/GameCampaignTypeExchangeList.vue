@@ -93,37 +93,44 @@ export default {
                 {
                     title: "活动id",
                     align: "center",
+                    width: 80,
                     dataIndex: "campaignId"
                 },
                 {
                     title: "页签id",
                     align: "center",
+                    width: 80,
                     dataIndex: "typeId"
                 },
                 {
                     title: "兑换id",
                     align: "center",
+                    width: 80,
                     dataIndex: "exchangeId"
                 },
                 {
                     title: "道具名称",
                     align: "center",
+                    width: 80,
                     dataIndex: "itemName"
                 },
                 {
                     title: "最大兑换数量",
                     align: "center",
+                    width: 80,
                     dataIndex: "maxExchangeNum"
                 },
                 {
                     title: "奖励列表",
                     align: "center",
+                    width: 220,
                     dataIndex: "reward",
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "消耗列表",
                     align: "center",
+                    width: 220,
                     dataIndex: "consume",
                     scopedSlots: { customRender: "largeText" }
                 },
