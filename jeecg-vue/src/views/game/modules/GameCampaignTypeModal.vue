@@ -3,7 +3,7 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
@@ -16,25 +16,25 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <img
-                        v-if="model.typeImage"
-                        :src="getImgView(model.typeImage)"
-                        height="100px"
-                        :alt="getImgView(model.typeImage)"
-                        style="max-width:100%;font-size: 12px;font-style: italic;"
-                    />
-                    <game-image-selector placeholder="请输入活动宣传图" v-model="model.typeImage" />
+                    <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)" class="banner-image" />
+                    <game-image-selector placeholder="请选择活动宣传图" v-model="model.typeImage" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
                 </a-form-item>
             </a-form>
+
+            <game-campaign-type-login-list v-if="isEdit && model.type === 1" ref="loginList" />
+            <game-campaign-type-recharge-list v-if="isEdit && model.type === 2" ref="rechargeList" />
+            <game-campaign-type-exchange-list v-if="isEdit && model.type === 3" ref="exchangeList" />
+            <game-campaign-type-task-list v-if="isEdit && model.type === 4" ref="taskList" />
+            <game-campaign-type-buff-list v-if="isEdit && (model.type === 5 || model.type === 6)" ref="buffList" />
         </a-spin>
     </a-modal>
 </template>
@@ -45,20 +45,30 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import moment from "moment";
 import GameImageSelector from "../components/GameImageSelector";
+import GameCampaignTypeLoginList from "../GameCampaignTypeLoginList";
+import GameCampaignTypeRechargeList from "../GameCampaignTypeRechargeList";
+import GameCampaignTypeExchangeList from "../GameCampaignTypeExchangeList";
+import GameCampaignTypeTaskList from "../GameCampaignTypeTaskList";
+import GameCampaignTypeBuffList from "../GameCampaignTypeBuffList";
 
 export default {
     name: "GameCampaignTypeModal",
     components: {
         JDate,
-        GameImageSelector
+        GameImageSelector,
+        GameCampaignTypeLoginList,
+        GameCampaignTypeRechargeList,
+        GameCampaignTypeExchangeList,
+        GameCampaignTypeTaskList,
+        GameCampaignTypeBuffList
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
-            isEdit: false,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -71,7 +81,7 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
-                type: { rules: [{ required: true, message: "请输入活动项类型" }] },
+                type: { rules: [{ required: true, message: "请输入活动类型" }] },
                 typeImage: { rules: [{ required: true, message: "请输入活动类型图片!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
@@ -85,15 +95,31 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("GameCampaignTypeModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
+                if (this.isEdit) {
+                    if (this.$refs.loginList) {
+                        this.$refs.loginList.edit(record);
+                    } else if (this.$refs.rechargeList) {
+                        this.$refs.rechargeList.edit(record);
+                    } else if (this.$refs.exchangeList) {
+                        this.$refs.exchangeList.edit(record);
+                    } else if (this.$refs.taskList) {
+                        this.$refs.taskList.edit(record);
+                    } else if (this.$refs.buffList) {
+                        this.$refs.buffList.edit(record);
+                    }
+                }
+
                 this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
@@ -159,11 +185,13 @@ export default {
 
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
-
-.image {
-    width: 100%;
-    height: 100px;
-    object-fit: contain;
+.banner-image {
+    width: auto;
+    height: auto;
+    display: block;
+    max-width: 600px;
+    max-height: 180px;
+    object-fit: scale-down;
 }
 
 /** Button按钮间距 */

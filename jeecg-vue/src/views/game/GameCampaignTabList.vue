@@ -6,7 +6,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <!-- <a-button type="primary" icon="download" @click="handleExportXls('充值活动')">导出</a-button> -->
+            <!-- <a-button type="primary" icon="download" @click="handleExportXls('节日活动页签配置')">导出</a-button> -->
         </div>
 
         <!-- table区域-begin -->
@@ -51,7 +51,7 @@
             </a-table>
         </div>
 
-        <game-campaign-type-recharge-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-recharge-modal>
+        <game-campaign-type-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-modal>
     </a-card>
 </template>
 
@@ -59,19 +59,19 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
-import GameCampaignTypeRechargeModal from "./modules/GameCampaignTypeRechargeModal";
+import GameCampaignTypeModal from "./modules/GameCampaignTypeModal";
 import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
-    name: "GameCampaignTypeRechargeList",
+    name: "GameCampaignTypeList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        GameCampaignTypeRechargeModal
+        GameCampaignTypeModal
     },
     data() {
         return {
-            description: "充值活动管理页面",
+            description: "节日活动页签配置管理页面",
             model: {},
             // 表头
             columns: [
@@ -93,23 +93,50 @@ export default {
                 {
                     title: "页签id",
                     align: "center",
-                    dataIndex: "typeId"
+                    dataIndex: "id"
                 },
                 {
-                    title: "礼包id",
+                    title: "活动类型",
                     align: "center",
-                    dataIndex: "rechargeId"
+                    dataIndex: "type",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 1) {
+                            text = "1-登录礼包";
+                        } else if (value === 2) {
+                            text = "2-累计充值";
+                        } else if (value === 3) {
+                            text = "3-兑换";
+                        } else if (value === 4) {
+                            text = "4-节日任务";
+                        } else if (value === 5) {
+                            text = "5-buff-修为加成";
+                        } else if (value === 6) {
+                            text = "6-buff-灵气加成";
+                        }
+                        return text;
+                    }
                 },
                 {
-                    title: "累计充值额度",
+                    title: "活动宣传图",
                     align: "center",
-                    dataIndex: "rechargeAmount"
+                    dataIndex: "typeImage",
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
-                    title: "奖励列表",
+                    title: "排序",
                     align: "center",
-                    dataIndex: "reward",
-                    scopedSlots: { customRender: "largeText" }
+                    dataIndex: "sort"
+                },
+                {
+                    title: "开始时间",
+                    align: "center",
+                    dataIndex: "startTime"
+                },
+                {
+                    title: "结束时间",
+                    align: "center",
+                    dataIndex: "endTime"
                 },
                 {
                     title: "创建时间",
@@ -124,11 +151,11 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameCampaignTypeRecharge/list",
-                delete: "game/gameCampaignTypeRecharge/delete",
-                deleteBatch: "game/gameCampaignTypeRecharge/deleteBatch",
-                exportXlsUrl: "game/gameCampaignTypeRecharge/exportXls",
-                importExcelUrl: "game/gameCampaignTypeRecharge/importExcel"
+                list: "game/gameCampaignType/list",
+                delete: "game/gameCampaignType/delete",
+                deleteBatch: "game/gameCampaignType/deleteBatch",
+                exportXlsUrl: "game/gameCampaignType/exportXls",
+                importExcelUrl: "game/gameCampaignType/importExcel"
             },
             dictOptions: {}
         };
@@ -174,17 +201,16 @@ export default {
             this.loadData();
         },
         handleAdd() {
-            this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
-            this.$refs.modalForm.title = "新增充值活动配置";
+            this.$refs.modalForm.add({ campaignId: this.model.id });
+            this.$refs.modalForm.title = "新增节日页签配置";
         },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
-            // typeId、活动id
-            param.typeId = this.model.id;
-            param.campaignId = this.model.campaignId;
+            // 活动id
+            param.campaignId = this.model.id;
             return filterObj(param);
         },
         getImgView(text) {

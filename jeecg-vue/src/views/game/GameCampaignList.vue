@@ -110,8 +110,6 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
-                    <a @click="handleTabList(record)">页签配置</a>
-                    <a-divider type="vertical" />
                     <a @click="handleServerList(record)">活动状态</a>
                     <a-divider type="vertical" />
                     <a @click="handleSyncCampaign(record)">同步到区服</a>
@@ -131,7 +129,6 @@
 
         <game-campaign-modal ref="modalForm" @ok="modalFormOk"></game-campaign-modal>
         <game-campaign-server-list ref="serverListModal"></game-campaign-server-list>
-        <game-campaign-tab-list ref="tabListModal"></game-campaign-tab-list>
     </a-card>
 </template>
 
@@ -142,7 +139,7 @@ import { getAction } from "@/api/manage";
 import { filterObj } from "@/utils/util";
 import GameCampaignModal from "./modules/GameCampaignModal";
 import GameCampaignServerList from "./modules/GameCampaignServerList";
-import GameCampaignTabList from "./modules/GameCampaignTabList";
+import GameCampaignTabList from "./GameCampaignTabList";
 import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
@@ -175,19 +172,6 @@ export default {
                     align: "center",
                     width: 100,
                     dataIndex: "id"
-                },
-                {
-                    title: "活动类型",
-                    align: "center",
-                    dataIndex: "type",
-                    width: 100,
-                    customRender: value => {
-                        let re = "--";
-                        if (value === 1) {
-                            re = "节日活动";
-                        }
-                        return re;
-                    }
                 },
                 {
                     title: "活动名称",
@@ -323,11 +307,6 @@ export default {
         handleServerList: function(record) {
             this.$refs.serverListModal.edit(record);
             this.$refs.serverListModal.title = "活动信息";
-        },
-        handleTabList: function(record) {
-            this.$refs.tabListModal.edit(record);
-            this.$refs.tabListModal.title = "页签配置";
-            this.$refs.tabListModal.disableSubmit = false;
         },
         handleSyncCampaign: function(record) {
             const that = this;

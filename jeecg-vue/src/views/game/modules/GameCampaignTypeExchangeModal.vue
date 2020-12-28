@@ -4,10 +4,10 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="typeIds" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入typeIds" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="兑换id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['exchangeId', validatorRules.exchangeId]" placeholder="请输入兑换id" style="width: 100%" />
@@ -19,10 +19,10 @@
                     <a-input-number v-decorator="['maxExchangeNum', validatorRules.maxExchangeNum]" placeholder="请输入最大兑换数量" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
+                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
                 <a-form-item label="消耗列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['consume', validatorRules.consume]" placeholder="请输入消耗列表"></a-input>
+                    <a-textarea v-decorator="['consume', validatorRules.consume]" placeholder="请输入消耗列表"></a-textarea>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -45,6 +45,7 @@ export default {
             title: "操作",
             width: 800,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -72,15 +73,18 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("GameCampaignTypeExchangeModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume"));
             });
         },
         close() {
@@ -124,7 +128,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume"));
         }
     }
 };

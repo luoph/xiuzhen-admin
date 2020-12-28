@@ -4,10 +4,10 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="typeIds" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入typeIds" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="礼包id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['rechargeId', validatorRules.rechargeId]" placeholder="请输入礼包id" style="width: 100%" />
@@ -39,6 +39,7 @@ export default {
             title: "操作",
             width: 800,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -51,7 +52,7 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
-                typeId: { rules: [{ required: true, message: "请输入game_campaign_type.id!" }] },
+                typeId: { rules: [{ required: true, message: "请输入页签id" }] },
                 rechargeId: { rules: [{ required: true, message: "请输入礼包id!" }] },
                 rechargeAmount: { rules: [{ required: true, message: "请输入累计充值额度!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
@@ -64,15 +65,18 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("GameCampaignTypeRechargeModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "rechargeId", "rechargeAmount", "reward", "createTime", "updateTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "rechargeId", "rechargeAmount", "reward"));
             });
         },
         close() {
@@ -116,7 +120,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "rechargeId", "rechargeAmount", "reward", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "rechargeId", "rechargeAmount", "reward"));
         }
     }
 };
