@@ -206,6 +206,34 @@ export default {
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
+                    title: "排名奖励邮件标题",
+                    align: "center",
+                    width: 180,
+                    dataIndex: "rankRewardEmailTitle",
+                    scopedSlots: { customRender: "largeText" }
+                },
+                {
+                    title: "排名奖励邮件内容",
+                    align: "center",
+                    width: 180,
+                    dataIndex: "rankRewardEmailContent",
+                    scopedSlots: { customRender: "largeText" }
+                },
+                {
+                    title: "积分奖励邮件标题",
+                    align: "center",
+                    width: 180,
+                    dataIndex: "scoreRewardEmailTitle",
+                    scopedSlots: { customRender: "largeText" }
+                },
+                {
+                    title: "积分奖励邮件内容",
+                    align: "center",
+                    width: 180,
+                    dataIndex: "scoreRewardEmailContent",
+                    scopedSlots: { customRender: "largeText" }
+                },
+                {
                     title: "帮助信息",
                     align: "center",
                     width: 180,

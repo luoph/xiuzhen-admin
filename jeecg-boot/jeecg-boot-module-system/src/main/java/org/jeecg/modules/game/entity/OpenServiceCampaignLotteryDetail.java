@@ -137,6 +137,18 @@ public class OpenServiceCampaignLotteryDetail extends BaseEntity {
     @Excel(name = "奖池", width = 15)
     private java.lang.String rewardPool;
 
+    @Excel(name = "排名奖励邮件标题", width = 15)
+    private java.lang.String rankRewardEmailTitle;
+
+    @Excel(name = "排名奖励邮件内容", width = 15)
+    private java.lang.String rankRewardEmailContent;
+
+    @Excel(name = "积分奖励邮件标题", width = 15)
+    private java.lang.String scoreRewardEmailTitle;
+
+    @Excel(name = "积分奖励邮件内容", width = 15)
+    private java.lang.String scoreRewardEmailContent;
+
     /**
      * 帮助信息
      */
