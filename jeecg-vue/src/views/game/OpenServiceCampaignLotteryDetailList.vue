@@ -351,7 +351,7 @@ export default {
 }
 
 .action {
-    height: 160px;
+    height: 170px;
     display: flex;
     align-items: center;
 }
