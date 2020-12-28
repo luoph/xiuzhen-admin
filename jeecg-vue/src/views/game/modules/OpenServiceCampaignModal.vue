@@ -7,7 +7,7 @@
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
                 </a-form-item>
                 <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <img v-if="model.icon" :src="getImgView(model.icon)" height="80px" :alt="getImgView(model.icon)" style="max-width:100%;font-size: 12px;font-style: italic;" />
+                    <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" class="icon-image" />
                     <game-image-selector placeholder="请选择活动图标" v-decorator="['icon', validatorRules.icon]" />
                 </a-form-item>
                 <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -190,6 +190,12 @@ export default {
 
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
+.icon-image {
+    width: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: scale-down;
+}
 
 .image {
     width: 100%;

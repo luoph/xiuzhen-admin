@@ -32,13 +32,7 @@
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
                 <a-form-item label="奖励图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <img
-                        v-if="model.rewardImg"
-                        :src="getImgView(model.rewardImg)"
-                        height="100px"
-                        :alt="getImgView(model.rewardImg)"
-                        style="max-width:100%;font-size: 12px;font-style: italic;"
-                    />
+                    <img v-if="model.rewardImg" :src="getImgView(model.rewardImg)" :alt="getImgView(model.rewardImg)" class="icon-image" />
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.rewardImg" />
                 </a-form-item>
                 <a-form-item label="活动宣传仙力" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -255,6 +249,13 @@ export default {
 
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
+.icon-image {
+    width: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: scale-down;
+}
+
 .banner-image {
     width: 100%;
     max-height: 180px;
