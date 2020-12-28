@@ -99,7 +99,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
+                    <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -175,11 +175,11 @@ export default {
                     width: 180
                 },
                 {
-                    title: "活动项类型",
+                    title: "活动类型",
                     align: "center",
                     dataIndex: "type",
                     width: 180,
-                    // <!-- 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵所加成' -->
+                    // <!-- 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成' -->
                     customRender: value => {
                         let re = "--";
                         if (value === 1) {
@@ -276,7 +276,7 @@ export default {
 <style scoped>
 @import "~@assets/less/common.less";
 
-.image {
+.list-image {
     width: 100%;
     height: 100px;
     object-fit: scale-down;

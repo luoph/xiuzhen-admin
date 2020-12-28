@@ -4,29 +4,25 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="typeIds" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入typeIds" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
-                        <a-select-option :value="1">1-登录礼包</a-select-option>
-                        <a-select-option :value="2">2-累计充值</a-select-option>
-                        <a-select-option :value="3">3-兑换</a-select-option>
-                        <a-select-option :value="4">4-节日任务</a-select-option>
+                <a-form-item label="加成类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="选择加成类型" v-decorator="['type', validatorRules.type]" initialValue="5">
                         <a-select-option :value="5">5-Buff-修为加成</a-select-option>
                         <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />
+                    <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
+                    <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
+                    <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-textarea>
                 </a-form-item>
                 <a-form-item label="加成" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成" style="width: 100%" />
@@ -42,6 +38,7 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import moment from "moment";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
@@ -55,6 +52,7 @@ export default {
             title: "操作",
             width: 800,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -68,7 +66,7 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
                 typeId: { rules: [{ required: true, message: "请输入game_campaign_type.id!" }] },
-                type: { rules: [{ required: true, message: "请输入活动项类型!" }] },
+                type: { rules: [{ required: true, message: "请输入活动类型!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
@@ -82,15 +80,20 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("GameCampaignTypeBuffModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
+                this.form.setFieldsValue({ startTime: this.startTime ? moment(this.startTime) : null });
+                this.form.setFieldsValue({ endtTime: this.endtTime ? moment(this.endtTime) : null });
             });
         },
         close() {
@@ -113,6 +116,10 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
@@ -135,7 +142,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
-        },
+        }
     }
 };
 </script>

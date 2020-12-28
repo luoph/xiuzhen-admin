@@ -1,22 +1,22 @@
 <template>
-    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="typeIds" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入typeIds" style="width: 100%" />
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="任务id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['taskId', validatorRules.taskId]" placeholder="请输入任务id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
+                    <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-textarea>
                 </a-form-item>
-                <a-form-item label="task_module_type.json.module_id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['moduleId', validatorRules.moduleId]" placeholder="请输入task_module_type.json.module_id" style="width: 100%" />
+                <a-form-item label="moduleId" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['moduleId', validatorRules.moduleId]" placeholder="请输moduleId" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="任务完成条件" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['target', validatorRules.target]" placeholder="请输入任务完成条件" style="width: 100%" />
@@ -25,14 +25,17 @@
                     <a-input-number v-decorator="['args', validatorRules.args]" placeholder="请输入任务参数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
+                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
             </a-form>
         </a-spin>
         <!-- </a-modal> -->
         <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer>
+    </a-modal>
+    <!-- <a-button type="primary" @click="handleOk">确定</a-button>
+        <a-button type="primary" @click="handleCancel">取消</a-button>
+    </a-drawer> -->
 </template>
 
 <script>
@@ -51,6 +54,7 @@ export default {
             title: "操作",
             width: 800,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -63,15 +67,13 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
-                typeId: { rules: [{ required: true, message: "请输入game_campaign_type.id!" }] },
+                typeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 taskId: { rules: [{ required: true, message: "请输入任务id!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
-                moduleId: { rules: [{ required: true, message: "请输入task_module_type.json.module_id!" }] },
+                moduleId: { rules: [{ required: true, message: "请输入moduleId!" }] },
                 target: { rules: [{ required: true, message: "请输入任务完成条件!" }] },
                 args: { rules: [{ required: true, message: "请输入任务参数!" }] },
-                reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
-                createTime: {},
-                updateTime: {}
+                reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
             },
             url: {
                 add: "game/gameCampaignTypeTask/add",
@@ -81,13 +83,16 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("GameCampaignTypeTaskModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "args", "reward"));
             });
