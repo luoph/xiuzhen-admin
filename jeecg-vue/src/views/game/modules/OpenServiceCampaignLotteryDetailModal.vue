@@ -47,10 +47,10 @@
                     <a-textarea v-decorator="['probabilityMsg', validatorRules.probabilityMsg]" placeholder="请输入概率公示"></a-textarea>
                 </a-form-item>
                 <a-form-item label="抽奖设置(单抽/多抽)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input
+                    <a-textarea
                         v-decorator="['lotteryType', validatorRules.lotteryType]"
                         placeholder='请输入抽奖设置(单抽/多抽) e.g. [{"itemId":1001, "num":1, "lotteryNum":1, "score":10}]'
-                    ></a-input>
+                    />
                 </a-form-item>
                 <a-form-item label="展示特奖" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['ssrShowReward', validatorRules.ssrShowReward]" placeholder='请输入展示特奖 e.g. [{"itemId":1001, "num":1}]'></a-input>
