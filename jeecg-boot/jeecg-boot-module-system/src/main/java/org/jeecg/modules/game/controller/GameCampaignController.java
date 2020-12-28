@@ -77,10 +77,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         QueryWrapper<GameCampaign> queryWrapper = QueryGenerator.initQueryWrapper(gameCampaign, req.getParameterMap());
         Page<GameCampaign> page = new Page<>(pageNo, pageSize);
         IPage<GameCampaign> pageList = campaignService.page(page, queryWrapper);
-        // 查询子页签列表
-        for (GameCampaign record : pageList.getRecords()) {
-            getGameCampaignTypeList(record);
-        }
         return Result.ok(pageList);
     }
 

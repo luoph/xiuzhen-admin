@@ -91,42 +91,51 @@ export default {
                 {
                     title: "活动id",
                     align: "center",
+                    width: 80,
                     dataIndex: "campaignId"
                 },
                 {
                     title: "页签id",
                     align: "center",
+                    width: 80,
                     dataIndex: "typeId"
                 },
                 {
                     title: "任务id",
                     align: "center",
+                    width: 80,
                     dataIndex: "taskId"
                 },
                 {
                     title: "描述",
                     align: "center",
+                    width: 120,
                     dataIndex: "description",
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "模块id",
                     align: "center",
+                    width: 80,
                     dataIndex: "moduleId"
                 },
                 {
                     title: "任务完成条件",
                     align: "center",
+                    width: 80,
                     dataIndex: "target"
                 },
                 {
                     title: "任务参数",
                     align: "center",
+                    width: 80,
+
                     dataIndex: "args"
                 },
                 {
                     title: "奖励列表",
                     align: "center",
+                    width: 240,
                     dataIndex: "reward",
                     scopedSlots: { customRender: "largeText" }
                 },
