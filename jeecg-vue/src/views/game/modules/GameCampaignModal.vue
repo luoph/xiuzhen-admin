@@ -3,7 +3,7 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
+                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
                         <a-select-option :value="1">1-节日活动</a-select-option>
                     </a-select>
                 </a-form-item>
@@ -42,7 +42,7 @@
             </a-form>
 
             <a-tabs v-if="isEdit" defaultActiveKey="1">
-                <a-tab-pane tab="活动页签配置" key="1">
+                <a-tab-pane tab="页签配置" key="1">
                     <game-campaign-tab-list ref="tabList"></game-campaign-tab-list>
                 </a-tab-pane>
             </a-tabs>

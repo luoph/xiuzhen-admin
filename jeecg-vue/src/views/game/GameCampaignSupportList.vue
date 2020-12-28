@@ -153,7 +153,7 @@ export default {
                     align: "center",
                     dataIndex: "status",
                     customRender: function(text) {
-                        var value = "未设置";
+                        var value = "--";
                         if (text == "1") {
                             value = "已开启";
                         } else if (text == "0") {
