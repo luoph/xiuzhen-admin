@@ -28,9 +28,8 @@
                     <img
                         v-if="model.banner"
                         :src="getImgView(model.banner)"
-                        height="100px"
                         :alt="getImgView(model.banner)"
-                        style="max-width:100%;font-size: 12px;font-style: italic;"
+                        style="max-width:100%; max-height:100%;font-size: 12px;font-style: italic;"
                     />
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
