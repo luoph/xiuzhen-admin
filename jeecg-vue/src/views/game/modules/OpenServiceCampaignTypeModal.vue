@@ -62,7 +62,7 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 1200,
+            width: 1400,
             visible: false,
             isEdit: false,
             model: {},
