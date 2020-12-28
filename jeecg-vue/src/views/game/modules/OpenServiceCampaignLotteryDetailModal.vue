@@ -144,9 +144,9 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                campaignId: { rules: [{ required: true, message: "请输入开服活动id, open_service_campaign.id!" }] },
-                campaignTypeId: { rules: [{ required: true, message: "请输入open_service_campaign_type.id!" }] },
-                startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天, e.g. 0表示开服第1天)!" }] },
+                campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
+                campaignTypeId: { rules: [{ required: true, message: "请输入页签id！" }] },
+                startDay: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
                 tabName: { rules: [{ required: true, message: "请输入活动页签名称!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
