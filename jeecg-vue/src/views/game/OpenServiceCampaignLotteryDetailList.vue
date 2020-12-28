@@ -111,7 +111,7 @@ export default {
                     dataIndex: "name"
                 },
                 {
-                    title: "活动页签名称",
+                    title: "页签名称",
                     align: "center",
                     dataIndex: "tabName"
                 },

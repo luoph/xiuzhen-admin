@@ -56,7 +56,7 @@ public class OpenServiceCampaignConsumeDetailItem extends BaseEntity {
     /**
      * 统计类型 0.个人, 1.全服
      */
-    @Excel(name = "统计类型 0.个人, 1.全服", width = 15)
+    @Excel(name = "统计类型", width = 15)
     private java.lang.Integer consumeType;
 
     /**
@@ -68,7 +68,7 @@ public class OpenServiceCampaignConsumeDetailItem extends BaseEntity {
     /**
      * 开启前是否统计，全服统计默认是
      */
-    @Excel(name = "开启前是否统计，全服统计默认是", width = 15)
+    @Excel(name = "开启前是否统计", width = 15)
     private java.lang.Integer statisticsUnstart;
 
     /**

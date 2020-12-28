@@ -49,6 +49,7 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
                                    HttpServletRequest req) {
         QueryWrapper<OpenServiceCampaignConsumeDetailItem> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignConsumeDetailItem, req.getParameterMap());
         Page<OpenServiceCampaignConsumeDetailItem> page = new Page<>(pageNo, pageSize);
+        queryWrapper.orderByAsc("sort");
         IPage<OpenServiceCampaignConsumeDetailItem> pageList = openServiceCampaignConsumeDetailItemService.page(page, queryWrapper);
         return Result.ok(pageList);
     }

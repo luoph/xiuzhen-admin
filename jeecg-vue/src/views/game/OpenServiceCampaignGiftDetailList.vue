@@ -125,6 +125,12 @@ export default {
                     dataIndex: "duration"
                 },
                 {
+                    title: "排序",
+                    align: "center",
+                    dataIndex: "sort",
+                    width: 80
+                },
+                {
                     title: "帮助信息",
                     align: "center",
                     width: 180,
