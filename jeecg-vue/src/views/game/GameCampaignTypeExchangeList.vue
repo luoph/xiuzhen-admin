@@ -98,7 +98,7 @@ export default {
                 {
                     title: "页签id",
                     align: "center",
-                    dataIndex: "页签id"
+                    dataIndex: "typeId"
                 },
                 {
                     title: "兑换id",
