@@ -12,8 +12,11 @@
                 <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
                 </a-form-item>
-                <a-form-item label="活动页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
+                <a-form-item label="页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称"></a-input>
+                </a-form-item>
+                <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="排行类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select :disabled="isEdit" placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" initialValue="1">
@@ -117,10 +120,11 @@ export default {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入typeId!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
-                tabName: { rules: [{ required: true, message: "请输入活动页签名称!" }] },
+                tabName: { rules: [{ required: true, message: "请输入页签名称!" }] },
                 rankType: { rules: [{ required: true, message: "请输入排行类型!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天)!" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
+                sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
                 rewardImg: { rules: [{ required: true, message: "请输入活动宣传奖励图!" }] },
                 combatPower: { rules: [{ required: true, message: "请输入活动宣传仙力!" }] },
@@ -162,6 +166,7 @@ export default {
                         "campaignTypeId",
                         "name",
                         "tabName",
+                        "sort",
                         "rankType",
                         "startDay",
                         "duration",
@@ -224,6 +229,7 @@ export default {
                     "campaignTypeId",
                     "name",
                     "tabName",
+                    "sort",
                     "rankType",
                     "startDay",
                     "duration",
