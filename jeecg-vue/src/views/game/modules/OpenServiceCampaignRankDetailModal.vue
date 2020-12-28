@@ -126,7 +126,7 @@ export default {
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
-                rewardImg: { rules: [{ required: true, message: "请输入活动宣传奖励图!" }] },
+                rewardImg: { rules: [{ required: true, message: "请输入奖励图!" }] },
                 combatPower: { rules: [{ required: true, message: "请输入活动宣传仙力!" }] },
                 // rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
                 helpMsg: { rules: [{ required: true, message: "请输入帮助信息!" }] },
