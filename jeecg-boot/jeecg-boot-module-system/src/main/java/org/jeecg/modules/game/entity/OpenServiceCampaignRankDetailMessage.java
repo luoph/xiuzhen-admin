@@ -47,7 +47,7 @@ public class OpenServiceCampaignRankDetailMessage extends BaseEntity {
     /**
      * open_service_campaign_rank_detail.id
      */
-    @Excel(name = "rankDetailId", width = 15)
+    @Excel(name = "详情id", width = 15)
     private java.lang.Long rankDetailId;
 
     /**

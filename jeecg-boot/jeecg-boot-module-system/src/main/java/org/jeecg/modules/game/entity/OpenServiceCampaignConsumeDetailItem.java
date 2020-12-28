@@ -44,7 +44,7 @@ public class OpenServiceCampaignConsumeDetailItem extends BaseEntity {
     /**
      * open_service_campaign_consume_detail.id
      */
-    @Excel(name = "页签详情id", width = 15)
+    @Excel(name = "详情id", width = 15)
     private java.lang.Integer consumeDetailId;
 
     /**

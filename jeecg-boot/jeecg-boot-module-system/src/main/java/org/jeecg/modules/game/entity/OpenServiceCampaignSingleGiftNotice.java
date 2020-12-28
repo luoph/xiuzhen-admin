@@ -47,7 +47,7 @@ public class OpenServiceCampaignSingleGiftNotice extends BaseEntity {
     /**
      * open_service_single_recharge_gift_detail.id
      */
-    @Excel(name = "giftDetailId", width = 15)
+    @Excel(name = "详情id", width = 15)
     private java.lang.Long giftDetailId;
 
     /**

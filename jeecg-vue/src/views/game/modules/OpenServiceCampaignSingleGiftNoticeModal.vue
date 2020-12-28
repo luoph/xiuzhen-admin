@@ -9,7 +9,7 @@
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入typeId" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入giftDetailId" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="消息内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -68,7 +68,7 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                giftDetailId: { rules: [{ required: true, message: "请输入页签详情id!" }] },
+                giftDetailId: { rules: [{ required: true, message: "请输入详情id!" }] },
                 num: { rules: [{ required: true, message: "请输入播放次数!" }] },
                 message: { rules: [{ required: true, message: "请输入传闻内容!" }] },
                 email: { rules: [{ required: true, message: "请输入是否发送邮件!" }] },

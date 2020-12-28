@@ -64,7 +64,7 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                lotteryDetailId: { rules: [{ required: true, message: "请输入页签详情id!" }] },
+                lotteryDetailId: { rules: [{ required: true, message: "请输入详情id!" }] },
                 minRank: { rules: [{ required: true, message: "请输入排名最小值!" }] },
                 maxRank: { rules: [{ required: true, message: "请输入排名最大值!" }] },
                 score: { rules: [{ required: true, message: "请输入上榜最低积分!" }] },

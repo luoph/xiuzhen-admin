@@ -56,7 +56,7 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction, httpAction } from "../../api/manage";
+import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignRankDetailMessageModal from "./modules/OpenServiceCampaignRankDetailMessageModal";
 import JDate from "@/components/jeecg/JDate.vue";
@@ -95,7 +95,7 @@ export default {
                 //     dataIndex: "campaignTypeId"
                 // },
                 // {
-                //     title: "页签详情id",
+                //     title: "详情id",
                 //     align: "center",
                 //     dataIndex: "rankDetailId"
                 // },
@@ -208,7 +208,7 @@ export default {
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
-            // typeId、活动id、页签详情id
+            // typeId、活动id、详情id
             param.campaignId = this.model.campaignId;
             param.campaignTypeId = this.model.campaignTypeId;
             param.rankDetailId = this.model.id;

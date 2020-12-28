@@ -63,8 +63,9 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -78,7 +79,7 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id" }] },
-                lotteryDetailId: { rules: [{ required: true, message: "请输入页签详情id" }] },
+                lotteryDetailId: { rules: [{ required: true, message: "请输入详情id" }] },
                 poolId: { rules: [{ required: true, message: "请输入奖池id!" }] },
                 reward: {},
                 weight: { rules: [{ required: true, message: "请输入掉落权重!" }] },

@@ -93,7 +93,7 @@ export default {
                 //     dataIndex: "campaignTypeId"
                 // },
                 // {
-                //     title: "页签详情id",
+                //     title: "详情id",
                 //     align: "center",
                 //     dataIndex: "rankDetailId"
                 // },
@@ -202,7 +202,7 @@ export default {
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
-            // typeId、活动id、页签详情id
+            // typeId、活动id、详情id
             param.campaignId = this.model.campaignId;
             param.campaignTypeId = this.model.campaignTypeId;
             param.rankDetailId = this.model.id;
