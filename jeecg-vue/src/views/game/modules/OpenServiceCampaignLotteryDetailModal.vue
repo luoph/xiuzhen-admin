@@ -70,6 +70,18 @@
                         placeholder='请输入奖池, e.g. [{"timeMin":1, "timeMax":20, "rewardPool":1}, {"timeMin":21, "timeMax":30, "rewardPool":2}]'
                     ></a-input>
                 </a-form-item>
+                <a-form-item label="排名奖励邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['rankRewardEmailTitle', validatorRules.rankRewardEmailTitle]" placeholder="请输入排名奖励邮件标题"></a-textarea>
+                </a-form-item>
+                <a-form-item label="排名奖励邮件内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['rankRewardEmailContent', validatorRules.rankRewardEmailContent]" placeholder="请输入排名奖励邮件内容"></a-textarea>
+                </a-form-item>
+                <a-form-item label="积分奖励邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['scoreRewardEmailTitle', validatorRules.scoreRewardEmailTitle]" placeholder="请输入积分奖励邮件标题"></a-textarea>
+                </a-form-item>
+                <a-form-item label="积分奖励邮件内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['scoreRewardEmailContent', validatorRules.scoreRewardEmailContent]" placeholder="请输入积分奖励邮件内容"></a-textarea>
+                </a-form-item>
                 <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
                 </a-form-item>
@@ -150,6 +162,10 @@ export default {
                 showReward: { rules: [{ required: true, message: "请输入展示奖励!" }] },
                 resetReward: { rules: [{ required: true, message: "请输入重置大奖" }] },
                 rewardPool: { rules: [{ required: true, message: "请输入奖池!" }] },
+                rankRewardEmailTitle: { rules: [{ required: true, message: "请输入排名奖励邮件标题!" }] },
+                rankRewardEmailContent: { rules: [{ required: true, message: "请输入排名奖励邮件内容!" }] },
+                scoreRewardEmailTitle: { rules: [{ required: true, message: "请输入积分奖励邮件标题!" }] },
+                scoreRewardEmailContent: { rules: [{ required: true, message: "请输入积分奖励邮件内容!" }] },
                 helpMsg: {}
             },
             url: {
@@ -198,6 +214,10 @@ export default {
                         "showReward",
                         "resetReward",
                         "rewardPool",
+                        "rankRewardEmailTitle",
+                        "rankRewardEmailContent",
+                        "scoreRewardEmailTitle",
+                        "scoreRewardEmailContent",
                         "helpMsg"
                     )
                 );
@@ -265,6 +285,10 @@ export default {
                     "showReward",
                     "resetReward",
                     "rewardPool",
+                    "rankRewardEmailTitle",
+                    "rankRewardEmailContent",
+                    "scoreRewardEmailTitle",
+                    "scoreRewardEmailContent",
                     "helpMsg"
                 )
             );
@@ -281,7 +305,6 @@ export default {
 
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
-
 .image {
     width: 100%;
     height: 100px;
