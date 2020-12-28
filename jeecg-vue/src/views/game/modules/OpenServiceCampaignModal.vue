@@ -191,16 +191,21 @@ export default {
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
 .icon-image {
-    width: 100%;
-    max-width: 200px;
-    max-height: 200px;
+    width: auto;
+    height: auto;
+    display: block;
+    max-width: 180px;
+    max-height: 180px;
     object-fit: scale-down;
 }
 
-.image {
-    width: 100%;
-    height: 100px;
-    object-fit: contain;
+.banner-image {
+    width: auto;
+    height: auto;
+    display: block;
+    max-width: 600px;
+    max-height: 180px;
+    object-fit: scale-down;
 }
 
 /** Button按钮间距 */

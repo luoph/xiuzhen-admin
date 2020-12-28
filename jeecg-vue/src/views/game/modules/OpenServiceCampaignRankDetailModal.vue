@@ -250,19 +250,22 @@ export default {
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
 .icon-image {
-    width: 100%;
-    max-width: 200px;
-    max-height: 200px;
+    width: auto;
+    height: auto;
+    display: block;
+    max-width: 180px;
+    max-height: 180px;
     object-fit: scale-down;
 }
 
 .banner-image {
-    width: 100%;
-    max-height: 180px;
+    width: auto;
+    height: auto;
+    display: block;
     max-width: 600px;
+    max-height: 180px;
     object-fit: scale-down;
 }
-
 /** Button按钮间距 */
 .ant-btn {
     margin-left: 30px;
