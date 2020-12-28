@@ -198,7 +198,9 @@ export default {
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
 .banner-image {
-    width: 100%;
+    width: auto;
+    height: auto;
+    display: block;
     max-width: 600px;
     max-height: 180px;
     object-fit: scale-down;
