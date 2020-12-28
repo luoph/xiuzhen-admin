@@ -108,6 +108,12 @@ export default {
                     dataIndex: "tabName"
                 },
                 {
+                    title: "排序",
+                    align: "center",
+                    dataIndex: "sort",
+                    width: 80
+                },
+                {
                     title: "排行类型",
                     align: "center",
                     dataIndex: "rankType",

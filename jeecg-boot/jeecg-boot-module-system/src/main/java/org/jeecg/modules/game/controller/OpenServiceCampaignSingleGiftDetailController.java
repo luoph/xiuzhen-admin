@@ -49,6 +49,7 @@ public class OpenServiceCampaignSingleGiftDetailController extends JeecgControll
                                    HttpServletRequest req) {
         QueryWrapper<OpenServiceCampaignSingleGiftDetail> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignSingleGiftDetail, req.getParameterMap());
         Page<OpenServiceCampaignSingleGiftDetail> page = new Page<>(pageNo, pageSize);
+        queryWrapper.orderByAsc("sort");
         IPage<OpenServiceCampaignSingleGiftDetail> pageList = openServiceCampaignSingleGiftDetailService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
