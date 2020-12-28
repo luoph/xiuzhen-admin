@@ -4,16 +4,16 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['consumeDetailId', validatorRules.consumeDetailId]" placeholder="请输入页签详情id" style="width: 100%" />
+                <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['consumeDetailId', validatorRules.consumeDetailId]" placeholder="请输入详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="传闻推送时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择传闻推送时间" v-decorator="['sendTime', validatorRules.sendTime]" :trigger-change="true" style="width: 100%" />
+                    <a-date-picker placeholder="传闻推送时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-textarea>
@@ -22,7 +22,10 @@
                     <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入传闻次数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="是否发送邮件" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['email', validatorRules.email]" placeholder="请输入是否发送邮件" style="width: 100%" />
+                    <a-select placeholder="是否发送邮件" v-decorator="['email', validatorRules.email]" initialValue="1">
+                        <a-select-option :value="0">否</a-select-option>
+                        <a-select-option :value="1">是</a-select-option>
+                    </a-select>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -38,6 +41,7 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import moment from "moment";
 
 export default {
     name: "OpenServiceCampaignConsumeDetailMessageModal",
@@ -48,8 +52,9 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -63,7 +68,7 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                consumeDetailId: { rules: [{ required: true, message: "请输入页签详情id!" }] },
+                consumeDetailId: { rules: [{ required: true, message: "请输入详情id!" }] },
                 sendTime: { rules: [{ required: true, message: "请输入传闻推送时间!" }] },
                 message: { rules: [{ required: true, message: "请输入传闻内容!" }] },
                 num: { rules: [{ required: true, message: "请输入传闻次数!" }] },
@@ -77,15 +82,19 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
+            console.log("OpenServiceCampaignConsumeDetailMessageModal, model:", JSON.stringify(this.model));
             this.visible = true;
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "consumeDetailId", "sendTime", "message", "num", "email"));
+                this.form.setFieldsValue({ sendTime: this.model.sendTime ? moment(this.model.sendTime) : null });
             });
         },
         close() {
@@ -108,7 +117,10 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.sendTime = formData.sendTime ? formData.sendTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     console.log("表单提交数据", formData);
+
                     httpAction(httpUrl, formData, method)
                         .then(res => {
                             if (res.success) {

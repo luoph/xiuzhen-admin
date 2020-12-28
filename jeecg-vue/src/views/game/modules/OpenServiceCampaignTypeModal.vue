@@ -28,6 +28,7 @@
             <open-service-campaign-gift-detail-list v-if="isEdit && model.type === 2" ref="giftList" />
             <open-service-campaign-single-gift-detail-list v-if="isEdit && model.type === 3" ref="singleGiftList" />
             <open-service-campaign-lottery-detail-list v-if="isEdit && model.type === 4" ref="lotteryList" />
+            <open-service-campaign-consume-detail-list v-if="isEdit && model.type === 5" ref="consumeList" />
         </a-spin>
     </a-modal>
     <!--
@@ -45,6 +46,7 @@ import OpenServiceCampaignGiftDetailList from "../OpenServiceCampaignGiftDetailL
 import OpenServiceCampaignRankDetailList from "../OpenServiceCampaignRankDetailList";
 import OpenServiceCampaignSingleGiftDetailList from "../OpenServiceCampaignSingleGiftDetailList";
 import OpenServiceCampaignLotteryDetailList from "../OpenServiceCampaignLotteryDetailList";
+import OpenServiceCampaignConsumeDetailList from "../OpenServiceCampaignConsumeDetailList";
 
 export default {
     name: "OpenServiceCampaignTypeModal",
@@ -53,7 +55,8 @@ export default {
         OpenServiceCampaignRankDetailList,
         OpenServiceCampaignGiftDetailList,
         OpenServiceCampaignSingleGiftDetailList,
-        OpenServiceCampaignLotteryDetailList
+        OpenServiceCampaignLotteryDetailList,
+        OpenServiceCampaignConsumeDetailList
     },
     data() {
         return {
@@ -106,6 +109,8 @@ export default {
                         this.$refs.singleGiftList.edit(record);
                     } else if (this.$refs.lotteryList) {
                         this.$refs.lotteryList.edit(record);
+                    } else if (this.$refs.consumeList) {
+                        this.$refs.consumeList.edit(record);
                     }
                 }
 

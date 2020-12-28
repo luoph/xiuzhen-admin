@@ -10,26 +10,11 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('开服互动消耗配置')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
+            <!-- <a-button type="primary" icon="download" @click="handleExportXls('开服互动消耗配置')">导出</a-button> -->
         </div>
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -39,7 +24,6 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
                 <template slot="htmlSlot" slot-scope="text">
@@ -47,11 +31,16 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+                </template>
+                <template slot="largeText" slot-scope="text">
+                    <div class="largeTextContainer">
+                        <span class="largeText">{{ text }}</span>
+                    </div>
                 </template>
 
                 <span slot="action" slot-scope="text, record">
@@ -71,12 +60,14 @@
             </a-table>
         </div>
 
-        <openServiceCampaignConsumeDetail-modal ref="modalForm" @ok="modalFormOk"></openServiceCampaignConsumeDetail-modal>
+        <open-service-campaign-consume-detail-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-consume-detail-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction } from "../../api/manage";
+import { filterObj } from "@/utils/util";
 import OpenServiceCampaignConsumeDetailModal from "./modules/OpenServiceCampaignConsumeDetailModal";
 
 export default {
@@ -88,6 +79,7 @@ export default {
     data() {
         return {
             description: "开服互动消耗配置管理页面",
+            model: {},
             // 表头
             columns: [
                 {
@@ -100,59 +92,72 @@ export default {
                         return parseInt(index) + 1;
                     }
                 },
-                {
-                    title: "开服活动id",
-                    align: "center",
-                    dataIndex: "campaignId"
-                },
-                {
-                    title: "页签id",
-                    align: "center",
-                    dataIndex: "campaignTypeId"
-                },
+                // {
+                //     title: "开服活动id",
+                //     align: "center",
+                //     dataIndex: "campaignId"
+                // },
+                // {
+                //     title: "页签id",
+                //     align: "center",
+                //     dataIndex: "campaignTypeId"
+                // },
                 {
                     title: "活动名称",
                     align: "center",
+                    width: 100,
                     dataIndex: "name"
                 },
                 {
-                    title: "活动页签名称",
+                    title: "页签名称",
                     align: "center",
+                    width: 100,
                     dataIndex: "tabName"
                 },
                 {
-                    title: "开始时间(开服第n天)",
+                    title: "开始时间",
                     align: "center",
+                    width: 80,
                     dataIndex: "startDay"
                 },
                 {
                     title: "持续时间(天)",
                     align: "center",
+                    width: 80,
                     dataIndex: "duration"
                 },
                 {
                     title: "活动宣传背景图",
                     align: "center",
-                    dataIndex: "banner"
+                    dataIndex: "banner",
+                    width: 160,
+                    scopedSlots: { customRender: "imgSlot" }
                 },
                 {
                     title: "消耗奖励邮件标题",
                     align: "center",
-                    dataIndex: "consumeRewardEmailTitle"
+                    dataIndex: "consumeRewardEmailTitle",
+                    width: 120,
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "消耗奖励邮件内容",
                     align: "center",
-                    dataIndex: "consumeRewardEmailContent"
+                    dataIndex: "consumeRewardEmailContent",
+                    width: 120,
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "帮助信息",
                     align: "center",
-                    dataIndex: "helpMsg"
+                    dataIndex: "helpMsg",
+                    width: 200,
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "创建时间",
                     align: "center",
+                    width: 100,
                     dataIndex: "createTime"
                 },
                 {
@@ -178,11 +183,83 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        loadData(arg) {
+            if (!this.model.id) {
+                return;
+            }
+
+            if (!this.url.list) {
+                this.$message.error("请设置url.list属性!");
+                return;
+            }
+
+            // 加载数据 若传入参数1则加载第一页的内容
+            if (arg === 1) {
+                this.ipagination.current = 1;
+            }
+
+            // 查询条件
+            var params = this.getQueryParams();
+            this.loading = true;
+            getAction(this.url.list, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.total = res.result.total;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
+        },
+        edit(record) {
+            this.model = record;
+            this.loadData();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({ campaignTypeId: this.model.id, campaignId: this.model.campaignId });
+            this.$refs.modalForm.title = "新增开服消耗配置";
+        },
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam);
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // typeId、活动id
+            param.campaignId = this.model.campaignId;
+            param.campaignTypeId = this.model.id;
+            return filterObj(param);
+        },
+        getImgView(text) {
+            // return "http://10.21.211.35:8888/jeecg-boot/image/20201222/jierihuodongdi6_105402.jpg";
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
+        }
     }
 };
 </script>
 
 <style scoped>
 @import "~@assets/less/common.less";
+
+.image {
+    width: 100%;
+    height: 100px;
+    object-fit: scale-down;
+}
+
+.largeTextContainer {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.largeText {
+    white-space: normal;
+    word-break: break-word;
+}
 </style>

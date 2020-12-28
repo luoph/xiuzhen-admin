@@ -44,7 +44,7 @@ public class OpenServiceCampaignGiftDetailItem extends BaseEntity {
     /**
      * open_service_campaign_gift_detail.id
      */
-    @Excel(name = "open_service_campaign_gift_detail.id", width = 15)
+    @Excel(name = "详情id", width = 15)
     private java.lang.Long giftDetailId;
 
     /**

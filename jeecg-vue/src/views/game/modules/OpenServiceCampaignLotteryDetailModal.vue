@@ -16,7 +16,7 @@
                     <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入活动页签名称"></a-input>
                 </a-form-item>
                 <a-form-item label="开始时间(开服第n天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天, e.g. 0表示开服第1天)" style="width: 100%" />
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天, 0表示开服第1天)" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />

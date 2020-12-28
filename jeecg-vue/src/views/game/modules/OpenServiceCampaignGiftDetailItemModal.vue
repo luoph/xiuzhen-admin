@@ -9,8 +9,8 @@
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入页签详情id" style="width: 100%" />
+                <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['giftDetailId', validatorRules.giftDetailId]" placeholder="请输入详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
@@ -74,7 +74,7 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                giftDetailId: { rules: [{ required: true, message: "请输入页签详情id!" }] },
+                giftDetailId: { rules: [{ required: true, message: "请输入详情id!" }] },
                 buyNum: { rules: [{ required: true, message: "请输入购买数量" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 giftType: { rules: [{ required: true, message: "请选择礼包类型!" }] },

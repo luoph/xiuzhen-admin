@@ -4,13 +4,13 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="开服活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入开服活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="页签详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['consumeDetailId', validatorRules.consumeDetailId]" placeholder="请输入页签详情id" style="width: 100%" />
+                <a-form-item label="详情id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['consumeDetailId', validatorRules.consumeDetailId]" placeholder="请输入详情id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
@@ -24,8 +24,11 @@
                 <a-form-item label="开始时间(子活动开始第n天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(子活动开始第n天, 0表示子活动开始第1天)" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="开启前是否统计，全服统计默认是" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['statisticsUnstart', validatorRules.statisticsUnstart]" placeholder="请输入开启前是否统计，全服统计默认是" style="width: 100%" />
+                <a-form-item label="开启前是否统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="开启前是否统计" v-decorator="['statisticsUnstart', validatorRules.statisticsUnstart]" initialValue="1">
+                        <a-select-option :value="0">否</a-select-option>
+                        <a-select-option :value="1">是</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
@@ -60,8 +63,9 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1200,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -92,13 +96,16 @@ export default {
     },
     created() {},
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
+            console.log("OpenServiceCampaignConsumeDetailItemModal, model:", JSON.stringify(this.model));
             this.visible = true;
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(
                     pick(this.model, "campaignId", "campaignTypeId", "consumeDetailId", "sort", "consumeType", "startDay", "statisticsUnstart", "description", "consume", "reward")
