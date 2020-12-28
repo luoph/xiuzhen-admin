@@ -25,12 +25,7 @@
                     <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <img
-                        v-if="model.banner"
-                        :src="getImgView(model.banner)"
-                        :alt="getImgView(model.banner)"
-                        style="max-width:100%; max-height:100%;font-size: 12px;font-style: italic;"
-                    />
+                    <img v-if="model.banner" :src="getImgView(model.banner)" :alt="getImgView(model.banner)" class="banner-image" />
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
                 <a-form-item label="邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -193,11 +188,11 @@ export default {
 
 // <style lang="less" scoped></style>
 <style lang="less" scoped>
-
-.image {
+.banner-image {
     width: 100%;
-    height: 100px;
-    object-fit: contain;
+    max-width: 600px;
+    max-height: 180px;
+    object-fit: scale-down;
 }
 
 /** Button按钮间距 */
