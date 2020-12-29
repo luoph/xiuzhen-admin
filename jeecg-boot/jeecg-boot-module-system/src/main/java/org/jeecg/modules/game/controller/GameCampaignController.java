@@ -301,18 +301,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         return super.importExcel(request, response, GameCampaign.class);
     }
 
-    private void updateGameCampaignTypeList(List<GameCampaignType> addList, List<GameCampaignType> updateList, List<Long> removeList) {
-        if (CollUtil.isNotEmpty(addList)) {
-            campaignTypeService.saveBatch(addList);
-        }
-        if (CollUtil.isNotEmpty(updateList)) {
-            campaignTypeService.updateBatchById(updateList);
-        }
-        if (CollUtil.isNotEmpty(removeList)) {
-            campaignTypeService.removeByIds(removeList);
-        }
-    }
-
     private void batchSwitchOff(long campaignId, List<Integer> serverList) {
         if (CollUtil.isNotEmpty(serverList)) {
             Wrapper<GameCampaignSupport> updateWrapper = Wrappers.<GameCampaignSupport>lambdaUpdate()
