@@ -30,8 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -155,7 +153,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaign gameCampaign) {
         campaignService.save(gameCampaign);
-        updateTypeList(true, gameCampaign);
         return Result.ok("添加成功！");
     }
 
@@ -189,7 +186,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         }
 
         campaignService.updateById(gameCampaign);
-        updateTypeList(false, gameCampaign);
 
         // 批量关闭
         batchSwitchOff(gameCampaign.getId(), removeList);
@@ -303,67 +299,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaign.class);
-    }
-
-    private void updateTypeList(boolean isAdd, GameCampaign gameCampaign) {
-        // 过滤空的新增页签
-        List<GameCampaignType> nowList = gameCampaign.getTypeList().stream().filter(t -> t.getType() != null).collect(Collectors.toList());
-        for (GameCampaignType model : nowList) {
-            model.setCampaignId(gameCampaign.getId());
-            if (model.getStartTime() == null) {
-                model.setStartTime(gameCampaign.getStartTime());
-            }
-
-            if (model.getEndTime() == null) {
-                model.setEndTime(gameCampaign.getEndTime());
-            }
-        }
-
-        List<GameCampaignType> addList = new ArrayList<>();
-        List<GameCampaignType> updateList = new ArrayList<>();
-        List<Long> removeList = new ArrayList<>();
-
-        if (isAdd) {
-            addList.addAll(nowList);
-        } else {
-            for (GameCampaignType model : nowList) {
-                if (model.getId() == null) {
-                    addList.add(model);
-                }
-            }
-
-            nowList.removeAll(addList);
-            updateList.addAll(nowList);
-
-            if (!nowList.isEmpty()) {
-                Map<Long, GameCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(GameCampaignType::getId, Function.identity()));
-
-                // 更新子页签
-                List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign);
-                for (GameCampaignType model : typeList) {
-                    if (typeMap.containsKey(model.getId())) {
-                        updateList.remove(model);
-                    } else {
-                        removeList.add(model.getId());
-                    }
-                }
-            }
-        }
-
-        log.debug("addList:{}, updateList:{}, removeList:{}", addList, updateList, removeList);
-        updateGameCampaignTypeList(addList, updateList, removeList);
-
-        // 新增页签，根据活动选定的区服生成页签与服务器的关联关系
-        if (isAdd) {
-            for (GameCampaignType model : addList) {
-                GameCampaignServer campaignServer = new GameCampaignServer()
-                        .setCampaignId(gameCampaign.getId())
-                        .setServer(gameCampaign.getServerIds())
-                        .setTypeId(model.getId())
-                        .setStatus(SwitchStatus.ON.getValue());
-                batchSwitch(campaignServer);
-            }
-        }
     }
 
     private void updateGameCampaignTypeList(List<GameCampaignType> addList, List<GameCampaignType> updateList, List<Long> removeList) {
