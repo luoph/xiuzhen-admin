@@ -126,6 +126,7 @@ export default {
                         "statisticsNotStart",
                         "description",
                         "consumeItems",
+                        "jump",
                         "num",
                         "reward"
                     )
@@ -185,6 +186,7 @@ export default {
                     "statisticsNotStart",
                     "description",
                     "consumeItems",
+                    "jump",
                     "num",
                     "reward"
                 )
