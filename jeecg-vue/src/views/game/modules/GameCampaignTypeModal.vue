@@ -15,6 +15,9 @@
                         <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名" style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)" class="banner-image" />
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.typeImage" />
@@ -171,7 +174,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "type", "typeImage", "sort", "startTime", "endTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {

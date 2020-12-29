@@ -101,6 +101,12 @@ export default {
                     dataIndex: "id"
                 },
                 {
+                    title: "页签名",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "name"
+                },
+                {
                     title: "活动类型",
                     align: "center",
                     dataIndex: "type",
