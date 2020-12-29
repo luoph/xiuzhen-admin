@@ -1,6 +1,6 @@
 <template>
-    <a-card :bordered="false">
-        <a-modal :title="title" :width="1200" :visible="visible" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="1200" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+        <a-spin :spinning="confirmLoading">
             <a-tabs :activeKey="tabIndex" @change="handleTabChange">
                 <!-- 查询区域 -->
                 <a-tab-pane v-for="(row, index) in model.typeList" :key="index" :tab="row.name">
@@ -58,8 +58,8 @@
                     </div>
                 </a-tab-pane>
             </a-tabs>
-        </a-modal>
-    </a-card>
+        </a-spin>
+    </a-modal>
 </template>
 
 <script>
@@ -75,6 +75,11 @@ export default {
     data() {
         return {
             description: "活动状态",
+            // 查询参数
+            title: "操作",
+            visible: false,
+            confirmLoading: false,
+            model: {},
             // 表头
             columns: [
                 {
@@ -129,13 +134,6 @@ export default {
                     scopedSlots: { customRender: "action" }
                 }
             ],
-            // 查询参数
-            queryParam: {},
-            title: "操作",
-            visible: false,
-            model: {},
-
-            campaignId: "",
             // 页签信息
             tabIndex: 0,
             labelCol: {
@@ -149,6 +147,7 @@ export default {
             form: this.$form.createForm(this),
             url: {
                 list: "game/gameCampaign/serverList",
+                typeList: "game/gameCampaignType/list",
                 switch: "game/gameCampaign/serverSwitch",
                 batch: "game/gameCampaign/switchBatch"
             }
@@ -157,22 +156,67 @@ export default {
     computed: {},
     created() {},
     methods: {
-        edit(record) {
-            if (record.id) {
-                this.campaignId = record.id;
+        initDictConfig() {},
+        loadData(arg) {
+            if (!this.model.id) {
+                return;
             }
-            this.queryParam = {};
-            this.form.resetFields();
+
+            if (!this.url.list) {
+                this.$message.error("请设置url.list属性!");
+                return;
+            }
+
+            // 加载数据 若传入参数1则加载第一页的内容
+            if (arg === 1) {
+                this.ipagination.current = 1;
+            }
+
+            // 查询条件
+            var params = this.getQueryParams();
+            if (!params.typeId) {
+                return;
+            }
+
+            this.loading = true;
+            getAction(this.url.list, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.total = res.result.total;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
+        },
+        loadTypeList() {
+            if (!this.model.id) {
+                return;
+            }
+
+            // 查询条件
+            let that = this;
+            that.loading = true;
+            that.confirmLoading = true;
+            var params = { campaignId: this.model.id };
+            getAction(that.url.typeList, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    that.model.typeList = res.result.records;
+                }
+                that.confirmLoading = false;
+
+                // 加载对应页签的区服状态
+                that.loadData();
+            });
+        },
+        edit(record) {
             this.model = Object.assign({}, record);
-            this.model.campaignId = this.campaignId;
             this.tabIndex = 0;
             this.visible = true;
-            this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "serverId"));
-            });
 
-            // 当其它模块调用该模块时,调用此方法加载字典数据
-            this.loadData();
+            this.form.resetFields();
+            this.loadTypeList();
         },
         close() {
             this.$emit("close");
@@ -182,10 +226,11 @@ export default {
         },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
-            param.campaignId = this.campaignId;
+            param.campaignId = this.model.id;
             if (this.model && this.model.typeList) {
                 param.typeId = this.model.typeList[this.tabIndex].id;
             }
+
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
@@ -222,7 +267,13 @@ export default {
             var that = this;
             that.loading = true;
 
-            var params = { typeId: that.model.typeList[this.tabIndex].id, campaignId: that.campaignId, server: ids, status: status };
+            var params = {
+                campaignId: this.model.id,
+                typeId: this.model.typeList[this.tabIndex].id,
+                server: ids,
+                status: status
+            };
+
             getAction(that.url.batch, params).then(res => {
                 that.onClearSelected();
                 if (res.success) {
