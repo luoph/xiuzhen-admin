@@ -25,7 +25,7 @@
                     <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(子活动开始第n天, 0表示子活动开始第1天)" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="开启前是否统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="开启前是否统计" v-decorator="['statisticsUnstart', validatorRules.statisticsUnstart]" initialValue="1">
+                    <a-select placeholder="开启前是否统计" v-decorator="['statisticsNotStart', validatorRules.statisticsNotStart]" initialValue="1">
                         <a-select-option :value="0">否</a-select-option>
                         <a-select-option :value="1">是</a-select-option>
                     </a-select>
@@ -83,7 +83,7 @@ export default {
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 consumeType: { rules: [{ required: true, message: "请输入统计类型!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间(子活动开始第n天)!" }] },
-                statisticsUnstart: { rules: [{ required: true, message: "请输入开启前是否统计!" }] },
+                statisticsNotStart: { rules: [{ required: true, message: "请输入开启前是否统计!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
                 consume: { rules: [{ required: true, message: "请输入消耗道具!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
@@ -108,7 +108,7 @@ export default {
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(
-                    pick(this.model, "campaignId", "campaignTypeId", "consumeDetailId", "sort", "consumeType", "startDay", "statisticsUnstart", "description", "consume", "reward")
+                    pick(this.model, "campaignId", "campaignTypeId", "consumeDetailId", "sort", "consumeType", "startDay", "statisticsNotStart", "description", "consume", "reward")
                 );
             });
         },
@@ -154,7 +154,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(
-                pick(row, "campaignId", "campaignTypeId", "consumeDetailId", "sort", "consumeType", "startDay", "statisticsUnstart", "description", "consume", "reward")
+                pick(row, "campaignId", "campaignTypeId", "consumeDetailId", "sort", "consumeType", "startDay", "statisticsNotStart", "description", "consume", "reward")
             );
         }
     }

@@ -202,9 +202,14 @@ export default {
             this.loadData();
         },
         switchServer(record, status) {
-            var params = { typeId: record.typeId, campaignId: record.campaignId, serverId: record.serverId, status: status };
+            var params = {
+                typeId: record.typeId,
+                campaignId: record.campaignId,
+                serverId: record.serverId,
+                status: status
+            };
             let that = this;
-            getAction(that.url.switch, params).then(res => {
+            getAction(that.url.switch, params).then(() => {
                 that.loadData();
             });
         },

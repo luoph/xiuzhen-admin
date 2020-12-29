@@ -133,7 +133,7 @@ export default {
                     title: "开启前是否统计",
                     align: "center",
                     width: 80,
-                    dataIndex: "statisticsUnstart",
+                    dataIndex: "statisticsNotStart",
                     customRender: value => {
                         let text = "--";
                         if (value === 0) {

@@ -69,7 +69,7 @@ public class OpenServiceCampaignConsumeDetailItem extends BaseEntity {
      * 开启前是否统计，全服统计默认是
      */
     @Excel(name = "开启前是否统计", width = 15)
-    private java.lang.Integer statisticsUnstart;
+    private java.lang.Integer statisticsNotStart;
 
     /**
      * 描述
