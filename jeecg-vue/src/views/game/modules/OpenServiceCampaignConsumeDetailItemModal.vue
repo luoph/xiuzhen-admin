@@ -92,7 +92,8 @@ export default {
                 statisticsNotStart: { rules: [{ required: true, message: "请输入开启前是否统计!" }] },
                 jump: { rules: [{ required: false, message: "请输入跳转!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
-                consume: { rules: [{ required: true, message: "请输入消耗道具!" }] },
+                consumeItems: { rules: [{ required: true, message: "请输入消耗道具!" }] },
+                num: { rules: [{ required: true, message: "请输入总数量!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
             },
             url: {
