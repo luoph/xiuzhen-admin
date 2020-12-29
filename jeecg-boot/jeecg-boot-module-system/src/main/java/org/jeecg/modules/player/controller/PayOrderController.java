@@ -1,5 +1,8 @@
 package org.jeecg.modules.player.controller;
 
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,16 +11,18 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.entity.GameForbidden;
 import org.jeecg.modules.player.entity.GameOrder;
 import org.jeecg.modules.player.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * @author jeecg-boot
@@ -92,5 +97,28 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameOrder gameOrder) {
         return super.exportXls(request, gameOrder, GameOrder.class, "充值订单");
+    }
+
+    @RequestMapping("download")
+    public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws IOException {
+        GameOrder gameOrder = JSON.parseObject(jsonObject.toJSONString(),GameOrder.class);
+
+        Map<String, String[]> data =new HashMap<>();
+        Iterator it =jsonObject.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
+            String[] a= new String[1];
+            a[0] = String.valueOf(entry.getValue());
+            data.put(entry.getKey(), a);
+        }
+        QueryWrapper<GameOrder> queryWrapper = QueryGenerator.initQueryWrapper(gameOrder, data);
+        List<GameOrder> gameOrderList = payOrderService.list(queryWrapper);
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("测试", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+        EasyExcel.write(response.getOutputStream(), GameOrder.class).sheet("模板").doWrite(gameOrderList);
     }
 }
