@@ -30,6 +30,9 @@
                         <a-select-option :value="1">是</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="跳转" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['jump', validatorRules.jump]" placeholder="请输入跳转"></a-input>
+                </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
                 </a-form-item>
@@ -84,6 +87,7 @@ export default {
                 consumeType: { rules: [{ required: true, message: "请输入统计类型!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间(子活动开始第n天)!" }] },
                 statisticsNotStart: { rules: [{ required: true, message: "请输入开启前是否统计!" }] },
+                jump: { rules: [{ required: false, message: "请输入跳转!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
                 consume: { rules: [{ required: true, message: "请输入消耗道具!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
