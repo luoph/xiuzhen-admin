@@ -78,7 +78,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <!-- <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button> -->
-            <a-button type="primary" icon="download" @click="handleExportXls('充值订单')">导出</a-button>
+            <a-button type="primary" icon="download" @click="downlodaExcel('充值订单')">导出</a-button>
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload> -->
@@ -147,6 +147,8 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
 import JInput from "@/components/jeecg/JInput";
 import PayOrderModal from "./modules/PayOrderModal";
+import Vue from "vue";
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 
 export default {
     name: "PayOrderList",
@@ -289,7 +291,9 @@ export default {
             ],
             url: {
                 list: "player/payOrder/list",
-                exportXlsUrl: "player/payOrder/exportXls"
+                exportXlsUrl: "player/payOrder/exportXls",
+                downloadExcel: "/player/payOrder/download"
+                
             },
             dictOptions: {}
         };
@@ -317,6 +321,30 @@ export default {
         },
         onDateOk(value) {
             console.log(value);
+        },
+        downlodaExcel(filename) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", window._CONFIG["domainURL"] +this.url.downloadExcel, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const token = Vue.ls.get(ACCESS_TOKEN);
+            console.log(token);
+            xhr.setRequestHeader("X-Access-Token", token);
+            xhr.onload = function () {
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = function (e) {
+                    var a = document.createElement("a");
+                    a.download = filename + ".xlsx";
+                    a.href = e.target.result;
+                    a.click();
+                };
+            };
+            var a = this.queryParam;
+            var param = JSON.stringify(a);
+            console.log(param);
+            xhr.send(param);
         }
     }
 };
