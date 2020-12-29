@@ -98,7 +98,8 @@
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
                 <span slot="serverIdTags" slot-scope="text, record">
-                    <a-tag v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                    <a-tag v-if="!text" color="red">未设置</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
 
                 <span slot="action" slot-scope="text, record">
@@ -306,5 +307,4 @@ export default {
     height: 100px;
     object-fit: scale-down;
 }
-
 </style>

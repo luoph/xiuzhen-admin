@@ -103,7 +103,8 @@
                     </a-dropdown>
                 </span>
                 <span slot="ipTags" slot-scope="text, record">
-                    <a-tag v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                    <a-tag v-if="!text" color="red">未设置</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
             </a-table>
         </div>
