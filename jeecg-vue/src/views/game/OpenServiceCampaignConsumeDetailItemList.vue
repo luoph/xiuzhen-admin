@@ -75,6 +75,7 @@ export default {
     data() {
         return {
             description: "开服活动消耗道具管理页面",
+            model: {},
             // 表头
             columns: [
                 {
