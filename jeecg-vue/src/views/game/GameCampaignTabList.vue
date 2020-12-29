@@ -232,7 +232,7 @@ export default {
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
         },
-        importExcelUrl: function() {
+        importExcelUrl() {
             let domainURL = window._CONFIG["domainURL"];
             return `${domainURL}/${this.url.importExcelUrl}?campaignId=${this.model.id}`;
         }
