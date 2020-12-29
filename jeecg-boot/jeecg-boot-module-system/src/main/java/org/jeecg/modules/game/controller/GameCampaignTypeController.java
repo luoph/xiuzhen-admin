@@ -1,7 +1,9 @@
 package org.jeecg.modules.game.controller;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -11,8 +13,9 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.constant.CampaignFestivalType;
-import org.jeecg.modules.game.entity.GameCampaignType;
-import org.jeecg.modules.game.service.IGameCampaignTypeService;
+import org.jeecg.modules.game.entity.*;
+import org.jeecg.modules.game.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +43,20 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
 
     @Autowired
     private IGameCampaignTypeService gameCampaignTypeService;
+
+    @Autowired
+    private IGameCampaignService gameCampaignService;
+
+    @Autowired
+    private IGameCampaignTypeLoginService campaignTypeLoginService;
+    @Autowired
+    private IGameCampaignTypeRechargeService campaignTypeRechargeService;
+    @Autowired
+    private IGameCampaignTypeExchangeService campaignTypeExchangeService;
+    @Autowired
+    private IGameCampaignTypeTaskService campaignTypeTaskService;
+    @Autowired
+    private IGameCampaignTypeBuffService campaignTypeBuffService;
 
     /**
      * 分页列表查询
@@ -161,11 +180,12 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
      */
     @SuppressWarnings({"unchecked"})
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-    public Result<?> importExcel(@RequestParam(name = "type") Integer type,
+    public Result<?> importExcel(@RequestParam(name = "campaignId") Long campaignId,
                                  HttpServletRequest request, HttpServletResponse response) {
-        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(type);
-        if (festivalType == null) {
-            return Result.error("活动类型错误");
+
+        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
+        if (gameCampaign == null) {
+            return Result.error("找不到活动配置");
         }
 
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -176,16 +196,84 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
             return Result.error("上传错误");
         }
 
-        try {
-            Result<List<?>> result = new Result<>();
-            List<?> dataList = ExcelUtils.readExcel(mf.getInputStream(), festivalType.getName(), festivalType.getExcelClass());
-            result.setResult(dataList);
-            result.setSuccess(true);
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Result.error("文件导入失败！");
+        Wrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
+                .eq(GameCampaignType::getCampaignId, campaignId)
+                .orderByAsc(GameCampaignType::getSort);
+
+        List<GameCampaignType> typeList = gameCampaignTypeService.list(query);
+        for (GameCampaignType campaignType : typeList) {
+            CampaignFestivalType festivalType = CampaignFestivalType.valueOf(campaignType.getType());
+            if (festivalType == null) {
+                continue;
+            }
+
+            try {
+                List<?> dataList = ExcelUtils.readExcel(mf.getInputStream(), festivalType.getName(), festivalType.getExcelClass());
+                log.info("name:{}, dataList:{}", festivalType.getName(), dataList);
+
+                if (festivalType.getTableClass() == GameCampaignTypeLogin.class) {
+                    List<GameCampaignTypeLogin> entities = new ArrayList<>();
+                    for (Object obj : dataList) {
+                        GameCampaignTypeLogin entity = new GameCampaignTypeLogin();
+                        BeanUtils.copyProperties(obj, entity);
+                        entity.setCampaignId(campaignId);
+                        entity.setTypeId(campaignType.getId());
+                        entity.setCreateTime(new Date());
+                        entities.add(entity);
+                    }
+                    campaignTypeLoginService.saveBatch(entities);
+                } else if (festivalType.getTableClass() == GameCampaignTypeRecharge.class) {
+                    List<GameCampaignTypeRecharge> entities = new ArrayList<>();
+                    for (Object obj : dataList) {
+                        GameCampaignTypeRecharge entity = new GameCampaignTypeRecharge();
+                        BeanUtils.copyProperties(obj, entity);
+                        entity.setCampaignId(campaignId);
+                        entity.setTypeId(campaignType.getId());
+                        entity.setCreateTime(new Date());
+                        entities.add(entity);
+                    }
+                    campaignTypeRechargeService.saveBatch(entities);
+                } else if (festivalType.getTableClass() == GameCampaignTypeExchange.class) {
+                    List<GameCampaignTypeExchange> entities = new ArrayList<>();
+                    for (Object obj : dataList) {
+                        GameCampaignTypeExchange entity = new GameCampaignTypeExchange();
+                        BeanUtils.copyProperties(obj, entity);
+                        entity.setCampaignId(campaignId);
+                        entity.setTypeId(campaignType.getId());
+                        entity.setCreateTime(new Date());
+                        entities.add(entity);
+                    }
+                    campaignTypeExchangeService.saveBatch(entities);
+                } else if (festivalType.getTableClass() == GameCampaignTypeTask.class) {
+                    List<GameCampaignTypeTask> entities = new ArrayList<>();
+                    for (Object obj : dataList) {
+                        GameCampaignTypeTask entity = new GameCampaignTypeTask();
+                        BeanUtils.copyProperties(obj, entity);
+                        entity.setCampaignId(campaignId);
+                        entity.setTypeId(campaignType.getId());
+                        entity.setCreateTime(new Date());
+                        entities.add(entity);
+                    }
+                    campaignTypeTaskService.saveBatch(entities);
+                } else if (festivalType.getTableClass() == GameCampaignTypeBuff.class) {
+                    List<GameCampaignTypeBuff> entities = new ArrayList<>();
+                    for (Object obj : dataList) {
+                        GameCampaignTypeBuff entity = new GameCampaignTypeBuff();
+                        BeanUtils.copyProperties(obj, entity);
+                        entity.setCampaignId(campaignId);
+                        entity.setTypeId(campaignType.getId());
+                        entity.setCreateTime(new Date());
+                        entities.add(entity);
+                    }
+                    campaignTypeBuffService.saveBatch(entities);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return Result.error("文件导入失败！");
+            }
         }
+        return Result.ok("导入成功");
     }
 
 }

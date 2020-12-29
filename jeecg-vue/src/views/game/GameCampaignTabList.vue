@@ -6,6 +6,9 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
+            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+                <a-button type="primary" icon="import">导入活动配置</a-button>
+            </a-upload>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('节日活动页签配置')">导出</a-button> -->
         </div>
 
@@ -168,11 +171,7 @@ export default {
             dictOptions: {}
         };
     },
-    computed: {
-        importExcelUrl: function() {
-            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        }
-    },
+    computed: {},
     methods: {
         initDictConfig() {},
         loadData(arg) {
@@ -226,6 +225,10 @@ export default {
                 text = text.substring(0, text.indexOf(","));
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
+        },
+        importExcelUrl: function() {
+            let domainURL = window._CONFIG["domainURL"];
+            return `${domainURL}/${this.url.importExcelUrl}?campaignId=${this.model.id}`;
         }
     }
 };

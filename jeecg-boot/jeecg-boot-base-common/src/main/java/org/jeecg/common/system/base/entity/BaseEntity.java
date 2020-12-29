@@ -3,7 +3,6 @@ package org.jeecg.common.system.base.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +17,6 @@ import java.util.Date;
  * @date 2019-4-28
  */
 @Data
-@Accessors(chain = true)
 public class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
