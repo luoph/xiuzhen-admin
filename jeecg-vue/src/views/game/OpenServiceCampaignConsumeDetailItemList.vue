@@ -146,6 +146,12 @@ export default {
                     }
                 },
                 {
+                    title: "跳转",
+                    align: "center",
+                    width: 100,
+                    dataIndex: "jump"
+                },
+                {
                     title: "描述",
                     align: "center",
                     dataIndex: "description",
