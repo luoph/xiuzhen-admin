@@ -83,7 +83,7 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
+                    <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -185,11 +185,13 @@ export default {
                 {
                     title: "备注",
                     align: "center",
+                    width: 160,
                     dataIndex: "remark"
                 },
                 {
                     title: "上传时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "createTime"
                 },
                 {
@@ -229,9 +231,9 @@ export default {
 <style scoped>
 @import "~@assets/less/common.less";
 
-.image {
+.list-image {
     width: 100%;
-    height: 100px;
+    height: 120px;
     object-fit: scale-down;
 }
 </style>
