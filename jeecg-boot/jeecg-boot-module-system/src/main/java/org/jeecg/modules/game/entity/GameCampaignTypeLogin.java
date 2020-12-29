@@ -1,9 +1,9 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -14,7 +14,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  */
 @Data
 @TableName("game_campaign_type_login")
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class GameCampaignTypeLogin extends GameCampaignTypeBase {
 
@@ -23,18 +22,21 @@ public class GameCampaignTypeLogin extends GameCampaignTypeBase {
     /**
      * 登录天数
      */
+    @ExcelProperty("登录天数")
     @Excel(name = "登录天数", width = 15)
     private Integer loginDay;
 
     /**
      * 描述
      */
+    @ExcelProperty("描述")
     @Excel(name = "描述", width = 15)
     private String description;
 
     /**
      * 奖励列表
      */
+    @ExcelProperty("奖励列表")
     @Excel(name = "奖励列表", width = 15)
     private String reward;
 }

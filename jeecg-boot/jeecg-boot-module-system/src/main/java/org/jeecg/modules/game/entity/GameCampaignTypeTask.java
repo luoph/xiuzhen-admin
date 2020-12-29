@@ -1,9 +1,9 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -14,7 +14,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  */
 @Data
 @TableName("game_campaign_type_task")
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class GameCampaignTypeTask extends GameCampaignTypeBase {
 
@@ -23,41 +22,48 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
     /**
      * 任务id
      */
+    @ExcelProperty("任务id")
     @Excel(name = "任务id", width = 15)
     private Integer taskId;
 
     /**
      * 描述
      */
-    @Excel(name = "描述", width = 15)
+    @ExcelProperty("任务描述")
+    @Excel(name = "任务描述", width = 15)
     private String description;
 
     /**
      * task_module_type.json.module_id
      */
-    @Excel(name = "task_module_type.json.module_id", width = 15)
+    @ExcelProperty("模块id")
+    @Excel(name = "模块id", width = 15)
     private Integer moduleId;
 
     /**
      * 任务完成条件
      */
-    @Excel(name = "任务完成条件", width = 15)
+    @ExcelProperty("条件")
+    @Excel(name = "条件", width = 15)
     private Integer target;
 
     /**
      * 任务参数
      */
-    @Excel(name = "任务参数", width = 15)
+    @ExcelProperty("参数")
+    @Excel(name = "参数", width = 15)
     private Integer args;
 
     /**
      * 奖励列表
      */
+    @ExcelProperty("奖励列表")
     @Excel(name = "奖励列表", width = 15)
     private String reward;
     /**
      * 跳转 id
      */
-    @Excel(name = "跳转 id", width = 15)
+    @ExcelProperty("跳转id")
+    @Excel(name = "跳转id", width = 15)
     private Integer jumpId;
 }
