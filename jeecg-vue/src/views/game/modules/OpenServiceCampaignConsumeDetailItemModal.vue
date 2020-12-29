@@ -36,8 +36,11 @@
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
                 </a-form-item>
+                <a-form-item label="总数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入总数量"></a-input-number>
+                </a-form-item>
                 <a-form-item label="消耗道具" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['consume', validatorRules.consume]" placeholder='请输入消耗道具 e.g. [{"itemId":1001, "num":1}]'></a-input>
+                    <a-input v-decorator="['consumeItems', validatorRules.consumeItems]" placeholder="请输入消耗道具 e.g. [1001, 1002, 1003]"></a-input>
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['reward', validatorRules.reward]" placeholder='请输入奖励列表 e.g. [{"itemId":1001, "num":1}]'></a-input>
@@ -112,7 +115,20 @@ export default {
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(
-                    pick(this.model, "campaignId", "campaignTypeId", "consumeDetailId", "sort", "consumeType", "startDay", "statisticsNotStart", "description", "consume", "reward")
+                    pick(
+                        this.model,
+                        "campaignId",
+                        "campaignTypeId",
+                        "consumeDetailId",
+                        "sort",
+                        "consumeType",
+                        "startDay",
+                        "statisticsNotStart",
+                        "description",
+                        "consumeItems",
+                        "num",
+                        "reward"
+                    )
                 );
             });
         },
@@ -158,7 +174,20 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(
-                pick(row, "campaignId", "campaignTypeId", "consumeDetailId", "sort", "consumeType", "startDay", "statisticsNotStart", "description", "consume", "reward")
+                pick(
+                    row,
+                    "campaignId",
+                    "campaignTypeId",
+                    "consumeDetailId",
+                    "sort",
+                    "consumeType",
+                    "startDay",
+                    "statisticsNotStart",
+                    "description",
+                    "consumeItems",
+                    "num",
+                    "reward"
+                )
             );
         }
     }

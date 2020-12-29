@@ -76,7 +76,7 @@ public class OpenServiceCampaignConsumeDetailItem extends BaseEntity {
      */
     @Excel(name = "描述", width = 15)
     private java.lang.String description;
-    
+
     /**
      * 跳转
      */
@@ -84,10 +84,16 @@ public class OpenServiceCampaignConsumeDetailItem extends BaseEntity {
     private java.lang.String jump;
 
     /**
-     * 消耗道具 e.g. [{"itemId":1001, "num":1}]
+     * 消耗道具 e.g. [1001, 1002, 1003]
      */
     @Excel(name = "消耗道具", width = 15)
-    private java.lang.String consume;
+    private java.lang.String consumeItems;
+
+    /**
+     * 总数量
+     */
+    @Excel(name = "总数量", width = 15)
+    private java.lang.Integer num;
 
     /**
      * 奖励列表 e.g. [{"itemId":1001, "num":1}]

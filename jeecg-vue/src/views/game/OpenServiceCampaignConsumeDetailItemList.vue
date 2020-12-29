@@ -159,9 +159,15 @@ export default {
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
+                    title: "总数量",
+                    align: "center",
+                    dataIndex: "num",
+                    width: 80
+                },
+                {
                     title: "消耗道具",
                     align: "center",
-                    dataIndex: "consume",
+                    dataIndex: "consumeItems",
                     width: 200,
                     scopedSlots: { customRender: "largeText" }
                 },
