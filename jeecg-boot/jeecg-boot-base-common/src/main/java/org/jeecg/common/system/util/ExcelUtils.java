@@ -1,9 +1,15 @@
 package org.jeecg.common.system.util;
 
+import cn.hutool.core.io.FileUtil;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
@@ -16,9 +22,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -140,12 +149,60 @@ public class ExcelUtils {
         return EasyExcel.read(filename).head(clazz).sheet().headRowNumber(headRowCount).doReadSync();
     }
 
-    private static <T> List<T> readExcel(InputStream inputStream, Class<T> clazz, int headRowCount) {
+    public static <T> List<T> readExcel(InputStream inputStream, Class<T> clazz, int headRowCount) {
         return EasyExcel.read(inputStream).head(clazz).sheet().headRowNumber(headRowCount).doReadSync();
     }
 
-    private static <T> List<T> readExcel(InputStream inputStream, String sheetName, Class<T> clazz, int headRowCount) {
+    public static <T> List<T> readExcel(InputStream inputStream, String sheetName, Class<T> clazz, int headRowCount) {
         return EasyExcel.read(inputStream).head(clazz).sheet(sheetName).headRowNumber(headRowCount).doReadSync();
     }
 
+
+    /**
+     * 解析从excel复制的文本
+     *
+     * @param text         文本
+     * @param tempFileName 临时文件地址
+     * @param clazz        解析出的目标类型
+     * @param <T>          模版类型
+     * @return 对象列表
+     */
+    public static <T> List<T> importFromExcelText(String text, String tempFileName, Class<T> clazz) {
+        File excelFile = new File(tempFileName);
+        if (excelFile.exists()) {
+            FileUtil.del(excelFile);
+        }
+
+        FileUtil.mkParentDirs(excelFile);
+
+        LinkedList<String[]> textLine = new LinkedList<>();
+        String[] lines = text.split("\\n");
+        for (String line : lines) {
+            textLine.add(line.split("\\t"));
+        }
+
+        // 保存成临时文件
+        try {
+            Workbook workbook = new HSSFWorkbook();
+            Sheet sheet = workbook.createSheet(clazz.getSimpleName());
+            int rowNum = 0;
+            for (String[] line : textLine) {
+                Row row = sheet.createRow(rowNum++);
+                int cellNum = 0;
+                for (String value : line) {
+                    Cell cell = row.createCell(cellNum++);
+                    cell.setCellValue(value);
+                }
+            }
+
+            FileOutputStream fileOut = new FileOutputStream(tempFileName);
+            workbook.write(fileOut);
+            fileOut.close();
+
+        } catch (IOException e) {
+            log.error("importFromExcelText error, text:" + text + ", clazz:" + clazz.getSimpleName(), e);
+        }
+
+        return readExcel(tempFileName, clazz.getSimpleName(), clazz);
+    }
 }
