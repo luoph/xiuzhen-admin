@@ -97,16 +97,16 @@ export default {
             importText: "",
             // 表头
             columns: [
-                {
-                    title: "#",
-                    dataIndex: "",
-                    key: "rowIndex",
-                    width: 60,
-                    align: "center",
-                    customRender: function(t, r, index) {
-                        return parseInt(index) + 1;
-                    }
-                },
+                // {
+                //     title: "#",
+                //     dataIndex: "",
+                //     key: "rowIndex",
+                //     width: 60,
+                //     align: "center",
+                //     customRender: function(t, r, index) {
+                //         return parseInt(index) + 1;
+                //     }
+                // },
                 {
                     title: "id",
                     align: "center",
@@ -126,12 +126,20 @@ export default {
                 {
                     title: "活动名称",
                     align: "center",
+                    width: 120,
                     dataIndex: "name"
                 },
                 {
                     title: "页签名称",
                     align: "center",
+                    width: 120,
                     dataIndex: "tabName"
+                },
+                {
+                    title: "排序",
+                    align: "center",
+                    dataIndex: "sort",
+                    width: 80
                 },
                 {
                     title: "宣传图",
@@ -174,12 +182,6 @@ export default {
                     title: "持续时间(天)",
                     align: "center",
                     dataIndex: "duration",
-                    width: 80
-                },
-                {
-                    title: "排序",
-                    align: "center",
-                    dataIndex: "sort",
                     width: 80
                 },
                 {
