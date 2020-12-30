@@ -57,6 +57,7 @@ public class OpenServiceCampaignConsumeDetailMessage extends BaseEntity {
      * 传闻推送时间
      */
     @ExcelProperty("传闻推送时间")
+    @com.alibaba.excel.annotation.format.DateTimeFormat("HH:mm:ss")
     @Excel(name = "传闻推送时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)

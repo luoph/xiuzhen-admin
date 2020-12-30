@@ -79,6 +79,7 @@ public class OpenServiceCampaignSingleGiftNotice extends BaseEntity {
      * 发送时间
      */
     @ExcelProperty("发送时间")
+    @com.alibaba.excel.annotation.format.DateTimeFormat("HH:mm:ss")
     @Excel(name = "发送时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
