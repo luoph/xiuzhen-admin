@@ -2,6 +2,7 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,8 +20,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @date 2020-12-21
  */
 @Data
-@TableName("game_open_service_campaign_rank_detail_message")
 @EqualsAndHashCode(callSuper = true)
+@TableName("game_open_service_campaign_rank_detail_message")
 public class OpenServiceCampaignRankDetailMessage extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -34,21 +35,18 @@ public class OpenServiceCampaignRankDetailMessage extends BaseEntity {
     /**
      * 开服活动id
      */
-    @ExcelProperty("开服活动id")
     @Excel(name = "开服活动id", width = 15)
     private java.lang.Long campaignId;
 
     /**
      * typeId
      */
-    @ExcelProperty("页签id")
     @Excel(name = "页签id", width = 15)
     private java.lang.Long campaignTypeId;
 
     /**
      * open_service_campaign_rank_detail.id
      */
-    @ExcelProperty("详情id")
     @Excel(name = "详情id", width = 15)
     private java.lang.Long rankDetailId;
 
@@ -56,6 +54,7 @@ public class OpenServiceCampaignRankDetailMessage extends BaseEntity {
      * 传闻推送时间
      */
     @ExcelProperty("传闻推送时间")
+    @com.alibaba.excel.annotation.format.DateTimeFormat("HH:mm:ss")
     @Excel(name = "传闻推送时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)

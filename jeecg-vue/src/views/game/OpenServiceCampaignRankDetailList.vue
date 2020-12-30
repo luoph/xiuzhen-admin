@@ -149,6 +149,8 @@ export default {
                             text = "1-境界冲榜";
                         } else if (value === 2) {
                             text = "2-功法冲榜";
+                        } else if (value === 3) {
+                            text = "3-功法冲榜";
                         }
                         return text;
                     }

@@ -231,6 +231,6 @@ public class ExcelUtils {
             log.error("importFromExcelText error, text:" + text + ", clazz:" + clazz.getSimpleName(), e);
         }
 
-        return readExcel(tempFileName, clazz.getSimpleName(), clazz);
+        return readExcel(tempFileName, clazz);
     }
 }
