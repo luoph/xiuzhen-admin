@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
@@ -64,6 +63,12 @@ public class OpenServiceCampaignGiftDetail extends BaseEntity {
     @Excel(name = "活动宣传背景图", width = 15)
     private java.lang.String banner;
 
+    /**
+     * 资源格式: 1.骨骼, 2.序列帧, 3.图片
+     */
+    @ExcelProperty("资源类型")
+    @Excel(name = "资源类型", width = 15)
+    private java.lang.String resType;
     /**
      * 骨骼动画资源
      */

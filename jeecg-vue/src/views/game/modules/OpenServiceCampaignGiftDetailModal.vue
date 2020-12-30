@@ -22,6 +22,13 @@
                     <img v-if="model.banner" :src="getImgView(model.banner)" :alt="getImgView(model.banner)" class="banner-image" />
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
+                <a-form-item label="资源类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="资源类型" v-decorator="['resType', validatorRules.resType]" initialValue="1">
+                        <a-select-option :value="1">骨骼</a-select-option>
+                        <a-select-option :value="2">序列帧</a-select-option>
+                        <a-select-option :value="3">图片</a-select-option>
+                    </a-select>
+                </a-form-item>
                 <a-form-item label="骨骼动画资源" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['skeleton', validatorRules.skeleton]" placeholder="请输入骨骼动画资源"></a-input>
                 </a-form-item>
@@ -87,6 +94,7 @@ export default {
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 tabName: { rules: [{ required: true, message: "请输入页签名称!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
+                resType: { rules: [{ required: true, message: "请输入资源类型!" }] },
                 skeleton: { rules: [{ required: true, message: "请输入骨骼动画资源!" }] },
                 startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天)!" }] },
                 duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
@@ -116,7 +124,9 @@ export default {
                     this.$refs.detailList.edit(record);
                 }
 
-                this.form.setFieldsValue(pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration", "helpMsg"));
+                this.form.setFieldsValue(
+                    pick(this.model, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "resType", "banner", "startDay", "duration", "helpMsg")
+                );
             });
         },
         close() {
@@ -160,7 +170,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "banner", "startDay", "duration", "helpMsg"));
+            this.form.setFieldsValue(pick(row, "campaignId", "campaignTypeId", "name", "tabName", "sort", "skeleton", "resType", "banner", "startDay", "duration", "helpMsg"));
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {

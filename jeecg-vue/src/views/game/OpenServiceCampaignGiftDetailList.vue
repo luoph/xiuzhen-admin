@@ -146,6 +146,28 @@ export default {
                     dataIndex: "startDay"
                 },
                 {
+                    title: "资源类型",
+                    align: "center",
+                    dataIndex: "resType",
+                    width: 60,
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 1) {
+                            text = "骨骼";
+                        } else if (value === 2) {
+                            text = "序列帧";
+                        } else if (value === 3) {
+                            text = "图片";
+                        }
+                        return text;
+                    }
+                },
+                {
+                    title: "骨骼动画资源图",
+                    align: "center",
+                    dataIndex: "skeleton"
+                },
+                {
                     title: "持续时间(天)",
                     align: "center",
                     dataIndex: "duration"
