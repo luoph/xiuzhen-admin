@@ -161,16 +161,16 @@ public class OpenServiceCampaignTypeController extends JeecgController<OpenServi
 
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
-        OpenServiceCampaign campaign = openServiceCampaignService.getById(vo.getId());
-        if (campaign == null) {
-            return Result.error("未找得到对应的活动数据");
+        OpenServiceCampaign parent = openServiceCampaignService.getById(vo.getId());
+        if (parent == null) {
+            return Result.error("未找得到对应的 OpenServiceCampaign");
         }
 
         String fileName = tempFolder + File.separator + OpenServiceCampaignType.class.getSimpleName() + ".xls";
         List<OpenServiceCampaignType> entityList = ExcelUtils.importFromExcelText(vo.getText(), fileName, OpenServiceCampaignType.class);
         log.debug("importText vo:{}, list:{}", vo, entityList);
         for (OpenServiceCampaignType entity : entityList) {
-            entity.setCampaignId(campaign.getId());
+            entity.setCampaignId(parent.getId());
             entity.setCreateTime(DateUtils.now());
         }
 
@@ -179,6 +179,5 @@ public class OpenServiceCampaignTypeController extends JeecgController<OpenServi
         }
         return Result.ok(vo);
     }
-
 
 }

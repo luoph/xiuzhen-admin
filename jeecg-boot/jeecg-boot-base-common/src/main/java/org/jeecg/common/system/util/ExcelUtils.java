@@ -26,8 +26,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -175,22 +175,50 @@ public class ExcelUtils {
 
         FileUtil.mkParentDirs(excelFile);
 
-        LinkedList<String[]> textLine = new LinkedList<>();
-        String[] lines = text.split("\\n");
-        for (String line : lines) {
-            textLine.add(line.split("\\t"));
+        char[] chars = text.toCharArray();
+        boolean hasQuotation = false;
+        int prevIndex = 0;
+
+        List<String> cellLine = new ArrayList<>();
+        List<List<String>> textLine = new ArrayList<>();
+
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '"') {
+                // 是否与上一个引号匹配
+                hasQuotation = !hasQuotation;
+            } else if (chars[i] == '\n') {
+                if (!hasQuotation) {
+                    textLine.add(cellLine);
+                    cellLine.add(text.substring(prevIndex, i));
+                    prevIndex = i + 1;
+
+                    // 新的行
+                    cellLine = new ArrayList<>();
+                }
+            } else if (chars[i] == '\t') {
+                if (!hasQuotation) {
+                    cellLine.add(text.substring(prevIndex, i));
+                    prevIndex = i + 1;
+                }
+            }
         }
+
+//        log.info("textLine:{}", textLine);
 
         // 保存成临时文件
         try {
             Workbook workbook = new HSSFWorkbook();
             Sheet sheet = workbook.createSheet(clazz.getSimpleName());
             int rowNum = 0;
-            for (String[] line : textLine) {
+            for (List<String> line : textLine) {
                 Row row = sheet.createRow(rowNum++);
                 int cellNum = 0;
                 for (String value : line) {
                     Cell cell = row.createCell(cellNum++);
+                    // 去掉双引号
+                    if (value.startsWith("\"") && value.endsWith("\"")) {
+                        value = value.substring(1, value.length() - 1);
+                    }
                     cell.setCellValue(value);
                 }
             }

@@ -6,10 +6,28 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('开服活动类型配置')">导出</a-button>
+            <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
+            <a-dropdown v-if="selectedRowKeys.length > 0">
+                <a-menu slot="overlay">
+                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+                </a-menu>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+            </a-dropdown>
+            <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据"></a-textarea>
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+                <a-button type="primary" icon="import">导入</a-button>
+            </a-upload> -->
         </div>
 
         <!-- table区域-begin -->
         <div>
+            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
+                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+            </div>
+
             <a-table
                 ref="table"
                 size="middle"
@@ -20,6 +38,7 @@
                 :pagination="ipagination"
                 :loading="loading"
                 @change="handleTableChange"
+                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -61,7 +80,7 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction } from "../../api/manage";
+import { getAction, postAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignRankDetailModal from "./modules/OpenServiceCampaignRankDetailModal";
 
@@ -75,6 +94,7 @@ export default {
         return {
             description: "开服活动-开服排行-活动明细(3级)管理页面",
             model: {},
+            importText: "",
             // 表头
             columns: [
                 {
@@ -97,6 +117,12 @@ export default {
                 //     align: "center",
                 //     dataIndex: "campaignTypeId"
                 // },
+                {
+                    title: "id",
+                    align: "center",
+                    width: 60,
+                    dataIndex: "id"
+                },
                 {
                     title: "活动名称",
                     align: "center",
@@ -200,16 +226,13 @@ export default {
                 delete: "game/openServiceCampaignRankDetail/delete",
                 deleteBatch: "game/openServiceCampaignRankDetail/deleteBatch",
                 exportXlsUrl: "game/openServiceCampaignRankDetail/exportXls",
-                importExcelUrl: "game/openServiceCampaignRankDetail/importExcel"
+                importExcelUrl: "game/openServiceCampaignRankDetail/importExcel",
+                importTextUrl: "game/openServiceCampaignRankDetail/importText"
             },
             dictOptions: {}
         };
     },
-    computed: {
-        importExcelUrl: function() {
-            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        }
-    },
+    computed: {},
     methods: {
         initDictConfig() {},
         loadData(arg) {
@@ -243,6 +266,7 @@ export default {
         },
         edit(record) {
             this.model = record;
+            this.importText = "";
             this.loadData();
         },
         handleAdd() {
@@ -264,6 +288,25 @@ export default {
                 text = text.substring(0, text.indexOf(","));
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
+        },
+        importExcelUrl() {
+            let domainURL = window._CONFIG["domainURL"];
+            return `${domainURL}/${this.url.importExcelUrl}`;
+        },
+        handleImportText() {
+            let params = {
+                id: this.model.id,
+                text: this.importText
+            };
+            console.log(params);
+            postAction(this.url.importTextUrl, params).then(res => {
+                if (res.success) {
+                    this.$message.success(res.message);
+                    this.loadData();
+                } else {
+                    this.$message.warning(res.message);
+                }
+            });
         }
     }
 };
@@ -288,5 +331,15 @@ export default {
 .largeText {
     white-space: normal;
     word-break: break-word;
+}
+
+/** Button按钮间距 */
+.ant-btn {
+    margin-right: 15px;
+}
+
+.import-text {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 </style>
