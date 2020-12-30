@@ -6,11 +6,28 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <!-- <a-button type="primary" icon="download" @click="handleExportXls('开服夺宝奖池')">导出</a-button> -->
+            <a-button type="primary" icon="download" @click="handleExportXls('开服夺宝奖池')">导出</a-button>
+            <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
+            <a-dropdown v-if="selectedRowKeys.length > 0">
+                <a-menu slot="overlay">
+                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+                </a-menu>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+            </a-dropdown>
+            <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据"></a-textarea>
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+                <a-button type="primary" icon="import">导入</a-button>
+            </a-upload> -->
         </div>
 
         <!-- table区域-begin -->
         <div>
+            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
+                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+            </div>
+
             <a-table
                 ref="table"
                 size="middle"
@@ -21,6 +38,7 @@
                 :pagination="ipagination"
                 :loading="loading"
                 @change="handleTableChange"
+                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -57,7 +75,7 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction } from "../../api/manage";
+import { getAction, postAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignLotteryDetailPoolModal from "./modules/OpenServiceCampaignLotteryDetailPoolModal";
 
@@ -70,6 +88,8 @@ export default {
     data() {
         return {
             description: "开服夺宝奖池管理页面",
+            model: {},
+            importText: "",
             // 表头
             columns: [
                 {
@@ -81,6 +101,12 @@ export default {
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
+                },
+                {
+                    title: "id",
+                    align: "center",
+                    width: 60,
+                    dataIndex: "id"
                 },
                 // {
                 //     title: "开服活动id",
@@ -171,16 +197,13 @@ export default {
                 delete: "game/openServiceCampaignLotteryDetailPool/delete",
                 deleteBatch: "game/openServiceCampaignLotteryDetailPool/deleteBatch",
                 exportXlsUrl: "game/openServiceCampaignLotteryDetailPool/exportXls",
-                importExcelUrl: "game/openServiceCampaignLotteryDetailPool/importExcel"
+                importExcelUrl: "game/openServiceCampaignLotteryDetailPool/importExcel",
+                importTextUrl: "game/openServiceCampaignLotteryDetailPool/importText"
             },
             dictOptions: {}
         };
     },
-    computed: {
-        importExcelUrl: function() {
-            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        }
-    },
+    computed: {},
     methods: {
         initDictConfig() {},
         loadData(arg) {
@@ -214,6 +237,7 @@ export default {
         },
         edit(record) {
             this.model = record;
+            this.importText = "";
             this.loadData();
         },
         handleAdd() {
@@ -234,6 +258,25 @@ export default {
             param.campaignTypeId = this.model.campaignTypeId;
             param.lotteryDetailId = this.model.id;
             return filterObj(param);
+        },
+        importExcelUrl() {
+            let domainURL = window._CONFIG["domainURL"];
+            return `${domainURL}/${this.url.importExcelUrl}`;
+        },
+        handleImportText() {
+            let params = {
+                id: this.model.id,
+                text: this.importText
+            };
+            console.log(params);
+            postAction(this.url.importTextUrl, params).then(res => {
+                if (res.success) {
+                    this.$message.success(res.message);
+                    this.loadData();
+                } else {
+                    this.$message.warning(res.message);
+                }
+            });
         }
     }
 };
@@ -241,4 +284,14 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+
+/** Button按钮间距 */
+.ant-btn {
+    margin-right: 15px;
+}
+
+.import-text {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 </style>
