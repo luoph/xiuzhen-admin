@@ -26,15 +26,19 @@
                     </a-col>
 
                     <a-col :md="4" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                        <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="search" @click="searchQuery2">查询</a-button>
                         </span>
                     </a-col>
                 </a-row>
             </a-form>
-
         </div>
         <!-- 查询区域-END -->
+        <div class="lateral-sliding" v-if="ynShowPicture">
+            <div class="" v-for="(item, index) in items" :key="index">
+                <lineChartMultid  class="" :style="{ width: pictureWidth }" title="折线图(前1450条数据)" :fields="c" :dataSource="dataSourceaaa" :height="420" />
+            </div>
+        </div>
         <!-- table区域-begin -->
         <div>
             <a-table
@@ -48,11 +52,9 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
             </a-table>
         </div>
-
     </a-card>
 </template>
 
@@ -63,16 +65,27 @@ import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
 
+import LineChartMultid from "@/components/chart/LineChartMultid";
+import Vue from "vue";
+
 export default {
     name: "GameOnlineNumList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
         GameChannelServer,
-        getAction
+        getAction,
+        LineChartMultid
     },
     data() {
         return {
+            timer: "",
+            ynShowPicture: false,
+            ik: 0,
+            items: 1,
+            pictureWidth: "1300px",
+            c: ["pepole"],
+            dataSourceaaa: [],
             description: "在线情况管理页面",
             // 表头
             columns: [
@@ -82,7 +95,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -105,39 +118,43 @@ export default {
                     title: "日期",
                     align: "center",
                     dataIndex: "getTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                    customRender: function (text) {
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
                     title: "获取在线人数的时间点",
                     align: "center",
                     dataIndex: "createTime"
-                },
+                }
             ],
             url: {
-                list: "game/gameOnlineNum/list",
+                list: "game/gameOnlineNum/list"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
-        importExcelUrl: function() {
+        importExcelUrl: function () {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
     methods: {
         initDictConfig() {},
-        onSelectChannel: function(channelId) {
+        onSelectChannel: function (channelId) {
             this.queryParam.channelId = channelId;
         },
-        onSelectServer: function(serverId) {
+        onSelectServer: function (serverId) {
             this.queryParam.serverId = serverId;
         },
-        onDateChange: function(value, dateStr) {
+        onDateChange: function (value, dateStr) {
             this.queryParam.rangeDateBegin = dateStr[0];
             this.queryParam.rangeDateEnd = dateStr[1];
+        },
+        searchQuery2(){
+                this.ynShowPicture = false;
+                this.pictureWidth = "0px";
+            this.timer = setTimeout(this.searchQuery , 10);
         },
         searchQuery() {
             let param = {
@@ -149,9 +166,29 @@ export default {
                 pageNo: this.ipagination.current,
                 pageSize: this.ipagination.pageSize
             };
-            getAction(this.url.list, param).then(res => {
+            getAction(this.url.list, param).then((res) => {
+                // this.pictureWidth = "0px";
                 if (res.success) {
+                    this.dataSourceaaa = [];
                     this.dataSource = res.result.records;
+                    this.dataSource.forEach((element) => {
+                        let dd = { type: element.createTime.substr(5, 11), pepole: element.onlineNum };
+                        if(this.dataSourceaaa.length < 1450){
+                            this.dataSourceaaa.push(dd);
+                        }
+                    });
+
+                    // for (let index = 0; index < 40; index++) {
+                    //     this.ik ++;
+                    //     let dd = { type: this.ik, a: 18.4 };
+                    //     this.dataSourceaaa.push(dd);
+                    // }
+                    if(this.dataSourceaaa.length>0){
+                        this.ynShowPicture = true;
+                    }
+                    // this.$forceUpdate();
+                    this.pictureWidth = this.dataSourceaaa.length * 50 + "px";
+                    console.log(this.dataSourceaaa.length);
                     this.ipagination.current = res.result.current;
                     this.ipagination.size = res.result.size.toString();
                     this.ipagination.total = res.result.total;
@@ -160,6 +197,9 @@ export default {
                     this.$message.error(res.message);
                 }
             });
+        },
+        beforeDestroy() {
+            clearTimeout(this.timer);
         }
     }
 };
@@ -167,4 +207,10 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+.lateral-sliding {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+}
+
 </style>
