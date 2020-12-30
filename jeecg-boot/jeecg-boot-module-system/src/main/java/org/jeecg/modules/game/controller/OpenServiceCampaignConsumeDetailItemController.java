@@ -1,5 +1,7 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,15 +10,22 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.util.ExcelUtils;
+import org.jeecg.modules.game.entity.ImportTextVO;
+import org.jeecg.modules.game.entity.OpenServiceCampaignConsumeDetail;
 import org.jeecg.modules.game.entity.OpenServiceCampaignConsumeDetailItem;
 import org.jeecg.modules.game.service.IOpenServiceCampaignConsumeDetailItemService;
+import org.jeecg.modules.game.service.IOpenServiceCampaignConsumeDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -31,6 +40,12 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
 
     @Autowired
     private IOpenServiceCampaignConsumeDetailItemService openServiceCampaignConsumeDetailItemService;
+
+    @Autowired
+    private IOpenServiceCampaignConsumeDetailService openServiceCampaignConsumeDetailService;
+
+    @Value("${app.folder.temp}")
+    private String tempFolder;
 
     /**
      * 分页列表查询
@@ -143,6 +158,30 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaignConsumeDetailItem.class);
+    }
+
+    @RequestMapping(value = "/importText", method = RequestMethod.POST)
+    public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
+        OpenServiceCampaignConsumeDetail parent = openServiceCampaignConsumeDetailService.getById(vo.getId());
+        if (parent == null) {
+            return Result.error("未找得到对应的 OpenServiceCampaignConsumeDetail");
+        }
+
+        String fileName = tempFolder + File.separator + OpenServiceCampaignConsumeDetailItem.class.getSimpleName() + ".xls";
+        List<OpenServiceCampaignConsumeDetailItem> entityList = ExcelUtils.importFromExcelText(vo.getText(), fileName, OpenServiceCampaignConsumeDetailItem.class);
+        log.debug("importText vo:{}, list:{}", vo, entityList);
+        for (OpenServiceCampaignConsumeDetailItem entity : entityList) {
+            entity.setId(null);
+            entity.setCampaignId(parent.getCampaignId());
+            entity.setCampaignTypeId(parent.getCampaignTypeId());
+            entity.setConsumeDetailId(parent.getId());
+            entity.setCreateTime(DateUtils.now());
+        }
+
+        if (CollUtil.isNotEmpty(entityList)) {
+            openServiceCampaignConsumeDetailItemService.saveBatch(entityList);
+        }
+        return Result.ok(vo);
     }
 
 }

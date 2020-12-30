@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -35,42 +36,49 @@ public class OpenServiceCampaignSingleGiftNotice extends BaseEntity {
     /**
      * 开服活动id
      */
+    @ExcelProperty("开服活动id")
     @Excel(name = "开服活动id", width = 15)
     private java.lang.Long campaignId;
 
     /**
      * typeId
      */
+    @ExcelProperty("typeId")
     @Excel(name = "typeId", width = 15)
     private java.lang.Long campaignTypeId;
 
     /**
      * open_service_single_recharge_gift_detail.id
      */
+    @ExcelProperty("详情id")
     @Excel(name = "详情id", width = 15)
     private java.lang.Long giftDetailId;
 
     /**
      * 播放次数
      */
+    @ExcelProperty("播放次数")
     @Excel(name = "播放次数", width = 15)
     private java.lang.Integer num;
 
     /**
      * 消息内容
      */
+    @ExcelProperty("消息内容")
     @Excel(name = "消息内容", width = 15)
     private java.lang.String message;
 
     /**
      * 是否发送邮件
      */
+    @ExcelProperty("是否发送邮件")
     @Excel(name = "是否发送邮件", width = 15)
     private java.lang.Integer email;
 
     /**
      * 发送时间
      */
+    @ExcelProperty("发送时间")
     @Excel(name = "发送时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)

@@ -30,7 +30,7 @@ import java.util.Arrays;
 public class OpenServiceCampaignRankTypeController extends JeecgController<OpenServiceCampaignRankType, IOpenServiceCampaignRankTypeService> {
 
     @Autowired
-    private IOpenServiceCampaignRankTypeService gameOpenServiceCampaignRankTypeService;
+    private IOpenServiceCampaignRankTypeService openServiceCampaignRankTypeService;
 
     /**
      * 分页列表查询
@@ -49,7 +49,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
                                    HttpServletRequest req) {
         QueryWrapper<OpenServiceCampaignRankType> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignRankType, req.getParameterMap());
         Page<OpenServiceCampaignRankType> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignRankType> pageList = gameOpenServiceCampaignRankTypeService.page(page, queryWrapper);
+        IPage<OpenServiceCampaignRankType> pageList = openServiceCampaignRankTypeService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
 
@@ -62,7 +62,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignRankType openServiceCampaignRankType) {
-        gameOpenServiceCampaignRankTypeService.save(openServiceCampaignRankType);
+        openServiceCampaignRankTypeService.save(openServiceCampaignRankType);
         return Result.ok("添加成功！");
     }
 
@@ -75,7 +75,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignRankType openServiceCampaignRankType) {
-        gameOpenServiceCampaignRankTypeService.updateById(openServiceCampaignRankType);
+        openServiceCampaignRankTypeService.updateById(openServiceCampaignRankType);
         return Result.ok("编辑成功!");
     }
 
@@ -88,7 +88,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameOpenServiceCampaignRankTypeService.removeById(id);
+        openServiceCampaignRankTypeService.removeById(id);
         return Result.ok("删除成功!");
     }
 
@@ -101,7 +101,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameOpenServiceCampaignRankTypeService.removeByIds(Arrays.asList(ids.split(",")));
+        this.openServiceCampaignRankTypeService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
 
@@ -114,7 +114,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignRankType openServiceCampaignRankType = gameOpenServiceCampaignRankTypeService.getById(id);
+        OpenServiceCampaignRankType openServiceCampaignRankType = openServiceCampaignRankTypeService.getById(id);
         if (openServiceCampaignRankType == null) {
             return Result.error("未找到对应数据");
         }

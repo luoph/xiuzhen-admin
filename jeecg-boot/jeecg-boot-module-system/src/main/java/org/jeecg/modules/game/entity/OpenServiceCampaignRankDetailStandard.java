@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -32,48 +33,56 @@ public class OpenServiceCampaignRankDetailStandard extends BaseEntity {
     /**
      * 开服活动id
      */
+    @ExcelProperty("开服活动id")
     @Excel(name = "开服活动id", width = 15)
     private java.lang.Long campaignId;
 
     /**
      * typeId
      */
-    @Excel(name = "typeId", width = 15)
+    @ExcelProperty("页签id")
+    @Excel(name = "页签id", width = 15)
     private java.lang.Long campaignTypeId;
 
     /**
      * open_service_campaign_rank_detail.id
      */
+    @ExcelProperty("详情id")
     @Excel(name = "详情id", width = 15)
     private java.lang.Long rankDetailId;
 
     /**
      * 达标奖励积分
      */
+    @ExcelProperty("达标奖励积分")
     @Excel(name = "达标奖励积分", width = 15)
     private java.lang.Integer score;
 
     /**
      * 描述
      */
+    @ExcelProperty("描述")
     @Excel(name = "描述", width = 15)
     private java.lang.String description;
 
     /**
      * 奖励列表
      */
+    @ExcelProperty("奖励列表")
     @Excel(name = "奖励列表", width = 15)
     private java.lang.String reward;
 
     /**
      * 传闻内容
      */
+    @ExcelProperty("广告引导内容")
     @Excel(name = "广告引导内容", width = 15)
     private java.lang.String message;
 
     /**
      * 广告引导显示时长(秒)
      */
-    @Excel(name = "广告引导显示时长(秒)，0表示一直显示直到玩家点击", width = 15)
+    @ExcelProperty("广告引导显示时长(秒)")
+    @Excel(name = "广告引导显示时长(秒)", width = 15)
     private java.lang.Integer adShowTime;
 }

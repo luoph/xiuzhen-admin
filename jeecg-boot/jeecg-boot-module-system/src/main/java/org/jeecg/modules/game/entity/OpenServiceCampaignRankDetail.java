@@ -37,7 +37,7 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
     /**
      * typeId
      */
-    @Excel(name = "typeId", width = 15)
+    @Excel(name = "页签id", width = 15)
     private java.lang.Long campaignTypeId;
 
     /**
