@@ -1,5 +1,7 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,15 +10,22 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.util.ExcelUtils;
+import org.jeecg.modules.game.entity.ImportTextVO;
 import org.jeecg.modules.game.entity.OpenServiceCampaignGiftDetail;
+import org.jeecg.modules.game.entity.OpenServiceCampaignType;
 import org.jeecg.modules.game.service.IOpenServiceCampaignGiftDetailService;
+import org.jeecg.modules.game.service.IOpenServiceCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -30,7 +39,13 @@ import java.util.Arrays;
 public class OpenServiceCampaignGiftDetailController extends JeecgController<OpenServiceCampaignGiftDetail, IOpenServiceCampaignGiftDetailService> {
 
     @Autowired
-    private IOpenServiceCampaignGiftDetailService gameOpenServiceCampaignGiftDetailService;
+    private IOpenServiceCampaignGiftDetailService openServiceCampaignGiftDetailService;
+
+    @Autowired
+    private IOpenServiceCampaignTypeService openServiceCampaignTypeService;
+
+    @Value("${app.folder.temp}")
+    private String tempFolder;
 
     /**
      * 分页列表查询
@@ -50,7 +65,7 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
         QueryWrapper<OpenServiceCampaignGiftDetail> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignGiftDetail, req.getParameterMap());
         queryWrapper.orderByAsc("sort");
         Page<OpenServiceCampaignGiftDetail> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignGiftDetail> pageList = gameOpenServiceCampaignGiftDetailService.page(page, queryWrapper);
+        IPage<OpenServiceCampaignGiftDetail> pageList = openServiceCampaignGiftDetailService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
 
@@ -63,7 +78,7 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
     @AutoLog(value = "开服活动-开服排行-活动明细(3级)-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignGiftDetail openServiceCampaignGiftDetail) {
-        gameOpenServiceCampaignGiftDetailService.save(openServiceCampaignGiftDetail);
+        openServiceCampaignGiftDetailService.save(openServiceCampaignGiftDetail);
         return Result.ok("添加成功！");
     }
 
@@ -76,7 +91,7 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
     @AutoLog(value = "开服活动-开服排行-活动明细(3级)-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignGiftDetail openServiceCampaignGiftDetail) {
-        gameOpenServiceCampaignGiftDetailService.updateById(openServiceCampaignGiftDetail);
+        openServiceCampaignGiftDetailService.updateById(openServiceCampaignGiftDetail);
         return Result.ok("编辑成功!");
     }
 
@@ -89,7 +104,7 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
     @AutoLog(value = "开服活动-开服排行-活动明细(3级)-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameOpenServiceCampaignGiftDetailService.removeById(id);
+        openServiceCampaignGiftDetailService.removeById(id);
         return Result.ok("删除成功!");
     }
 
@@ -102,7 +117,7 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
     @AutoLog(value = "开服活动-开服排行-活动明细(3级)-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameOpenServiceCampaignGiftDetailService.removeByIds(Arrays.asList(ids.split(",")));
+        this.openServiceCampaignGiftDetailService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
 
@@ -115,7 +130,7 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
     @AutoLog(value = "开服活动-开服排行-活动明细(3级)-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignGiftDetail openServiceCampaignGiftDetail = gameOpenServiceCampaignGiftDetailService.getById(id);
+        OpenServiceCampaignGiftDetail openServiceCampaignGiftDetail = openServiceCampaignGiftDetailService.getById(id);
         if (openServiceCampaignGiftDetail == null) {
             return Result.error("未找到对应数据");
         }
@@ -143,6 +158,29 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaignGiftDetail.class);
+    }
+
+    @RequestMapping(value = "/importText", method = RequestMethod.POST)
+    public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
+        OpenServiceCampaignType parent = openServiceCampaignTypeService.getById(vo.getId());
+        if (parent == null) {
+            return Result.error("未找得到对应的 OpenServiceCampaignType");
+        }
+
+        String fileName = tempFolder + File.separator + OpenServiceCampaignGiftDetail.class.getSimpleName() + ".xls";
+        List<OpenServiceCampaignGiftDetail> entityList = ExcelUtils.importFromExcelText(vo.getText(), fileName, OpenServiceCampaignGiftDetail.class);
+        log.debug("importText vo:{}, list:{}", vo, entityList);
+        for (OpenServiceCampaignGiftDetail entity : entityList) {
+            entity.setId(null);
+            entity.setCampaignId(parent.getCampaignId());
+            entity.setCampaignTypeId(parent.getId());
+            entity.setCreateTime(DateUtils.now());
+        }
+
+        if (CollUtil.isNotEmpty(entityList)) {
+            openServiceCampaignGiftDetailService.saveBatch(entityList);
+        }
+        return Result.ok(vo);
     }
 
 }

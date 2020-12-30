@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -32,42 +33,49 @@ public class OpenServiceCampaignSingleGiftItem extends BaseEntity {
     /**
      * 开服活动id
      */
+    @ExcelProperty("开服活动id")
     @Excel(name = "开服活动id", width = 15)
     private java.lang.Long campaignId;
 
     /**
-     * typeId
+     * 页签id
      */
-    @Excel(name = "typeId", width = 15)
+    @ExcelProperty("页签id")
+    @Excel(name = "页签id", width = 15)
     private java.lang.Long campaignTypeId;
 
     /**
      * open_service_single_recharge_gift_detail.id
      */
+    @ExcelProperty("详情id")
     @Excel(name = "详情id", width = 15)
     private java.lang.Long giftDetailId;
 
     /**
      * 任务金额
      */
+    @ExcelProperty("任务金额")
     @Excel(name = "任务金额", width = 15)
     private java.math.BigDecimal amount;
 
     /**
      * 领取上限次数
      */
+    @ExcelProperty("领取上限次数")
     @Excel(name = "领取上限次数", width = 15)
     private java.lang.Integer limitTimes;
 
     /**
      * 任务描述
      */
+    @ExcelProperty("任务描述")
     @Excel(name = "任务描述", width = 15)
     private java.lang.String remark;
 
     /**
      * 奖励json
      */
+    @ExcelProperty("奖励列表")
     @Excel(name = "奖励列表", width = 15)
     private java.lang.String reward;
 }

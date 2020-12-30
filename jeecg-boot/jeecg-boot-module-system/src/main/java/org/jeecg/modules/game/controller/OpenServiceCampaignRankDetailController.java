@@ -37,12 +37,11 @@ import java.util.List;
 @RestController
 @RequestMapping("game/openServiceCampaignRankDetail")
 public class OpenServiceCampaignRankDetailController extends JeecgController<OpenServiceCampaignRankDetail, IOpenServiceCampaignRankDetailService> {
+    @Autowired
+    private IOpenServiceCampaignRankDetailService openServiceCampaignRankDetailService;
 
     @Autowired
     private IOpenServiceCampaignTypeService openServiceCampaignTypeService;
-
-    @Autowired
-    private IOpenServiceCampaignRankDetailService openServiceCampaignRankDetailService;
 
     @Value("${app.folder.temp}")
     private String tempFolder;
@@ -171,6 +170,7 @@ public class OpenServiceCampaignRankDetailController extends JeecgController<Ope
         List<OpenServiceCampaignRankDetail> entityList = ExcelUtils.importFromExcelText(vo.getText(), fileName, OpenServiceCampaignRankDetail.class);
         log.debug("importText vo:{}, list:{}", vo, entityList);
         for (OpenServiceCampaignRankDetail entity : entityList) {
+            entity.setId(null);
             entity.setCampaignId(parent.getCampaignId());
             entity.setCampaignTypeId(parent.getId());
             entity.setCreateTime(DateUtils.now());
