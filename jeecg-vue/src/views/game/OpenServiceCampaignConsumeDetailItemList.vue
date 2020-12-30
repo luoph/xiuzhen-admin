@@ -52,8 +52,8 @@
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
                 <template slot="largeText" slot-scope="text">
-                    <div class="largeTextContainer">
-                        <span class="largeText">{{ text }}</span>
+                    <div class="large-text-ontainer">
+                        <span class="large-text">{{ text }}</span>
                     </div>
                 </template>
 
@@ -309,14 +309,14 @@ export default {
 <style scoped>
 @import "~@assets/less/common.less";
 
-.largeTextContainer {
+.large-text-ontainer {
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 200px;
 }
 
-.largeText {
+.large-text {
     white-space: normal;
     word-break: break-word;
 }

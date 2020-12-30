@@ -228,14 +228,14 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
-.largeTextContainer {
+.large-text-container {
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 200px;
 }
 
-.largeText {
+.large-text {
     white-space: normal;
     word-break: break-word;
 }

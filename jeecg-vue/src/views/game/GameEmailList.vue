@@ -72,8 +72,8 @@
                 @change="handleTableChange"
             >
                 <template slot="largeText" slot-scope="text">
-                    <div class="largeTextContainer">
-                        <span class="largeText">{{ text }}</span>
+                    <div class="large-text-container">
+                        <span class="large-text">{{ text }}</span>
                     </div>
                 </template>
             </a-table>
@@ -223,14 +223,14 @@ export default {
 <style scoped>
 @import "~@assets/less/common.less";
 
-.largeTextContainer {
+.large-text-container {
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 200px;
 }
 
-.largeText {
+.large-text {
     white-space: normal;
     word-break: break-word;
 }
