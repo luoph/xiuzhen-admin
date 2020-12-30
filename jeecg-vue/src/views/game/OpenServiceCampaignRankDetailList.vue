@@ -97,15 +97,21 @@ export default {
             importText: "",
             // 表头
             columns: [
+                // {
+                //     title: "#",
+                //     dataIndex: "",
+                //     key: "rowIndex",
+                //     width: 60,
+                //     align: "center",
+                //     customRender: function(t, r, index) {
+                //         return parseInt(index) + 1;
+                //     }
+                // },
                 {
-                    title: "#",
-                    dataIndex: "",
-                    key: "rowIndex",
-                    width: 60,
+                    title: "id",
                     align: "center",
-                    customRender: function(t, r, index) {
-                        return parseInt(index) + 1;
-                    }
+                    width: 60,
+                    dataIndex: "id"
                 },
                 // {
                 //     title: "开服活动id",

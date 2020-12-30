@@ -127,15 +127,21 @@ export default {
             description: "开服活动-开服排行-类型库管理页面",
             // 表头
             columns: [
+                // {
+                //     title: "#",
+                //     dataIndex: "",
+                //     key: "rowIndex",
+                //     width: 60,
+                //     align: "center",
+                //     customRender: function(t, r, index) {
+                //         return parseInt(index) + 1;
+                //     }
+                // },
                 {
-                    title: "#",
-                    dataIndex: "",
-                    key: "rowIndex",
-                    width: 60,
+                    title: "id",
                     align: "center",
-                    customRender: function(t, r, index) {
-                        return parseInt(index) + 1;
-                    }
+                    width: 60,
+                    dataIndex: "id"
                 },
                 {
                     title: "排行类型",
