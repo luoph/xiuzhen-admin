@@ -8,7 +8,20 @@
                         <a-form-item label="排行类型">
                             <a-select placeholder="请选择排行类型" model="queryParam.rankType" initialValue="1">
                                 <a-select-option :value="1">1-境界冲榜</a-select-option>
-                                <a-select-option :value="2">2-功法冲榜</a-select-option>
+                                <a-select-option :value="2">2-喂养冲榜</a-select-option>
+                                <a-select-option :value="3">3-追加冲榜</a-select-option>
+                                <a-select-option :value="4">4-祖鲲冲榜</a-select-option>
+                                <a-select-option :value="5">5-腾蛇冲榜</a-select-option>
+                                <a-select-option :value="6">6-火凤冲榜</a-select-option>
+                                <a-select-option :value="7">7-飞剑冲榜</a-select-option>
+                                <a-select-option :value="8">8-情缘冲榜</a-select-option>
+                                <a-select-option :value="9">9-功法冲榜</a-select-option>
+                                <a-select-option :value="10">10-兽魂石冲榜</a-select-option>
+                                <a-select-option :value="11">11-炼灵冲榜</a-select-option>
+                                <a-select-option :value="12">12-宝匣冲榜</a-select-option>
+                                <a-select-option :value="13">13-仙器冲榜</a-select-option>
+                                <a-select-option :value="14">14-符文冲榜</a-select-option>
+                                <a-select-option :value="15">15-天命冲榜</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -133,7 +146,33 @@ export default {
                         if (value === 1) {
                             text = "1-境界冲榜";
                         } else if (value === 2) {
-                            text = "2-功法冲榜";
+                            text = "2-喂养冲榜";
+                        } else if (value === 3) {
+                            text = "3-追加冲榜";
+                        } else if (value === 4) {
+                            text = "4-祖鲲冲榜";
+                        } else if (value === 5) {
+                            text = "5-腾蛇冲榜";
+                        } else if (value === 6) {
+                            text = "6-火凤冲榜";
+                        } else if (value === 7) {
+                            text = "7-飞剑冲榜";
+                        } else if (value === 8) {
+                            text = "8-情缘冲榜";
+                        } else if (value === 9) {
+                            text = "9-功法冲榜";
+                        } else if (value === 10) {
+                            text = "10-兽魂石冲榜";
+                        } else if (value === 11) {
+                            text = "11-炼灵冲榜";
+                        } else if (value === 12) {
+                            text = "12-宝匣冲榜";
+                        } else if (value === 13) {
+                            text = "13-仙器冲榜";
+                        } else if (value === 14) {
+                            text = "14-符文冲榜";
+                        } else if (value === 15) {
+                            text = "15-天命冲榜";
                         }
                         return text;
                     }

@@ -148,9 +148,33 @@ export default {
                         if (value === 1) {
                             text = "1-境界冲榜";
                         } else if (value === 2) {
-                            text = "2-功法冲榜";
+                            text = "2-喂养冲榜";
                         } else if (value === 3) {
-                            text = "3-功法冲榜";
+                            text = "3-追加冲榜";
+                        } else if (value === 4) {
+                            text = "4-祖鲲冲榜";
+                        } else if (value === 5) {
+                            text = "5-腾蛇冲榜";
+                        } else if (value === 6) {
+                            text = "6-火凤冲榜";
+                        } else if (value === 7) {
+                            text = "7-飞剑冲榜";
+                        } else if (value === 8) {
+                            text = "8-情缘冲榜";
+                        } else if (value === 9) {
+                            text = "9-功法冲榜";
+                        } else if (value === 10) {
+                            text = "10-兽魂石冲榜";
+                        } else if (value === 11) {
+                            text = "11-炼灵冲榜";
+                        } else if (value === 12) {
+                            text = "12-宝匣冲榜";
+                        } else if (value === 13) {
+                            text = "13-仙器冲榜";
+                        } else if (value === 14) {
+                            text = "14-符文冲榜";
+                        } else if (value === 15) {
+                            text = "15-天命冲榜";
                         }
                         return text;
                     }
