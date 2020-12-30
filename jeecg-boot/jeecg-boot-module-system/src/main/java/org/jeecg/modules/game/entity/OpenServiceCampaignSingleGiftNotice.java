@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
@@ -22,7 +21,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_open_service_campaign_single_gift_notice")
-@Accessors(chain = true)
 public class OpenServiceCampaignSingleGiftNotice extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

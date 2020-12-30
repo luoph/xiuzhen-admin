@@ -19,7 +19,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Data
 @TableName("game_open_service_campaign_rank_detail_score")
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 public class OpenServiceCampaignRankDetailScore extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
