@@ -162,6 +162,11 @@ export default {
                     }
                 },
                 {
+                    title: "id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "活动名称",
                     align: "center",
                     dataIndex: "name"
