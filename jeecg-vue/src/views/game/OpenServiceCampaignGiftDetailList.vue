@@ -143,20 +143,21 @@ export default {
                 {
                     title: "开始时间",
                     align: "center",
+                    width: 80,
                     dataIndex: "startDay"
                 },
                 {
                     title: "资源类型",
                     align: "center",
                     dataIndex: "resType",
-                    width: 60,
+                    width: 80,
                     customRender: value => {
                         let text = "--";
-                        if (value === 1) {
+                        if (value == 1) {
                             text = "骨骼";
-                        } else if (value === 2) {
+                        } else if (value == 2) {
                             text = "序列帧";
-                        } else if (value === 3) {
+                        } else if (value == 3) {
                             text = "图片";
                         }
                         return text;
@@ -165,12 +166,15 @@ export default {
                 {
                     title: "骨骼动画资源图",
                     align: "center",
-                    dataIndex: "skeleton"
+                    width: 180,
+                    dataIndex: "skeleton",
+                    scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "持续时间(天)",
                     align: "center",
-                    dataIndex: "duration"
+                    dataIndex: "duration",
+                    width: 80
                 },
                 {
                     title: "排序",
@@ -181,13 +185,14 @@ export default {
                 {
                     title: "帮助信息",
                     align: "center",
-                    width: 180,
                     dataIndex: "helpMsg",
+                    width: 180,
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "创建时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "createTime"
                 },
                 // {
