@@ -124,30 +124,27 @@ export default {
                 //     dataIndex: "campaignTypeId"
                 // },
                 {
-                    title: "id",
-                    align: "center",
-                    width: 60,
-                    dataIndex: "id"
-                },
-                {
                     title: "活动名称",
                     align: "center",
+                    width: 100,
                     dataIndex: "name"
                 },
                 {
                     title: "页签名称",
                     align: "center",
+                    width: 100,
                     dataIndex: "tabName"
                 },
                 {
                     title: "排序",
                     align: "center",
-                    dataIndex: "sort",
-                    width: 80
+                    width: 80,
+                    dataIndex: "sort"
                 },
                 {
                     title: "排行类型",
                     align: "center",
+                    width: 100,
                     dataIndex: "rankType",
                     customRender: value => {
                         let text = "--";
@@ -188,11 +185,13 @@ export default {
                 {
                     title: "开始时间",
                     align: "center",
+                    width: 80,
                     dataIndex: "startDay"
                 },
                 {
                     title: "持续时间(天)",
                     align: "center",
+                    width: 80,
                     dataIndex: "duration"
                 },
                 {
@@ -212,6 +211,7 @@ export default {
                 {
                     title: "活动宣传仙力",
                     align: "center",
+                    width: 100,
                     dataIndex: "combatPower"
                 },
                 // {
@@ -222,11 +222,13 @@ export default {
                 {
                     title: "排名奖励邮件id",
                     align: "center",
+                    width: 80,
                     dataIndex: "rankRewardEmail"
                 },
                 {
                     title: "达标奖励邮件id",
                     align: "center",
+                    width: 80,
                     dataIndex: "standardRewardEmail"
                 },
                 {
@@ -239,6 +241,7 @@ export default {
                 {
                     title: "创建时间",
                     align: "center",
+                    width: 120,
                     dataIndex: "createTime"
                 },
                 // {
