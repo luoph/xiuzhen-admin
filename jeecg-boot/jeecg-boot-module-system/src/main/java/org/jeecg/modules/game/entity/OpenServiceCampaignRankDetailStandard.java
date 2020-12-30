@@ -19,7 +19,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Data
 @TableName("game_open_service_campaign_rank_detail_standard")
 @EqualsAndHashCode(callSuper = true)
-@Accessors(chain = true)
 public class OpenServiceCampaignRankDetailStandard extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -33,21 +32,18 @@ public class OpenServiceCampaignRankDetailStandard extends BaseEntity {
     /**
      * 开服活动id
      */
-    @ExcelProperty("开服活动id")
     @Excel(name = "开服活动id", width = 15)
     private java.lang.Long campaignId;
 
     /**
      * typeId
      */
-    @ExcelProperty("页签id")
     @Excel(name = "页签id", width = 15)
     private java.lang.Long campaignTypeId;
 
     /**
      * open_service_campaign_rank_detail.id
      */
-    @ExcelProperty("详情id")
     @Excel(name = "详情id", width = 15)
     private java.lang.Long rankDetailId;
 

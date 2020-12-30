@@ -19,7 +19,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_open_service_campaign_single_gift_detail")
-@Accessors(chain = true)
 public class OpenServiceCampaignSingleGiftDetail extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

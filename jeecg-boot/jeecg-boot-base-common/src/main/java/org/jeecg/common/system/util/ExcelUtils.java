@@ -130,7 +130,7 @@ public class ExcelUtils {
     }
 
     public static <T> List<T> readExcel(String filename, Class<T> clazz) {
-        return EasyExcel.read(filename).head(clazz).sheet().doReadSync();
+        return EasyExcel.read(filename).head(clazz).sheet(0).doReadSync();
     }
 
     public static <T> List<T> readExcel(String filename, String sheetName, Class<T> clazz) {
@@ -208,7 +208,7 @@ public class ExcelUtils {
         // 保存成临时文件
         try {
             Workbook workbook = new HSSFWorkbook();
-            Sheet sheet = workbook.createSheet(clazz.getSimpleName());
+            Sheet sheet = workbook.createSheet("Sheet1");
             int rowNum = 0;
             for (List<String> line : textLine) {
                 Row row = sheet.createRow(rowNum++);
