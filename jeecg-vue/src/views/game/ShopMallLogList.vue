@@ -181,7 +181,7 @@ export default {
                                     align: "center",
                                     dataIndex: "itemNumRate",
                                     customRender: function (text) {
-                                        return text + "%";
+                                        return text*100 + "%";
                                     }
                                 }
                             ],
