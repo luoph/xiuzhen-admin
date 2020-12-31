@@ -25,6 +25,7 @@
     <select id="queryShopMallList" resultMap="BaseResultMap">
         SELECT
         item_id,
+        create_time,
         type,
         SUM(num) item_num,
         COUNT(DISTINCT(player_id)) player_num

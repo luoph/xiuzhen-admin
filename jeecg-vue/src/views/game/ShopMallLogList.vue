@@ -38,7 +38,7 @@
                     </a-col>
 
                     <a-col :md="4" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                        <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                         </span>
                     </a-col>
@@ -51,27 +51,26 @@
         </div>
         <!-- 查询区域-END -->
 
-
         <!-- table区域-begin -->
-        <div>
-
-            <a-table
-                ref="table"
-                size="middle"
-                bordered
-                rowKey="id"
-                :columns="columns"
-                :dataSource="dataSource"
-                :pagination="ipagination"
-                :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-                @change="handleTableChange"
-
-            >
-
-            </a-table>
-        </div>
-
+        <a-row :gutter="45" type="flex">
+            <a-col :md="8" :sm="8" v-for="colu in columnsList" :key="colu.id">
+                <div>
+                    <a-table
+                        ref="table"
+                        size="middle"
+                        bordered
+                        :rowKey="(record) => (record.id != null ? record.id : '0')"
+                        :loading="loading"
+                        :columns="colu.columns"
+                        :dataSource="colu.columnsData"
+                        :pagination="false"
+                        :scroll="{ x: 'max-content' }"
+                    >
+                        <div slot="title" class="word-v-middle">{{colu.time}}</div></a-table
+                    >
+                </div>
+            </a-col>
+        </a-row>
     </a-card>
 </template>
 
@@ -91,69 +90,28 @@ export default {
     },
     data() {
         return {
+            columnsList: [],
             description: "商店销售管理页面",
-            // 表头
-            columns: [
-                {
-                    title: "#",
-                    dataIndex: "",
-                    key: "rowIndex",
-                    width: 60,
-                    align: "center",
-                    customRender: function(t, r, index) {
-                        return parseInt(index) + 1;
-                    }
-                },
-                {
-                    title: "道具",
-                    align: "center",
-                    dataIndex: "wayName"
-                },
-                {
-                    title: "货币数量",
-                    align: "center",
-                    dataIndex: "itemNum"
-                },
-                {
-                    title: "人数",
-                    align: "center",
-                    dataIndex: "playerNum"
-                },
-                {
-                    title: "次数",
-                    align: "center",
-                    dataIndex: "itemCount"
-                },
-                {
-                    title: "占比",
-                    align: "center",
-                    dataIndex: "itemNumRate",
-                    customRender: function(text) {
-                        return text + "%";
-                    }
-                },
-            ],
             url: {
-                list: "game/shopMallLog/list",
+                list: "game/shopMallLog/list"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
-        importExcelUrl: function() {
+        importExcelUrl: function () {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
     methods: {
         initDictConfig() {},
-        onSelectChannel: function(channelId) {
+        onSelectChannel: function (channelId) {
             this.queryParam.channelId = channelId;
         },
-        onSelectServer: function(serverId) {
+        onSelectServer: function (serverId) {
             this.queryParam.serverId = serverId;
         },
-        onDateChange: function(value, dateStr) {
+        onDateChange: function (value, dateStr) {
             this.queryParam.rangeDateBegin = dateStr[0];
             this.queryParam.rangeDateEnd = dateStr[1];
         },
@@ -168,9 +126,70 @@ export default {
                 pageNo: this.ipagination.current,
                 pageSize: this.ipagination.pageSize
             };
-            getAction(this.url.list, param).then(res => {
+            getAction(this.url.list, param).then((res) => {
                 if (res.success) {
+                    this.columnsList = [];
                     this.dataSource = res.result.records;
+                    res.result.records.forEach((element) => {
+                        console.log(element.time);
+                    });
+
+                    for (const aa of res.result.records) {
+                        let a = {
+                            id: aa.time,
+                            time: aa.time,
+                            ipagination: {
+                                current: 1,
+                                size: 1,
+                                total: 1,
+                                pages: 1
+                            },
+                            // 表头
+                            columns: [
+                                {
+                                    title: "#",
+                                    dataIndex: "",
+                                    key: "rowIndex",
+                                    width: 60,
+                                    align: "center",
+                                    customRender: function (t, r, index) {
+                                        return parseInt(index) + 1;
+                                    }
+                                },
+                                {
+                                    title: "道具",
+                                    align: "center",
+                                    dataIndex: "wayName"
+                                },
+                                {
+                                    title: "货币数量",
+                                    align: "center",
+                                    dataIndex: "itemNum"
+                                },
+                                {
+                                    title: "人数",
+                                    align: "center",
+                                    dataIndex: "playerNum"
+                                },
+                                {
+                                    title: "次数",
+                                    align: "center",
+                                    dataIndex: "itemCount"
+                                },
+                                {
+                                    title: "占比",
+                                    align: "center",
+                                    dataIndex: "itemNumRate",
+                                    customRender: function (text) {
+                                        return text + "%";
+                                    }
+                                }
+                            ],
+                            columnsData: aa.shopMallLogList
+                        };
+                        this.columnsList.push(a);
+                    }
+
                     this.ipagination.current = res.result.current;
                     this.ipagination.size = res.result.size.toString();
                     this.ipagination.total = res.result.total;
@@ -186,4 +205,15 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+.word-v-middle {
+    margin-bottom: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 21px;
+    margin-top: 0px;
+    color: #0c0c0c;
+    white-space: normal;
+}
 </style>
