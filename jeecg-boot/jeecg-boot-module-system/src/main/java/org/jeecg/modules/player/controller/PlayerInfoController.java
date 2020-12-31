@@ -31,6 +31,9 @@ public class PlayerInfoController extends MultiDataSourceController<Player, IPla
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    @RequestParam(name = "serverId", required = false) Integer serverId,
                                    HttpServletRequest req) {
+        if(null == serverId){
+            return Result.error("请选择服务器！");
+        }
         return super.queryPageList(model, pageNo, pageSize, serverId, req);
     }
 
