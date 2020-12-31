@@ -201,8 +201,9 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         log.info("sync id:{} response:{}", id, response);
 
         // 更新已刷新的服务器id
+        Collections.sort(currentIds);
         campaign.setLastServerIds(StrUtil.join(",", currentIds));
-        campaignService.updateById(new OpenServiceCampaign().setId(campaign.getId()).setServerIds(campaign.getServerIds()));
+        campaignService.updateById(new OpenServiceCampaign().setId(campaign.getId()).setLastServerIds(campaign.getLastServerIds()));
 
         return Result.ok("同步成功!");
     }
