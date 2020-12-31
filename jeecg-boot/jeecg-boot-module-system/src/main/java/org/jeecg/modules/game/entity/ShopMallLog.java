@@ -79,6 +79,10 @@ public class ShopMallLog implements Serializable {
      * 创建时间
      */
     private Date createTime;
+    /**
+     * 创建时间String格式
+     */
+    private String createTimeString;
 
     /**
      * 更新时间
