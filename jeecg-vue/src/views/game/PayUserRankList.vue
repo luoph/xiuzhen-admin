@@ -83,7 +83,7 @@ export default {
                 {
                     title: "玩家昵称",
                     align: "center",
-                    dataIndex: "playerRegisterInfo.name"
+                    dataIndex: "gameRegisterInfoVO.name"
                 },
                 {
                     title: "排名",

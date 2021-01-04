@@ -82,7 +82,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
         Date nowDate = new Date();
         for (PayUserRank payUserRank : list) {
             //获取玩家注册信息
-            GameRegisterInfoVO playerRegisterInfo = payUserRank.getPlayerRegisterInfo();
+            GameRegisterInfoVO playerRegisterInfo = payUserRank.getGameRegisterInfoVO();
 
             //获取玩家最后的充值时间
             Date payTimeMax = payUserRank.getPayTimeMax();
@@ -100,7 +100,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             //设置登录预警天数
             playerRegisterInfo.setLoginWarningDays(loginWarningDays);
 
-            payUserRank.setPlayerRegisterInfo(playerRegisterInfo);
+            payUserRank.setGameRegisterInfoVO(playerRegisterInfo);
         }
         return list;
     }
