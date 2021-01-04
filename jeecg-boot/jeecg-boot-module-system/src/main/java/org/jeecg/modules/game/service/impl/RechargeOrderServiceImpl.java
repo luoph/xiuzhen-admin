@@ -192,19 +192,33 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         //重组消耗明细信息
         List<Map> fairyJadeBuyInfoNewList = new ArrayList<>();
         for (Map map : fairyJadeBuyInfoList) {
-            Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
-            fairyJadeBuyInfoNewMap.put("player_id", map.get("player_id").toString());
-            fairyJadeBuyInfoNewMap.put("type", map.get("type").toString());
-            fairyJadeBuyInfoNewMap.put("config_id", map.get("config_id").toString());
-            fairyJadeBuyInfoNewMap.put("num", map.get("num").toString());
-            JSONArray dangweiPriceJsonArray = JSONArray.parseArray(map.get("price").toString());
-            for (int i = 0; i < dangweiPriceJsonArray.size(); i++) {
-                JSONObject jsonObject = dangweiPriceJsonArray.getJSONObject(i);
-                fairyJadeBuyInfoNewMap.put("itemId", jsonObject.getString("itemId"));
-                fairyJadeBuyInfoNewMap.put("itemNum", jsonObject.getString("num"));
+            JSONArray dangweiPriceJsonArray = new JSONArray();
+            if(!map.get("price").toString().equals("[null]")){
+                dangweiPriceJsonArray = JSONArray.parseArray(map.get("price").toString());
+                for (int i = 0; i < dangweiPriceJsonArray.size(); i++) {
+                    Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
+                    fairyJadeBuyInfoNewMap.put("player_id", map.get("player_id").toString());
+                    fairyJadeBuyInfoNewMap.put("type", map.get("type").toString());
+                    fairyJadeBuyInfoNewMap.put("config_id", map.get("config_id").toString());
+                    fairyJadeBuyInfoNewMap.put("num", map.get("num").toString());
+                    JSONObject jsonObject = dangweiPriceJsonArray.getJSONObject(i);
+                    fairyJadeBuyInfoNewMap.put("itemId", jsonObject.getString("itemId"));
+                    fairyJadeBuyInfoNewMap.put("itemNum", jsonObject.getString("num"));
+                    fairyJadeBuyInfoNewMap.put("create_time", map.get("create_time").toString());
+                    fairyJadeBuyInfoNewList.add(fairyJadeBuyInfoNewMap);
+                }
+            }else{
+                Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
+                fairyJadeBuyInfoNewMap.put("player_id", map.get("player_id").toString());
+                fairyJadeBuyInfoNewMap.put("type", map.get("type").toString());
+                fairyJadeBuyInfoNewMap.put("config_id", map.get("config_id").toString());
+                fairyJadeBuyInfoNewMap.put("num", map.get("num").toString());
+                fairyJadeBuyInfoNewMap.put("itemId", "免费");
+                fairyJadeBuyInfoNewMap.put("itemNum", "0");
+                fairyJadeBuyInfoNewMap.put("create_time", map.get("create_time").toString());
+                fairyJadeBuyInfoNewList.add(fairyJadeBuyInfoNewMap);
             }
-            fairyJadeBuyInfoNewMap.put("create_time", map.get("create_time").toString());
-            fairyJadeBuyInfoNewList.add(fairyJadeBuyInfoNewMap);
+
         }
         //过滤出玉髓明细
         List<Map> fairyList = fairyJadeBuyInfoNewList.stream().filter(map -> map.get("itemId").toString().equals("1010")).collect(Collectors.toList());
