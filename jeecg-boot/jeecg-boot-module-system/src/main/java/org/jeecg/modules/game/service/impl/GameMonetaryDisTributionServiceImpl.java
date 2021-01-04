@@ -1,11 +1,14 @@
 package org.jeecg.modules.game.service.impl;
 
+import com.google.common.collect.Lists;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.constant.FairyJadeBuyType;
 import org.jeecg.modules.game.constant.ItemId;
+import org.jeecg.modules.game.constant.PackageGet;
+import org.jeecg.modules.game.constant.PackageReduce;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.jeecg.modules.game.mapper.GameMonetaryDisTributionMapper;
 import org.jeecg.modules.game.service.IGameMonetaryDisTributionService;
@@ -28,17 +31,8 @@ import org.jeecg.modules.game.constant.FairyJadeBuyType.*;
 @Service
 public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTributionService {
     Log log = LogFactory.getLog(this.getClass());
-    /**
-     * 产销点类型map
-     */
-    private static final Map<Integer,String> FairyJadeBuyTypeMap = new HashMap<>();
-    static {
-        FairyJadeBuyTypeMap.put(FairyJadeBuyType.PRACTICE_FUND.getType(),FairyJadeBuyType.PRACTICE_FUND.getDesc());
-        FairyJadeBuyTypeMap.put(FairyJadeBuyType.IMMORTAL.getType(),FairyJadeBuyType.IMMORTAL.getDesc());
-        FairyJadeBuyTypeMap.put(FairyJadeBuyType.DAILY_GIFT.getType(),FairyJadeBuyType.DAILY_GIFT.getDesc());
-        FairyJadeBuyTypeMap.put(FairyJadeBuyType.SEVEN_DAY_GIFT.getType(),FairyJadeBuyType.SEVEN_DAY_GIFT.getDesc());
-        FairyJadeBuyTypeMap.put(FairyJadeBuyType.ZERO_BUY.getType(),FairyJadeBuyType.ZERO_BUY.getDesc());
-    }
+
+
 
     @Resource
     private GameMonetaryDisTributionMapper gameMonetaryDisTributionMapper;
@@ -52,6 +46,24 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             List<Map> backPackList = gameMonetaryDisTributionMapper.selectAllBackPackByTime(rangeTimeBegin, rangeTimeEnd, productAndMarketTyep, quantityType);
             //背包物品出入信息 以 way 分组
             Map<String, List<Map>> backPackListMap_way = backPackList.stream().collect(Collectors.groupingBy(map -> map.get("way").toString()));
+
+            /**
+             * 产销点类型map
+             */
+            Map<Integer, String> FairyJadeBuyTypeMap = new HashMap<>();
+            //存入
+            if(1== quantityType){
+                for (PackageGet value : PackageGet.values()) {
+                    FairyJadeBuyTypeMap.put(value.getId(), value.getName());
+                }
+            //消耗
+            }else if(2== quantityType){
+                for (PackageReduce value : PackageReduce.values()) {
+                    FairyJadeBuyTypeMap.put(value.getId(), value.getName());
+                }
+            }
+
+
             for (Integer integer : FairyJadeBuyTypeMap.keySet()) {
                 //获取当前产销点
                 List<Map> oneBackPackListMap_way = backPackListMap_way.get(integer.toString());
