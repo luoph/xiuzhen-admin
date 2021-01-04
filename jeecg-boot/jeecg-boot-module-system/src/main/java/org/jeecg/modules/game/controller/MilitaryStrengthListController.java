@@ -31,6 +31,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author huli
@@ -53,7 +55,9 @@ public class MilitaryStrengthListController {
      */
     @AutoLog(value = "")
     @RequestMapping("/list")
-    public Result<?> controller名(String rangeDateBegin,
+    public Result<?> militaryStrengthList(
+                                 String userName,
+                                 String rangeDateBegin,
                                  String rangeDateEnd,
                                  @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                                  @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
@@ -86,7 +90,14 @@ public class MilitaryStrengthListController {
         }
         Page<MilitaryStrengthVO> pageVo = new Page<>(pageNo, pageSize);
         List<MilitaryStrengthVO> list = iMilitaryStrengthService.getMilitaryStrengVoDujieList(serverId, DateUtils.formatDate( DateUtils.parseDate(rangeDateBegin), DatePattern.NORM_DATE_PATTERN), DateUtils.formatDate( DateUtils.parseDate(rangeDateEnd), DatePattern.NORM_DATE_PATTERN), channel);
-
+        if(!StringUtils.isEmpty(userName)){
+            Map<String, List<MilitaryStrengthVO>> prodMap= list.stream().collect(Collectors.groupingBy(MilitaryStrengthVO::getUserName));
+            if(null != prodMap.get(userName)){
+                list =  prodMap.get(userName);
+            }else{
+                list = new ArrayList<>() ;
+            }
+        }
         pageVo.setRecords(list).setTotal(list.size());
         return Result.ok(pageVo);
     }

@@ -15,7 +15,7 @@
                         </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="玩家名">
-                            <a-input placeholder="请输入玩家名" v-model="queryParam.banValue"></a-input>
+                            <a-input placeholder="请输入玩家名" v-model="queryParam.userName"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -172,7 +172,8 @@ export default {
                 serverId: this.queryParam.serverId,
                 rangeDateBegin: this.queryParam.rangeDateBegin,
                 rangeDateEnd: this.queryParam.rangeDateEnd,
-                pageNo: this.ipagination.current
+                pageNo: this.ipagination.current,
+                userName: this.queryParam.userName
             };
             getAction(this.url.list, param).then(res => {
                 if (res.success) {
