@@ -1,8 +1,10 @@
 package org.jeecg.modules.game.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.jeecg.modules.game.entity.GameRemainStatistisc;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface IRemainStatisticsService extends IService<GameRemainStatistisc> {
@@ -25,6 +27,11 @@ public interface IRemainStatisticsService extends IService<GameRemainStatistisc>
      * 免费留存
      */
     List<GameRemainStatistisc> queryRemainStatistiscOfFreeList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName);
+
+    /**
+     * 免费留存
+     */
+    List<GameRemainStatistisc> queryRemainStatistiscOfFreeListB(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName) throws IllegalAccessException, InvocationTargetException, JsonProcessingException, Exception;
 
     /**
      * 分档位留存
