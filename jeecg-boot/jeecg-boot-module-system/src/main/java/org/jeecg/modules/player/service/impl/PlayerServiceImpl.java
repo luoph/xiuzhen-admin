@@ -332,6 +332,12 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
         long consumeMoney = list.stream().filter(i -> i.getType() == PlayerLogType.CONSUME_MONEY.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setConsumeMoney(consumeMoney);
+        //仙缘试炼
+        long mateBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_BOSS.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setMateBoss(mateBoss);
+        //仙缘双修
+        long matePractice = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_PRACTICE.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setMatePractice(matePractice);
 
         long experience = list.stream().filter(i -> i.getType() == PlayerLogType.EXPERIENCE.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setExperience(experience);
