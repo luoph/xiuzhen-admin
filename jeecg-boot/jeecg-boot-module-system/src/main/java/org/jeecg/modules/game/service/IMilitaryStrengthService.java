@@ -16,8 +16,12 @@ import java.util.Map;
 
 public interface IMilitaryStrengthService {
     /**
-     * 获取战力列表
+     * 获取渡劫战力列表
      * @return
      */
     List<MilitaryStrengthVO> getMilitaryStrengVoDujieList(int serverId, String createDateBegin, String createDateEnd, String channel);
+    /**
+     * 获取所有战力变化列表
+     */
+    List<MilitaryStrengthVO> getMilitaryStrengVoAllList(String userName, int serverId, String createDateBegin, String createDateEnd, String channel);
 }
