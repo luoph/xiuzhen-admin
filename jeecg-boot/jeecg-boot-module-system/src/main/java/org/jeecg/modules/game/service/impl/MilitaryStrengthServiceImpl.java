@@ -83,7 +83,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
         if(StringUtils.isEmpty(userName)){
             militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAll(createDateBegin, createDateEnd,logPlayerTable);
         }else{
-            List<Map> registerUserMap = militaryStrengthMapper.selectRegisterUserByAccount(userName,channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
+            List<Map> registerUserMap = militaryStrengthMapper.selectRegisterUserByName(userName,channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
             militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAllByPlayerId(registerUserMap.get(0).get("player_id").toString(), createDateBegin, createDateEnd,logPlayerTable);
         }
 
@@ -96,7 +96,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
             if(null == allRegisterUserListMap_playerId.get(map.get("player_id").toString())){
                 militaryStrengthVO.setUserName("");
             }else{
-                militaryStrengthVO.setUserName(allRegisterUserListMap_playerId.get(map.get("player_id").toString()).get(0).get("account").toString());
+                militaryStrengthVO.setUserName(allRegisterUserListMap_playerId.get(map.get("player_id").toString()).get(0).get("name").toString());
             }
 //            militaryStrengthVO.setMilitaryStrengthChange(map.get("reduce_practice_value").toString());
             militaryStrengthVO.setNewMilitary(map.get("value").toString());

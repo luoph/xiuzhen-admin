@@ -6,6 +6,9 @@ import com.alibaba.druid.support.logging.Log;
 import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,6 +22,7 @@ import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.MilitaryStrengthVO;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IMilitaryStrengthService;
+import org.jeecg.modules.player.entity.GameOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -100,6 +101,60 @@ public class MilitaryStrengthListController {
         }
         pageVo.setRecords(list).setTotal(list.size());
         return Result.ok(pageVo);
+    }
+
+    @RequestMapping("/download")
+    public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws IOException {
+        String userName = null == jsonObject.getString("userName") ? "":jsonObject.getString("userName");
+        String rangeDateBegin = null == jsonObject.getString("rangeDateBegin") ? "":jsonObject.getString("rangeDateBegin");;
+        String rangeDateEnd = null == jsonObject.getString("rangeDateEnd") ? "":jsonObject.getString("rangeDateEnd");;
+        Integer serverId =  null == jsonObject.getString("serverId") ? 0:Integer.parseInt(jsonObject.getString("serverId"));
+        Integer channelId =  null == jsonObject.getString("channelId") ? 0:Integer.parseInt(jsonObject.getString("channelId"));
+        Integer days =  null == jsonObject.getString("days") ? 0:Integer.parseInt(jsonObject.getString("days"));
+        Integer pageNo =  null == jsonObject.getString("pageNo") ? 1:Integer.parseInt(jsonObject.getString("pageNo"));
+        Integer pageSize  =  null == jsonObject.getString("pageSize") ? 20:Integer.parseInt(jsonObject.getString("pageSize"));
+
+        if (!StringUtils.isEmpty(rangeDateBegin) && !StringUtils.isEmpty(rangeDateEnd)) {
+            rangeDateBegin = rangeDateBegin + " 00:00:00";
+            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        }
+        String channel = "";
+        //服务器空校验
+        if (0 == serverId || 0 == channelId) {
+            log.error("请选择服务器！");
+        }else{
+            GameChannel gameChannel = gameChannelService.getById(channelId);
+            channel = gameChannel.getSimpleName();
+        }
+
+        //日期空校验
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if (0 == days) {
+                log.error("请选择日期！");
+            } else {
+                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN) + " 23:59:59";
+                ;
+                rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN) + " 00:00:00";
+                ;
+            }
+        }
+
+        List<MilitaryStrengthVO> list = iMilitaryStrengthService.getMilitaryStrengVoAllList(userName,serverId, DateUtils.formatDate( DateUtils.parseDate(rangeDateBegin), DatePattern.NORM_DATE_PATTERN), DateUtils.formatDate( DateUtils.parseDate(rangeDateEnd), DatePattern.NORM_DATE_PATTERN), channel);
+        if(!StringUtils.isEmpty(userName)){
+            Map<String, List<MilitaryStrengthVO>> prodMap= list.stream().collect(Collectors.groupingBy(MilitaryStrengthVO::getUserName));
+            if(null != prodMap.get(userName)){
+                list =  prodMap.get(userName);
+            }else{
+                list = new ArrayList<>() ;
+            }
+        }
+
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("测试", "UTF-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+        EasyExcel.write(response.getOutputStream(), MilitaryStrengthVO.class).sheet("模板").doWrite(list);
     }
 
 }
