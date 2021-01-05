@@ -197,6 +197,16 @@ public class PlayerBehavior implements Serializable {
     @Excel(name = "仙器秘境", width = 15)
     private Long tierMapExplore;
     /**
+     * 仙缘双休
+     */
+    @Excel(name = "仙缘双休", width = 15)
+    private Long matePractice;
+    /**
+     * 仙缘试炼
+     */
+    @Excel(name = "仙缘试炼", width = 15)
+    private Long mateBoss;
+    /**
      * 日期
      */
     @Excel(name = "统计日期", width = 15)
