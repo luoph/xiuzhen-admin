@@ -2,16 +2,24 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.jeecg.modules.game.entity.GameRemainStatistisc;
 import org.jeecg.modules.game.mapper.RemainStatisticsMapper;
 import org.jeecg.modules.game.service.IRemainStatisticsService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.annotation.Resource;
 
 /**
  * author:huli
@@ -24,7 +32,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     private static final int[] DAY = {0, 1, 2, 3, 4, 5, 6, 14, 29, 59, 89, 119};
     //查询档位跨度
     private static final String[] GRADE = {"6-6", "7-29", "30-67", "68-97", "98-197", "198-327", "328-647", "648-9999"};
-    @Autowired
+    @Resource
     RemainStatisticsMapper remainStatisticsMapper;
 
     @Override
@@ -161,14 +169,24 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     ;
                     continue;
                 }
-                //按account收集登录日期里的登录信息
-                Map<String, List<Map>> userMap3 = userMap2.stream().collect(Collectors.groupingBy(a -> a.get("account").toString()));
-                //当前登录日期下计数
+                //按player_id收集登录日期里的登录信息
+                Map<String, List<Map>> userMap3 = userMap2.stream().collect(Collectors.groupingBy(a -> a.get("player_id").toString()));
+                //当前登录日期下计数，并收集第一天新增的用户
                 int num = 0;
+                JSONArray jsonArray = new JSONArray();
                 for (Map map : userMap1) {
-                    if (null != userMap3.get(map.get("account").toString())) {
+                    if (null != userMap3.get(map.get("player_id").toString())) {
+                        if(0 == j){
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("player_id",map.get("player_id").toString());
+                            jsonObject.put("createTime",map.get("create_date").toString());
+                            jsonArray.add(jsonObject);
+                        }
                         num++;
                     }
+                }
+                if(0 == j){
+                    gameRemainStatistisc.setUserJsonArray(jsonArray);
                 }
                 if (0 == DAY[j]) {
                     gameRemainStatistisc.setRegisterNum((long) num);
@@ -282,7 +300,6 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     if (119 == DAY[j]) {
                         gameRemainStatistisc.setC120((long) 0);
                     }
-                    ;
                     continue;
                 }
 
@@ -293,6 +310,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 Map<String, List<Map>> userMap3 = userMap2.stream().collect(Collectors.groupingBy(a -> a.get("player_id").toString()));
                 //当前登录日期下计数
                 int num = 0;
+                JSONArray jsonArray = new JSONArray();
                 for (Map map : userPayMapEquels) {
                     //判断当前日期之前的日期用户是否已经购买过，如果购买过，说明不是首付，需要去除
                     List<Map> hasPayMap = payMapByPlayId.get(map.get("player_id").toString());
@@ -308,8 +326,17 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     }
                     //累加计数
                     if (null != userMap3.get(map.get("player_id").toString()) && ynCanNum) {
+                        if(0 == j){
+                            JSONObject jsonObject = new JSONObject();
+                            jsonObject.put("player_id",map.get("player_id").toString());
+                            jsonObject.put("createTime",map.get("create_time").toString());
+                            jsonArray.add(jsonObject);
+                        }
                         num++;
                     }
+                }
+                if(0 == j){
+                    gameRemainStatistisc.setUserJsonArray(jsonArray);
                 }
                 if (0 == DAY[j]) {
                     gameRemainStatistisc.setRegisterNum((long) num);
@@ -433,7 +460,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 //获取支付日期里所有用户player_id(去重)
                 List<Map> userPayMapEquels = userMap1.stream().collect(
                         Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.get("player_id").toString()))), ArrayList::new));
-                //按account收集登录日期里的登录信息
+                //按player_id收集登录日期里的登录信息
                 Map<String, List<Map>> userMap3 = userMap2.stream().collect(Collectors.groupingBy(a -> a.get("player_id").toString()));
                 //当前登录日期下计数
                 int num = 0;
@@ -491,6 +518,166 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             gameRemainStatistisc.setServerId(serverId);
             gameRemainStatistiscList.add(gameRemainStatistisc);
         }
+        return gameRemainStatistiscList;
+    }
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    @Override
+    public List<GameRemainStatistisc> queryRemainStatistiscOfFreeListB(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName) throws Exception {
+        List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
+        //新增留存
+        List<GameRemainStatistisc>  remainStatistiscOfNewUserlList = queryRemainStatistiscOfNewUserlListB(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        //首付留存
+        List<GameRemainStatistisc>  remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        JSONArray jsonArrayOfNewUser = new JSONArray();
+        JSONArray jsonArrayOfDownPayMent = new JSONArray();
+        if(null != remainStatistiscOfNewUserlList.get(0)){
+            jsonArrayOfNewUser = remainStatistiscOfNewUserlList.get(0).getUserJsonArray();
+        }
+        if(null != remainStatistiscOfDownPaymentList.get(0)){
+            jsonArrayOfDownPayMent = remainStatistiscOfDownPaymentList.get(0).getUserJsonArray();
+        }
+
+        JSONArray jsonArrayOfFree = new JSONArray();
+        //新增留存-首付留存=免费留存用户
+        for (int i = 0; i < jsonArrayOfNewUser.size(); i++) {
+            for (int i1 = 0; i1 < jsonArrayOfDownPayMent.size(); i1++) {
+                if(jsonArrayOfNewUser.getJSONObject(i).getString("player_id").equals(jsonArrayOfDownPayMent.getJSONObject(i1).getString("player_id"))){
+                    break;
+                }
+                if(i1 == jsonArrayOfDownPayMent.size()-1){
+                    jsonArrayOfFree.add(jsonArrayOfNewUser.getJSONObject(i));
+                }
+            }
+        }
+        //免费留存按日期分类
+        List<Map> freeList = new ArrayList<>();
+        for (int i = 0; i < jsonArrayOfFree.size(); i++) {
+            Map<String, String> freeMap = new HashMap<>();
+            freeMap.put("createTime",jsonArrayOfFree.getJSONObject(i).getString("createTime"));
+            freeMap.put("player_id",jsonArrayOfFree.getJSONObject(i).getString("player_id"));
+            freeList.add(freeMap);
+        }
+        Map<String, List<Map>> freeMap_createDate= freeList.stream().collect(Collectors.groupingBy(map -> map.get("createTime").toString().substring(0,10)));
+
+        //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
+        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, tableName, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        //收集登陆信息
+        Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
+
+
+
+        //计算开始时间和结束时间的相差天数
+        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        //根据相差天数来决定返回的总行数
+        for (int i = dateRangeBetween; i >= 0; i--) {
+            //用户注册日期
+            Date registerTime = DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i);
+            String registerTimeString = DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN);
+            GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
+            for (int j = 0; j < DAY.length; j++) {
+                //需要判断的登录日期
+                Date loginTime = DateUtils.addDays(registerTime, DAY[j]);
+                String loginTimeString = DateUtils.formatDate(loginTime, DatePattern.NORM_DATE_PATTERN);
+                //获取登录日期里所有用户
+                List<Map> userMap2 = prodMap2.get(loginTimeString);
+                //注册日期内免费用户
+                List<Map> prodMap3 = freeMap_createDate.get(registerTimeString);
+                if (null == userMap2 ||null ==prodMap3) {
+                    if (0 == DAY[j]) {
+                        gameRemainStatistisc.setRegisterNum((long) 0);
+                    }
+                    if (1 == DAY[j]) {
+                        gameRemainStatistisc.setC2((long) 0);
+                    }
+                    if (2 == DAY[j]) {
+                        gameRemainStatistisc.setC3((long) 0);
+                    }
+                    if (3 == DAY[j]) {
+                        gameRemainStatistisc.setC4((long) 0);
+                    }
+                    if (4 == DAY[j]) {
+                        gameRemainStatistisc.setC5((long) 0);
+                    }
+                    if (5 == DAY[j]) {
+                        gameRemainStatistisc.setC6((long) 0);
+                    }
+                    if (6 == DAY[j]) {
+                        gameRemainStatistisc.setC7((long) 0);
+                    }
+                    if (14 == DAY[j]) {
+                        gameRemainStatistisc.setC15((long) 0);
+                    }
+                    if (29 == DAY[j]) {
+                        gameRemainStatistisc.setC30((long) 0);
+                    }
+                    if (59 == DAY[j]) {
+                        gameRemainStatistisc.setC60((long) 0);
+                    }
+                    if (89 == DAY[j]) {
+                        gameRemainStatistisc.setC90((long) 0);
+                    }
+                    if (119 == DAY[j]) {
+                        gameRemainStatistisc.setC120((long) 0);
+                    }
+                    continue;
+                }
+
+                //按player_id收集登录日期里的登录信息
+                Map<String, List<Map>> userMap3 = userMap2.stream().collect(Collectors.groupingBy(a -> a.get("player_id").toString()));
+
+                //当前登录日期下计数
+                int num = 0;
+                System.out.println(j);
+                for (Map map : prodMap3) {
+                    //累加计数
+                    if (null != userMap3.get(map.get("player_id").toString())) {
+                        num++;
+                    }
+                }
+                if (0 == DAY[j]) {
+                    gameRemainStatistisc.setRegisterNum((long) num);
+                }
+                if (1 == DAY[j]) {
+                    gameRemainStatistisc.setC2((long) num);
+                }
+                if (2 == DAY[j]) {
+                    gameRemainStatistisc.setC3((long) num);
+                }
+                if (3 == DAY[j]) {
+                    gameRemainStatistisc.setC4((long) num);
+                }
+                if (4 == DAY[j]) {
+                    gameRemainStatistisc.setC5((long) num);
+                }
+                if (5 == DAY[j]) {
+                    gameRemainStatistisc.setC6((long) num);
+                }
+                if (6 == DAY[j]) {
+                    gameRemainStatistisc.setC7((long) num);
+                }
+                if (14 == DAY[j]) {
+                    gameRemainStatistisc.setC15((long) num);
+                }
+                if (29 == DAY[j]) {
+                    gameRemainStatistisc.setC30((long) num);
+                }
+                if (59 == DAY[j]) {
+                    gameRemainStatistisc.setC60((long) num);
+                }
+                if (89 == DAY[j]) {
+                    gameRemainStatistisc.setC90((long) num);
+                }
+                if (119 == DAY[j]) {
+                    gameRemainStatistisc.setC120((long) num);
+                }
+            }
+            gameRemainStatistisc.setCountDate(DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
+            gameRemainStatistisc.setChannel(channelName);
+            gameRemainStatistisc.setServerId(serverId);
+            gameRemainStatistiscList.add(gameRemainStatistisc);
+        }
+
         return gameRemainStatistiscList;
     }
 

@@ -4,6 +4,7 @@ package org.jeecg.modules.game.controller;
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -175,7 +177,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
                           @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-    ) {
+    ) throws Exception{
         Page<GameRemainStatistisc> page = new Page<>(pageNo, pageSize);
         if (0 == serverId) {
             return Result.error("请选择服务器!");
@@ -191,7 +193,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         }
         String channelName = gameChannelService.queryChannelNameById(channelId);
         //查询并计算新增留存
-        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfFreeList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
+        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfFreeListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
         //统计
         List<GameRemainStatistisc> gameRemainStatistiscList2 = new ArrayList<>();
         GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();

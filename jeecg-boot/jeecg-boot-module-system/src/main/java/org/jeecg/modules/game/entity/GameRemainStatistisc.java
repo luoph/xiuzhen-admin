@@ -3,6 +3,7 @@
  */
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
@@ -27,6 +28,11 @@ public class GameRemainStatistisc implements Serializable {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+
+    /**
+     * 新增的用户集合
+     */
+    private JSONArray userJsonArray;
 
     /**
      * 统计日期
