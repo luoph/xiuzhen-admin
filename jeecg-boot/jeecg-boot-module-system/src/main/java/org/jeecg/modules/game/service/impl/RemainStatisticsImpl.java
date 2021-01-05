@@ -531,11 +531,21 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<GameRemainStatistisc>  remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
         JSONArray jsonArrayOfNewUser = new JSONArray();
         JSONArray jsonArrayOfDownPayMent = new JSONArray();
-        if(null != remainStatistiscOfNewUserlList.get(0)){
+        if(null != remainStatistiscOfNewUserlList.get(0).getUserJsonArray()){
             jsonArrayOfNewUser = remainStatistiscOfNewUserlList.get(0).getUserJsonArray();
+        }else{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("player_id","");
+            jsonObject.put("createTime","");
+            jsonArrayOfNewUser.add(jsonObject);
         }
-        if(null != remainStatistiscOfDownPaymentList.get(0)){
+        if(null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()){
             jsonArrayOfDownPayMent = remainStatistiscOfDownPaymentList.get(0).getUserJsonArray();
+        }else{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("player_id","");
+            jsonObject.put("createTime","");
+            jsonArrayOfDownPayMent.add(jsonObject);
         }
 
         JSONArray jsonArrayOfFree = new JSONArray();
