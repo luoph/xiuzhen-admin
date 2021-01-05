@@ -459,7 +459,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 leftDays = Math.min(leftDays, DAYS_BETWEEN);
                 // 更新统计
                 for (int j = 0; j <= leftDays; j++) {
-                    String countField = FIELD + j + 1;
+                    String countField = FIELD;
+                    if (j == 0) {
+                        countField += 1;
+                    } else {
+                        countField += j;
+                    }
                     BigDecimal getField = (BigDecimal) ReflectUtils.invokeGetField(gameCountOngoing, countField);
                     if (getField == null) {
                         double countValue;
