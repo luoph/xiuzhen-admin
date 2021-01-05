@@ -105,7 +105,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             //查询所有用户注册信息（唯一不重复）
             List<Map> allPlayerInfoList = playerMapper.selectAllPlayerInfo(playerDTO.getServerId());
             //查询所有用户登录信息
-            List<Map> allLoginInfoList = playerMapper.selectAllLoginInfo(playerDTO.getServerId());
+            List<Map> allLoginInfoList = playerMapper.selectAllLoginInfo(playerDTO.getServerId(),logTable);
             //登录信息按照plaer_id分组
             Map<String, List<Map>> allLoginInfoListMap_playerId = allLoginInfoList.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
             for (Map map : allPlayerInfoList) {

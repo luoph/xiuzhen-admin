@@ -41,7 +41,7 @@ public interface PlayerMapper extends BaseMapper<Player> {
 	/**
 	 * 查询所有用户登录信息
 	 */
-	@Select("select player_id, create_time from xiuzhen_log_test.`log_account` where type = 2 and server_id = #{serverId} order by create_time desc")
-	List<Map> selectAllLoginInfo(@Param("serverId") Integer serverId);
+	@Select("select player_id, create_time from ${logPlayerTableName} where type = 2 and server_id = #{serverId} order by create_time desc")
+	List<Map> selectAllLoginInfo(@Param("serverId") Integer serverId, @Param("logPlayerTableName") String logPlayerTableName);
 
 }
