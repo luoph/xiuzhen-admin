@@ -30,6 +30,7 @@
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
 
+        <a-button type="primary" icon="download" @click="downlodaExcel('战力')">导出</a-button>
         <!-- table区域-begin -->
         <div>
             <a-table
@@ -137,7 +138,8 @@ export default {
             ],
             url: {
                 list: "game/militaryStrength/list",
-                exportXlsUrl: "game/militaryStrength/downloadExcel"
+                exportXlsUrl: "game/militaryStrength/download",
+                downloadExcel: "/game/militaryStrength/download"
             },
             dictOptions: {}
         };
@@ -187,6 +189,30 @@ export default {
                     this.$message.error(res.message);
                 }
             });
+        },
+        downlodaExcel(filename) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", window._CONFIG["domainURL"] +this.url.downloadExcel, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const token = Vue.ls.get(ACCESS_TOKEN);
+            console.log(token);
+            xhr.setRequestHeader("X-Access-Token", token);
+            xhr.onload = function () {
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = function (e) {
+                    var a = document.createElement("a");
+                    a.download = filename + ".xlsx";
+                    a.href = e.target.result;
+                    a.click();
+                };
+            };
+            var a = this.queryParam;
+            var param = JSON.stringify(a);
+            console.log(param);
+            xhr.send(param);
         }
     }
 };
