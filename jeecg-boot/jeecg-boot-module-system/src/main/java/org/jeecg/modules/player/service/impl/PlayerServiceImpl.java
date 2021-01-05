@@ -173,8 +173,10 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
         } catch (Exception e) {
             log.error("切换数据源异常,serverId: " + playerDTO.getServerId(), e);
+            throw e;
         } finally {
             DataSourceHelper.useDefaultDatabase();
+
         }
         return collect4;
     }
