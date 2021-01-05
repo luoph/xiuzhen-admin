@@ -246,6 +246,18 @@ export default {
                     dataIndex: "experience"
                 },
                 {
+                    title: "仙缘双休",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "matePractice"
+                },
+                {
+                    title: "仙缘试炼",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "mateBoss"
+                },
+                {
                     title: "在线时长",
                     align: "center",
                     width: "5%",
