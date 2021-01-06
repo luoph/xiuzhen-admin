@@ -41,7 +41,7 @@
             </a-form>
         </div>
         <div class="table-operator">
-            <a-button type="primary" icon="download" @click="handleExportXls('玩家行为分析')">导出</a-button>
+            <a-button type="primary" icon="download" @click="downlodaExcel('玩家行为分析')">导出</a-button>
         </div>
         <!-- 查询区域-END -->
         <!-- table区域-begin -->
@@ -71,6 +71,8 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { getAction } from "@/api/manage";
+import Vue from "vue";
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 
 export default {
     name: "PlayerBehaviorList",
@@ -267,7 +269,8 @@ export default {
             ],
             url: {
                 list: "game/player/behavior",
-                exportXlsUrl: "game/player/exportXls"
+                exportXlsUrl: "game/player/exportXls",
+                downloadExcel: "/game/player/download"
             },
             dictOptions: {}
         };
@@ -312,6 +315,30 @@ export default {
                     this.$message.error(res.message);
                 }
             });
+        },
+        downlodaExcel(filename) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", window._CONFIG["domainURL"] +this.url.downloadExcel, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const token = Vue.ls.get(ACCESS_TOKEN);
+            console.log(token);
+            xhr.setRequestHeader("X-Access-Token", token);
+            xhr.onload = function () {
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = function (e) {
+                    var a = document.createElement("a");
+                    a.download = filename + ".xlsx";
+                    a.href = e.target.result;
+                    a.click();
+                };
+            };
+            var a = this.queryParam;
+            var param = JSON.stringify(a);
+            console.log(param);
+            xhr.send(param);
         }
     }
 };

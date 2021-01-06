@@ -1,7 +1,10 @@
 package org.jeecg.modules.player.controller;
 
+import cn.hutool.core.date.DatePattern;
 import cn.youai.commons.model.DataResponse;
 import cn.youai.xiuzhen.entity.pojo.RoleAttr;
+import cn.youai.xiuzhen.utils.DateUtils;
+import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -26,7 +29,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -149,6 +156,42 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
         List<PlayerBehavior> list = playerService.queryPlayerBehavior(rangeDateBegin, rangeDateEnd, nickname, days, serverId);
         return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PlayerBehavior.class, "玩家行为分析");
     }
+
+    @RequestMapping("/download")
+        public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws Exception {
+            String nickname = null == jsonObject.getString("nickname") ? "":jsonObject.getString("nickname");
+            String rangeDateBegin = null == jsonObject.getString("rangeDateBegin") ? "":jsonObject.getString("rangeDateBegin");;
+            String rangeDateEnd = null == jsonObject.getString("rangeDateEnd") ? "":jsonObject.getString("rangeDateEnd");;
+            Integer serverId =  null == jsonObject.getString("serverId") ? 0:Integer.parseInt(jsonObject.getString("serverId"));
+            Integer days =  null == jsonObject.getString("days") ? 0:Integer.parseInt(jsonObject.getString("days"));
+
+        //日期空校验
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if(0 == days){
+                throw new Exception("导出文件，请选择日期！");
+            } else {
+                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN) + " 23:59:59";;
+                rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN) + " 00:00:00";;
+            }
+        }
+
+        // TODO 复用博栋的写法 后面统一改
+        if (rangeDateBegin.equals(rangeDateEnd)) {
+            rangeDateBegin = rangeDateBegin + " 00:00:00";
+            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        }
+
+
+        List<PlayerBehavior> list = playerService.queryPlayerBehavior(rangeDateBegin, rangeDateEnd, nickname, days, serverId);
+
+            response.setContentType("application/vnd.ms-excel");
+            response.setCharacterEncoding("utf-8");
+            String fileName = URLEncoder.encode("测试", "UTF-8");
+            response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+            EasyExcel.write(response.getOutputStream(), PlayerBehavior.class).sheet("模板").doWrite(list);
+        }
+
 }
 
 
