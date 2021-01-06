@@ -172,10 +172,10 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             if (goodsType.equals(DAILY_GIFT.getType().toString())) {
                 //查询时间范围内消耗明细
                 fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, DAILY_GIFT.getType());
-                //冲榜礼包
-            } else if (goodsType.equals(SEVEN_DAY_GIFT.getType().toString())) {
+                //冲榜礼包（开服礼包）
+            } else if (goodsType.equals(OPEN_SERVICE_GIFT.getType().toString())){
                 //查询时间范围内消耗明细
-                fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, SEVEN_DAY_GIFT.getType());
+                fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, OPEN_SERVICE_GIFT.getType());
                 //0元购
             } else if (goodsType.equals(ZERO_BUY.getType().toString())) {
                 //查询时间范围内消耗明细

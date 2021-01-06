@@ -19,7 +19,8 @@ public enum FairyJadeBuyType {
     IMMORTAL(2, "仙职位"),
     DAILY_GIFT(3, "特惠礼包"),
     SEVEN_DAY_GIFT(4, "七天礼包"),
-    ZERO_BUY(5, "0元购买");
+    ZERO_BUY(5, "0元购买"),
+    OPEN_SERVICE_GIFT(6, "开服礼包");
 
     private final Integer type;
     private final String desc;
