@@ -91,8 +91,8 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
             int payRankBegin = Integer.parseInt(payRanks[0]);
             int payRankEnd = Integer.parseInt(payRanks[1]);
             if (days == 0) {
-                Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
-                Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
+                Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
+                Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
                 Integer payNumSum = payOrderBillMapper.queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
                 payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
                 payOrderBill.setPayRank(payRank);

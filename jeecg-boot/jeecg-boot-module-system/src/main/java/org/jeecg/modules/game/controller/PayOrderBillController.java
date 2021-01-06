@@ -1,5 +1,7 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.date.DatePattern;
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -104,11 +107,19 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         // 没有传入查询参数返回空的数据
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && StringUtils.isEmpty(payRank)
                 && serverId == 0 && channelId == 0 && days == 0) {
-            return Result.ok(page);
+            return Result.error("请输入参数！");
         }
-        // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
-            return Result.ok(page);
+        //日期空校验
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if(0 == days){
+                return Result.error("请选择日期！");
+            } else {
+                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);;
+                rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
+                days = 0 ;
+            }
+        }else{
+            days = 0 ;
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
         if (StringUtils.isEmpty(payRank)) {
