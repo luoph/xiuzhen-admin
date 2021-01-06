@@ -222,7 +222,7 @@ export default {
                         }
                     },
                     {
-                        title: "日期",
+                        title: "档位",
                         dataIndex: "countDate",
                         width: "120",
                         align: "center",
@@ -348,7 +348,7 @@ export default {
                         }
                     },
                     {
-                        title: "日期",
+                        title: "档位",
                         dataIndex: "countDate",
                         width: "120",
                         align: "center",
