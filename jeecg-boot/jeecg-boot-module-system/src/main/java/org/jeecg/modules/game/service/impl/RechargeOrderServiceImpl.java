@@ -220,10 +220,10 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             }
 
         }
-        //过滤出玉髓明细
-        List<Map> fairyList = fairyJadeBuyInfoNewList.stream().filter(map -> map.get("itemId").toString().equals("1010")).collect(Collectors.toList());
+//        //过滤出玉髓明细
+//        List<Map> fairyList = fairyJadeBuyInfoNewList.stream().filter(map -> map.get("itemId").toString().equals("1010")).collect(Collectors.toList());
         //玉髓明细 以日期分组
-        Map<String, List<Map>> fairyJadeBuyInfoMao_Time = fairyList.stream().collect(Collectors.groupingBy(map -> map.get("create_time").toString().substring(0, 10)));
+        Map<String, List<Map>> fairyJadeBuyInfoMao_Time = fairyJadeBuyInfoNewList.stream().collect(Collectors.groupingBy(map -> map.get("create_time").toString().substring(0, 10)));
         //玉髓明细 排序 倒叙
         Map<String, List<Map>> fairyJadeBuyInfoMap_Time_Sort = fairyJadeBuyInfoMao_Time.entrySet()
                 .stream()
