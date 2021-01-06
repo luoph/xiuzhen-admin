@@ -263,7 +263,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
     }
 
     /**
-     * 冲榜礼包列表查询
+     * 冲榜礼包列表查询(开服礼包)
      *
      * @param pageNo   页码
      * @param pageSize 分页大小
@@ -293,7 +293,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, SEVEN_DAY_GIFT.getType().toString());
+        List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, OPEN_SERVICE_GIFT.getType().toString());
         page.setRecords(GameChalcedonyOrders).setTotal(GameChalcedonyOrders.size());
         return Result.ok(page);
     }
