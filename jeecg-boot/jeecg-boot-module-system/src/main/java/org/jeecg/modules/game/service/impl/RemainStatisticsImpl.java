@@ -885,8 +885,8 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             freeMap.put("player_id",jsonArrayOfDownPayMent.getJSONObject(i).getString("player_id"));
             downPayMentList.add(freeMap);
         }
-        //首付留存用户按player_id分组
-        Map<String, List<Map>> downPayMentMap_playerId= downPayMentList.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString().substring(0,10)));
+//        //首付留存用户按player_id分组
+//        Map<String, List<Map>> downPayMentMap_playerId= downPayMentList.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString().substring(0,10)));
 
         //首付留存用户按档位分类
         Map<String, List<String>> grade_downPaymentMap = new HashMap<>();
@@ -977,7 +977,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 int num = 0;
                 for (String s1 : g) {
                     if(null != userMap3.get(s1)){
-                        num =+ 1;
+                        num += 1;
                     }
                 }
                 //设置登录留存数
