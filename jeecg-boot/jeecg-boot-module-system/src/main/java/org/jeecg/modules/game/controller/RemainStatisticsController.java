@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author huli
@@ -252,7 +253,9 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         }
         String channelName = gameChannelService.queryChannelNameById(channelId);
         //查询并计算新增留存
-        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfGradeList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
+        List<GameRemainStatistisc> gameRemainStatistiscList = remainStatisticsService.queryRemainStatistiscOfGradeListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
+        List<GameRemainStatistisc> gameRemainStatistiscList1 = gameRemainStatistiscList.stream().sorted((s2, s1) -> Integer.parseInt(s2.getCountDate().split("-")[0]) - (Integer.parseInt(s1.getCountDate().split("-")[0]))).collect(Collectors.toList());
+
         page.setRecords(gameRemainStatistiscList1).setTotal(gameRemainStatistiscList1.size());
         return Result.ok(page);
     }

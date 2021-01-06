@@ -37,4 +37,8 @@ public interface IRemainStatisticsService extends IService<GameRemainStatistisc>
      * 分档位留存
      */
     List<GameRemainStatistisc> queryRemainStatistiscOfGradeList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName);
+    /**
+     * 分档位留存
+     */
+    List<GameRemainStatistisc> queryRemainStatistiscOfGradeListB(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName);
 }
