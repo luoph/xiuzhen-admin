@@ -304,6 +304,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     public Result<?> grade(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                            @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                            @RequestParam(name = "showColumn", defaultValue = "") String showColumn,
+                           @RequestParam(name = "grade", defaultValue = "") String grade,
                            @RequestParam(name = "days", defaultValue = "0") int days,
                            @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                            @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
@@ -338,7 +339,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<JSONObject>  jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject>  jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn, grade);
         List<JSONObject> jsonObjectList = jsonObjectList1.stream().sorted((s1, s2) -> Integer.parseInt(s1.getString("countDate").split("-")[0]) - Integer.parseInt(s2.getString("countDate").split("-")[0])).collect(Collectors.toList());
         List<JSONObject>  jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
