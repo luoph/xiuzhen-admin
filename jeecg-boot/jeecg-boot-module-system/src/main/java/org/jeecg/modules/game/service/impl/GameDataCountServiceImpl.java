@@ -94,7 +94,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         // 数组第一个元素为开始统计的第一个日期
         Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
-        for (int i = 0; i <= dateRangeBetween; i++) {
+        for (int i = 0; i < dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             String dailyCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             GameStatDaily gameDayDataCount = map.get(dailyCountKey);
@@ -214,7 +214,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         // 数组第一个元素为开始统计的第一个日期
         Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
-        for (int i = 0; i <= dateRangeBetween; i++) {
+        for (int i = 0; i < dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             String remainCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             GameStatRemain dataRemain = map.get(remainCountKey);
@@ -249,7 +249,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         // 数组第一个元素为开始统计的第一个日期
         Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
-        for (int i = 0; i <= dateRangeBetween; i++) {
+        for (int i = 0; i < dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
             String ltvCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             GameStatLtv ltvCount = map.get(ltvCountKey);
