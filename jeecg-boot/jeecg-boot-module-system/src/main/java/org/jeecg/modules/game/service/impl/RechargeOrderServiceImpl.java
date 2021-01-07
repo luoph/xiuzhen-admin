@@ -193,7 +193,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         List<Map> fairyJadeBuyInfoNewList = new ArrayList<>();
         for (Map map : fairyJadeBuyInfoList) {
             JSONArray dangweiPriceJsonArray = new JSONArray();
-            if(!map.get("price").toString().equals("[null]")){
+            if(!map.get("price").toString().equals("[null]") && !map.get("price").toString().equals("null")){
                 dangweiPriceJsonArray = JSONArray.parseArray(map.get("price").toString());
                 for (int i = 0; i < dangweiPriceJsonArray.size(); i++) {
                     Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
@@ -249,7 +249,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
                 List<Map> gradeBuyInfo = oneDayFairyJadeBuyInfoList_itemNum.get(s1);
                 //以player_id分组
                 Map<String, List<Map>> oneDayFairyJadeBuyInfoList_playId = gradeBuyInfo.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
-                gameChalcedonyOrder.setPayNum(gradeBuyInfo.size());
+                gameChalcedonyOrder.setPayNum(oneDayFairyJadeBuyInfoList_playId.size());
                 gameChalcedonyOrder.setPayCount(gradeBuyInfo.stream().mapToInt(Map -> Integer.parseInt(Map.get("num").toString())).sum());
                 gameChalcedonyOrder.setDau(dau);
                 //计算并设置购买率
