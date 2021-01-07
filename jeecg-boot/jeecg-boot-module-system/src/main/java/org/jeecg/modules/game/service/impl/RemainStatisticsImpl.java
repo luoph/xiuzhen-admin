@@ -348,10 +348,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 }else{
                     gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
                 }
-                gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
-                gameRemainStatistiscJsonObjectMap.put("channel", channelName);
-                gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             }
+            gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
+            gameRemainStatistiscJsonObjectMap.put("channel", channelName);
+            gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
             gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
@@ -644,10 +644,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 }else{
                     gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
                 }
-                gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
-                gameRemainStatistiscJsonObjectMap.put("channel", channelName);
-                gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             }
+            gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
+            gameRemainStatistiscJsonObjectMap.put("channel", channelName);
+            gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
             gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
@@ -1115,10 +1115,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 }else{
                     gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
                 }
-                gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
-                gameRemainStatistiscJsonObjectMap.put("channel", channelName);
-                gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             }
+            gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
+            gameRemainStatistiscJsonObjectMap.put("channel", channelName);
+            gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
             gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
