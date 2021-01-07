@@ -63,9 +63,6 @@
             <if test="playerId != null">
                 id = #{playerId}
             </if>
-            <if test="nickName != null">
-                AND nickname = #{nickName}
-            </if>
             <if test="createDateBegin != null">
                 AND create_time >= #{createDateBegin}
             </if>
@@ -83,6 +80,9 @@
             </if>
             <if test="levelEnd != null">
                 AND level &lt;= #{levelEnd}
+            </if>
+            <if test="nickName != null">
+                AND nickname  like CONCAT('%',#{nickName},'%')
             </if>
         </where>
     </select>
