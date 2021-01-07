@@ -249,6 +249,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<JSONObject> queryRemainStatistiscOfNewUserlListJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) {
         List<Integer> dayList = new ArrayList<Integer>();
         if(!StringUtils.isEmpty(daysRange)){
+            dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
                 String[] daysRangeArray = s.split("-");
@@ -319,7 +320,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 //获取登录日期里所有用户
                 List<Map> userMap2 = prodMap2.get(loginTimeString);
                 if (null == userMap1 || null == userMap2) {
-                    if(0 == j){
+                    if(0 == dayList.get(j)){
                         gameRemainStatistiscJsonObjectMap.put("registerNum",0);
                     }else{
                         gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
@@ -342,7 +343,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                         num++;
                     }
                 }
-                if(0 == j){
+                if(0 == dayList.get(j)){
                     gameRemainStatistiscJsonObjectMap.put("userJsonArray",jsonArray);
                     gameRemainStatistiscJsonObjectMap.put("registerNum",num);
                 }else{
@@ -523,6 +524,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<JSONObject> queryRemainStatistiscOfDownPaymentListJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) {
         List<Integer> dayList = new ArrayList<Integer>();
         if(!StringUtils.isEmpty(daysRange)){
+            dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
                 String[] daysRangeArray = s.split("-");
@@ -596,7 +598,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 List<Map> userMap2 = prodMap2.get(loginTimeString);
                 if (null == userMap1 || null == userMap2) {
 
-                    if(0 == j){
+                    if(0 == dayList.get(j)){
                         gameRemainStatistiscJsonObjectMap.put("registerNum",0);
                     }else{
                         gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
@@ -638,7 +640,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     }
                 }
 
-                if(0 == j){
+                if(0 == dayList.get(j)){
                     gameRemainStatistiscJsonObjectMap.put("userJsonArray",jsonArray);
                     gameRemainStatistiscJsonObjectMap.put("registerNum",num);
                 }else{
@@ -977,6 +979,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<JSONObject> queryRemainStatistiscOfFreeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) throws IllegalAccessException, InvocationTargetException, JsonProcessingException, Exception {
         List<Integer> dayList = new ArrayList<Integer>();
         if(!StringUtils.isEmpty(daysRange)){
+            dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
                 String[] daysRangeArray = s.split("-");
@@ -1091,7 +1094,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 //注册日期内免费用户
                 List<Map> prodMap3 = freeMap_createDate.get(registerTimeString);
                 if (null == userMap2 || null == prodMap3) {
-                    if(0 == j){
+                    if(0 == dayList.get(j)){
                         gameRemainStatistiscJsonObjectMap.put("registerNum",0);
                     }else{
                         gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
@@ -1110,7 +1113,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                         num++;
                     }
                 }
-                if(0 == j){
+                if(0 == dayList.get(j)){
                     gameRemainStatistiscJsonObjectMap.put("registerNum",num);
                 }else{
                     gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
@@ -1472,6 +1475,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<JSONObject> queryRemainStatistiscOfGradeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) {
         List<Integer> dayList = new ArrayList<Integer>();
         if(!StringUtils.isEmpty(daysRange)){
+            dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
                 String[] daysRangeArray = s.split("-");
@@ -1591,7 +1595,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 //获取登录日期里所有用户
                 List<Map> userMap2 = prodMap2.get(loginTimeString);
                 if (null == userMap2) {
-                    if(0 == j){
+                    if(0 == dayList.get(j)){
                         gameRemainStatistiscJsonObjectMap.put("registerNum",0);
                     }else{
                         gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
@@ -1608,7 +1612,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     }
                 }
                 //设置登录留存数
-                if(0 == j){
+                if(0 == dayList.get(j)){
                     gameRemainStatistiscJsonObjectMap.put("registerNum",num);
                 }else{
                     gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
