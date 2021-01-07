@@ -56,7 +56,7 @@
             </a-form>
 
             <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('玩家查询')">导出</a-button>
+                <a-button type="primary" icon="download" @click="downlodaExcel('玩家查询')">导出</a-button>
             </div>
         </div>
         <!-- 查询区域-END -->
@@ -93,6 +93,8 @@ import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import PlayerModal from "./modules/PlayerModal";
 import { getAction } from "@/api/manage";
+import Vue from "vue";
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 
 export default {
     name: "PlayerList",
@@ -183,7 +185,8 @@ export default {
                 }
             ],
             url: {
-                list: "game/player/list"
+                list: "game/player/list",
+                downloadExcel: "/game/player/downloadPlayerInfo"
             },
             dictOptions: {
             }
@@ -239,6 +242,30 @@ export default {
         editPlayerDetail(record) {
             this.$refs.playerModal.edit(record);
         },
+        downlodaExcel(filename) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", window._CONFIG["domainURL"] +this.url.downloadExcel, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const token = Vue.ls.get(ACCESS_TOKEN);
+            console.log(token);
+            xhr.setRequestHeader("X-Access-Token", token);
+            xhr.onload = function () {
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = function (e) {
+                    var a = document.createElement("a");
+                    a.download = filename + ".xlsx";
+                    a.href = e.target.result;
+                    a.click();
+                };
+            };
+            var a = this.queryParam;
+            var param = JSON.stringify(a);
+            console.log(param);
+            xhr.send(param);
+        }
     }
 };
 </script>
