@@ -3,6 +3,10 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +63,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @AutoLog(value = "新增留存-列表查询")
     @GetMapping(value = "/newUserlist")
     public Result<?> queryPageList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                   @RequestParam(name = "showColumn", defaultValue = "120") int showColumn,
+                                   @RequestParam(name = "showColumn", defaultValue = "") String showColumn,
                                    @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                                    @RequestParam(name = "days", defaultValue = "0") int days,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
@@ -81,29 +85,52 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             }
         }
         String channelName = gameChannelService.queryChannelNameById(channelId);
+
+//        //查询并计算新增留存
+//        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfNewUserlListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
+//        //统计
+//        List<GameRemainStatistisc> gameRemainStatistiscList2 = new ArrayList<>();
+//        GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
+//        gameRemainStatistisc.setCountDate("汇总");
+//        Long registerNum = gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getRegisterNum).sum();
+//        gameRemainStatistisc.setRegisterNum(registerNum);
+//        gameRemainStatistisc.setC2(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC2).sum());
+//        gameRemainStatistisc.setC3(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC3).sum());
+//        gameRemainStatistisc.setC4(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC4).sum());
+//        gameRemainStatistisc.setC5(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC5).sum());
+//        gameRemainStatistisc.setC6(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC6).sum());
+//        gameRemainStatistisc.setC7(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC7).sum());
+//        gameRemainStatistisc.setC15(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC15).sum());
+//        gameRemainStatistisc.setC30(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC30).sum());
+//        gameRemainStatistisc.setC60(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC60).sum());
+//        gameRemainStatistisc.setC90(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC90).sum());
+//        gameRemainStatistisc.setC120(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC120).sum());
+//        gameRemainStatistiscList2.add(gameRemainStatistisc);
+//        gameRemainStatistiscList2.addAll(gameRemainStatistiscList1);
+//        page.setRecords(gameRemainStatistiscList2).setTotal(gameRemainStatistiscList2.size());
+
+
+
+        Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfNewUserlListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
-        //统计
-        List<GameRemainStatistisc> gameRemainStatistiscList2 = new ArrayList<>();
-        GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
-        gameRemainStatistisc.setCountDate("汇总");
-        Long registerNum = gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getRegisterNum).sum();
-        gameRemainStatistisc.setRegisterNum(registerNum);
-        gameRemainStatistisc.setC2(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC2).sum());
-        gameRemainStatistisc.setC3(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC3).sum());
-        gameRemainStatistisc.setC4(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC4).sum());
-        gameRemainStatistisc.setC5(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC5).sum());
-        gameRemainStatistisc.setC6(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC6).sum());
-        gameRemainStatistisc.setC7(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC7).sum());
-        gameRemainStatistisc.setC15(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC15).sum());
-        gameRemainStatistisc.setC30(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC30).sum());
-        gameRemainStatistisc.setC60(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC60).sum());
-        gameRemainStatistisc.setC90(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC90).sum());
-        gameRemainStatistisc.setC120(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC120).sum());
-        gameRemainStatistiscList2.add(gameRemainStatistisc);
-        gameRemainStatistiscList2.addAll(gameRemainStatistiscList1);
-        page.setRecords(gameRemainStatistiscList2).setTotal(gameRemainStatistiscList2.size());
-        return Result.ok(page);
+        List<JSONObject>  jsonObjectList = remainStatisticsService.queryRemainStatistiscOfNewUserlListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject();
+        for (String s : jsonObjectList.get(0).keySet()) {
+            if("countDate".equals(s)){
+                jsonObject.put("countDate","汇总");
+                continue;
+            }
+            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+                continue;
+            }
+            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+        }
+        jsonObjectList2.add(jsonObject);
+        jsonObjectList2.addAll(jsonObjectList);
+        page2.setRecords(jsonObjectList2).setTotal(jsonObjectList2.size());
+
+        return Result.ok(page2);
     }
 
     /**
@@ -117,6 +144,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @GetMapping(value = "/downPayment")
     public Result<?> downPayment(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                  @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                                 @RequestParam(name = "showColumn", defaultValue = "") String showColumn,
                                  @RequestParam(name = "days", defaultValue = "0") int days,
                                  @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                                  @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
@@ -137,29 +165,52 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             }
         }
         String channelName = gameChannelService.queryChannelNameById(channelId);
+
+
+//        //查询并计算新增留存
+//        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
+//        //统计
+//        List<GameRemainStatistisc> gameRemainStatistiscList2 = new ArrayList<>();
+//        GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
+//        gameRemainStatistisc.setCountDate("汇总");
+//        Long registerNum = gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getRegisterNum).sum();
+//        gameRemainStatistisc.setRegisterNum(registerNum);
+//        gameRemainStatistisc.setC2(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC2).sum());
+//        gameRemainStatistisc.setC3(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC3).sum());
+//        gameRemainStatistisc.setC4(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC4).sum());
+//        gameRemainStatistisc.setC5(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC5).sum());
+//        gameRemainStatistisc.setC6(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC6).sum());
+//        gameRemainStatistisc.setC7(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC7).sum());
+//        gameRemainStatistisc.setC15(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC15).sum());
+//        gameRemainStatistisc.setC30(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC30).sum());
+//        gameRemainStatistisc.setC60(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC60).sum());
+//        gameRemainStatistisc.setC90(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC90).sum());
+//        gameRemainStatistisc.setC120(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC120).sum());
+//        gameRemainStatistiscList2.add(gameRemainStatistisc);
+//        gameRemainStatistiscList2.addAll(gameRemainStatistiscList1);
+//        page.setRecords(gameRemainStatistiscList2).setTotal(gameRemainStatistiscList2.size());
+
+
+        Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
-        //统计
-        List<GameRemainStatistisc> gameRemainStatistiscList2 = new ArrayList<>();
-        GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
-        gameRemainStatistisc.setCountDate("汇总");
-        Long registerNum = gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getRegisterNum).sum();
-        gameRemainStatistisc.setRegisterNum(registerNum);
-        gameRemainStatistisc.setC2(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC2).sum());
-        gameRemainStatistisc.setC3(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC3).sum());
-        gameRemainStatistisc.setC4(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC4).sum());
-        gameRemainStatistisc.setC5(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC5).sum());
-        gameRemainStatistisc.setC6(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC6).sum());
-        gameRemainStatistisc.setC7(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC7).sum());
-        gameRemainStatistisc.setC15(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC15).sum());
-        gameRemainStatistisc.setC30(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC30).sum());
-        gameRemainStatistisc.setC60(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC60).sum());
-        gameRemainStatistisc.setC90(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC90).sum());
-        gameRemainStatistisc.setC120(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC120).sum());
-        gameRemainStatistiscList2.add(gameRemainStatistisc);
-        gameRemainStatistiscList2.addAll(gameRemainStatistiscList1);
-        page.setRecords(gameRemainStatistiscList2).setTotal(gameRemainStatistiscList2.size());
-        return Result.ok(page);
+        List<JSONObject>  jsonObjectList = remainStatisticsService.queryRemainStatistiscOfDownPaymentListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject();
+        for (String s : jsonObjectList.get(0).keySet()) {
+            if("countDate".equals(s)){
+                jsonObject.put("countDate","汇总");
+                continue;
+            }
+            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+                continue;
+            }
+            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+        }
+        jsonObjectList2.add(jsonObject);
+        jsonObjectList2.addAll(jsonObjectList);
+        page2.setRecords(jsonObjectList2).setTotal(jsonObjectList2.size());
+
+        return Result.ok(page2);
     }
 
     /**
@@ -173,6 +224,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @GetMapping(value = "/free")
     public Result<?> free(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                           @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                          @RequestParam(name = "showColumn", defaultValue = "") String showColumn,
                           @RequestParam(name = "days", defaultValue = "0") int days,
                           @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                           @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
@@ -193,29 +245,51 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             }
         }
         String channelName = gameChannelService.queryChannelNameById(channelId);
+
+//        //查询并计算新增留存
+//        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfFreeListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
+//        //统计
+//        List<GameRemainStatistisc> gameRemainStatistiscList2 = new ArrayList<>();
+//        GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
+//        gameRemainStatistisc.setCountDate("汇总");
+//        Long registerNum = gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getRegisterNum).sum();
+//        gameRemainStatistisc.setRegisterNum(registerNum);
+//        gameRemainStatistisc.setC2(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC2).sum());
+//        gameRemainStatistisc.setC3(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC3).sum());
+//        gameRemainStatistisc.setC4(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC4).sum());
+//        gameRemainStatistisc.setC5(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC5).sum());
+//        gameRemainStatistisc.setC6(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC6).sum());
+//        gameRemainStatistisc.setC7(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC7).sum());
+//        gameRemainStatistisc.setC15(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC15).sum());
+//        gameRemainStatistisc.setC30(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC30).sum());
+//        gameRemainStatistisc.setC60(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC60).sum());
+//        gameRemainStatistisc.setC90(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC90).sum());
+//        gameRemainStatistisc.setC120(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC120).sum());
+//        gameRemainStatistiscList2.add(gameRemainStatistisc);
+//        gameRemainStatistiscList2.addAll(gameRemainStatistiscList1);
+//        page.setRecords(gameRemainStatistiscList2).setTotal(gameRemainStatistiscList2.size());
+
+
+        Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<GameRemainStatistisc> gameRemainStatistiscList1 = remainStatisticsService.queryRemainStatistiscOfFreeListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
-        //统计
-        List<GameRemainStatistisc> gameRemainStatistiscList2 = new ArrayList<>();
-        GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
-        gameRemainStatistisc.setCountDate("汇总");
-        Long registerNum = gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getRegisterNum).sum();
-        gameRemainStatistisc.setRegisterNum(registerNum);
-        gameRemainStatistisc.setC2(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC2).sum());
-        gameRemainStatistisc.setC3(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC3).sum());
-        gameRemainStatistisc.setC4(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC4).sum());
-        gameRemainStatistisc.setC5(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC5).sum());
-        gameRemainStatistisc.setC6(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC6).sum());
-        gameRemainStatistisc.setC7(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC7).sum());
-        gameRemainStatistisc.setC15(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC15).sum());
-        gameRemainStatistisc.setC30(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC30).sum());
-        gameRemainStatistisc.setC60(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC60).sum());
-        gameRemainStatistisc.setC90(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC90).sum());
-        gameRemainStatistisc.setC120(gameRemainStatistiscList1.stream().mapToLong(GameRemainStatistisc::getC120).sum());
-        gameRemainStatistiscList2.add(gameRemainStatistisc);
-        gameRemainStatistiscList2.addAll(gameRemainStatistiscList1);
-        page.setRecords(gameRemainStatistiscList2).setTotal(gameRemainStatistiscList2.size());
-        return Result.ok(page);
+        List<JSONObject>  jsonObjectList = remainStatisticsService.queryRemainStatistiscOfFreeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject();
+        for (String s : jsonObjectList.get(0).keySet()) {
+            if("countDate".equals(s)){
+                jsonObject.put("countDate","汇总");
+                continue;
+            }
+            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+                continue;
+            }
+            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+        }
+        jsonObjectList2.add(jsonObject);
+        jsonObjectList2.addAll(jsonObjectList);
+        page2.setRecords(jsonObjectList2).setTotal(jsonObjectList2.size());
+
+        return Result.ok(page2);
     }
 
     /**
@@ -229,6 +303,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     @GetMapping(value = "/grade")
     public Result<?> grade(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                            @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                           @RequestParam(name = "showColumn", defaultValue = "") String showColumn,
                            @RequestParam(name = "days", defaultValue = "0") int days,
                            @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                            @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
@@ -252,12 +327,36 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             return Result.error("请选择同一天的时间");
         }
         String channelName = gameChannelService.queryChannelNameById(channelId);
-        //查询并计算新增留存
-        List<GameRemainStatistisc> gameRemainStatistiscList = remainStatisticsService.queryRemainStatistiscOfGradeListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
-        List<GameRemainStatistisc> gameRemainStatistiscList1 = gameRemainStatistiscList.stream().sorted((s2, s1) -> Integer.parseInt(s2.getCountDate().split("-")[0]) - (Integer.parseInt(s1.getCountDate().split("-")[0]))).collect(Collectors.toList());
 
-        page.setRecords(gameRemainStatistiscList1).setTotal(gameRemainStatistiscList1.size());
-        return Result.ok(page);
+
+//        //查询并计算新增留存
+//        List<GameRemainStatistisc> gameRemainStatistiscList = remainStatisticsService.queryRemainStatistiscOfGradeListB(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName);
+//        List<GameRemainStatistisc> gameRemainStatistiscList1 = gameRemainStatistiscList.stream().sorted((s2, s1) -> Integer.parseInt(s2.getCountDate().split("-")[0]) - (Integer.parseInt(s1.getCountDate().split("-")[0]))).collect(Collectors.toList());
+//
+//        page.setRecords(gameRemainStatistiscList1).setTotal(gameRemainStatistiscList1.size());
+
+
+        Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
+        //查询并计算新增留存
+        List<JSONObject>  jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject> jsonObjectList = jsonObjectList1.stream().sorted((s1, s2) -> Integer.parseInt(s1.getString("countDate").split("-")[0]) - Integer.parseInt(s2.getString("countDate").split("-")[0])).collect(Collectors.toList());
+        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject();
+        for (String s : jsonObjectList.get(0).keySet()) {
+            if("countDate".equals(s)){
+                jsonObject.put("countDate","汇总");
+                continue;
+            }
+            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+                continue;
+            }
+            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+        }
+        jsonObjectList2.add(jsonObject);
+        jsonObjectList2.addAll(jsonObjectList);
+        page2.setRecords(jsonObjectList2).setTotal(jsonObjectList2.size());
+
+        return Result.ok(page2);
     }
 
 }
