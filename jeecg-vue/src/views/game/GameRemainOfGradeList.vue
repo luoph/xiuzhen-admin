@@ -18,6 +18,11 @@
                             <a-input v-model="queryParam.showColumn" placeholder="请输入型如这样的数据：1-2,8-12,4-4" style="width: 100%" />
                         </a-form-item>
                     </a-col>
+                    <a-col :md="10" :sm="8">
+                        <a-form-item label="档位">
+                            <a-input v-model="queryParam.grade" placeholder="请输入型如这样的数据：1-2,8-12,6-6" style="width: 100%" />
+                        </a-form-item>
+                    </a-col>
                     <a-col :md="4" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -265,7 +270,8 @@ export default {
                 pageNo: this.ipagination.current,
                 pageSize: this.ipagination.pageSize,
                 type: this.queryParam.type,
-                showColumn: this.queryParam.showColumn
+                showColumn: this.queryParam.showColumn,
+                grade: this.queryParam.grade
             };
             getAction(this.url.list, param).then(res => {
                 if (res.success) {

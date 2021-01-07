@@ -1472,7 +1472,25 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
      * @param daysRange
      */
     @Override
-    public List<JSONObject> queryRemainStatistiscOfGradeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) {
+    public List<JSONObject> queryRemainStatistiscOfGradeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange, String grade) {
+        //档位自定义
+        List<String> gradeList = new ArrayList<>();
+        if(!StringUtils.isEmpty(grade)){
+            String[] daysRangeArrayAll = grade.split(",");
+            for (String s : daysRangeArrayAll) {
+                gradeList.add(s);
+            }
+        }else{//使用Array.asList()会有bug
+            gradeList.add("1-6");
+            gradeList.add("7-29");
+            gradeList.add("30-67");
+            gradeList.add("68-97");
+            gradeList.add("98-197");
+            gradeList.add("198-327");
+            gradeList.add("328-647");
+            gradeList.add("648-9999");
+        }
+        //天数自定义
         List<Integer> dayList = new ArrayList<Integer>();
         if(!StringUtils.isEmpty(daysRange)){
             dayList.add(0);
@@ -1537,7 +1555,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         //首付留存用户按档位分类
         Map<String, List<String>> grade_downPaymentMap = new HashMap<>();
         //根据档位等级来决定返回数据条数
-        for (int i = 0; i < GRADE.length; i++) {
+        for (int i = 0; i < gradeList.size(); i++) {
             List<String> grade_downPaymentList = new ArrayList<>();
             for (Map map : downPayMentList) {
                 List<Map> someoneOnedayPayInfo = payMapByPlayId.get(map.get("player_id").toString());
@@ -1546,7 +1564,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 payAmountSum = someoneOnedayPayInfo.stream().mapToDouble(usermap -> {
                     return Double.parseDouble(usermap.get("pay_amount").toString());
                 }).sum();
-                String[] gradeBeginAndEnd = GRADE[i].split("-");
+                String[] gradeBeginAndEnd = gradeList.get(i).split("-");
                 //档位前后相等情况
                 if (Integer.parseInt(gradeBeginAndEnd[0]) == Integer.parseInt(gradeBeginAndEnd[1])) {
                     //判断是否处于档位内
@@ -1561,7 +1579,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 }
 
             }
-            grade_downPaymentMap.put(GRADE[i], grade_downPaymentList);
+            grade_downPaymentMap.put(gradeList.get(i), grade_downPaymentList);
 
         }
 

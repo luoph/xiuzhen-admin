@@ -64,5 +64,5 @@ public interface IRemainStatisticsService extends IService<GameRemainStatistisc>
     /**
      * 分档位留存
      */
-    List<JSONObject> queryRemainStatistiscOfGradeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange);
+    List<JSONObject> queryRemainStatistiscOfGradeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange, String grade);
 }
