@@ -2,12 +2,14 @@ package org.jeecg.modules.game.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.jeecg.modules.game.entity.PayOrderBill;
 import org.jeecg.modules.player.entity.GameOrder;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -43,4 +45,14 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
                            @Param("channel") String channel);
 
     List<GameOrder> getPayAmountSum(@Param("serverId") int serverId);
+    /**
+     * 查询日期范围内所有用户的支付订单
+     */
+    @Select("select player_id, order_amount, pay_time from game_order where server_id = #{serverId} and channel = #{channel} and order_amount >= #{payRankBegin} and  order_amount <= #{payRankEnd} and pay_time >= STR_TO_DATE(#{rangeDateBeginTime},'%Y-%m-%d %H:%i:%s') and pay_time <= STR_TO_DATE(#{rangeDateEndTime},'%Y-%m-%d %H:%i:%s')")
+    List<Map> selectAllPayInfoByTimeRange(@Param("payRankBegin") Integer payRankBegin,
+                                          @Param("payRankEnd") Integer payRankEnd,
+                                          @Param("rangeDateBeginTime") String rangeDateBeginTime,
+                                          @Param("rangeDateEndTime") String rangeDateEndTime,
+                                          @Param("serverId") Integer serverId,
+                                          @Param("channel") String channel);
 }

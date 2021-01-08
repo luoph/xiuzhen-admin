@@ -1,8 +1,10 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.PayOrderBill;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
 import org.jeecg.modules.game.service.IPayOrderBillService;
@@ -10,9 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -83,30 +84,51 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
     }
 
     @Override
-    public List<PayOrderBill> queryForList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel) {
+    public List<PayOrderBill> queryForList(String payRankString, String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel) {
+        List<String> payRankList = new ArrayList<>();
+        if(!StringUtils.isEmpty(payRankString)){
+            payRankList.add(payRankString);
+        }else{
+            for (String payrank : PAYRANKS) {
+                payRankList.add(payrank);
+            }
+        }
+
         List<PayOrderBill> list = new ArrayList<>();
-        PayOrderBill payOrderBill = null;
-        for (String payRank : PAYRANKS) {
+        for (String payRank : payRankList) {
+            PayOrderBill payOrderBill = new PayOrderBill();
             String[] payRanks = payRank.split("-");
             int payRankBegin = Integer.parseInt(payRanks[0]);
             int payRankEnd = Integer.parseInt(payRanks[1]);
-            if (days == 0) {
-                Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
-                Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
-                Integer payNumSum = payOrderBillMapper.queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
-                payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
-                payOrderBill.setPayRank(payRank);
-                list.add(getDataTreating(payOrderBill));
-            } else {
-                // 如果有选天数,就使用就近天数查询
-                // 获取过去第几天的日期
-                Date nowDate = new Date();
-                Date pastDate = DateUtils.addDays(nowDate, days * (-1));
-                Integer payNumSum = payOrderBillMapper.queryPayNumSum(pastDate, nowDate, serverId, channel);
-                payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel, payNumSum);
-                payOrderBill.setPayRank(payRank);
-                list.add(getDataTreating(payOrderBill));
+
+            Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
+            Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
+            //查询日期范围内所有支付金额范围内支付订单
+            List<Map> allPayInfoList = payOrderBillMapper.selectAllPayInfoByTimeRange(payRankBegin, payRankEnd,DateUtils.formatDate(rangeDateBeginTime, DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(rangeDateEndTime, DatePattern.NORM_DATETIME_PATTERN), serverId, channel);
+            //支付订单按player_id收集并去重
+            List<Map> allPayInforList_equals_playerId = allPayInfoList.stream().collect(
+                    Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.get("player_id").toString()))), ArrayList::new));
+            //设置 付费人数
+            payOrderBill.setPayNumSum(allPayInforList_equals_playerId.size());
+            //设置 充值档位
+            payOrderBill.setPayRank(payRank);
+            //设置 人数占比
+//            payOrderBill.setPayNumSumRate();
+            //支付订单按order_amount求和
+            Double sumOrderAmount = allPayInfoList.stream().mapToDouble(map -> Double.parseDouble(map.get("order_amount").toString())).sum();
+            //设置 付费金额
+            payOrderBill.setPayAmountSum(new BigDecimal(sumOrderAmount.toString()).setScale(4, BigDecimal.ROUND_HALF_UP));
+            //设置 金额占比
+//            payOrderBill.setPayAmountSumRate();
+            //设置 ARPPU（付费金额 除以 付费人数）
+            if(0 == payOrderBill.getPayNumSum()){
+                payOrderBill.setArppu(new BigDecimal("0").setScale(4, BigDecimal.ROUND_HALF_UP));
+            }else{
+                payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(),payOrderBill.getPayNumSum(),4));
             }
+
+            list.add(payOrderBill);
+
         }
         return list;
     }
