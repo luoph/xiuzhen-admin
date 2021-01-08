@@ -91,14 +91,7 @@ public class MilitaryStrengthListController {
         }
         Page<MilitaryStrengthVO> pageVo = new Page<>(pageNo, pageSize);
         List<MilitaryStrengthVO> list = iMilitaryStrengthService.getMilitaryStrengVoAllList(userName,serverId, DateUtils.formatDate( DateUtils.parseDate(rangeDateBegin), DatePattern.NORM_DATE_PATTERN), DateUtils.formatDate( DateUtils.parseDate(rangeDateEnd), DatePattern.NORM_DATE_PATTERN), channel);
-//        if(!StringUtils.isEmpty(userName)){
-//            Map<String, List<MilitaryStrengthVO>> prodMap= list.stream().collect(Collectors.groupingBy(MilitaryStrengthVO::getUserName));
-//            if(null != prodMap.get(userName)){
-//                list =  prodMap.get(userName);
-//            }else{
-//                list = new ArrayList<>() ;
-//            }
-//        }
+
         pageVo.setRecords(list).setTotal(list.size());
         return Result.ok(pageVo);
     }
@@ -140,14 +133,7 @@ public class MilitaryStrengthListController {
         }
 
         List<MilitaryStrengthVO> list = iMilitaryStrengthService.getMilitaryStrengVoAllList(userName,serverId, DateUtils.formatDate( DateUtils.parseDate(rangeDateBegin), DatePattern.NORM_DATE_PATTERN), DateUtils.formatDate( DateUtils.parseDate(rangeDateEnd), DatePattern.NORM_DATE_PATTERN), channel);
-        if(!StringUtils.isEmpty(userName)){
-            Map<String, List<MilitaryStrengthVO>> prodMap= list.stream().collect(Collectors.groupingBy(MilitaryStrengthVO::getUserName));
-            if(null != prodMap.get(userName)){
-                list =  prodMap.get(userName);
-            }else{
-                list = new ArrayList<>() ;
-            }
-        }
+
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
