@@ -7,6 +7,7 @@ import com.alibaba.druid.support.logging.LogFactory;
 import com.alibaba.druid.util.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.database.DataSourceHelper;
+import org.jeecg.modules.game.constant.AttrType;
 import org.jeecg.modules.game.entity.MilitaryStrengthVO;
 import org.jeecg.modules.game.mapper.MilitaryStrengthMapper;
 import org.jeecg.modules.game.service.IMilitaryStrengthService;
@@ -84,7 +85,17 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
             militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAll(createDateBegin, createDateEnd,logPlayerTable);
         }else{
             List<Map> registerUserMap = militaryStrengthMapper.selectRegisterUserByName(userName,channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
-            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAllByPlayerId(registerUserMap.get(0).get("player_id").toString(), createDateBegin, createDateEnd,logPlayerTable);
+            //这个名字下所有player_id集合
+            List<String> playerIdCollect =registerUserMap.stream().map(map -> map.get("player_id").toString()).collect(Collectors.toList());
+            String plyayerIdCollectString = "";
+            for (int i = 0; i < playerIdCollect.size(); i++) {
+                if(i == playerIdCollect.size() -1){
+                    plyayerIdCollectString = plyayerIdCollectString +playerIdCollect.get(i);
+                }else{
+                    plyayerIdCollectString = plyayerIdCollectString +playerIdCollect.get(i) +",";
+                }
+            }
+            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAllByPlayerId("("+plyayerIdCollectString+")", createDateBegin, createDateEnd,logPlayerTable);
         }
 
         //查询时间范围内 所有注册的用户
@@ -98,12 +109,16 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
             }else{
                 militaryStrengthVO.setUserName(allRegisterUserListMap_playerId.get(map.get("player_id").toString()).get(0).get("name").toString());
             }
-//            militaryStrengthVO.setMilitaryStrengthChange(map.get("reduce_practice_value").toString());
-            militaryStrengthVO.setNewMilitary(map.get("value").toString());
-//            militaryStrengthVO.setOriginalMilitary(map.get("before_practice_value").toString());
+            militaryStrengthVO.setMilitaryStrengthChange(map.get("param_2").toString());
+            militaryStrengthVO.setNewMilitary(map.get("param_3").toString());
+            militaryStrengthVO.setOriginalMilitary(map.get("param_1").toString());
             militaryStrengthVO.setUserId(map.get("player_id").toString());
             militaryStrengthVO.setTime(map.get("create_time").toString());
-            militaryStrengthVO.setOperation("");
+            if(null == AttrType.valueOf(Integer.parseInt(map.get("value").toString()))) {
+                militaryStrengthVO.setOperation("未知操作");
+            }else{
+                militaryStrengthVO.setOperation(AttrType.getNameByCode(Integer.parseInt(map.get("value").toString())));
+            }
             militaryStrengthVOList.add(militaryStrengthVO);
         }
         return militaryStrengthVOList;

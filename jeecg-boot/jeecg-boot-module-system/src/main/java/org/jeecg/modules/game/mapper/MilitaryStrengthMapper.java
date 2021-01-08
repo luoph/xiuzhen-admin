@@ -35,21 +35,21 @@ public interface MilitaryStrengthMapper {
     List<Map> selectRegisterUserByAccount(@Param("account") String account, @Param("channel") String channel, @Param("serverId") int serverId, @Param("createDateBegin") String createDateBegin, @Param("createDateEnd") String createDateEnd);
 
     /**
-     * 根据name查询用户
+     * 根据name模糊查询用户
      */
-    @Select("select name, account, player_id from game_register_info where name = #{name} and channel = #{channel} and server_id = #{serverId} and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') ")
+    @Select("select name, account, player_id from game_register_info where channel = #{channel} and server_id = #{serverId} and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') and name like CONCAT('%',#{name},'%') ")
     List<Map> selectRegisterUserByName(@Param("name") String name, @Param("channel") String channel, @Param("serverId") int serverId, @Param("createDateBegin") String createDateBegin, @Param("createDateEnd") String createDateEnd);
 
 
     /**
      * 获取所有战力列表
      */
-    @Select("select player_id, value, create_time from ${logPlayerTable} where type = 2 and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') order by create_time desc")
+    @Select("select player_id, value, create_time, type, param_1, param_2, param_3 from ${logPlayerTable} where type = 9 and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') order by create_time desc")
     List<Map> selectMilitaryStrengVoAll(@Param("createDateBegin") String createDateBegin, @Param("createDateEnd") String createDateEnd, @Param("logPlayerTable") String logPlayerTable);
 
     /**
-     * 获取某用户战力列表
+     * 获取某用户战力列表（playerId多个，name一个的情况）
      */
-    @Select("select player_id, value, create_time from ${logPlayerTable} where player_id = #{playerId} and type = 2 and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') order by create_time desc")
+    @Select("select player_id, value, create_time, type, param_1, param_2, param_3 from ${logPlayerTable} where player_id in ${playerId} and type = 9 and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') order by create_time desc")
     List<Map> selectMilitaryStrengVoAllByPlayerId(@Param("playerId") String playerId, @Param("createDateBegin") String createDateBegin, @Param("createDateEnd") String createDateEnd, @Param("logPlayerTable") String logPlayerTable);
 }

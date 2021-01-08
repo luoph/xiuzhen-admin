@@ -20,6 +20,7 @@ public enum PlayerLogType {
     MAP_LEVEL(5, "冒险等级"),
     PRACTICE_YEAR(6, "修炼年数"),
     LINGSHAN_CHECKPOINT(7, "符文秘境-小灵山"),
+    CHANGE_COMBAT_POWER(9, "战力前后变化值"),
 
     // 100 以上是次数统计
     ONLINE_TIME(101, "在线时长"),
