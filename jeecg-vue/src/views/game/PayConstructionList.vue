@@ -48,7 +48,7 @@
             </a-form>
 
             <div class="table-operator">
-                <a-button type="primary" icon="download" @click="handleExportXls('付费结构')">导出</a-button>
+                <a-button type="primary" icon="download" @click="downloadExcel('付费结构')">导出</a-button>
             </div>
 
         </div>
@@ -79,7 +79,8 @@ import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { filterObj } from "@/utils/util";
 import { getAction } from "@/api/manage";
-
+import Vue from "vue";
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 
 export default {
     name: "PayUserRankList",
@@ -144,6 +145,7 @@ export default {
             url: {
                 list: "game/payOrderBill/payConstruction",
                 exportXlsUrl: "game/payOrderBill/exportXls",
+                downloadExcela: "/game/payOrderBill/download"
             },
             dictOptions: {
             }
@@ -188,6 +190,30 @@ export default {
                     this.$message.error(res.message);
                 }
             });
+        },
+        downloadExcel(filename) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", window._CONFIG["domainURL"] +this.url.downloadExcela, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const token = Vue.ls.get(ACCESS_TOKEN);
+            console.log(token);
+            xhr.setRequestHeader("X-Access-Token", token);
+            xhr.onload = function () {
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = function (e) {
+                    var a = document.createElement("a");
+                    a.download = filename + ".xlsx";
+                    a.href = e.target.result;
+                    a.click();
+                };
+            };
+            var a = this.queryParam;
+            var param = JSON.stringify(a);
+            console.log(param);
+            xhr.send(param);
         }
     }
 };

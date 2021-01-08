@@ -46,5 +46,5 @@ public interface IPayOrderBillService extends IService<PayOrderBill> {
      * @param channel
      * @return
      */
-    List<PayOrderBill> queryForList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel);
+    List<PayOrderBill> queryForList(String payRank, String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel);
 }
