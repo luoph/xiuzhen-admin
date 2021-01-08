@@ -185,4 +185,20 @@ public class ConvertUtils {
             }
         }
     }
+
+    public static String safeString(String string) {
+        return string != null ? string : StringUtils.EMPTY;
+    }
+
+    public static String safeString(String string, String fallback) {
+        return string != null ? string : fallback;
+    }
+
+    public static int safeInteger(Integer num) {
+        return null != num ? num : 0;
+    }
+
+    public static long safeLong(Long num) {
+        return null != num ? num : 0;
+    }
 }
