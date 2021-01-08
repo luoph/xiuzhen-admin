@@ -94,40 +94,82 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
             }
         }
 
+        Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
+        Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
+        //查询日期范围内所有支付订单
+        List<Map> allPayInfoList0 = payOrderBillMapper.selectAllPayInfoByTimeRange(DateUtils.formatDate(rangeDateBeginTime, DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(rangeDateEndTime, DatePattern.NORM_DATETIME_PATTERN), serverId, channel);
+        //支付订单player_id分组
+        Map<String, List<Map>> allPayInfoList0Map_playerId= allPayInfoList0.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
+        //每个用户当天支付总额
+        Map<String, Double> playerPaySum = new HashMap<>();
+        for (String s : allPayInfoList0Map_playerId.keySet()) {
+            List<Map> onePlayerPayInfo = allPayInfoList0Map_playerId.get(s);
+            Double sum = onePlayerPayInfo.stream().mapToDouble(map -> Double.parseDouble(map.get("order_amount").toString())).sum();
+            playerPaySum.put(s, Double.parseDouble(sum.toString()));
+        }
+
+        //档位包含的用户支付信息
+        Map<String, Map<String, String>> prodMap = new HashMap<>();
+        for (String payRank : payRankList) {
+            Map playerMap = new HashMap();
+            for (String s : playerPaySum.keySet()) {
+                String[] payRanks = payRank.split("-");
+                BigDecimal payRankBegin = new BigDecimal(payRanks[0]).setScale(4, BigDecimal.ROUND_HALF_UP);
+                BigDecimal payRankEnd = new BigDecimal(payRanks[1]).setScale(4, BigDecimal.ROUND_HALF_UP);
+                BigDecimal pay = new BigDecimal(playerPaySum.get(s).toString()).setScale(4, BigDecimal.ROUND_HALF_UP);
+                if(payRankBegin.compareTo(pay) < 1 && pay.compareTo(payRankEnd) < 1){
+
+                    playerMap.put(s, playerPaySum.get(s).toString());
+                }
+            }
+            prodMap.put(payRank, playerMap);
+        }
+
         List<PayOrderBill> list = new ArrayList<>();
+        //返回信息给前端
         for (String payRank : payRankList) {
             PayOrderBill payOrderBill = new PayOrderBill();
-            String[] payRanks = payRank.split("-");
-            int payRankBegin = Integer.parseInt(payRanks[0]);
-            int payRankEnd = Integer.parseInt(payRanks[1]);
+            Map<String, String> allPayInfoList = prodMap.get(payRank);
+            if(null == allPayInfoList){
+                //设置 付费人数
+                payOrderBill.setPayNumSum(0);
+                //设置 充值档位
+                payOrderBill.setPayRank(payRank);
+                //设置 付费金额
+                payOrderBill.setPayAmountSum(new BigDecimal("0.00").setScale(4, BigDecimal.ROUND_HALF_UP));
+                //设置 ARPPU（付费金额 除以 付费人数）
+                if(0 == payOrderBill.getPayNumSum()){
+                    payOrderBill.setArppu(new BigDecimal("0").setScale(4, BigDecimal.ROUND_HALF_UP));
+                }else{
+                    payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(),payOrderBill.getPayNumSum(),4));
+                }
 
-            Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
-            Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
-            //查询日期范围内所有支付金额范围内支付订单
-            List<Map> allPayInfoList = payOrderBillMapper.selectAllPayInfoByTimeRange(payRankBegin, payRankEnd,DateUtils.formatDate(rangeDateBeginTime, DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(rangeDateEndTime, DatePattern.NORM_DATETIME_PATTERN), serverId, channel);
-            //支付订单按player_id收集并去重
-            List<Map> allPayInforList_equals_playerId = allPayInfoList.stream().collect(
-                    Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.get("player_id").toString()))), ArrayList::new));
-            //设置 付费人数
-            payOrderBill.setPayNumSum(allPayInforList_equals_playerId.size());
-            //设置 充值档位
-            payOrderBill.setPayRank(payRank);
-            //设置 人数占比
-//            payOrderBill.setPayNumSumRate();
-            //支付订单按order_amount求和
-            Double sumOrderAmount = allPayInfoList.stream().mapToDouble(map -> Double.parseDouble(map.get("order_amount").toString())).sum();
-            //设置 付费金额
-            payOrderBill.setPayAmountSum(new BigDecimal(sumOrderAmount.toString()).setScale(4, BigDecimal.ROUND_HALF_UP));
-            //设置 金额占比
-//            payOrderBill.setPayAmountSumRate();
-            //设置 ARPPU（付费金额 除以 付费人数）
-            if(0 == payOrderBill.getPayNumSum()){
-                payOrderBill.setArppu(new BigDecimal("0").setScale(4, BigDecimal.ROUND_HALF_UP));
+                list.add(payOrderBill);
             }else{
-                payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(),payOrderBill.getPayNumSum(),4));
-            }
 
-            list.add(payOrderBill);
+                //设置 付费人数
+                payOrderBill.setPayNumSum(allPayInfoList.size());
+                //设置 充值档位
+                payOrderBill.setPayRank(payRank);
+                //设置 人数占比
+//            payOrderBill.setPayNumSumRate();
+                Double sumOrderAmount = 0.0;
+                for (String s : allPayInfoList.keySet()) {
+                    sumOrderAmount += Double.parseDouble(allPayInfoList.get(s));
+                }
+                //设置 付费金额
+                payOrderBill.setPayAmountSum(new BigDecimal(sumOrderAmount.toString()).setScale(4, BigDecimal.ROUND_HALF_UP));
+                //设置 金额占比
+//            payOrderBill.setPayAmountSumRate();
+                //设置 ARPPU（付费金额 除以 付费人数）
+                if(0 == payOrderBill.getPayNumSum()){
+                    payOrderBill.setArppu(new BigDecimal("0").setScale(4, BigDecimal.ROUND_HALF_UP));
+                }else{
+                    payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(),payOrderBill.getPayNumSum(),4));
+                }
+
+                list.add(payOrderBill);
+            }
 
         }
         return list;

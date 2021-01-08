@@ -48,10 +48,8 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
     /**
      * 查询日期范围内所有用户的支付订单
      */
-    @Select("select player_id, order_amount, pay_time from game_order where server_id = #{serverId} and channel = #{channel} and order_amount >= #{payRankBegin} and  order_amount <= #{payRankEnd} and pay_time >= STR_TO_DATE(#{rangeDateBeginTime},'%Y-%m-%d %H:%i:%s') and pay_time <= STR_TO_DATE(#{rangeDateEndTime},'%Y-%m-%d %H:%i:%s')")
-    List<Map> selectAllPayInfoByTimeRange(@Param("payRankBegin") Integer payRankBegin,
-                                          @Param("payRankEnd") Integer payRankEnd,
-                                          @Param("rangeDateBeginTime") String rangeDateBeginTime,
+    @Select("select player_id, order_amount, pay_time from game_order where server_id = #{serverId} and channel = #{channel} and pay_time >= STR_TO_DATE(#{rangeDateBeginTime},'%Y-%m-%d %H:%i:%s') and pay_time <= STR_TO_DATE(#{rangeDateEndTime},'%Y-%m-%d %H:%i:%s')")
+    List<Map> selectAllPayInfoByTimeRange(@Param("rangeDateBeginTime") String rangeDateBeginTime,
                                           @Param("rangeDateEndTime") String rangeDateEndTime,
                                           @Param("serverId") Integer serverId,
                                           @Param("channel") String channel);
