@@ -29,24 +29,21 @@
                     </a-col>
                     <template>
                         <a-col :md="4" :sm="5">
-                            <a-form-item v-if="queryParam.type === '1'" key='1' label="产出途径">
-                                <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径"
-                                                    @onSelectOption="selectWay"></a-select-read-json>
+                            <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
+                                <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
                             </a-form-item>
-                            <a-form-item v-if="queryParam.type === '2'" key='2' label="消耗途径">
-                                <a-select-read-json json-file="item_expend" placeholder="请选择途径"
-                                                    @onSelectOption="selectWay"></a-select-read-json>
+                            <a-form-item v-if="queryParam.type === '2'" key="2" label="消耗途径">
+                                <a-select-read-json json-file="item_expend" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
                             </a-form-item>
                         </a-col>
                     </template>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="统计日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']"
-                                            @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="8" :sm="10">
-                        <span style="float: left; overflow: hidden;" class="table-page-search-submitButtons">
+                        <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                         </span>
                     </a-col>
@@ -54,7 +51,7 @@
             </a-form>
         </div>
         <div class="table-operator">
-            <a-button type="primary" icon="download" @click="handleExportXls('玩家道具日志')">导出</a-button>
+            <a-button type="primary" icon="download" @click="downloadExcel('玩家道具日志')">导出</a-button>
         </div>
         <!-- 查询区域-END -->
 
@@ -73,7 +70,6 @@
             >
             </a-table>
         </div>
-
     </a-card>
 </template>
 
@@ -83,7 +79,8 @@ import JDate from "@/components/jeecg/JDate.vue";
 import { filterObj } from "@/utils/util";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 import ASelectReadJson from "@comp/gameserver/ASelectReadJson";
-
+import Vue from "vue";
+import { ACCESS_TOKEN } from "@/store/mutation-types"
 export default {
     name: "PlayerItemLogList",
     mixins: [JeecgListMixin],
@@ -103,7 +100,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -141,7 +138,7 @@ export default {
                     title: "方式",
                     align: "center",
                     dataIndex: "type",
-                    customRender: function(text) {
+                    customRender: function (text) {
                         return text === 1 ? "存入" : "支出";
                     }
                 },
@@ -149,14 +146,15 @@ export default {
                     title: "统计日期",
                     align: "center",
                     dataIndex: "createDate",
-                    customRender: function(text) {
+                    customRender: function (text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 }
             ],
             url: {
                 list: "player/playerItemLog/list",
-                exportXlsUrl: "player/playerItemLog/exportXls"
+                exportXlsUrl: "player/playerItemLog/exportXls",
+                downloadExcel: "/player/playerItemLog/download"
             },
             dictOptions: {}
         };
@@ -171,7 +169,7 @@ export default {
             param.pageSize = this.ipagination.pageSize;
             return filterObj(param);
         },
-        onDateChange: function(value, dateString) {
+        onDateChange: function (value, dateString) {
             this.queryParam.startDate = dateString[0];
             this.queryParam.endDate = dateString[1];
         },
@@ -180,6 +178,31 @@ export default {
         },
         selectWay(way) {
             this.queryParam.way = way;
+        },
+
+        downloadExcel(filename) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", window._CONFIG["domainURL"] + this.url.downloadExcel, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const token = Vue.ls.get(ACCESS_TOKEN);
+            console.log(token);
+            xhr.setRequestHeader("X-Access-Token", token);
+            xhr.onload = function () {
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = function (e) {
+                    var a = document.createElement("a");
+                    a.download = filename + ".xlsx";
+                    a.href = e.target.result;
+                    a.click();
+                };
+            };
+            var a = this.queryParam;
+            var param = JSON.stringify(a);
+            console.log(param);
+            xhr.send(param);
         }
     }
 };

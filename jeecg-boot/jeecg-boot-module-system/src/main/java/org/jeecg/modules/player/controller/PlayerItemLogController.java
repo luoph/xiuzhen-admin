@@ -2,6 +2,9 @@ package org.jeecg.modules.player.controller;
 
 import cn.youai.commons.model.ResponseCode;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -22,13 +25,14 @@ import org.jeecg.modules.player.entity.GamePlayerItemLog;
 import org.jeecg.modules.player.service.BackpackLogService;
 import org.jeecg.modules.player.service.IGamePlayerItemLogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -248,5 +252,36 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
             DataSourceHelper.useDefaultDatabase();
         }
     }
+
+        @RequestMapping("/download")
+            public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws Exception {
+
+                Integer pageNo =  null == jsonObject.getString("pageNo") ? 1:Integer.parseInt(jsonObject.getString("pageNo"));
+                Integer pageSize  =  null == jsonObject.getString("pageSize") ? 20:Integer.parseInt(jsonObject.getString("pageSize"));
+
+                GamePlayerItemLog playerItemLog = JSON.parseObject(jsonObject.toJSONString(),GamePlayerItemLog.class);
+
+                if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
+                    log.error("请选择服务器！");
+                }
+                LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog);
+
+                Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
+                List<GamePlayerItemLog> list = new ArrayList<>();
+                try {
+                    DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
+                    IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
+                    list = pageList.getRecords();
+                } finally {
+                    DataSourceHelper.useDefaultDatabase();
+                }
+
+                response.setContentType("application/vnd.ms-excel");
+                response.setCharacterEncoding("utf-8");
+                String fileName = URLEncoder.encode("测试", "UTF-8");
+                response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+                EasyExcel.write(response.getOutputStream(), GamePlayerItemLog.class).sheet("模板").doWrite(list);
+            }
 
 }
