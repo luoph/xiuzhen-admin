@@ -257,7 +257,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
             public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws Exception {
 
                 Integer pageNo =  null == jsonObject.getString("pageNo") ? 1:Integer.parseInt(jsonObject.getString("pageNo"));
-                Integer pageSize  =  null == jsonObject.getString("pageSize") ? 20:Integer.parseInt(jsonObject.getString("pageSize"));
+//                Integer pageSize  =  null == jsonObject.getString("pageSize") ? 20:Integer.parseInt(jsonObject.getString("pageSize"));
 
                 GamePlayerItemLog playerItemLog = JSON.parseObject(jsonObject.toJSONString(),GamePlayerItemLog.class);
 
@@ -266,7 +266,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
                 }
                 LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog);
 
-                Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
+                Page<GamePlayerItemLog> page = new Page<>(pageNo, 1999999999);
                 List<GamePlayerItemLog> list = new ArrayList<>();
                 try {
                     DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
