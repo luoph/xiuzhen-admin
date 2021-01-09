@@ -118,8 +118,11 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
                                    @RequestParam(name = "serverId", defaultValue = "0") int serverId,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        if (StringUtils.isAllBlank(rangeDateBegin, rangeDateEnd)) {
-            return Result.error("");
+        //日期空校验
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if(0 == days){
+                return Result.error("请选择日期！");
+            }
         }
         Page<PlayerBehavior> page = new Page<>(pageNo, pageSize);
         // 如果选择开始时间和结束时间是同一天
