@@ -7,9 +7,12 @@ import lombok.Getter;
  * @author Administrator
  */
 @Getter
-public enum PackageReduce {
+public enum ItemReduce {
     /**
      * 背包扣减物品 way 类型
+     */
+    /**
+     * 系统定义
      */
     DEFAULT(0, "默认"),
     GM(1, "GM命令"),
@@ -135,19 +138,26 @@ public enum PackageReduce {
     WEAPON_ONE_KEY_SALE(121, "法宝已将出售"),
     SPIRIT_STONE_MAP_SWEEP(122, "灵石秘境-扫荡"),
     PRACTICE_MAP_SWEEP(123, "修为秘境-扫荡"),
-    OPEN_SERVICE_CAMPAIGN(124, "开服活动"),
-    XIAN_ZHI(125, "仙福-仙职");
+    XIAN_ZHI(124, "仙福-仙职"),
+    OPEN_SERVICE_CAMPAIGN_GIFT(125, "开服活动-开服礼包"),
+    OPEN_SERVICE_CAMPAIGN_LOTTERY(126, "开服活动-排行夺宝（抽奖消耗）"),
+    HEAVEN_BOOK(127, "天书"),
+    TEAM_BOSS_BUY(128, "斗法-组队boss"),
+    DIPPER_STAR(129, "北斗七星"),
+
+    // endå
+    ;
 
     private final Integer id;
     private final String name;
 
-    PackageReduce(Integer type, String name) {
+    ItemReduce(Integer type, String name) {
         this.id = type;
         this.name = name;
     }
 
-    public static PackageReduce valueOf(int type) {
-        for (PackageReduce itemReduce : PackageReduce.values()) {
+    public static ItemReduce valueOf(int type) {
+        for (ItemReduce itemReduce : ItemReduce.values()) {
             if (type == itemReduce.getId()) {
                 return itemReduce;
             }

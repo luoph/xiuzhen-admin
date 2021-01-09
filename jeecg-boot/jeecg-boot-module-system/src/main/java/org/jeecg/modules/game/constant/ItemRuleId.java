@@ -6,9 +6,13 @@ import lombok.Getter;
  * 背包获得物品 way 类型
  */
 @Getter
-public enum PackageGet {
+public enum ItemRuleId {
     /**
      * 背包获得物品 way 类型
+     */
+    /**
+     /**
+     * 奖励模块
      */
     DEFAULT(0, "系统默认"),
     GM(1, "GM命令获取"),
@@ -138,20 +142,33 @@ public enum PackageGet {
     WEAPON_SALE(133, "法宝出售"),
     SPIRIT_STONE_MAP_SWEEP(134, "秘境-灵石秘境-扫荡"),
     PRACTICE_MAP_SWEEP(135, "秘境-修为秘境-扫荡"),
-    OPEN_SERVICE_CAMPAIGN(136, "开服活动"),
-    XIANZHI_IMMORTAL(137, "仙福-仙职位");
+    XIANZHI_IMMORTAL(136, "仙福-仙职位"),
+    OPEN_SERVICE_CAMPAIGN_RANK(137, "开服活动-开服排行-排名奖励"),
+    OPEN_SERVICE_CAMPAIGN_STANDARD(138, "开服活动-开服排行-达标奖励"),
+    OPEN_SERVICE_CAMPAIGN_GIFT(139, "开服活动-开服礼包"),
+    OPEN_SERVICE_CAMPAIGN_SINGLE_GIFT(140, "开服活动-单笔好礼"),
+    OPEN_SERVICE_CAMPAIGN_LOTTERY(141, "开服活动-排行夺宝-中奖奖励"),
+    OPEN_SERVICE_CAMPAIGN_LOTTERY_RANK(142, "开服活动-排行夺宝-排名奖励"),
+    OPEN_SERVICE_CAMPAIGN_LOTTERY_SCORE(143, "开服活动-排行夺宝-积分奖励"),
+    OPEN_SERVICE_CAMPAIGN_CONSUME_REWARD(144, "开服活动-消耗有礼"),
+    TEAM_BOSS_BATTLE(145, "斗法-须弥法界-伤害奖励"),
+    TEAM_BOSS_SINGLE_INJURY(146, "斗法-须弥法界-周单次伤害排行奖励"),
+    TEAM_BOSS_TOTAL_INJURY(147, "斗法-须弥法界-周累计伤害排行奖励"),
+    TEAM_BOSS_ASSIST_REWARD(148, "斗法-须弥法界-助战奖励"),
+
     // end
+    ;
 
     private final Integer id;
     private final String name;
 
-    PackageGet(Integer type, String name) {
+    ItemRuleId(Integer type, String name) {
         this.id = type;
         this.name = name;
     }
 
-    public static PackageGet valueOf(int type) {
-        for (PackageGet itemReduce : PackageGet.values()) {
+    public static ItemRuleId valueOf(int type) {
+        for (ItemRuleId itemReduce : ItemRuleId.values()) {
             if (type == itemReduce.getId()) {
                 return itemReduce;
             }
