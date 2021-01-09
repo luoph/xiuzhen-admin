@@ -1,26 +1,19 @@
 package org.jeecg.modules.game.service.impl;
 
-import com.google.common.collect.Lists;
-import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.jeecg.database.DataSourceHelper;
-import org.jeecg.modules.game.constant.FairyJadeBuyType;
-import org.jeecg.modules.game.constant.ItemId;
-import org.jeecg.modules.game.constant.PackageGet;
-import org.jeecg.modules.game.constant.PackageReduce;
+import org.jeecg.modules.game.constant.ItemRuleId;
+import org.jeecg.modules.game.constant.ItemReduce;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.jeecg.modules.game.mapper.GameMonetaryDisTributionMapper;
 import org.jeecg.modules.game.service.IGameMonetaryDisTributionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.jeecg.modules.game.constant.FairyJadeBuyType.*;
 
 /**
  * @author 胡立
@@ -53,12 +46,12 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             Map<Integer, String> FairyJadeBuyTypeMap = new HashMap<>();
             //存入
             if(1== quantityType){
-                for (PackageGet value : PackageGet.values()) {
+                for (ItemRuleId value : ItemRuleId.values()) {
                     FairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
             //消耗
             }else if(2== quantityType){
-                for (PackageReduce value : PackageReduce.values()) {
+                for (ItemReduce value : ItemReduce.values()) {
                     FairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
             }
