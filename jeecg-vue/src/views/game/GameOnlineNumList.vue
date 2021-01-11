@@ -24,6 +24,15 @@
                             </a-select>
                         </a-form-item>
                     </a-col>
+                    <a-col :md="5" :sm="5">
+                        <a-form-item label="折线图显示类型">
+                            <a-select placeholder="显示类型" v-model="queryParam.lineType">
+                                <a-select-option :value="'seconds'">按分</a-select-option>
+                                <a-select-option :value="'hours'">按时</a-select-option>
+                                <a-select-option :value="'days'">按天</a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col>
 
                     <a-col :md="4" :sm="8">
                         <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
@@ -36,7 +45,14 @@
         <!-- 查询区域-END -->
         <div class="lateral-sliding" v-if="ynShowPicture">
             <div class="" v-for="(item, index) in items" :key="index">
-                <lineChartMultid  class="" :style="{ width: pictureWidth }" title="折线图(前1450条数据)" :fields="c" :dataSource="dataSourceaaa" :height="420" />
+                <lineChartMultid
+                    class=""
+                    :style="{ width: pictureWidth }"
+                    title="折线图(数据量过大只会展示前1200条数据)"
+                    :fields="c"
+                    :dataSource="dataSourceLineChat"
+                    :height="420"
+                />
             </div>
         </div>
         <!-- table区域-begin -->
@@ -85,7 +101,7 @@ export default {
             items: 1,
             pictureWidth: "1300px",
             c: ["pepole"],
-            dataSourceaaa: [],
+            dataSourceLineChat: [],
             description: "在线情况管理页面",
             // 表头
             columns: [
@@ -151,10 +167,10 @@ export default {
             this.queryParam.rangeDateBegin = dateStr[0];
             this.queryParam.rangeDateEnd = dateStr[1];
         },
-        searchQuery2(){
-                this.ynShowPicture = false;
-                this.pictureWidth = "0px";
-            this.timer = setTimeout(this.searchQuery , 10);
+        searchQuery2() {
+            this.ynShowPicture = false;
+            this.pictureWidth = "0px";
+            this.timer = setTimeout(this.searchQuery, 10);
         },
         searchQuery() {
             let param = {
@@ -169,26 +185,46 @@ export default {
             getAction(this.url.list, param).then((res) => {
                 // this.pictureWidth = "0px";
                 if (res.success) {
-                    this.dataSourceaaa = [];
-                    this.dataSource = res.result.records;
-                    this.dataSource.forEach((element) => {
-                        let dd = { type: element.createTime.substr(5, 11), pepole: element.onlineNum };
-                        if(this.dataSourceaaa.length < 1450){
-                            this.dataSourceaaa.push(dd);
-                        }
-                    });
+                    this.dataSourceLineChat = [];
+                    this.dataSource = res.result.gameOnlineNumListAll;
+                    if ("seconds" == this.queryParam.lineType) {
+                        res.result.gameOnlineNumListSeconds.forEach((element) => {
+                            let lineDate = { type: element.getTime, pepole: element.onlineNum };
+                            if (this.dataSourceLineChat.length < 1200) {
+                                this.dataSourceLineChat.push(lineDate);
+                            }
+                        });
+                    }else if("days" == this.queryParam.lineType){
+                        res.result.gameOnlineNumListDays.forEach((element) => {
+                            let lineDate = { type: element.getTime, pepole: element.onlineNum };
+                            if (this.dataSourceLineChat.length < 1200) {
+                                this.dataSourceLineChat.push(lineDate);
+                            }
+                        });
+                    }else {
+                        res.result.gameOnlineNumListHours.forEach((element) => {
+                            let lineDate = { type: element.getTime, pepole: element.onlineNum };
+                            if (this.dataSourceLineChat.length < 1200) {
+                                this.dataSourceLineChat.push(lineDate);
+                            }
+                        });
+                    }
 
                     // for (let index = 0; index < 40; index++) {
                     //     this.ik ++;
-                    //     let dd = { type: this.ik, a: 18.4 };
-                    //     this.dataSourceaaa.push(dd);
+                    //     let lineDate = { type: this.ik, a: 18.4 };
+                    //     this.dataSourceLineChat.push(lineDate);
                     // }
-                    if(this.dataSourceaaa.length>0){
+                    if (this.dataSourceLineChat.length > 0) {
                         this.ynShowPicture = true;
                     }
                     // this.$forceUpdate();
-                    this.pictureWidth = this.dataSourceaaa.length * 50 + "px";
-                    console.log(this.dataSourceaaa.length);
+                    if (this.dataSourceLineChat.length <= 20) {
+                        this.pictureWidth = 22 * 50 + "px";
+                    } else {
+                        this.pictureWidth = this.dataSourceLineChat.length * 50 + "px";
+                    }
+                    console.log(this.dataSourceLineChat.length);
                     this.ipagination.current = res.result.current;
                     this.ipagination.size = res.result.size.toString();
                     this.ipagination.total = res.result.total;
@@ -212,5 +248,4 @@ export default {
     overflow-y: hidden;
     overflow-x: scroll;
 }
-
 </style>

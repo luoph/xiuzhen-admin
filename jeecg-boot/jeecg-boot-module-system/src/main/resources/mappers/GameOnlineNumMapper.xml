@@ -34,6 +34,7 @@
         <if test="channel != null">
             AND channel = #{channel}
         </if>
+        order by create_time desc
     </select>
 
     <select id="queryGameOnlineCollectByRangDate" resultMap="BaseResultMap">
