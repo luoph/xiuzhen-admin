@@ -327,17 +327,19 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         long factionBanquet = list.stream().filter(i -> i.getType() == PlayerLogType.FACTION_BANQUET.getType()).count();
         behavior.setFactionBanquet(factionBanquet);
 
+        //仙缘试炼
+        long mateBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_BOSS.getType()).count();
+        behavior.setMateBoss(mateBoss);
+
+        //仙缘双修
+        long matePractice = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_PRACTICE.getType()).count();
+
+        behavior.setMatePractice(matePractice);
         long recharge = list.stream().filter(i -> i.getType() == PlayerLogType.RECHARGE.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setRecharge(BigDecimalUtil.divide(recharge, 100, 2).doubleValue());
 
         long consumeMoney = list.stream().filter(i -> i.getType() == PlayerLogType.CONSUME_MONEY.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setConsumeMoney(consumeMoney);
-        //仙缘试炼
-        long mateBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_BOSS.getType()).mapToLong(PlayerBehavior::getValue).sum();
-        behavior.setMateBoss(mateBoss);
-        //仙缘双修
-        long matePractice = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_PRACTICE.getType()).mapToLong(PlayerBehavior::getValue).sum();
-        behavior.setMatePractice(matePractice);
 
         long experience = list.stream().filter(i -> i.getType() == PlayerLogType.EXPERIENCE.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setExperience(experience);
