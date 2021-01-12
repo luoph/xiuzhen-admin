@@ -58,8 +58,19 @@ public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGam
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<JSONObject> page = new Page<>(pageNo, pageSize);
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
-            return null;
+        if(0 == serverId){
+            JSONObject res = new JSONObject();
+            res.put("message", "服务器id不能为空！");
+            res.put("success", false);
+            return res;
+        }
+        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+            if(0 == days){
+                JSONObject res = new JSONObject();
+                res.put("message", "时间或就近天数不能同时为空！");
+                res.put("success", false);
+                return res;
+            }
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<GameOnlineNum> gameOnlineNumList = gameOnlineNumService.queryGameOnlineNumByRangDate(rangeDateBegin, rangeDateEnd, days, serverId, channel);

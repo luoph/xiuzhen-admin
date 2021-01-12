@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -21,10 +22,10 @@ public class ItemId {
     private static final Map<String, String> itemIdToNameMap = new HashMap<>();
     //name item_id
     private static final Map<String, String> itemNameToIdMap = new HashMap<>();
-    public ItemId() {
+    public ItemId() throws UnsupportedEncodingException {
         if(itemIdToNameMap.size() <= 0 ){
             InputStream in = this.getClass().getResourceAsStream("/json/item.json");
-            String file1 = new BufferedReader(new InputStreamReader(in))
+            String file1 = new BufferedReader(new InputStreamReader(in, "utf-8"))
                     .lines().collect(Collectors.joining(System.lineSeparator()));
             String dest = "";
             if (file1!=null) {
