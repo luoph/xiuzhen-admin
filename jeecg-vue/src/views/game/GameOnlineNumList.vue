@@ -179,8 +179,8 @@ export default {
                 serverId: this.queryParam.serverId,
                 rangeDateBegin: this.queryParam.rangeDateBegin,
                 rangeDateEnd: this.queryParam.rangeDateEnd,
-                pageNo: this.ipagination.current,
-                pageSize: this.ipagination.pageSize
+                // pageNo: this.ipagination.current,
+                // pageSize: this.ipagination.pageSize
             };
             getAction(this.url.list, param).then((res) => {
                 // this.pictureWidth = "0px";
@@ -208,6 +208,7 @@ export default {
                                 this.dataSourceLineChat.push(lineDate);
                             }
                         });
+                        this.queryParam.lineType = "hours"
                     }
 
                     // for (let index = 0; index < 40; index++) {
@@ -225,10 +226,10 @@ export default {
                         this.pictureWidth = this.dataSourceLineChat.length * 50 + "px";
                     }
                     console.log(this.dataSourceLineChat.length);
-                    this.ipagination.current = res.result.current;
-                    this.ipagination.size = res.result.size.toString();
-                    this.ipagination.total = res.result.total;
-                    this.ipagination.pages = res.result.pages;
+                    // this.ipagination.current = res.result.current;
+                    // this.ipagination.size = res.result.size.toString();
+                    // this.ipagination.total = res.result.total;
+                    // this.ipagination.pages = res.result.pages;
                 } else {
                     this.$message.error(res.message);
                 }
@@ -236,7 +237,8 @@ export default {
         },
         beforeDestroy() {
             clearTimeout(this.timer);
-        }
+        },
+        
     }
 };
 </script>

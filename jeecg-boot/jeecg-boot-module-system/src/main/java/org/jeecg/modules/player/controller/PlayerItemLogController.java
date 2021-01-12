@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -75,7 +76,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
     public Result<?> queryPageList(GamePlayerItemLog playerItemLog,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
-                                   HttpServletRequest req) {
+                                   HttpServletRequest req) throws UnsupportedEncodingException {
 
         if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
             return Result.error("请选择服务器！");
