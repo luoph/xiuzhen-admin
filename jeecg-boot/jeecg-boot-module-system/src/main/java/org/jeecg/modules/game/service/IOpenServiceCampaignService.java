@@ -11,4 +11,6 @@ import org.jeecg.modules.game.entity.OpenServiceCampaign;
  */
 public interface IOpenServiceCampaignService extends IService<OpenServiceCampaign> {
 
+    void duplicate(OpenServiceCampaign other);
+
 }

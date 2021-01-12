@@ -33,28 +33,24 @@ public class OpenServiceCampaignRankDetailServiceImpl extends ServiceImpl<GameOp
     @Override
     public void duplicate(OpenServiceCampaignRankDetail other, long typeId, long campaignId) {
         OpenServiceCampaignRankDetail copy = new OpenServiceCampaignRankDetail(other);
-        save(copy);
         copy.setCampaignTypeId(typeId);
         copy.setCampaignId(campaignId);
+        save(copy);
 
         if (CollUtil.isNotEmpty(other.getMessageList())) {
-            for (OpenServiceCampaignRankDetailMessage entity : other.getMessageList()) {
-            }
+            detailMessageService.duplicate(other.getMessageList(), copy.getId(), typeId, campaignId);
         }
 
         if (CollUtil.isNotEmpty(other.getRankingList())) {
-            for (OpenServiceCampaignRankDetailRanking entity : other.getRankingList()) {
-            }
+            detailRankingService.duplicate(other.getRankingList(), copy.getId(), typeId, campaignId);
         }
 
         if (CollUtil.isNotEmpty(other.getScoreList())) {
-            for (OpenServiceCampaignRankDetailScore entity : other.getScoreList()) {
-            }
+            detailScoreService.duplicate(other.getScoreList(), copy.getId(), typeId, campaignId);
         }
 
         if (CollUtil.isNotEmpty(other.getStandardList())) {
-            for (OpenServiceCampaignRankDetailStandard entity : other.getStandardList()) {
-            }
+            detailStandardService.duplicate(other.getStandardList(), copy.getId(), typeId, campaignId);
         }
     }
 

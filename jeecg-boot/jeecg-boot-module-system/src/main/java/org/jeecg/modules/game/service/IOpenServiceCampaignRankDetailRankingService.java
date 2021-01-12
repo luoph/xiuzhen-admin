@@ -1,7 +1,10 @@
 package org.jeecg.modules.game.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetailMessage;
 import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetailRanking;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -11,4 +14,7 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetailRanking;
  */
 public interface IOpenServiceCampaignRankDetailRankingService extends IService<OpenServiceCampaignRankDetailRanking> {
 
+    void duplicate(OpenServiceCampaignRankDetailRanking other, long detailId, long typeId, Long campaignId);
+
+    void duplicate(List<OpenServiceCampaignRankDetailRanking> others, long detailId, long typeId, long campaignId);
 }

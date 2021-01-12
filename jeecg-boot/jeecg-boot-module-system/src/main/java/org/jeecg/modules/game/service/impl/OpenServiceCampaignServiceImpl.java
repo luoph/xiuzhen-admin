@@ -15,4 +15,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceCampaignMapper, OpenServiceCampaign> implements IOpenServiceCampaignService {
 
+    @Override
+    public void duplicate(OpenServiceCampaign other) {
+
+    }
+
 }

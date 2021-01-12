@@ -1,10 +1,14 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetailStandard;
 import org.jeecg.modules.game.mapper.GameOpenServiceCampaignRankDetailStandardMapper;
 import org.jeecg.modules.game.service.IOpenServiceCampaignRankDetailStandardService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -15,4 +19,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class OpenServiceCampaignRankDetailStandardServiceImpl extends ServiceImpl<GameOpenServiceCampaignRankDetailStandardMapper, OpenServiceCampaignRankDetailStandard> implements IOpenServiceCampaignRankDetailStandardService {
 
+    @Override
+    public void duplicate(OpenServiceCampaignRankDetailStandard other, long detailId, long typeId, long campaignId) {
+        OpenServiceCampaignRankDetailStandard copy = new OpenServiceCampaignRankDetailStandard(other);
+        copy.setRankDetailId(detailId);
+        copy.setCampaignTypeId(typeId);
+        copy.setCampaignId(campaignId);
+        save(copy);
+    }
+
+    @Override
+    public void duplicate(List<OpenServiceCampaignRankDetailStandard> others, long detailId, long typeId, long campaignId) {
+        List<OpenServiceCampaignRankDetailStandard> addList = new ArrayList<>();
+        for (OpenServiceCampaignRankDetailStandard other : others) {
+            OpenServiceCampaignRankDetailStandard copy = new OpenServiceCampaignRankDetailStandard(other);
+            copy.setRankDetailId(detailId);
+            copy.setCampaignTypeId(typeId);
+            copy.setCampaignId(campaignId);
+            addList.add(copy);
+        }
+        if (CollUtil.isNotEmpty(addList)) {
+            saveBatch(addList);
+        }
+    }
 }

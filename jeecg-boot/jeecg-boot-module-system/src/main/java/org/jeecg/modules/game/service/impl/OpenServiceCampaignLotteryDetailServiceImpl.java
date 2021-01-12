@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -34,15 +35,30 @@ public class OpenServiceCampaignLotteryDetailServiceImpl extends ServiceImpl<Ope
     private IOpenServiceCampaignLotteryDetailRankingService detailRankingService;
 
     @Override
+    public void duplicate(OpenServiceCampaignLotteryDetail other, long typeId, long campaignId) {
+        OpenServiceCampaignLotteryDetail copy = new OpenServiceCampaignLotteryDetail(other);
+        copy.setCampaignTypeId(typeId);
+        copy.setCampaignId(campaignId);
+        save(copy);
+
+        if (CollUtil.isNotEmpty(other.getPoolList())) {
+            detailPoolService.duplicate(other.getPoolList(), copy.getId(), typeId, campaignId);
+        }
+
+        if (CollUtil.isNotEmpty(other.getRankingList())) {
+            detailRankingService.duplicate(other.getRankingList(), copy.getId(), typeId, campaignId);
+        }
+
+        if (CollUtil.isNotEmpty(other.getScoreList())) {
+            detailScoreService.duplicate(other.getScoreList(), copy.getId(), typeId, campaignId);
+        }
+    }
+
+    @Override
     public void fillDetail(OpenServiceCampaignLotteryDetail detail) {
         detail.setPoolList(getOpenServiceCampaignLotteryDetailPoolList(detail));
         detail.setScoreList(getOpenServiceCampaignLotteryDetailScoreList(detail));
         detail.setRankingList(getOpenServiceCampaignLotteryDetailRankingList(detail));
-    }
-
-    @Override
-    public void duplicate(OpenServiceCampaignLotteryDetail entity, Long id, Long campaignId) {
-
     }
 
     private List<OpenServiceCampaignLotteryDetailPool> getOpenServiceCampaignLotteryDetailPoolList(OpenServiceCampaignLotteryDetail detail) {

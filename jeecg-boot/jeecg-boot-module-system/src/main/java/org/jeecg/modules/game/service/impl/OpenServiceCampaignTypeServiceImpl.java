@@ -35,7 +35,7 @@ public class OpenServiceCampaignTypeServiceImpl extends ServiceImpl<GameOpenServ
 
     @Override
     @SuppressWarnings("unchecked")
-    public void duplicate(OpenServiceCampaignType other, Long campaignId) {
+    public void duplicate(OpenServiceCampaignType other, long campaignId) {
         OpenServiceCampaignType copy = new OpenServiceCampaignType(other);
         copy.setCampaignId(campaignId);
         save(copy);

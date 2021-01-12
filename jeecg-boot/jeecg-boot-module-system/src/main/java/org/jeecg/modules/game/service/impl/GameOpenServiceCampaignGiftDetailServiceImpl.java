@@ -24,6 +24,11 @@ public class GameOpenServiceCampaignGiftDetailServiceImpl extends ServiceImpl<Ga
     private IOpenServiceCampaignGiftDetailItemService giftDetailItemService;
 
     @Override
+    public void duplicate(OpenServiceCampaignGiftDetail other, long typeId, long campaignId) {
+
+    }
+
+    @Override
     public void fillDetail(OpenServiceCampaignGiftDetail detail) {
         Wrapper<OpenServiceCampaignGiftDetailItem> query = Wrappers.<OpenServiceCampaignGiftDetailItem>lambdaQuery()
                 .eq(OpenServiceCampaignGiftDetailItem::getCampaignId, detail.getCampaignId())
@@ -33,8 +38,4 @@ public class GameOpenServiceCampaignGiftDetailServiceImpl extends ServiceImpl<Ga
         detail.setDetailItemList(giftDetailItemService.list(query));
     }
 
-    @Override
-    public void duplicate(OpenServiceCampaignGiftDetail entity, Long id, Long campaignId) {
-
-    }
 }

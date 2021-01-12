@@ -210,14 +210,14 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
             return Result.error("找不到对应活动配置!");
         }
 
-        Date now = DateUtils.now();
         OpenServiceCampaign copy = new OpenServiceCampaign(campaign);
-        copy.setCreateTime(now);
         campaignService.save(copy);
 
         List<OpenServiceCampaignType> typeList = getCampaignTypeList(campaign);
         if (CollUtil.isNotEmpty(typeList)) {
-
+            for (OpenServiceCampaignType entity : typeList) {
+                campaignTypeService.duplicate(entity, copy.getId());
+            }
         }
 
         return Result.ok("复制成功!");

@@ -3,6 +3,8 @@ package org.jeecg.modules.game.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.OpenServiceCampaignConsumeDetailItem;
 
+import java.util.List;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -11,4 +13,7 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignConsumeDetailItem;
  */
 public interface IOpenServiceCampaignConsumeDetailItemService extends IService<OpenServiceCampaignConsumeDetailItem> {
 
+    void duplicate(OpenServiceCampaignConsumeDetailItem other, long detailId, long typeId, long campaignId);
+
+    void duplicate(List<OpenServiceCampaignConsumeDetailItem> others, long detailId, long typeId, long campaignId);
 }

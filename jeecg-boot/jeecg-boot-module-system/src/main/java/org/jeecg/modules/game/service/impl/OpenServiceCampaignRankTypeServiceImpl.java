@@ -15,4 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class OpenServiceCampaignRankTypeServiceImpl extends ServiceImpl<GameOpenServiceCampaignRankTypeMapper, OpenServiceCampaignRankType> implements IOpenServiceCampaignRankTypeService {
 
+    @Override
+    public void duplicate(OpenServiceCampaignRankType other, long campaignId) {
+    }
 }

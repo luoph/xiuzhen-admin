@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -30,15 +31,27 @@ public class OpenServiceCampaignConsumeDetailServiceImpl extends ServiceImpl<Ope
     private IOpenServiceCampaignConsumeDetailMessageService detailMessageService;
 
     @Override
+    public void duplicate(OpenServiceCampaignConsumeDetail other, long typeId, long campaignId) {
+        OpenServiceCampaignConsumeDetail copy = new OpenServiceCampaignConsumeDetail(other);
+        copy.setCampaignTypeId(typeId);
+        copy.setCampaignId(campaignId);
+        save(copy);
+
+        if (CollUtil.isNotEmpty(other.getConsumeList())) {
+            detailItemService.duplicate(other.getConsumeList(), copy.getId(), typeId, campaignId);
+        }
+
+        if (CollUtil.isNotEmpty(other.getMessageList())) {
+            detailMessageService.duplicate(other.getMessageList(), copy.getId(), typeId, campaignId);
+        }
+    }
+
+    @Override
     public void fillDetail(OpenServiceCampaignConsumeDetail detail) {
         detail.setConsumeList(getOpenServiceCampaignConsumeDetailItemList(detail));
         detail.setMessageList(getOpenServiceCampaignConsumeDetailMessageList(detail));
     }
 
-    @Override
-    public void duplicate(OpenServiceCampaignConsumeDetail entity, Long id, Long campaignId) {
-
-    }
 
     private List<OpenServiceCampaignConsumeDetailItem> getOpenServiceCampaignConsumeDetailItemList(OpenServiceCampaignConsumeDetail detail) {
         Wrapper<OpenServiceCampaignConsumeDetailItem> query = Wrappers.<OpenServiceCampaignConsumeDetailItem>lambdaQuery()
