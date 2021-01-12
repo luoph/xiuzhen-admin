@@ -100,9 +100,11 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
             queryWrapper.eq(GamePlayerItemLog::getType, playerItemLog.getType());
         }
 
-        if (StringUtils.isAllBlank(playerItemLog.getStartDate(), playerItemLog.getEndDate())) {
-            queryWrapper.between(GamePlayerItemLog::getCreateDate, DateUtils.dateOnly(DateUtils.parseDate(playerItemLog.getStartDate())),
-                    DateUtils.dateOnly(DateUtils.parseDate(playerItemLog.getEndDate()))).orderByDesc(GamePlayerItemLog::getCreateTime);
+        if (!StringUtils.isAllBlank(playerItemLog.getStartDate(), playerItemLog.getEndDate())) {
+            queryWrapper.between(GamePlayerItemLog::getCreateTime, DateUtils.parseDate(playerItemLog.getStartDate()),
+                    DateUtils.parseDate(playerItemLog.getEndDate())).orderByDesc(GamePlayerItemLog::getCreateTime);
+        }else{
+            queryWrapper.orderByDesc(GamePlayerItemLog::getCreateTime);
         }
         return queryWrapper;
     }

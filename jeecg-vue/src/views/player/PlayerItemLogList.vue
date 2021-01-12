@@ -27,22 +27,25 @@
                             </a-select>
                         </a-form-item>
                     </a-col>
-                    <template>
-                        <a-col :md="4" :sm="5">
-                            <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
-                                <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
-                            </a-form-item>
-                            <a-form-item v-if="queryParam.type === '2'" key="2" label="消耗途径">
-                                <a-select-read-json json-file="item_expend" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
-                            </a-form-item>
-                        </a-col>
-                    </template>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="统计日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                    <a-col :md="4" :sm="5">
+                        <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
+                            <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
+                        </a-form-item>
+                        <a-form-item v-if="queryParam.type === '2'" key="2" label="消耗途径">
+                            <a-select-read-json json-file="item_expend" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="8" :sm="10">
+                    <a-col :md="8" :sm="8">
+                        <a-form-item label="统计日期">
+                            <a-range-picker
+                                :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
+                                show-time
+                                format="YYYY/MM/DD HH:mm:ss"
+                                @change="onDateChange"
+                            />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="2" :sm="10">
                         <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                         </span>
@@ -80,7 +83,8 @@ import { filterObj } from "@/utils/util";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 import ASelectReadJson from "@comp/gameserver/ASelectReadJson";
 import Vue from "vue";
-import { ACCESS_TOKEN } from "@/store/mutation-types"
+import { ACCESS_TOKEN } from "@/store/mutation-types";
+import moment from "moment";
 export default {
     name: "PlayerItemLogList",
     mixins: [JeecgListMixin],
@@ -91,6 +95,8 @@ export default {
     },
     data() {
         return {
+            dateFormat: "YYYY/MM/DD",
+            monthFormat: "YYYY/MM",
             description: "玩家道具日志管理页面",
             // 表头
             columns: [
@@ -145,10 +151,7 @@ export default {
                 {
                     title: "统计日期",
                     align: "center",
-                    dataIndex: "createDate",
-                    customRender: function (text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    dataIndex: "createTime"
                 }
             ],
             url: {
@@ -169,9 +172,14 @@ export default {
             param.pageSize = this.ipagination.pageSize;
             return filterObj(param);
         },
-        onDateChange: function (value, dateString) {
-            this.queryParam.startDate = dateString[0];
-            this.queryParam.endDate = dateString[1];
+        // onDateChange: function (value, dateString) {
+        //     this.queryParam.startDate = dateString[0];
+        //     this.queryParam.endDate = dateString[1];
+        // },
+        moment,
+        onDateChange(dates, dateStrings) {
+            this.queryParam.startDate = dateStrings[0];
+            this.queryParam.endDate = dateStrings[1];
         },
         change(serverId) {
             this.queryParam.serverId = serverId;
