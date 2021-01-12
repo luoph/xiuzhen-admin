@@ -198,12 +198,16 @@ export default {
             this.queryParam.serverId = serverId;
         },
         selectWay(way) {
+            console.log(way.length);
             for (const key in way) {
                 this.queryParam.wayName = way+",";
             }
+            if(0 == way.length){
+                this.queryParam.wayName = ""
+            }
         },
         resetWay(){
-this.queryParam.wayName = ""
+            this.queryParam.wayName = ""
         },
         handleChange(value) {
             console.log(`selected ${value}`);
