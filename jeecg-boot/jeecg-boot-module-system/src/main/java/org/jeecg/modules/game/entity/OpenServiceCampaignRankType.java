@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
@@ -21,6 +20,15 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignRankType extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignRankType() {
+    }
+
+    public OpenServiceCampaignRankType(OpenServiceCampaignRankType other) {
+//        this.id = other.id;
+        this.rankType = other.rankType;
+        this.rankTypeName = other.rankTypeName;
+    }
 
     /**
      * id

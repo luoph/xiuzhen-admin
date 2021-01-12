@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
@@ -22,6 +21,21 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignGiftDetailItem extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignGiftDetailItem() {
+    }
+
+    public OpenServiceCampaignGiftDetailItem(OpenServiceCampaignGiftDetailItem other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+//        this.giftDetailId = other.giftDetailId;
+        this.sort = other.sort;
+        this.giftType = other.giftType;
+        this.buyNum = other.buyNum;
+        this.price = other.price;
+        this.reward = other.reward;
+    }
 
     /**
      * id

@@ -3,6 +3,7 @@ package org.jeecg.modules.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.Response;
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -70,11 +71,6 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         QueryWrapper<OpenServiceCampaign> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaign, req.getParameterMap());
         Page<OpenServiceCampaign> page = new Page<>(pageNo, pageSize);
         IPage<OpenServiceCampaign> pageList = campaignService.page(page, queryWrapper);
-        // 查询子页签列表
-        for (OpenServiceCampaign record : pageList.getRecords()) {
-            List<OpenServiceCampaignType> typeList = getCampaignTypeList(record);
-            record.setTypeList(typeList);
-        }
         return Result.ok(pageList);
     }
 
@@ -87,12 +83,11 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "开服活动(1级)-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaign model) {
-        campaignService.save(model);
-        List<String> serverIds = StrUtil.splitTrim(model.getServerIds(), ",");
         // 排序区服id
+        List<String> serverIds = StrUtil.splitTrim(model.getServerIds() != null ? model.getServerIds() : "", ",");
         Collections.sort(serverIds);
         model.setServerIds(StrUtil.join(",", serverIds));
-        updateTypeList(true, model);
+        campaignService.save(model);
         return Result.ok("添加成功！");
     }
 
@@ -106,7 +101,6 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaign model) {
         campaignService.updateById(model);
-        updateTypeList(false, model);
         return Result.ok("编辑成功!");
     }
 
@@ -208,6 +202,27 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         return Result.ok("同步成功!");
     }
 
+    @AutoLog(value = "活动配置-复制")
+    @GetMapping(value = "/duplicate")
+    public Result<?> duplicate(@RequestParam(name = "id") String id) {
+        OpenServiceCampaign campaign = campaignService.getById(id);
+        if (campaign == null) {
+            return Result.error("找不到对应活动配置!");
+        }
+
+        Date now = DateUtils.now();
+        OpenServiceCampaign copy = new OpenServiceCampaign(campaign);
+        copy.setCreateTime(now);
+        campaignService.save(copy);
+
+        List<OpenServiceCampaignType> typeList = getCampaignTypeList(campaign);
+        if (CollUtil.isNotEmpty(typeList)) {
+
+        }
+
+        return Result.ok("复制成功!");
+    }
+
     private void updateTypeList(boolean isAdd, OpenServiceCampaign model) {
         // 过滤空的新增页签
         List<OpenServiceCampaignType> nowList = model.getTypeList().stream().filter(t -> t.getType() != null).collect(Collectors.toList());
@@ -274,7 +289,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
 
         List<OpenServiceCampaignType> list = campaignTypeService.list(query);
         for (OpenServiceCampaignType model : list) {
-            campaignTypeService.fillTabDetail(model, true);
+            campaignTypeService.fillTabDetail(model);
         }
         return list;
     }

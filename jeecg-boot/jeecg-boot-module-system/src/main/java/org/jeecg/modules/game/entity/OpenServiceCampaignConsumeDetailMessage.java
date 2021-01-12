@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
@@ -25,6 +24,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class OpenServiceCampaignConsumeDetailMessage extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignConsumeDetailMessage() {
+    }
+
+    public OpenServiceCampaignConsumeDetailMessage(OpenServiceCampaignConsumeDetailMessage other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+//        this.consumeDetailId = other.consumeDetailId;
+        this.sendTime = other.sendTime;
+        this.message = other.message;
+        this.num = other.num;
+        this.email = other.email;
+    }
 
     /**
      * id

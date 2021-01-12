@@ -11,4 +11,7 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignLotteryDetail;
  */
 public interface IOpenServiceCampaignLotteryDetailService extends IService<OpenServiceCampaignLotteryDetail> {
 
+    void fillDetail(OpenServiceCampaignLotteryDetail detail);
+
+    void duplicate(OpenServiceCampaignLotteryDetail entity, Long id, Long campaignId);
 }

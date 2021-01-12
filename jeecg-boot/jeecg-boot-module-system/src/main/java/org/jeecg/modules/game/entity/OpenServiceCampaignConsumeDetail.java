@@ -2,13 +2,15 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -22,6 +24,23 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignConsumeDetail extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignConsumeDetail() {
+    }
+
+    public OpenServiceCampaignConsumeDetail(OpenServiceCampaignConsumeDetail other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+        this.startDay = other.startDay;
+        this.duration = other.duration;
+        this.tabName = other.tabName;
+        this.name = other.name;
+        this.banner = other.banner;
+        this.consumeRewardEmailTitle = other.consumeRewardEmailTitle;
+        this.consumeRewardEmailContent = other.consumeRewardEmailContent;
+        this.helpMsg = other.helpMsg;
+    }
 
     /**
      * id
@@ -98,5 +117,11 @@ public class OpenServiceCampaignConsumeDetail extends BaseEntity {
     @ExcelProperty("帮助信息")
     @Excel(name = "帮助信息", width = 15)
     private java.lang.String helpMsg;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignConsumeDetailItem> consumeList;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignConsumeDetailMessage> messageList;
 
 }
