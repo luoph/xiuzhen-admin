@@ -11,4 +11,6 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignRankType;
  */
 public interface IOpenServiceCampaignRankTypeService extends IService<OpenServiceCampaignRankType> {
 
+    void duplicate(OpenServiceCampaignRankType other, long campaignId);
+
 }

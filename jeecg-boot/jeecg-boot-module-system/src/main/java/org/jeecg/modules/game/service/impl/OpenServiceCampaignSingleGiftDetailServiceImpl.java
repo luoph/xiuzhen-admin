@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -28,6 +29,22 @@ public class OpenServiceCampaignSingleGiftDetailServiceImpl extends ServiceImpl<
     private IOpenServiceCampaignSingleGiftNoticeService singleGiftNoticeService;
 
     @Override
+    public void duplicate(OpenServiceCampaignSingleGiftDetail other, long typeId, long campaignId) {
+        OpenServiceCampaignSingleGiftDetail copy = new OpenServiceCampaignSingleGiftDetail(other);
+        copy.setCampaignTypeId(typeId);
+        copy.setCampaignId(campaignId);
+        save(copy);
+
+        if (CollUtil.isNotEmpty(other.getDetailItemList())) {
+            singleGiftItemService.duplicate(other.getDetailItemList(), copy.getId(), typeId, campaignId);
+        }
+
+        if (CollUtil.isNotEmpty(other.getMessageList())) {
+            singleGiftNoticeService.duplicate(other.getMessageList(), copy.getId(), typeId, campaignId);
+        }
+    }
+
+    @Override
     public void fillDetail(OpenServiceCampaignSingleGiftDetail detail) {
         Wrapper<OpenServiceCampaignSingleGiftItem> itemQuery = Wrappers.<OpenServiceCampaignSingleGiftItem>lambdaQuery()
                 .eq(OpenServiceCampaignSingleGiftItem::getCampaignId, detail.getCampaignId())
@@ -42,9 +59,5 @@ public class OpenServiceCampaignSingleGiftDetailServiceImpl extends ServiceImpl<
         detail.setMessageList(singleGiftNoticeService.list(noticeQuery));
     }
 
-    @Override
-    public void duplicate(OpenServiceCampaignSingleGiftDetail entity, Long id, Long campaignId) {
-
-    }
 
 }

@@ -3,6 +3,8 @@ package org.jeecg.modules.game.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.OpenServiceCampaignSingleGiftNotice;
 
+import java.util.List;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -11,4 +13,7 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignSingleGiftNotice;
  */
 public interface IOpenServiceCampaignSingleGiftNoticeService extends IService<OpenServiceCampaignSingleGiftNotice> {
 
+    void duplicate(OpenServiceCampaignSingleGiftNotice other, long detailId, long typeId, long campaignId);
+
+    void duplicate(List<OpenServiceCampaignSingleGiftNotice> others, long detailId, long typeId, long campaignId);
 }

@@ -19,7 +19,7 @@ public interface IOpenServiceCampaignTypeService extends IService<OpenServiceCam
      * @param other      复制的数据源
      * @param campaignId 新的活动id
      */
-    void duplicate(OpenServiceCampaignType other, Long campaignId);
+    void duplicate(OpenServiceCampaignType other, long campaignId);
 
     /**
      * 填充具体的活动配置信息

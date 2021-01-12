@@ -11,4 +11,6 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignGiftDetailItem;
  */
 public interface IOpenServiceCampaignGiftDetailItemService extends IService<OpenServiceCampaignGiftDetailItem> {
 
+    void duplicate(OpenServiceCampaignGiftDetailItem other, long detailId, long typeId, long campaignId);
+
 }

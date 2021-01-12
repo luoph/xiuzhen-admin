@@ -11,7 +11,8 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignConsumeDetail;
  */
 public interface IOpenServiceCampaignConsumeDetailService extends IService<OpenServiceCampaignConsumeDetail> {
 
+    void duplicate(OpenServiceCampaignConsumeDetail other, long typeId, long campaignId);
+
     void fillDetail(OpenServiceCampaignConsumeDetail detail);
 
-    void duplicate(OpenServiceCampaignConsumeDetail entity, Long id, Long campaignId);
 }
