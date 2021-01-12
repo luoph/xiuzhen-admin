@@ -15,8 +15,8 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="道具ID">
-                            <a-input placeholder="请输入道具ID" v-model="queryParam.itemId"></a-input>
+                        <a-form-item label="道具名">
+                            <a-input placeholder="请输入道具名" v-model="queryParam.itemIdName"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="3" :sm="3">
@@ -27,19 +27,19 @@
                             </a-select>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="5">
+                    <a-col :md="8" :sm="5">
                         <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
-                            <a-select-read-json json-file="item_fall_rule" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
+                            <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径" @onSelectOptionSome="selectWay"></a-select-read-json-some>
                         </a-form-item>
                         <a-form-item v-if="queryParam.type === '2'" key="2" label="消耗途径">
-                            <a-select-read-json json-file="item_expend" placeholder="请选择途径" @onSelectOption="selectWay"></a-select-read-json>
+                            <a-select-read-json-some json-file="item_expend" placeholder="请选择途径" @onSelectOptionSome="selectWay"></a-select-read-json-some>
                         </a-form-item>
                     </a-col>
                     <a-col :md="8" :sm="8">
                         <a-form-item label="统计日期">
                             <a-range-picker
                                 :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                                show-time
+                                :show-time="{ defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')] }"
                                 format="YYYY/MM/DD HH:mm:ss"
                                 @change="onDateChange"
                             />
@@ -47,7 +47,7 @@
                     </a-col>
                     <a-col :md="2" :sm="10">
                         <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="search" @click="searchQuery()">查询</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -82,7 +82,9 @@ import JDate from "@/components/jeecg/JDate.vue";
 import { filterObj } from "@/utils/util";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 import ASelectReadJson from "@comp/gameserver/ASelectReadJson";
+import ASelectReadJsonSome from "@comp/gameserver/ASelectReadJsonSome";
 import Vue from "vue";
+import { getAction } from "@/api/manage";
 import { ACCESS_TOKEN } from "@/store/mutation-types";
 import moment from "moment";
 export default {
@@ -91,7 +93,8 @@ export default {
     components: {
         JDate,
         ServerSelect,
-        ASelectReadJson
+        ASelectReadJson,
+        ASelectReadJsonSome
     },
     data() {
         return {
@@ -121,6 +124,11 @@ export default {
                     dataIndex: "itemId"
                 },
                 {
+                    title: "道具名",
+                    align: "center",
+                    dataIndex: "itemIdName"
+                },
+                {
                     title: "数量",
                     align: "center",
                     dataIndex: "num"
@@ -129,6 +137,11 @@ export default {
                     title: "途径",
                     align: "center",
                     dataIndex: "way"
+                },
+                {
+                    title: "途径名",
+                    align: "center",
+                    dataIndex: "wayName"
                 },
                 {
                     title: "更新前数量",
@@ -185,9 +198,28 @@ export default {
             this.queryParam.serverId = serverId;
         },
         selectWay(way) {
-            this.queryParam.way = way;
+            for (const key in way) {
+                this.queryParam.wayName = way+",";
+            }
         },
-
+        handleChange(value) {
+            console.log(`selected ${value}`);
+        },
+        searchQuery() {
+            let param = this.queryParam;
+            console.log(param);
+            getAction(this.url.list, param).then((res) => {
+                if (res.success) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.current = res.result.current;
+                    this.ipagination.size = res.result.size.toString();
+                    this.ipagination.total = res.result.total;
+                    this.ipagination.pages = res.result.pages;
+                } else {
+                    this.$message.error(res.message);
+                }
+            });
+        },
         downloadExcel(filename) {
             var xhr = new XMLHttpRequest();
             xhr.open("post", window._CONFIG["domainURL"] + this.url.downloadExcel, true);

@@ -62,6 +62,15 @@ public class GamePlayerItemLog implements Serializable {
     private java.lang.Integer itemId;
 
     /**
+     * 道具名称
+     */
+    @ColumnWidth(15)
+    @ExcelProperty("道具名称")
+    @TableField(exist = false)
+    @Excel(name = "道具名称", width = 15)
+    private java.lang.String itemIdName;
+
+    /**
      * 数量
      */
     @ColumnWidth(15)
@@ -76,6 +85,15 @@ public class GamePlayerItemLog implements Serializable {
     @ExcelProperty("途径")
     @Excel(name = "途径", width = 15)
     private java.lang.Integer way;
+
+    /**
+     * 途径名称
+     */
+    @ColumnWidth(15)
+    @ExcelProperty("途径名称")
+    @TableField(exist = false)
+    @Excel(name = "途径名称", width = 15)
+    private java.lang.String wayName;
 
     /**
      * 方式：1-获取 2-使用
@@ -191,9 +209,9 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 途径类型对应的名称 (产销点)
      */
-    @ExcelIgnore
-    @TableField(exist = false)
-    private String wayName;
+//    @ExcelIgnore
+//    @TableField(exist = false)
+//    private String wayName;
 
     /**
      * 玩家数量
