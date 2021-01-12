@@ -21,7 +21,7 @@
                     </a-col>
                     <a-col :md="3" :sm="3">
                         <a-form-item label="产销类型">
-                            <a-select placeholder="产销类型" v-model="queryParam.type">
+                            <a-select placeholder="产销类型" v-model="queryParam.type" @click="resetWay()">
                                 <a-select-option value="1">产出</a-select-option>
                                 <a-select-option value="2">消耗</a-select-option>
                             </a-select>
@@ -201,6 +201,9 @@ export default {
             for (const key in way) {
                 this.queryParam.wayName = way+",";
             }
+        },
+        resetWay(){
+this.queryParam.wayName = ""
         },
         handleChange(value) {
             console.log(`selected ${value}`);
