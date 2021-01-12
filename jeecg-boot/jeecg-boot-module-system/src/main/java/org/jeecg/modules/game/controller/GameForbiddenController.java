@@ -43,37 +43,6 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     private IGameForbiddenRecordService gameForbiddenRecordService;
 
     /**
-     * *将新对象的值赋给旧对象
-     *
-     * @param old       旧对象
-     * @param ne        新对象
-     * @param fieldsOut 过滤属性
-     * @throws Exception
-     */
-    public static void copyFieldWithOut(Object old, Object ne, String[] fieldsOut) throws Exception {
-
-        Class<?> clazz = old.getClass();
-        if (!clazz.getName().equals(ne.getClass().getName())) {
-            return;
-        }
-        List<String> outList = new ArrayList<String>();
-        if (fieldsOut != null) {
-            outList = Arrays.asList(fieldsOut);
-        }
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field f : fields) {
-            int mod = f.getModifiers();
-            if (Modifier.isStatic(mod) || Modifier.isFinal(mod)) {
-                continue;
-            }
-            if (!outList.contains(f.getName())) {
-                f.setAccessible(true);
-                f.set(old, f.get(ne));
-            }
-        }
-    }
-
-    /**
      * 分页列表查询
      *
      * @param gameForbidden 数据实体
@@ -95,16 +64,14 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        Date rangeDateBeginDate = new Date();
-        Date rangeDateEndDate = new Date();
+        Date rangeDateBeginDate = null;
+        Date rangeDateEndDate = null;
         if (0 == serverId) {
             return Result.error("请选择服务器！");
         }
-        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            return Result.error("请输入时间！");
-        } else {
-            rangeDateBeginDate = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
-            rangeDateEndDate = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
+        if (!StringUtils.isEmpty(rangeDateBegin) || !StringUtils.isEmpty(rangeDateEnd)) {
+            rangeDateBeginDate = DateUtils.startTimeOfDate(DateUtils.parseDate(rangeDateBegin));
+            rangeDateEndDate = DateUtils.startTimeOfDate(DateUtils.parseDate(rangeDateEnd));
         }
         gameForbidden.setDelFlag(0);
         gameForbidden.setServerId(serverId);
@@ -117,8 +84,12 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
         }
         QueryWrapper<GameForbidden> queryWrapper = QueryGenerator.initQueryWrapper(gameForbidden, req.getParameterMap());
         Page<GameForbidden> page = new Page<>(pageNo, pageSize);
-        queryWrapper.ge("create_time", rangeDateBeginDate);
-        queryWrapper.le("create_time", rangeDateEndDate);
+        if(null != rangeDateBeginDate){
+            queryWrapper.ge("create_time", rangeDateBeginDate);
+        }
+        if(null != rangeDateBeginDate){
+            queryWrapper.le("create_time", rangeDateEndDate);
+        }
         IPage<GameForbidden> pageList = gameForbiddenService.page(page, queryWrapper);
         return Result.ok(pageList);
     }

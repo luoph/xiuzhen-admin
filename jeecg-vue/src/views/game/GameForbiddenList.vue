@@ -182,11 +182,6 @@ export default {
                     align: "center",
                     dataIndex: "reason"
                 },
-                // {
-                //     title: "数据状态	",
-                //     align: "center",
-                //     dataIndex: "delFlag"
-                // },
                 {
                     title: "封禁时间",
                     align: "center",
