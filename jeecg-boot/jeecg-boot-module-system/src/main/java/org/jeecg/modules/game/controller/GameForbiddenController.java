@@ -55,7 +55,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameForbidden gameForbidden,
                                    @RequestParam(name = "channelId", defaultValue = "") Integer channelId,
-                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                                   @RequestParam(name = "serverId", defaultValue = "") Integer serverId,
                                    @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                    @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                                    @RequestParam(name = "type", defaultValue = "") String type,
@@ -66,9 +66,6 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
                                    HttpServletRequest req) {
         Date rangeDateBeginDate = null;
         Date rangeDateEndDate = null;
-        if (0 == serverId) {
-            return Result.error("请选择服务器！");
-        }
         if (!StringUtils.isEmpty(rangeDateBegin) || !StringUtils.isEmpty(rangeDateEnd)) {
             rangeDateBeginDate = DateUtils.startTimeOfDate(DateUtils.parseDate(rangeDateBegin));
             rangeDateEndDate = DateUtils.startTimeOfDate(DateUtils.parseDate(rangeDateEnd));
