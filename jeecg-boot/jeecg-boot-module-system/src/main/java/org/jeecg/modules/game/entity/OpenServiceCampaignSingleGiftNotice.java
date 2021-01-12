@@ -25,6 +25,20 @@ public class OpenServiceCampaignSingleGiftNotice extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    public OpenServiceCampaignSingleGiftNotice() {
+    }
+
+    public OpenServiceCampaignSingleGiftNotice(OpenServiceCampaignSingleGiftNotice other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+        this.giftDetailId = other.giftDetailId;
+        this.num = other.num;
+        this.message = other.message;
+        this.email = other.email;
+        this.sendTime = other.sendTime;
+    }
+
     /**
      * id
      */

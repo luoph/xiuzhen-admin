@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
@@ -22,6 +21,21 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignRankDetailStandard extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignRankDetailStandard() {
+    }
+
+    public OpenServiceCampaignRankDetailStandard(OpenServiceCampaignRankDetailStandard other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+//        this.rankDetailId = other.rankDetailId;
+        this.score = other.score;
+        this.description = other.description;
+        this.reward = other.reward;
+        this.message = other.message;
+        this.adShowTime = other.adShowTime;
+    }
 
     /**
      * id

@@ -26,6 +26,20 @@ public class OpenServiceCampaign extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    public OpenServiceCampaign() {
+    }
+
+    public OpenServiceCampaign(OpenServiceCampaign other) {
+//        this.id = other.id;
+        this.name = other.name;
+//        this.serverIds = other.serverIds;
+//        this.lastServerIds = other.lastServerIds;
+        this.icon = other.icon;
+        this.status = other.status;
+        this.autoOpen = other.autoOpen;
+        this.remark = other.remark;
+    }
+
     /**
      * 活动id
      */
@@ -76,4 +90,5 @@ public class OpenServiceCampaign extends BaseEntity {
 
     @TableField(exist = false)
     private List<OpenServiceCampaignType> typeList;
+
 }

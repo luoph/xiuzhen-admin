@@ -11,4 +11,8 @@ import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetail;
  */
 public interface IOpenServiceCampaignRankDetailService extends IService<OpenServiceCampaignRankDetail> {
 
+    void duplicate(OpenServiceCampaignRankDetail detail, long typeId, long campaignId);
+
+    void fillDetail(OpenServiceCampaignRankDetail detail);
+
 }

@@ -2,12 +2,15 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -21,6 +24,24 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignGiftDetail extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignGiftDetail() {
+    }
+
+    public OpenServiceCampaignGiftDetail(OpenServiceCampaignGiftDetail other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+        this.name = other.name;
+        this.tabName = other.tabName;
+        this.banner = other.banner;
+        this.resType = other.resType;
+        this.skeleton = other.skeleton;
+        this.startDay = other.startDay;
+        this.sort = other.sort;
+        this.duration = other.duration;
+        this.helpMsg = other.helpMsg;
+    }
 
     /**
      * id
@@ -103,5 +124,8 @@ public class OpenServiceCampaignGiftDetail extends BaseEntity {
     @ExcelProperty("帮助信息")
     @Excel(name = "帮助信息", width = 15)
     private java.lang.String helpMsg;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignGiftDetailItem> detailItemList;
 
 }

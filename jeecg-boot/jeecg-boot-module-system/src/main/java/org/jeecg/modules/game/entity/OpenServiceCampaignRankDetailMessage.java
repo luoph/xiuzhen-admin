@@ -2,7 +2,6 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,6 +24,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class OpenServiceCampaignRankDetailMessage extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignRankDetailMessage() {
+    }
+
+    public OpenServiceCampaignRankDetailMessage(OpenServiceCampaignRankDetailMessage other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+//        this.rankDetailId = other.rankDetailId;
+        this.sendTime = other.sendTime;
+        this.message = other.message;
+        this.num = other.num;
+        this.email = other.email;
+    }
 
     /**
      * id

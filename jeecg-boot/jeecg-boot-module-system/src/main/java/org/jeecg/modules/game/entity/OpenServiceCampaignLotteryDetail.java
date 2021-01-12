@@ -2,13 +2,15 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -22,6 +24,36 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignLotteryDetail extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignLotteryDetail() {
+    }
+
+    public OpenServiceCampaignLotteryDetail(OpenServiceCampaignLotteryDetail other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+        this.startDay = other.startDay;
+        this.duration = other.duration;
+        this.tabName = other.tabName;
+        this.name = other.name;
+        this.banner = other.banner;
+        this.skeleton = other.skeleton;
+        this.rewardRecordNum = other.rewardRecordNum;
+        this.rewardRecordMsg = other.rewardRecordMsg;
+        this.rewardMsg = other.rewardMsg;
+        this.probabilityMsg = other.probabilityMsg;
+        this.lotteryType = other.lotteryType;
+        this.ssrShowReward = other.ssrShowReward;
+        this.srShowReward = other.srShowReward;
+        this.showReward = other.showReward;
+        this.resetReward = other.resetReward;
+        this.rewardPool = other.rewardPool;
+        this.rankRewardEmailTitle = other.rankRewardEmailTitle;
+        this.rankRewardEmailContent = other.rankRewardEmailContent;
+        this.scoreRewardEmailTitle = other.scoreRewardEmailTitle;
+        this.scoreRewardEmailContent = other.scoreRewardEmailContent;
+        this.helpMsg = other.helpMsg;
+    }
 
     /**
      * id
@@ -177,4 +209,13 @@ public class OpenServiceCampaignLotteryDetail extends BaseEntity {
     @ExcelProperty("帮助信息")
     @Excel(name = "帮助信息", width = 15)
     private java.lang.String helpMsg;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignLotteryDetailPool> poolList;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignLotteryDetailRanking> rankingList;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignLotteryDetailScore> scoreList;
 }

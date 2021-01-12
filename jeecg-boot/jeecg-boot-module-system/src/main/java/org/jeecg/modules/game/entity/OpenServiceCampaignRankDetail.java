@@ -2,12 +2,15 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -21,6 +24,28 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignRankDetail extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignRankDetail() {
+    }
+
+    public OpenServiceCampaignRankDetail(OpenServiceCampaignRankDetail other) {
+//        this.id = other.id;
+//        this.campaignId = other.campaignId;
+//        this.campaignTypeId = other.campaignTypeId;
+        this.name = other.name;
+        this.tabName = other.tabName;
+        this.rankType = other.rankType;
+        this.sort = other.sort;
+        this.startDay = other.startDay;
+        this.duration = other.duration;
+        this.banner = other.banner;
+        this.rewardImg = other.rewardImg;
+        this.combatPower = other.combatPower;
+        this.rankNum = other.rankNum;
+        this.rankRewardEmail = other.rankRewardEmail;
+        this.standardRewardEmail = other.standardRewardEmail;
+        this.helpMsg = other.helpMsg;
+    }
 
     /**
      * id
@@ -130,4 +155,17 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
     @ExcelProperty("帮助信息")
     @Excel(name = "帮助信息", width = 15)
     private java.lang.String helpMsg;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignRankDetailMessage> messageList;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignRankDetailRanking> rankingList;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignRankDetailScore> scoreList;
+
+    @TableField(exist = false)
+    private List<OpenServiceCampaignRankDetailStandard> standardList;
+
 }

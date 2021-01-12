@@ -2,12 +2,15 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -21,6 +24,15 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class OpenServiceCampaignType extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
+
+    public OpenServiceCampaignType() {
+    }
+
+    public OpenServiceCampaignType(OpenServiceCampaignType other) {
+        this.type = other.type;
+        this.sort = other.sort;
+        this.remark = other.remark;
+    }
 
     /**
      * id
@@ -54,4 +66,10 @@ public class OpenServiceCampaignType extends BaseEntity {
     @ExcelProperty("活动备注")
     @Excel(name = "活动备注", width = 15)
     private java.lang.String remark;
+
+    /**
+     * 活动明细
+     */
+    @TableField(exist = false)
+    private List<?> details;
 }

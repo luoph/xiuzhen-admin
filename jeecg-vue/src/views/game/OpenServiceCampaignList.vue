@@ -105,9 +105,10 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
-                    <!-- <a @click="handleTabList(record)">页签配置</a>
-                    <a-divider type="vertical" /> -->
-                    <a @click="handleSyncCampaign(record)">同步到区服</a>
+                    <a @click="handleDuplicate(record)">复制</a>
+                    <a-divider type="vertical" />
+                    <!-- <a @click="handleTabList(record)">页签配置</a> -->
+                    <a @click="handleSync(record)">同步到区服</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -134,7 +135,6 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
 import { filterObj } from "@/utils/util";
 import OpenServiceCampaignModal from "./modules/OpenServiceCampaignModal";
-// import OpenServiceCampaignTabList from "./modules/OpenServiceCampaignTabList";
 import JDate from "@/components/jeecg/JDate.vue";
 import JInput from "@/components/jeecg/JInput";
 
@@ -235,8 +235,9 @@ export default {
             ],
             url: {
                 list: "game/openServiceCampaign/list",
-                delete: "game/openServiceCampaign/delete",
                 sync: "game/openServiceCampaign/sync",
+                delete: "game/openServiceCampaign/delete",
+                duplicate: "game/openServiceCampaign/duplicate",
                 deleteBatch: "game/openServiceCampaign/deleteBatch",
                 exportXlsUrl: "game/openServiceCampaign/exportXls",
                 importExcelUrl: "game/openServiceCampaign/importExcel"
@@ -270,16 +271,22 @@ export default {
             this.$refs.modalForm.title = "活动信息";
             this.$refs.modalForm.disableSubmit = false;
         },
-        handleServerList: function(record) {
-            this.$refs.serverListModal.edit(record);
-            this.$refs.serverListModal.title = "活动信息";
+        handleDuplicate: function(record) {
+            const that = this;
+            that.confirmLoading = true;
+            getAction(that.url.duplicate, { id: record.id })
+                .then(res => {
+                    if (res.success) {
+                        that.$message.success("复制成功");
+                    } else {
+                        that.$message.error("复制失败");
+                    }
+                })
+                .finally(() => {
+                    that.confirmLoading = false;
+                });
         },
-        handleTabList: function(record) {
-            this.$refs.tabListModal.edit(record);
-            this.$refs.tabListModal.title = "页签配置";
-            this.$refs.tabListModal.disableSubmit = false;
-        },
-        handleSyncCampaign: function(record) {
+        handleSync: function(record) {
             const that = this;
             that.confirmLoading = true;
             getAction(that.url.sync, { id: record.id })
@@ -293,6 +300,15 @@ export default {
                 .finally(() => {
                     that.confirmLoading = false;
                 });
+        },
+        handleServerList: function(record) {
+            this.$refs.serverListModal.edit(record);
+            this.$refs.serverListModal.title = "活动信息";
+        },
+        handleTabList: function(record) {
+            this.$refs.tabListModal.edit(record);
+            this.$refs.tabListModal.title = "页签配置";
+            this.$refs.tabListModal.disableSubmit = false;
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {
