@@ -11,16 +11,16 @@
                     <a-textarea v-decorator="['url', validatorRules.url]" placeholder="请输入问卷调查地址"></a-textarea>
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="状态" v-decorator="['type', validatorRules.status]" initialValue="1">
+                    <a-select placeholder="状态" v-decorator="['status', validatorRules.status]" initialValue="1">
                         <a-select-option :value="0">无效</a-select-option>
                         <a-select-option :value="1">有效</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-col :md="7" :sm="8">
+                    <a-col :md="8" :sm="8">
                         <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
                     </a-col>
-                    <a-col :md="7" :sm="8">
+                    <a-col :md="8" :sm="8">
                         <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
                     </a-col>
                 </a-form-item>
@@ -54,7 +54,7 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1000,
             visible: false,
             isEdit: false,
             model: {},

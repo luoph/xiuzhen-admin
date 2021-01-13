@@ -21,10 +21,10 @@
                     <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
                 </a-form-item>
                 <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-col :md="7" :sm="8">
+                    <a-col :md="8" :sm="8">
                         <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
                     </a-col>
-                    <a-col :md="7" :sm="8">
+                    <a-col :md="8" :sm="8">
                         <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
                     </a-col>
                 </a-form-item>

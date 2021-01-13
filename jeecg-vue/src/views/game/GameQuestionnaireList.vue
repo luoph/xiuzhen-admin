@@ -10,6 +10,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
+                        <a-form-item label="备注">
+                            <j-input placeholder="请输入备注" v-model="queryParam.remark"></j-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="状态">
                             <a-select placeholder="请选择状态" v-model="queryParam.status" initialValue="0">
                                 <a-select-option :value="0">关闭</a-select-option>
@@ -19,18 +24,13 @@
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="8" :sm="16">
-                            <a-form-item label="活动开始时间">
+                            <a-form-item label="开始时间">
                                 <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
                             </a-form-item>
                         </a-col>
                         <a-col :md="8" :sm="16">
-                            <a-form-item label="活动结束时间">
+                            <a-form-item label="结束时间">
                                 <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="备注">
-                                <a-input placeholder="请输入备注" v-model="queryParam.remark"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -94,6 +94,10 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
+                <span slot="serverIdTags" slot-scope="text, record">
+                    <a-tag v-if="!text" color="red">未设置</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                </span>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -120,6 +124,7 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import JInput from "@/components/jeecg/JInput";
 import GameQuestionnaireModal from "./modules/GameQuestionnaireModal";
 import JDate from "@/components/jeecg/JDate.vue";
 import { filterObj } from "@/utils/util";
@@ -130,6 +135,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         JDate,
+        JInput,
         GameQuestionnaireModal
     },
     data() {
@@ -151,7 +157,8 @@ export default {
                 {
                     title: "服务器id",
                     align: "center",
-                    dataIndex: "serverIds"
+                    dataIndex: "serverIds",
+                    scopedSlots: { customRender: "serverIdTags" }
                 },
                 {
                     title: "问卷调查地址",
