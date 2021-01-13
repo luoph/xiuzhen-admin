@@ -33,6 +33,7 @@ public class OpenServiceCampaignGiftDetailItem extends BaseEntity {
         this.sort = other.sort;
         this.giftType = other.giftType;
         this.buyNum = other.buyNum;
+        this.discount = other.discount;
         this.price = other.price;
         this.reward = other.reward;
     }
