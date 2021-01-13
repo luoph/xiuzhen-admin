@@ -130,10 +130,11 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 创建时间
      */
-    @ExcelIgnore
+    @ColumnWidth(15)
+    @ExcelProperty("统计日期")
     @Excel(name = "创建时间", width = 15)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date createTime;
 
     /**
@@ -151,7 +152,7 @@ public class GamePlayerItemLog implements Serializable {
      */
 
     @ColumnWidth(15)
-    @ExcelProperty("统计日期")
+    @ExcelIgnore
     @Excel(name = "统计日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
