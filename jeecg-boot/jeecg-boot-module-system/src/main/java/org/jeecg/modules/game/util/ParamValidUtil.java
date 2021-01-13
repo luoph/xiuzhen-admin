@@ -2,6 +2,7 @@ package org.jeecg.modules.game.util;
 
 import cn.hutool.core.date.DatePattern;
 import cn.youai.commons.model.ResponseCode;
+import cn.youai.xiuzhen.entity.pojo.DateRange;
 import cn.youai.xiuzhen.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.constant.ErrorCode;
@@ -73,8 +74,8 @@ public final class ParamValidUtil {
         return null;
     }
 
-    public static Date[] convertDateParam(String rangeDateBegin, String rangeDateEnd, Integer days) {
-        boolean isValidRangeDate = !StringUtils.isEmpty(rangeDateBegin) && !StringUtils.isEmpty(rangeDateEnd);
+    public static Date[] convertDateParam(String startDate, String endDate, Integer days) {
+        boolean isValidRangeDate = !StringUtils.isEmpty(startDate) && !StringUtils.isEmpty(endDate);
         if (!isValidRangeDate && (null == days || days <= 0)) {
             return null;
         }
@@ -82,14 +83,19 @@ public final class ParamValidUtil {
         Date startTime;
         Date endTime;
         if (isValidRangeDate) {
-            startTime = DateUtils.parseDate(rangeDateBegin);
-            endTime = DateUtils.parseDate(rangeDateEnd);
+            startTime = DateUtils.parseDate(startDate);
+            endTime = DateUtils.parseDate(endDate);
         } else {
             Date current = DateUtils.now();
             startTime = DateUtils.addDays(current, -days + 1);
             endTime = DateUtils.endTimeOfDate(current);
         }
         return new Date[]{DateUtils.startTimeOfDate(startTime), DateUtils.endTimeOfDate(endTime)};
+    }
+
+    public static DateRange getDateRange(String startDate, String endDate, Integer days) {
+        Date[] dates = convertDateParam(startDate, endDate, days);
+        return null != dates ? new DateRange(dates[0], dates[1]) : null;
     }
 
 }
