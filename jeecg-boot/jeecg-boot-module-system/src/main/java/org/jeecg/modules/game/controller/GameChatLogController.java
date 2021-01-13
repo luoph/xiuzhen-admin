@@ -6,14 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.modules.game.entity.ChatMessageVO;
-import org.jeecg.modules.game.service.IFriendChatMessageService;
 import org.jeecg.modules.game.service.IGameChatLogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,9 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("game/chatLog")
 public class GameChatLogController {
 
-    @Autowired
-    private IFriendChatMessageService friendChatMessageService;
-    @Autowired
+    @Resource
     private IGameChatLogService iGameChatLogService;
 
 
@@ -66,20 +63,28 @@ public class GameChatLogController {
             rangeTimeBegin = rangeTimeBegin + " 00:00:00";
             rangeTimeEnd = rangeTimeEnd + " 23:59:59";
         }
+        //公共聊天
+        int commonType = 1;
+        //仙盟聊天
+        int immortalType = 2;
+        //私聊
+        int selfType = 3;
+        //所有
+        int allType = 4;
 
-        if (type == 1) {
+        if (type == commonType) {
             // 公共聊天
             list = iGameChatLogService.queryCommonChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
             pageVo.setRecords(list).setTotal(list.size());
-        } else if (type == 2) {
+        } else if (type == immortalType) {
             // 仙盟聊天（帮派）
             list = iGameChatLogService.queryImmortalChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
             pageVo.setRecords(list).setTotal(list.size());
-        } else if (type == 3) {
+        } else if (type == selfType) {
             // 私聊
             list = iGameChatLogService.querySelfChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
             pageVo.setRecords(list).setTotal(list.size());
-        } else if (type == 4) {
+        } else if (type == allType) {
             // 公共聊天
             List<ChatMessageVO> list1 = iGameChatLogService.queryCommonChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
             // 仙盟聊天（帮派）

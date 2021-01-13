@@ -45,8 +45,8 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
     public List<ShopMallLog> queryShopMallList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int type) {
         List<ShopMallLog> list = null;
         try {
-            Date rangeDateBeginTime = null;
-            Date rangeDateEndTime = null;
+            Date rangeDateBeginTime;
+            Date rangeDateEndTime;
             if (days == 0) {
                 rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
                 rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
@@ -90,16 +90,14 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
         InputStream in = this.getClass().getResourceAsStream("/json/item.json");
         String file1 = new BufferedReader(new InputStreamReader(in))
                 .lines().collect(Collectors.joining(System.lineSeparator()));
-        String dest = "";
-        if (file1!=null) {
-            Pattern p = compile("\\s*|\t|\r|\n");
-            Matcher m = p.matcher(file1);
-            dest = m.replaceAll("");
-        }
+        String dest;
+        Pattern p = compile("\\s*|\t|\r|\n");
+        Matcher m = p.matcher(file1);
+        dest = m.replaceAll("");
         file1 = dest;
         JSONArray jsonArray = JSONArray.parseArray(file1);
         //道具id和名称map
-        Map<String, String> wayNameMap = new HashMap<>();
+        Map<String, String> wayNameMap = new HashMap<>(16);
         for (int i = 0; i < jsonArray.size(); i++) {
             wayNameMap.put(jsonArray.getJSONObject(i).getString("item_id"),jsonArray.getJSONObject(i).getString("name"));
         }
@@ -113,41 +111,41 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
         } finally {
             DataSourceHelper.useDefaultDatabase();
         }
-
+        List<ShopMallLog> shopMallLogVO = new ArrayList<>();
+        if(null == list){
+            return shopMallLogVO;
+        }
         //购买信息按日分组
-        Map<String, List<ShopMallLog>> shopMallLogListMap_create_time= list.stream().collect(Collectors.groupingBy(shopmalllog -> {
-            return DateUtils.formatDate(DateUtils.dateOnly(shopmalllog.getCreateTime()), DatePattern.NORM_DATE_PATTERN);
-        } ));
-        List<ShopMallLog> ShopMallLogVO = new ArrayList<>();
+        Map<String, List<ShopMallLog>> shopMallLogListMapCreateTime = list.stream().collect(Collectors.groupingBy(shopmalllog -> DateUtils.formatDate(DateUtils.dateOnly(shopmalllog.getCreateTime()), DatePattern.NORM_DATE_PATTERN)));
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         for (int i = 0; i <= dateRangeBetween; i++) {
-            String dayStringYMD =  DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i), DatePattern.NORM_DATE_PATTERN);
+            String dayStringYmd =  DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i), DatePattern.NORM_DATE_PATTERN);
             //获取当前日期的购买信息
-            List<ShopMallLog> shopMallLogList_OneDay = shopMallLogListMap_create_time.get(dayStringYMD);
-            if(null == shopMallLogList_OneDay){ continue;}
+            List<ShopMallLog> shopMallLogListOneDay = shopMallLogListMapCreateTime .get(dayStringYmd);
+            if(null == shopMallLogListOneDay){ continue;}
             System.out.println(i);
             //道具名称收集
-            Map<Integer, List<ShopMallLog>> shopMallLogList_OneDayMap_wayName= shopMallLogList_OneDay.stream().collect(Collectors.groupingBy(ShopMallLog::getItemId));
-            for (Integer s : shopMallLogList_OneDayMap_wayName.keySet()) {
-                List<ShopMallLog> shopMallLogList_OneDayMap_wayName_OneWayName = shopMallLogList_OneDayMap_wayName.get(s);
+            Map<Integer, List<ShopMallLog>> shopMallLogListOneDayMapWayName = shopMallLogListOneDay.stream().collect(Collectors.groupingBy(ShopMallLog::getItemId));
+            for (Integer s : shopMallLogListOneDayMapWayName .keySet()) {
+                List<ShopMallLog> shopMallLogListOneDayMapWayNameOneWayName = shopMallLogListOneDayMapWayName .get(s);
                 ShopMallLog shopMallLog = new ShopMallLog();
                 //道具名称
                 shopMallLog.setWayName(wayNameMap.get(s.toString()));
-                Integer sum = shopMallLogList_OneDayMap_wayName_OneWayName.stream().mapToInt(shopMallLog1 -> shopMallLog1.getTotalPrice().intValue()).sum();
+                int sum = shopMallLogListOneDayMapWayNameOneWayName.stream().mapToInt(shopMallLog1 -> shopMallLog1.getTotalPrice().intValue()).sum();
                 //货币数量
                 shopMallLog.setItemNum(new BigDecimal(sum));
-                Map<Long, List<ShopMallLog>> shopMallLogList_OneDayMap_wayName_OneWayNameMap_PlayerId= shopMallLogList_OneDayMap_wayName_OneWayName.stream().collect(Collectors.groupingBy(ShopMallLog::getPlayerId));
+                Map<Long, List<ShopMallLog>> shopMallLogListOneDayMapWayNameOneWayNameMapPlayerId = shopMallLogListOneDayMapWayNameOneWayName.stream().collect(Collectors.groupingBy(ShopMallLog::getPlayerId));
                 //人数
-                shopMallLog.setPlayerNum(new BigDecimal(shopMallLogList_OneDayMap_wayName_OneWayNameMap_PlayerId.size()));
+                shopMallLog.setPlayerNum(new BigDecimal(shopMallLogListOneDayMapWayNameOneWayNameMapPlayerId .size()));
                 //次数
-                shopMallLog.setItemCount(new BigDecimal(shopMallLogList_OneDayMap_wayName_OneWayName.size()));
+                shopMallLog.setItemCount(new BigDecimal(shopMallLogListOneDayMapWayNameOneWayName.size()));
                 //时间
-                shopMallLog.setCreateTimeString(dayStringYMD);
-                ShopMallLogVO.add(shopMallLog);
+                shopMallLog.setCreateTimeString(dayStringYmd);
+                shopMallLogVO.add(shopMallLog);
             }
 
         }
 
-        return ShopMallLogVO;
+        return shopMallLogVO;
     }
 }

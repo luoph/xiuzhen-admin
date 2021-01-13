@@ -7,14 +7,12 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.modules.game.entity.ChatMessageVO;
 import org.jeecg.modules.game.service.IChatMessageService;
-import org.jeecg.modules.game.service.IFriendChatMessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -27,9 +25,7 @@ import java.util.List;
 @RequestMapping("game/chatMessage")
 public class ChatMessageController {
 
-    @Autowired
-    private IFriendChatMessageService friendChatMessageService;
-    @Autowired
+    @Resource
     private IChatMessageService chatMessageService;
 
 
@@ -54,7 +50,7 @@ public class ChatMessageController {
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<ChatMessageVO> pageVo = new Page<>(pageNo, pageSize);
-        List<ChatMessageVO> list = new ArrayList<>();
+        List<ChatMessageVO> list;
         if (StringUtils.isEmpty(rangeTimeBegin) && StringUtils.isEmpty(rangeTimeEnd) && serverId == 0 && channelId == 0
         ) {
             return Result.ok(pageVo);
@@ -64,11 +60,15 @@ public class ChatMessageController {
             rangeTimeBegin = rangeTimeBegin + " 00:00:00";
             rangeTimeEnd = rangeTimeEnd + " 23:59:59";
         }
+        //公共聊天
+        int commonType = 1;
+        //仙盟聊天
+        int immortalType = 2;
         // 公共聊天
-        if (type == 1) {
+        if (type == commonType) {
             list = chatMessageService.queryForList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
             pageVo.setRecords(list).setTotal(list.size());
-        } else if (type == 2) {
+        } else if (type == immortalType) {
             // 私聊
             // 把玩家信息作为发送方条件和接收方方条件
             list = chatMessageService.queryListBySenderAndReceive(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
