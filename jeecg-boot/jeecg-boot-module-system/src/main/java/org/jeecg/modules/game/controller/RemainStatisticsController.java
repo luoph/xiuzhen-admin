@@ -82,11 +82,11 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         List<JSONObject>  jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if("countDate".equals(s)){
+            if ("countDate".equals(s)){
                 jsonObject.put("countDate","汇总");
                 continue;
             }
-            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
                 continue;
             }
             jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
@@ -136,11 +136,11 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         List<JSONObject>  jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if("countDate".equals(s)){
+            if ("countDate".equals(s)){
                 jsonObject.put("countDate","汇总");
                 continue;
             }
-            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
                 continue;
             }
             jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
@@ -188,11 +188,11 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         List<JSONObject>  jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if("countDate".equals(s)){
+            if ("countDate".equals(s)){
                 jsonObject.put("countDate","汇总");
                 continue;
             }
-            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
                 continue;
             }
             jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
@@ -247,11 +247,11 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         List<JSONObject>  jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if("countDate".equals(s)){
+            if ("countDate".equals(s)){
                 jsonObject.put("countDate","汇总");
                 continue;
             }
-            if("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
                 continue;
             }
             jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());

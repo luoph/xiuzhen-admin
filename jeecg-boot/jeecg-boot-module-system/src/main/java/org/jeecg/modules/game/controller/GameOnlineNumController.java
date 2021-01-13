@@ -51,14 +51,14 @@ public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGam
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                                    @RequestParam(name = "channelId", defaultValue = "0") Integer channelId
     ) {
-        if(0 == serverId){
+        if (0 == serverId) {
             JSONObject res = new JSONObject();
             res.put("message", "服务器id不能为空！");
             res.put("success", false);
             return res;
         }
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days){
+            if (0 == days) {
                 JSONObject res = new JSONObject();
                 res.put("message", "时间或就近天数不能同时为空！");
                 res.put("success", false);
@@ -115,13 +115,13 @@ public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGam
     /**
      * 对集合排序，并封装成List<JSONObject>
      */
-    private List<JSONObject> sortMap(Map<String, List<GameOnlineNum>> gameOnlineNumListSeconds){
+    private List<JSONObject> sortMap(Map<String, List<GameOnlineNum>> gameOnlineNumListSeconds) {
         List<JSONObject> gameOnlineNumList = new ArrayList<>();
         Map<String, List<GameOnlineNum>> sortMapDescDaySeconds = gameOnlineNumListSeconds.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors
-                        .toMap(Map.Entry::getKey,Map.Entry::getValue,(e1,e2)->e1, LinkedHashMap::new));
+                        .toMap(Map.Entry::getKey, Map.Entry::getValue,(e1, e2) -> e1, LinkedHashMap::new));
         for (String s : sortMapDescDaySeconds.keySet()) {
             JSONObject gameOnlineNumListSecondsJsonObject = new JSONObject();
             gameOnlineNumListSecondsJsonObject.put("onlineNum", gameOnlineNumListSeconds.get(s).size());

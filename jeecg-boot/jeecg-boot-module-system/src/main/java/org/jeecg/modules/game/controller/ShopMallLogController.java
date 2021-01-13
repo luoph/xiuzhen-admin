@@ -56,7 +56,7 @@ public class ShopMallLogController {
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         //服务器空校验
-        if(0 == serverId || 0 == channelId){
+        if (0 == serverId || 0 == channelId) {
             return Result.error("请选择服务器！");
         }
         //日期校验
@@ -68,7 +68,7 @@ public class ShopMallLogController {
             return Result.error("请选择日期！");
         }
 
-        if(0 == type){
+        if (0 == type) {
             return Result.error("请选择商店类型！");
         }
 
@@ -81,23 +81,23 @@ public class ShopMallLogController {
                 .sorted(Collections
                         .reverseOrder(Map.Entry.comparingByKey()))
                 .collect(Collectors
-                        .toMap(Map.Entry::getKey,Map.Entry::getValue,(e1,e2)->e1, LinkedHashMap::new));
+                        .toMap(Map.Entry::getKey, Map.Entry::getValue,(e1, e2) -> e1, LinkedHashMap::new));
 
         List<OneDayDate> shopMallLogsOneDayDate = new ArrayList<>();
-        for (String s : shopMallLogListMapTimeDesc .keySet()) {
-            List<ShopMallLog> shopMallLogListOneDay = shopMallLogListMapTimeDesc .get(s);
+        for (String s : shopMallLogListMapTimeDesc.keySet()) {
+            List<ShopMallLog> shopMallLogListOneDay = shopMallLogListMapTimeDesc.get(s);
             //总货币数
             int sum = shopMallLogListOneDay.stream().mapToInt(shopMallLog1 -> shopMallLog1.getItemNum().intValue()).sum();
             for (ShopMallLog shopMallLog : shopMallLogListOneDay) {
-                if(0 == shopMallLog.getItemNum().intValue() || 0 == sum){
+                if (0 == shopMallLog.getItemNum().intValue() || 0 == sum) {
                     shopMallLog.setItemNumRate(new BigDecimal(0));
                     continue;
                 }
-                shopMallLog.setItemNumRate(shopMallLog.getItemNum().divide(new BigDecimal(sum),2,BigDecimal.ROUND_HALF_UP));
+                shopMallLog.setItemNumRate(shopMallLog.getItemNum().divide(new BigDecimal(sum),2, BigDecimal.ROUND_HALF_UP));
             }
             OneDayDate oneDayDate = new OneDayDate();
             oneDayDate.setTime(s);
-            oneDayDate.setShopMallLogList(shopMallLogListMapTimeDesc .get(s));
+            oneDayDate.setShopMallLogList(shopMallLogListMapTimeDesc.get(s));
             shopMallLogsOneDayDate.add(oneDayDate);
         }
 

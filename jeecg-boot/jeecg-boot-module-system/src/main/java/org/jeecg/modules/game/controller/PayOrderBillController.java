@@ -114,7 +114,7 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         }
         //日期空校验
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days){
+            if(0 == days) {
                 return Result.error("请选择日期！");
             } else {
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);;
@@ -130,14 +130,14 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         Integer sumPayuser = list.stream().mapToInt(payorderBill -> payorderBill.getPayNumSum()).sum();
         Double sumPayuserPayAmount = list.stream().mapToDouble(payorderBill -> payorderBill.getPayAmountSum().doubleValue()).sum();
         for (PayOrderBill payOrderBill : list) {
-            if(0 == sumPayuser){
+            if(0 == sumPayuser) {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
             }else {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(BigDecimalUtil.divide(payOrderBill.getPayNumSum() * 100, sumPayuser, 2));//a÷b);
             }
-            if(0 == sumPayuserPayAmount){
+            if(0 == sumPayuserPayAmount) {
                 //设置 金额占比
                 payOrderBill.setPayAmountSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
             }else {
@@ -193,7 +193,7 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         }
         //日期空校验
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days){
+            if(0 == days) {
                 log.error("请选择日期！");
             } else {
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);;
@@ -209,14 +209,14 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         Integer sumPayuser = list.stream().mapToInt(payorderBill -> payorderBill.getPayNumSum()).sum();
         Double sumPayuserPayAmount = list.stream().mapToDouble(payorderBill -> payorderBill.getPayAmountSum().doubleValue()).sum();
         for (PayOrderBill payOrderBill : list) {
-            if(0 == sumPayuser){
+            if(0 == sumPayuser) {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
             }else {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(BigDecimalUtil.divide(payOrderBill.getPayNumSum() * 100, sumPayuser, 2));//a÷b);
             }
-            if(0 == sumPayuserPayAmount){
+            if(0 == sumPayuserPayAmount) {
                 //设置 金额占比
                 payOrderBill.setPayAmountSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
             }else {
@@ -228,7 +228,7 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("", "UTF-8");
+        String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 
         EasyExcel.write(response.getOutputStream(), PayOrderBill.class).sheet("模板").doWrite(list);

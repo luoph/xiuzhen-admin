@@ -60,9 +60,9 @@ public final class ParamValidUtil {
         return dates;
     }
 
-    public static String[] dateParamValid(String rangeDateBegin, String rangeDateEnd, int days){
+    public static String[] dateParamValid(String rangeDateBegin, String rangeDateEnd, int days) {
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days){
+            if (0 == days) {
                 return null;
             } else {
                 String[] beginAndEndDate = new String[2];

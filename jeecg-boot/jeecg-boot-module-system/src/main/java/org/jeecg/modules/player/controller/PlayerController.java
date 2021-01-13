@@ -120,7 +120,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
         //日期空校验
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days){
+            if (0 == days){
                 return Result.error("请选择日期！");
             }
         }
@@ -170,7 +170,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 
     //日期空校验
     if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-        if(0 == days){
+        if (0 == days){
             throw new Exception("导出文件，请选择日期！");
         } else {
             rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN) + " 23:59:59";;
@@ -189,7 +189,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("", "UTF-8");
+        String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 
         EasyExcel.write(response.getOutputStream(), PlayerBehavior.class).sheet("模板").doWrite(list);
@@ -205,7 +205,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("", "UTF-8");
+        String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 
         EasyExcel.write(response.getOutputStream(), Player.class).sheet("模板").doWrite(list);

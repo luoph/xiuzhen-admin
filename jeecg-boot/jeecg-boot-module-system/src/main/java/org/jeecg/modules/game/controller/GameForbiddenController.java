@@ -73,10 +73,10 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
         }
         QueryWrapper<GameForbidden> queryWrapper = QueryGenerator.initQueryWrapper(gameForbidden, req.getParameterMap());
         Page<GameForbidden> page = new Page<>(pageNo, pageSize);
-        if(null != rangeDateBeginDate){
+        if (null != rangeDateBeginDate) {
             queryWrapper.ge("create_time", rangeDateBeginDate);
         }
-        if(null != rangeDateBeginDate){
+        if (null != rangeDateBeginDate) {
             queryWrapper.le("create_time", rangeDateEndDate);
         }
         IPage<GameForbidden> pageList = gameForbiddenService.page(page, queryWrapper);

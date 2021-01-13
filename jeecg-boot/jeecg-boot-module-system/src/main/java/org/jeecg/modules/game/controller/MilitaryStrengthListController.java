@@ -122,7 +122,7 @@ public class MilitaryStrengthListController {
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("", "UTF-8");
+        String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 
         EasyExcel.write(response.getOutputStream(), MilitaryStrengthVO.class).sheet("模板").doWrite(list);

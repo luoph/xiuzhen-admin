@@ -84,9 +84,9 @@ public enum AttrType {
         return null;
     }
 
-    public static String getNameByCode(int code){
+    public static String getNameByCode(int code) {
         for (AttrType value : AttrType.values()) {
-            if(value.getCode() == code){
+            if (value.getCode() == code) {
                 return value.getName();
             }
         }

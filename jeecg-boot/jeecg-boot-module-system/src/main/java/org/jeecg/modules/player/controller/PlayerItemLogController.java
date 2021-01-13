@@ -78,9 +78,9 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
         Map<String, String> itemIdToNameMap = itemId.getItemIdToNameMap();
         //根据前端输入的道具名称模糊匹配到的对应id集合
         List<Integer> wayList = new ArrayList<>();
-        String regex = null == playerItemLog.getItemIdName() ? "":playerItemLog.getItemIdName();
+        String regex = null == playerItemLog.getItemIdName() ? "" : playerItemLog.getItemIdName();
         for (String s : itemNameToIdMap.keySet()) {
-            if(s.contains(regex) && !"".equals(regex)){
+            if (s.contains(regex) && !"".equals(regex)){
                 wayList.add(Integer.parseInt(itemNameToIdMap.get(s)));
             }
         }
@@ -90,13 +90,13 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
             List<GamePlayerItemLog> recordList = new ArrayList<>();
             //对模糊匹配的所有道具id进行查询，并将结果放入recordList中
-            if(wayList.size() > 0 ){
+            if (wayList.size() > 0 ){
                 String itemIdStr = "";
                 for (int i = 0; i < wayList.size(); i++) {
-                    if(i == wayList.size()-1){
-                        itemIdStr= itemIdStr +wayList.get(i);
+                    if (i == wayList.size()-1){
+                        itemIdStr= itemIdStr + wayList.get(i);
                     }else{
-                        itemIdStr= itemIdStr +wayList.get(i)+",";
+                        itemIdStr= itemIdStr + wayList.get(i) + ",";
                     }
 
                 }
@@ -107,14 +107,14 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
                 for (GamePlayerItemLog record : pageList0.getRecords()) {
 
                     //道具名称
-                    if(null != itemIdToNameMap.get(record.getItemId().toString())){
+                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
                         record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
                     }
                     //途径名称
-                    if(1 == record.getType()){
+                    if (1 == record.getType()){
                         //获得
                         record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
-                    }else if(2 == record.getType()){
+                    }else if (2 == record.getType()){
                         //使用
                         record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
                     }
@@ -127,14 +127,14 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
                 IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
                 for (GamePlayerItemLog record : pageList.getRecords()) {
                     //道具名称
-                    if(null != itemIdToNameMap.get(record.getItemId().toString())){
+                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
                         record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
                     }
                     //途径名称
-                    if(1 == record.getType()){
+                    if (1 == record.getType()){
                         //获得
                         record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
-                    }else if(2 == record.getType()){
+                    }else if (2 == record.getType()){
                         //使用
                         record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
                     }
@@ -159,7 +159,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
             queryWrapper.in(GamePlayerItemLog::getItemId, itemIdStr.split(","));
         }
         String wayNameFenGeFu = ",";
-        if(!StringUtils.isEmpty(playerItemLog.getWayName()) && ! wayNameFenGeFu.equals(playerItemLog.getWayName())){
+        if (!StringUtils.isEmpty(playerItemLog.getWayName()) && ! wayNameFenGeFu.equals(playerItemLog.getWayName())){
             String[] strArr = playerItemLog.getWayName().split(",");
             Integer[] intArr = new Integer[strArr.length];
             for(int a=0;a<strArr.length;a++){
@@ -350,7 +350,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
         List<Integer> wayList = new ArrayList<>();
         String regex = null == playerItemLog.getItemIdName() ? "":playerItemLog.getItemIdName();
         for (String s : itemNameToIdMap.keySet()) {
-            if(s.contains(regex) && !"".equals(regex)){
+            if (s.contains(regex) && !"".equals(regex)){
                 wayList.add(Integer.parseInt(itemNameToIdMap.get(s)));
             }
         }
@@ -360,10 +360,10 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
             List<GamePlayerItemLog> recordList = new ArrayList<>();
             //对模糊匹配的所有道具id进行查询，并将结果放入recordList中
-            if(wayList.size() > 0 ){
+            if (wayList.size() > 0 ){
                 String itemIdStr = "";
                 for (int i = 0; i < wayList.size(); i++) {
-                    if(i == wayList.size()-1){
+                    if (i == wayList.size()-1){
                         itemIdStr= itemIdStr + wayList.get(i);
                     }else{
                         itemIdStr= itemIdStr + wayList.get(i)+",";
@@ -377,14 +377,14 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
                 for (GamePlayerItemLog record : pageList0.getRecords()) {
 
                     //道具名称
-                    if(null != itemIdToNameMap.get(record.getItemId().toString())){
+                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
                         record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
                     }
                     //途径名称
-                    if(1 == record.getType()){
+                    if (1 == record.getType()){
                         //获得
                         record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
-                    }else if(2 == record.getType()){
+                    }else if (2 == record.getType()){
                         //使用
                         record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
                     }
@@ -393,7 +393,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
                 response.setContentType("application/vnd.ms-excel");
                 response.setCharacterEncoding("utf-8");
-                String fileName = URLEncoder.encode("", "UTF-8");
+                String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
                 response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 
                 EasyExcel.write(response.getOutputStream(), GamePlayerItemLog.class).sheet("模板").doWrite(pageList0.getRecords());
@@ -403,14 +403,14 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
                 IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
                 for (GamePlayerItemLog record : pageList.getRecords()) {
                     //道具名称
-                    if(null != itemIdToNameMap.get(record.getItemId().toString())){
+                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
                         record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
                     }
                     //途径名称
-                    if(1 == record.getType()){
+                    if (1 == record.getType()){
                         //获得
                         record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
-                    }else if(2 == record.getType()){
+                    }else if (2 == record.getType()){
                         //使用
                         record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
                     }
@@ -419,7 +419,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
                 response.setContentType("application/vnd.ms-excel");
                 response.setCharacterEncoding("utf-8");
-                String fileName = URLEncoder.encode("", "UTF-8");
+                String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
                 response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
                 EasyExcel.write(response.getOutputStream(), GamePlayerItemLog.class).sheet("模板").doWrite(pageList.getRecords());
             }

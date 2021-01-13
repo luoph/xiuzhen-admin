@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class GameChatLogController {
 
     @Resource
-    private IGameChatLogService iGameChatLogService;
+    private IGameChatLogService gameChatLogService;
 
 
     /**
@@ -74,23 +74,23 @@ public class GameChatLogController {
 
         if (type == commonType) {
             // 公共聊天
-            list = iGameChatLogService.queryCommonChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
+            list = gameChatLogService.queryCommonChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
             pageVo.setRecords(list).setTotal(list.size());
         } else if (type == immortalType) {
             // 仙盟聊天（帮派）
-            list = iGameChatLogService.queryImmortalChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
+            list = gameChatLogService.queryImmortalChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
             pageVo.setRecords(list).setTotal(list.size());
         } else if (type == selfType) {
             // 私聊
-            list = iGameChatLogService.querySelfChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
+            list = gameChatLogService.querySelfChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
             pageVo.setRecords(list).setTotal(list.size());
         } else if (type == allType) {
             // 公共聊天
-            List<ChatMessageVO> list1 = iGameChatLogService.queryCommonChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
+            List<ChatMessageVO> list1 = gameChatLogService.queryCommonChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
             // 仙盟聊天（帮派）
-            List<ChatMessageVO> list2 = iGameChatLogService.queryImmortalChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
+            List<ChatMessageVO> list2 = gameChatLogService.queryImmortalChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
             // 私聊
-            List<ChatMessageVO> list3 = iGameChatLogService.querySelfChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
+            List<ChatMessageVO> list3 = gameChatLogService.querySelfChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
             // 整合
             list.addAll(list1);
             list.addAll(list2);

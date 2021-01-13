@@ -187,7 +187,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         List<Map> fairyJadeBuyInfoNewList = new ArrayList<>();
         for (Map map : fairyJadeBuyInfoList) {
             JSONArray dangweiPriceJsonArray = new JSONArray();
-            if(!("[null]").equals(map.get("price").toString()) && !("null").equals(map.get("price").toString()) ){
+            if (!("[null]").equals(map.get("price").toString()) && !("null").equals(map.get("price").toString()) ) {
                 dangweiPriceJsonArray = JSONArray.parseArray(map.get("price").toString());
                 for (int i = 0; i < dangweiPriceJsonArray.size(); i++) {
                     Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
