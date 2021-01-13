@@ -3,13 +3,13 @@ package org.jeecg.modules.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.Response;
-import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
@@ -99,8 +99,15 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
      */
     @AutoLog(value = "开服活动(1级)-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaign model) {
-        campaignService.updateById(model);
+    public Result<?> edit(@RequestBody OpenServiceCampaign entity) {
+        // 排序区服id
+        List<String> serverIds = StrUtil.splitTrim(entity.getServerIds() != null ? entity.getServerIds() : "", ",");
+        Collections.sort(serverIds);
+        String newServerIds = StrUtil.join(",", serverIds);
+        if (StringUtils.equals(newServerIds, entity.getServerIds())) {
+            entity.setServerIds(newServerIds);
+        }
+        campaignService.updateById(entity);
         return Result.ok("编辑成功!");
     }
 
