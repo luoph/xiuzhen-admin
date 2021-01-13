@@ -1,20 +1,22 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.date.DatePattern;
+import cn.youai.xiuzhen.entity.pojo.DateRange;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
+import lombok.NoArgsConstructor;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.jeecg.modules.game.service.IGameMonetaryDisTributionService;
 import org.jeecg.modules.game.util.ParamValidUtil;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author huli
@@ -25,8 +27,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("game/monetaryDistribution")
 public class GameMonetaryDistributionController {
+    
     @Resource
     private IGameMonetaryDisTributionService gameMonetaryDistributionService;
+
     /**
      * 查询货币分布列表
      */
@@ -40,52 +44,39 @@ public class GameMonetaryDistributionController {
                                               @RequestParam(name = "quantityType", defaultValue = "0") Integer quantityType,
                                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        //服务器空校验
+        // 服务器空校验
         if (0 == serverId || 0 == channelId) {
             return Result.error("请选择服务器！");
         }
-        //日期空校验
-        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if (0 == days) {
-                return Result.error("请选择日期！");
-            } else {
-                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
-                rangeDateBegin= DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
-            }
-        }
+
         if (0 == productAndMarketType || 0 == quantityType) {
             return Result.error("产销类型和货币类型不能为空");
         }
-        Page<OneDayDate> pageVo = new Page<>(pageNo, pageSize);
 
-        List<OneDayDate> lists= new ArrayList<>();
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
-        for (int i = 0; i <= dateRangeBetween; i++) {
-            Date begin = DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i);
-            Date end = DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i);
-            String rangeDateBegin1 = DateUtils.formatDate(begin, DatePattern.NORM_DATE_PATTERN) + " 00:00:00";
-            String rangeDateEnd1 = DateUtils.formatDate(end, DatePattern.NORM_DATE_PATTERN)+ " 23:59:59";
-            //查询
-            List<MonetaryDisTributionVO> list = gameMonetaryDistributionService.monetaryDistributionList(channelId, serverId, rangeDateBegin1, rangeDateEnd1, productAndMarketType, quantityType);
-            if (list.size() == 0) {continue;}
-            OneDayDate oneDayDate = new OneDayDate();
-            oneDayDate.setTime(DateUtils.formatDate(begin, DatePattern.NORM_DATE_PATTERN));
-            oneDayDate.setMonetaryDistributionVOs(list);
-            lists.add(oneDayDate);
-
+        // 日期空校验
+        DateRange dateRange = ParamValidUtil.getDateRange(rangeDateBegin, rangeDateEnd, days);
+        if (null == dateRange) {
+            return Result.error("请选择日期！");
         }
-        List<OneDayDate> sortList = lists.stream().sorted((s1, s2) -> s2.getTime().compareTo(s1.getTime())).collect(Collectors.toList());
-        pageVo.setRecords(sortList).setTotal(sortList.size());
-        return Result.ok(pageVo);
+
+        Page<OneDayDate> page = new Page<>(pageNo, pageSize);
+        Map<Date, List<MonetaryDisTributionVO>> map = gameMonetaryDistributionService.monetaryDistributionList(channelId, serverId, dateRange, productAndMarketType, quantityType);
+        List<OneDayDate> lists = new ArrayList<>();
+        map.forEach((k, v) -> lists.add(new OneDayDate(DateUtils.formatDate(k, DatePattern.NORM_DATE_PATTERN), v)));
+        lists.sort(Comparator.comparing(OneDayDate::getTime));
+        page.setRecords(lists).setTotal(lists.size());
+        return Result.ok(page);
     }
 
     /**
      * 返回给前端的某一天的数据对象
      */
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     private static class OneDayDate {
-        String time;
-        List<MonetaryDisTributionVO> monetaryDistributionVOs;
+        private String time;
+        private List<MonetaryDisTributionVO> monetaryDistributionVOs;
     }
 
 }

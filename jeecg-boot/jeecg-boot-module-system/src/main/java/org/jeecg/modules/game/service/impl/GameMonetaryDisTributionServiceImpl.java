@@ -1,14 +1,17 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.youai.xiuzhen.entity.pojo.DateRange;
+import cn.youai.xiuzhen.entity.pojo.OperationType;
+import cn.youai.xiuzhen.utils.ConvertUtils;
+import cn.youai.xiuzhen.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
 import org.jeecg.database.DataSourceHelper;
-import org.jeecg.modules.game.constant.ItemRuleId;
 import org.jeecg.modules.game.constant.ItemReduce;
+import org.jeecg.modules.game.constant.ItemRuleId;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.jeecg.modules.game.mapper.GameMonetaryDisTributionMapper;
 import org.jeecg.modules.game.service.IGameMonetaryDisTributionService;
+import org.jeecg.modules.player.entity.BackpackLog;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,8 +28,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTributionService {
+
     @Resource
     private GameMonetaryDisTributionMapper gameMonetaryDisTributionMapper;
+
     @Override
     public List<MonetaryDisTributionVO> monetaryDistributionList(int channelId, int serverId, String rangeTimeBegin, String rangeTimeEnd, int productAndMarketTyep, int quantityType) {
         List<MonetaryDisTributionVO> monetaryDisTributionVOList = new ArrayList<>();
@@ -43,12 +48,12 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
              */
             Map<Integer, String> fairyJadeBuyTypeMap = new HashMap<>();
             //存入
-            if (1== quantityType) {
+            if (1 == quantityType) {
                 for (ItemRuleId value : ItemRuleId.values()) {
                     fairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
-            //消耗
-            }else if (2== quantityType) {
+                //消耗
+            } else if (2 == quantityType) {
                 for (ItemReduce value : ItemReduce.values()) {
                     fairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
@@ -58,7 +63,9 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             for (Integer integer : fairyJadeBuyTypeMap.keySet()) {
                 //获取当前产销点
                 List<Map> oneBackPackListMapWay = backPackListMapWay.get(integer.toString());
-                if (null == oneBackPackListMapWay) {continue;}
+                if (null == oneBackPackListMapWay) {
+                    continue;
+                }
                 MonetaryDisTributionVO monetaryDisTributionVO = new MonetaryDisTributionVO();
                 //设置产销点
                 monetaryDisTributionVO.setProductAndMarket(fairyJadeBuyTypeMap.get(integer));
@@ -75,15 +82,58 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             }
 
         } catch (Exception e) {
-           log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
+            log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
         } finally {
-           DataSourceHelper.useDefaultDatabase();
+            DataSourceHelper.useDefaultDatabase();
         }
         //设置百分比
         Long allSum = monetaryDisTributionVOList.stream().mapToLong(monetaryDisTribution -> monetaryDisTribution.getQuantityOfMoney()).sum();
         for (MonetaryDisTributionVO monetaryDisTributionVO : monetaryDisTributionVOList) {
-            monetaryDisTributionVO.setProportion(BigDecimal.valueOf(monetaryDisTributionVO.getQuantityOfMoney()).divide(BigDecimal.valueOf(allSum),4,BigDecimal.ROUND_HALF_UP));;
+            monetaryDisTributionVO.setProportion(BigDecimal.valueOf(monetaryDisTributionVO.getQuantityOfMoney()).divide(BigDecimal.valueOf(allSum), 4, BigDecimal.ROUND_HALF_UP));
+            ;
         }
         return monetaryDisTributionVOList;
+    }
+
+
+    @Override
+    public Map<Date, List<MonetaryDisTributionVO>> monetaryDistributionList(int channelId, int serverId, DateRange dateRange, int productAndMarketType, int quantityType) {
+        if (null == dateRange || !dateRange.isValid()) {
+            return Collections.emptyMap();
+        }
+
+        Map<Date, List<MonetaryDisTributionVO>> map = new HashMap<>(DateUtils.daysBetween(dateRange.getStart(), dateRange.getEnd()));
+        Map<Integer, String> wayMap = OperationType.getWayMap(quantityType);
+        if (null == wayMap) {
+            return map;
+        }
+
+        // 通过serverId切换数据源
+        DataSourceHelper.useServerDatabase(serverId);
+
+        // 查询符合条件的背包物品出入信息
+        List<BackpackLog> backpackLogList = gameMonetaryDisTributionMapper.selectAllBackPackByTime2(dateRange.getStart(), dateRange.getEnd(), productAndMarketType, quantityType);
+
+        // 根据日期分组(天)
+        Map<Date, List<BackpackLog>> dateBackpackLogMap = backpackLogList.stream().collect(Collectors.groupingBy(BackpackLog::getCreateDate));
+
+        dateBackpackLogMap.forEach((date, list) -> {
+            List<MonetaryDisTributionVO> dateResults = new ArrayList<>();
+            // 背包物品出入信息 以 way 分组
+            Map<Integer, List<BackpackLog>> wayBackpackLogMap = list.stream().collect(Collectors.groupingBy(BackpackLog::getWay));
+            wayBackpackLogMap.forEach((k, v) ->
+                    dateResults.add(new MonetaryDisTributionVO()
+                            .setProductAndMarket(ConvertUtils.safeString(wayMap.get(k), "未知类型"))
+                            .setQuantityOfMoney(v.stream().mapToLong(BackpackLog::getNum).sum())
+                            .setTimes(v.size())
+                            .setNumberOfPeople(v.stream().map(BackpackLog::getPlayerId).collect(Collectors.toSet()).size())));
+            if (!dateResults.isEmpty()) {
+                // 设置百分比
+                BigDecimal sum = BigDecimal.valueOf(dateResults.stream().mapToLong(MonetaryDisTributionVO::getQuantityOfMoney).sum());
+                dateResults.forEach(e -> e.setProportion(BigDecimal.valueOf(e.getQuantityOfMoney()).divide(sum, 4, BigDecimal.ROUND_HALF_UP)));
+                map.put(date, dateResults);
+            }
+        });
+        return map;
     }
 }

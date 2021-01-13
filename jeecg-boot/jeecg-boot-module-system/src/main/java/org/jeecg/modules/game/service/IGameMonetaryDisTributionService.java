@@ -1,10 +1,12 @@
 package org.jeecg.modules.game.service;
 
+import cn.youai.xiuzhen.entity.pojo.DateRange;
 import org.apache.ibatis.annotations.*;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,4 +28,6 @@ public interface IGameMonetaryDisTributionService {
     * @return
     */
    List<MonetaryDisTributionVO> monetaryDistributionList(int channelId, int serverId, String rangeTimeBegin, String rangeTimeEnd, int productAndMarketTyep, int quantityType);
+
+    Map<Date, List<MonetaryDisTributionVO>> monetaryDistributionList(int channelId, int serverId, DateRange dateRange, int productAndMarketType, int quantityType);
 }
