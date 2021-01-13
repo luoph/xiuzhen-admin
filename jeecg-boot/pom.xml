@@ -55,6 +55,7 @@
         <okhttp3.version>3.14.4</okhttp3.version>
         <cqengine.version>3.4.0</cqengine.version>
         <easyexcel.version>2.2.7</easyexcel.version>
+        <autopoi.version>1.2.4</autopoi.version>
         <concurrentlinkedhashmap.lru.version>1.4.2</concurrentlinkedhashmap.lru.version>
     </properties>
 
@@ -247,20 +248,15 @@
 
         <!-- AutoPoi Excel工具类-->
         <dependency>
-            <groupId>org.jeecgframework</groupId>
+            <groupId>cn.youai</groupId>
             <artifactId>autopoi-web</artifactId>
-            <version>1.0.4</version>
+            <version>${autopoi.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-codec</groupId>
                     <artifactId>commons-codec</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>3.17</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
