@@ -171,6 +171,7 @@ export default {
             this.form.setFieldsValue(pick(row, "name", "serverIds", "icon", "status", "autoOpen", "remark"));
         },
         changeSelect(value) {
+            this.model.serverIds = value.join(",");
             this.form.setFieldsValue({
                 serverIds: value.join(",")
             });

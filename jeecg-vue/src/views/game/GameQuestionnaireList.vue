@@ -17,8 +17,8 @@
                     <a-col :md="6" :sm="8">
                         <a-form-item label="状态">
                             <a-select placeholder="请选择状态" v-model="queryParam.status" initialValue="0">
-                                <a-select-option :value="0">关闭</a-select-option>
                                 <a-select-option :value="1">开启</a-select-option>
+                                <a-select-option :value="0">关闭</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
