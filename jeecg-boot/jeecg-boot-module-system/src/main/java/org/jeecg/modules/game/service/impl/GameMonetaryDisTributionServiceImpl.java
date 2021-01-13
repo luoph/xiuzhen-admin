@@ -43,12 +43,12 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
              */
             Map<Integer, String> fairyJadeBuyTypeMap = new HashMap<>();
             //存入
-            if(1== quantityType){
+            if (1== quantityType) {
                 for (ItemRuleId value : ItemRuleId.values()) {
                     fairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
             //消耗
-            }else if(2== quantityType){
+            }else if (2== quantityType) {
                 for (ItemReduce value : ItemReduce.values()) {
                     fairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
@@ -58,7 +58,7 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             for (Integer integer : fairyJadeBuyTypeMap.keySet()) {
                 //获取当前产销点
                 List<Map> oneBackPackListMapWay = backPackListMapWay.get(integer.toString());
-                if(null == oneBackPackListMapWay){continue;}
+                if (null == oneBackPackListMapWay) {continue;}
                 MonetaryDisTributionVO monetaryDisTributionVO = new MonetaryDisTributionVO();
                 //设置产销点
                 monetaryDisTributionVO.setProductAndMarket(fairyJadeBuyTypeMap.get(integer));

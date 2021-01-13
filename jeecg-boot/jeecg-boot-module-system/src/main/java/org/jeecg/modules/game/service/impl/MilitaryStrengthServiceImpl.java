@@ -50,12 +50,12 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
            DataSourceHelper.useDefaultDatabase();
         }
         List<MilitaryStrengthVO> militaryStrengthVOList = new ArrayList<>();
-        if(null == practiceDuJieList){
+        if (null == practiceDuJieList) {
             return militaryStrengthVOList;
         }
         for (Map map : practiceDuJieList) {
             MilitaryStrengthVO militaryStrengthVO = new MilitaryStrengthVO();
-            if(null == allRegisterUserListMapPlayerId .get(map.get("player_id").toString())){
+            if (null == allRegisterUserListMapPlayerId .get(map.get("player_id").toString())){
                 militaryStrengthVO.setUserName("");
             }else{
                 militaryStrengthVO.setUserName(allRegisterUserListMapPlayerId .get(map.get("player_id").toString()).get(0).get("account").toString());
@@ -77,7 +77,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
     @Override
     public List<MilitaryStrengthVO> getMilitaryStrengVoAllList(String userName, int serverId, String createDateBegin, String createDateEnd, String channel) {
         List<Map>  militaryStrengVoAllList;
-        if(StringUtils.isEmpty(userName)){
+        if (StringUtils.isEmpty(userName)){
             militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAll(createDateBegin, createDateEnd,logPlayerTable);
         }else{
             List<Map> registerUserMap = militaryStrengthMapper.selectRegisterUserByName(userName,channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
@@ -85,7 +85,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
             List<String> playerIdCollect =registerUserMap.stream().map(map -> map.get("player_id").toString()).collect(Collectors.toList());
             String playerIdCollectString = "";
             for (int i = 0; i < playerIdCollect.size(); i++) {
-                if(i == playerIdCollect.size() -1){
+                if (i == playerIdCollect.size() -1) {
                     playerIdCollectString = playerIdCollectString + playerIdCollect.get(i);
                 }else{
                     playerIdCollectString = playerIdCollectString + playerIdCollect.get(i) +",";
@@ -100,7 +100,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
         List<MilitaryStrengthVO> militaryStrengthVOList = new ArrayList<>();
         for (Map map : militaryStrengVoAllList) {
             MilitaryStrengthVO militaryStrengthVO = new MilitaryStrengthVO();
-            if(null == allRegisterUserListMapPlayerId .get(map.get("player_id").toString())){
+            if (null == allRegisterUserListMapPlayerId .get(map.get("player_id").toString())){
                 militaryStrengthVO.setUserName("");
             }else{
                 militaryStrengthVO.setUserName(allRegisterUserListMapPlayerId .get(map.get("player_id").toString()).get(0).get("name").toString());
@@ -110,7 +110,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
             militaryStrengthVO.setOriginalMilitary(map.get("param_1").toString());
             militaryStrengthVO.setUserId(map.get("player_id").toString());
             militaryStrengthVO.setTime(map.get("create_time").toString());
-            if(null == AttrType.valueOf(Integer.parseInt(map.get("value").toString()))) {
+            if (null == AttrType.valueOf(Integer.parseInt(map.get("value").toString()))) {
                 militaryStrengthVO.setOperation("未知操作");
             }else{
                 militaryStrengthVO.setOperation(AttrType.getNameByCode(Integer.parseInt(map.get("value").toString())));

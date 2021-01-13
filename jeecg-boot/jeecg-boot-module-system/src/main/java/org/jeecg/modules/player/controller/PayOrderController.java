@@ -11,7 +11,6 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.GameForbidden;
 import org.jeecg.modules.player.entity.GameOrder;
 import org.jeecg.modules.player.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +102,7 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
     public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws IOException {
         GameOrder gameOrder = JSON.parseObject(jsonObject.toJSONString(),GameOrder.class);
 
-        Map<String, String[]> data =new HashMap<>();
+        Map<String, String[]> data =new HashMap<>(16);
         Iterator it =jsonObject.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
@@ -116,7 +115,7 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("", "UTF-8");
+        String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 
         EasyExcel.write(response.getOutputStream(), GameOrder.class).sheet("模板").doWrite(gameOrderList);

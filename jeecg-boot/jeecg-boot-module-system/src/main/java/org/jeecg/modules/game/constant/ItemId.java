@@ -23,7 +23,7 @@ public class ItemId {
     //name item_id
     private static final Map<String, String> itemNameToIdMap = new HashMap<>();
     public ItemId() throws UnsupportedEncodingException {
-        if(itemIdToNameMap.size() <= 0 ){
+        if (itemIdToNameMap.size() <= 0 ) {
             InputStream in = this.getClass().getResourceAsStream("/json/item.json");
             String file1 = new BufferedReader(new InputStreamReader(in, "utf-8"))
                     .lines().collect(Collectors.joining(System.lineSeparator()));

@@ -112,7 +112,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
             DataSourceHelper.useDefaultDatabase();
         }
         List<ShopMallLog> shopMallLogVO = new ArrayList<>();
-        if(null == list){
+        if (null == list) {
             return shopMallLogVO;
         }
         //购买信息按日分组
@@ -122,7 +122,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
             String dayStringYmd =  DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i), DatePattern.NORM_DATE_PATTERN);
             //获取当前日期的购买信息
             List<ShopMallLog> shopMallLogListOneDay = shopMallLogListMapCreateTime .get(dayStringYmd);
-            if(null == shopMallLogListOneDay){ continue;}
+            if (null == shopMallLogListOneDay) { continue;}
             System.out.println(i);
             //道具名称收集
             Map<Integer, List<ShopMallLog>> shopMallLogListOneDayMapWayName = shopMallLogListOneDay.stream().collect(Collectors.groupingBy(ShopMallLog::getItemId));

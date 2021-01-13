@@ -41,19 +41,19 @@ public class GameMonetaryDistributionController {
                                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
         //服务器空校验
-        if(0 == serverId || 0 == channelId){
+        if (0 == serverId || 0 == channelId) {
             return Result.error("请选择服务器！");
         }
         //日期空校验
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days){
+            if (0 == days) {
                 return Result.error("请选择日期！");
             } else {
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
                 rangeDateBegin= DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
             }
         }
-        if(0 == productAndMarketType || 0 == quantityType){
+        if (0 == productAndMarketType || 0 == quantityType) {
             return Result.error("产销类型和货币类型不能为空");
         }
         Page<OneDayDate> pageVo = new Page<>(pageNo, pageSize);
@@ -67,10 +67,10 @@ public class GameMonetaryDistributionController {
             String rangeDateEnd1 = DateUtils.formatDate(end, DatePattern.NORM_DATE_PATTERN)+ " 23:59:59";
             //查询
             List<MonetaryDisTributionVO> list = gameMonetaryDistributionService.monetaryDistributionList(channelId, serverId, rangeDateBegin1, rangeDateEnd1, productAndMarketType, quantityType);
-            if(list.size() == 0){continue;}
+            if (list.size() == 0) {continue;}
             OneDayDate oneDayDate = new OneDayDate();
             oneDayDate.setTime(DateUtils.formatDate(begin, DatePattern.NORM_DATE_PATTERN));
-            oneDayDate.setMonetaryDistributionVos(list);
+            oneDayDate.setMonetaryDistributionVOs(list);
             lists.add(oneDayDate);
 
         }
@@ -85,7 +85,7 @@ public class GameMonetaryDistributionController {
     @Data
     private static class OneDayDate {
         String time;
-        List<MonetaryDisTributionVO> monetaryDistributionVos;
+        List<MonetaryDisTributionVO> monetaryDistributionVOs;
     }
 
 }

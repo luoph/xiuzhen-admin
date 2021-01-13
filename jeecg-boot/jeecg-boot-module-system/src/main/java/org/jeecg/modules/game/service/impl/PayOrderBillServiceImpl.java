@@ -117,7 +117,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 BigDecimal payRankBegin = new BigDecimal(payRanks[0]).setScale(4, BigDecimal.ROUND_HALF_UP);
                 BigDecimal payRankEnd = new BigDecimal(payRanks[1]).setScale(4, BigDecimal.ROUND_HALF_UP);
                 BigDecimal pay = new BigDecimal(playerPaySum.get(s).toString()).setScale(4, BigDecimal.ROUND_HALF_UP);
-                if(payRankBegin.compareTo(pay) < 1 && pay.compareTo(payRankEnd) < 1){
+                if(payRankBegin.compareTo(pay) < 1 && pay.compareTo(payRankEnd) < 1) {
 
                     playerMap.put(s, playerPaySum.get(s).toString());
                 }
@@ -130,7 +130,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         for (String payRank : payRankList) {
             PayOrderBill payOrderBill = new PayOrderBill();
             Map<String, String> allPayInfoList = prodMap.get(payRank);
-            if(null == allPayInfoList){
+            if(null == allPayInfoList) {
                 //设置 付费人数
                 payOrderBill.setPayNumSum(0);
                 //设置 充值档位
