@@ -155,6 +155,11 @@ export default {
                     }
                 },
                 {
+                    title: "id",
+                    align: "center",
+                    dataIndex: "id"
+                },
+                {
                     title: "服务器id",
                     align: "center",
                     dataIndex: "serverIds",
