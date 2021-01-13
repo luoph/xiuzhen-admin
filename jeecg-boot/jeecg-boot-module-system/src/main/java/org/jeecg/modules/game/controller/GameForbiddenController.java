@@ -1,5 +1,7 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.youai.commons.model.Response;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.druid.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -12,6 +14,9 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameForbidden;
 import org.jeecg.modules.game.service.IGameForbiddenService;
+import org.jeecg.modules.game.service.IGameServerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -32,8 +38,14 @@ import java.util.Date;
 @RequestMapping("game/gameForbidden")
 public class GameForbiddenController extends JeecgController<GameForbidden, IGameForbiddenService> {
 
+    @Autowired
+    private IGameServerService gameServerService;
+
     @Resource
     private IGameForbiddenService gameForbiddenService;
+
+    @Value("${app.forbidden-update-url:/forbidden/update}")
+    private String forbiddenUpdateUrl;
 
     /**
      * 分页列表查询
@@ -92,12 +104,8 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "game_forbidden-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameForbidden gameForbidden) {
-        gameForbidden.setDelFlag(0);
-        if (gameForbiddenService.save(gameForbidden)) {
-            gameForbidden.setDelFlag(1);
-            gameForbiddenService.save(gameForbidden);
-            return Result.ok("添加成功！");
-        }
+        gameForbiddenService.save(gameForbidden);
+        notifyForbiddenUpdate(gameForbidden);
         return Result.ok("添加成功！");
     }
 
@@ -110,12 +118,9 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "game_forbidden-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameForbidden gameForbidden) {
-        if (gameForbiddenService.updateById(gameForbidden)) {
-            gameForbidden.setDelFlag(1);
-            gameForbiddenService.save(gameForbidden);
-            return Result.ok("编辑成功!");
-        }
-        return Result.error("编辑失败!");
+        gameForbiddenService.updateById(gameForbidden);
+        notifyForbiddenUpdate(gameForbidden);
+        return Result.ok("编辑成功!");
     }
 
     /**
@@ -127,7 +132,9 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "game_forbidden-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
+        GameForbidden entity = gameForbiddenService.getById(id);
         gameForbiddenService.removeById(id);
+        notifyForbiddenUpdate(entity);
         return Result.ok("删除成功!");
     }
 
@@ -181,6 +188,13 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameForbidden.class);
+    }
+
+    private void notifyForbiddenUpdate(GameForbidden gameForbidden) {
+        if (gameForbidden != null && gameForbidden.getServerId() != null) {
+            Map<Integer, Response> responseMap = gameServerService.gameServerGet(CollUtil.newArrayList(gameForbidden.getServerId()), forbiddenUpdateUrl);
+            log.info("notifyForbiddenUpdate response:{}", responseMap);
+        }
     }
 
 }
