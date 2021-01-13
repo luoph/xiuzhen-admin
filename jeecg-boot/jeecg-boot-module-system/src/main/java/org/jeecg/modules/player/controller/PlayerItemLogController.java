@@ -110,7 +110,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
                 }
                 LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog, itemIdStr);
-                Page<GamePlayerItemLog> page = new Page<>(pageNo, 1000);
+                Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
                 IPage<GamePlayerItemLog> pageList0= playerItemLogService.page(page, queryWrapper);
 
                 for (GamePlayerItemLog record : pageList0.getRecords()) {
