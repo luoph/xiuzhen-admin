@@ -4,7 +4,6 @@ import cn.hutool.core.date.DatePattern;
 import cn.youai.commons.model.ResponseCode;
 import cn.youai.xiuzhen.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.ErrorCode;
 
 import java.util.Date;
@@ -65,11 +64,9 @@ public final class ParamValidUtil {
             if (0 == days) {
                 return null;
             } else {
-                String[] beginAndEndDate = new String[2];
                 rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN) + " 23:59:59";
                 rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN) + " 00:00:00";
-                beginAndEndDate[0] = rangeDateBegin;
-                beginAndEndDate[1] = rangeDateEnd;
+                return new String[]{rangeDateBegin, rangeDateEnd};
             }
         }
         return null;
