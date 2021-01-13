@@ -342,6 +342,7 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
         }
     }
 
+    //玩家道具日志excel下载
         @RequestMapping("/download")
             public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws Exception {
 
@@ -350,27 +351,97 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
                 GamePlayerItemLog playerItemLog = JSON.parseObject(jsonObject.toJSONString(),GamePlayerItemLog.class);
 
-                if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
-                    log.error("请选择服务器！");
+            if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
+                log.error("请选择服务器！");
+            }
+            ItemId itemId = new ItemId();
+            //道具map
+            Map<String, String> itemNameToIdMap = itemId.getItemNameToIdMap();
+            Map<String, String> itemIdToNameMap = itemId.getItemIdToNameMap();
+            //根据前端输入的道具名称模糊匹配到的对应id集合
+            List<Integer> wayList = new ArrayList<>();
+            String regex = null == playerItemLog.getItemIdName() ? "":playerItemLog.getItemIdName();
+            for (String s : itemNameToIdMap.keySet()) {
+                if(s.contains(regex) && !"".equals(regex)){
+                    wayList.add(Integer.parseInt(itemNameToIdMap.get(s)));
                 }
-                LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog,"");
+            }
 
-                Page<GamePlayerItemLog> page = new Page<>(pageNo, 1999999999);
-                List<GamePlayerItemLog> list = new ArrayList<>();
-                try {
-                    DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
+            try {
+                DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
+
+                List<GamePlayerItemLog> recordList = new ArrayList<>();
+                //对模糊匹配的所有道具id进行查询，并将结果放入recordList中
+                if(wayList.size() > 0 ){
+                    String itemIdStr = "";
+                    for (int i = 0; i < wayList.size(); i++) {
+                        if(i == wayList.size()-1){
+                            itemIdStr= itemIdStr +wayList.get(i);
+                        }else{
+                            itemIdStr= itemIdStr +wayList.get(i)+",";
+                        }
+
+                    }
+                    LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog, itemIdStr);
+                    Page<GamePlayerItemLog> page = new Page<>(pageNo, 1999999999);
+                    IPage<GamePlayerItemLog> pageList0= playerItemLogService.page(page, queryWrapper);
+
+                    for (GamePlayerItemLog record : pageList0.getRecords()) {
+
+                        //道具名称
+                        if(null != itemIdToNameMap.get(record.getItemId().toString())){
+                            record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
+                        }
+                        //途径名称
+                        if(1 == record.getType()){
+                            //获得
+                            record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
+                        }else if(2 == record.getType()){
+                            //使用
+                            record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
+                        }
+                        recordList.add(record);
+                    }
+
+                    response.setContentType("application/vnd.ms-excel");
+                    response.setCharacterEncoding("utf-8");
+                    String fileName = URLEncoder.encode("测试", "UTF-8");
+                    response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+                    EasyExcel.write(response.getOutputStream(), GamePlayerItemLog.class).sheet("模板").doWrite(pageList0.getRecords());
+                }else{
+                    LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog,"");
+                    Page<GamePlayerItemLog> page = new Page<>(pageNo, 1999999999);
                     IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
-                    list = pageList.getRecords();
-                } finally {
-                    DataSourceHelper.useDefaultDatabase();
+                    for (GamePlayerItemLog record : pageList.getRecords()) {
+                        //道具名称
+                        if(null != itemIdToNameMap.get(record.getItemId().toString())){
+                            record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
+                        }
+                        //途径名称
+                        if(1 == record.getType()){
+                            //获得
+                            record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
+                        }else if(2 == record.getType()){
+                            //使用
+                            record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
+                        }
+
+                    }
+
+                    response.setContentType("application/vnd.ms-excel");
+                    response.setCharacterEncoding("utf-8");
+                    String fileName = URLEncoder.encode("测试", "UTF-8");
+                    response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+
+                    EasyExcel.write(response.getOutputStream(), GamePlayerItemLog.class).sheet("模板").doWrite(pageList.getRecords());
                 }
 
-                response.setContentType("application/vnd.ms-excel");
-                response.setCharacterEncoding("utf-8");
-                String fileName = URLEncoder.encode("测试", "UTF-8");
-                response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
+            } finally {
+                DataSourceHelper.useDefaultDatabase();
+            }
 
-                EasyExcel.write(response.getOutputStream(), GamePlayerItemLog.class).sheet("模板").doWrite(list);
+
             }
 
 }
