@@ -116,7 +116,7 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("测试", "UTF-8");
+        String fileName = URLEncoder.encode("", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
 
         EasyExcel.write(response.getOutputStream(), GameOrder.class).sheet("模板").doWrite(gameOrderList);

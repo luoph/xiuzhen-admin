@@ -11,20 +11,15 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameForbidden;
-import org.jeecg.modules.game.service.IGameForbiddenRecordService;
 import org.jeecg.modules.game.service.IGameForbiddenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -37,10 +32,8 @@ import java.util.List;
 @RequestMapping("game/gameForbidden")
 public class GameForbiddenController extends JeecgController<GameForbidden, IGameForbiddenService> {
 
-    @Autowired
+    @Resource
     private IGameForbiddenService gameForbiddenService;
-    @Autowired
-    private IGameForbiddenRecordService gameForbiddenRecordService;
 
     /**
      * 分页列表查询
@@ -54,7 +47,6 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "game_forbidden-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameForbidden gameForbidden,
-                                   @RequestParam(name = "channelId", defaultValue = "") Integer channelId,
                                    @RequestParam(name = "serverId", defaultValue = "") Integer serverId,
                                    @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                    @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,

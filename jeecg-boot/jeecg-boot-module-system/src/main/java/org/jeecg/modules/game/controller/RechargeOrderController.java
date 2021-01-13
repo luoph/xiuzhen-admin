@@ -10,13 +10,14 @@ import org.jeecg.modules.game.entity.GameChalcedonyOrder;
 import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IRechargeOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -38,10 +39,10 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
      */
     private static final int[] GOODS_TYPE = {0, 1, 2, 3, 4,};
 
-    @Autowired
+    @Resource
     private IRechargeOrderService rechargeOrderService;
 
-    @Autowired
+    @Resource
     private IGameChannelService gameChannelService;
 
 
@@ -102,14 +103,12 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
             return Result.ok(page);
         }
-        // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
-            return Result.ok(page);
-        }
-        // 如果选择开始时间和结束时间是同一天
-        if (rangeDateBegin.equals(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        if (null != dateParamValid) {
+            rangeDateEnd = dateParamValid[1];
+            rangeDateBegin = dateParamValid[0];
+        }else{
+            return Result.error("请选择日期！");
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[3]);
@@ -138,14 +137,12 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
             return Result.ok(page);
         }
-        // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
-            return Result.ok(page);
-        }
-        // 如果选择开始时间和结束时间是同一天
-        if (rangeDateBegin.equals(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        if (null != dateParamValid) {
+            rangeDateEnd = dateParamValid[1];
+            rangeDateBegin = dateParamValid[0];
+        }else{
+            return Result.error("请选择日期！");
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[4]);
@@ -175,14 +172,12 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
             return Result.ok(page);
         }
-        // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
-            return Result.ok(page);
-        }
-        // 如果选择开始时间和结束时间是同一天
-        if (rangeDateBegin.equals(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        if (null != dateParamValid) {
+            rangeDateEnd = dateParamValid[1];
+            rangeDateBegin = dateParamValid[0];
+        }else{
+            return Result.error("请选择日期！");
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[1]);
@@ -211,14 +206,12 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && channelId == 0 && days == 0) {
             return Result.ok(page);
         }
-        // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && days == 0) {
-            return Result.ok(page);
-        }
-        // 如果选择开始时间和结束时间是同一天
-        if (rangeDateBegin.equals(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        if (null != dateParamValid) {
+            rangeDateEnd = dateParamValid[1];
+            rangeDateBegin = dateParamValid[0];
+        }else{
+            return Result.error("请选择日期！");
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
         List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[2]);
@@ -247,18 +240,17 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
         if (serverId == 0 && channelId == 0) {
             return Result.error("请选择服务器！");
         }
-        // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if (days == 0) {
-                return Result.error("请输入日期！");
-            }
-        } else {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        // 时间校验
+        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        if (null != dateParamValid) {
+            rangeDateEnd = dateParamValid[1];
+            rangeDateBegin = dateParamValid[0];
+        }else{
+            return Result.error("请选择日期！");
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, DAILY_GIFT.getType().toString());
-        page.setRecords(GameChalcedonyOrders).setTotal(GameChalcedonyOrders.size());
+        List<GameChalcedonyOrder> gameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, DAILY_GIFT.getType().toString());
+        page.setRecords(gameChalcedonyOrders).setTotal(gameChalcedonyOrders.size());
         return Result.ok(page);
     }
 
@@ -284,17 +276,16 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             return Result.error("请选择服务器！");
         }
         // 没有传入时间和天数返回空的数据
-        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if (days == 0) {
-                return Result.error("请输入日期！");
-            }
-        } else {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        if (null != dateParamValid) {
+            rangeDateEnd = dateParamValid[1];
+            rangeDateBegin = dateParamValid[0];
+        }else{
+            return Result.error("请选择日期！");
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, OPEN_SERVICE_GIFT.getType().toString());
-        page.setRecords(GameChalcedonyOrders).setTotal(GameChalcedonyOrders.size());
+        List<GameChalcedonyOrder> gameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, OPEN_SERVICE_GIFT.getType().toString());
+        page.setRecords(gameChalcedonyOrders).setTotal(gameChalcedonyOrders.size());
         return Result.ok(page);
     }
 
@@ -329,8 +320,8 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameChalcedonyOrder> GameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, ZERO_BUY.getType().toString());
-        page.setRecords(GameChalcedonyOrders).setTotal(GameChalcedonyOrders.size());
+        List<GameChalcedonyOrder> gameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, ZERO_BUY.getType().toString());
+        page.setRecords(gameChalcedonyOrders).setTotal(gameChalcedonyOrders.size());
         return Result.ok(page);
     }
 

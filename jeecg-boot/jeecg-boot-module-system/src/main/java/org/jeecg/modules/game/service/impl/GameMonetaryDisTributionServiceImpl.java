@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.jeecg.database.DataSourceHelper;
@@ -21,12 +22,9 @@ import java.util.stream.Collectors;
  * @date 2020/12/29 10:40
  */
 
+@Slf4j
 @Service
 public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTributionService {
-    Log log = LogFactory.getLog(this.getClass());
-
-
-
     @Resource
     private GameMonetaryDisTributionMapper gameMonetaryDisTributionMapper;
     @Override
@@ -38,41 +36,41 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             //查询符合条件的背包物品出入信息
             List<Map> backPackList = gameMonetaryDisTributionMapper.selectAllBackPackByTime(rangeTimeBegin, rangeTimeEnd, productAndMarketTyep, quantityType);
             //背包物品出入信息 以 way 分组
-            Map<String, List<Map>> backPackListMap_way = backPackList.stream().collect(Collectors.groupingBy(map -> map.get("way").toString()));
+            Map<String, List<Map>> backPackListMapWay = backPackList.stream().collect(Collectors.groupingBy(map -> map.get("way").toString()));
 
             /**
              * 产销点类型map
              */
-            Map<Integer, String> FairyJadeBuyTypeMap = new HashMap<>();
+            Map<Integer, String> fairyJadeBuyTypeMap = new HashMap<>();
             //存入
             if(1== quantityType){
                 for (ItemRuleId value : ItemRuleId.values()) {
-                    FairyJadeBuyTypeMap.put(value.getId(), value.getName());
+                    fairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
             //消耗
             }else if(2== quantityType){
                 for (ItemReduce value : ItemReduce.values()) {
-                    FairyJadeBuyTypeMap.put(value.getId(), value.getName());
+                    fairyJadeBuyTypeMap.put(value.getId(), value.getName());
                 }
             }
 
 
-            for (Integer integer : FairyJadeBuyTypeMap.keySet()) {
+            for (Integer integer : fairyJadeBuyTypeMap.keySet()) {
                 //获取当前产销点
-                List<Map> oneBackPackListMap_way = backPackListMap_way.get(integer.toString());
-                if(null == oneBackPackListMap_way){continue;}
+                List<Map> oneBackPackListMapWay = backPackListMapWay.get(integer.toString());
+                if(null == oneBackPackListMapWay){continue;}
                 MonetaryDisTributionVO monetaryDisTributionVO = new MonetaryDisTributionVO();
                 //设置产销点
-                monetaryDisTributionVO.setProductAndMarket(FairyJadeBuyTypeMap.get(integer));
+                monetaryDisTributionVO.setProductAndMarket(fairyJadeBuyTypeMap.get(integer));
                 //设置货币总和
-                Long sum = oneBackPackListMap_way.stream().mapToLong(map -> Long.parseLong(map.get("num").toString())).sum();
+                Long sum = oneBackPackListMapWay.stream().mapToLong(map -> Long.parseLong(map.get("num").toString())).sum();
                 monetaryDisTributionVO.setQuantityOfMoney(sum);
                 //设置次数
-                monetaryDisTributionVO.setTimes(oneBackPackListMap_way.size());
+                monetaryDisTributionVO.setTimes(oneBackPackListMapWay.size());
                 //设置人数
                 //背包物品出入信息 以 player_id 分组
-                Map<String, List<Map>> backPackListMap_playerId = oneBackPackListMap_way.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
-                monetaryDisTributionVO.setNumberOfPeople(backPackListMap_playerId.size());
+                Map<String, List<Map>> backPackListMapPlayerId = oneBackPackListMapWay.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
+                monetaryDisTributionVO.setNumberOfPeople(backPackListMapPlayerId.size());
                 monetaryDisTributionVOList.add(monetaryDisTributionVO);
             }
 

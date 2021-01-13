@@ -150,7 +150,7 @@ export default {
                 pageNo: this.ipagination.current,
                 pageSize: this.ipagination.pageSize,
                 days: this.queryParam.days,
-                productAndMarketTyep: this.queryParam.productAndMarketTyep,
+                productAndMarketType: this.queryParam.productAndMarketType,
                 quantityType: this.queryParam.quantityType
             };
             getAction(this.url.list, param).then((res) => {

@@ -79,12 +79,6 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
 
     /**
      * 获取充值礼包数据处理
-     *
-     * @param rangeDateBeginTime
-     * @param rangeDateEndTime
-     * @param serverId
-     * @param channel
-     * @return
      */
     private List<RechargeOrder> getDataTreating(Date rangeDateBeginTime, Date rangeDateEndTime, Integer serverId, String channel, int goodsType) {
         // 封装商品id和商品类型
@@ -193,7 +187,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         List<Map> fairyJadeBuyInfoNewList = new ArrayList<>();
         for (Map map : fairyJadeBuyInfoList) {
             JSONArray dangweiPriceJsonArray = new JSONArray();
-            if(!map.get("price").toString().equals("[null]") && !map.get("price").toString().equals("null")){
+            if(!("[null]").equals(map.get("price").toString()) && !("null").equals(map.get("price").toString()) ){
                 dangweiPriceJsonArray = JSONArray.parseArray(map.get("price").toString());
                 for (int i = 0; i < dangweiPriceJsonArray.size(); i++) {
                     Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
@@ -223,9 +217,9 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
 //        //过滤出玉髓明细
 //        List<Map> fairyList = fairyJadeBuyInfoNewList.stream().filter(map -> map.get("itemId").toString().equals("1010")).collect(Collectors.toList());
         //玉髓明细 以日期分组
-        Map<String, List<Map>> fairyJadeBuyInfoMao_Time = fairyJadeBuyInfoNewList.stream().collect(Collectors.groupingBy(map -> map.get("create_time").toString().substring(0, 10)));
+        Map<String, List<Map>> fairyJadeBuyInfoMaoTime = fairyJadeBuyInfoNewList.stream().collect(Collectors.groupingBy(map -> map.get("create_time").toString().substring(0, 10)));
         //玉髓明细 排序 倒叙
-        Map<String, List<Map>> fairyJadeBuyInfoMap_Time_Sort = fairyJadeBuyInfoMao_Time.entrySet()
+        Map<String, List<Map>> fairyJadeBuyInfoMapTimeSort = fairyJadeBuyInfoMaoTime.entrySet()
                 .stream()
                 .sorted(Collections
                         .reverseOrder(Map.Entry.comparingByKey()))
@@ -235,25 +229,25 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
                                 (e1, e2) -> e1,
                                 LinkedHashMap::new));
         //遍历获取日期内的消耗玉髓明细数据
-        for (String s : fairyJadeBuyInfoMap_Time_Sort.keySet()) {
+        for (String s : fairyJadeBuyInfoMapTimeSort.keySet()) {
             // 通过登录日志统计当前时间段的dau
             Long dau = rechargeOrderMapper.queryDAU(DateUtils.dateOnly(DateUtils.parseDate(s)), DateUtils.dateOnly(DateUtils.parseDate(s)), serverId, channel, logTable);
-            List<Map> oneDayFairyJadeBuyInfoList = fairyJadeBuyInfoMap_Time_Sort.get(s);
+            List<Map> oneDayFairyJadeBuyInfoList = fairyJadeBuyInfoMapTimeSort.get(s);
             //以档位分组
-            Map<String, List<Map>> oneDayFairyJadeBuyInfoList_itemNum = oneDayFairyJadeBuyInfoList.stream().collect(Collectors.groupingBy(map -> map.get("itemNum").toString()));
+            Map<String, List<Map>> oneDayFairyJadeBuyInfoListItemNum = oneDayFairyJadeBuyInfoList.stream().collect(Collectors.groupingBy(map -> map.get("itemNum").toString()));
             //遍历档位
-            for (String s1 : oneDayFairyJadeBuyInfoList_itemNum.keySet()) {
+            for (String s1 : oneDayFairyJadeBuyInfoListItemNum.keySet()) {
                 GameChalcedonyOrder gameChalcedonyOrder = new GameChalcedonyOrder();
                 gameChalcedonyOrder.setConsumeRank(new BigDecimal(s1));
                 //这个档位下用户购买信息
-                List<Map> gradeBuyInfo = oneDayFairyJadeBuyInfoList_itemNum.get(s1);
+                List<Map> gradeBuyInfo = oneDayFairyJadeBuyInfoListItemNum.get(s1);
                 //以player_id分组
-                Map<String, List<Map>> oneDayFairyJadeBuyInfoList_playId = gradeBuyInfo.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
-                gameChalcedonyOrder.setPayNum(oneDayFairyJadeBuyInfoList_playId.size());
+                Map<String, List<Map>> oneDayFairyJadeBuyInfoListPlayId = gradeBuyInfo.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
+                gameChalcedonyOrder.setPayNum(oneDayFairyJadeBuyInfoListPlayId.size());
                 gameChalcedonyOrder.setPayCount(gradeBuyInfo.stream().mapToInt(Map -> Integer.parseInt(Map.get("num").toString())).sum());
                 gameChalcedonyOrder.setDau(dau);
                 //计算并设置购买率
-                BigDecimal payCountCount = new BigDecimal(oneDayFairyJadeBuyInfoList_playId.size());
+                BigDecimal payCountCount = new BigDecimal(oneDayFairyJadeBuyInfoListPlayId.size());
                 BigDecimal dauCount = new BigDecimal(dau);
                 BigDecimal divide = payCountCount.divide(dauCount, 2, BigDecimal.ROUND_HALF_UP);
                 gameChalcedonyOrder.setPayNumRate(BigDecimalUtil.dividePercent(divide.doubleValue()).toString());

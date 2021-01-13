@@ -7,33 +7,32 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.jeecg.modules.game.entity.GameRemainStatistisc;
 import org.jeecg.modules.game.mapper.RemainStatisticsMapper;
 import org.jeecg.modules.game.service.IRemainStatisticsService;
 import org.jeecg.modules.game.util.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.InvocationTargetException;
-import java.time.DayOfWeek;
 import java.util.*;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
 
 /**
- * author:huli
  * 留存统计实现类
+ * @author huli
  */
 @Service
 public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, GameRemainStatistisc> implements IRemainStatisticsService {
 
-    //查询时间时间跨度
-    private int[] DAY = {0, 1, 2, 3, 4, 5, 6, 14, 29, 59, 89, 119};
-    //查询档位跨度
+    /**
+     * 查询时间时间跨度
+     */
+    private final int[] DAY = {0, 1, 2, 3, 4, 5, 6, 14, 29, 59, 89, 119};
+    /**
+     * 查询档位跨度
+     */
     private static final String[] GRADE = {"6-6", "7-29", "30-67", "68-97", "98-197", "198-327", "328-647", "648-9999"};
     @Resource
     RemainStatisticsMapper remainStatisticsMapper;
@@ -169,7 +168,6 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     if (119 == DAY[j]) {
                         gameRemainStatistisc.setC120((long) 0);
                     }
-                    ;
                     continue;
                 }
                 //按player_id收集登录日期里的登录信息
@@ -293,7 +291,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             Date registerTime = DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i);
             String registerTimeString = DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN);
 
-            JSONObject gameRemainStatistiscJsonObject = new JSONObject();
+            JSONObject gameRemainStatistiscJsonObject;
             //对放入的数据排序
             Map<String, Object> gameRemainStatistiscJsonObjectMap = new TreeMap<>(new Comparator<String>() {
                 @Override
@@ -569,7 +567,6 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             //支付日期
             Date registerTime = DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i);
             String registerTimeString = DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN);
-            GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
 
             JSONObject gameRemainStatistiscJsonObject = new JSONObject();
             //对放入的数据排序
@@ -976,7 +973,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
      * @param daysRange
      */
     @Override
-    public List<JSONObject> queryRemainStatistiscOfFreeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) throws IllegalAccessException, InvocationTargetException, JsonProcessingException, Exception {
+    public List<JSONObject> queryRemainStatistiscOfFreeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) throws Exception {
         List<Integer> dayList = new ArrayList<Integer>();
         if(!StringUtils.isEmpty(daysRange)){
             dayList.add(0);
@@ -1065,9 +1062,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             //用户注册日期
             Date registerTime = DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i);
             String registerTimeString = DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN);
-            GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
 
-            JSONObject gameRemainStatistiscJsonObject = new JSONObject();
             //对放入的数据排序
             Map<String, Object> gameRemainStatistiscJsonObjectMap = new TreeMap<>(new Comparator<String>() {
                 @Override
@@ -1123,7 +1118,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             gameRemainStatistiscJsonObjectMap.put("channel", channelName);
             gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
-            gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
+            JSONObject gameRemainStatistiscJsonObject  = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
         }
         return gameRemainStatistiscJsonObjectList;
