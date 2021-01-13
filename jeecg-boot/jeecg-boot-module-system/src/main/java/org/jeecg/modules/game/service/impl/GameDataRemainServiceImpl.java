@@ -3,8 +3,9 @@
  */
 package org.jeecg.modules.game.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameChannel;
@@ -39,18 +40,16 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
 
     @Override
     public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameStatRemain> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("count_date");
+        LambdaQueryWrapper<GameStatRemain> queryWrapper = Wrappers.<GameStatRemain>lambdaQuery();
         boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
+            queryWrapper.between(GameStatRemain::getCountDate, rangeDateBegin, rangeDateEnd);
             GameChannel gameChannel = gameChannelService.getById(channelId);
-            queryWrapper.ge("count_date", rangeDateBegin);
-            queryWrapper.le("count_date", rangeDateEnd);
             if (gameChannel != null) {
-                queryWrapper.eq("channel", gameChannel.getSimpleName());
-                queryWrapper.eq("server_id", serverId);
+                queryWrapper.eq(GameStatRemain::getChannel, gameChannel.getSimpleName()).eq(GameStatRemain::getServerId, serverId);
             }
         }
+        queryWrapper.orderByDesc(GameStatRemain::getCountDate);
         return page(page, queryWrapper);
     }
 

@@ -59,6 +59,7 @@ public final class ParamValidUtil {
         return dates;
     }
 
+    @Deprecated
     public static String[] dateParamValid(String rangeDateBegin, String rangeDateEnd, int days) {
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
             if (0 == days) {
@@ -71,4 +72,24 @@ public final class ParamValidUtil {
         }
         return null;
     }
+
+    public static Date[] convertDateParam(String rangeDateBegin, String rangeDateEnd, Integer days) {
+        boolean isValidRangeDate = !StringUtils.isEmpty(rangeDateBegin) && !StringUtils.isEmpty(rangeDateEnd);
+        if (!isValidRangeDate && (null == days || days <= 0)) {
+            return null;
+        }
+
+        Date startTime;
+        Date endTime;
+        if (isValidRangeDate) {
+            startTime = DateUtils.parseDate(rangeDateBegin);
+            endTime = DateUtils.parseDate(rangeDateEnd);
+        } else {
+            Date current = DateUtils.now();
+            startTime = DateUtils.addDays(current, -days + 1);
+            endTime = DateUtils.endTimeOfDate(current);
+        }
+        return new Date[]{DateUtils.startTimeOfDate(startTime), DateUtils.endTimeOfDate(endTime)};
+    }
+
 }
