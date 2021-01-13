@@ -35,10 +35,10 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />
+                    <j-date placeholder="请选择开始时间" :showTime="true" dateFormat="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
+                    <j-date placeholder="请选择结束时间" :showTime="true" dateFormat="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
                 <!-- <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <j-date placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
@@ -70,7 +70,7 @@ import JDate from "@/components/jeecg/JDate";
 export default {
     name: "GameForbiddenModal",
     components: {
-        JDate,
+        JDate
     },
     data() {
         return {
@@ -102,7 +102,7 @@ export default {
                 createTime: {},
                 updateTime: {},
                 createBy: {},
-                updateBy: {},
+                updateBy: {}
             },
             url: {
                 add: "game/gameForbidden/add",
@@ -110,8 +110,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -121,7 +120,26 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "serverId", "type", "banKey", "banValue", "reason", "delFlag", "isForever", "startTime", "endTime", "createTime", "updateTime", "createBy", "updateBy"));
+                setTimeout(() => {
+                    this.form.setFieldsValue(
+                        pick(
+                            this.model,
+                            "serverId",
+                            "type",
+                            "banKey",
+                            "banValue",
+                            "reason",
+                            // "delFlag",
+                            "isForever",
+                            "startTime",
+                            "endTime",
+                            // "createTime",
+                            // "updateTime",
+                            // "createBy",
+                            // "updateBy"
+                        )
+                    );
+                });
             });
         },
         close() {
@@ -143,10 +161,12 @@ export default {
                         httpUrl += this.url.edit;
                         method = "put";
                     }
+                    console.log(this.model);
+                    console.log(values);
                     let formData = Object.assign(this.model, values);
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
-                        .then(res => {
+                        .then((res) => {
                             if (res.success) {
                                 that.$message.success(res.message);
                                 that.$emit("ok");
@@ -165,8 +185,10 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "serverId", "type", "banKey", "banValue", "reason", "delFlag", "isForever", "startTime", "endTime", "createTime", "updateTime", "createBy", "updateBy"));
-        },
+            this.form.setFieldsValue(
+                pick(row, "serverId", "type", "banKey", "banValue", "reason", "delFlag", "isForever", "startTime", "endTime", "createTime", "updateTime", "createBy", "updateBy")
+            );
+        }
     }
 };
 </script>

@@ -18,8 +18,8 @@
                         <a-form-item  label="封禁类型">
                             <a-select placeholder="请选择封禁类型" @change="typeChange">
                                 <a-select-option :value="''">不选择</a-select-option>
-                                <a-select-option :value="'1'">登录封禁</a-select-option>
-                                <a-select-option :value="'2'">聊天封禁</a-select-option>
+                                <a-select-option :value="'1'">1-登录封禁</a-select-option>
+                                <a-select-option :value="'2'">2-聊天封禁</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -33,8 +33,8 @@
                             <a-form-item label="封禁时间">
                             <a-select placeholder="封禁时间" @change="isForeverChange">
                                 <a-select-option :value="''">不选择</a-select-option>
-                                <a-select-option :value="'0'">临时封禁</a-select-option>
-                                <a-select-option :value="'1'">永久封禁</a-select-option>
+                                <a-select-option :value="'0'">0-临时封禁</a-select-option>
+                                <a-select-option :value="'1'">1-永久封禁</a-select-option>
                             </a-select>
                         </a-form-item>
                         </a-col>
@@ -106,7 +106,7 @@
                 </template>
 
                 <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">查看详情</a>
+                    <a @click="handleEdit(record)">编辑</a>
                     <!-- <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -191,33 +191,33 @@ export default {
                     title: "开始时间",
                     align: "center",
                     dataIndex: "startTime",
-                    customRender: function (text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    // customRender: function (text) {
+                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
+                    // }
                 },
                 {
                     title: "结束时间",
                     align: "center",
                     dataIndex: "endTime",
-                    customRender: function (text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    // customRender: function (text) {
+                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
+                    // }
                 },
                 {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    customRender: function (text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    // customRender: function (text) {
+                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
+                    // }
                 },
                 {
                     title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime",
-                    customRender: function (text) {
-                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    }
+                    // customRender: function (text) {
+                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
+                    // }
                 },
                 {
                     title: "操作人",
@@ -284,6 +284,7 @@ export default {
             };
             getAction(this.url.list, param).then(res => {
                 if (res.success) {
+                    console.log(res.result.records);
                     this.dataSource = res.result.records;
                     this.ipagination.current = res.result.current;
                     this.ipagination.size = res.result.size.toString();
