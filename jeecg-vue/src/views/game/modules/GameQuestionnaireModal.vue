@@ -12,8 +12,8 @@
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="状态" v-decorator="['status', validatorRules.status]" initialValue="1">
-                        <a-select-option :value="0">无效</a-select-option>
                         <a-select-option :value="1">有效</a-select-option>
+                        <a-select-option :value="0">无效</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -89,7 +89,10 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
+            console.log("GameQuestionnaireModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "serverIds", "url", "status", "startTime", "endTime", "remark"));
 
@@ -147,9 +150,10 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "serverIds", "lastServerIds", "url", "status", "startTime", "endTime", "remark"));
+            this.form.setFieldsValue(pick(row, "serverIds", "url", "status", "startTime", "endTime", "remark"));
         },
         changeSelect(value) {
+            this.model.serverIds = value.join(",");
             this.form.setFieldsValue({
                 serverIds: value.join(",")
             });
