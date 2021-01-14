@@ -26,7 +26,7 @@
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="产销类型" >
-                            <a-select placeholder="产销类型" v-model="queryParam.productAndMarketTyep" initialValue="1" >
+                            <a-select placeholder="产销类型" v-model="queryParam.productAndMarketType" initialValue="1" >
                                 <a-select-option :value="1002">玉髓</a-select-option>
                                 <a-select-option :value="1010">仙石</a-select-option>
                                 <a-select-option :value="1001">灵石</a-select-option>
