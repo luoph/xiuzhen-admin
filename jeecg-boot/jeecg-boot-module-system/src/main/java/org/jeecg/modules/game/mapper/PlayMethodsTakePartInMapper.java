@@ -1,12 +1,11 @@
 package org.jeecg.modules.game.mapper;
 
 import org.apache.ibatis.annotations.*;
-import org.jeecg.modules.game.entity.LogAcount;
+import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author huli
@@ -26,23 +25,6 @@ public interface PlayMethodsTakePartInMapper {
      * @param serverId        服务器id
      * @return List<Map < String, Object>>
      */
-    @Select({
-            "<script>",
-            "SELECT player_id, type, create_date, value FROM ${logPlayerTable} where 1=1 ",
-            "<if test='type != null and type != \" \" and type != \"\"'>",
-            " and type = #{type}",
-            "</if>",
-            "<if test='createDateBegin != null'>",
-            " and create_date &gt;= #{createDateBegin}",
-            "</if>",
-            "<if test='createDateEnd != null'>",
-            " and create_date &lt;= #{createDateEnd}",
-            "</if>",
-            "<if test='serverId != 0'>",
-            " and server_id = #{serverId}",
-            "</if> order by create_date",
-            "</script>"
-    })
     List<LogPlayer> conditionSelectPlayerLog(@Param("type") String type,
                                                        @Param("createDateBegin") Date createDateBegin,
                                                        @Param("createDateEnd") Date createDateEnd,
@@ -57,15 +39,7 @@ public interface PlayMethodsTakePartInMapper {
      * @param serverId        服务器名称
      * @return List<Map < String, Object>>
      */
-    @Select({
-            "<script>",
-            "SELECT create_date, value, player_id from ${logAccountTable} where type = 2 and value >= #{grade} ",
-            "<if test='serverId != 0'>",
-            " and server_id = #{serverId}",
-            "</if>",
-            "</script>"
-    })
-    List<LogAcount> selectPlayLoginInfo(@Param("grade") int grade,
-                                        @Param("logAccountTable") String logAccountTable,
-                                        @Param("serverId") int serverId);
+    List<LogAccount> selectPlayLoginInfo(@Param("grade") int grade,
+                                         @Param("logAccountTable") String logAccountTable,
+                                         @Param("serverId") int serverId);
 }
