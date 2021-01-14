@@ -1,6 +1,8 @@
 package org.jeecg.modules.game.mapper;
 
 import org.apache.ibatis.annotations.*;
+import org.jeecg.modules.game.entity.LogAcount;
+import org.jeecg.modules.game.entity.LogPlayer;
 
 import java.util.Date;
 import java.util.List;
@@ -16,12 +18,13 @@ public interface PlayMethodsTakePartInMapper {
 
     /**
      * 查询玩家日志
-     * @param type 日志记录类型
+     *
+     * @param type            日志记录类型
      * @param createDateBegin 开始时间
-     * @param createDateEnd 结束时间
-     * @param logPlayerTable 表名
-     * @param serverId 服务器id
-     * @return List<Map<String, Object>>
+     * @param createDateEnd   结束时间
+     * @param logPlayerTable  表名
+     * @param serverId        服务器id
+     * @return List<Map < String, Object>>
      */
     @Select({
             "<script>",
@@ -40,18 +43,19 @@ public interface PlayMethodsTakePartInMapper {
             "</if> order by create_date",
             "</script>"
     })
-    List<Map<String, Object>> conditionSelectPlayerLog(@Param("type") String type,
-                    @Param("createDateBegin") Date createDateBegin,
-                    @Param("createDateEnd") Date createDateEnd,
-                    @Param("logPlayerTable") String logPlayerTable,
-                    @Param("serverId") int serverId);
+    List<LogPlayer> conditionSelectPlayerLog(@Param("type") String type,
+                                                       @Param("createDateBegin") Date createDateBegin,
+                                                       @Param("createDateEnd") Date createDateEnd,
+                                                       @Param("logPlayerTable") String logPlayerTable,
+                                                       @Param("serverId") int serverId);
 
     /**
      * 查询符合等级的用户登录信息
-     * @param grade 等级
+     *
+     * @param grade           等级
      * @param logAccountTable 表名
-     * @param serverId 服务器名称
-     * @return List<Map<String, Object>>
+     * @param serverId        服务器名称
+     * @return List<Map < String, Object>>
      */
     @Select({
             "<script>",
@@ -61,7 +65,7 @@ public interface PlayMethodsTakePartInMapper {
             "</if>",
             "</script>"
     })
-    List<Map<String, Object>> selectPlayLoginInfo(@Param("grade") int grade,
-                                                  @Param("logAccountTable") String logAccountTable,
-                                                  @Param("serverId") int serverId);
+    List<LogAcount> selectPlayLoginInfo(@Param("grade") int grade,
+                                        @Param("logAccountTable") String logAccountTable,
+                                        @Param("serverId") int serverId);
 }
