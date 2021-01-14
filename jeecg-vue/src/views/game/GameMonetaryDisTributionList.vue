@@ -206,7 +206,7 @@ export default {
                                         }
                                     }
                                 ],
-                                columnsData: aa.monetaryDisTributionVOS
+                                columnsData: aa.monetaryDistributionVOs
                             }
                         this.columnsList.push(a);
                     }
