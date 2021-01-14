@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
-import java.util.Date;
 import java.util.List;
 
 
@@ -83,8 +82,7 @@ public class GamePlayMethodsTakePartInController {
                                   @RequestParam(name = "serverId", defaultValue = "0") int serverId,
                                   @RequestParam(name = "playMethodsType", defaultValue = "") String playMethodsType,
                                   @RequestParam(name = "days", defaultValue = "0") int days) {
-        Date rangeBegin = null;
-        Date rangeEnd = null;
+
         if (StringUtils.isEmpty(playMethodsType)) {
             return null;
         }
@@ -94,7 +92,7 @@ public class GamePlayMethodsTakePartInController {
             return null;
         }
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        List<GamePlayMethodsTakePartInVO> pageList = gamePlayMethodsTakePartInService.playMethodsTakePartList(fullTime, grade, playMethodsType, rangeBegin, rangeEnd, serverId);
+        List<GamePlayMethodsTakePartInVO> pageList = gamePlayMethodsTakePartInService.playMethodsTakePartList(fullTime, grade, playMethodsType, dateRange.getStart(), dateRange.getEnd(), serverId);
 
         return ExcelUtils.exportXls(sysUser.getRealname(), pageList, request.getParameter("selections"), GamePlayMethodsTakePartInVO.class, "玩法参与");
     }
@@ -109,8 +107,6 @@ public class GamePlayMethodsTakePartInController {
         String playMethodsType = ConvertUtils.safeString(jsonObject.getString("playMethodsType"));
         int days = ConvertUtils.safeInteger(jsonObject.getInteger("days"));
 
-        Date rangeBegin = null;
-        Date rangeEnd = null;
         if (StringUtils.isEmpty(playMethodsType)) {
             throw new Exception("玩法类型不能为空");
         }
@@ -119,7 +115,7 @@ public class GamePlayMethodsTakePartInController {
         if (null == dateRange) {
             throw new Exception("请选择日期！");
         }
-        List<GamePlayMethodsTakePartInVO> pageList = gamePlayMethodsTakePartInService.playMethodsTakePartList(fullTime, grade, playMethodsType, rangeBegin, rangeEnd, serverId);
+        List<GamePlayMethodsTakePartInVO> pageList = gamePlayMethodsTakePartInService.playMethodsTakePartList(fullTime, grade, playMethodsType, dateRange.getStart(), dateRange.getEnd(), serverId);
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");

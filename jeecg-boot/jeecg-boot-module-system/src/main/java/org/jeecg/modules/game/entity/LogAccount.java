@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Data
 @TableName("log_account")
 @Accessors(chain = true)
-public class LogAcount implements Serializable {
+public class LogAccount implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
