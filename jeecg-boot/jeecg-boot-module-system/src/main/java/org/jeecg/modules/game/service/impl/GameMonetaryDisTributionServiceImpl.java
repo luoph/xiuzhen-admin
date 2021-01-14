@@ -108,11 +108,19 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             return map;
         }
 
-        // 通过serverId切换数据源
-        DataSourceHelper.useServerDatabase(serverId);
-
         // 查询符合条件的背包物品出入信息
-        List<BackpackLog> backpackLogList = gameMonetaryDisTributionMapper.selectAllBackPackByTime2(dateRange.getStart(), dateRange.getEnd(), productAndMarketType, quantityType);
+        List<BackpackLog> backpackLogList;
+        try {
+           // 通过serverId切换数据源
+           DataSourceHelper.useServerDatabase(serverId);
+           backpackLogList = gameMonetaryDisTributionMapper.selectAllBackPackByTime2(dateRange.getStart(), dateRange.getEnd(), productAndMarketType, quantityType);
+        } catch (Exception e) {
+           log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
+           throw e;
+        } finally {
+           DataSourceHelper.useDefaultDatabase();
+        }
+        DataSourceHelper.useServerDatabase(serverId);
 
         // 根据日期分组(天)
         Map<Date, List<BackpackLog>> dateBackpackLogMap = backpackLogList.stream().collect(Collectors.groupingBy(BackpackLog::getCreateDate));
