@@ -120,7 +120,6 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
         } finally {
            DataSourceHelper.useDefaultDatabase();
         }
-        DataSourceHelper.useServerDatabase(serverId);
 
         // 根据日期分组(天)
         Map<Date, List<BackpackLog>> dateBackpackLogMap = backpackLogList.stream().collect(Collectors.groupingBy(BackpackLog::getCreateDate));
