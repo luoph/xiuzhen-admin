@@ -12,7 +12,6 @@ import org.jeecg.modules.game.entity.*;
 @Getter
 @SuppressWarnings("rawtypes")
 public enum CampaignFestivalType {
-
     /**
      * 活动状态
      */
@@ -22,6 +21,9 @@ public enum CampaignFestivalType {
     TASK("节日任务", 4, GameCampaignTypeTask.class, GameCampaignTypeTaskVO.class),
     BUFF_PRACTICE("修为加成", 5, GameCampaignTypeBuff.class, GameCampaignTypeBuffVO.class),
     BUFF_ANIMA("灵气加成", 6, GameCampaignTypeBuff.class, GameCampaignTypeBuffVO.class),
+    FALL("节日掉落", 7, GameCampaignTypeFall.class, GameCampaignTypeBuffVO.class),
+    //    FALL_REWARD("节日掉落奖励", 7, GameCampaignTypeFallReward.class, GameCampaignTypeBuffVO.class),
+    FIREWORK("烟火", 8, GameCampaignTypeFireworks.class, GameCampaignTypeFireworkVO.class),
     ;
 
     private final String name;

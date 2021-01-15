@@ -19,10 +19,12 @@
                             <a-select placeholder="选择活动类型" v-model="queryParam.type" default-value="1">
                                 <a-select-option :value="1">1-登录礼包</a-select-option>
                                 <a-select-option :value="2">2-累计充值</a-select-option>
-                                <a-select-option :value="3">3-兑换</a-select-option>
+                                <a-select-option :value="3">3-节日兑换</a-select-option>
                                 <a-select-option :value="4">4-节日任务</a-select-option>
-                                <a-select-option :value="5">5-Buff-修为加成</a-select-option>
-                                <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
+                                <a-select-option :value="5">5-修为加成</a-select-option>
+                                <a-select-option :value="6">6-灵气加成</a-select-option>
+                                <a-select-option :value="7">7-节日掉落</a-select-option>
+                                <a-select-option :value="8">8-节日烟花</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -179,7 +181,6 @@ export default {
                     align: "center",
                     dataIndex: "type",
                     width: 180,
-                    // <!-- 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成' -->
                     customRender: value => {
                         let re = "--";
                         if (value === 1) {
@@ -187,13 +188,13 @@ export default {
                         } else if (value === 2) {
                             re = "2-累计充值";
                         } else if (value === 3) {
-                            re = "3-兑换";
+                            re = "3-节日兑换";
                         } else if (value === 4) {
                             re = "4-节日任务";
                         } else if (value === 5) {
-                            re = "5-Buff-修为加成";
+                            re = "5-修为加成";
                         } else if (value === 6) {
-                            re = "6-Buff-灵气加成";
+                            re = "6-灵气加成";
                         }
                         return re;
                     }

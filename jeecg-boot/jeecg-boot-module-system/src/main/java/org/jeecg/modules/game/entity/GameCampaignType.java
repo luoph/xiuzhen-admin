@@ -49,7 +49,7 @@ public class GameCampaignType extends BaseEntity {
     private String name;
 
     /**
-     * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成
+     * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换, 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成, 7-掉落, 8-烟花
      */
     @Excel(name = "活动项类型", width = 15)
     private Integer type;
@@ -65,6 +65,12 @@ public class GameCampaignType extends BaseEntity {
      */
     @Excel(name = "排序", width = 15)
     private Integer sort;
+
+    /**
+     * 额外参数
+     */
+    @Excel(name = "额外参数", width = 15)
+    private String extra;
 
     /**
      * 开始时间
@@ -92,25 +98,17 @@ public class GameCampaignType extends BaseEntity {
      * 6.buff-灵气加成 - GameCampaignTypeBuff
      */
     @TableField(exist = false)
-    private List<?> details;
+    private List<? extends GameCampaignTypeBase> details;
+
+    /**
+     * 节日掉落奖励配置
+     */
+    @TableField(exist = false)
+    private List<? extends GameCampaignTypeBase> rewardList;
 
     /**
      * 页面更新过来的数据
      */
     @TableField(exist = false)
     private String detailsData;
-
-
-    //--------------------- 以下的字段为了方便页面处理 ---------------------//
-    /**
-     * 加成效率
-     */
-    @TableField(exist = false)
-    private Integer addition;
-
-    /**
-     * buff 描述
-     */
-    @TableField(exist = false)
-    private String buffDesc;
 }

@@ -9,14 +9,16 @@
                     <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
                         <a-select-option :value="1">1-登录礼包</a-select-option>
                         <a-select-option :value="2">2-累计充值</a-select-option>
-                        <a-select-option :value="3">3-兑换</a-select-option>
+                        <a-select-option :value="3">3-节日兑换</a-select-option>
                         <a-select-option :value="4">4-节日任务</a-select-option>
-                        <a-select-option :value="5">5-Buff-修为加成</a-select-option>
-                        <a-select-option :value="6">6-Buff-灵气加成</a-select-option>
+                        <a-select-option :value="5">5-修为加成</a-select-option>
+                        <a-select-option :value="6">6-灵气加成</a-select-option>
+                        <a-select-option :value="7">7-节日掉落</a-select-option>
+                        <a-select-option :value="8">8-节日烟花</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名" style="width: 100%" />
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名" />
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)" class="banner-image" />
@@ -24,6 +26,9 @@
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="额外参数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['extra', validatorRules.extra]" placeholder="请输入额外参数" />
                 </a-form-item>
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
@@ -38,6 +43,9 @@
             <game-campaign-type-exchange-list v-if="isEdit && model.type === 3" ref="exchangeList" />
             <game-campaign-type-task-list v-if="isEdit && model.type === 4" ref="taskList" />
             <game-campaign-type-buff-list v-if="isEdit && (model.type === 5 || model.type === 6)" ref="buffList" />
+            <game-campaign-type-fall-list v-if="isEdit && model.type === 7" ref="fallList" />
+            <game-campaign-type-fall-reward-list v-if="isEdit && model.type === 7" ref="rewardList" />
+            <game-campaign-type-fireworks-list v-if="isEdit && model.type === 8" ref="fireworksList" />
         </a-spin>
     </a-modal>
 </template>
@@ -53,6 +61,9 @@ import GameCampaignTypeRechargeList from "../GameCampaignTypeRechargeList";
 import GameCampaignTypeExchangeList from "../GameCampaignTypeExchangeList";
 import GameCampaignTypeTaskList from "../GameCampaignTypeTaskList";
 import GameCampaignTypeBuffList from "../GameCampaignTypeBuffList";
+import GameCampaignTypeFallList from "../GameCampaignTypeFallList";
+import GameCampaignTypeFallRewardList from "../GameCampaignTypeFallRewardList";
+import GameCampaignTypeFireworksList from "../GameCampaignTypeFireworksList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -63,7 +74,10 @@ export default {
         GameCampaignTypeRechargeList,
         GameCampaignTypeExchangeList,
         GameCampaignTypeTaskList,
-        GameCampaignTypeBuffList
+        GameCampaignTypeBuffList,
+        GameCampaignTypeFallList,
+        GameCampaignTypeFallRewardList,
+        GameCampaignTypeFireworksList
     },
     data() {
         return {
@@ -87,6 +101,7 @@ export default {
                 type: { rules: [{ required: true, message: "请输入活动类型" }] },
                 typeImage: { rules: [{ required: true, message: "请输入活动类型图片!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
+                extra: { rules: [{ required: false, message: "请输入额外参数!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
             },
@@ -120,10 +135,16 @@ export default {
                         this.$refs.taskList.edit(record);
                     } else if (this.$refs.buffList) {
                         this.$refs.buffList.edit(record);
+                    } else if (this.$refs.fallList) {
+                        this.$refs.fallList.edit(record);
+                    } else if (this.$refs.rewardList) {
+                        this.$refs.rewardList.edit(record);
+                    } else if (this.$refs.fireworksList) {
+                        this.$refs.fireworksList.edit(record);
                     }
                 }
 
-                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "extra", "startTime", "endTime"));
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
                 this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
@@ -174,7 +195,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "startTime", "endTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "extra", "startTime", "endTime"));
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {

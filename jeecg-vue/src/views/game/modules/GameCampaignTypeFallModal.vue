@@ -9,40 +9,47 @@
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="加成类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="选择加成类型" v-decorator="['type', validatorRules.type]" initialValue="5">
-                        <a-select-option :value="5">5-修为加成</a-select-option>
-                        <a-select-option :value="6">6-灵气加成</a-select-option>
+                <a-form-item label="模块" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="模块" v-decorator="['module', validatorRules.module]" initialValue="1">
+                        <a-select-option :value="1">仙器秘境</a-select-option>
+                        <a-select-option :value="2">仙兽秘境</a-select-option>
+                        <a-select-option :value="3">丹药秘境</a-select-option>
+                        <a-select-option :value="4">修为秘境</a-select-option>
+                        <a-select-option :value="5">灵石秘境</a-select-option>
+                        <a-select-option :value="6">北冥魔海</a-select-option>
+                        <a-select-option :value="7">不死魔巢</a-select-option>
+                        <a-select-option :value="8">蛇陵魔窟</a-select-option>
+                        <a-select-option :value="9">魔王入侵</a-select-option>
+                        <a-select-option :value="10">剧情挂机</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%;" />
+                <a-form-item label="奖励类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="奖励类型" v-decorator="['rewardType', validatorRules.rewardType]" initialValue="1">
+                        <a-select-option :value="1">按比例加成</a-select-option>
+                        <a-select-option :value="2">额外的活动掉落组</a-select-option>
+                        <a-select-option :value="3">剧情挂机奖励</a-select-option>
+                    </a-select>
                 </a-form-item>
-                <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%;" />
-                </a-form-item>
-                <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-textarea>
-                </a-form-item>
-                <a-form-item label="加成" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成" style="width: 100%" />
+                <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder='请输入奖励类型对应的奖励值, e.g. 5,  [1, 2],  [{"time":300, "reward":1}]'></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
-    <!-- <a-button type="primary" @click="handleOk">确定</a-button>
+    <!--
+        <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer> -->
+        </a-drawer>
+     -->
 </template>
 
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
-import moment from "moment";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameCampaignTypeBuffModal",
+    name: "GameCampaignTypeFallModal",
     components: {
         JDate
     },
@@ -66,15 +73,13 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
                 typeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                type: { rules: [{ required: true, message: "请输入活动类型!" }] },
-                startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
-                description: { rules: [{ required: true, message: "请输入描述!" }] },
-                addition: { rules: [{ required: true, message: "请输入加成!" }] }
+                module: { rules: [{ required: true, message: "请输入模块!" }] },
+                rewardType: { rules: [{ required: true, message: "请输入奖励类型!" }] },
+                reward: { rules: [{ required: true, message: "请输入奖励!" }] }
             },
             url: {
-                add: "game/gameCampaignTypeBuff/add",
-                edit: "game/gameCampaignTypeBuff/edit"
+                add: "game/gameCampaignTypeFall/add",
+                edit: "game/gameCampaignTypeFall/edit"
             }
         };
     },
@@ -88,12 +93,10 @@ export default {
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.visible = true;
-            console.log("GameCampaignTypeBuffModal, model:", JSON.stringify(this.model));
+            console.log("GameCampaignTypeFallModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
-                this.form.setFieldsValue({ startTime: this.startTime ? moment(this.startTime) : null });
-                this.form.setFieldsValue({ endtTime: this.endtTime ? moment(this.endtTime) : null });
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "module", "rewardType", "reward"));
             });
         },
         close() {
@@ -116,10 +119,6 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-                    // 时间格式化
-                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
-
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
@@ -141,7 +140,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "module", "rewardType", "reward"));
         }
     }
 };

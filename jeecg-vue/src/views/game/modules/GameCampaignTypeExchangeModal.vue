@@ -58,7 +58,7 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
-                typeId: { rules: [{ required: true, message: "请输入game_campaign_type.id!" }] },
+                typeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 exchangeId: { rules: [{ required: true, message: "请输入兑换id!" }] },
                 itemName: { rules: [{ required: true, message: "请输入道具名称!" }] },
                 maxExchangeNum: { rules: [{ required: true, message: "请输入最大兑换数量!" }] },
