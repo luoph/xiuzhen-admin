@@ -52,7 +52,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     private IGameCampaignTypeFallRewardService campaignTypeFallRewardService;
 
     @Autowired
-    private IGameCampaignTypeFireworksService campaignTypeFireworksService;
+    private IGameCampaignTypeFireworkService campaignTypeFireworkService;
 
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
@@ -115,10 +115,10 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                 break;
 
                 case FIREWORK: {
-                    Wrapper<GameCampaignTypeFireworks> detailQuery = Wrappers.<GameCampaignTypeFireworks>lambdaQuery()
-                            .eq(GameCampaignTypeFireworks::getCampaignId, campaignId)
-                            .eq(GameCampaignTypeFireworks::getTypeId, model.getId());
-                    model.setDetails(campaignTypeFireworksService.list(detailQuery));
+                    Wrapper<GameCampaignTypeFirework> detailQuery = Wrappers.<GameCampaignTypeFirework>lambdaQuery()
+                            .eq(GameCampaignTypeFirework::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeFirework::getTypeId, model.getId());
+                    model.setDetails(campaignTypeFireworkService.list(detailQuery));
                     break;
                 }
 

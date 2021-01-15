@@ -43,7 +43,7 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameCampaignTypeFireworksModal",
+    name: "GameCampaignTypeFireworkModal",
     components: {
         JDate
     },
@@ -75,8 +75,8 @@ export default {
                 btnName: { rules: [{ required: true, message: "请输入按钮标题!" }] }
             },
             url: {
-                add: "game/gameCampaignTypeFireworks/add",
-                edit: "game/gameCampaignTypeFireworks/edit"
+                add: "game/gameCampaignTypeFirework/add",
+                edit: "game/gameCampaignTypeFirework/edit"
             }
         };
     },
@@ -90,7 +90,7 @@ export default {
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.visible = true;
-            console.log("GameCampaignTypeFireworksModal, model:", JSON.stringify(this.model));
+            console.log("GameCampaignTypeFireworkModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "giftId", "times", "price", "discount", "num", "btnName"));
