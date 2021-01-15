@@ -41,7 +41,7 @@ public class LogAccount implements Serializable {
      * 玩家id
      */
     @Excel(name = "玩家id", width = 15)
-    private Integer playerId;
+    private Long playerId;
 
     /**
      * 服务器id

@@ -29,7 +29,7 @@ export default {
             // 玩法类型数据
             playMethodsTypeList: [],
             url: {
-                playMethodsTypeUrl: "game/commonModule/playMethodsTypeShowlist"
+                playMethodsTypeUrl: "game/commonModule/playMethodsTypeShowList"
             }
         };
     },
