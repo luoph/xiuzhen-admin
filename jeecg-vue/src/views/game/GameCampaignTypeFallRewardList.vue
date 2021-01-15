@@ -6,11 +6,26 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('Buff活动')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('掉落奖励组')">导出</a-button>
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+                <a-button type="primary" icon="import">导入</a-button>
+            </a-upload>
+            <a-dropdown v-if="selectedRowKeys.length > 0">
+                <a-menu slot="overlay">
+                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+                </a-menu>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+            </a-dropdown> -->
         </div>
 
         <!-- table区域-begin -->
         <div>
+            <!-- <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
+                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+            </div> -->
+
             <a-table
                 ref="table"
                 size="middle"
@@ -51,7 +66,7 @@
             </a-table>
         </div>
 
-        <game-campaign-type-buff-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-buff-modal>
+        <game-campaign-type-fall-reward-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-fall-reward-modal>
     </a-card>
 </template>
 
@@ -59,19 +74,19 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
-import GameCampaignTypeBuffModal from "./modules/GameCampaignTypeBuffModal";
 import JDate from "@/components/jeecg/JDate.vue";
+import GameCampaignTypeFallRewardModal from "./modules/GameCampaignTypeFallRewardModal";
 
 export default {
-    name: "GameCampaignTypeBuffList",
+    name: "GameCampaignTypeFallRewardList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        GameCampaignTypeBuffModal
+        GameCampaignTypeFallRewardModal
     },
     data() {
         return {
-            description: "Buff活动管理页面",
+            description: "掉落奖励组管理页面",
             model: {},
             // 表头
             columns: [
@@ -95,40 +110,25 @@ export default {
                     align: "center",
                     dataIndex: "typeId"
                 },
-                // {
-                //     title: "活动类型",
-                //     align: "center",
-                //     dataIndex: "type",
-                //     customRender: value => {
-                //         let re = "--";
-                //         if (value === 5) {
-                //             re = "Buff-修为加成";
-                //         } else if (value === 6) {
-                //             re = "Buff-灵气加成";
-                //         }
-                //         return re;
-                //     }
-                // },
                 {
-                    title: "描述",
+                    title: "奖励组id",
                     align: "center",
-                    dataIndex: "description",
-                    scopedSlots: { customRender: "largeText" }
+                    dataIndex: "rewardId"
                 },
                 {
-                    title: "加成",
+                    title: "奖励列表",
                     align: "center",
-                    dataIndex: "addition"
+                    dataIndex: "reward"
                 },
                 {
-                    title: "开始时间",
+                    title: "掉落权重",
                     align: "center",
-                    dataIndex: "startTime"
+                    dataIndex: "weight"
                 },
                 {
-                    title: "结束时间",
+                    title: "传闻id",
                     align: "center",
-                    dataIndex: "endTime"
+                    dataIndex: "message"
                 },
                 {
                     title: "创建时间",
@@ -143,11 +143,11 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameCampaignTypeBuff/list",
-                delete: "game/gameCampaignTypeBuff/delete",
-                deleteBatch: "game/gameCampaignTypeBuff/deleteBatch",
-                exportXlsUrl: "game/gameCampaignTypeBuff/exportXls",
-                importExcelUrl: "game/gameCampaignTypeBuff/importExcel"
+                list: "game/gameCampaignTypeFallReward/list",
+                delete: "game/gameCampaignTypeFallReward/delete",
+                deleteBatch: "game/gameCampaignTypeFallReward/deleteBatch",
+                exportXlsUrl: "game/gameCampaignTypeFallReward/exportXls",
+                importExcelUrl: "game/gameCampaignTypeFallReward/importExcel"
             },
             dictOptions: {}
         };
@@ -159,16 +159,6 @@ export default {
     },
     methods: {
         initDictConfig() {},
-        onStartTimeChange: function(value, dateString) {
-            console.log(dateString[0], dateString[1]);
-            this.queryParam.startTime_begin = dateString[0];
-            this.queryParam.startTime_end = dateString[1];
-        },
-        onEndTimeChange: function(value, dateString) {
-            console.log(dateString[0], dateString[1]);
-            this.queryParam.endTime_begin = dateString[0];
-            this.queryParam.endTime_end = dateString[1];
-        },
         loadData(arg) {
             if (!this.model.id) {
                 return;
@@ -204,7 +194,7 @@ export default {
         },
         handleAdd() {
             this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
-            this.$refs.modalForm.title = "新增Buff活动配置";
+            this.$refs.modalForm.title = "新增掉落奖励组配置";
         },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
@@ -228,15 +218,4 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
-.large-text-container {
-    display: flex;
-    overflow-x: hidden;
-    overflow-y: auto;
-    max-height: 200px;
-}
-
-.large-text {
-    white-space: normal;
-    word-break: break-word;
-}
 </style>

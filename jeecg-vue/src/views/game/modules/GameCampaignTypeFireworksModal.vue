@@ -9,40 +9,41 @@
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="加成类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="选择加成类型" v-decorator="['type', validatorRules.type]" initialValue="5">
-                        <a-select-option :value="5">5-修为加成</a-select-option>
-                        <a-select-option :value="6">6-灵气加成</a-select-option>
-                    </a-select>
+                <a-form-item label="礼包id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['giftId', validatorRules.giftId]" placeholder="请输入礼包id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%;" />
+                <a-form-item label="购买次数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['times', validatorRules.times]" placeholder="请输入购买次数" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%;" />
+                <a-form-item label="价格" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['price', validatorRules.price]" placeholder="请输入价格"></a-input>
                 </a-form-item>
-                <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-textarea>
+                <a-form-item label="折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="加成" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成" style="width: 100%" />
+                <a-form-item label="单次购买数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入单次购买数量" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="按钮标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['btnName', validatorRules.btnName]" placeholder="请输入按钮标题"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
-    <!-- <a-button type="primary" @click="handleOk">确定</a-button>
+    <!--
+        <a-button type="primary" @click="handleOk">确定</a-button>
         <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer> -->
+        </a-drawer>
+     -->
 </template>
 
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
-import moment from "moment";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-    name: "GameCampaignTypeBuffModal",
+    name: "GameCampaignTypeFireworksModal",
     components: {
         JDate
     },
@@ -66,15 +67,16 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
                 typeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                type: { rules: [{ required: true, message: "请输入活动类型!" }] },
-                startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
-                description: { rules: [{ required: true, message: "请输入描述!" }] },
-                addition: { rules: [{ required: true, message: "请输入加成!" }] }
+                giftId: { rules: [{ required: true, message: "请输入礼包id!" }] },
+                times: { rules: [{ required: true, message: "请输入购买次数!" }] },
+                price: { rules: [{ required: true, message: "请输入价格!" }] },
+                discount: { rules: [{ required: true, message: "请输入折扣!" }] },
+                num: { rules: [{ required: true, message: "请输入单次购买数量!" }] },
+                btnName: { rules: [{ required: true, message: "请输入按钮标题!" }] }
             },
             url: {
-                add: "game/gameCampaignTypeBuff/add",
-                edit: "game/gameCampaignTypeBuff/edit"
+                add: "game/gameCampaignTypeFireworks/add",
+                edit: "game/gameCampaignTypeFireworks/edit"
             }
         };
     },
@@ -88,12 +90,10 @@ export default {
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.visible = true;
-            console.log("GameCampaignTypeBuffModal, model:", JSON.stringify(this.model));
+            console.log("GameCampaignTypeFireworksModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
-                this.form.setFieldsValue({ startTime: this.startTime ? moment(this.startTime) : null });
-                this.form.setFieldsValue({ endtTime: this.endtTime ? moment(this.endtTime) : null });
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "giftId", "times", "price", "discount", "num", "btnName"));
             });
         },
         close() {
@@ -116,10 +116,6 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
-                    // 时间格式化
-                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
-
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
@@ -141,7 +137,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "startTime", "endTime", "description", "addition"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "giftId", "times", "price", "discount", "num", "btnName"));
         }
     }
 };

@@ -118,13 +118,17 @@ export default {
                         } else if (value === 2) {
                             text = "2-累计充值";
                         } else if (value === 3) {
-                            text = "3-兑换";
+                            text = "3-节日兑换";
                         } else if (value === 4) {
                             text = "4-节日任务";
                         } else if (value === 5) {
-                            text = "5-buff-修为加成";
+                            text = "5-修为加成";
                         } else if (value === 6) {
-                            text = "6-buff-灵气加成";
+                            text = "6-灵气加成";
+                        } else if (value === 7) {
+                            text = "7-节日掉落";
+                        } else if (value === 8) {
+                            text = "8-节日烟花";
                         }
                         return text;
                     }

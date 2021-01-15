@@ -45,6 +45,15 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignTypeExchangeService campaignTypeExchangeService;
 
+    @Autowired
+    private IGameCampaignTypeFallService campaignTypeFallService;
+
+    @Autowired
+    private IGameCampaignTypeFallRewardService campaignTypeFallRewardService;
+
+    @Autowired
+    private IGameCampaignTypeFireworksService campaignTypeFireworksService;
+
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
@@ -88,14 +97,30 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     Wrapper<GameCampaignTypeBuff> detailQuery = Wrappers.<GameCampaignTypeBuff>lambdaQuery()
                             .eq(GameCampaignTypeBuff::getCampaignId, campaignId)
                             .eq(GameCampaignTypeBuff::getTypeId, model.getId());
-                    List<GameCampaignTypeBuff> buffList = campaignTypeBuffService.list(detailQuery);
-                    if (merge && CollUtil.isNotEmpty(buffList)) {
-                        GameCampaignTypeBuff first = buffList.get(0);
-                        model.setAddition(first.getAddition()).setBuffDesc(first.getDescription());
-                    }
-                    model.setDetails(buffList);
+                    model.setDetails(campaignTypeBuffService.list(detailQuery));
                 }
                 break;
+
+                case FALL: {
+                    Wrapper<GameCampaignTypeFall> detailQuery = Wrappers.<GameCampaignTypeFall>lambdaQuery()
+                            .eq(GameCampaignTypeFall::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeFall::getTypeId, model.getId());
+                    model.setDetails(campaignTypeFallService.list(detailQuery));
+
+                    Wrapper<GameCampaignTypeFallReward> rewardQuery = Wrappers.<GameCampaignTypeFallReward>lambdaQuery()
+                            .eq(GameCampaignTypeFallReward::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeFallReward::getTypeId, model.getId());
+                    model.setRewardList(campaignTypeFallRewardService.list(rewardQuery));
+                }
+                break;
+
+                case FIREWORK: {
+                    Wrapper<GameCampaignTypeFireworks> detailQuery = Wrappers.<GameCampaignTypeFireworks>lambdaQuery()
+                            .eq(GameCampaignTypeFireworks::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeFireworks::getTypeId, model.getId());
+                    model.setDetails(campaignTypeFireworksService.list(detailQuery));
+                    break;
+                }
 
                 default:
                     break;
@@ -322,8 +347,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
         for (GameCampaignTypeBuff item : list) {
             item.setTypeId(model.getId());
             item.setCampaignId(model.getCampaignId());
-            item.setDescription(model.getBuffDesc());
-            item.setAddition(model.getAddition());
 
             if (item.getId() == null) {
                 addList.add(item);
