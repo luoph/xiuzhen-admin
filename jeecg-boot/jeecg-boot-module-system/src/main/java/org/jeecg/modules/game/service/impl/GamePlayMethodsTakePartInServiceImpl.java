@@ -46,10 +46,10 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
 
         for (Date s : playerLogListMapCreateDate.keySet()) {
             // 时间内玩家日志以用户id分组
-            Map<Integer, List<LogPlayer>> playerLogListMapCreateDatePlayerId = playerLogListMapCreateDate.get(s).stream().collect(Collectors.groupingBy(LogPlayer::getPlayerId));
+            Map<Long, List<LogPlayer>> playerLogListMapCreateDatePlayerId = playerLogListMapCreateDate.get(s).stream().collect(Collectors.groupingBy(LogPlayer::getPlayerId));
 
             // 时间内登录日志以用户id分组
-            Map<Integer, List<LogAccount>> accountLogListCreateDatePlayerId;
+            Map<Long, List<LogAccount>> accountLogListCreateDatePlayerId;
             if (null == accountLogListCreateDate.get(s)) {
                 continue;
             }
@@ -68,13 +68,13 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
             int yesterdayHasLoginInTodaySum = 0;
             if (null != yesterdayDateData) {
                 // 昨天参与该玩法的玩家 以player_id分组
-                Map<Integer, List<LogPlayer>> yesterdayDateDataMapPlayerId = yesterdayDateData.stream().collect(Collectors.groupingBy(LogPlayer::getPlayerId));
-                for (Integer mapkey : yesterdayDateDataMapPlayerId.keySet()) {
+                Map<Long, List<LogPlayer>> yesterdayDateDataMapPlayerId = yesterdayDateData.stream().collect(Collectors.groupingBy(LogPlayer::getPlayerId));
+                for (Long mapkey : yesterdayDateDataMapPlayerId.keySet()) {
                     if (null != playerLogListMapCreateDatePlayerId.get(mapkey)) {
                         yesterdayHasPlayInTodaySum++;
                     }
                 }
-                for (Integer mapkey : yesterdayDateDataMapPlayerId.keySet()) {
+                for (Long mapkey : yesterdayDateDataMapPlayerId.keySet()) {
                     if (null != accountLogListCreateDatePlayerId.get(mapkey)) {
                         yesterdayHasLoginInTodaySum++;
                     }
@@ -85,8 +85,8 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
             // 100以上的类型记录的是次数
             if (Integer.parseInt(playMethodsType) >= 100) {
                 // 时间内玩家日志以用户id分组 且 过滤掉没有达到满次的数据
-                Map<Integer, List<LogPlayer>> playerLogListMapCreateDatePlayerIdFullTimes = new HashMap<>(16);
-                for (Integer mapKey : playerLogListMapCreateDatePlayerId.keySet()) {
+                Map<Long, List<LogPlayer>> playerLogListMapCreateDatePlayerIdFullTimes = new HashMap<>(16);
+                for (Long mapKey : playerLogListMapCreateDatePlayerId.keySet()) {
                     if (playerLogListMapCreateDatePlayerId.get(mapKey).size() >= fullTimes) {
                         playerLogListMapCreateDatePlayerIdFullTimes.put(mapKey, playerLogListMapCreateDatePlayerId.get(mapKey));
                     }
@@ -102,7 +102,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
                 // 100以下记录的是最大值
             } else {
                 List<LogPlayer> playerOneDayPlayLogFullTimes = new ArrayList<>();
-                for (Integer mapKey : playerLogListMapCreateDatePlayerId.keySet()) {
+                for (Long mapKey : playerLogListMapCreateDatePlayerId.keySet()) {
                     List<LogPlayer> playerOneDayPlayLog = playerLogListMapCreateDatePlayerId.get(mapKey);
                     // 过滤出最大值 达到满次的数据
                     playerOneDayPlayLogFullTimes = playerOneDayPlayLog.stream().filter(logPlayer -> logPlayer.getValue() >= fullTimes).collect(Collectors.toList());

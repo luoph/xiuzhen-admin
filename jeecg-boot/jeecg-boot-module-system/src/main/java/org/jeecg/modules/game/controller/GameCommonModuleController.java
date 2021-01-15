@@ -19,8 +19,7 @@ public class GameCommonModuleController {
     /**
      * 玩法类型前端展示选择列表
      */
-    // TODO url命名错误(小驼峰)
-    @RequestMapping("/playMethodsTypeShowlist")
+    @RequestMapping("/playMethodsTypeShowList")
     public JSONObject list() {
         JSONObject response = new JSONObject();
         JSONObject result = new JSONObject();
