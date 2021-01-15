@@ -53,7 +53,7 @@ public class LogPlayer implements Serializable {
 	 * 数值
 	 */
 	@Excel(name = "数值", width = 15)
-    private java.lang.Integer value;
+    private java.lang.Long value;
 	
 	/**
 	 * 补充参数1
@@ -76,9 +76,9 @@ public class LogPlayer implements Serializable {
 	/**
 	 * 创建时间
 	 */
-	@Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+	@Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date createTime;
 	
 	/**

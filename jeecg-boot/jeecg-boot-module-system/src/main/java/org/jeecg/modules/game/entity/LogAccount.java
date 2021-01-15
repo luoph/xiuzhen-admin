@@ -65,7 +65,7 @@ public class LogAccount implements Serializable {
      * 数值记录
      */
     @Excel(name = "数值记录", width = 15)
-    private Integer value;
+    private Long value;
 
     /**
      * IP地址
