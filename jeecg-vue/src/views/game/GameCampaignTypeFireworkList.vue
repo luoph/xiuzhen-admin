@@ -66,7 +66,7 @@
             </a-table>
         </div>
 
-        <game-campaign-type-fireworks-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-fireworks-modal>
+        <game-campaign-type-firework-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-firework-modal>
     </a-card>
 </template>
 
@@ -74,13 +74,13 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "../../api/manage";
 import { filterObj } from "@/utils/util";
-import GameCampaignTypeFireworksModal from "./modules/GameCampaignTypeFireworksModal";
+import GameCampaignTypeFireworkModal from "./modules/GameCampaignTypeFireworkModal";
 
 export default {
-    name: "GameCampaignTypeFireworksList",
+    name: "GameCampaignTypeFireworkList",
     mixins: [JeecgListMixin],
     components: {
-        GameCampaignTypeFireworksModal
+        GameCampaignTypeFireworkModal
     },
     data() {
         return {
@@ -151,11 +151,11 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameCampaignTypeFireworks/list",
-                delete: "game/gameCampaignTypeFireworks/delete",
-                deleteBatch: "game/gameCampaignTypeFireworks/deleteBatch",
-                exportXlsUrl: "game/gameCampaignTypeFireworks/exportXls",
-                importExcelUrl: "game/gameCampaignTypeFireworks/importExcel"
+                list: "game/gameCampaignTypeFirework/list",
+                delete: "game/gameCampaignTypeFirework/delete",
+                deleteBatch: "game/gameCampaignTypeFirework/deleteBatch",
+                exportXlsUrl: "game/gameCampaignTypeFirework/exportXls",
+                importExcelUrl: "game/gameCampaignTypeFirework/importExcel"
             },
             dictOptions: {}
         };

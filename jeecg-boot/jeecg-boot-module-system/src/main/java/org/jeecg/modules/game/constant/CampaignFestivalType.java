@@ -23,7 +23,7 @@ public enum CampaignFestivalType {
     BUFF_ANIMA("灵气加成", 6, GameCampaignTypeBuff.class, GameCampaignTypeBuffVO.class),
     FALL("节日掉落", 7, GameCampaignTypeFall.class, GameCampaignTypeBuffVO.class),
     //    FALL_REWARD("节日掉落奖励", 7, GameCampaignTypeFallReward.class, GameCampaignTypeBuffVO.class),
-    FIREWORK("烟火", 8, GameCampaignTypeFireworks.class, GameCampaignTypeFireworkVO.class),
+    FIREWORK("烟火", 8, GameCampaignTypeFirework.class, GameCampaignTypeFireworkVO.class),
     ;
 
     private final String name;

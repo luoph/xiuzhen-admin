@@ -15,8 +15,8 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-@TableName("game_campaign_type_fireworks")
-public class GameCampaignTypeFireworks extends GameCampaignTypeBase {
+@TableName("game_campaign_type_firework")
+public class GameCampaignTypeFirework extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 

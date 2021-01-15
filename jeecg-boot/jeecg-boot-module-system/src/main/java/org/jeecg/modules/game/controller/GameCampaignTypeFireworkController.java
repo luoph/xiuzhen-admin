@@ -8,8 +8,8 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.GameCampaignTypeFireworks;
-import org.jeecg.modules.game.service.IGameCampaignTypeFireworksService;
+import org.jeecg.modules.game.entity.GameCampaignTypeFirework;
+import org.jeecg.modules.game.service.IGameCampaignTypeFireworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,11 +26,11 @@ import java.util.Arrays;
  */
 @Slf4j
 @RestController
-@RequestMapping("game/gameCampaignTypeFireworks")
-public class GameCampaignTypeFireworksController extends JeecgController<GameCampaignTypeFireworks, IGameCampaignTypeFireworksService> {
+@RequestMapping("game/gameCampaignTypeFirework")
+public class GameCampaignTypeFireworkController extends JeecgController<GameCampaignTypeFirework, IGameCampaignTypeFireworkService> {
 
     @Autowired
-    private IGameCampaignTypeFireworksService campaignTypeFireworksService;
+    private IGameCampaignTypeFireworkService campaignTypeFireworkService;
 
     /**
      * 分页列表查询
@@ -43,13 +43,13 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
      */
     @AutoLog(value = "节日烟花-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameCampaignTypeFireworks entity,
+    public Result<?> queryPageList(GameCampaignTypeFirework entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameCampaignTypeFireworks> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
-        Page<GameCampaignTypeFireworks> page = new Page<>(pageNo, pageSize);
-        IPage<GameCampaignTypeFireworks> pageList = campaignTypeFireworksService.page(page, queryWrapper);
+        QueryWrapper<GameCampaignTypeFirework> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
+        Page<GameCampaignTypeFirework> page = new Page<>(pageNo, pageSize);
+        IPage<GameCampaignTypeFirework> pageList = campaignTypeFireworkService.page(page, queryWrapper);
         return Result.ok(pageList);
     }
 
@@ -61,8 +61,8 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
      */
     @AutoLog(value = "节日烟花-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameCampaignTypeFireworks entity) {
-        campaignTypeFireworksService.save(entity);
+    public Result<?> add(@RequestBody GameCampaignTypeFirework entity) {
+        campaignTypeFireworkService.save(entity);
         return Result.ok("添加成功！");
     }
 
@@ -74,8 +74,8 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
      */
     @AutoLog(value = "节日烟花-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameCampaignTypeFireworks entity) {
-        campaignTypeFireworksService.updateById(entity);
+    public Result<?> edit(@RequestBody GameCampaignTypeFirework entity) {
+        campaignTypeFireworkService.updateById(entity);
         return Result.ok("编辑成功!");
     }
 
@@ -88,7 +88,7 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
     @AutoLog(value = "节日烟花-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        campaignTypeFireworksService.removeById(id);
+        campaignTypeFireworkService.removeById(id);
         return Result.ok("删除成功!");
     }
 
@@ -101,7 +101,7 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
     @AutoLog(value = "节日烟花-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.campaignTypeFireworksService.removeByIds(Arrays.asList(ids.split(",")));
+        this.campaignTypeFireworkService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
 
@@ -114,11 +114,11 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
     @AutoLog(value = "节日烟花-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameCampaignTypeFireworks gameCampaignTypeFireworks = campaignTypeFireworksService.getById(id);
-        if (gameCampaignTypeFireworks == null) {
+        GameCampaignTypeFirework gameCampaignTypeFirework = campaignTypeFireworkService.getById(id);
+        if (gameCampaignTypeFirework == null) {
             return Result.error("未找到对应数据");
         }
-        return Result.ok(gameCampaignTypeFireworks);
+        return Result.ok(gameCampaignTypeFirework);
     }
 
     /**
@@ -128,8 +128,8 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
      * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFireworks entity) {
-        return super.exportXls(request, entity, GameCampaignTypeFireworks.class, "节日烟花");
+    public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFirework entity) {
+        return super.exportXls(request, entity, GameCampaignTypeFirework.class, "节日烟花");
     }
 
     /**
@@ -141,7 +141,7 @@ public class GameCampaignTypeFireworksController extends JeecgController<GameCam
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameCampaignTypeFireworks.class);
+        return super.importExcel(request, response, GameCampaignTypeFirework.class);
     }
 
 }

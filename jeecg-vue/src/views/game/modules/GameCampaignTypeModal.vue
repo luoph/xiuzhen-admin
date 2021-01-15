@@ -45,7 +45,7 @@
             <game-campaign-type-buff-list v-if="isEdit && (model.type === 5 || model.type === 6)" ref="buffList" />
             <game-campaign-type-fall-list v-if="isEdit && model.type === 7" ref="fallList" />
             <game-campaign-type-fall-reward-list v-if="isEdit && model.type === 7" ref="rewardList" />
-            <game-campaign-type-fireworks-list v-if="isEdit && model.type === 8" ref="fireworksList" />
+            <game-campaign-type-firework-list v-if="isEdit && model.type === 8" ref="fireworkList" />
         </a-spin>
     </a-modal>
 </template>
@@ -63,7 +63,7 @@ import GameCampaignTypeTaskList from "../GameCampaignTypeTaskList";
 import GameCampaignTypeBuffList from "../GameCampaignTypeBuffList";
 import GameCampaignTypeFallList from "../GameCampaignTypeFallList";
 import GameCampaignTypeFallRewardList from "../GameCampaignTypeFallRewardList";
-import GameCampaignTypeFireworksList from "../GameCampaignTypeFireworksList";
+import GameCampaignTypeFireworkList from "../GameCampaignTypeFireworkList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -77,7 +77,7 @@ export default {
         GameCampaignTypeBuffList,
         GameCampaignTypeFallList,
         GameCampaignTypeFallRewardList,
-        GameCampaignTypeFireworksList
+        GameCampaignTypeFireworkList
     },
     data() {
         return {
@@ -146,8 +146,8 @@ export default {
                     if (this.$refs.rewardList) {
                         this.$refs.rewardList.edit(record);
                     }
-                    if (this.$refs.fireworksList) {
-                        this.$refs.fireworksList.edit(record);
+                    if (this.$refs.fireworkList) {
+                        this.$refs.fireworkList.edit(record);
                     }
                 }
 
