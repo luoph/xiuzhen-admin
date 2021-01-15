@@ -115,25 +115,25 @@ export default {
                     customRender: value => {
                         let text = "--";
                         if (value === 1) {
-                            text = "1.仙器秘境";
+                            text = "1-仙器秘境";
                         } else if (value === 2) {
-                            text = "2.仙兽秘境";
+                            text = "2-仙兽秘境";
                         } else if (value === 3) {
-                            text = "3.丹药秘境";
+                            text = "3-丹药秘境";
                         } else if (value === 4) {
-                            text = "4.修为秘境";
+                            text = "4-修为秘境";
                         } else if (value === 5) {
-                            text = "5.灵石秘境";
+                            text = "5-灵石秘境";
                         } else if (value === 6) {
-                            text = "6.北冥魔海";
+                            text = "6-北冥魔海";
                         } else if (value === 7) {
-                            text = "7.不死魔巢";
+                            text = "7-不死魔巢";
                         } else if (value === 8) {
-                            text = "8.蛇陵魔窟";
+                            text = "8-蛇陵魔窟";
                         } else if (value === 9) {
-                            text = "9.魔王入侵";
+                            text = "9-魔王入侵";
                         } else if (value === 10) {
-                            text = "10.剧情挂机";
+                            text = "10-剧情挂机";
                         }
                         return text;
                     }
@@ -145,11 +145,11 @@ export default {
                     customRender: value => {
                         let text = "--";
                         if (value === 1) {
-                            text = "按比例加成";
+                            text = "1-按比例加成";
                         } else if (value === 2) {
-                            text = "额外的活动掉落组";
+                            text = "2-额外的活动掉落组";
                         } else if (value === 3) {
-                            text = "剧情挂机奖励";
+                            text = "3-剧情挂机奖励";
                         }
                         return text;
                     }

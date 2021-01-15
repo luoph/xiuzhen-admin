@@ -11,27 +11,27 @@
                 </a-form-item>
                 <a-form-item label="模块" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="模块" v-decorator="['module', validatorRules.module]" initialValue="1">
-                        <a-select-option :value="1">仙器秘境</a-select-option>
-                        <a-select-option :value="2">仙兽秘境</a-select-option>
-                        <a-select-option :value="3">丹药秘境</a-select-option>
-                        <a-select-option :value="4">修为秘境</a-select-option>
-                        <a-select-option :value="5">灵石秘境</a-select-option>
-                        <a-select-option :value="6">北冥魔海</a-select-option>
-                        <a-select-option :value="7">不死魔巢</a-select-option>
-                        <a-select-option :value="8">蛇陵魔窟</a-select-option>
-                        <a-select-option :value="9">魔王入侵</a-select-option>
-                        <a-select-option :value="10">剧情挂机</a-select-option>
+                        <a-select-option :value="1">1-仙器秘境</a-select-option>
+                        <a-select-option :value="2">2-仙兽秘境</a-select-option>
+                        <a-select-option :value="3">3-丹药秘境</a-select-option>
+                        <a-select-option :value="4">4-修为秘境</a-select-option>
+                        <a-select-option :value="5">5-灵石秘境</a-select-option>
+                        <a-select-option :value="6">6-北冥魔海</a-select-option>
+                        <a-select-option :value="7">7-不死魔巢</a-select-option>
+                        <a-select-option :value="8">8-蛇陵魔窟</a-select-option>
+                        <a-select-option :value="9">9-魔王入侵</a-select-option>
+                        <a-select-option :value="10">10-剧情挂机</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="奖励类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="奖励类型" v-decorator="['rewardType', validatorRules.rewardType]" initialValue="1">
-                        <a-select-option :value="1">按比例加成</a-select-option>
-                        <a-select-option :value="2">额外的活动掉落组</a-select-option>
-                        <a-select-option :value="3">剧情挂机奖励</a-select-option>
+                        <a-select-option :value="1">1-按比例加成</a-select-option>
+                        <a-select-option :value="2">2-额外的活动掉落组</a-select-option>
+                        <a-select-option :value="3">3-剧情挂机奖励</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder='请输入奖励类型对应的奖励值, e.g. 5,  [1, 2],  [{"time":300, "reward":1}]'></a-input>
+                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder='请输入奖励类型对应的奖励值, e.g. 5,  [1, 2],  [{"time":300, "reward":1}]' />
                 </a-form-item>
             </a-form>
         </a-spin>

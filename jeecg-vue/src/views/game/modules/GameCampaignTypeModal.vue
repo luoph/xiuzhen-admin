@@ -127,19 +127,26 @@ export default {
                 if (this.isEdit) {
                     if (this.$refs.loginList) {
                         this.$refs.loginList.edit(record);
-                    } else if (this.$refs.rechargeList) {
+                    }
+                    if (this.$refs.rechargeList) {
                         this.$refs.rechargeList.edit(record);
-                    } else if (this.$refs.exchangeList) {
+                    }
+                    if (this.$refs.exchangeList) {
                         this.$refs.exchangeList.edit(record);
-                    } else if (this.$refs.taskList) {
+                    }
+                    if (this.$refs.taskList) {
                         this.$refs.taskList.edit(record);
-                    } else if (this.$refs.buffList) {
+                    }
+                    if (this.$refs.buffList) {
                         this.$refs.buffList.edit(record);
-                    } else if (this.$refs.fallList) {
+                    }
+                    if (this.$refs.fallList) {
                         this.$refs.fallList.edit(record);
-                    } else if (this.$refs.rewardList) {
+                    }
+                    if (this.$refs.rewardList) {
                         this.$refs.rewardList.edit(record);
-                    } else if (this.$refs.fireworksList) {
+                    }
+                    if (this.$refs.fireworksList) {
                         this.$refs.fireworksList.edit(record);
                     }
                 }
