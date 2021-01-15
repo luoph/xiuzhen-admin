@@ -88,5 +88,9 @@ public enum PlayerLogType {
         }
         return 0;
     }
+
+    public static boolean isCount(int type) {
+        return type >= ONLINE_TIME.type;
+    }
 }
 

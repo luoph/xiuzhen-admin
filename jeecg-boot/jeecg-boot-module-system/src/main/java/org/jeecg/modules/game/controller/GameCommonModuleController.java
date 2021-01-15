@@ -3,8 +3,14 @@ package org.jeecg.modules.game.controller;
 import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.Data;
+import lombok.experimental.Accessors;
+import org.apache.poi.ss.formula.functions.Rank;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -59,6 +65,33 @@ public class GameCommonModuleController {
         jsonObject.put("grade", grade);
         jsonObject.put("fullTime", fullTime);
         return jsonObject;
+    }
+
+    /**
+     * 玩法类型前端展示选择列表
+     */
+    @RequestMapping("/rankListTypeShowList")
+    public List<RankListType> rankListTypeShowList() {
+        List<RankListType> rankListTypeList = new ArrayList<>();
+        // 战力
+        rankListTypeList.add(new RankListType().setName(PlayerLogType.COMBAT_POWER.getName()).setType(PlayerLogType.COMBAT_POWER.getType()));
+        // 剧情等级
+        rankListTypeList.add(new RankListType().setName(PlayerLogType.STORY_LEVEL.getName()).setType(PlayerLogType.STORY_LEVEL.getType()));
+        // 仙兽秘境/冒险探索
+        rankListTypeList.add(new RankListType().setName(PlayerLogType.MAP_EXPLORE.getName()).setType(PlayerLogType.MAP_EXPLORE.getType()));
+        // 符文秘境-小灵山
+        rankListTypeList.add(new RankListType().setName(PlayerLogType.LINGSHAN_CHECKPOINT.getName()).setType(PlayerLogType.LINGSHAN_CHECKPOINT.getType()));
+        return rankListTypeList;
+
+    }
+
+    @Data
+    @Accessors(chain = true)
+    private static class RankListType {
+        // 类型编号
+        private Integer type;
+        // 类型名称
+        private String name;
     }
 
 }

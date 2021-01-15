@@ -15,21 +15,17 @@ import java.util.stream.Collectors;
 import static java.util.regex.Pattern.compile;
 
 /**
- * itemId 和 名称 对应的map集合类
+ * 等级 和 阶级名称 对应关系
  * @author 胡立
  */
-public class ItemId {
+public class PracticeExp {
     /**
      * item_id  name
      */
-    private static final Map<String, String> ITEM_ID_TO_NAME_MAP = new HashMap<>();
-    /**
-     * name item_id
-     */
-    private static final Map<String, String> ITEM_NAME_TO_ID_MAP = new HashMap<>();
-    public ItemId() throws UnsupportedEncodingException {
-        if (ITEM_ID_TO_NAME_MAP.size() <= 0 ) {
-            InputStream in = this.getClass().getResourceAsStream("/json/item.json");
+    private static final Map<Long, String> LEVEL_TO_NAME = new HashMap<>();
+    public PracticeExp() throws UnsupportedEncodingException {
+        if (LEVEL_TO_NAME.size() <= 0 ) {
+            InputStream in = this.getClass().getResourceAsStream("/json/practice_exp.json");
             String file1 = new BufferedReader(new InputStreamReader(in, "utf-8"))
                     .lines().collect(Collectors.joining(System.lineSeparator()));
             String dest = "";
@@ -42,16 +38,11 @@ public class ItemId {
             JSONArray jsonArray = JSONArray.parseArray(file1);
             //道具id和名称map
             for (int i = 0; i < jsonArray.size(); i++) {
-                ITEM_ID_TO_NAME_MAP.put(jsonArray.getJSONObject(i).getString("item_id"),jsonArray.getJSONObject(i).getString("name"));
-                ITEM_NAME_TO_ID_MAP.put(jsonArray.getJSONObject(i).getString("name"),jsonArray.getJSONObject(i).getString("item_id"));
+                LEVEL_TO_NAME.put(jsonArray.getJSONObject(i).getLong("practice_level"),jsonArray.getJSONObject(i).getString("practice_name"));
             }
         }
     }
-
-    public Map<String, String> getItemIdToNameMap() {
-        return ITEM_ID_TO_NAME_MAP;
-    }
-    public Map<String, String> getItemNameToIdMap() {
-        return ITEM_NAME_TO_ID_MAP;
+    public Map<Long, String> getLevelToNameMap() {
+        return LEVEL_TO_NAME;
     }
 }

@@ -98,4 +98,24 @@ public final class ParamValidUtil {
         return null != dates ? new DateRange(dates[0], dates[1]) : null;
     }
 
+    /**
+     * 获取日期里的整点结束时间，例如:输入2021-01-12 1 得到 2021-01-12 01:59:59
+     *
+     * @param date
+     * @param hour
+     * @return
+     */
+    public static Date getHourEnd(Date date, Integer hour) {
+        if (hour > 23 || hour < 0) {
+            return null;
+        }
+        String hourStr;
+        if (hour < 10) {
+            hourStr = "0" + hour;
+        } else {
+            hourStr = hour + "";
+        }
+        return DateUtils.parseDate(DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN) + " " + hourStr + ":59:59");
+    }
+
 }
