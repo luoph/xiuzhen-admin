@@ -38,6 +38,7 @@ public class OpenServiceCampaignLotteryDetail extends BaseEntity {
         this.name = other.name;
         this.banner = other.banner;
         this.skeleton = other.skeleton;
+        this.freeNum = other.freeNum;
         this.rewardRecordNum = other.rewardRecordNum;
         this.rewardRecordMsg = other.rewardRecordMsg;
         this.rewardMsg = other.rewardMsg;
@@ -116,6 +117,13 @@ public class OpenServiceCampaignLotteryDetail extends BaseEntity {
     @ExcelProperty("骨骼动画资源图")
     @Excel(name = "骨骼动画资源图", width = 15)
     private java.lang.String skeleton;
+
+    /**
+     * 免费抽奖次数
+     */
+    @ExcelProperty("免费抽奖次数")
+    @Excel(name = "免费抽奖次数", width = 15)
+    private java.lang.String freeNum;
 
     /**
      * 获奖记录显示数量

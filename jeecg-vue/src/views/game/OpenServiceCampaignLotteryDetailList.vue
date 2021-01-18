@@ -156,6 +156,11 @@ export default {
                     dataIndex: "skeleton"
                 },
                 {
+                    title: "免费抽奖次数",
+                    align: "center",
+                    dataIndex: "freeNum"
+                },
+                {
                     title: "获奖记录显示数量",
                     align: "center",
                     dataIndex: "rewardRecordNum"
