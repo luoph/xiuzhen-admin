@@ -26,19 +26,22 @@
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.banner" />
                 </a-form-item>
                 <a-form-item label="骨骼动画资源图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['skeleton', validatorRules.skeleton]" placeholder="请输入骨骼动画资源图"></a-input>
+                    <a-input v-decorator="['skeleton', validatorRules.skeleton]" placeholder="请输入骨骼动画资源图" />
+                </a-form-item>
+                <a-form-item label="免费抽奖次数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['freeNum', validatorRules.freeNum]" placeholder="请输入免费抽奖次数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="获奖记录显示数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['rewardRecordNum', validatorRules.rewardRecordNum]" placeholder="请输入获奖记录显示数量" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="获奖记录内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['rewardRecordMsg', validatorRules.rewardRecordMsg]" placeholder="请输入获奖记录内容"></a-input>
+                    <a-input v-decorator="['rewardRecordMsg', validatorRules.rewardRecordMsg]" placeholder="请输入获奖记录内容" />
                 </a-form-item>
                 <a-form-item label="获奖传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['rewardMsg', validatorRules.rewardMsg]" placeholder="请输入获奖传闻内容"></a-input>
+                    <a-input v-decorator="['rewardMsg', validatorRules.rewardMsg]" placeholder="请输入获奖传闻内容" />
                 </a-form-item>
                 <a-form-item label="概率公示" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['probabilityMsg', validatorRules.probabilityMsg]" placeholder="请输入概率公示"></a-textarea>
+                    <a-textarea v-decorator="['probabilityMsg', validatorRules.probabilityMsg]" placeholder="请输入概率公示" />
                 </a-form-item>
                 <a-form-item label="抽奖设置(单抽/多抽)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea
@@ -65,19 +68,19 @@
                     ></a-input>
                 </a-form-item>
                 <a-form-item label="排名奖励邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['rankRewardEmailTitle', validatorRules.rankRewardEmailTitle]" placeholder="请输入排名奖励邮件标题"></a-textarea>
+                    <a-textarea v-decorator="['rankRewardEmailTitle', validatorRules.rankRewardEmailTitle]" placeholder="请输入排名奖励邮件标题" />
                 </a-form-item>
                 <a-form-item label="排名奖励邮件内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['rankRewardEmailContent', validatorRules.rankRewardEmailContent]" placeholder="请输入排名奖励邮件内容"></a-textarea>
+                    <a-textarea v-decorator="['rankRewardEmailContent', validatorRules.rankRewardEmailContent]" placeholder="请输入排名奖励邮件内容" />
                 </a-form-item>
                 <a-form-item label="积分奖励邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['scoreRewardEmailTitle', validatorRules.scoreRewardEmailTitle]" placeholder="请输入积分奖励邮件标题"></a-textarea>
+                    <a-textarea v-decorator="['scoreRewardEmailTitle', validatorRules.scoreRewardEmailTitle]" placeholder="请输入积分奖励邮件标题" />
                 </a-form-item>
                 <a-form-item label="积分奖励邮件内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['scoreRewardEmailContent', validatorRules.scoreRewardEmailContent]" placeholder="请输入积分奖励邮件内容"></a-textarea>
+                    <a-textarea v-decorator="['scoreRewardEmailContent', validatorRules.scoreRewardEmailContent]" placeholder="请输入积分奖励邮件内容" />
                 </a-form-item>
                 <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息" />
                 </a-form-item>
             </a-form>
 
@@ -146,6 +149,7 @@ export default {
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 banner: {},
                 skeleton: {},
+                freeNum: { rules: [{ required: true, message: "请输入免费抽奖次数!" }] },
                 rewardRecordNum: { rules: [{ required: true, message: "请输入获奖记录显示数量!" }] },
                 rewardRecordMsg: { rules: [{ required: true, message: "请输入获奖记录内容!" }] },
                 rewardMsg: { rules: [{ required: true, message: "请输入获奖传闻内容!" }] },
@@ -198,6 +202,7 @@ export default {
                         "name",
                         "banner",
                         "skeleton",
+                        "freeNum",
                         "rewardRecordNum",
                         "rewardRecordMsg",
                         "rewardMsg",
@@ -269,6 +274,7 @@ export default {
                     "name",
                     "banner",
                     "skeleton",
+                    "freeNum",
                     "rewardRecordNum",
                     "rewardRecordMsg",
                     "rewardMsg",
