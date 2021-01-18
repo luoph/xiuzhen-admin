@@ -27,6 +27,7 @@ public interface GameRankListMapper {
                                     @Param("type") int type,
                                     @Param("createTime") Date createTime,
                                     @Param("serverId") int serverId);
+
     /**
      * 查询用户角色信息
      */
@@ -36,6 +37,25 @@ public interface GameRankListMapper {
     /**
      * 查询用户登录等级
      */
-    @Select("select player_id, value from ${logAcountTable} where type = 2")
-    List<LogAccount> selectLogAccount(@Param("logAcountTable") String logAcountTable);
+    @Select("select player_id, value from ${logAccountTable} where type = 2")
+    List<LogAccount> selectLogAccount(@Param("logAccountTable") String logAccountTable);
+
+    /**
+     * 查询log_player中type>=100的类型行为总数
+     */
+    @Select("select player_id, count(*) as value from ${logPlayerTable} where type = #{type} and server_id = #{serverId} and create_date <= #{createTime} group by player_id having count(*) >= 1 ORDER BY count(*) desc")
+    List<LogPlayer> selectCount(@Param("logPlayerTable") String logPlayerTable,
+                                @Param("type") int type,
+                                @Param("createTime") Date createTime,
+                                @Param("serverId") int serverId);
+
+    /**
+     * 查询log_player中type<100的类型行为最大值
+     */
+    @Select("select player_id, max(value) as value from ${logPlayerTable} where type = #{type} and server_id = #{serverId} and create_date <= #{createTime} group by player_id  ORDER BY max(value) desc")
+    List<LogPlayer> selectSum(@Param("logPlayerTable") String logPlayerTable,
+                              @Param("type") int type,
+                              @Param("createTime") Date createTime,
+                              @Param("serverId") int serverId);
+
 }
