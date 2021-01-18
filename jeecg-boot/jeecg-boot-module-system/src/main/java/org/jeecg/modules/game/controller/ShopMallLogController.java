@@ -1,5 +1,8 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.date.DatePattern;
+import cn.youai.xiuzhen.entity.pojo.DateRange;
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -51,20 +54,14 @@ public class ShopMallLogController {
                                            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
     ) {
         Page<OneDayDate> page = new Page<>(pageNo, pageSize);
-        if (!StringUtils.isEmpty(rangeDateBegin) && !StringUtils.isEmpty(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
-        }
+
         //服务器空校验
         if (0 == serverId || 0 == channelId) {
             return Result.error("请选择服务器！");
         }
         //日期校验
-        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
-        if (null != dateParamValid) {
-            rangeDateEnd = dateParamValid[1];
-            rangeDateBegin = dateParamValid[0];
-        }else{
+        DateRange dateRange = ParamValidUtil.getDateRange(rangeDateBegin, rangeDateEnd, days);
+        if (null == dateRange) {
             return Result.error("请选择日期！");
         }
 
@@ -72,7 +69,7 @@ public class ShopMallLogController {
             return Result.error("请选择商店类型！");
         }
 
-        List<ShopMallLog> shopMallLogs = shopMallLogService.queryShopMallListNew(rangeDateBegin, rangeDateEnd, days, serverId, type);
+        List<ShopMallLog> shopMallLogs = shopMallLogService.queryShopMallListNew(DateUtils.formatDate(dateRange.getStart(), DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(dateRange.getEnd(), DatePattern.NORM_DATETIME_PATTERN), days, serverId, type);
 
         //重新整理数据给前端
         Map<String, List<ShopMallLog>> shopMallLogListMapTime = shopMallLogs.stream().collect(Collectors.groupingBy(ShopMallLog::getCreateTimeString));
