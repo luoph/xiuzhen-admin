@@ -26,7 +26,7 @@
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="折线图显示类型">
-                            <a-select placeholder="显示类型" v-model="queryParam.lineType">
+                            <a-select placeholder="显示类型" v-model="queryParam.lineType"  @change="onChangeLineType">
                                 <a-select-option :value="'seconds'">按分</a-select-option>
                                 <a-select-option :value="'hours'">按时</a-select-option>
                                 <a-select-option :value="'days'">按天</a-select-option>
@@ -166,6 +166,9 @@ export default {
         onDateChange: function (value, dateStr) {
             this.queryParam.rangeDateBegin = dateStr[0];
             this.queryParam.rangeDateEnd = dateStr[1];
+        },
+        onChangeLineType: function(lineType){
+            this.queryParam.lineType = lineType;
         },
         searchQuery2() {
             this.ynShowPicture = false;
