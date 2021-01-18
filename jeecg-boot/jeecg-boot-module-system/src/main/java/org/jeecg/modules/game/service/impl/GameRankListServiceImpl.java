@@ -53,7 +53,6 @@ public class GameRankListServiceImpl implements IGameRankListService {
         } else {
             logPlayerValueList = gameRankListMapper.selectCount(logPlayerTable, gameRankListVO.getRankListType(), createTime, gameRankListVO.getServerId());
         }
-        // 查询操作日志
         // 查询注册信息
         List<GameRegisterInfo> gameRegisterInfoList = gameRankListMapper.selectRegisterInfo();
         Map<Long, List<GameRegisterInfo>> gameRegisterInfoListMapPlayerId = gameRegisterInfoList.stream().collect(Collectors.groupingBy(GameRegisterInfo::getPlayerId));
