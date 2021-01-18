@@ -78,7 +78,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
     public List<MilitaryStrengthVO> getMilitaryStrengVoAllList(String userName, int serverId, String createDateBegin, String createDateEnd, String channel) {
         List<Map>  militaryStrengVoAllList;
         if (StringUtils.isEmpty(userName)){
-            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAll(createDateBegin, createDateEnd,logPlayerTable);
+            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAll(serverId, createDateBegin, createDateEnd,logPlayerTable);
         }else{
             List<Map> registerUserMap = militaryStrengthMapper.selectRegisterUserByName(userName,channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
             //这个名字下所有player_id集合
@@ -91,7 +91,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
                     playerIdCollectString = playerIdCollectString + playerIdCollect.get(i) +",";
                 }
             }
-            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAllByPlayerId("("+playerIdCollectString+")", createDateBegin, createDateEnd,logPlayerTable);
+            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAllByPlayerId(serverId,"("+playerIdCollectString+")", createDateBegin, createDateEnd,logPlayerTable);
         }
 
         //查询时间范围内 所有注册的用户
