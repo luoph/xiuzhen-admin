@@ -5,21 +5,21 @@
             <a-form :form="form">
                 <a-form-item label="排行类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" initialValue="1">
-                        <a-select-option :value="1">1-境界冲榜</a-select-option>
-                        <a-select-option :value="2">2-喂养冲榜</a-select-option>
-                        <a-select-option :value="3">3-追加冲榜</a-select-option>
-                        <a-select-option :value="4">4-祖鲲冲榜</a-select-option>
-                        <a-select-option :value="5">5-腾蛇冲榜</a-select-option>
-                        <a-select-option :value="6">6-火凤冲榜</a-select-option>
-                        <a-select-option :value="7">7-飞剑冲榜</a-select-option>
-                        <a-select-option :value="8">8-情缘冲榜</a-select-option>
-                        <a-select-option :value="9">9-功法冲榜</a-select-option>
-                        <a-select-option :value="10">10-兽魂石冲榜</a-select-option>
-                        <a-select-option :value="11">11-炼灵冲榜</a-select-option>
-                        <a-select-option :value="12">12-宝匣冲榜</a-select-option>
-                        <a-select-option :value="13">13-仙器冲榜</a-select-option>
-                        <a-select-option :value="14">14-符文冲榜</a-select-option>
-                        <a-select-option :value="15">15-天命冲榜</a-select-option>
+                        <a-select-option :value="1">1-境界排行</a-select-option>
+                        <a-select-option :value="2">2-仙兽排行</a-select-option>
+                        <a-select-option :value="3">3-法宝排行</a-select-option>
+                        <a-select-option :value="4">4-圣灵排行</a-select-option>
+                        <a-select-option :value="5">5-情缘排行</a-select-option>
+                        <a-select-option :value="6">6-飞剑排行</a-select-option>
+                        <a-select-option :value="7">7-天书排行</a-select-option>
+                        <a-select-option :value="8">8-仙器排行</a-select-option>
+                        <a-select-option :value="9">9-仙兽排行</a-select-option>
+                        <a-select-option :value="10">10-法宝排行</a-select-option>
+                        <a-select-option :value="11">11-圣灵排行</a-select-option>
+                        <a-select-option :value="12">12-情缘排行</a-select-option>
+                        <a-select-option :value="13">13-飞剑排行</a-select-option>
+                        <a-select-option :value="14">14-天书排行</a-select-option>
+                        <a-select-option :value="15">15-仙器排行</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="排行类型名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
