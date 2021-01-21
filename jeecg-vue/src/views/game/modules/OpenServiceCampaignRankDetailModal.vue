@@ -20,8 +20,21 @@
                 </a-form-item>
                 <a-form-item label="排行类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select :disabled="isEdit" placeholder="请选择排行类型" v-decorator="['rankType', validatorRules.rankType]" initialValue="1">
-                        <a-select-option :value="1">1-境界冲榜</a-select-option>
-                        <a-select-option :value="2">2-功法冲榜</a-select-option>
+                        <a-select-option :value="1">1-境界排行</a-select-option>
+                        <a-select-option :value="2">2-仙兽排行</a-select-option>
+                        <a-select-option :value="3">3-法宝排行</a-select-option>
+                        <a-select-option :value="4">4-圣灵排行</a-select-option>
+                        <a-select-option :value="5">5-情缘排行</a-select-option>
+                        <a-select-option :value="6">6-飞剑排行</a-select-option>
+                        <a-select-option :value="7">7-天书排行</a-select-option>
+                        <a-select-option :value="8">8-仙器排行</a-select-option>
+                        <a-select-option :value="9">9-仙兽排行</a-select-option>
+                        <a-select-option :value="10">10-法宝排行</a-select-option>
+                        <a-select-option :value="11">11-圣灵排行</a-select-option>
+                        <a-select-option :value="12">12-情缘排行</a-select-option>
+                        <a-select-option :value="13">13-飞剑排行</a-select-option>
+                        <a-select-option :value="14">14-天书排行</a-select-option>
+                        <a-select-option :value="15">15-仙器排行</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">

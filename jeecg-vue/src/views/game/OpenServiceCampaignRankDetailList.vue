@@ -149,35 +149,35 @@ export default {
                     customRender: value => {
                         let text = "--";
                         if (value === 1) {
-                            text = "1-境界冲榜";
+                            text = "1-境界排行";
                         } else if (value === 2) {
-                            text = "2-喂养冲榜";
+                            text = "2-仙兽排行";
                         } else if (value === 3) {
-                            text = "3-追加冲榜";
+                            text = "3-法宝排行";
                         } else if (value === 4) {
-                            text = "4-祖鲲冲榜";
+                            text = "4-圣灵排行";
                         } else if (value === 5) {
-                            text = "5-腾蛇冲榜";
+                            text = "5-情缘排行";
                         } else if (value === 6) {
-                            text = "6-火凤冲榜";
+                            text = "6-飞剑排行";
                         } else if (value === 7) {
-                            text = "7-飞剑冲榜";
+                            text = "7-天书排行";
                         } else if (value === 8) {
-                            text = "8-情缘冲榜";
+                            text = "8-仙器排行";
                         } else if (value === 9) {
-                            text = "9-功法冲榜";
+                            text = "9-仙兽排行";
                         } else if (value === 10) {
-                            text = "10-兽魂石冲榜";
+                            text = "10-法宝排行";
                         } else if (value === 11) {
-                            text = "11-炼灵冲榜";
+                            text = "11-圣灵排行";
                         } else if (value === 12) {
-                            text = "12-宝匣冲榜";
+                            text = "12-情缘排行";
                         } else if (value === 13) {
-                            text = "13-仙器冲榜";
+                            text = "13-飞剑排行";
                         } else if (value === 14) {
-                            text = "14-符文冲榜";
+                            text = "14-天书排行";
                         } else if (value === 15) {
-                            text = "15-天命冲榜";
+                            text = "15-仙器排行";
                         }
                         return text;
                     }
