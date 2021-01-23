@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description game_forbidden_record
- * @date 2020-12-17
+ * @description 封禁记录
+ * @date 2021-01-23
  */
 @Service
 public class GameForbiddenRecordServiceImpl extends ServiceImpl<GameForbiddenRecordMapper, GameForbiddenRecord> implements IGameForbiddenRecordService {

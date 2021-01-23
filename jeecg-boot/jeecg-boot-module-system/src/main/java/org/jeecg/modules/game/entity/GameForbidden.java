@@ -25,6 +25,9 @@ public class GameForbidden implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    GameForbidden() {
+    }
+
     /**
      * id
      */
@@ -60,12 +63,6 @@ public class GameForbidden implements Serializable {
      */
     @Excel(name = "封禁原因", width = 15)
     private java.lang.String reason;
-
-    /**
-     * 删除状态：0-未删除 1-已删除
-     */
-    @Excel(name = "删除状态：0-未删除 1-已删除	", width = 15)
-    private java.lang.Integer delFlag;
 
     /**
      * 0-临时 1-永久
@@ -116,4 +113,11 @@ public class GameForbidden implements Serializable {
      */
     @Excel(name = "操作人", width = 15)
     private java.lang.String updateBy;
+
+    public void copy(GameForbidden other) {
+        this.setStartTime(other.getStartTime());
+        this.setEndTime(other.getEndTime());
+        this.setIsForever(other.getIsForever());
+        this.setReason(other.getReason());
+    }
 }

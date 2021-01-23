@@ -6,24 +6,24 @@
                 <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="封禁类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="请选择状态" v-decorator="['type', validatorRules.type]">
-                        <a-select-option :value="1">登陆</a-select-option>
+                <a-form-item label="封禁功能" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请选择封禁功能" v-decorator="['type', validatorRules.type]">
+                        <a-select-option :value="1">登录</a-select-option>
                         <a-select-option :value="2">聊天</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="封禁值类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="请选择类型" v-decorator="['banKey', validatorRules.banKey]">
+                <a-form-item label="封禁依据" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请选择封禁依据" v-decorator="['banKey', validatorRules.banKey]">
                         <a-select-option :value="'playerId'">playerId</a-select-option>
                         <a-select-option :value="'ip'">ip</a-select-option>
                         <a-select-option :value="'deviceId'">deviceId</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="封禁值" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入对应 ban_type 的值"></a-input>
+                    <a-input v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入封禁值" />
                 </a-form-item>
                 <a-form-item label="封禁原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因"></a-input>
+                    <a-textarea v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因" />
                 </a-form-item>
                 <!-- <a-form-item label="数据状态	" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input disabled v-decorator="['delFlag', validatorRules.delFlag]" placeholder="请输入删除状态：0-未删除 1-已删除	" initialValue="0" style="width: 100%" />
@@ -34,24 +34,14 @@
                         <a-select-option :value="1">永久</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择开始时间" :showTime="true" dateFormat="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />
+                <a-form-item label="封禁时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-col :md="10" :sm="8">
+                        <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
+                    </a-col>
+                    <a-col :md="10" :sm="8">
+                        <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
+                    </a-col>
                 </a-form-item>
-                <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择结束时间" :showTime="true" dateFormat="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <!-- <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择更新时间" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="操作人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入操作人"></a-input>
-                </a-form-item>
-                <a-form-item label="操作人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['updateBy', validatorRules.updateBy]" placeholder="请输入操作人"></a-input>
-                </a-form-item> -->
             </a-form>
         </a-spin>
     </a-modal>
@@ -66,6 +56,7 @@
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import moment from "moment";
 
 export default {
     name: "GameForbiddenModal",
@@ -76,7 +67,7 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1000,
             visible: false,
             isEdit: false,
             model: {},
@@ -91,18 +82,13 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 serverId: { rules: [{ required: true, message: "请输入服务器id!" }] },
-                type: {},
-                banKey: { rules: [{ required: true, message: "请输入playerId/ip/deviceId!" }] },
-                banValue: { rules: [{ required: true, message: "请输入对应 ban_type 的值!" }] },
+                type: { rules: [{ required: true, message: "请输入封禁功能" }] },
+                banKey: { rules: [{ required: true, message: "请输入封禁依据" }] },
+                banValue: { rules: [{ required: true, message: "请输入对应封禁值!" }] },
                 reason: { rules: [{ required: true, message: "请输入封禁原因!" }] },
-                // delFlag: { rules: [{ required: true, message: "请输入删除状态：0-未删除 1-已删除	!" }] },
-                isForever: { rules: [{ required: true, message: "请输入0-临时 1-永久!" }] },
+                isForever: { rules: [{ required: true, message: "请选择是否永久封禁" }] },
                 startTime: {},
-                endTime: {},
-                createTime: {},
-                updateTime: {},
-                createBy: {},
-                updateBy: {}
+                endTime: {}
             },
             url: {
                 add: "game/gameForbidden/add",
@@ -119,26 +105,15 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.visible = true;
+            console.log("GameForbiddenModal, model:", JSON.stringify(this.model));
+
             this.$nextTick(() => {
                 setTimeout(() => {
-                    this.form.setFieldsValue(
-                        pick(
-                            this.model,
-                            "serverId",
-                            "type",
-                            "banKey",
-                            "banValue",
-                            "reason",
-                            // "delFlag",
-                            "isForever",
-                            "startTime",
-                            "endTime",
-                            // "createTime",
-                            // "updateTime",
-                            // "createBy",
-                            // "updateBy"
-                        )
-                    );
+                    this.form.setFieldsValue(pick(this.model, "serverId", "type", "banKey", "banValue", "reason", "isForever", "startTime", "endTime"));
+
+                    // 时间格式化
+                    this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+                    this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
                 });
             });
         },
@@ -164,9 +139,12 @@ export default {
                     console.log(this.model);
                     console.log(values);
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
-                        .then((res) => {
+                        .then(res => {
                             if (res.success) {
                                 that.$message.success(res.message);
                                 that.$emit("ok");
@@ -185,9 +163,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(
-                pick(row, "serverId", "type", "banKey", "banValue", "reason", "delFlag", "isForever", "startTime", "endTime", "createTime", "updateTime", "createBy", "updateBy")
-            );
+            this.form.setFieldsValue(pick(row, "serverId", "type", "banKey", "banValue", "reason", "delFlag", "isForever", "startTime", "endTime"));
         }
     }
 };

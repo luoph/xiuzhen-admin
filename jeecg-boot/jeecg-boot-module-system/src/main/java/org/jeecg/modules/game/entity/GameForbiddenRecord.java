@@ -15,8 +15,8 @@ import java.io.Serializable;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description game_forbidden_record
- * @date 2020-12-17
+ * @description 封禁记录
+ * @date 2021-01-23
  */
 @Data
 @TableName("game_forbidden_record")
@@ -41,7 +41,7 @@ public class GameForbiddenRecord implements Serializable {
      * 封号禁言表id
      */
     @Excel(name = "封号禁言表id", width = 15)
-    private java.lang.Long gameForbiddenId;
+    private java.lang.Long forbiddenId;
 
     /**
      * 服务器id
@@ -74,12 +74,6 @@ public class GameForbiddenRecord implements Serializable {
     private java.lang.String reason;
 
     /**
-     * 删除状态：0-未删除 1-已删除
-     */
-    @Excel(name = "删除状态：0-未删除 1-已删除	", width = 15)
-    private java.lang.Integer delFlag;
-
-    /**
      * 0-临时 1-永久
      */
     @Excel(name = "0-临时 1-永久", width = 15)
@@ -88,44 +82,30 @@ public class GameForbiddenRecord implements Serializable {
     /**
      * 开始时间
      */
-    @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date startTime;
 
     /**
      * 结束时间
      */
-    @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date endTime;
 
     /**
      * 创建时间
      */
-    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date createTime;
-
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    private java.util.Date updateTime;
 
     /**
      * 操作人
      */
     @Excel(name = "操作人", width = 15)
     private java.lang.String createBy;
-
-    /**
-     * 操作人
-     */
-    @Excel(name = "操作人", width = 15)
-    private java.lang.String updateBy;
 }
