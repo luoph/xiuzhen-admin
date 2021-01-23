@@ -15,39 +15,42 @@
                     </a-col>
 
                     <a-col :md="6" :sm="8">
-                        <a-form-item  label="封禁类型">
-                            <a-select placeholder="请选择封禁类型" @change="typeChange">
-                                <a-select-option :value="''">不选择</a-select-option>
-                                <a-select-option :value="'1'">1-登录封禁</a-select-option>
-                                <a-select-option :value="'2'">2-聊天封禁</a-select-option>
+                        <a-form-item label="封禁类型">
+                            <a-select placeholder="请选择封禁类型" v-model="queryParam.type" initialValue="0">
+                                <a-select-option :value="1">登录</a-select-option>
+                                <a-select-option :value="2">聊天</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
                         <a-col :md="6" :sm="8">
                             <a-form-item label="封禁值">
-                                <a-input placeholder="请输入对应 ban_type 的值" v-model="queryParam.banValue"></a-input>
+                                <a-input placeholder="请输入封禁值" v-model="queryParam.banValue"></a-input>
                             </a-form-item>
                         </a-col>
                         <a-col :md="6" :sm="8">
                             <a-form-item label="封禁时间">
-                            <a-select placeholder="封禁时间" @change="isForeverChange">
-                                <a-select-option :value="''">不选择</a-select-option>
-                                <a-select-option :value="'0'">0-临时封禁</a-select-option>
-                                <a-select-option :value="'1'">1-永久封禁</a-select-option>
-                            </a-select>
-                        </a-form-item>
+                                <a-select placeholder="永久期限" v-model="queryParam.isForever" initialValue="0">
+                                    <a-select-option :value="0">临时</a-select-option>
+                                    <a-select-option :value="1">永久</a-select-option>
+                                </a-select>
+                            </a-form-item>
                         </a-col>
-                        <a-col :md="10" :sm="8">
-                            <a-form-item label="创建日期">
-                                <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                        <a-col :md="6" :sm="16">
+                            <a-form-item label="开始时间">
+                                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="16">
+                            <a-form-item label="结束时间">
+                                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
                             </a-form-item>
                         </a-col>
                     </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchQuery">刷新数据</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                             <a style="margin-left: 8px" @click="handleToggleSearch">
                                 {{ toggleSearchStatus ? "收起" : "展开" }}
                                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
@@ -61,7 +64,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('game_forbidden')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('封禁列表')">导出</a-button>
             <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload> -->
@@ -107,7 +110,7 @@
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
-                    <!-- <a-divider type="vertical" />
+                    <a-divider type="vertical" />
                     <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
@@ -117,7 +120,7 @@
                                 </a-popconfirm>
                             </a-menu-item>
                         </a-menu>
-                    </a-dropdown> -->
+                    </a-dropdown>
                 </span>
             </a-table>
         </div>
@@ -132,6 +135,7 @@ import GameForbiddenModal from "./modules/GameForbiddenModal";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { getAction } from "@/api/manage";
+import { filterObj } from "@/utils/util";
 
 export default {
     name: "GameForbiddenList",
@@ -153,7 +157,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function (t, r, index) {
+                    customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -165,12 +169,32 @@ export default {
                 {
                     title: "封禁类型",
                     align: "center",
-                    dataIndex: "type"
+                    dataIndex: "type",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 1) {
+                            text = "登录";
+                        } else if (value === 2) {
+                            text = "聊天";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "封禁值类型",
                     align: "center",
-                    dataIndex: "banKey"
+                    dataIndex: "banKey",
+                    customRender: value => {
+                        let text = "--";
+                        if (value == "ip") {
+                            text = "IP";
+                        } else if (value == "playerId") {
+                            text = "玩家id";
+                        } else if (value == "deviceId") {
+                            text = "设备号";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "封禁值",
@@ -183,51 +207,43 @@ export default {
                     dataIndex: "reason"
                 },
                 {
-                    title: "封禁时间",
+                    title: "永久封禁",
                     align: "center",
-                    dataIndex: "isForever"
+                    dataIndex: "isForever",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "临时";
+                        } else if (value === 1) {
+                            text = "永久";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "开始时间",
                     align: "center",
-                    dataIndex: "startTime",
-                    // customRender: function (text) {
-                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    // }
+                    dataIndex: "startTime"
                 },
                 {
                     title: "结束时间",
                     align: "center",
-                    dataIndex: "endTime",
-                    // customRender: function (text) {
-                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    // }
+                    dataIndex: "endTime"
                 },
                 {
                     title: "创建时间",
                     align: "center",
-                    dataIndex: "createTime",
-                    // customRender: function (text) {
-                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    // }
+                    dataIndex: "createTime"
                 },
                 {
                     title: "更新时间",
                     align: "center",
-                    dataIndex: "updateTime",
-                    // customRender: function (text) {
-                    //     return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-                    // }
+                    dataIndex: "updateTime"
                 },
                 {
                     title: "操作人",
                     align: "center",
                     dataIndex: "createBy"
-                },
-                {
-                    title: "操作人",
-                    align: "center",
-                    dataIndex: "updateBy"
                 },
                 {
                     title: "操作",
@@ -247,54 +263,38 @@ export default {
         };
     },
     computed: {
-        importExcelUrl: function () {
+        importExcelUrl: function() {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
     methods: {
         initDictConfig() {},
-        typeChange: function (type){
-            this.queryParam.type = type;
-        },
-        isForeverChange: function (isForever){
-            this.queryParam.isForever = isForever;
-        },
-        onSelectChannel: function (channelId) {
+        onSelectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },
-        onSelectServer: function (serverId) {
+        onSelectServer: function(serverId) {
             this.queryParam.serverId = serverId;
         },
-        onDateChange: function (value, dateStr) {
-            this.queryParam.rangeDateBegin = dateStr[0];
-            this.queryParam.rangeDateEnd = dateStr[1];
+        getQueryParams() {
+            console.log(this.queryParam.createTimeRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.startTimeRange;
+            delete param.endTimeRange;
+            return filterObj(param);
         },
-        searchQuery() {
-            let param = {
-                days: this.queryParam.days,
-                channelId: this.queryParam.channelId,
-                serverId: this.queryParam.serverId,
-                rangeDateBegin: this.queryParam.rangeDateBegin,
-                rangeDateEnd: this.queryParam.rangeDateEnd,
-                pageNo: this.ipagination.current,
-                pageSize: this.ipagination.pageSize,
-                type: this.queryParam.type,
-                banValue: this.queryParam.banValue,
-                isForever: this.queryParam.isForever,
-            };
-            getAction(this.url.list, param).then(res => {
-                if (res.success) {
-                    console.log(res.result.records);
-                    this.dataSource = res.result.records;
-                    this.ipagination.current = res.result.current;
-                    this.ipagination.size = res.result.size.toString();
-                    this.ipagination.total = res.result.total;
-                    this.ipagination.pages = res.result.pages;
-                } else {
-                    this.$message.error(res.message);
-                }
-            });
+        onStartTimeChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.startTime_begin = dateString[0];
+            this.queryParam.startTime_end = dateString[1];
         },
+        onEndTimeChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.endTime_begin = dateString[0];
+            this.queryParam.endTime_end = dateString[1];
+        }
     }
 };
 </script>
