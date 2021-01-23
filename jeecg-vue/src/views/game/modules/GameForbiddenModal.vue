@@ -14,9 +14,9 @@
                 </a-form-item>
                 <a-form-item label="封禁依据" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="请选择封禁依据" v-decorator="['banKey', validatorRules.banKey]">
-                        <a-select-option :value="'playerId'">playerId</a-select-option>
+                        <a-select-option :value="'playerId'">玩家id</a-select-option>
                         <a-select-option :value="'ip'">ip</a-select-option>
-                        <a-select-option :value="'deviceId'">deviceId</a-select-option>
+                        <a-select-option :value="'deviceId'">设备号</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="封禁值" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -28,7 +28,7 @@
                 <!-- <a-form-item label="数据状态	" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input disabled v-decorator="['delFlag', validatorRules.delFlag]" placeholder="请输入删除状态：0-未删除 1-已删除	" initialValue="0" style="width: 100%" />
                 </a-form-item> -->
-                <a-form-item label="封禁时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="封禁期限" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="请选择状态" v-decorator="['isForever', validatorRules.isForever]">
                         <a-select-option :value="0">临时</a-select-option>
                         <a-select-option :value="1">永久</a-select-option>
