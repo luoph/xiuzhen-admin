@@ -232,6 +232,12 @@ export default {
                     dataIndex: "standardRewardEmail"
                 },
                 {
+                    title: "跳转id",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "jump"
+                },
+                {
                     title: "帮助信息",
                     align: "center",
                     width: 180,

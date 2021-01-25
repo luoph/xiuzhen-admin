@@ -10,10 +10,10 @@
                     <a-input-number :disabled="true" v-decorator="['campaignTypeId', validatorRules.campaignTypeId]" placeholder="请输入页签id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称" />
                 </a-form-item>
                 <a-form-item label="页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称"></a-input>
+                    <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
@@ -63,8 +63,11 @@
                 <a-form-item label="达标奖励邮件id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['standardRewardEmail', validatorRules.standardRewardEmail]" placeholder="请输入达标奖励邮件id" style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="跳转id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['jump', validatorRules.jump]" placeholder="请输入跳转id" />
+                </a-form-item>
                 <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+                    <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息" />
                 </a-form-item>
             </a-form>
 
@@ -143,6 +146,7 @@ export default {
                 combatPower: { rules: [{ required: true, message: "请输入活动宣传仙力!" }] },
                 // rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
                 helpMsg: { rules: [{ required: true, message: "请输入帮助信息!" }] },
+                jump: { rules: [{ required: false, message: "请输入跳转id!" }] },
                 rankRewardEmail: { rules: [{ required: true, message: "请输入排名奖励邮件id!" }] },
                 standardRewardEmail: { rules: [{ required: true, message: "请输入达标奖励邮件id!" }] }
             },
@@ -189,7 +193,8 @@ export default {
                         "rankNum",
                         "rankRewardEmail",
                         "standardRewardEmail",
-                        "helpMsg"
+                        "helpMsg",
+                        "jump"
                     )
                 );
             });
@@ -252,7 +257,8 @@ export default {
                     "rankNum",
                     "rankRewardEmail",
                     "standardRewardEmail",
-                    "helpMsg"
+                    "helpMsg",
+                    "jump"
                 )
             );
         },
