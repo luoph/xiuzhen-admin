@@ -45,6 +45,7 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
         this.rankRewardEmail = other.rankRewardEmail;
         this.standardRewardEmail = other.standardRewardEmail;
         this.helpMsg = other.helpMsg;
+        this.jump = other.jump;
     }
 
     /**
@@ -155,6 +156,13 @@ public class OpenServiceCampaignRankDetail extends BaseEntity {
     @ExcelProperty("帮助信息")
     @Excel(name = "帮助信息", width = 15)
     private java.lang.String helpMsg;
+
+    /**
+     * 跳转id
+     */
+    @ExcelProperty("跳转id")
+    @Excel(name = "跳转id", width = 15)
+    private java.lang.String jump;
 
     @TableField(exist = false)
     private List<OpenServiceCampaignRankDetailMessage> messageList;
