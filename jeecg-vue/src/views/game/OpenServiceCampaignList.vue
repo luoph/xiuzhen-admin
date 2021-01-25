@@ -97,11 +97,14 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
-                <span slot="serverIdTags" slot-scope="text, record">
+                <span slot="serverIdSlot" slot-scope="text">
                     <a-tag v-if="!text" color="red">未设置</a-tag>
                     <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
-
+                <span slot="statuSlot" slot-scope="text">
+                    <a-tag v-if="text === 0" color="red">无效</a-tag>
+                    <a-tag v-else color="green">有效</a-tag>
+                </span>
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
@@ -176,7 +179,7 @@ export default {
                     title: "服务器id",
                     align: "center",
                     dataIndex: "serverIds",
-                    scopedSlots: { customRender: "serverIdTags" }
+                    scopedSlots: { customRender: "serverIdSlot" }
                 },
                 {
                     title: "活动图标",
@@ -188,15 +191,7 @@ export default {
                     title: "活动状态",
                     align: "center",
                     dataIndex: "status",
-                    customRender: value => {
-                        let re = "--";
-                        if (value === 0) {
-                            re = "无效";
-                        } else if (value === 1) {
-                            re = "有效";
-                        }
-                        return re;
-                    }
+                    scopedSlots: { customRender: "statuSlot" }
                 },
                 {
                     title: "自动开启",

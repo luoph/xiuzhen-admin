@@ -94,7 +94,7 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
-                <span slot="serverIdTags" slot-scope="text, record">
+                <span slot="serverIdSlot" slot-scope="text, record">
                     <a-tag v-if="!text" color="red">未设置</a-tag>
                     <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
@@ -163,7 +163,7 @@ export default {
                     title: "服务器id",
                     align: "center",
                     dataIndex: "serverIds",
-                    scopedSlots: { customRender: "serverIdTags" }
+                    scopedSlots: { customRender: "serverIdSlot" }
                 },
                 {
                     title: "问卷调查地址",
