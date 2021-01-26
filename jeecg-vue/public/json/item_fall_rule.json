@@ -544,7 +544,7 @@
         "type": 68,
         "name": "秘境-符文秘境-傀儡探险",
         "reward_type": 3,
-        "title": "傀儡扫荡奖励",
+        "title": "神魂扫荡奖励",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3
     },
@@ -1104,7 +1104,7 @@
         "reward_type": 3,
         "title": "天劫任务奖励",
         "describe": "储物袋已满，通过传书发放的道具",
-        "notice_type": 3
+        "notice_type": 0
     },
     {
         "id": 124,
@@ -1276,5 +1276,158 @@
         "title": "",
         "describe": "",
         "notice_type": ""
+    },
+    {
+        "id": 142,
+        "type": 149,
+        "name": "战力转盘",
+        "reward_type": 3,
+        "title": "战力转盘奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 5
+    },
+    {
+        "id": 143,
+        "type": 150,
+        "name": "仙器秘境扫荡",
+        "reward_type": 3,
+        "title": "仙器秘境扫荡奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 144,
+        "type": 151,
+        "name": "秘境-符文秘境-秘境悬赏",
+        "reward_type": 2,
+        "title": "符文秘境悬赏",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 145,
+        "type": 152,
+        "name": "节日活动-节日烟花",
+        "reward_type": 3,
+        "title": "节日烟花奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 2
+    },
+    {
+        "id": 146,
+        "type": 153,
+        "name": "法宝秘境扫荡",
+        "reward_type": 3,
+        "title": "法宝秘境扫荡奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 147,
+        "type": 154,
+        "name": "秘境-法宝秘境-宝箱",
+        "reward_type": 3,
+        "title": "法宝秘境奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 2
+    },
+    {
+        "id": 148,
+        "type": 155,
+        "name": "秘境-法宝秘境-怪物",
+        "reward_type": 3,
+        "title": "法宝秘境奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 4
+    },
+    {
+        "id": 149,
+        "type": 156,
+        "name": "结婚-双修任务",
+        "reward_type": 3,
+        "title": "结婚-双修任务奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 150,
+        "type": 157,
+        "name": "结婚-新婚礼物",
+        "reward_type": 3,
+        "title": "结婚-新婚奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 151,
+        "type": 158,
+        "name": "结婚-新婚礼物-退回",
+        "reward_type": 3,
+        "title": "结婚-新婚礼物-退回",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 152,
+        "type": 159,
+        "name": "结婚-结婚奖励",
+        "reward_type": 3,
+        "title": "结婚-结婚奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 153,
+        "type": 160,
+        "name": "结婚-结婚公共红包",
+        "reward_type": 3,
+        "title": "结婚-结婚公共红包",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 154,
+        "type": 161,
+        "name": "结婚-亲密度奖励",
+        "reward_type": 3,
+        "title": "结婚-亲密度奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 155,
+        "type": 162,
+        "name": "结婚-双修副本-伤害奖励",
+        "reward_type": 3,
+        "title": "结婚伤害奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 4
+    },
+    {
+        "id": 156,
+        "type": 163,
+        "name": "藏宝阁",
+        "reward_type": 3,
+        "title": "藏宝阁奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 157,
+        "type": 164,
+        "name": "境界转盘",
+        "reward_type": 3,
+        "title": "境界转盘奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 5
+    },
+    {
+        "id": 158,
+        "type": 165,
+        "name": "仙兽抽奖积分",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2
     }
 ]
