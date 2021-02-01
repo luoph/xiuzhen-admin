@@ -26,7 +26,7 @@ public class DailyGiftPackageBuyVO implements Serializable {
     /**
      * 自增id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 玩家id

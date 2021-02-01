@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -59,6 +60,9 @@ public class DailyGiftPackageBuyController extends JeecgController<DailyGiftPack
             return Result.ok(pageVo);
         }
         List<DailyGiftPackageBuyVO> dailyGiftPackageBuyVOList = dailyGiftPackageBuyVOService.queryGiftPackageByDateRange(serverId, createTimeBegin, createTimeEnd);
+        if (CollUtil.isEmpty(dailyGiftPackageBuyVOList)) {
+            return Result.ok();
+        }
         pageVo.setRecords(dailyGiftPackageBuyVOList).setTotal(dailyGiftPackageBuyVOList.size());
         return Result.ok(pageVo);
     }

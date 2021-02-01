@@ -74,10 +74,10 @@
                 a.server_id = #{serverId}
             </if>
             <if test="nickname != null and nickname != ''">
-                and a.name like CONCAT('%',#{nickname},'%')
+                AND a.name LIKE CONCAT('%',#{nickname},'%')
             </if>
             <if test="start != null and end != null">
-                AND b.create_time >= #{start} and b.create_time <![CDATA[ <= ]]> #{end}
+                AND b.create_time >= #{start} AND b.create_time <![CDATA[ <= ]]> #{end}
             </if>
         </where>
     </select>
