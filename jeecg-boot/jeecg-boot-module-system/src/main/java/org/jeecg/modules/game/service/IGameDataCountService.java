@@ -17,13 +17,14 @@ public interface IGameDataCountService {
     /**
      * 统计数据列表
      *
-     * @param gameChannel    渠道id
-     * @param gameServer     服务器id
-     * @param rangeDateBegin 开始日期
-     * @param rangeDateEnd   结束日期
+     * @param gameChannel     渠道id
+     * @param gameServer      服务器id
+     * @param rangeDateBegin  开始日期
+     * @param rangeDateEnd    结束日期
+     * @param isOpenDateCount
      * @return 统计列表
      */
-    List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
     /**
      * 按照日期统计每日数据
@@ -44,7 +45,7 @@ public interface IGameDataCountService {
      * @param rangeDateEnd
      * @return
      */
-    List<GameStatRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
     /**
      * ltv 统计
@@ -55,7 +56,7 @@ public interface IGameDataCountService {
      * @param rangeDateEnd
      * @return
      */
-    List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
 
     /**

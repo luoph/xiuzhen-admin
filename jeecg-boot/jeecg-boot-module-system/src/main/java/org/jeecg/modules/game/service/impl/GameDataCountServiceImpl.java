@@ -86,7 +86,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private String logTable;
 
     @Override
-    public List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+    public List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount) {
         Map<String, GameStatDaily> map = dailyCountMap();
         List<GameStatDaily> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
@@ -96,9 +96,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            if (DateUtils.isSameDay(DateUtils.parseDate(dateOnly), gameServer.getOpenTime())) {
-                continue;
+            if (!isOpenDateCount) {
+                if (DateUtils.isSameDay(DateUtils.parseDate(dateOnly), gameServer.getOpenTime())) {
+                    continue;
+                }
             }
+
             String dailyCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             GameStatDaily gameDayDataCount = map.get(dailyCountKey);
             if (gameDayDataCount != null) {
@@ -172,17 +175,17 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
             GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
             String f = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATETIME_PATTERN);
-            List<GameStatDaily> gameDayDataCounts = queryDateRangeDataCount(gameChannel, gameServer, f, formatDate);
+            List<GameStatDaily> gameDayDataCounts = queryDateRangeDataCount(gameChannel, gameServer, f, formatDate, false);
             if (CollUtil.isNotEmpty(gameDayDataCounts)) {
                 gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
             }
 
-            List<GameStatRemain> gameDataRemains = queryDataRemainCount(gameChannel, gameServer, f, formatDate);
+            List<GameStatRemain> gameDataRemains = queryDataRemainCount(gameChannel, gameServer, f, formatDate, false);
             if (CollUtil.isNotEmpty(gameDataRemains)) {
                 gameDataRemainMapper.updateOrInsert(gameDataRemains);
             }
 
-            List<GameStatLtv> gameLtvCounts = queryDataLtvCount(gameChannel, gameServer, f, formatDate);
+            List<GameStatLtv> gameLtvCounts = queryDataLtvCount(gameChannel, gameServer, f, formatDate, false);
             if (CollUtil.isNotEmpty(gameLtvCounts)) {
                 gameLtvCountMapper.updateOrInsert(gameLtvCounts);
             }
@@ -209,7 +212,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
 
     @Override
-    public List<GameStatRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+    public List<GameStatRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount) {
         Map<String, GameStatRemain> map = remainCountMap();
         List<GameStatRemain> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
@@ -219,10 +222,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            if (DateUtils.isSameDay(DateUtils.parseDate(dateOnly), gameServer.getOpenTime())) {
-                continue;
+            if (!isOpenDateCount) {
+                if (DateUtils.isSameDay(DateUtils.parseDate(dateOnly), gameServer.getOpenTime())) {
+                    continue;
+                }
             }
-
             String remainCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             GameStatRemain dataRemain = map.get(remainCountKey);
             if (dataRemain != null) {
@@ -248,7 +252,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
 
     @Override
-    public List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+    public List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount) {
         Map<String, GameStatLtv> map = ltvCountMap();
         List<GameStatLtv> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
@@ -258,9 +262,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            if (DateUtils.isSameDay(DateUtils.parseDate(dateOnly), gameServer.getOpenTime())) {
-                continue;
+            if (!isOpenDateCount) {
+                if (DateUtils.isSameDay(DateUtils.parseDate(dateOnly), gameServer.getOpenTime())) {
+                    continue;
+                }
             }
+
             String ltvCountKey = dailyCountKey(gameChannel.getSimpleName(), gameServer.getId(), dateOnly);
             GameStatLtv ltvCount = map.get(ltvCountKey);
             if (ltvCount != null) {

@@ -99,7 +99,7 @@ public class GameDataCountController {
                     GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
-                    List<GameStatDaily> gameDayCounts = gameDataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+                    List<GameStatDaily> gameDayCounts = gameDataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
                     allCount.addAll(gameDayCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
@@ -138,7 +138,7 @@ public class GameDataCountController {
                     GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
-                    List<GameStatRemain> gameLtvCounts = gameDataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+                    List<GameStatRemain> gameLtvCounts = gameDataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
                     allCount.addAll(gameLtvCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
@@ -178,7 +178,7 @@ public class GameDataCountController {
                     GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
-                    List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+                    List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
                     allCount.addAll(gameLtvCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
@@ -205,13 +205,13 @@ public class GameDataCountController {
             return Result.error(responseCode.getDesc());
         }
         if (type == 1) {
-            List<GameStatDaily> gameDayDataCounts = gameDataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+            List<GameStatDaily> gameDayDataCounts = gameDataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, true);
             page.setRecords(gameDayDataCounts).setTotal(gameDayDataCounts.size());
         } else if (type == 2) {
-            List<GameStatRemain> gameDataRemains = gameDataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+            List<GameStatRemain> gameDataRemains = gameDataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, true);
             page.setRecords(gameDataRemains).setTotal(gameDataRemains.size());
         } else {
-            List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+            List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, true);
             page.setRecords(gameLtvCounts).setTotal(gameLtvCounts.size());
         }
         return Result.ok(page);
