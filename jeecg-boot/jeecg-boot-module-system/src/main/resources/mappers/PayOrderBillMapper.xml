@@ -55,13 +55,17 @@
 
     <select id="queryPayOrderList" resultMap="BaseResultMap">
         SELECT
-        (SELECT COUNT(DISTINCT(player_id)) FROM game_order WHERE product_id = #{goodsId}) pay_num_sum,
+        (SELECT COUNT(DISTINCT(player_id)) FROM game_order WHERE product_id = #{goodsId} AND order_status
+        > 0) pay_num_sum,
         (SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId}) pay_count,
-        ((SELECT COUNT(DISTINCT(player_id)) FROM game_order WHERE product_id = #{goodsId}) / #{dau}) pay_num_sum_rate,
-        ((SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId}) * order_amount) pay_amount_sum,
+        ((SELECT COUNT(DISTINCT(player_id)) FROM game_order WHERE product_id = #{goodsId}) / #{dau})
+        pay_num_sum_rate,
+        ((SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId}) * order_amount)
+        pay_amount_sum,
         order_amount,
         SUM(pay_amount) consume_rank,
-        SUM(pay_amount) * (SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId}) chalcedony
+        SUM(pay_amount) * (SELECT COUNT(player_id) FROM game_order WHERE product_id = #{goodsId})
+        chalcedony
         FROM game_order
         WHERE
         product_id = #{goodsId}
@@ -75,7 +79,7 @@
         </if>
     </select>
 
-    <select id="queryPayNumSum" resultType="Integer">
+    <select id="queryPayNumSum" resultType="java.lang.Integer">
         SELECT
         COUNT(DISTINCT(player_id))
         FROM game_order
