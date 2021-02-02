@@ -1,12 +1,15 @@
 <template>
-    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+             @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
+                                    placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1">
+                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]"
+                              initialValue="1">
                         <a-select-option :value="1">1-登录礼包</a-select-option>
                         <a-select-option :value="2">2-累计充值</a-select-option>
                         <a-select-option :value="3">3-节日兑换</a-select-option>
@@ -15,26 +18,31 @@
                         <a-select-option :value="6">6-灵气加成</a-select-option>
                         <a-select-option :value="7">7-节日掉落</a-select-option>
                         <a-select-option :value="8">8-节日烟花</a-select-option>
+                        <a-select-option :value="9">9-消费排行</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名" />
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)" class="banner-image" />
+                    <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)"
+                         class="banner-image" />
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.typeImage" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
+                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序"
+                                    style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="额外参数" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['extra', validatorRules.extra]" placeholder="请输入额外参数" />
                 </a-form-item>
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss"
+                                   v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss"
+                                   v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
                 </a-form-item>
             </a-form>
 
@@ -46,6 +54,7 @@
             <game-campaign-type-fall-list v-if="isEdit && model.type === 7" ref="fallList" />
             <game-campaign-type-fall-reward-list v-if="isEdit && model.type === 7" ref="rewardList" />
             <game-campaign-type-firework-list v-if="isEdit && model.type === 8" ref="fireworkList" />
+            <game-campaign-type-reduce-list v-if="isEdit && model.type === 9" ref="reduceList" />
         </a-spin>
     </a-modal>
 </template>
@@ -64,6 +73,7 @@ import GameCampaignTypeBuffList from "../GameCampaignTypeBuffList";
 import GameCampaignTypeFallList from "../GameCampaignTypeFallList";
 import GameCampaignTypeFallRewardList from "../GameCampaignTypeFallRewardList";
 import GameCampaignTypeFireworkList from "../GameCampaignTypeFireworkList";
+import GameCampaignTypeReduceList from "@views/game/GameCampaignTypeReduceList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -77,7 +87,8 @@ export default {
         GameCampaignTypeBuffList,
         GameCampaignTypeFallList,
         GameCampaignTypeFallRewardList,
-        GameCampaignTypeFireworkList
+        GameCampaignTypeFireworkList,
+        GameCampaignTypeReduceList
     },
     data() {
         return {
@@ -111,7 +122,8 @@ export default {
             }
         };
     },
-    created() {},
+    created() {
+    },
     methods: {
         add(record) {
             this.edit(record);
@@ -148,6 +160,9 @@ export default {
                     }
                     if (this.$refs.fireworkList) {
                         this.$refs.fireworkList.edit(record);
+                    }
+                    if(this.$refs.reduceList){
+                        this.$refs.reduceList.edit(record);
                     }
                 }
 
@@ -214,7 +229,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 .banner-image {
     width: auto;

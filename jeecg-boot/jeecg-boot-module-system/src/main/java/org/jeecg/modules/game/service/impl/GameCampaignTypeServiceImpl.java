@@ -54,6 +54,9 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignTypeFireworkService campaignTypeFireworkService;
 
+    @Autowired
+    private IGameCampaignTypeReduceService gameCampaignTypeReduceService;
+
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
@@ -122,6 +125,14 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     break;
                 }
 
+                case REDUCE_RANK: {
+                    Wrapper<GameCampaignTypeReduce> detailQuery = Wrappers.<GameCampaignTypeReduce>lambdaQuery()
+                            .eq(GameCampaignTypeReduce::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeReduce::getTypeId, model.getId());
+                    model.setDetails(gameCampaignTypeReduceService.list(detailQuery));
+                    break;
+                }
+
                 default:
                     break;
             }
@@ -158,7 +169,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                 case BUFF_PRACTICE:
                     handleBuffTab(model, detailList);
                     break;
-
                 default:
                     break;
             }

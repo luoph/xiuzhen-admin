@@ -24,6 +24,7 @@ public enum CampaignFestivalType {
     FALL("节日掉落", 7, GameCampaignTypeFall.class, GameCampaignTypeBuffVO.class),
     //    FALL_REWARD("节日掉落奖励", 7, GameCampaignTypeFallReward.class, GameCampaignTypeBuffVO.class),
     FIREWORK("烟火", 8, GameCampaignTypeFirework.class, GameCampaignTypeFireworkVO.class),
+    REDUCE_RANK("消耗排行", 9, GameCampaignTypeReduce.class, GameCampaignTypeReduceVO.class),
     ;
 
     private final String name;
