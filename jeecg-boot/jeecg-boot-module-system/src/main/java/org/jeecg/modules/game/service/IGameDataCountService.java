@@ -56,7 +56,7 @@ public interface IGameDataCountService {
      * @param rangeDateEnd
      * @return
      */
-    List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
+    List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
 
     /**

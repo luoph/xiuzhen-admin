@@ -178,7 +178,7 @@ public class GameDataCountController {
                     GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
-                    List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
+                    List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
                     allCount.addAll(gameLtvCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
@@ -205,13 +205,13 @@ public class GameDataCountController {
             return Result.error(responseCode.getDesc());
         }
         if (type == 1) {
-            List<GameStatDaily> gameDayDataCounts = gameDataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, true);
+            List<GameStatDaily> gameDayDataCounts = gameDataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
             page.setRecords(gameDayDataCounts).setTotal(gameDayDataCounts.size());
         } else if (type == 2) {
-            List<GameStatRemain> gameDataRemains = gameDataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, true);
+            List<GameStatRemain> gameDataRemains = gameDataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
             page.setRecords(gameDataRemains).setTotal(gameDataRemains.size());
         } else {
-            List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, true);
+            List<GameStatLtv> gameLtvCounts = gameDataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
             page.setRecords(gameLtvCounts).setTotal(gameLtvCounts.size());
         }
         return Result.ok(page);
