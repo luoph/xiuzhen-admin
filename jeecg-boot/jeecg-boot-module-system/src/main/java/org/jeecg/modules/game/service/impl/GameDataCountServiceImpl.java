@@ -168,7 +168,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         for (GameChannelServer gameChannelServer : list) {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
             GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
-            if (DateUtils.daysBetween(date, gameServer.getOpenTime()) >= 0) {
+            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) >= 0) {
                 continue;
             }
 
@@ -201,6 +201,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         for (GameChannelServer gameChannelServer : list) {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
             GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
+            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) >= 0) {
+                continue;
+            }
             // 留存更新
             updateRemainTask(gameChannel, gameServer, formatDate);
             // ltv更新
