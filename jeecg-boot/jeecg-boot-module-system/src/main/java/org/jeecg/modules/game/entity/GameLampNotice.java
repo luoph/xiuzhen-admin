@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -65,6 +66,7 @@ public class GameLampNotice implements Serializable {
      * 状态 0-关闭 1-开启
      */
     @Excel(name = "状态", width = 15)
+    @TableField(value = "`status`")
     private java.lang.Integer status;
 
     /**
