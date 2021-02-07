@@ -308,6 +308,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             }
 
             for (int j = 1; j <= leftDays; j++) {
+                log.info("updateRemainTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
                 int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), logTable, j);
                 updateRemainCountField(gameRemainCount, j, remain);
             }
@@ -364,6 +365,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             }
 
             for (int j = 1; j <= leftDays; j++) {
+                log.info("updateLtvTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
                 double remain = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
                 updateLtvCountField(gameLtvCount, j, remain);
             }
