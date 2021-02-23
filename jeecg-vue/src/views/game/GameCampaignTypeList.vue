@@ -25,6 +25,8 @@
                                 <a-select-option :value="6">6-灵气加成</a-select-option>
                                 <a-select-option :value="7">7-节日掉落</a-select-option>
                                 <a-select-option :value="8">8-节日烟花</a-select-option>
+                                <a-select-option :value="9">9-消费排行</a-select-option>
+                                <a-select-option :value="10">10-限时仙剑</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -213,6 +215,8 @@ export default {
                             re = "8-节日烟花";
                         } else if (value === 9) {
                             re = "9-消费排行";
+                        }else if (value === 10) {
+                            re = "10-限时仙剑";
                         }
                         return re;
                     }
