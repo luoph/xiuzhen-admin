@@ -124,6 +124,11 @@ export default {
                     dataIndex: "monsterId"
                 },
                 {
+                    title: "推荐战力",
+                    align: "center",
+                    dataIndex: "combatPower"
+                },
+                {
                     title: "解锁关卡",
                     align: "center",
                     dataIndex: "unlockCheckpointId"

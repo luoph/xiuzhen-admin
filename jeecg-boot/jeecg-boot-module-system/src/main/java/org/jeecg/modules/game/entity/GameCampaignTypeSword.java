@@ -51,6 +51,13 @@ public class GameCampaignTypeSword extends GameCampaignTypeBase {
     @Excel(name = "奖励", width = 15)
     private java.lang.String reward;
 
+
+    /**
+     * 奖励
+     */
+    @Excel(name = "推荐战力", width = 15)
+    private java.lang.Long combatPower;
+
     /**
      * 关卡名
      */
