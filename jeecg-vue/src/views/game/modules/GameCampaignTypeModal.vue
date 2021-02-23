@@ -19,6 +19,7 @@
                         <a-select-option :value="7">7-节日掉落</a-select-option>
                         <a-select-option :value="8">8-节日烟花</a-select-option>
                         <a-select-option :value="9">9-消费排行</a-select-option>
+                        <a-select-option :value="10">10-限时仙剑</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -36,6 +37,18 @@
                 <a-form-item label="额外参数" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['extra', validatorRules.extra]" placeholder="请输入额外参数" />
                 </a-form-item>
+
+                <a-form-item label="资源类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="资源类型" v-decorator="['resType', validatorRules.resType]" initialValue="1">
+                        <a-select-option :value="1">骨骼</a-select-option>
+                        <a-select-option :value="2">序列帧</a-select-option>
+                        <a-select-option :value="3">图片</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="骨骼动画资源" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['animation', validatorRules.animation]" placeholder="请输入骨骼动画资源"></a-input>
+                </a-form-item>
+
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss"
                                    v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
@@ -55,6 +68,7 @@
             <game-campaign-type-fall-reward-list v-if="isEdit && model.type === 7" ref="rewardList" />
             <game-campaign-type-firework-list v-if="isEdit && model.type === 8" ref="fireworkList" />
             <game-campaign-type-reduce-list v-if="isEdit && model.type === 9" ref="reduceList" />
+            <game-campaign-type-sword-list v-if="isEdit && model.type === 10" ref="swordList"/>
         </a-spin>
     </a-modal>
 </template>
@@ -74,6 +88,7 @@ import GameCampaignTypeFallList from "../GameCampaignTypeFallList";
 import GameCampaignTypeFallRewardList from "../GameCampaignTypeFallRewardList";
 import GameCampaignTypeFireworkList from "../GameCampaignTypeFireworkList";
 import GameCampaignTypeReduceList from "@views/game/GameCampaignTypeReduceList";
+import GameCampaignTypeSwordList from "@views/game/GameCampaignTypeSwordList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -88,7 +103,8 @@ export default {
         GameCampaignTypeFallList,
         GameCampaignTypeFallRewardList,
         GameCampaignTypeFireworkList,
-        GameCampaignTypeReduceList
+        GameCampaignTypeReduceList,
+        GameCampaignTypeSwordList,
     },
     data() {
         return {
@@ -113,8 +129,10 @@ export default {
                 typeImage: { rules: [{ required: true, message: "请输入活动类型图片!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 extra: { rules: [{ required: false, message: "请输入额外参数!" }] },
+                resType: { rules: [{ required: false, message: "请选择资源类型" }] },
+                animation: { rules: [{ required: false, message: "请输入资源类型!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
+                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
             },
             url: {
                 add: "game/gameCampaignType/add",
@@ -164,9 +182,12 @@ export default {
                     if(this.$refs.reduceList){
                         this.$refs.reduceList.edit(record);
                     }
+                    if(this.$refs.swordList){
+                        this.$refs.swordList.edit(record);
+                    }
                 }
 
-                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "extra", "startTime", "endTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "extra", "resType", "animation", "startTime", "endTime"));
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
                 this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
@@ -217,7 +238,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "extra", "startTime", "endTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "extra","resType", "animation",  "startTime", "endTime"));
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {

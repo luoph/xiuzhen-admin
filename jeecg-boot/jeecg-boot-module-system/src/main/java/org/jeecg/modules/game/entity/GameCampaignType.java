@@ -73,6 +73,19 @@ public class GameCampaignType extends BaseEntity {
     private String extra;
 
     /**
+     * 动画
+     */
+    @Excel(name = "动画", width = 15)
+    private String animation;
+
+
+    /**
+     * 资源格式: 1.骨骼, 2.序列帧, 3.图片
+     */
+    @Excel(name = "资源格式", width = 15)
+    private Integer resType;
+
+    /**
      * 开始时间
      */
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)

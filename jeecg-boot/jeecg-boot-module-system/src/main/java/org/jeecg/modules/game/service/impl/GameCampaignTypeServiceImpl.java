@@ -55,7 +55,11 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     private IGameCampaignTypeFireworkService campaignTypeFireworkService;
 
     @Autowired
-    private IGameCampaignTypeReduceService gameCampaignTypeReduceService;
+    private IGameCampaignTypeReduceService campaignTypeReduceService;
+
+    @Autowired
+    private IGameCampaignTypeSwordService campaignTypeSwordService;
+
 
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
@@ -129,7 +133,15 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     Wrapper<GameCampaignTypeReduce> detailQuery = Wrappers.<GameCampaignTypeReduce>lambdaQuery()
                             .eq(GameCampaignTypeReduce::getCampaignId, campaignId)
                             .eq(GameCampaignTypeReduce::getTypeId, model.getId());
-                    model.setDetails(gameCampaignTypeReduceService.list(detailQuery));
+                    model.setDetails(campaignTypeReduceService.list(detailQuery));
+                    break;
+                }
+
+                case LIMIT_TIME_SWORD: {
+                    Wrapper<GameCampaignTypeSword> detailQuery = Wrappers.<GameCampaignTypeSword>lambdaQuery()
+                            .eq(GameCampaignTypeSword::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeSword::getTypeId, model.getId());
+                    model.setDetails(campaignTypeSwordService.list(detailQuery));
                     break;
                 }
 
