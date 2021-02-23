@@ -35,6 +35,11 @@ public class GameCampaignTypeSwordVO {
     private Integer monsterId;
 
     /**
+     * 推荐战力
+     */
+    @ExcelProperty("推荐战力")
+    private java.lang.Long combatPower;
+    /**
      * 解锁关卡
      */
     @ExcelProperty("解锁关卡")

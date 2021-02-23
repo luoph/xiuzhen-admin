@@ -20,6 +20,10 @@
                     <a-input-number v-decorator="['monsterId', validatorRules.monsterId]" placeholder="请输入怪物id"
                                     style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="推荐战力" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['monsterId', validatorRules.combatPower]" placeholder="请输入怪物id"
+                                    style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="解锁关卡" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['unlockCheckpointId', validatorRules.unlockCheckpointId]"
                                     placeholder="请输入解锁关卡" style="width: 100%" />
@@ -28,7 +32,8 @@
                     <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入奖励" />
                 </a-form-item>
                 <a-form-item label="关卡名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['checkpointName',validatorRules.checkpointName]" placeholder="请输入关卡名"></a-input>
+                    <a-input v-decorator="['checkpointName',validatorRules.checkpointName]"
+                             placeholder="请输入关卡名"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -68,6 +73,7 @@ export default {
                 typeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 checkpointId: { rules: [{ required: true, message: "请输入关卡ID!" }] },
                 monsterId: { rules: [{ required: true, message: "请输入怪物ID!" }] },
+                combatPower: { rules: [{ required: true, message: "请输入推荐战力!" }] },
                 unlockCheckpointId: { rules: [{ required: true, message: "请输入解锁关卡!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励!" }] },
                 checkpointName: { rules: [{ required: true, message: "请输入关卡名!" }] }
@@ -92,7 +98,7 @@ export default {
             console.log("GameCampaignTypeSwordModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "checkpointId", "monsterId", "unlockCheckpointId", "reward", "checkpointName"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "checkpointId", "monsterId", "combatPower", "unlockCheckpointId", "reward", "checkpointName"));
             });
         },
         close() {
@@ -136,7 +142,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "checkpointId", "monsterId", "unlockCheckpointId", "reward", "checkpointName"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "checkpointId", "monsterId", "combatPower", "unlockCheckpointId", "reward", "checkpointName"));
         }
     }
 };
