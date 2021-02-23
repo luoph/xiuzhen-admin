@@ -6,7 +6,8 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader"
+                      :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入活动配置</a-button>
             </a-upload>
             <!-- <a-button type="primary" icon="download" @click="handleExportXls('节日活动页签配置')">导出</a-button> -->
@@ -34,14 +35,16 @@
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+                    <a-button v-else :ghost="true" type="primary" icon="download" size="small"
+                              @click="uploadFile(text)"> 下载
+                    </a-button>
                 </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+                        <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -129,6 +132,10 @@ export default {
                             text = "7-节日掉落";
                         } else if (value === 8) {
                             text = "8-节日烟花";
+                        } else if (value === 9) {
+                            text = "9-消费排行";
+                        } else if (value === 10) {
+                            text = "10-限时仙剑";
                         }
                         return text;
                     }
@@ -183,7 +190,8 @@ export default {
     },
     computed: {},
     methods: {
-        initDictConfig() {},
+        initDictConfig() {
+        },
         loadData(arg) {
             if (!this.model.id) {
                 return;
@@ -246,6 +254,7 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+
 .list-image {
     width: 100%;
     height: 100px;
