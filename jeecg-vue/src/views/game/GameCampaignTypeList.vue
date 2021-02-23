@@ -215,7 +215,7 @@ export default {
                             re = "8-节日烟花";
                         } else if (value === 9) {
                             re = "9-消费排行";
-                        }else if (value === 10) {
+                        } else if (value === 10) {
                             re = "10-限时仙剑";
                         }
                         return re;
