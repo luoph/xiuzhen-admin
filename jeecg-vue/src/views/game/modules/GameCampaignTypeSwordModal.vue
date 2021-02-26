@@ -21,7 +21,7 @@
                                     style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="推荐战力" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['combatPower', validatorRules.combatPower]" placeholder="请输入怪物id"
+                    <a-input-number v-decorator="['combatPower', validatorRules.combatPower]" placeholder="请输入推荐战力"
                                     style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="解锁关卡" :labelCol="labelCol" :wrapperCol="wrapperCol">
