@@ -12,6 +12,7 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameUpgradeNotice;
 import org.jeecg.modules.game.service.IGameUpgradeNoticeService;
+import org.jeecg.modules.game.util.StrHtmlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,7 +67,7 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
     @AutoLog(value = "更新公告-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameUpgradeNotice model) {
-        model.setNoticeMsg(formatNoticeHtml(model.getNoticeMsg()));
+        model.setNoticeMsg(StrHtmlUtil.formatNoticeHtml(model.getNoticeMsg()));
         // 排序区服id
         List<String> serverIds = StrUtil.splitTrim(model.getServerIds() != null ? model.getServerIds() : "", ",");
         Collections.sort(serverIds);
@@ -84,7 +85,7 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
     @AutoLog(value = "更新公告-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameUpgradeNotice entity) {
-        entity.setNoticeMsg(formatNoticeHtml(entity.getNoticeMsg()));
+        entity.setNoticeMsg(StrHtmlUtil.formatNoticeHtml(entity.getNoticeMsg()));
         // 排序区服id
         List<String> serverIds = StrUtil.splitTrim(entity.getServerIds() != null ? entity.getServerIds() : "", ",");
         Collections.sort(serverIds);
@@ -192,18 +193,5 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
         }
         gameUpgradeNoticeService.syncServerAll(gameUpgradeNotice);
         return Result.ok("同步成功！");
-    }
-
-    private static String formatNoticeHtml(String input) {
-        input = input.replace("\n<p>", "<br />&nbsp;<br />");
-        input = input.replace("<br/>", "<br />");
-        input = input.replace("\r\n", "<br />");
-        input = input.replace("\n", "<br />");
-        input = input.replace("<p>", "");
-        input = input.replace("</p>", "");
-        // strong 标签无效
-        input = input.replace("<strong>", "");
-        input = input.replace("</strong>", "");
-        return input;
     }
 }

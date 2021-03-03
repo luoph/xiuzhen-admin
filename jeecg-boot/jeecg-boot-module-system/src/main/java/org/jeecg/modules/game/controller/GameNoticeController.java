@@ -14,6 +14,7 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameNotice;
 import org.jeecg.modules.game.model.NoticeConfig;
 import org.jeecg.modules.game.service.IGameNoticeService;
+import org.jeecg.modules.game.util.StrHtmlUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,18 +44,6 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @Autowired
     private IGameNoticeService gameNoticeService;
 
-    private static String formatNoticeHtml(String input) {
-        input = input.replace("\n<p>", "<br />&nbsp;<br />");
-        input = input.replace("<br/>", "<br />");
-        input = input.replace("\r\n", "<br />");
-        input = input.replace("\n", "<br />");
-        input = input.replace("<p>", "");
-        input = input.replace("</p>", "");
-        // strong 标签无效
-        input = input.replace("<strong>", "");
-        input = input.replace("</strong>", "");
-        return input;
-    }
 
     /**
      * 分页列表查询
@@ -88,7 +77,7 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @ApiOperation(value = "游戏公告-添加", notes = "游戏公告-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameNotice gameNotice) {
-        gameNotice.setContent(formatNoticeHtml(gameNotice.getContent()));
+        gameNotice.setContent(StrHtmlUtil.formatNoticeHtml(gameNotice.getContent()));
         gameNoticeService.save(gameNotice);
         return Result.ok("添加成功！");
     }
@@ -103,7 +92,7 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @ApiOperation(value = "游戏公告-编辑", notes = "游戏公告-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameNotice gameNotice) {
-        gameNotice.setContent(formatNoticeHtml(gameNotice.getContent()));
+        gameNotice.setContent(StrHtmlUtil.formatNoticeHtml(gameNotice.getContent()));
         gameNoticeService.updateById(gameNotice);
         return Result.ok("编辑成功!");
     }
