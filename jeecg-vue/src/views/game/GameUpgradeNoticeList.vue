@@ -3,14 +3,14 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    <a-col :md="12" :sm="16">
+                <a-row :gutter="20">
+                    <a-col :md="6" :sm="10">
                         <a-form-item label="标题">
                             <a-input placeholder="请输入标题" class="query-group-cust"
                                      v-model="queryParam.title"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="12" :sm="16">
+                    <a-col :md="6" :sm="10">
                         <a-form-item label="状态">
                             <a-select placeholder="请选择状态" v-model="queryParam.status" initialValue="0">
                                 <a-select-option :value="0">关闭</a-select-option>
@@ -113,8 +113,6 @@
                     <a @click="resumeJob(record)" v-if="record.status === 1">已启动</a>
                     <a @click="resumeJob(record)" v-if="record.status === 0">已关闭</a>
                     <a-divider type="vertical" />
-                    <a @click="handleEdit(record)">编辑</a>
-                    <a-divider type="vertical" />
 <!--                    <a-dropdown>-->
 <!--                        <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>-->
 <!--                        <a-menu slot="overlay">-->
@@ -168,11 +166,6 @@ export default {
                     dataIndex: "title"
                 },
                 {
-                    title: "正文",
-                    align: "center",
-                    dataIndex: "noticeMsg"
-                },
-                {
                     title: "奖励",
                     align: "center",
                     dataIndex: "reward"
@@ -194,12 +187,12 @@ export default {
                     dataIndex: "endTime"
                 },
                 {
-                    title: "createTime",
+                    title: "创建时间",
                     align: "center",
                     dataIndex: "createTime"
                 },
                 {
-                    title: "updateTime",
+                    title: "更新时间",
                     align: "center",
                     dataIndex: "updateTime"
                 },
@@ -250,7 +243,7 @@ export default {
                     if (res.success) {
                         that.$message.success("同步成功");
                     } else {
-                        that.$message.error("同步失败");
+                        that.$message.error(res.message);
                     }
                 })
                 .finally(() => {

@@ -20,7 +20,7 @@ export default {
     props: {
         value: {
             type: String,
-            default: ""
+            default: null
         }
     },
     components: {
@@ -85,7 +85,7 @@ export default {
             for (let index = 0; index < this.initValue.length; index++) {
                 for (const element of this.serverList) {
                     console.log(element);
-                    if (element.id == this.initValue[index]) {
+                    if (element.id === this.initValue[index]) {
                         this.defaultValue.push(this.initValue[index]);
                     }
                 }

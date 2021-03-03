@@ -13,10 +13,10 @@
                     <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励"></a-input>
                 </a-form-item>
                 <a-form-item label="服务器" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入服务器"></a-input>
+                    <a-input v-show="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入服务器"></a-input>
                     <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
                 </a-form-item>
-                <a-form-item label="状态">
+                <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="请选择状态" v-decorator="['status', validatorRules.status]" initialValue="0">
                         <a-select-option :value="0">关闭</a-select-option>
                         <a-select-option :value="1">开启</a-select-option>
@@ -97,16 +97,11 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.isEdit = this.model.id != null;
-            if (this.model.content) {
+            if (this.model.noticeMsg) {
                 this.contentHtml = this.model.noticeMsg;
             }
             this.$nextTick(() => {
-
                 this.form.setFieldsValue(pick(this.model, "title", "noticeMsg", "reward", "serverIds", "status", "startTime", "endTime"));
-
-                // 时间格式化
-                this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
-                this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
             });
         },
         close() {
@@ -128,14 +123,9 @@ export default {
                         httpUrl += this.url.edit;
                         method = "put";
                     }
-                    this.model.content = this.contentHtml;
+                    this.model.noticeMsg = this.contentHtml;
 
                     let formData = Object.assign(this.model, values);
-                    formData.autoOpen = this.isAutoOpen ? 1 : 0;
-                    // 时间格式化
-                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
-
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
