@@ -1,14 +1,10 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.Response;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameUpgradeNotice;
-import org.jeecg.modules.game.entity.OpenServiceCampaign;
 import org.jeecg.modules.game.mapper.GameUpgradeNoticeMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IGameUpgradeNoticeService;
@@ -28,7 +24,7 @@ import java.util.*;
 @Slf4j
 public class GameUpgradeNoticeServiceImpl extends ServiceImpl<GameUpgradeNoticeMapper, GameUpgradeNotice> implements IGameUpgradeNoticeService {
 
-    @Value("${app.campaign-update-url:/campaign/update}")
+    @Value("${app.campaign-update-url:/campaign/reload}")
     private String campaignUpdateUrl;
 
     @Autowired
