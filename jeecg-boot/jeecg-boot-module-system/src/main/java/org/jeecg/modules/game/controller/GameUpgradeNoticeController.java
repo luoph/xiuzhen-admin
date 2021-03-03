@@ -1,7 +1,6 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,7 +10,6 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.GameLampNotice;
 import org.jeecg.modules.game.entity.GameUpgradeNotice;
 import org.jeecg.modules.game.service.IGameUpgradeNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,9 +186,7 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
         if (gameUpgradeNotice == null) {
             return Result.error("消息不存在！");
         }
-        if (gameUpgradeNotice.getStatus() == 0) {
-            return Result.error("请先开启活动！");
-        }
+
         if (StringUtils.isBlank(gameUpgradeNotice.getServerIds())) {
             return Result.error("请配置活动游戏服务器！");
         }
