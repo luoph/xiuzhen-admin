@@ -78,18 +78,18 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         String channelName = gameChannelService.queryChannelNameById(channelId);
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<JSONObject>  jsonObjectList = remainStatisticsService.queryRemainStatistiscOfNewUserlListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
-        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfNewUserlListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if ("countDate".equals(s)){
-                jsonObject.put("countDate","汇总");
+            if ("countDate".equals(s)) {
+                jsonObject.put("countDate", "汇总");
                 continue;
             }
-            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)) {
                 continue;
             }
-            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+            jsonObject.put(s, jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
         }
         jsonObjectList2.add(jsonObject);
         jsonObjectList2.addAll(jsonObjectList);
@@ -132,18 +132,18 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<JSONObject>  jsonObjectList = remainStatisticsService.queryRemainStatistiscOfDownPaymentListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
-        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfDownPaymentListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if ("countDate".equals(s)){
-                jsonObject.put("countDate","汇总");
+            if ("countDate".equals(s)) {
+                jsonObject.put("countDate", "汇总");
                 continue;
             }
-            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)) {
                 continue;
             }
-            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+            jsonObject.put(s, jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
         }
         jsonObjectList2.add(jsonObject);
         jsonObjectList2.addAll(jsonObjectList);
@@ -164,38 +164,38 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
     public Result<?> free(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                           @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                           @RequestParam(name = "showColumn", defaultValue = "") String showColumn,
-                          @RequestParam(name = "days", defaultValue = "0") int days,
+                          @RequestParam(name = "days", defaultValue = "1") int days,
                           @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                           @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-    ) throws Exception{
+    ) throws Exception {
         if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
         //时间相关参数校验和转换
-        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        Date[] dateParamValid = ParamValidUtil.convertDateParam(rangeDateBegin, rangeDateEnd, days);
         if (null != dateParamValid) {
-            rangeDateEnd = dateParamValid[1];
-            rangeDateBegin = dateParamValid[0];
-        }else{
+            rangeDateEnd = DateUtils.formatDate(dateParamValid[1], "YYYY-MM-DD");
+            rangeDateBegin = DateUtils.formatDate(dateParamValid[0], "YYYY-MM-DD");
+        } else {
             return Result.error("请选择日期！");
         }
         String channelName = gameChannelService.queryChannelNameById(channelId);
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<JSONObject>  jsonObjectList = remainStatisticsService.queryRemainStatistiscOfFreeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
-        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfFreeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if ("countDate".equals(s)){
-                jsonObject.put("countDate","汇总");
+            if ("countDate".equals(s)) {
+                jsonObject.put("countDate", "汇总");
                 continue;
             }
-            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)) {
                 continue;
             }
-            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+            jsonObject.put(s, jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
         }
         jsonObjectList2.add(jsonObject);
         jsonObjectList2.addAll(jsonObjectList);
@@ -227,34 +227,31 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             return Result.error("请选择服务器!");
         }
         //时间相关参数校验和转换
-        String[] dateParamValid = ParamValidUtil.dateParamValid(rangeDateBegin, rangeDateEnd, days);
+        Date[] dateParamValid = ParamValidUtil.convertDateParam(rangeDateBegin, rangeDateEnd, days);
         if (null != dateParamValid) {
-            rangeDateEnd = dateParamValid[1];
-            rangeDateBegin = dateParamValid[0];
-        }else{
+            rangeDateEnd = DateUtils.formatDate(dateParamValid[1], "YYYY-MM-DD");
+            rangeDateBegin = DateUtils.formatDate(dateParamValid[0], "YYYY-MM-DD");
+        } else {
             return Result.error("请选择日期！");
         }
 
-        if (!rangeDateBegin.equals(rangeDateEnd)) {
-            return Result.error("请选择同一天的时间");
-        }
         String channelName = gameChannelService.queryChannelNameById(channelId);
 
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<JSONObject>  jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn, grade);
+        List<JSONObject> jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn, grade);
         List<JSONObject> jsonObjectList = jsonObjectList1.stream().sorted(Comparator.comparingInt(s -> Integer.parseInt(s.getString("countDate").split("-")[0]))).collect(Collectors.toList());
-        List<JSONObject>  jsonObjectList2 = new ArrayList<>();
+        List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
-            if ("countDate".equals(s)){
-                jsonObject.put("countDate","汇总");
+            if ("countDate".equals(s)) {
+                jsonObject.put("countDate", "汇总");
                 continue;
             }
-            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)){
+            if ("channel".equals(s) || "serverId".equals(s) || "userJsonArray".equals(s)) {
                 continue;
             }
-            jsonObject.put(s,jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
+            jsonObject.put(s, jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
         }
         jsonObjectList2.add(jsonObject);
         jsonObjectList2.addAll(jsonObjectList);

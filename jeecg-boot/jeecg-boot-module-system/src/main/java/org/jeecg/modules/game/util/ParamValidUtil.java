@@ -62,7 +62,7 @@ public final class ParamValidUtil {
 
     @Deprecated
     public static String[] dateParamValid(String rangeDateBegin, String rangeDateEnd, int days) {
-        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
+        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd)) {
             if (0 == days) {
                 return null;
             } else {
