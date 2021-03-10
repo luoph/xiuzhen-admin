@@ -45,7 +45,7 @@
                                     placeholder="请输入幸运奖池概率" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="概率公示" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['probabilityPublicity']" rows="4" placeholder="请输入概率公示" />
+                    <a-textarea v-decorator="['probabilityPublicity']" rows="4" placeholder='概率公示:[{"tag":"飞剑","pro":"1.5%"}]' />
                 </a-form-item>
                 <a-form-item label="玩法规则" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['rule']" rows="4" placeholder="请输入玩法规则" />
@@ -55,22 +55,22 @@
                              placeholder="请输入普通奖池"></a-input>
                 </a-form-item>
                 <a-form-item label="幸运奖池" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['luckyPool', validatorRules.luckyPool]" placeholder="请输入幸运奖池"></a-input>
+                    <a-input v-decorator="['luckyPool', validatorRules.luckyPool]" placeholder="幸运奖池:[1001,1002]"></a-input>
                 </a-form-item>
                 <a-form-item label="幸运奖池掉落" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['luckyPoolItem']" rows="4" placeholder="请输入幸运奖池掉落" />
+                    <a-textarea v-decorator="['luckyPoolItem']" rows="4" placeholder='幸运奖池掉落:[{"rewardId":1001,"itemId":1001,"fallNum":100,"weight":100}]' />
                 </a-form-item>
                 <a-form-item label="普通奖池掉落" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['ordinaryPoolItem']" rows="4" placeholder="请输入普通奖池掉落" />
+                    <a-textarea v-decorator="['ordinaryPoolItem']" rows="4" placeholder='普通奖池掉落:[{"rewardId":1001,"itemId":1001,"fallNum":100,"weight":100}]' />
                 </a-form-item>
                 <a-form-item label="大奖动画" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['rewardAnim', validatorRules.rewardAnim]" placeholder="请输入大奖动画"></a-input>
+                    <a-input v-decorator="['rewardAnim', validatorRules.rewardAnim]" placeholder='动画:{"name": "pet_019", "offsetY": 440, "offsetX": 400, "scale": 0.6 }'></a-input>
                 </a-form-item>
                 <a-form-item label="普通奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['showOrdinaryReward']" rows="4" placeholder="请输入普通奖励" />
+                    <a-textarea v-decorator="['showOrdinaryReward']" rows="4" placeholder='普通奖励:[{"itemId":1001,"num":1001}]' />
                 </a-form-item>
                 <a-form-item label="幸运奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['showLuckyReward']" rows="4" placeholder="请输入幸运奖励" />
+                    <a-textarea v-decorator="['showLuckyReward']" rows="4" placeholder='幸运奖励:[{"itemId":1001,"num":1001}]' />
                 </a-form-item>
             </a-form>
         </a-spin>

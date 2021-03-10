@@ -41,7 +41,7 @@
                              placeholder="请输入限购条件"></a-input>
                 </a-form-item>
                 <a-form-item label="显示奖励内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['showReward', validatorRules.showReward]" placeholder="请输入显示奖励内容"></a-input>
+                    <a-input v-decorator="['showReward', validatorRules.showReward]" placeholder='奖励内容:[{"itemId":1001,"num":1001}]'></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
