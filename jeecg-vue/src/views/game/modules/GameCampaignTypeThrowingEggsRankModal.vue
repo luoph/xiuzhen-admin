@@ -1,22 +1,27 @@
 <template>
     <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+             @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+                <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
+                                    placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="子活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]"
+                                    placeholder="请输入子活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="排名序列" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排名序列" style="width: 100%" />
+                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排名序列"
+                                    style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="上榜下限数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" placeholder="请输入上榜下限数量" style="width: 100%" />
+                    <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" placeholder="请输入上榜下限数量"
+                                    style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="奖励内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['reward']" rows="4" placeholder='请输入奖励内容[{"itemId":1001,"num":100}]'/>
+                    <a-textarea v-decorator="['reward']" rows="4" placeholder='请输入奖励内容[{"itemId":1001,"num":100}]' />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -34,8 +39,7 @@ import pick from "lodash.pick";
 
 export default {
     name: "GameCampaignTypeThrowingEggsRankModal",
-    components: {
-    },
+    components: {},
     data() {
         return {
             form: this.$form.createForm(this),
@@ -58,7 +62,7 @@ export default {
                 typeId: { rules: [{ required: true, message: "请输入子活动id!" }] },
                 sort: { rules: [{ required: true, message: "请输入排名序列!" }] },
                 limitNum: { rules: [{ required: true, message: "请输入上榜下限数量!" }] },
-                reward: { rules: [{ required: true, message: "请输入奖励内容!" }] },
+                reward: { rules: [{ required: true, message: "请输入奖励内容!" }] }
             },
             url: {
                 add: "game/gameCampaignTypeThrowingEggsRank/add",
@@ -69,8 +73,8 @@ export default {
     created() {
     },
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
@@ -123,12 +127,13 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "campaignId", "typeId", "sort", "limitNum", "reward"));
-        },
+        }
     }
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {
