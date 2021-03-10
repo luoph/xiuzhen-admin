@@ -11,24 +11,31 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('game_campaign_type_reduce')">导出</a-button>
-            <!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
-            <!--                <a-button type="primary" icon="import">导入</a-button>-->
-            <!--            </a-upload>-->
-            <!--            <a-dropdown v-if="selectedRowKeys.length > 0">-->
-            <!--                <a-menu slot="overlay">-->
-            <!--                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>-->
-            <!--                </a-menu>-->
-            <!--                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>-->
-            <!--            </a-dropdown>-->
+<!--            <a-button type="primary" icon="download" @click="handleExportXls('节日砸蛋')">导出</a-button>-->
+<!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader"-->
+<!--                      :action="importExcelUrl" @change="handleImportExcel">-->
+<!--                <a-button type="primary" icon="import">导入</a-button>-->
+<!--            </a-upload>-->
+            <a-dropdown v-if="selectedRowKeys.length > 0">
+                <a-menu slot="overlay">
+                    <a-menu-item key="1" @click="batchDel">
+                        <a-icon type="delete" />
+                        删除
+                    </a-menu-item>
+                </a-menu>
+                <a-button style="margin-left: 8px"> 批量操作
+                    <a-icon type="down" />
+                </a-button>
+            </a-dropdown>
         </div>
 
         <!-- table区域-begin -->
         <div>
-            <!--            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">-->
-            <!--                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项-->
-            <!--                <a style="margin-left: 24px" @click="onClearSelected">清空</a>-->
-            <!--            </div>-->
+            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+                style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+            </div>
 
             <a-table
                 ref="table"
@@ -57,7 +64,14 @@
                               @click="uploadFile(text)"> 下载
                     </a-button>
                 </template>
-
+                <span slot="ordinaryPool" slot-scope="text, record">
+                    <a-tag v-if="!text" color="red">未设置</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                </span>
+                <span slot="luckyPool" slot-scope="text, record">
+                    <a-tag v-if="!text" color="red">未设置</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                </span>
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
@@ -75,25 +89,25 @@
             </a-table>
         </div>
 
-        <gameCampaignTypeReduce-modal ref="modalForm" @ok="modalFormOk"></gameCampaignTypeReduce-modal>
+        <gameCampaignTypeThrowingEggs-modal ref="modalForm" @ok="modalFormOk"></gameCampaignTypeThrowingEggs-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameCampaignTypeReduceModal from "./modules/GameCampaignTypeReduceModal";
-import { filterObj } from "@/utils/util";
+import GameCampaignTypeThrowingEggsModal from "./modules/GameCampaignTypeThrowingEggsModal";
 import { getAction } from "@api/manage";
+import { filterObj } from "@/utils/util";
 
 export default {
-    name: "GameCampaignTypeReduceList",
+    name: "GameCampaignTypeThrowingEggsList",
     mixins: [JeecgListMixin],
     components: {
-        GameCampaignTypeReduceModal
+        GameCampaignTypeThrowingEggsModal
     },
     data() {
         return {
-            description: "消费排行管理页面",
+            description: "节日砸蛋管理页面",
             // 表头
             columns: [
                 {
@@ -107,34 +121,78 @@ export default {
                     }
                 },
                 {
-                    title: "活动id",
+                    title: "砸蛋类型",
                     align: "center",
-                    dataIndex: "campaignId"
+                    dataIndex: "eggType",
+                    customRender:value=>{
+                        let text = "--";
+                        if(value === 1){
+                            text = "1-金蛋"
+                        }else if(value === 2){
+                            text = "2-铂金单"
+                        }else if(value === 3){
+                            text = "3-钻石蛋"
+                        }
+                        return text;
+                    }
                 },
                 {
-                    title: "页签id",
+                    title: "抽奖道具",
                     align: "center",
-                    dataIndex: "typeId"
+                    dataIndex: "costItemId"
                 },
                 {
-                    title: "排名序列",
+                    title: "幸运值上限",
                     align: "center",
-                    dataIndex: "sort"
+                    dataIndex: "limitLuckyValue"
                 },
                 {
-                    title: "消耗道具ID",
+                    title: "消耗道具数量",
                     align: "center",
-                    dataIndex: "reduceItemId"
+                    dataIndex: "costNum"
                 },
                 {
-                    title: "上榜下限数量",
+                    title: "抽奖积分最小值",
                     align: "center",
-                    dataIndex: "limitNum"
+                    dataIndex: "lotteryIntegralMin"
                 },
                 {
-                    title: "奖励内容",
+                    title: "抽奖积分最大值",
                     align: "center",
-                    dataIndex: "reward"
+                    dataIndex: "lotteryIntegralMax"
+                },
+                {
+                    title: "幸运奖池概率",
+                    align: "center",
+                    dataIndex: "luckyProbability"
+                },
+                {
+                    title: "普通奖池",
+                    align: "center",
+                    dataIndex: "ordinaryPool",
+                    scopedSlots: { customRender: "ordinaryPool" }
+                },
+                {
+                    title: "幸运奖池",
+                    align: "center",
+                    dataIndex: "luckyPool",
+                    scopedSlots: { customRender: "luckyPool" }
+                },
+                {
+                    title: "创建时间",
+                    align: "center",
+                    dataIndex: "createTime",
+                    customRender: function(text) {
+                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                    }
+                },
+                {
+                    title: "更新时间",
+                    align: "center",
+                    dataIndex: "updateTime",
+                    customRender: function(text) {
+                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                    }
                 },
                 {
                     title: "操作",
@@ -144,11 +202,11 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameCampaignTypeReduce/list",
-                delete: "game/gameCampaignTypeReduce/delete",
-                deleteBatch: "game/gameCampaignTypeReduce/deleteBatch",
-                exportXlsUrl: "game/gameCampaignTypeReduce/exportXls",
-                importExcelUrl: "game/gameCampaignTypeReduce/importExcel"
+                list: "game/gameCampaignTypeThrowingEggs/list",
+                delete: "game/gameCampaignTypeThrowingEggs/delete",
+                deleteBatch: "game/gameCampaignTypeThrowingEggs/deleteBatch",
+                exportXlsUrl: "game/gameCampaignTypeThrowingEggs/exportXls",
+                importExcelUrl: "game/gameCampaignTypeThrowingEggs/importExcel"
             },
             dictOptions: {}
         };
@@ -196,7 +254,7 @@ export default {
         },
         handleAdd() {
             this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
-            this.$refs.modalForm.title = "新增消费活动配置";
+            this.$refs.modalForm.title = "新增砸蛋活动配置";
         },
         getQueryParams() {
             const param = Object.assign({}, this.queryParam);
