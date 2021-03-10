@@ -108,6 +108,7 @@ export default {
     data() {
         return {
             description: "节日砸蛋管理页面",
+            model: {},
             // 表头
             columns: [
                 {

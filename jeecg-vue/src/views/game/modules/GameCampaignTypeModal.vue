@@ -151,7 +151,7 @@ export default {
                 animation: { rules: [{ required: false, message: "请输入资源类型!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
-                eggsIntegralGoods: { rules: [{ required: type === 11, message: "该活动需要对应的商品" }] }
+                eggsIntegralGoods: { rules: [{ required: this.type === 11, message: "该活动需要对应的商品" }] }
             },
             url: {
                 add: "game/gameCampaignType/add",

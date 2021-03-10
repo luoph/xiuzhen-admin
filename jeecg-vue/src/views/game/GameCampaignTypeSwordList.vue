@@ -91,6 +91,7 @@ export default {
     data() {
         return {
             description: "限时仙剑管理页面",
+            model: {},
             // 表头
             columns: [
                 {
