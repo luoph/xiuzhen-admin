@@ -21,12 +21,12 @@
                     <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
                 </a-form-item>
                 <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-col :md="8" :sm="8">
+                    <a-form-item>
                         <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
-                    </a-col>
-                    <a-col :md="8" :sm="8">
+                    </a-form-item>
+                    <a-form-item>
                         <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
-                    </a-col>
+                    </a-form-item>
                 </a-form-item>
                 <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" style="icon-image" />

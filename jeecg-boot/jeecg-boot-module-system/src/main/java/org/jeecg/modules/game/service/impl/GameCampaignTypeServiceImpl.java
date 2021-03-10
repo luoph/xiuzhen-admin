@@ -3,6 +3,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,14 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignTypeSwordService campaignTypeSwordService;
 
+    @Autowired
+    private IGameCampaignTypeThrowingEggsService campaignTypeThrowingEggsService;
+
+    @Autowired
+    private IGameCampaignTypeThrowingEggsRankService campaignTypeThrowingEggsRankService;
+
+    @Autowired
+    private IGameCampaignTypeThrowingEggsGiftService campaignTypeThrowingEggsGiftService;
 
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
@@ -145,6 +154,29 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     break;
                 }
 
+                case THROWING_EGGS: {
+                    Wrapper<GameCampaignTypeThrowingEggs> detailQuery = Wrappers.<GameCampaignTypeThrowingEggs>lambdaQuery()
+                            .eq(GameCampaignTypeThrowingEggs::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeThrowingEggs::getTypeId, model.getId());
+                    model.setDetails(campaignTypeThrowingEggsService.list(detailQuery));
+                    break;
+                }
+
+                case THROWING_EGGS_RANK: {
+                    Wrapper<GameCampaignTypeThrowingEggsRank> detailQuery = Wrappers.<GameCampaignTypeThrowingEggsRank>lambdaQuery()
+                            .eq(GameCampaignTypeThrowingEggsRank::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeThrowingEggsRank::getTypeId, model.getId());
+                    model.setDetails(campaignTypeThrowingEggsRankService.list(detailQuery));
+                    break;
+                }
+                
+                case THROWING_EGGS_GIFT: {
+                    Wrapper<GameCampaignTypeThrowingEggsGift> detailQuery = Wrappers.<GameCampaignTypeThrowingEggsGift>lambdaQuery()
+                            .eq(GameCampaignTypeThrowingEggsGift::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeThrowingEggsGift::getTypeId, model.getId());
+                    model.setDetails(campaignTypeThrowingEggsGiftService.list(detailQuery));
+                    break;
+                }
                 default:
                     break;
             }

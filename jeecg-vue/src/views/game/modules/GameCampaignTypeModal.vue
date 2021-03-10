@@ -20,6 +20,9 @@
                         <a-select-option :value="8">8-节日烟花</a-select-option>
                         <a-select-option :value="9">9-消费排行</a-select-option>
                         <a-select-option :value="10">10-限时仙剑</a-select-option>
+                        <a-select-option :value="11">11-节日砸蛋</a-select-option>
+                        <a-select-option :value="12">12-砸蛋排行</a-select-option>
+                        <a-select-option :value="13">13-砸蛋礼包</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -45,8 +48,14 @@
                         <a-select-option :value="3">图片</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="骨骼动画资源" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['animation', validatorRules.animation]" placeholder="请输入骨骼动画资源"></a-input>
+                <a-form-item label="骨骼动画" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['animation', validatorRules.animation]"
+                             placeholder="骨骼动画"></a-input>
+                </a-form-item>
+
+                <a-form-item label="砸蛋积分商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
+                                placeholder='活动类型"11-砸蛋" 时必填,格式如下:"[{"goodsId":1,"itemId":1001,"integral":1,"stack":1,"num":100}]"' />
                 </a-form-item>
 
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -68,7 +77,10 @@
             <game-campaign-type-fall-reward-list v-if="isEdit && model.type === 7" ref="rewardList" />
             <game-campaign-type-firework-list v-if="isEdit && model.type === 8" ref="fireworkList" />
             <game-campaign-type-reduce-list v-if="isEdit && model.type === 9" ref="reduceList" />
-            <game-campaign-type-sword-list v-if="isEdit && model.type === 10" ref="swordList"/>
+            <game-campaign-type-sword-list v-if="isEdit && model.type === 10" ref="swordList" />
+            <game-campaign-type-throwing-eggs-list v-if="isEdit && model.type === 11" ref="throwingEggsList" />
+            <game-campaign-type-throwing-eggs-rank-list v-if="isEdit && model.type === 12" ref="throwingEggsRankList" />
+            <game-campaign-type-throwing-eggs-gift-list v-if="isEdit && model.type === 13" ref="throwingEggsGiftList" />
         </a-spin>
     </a-modal>
 </template>
@@ -89,6 +101,9 @@ import GameCampaignTypeFallRewardList from "../GameCampaignTypeFallRewardList";
 import GameCampaignTypeFireworkList from "../GameCampaignTypeFireworkList";
 import GameCampaignTypeReduceList from "@views/game/GameCampaignTypeReduceList";
 import GameCampaignTypeSwordList from "@views/game/GameCampaignTypeSwordList";
+import GameCampaignTypeThrowingEggsList from "@views/game/GameCampaignTypeThrowingEggsList";
+import GameCampaignTypeThrowingEggsRankList from "@views/game/GameCampaignTypeThrowingEggsRankList";
+import GameCampaignTypeThrowingEggsGiftList from "@views/game/GameCampaignTypeThrowingEggsGiftList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -105,6 +120,9 @@ export default {
         GameCampaignTypeFireworkList,
         GameCampaignTypeReduceList,
         GameCampaignTypeSwordList,
+        GameCampaignTypeThrowingEggsList,
+        GameCampaignTypeThrowingEggsRankList,
+        GameCampaignTypeThrowingEggsGiftList
     },
     data() {
         return {
@@ -133,6 +151,7 @@ export default {
                 animation: { rules: [{ required: false, message: "请输入资源类型!" }] },
                 startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
                 endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
+                eggsIntegralGoods: { rules: [{ required: type === 11, message: "该活动需要对应的商品" }] }
             },
             url: {
                 add: "game/gameCampaignType/add",
@@ -179,15 +198,24 @@ export default {
                     if (this.$refs.fireworkList) {
                         this.$refs.fireworkList.edit(record);
                     }
-                    if(this.$refs.reduceList){
+                    if (this.$refs.reduceList) {
                         this.$refs.reduceList.edit(record);
                     }
-                    if(this.$refs.swordList){
+                    if (this.$refs.swordList) {
                         this.$refs.swordList.edit(record);
+                    }
+                    if (this.$refs.throwingEggsList) {
+                        this.$refs.throwingEggsList.edit(record);
+                    }
+                    if (this.$refs.throwingEggsRankList) {
+                        this.$refs.throwingEggsRankList.edit(record);
+                    }
+                    if (this.$refs.throwingEggsGiftList) {
+                        this.$refs.throwingEggsGiftList.edit(record);
                     }
                 }
 
-                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "extra", "resType", "animation", "startTime", "endTime"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "extra", "resType", "animation", "eggsIntegralGoods", "startTime", "endTime"));
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
                 this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
@@ -238,7 +266,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "extra","resType", "animation",  "startTime", "endTime"));
+            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "extra", "resType", "animation", "eggsIntegralGoods", "startTime", "endTime"));
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {
@@ -246,6 +274,26 @@ export default {
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
         }
+        // 自定义校验函数，要求输入的是一个正整数
+        // checkGoods() {
+        //     this.form.validateFields(eggsIntegralGoods => {
+        //         if (this.type === 11) {
+        //             if (value == null || value === "") {
+        //                 // 如果需要返回 error msg，就把它传给 `callback()`
+        //                 callback("请输入该活动必须的参数'砸蛋积分商品'");
+        //             } else {
+        //                 // 如果通过校验，调用无参数的 `callback()` 即可
+        //                 callback();
+        //             }
+        //         }
+        //     });
+        // },
+        // selectActivityType(e) {
+        //     this.checkNick = e.checked;
+        //     this.$nextTick(() => {
+        //         this.form.validateFields(["eggsIntegralGoods"], { force: true });
+        //     });
+        // }
     }
 };
 </script>

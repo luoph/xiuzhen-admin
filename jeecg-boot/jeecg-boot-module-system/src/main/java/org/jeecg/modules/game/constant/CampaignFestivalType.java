@@ -25,7 +25,12 @@ public enum CampaignFestivalType {
     //    FALL_REWARD("节日掉落奖励", 7, GameCampaignTypeFallReward.class, GameCampaignTypeBuffVO.class),
     FIREWORK("烟火", 8, GameCampaignTypeFirework.class, GameCampaignTypeFireworkVO.class),
     REDUCE_RANK("消耗排行", 9, GameCampaignTypeReduce.class, GameCampaignTypeReduceVO.class),
-    LIMIT_TIME_SWORD("限时仙剑", 10, GameCampaignTypeSword.class, GameCampaignTypeSwordVO.class);
+    LIMIT_TIME_SWORD("限时仙剑", 10, GameCampaignTypeSword.class, GameCampaignTypeSwordVO.class),
+    THROWING_EGGS("砸蛋", 11, GameCampaignTypeThrowingEggs.class, GameCampaignTypeThrowingEggsVO.class),
+    THROWING_EGGS_RANK("砸蛋榜", 12, GameCampaignTypeThrowingEggsRank.class, GameCampaignTypeThrowingEggsRankVO.class),
+    THROWING_EGGS_GIFT("砸蛋礼包", 13, GameCampaignTypeThrowingEggsGift.class, GameCampaignTypeThrowingEggsGiftVO.class),
+    // end
+    ;
 
     private final String name;
     private final int value;

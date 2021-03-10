@@ -86,6 +86,12 @@ public class GameCampaignType extends BaseEntity {
     private Integer resType;
 
     /**
+     * 活动类型-11 所需的商品列表
+     */
+    @Excel(name = "砸蛋商品",width = 15)
+    private String eggsIntegralGoods;
+
+    /**
      * 开始时间
      */
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)

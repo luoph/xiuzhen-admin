@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
@@ -90,6 +91,10 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     @AutoLog(value = "活动类型配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaignType gameCampaignType) {
+        String eggsIntegralGoods = gameCampaignType.getEggsIntegralGoods();
+        if (gameCampaignType.getType() == CampaignFestivalType.THROWING_EGGS.getValue() && StringUtils.isBlank(eggsIntegralGoods)) {
+            return Result.error("积分商品丢失!");
+        }
         gameCampaignTypeService.save(gameCampaignType);
         return Result.ok("添加成功！");
     }

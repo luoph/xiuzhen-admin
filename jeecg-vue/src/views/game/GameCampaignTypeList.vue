@@ -217,6 +217,12 @@ export default {
                             re = "9-消费排行";
                         } else if (value === 10) {
                             re = "10-限时仙剑";
+                        } else if (value === 11) {
+                            re = "11-砸蛋";
+                        } else if (value === 12) {
+                            re = "12-砸蛋榜单";
+                        } else if (value === 13) {
+                            re = "13-砸蛋礼包";
                         }
                         return re;
                     }
