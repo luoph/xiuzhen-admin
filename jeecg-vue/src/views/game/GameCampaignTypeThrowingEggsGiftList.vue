@@ -91,6 +91,7 @@ export default {
     data() {
         return {
             description: "砸蛋礼包管理页面",
+            model: {},
             // 表头
             columns: [
                 {

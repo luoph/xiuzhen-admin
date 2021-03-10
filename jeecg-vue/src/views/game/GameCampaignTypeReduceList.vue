@@ -94,6 +94,7 @@ export default {
     data() {
         return {
             description: "消费排行管理页面",
+            model: {},
             // 表头
             columns: [
                 {
