@@ -148,6 +148,11 @@ export default {
                     dataIndex: "limitLuckyValue"
                 },
                 {
+                    title: "砸蛋值",
+                    align: "center",
+                    dataIndex: "throwingEggsValue"
+                },
+                {
                     title: "消耗道具数量",
                     align: "center",
                     dataIndex: "costNum"

@@ -105,11 +105,6 @@ export default {
                     }
                 },
                 {
-                    title: "道具id",
-                    align: "center",
-                    dataIndex: "itemId"
-                },
-                {
                     title: "消耗道具",
                     align: "center",
                     dataIndex: "costItemId"

@@ -122,5 +122,8 @@ public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBase {
      */
     @Excel(name = "幸运奖励", width = 15)
     private java.lang.String showLuckyReward;
-    
+
+    @Excel(name = "砸蛋值", width = 15)
+    private java.lang.Integer throwingEggsValue;
+
 }
