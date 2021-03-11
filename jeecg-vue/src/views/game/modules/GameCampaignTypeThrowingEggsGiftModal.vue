@@ -37,7 +37,7 @@
                              placeholder="请输入限购条件"></a-input>
                 </a-form-item>
                 <a-form-item label="奖励内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['showReward', validatorRules.showReward]"
+                    <a-input v-decorator="['reward', validatorRules.reward]"
                              placeholder='奖励内容:[{"itemId":1001,"num":1001}]'></a-input>
                 </a-form-item>
             </a-form>
@@ -84,7 +84,7 @@ export default {
                 amount: {},
                 discount: {},
                 limitCondition: {},
-                showReward: { rules: [{ required: true, message: "请输入显示奖励内容!" }] }
+                reward: { rules: [{ required: true, message: "请输入奖励内容!" }] }
             },
             url: {
                 add: "game/gameCampaignTypeThrowingEggsGift/add",
