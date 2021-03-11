@@ -16,6 +16,10 @@
                     <a-input-number v-decorator="['costItemId', validatorRules.costItemId]" placeholder="请输入消耗道具"
                                     style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="礼包名" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['giftName', validatorRules.giftName]"
+                             placeholder="请输入礼包名"></a-input>
+                </a-form-item>
                 <a-form-item label="消耗道具数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['costNum', validatorRules.costNum]" placeholder="请输入消耗道具数量"
                                     style="width: 100%" />
@@ -84,7 +88,8 @@ export default {
                 amount: {},
                 discount: {},
                 limitCondition: {},
-                reward: { rules: [{ required: true, message: "请输入奖励内容!" }] }
+                reward: { rules: [{ required: true, message: "请输入奖励内容!" }] },
+                giftName: { rules: [{ required: true, message: "请输入奖励内容!" }] }
             },
             url: {
                 add: "game/gameCampaignTypeThrowingEggsGift/add",
@@ -104,7 +109,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward", "giftName"));
             });
         },
         close() {
@@ -148,7 +153,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward", "giftName"));
         }
     }
 };

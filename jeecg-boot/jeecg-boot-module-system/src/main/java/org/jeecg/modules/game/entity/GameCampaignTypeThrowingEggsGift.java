@@ -70,4 +70,6 @@ public class GameCampaignTypeThrowingEggsGift extends GameCampaignTypeBase {
     private java.lang.String reward;
 
 
+    @Excel(name = "礼包名", width = 15)
+    private java.lang.String giftName;
 }

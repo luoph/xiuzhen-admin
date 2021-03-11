@@ -115,6 +115,11 @@ export default {
                     dataIndex: "costNum"
                 },
                 {
+                    title: "礼包名",
+                    align: "center",
+                    dataIndex: "giftName"
+                },
+                {
                     title: "库存",
                     align: "center",
                     dataIndex: "stack"
