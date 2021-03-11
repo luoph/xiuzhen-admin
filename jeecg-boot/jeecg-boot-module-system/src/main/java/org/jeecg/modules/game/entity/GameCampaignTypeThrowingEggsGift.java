@@ -28,12 +28,6 @@ public class GameCampaignTypeThrowingEggsGift extends GameCampaignTypeBase {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 道具id
-     */
-    @Excel(name = "道具id", width = 15)
-    private java.lang.Integer itemId;
-
-    /**
      * 消耗道具
      */
     @Excel(name = "消耗道具", width = 15)
@@ -72,7 +66,8 @@ public class GameCampaignTypeThrowingEggsGift extends GameCampaignTypeBase {
     /**
      * 显示奖励内容
      */
-    @Excel(name = "显示奖励内容", width = 15)
-    private java.lang.String showReward;
+    @Excel(name = "奖励内容", width = 15)
+    private java.lang.String reward;
+
 
 }

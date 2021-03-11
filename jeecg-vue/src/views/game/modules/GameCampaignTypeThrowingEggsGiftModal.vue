@@ -12,10 +12,6 @@
                     <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]"
                                     placeholder="请输入子活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="道具id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['itemId', validatorRules.itemId]" placeholder="请输入道具id"
-                                    style="width: 100%" />
-                </a-form-item>
                 <a-form-item label="消耗道具" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['costItemId', validatorRules.costItemId]" placeholder="请输入消耗道具"
                                     style="width: 100%" />
@@ -40,8 +36,9 @@
                     <a-input v-decorator="['limitCondition', validatorRules.limitCondition]"
                              placeholder="请输入限购条件"></a-input>
                 </a-form-item>
-                <a-form-item label="显示奖励内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['showReward', validatorRules.showReward]" placeholder='奖励内容:[{"itemId":1001,"num":1001}]'></a-input>
+                <a-form-item label="奖励内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['showReward', validatorRules.showReward]"
+                             placeholder='奖励内容:[{"itemId":1001,"num":1001}]'></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -107,7 +104,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "itemId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "showReward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward"));
             });
         },
         close() {
@@ -151,7 +148,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "itemId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "showReward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward"));
         }
     }
 };

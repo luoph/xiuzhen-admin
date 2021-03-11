@@ -22,11 +22,6 @@ import java.io.Serializable;
 @Data
 public class GameCampaignTypeThrowingEggsGiftVO {
 
-    /**
-     * 道具id
-     */
-    @ExcelProperty("道具id")
-    private Integer itemId;
 
     /**
      * 消耗道具
@@ -67,7 +62,7 @@ public class GameCampaignTypeThrowingEggsGiftVO {
     /**
      * 显示奖励内容
      */
-    @ExcelProperty("显示奖励内容")
-    private String showReward;
+    @ExcelProperty("奖励内容")
+    private String reward;
 
 }
