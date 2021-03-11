@@ -65,4 +65,9 @@ public class GameCampaignTypeThrowingEggsGiftVO {
     @ExcelProperty("奖励内容")
     private String reward;
 
+
+    @ExcelProperty("礼包名")
+    private String giftName;
+
+
 }
