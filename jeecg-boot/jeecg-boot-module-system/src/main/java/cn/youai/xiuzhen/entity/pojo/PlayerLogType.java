@@ -20,6 +20,7 @@ public enum PlayerLogType {
     MAP_LEVEL(5, "冒险等级"),
     PRACTICE_YEAR(6, "修炼年数"),
     LINGSHAN_CHECKPOINT(7, "符文秘境-小灵山"),
+    PRACTICE_VALUE(8, "玩家修为"),
     CHANGE_COMBAT_POWER(9, "战力前后变化值"),
 
     // 100 以上是次数统计
@@ -27,6 +28,9 @@ public enum PlayerLogType {
     RECHARGE(102, "当天充值"),
     CONSUME_MONEY(103, "玉髓消耗"),
     EXPERIENCE(104, "阅历值"),
+
+    GAIN_RARE_STONE(105, "极品灵石获得"),
+    COST_RARE_STONE(106, "极品灵石消耗"),
 
     // 剧情关卡
     MAIN_STORY_LEVEL(110, "剧情小关卡"),
@@ -36,13 +40,19 @@ public enum PlayerLogType {
     ARENA_BATTLE(120, "福地夺宝/斗法-挑战"),
     TRAVEL_HILL(121, "上古遗迹（游历仙山）"),
     GHOST_WAR(122, "神魔战场"),
+    TEAM_BOSS(123, "组队BOSS/须弥幻境"),
+    MARRY_BOSS(124, "金兰副本"),
+    QUALIFYING(125, "谪仙台"),
 
     // 秘境
     MAP_EXPLORE(130, "仙兽秘境/冒险探索"),
     AUTO_EXPLORE(131, "神游次数"),
     GOD_ROAD(132, "丹药秘境（成仙路）"),
     TIER_MAP_EXPLORE(133, "仙器秘境"),
+    SPIRIT_STONE_MAP_EXPLORE(134, "灵石秘境"),
+    PRACTICE_MAP_EXPLORE(135, "修为秘境"),
     MATE_PRACTICE(136, "仙缘双休"),
+    WEAPON_MAP_EXPLORE(137, "法宝秘境"),
 
     // 封魔
     MAIN_STORY_BOSS(140, "北冥魔海"),
@@ -51,9 +61,25 @@ public enum PlayerLogType {
     WORLD_BOSS(143, "魔王入侵（世界boss）"),
     MATE_BOSS(144, "仙缘试炼"),
 
+    // 炼丹炼器
+    REFINE_DAN(150, "成功炼丹次数"),
+    REFINE_EQUIP(151, "成功炼器次数"),
+
+    // 秘境扫荡
+    SPIRIT_STONE_MAP_SWEEP(160, "灵石秘境扫荡"),
+    PRACTICE_MAP_SWEEP(161, "修为秘境扫荡"),
+    TIER_MAP_SWEEP(162, "仙器秘境扫荡"),
+    WEAPON_MAP_SWEEP(163, "法宝秘境扫荡"),
+
     // 礼包类型 value: 金额，param1: 礼包ID
     OPEN_SERVICE_RANK_PACK(1000, "开服排行礼包"),
     GIFT_PACK(1001, "特惠礼包"),
+
+    // 特权boss
+    IMMORTAL_HIGH(1010, "八荒天魔一键挑战"),
+    IMMORTAL_LOW(1011, "九天魔君一键挑战"),
+    MONTH_CARD_HIGH(1012, "至尊月卡一键挑战"),
+    MONTH_CARD_LOW(1013, "特惠月卡一键挑战"),
     ;
 
     /**

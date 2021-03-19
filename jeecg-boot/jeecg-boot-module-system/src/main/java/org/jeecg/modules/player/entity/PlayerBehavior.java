@@ -160,7 +160,7 @@ public class PlayerBehavior implements Serializable {
     @ExcelProperty("在线时长")
     @Excel(name = "在线时长", width = 15)
     private Long onlineTime;
-    
+
     /**
      * 上古遗迹
      */
@@ -269,6 +269,108 @@ public class PlayerBehavior implements Serializable {
     @ExcelProperty("仙缘试炼")
     @Excel(name = "仙缘试炼", width = 15)
     private Long mateBoss;
+
+
+    @ColumnWidth(15)
+    @ExcelProperty("玩家修为")
+    @Excel(name = "玩家修为", width = 15)
+    private Long practiceValue;
+
+
+    @ColumnWidth(15)
+    @ExcelProperty("极品灵石获得")
+    @Excel(name = "极品灵石获得", width = 15)
+    private Long gainRareStone;
+
+    @ColumnWidth(15)
+    @ExcelProperty("极品灵石消耗")
+    @Excel(name = "极品灵石消耗", width = 15)
+    private Long costRareStone;
+
+
+    @ColumnWidth(15)
+    @ExcelProperty("组队BOSS/须弥幻境")
+    @Excel(name = "组队BOSS/须弥幻境", width = 15)
+    private Long teamBoss;
+
+
+    @ColumnWidth(15)
+    @ExcelProperty("金兰副本")
+    @Excel(name = "金兰副本", width = 15)
+    private Long marryBoss;
+
+    @ColumnWidth(15)
+    @ExcelProperty("谪仙台")
+    @Excel(name = "谪仙台", width = 15)
+    private Long qualifying;
+
+
+    @ColumnWidth(15)
+    @ExcelProperty("灵石秘境")
+    @Excel(name = "灵石秘境", width = 15)
+    private Long spiritStoneMapExplore;
+
+
+    @ColumnWidth(15)
+    @ExcelProperty("修为秘境")
+    @Excel(name = "修为秘境", width = 15)
+    private Long practiceMapExplore;
+
+    @ColumnWidth(15)
+    @ExcelProperty("法宝秘境")
+    @Excel(name = "法宝秘境", width = 15)
+    private Long weaponMapExplore;
+
+    @ColumnWidth(15)
+    @ExcelProperty("八荒天魔一键挑战")
+    @Excel(name = "八荒天魔一键挑战", width = 15)
+    private long immortalHigh;
+
+    @ColumnWidth(15)
+    @ExcelProperty("九天魔君一键挑战")
+    @Excel(name = "九天魔君一键挑战", width = 15)
+    private long immortalLow;
+
+    @ColumnWidth(15)
+    @ExcelProperty("至尊月卡一键挑战")
+    @Excel(name = "至尊月卡一键挑战", width = 15)
+    private long monthCardHigh;
+
+    @ColumnWidth(15)
+    @ExcelProperty("特惠月卡一键挑战")
+    @Excel(name = "特惠月卡一键挑战", width = 15)
+    private long monthCardLow;
+
+    @ColumnWidth(15)
+    @ExcelProperty("成功炼丹次数")
+    @Excel(name = "成功炼丹次数", width = 15)
+    private long refineDan;
+
+    @ColumnWidth(15)
+    @ExcelProperty("成功炼器次数")
+    @Excel(name = "成功炼器次数", width = 15)
+    private long refineEquip;
+
+    @ColumnWidth(15)
+    @ExcelProperty("灵石秘境扫荡")
+    @Excel(name = "灵石秘境扫荡", width = 15)
+    private long spiritStoneMapSweep;
+
+    @ColumnWidth(15)
+    @ExcelProperty("修为秘境扫荡")
+    @Excel(name = "修为秘境扫荡", width = 15)
+    private long practiceMapSweep;
+
+    @ColumnWidth(15)
+    @ExcelProperty("仙器秘境扫荡")
+    @Excel(name = "仙器秘境扫荡", width = 15)
+    private long tierMapSweep;
+
+    @ColumnWidth(15)
+    @ExcelProperty("法宝秘境扫荡")
+    @Excel(name = "法宝秘境扫荡", width = 15)
+    private long weaponMapSweep;
+
     /**
      * 日期
      */
