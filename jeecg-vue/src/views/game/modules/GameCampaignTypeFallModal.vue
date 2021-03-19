@@ -17,10 +17,12 @@
                         <a-select-option :value="4">4-修为秘境</a-select-option>
                         <a-select-option :value="5">5-灵石秘境</a-select-option>
                         <a-select-option :value="6">6-北冥魔海</a-select-option>
-                        <a-select-option :value="7">7-不死魔巢</a-select-option>
+                        <a-select-option :value="7">7-不死魔巢/特权BOSS</a-select-option>
                         <a-select-option :value="8">8-蛇陵魔窟</a-select-option>
                         <a-select-option :value="9">9-魔王入侵</a-select-option>
                         <a-select-option :value="10">10-剧情挂机</a-select-option>
+                        <a-select-option :value="11">11-法宝秘境</a-select-option>
+                        <a-select-option :value="12">12-仙盟妖灵</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="奖励类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
