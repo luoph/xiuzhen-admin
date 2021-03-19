@@ -127,13 +127,17 @@ export default {
                         } else if (value === 6) {
                             text = "6-北冥魔海";
                         } else if (value === 7) {
-                            text = "7-不死魔巢";
+                            text = "7-不死魔巢/特权BOSS";
                         } else if (value === 8) {
                             text = "8-蛇陵魔窟";
                         } else if (value === 9) {
                             text = "9-魔王入侵";
                         } else if (value === 10) {
                             text = "10-剧情挂机";
+                        } else if (value === 11) {
+                            text = "11-法宝秘境";
+                        } else if (value === 12) {
+                            text = "12-仙盟妖灵";
                         }
                         return text;
                     }
