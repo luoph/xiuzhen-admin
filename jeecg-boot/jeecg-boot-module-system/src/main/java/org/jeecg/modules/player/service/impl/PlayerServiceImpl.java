@@ -105,21 +105,21 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             //查询所有用户注册信息（唯一不重复）
             List<Map> allPlayerInfoList = playerMapper.selectAllPlayerInfo(playerDTO.getServerId());
             //查询所有用户登录信息
-            List<Map> allLoginInfoList = playerMapper.selectAllLoginInfo(playerDTO.getServerId(),logTable);
+            List<Map> allLoginInfoList = playerMapper.selectAllLoginInfo(playerDTO.getServerId(), logTable);
             //登录信息按照plaer_id分组
             Map<String, List<Map>> allLoginInfoListMap_playerId = allLoginInfoList.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
             for (Map map : allPlayerInfoList) {
                 Player player = new Player();
                 player.setId(Long.parseLong(map.get("player_id").toString()));
-                List<Map> OnePlayerLoginInfoList = allLoginInfoListMap_playerId.get(map.get("player_id").toString()) ;
+                List<Map> OnePlayerLoginInfoList = allLoginInfoListMap_playerId.get(map.get("player_id").toString());
                 player.setRegisterTime(DateUtils.parseDate(map.get("create_time").toString()));
                 //注册过不一定登录过
-                if(null == OnePlayerLoginInfoList){break;}
+                if (null == OnePlayerLoginInfoList) {
+                    break;
+                }
                 player.setLastLoginTime(DateUtils.parseDate(OnePlayerLoginInfoList.get(0).get("create_time").toString()));
                 playerTimes.add(player);
             }
-
-
 
 
             for (Player player : list) {
@@ -306,6 +306,12 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
                 .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
         behavior.setLingShanLevel(lingShanLevel);
 
+        long practiceValue = list.stream().filter(i -> i.getType() == PlayerLogType.PRACTICE_VALUE.getType())
+                .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
+        behavior.setPracticeValue(practiceValue);
+
+
+
         long mainStoryCheck = list.stream().filter(i -> i.getType() == PlayerLogType.MAIN_STORY_LEVEL.getType()).count();
         behavior.setMainStoryCheck(mainStoryCheck);
 
@@ -327,12 +333,42 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         long factionBanquet = list.stream().filter(i -> i.getType() == PlayerLogType.FACTION_BANQUET.getType()).count();
         behavior.setFactionBanquet(factionBanquet);
 
-        //仙缘试炼
         long mateBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_BOSS.getType()).count();
         behavior.setMateBoss(mateBoss);
 
-        //仙缘双修
         long matePractice = list.stream().filter(i -> i.getType() == PlayerLogType.MATE_PRACTICE.getType()).count();
+        behavior.setMatePractice(matePractice);
+
+        long teamBoss = list.stream().filter(i -> i.getType() == PlayerLogType.TEAM_BOSS.getType()).count();
+        behavior.setTeamBoss(teamBoss);
+
+        long marryBoss = list.stream().filter(i -> i.getType() == PlayerLogType.MARRY_BOSS.getType()).count();
+        behavior.setMarryBoss(marryBoss);
+
+        long qualifying = list.stream().filter(i -> i.getType() == PlayerLogType.QUALIFYING.getType()).count();
+        behavior.setQualifying(qualifying);
+
+        long spiritStoneMapExplore = list.stream().filter(i -> i.getType() == PlayerLogType.SPIRIT_STONE_MAP_EXPLORE.getType()).count();
+        behavior.setSpiritStoneMapExplore(spiritStoneMapExplore);
+
+        long practiceMapExplore = list.stream().filter(i -> i.getType() == PlayerLogType.PRACTICE_MAP_EXPLORE.getType()).count();
+        behavior.setPracticeMapExplore(practiceMapExplore);
+
+        long weaponMapExplore = list.stream().filter(i -> i.getType() == PlayerLogType.WEAPON_MAP_EXPLORE.getType()).count();
+        behavior.setWeaponMapExplore(weaponMapExplore);
+
+        long immortalHigh = list.stream().filter(i -> i.getType() == PlayerLogType.IMMORTAL_HIGH.getType()).count();
+        behavior.setImmortalHigh(immortalHigh);
+
+        long immortalLow = list.stream().filter(i -> i.getType() == PlayerLogType.IMMORTAL_LOW.getType()).count();
+        behavior.setImmortalLow(immortalLow);
+
+        long monthCardHigh = list.stream().filter(i -> i.getType() == PlayerLogType.MONTH_CARD_HIGH.getType()).count();
+        behavior.setMonthCardHigh(monthCardHigh);
+
+        long monthCardLow = list.stream().filter(i -> i.getType() == PlayerLogType.MONTH_CARD_LOW.getType()).count();
+        behavior.setMonthCardLow(monthCardLow);
+
 
         behavior.setMatePractice(matePractice);
         long recharge = list.stream().filter(i -> i.getType() == PlayerLogType.RECHARGE.getType()).mapToLong(PlayerBehavior::getValue).sum();
@@ -346,5 +382,29 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
 
         long onlineTime = list.stream().filter(i -> i.getType() == PlayerLogType.ONLINE_TIME.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setOnlineTime(onlineTime);
+
+        long gainRareStone = list.stream().filter(i -> i.getType() == PlayerLogType.GAIN_RARE_STONE.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setGainRareStone(gainRareStone);
+
+        long costRareStone = list.stream().filter(i -> i.getType() == PlayerLogType.COST_RARE_STONE.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setCostRareStone(costRareStone);
+
+        long refineDan = list.stream().filter(i -> i.getType() == PlayerLogType.REFINE_DAN.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setRefineDan(refineDan);
+
+        long refineEquip = list.stream().filter(i -> i.getType() == PlayerLogType.REFINE_EQUIP.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setRefineEquip(refineEquip);
+
+        long spiritStoneMapSweep = list.stream().filter(i -> i.getType() == PlayerLogType.SPIRIT_STONE_MAP_SWEEP.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setSpiritStoneMapSweep(spiritStoneMapSweep);
+
+        long practiceMapSweep = list.stream().filter(i -> i.getType() == PlayerLogType.PRACTICE_MAP_SWEEP.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setPracticeMapSweep(practiceMapSweep);
+
+        long tierMapSweep = list.stream().filter(i -> i.getType() == PlayerLogType.TIER_MAP_SWEEP.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setTierMapSweep(tierMapSweep);
+
+        long weaponMapSweep = list.stream().filter(i -> i.getType() == PlayerLogType.WEAPON_MAP_SWEEP.getType()).mapToLong(PlayerBehavior::getValue).sum();
+        behavior.setWeaponMapSweep(weaponMapSweep);
     }
 }

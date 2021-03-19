@@ -41,7 +41,7 @@
             </a-form>
         </div>
         <div class="table-operator">
-            <a-button type="primary" icon="download" @click="downlodaExcel('玩家行为分析')">导出</a-button>
+            <a-button type="primary" icon="download" @click="downloadExcel('玩家行为分析')">导出</a-button>
         </div>
         <!-- 查询区域-END -->
         <!-- table区域-begin -->
@@ -72,7 +72,7 @@ import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { getAction } from "@/api/manage";
 import Vue from "vue";
-import { ACCESS_TOKEN } from "@/store/mutation-types"
+import { ACCESS_TOKEN } from "@/store/mutation-types";
 
 export default {
     name: "PlayerBehaviorList",
@@ -264,6 +264,120 @@ export default {
                     align: "center",
                     width: "5%",
                     dataIndex: "onlineTime"
+                },
+                {
+                    title: "玩家修为",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "practiceValue"
+                },
+                {
+                    title: "极品灵石获得",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "gainRareStone"
+                },
+                {
+                    title: "极品灵石消耗",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "costRareStone"
+                },
+                {
+                    title: "组队BOSS/须弥幻境",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "teamBoss"
+                },
+                {
+                    title: "金兰副本",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "marryBoss"
+                },
+                {
+                    title: "谪仙台",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "qualifying"
+                },
+                {
+                    title: "灵石秘境",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "spiritStoneMapExplore"
+                },
+                {
+                    title: "修为秘境",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "practiceMapExplore"
+                },
+                {
+                    title: "法宝秘境",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "weaponMapExplore"
+                },
+                {
+                    title: "八荒天魔一键挑战",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "immortalHigh"
+                },
+                {
+                    title: "九天魔君一键挑战",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "immortalLow"
+                },
+                {
+                    title: "至尊月卡一键挑战",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "monthCardHigh"
+                },
+                {
+                    title: "特惠月卡一键挑战",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "monthCardLow"
+                },
+                {
+                    title: "成功炼丹次数",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "refineDan"
+                },
+                {
+                    title: "成功炼器次数",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "refineEquip"
+                },
+                {
+                    title: "灵石秘境扫荡",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "spiritStoneMapSweep"
+                },
+                {
+                    title: "修为秘境扫荡",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "practiceMapSweep"
+                },
+                {
+                    title: "仙器秘境扫荡",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "tierMapSweep"
+                },
+                {
+                    title: "法宝秘境扫荡",
+                    align: "center",
+                    width: "5%",
+                    dataIndex: "weaponMapSweep"
                 }
 
             ],
@@ -316,19 +430,19 @@ export default {
                 }
             });
         },
-        downlodaExcel(filename) {
+        downloadExcel(filename) {
             var xhr = new XMLHttpRequest();
-            xhr.open("post", window._CONFIG["domainURL"] +this.url.downloadExcel, true);
+            xhr.open("post", window._CONFIG["domainURL"] + this.url.downloadExcel, true);
             xhr.responseType = "blob";
             xhr.setRequestHeader("Content-Type", "application/json");
             const token = Vue.ls.get(ACCESS_TOKEN);
             console.log(token);
             xhr.setRequestHeader("X-Access-Token", token);
-            xhr.onload = function () {
+            xhr.onload = function() {
                 var blob = this.response;
                 var reader = new FileReader();
                 reader.readAsDataURL(blob);
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     var a = document.createElement("a");
                     a.download = filename + ".xlsx";
                     a.href = e.target.result;
