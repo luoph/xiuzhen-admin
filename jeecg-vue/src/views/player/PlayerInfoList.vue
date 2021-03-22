@@ -223,7 +223,7 @@ export default {
                 deleteBatch: "player/playerInfo/deleteBatch",
                 exportXlsUrl: "player/playerInfo/exportXls",
                 importExcelUrl: "player/playerInfo/importExcel",
-                serverListUrl: "game/gameServer/list"
+                serverListUrl: "game/gameServer/all"
             },
             dictOptions: {}
         };

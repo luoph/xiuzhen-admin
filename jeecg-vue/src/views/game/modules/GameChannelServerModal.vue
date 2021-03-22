@@ -57,7 +57,7 @@ export default {
                 add: "game/gameChannelServer/add",
                 edit: "game/gameChannelServer/edit",
                 // 游戏服列表
-                serverListUrl: "game/gameServer/list?pageNo=1&pageSize=100000"
+                serverListUrl: "game/gameServer/all"
             }
         };
     },

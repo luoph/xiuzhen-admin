@@ -158,7 +158,7 @@ export default {
                 delete: "game/gameChannelServer/delete",
                 deleteBatch: "game/gameChannelServer/deleteBatch",
                 // 游戏服列表
-                serverListUrl: "game/gameServer/list"
+                serverListUrl: "game/gameServer/all"
             }
         };
     },
