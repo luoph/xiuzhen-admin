@@ -24,7 +24,7 @@ export default {
             },
             serverList: [],
             url: {
-                serverUrl: "game/gameServer/list"
+                serverUrl: "game/gameServer/all"
             }
         };
     },

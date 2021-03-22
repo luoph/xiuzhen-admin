@@ -4,8 +4,10 @@ import cn.youai.commons.model.DataResponse;
 import cn.youai.commons.model.Response;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -90,6 +92,17 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
             }
         }
         return Result.ok(pageList);
+    }
+
+    @AutoLog(value = "游戏服配置-列表查询")
+    @ApiOperation(value = "游戏服配置-列表查询", notes = "游戏服配置-列表查询")
+    @GetMapping(value = "/all")
+    public Result<?> all() {
+        Wrapper<GameServer> query = Wrappers.<GameServer>lambdaQuery()
+                .select(GameServer::getId, GameServer::getName, GameServer::getGameId,
+                        GameServer::getHost, GameServer::getStatus, GameServer::getOpenTime)
+                .orderByAsc(GameServer::getId);
+        return Result.ok(gameServerService.list(query));
     }
 
     /**
