@@ -220,8 +220,8 @@ export default {
                 if (res.success) {
                     if (res.result instanceof Array) {
                         this.serverList = res.result;
-                    } else if (res.result.records instanceof Array) {
-                        this.serverList = res.result.records;
+                    } else if (res.result instanceof Array) {
+                        this.serverList = res.result;
                     }
                 } else {
                     this.serverList = [];

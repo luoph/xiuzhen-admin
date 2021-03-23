@@ -24,7 +24,7 @@ export default {
     methods: {
         initServerList() {
             getAction(this.url.serverUrl).then(res => {
-                this.serverList = res.result.records;
+                this.serverList = res.result;
             });
         },
         handleChange(value) {
