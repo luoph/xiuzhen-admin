@@ -27,11 +27,17 @@
                     <a-input v-decorator="['gmUrl', validatorRules.gmUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服状态">
-                    <a-select placeholder="请选择区服状态" v-decorator="['status', {}]">
+                    <a-select placeholder="请选择区服状态" v-decorator="['status', validatorRules.status]">
                         <a-select-option :value="0">正常</a-select-option>
                         <a-select-option :value="1">流畅</a-select-option>
                         <a-select-option :value="2">火爆</a-select-option>
                         <a-select-option :value="3">维护</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开启维护">
+                    <a-select placeholder="开启维护" v-decorator="['isMaintain', validatorRules.isMaintain]">
+                        <a-select-option :value="0">否</a-select-option>
+                        <a-select-option :value="1">是</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识">
@@ -132,6 +138,7 @@ export default {
                 host: { rules: [{ required: true, message: "请输入前端HOST!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入登录地址!" }] },
                 status: { rules: [{ required: true, message: "请输入区服状态!" }] },
+                isMaintain: { rules: [{ required: true, message: "请选择是否开启维护!" }] },
                 type: { rules: [{ required: true, message: "请输入区服类型!" }] },
                 dbHost: { rules: [{ required: true, message: "请输入数据库Host!" }] },
                 dbUser: { rules: [{ required: true, message: "请输入数据库帐号!" }] },
@@ -183,6 +190,7 @@ export default {
                         "loginUrl",
                         "gmUrl",
                         "status",
+                        "isMaintain",
                         "recommend",
                         "warning",
                         "minVersion",
