@@ -1,6 +1,5 @@
 package org.jeecg.modules.game.constant;
 
-import cn.youai.xiuzhen.entity.pojo.ItemReduce;
 import lombok.Getter;
 
 /**

@@ -8,10 +8,6 @@ import lombok.Getter;
 @Getter
 public enum ItemRuleId {
     /**
-     * 背包获得物品 way 类型
-     */
-    /**
-     /**
      * 奖励模块
      */
     DEFAULT(0, "系统默认"),
@@ -155,6 +151,50 @@ public enum ItemRuleId {
     TEAM_BOSS_SINGLE_INJURY(146, "斗法-须弥法界-周单次伤害排行奖励"),
     TEAM_BOSS_TOTAL_INJURY(147, "斗法-须弥法界-周累计伤害排行奖励"),
     TEAM_BOSS_ASSIST_REWARD(148, "斗法-须弥法界-助战奖励"),
+    COMBAT_POWER_LOTTERY(149, "战力转盘"),
+    TIER_MAP_SWEEP(150, "仙器秘境扫荡"),
+    EXPLORE_REWARD(151, "符文秘境悬赏"),
+    FIREWORK(152, "烟花"),
+    WEAPON_MAP_SWEEP(153, "法宝秘境扫荡"),
+    WEAPON_MAP_BOX(154, "秘境-法宝秘境-宝箱"),
+    WEAPON_MAP_BATTLE(155, "秘境-法宝秘境-怪物"),
+    MARRY_TASK(156, "结婚-双修任务"),
+    MARRY_CASH_GIFT(157, "结婚-新婚礼物"),
+    MARRY_CASH_GIFT_REFUND(158, "结婚-新婚礼物-退回"),
+    MARRY_REWARD(159, "结婚-结婚奖励"),
+    MARRY_COMMON_REWARD(160, "结婚-结婚公共红包"),
+    MARRY_INTIMACY(161, "结婚-亲密度奖励"),
+    MARRY_BOSS_BATTLE(162, "结婚-双修副本-伤害奖励"),
+    TREASURE_DRAW(163, "藏宝阁"),
+    LEVEL_LOTTERY(164, "境界转盘"),
+    NOT_FLOAT_CURRENCY(165, "不飘字货币道具"),
+    GOD_ROAD_SWEEP(166, "丹药秘境扫荡"),
+    FESTIVAL_REDUCE(167, "节日活动-消费排行"),
+    WEEK_CARD(168, "周卡"),
+    LIMIT_TIME_SWORD(169, "古神传承奖励"),
+
+    QUALIFYING_DAILY_CHALLENGE(170, "谪仙台-每日挑战奖励"),
+    QUALIFYING_DAILY_LEVEL(171, "谪仙台-每日段位奖励"),
+    QUALIFYING_UPGRADE(172, "谪仙台-段位晋级奖励"),
+    QUALIFYING_SEASON_RANK(173, "谪仙台-赛季排行奖励"),
+    QUALIFYING_BATTLE(174, "谪仙台-战斗"),
+
+    SIX_SWORD(175, "六道剑阵"),
+    PRECEPT_POWER(176, "战力护符"),
+    BUSINESS_THRIVING(177, "招财进宝"),
+    UPGRADE_NOTICE(178, "更新公告"),
+    ONE_BOSS_PET(179, "不死魔巢一键挑战"),
+
+    ONE_KEY_RANK_KNEEL(180, "一键膜拜"),
+
+    THROWING_EGGS(181, "砸蛋"),
+    THROWING_EGGS_GOODS(182, "砸蛋商店"),
+    THROWING_EGGS_GIFT(183, "砸蛋礼包"),
+
+    ALCHEMY_HOUSE_RETURN(184, "炼丹返还"),
+    REFINERY_WORK_SHOP_RETURN(185, "炼器返还"),
+
+    STORY_HELP(186, "剧情-助战"),
 
     // end
     ;

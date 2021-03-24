@@ -9,9 +9,6 @@ import lombok.Getter;
 @Getter
 public enum ItemReduce {
     /**
-     * 背包扣减物品 way 类型
-     */
-    /**
      * 系统定义
      */
     DEFAULT(0, "默认"),
@@ -100,7 +97,7 @@ public enum ItemReduce {
     HOLY_GHOST_APPEARANCE_UPGRADE(83, "储物袋-圣灵-升星"),
     HOLY_GHOST_PITHY(84, "储物袋-圣灵-精粹"),
     EQUIPMENT_SUIT(85, "套装"),
-    TIER_MAP_EXPLORE(86, "套装秘境-购买挑战次数"),
+    TIER_MAP_BUY_NUM(86, "仙器秘境-购买挑战次数"),
     IDENTIFY_LOOK(87, "鉴宝"),
     LEVEL_GIFT(88, "境界每日礼包"),
     DUEL_FIELD_CHALLENGE_TIMES(89, "斗灵道场-购买挑战次数"),
@@ -144,6 +141,26 @@ public enum ItemReduce {
     HEAVEN_BOOK(127, "天书"),
     TEAM_BOSS_BUY(128, "斗法-组队boss"),
     DIPPER_STAR(129, "北斗七星"),
+    FIREWORK(130, "烟花"),
+    WEAPON_MAP_BUY_NUM(131, "法宝秘境-购买挑战次数"),
+    MARRY_CASH_GIFT(132, "结婚-礼金"),
+    MARRY_DIVORCE(133, "结婚-离婚"),
+    MARRY_INTIMACY_LEVEL(134, "结婚-亲密度等级"),
+    MARRY_RING(135, "结婚-誓戒"),
+    MARRY_KEEPSAKE(136, "结婚-信物"),
+    MARRY_BOSS_BUY_NUM(137, "结婚-双修BOSS购买次数"),
+    MARRY_BOSS_SINGLE_BATTLE(138, "结婚-双修BOSS单身挑战"),
+    TREASURE_DRAW(139, "藏宝阁"),
+    GOD_ROAD_SWEEP(140, "丹药秘境扫荡"),
+    QUALIFYING_BUY(141, "谪仙台-购买次数"),
+    SIX_SWORD(142, "六道剑阵"),
+    PRECEPT_POWER(143, "战力护符"),
+    BUSINESS_THRIVING(144, "招财进宝"),
+    SPIRIT_CHANGE(145, "逆天改命"),
+
+    THROWING_EGGS(146, "砸蛋"),
+    THROWING_EGGS_SHOP(147, "砸蛋商城"),
+    THROWING_EGGS_GIFT(148, "砸蛋礼包"),
 
     // endå
     ;
