@@ -186,4 +186,13 @@ public class GameServer extends BaseEntity {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @ApiModelProperty(value = "服务器开服时间")
     private java.util.Date openTime;
+
+    /**
+     * 服务器上线时间
+     */
+    @Excel(name = "服务器上线时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @ApiModelProperty(value = "服务器上线时间")
+    private java.util.Date onlineTime;
 }

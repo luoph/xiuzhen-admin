@@ -246,6 +246,12 @@ export default {
                     dataIndex: "openTime"
                 },
                 {
+                    title: "上线时间",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "onlineTime"
+                },
+                {
                     title: "操作",
                     align: "center",
                     width: 80,

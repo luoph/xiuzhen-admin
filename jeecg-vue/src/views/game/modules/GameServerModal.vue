@@ -84,6 +84,9 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['openTime', {}]" />
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上线时间">
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['onlineTime', {}]" />
+                </a-form-item>
                 <a-form-item v-if="isEdit" :labelCol="labelCol" :wrapperCol="wrapperCol" label="创建时间">
                     <a-date-picker :disabled="isEdit" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['createTime', {}]" />
                 </a-form-item>
@@ -198,6 +201,7 @@ export default {
                 // 时间格式化
                 this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
+                this.form.setFieldsValue({ onlineTime: this.model.onlineTime ? moment(this.model.onlineTime) : null });
                 this.form.setFieldsValue({ createTime: this.model.createTime ? moment(this.model.createTime) : null });
             });
         },
@@ -224,6 +228,7 @@ export default {
                     // 时间格式化
                     formData.mergeTime = formData.mergeTime ? formData.mergeTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.onlineTime = formData.onlineTime ? formData.onlineTime.format("YYYY-MM-DD HH:mm:ss") : null;
 
                     // 创建时间参数不传递后台
                     delete formData.createTime;

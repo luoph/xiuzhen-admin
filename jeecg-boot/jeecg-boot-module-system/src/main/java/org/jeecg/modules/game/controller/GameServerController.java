@@ -100,7 +100,8 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     public Result<?> all() {
         Wrapper<GameServer> query = Wrappers.<GameServer>lambdaQuery()
                 .select(GameServer::getId, GameServer::getName, GameServer::getGameId,
-                        GameServer::getHost, GameServer::getStatus, GameServer::getOpenTime)
+                        GameServer::getHost, GameServer::getStatus, GameServer::getOpenTime,
+                        GameServer::getOnlineTime)
                 .orderByAsc(GameServer::getId);
         return Result.ok(gameServerService.list(query));
     }
