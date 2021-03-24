@@ -110,6 +110,10 @@
                         </a-menu>
                     </a-dropdown>
                 </span>
+                <span slot="maintainSlot" slot-scope="text, record">
+                    <a-tag v-if="record.isMaintain == 1" color="red">维护中</a-tag>
+                    <a-tag v-else color="green">运行中</a-tag>
+                </span>
             </a-table>
         </div>
         <!-- table区域-end -->
@@ -232,15 +236,7 @@ export default {
                     align: "center",
                     width: 80,
                     dataIndex: "isMaintain",
-                    customRender: value => {
-                        let text = "--";
-                        if (value === 0) {
-                            text = "否";
-                        } else if (value === 1) {
-                            text = "是";
-                        }
-                        return text;
-                    }
+                    scopedSlots: { customRender: "maintainSlot" }
                 },
                 {
                     title: "推荐标识",
