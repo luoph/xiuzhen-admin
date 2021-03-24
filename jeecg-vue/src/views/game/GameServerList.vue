@@ -204,6 +204,12 @@ export default {
                     dataIndex: "loginUrl"
                 },
                 {
+                    title: "GM地址",
+                    align: "left",
+                    width: 120,
+                    dataIndex: "gmUrl"
+                },
+                {
                     title: "在线人数",
                     align: "center",
                     width: 60,
@@ -225,6 +231,7 @@ export default {
                     title: "维护中",
                     align: "center",
                     width: 80,
+                    dataIndex: "isMaintain",
                     customRender: value => {
                         let text = "--";
                         if (value === 0) {
@@ -241,12 +248,7 @@ export default {
                     width: 80,
                     dataIndex: "recommend_dictText"
                 },
-                {
-                    title: "GM地址",
-                    align: "left",
-                    width: 120,
-                    dataIndex: "gmUrl"
-                },
+
                 {
                     title: "类型",
                     align: "center",
