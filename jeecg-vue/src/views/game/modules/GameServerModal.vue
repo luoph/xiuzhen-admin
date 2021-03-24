@@ -42,7 +42,7 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="推荐标识">
                     <a-select placeholder="请选择推荐标识" v-decorator="['recommend', validatorRules.recommend]">
-                        <a-select-option :value="0">普遍</a-select-option>
+                        <a-select-option :value="0">普通</a-select-option>
                         <a-select-option :value="1">推荐</a-select-option>
                         <a-select-option :value="2">新服</a-select-option>
                         <a-select-option :value="3">推荐新服</a-select-option>
