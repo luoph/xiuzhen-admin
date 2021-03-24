@@ -222,6 +222,20 @@ export default {
                     dataIndex: "status_dictText"
                 },
                 {
+                    title: "维护中",
+                    align: "center",
+                    width: 80,
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "否";
+                        } else if (value === 1) {
+                            text = "是";
+                        }
+                        return text;
+                    }
+                },
+                {
                     title: "推荐标识",
                     align: "center",
                     width: 80,

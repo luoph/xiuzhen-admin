@@ -74,6 +74,10 @@ public class GameServer extends BaseEntity {
     @ApiModelProperty(value = "服务器状态")
     @Dict(dicCode = "server_status")
     private java.lang.Integer status;
+
+    @Excel(name = "维护状态", width = 15)
+    @ApiModelProperty(value = "维护状态")
+    private java.lang.Integer isMaintain;
     /**
      * 推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服
      */

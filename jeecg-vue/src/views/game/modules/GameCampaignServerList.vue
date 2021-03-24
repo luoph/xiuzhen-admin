@@ -108,11 +108,6 @@ export default {
                     dataIndex: "openTime"
                 },
                 {
-                    title: "上线时间",
-                    align: "center",
-                    dataIndex: "onlineTime"
-                },
-                {
                     title: "活动开关",
                     align: "center",
                     dataIndex: "status",
