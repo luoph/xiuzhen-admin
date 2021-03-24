@@ -23,11 +23,12 @@ public interface GameChannelMapper extends BaseMapper<GameChannel> {
      * @param channelId 渠道id
      * @return List Of {@linkplain GameServer}
      */
-    @Select("SELECT s.`id`, s.`game_id`, s.`name`, s.`host`, UNIX_TIMESTAMP(s.`open_time`) as `open_time`, " +
-            " s.`login_url`, s.`status`, s.`recommend`, s.`warning`, s.`min_version`, s.`max_version`" +
+    @Select("SELECT s.`id`, s.`game_id`, s.`name`, s.`host`, UNIX_TIMESTAMP(s.`open_time`) as `open_time`," +
+            "  UNIX_TIMESTAMP(s.`online_time`) as `online_time`,  s.`login_url`, s.`status`, s.`recommend`," +
+            " s.`warning`, s.`min_version`, s.`max_version`" +
             " FROM `game_server` s LEFT JOIN `game_channel_server` c ON c.`server_id` = s.`id`" +
             " WHERE c.`channel_id` = #{channel_id}  AND c.`del_flag` = 0 ORDER BY c.`position`")
-    List<GameServerVO> getServerListChannelId(@Param("channel_id") Integer channelId);
+    List<GameServerVO> getServerListByChannelId(@Param("channel_id") Integer channelId);
 
     /**
      * 超找渠道名

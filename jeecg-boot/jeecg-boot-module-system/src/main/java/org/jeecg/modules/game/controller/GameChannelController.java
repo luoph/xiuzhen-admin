@@ -43,9 +43,6 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @Value("${app.folder.server}")
     private String serverFolder;
 
-    @Value("${app.folder.notice}")
-    private String noticeFolder;
-
     @Value("${app.folder.ip-whitelist}")
     private String ipWhitelistFolder;
 
@@ -219,7 +216,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     }
 
     private void refreshChannelServerJson(GameChannel channel) {
-        List<GameServerVO> servers = gameChannelService.getServerListChannelId(channel.getId());
+        List<GameServerVO> servers = gameChannelService.getServerListByChannelId(channel.getId());
         UpdateConfig updateConfig = new UpdateConfig()
                 .setVersionCode(channel.getVersionCode())
                 .setVersionName(channel.getVersionName())
