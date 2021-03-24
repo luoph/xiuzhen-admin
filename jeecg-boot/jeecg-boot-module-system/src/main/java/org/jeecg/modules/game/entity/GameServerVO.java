@@ -19,6 +19,7 @@ public class GameServerVO {
     private String host;
     private String loginUrl;
     private Integer status;
+    private Integer isMaintain;
     private Integer recommend;
     private String warning;
     private Integer minVersion;
