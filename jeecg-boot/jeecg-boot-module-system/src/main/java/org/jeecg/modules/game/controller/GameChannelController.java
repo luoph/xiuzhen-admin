@@ -6,27 +6,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannel;
-import org.jeecg.modules.game.entity.GameServerVO;
-import org.jeecg.modules.game.model.ChannelConfig;
-import org.jeecg.modules.game.model.UpdateConfig;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -39,12 +31,6 @@ import java.util.List;
 @Api(tags = "游戏渠道")
 @RequestMapping("/game/gameChannel")
 public class GameChannelController extends JeecgController<GameChannel, IGameChannelService> {
-
-    @Value("${app.folder.server}")
-    private String serverFolder;
-
-    @Value("${app.folder.ip-whitelist}")
-    private String ipWhitelistFolder;
 
     @Autowired
     private IGameChannelService gameChannelService;
@@ -170,12 +156,9 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @GetMapping(value = "/updateAllServer")
     public Result<?> updateAllServer(HttpServletRequest req) {
         try {
-            List<GameChannel> channelList = gameChannelService.list();
-            for (GameChannel channel : channelList) {
-                refreshChannelServerJson(channel);
-            }
+            gameChannelService.updateAllChannelConfig();
         } catch (Exception e) {
-            log.error("updateServerConfig error", e);
+            log.error("updateAllServer error", e);
             return Result.error(e.getMessage());
         }
         return Result.ok("刷新成功");
@@ -185,29 +168,14 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @ApiOperation(value = "游戏渠道-刷新指定渠道区服json", notes = "游戏渠道-刷新指定渠道区服json")
     @GetMapping(value = "/updateChannelServer")
     public Result<?> updateChannelServer(@RequestParam(name = "id") String id) {
-        GameChannel channel = gameChannelService.getById(id);
-        if (channel == null) {
-            return Result.ok("找不到指定渠道");
-        }
-        refreshChannelServerJson(channel);
+        gameChannelService.updateChannelConfig(Integer.valueOf(id));
         return Result.ok("区服配置刷新成功");
     }
 
     @GetMapping(value = "/updateIpWhitelist")
     public Result<?> updateIpWhitelist(HttpServletRequest req) {
         try {
-            List<GameChannel> channelList = gameChannelService.list();
-            for (GameChannel channel : channelList) {
-                if (StringUtils.isNotBlank(channel.getIpWhitelist())) {
-                    String[] array = channel.getIpWhitelist().split(",");
-                    List<String> ipList = new ArrayList<>();
-                    for (String s : array) {
-                        ipList.add(s.trim());
-                    }
-
-                    JsonFileUtils.writeJsonFile(ipList, ipWhitelistFolder, channel.getSimpleName());
-                }
-            }
+            gameChannelService.updateIpWhiteListConfig();
         } catch (Exception e) {
             log.error("updateIpWhitelist error", e);
             return Result.error(e.getMessage());
@@ -215,14 +183,4 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
         return Result.ok("刷新成功");
     }
 
-    private void refreshChannelServerJson(GameChannel channel) {
-        List<GameServerVO> servers = gameChannelService.getServerListByChannelId(channel.getId());
-        UpdateConfig updateConfig = new UpdateConfig()
-                .setVersionCode(channel.getVersionCode())
-                .setVersionName(channel.getVersionName())
-                .setVersionUpdateTime(channel.getVersionUpdateTime());
-
-        JsonFileUtils.writeJsonFile(new ChannelConfig(channel.getNoticeId(), updateConfig, servers),
-                serverFolder, channel.getSimpleName());
-    }
 }

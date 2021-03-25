@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -104,6 +105,11 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     @Override
     public Map<Integer, Response> gameServerPost(String serverIds, String path, JSONObject data) {
         return gameServerPost(StrUtil.splitToInt(serverIds, ","), path, data);
+    }
+
+    @Override
+    public void updateGameServerMaintain(List<Integer> serverIds, int isMaintain) {
+        getBaseMapper().updateGameServerMaintain(serverIds, isMaintain);
     }
 
 }

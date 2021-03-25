@@ -16,6 +16,8 @@ import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.List;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -199,4 +201,7 @@ public class GameServer extends BaseEntity {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @ApiModelProperty(value = "服务器上线时间")
     private java.util.Date onlineTime;
+
+    @TableField(exist = false)
+    private List<Integer> channelIds;
 }
