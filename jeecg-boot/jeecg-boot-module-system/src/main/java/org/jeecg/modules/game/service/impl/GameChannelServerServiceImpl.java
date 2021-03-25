@@ -9,7 +9,6 @@ import org.jeecg.modules.game.mapper.GameChannelServerMapper;
 import org.jeecg.modules.game.service.IGameChannelServerService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -21,17 +20,15 @@ import java.util.List;
 @Service
 public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerMapper, GameChannelServer> implements IGameChannelServerService {
 
-    @Resource
-    private GameChannelServerMapper gameChannelServerMapper;
-
     @Override
     public List<GameServer> gameServerByChannelId(int channelId) {
-        return gameChannelServerMapper.gameServerByChannelId(channelId);
+        return getBaseMapper().gameServerByChannelId(channelId);
     }
 
     @Override
     public boolean isValidChannelWithServer(int channelId, int serverId) {
-        LambdaQueryWrapper<GameChannelServer> queryWrapper = Wrappers.<GameChannelServer>lambdaQuery().eq(GameChannelServer::getChannelId, channelId)
+        LambdaQueryWrapper<GameChannelServer> queryWrapper = Wrappers.<GameChannelServer>lambdaQuery()
+                .eq(GameChannelServer::getChannelId, channelId)
                 .eq(GameChannelServer::getServerId, serverId);
         GameChannelServer channelServer = getOne(queryWrapper);
         // 绑定关系正常

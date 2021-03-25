@@ -7,7 +7,6 @@ import org.jeecg.modules.game.mapper.GameChannelMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,16 +18,13 @@ import java.util.List;
 @Service
 public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameChannel> implements IGameChannelService {
 
-    @Resource
-    private GameChannelMapper gameChannelMapper;
-
     @Override
     public List<GameServerVO> getServerListByChannelId(Integer channelId) {
-        return gameChannelMapper.getServerListByChannelId(channelId);
+        return getBaseMapper().getServerListByChannelId(channelId);
     }
 
     @Override
     public String queryChannelNameById(Integer channelId) {
-        return gameChannelMapper.queryChannelNameById(channelId);
+        return getBaseMapper().queryChannelNameById(channelId);
     }
 }
