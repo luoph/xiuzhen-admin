@@ -3,6 +3,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.json.JSONTokener;
 import cn.youai.commons.model.Response;
+import cn.youai.commons.model.ResponseCode;
 import cn.youai.xiuzhen.common.data.ConfigDataEnum;
 import cn.youai.xiuzhen.common.data.ConfigDataService;
 import cn.youai.xiuzhen.entity.pojo.ConfItem;
@@ -83,17 +84,25 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             response.setFailure("投放目标不存在！");
             return response;
         }
-        boolean state = super.save(gameEmail);
-        if (state) {
-            sendEmailToGameCenterServer(gameEmail);
+        if (super.save(gameEmail)) {
             return response;
         }
-        response.setFailure("发送失败！");
+        response.setFailure("创建失败！");
         return response;
     }
 
-    private void sendEmailToGameCenterServer(GameEmail gameEmail) {
+    @Override
+    public Response sendEmailToGameCenterServer(GameEmail gameEmail) {
+        Response response = new Response();
+        if (gameEmail == null) {
+            response.setCode(ResponseCode.FAILURE.getCode());
+            response.setFailure("邮件不存在！");
+            return response;
+        }
         OkHttpHelper.post(gameCenterUrl + path, gameEmail);
+        response.setCode(ResponseCode.SUCCESS.getCode());
+        response.setFailure(ResponseCode.SUCCESS.getDesc());
+        return response;
     }
 
     @Override
