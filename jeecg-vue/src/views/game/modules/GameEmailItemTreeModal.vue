@@ -21,7 +21,8 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <span style="float: left;" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="reload" style="margin-left: 8px;" @click="searchReset">重置</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px;"
+                                      @click="searchReset">重置</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -29,8 +30,9 @@
         </div>
         <div style="margin-bottom: 50px;">
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600;">{{ selectedRowKeys.length }}</a
-                >项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+                style="font-weight: 600;">{{ selectedRowKeys.length }}</a
+            >项
                 <a style="margin-left: 24px;" @click="onClearSelected">清空</a>
             </div>
             <div v-if="showError">
@@ -63,6 +65,7 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
+
 export default {
     name: "GameEmailItemTreeModal",
     mixins: [JeecgListMixin],
@@ -89,7 +92,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function (t, r, index) {
+                    customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -126,16 +129,16 @@ export default {
     },
     created() {
         this.$form.createForm(this);
-        this.$nextTick(function () {
-            this.$on("getItemTree", function () {
-                console.log("监听成功");
+        this.$nextTick(function() {
+            this.$on("getItemTree", function() {
                 this.getItemTree();
             });
         });
-        this.queryParam = {};
     },
     methods: {
-        initDictConfig() {},
+        initDictConfig() {
+        },
+        
         close() {
             this.$emit("close");
             this.visible = false;
@@ -144,14 +147,17 @@ export default {
             this.selectedRows = [];
             this.selectItems = [];
         },
+
         handleCancel() {
             this.close();
         },
+
         onSelectChange(selectedRowKeys, selectedRows) {
             this.selectedRowKeys = selectedRowKeys;
             this.selectedRows = selectedRows;
             this.saveSelectItem();
         },
+
         handleOkGetItem() {
             let itemSize = this.selectItems.length;
             if (itemSize <= 0) {
@@ -166,35 +172,47 @@ export default {
                     this.showError = true;
                     return;
                 }
-                let json = '{"itemId":' + row.itemId + ',"num":' + row.num + "}";
+                let json = "{\"itemId\":" + row.itemId + ",\"num\":" + row.num + "}";
                 Items.push(json);
             }
 
             let itemTreeResult = "[" + Items + "]";
             console.log(itemTreeResult);
             this.$emit("func", itemTreeResult);
-            (this.showError = false), (this.showSuccess = true), (this.showWarning = false), this.close();
+            (this.showError = false);
+            (this.showSuccess = true);
+            this.handleCancel();
         },
-        getItemTree: function () {
+
+        getItemTree: function() {
+            this.visible = true;
             getAction(this.url.list, this.queryParam).then((res) => {
                 this.treeData = res.result;
             });
         },
-        saveSelectItem: function () {
-            this.selectItems = [];
-            let size = this.selectedRows.length;
+
+        saveSelectItem: function() {
+            let size = this.selectedRowKeys.length;
             if (size > 0) {
                 for (let index = 0; index < size; index++) {
-                    let selectedItem = this.selectedRows[index];
-                    this.selectItems.push(selectedItem);
+                    this.selectItems.push(this.selectedRows[index]);
                 }
+            } else {
+                this.selectItems = [];
             }
+            this.unique(this.selectItems);
+        },
+
+        unique(arr) {
+            const res = new Map();
+            return arr.filter((arr) => !res.has(arr.itemid) && res.set(arr.itemid, 1));
         }
     }
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

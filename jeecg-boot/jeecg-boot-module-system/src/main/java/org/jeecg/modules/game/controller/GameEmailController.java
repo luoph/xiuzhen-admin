@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.commons.model.Response;
 import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -172,4 +173,22 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         return Result.ok(items);
     }
 
+    @RequestMapping(value = "/check", method = RequestMethod.GET)
+    public Result<?> isCheck(@RequestParam("id") long id) {
+        GameEmail gameEmail = gameEmailService.getById(id);
+        if (gameEmail == null) {
+            return Result.error("邮件不存在！");
+        }
+        if (gameEmail.getValidState() == 1) {
+            return Result.error("已审核发送！");
+        }
+        gameEmail.setValidState(1);
+        gameEmailService.updateById(new GameEmail().setId(gameEmail.getId()).setValidState(1));
+
+        Response response = gameEmailService.sendEmailToGameCenterServer(gameEmail);
+        if (!response.isSuccess()) {
+            return Result.error(response.getDesc());
+        }
+        return Result.ok("审核发送成功！");
+    }
 }

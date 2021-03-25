@@ -29,4 +29,11 @@ public interface IGameEmailService extends IService<GameEmail> {
      * @return
      */
     List<ConfItem> itemTree(Integer itemId, String itemName);
+
+    /**
+     * 发送邮件
+     *
+     * @param gameEmail
+     */
+    Response sendEmailToGameCenterServer(GameEmail gameEmail);
 }
