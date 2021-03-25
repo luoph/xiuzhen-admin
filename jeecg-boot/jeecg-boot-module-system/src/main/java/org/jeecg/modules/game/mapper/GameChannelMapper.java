@@ -22,7 +22,7 @@ public interface GameChannelMapper extends BaseMapper<GameChannel> {
      * @param channelId 渠道id
      * @return List Of {@linkplain GameServer}
      */
-    List<GameServerVO> getServerListByChannelId(@Param("channel_id") int channelId);
+    List<GameServerVO> selectServerListByChannelId(@Param("channel_id") int channelId);
 
     /**
      * 超找渠道名

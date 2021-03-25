@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameServer;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,4 +85,7 @@ public interface IGameServerService extends IService<GameServer> {
      * @return 响应列表
      */
     Map<Integer, Response> gameServerPost(String serverIds, String path, JSONObject data);
+
+
+    void updateGameServerMaintain(List<Integer> serverIds, int isMaintain);
 }
