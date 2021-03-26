@@ -11,7 +11,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannelServer;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.GameServerVO;
 import org.jeecg.modules.game.service.IGameChannelServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -161,7 +161,7 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
      */
     @RequestMapping(value = "channelWithServer")
     public Result<?> channelWithServer(@RequestParam(name = "channelId") Integer channelId) {
-        List<GameServer> gameServers = gameChannelServerService.gameServerByChannelId(channelId);
+        List<GameServerVO> gameServers = gameChannelServerService.selectServerListByChannelId(channelId);
         return Result.ok(gameServers);
     }
 }

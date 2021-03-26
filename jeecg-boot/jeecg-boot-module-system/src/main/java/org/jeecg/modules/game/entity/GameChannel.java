@@ -46,12 +46,6 @@ public class GameChannel extends BaseEntity {
     @ApiModelProperty(value = "唯一标识")
     private java.lang.String simpleName;
     /**
-     * 排序字段
-     */
-    @Excel(name = "排序字段", width = 15)
-    @ApiModelProperty(value = "排序字段")
-    private java.lang.Integer position;
-    /**
      * 公告id
      */
     @Excel(name = "公告id", width = 15)

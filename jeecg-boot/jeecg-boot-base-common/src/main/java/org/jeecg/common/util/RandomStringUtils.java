@@ -35,8 +35,8 @@ public class RandomStringUtils {
         String existCode = "";
         HashSet<String> existSet = new HashSet<>(Arrays.asList(existCode.split(",")));
         HashSet<String> keys = new HashSet<>();
-        while (keys.size() < 5000) {
-            String s = "vip888" + genCdKeyCode();
+        while (keys.size() < 5100) {
+            String s = "" + genCdKeyCode();
             if (!existSet.contains(s)) {
                 keys.add(s);
             }
