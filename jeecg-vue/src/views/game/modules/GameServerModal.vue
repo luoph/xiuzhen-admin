@@ -88,7 +88,7 @@
                     <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
-                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['openTime', {}]" />
+                    <a-date-picker showTime format="YYYY-MM-DD" v-decorator="['openTime', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上线时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['onlineTime', {}]" />
@@ -207,9 +207,9 @@ export default {
                 );
 
                 // 时间格式化
-                this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
                 this.form.setFieldsValue({ onlineTime: this.model.onlineTime ? moment(this.model.onlineTime) : null });
+                this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
                 this.form.setFieldsValue({ createTime: this.model.createTime ? moment(this.model.createTime) : null });
             });
         },
@@ -234,8 +234,8 @@ export default {
                     }
                     let formData = Object.assign(this.model, values);
                     // 时间格式化
+                    formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD") : null;
                     formData.mergeTime = formData.mergeTime ? formData.mergeTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     formData.onlineTime = formData.onlineTime ? formData.onlineTime.format("YYYY-MM-DD HH:mm:ss") : null;
 
                     // 创建时间参数不传递后台
