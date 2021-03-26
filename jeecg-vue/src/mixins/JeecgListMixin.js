@@ -86,9 +86,6 @@ export const JeecgListMixin = {
                 if (res.success && res.result && res.result.records) {
                     this.dataSource = res.result.records;
                     this.ipagination.total = res.result.total;
-
-                    // 数据回调
-                    this.onDataChanged(res.result.records);
                 }
                 if (res.code === 510) {
                     this.$message.warning(res.message);
@@ -96,7 +93,6 @@ export const JeecgListMixin = {
                 this.loading = false;
             });
         },
-        onDataChanged(records) {},
         initDictConfig() {},
         handleSuperQuery(arg) {
             // 高级查询方法
