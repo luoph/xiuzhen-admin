@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,16 +12,19 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannelServer;
+import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameServerVO;
 import org.jeecg.modules.game.service.IGameChannelServerService;
+import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -36,6 +40,9 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
 
     @Autowired
     private IGameChannelServerService gameChannelServerService;
+
+    @Autowired
+    private IGameServerService gameServerService;
 
     /**
      * 分页列表查询
@@ -56,6 +63,20 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         QueryWrapper<GameChannelServer> queryWrapper = QueryGenerator.initQueryWrapper(gameChannelServer, req.getParameterMap());
         Page<GameChannelServer> page = new Page<>(pageNo, pageSize);
         IPage<GameChannelServer> pageList = gameChannelServerService.page(page, queryWrapper);
+
+        // 完善数据
+        if (CollUtil.isNotEmpty(pageList.getRecords())) {
+            Set<Integer> results = pageList.getRecords().stream().map(GameChannelServer::getServerId).collect(Collectors.toSet());
+            Collection<GameServer> servers = gameServerService.listByIds(results);
+            Map<Integer, GameServer> serverMap = servers.stream().collect(Collectors.toMap(GameServer::getId, Function.identity()));
+
+            for (GameChannelServer record : pageList.getRecords()) {
+                GameServer gameServer = serverMap.get(record.getServerId());
+                if (gameServer != null) {
+                    record.setServerName(gameServer.getName()).setOpenTime(gameServer.getOpenTime()).setOnlineTime(gameServer.getOnlineTime());
+                }
+            }
+        }
         return Result.ok(pageList);
     }
 

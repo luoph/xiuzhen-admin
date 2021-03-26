@@ -1,16 +1,22 @@
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * @author jeecg-boot
@@ -59,5 +65,18 @@ public class GameChannelServer extends BaseEntity {
     @Dict(dicCode = "no_need_count")
     @ApiModelProperty(value = "数据统计状态")
     private java.lang.Integer noNeedCount;
+
+    @TableField(exist = false)
+    private String serverName;
+
+    @TableField(exist = false)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    private Date openTime;
+
+    @TableField(exist = false)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    private Date onlineTime;
 
 }
