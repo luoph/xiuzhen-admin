@@ -1,5 +1,5 @@
 <template>
-    <a-modal :title="title" :width="600" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="800" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <!-- <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
@@ -11,7 +11,7 @@
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + " - " + server.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="位置权重（值越大越靠前）">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="位置权重">
                     <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入位置权重（值越大越靠前）" style="width: 100%" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
@@ -51,7 +51,7 @@ export default {
             form: this.$form.createForm(this),
             validatorRules: {
                 serverId: { rules: [{ required: true, message: "请输入区服Id!" }] },
-                position: { rules: [{ required: true, message: "请输入顺序!" }] }
+                position: { rules: [{ required: true, message: "请输入位置权重!" }] }
             },
             url: {
                 add: "game/gameChannelServer/add",
