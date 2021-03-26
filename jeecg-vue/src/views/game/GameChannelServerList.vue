@@ -100,7 +100,7 @@ export default {
                     dataIndex: "channelId"
                 },
                 {
-                    title: "排序",
+                    title: "位置权重",
                     align: "center",
                     dataIndex: "position"
                 },

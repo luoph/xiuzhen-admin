@@ -9,8 +9,8 @@
                 <a-form-item label="唯一标识" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['simpleName', validatorRules.simpleName]" placeholder="请输入唯一标识"></a-input>
                 </a-form-item>
-                <a-form-item label="排序字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入排序字段" style="width: 100%" />
+                <a-form-item label="位置权重" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入位置权重（数值的靠前）" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="公告Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请输入公告Id" style="width: 100%" />
@@ -72,7 +72,7 @@ export default {
                 gameId: { rules: [{ required: true, message: "请输入游戏编号!" }] },
                 name: { rules: [{ required: true, message: "请输入渠道名称!" }] },
                 simpleName: { rules: [{ required: true, message: "请输入唯一标识!" }] },
-                position: { rules: [{ required: true, message: "请输入排序字段!" }] },
+                position: { rules: [{ required: true, message: "请输入位置权重!" }] },
                 noticeId: { rules: [{ required: true, message: "请输入公告Id!" }] },
                 versionCode: { rules: [{ required: true, message: "请输入版本号!" }] },
                 versionName: { rules: [{ required: true, message: "请输入版本名!" }] },
