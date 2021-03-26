@@ -1,5 +1,5 @@
 <template>
-    <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="1200" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-card :bordered="false">
             <!-- 抽屉 -->
             <!-- <a-drawer :title="title" :width="1000" placement="right" :closable="false" @close="close" :visible="visible"> -->
@@ -45,9 +45,15 @@
                                 <a>删除</a>
                             </a-popconfirm>
                         </span>
+                        <span slot="maintainSlot" slot-scope="text, record">
+                            <a-tag v-if="record.isMaintain == 1" color="red">维护中</a-tag>
+                            <a-tag v-else color="green">运行中</a-tag>
+                        </span>
                         <span slot="statSlot" slot-scope="text, record">
-                            <a-tag v-if="record.delFlag == 0" color="green">正常</a-tag>
-                            <a-tag v-else-if="record.delFlag == 1" color="red">无效</a-tag>
+                            <a-tag v-if="record.serverStatus == 0" color="blue">正常</a-tag>
+                            <a-tag v-else-if="record.serverStatus == 1" color="green">流畅</a-tag>
+                            <a-tag v-else-if="record.serverStatus == 2" color="red">火爆</a-tag>
+                            <a-tag v-else-if="record.serverStatus == 3" color="gray">维护</a-tag>
                         </span>
                     </a-table>
                 </div>
@@ -125,10 +131,16 @@ export default {
                     dataIndex: "onlineTime"
                 },
                 {
-                    title: "状态",
+                    title: "区服状态",
                     align: "center",
-                    dataIndex: "delFlag",
+                    dataIndex: "serverStatus",
                     scopedSlots: { customRender: "statSlot" }
+                },
+                {
+                    title: "维护状态",
+                    align: "center",
+                    dataIndex: "isMaintain",
+                    scopedSlots: { customRender: "maintainSlot" }
                 },
                 {
                     title: "操作",

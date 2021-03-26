@@ -73,7 +73,11 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
             for (GameChannelServer record : pageList.getRecords()) {
                 GameServer gameServer = serverMap.get(record.getServerId());
                 if (gameServer != null) {
-                    record.setServerName(gameServer.getName()).setOpenTime(gameServer.getOpenTime()).setOnlineTime(gameServer.getOnlineTime());
+                    record.setServerName(gameServer.getName())
+                            .setOpenTime(gameServer.getOpenTime())
+                            .setOnlineTime(gameServer.getOnlineTime())
+                            .setServerStatus(gameServer.getStatus())
+                            .setIsMaintain(gameServer.getIsMaintain());
                 }
             }
         }
