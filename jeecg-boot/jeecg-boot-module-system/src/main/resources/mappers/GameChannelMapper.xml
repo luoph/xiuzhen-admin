@@ -20,7 +20,7 @@
                  LEFT JOIN `game_channel_server` c ON c.`server_id` = s.`id`
         WHERE c.`channel_id` = #{channel_id}
           AND c.`del_flag` = 0
-        ORDER BY c.`position`
+        ORDER BY c.`position` DESC
     </select>
 
     <select id="queryChannelNameById" resultType="java.lang.String">
