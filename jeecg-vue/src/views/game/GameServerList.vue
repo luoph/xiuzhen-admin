@@ -117,7 +117,7 @@
                 <span slot="statSlot" slot-scope="text, record">
                     <a-tag v-if="record.status == 0" color="blue">正常</a-tag>
                     <a-tag v-else-if="record.status == 1" color="green">流畅</a-tag>
-                    <a-tag v-else-if="record.status == 2" color="orange">火爆</a-tag>
+                    <a-tag v-else-if="record.status == 2" color="red">火爆</a-tag>
                     <a-tag v-else-if="record.status == 3" color="gray">维护</a-tag>
                 </span>
             </a-table>
