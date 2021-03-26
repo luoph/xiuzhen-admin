@@ -250,12 +250,11 @@ export default {
             getAction(that.url.isCheck, { id: record.id }).then(res => {
                 if (res.success) {
                     that.$message.success("审核成功！");
-                    that.confirmLoading = true;
                 } else {
                     that.$message.error("审核发送失败！");
                 }
             }).finally(() => {
-                that.confirmLoading = false;
+                that.loadData();
             });
         }
     }
