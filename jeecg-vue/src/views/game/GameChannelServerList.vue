@@ -52,6 +52,10 @@
                                 </a-menu>
                             </a-dropdown>
                         </span>
+                        <span slot="statSlot" slot-scope="text, record">
+                            <a-tag v-if="record.delFlag == 0" color="green">正常</a-tag>
+                            <a-tag v-else-if="record.delFlag == 1" color="red">无效</a-tag>
+                        </span>
                     </a-table>
                 </div>
             </div>
@@ -93,6 +97,10 @@ export default {
             description: "游戏渠道服配置管理页面",
             serverList: [],
             confirmLoading: false,
+            isorter: {
+                column: "position",
+                order: "desc"
+            },
             // 表头
             columns: [
                 {
@@ -126,7 +134,8 @@ export default {
                 {
                     title: "状态",
                     align: "center",
-                    dataIndex: "delFlag_dictText"
+                    dataIndex: "delFlag",
+                    scopedSlots: { customRender: "statSlot" }
                 },
                 {
                     title: "操作",
@@ -179,10 +188,13 @@ export default {
             if (record.id) {
                 this.channelId = record.id;
             }
+
             this.queryParam = {};
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.model.channelId = this.channelId;
+            console.log("GameChannelServerList, model:", JSON.stringify(this.model));
+
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "serverId", "delFlag"));
@@ -197,7 +209,7 @@ export default {
             this.dataSource = [];
         },
         getQueryParams() {
-            var param = Object.assign({}, this.queryParam);
+            var param = Object.assign({}, this.queryParam, this.isorter, this.filters);
             param.channelId = this.channelId;
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
