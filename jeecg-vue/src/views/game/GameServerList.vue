@@ -114,6 +114,12 @@
                     <a-tag v-if="record.isMaintain == 1" color="red">维护中</a-tag>
                     <a-tag v-else color="green">运行中</a-tag>
                 </span>
+                <span slot="statSlot" slot-scope="text, record">
+                    <a-tag v-if="record.status == 0" color="blue">正常</a-tag>
+                    <a-tag v-else-if="record.status == 1" color="green">流畅</a-tag>
+                    <a-tag v-else-if="record.status == 2" color="orange">火爆</a-tag>
+                    <a-tag v-else-if="record.status == 3" color="gray">维护</a-tag>
+                </span>
             </a-table>
         </div>
         <!-- table区域-end -->
@@ -229,10 +235,10 @@ export default {
                     title: "状态",
                     align: "center",
                     width: 80,
-                    dataIndex: "status_dictText"
+                    scopedSlots: { customRender: "statSlot" }
                 },
                 {
-                    title: "维护中",
+                    title: "维护状态",
                     align: "center",
                     width: 80,
                     dataIndex: "isMaintain",
