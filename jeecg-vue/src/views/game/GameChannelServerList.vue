@@ -77,7 +77,7 @@ export default {
     data() {
         return {
             description: "游戏渠道服配置管理页面",
-            serverList: [],
+            maxPosition: 0,
             confirmLoading: false,
             isorter: {
                 column: "position",
@@ -207,7 +207,7 @@ export default {
             return filterObj(param);
         },
         handleAdd() {
-            this.$refs.modalForm.add(this.channelId);
+            this.$refs.modalForm.edit({ channelId: this.channelId, delFlag: 0, position: this.maxPosition + 1 });
             this.$refs.modalForm.title = "新增";
         },
         handleCancel() {
@@ -215,6 +215,14 @@ export default {
         },
         handleOk() {
             this.close();
+        },
+        onDataChanged(records) {
+            let that = this;
+            records.forEach(function(item) {
+                if (item.position > that.maxPosition) {
+                    that.maxPosition = item.position;
+                }
+            });
         }
     }
 };
