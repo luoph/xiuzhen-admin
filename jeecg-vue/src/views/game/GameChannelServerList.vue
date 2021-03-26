@@ -41,16 +41,9 @@
                         <span slot="action" slot-scope="text, record">
                             <a @click="handleEdit(record)">编辑</a>
                             <a-divider type="vertical" />
-                            <a-dropdown>
-                                <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                                <a-menu slot="overlay">
-                                    <a-menu-item>
-                                        <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                            <a>删除</a>
-                                        </a-popconfirm>
-                                    </a-menu-item>
-                                </a-menu>
-                            </a-dropdown>
+                            <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                                <a>删除</a>
+                            </a-popconfirm>
                         </span>
                         <span slot="statSlot" slot-scope="text, record">
                             <a-tag v-if="record.delFlag == 0" color="green">正常</a-tag>
@@ -74,17 +67,6 @@ import { getAction } from "@/api/manage";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { filterObj } from "@/utils/util";
 import pick from "lodash.pick";
-
-function filterServerIdText(options, text) {
-    if (options instanceof Array) {
-        for (let server of options) {
-            if (text === server.id) {
-                return server.id + " - " + server.name;
-            }
-        }
-    }
-    return text;
-}
 
 export default {
     name: "GameChannelServerList",
@@ -114,6 +96,11 @@ export default {
                     }
                 },
                 {
+                    title: "渠道id",
+                    align: "center",
+                    dataIndex: "channelId"
+                },
+                {
                     title: "排序",
                     align: "center",
                     dataIndex: "position"
@@ -121,15 +108,22 @@ export default {
                 {
                     title: "区服Id",
                     align: "center",
-                    dataIndex: "serverId",
-                    customRender: text => {
-                        return filterServerIdText(this.serverList, text);
-                    }
+                    dataIndex: "serverId"
                 },
                 {
-                    title: "渠道id",
+                    title: "区服名称",
                     align: "center",
-                    dataIndex: "channelId"
+                    dataIndex: "serverName"
+                },
+                {
+                    title: "开服时间",
+                    align: "center",
+                    dataIndex: "openTime"
+                },
+                {
+                    title: "上线时间",
+                    align: "center",
+                    dataIndex: "onlineTime"
                 },
                 {
                     title: "状态",
@@ -165,9 +159,7 @@ export default {
             url: {
                 list: "game/gameChannelServer/list",
                 delete: "game/gameChannelServer/delete",
-                deleteBatch: "game/gameChannelServer/deleteBatch",
-                // 游戏服列表
-                serverListUrl: "game/gameServer/all"
+                deleteBatch: "game/gameChannelServer/deleteBatch"
             }
         };
     },
@@ -176,9 +168,7 @@ export default {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    created() {
-        this.queryServerList();
-    },
+    created() {},
     methods: {
         add(channelId) {
             this.channelId = channelId;
@@ -225,20 +215,6 @@ export default {
         },
         handleOk() {
             this.close();
-        },
-        queryServerList() {
-            let that = this;
-            getAction(that.url.serverListUrl).then(res => {
-                if (res.success) {
-                    if (res.result instanceof Array) {
-                        this.serverList = res.result;
-                    } else if (res.result instanceof Array) {
-                        this.serverList = res.result;
-                    }
-                } else {
-                    this.serverList = [];
-                }
-            });
         }
     }
 };
