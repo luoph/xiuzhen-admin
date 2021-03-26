@@ -31,8 +31,8 @@
                         <a-col :md="4" :sm="8">
                             <a-form-item label="状态">
                                 <a-select placeholder="邮件状态" v-model="queryParam.validState">
-                                    <a-select-option :value="1">有效</a-select-option>
-                                    <a-select-option :value="2">无效</a-select-option>
+                                    <a-select-option :value="0">未审核</a-select-option>
+                                    <a-select-option :value="1">已审核发送</a-select-option>
                                 </a-select>
                             </a-form-item>
                         </a-col>
