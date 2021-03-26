@@ -9,7 +9,7 @@
                  INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         WHERE b.`channel_id` = #{channelId}
           AND b.`del_flag` = 0
-          AND b.`no_need_count` = 0;
+          AND b.`no_need_count` = 0
         ORDER BY b.`position` DESC
     </select>
 
