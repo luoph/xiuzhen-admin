@@ -95,13 +95,11 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     public Response sendEmailToGameCenterServer(GameEmail gameEmail) {
         Response response = new Response();
         if (gameEmail == null) {
-            response.setCode(ResponseCode.FAILURE.getCode());
-            response.setFailure("邮件不存在！");
+            response.setErrorCode(ResponseCode.FAILURE);
             return response;
         }
         OkHttpHelper.post(gameCenterUrl + path, gameEmail);
-        response.setCode(ResponseCode.SUCCESS.getCode());
-        response.setFailure(ResponseCode.SUCCESS.getDesc());
+        response.setErrorCode(ResponseCode.SUCCESS);
         return response;
     }
 

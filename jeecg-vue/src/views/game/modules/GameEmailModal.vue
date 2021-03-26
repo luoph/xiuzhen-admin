@@ -54,8 +54,12 @@
                                           @onSelectServer="change" />
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker placeholder="请选择生效时间" showTime format="YYYY-MM-DD HH:mm:ss"
-                                   v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%;" />
+                    <a-date-picker
+                        placeholder="请选择生效时间"
+                        showTime
+                        format="YYYY-MM-DD HH:mm:ss"
+                        v-decorator="['sendTime', validatorRules.sendTime]"
+                        style="width: 100%;" />
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker
@@ -174,7 +178,7 @@ export default {
                         "targetBody"
                     )
                 );
-                this.form.setFieldsValue();
+                this.form.setFieldsValue({ sendTime: this.model.sendTime ? moment(this.model.sendTime) : null });
                 this.form.setFieldsValue({ validStarTime: this.model.validStarTime ? moment(this.model.validStarTime) : null });
                 this.form.setFieldsValue({ validEndTime: this.model.validEndTime ? moment(this.model.validEndTime) : null });
                 this.form.setFieldsValue({ targetBody: this.model.targetBodyIds ? this.model.targetBodyIds : null });
