@@ -154,6 +154,10 @@ export default {
         add(record) {
             if (record != null) {
                 delete record.id;
+                delete record.createTime;
+                delete record.createBy;
+                delete record.updateTime;
+                delete record.updateBy;
                 this.edit(record);
             } else {
                 this.edit({});
