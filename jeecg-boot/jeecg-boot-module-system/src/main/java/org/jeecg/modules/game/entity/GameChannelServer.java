@@ -70,6 +70,12 @@ public class GameChannelServer extends BaseEntity {
     private String serverName;
 
     @TableField(exist = false)
+    private Integer serverStatus;
+
+    @TableField(exist = false)
+    private Integer isMaintain;
+
+    @TableField(exist = false)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private Date openTime;
