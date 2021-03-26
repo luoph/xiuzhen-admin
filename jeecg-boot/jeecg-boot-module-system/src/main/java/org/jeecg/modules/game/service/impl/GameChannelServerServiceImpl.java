@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameChannelServer;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.entity.GameServerVO;
 import org.jeecg.modules.game.mapper.GameChannelServerMapper;
 import org.jeecg.modules.game.service.IGameChannelServerService;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,8 @@ import java.util.List;
 public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerMapper, GameChannelServer> implements IGameChannelServerService {
 
     @Override
-    public List<GameServer> gameServerByChannelId(int channelId) {
-        return getBaseMapper().gameServerByChannelId(channelId);
+    public List<GameServerVO> selectServerListByChannelId(int channelId) {
+        return getBaseMapper().selectServerListByChannelId(channelId);
     }
 
     @Override
