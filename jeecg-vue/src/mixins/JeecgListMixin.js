@@ -86,6 +86,9 @@ export const JeecgListMixin = {
                 if (res.success && res.result && res.result.records) {
                     this.dataSource = res.result.records;
                     this.ipagination.total = res.result.total;
+
+                    // 数据回调
+                    this.onDataChanged(res.result.records);
                 }
                 if (res.code === 510) {
                     this.$message.warning(res.message);
@@ -93,8 +96,8 @@ export const JeecgListMixin = {
                 this.loading = false;
             });
         },
-        initDictConfig() {
-        },
+        onDataChanged(records) {},
+        initDictConfig() {},
         handleSuperQuery(arg) {
             // 高级查询方法
             if (!arg) {
@@ -335,15 +338,14 @@ export const JeecgListMixin = {
                             content: (
                                 <div>
                                     <span> {msg} </span>
-                                    <br/>
+                                    <br />
                                     <span>
                                         {" "}
                                         具体详情请{" "}
                                         <a href={href} target="_blank" download={fileName}>
                                             {" "}
                                             点击下载{" "}
-                                        </a>
-                                        {" "}
+                                        </a>{" "}
                                     </span>
                                 </div>
                             )
