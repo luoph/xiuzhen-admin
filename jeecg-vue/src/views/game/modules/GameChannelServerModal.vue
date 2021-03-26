@@ -11,8 +11,8 @@
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">{{ server.id + " - " + server.name }}</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="顺序">
-                    <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入顺序" style="width: 100%" />
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="位置权重（值越大越靠前）">
+                    <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入位置权重（值越大越靠前）" style="width: 100%" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
                     <a-select v-decorator="['delFlag', {}]" placeholder="请选择状态" :initialValue="0">
