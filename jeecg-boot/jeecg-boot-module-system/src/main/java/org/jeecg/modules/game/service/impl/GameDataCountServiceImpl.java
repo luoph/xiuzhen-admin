@@ -204,10 +204,19 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
                 continue;
             }
-            // 留存更新
-            updateRemainTask(gameChannel, gameServer, formatDate);
-            // ltv更新
-            updateLtvTask(gameChannel, gameServer, formatDate);
+            try {
+                // 留存更新
+                updateRemainTask(gameChannel, gameServer, formatDate);
+            } catch (Exception e) {
+                log.error("updateRemainTask error!" + gameChannelServer.getChannelId() + "_" + gameChannelServer.getServerId());
+            }
+
+            try {
+                // ltv更新
+                updateLtvTask(gameChannel, gameServer, formatDate);
+            } catch (Exception e) {
+                log.error("updateLtvTask error!" + gameChannelServer.getChannelId() + "_" + gameChannelServer.getServerId());
+            }
         }
     }
 
