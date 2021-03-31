@@ -70,6 +70,12 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignTypeThrowingEggsGiftService campaignTypeThrowingEggsGiftService;
 
+    @Autowired
+    private IGameCampaignTypePartyTaskService campaignTypePartyTaskService;
+
+    @Autowired
+    private IGameCampaignTypePartyProgressService campaignTypePartyProgressService;
+
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
@@ -135,48 +141,61 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                             .eq(GameCampaignTypeFirework::getCampaignId, campaignId)
                             .eq(GameCampaignTypeFirework::getTypeId, model.getId());
                     model.setDetails(campaignTypeFireworkService.list(detailQuery));
-                    break;
                 }
+                break;
 
                 case REDUCE_RANK: {
                     Wrapper<GameCampaignTypeReduce> detailQuery = Wrappers.<GameCampaignTypeReduce>lambdaQuery()
                             .eq(GameCampaignTypeReduce::getCampaignId, campaignId)
                             .eq(GameCampaignTypeReduce::getTypeId, model.getId());
                     model.setDetails(campaignTypeReduceService.list(detailQuery));
-                    break;
                 }
+                break;
 
                 case LIMIT_TIME_SWORD: {
                     Wrapper<GameCampaignTypeSword> detailQuery = Wrappers.<GameCampaignTypeSword>lambdaQuery()
                             .eq(GameCampaignTypeSword::getCampaignId, campaignId)
                             .eq(GameCampaignTypeSword::getTypeId, model.getId());
                     model.setDetails(campaignTypeSwordService.list(detailQuery));
-                    break;
                 }
+                break;
 
                 case THROWING_EGGS: {
                     Wrapper<GameCampaignTypeThrowingEggs> detailQuery = Wrappers.<GameCampaignTypeThrowingEggs>lambdaQuery()
                             .eq(GameCampaignTypeThrowingEggs::getCampaignId, campaignId)
                             .eq(GameCampaignTypeThrowingEggs::getTypeId, model.getId());
                     model.setDetails(campaignTypeThrowingEggsService.list(detailQuery));
-                    break;
                 }
+                break;
 
                 case THROWING_EGGS_RANK: {
                     Wrapper<GameCampaignTypeThrowingEggsRank> detailQuery = Wrappers.<GameCampaignTypeThrowingEggsRank>lambdaQuery()
                             .eq(GameCampaignTypeThrowingEggsRank::getCampaignId, campaignId)
                             .eq(GameCampaignTypeThrowingEggsRank::getTypeId, model.getId());
                     model.setDetails(campaignTypeThrowingEggsRankService.list(detailQuery));
-                    break;
                 }
-                
+                break;
+
                 case THROWING_EGGS_GIFT: {
                     Wrapper<GameCampaignTypeThrowingEggsGift> detailQuery = Wrappers.<GameCampaignTypeThrowingEggsGift>lambdaQuery()
                             .eq(GameCampaignTypeThrowingEggsGift::getCampaignId, campaignId)
                             .eq(GameCampaignTypeThrowingEggsGift::getTypeId, model.getId());
                     model.setDetails(campaignTypeThrowingEggsGiftService.list(detailQuery));
-                    break;
                 }
+                break;
+
+                case PARTY: {
+                    Wrapper<GameCampaignTypePartyTask> detailQuery = Wrappers.<GameCampaignTypePartyTask>lambdaQuery()
+                            .eq(GameCampaignTypePartyTask::getCampaignId, campaignId)
+                            .eq(GameCampaignTypePartyTask::getTypeId, model.getId());
+                    model.setDetails(campaignTypePartyTaskService.list(detailQuery));
+
+                    Wrapper<GameCampaignTypePartyProgress> rewardsQuery = Wrappers.<GameCampaignTypePartyProgress>lambdaQuery()
+                            .eq(GameCampaignTypePartyProgress::getCampaignId, campaignId)
+                            .eq(GameCampaignTypePartyProgress::getTypeId, model.getId());
+                    model.setRewardList(campaignTypePartyProgressService.list(rewardsQuery));
+                }
+                break;
                 default:
                     break;
             }

@@ -1,20 +1,41 @@
 <template>
     <a-card :bordered="false">
         <!-- 查询区域 -->
-        <div class="table-page-search-wrapper"></div>
+        <!-- <div class="table-page-search-wrapper">
+             <a-form layout="inline" @keyup.enter.native="searchQuery">
+                 <a-row :gutter="24">
+                     </a-row>
+             </a-form>
+         </div>-->
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader"
-                      :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入活动配置</a-button>
-            </a-upload>
-            <!-- <a-button type="primary" icon="download" @click="handleExportXls('节日活动页签配置')">导出</a-button> -->
+            <!--<a-button type="primary" icon="download" @click="handleExportXls('节日派对任务')">导出</a-button>-->
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+                 <a-button type="primary" icon="import">导入</a-button>
+             </a-upload>-->
+            <!--<a-dropdown v-if="selectedRowKeys.length > 0">
+                <a-menu slot="overlay">
+                    <a-menu-item key="1" @click="batchDel">
+                        <a-icon type="delete" />
+                        删除
+                    </a-menu-item>
+                </a-menu>
+                <a-button style="margin-left: 8px"> 批量操作
+                    <a-icon type="down" />
+                </a-button>
+            </a-dropdown>-->
         </div>
 
         <!-- table区域-begin -->
         <div>
+            <!--<div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+                style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+            </div>-->
+
             <a-table
                 ref="table"
                 size="middle"
@@ -25,13 +46,15 @@
                 :pagination="ipagination"
                 :loading="loading"
                 @change="handleTableChange"
+
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
+                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+                         style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -57,28 +80,25 @@
             </a-table>
         </div>
 
-        <game-campaign-type-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-modal>
+        <gameCampaignTypePartyTask-modal ref="modalForm" @ok="modalFormOk"></gameCampaignTypePartyTask-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import { getAction } from "../../api/manage";
+import GameCampaignTypePartyTaskModal from "./modules/GameCampaignTypePartyTaskModal";
+import { getAction } from "@api/manage";
 import { filterObj } from "@/utils/util";
-import GameCampaignTypeModal from "./modules/GameCampaignTypeModal";
-import JDate from "@/components/jeecg/JDate.vue";
 
 export default {
-    name: "GameCampaignTypeList",
+    name: "GameCampaignTypePartyTaskList",
     mixins: [JeecgListMixin],
     components: {
-        JDate,
-        GameCampaignTypeModal
+        GameCampaignTypePartyTaskModal
     },
     data() {
         return {
-            description: "节日活动页签配置管理页面",
-            model: {},
+            description: "节日派对任务管理页面",
             // 表头
             columns: [
                 {
@@ -92,92 +112,54 @@ export default {
                     }
                 },
                 {
-                    title: "活动id",
+                    title: "campaign.id, 活动id",
                     align: "center",
-                    width: 80,
                     dataIndex: "campaignId"
                 },
                 {
-                    title: "页签id",
+                    title: "game_campaign_type.id",
                     align: "center",
-                    width: 80,
-                    dataIndex: "id"
+                    dataIndex: "typeId"
                 },
                 {
-                    title: "页签名",
+                    title: "任务类型",
                     align: "center",
-                    width: 80,
-                    dataIndex: "name"
+                    dataIndex: "type"
                 },
                 {
-                    title: "活动类型",
+                    title: "任务模块id",
                     align: "center",
-                    dataIndex: "type",
-                    width: 120,
-                    customRender: value => {
-                        let text = "--";
-                        if (value === 1) {
-                            text = "1-登录礼包";
-                        } else if (value === 2) {
-                            text = "2-累计充值";
-                        } else if (value === 3) {
-                            text = "3-节日兑换";
-                        } else if (value === 4) {
-                            text = "4-节日任务";
-                        } else if (value === 5) {
-                            text = "5-修为加成";
-                        } else if (value === 6) {
-                            text = "6-灵气加成";
-                        } else if (value === 7) {
-                            text = "7-节日掉落";
-                        } else if (value === 8) {
-                            text = "8-节日烟花";
-                        } else if (value === 9) {
-                            text = "9-消费排行";
-                        } else if (value === 10) {
-                            text = "10-限时仙剑";
-                        } else if (value === 11) {
-                            text = "11-砸蛋";
-                        } else if (value === 12) {
-                            text = "12-砸蛋榜单";
-                        } else if (value === 13) {
-                            text = "13-砸蛋礼包";
-                        } else if (value === 14) {
-                            text = "14-节日派对";
-                        }
-                        return text;
-                    }
+                    dataIndex: "moduleId"
                 },
                 {
-                    title: "活动宣传图",
+                    title: "参数",
                     align: "center",
-                    width: 400,
-                    dataIndex: "typeImage",
-                    scopedSlots: { customRender: "imgSlot" }
+                    dataIndex: "args"
                 },
                 {
-                    title: "排序",
+                    title: "任务描述",
                     align: "center",
-                    width: 80,
-                    dataIndex: "sort"
+                    dataIndex: "remark"
                 },
                 {
-                    title: "开始时间",
+                    title: "任务规定数量",
                     align: "center",
-                    width: 120,
-                    dataIndex: "startTime"
+                    dataIndex: "target"
                 },
                 {
-                    title: "结束时间",
+                    title: "直接消耗数量",
                     align: "center",
-                    width: 120,
-                    dataIndex: "endTime"
+                    dataIndex: "costNum"
                 },
                 {
-                    title: "创建时间",
+                    title: "跳转id",
                     align: "center",
-                    width: 120,
-                    dataIndex: "createTime"
+                    dataIndex: "jumpId"
+                },
+                {
+                    title: "任务奖励",
+                    align: "center",
+                    dataIndex: "reward"
                 },
                 {
                     title: "操作",
@@ -187,16 +169,20 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameCampaignType/list",
-                delete: "game/gameCampaignType/delete",
-                deleteBatch: "game/gameCampaignType/deleteBatch",
-                exportXlsUrl: "game/gameCampaignType/exportXls",
-                importExcelUrl: "game/gameCampaignType/importExcel"
+                list: "game/gameCampaignTypePartyTask/list",
+                delete: "game/gameCampaignTypePartyTask/delete"
+                //deleteBatch: "game/gameCampaignTypePartyTask/deleteBatch",
+                //exportXlsUrl: "game/gameCampaignTypePartyTask/exportXls",
+                //importExcelUrl: "game/gameCampaignTypePartyTask/importExcel"
             },
             dictOptions: {}
         };
     },
-    computed: {},
+    computed: {
+        importExcelUrl: function() {
+            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
+        }
+    },
     methods: {
         initDictConfig() {
         },
@@ -234,16 +220,17 @@ export default {
             this.loadData();
         },
         handleAdd() {
-            this.$refs.modalForm.add({ campaignId: this.model.id });
-            this.$refs.modalForm.title = "新增节日页签配置";
+            this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
+            this.$refs.modalForm.title = "新增节日派对活动任务配置";
         },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);
             param.field = this.getQueryField();
             param.pageNo = this.ipagination.current;
             param.pageSize = this.ipagination.pageSize;
-            // 活动id
-            param.campaignId = this.model.id;
+            // typeId、活动id
+            param.typeId = this.model.id;
+            param.campaignId = this.model.campaignId;
             return filterObj(param);
         },
         getImgView(text) {
@@ -251,10 +238,6 @@ export default {
                 text = text.substring(0, text.indexOf(","));
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
-        },
-        importExcelUrl() {
-            let domainURL = window._CONFIG["domainURL"];
-            return `${domainURL}/${this.url.importExcelUrl}?campaignId=${this.model.id}`;
         }
     }
 };
@@ -262,10 +245,4 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
-
-.list-image {
-    width: 100%;
-    height: 100px;
-    object-fit: scale-down;
-}
 </style>

@@ -27,6 +27,10 @@
                                 <a-select-option :value="8">8-节日烟花</a-select-option>
                                 <a-select-option :value="9">9-消费排行</a-select-option>
                                 <a-select-option :value="10">10-限时仙剑</a-select-option>
+                                <a-select-option :value="11">11-砸蛋</a-select-option>
+                                <a-select-option :value="12">12-砸蛋榜</a-select-option>
+                                <a-select-option :value="13">13-砸蛋礼包</a-select-option>
+                                <a-select-option :value="14">14-节日派对</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -160,6 +164,10 @@ export default {
     data() {
         return {
             description: "活动类型配置管理页面",
+            queryParam: {
+                startTimeRange: null,
+                endTimeRange: null
+            },
             // 表头
             columns: [
                 {
@@ -223,6 +231,8 @@ export default {
                             re = "12-砸蛋榜单";
                         } else if (value === 13) {
                             re = "13-砸蛋礼包";
+                        } else if (value === 14) {
+                            re = "14-节日派对";
                         }
                         return re;
                     }
