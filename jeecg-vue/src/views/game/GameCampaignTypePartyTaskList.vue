@@ -112,16 +112,6 @@ export default {
                     }
                 },
                 {
-                    title: "campaign.id, 活动id",
-                    align: "center",
-                    dataIndex: "campaignId"
-                },
-                {
-                    title: "game_campaign_type.id",
-                    align: "center",
-                    dataIndex: "typeId"
-                },
-                {
                     title: "任务类型",
                     align: "center",
                     dataIndex: "type"
