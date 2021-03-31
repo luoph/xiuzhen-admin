@@ -23,6 +23,7 @@
                         <a-select-option :value="11">11-节日砸蛋</a-select-option>
                         <a-select-option :value="12">12-砸蛋排行</a-select-option>
                         <a-select-option :value="13">13-砸蛋礼包</a-select-option>
+                        <a-select-option :value="14">14-节日派对</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -54,8 +55,11 @@
                 </a-form-item>
 
                 <a-form-item label="砸蛋积分商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
+                    <a-textarea v-if="model.type === 11" v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
                                 placeholder='活动类型"11-砸蛋" 时必填,格式如下:"[{"goodsId":1,"itemId":1001,"integral":1,"stack":1,"num":100}]"' />
+                    <a-textarea v-if="model.type === 14"
+                                v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
+                                placeholder='活动类型"14-节日派对" 时必填,格式如下:"[{"itemId":1001,"num":100}]"' />
                 </a-form-item>
 
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -81,6 +85,8 @@
             <game-campaign-type-throwing-eggs-list v-if="isEdit && model.type === 11" ref="throwingEggsList" />
             <game-campaign-type-throwing-eggs-rank-list v-if="isEdit && model.type === 12" ref="throwingEggsRankList" />
             <game-campaign-type-throwing-eggs-gift-list v-if="isEdit && model.type === 13" ref="throwingEggsGiftList" />
+            <game-campaign-type-party-task-list v-if="isEdit && model.type === 14" ref="partyTaskList" />
+            <game-campaign-type-party-progress-list v-if="isEdit && model.type === 14" ref="partyProgressList" />
         </a-spin>
     </a-modal>
 </template>
@@ -104,6 +110,8 @@ import GameCampaignTypeSwordList from "@views/game/GameCampaignTypeSwordList";
 import GameCampaignTypeThrowingEggsList from "@views/game/GameCampaignTypeThrowingEggsList";
 import GameCampaignTypeThrowingEggsRankList from "@views/game/GameCampaignTypeThrowingEggsRankList";
 import GameCampaignTypeThrowingEggsGiftList from "@views/game/GameCampaignTypeThrowingEggsGiftList";
+import GameCampaignTypePartyProgressList from "@views/game/GameCampaignTypePartyProgressList";
+import GameCampaignTypePartyTaskList from "@views/game/GameCampaignTypePartyTaskList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -122,7 +130,9 @@ export default {
         GameCampaignTypeSwordList,
         GameCampaignTypeThrowingEggsList,
         GameCampaignTypeThrowingEggsRankList,
-        GameCampaignTypeThrowingEggsGiftList
+        GameCampaignTypeThrowingEggsGiftList,
+        GameCampaignTypePartyProgressList,
+        GameCampaignTypePartyTaskList
     },
     data() {
         return {
@@ -212,6 +222,12 @@ export default {
                     }
                     if (this.$refs.throwingEggsGiftList) {
                         this.$refs.throwingEggsGiftList.edit(record);
+                    }
+                    if (this.$refs.partyTaskList) {
+                        this.$refs.partyTaskList.edit(record);
+                    }
+                    if (this.$refs.partyProgressList) {
+                        this.$refs.partyProgressList.edit(record);
                     }
                 }
 
