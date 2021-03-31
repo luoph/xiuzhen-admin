@@ -9,7 +9,7 @@
                 </a-form-item>
                 <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]"
-                              initialValue="1">
+                              initialValue="1" @change="selectType">
                         <a-select-option :value="1">1-登录礼包</a-select-option>
                         <a-select-option :value="2">2-累计充值</a-select-option>
                         <a-select-option :value="3">3-节日兑换</a-select-option>
@@ -54,12 +54,16 @@
                              placeholder="骨骼动画"></a-input>
                 </a-form-item>
 
-                <a-form-item label="砸蛋积分商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-if="model.type === 11" v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
-                                placeholder='活动类型"11-砸蛋" 时必填,格式如下:"[{"goodsId":1,"itemId":1001,"integral":1,"stack":1,"num":100}]"' />
-                    <a-textarea v-if="model.type === 14"
+                <a-form-item v-if="model.type === 11" label="砸蛋积分商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea
                                 v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
-                                placeholder='活动类型"14-节日派对" 时必填,格式如下:"[{"itemId":1001,"num":100}]"' />
+                                placeholder='活动类型"11-砸蛋" 时必填,格式如下:"[{"goodsId":1,"itemId":1001,"integral":1,"stack":1,"num":100}]"' />
+                </a-form-item>
+
+                <a-form-item v-if="model.type === 14" label="节日派对大奖" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea
+                        v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
+                        placeholder='活动类型"14-节日派对" 时必填,格式如下:"[{"itemId":1001,"num":100}]"' />
                 </a-form-item>
 
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -289,6 +293,9 @@ export default {
                 text = text.substring(0, text.indexOf(","));
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
+        },
+        selectType(value) {
+            this.model.type = value;
         }
         // 自定义校验函数，要求输入的是一个正整数
         // checkGoods() {
