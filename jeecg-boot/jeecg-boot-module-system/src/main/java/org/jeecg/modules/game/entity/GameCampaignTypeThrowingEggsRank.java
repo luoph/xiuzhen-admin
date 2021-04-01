@@ -27,6 +27,15 @@ public class GameCampaignTypeThrowingEggsRank extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignTypeThrowingEggsRank() {
+    }
+
+    public GameCampaignTypeThrowingEggsRank(GameCampaignTypeThrowingEggsRank other) {
+        this.sort = other.getSort();
+        this.limitNum = other.getLimitNum();
+        this.reward = other.getReward();
+    }
+
     /**
      * 排名序列
      */

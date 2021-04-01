@@ -27,6 +27,30 @@ public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+
+    public GameCampaignTypeThrowingEggs() {
+    }
+
+    public GameCampaignTypeThrowingEggs(GameCampaignTypeThrowingEggs other) {
+        this.eggType = other.getEggType();
+        this.costItemId = other.getCostItemId();
+        this.limitLuckyValue = other.getLimitLuckyValue();
+        this.costNum = other.getCostNum();
+        this.lotteryIntegralMin = other.getLotteryIntegralMin();
+        this.lotteryIntegralMax = other.getLotteryIntegralMax();
+        this.luckyProbability = other.getLuckyProbability();
+        this.probabilityPublicity = other.getProbabilityPublicity();
+        this.rule = other.getRule();
+        this.ordinaryPool = other.getOrdinaryPool();
+        this.luckyPool = other.getLuckyPool();
+        this.ordinaryPoolItem = other.getOrdinaryPoolItem();
+        this.luckyPoolItem = other.getLuckyPoolItem();
+        this.rewardAnim = other.getRewardAnim();
+        this.showOrdinaryReward = other.getShowOrdinaryReward();
+        this.showLuckyReward = other.getShowLuckyReward();
+        this.throwingEggsValue = other.getThrowingEggsValue();
+    }
+
     /**
      * 砸蛋类型
      */

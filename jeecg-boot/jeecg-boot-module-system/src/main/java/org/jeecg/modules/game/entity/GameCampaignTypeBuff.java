@@ -24,6 +24,18 @@ public class GameCampaignTypeBuff extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignTypeBuff() {
+
+    }
+
+    public GameCampaignTypeBuff(GameCampaignTypeBuff other) {
+        this.type = other.getType();
+        this.startTime = other.getStartTime();
+        this.endTime = other.getEndTime();
+        this.description = other.getDescription();
+        this.addition = other.getAddition();
+    }
+
     /**
      * 活动项类型: 1.登录礼包, 2.累计充值, 3.兑换 4.节日任务, 5.buff-修为加成, 6.buff-灵气加成
      */

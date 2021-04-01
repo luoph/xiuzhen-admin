@@ -30,6 +30,7 @@ public enum CampaignFestivalType {
     THROWING_EGGS_RANK("砸蛋榜", 12, GameCampaignTypeThrowingEggsRank.class, GameCampaignTypeThrowingEggsRankVO.class),
     THROWING_EGGS_GIFT("砸蛋礼包", 13, GameCampaignTypeThrowingEggsGift.class, GameCampaignTypeThrowingEggsGiftVO.class),
     PARTY("节日派对", 14, GameCampaignTypePartyTask.class, GameCampaignTypePartyTaskVO.class),
+    // PARTY_PROGRESS("节日派对", 14, GameCampaignTypePartyProgress.class, GameCampaignTypePartyProgressVO.class),
     // end
     ;
 

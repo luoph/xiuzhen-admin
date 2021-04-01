@@ -21,6 +21,16 @@ public class GameCampaignTypeRecharge extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+
+    public GameCampaignTypeRecharge() {
+    }
+
+    public GameCampaignTypeRecharge(GameCampaignTypeRecharge other) {
+        this.rechargeId = other.getRechargeId();
+        this.rechargeAmount = other.getRechargeAmount();
+        this.reward = other.getReward();
+    }
+
     /**
      * 礼包id
      */

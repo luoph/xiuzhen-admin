@@ -113,6 +113,8 @@
                     <a-divider type="vertical" />
                     <a @click="handleServerList(record)">活动状态</a>
                     <a-divider type="vertical" />
+                    <a @click="handleDuplicate(record)">复制</a>
+                    <a-divider type="vertical" />
                     <a @click="handleSyncCampaign(record)">同步到区服</a>
                     <!-- <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -266,6 +268,7 @@ export default {
                 list: "game/gameCampaign/list",
                 delete: "game/gameCampaign/delete",
                 sync: "game/gameCampaign/sync",
+                duplicate: "game/gameCampaign/duplicate",
                 deleteBatch: "game/gameCampaign/deleteBatch",
                 exportXlsUrl: "game/gameCampaign/exportXls",
                 importExcelUrl: "game/gameCampaign/importExcel"
@@ -329,7 +332,23 @@ export default {
                 text = text.substring(0, text.indexOf(","));
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
-        }
+        },
+        handleDuplicate: function(record) {
+            const that = this;
+            that.confirmLoading = true;
+            getAction(that.url.duplicate, { id: record.id })
+                .then(res => {
+                    if (res.success) {
+                        that.$message.success("复制成功");
+                    } else {
+                        that.$message.error("复制失败");
+                    }
+                })
+                .finally(() => {
+                    that.confirmLoading = false;
+                    that.loadData();
+                });
+        },
     }
 };
 </script>

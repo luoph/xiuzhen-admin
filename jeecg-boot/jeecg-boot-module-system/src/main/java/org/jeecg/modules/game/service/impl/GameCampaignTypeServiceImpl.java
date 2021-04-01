@@ -454,4 +454,231 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
             campaignTypeBuffService.removeByIds(removeList);
         }
     }
+
+
+    @Override
+    public void duplicate(GameCampaignType model, long copyCampaignId) {
+        GameCampaignType copyCampaignType = new GameCampaignType(model);
+        copyCampaignType.setCampaignId(copyCampaignId);
+        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(copyCampaignType.getType());
+        if (save(copyCampaignType) && festivalType != null) {
+            fillTabDetail(model, false);
+            if (CollUtil.isEmpty(model.getDetails())) {
+                return;
+            }
+            switch (festivalType) {
+                case LOGIN: {
+                    List<GameCampaignTypeLogin> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeLogin> details = (List<GameCampaignTypeLogin>) model.getDetails();
+                    for (GameCampaignTypeLogin detail : details) {
+                        GameCampaignTypeLogin copy = new GameCampaignTypeLogin(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeLoginService.saveBatch(list);
+                }
+                break;
+
+                case RECHARGE: {
+                    List<GameCampaignTypeRecharge> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeRecharge> details = (List<GameCampaignTypeRecharge>) model.getDetails();
+                    for (GameCampaignTypeRecharge detail : details) {
+                        GameCampaignTypeRecharge copy = new GameCampaignTypeRecharge(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeRechargeService.saveBatch(list);
+                }
+                break;
+
+                case EXCHANGE: {
+                    List<GameCampaignTypeExchange> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeExchange> details = (List<GameCampaignTypeExchange>) model.getDetails();
+                    for (GameCampaignTypeExchange detail : details) {
+                        GameCampaignTypeExchange copy = new GameCampaignTypeExchange(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeExchangeService.saveBatch(list);
+                }
+                break;
+
+                case TASK: {
+                    List<GameCampaignTypeTask> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeTask> details = (List<GameCampaignTypeTask>) model.getDetails();
+                    for (GameCampaignTypeTask detail : details) {
+                        GameCampaignTypeTask copy = new GameCampaignTypeTask(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeTaskService.saveBatch(list);
+                }
+                break;
+
+                case BUFF_ANIMA:
+                case BUFF_PRACTICE: {
+                    List<GameCampaignTypeBuff> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeBuff> details = (List<GameCampaignTypeBuff>) model.getDetails();
+                    for (GameCampaignTypeBuff detail : details) {
+                        GameCampaignTypeBuff copy = new GameCampaignTypeBuff(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeBuffService.saveBatch(list);
+                }
+                break;
+
+                case FALL: {
+                    List<GameCampaignTypeFall> copyDetails = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeFall> details = (List<GameCampaignTypeFall>) model.getDetails();
+                    for (GameCampaignTypeFall detail : details) {
+                        GameCampaignTypeFall copy = new GameCampaignTypeFall(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        copyDetails.add(copy);
+                    }
+                    campaignTypeFallService.saveBatch(copyDetails);
+
+                    if (CollUtil.isNotEmpty(model.getRewardList())) {
+                        List<GameCampaignTypeFallReward> copyRewards = new ArrayList<>(model.getRewardList().size());
+                        List<GameCampaignTypeFallReward> rewardList = (List<GameCampaignTypeFallReward>) model.getRewardList();
+                        for (GameCampaignTypeFallReward reward : rewardList) {
+                            GameCampaignTypeFallReward copy = new GameCampaignTypeFallReward(reward);
+                            copy.setCampaignId(copyCampaignId);
+                            copy.setTypeId(copyCampaignType.getId());
+
+                            copyRewards.add(copy);
+                        }
+                        campaignTypeFallRewardService.saveBatch(copyRewards);
+                    }
+                }
+                break;
+
+                case FIREWORK: {
+                    List<GameCampaignTypeFirework> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeFirework> details = (List<GameCampaignTypeFirework>) model.getDetails();
+                    for (GameCampaignTypeFirework detail : details) {
+                        GameCampaignTypeFirework copy = new GameCampaignTypeFirework(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeFireworkService.saveBatch(list);
+                }
+                break;
+
+                case REDUCE_RANK: {
+                    List<GameCampaignTypeReduce> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeReduce> details = (List<GameCampaignTypeReduce>) model.getDetails();
+                    for (GameCampaignTypeReduce detail : details) {
+                        GameCampaignTypeReduce copy = new GameCampaignTypeReduce(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeReduceService.saveBatch(list);
+                }
+                break;
+
+                case LIMIT_TIME_SWORD: {
+                    List<GameCampaignTypeSword> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeSword> details = (List<GameCampaignTypeSword>) model.getDetails();
+                    for (GameCampaignTypeSword detail : details) {
+                        GameCampaignTypeSword copy = new GameCampaignTypeSword(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeSwordService.saveBatch(list);
+                }
+                break;
+
+                case THROWING_EGGS: {
+                    List<GameCampaignTypeThrowingEggs> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeThrowingEggs> details = (List<GameCampaignTypeThrowingEggs>) model.getDetails();
+                    for (GameCampaignTypeThrowingEggs detail : details) {
+                        GameCampaignTypeThrowingEggs copy = new GameCampaignTypeThrowingEggs(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeThrowingEggsService.saveBatch(list);
+                }
+                break;
+
+                case THROWING_EGGS_RANK: {
+                    List<GameCampaignTypeThrowingEggsRank> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeThrowingEggsRank> details = (List<GameCampaignTypeThrowingEggsRank>) model.getDetails();
+                    for (GameCampaignTypeThrowingEggsRank detail : details) {
+                        GameCampaignTypeThrowingEggsRank copy = new GameCampaignTypeThrowingEggsRank(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeThrowingEggsRankService.saveBatch(list);
+                }
+                break;
+
+                case THROWING_EGGS_GIFT: {
+                    List<GameCampaignTypeThrowingEggsGift> list = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeThrowingEggsGift> details = (List<GameCampaignTypeThrowingEggsGift>) model.getDetails();
+                    for (GameCampaignTypeThrowingEggsGift detail : details) {
+                        GameCampaignTypeThrowingEggsGift copy = new GameCampaignTypeThrowingEggsGift(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        list.add(copy);
+                    }
+                    campaignTypeThrowingEggsGiftService.saveBatch(list);
+                }
+                break;
+
+                case PARTY: {
+                    List<GameCampaignTypePartyTask> copyDetails = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypePartyTask> details = (List<GameCampaignTypePartyTask>) model.getDetails();
+                    for (GameCampaignTypePartyTask detail : details) {
+                        GameCampaignTypePartyTask copy = new GameCampaignTypePartyTask(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        copyDetails.add(copy);
+                    }
+                    campaignTypePartyTaskService.saveBatch(copyDetails);
+
+                    if (CollUtil.isNotEmpty(model.getRewardList())) {
+                        List<GameCampaignTypePartyProgress> copyRewards = new ArrayList<>(model.getRewardList().size());
+                        List<GameCampaignTypePartyProgress> rewardList = (List<GameCampaignTypePartyProgress>) model.getRewardList();
+                        for (GameCampaignTypePartyProgress reward : rewardList) {
+                            GameCampaignTypePartyProgress copy = new GameCampaignTypePartyProgress(reward);
+                            copy.setCampaignId(copyCampaignId);
+                            copy.setTypeId(copyCampaignType.getId());
+
+                            copyRewards.add(copy);
+                        }
+                        campaignTypePartyProgressService.saveBatch(copyRewards);
+                    }
+                }
+                break;
+
+                default:
+                    break;
+            }
+        }
+    }
 }

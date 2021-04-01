@@ -27,6 +27,21 @@ public class GameCampaignTypeThrowingEggsGift extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+
+    public GameCampaignTypeThrowingEggsGift() {
+    }
+
+    public GameCampaignTypeThrowingEggsGift(GameCampaignTypeThrowingEggsGift other) {
+        this.costItemId = other.getCostItemId();
+        this.costNum = other.getCostNum();
+        this.stack = other.getStack();
+        this.amount = other.getAmount();
+        this.discount = other.getDiscount();
+        this.limitCondition = other.getLimitCondition();
+        this.reward = other.getReward();
+        this.giftName = other.getGiftName();
+    }
+
     /**
      * 消耗道具
      */
