@@ -20,6 +20,18 @@ public class GameCampaignTypeFirework extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignTypeFirework() {
+    }
+
+    public GameCampaignTypeFirework(GameCampaignTypeFirework other) {
+        this.giftId = other.getGiftId();
+        this.times = other.getTimes();
+        this.price = other.getPrice();
+        this.discount = other.getDiscount();
+        this.num = other.getNum();
+        this.btnName = other.getBtnName();
+    }
+
     /**
      * 礼包itemId
      */

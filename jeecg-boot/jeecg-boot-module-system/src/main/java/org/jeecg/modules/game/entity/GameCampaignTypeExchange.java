@@ -19,6 +19,19 @@ public class GameCampaignTypeExchange extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+
+    public GameCampaignTypeExchange() {
+
+    }
+
+    public GameCampaignTypeExchange(GameCampaignTypeExchange other) {
+        this.exchangeId = other.getExchangeId();
+        this.itemName = other.getItemName();
+        this.maxExchangeNum = other.getMaxExchangeNum();
+        this.reward = other.getReward();
+        this.consume = other.getConsume();
+    }
+
     /**
      * 兑换id
      */

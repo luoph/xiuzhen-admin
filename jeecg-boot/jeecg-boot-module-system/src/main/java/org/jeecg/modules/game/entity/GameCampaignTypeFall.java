@@ -20,6 +20,17 @@ public class GameCampaignTypeFall extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+
+    public GameCampaignTypeFall() {
+
+    }
+
+    public GameCampaignTypeFall(GameCampaignTypeFall other) {
+        this.module = other.getModule();
+        this.rewardType = other.getRewardType();
+        this.reward = other.getReward();
+    }
+
     /**
      * 模块
      * 1.仙器秘境

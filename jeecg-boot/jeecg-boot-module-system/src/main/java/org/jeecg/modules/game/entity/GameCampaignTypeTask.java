@@ -19,6 +19,19 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignTypeTask() {
+    }
+
+    public GameCampaignTypeTask(GameCampaignTypeTask other) {
+        this.taskId = other.getTaskId();
+        this.description = other.getDescription();
+        this.moduleId = other.getModuleId();
+        this.target = other.getTarget();
+        this.args = other.getArgs();
+        this.reward = other.getReward();
+        this.jumpId = other.getJumpId();
+    }
+
     /**
      * 任务id
      */

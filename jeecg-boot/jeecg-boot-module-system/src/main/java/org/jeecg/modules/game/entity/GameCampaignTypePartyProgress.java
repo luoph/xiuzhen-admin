@@ -27,6 +27,15 @@ public class GameCampaignTypePartyProgress extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignTypePartyProgress() {
+    }
+
+    public GameCampaignTypePartyProgress(GameCampaignTypePartyProgress other) {
+        this.target = other.getTarget();
+        this.percent = other.getPercent();
+        this.reward = other.getReward();
+    }
+
     /**
      * 任务规定数量
      */

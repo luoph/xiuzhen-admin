@@ -24,6 +24,17 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class GameCampaignTypeReduce extends GameCampaignTypeBase {
+
+    public GameCampaignTypeReduce() {
+    }
+
+    public GameCampaignTypeReduce(GameCampaignTypeReduce other) {
+        this.sort = other.getSort();
+        this.reduceItemId = other.getReduceItemId();
+        this.limitNum = other.getLimitNum();
+        this.reward = other.getReward();
+    }
+
     /**
      * 排名序列
      */

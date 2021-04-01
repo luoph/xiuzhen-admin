@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -18,6 +19,15 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 public class GameCampaignTypeLogin extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
+
+    public GameCampaignTypeLogin() {
+    }
+
+    public GameCampaignTypeLogin(GameCampaignTypeLogin other) {
+        this.loginDay = other.getLoginDay();
+        this.description = other.getDescription();
+        this.reward = other.getReward();
+    }
 
     /**
      * 登录天数

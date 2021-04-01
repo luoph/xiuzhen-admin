@@ -27,6 +27,19 @@ public class GameCampaignTypeSword extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignTypeSword() {
+    }
+
+    public GameCampaignTypeSword(GameCampaignTypeSword other) {
+        this.checkpointId = other.getCheckpointId();
+        this.monsterId = other.getMonsterId();
+        this.unlockCheckpointId = other.getUnlockCheckpointId();
+        this.reward = other.getReward();
+        this.combatPower = other.getCombatPower();
+        this.checkpointName = other.getCheckpointName();
+    }
+
+
     /**
      * 关卡id
      */

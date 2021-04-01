@@ -25,4 +25,12 @@ public interface IGameCampaignTypeService extends IService<GameCampaignType> {
      * @param model {@linkplain GameCampaignType}
      */
     void updateTabDetail(GameCampaignType model);
+
+    /**
+     * 复制
+     *
+     * @param model
+     * @param copyCampaignId
+     */
+    void duplicate(GameCampaignType model, long copyCampaignId);
 }

@@ -30,6 +30,23 @@ public class GameCampaignType extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignType() {
+
+    }
+
+    public GameCampaignType(GameCampaignType other) {
+        this.name = other.getName();
+        this.type = other.getType();
+        this.typeImage = other.getTypeImage();
+        this.sort = other.getSort();
+        this.extra = other.getExtra();
+        this.animation = other.getAnimation();
+        this.resType = other.getResType();
+        this.startTime = other.getStartTime();
+        this.endTime = other.getEndTime();
+        this.eggsIntegralGoods = other.getEggsIntegralGoods();
+    }
+
     /**
      * id
      */
@@ -88,7 +105,7 @@ public class GameCampaignType extends BaseEntity {
     /**
      * 活动类型-11 所需的商品列表
      */
-    @Excel(name = "砸蛋商品",width = 15)
+    @Excel(name = "砸蛋商品", width = 15)
     private String eggsIntegralGoods;
 
     /**

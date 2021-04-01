@@ -30,6 +30,22 @@ public class GameCampaign extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaign() {
+    }
+
+    public GameCampaign(GameCampaign other) {
+        this.type = other.getType();
+        this.name = other.getName();
+        this.description = other.getDescription();
+        this.showName = other.getShowName();
+        this.icon = other.getIcon();
+        this.banner = other.getBanner();
+        this.status = other.getStatus();
+        this.autoOpen = other.getAutoOpen();
+        this.startTime = other.getStartTime();
+        this.endTime = other.getEndTime();
+    }
+
     /**
      * 活动id
      */
