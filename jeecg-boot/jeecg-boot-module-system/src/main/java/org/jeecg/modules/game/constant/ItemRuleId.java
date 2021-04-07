@@ -196,6 +196,10 @@ public enum ItemRuleId {
 
     STORY_HELP(186, "剧情-助战"),
 
+    PARTY(187, "节日派对"),
+
+    FACTION_WAR(188, "仙盟战"),
+
     // end
     ;
 
