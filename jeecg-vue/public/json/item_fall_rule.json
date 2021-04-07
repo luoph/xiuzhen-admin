@@ -1618,5 +1618,23 @@
         "title": "助战奖励",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3
+    },
+    {
+        "id": 180,
+        "type": 187,
+        "name": "节日派对",
+        "reward_type": 3,
+        "title": "节日掉落",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
+    },
+    {
+        "id": 181,
+        "type": 188,
+        "name": "仙盟战",
+        "reward_type": 3,
+        "title": "仙盟战掉落",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3
     }
 ]

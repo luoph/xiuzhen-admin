@@ -14,8 +14,8 @@ import org.jeecg.modules.player.entity.GameOrder;
 import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.entity.PlayerDTO;
-import org.jeecg.modules.player.mapper.PlayerMapper;
 import org.jeecg.modules.player.mapper.GameRegisterInfoMapper;
+import org.jeecg.modules.player.mapper.PlayerMapper;
 import org.jeecg.modules.player.service.IPlayerService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -249,6 +249,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
                 voList.add(playerBehavior);
             }
         }
+        voList = voList.stream().sorted(Comparator.comparing(PlayerBehavior::getCreateDate).reversed()).collect(Collectors.toList());
         return voList;
     }
 
@@ -309,7 +310,6 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
         long practiceValue = list.stream().filter(i -> i.getType() == PlayerLogType.PRACTICE_VALUE.getType())
                 .max(Comparator.comparing(PlayerBehavior::getValue)).map(PlayerBehavior::getValue).orElse(0L);
         behavior.setPracticeValue(practiceValue);
-
 
 
         long mainStoryCheck = list.stream().filter(i -> i.getType() == PlayerLogType.MAIN_STORY_LEVEL.getType()).count();
