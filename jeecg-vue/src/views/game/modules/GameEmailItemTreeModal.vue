@@ -138,7 +138,7 @@ export default {
     methods: {
         initDictConfig() {
         },
-        
+
         close() {
             this.$emit("close");
             this.visible = false;
@@ -200,7 +200,7 @@ export default {
             } else {
                 this.selectItems = [];
             }
-            this.unique(this.selectItems);
+            this.selectItems = this.unique(this.selectItems);
         },
 
         unique(arr) {
