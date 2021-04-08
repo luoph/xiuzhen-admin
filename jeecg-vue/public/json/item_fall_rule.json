@@ -1154,15 +1154,6 @@
     {
         "id": 129,
         "type": 136,
-        "name": "开服活动",
-        "reward_type": 3,
-        "title": "开服活动",
-        "describe": "储物袋已满，通过传书发放的道具",
-        "notice_type": 2
-    },
-    {
-        "id": 129,
-        "type": 136,
         "name": "仙职",
         "reward_type": 3,
         "title": "仙职",
