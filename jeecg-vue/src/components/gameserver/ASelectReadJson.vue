@@ -36,12 +36,13 @@ export default {
             this.$emit("onSelectOption", v);
         },
         readJson() {
+            let that = this;
             let jsonUrl = "/json/" + this.jsonFile + ".json";
             axios.get(jsonUrl).then(res => {
-                if (this.selectArray !== null && this.selectArray.length > 0) {
-                    this.selectArray.splice(0);
+                if (that.selectArray !== null && that.selectArray.length > 0) {
+                    that.selectArray.splice(0);
                 }
-                this.selectArray = res.data;
+                that.selectArray = res.data;
             });
         }
     }

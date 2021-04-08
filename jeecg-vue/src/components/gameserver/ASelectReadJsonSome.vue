@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-select mode="multiple" style="width: 100%" :placeholder="tips" @change="handlerSelect">
-            <a-select-option v-for="(item,i) in selectArray" :key="Math.random()+i" :value="item.type">
+            <a-select-option v-for="item in selectArray" :key="item.id" :value="item.type">
                 {{ item.name }}
             </a-select-option>
         </a-select>
@@ -38,12 +38,13 @@ export default {
             this.$emit("onSelectOptionSome", v);
         },
         readJson() {
+            let that = this;
             let jsonUrl = "/json/" + this.jsonFile + ".json";
             axios.get(jsonUrl).then((res) => {
-                if (this.selectArray !== null && this.selectArray.length > 0) {
-                    this.selectArray.splice(0);
+                if (that.selectArray !== null && that.selectArray.length > 0) {
+                    that.selectArray.splice(0);
                 }
-                this.selectArray = res.data;
+                that.selectArray = res.data;
             });
         },
         handleChange(value) {
