@@ -1,5 +1,6 @@
 package org.jeecg.modules.player.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.xiuzhen.common.data.ConfigDataEnum;
 import cn.youai.xiuzhen.common.data.ConfigDataService;
 import cn.youai.xiuzhen.entity.pojo.ConfItem;
@@ -12,6 +13,7 @@ import com.googlecode.cqengine.query.logical.And;
 import com.googlecode.cqengine.query.logical.Or;
 import com.googlecode.cqengine.query.option.QueryOptions;
 import com.googlecode.cqengine.query.simple.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.constant.ItemReduce;
 import org.jeecg.modules.player.entity.BackpackLog;
@@ -24,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -197,18 +200,18 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
     public List<ConfItem> getConfItemList(Integer itemId, String itemName) {
         QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfItem.ITEM_ID)));
         if (itemId != null && itemName != null) {
-            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
-            StringIsContainedIn<ConfItem, String> containedIn = QueryFactory.isContainedIn(ConfItem.NAME, itemName);
-            And<ConfItem> and = QueryFactory.and(query1, containedIn);
+            Equal<ConfItem, Integer> equalItemId = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
+			Equal<ConfItem, String> equalName = equal(ConfItem.NAME, itemName);
+			And<ConfItem> and = QueryFactory.and(equalItemId, equalName);
             return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, and, queryOptions);
         } else if (itemId != null) {
-            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
-            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, query1, queryOptions);
+            Equal<ConfItem, Integer> equal = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, equal, queryOptions);
         } else if (itemName != null) {
-            StringContains<ConfItem, String> contains = QueryFactory.contains(ConfItem.NAME, itemName);
-            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, contains, queryOptions);
+			Equal<ConfItem, String> equal = equal(ConfItem.NAME, itemName);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, equal, queryOptions);
         } else {
-            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, queryOptions);
+            return new ArrayList<ConfItem>();
         }
     }
 
