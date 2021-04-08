@@ -1,6 +1,6 @@
 <template>
     <a-select :placeholder="tips" @change="handlerSelect">
-        <a-select-option v-for="(item,i) in selectArray" :key="Math.random()+i" :value="item.type">
+        <a-select-option v-for="item in selectArray" :value="item.type">
             {{ item.name }}
         </a-select-option>
     </a-select>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-select mode="multiple" style="width: 100%" :placeholder="tips" @change="handlerSelect">
-            <a-select-option v-for="item in selectArray" :key="item.id" :value="item.type">
+            <a-select-option v-for="item in selectArray" :value="item.type">
                 {{ item.name }}
             </a-select-option>
         </a-select>
