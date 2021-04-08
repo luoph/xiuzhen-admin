@@ -7,7 +7,11 @@ import cn.youai.xiuzhen.entity.pojo.OperationType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.googlecode.cqengine.query.simple.Equal;
+import com.googlecode.cqengine.query.QueryFactory;
+import com.googlecode.cqengine.query.logical.And;
+import com.googlecode.cqengine.query.logical.Or;
+import com.googlecode.cqengine.query.option.QueryOptions;
+import com.googlecode.cqengine.query.simple.*;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.constant.ItemReduce;
 import org.jeecg.modules.player.entity.BackpackLog;
@@ -187,6 +191,25 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
         }
 
         return list;
+    }
+
+    @Override
+    public List<ConfItem> getConfItemList(Integer itemId, String itemName) {
+        QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfItem.ITEM_ID)));
+        if (itemId != null && itemName != null) {
+            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
+            StringIsContainedIn<ConfItem, String> containedIn = QueryFactory.isContainedIn(ConfItem.NAME, itemName);
+            And<ConfItem> and = QueryFactory.and(query1, containedIn);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, and, queryOptions);
+        } else if (itemId != null) {
+            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, query1, queryOptions);
+        } else if (itemName != null) {
+            StringContains<ConfItem, String> contains = QueryFactory.contains(ConfItem.NAME, itemName);
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, contains, queryOptions);
+        } else {
+            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, queryOptions);
+        }
     }
 
     /**

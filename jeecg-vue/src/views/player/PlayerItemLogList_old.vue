@@ -4,29 +4,19 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="5" :sm="8">
-                        <a-form-item label="区服id">
-                            <server-select @select="selectServer"></server-select>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="区服ID">
+                            <server-select @select="change"></server-select>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="5" :sm="8">
-                        <a-form-item label="玩家id">
-                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="玩家ID">
+                            <a-input placeholder="请输入玩家ID" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="5" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="道具名">
                             <a-input placeholder="请输入道具名" v-model="queryParam.itemIdName"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="9" :sm="6">
-                        <a-form-item label="统计日期">
-                            <a-range-picker
-                                :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                                :show-time="{ defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')] }"
-                                format="YYYY/MM/DD HH:mm:ss"
-                                @change="onDateChange"
-                            />
                         </a-form-item>
                     </a-col>
                     <a-col :md="3" :sm="3">
@@ -45,21 +35,29 @@
                             <a-select-read-json-some json-file="item_expend" placeholder="请选择途径" @onSelectOptionSome="selectWay"></a-select-read-json-some>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-
+                    <a-col :md="8" :sm="8">
+                        <a-form-item label="统计日期">
+                            <a-range-picker
+                                :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
+                                :show-time="{ defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')] }"
+                                format="YYYY/MM/DD HH:mm:ss"
+                                @change="onDateChange"
+                            />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="2" :sm="10">
+                        <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
+                            <a-button type="primary" icon="search" @click="searchQuery()">查询</a-button>
                         </span>
                     </a-col>
                 </a-row>
             </a-form>
         </div>
-        <!-- 查询区域-END -->
-        <!-- 操作按钮区域 -->
         <div class="table-operator">
-            <a-button type="primary" icon="download" @click="downloadExcel('道具日志')">导出</a-button>
+            <a-button type="primary" icon="download" @click="downloadExcel('玩家道具日志')">导出</a-button>
         </div>
+        <!-- 查询区域-END -->
+
         <!-- table区域-begin -->
         <div>
             <a-table
@@ -71,36 +69,38 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                @change="handleTableChange"  
+                @change="handleTableChange"
             >
             </a-table>
         </div>
-
-        <playerItemLog-modal ref="modalForm" @ok="modalFormOk"></playerItemLog-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import PlayerItemLogModal from "./modules/PlayerItemLogModal";
-import { getAction } from "@/api/manage";
-import ServerSelect from "@/components/gameserver/ServerSelect";
-import ASelectReadJsonSome from "@comp/gameserver/ASelectReadJsonSome";
 import JDate from "@/components/jeecg/JDate.vue";
+import { filterObj } from "@/utils/util";
+import ServerSelect from "@/components/gameserver/ServerSelect";
+import ASelectReadJson from "@comp/gameserver/ASelectReadJson";
+import ASelectReadJsonSome from "@comp/gameserver/ASelectReadJsonSome";
+import Vue from "vue";
+import { getAction } from "@/api/manage";
+import { ACCESS_TOKEN } from "@/store/mutation-types";
 import moment from "moment";
-
 export default {
     name: "PlayerItemLogList",
     mixins: [JeecgListMixin],
     components: {
         JDate,
-        PlayerItemLogModal,
         ServerSelect,
+        ASelectReadJson,
         ASelectReadJsonSome
     },
     data() {
         return {
-            description: "player_item_log管理页面",
+            dateFormat: "YYYY/MM/DD",
+            monthFormat: "YYYY/MM",
+            description: "玩家道具日志管理页面",
             // 表头
             columns: [
                 {
@@ -109,7 +109,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -169,54 +169,33 @@ export default {
             ],
             url: {
                 list: "player/playerItemLog/list",
-                delete: "player/playerItemLog/delete",
-                deleteBatch: "player/playerItemLog/deleteBatch",
                 exportXlsUrl: "player/playerItemLog/exportXls",
-                importExcelUrl: "player/playerItemLog/importExcel"
+                downloadExcel: "/player/playerItemLog/download"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
-    },
-    computed: {
-        importExcelUrl: function() {
-            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
-        }
     },
     methods: {
         initDictConfig() {
+            return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         },
-        selectServer(serverId) {
-            this.queryParam.serverId = serverId;
+        getQueryParams() {
+            let param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            return filterObj(param);
         },
-        cleanDate(){
-            this.dataSource = []
-            this.ipagination.current = 0
-            this.ipagination.size = 0
-            this.ipagination.total = 0
-            this.ipagination.pages = 0
-        },
-        searchQuery() {
-            let param = this.queryParam;
-            console.log(param);
-
-            getAction(this.url.list, param).then((res) => {
-                if (res.success) {
-                    this.dataSource = res.result.records;
-                    this.ipagination.current = res.result.current;
-                    this.ipagination.size = res.result.size.toString();
-                    this.ipagination.total = res.result.total;
-                    this.ipagination.pages = res.result.pages;
-                } else {
-                    this.cleanDate()
-                    this.$message.error(res.message);
-                }
-            });
-        },
+        // onDateChange: function (value, dateString) {
+        //     this.queryParam.startDate = dateString[0];
+        //     this.queryParam.endDate = dateString[1];
+        // },
         moment,
         onDateChange(dates, dateStrings) {
             this.queryParam.startDate = dateStrings[0];
             this.queryParam.endDate = dateStrings[1];
+        },
+        change(serverId) {
+            this.queryParam.serverId = serverId;
         },
         selectWay(way) {
             console.log(way.length);
@@ -230,6 +209,48 @@ export default {
         resetWay(){
             this.queryParam.wayName = ""
         },
+        handleChange(value) {
+            console.log(`selected ${value}`);
+        },
+        searchQuery() {
+            let param = this.queryParam;
+            console.log(param);
+            getAction(this.url.list, param).then((res) => {
+                if (res.success) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.current = res.result.current;
+                    this.ipagination.size = res.result.size.toString();
+                    this.ipagination.total = res.result.total;
+                    this.ipagination.pages = res.result.pages;
+                } else {
+                    this.$message.error(res.message);
+                }
+            });
+        },
+        downloadExcel(filename) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("post", window._CONFIG["domainURL"] + this.url.downloadExcel, true);
+            xhr.responseType = "blob";
+            xhr.setRequestHeader("Content-Type", "application/json");
+            const token = Vue.ls.get(ACCESS_TOKEN);
+            console.log(token);
+            xhr.setRequestHeader("X-Access-Token", token);
+            xhr.onload = function () {
+                var blob = this.response;
+                var reader = new FileReader();
+                reader.readAsDataURL(blob);
+                reader.onload = function (e) {
+                    var a = document.createElement("a");
+                    a.download = filename + ".xlsx";
+                    a.href = e.target.result;
+                    a.click();
+                };
+            };
+            var a = this.queryParam;
+            var param = JSON.stringify(a);
+            console.log(param);
+            xhr.send(param);
+        }
     }
 };
 </script>
