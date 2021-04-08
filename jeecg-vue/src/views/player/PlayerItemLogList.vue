@@ -49,7 +49,6 @@
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-
                         </span>
                     </a-col>
                 </a-row>
@@ -71,7 +70,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                @change="handleTableChange"  
+                @change="handleTableChange"
             >
             </a-table>
         </div>
@@ -157,7 +156,7 @@ export default {
                     title: "方式",
                     align: "center",
                     dataIndex: "type",
-                    customRender: function (text) {
+                    customRender: function(text) {
                         return text === 1 ? "存入" : "支出";
                     }
                 },
@@ -174,8 +173,7 @@ export default {
                 exportXlsUrl: "player/playerItemLog/exportXls",
                 importExcelUrl: "player/playerItemLog/importExcel"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -184,23 +182,22 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        },
+        initDictConfig() {},
         selectServer(serverId) {
             this.queryParam.serverId = serverId;
         },
-        cleanDate(){
-            this.dataSource = []
-            this.ipagination.current = 0
-            this.ipagination.size = 0
-            this.ipagination.total = 0
-            this.ipagination.pages = 0
+        cleanDate() {
+            this.dataSource = [];
+            this.ipagination.current = 0;
+            this.ipagination.size = 0;
+            this.ipagination.total = 0;
+            this.ipagination.pages = 0;
         },
         searchQuery() {
             let param = this.queryParam;
             console.log(param);
 
-            getAction(this.url.list, param).then((res) => {
+            getAction(this.url.list, param).then(res => {
                 if (res.success) {
                     this.dataSource = res.result.records;
                     this.ipagination.current = res.result.current;
@@ -208,7 +205,7 @@ export default {
                     this.ipagination.total = res.result.total;
                     this.ipagination.pages = res.result.pages;
                 } else {
-                    this.cleanDate()
+                    this.cleanDate();
                     this.$message.error(res.message);
                 }
             });
@@ -221,15 +218,15 @@ export default {
         selectWay(way) {
             console.log(way.length);
             for (const key in way) {
-                this.queryParam.wayName = way+",";
+                this.queryParam.wayName = way + ",";
             }
-            if(0 == way.length){
-                this.queryParam.wayName = ""
+            if (0 == way.length) {
+                this.queryParam.wayName = "";
             }
         },
-        resetWay(){
-            this.queryParam.wayName = ""
-        },
+        resetWay() {
+            this.queryParam.wayName = "";
+        }
     }
 };
 </script>
