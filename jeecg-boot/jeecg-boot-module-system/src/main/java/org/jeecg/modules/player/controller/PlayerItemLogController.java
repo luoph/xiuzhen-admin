@@ -1,26 +1,31 @@
 package org.jeecg.modules.player.controller;
 
 import cn.youai.commons.model.ResponseCode;
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sun.net.httpserver.Authenticator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.constant.ItemId;
 import org.jeecg.modules.game.constant.ItemReduce;
 import org.jeecg.modules.game.constant.ItemRuleId;
+import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.player.entity.BackpackLog;
@@ -28,6 +33,7 @@ import org.jeecg.modules.player.entity.GamePlayerItemLog;
 import org.jeecg.modules.player.service.BackpackLogService;
 import org.jeecg.modules.player.service.IGamePlayerItemLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -72,91 +78,127 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
         if (playerItemLog.getServerId() == null || playerItemLog.getServerId() <= 0) {
             return Result.error("请选择服务器！");
         }
-        ItemId itemId = new ItemId();
-        //道具map
-        Map<String, String> itemNameToIdMap = itemId.getItemNameToIdMap();
-        Map<String, String> itemIdToNameMap = itemId.getItemIdToNameMap();
-        //根据前端输入的道具名称模糊匹配到的对应id集合
-        List<Integer> wayList = new ArrayList<>();
-        String regex = null == playerItemLog.getItemIdName() ? "" : playerItemLog.getItemIdName();
-        for (String s : itemNameToIdMap.keySet()) {
-            if (s.contains(regex) && !"".equals(regex)){
-                wayList.add(Integer.parseInt(itemNameToIdMap.get(s)));
-            }
-        }
+//        ItemId itemId = new ItemId();
+//        //道具map
+//        Map<String, String> itemNameToIdMap = itemId.getItemNameToIdMap();
+//        Map<String, String> itemIdToNameMap = itemId.getItemIdToNameMap();
+//        //根据前端输入的道具名称模糊匹配到的对应id集合
+//        List<Integer> wayList = new ArrayList<>();
+//        String regex = null == playerItemLog.getItemIdName() ? "" : playerItemLog.getItemIdName();
+//        for (String s : itemNameToIdMap.keySet()) {
+//            if (s.contains(regex) && !"".equals(regex)){
+//                wayList.add(Integer.parseInt(itemNameToIdMap.get(s)));
+//            }
+//        }
 
-        try {
-            DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
+        List<ConfItem> itemList = playerItemLogService.getConfItemList(playerItemLog.getItemId(), playerItemLog.getItemIdName());
+        Map<Integer, String> itemMapById = new HashMap<Integer, String>();
+        StringBuffer itemIdStr = new StringBuffer();
+        if (!CollectionUtils.isEmpty(itemList)) {
+            itemList.forEach((ConfItem item) -> {
+                itemIdStr.append(item.getItemId()).append(",");
+                itemMapById.put(item.getItemId(), item.getName());
+            });
+            itemIdStr.deleteCharAt(itemIdStr.length() - 1);
 
-            List<GamePlayerItemLog> recordList = new ArrayList<>();
-            //对模糊匹配的所有道具id进行查询，并将结果放入recordList中
-            if (wayList.size() > 0 ){
-                String itemIdStr = "";
-                for (int i = 0; i < wayList.size(); i++) {
-                    if (i == wayList.size()-1){
-                        itemIdStr= itemIdStr + wayList.get(i);
-                    }else{
-                        itemIdStr= itemIdStr + wayList.get(i) + ",";
-                    }
-
-                }
-                LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog, itemIdStr);
+            try {
+                DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
+                LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog, itemIdStr.toString());
                 Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
-                IPage<GamePlayerItemLog> pageList0= playerItemLogService.page(page, queryWrapper);
-
-                for (GamePlayerItemLog record : pageList0.getRecords()) {
-
-                    //道具名称
-                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
-                        record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
-                    }
-                    //途径名称
-                    if (1 == record.getType()){
-                        //获得
-                        record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
-                    }else if (2 == record.getType()){
-                        //使用
-                        record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
-                    }
-                    recordList.add(record);
-                }
-                return Result.ok(pageList0);
-            }else{
-                LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog,"");
-                Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
-                IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
-                for (GamePlayerItemLog record : pageList.getRecords()) {
-                    //道具名称
-                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
-                        record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
-                    }
-                    //途径名称
-                    if (1 == record.getType()){
-                        //获得
-                        record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
-                    }else if (2 == record.getType()){
-                        //使用
-                        record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
-                    }
-
+                IPage<GamePlayerItemLog> pageList= playerItemLogService.page(page, queryWrapper);
+                if (pageList.getSize() > 0){
+                    pageList.getRecords().forEach((GamePlayerItemLog p) -> {
+                        p.setItemIdName(itemMapById.get(p.getItemId()));
+                        //途径名称
+                        p.setWayName(ItemRuleId.valueOf(p.getWay()).getName());
+                    });
                 }
                 return Result.ok(pageList);
+            } finally {
+                DataSourceHelper.useDefaultDatabase();
             }
-
-        } finally {
-            DataSourceHelper.useDefaultDatabase();
+        } else {
+            return Result.error("道具不存在！");
         }
+
+
+
+//        try {
+//            DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
+//
+//            List<GamePlayerItemLog> recordList = new ArrayList<>();
+//            //对模糊匹配的所有道具id进行查询，并将结果放入recordList中
+//            if (wayList.size() > 0 ){
+//                String itemIdStr = "";
+//                for (int i = 0; i < wayList.size(); i++) {
+//                    if (i == wayList.size()-1){
+//                        itemIdStr= itemIdStr + wayList.get(i);
+//                    }else{
+//                        itemIdStr= itemIdStr + wayList.get(i) + ",";
+//                    }
+//
+//                }
+//                LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog, itemIdStr);
+//                Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
+//                IPage<GamePlayerItemLog> pageList0= playerItemLogService.page(page, queryWrapper);
+//
+//                for (GamePlayerItemLog record : pageList0.getRecords()) {
+//
+//                    //道具名称
+//                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
+//                        record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
+//                    }
+//                    //途径名称
+//                    if (1 == record.getType()){
+//                        //获得
+//                        record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
+//                    }else if (2 == record.getType()){
+//                        //使用
+//                        record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
+//                    }
+//                    recordList.add(record);
+//                }
+//                return Result.ok(pageList0);
+//            }else{
+//                LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog,"");
+//                Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
+//                IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
+//                for (GamePlayerItemLog record : pageList.getRecords()) {
+//                    //道具名称
+//                    if (null != itemIdToNameMap.get(record.getItemId().toString())){
+//                        record.setItemIdName(itemIdToNameMap.get(record.getItemId().toString()));
+//                    }
+//                    //途径名称
+//                    if (1 == record.getType()){
+//                        //获得
+//                        record.setWayName(ItemRuleId.valueOf(record.getWay()).getName());
+//                    }else if (2 == record.getType()){
+//                        //使用
+//                        record.setWayName(ItemReduce.valueOf(record.getWay()).getName());
+//                    }
+//
+//                }
+//                return Result.ok(pageList);
+//            }
+//
+//        } finally {
+//            DataSourceHelper.useDefaultDatabase();
+//        }
     }
 
 
-    private LambdaQueryWrapper<GamePlayerItemLog> getQueryWrapper(GamePlayerItemLog playerItemLog,String itemIdStr) {
+    private LambdaQueryWrapper<GamePlayerItemLog> getQueryWrapper(GamePlayerItemLog playerItemLog, String itemIdStr) {
         LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = Wrappers.lambdaQuery();
         if (playerItemLog.getPlayerId() != null && playerItemLog.getPlayerId() > 0) {
             queryWrapper.eq(GamePlayerItemLog::getPlayerId, playerItemLog.getPlayerId());
         }
 
-        if (!StringUtils.isEmpty(itemIdStr)) {
-            queryWrapper.in(GamePlayerItemLog::getItemId, itemIdStr.split(","));
+        if (!StringUtils.isEmpty(playerItemLog.getItemIdName())) {
+            if (!StringUtils.isEmpty(itemIdStr)) {
+                queryWrapper.in(GamePlayerItemLog::getItemId, itemIdStr.split(","));
+            } else {
+                queryWrapper.in(GamePlayerItemLog::getItemId, itemIdStr.split(","));
+            }
         }
         String wayNameFenGeFu = ",";
         if (!StringUtils.isEmpty(playerItemLog.getWayName()) && ! wayNameFenGeFu.equals(playerItemLog.getWayName())){

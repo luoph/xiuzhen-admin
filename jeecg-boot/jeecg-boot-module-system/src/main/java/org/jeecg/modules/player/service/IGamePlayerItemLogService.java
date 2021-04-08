@@ -1,5 +1,6 @@
 package org.jeecg.modules.player.service;
 
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.GamePlayerItemLog;
@@ -65,4 +66,12 @@ public interface IGamePlayerItemLogService extends IService<GamePlayerItemLog> {
      * @return
      */
     List<GamePlayerItemLog> queryItemBillList(String rangeDateBegin, String rangeDateEnd, int way, Integer serverId, int itemId, int type, Long playerId);
+
+    /**
+     * 获得静态道具列表
+     * @param itemId
+     * @param itemName 单个，模糊查询
+     * @return
+     */
+    List<ConfItem> getConfItemList(Integer itemId, String itemName);
 }
