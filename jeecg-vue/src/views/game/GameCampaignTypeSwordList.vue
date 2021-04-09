@@ -4,7 +4,7 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    </a-row>
+                </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
@@ -12,23 +12,25 @@
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
             <a-button type="primary" icon="download" @click="handleExportXls('game_campaign_type_sword')">导出</a-button>
-<!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
-<!--                <a-button type="primary" icon="import">导入</a-button>-->
-<!--            </a-upload>-->
-<!--            <a-dropdown v-if="selectedRowKeys.length > 0">-->
-<!--                <a-menu slot="overlay">-->
-<!--                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>-->
-<!--                </a-menu>-->
-<!--                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>-->
-<!--            </a-dropdown>-->
+            <!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
+            <!--                <a-button type="primary" icon="import">导入</a-button>-->
+            <!--            </a-upload>-->
+            <!--            <a-dropdown v-if="selectedRowKeys.length > 0">-->
+            <!--                <a-menu slot="overlay">-->
+            <!--                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>-->
+            <!--                </a-menu>-->
+            <!--                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>-->
+            <!--            </a-dropdown>-->
+            <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
+            <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据"></a-textarea>
         </div>
 
         <!-- table区域-begin -->
         <div>
-<!--            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">-->
-<!--                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项-->
-<!--                <a style="margin-left: 24px" @click="onClearSelected">清空</a>-->
-<!--            </div>-->
+            <!--            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">-->
+            <!--                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项-->
+            <!--                <a style="margin-left: 24px" @click="onClearSelected">清空</a>-->
+            <!--            </div>-->
 
             <a-table
                 ref="table"
@@ -48,18 +50,21 @@
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+                         style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+                    <a-button v-else :ghost="true" type="primary" icon="download" size="small"
+                              @click="uploadFile(text)"> 下载
+                    </a-button>
                 </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+                        <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -79,7 +84,7 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameCampaignTypeSwordModal from "./modules/GameCampaignTypeSwordModal";
-import { getAction } from "@api/manage";
+import { getAction, postAction } from "@api/manage";
 import { filterObj } from "@/utils/util";
 
 export default {
@@ -91,6 +96,7 @@ export default {
     data() {
         return {
             description: "限时仙剑管理页面",
+            importText: "",
             model: {},
             // 表头
             columns: [
@@ -156,10 +162,10 @@ export default {
                 delete: "game/gameCampaignTypeSword/delete",
                 deleteBatch: "game/gameCampaignTypeSword/deleteBatch",
                 exportXlsUrl: "game/gameCampaignTypeSword/exportXls",
-                importExcelUrl: "game/gameCampaignTypeSword/importExcel"
+                importExcelUrl: "game/gameCampaignTypeSword/importExcel",
+                importTextUrl: "game/gameCampaignTypeSword/importText"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -222,6 +228,21 @@ export default {
                 text = text.substring(0, text.indexOf(","));
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
+        },
+        handleImportText() {
+            let params = {
+                id: this.model.id,
+                text: this.importText
+            };
+            console.log(params);
+            postAction(this.url.importTextUrl, params).then(res => {
+                if (res.success) {
+                    this.$message.success(res.message);
+                    this.loadData();
+                } else {
+                    this.$message.warning(res.message);
+                }
+            });
         }
     }
 };
