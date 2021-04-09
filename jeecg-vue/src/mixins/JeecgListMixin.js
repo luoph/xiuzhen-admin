@@ -87,7 +87,7 @@ export const JeecgListMixin = {
                     this.dataSource = res.result.records;
                     this.ipagination.total = res.result.total;
                 }
-                if (res.code === 510) {
+                if (res.code === 510 || res.code === 500) {
                     this.$message.warning(res.message);
                 }
                 this.loading = false;

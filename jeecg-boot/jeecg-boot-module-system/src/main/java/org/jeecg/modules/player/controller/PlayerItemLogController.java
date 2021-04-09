@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
@@ -79,18 +80,23 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 			return Result.error("请选择服务器！");
 		}
 
+		if (StringUtils.isEmpty(playerItemLog.getItemIdName())) {
+			return Result.error("请选择道具名！");
+		}
+
 		List<ConfItem> itemList = playerItemLogService.getConfItemList(playerItemLog.getItemId(), playerItemLog.getItemIdName());
-		Map<Integer, String> itemMapById = new HashMap<Integer, String>(itemList.size());
-		StringJoiner itemIdStr = new StringJoiner(",");
 		if (!CollectionUtils.isEmpty(itemList)) {
+			Map<Integer, String> itemMapById = new HashMap<Integer, String>(itemList.size());
+			List itemIds = new ArrayList<Integer>(itemList.size());
 			itemList.forEach(item -> {
-				itemIdStr.add(String.valueOf(item.getItemId()));
+				itemIds.add(item.getItemId());
 				itemMapById.put(item.getItemId(), item.getName());
 			});
 
 			try {
 				DataSourceHelper.useServerDatabase(playerItemLog.getServerId());
-				LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog, itemIdStr.toString());
+
+				LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = getQueryWrapper(playerItemLog, itemIds);
 				Page<GamePlayerItemLog> page = new Page<>(pageNo, pageSize);
 				IPage<GamePlayerItemLog> pageList = playerItemLogService.page(page, queryWrapper);
 				if (pageList != null && pageList.getSize() > 0) {
@@ -108,6 +114,39 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 		}
 	}
 
+	private LambdaQueryWrapper<GamePlayerItemLog> getQueryWrapper(GamePlayerItemLog playerItemLog, List<Integer> itemIds) {
+		LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = Wrappers.lambdaQuery();
+
+		if (playerItemLog.getPlayerId() != null && playerItemLog.getPlayerId() > 0) {
+			queryWrapper.eq(GamePlayerItemLog::getPlayerId, playerItemLog.getPlayerId());
+		}
+
+		if (!CollectionUtils.isEmpty(itemIds)) {
+			queryWrapper.in(GamePlayerItemLog::getItemId, itemIds);
+		}
+
+		if (!StringUtils.isEmpty(playerItemLog.getWayName())) {
+			queryWrapper.in(GamePlayerItemLog::getWay, playerItemLog.getWayName().split(","));
+		}
+
+		if (playerItemLog.getType() != null && playerItemLog.getType() > 0) {
+			queryWrapper.eq(GamePlayerItemLog::getType, playerItemLog.getType());
+		}
+
+		if (!StringUtils.isAllBlank(playerItemLog.getStartDate(), playerItemLog.getEndDate())) {
+			// 如果选择开始时间和结束时间是同一天
+			if (playerItemLog.getStartDate().equals(playerItemLog.getEndDate())) {
+				playerItemLog.setStartDate(playerItemLog.getStartDate() + " 00:00:00");
+				playerItemLog.setEndDate(playerItemLog.getEndDate() + " 23:59:59");
+			}
+			queryWrapper.between(GamePlayerItemLog::getCreateTime, DateUtils.parseDate(playerItemLog.getStartDate()),
+					DateUtils.parseDate(playerItemLog.getEndDate()));
+		}
+
+		queryWrapper.orderByDesc(GamePlayerItemLog::getCreateTime);
+
+		return queryWrapper;
+	}
 
 	private LambdaQueryWrapper<GamePlayerItemLog> getQueryWrapper(GamePlayerItemLog playerItemLog, String itemIdStr) {
 		LambdaQueryWrapper<GamePlayerItemLog> queryWrapper = Wrappers.lambdaQuery();
