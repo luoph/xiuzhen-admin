@@ -6,7 +6,7 @@
                 <a-row :gutter="24">
                     <a-col :md="5" :sm="8">
                         <a-form-item label="区服id">
-                            <server-select @select="selectServer"></server-select>
+                            <server-select @select="selectServerId"></server-select>
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="8">
@@ -21,17 +21,12 @@
                     </a-col>
                     <a-col :md="9" :sm="6">
                         <a-form-item label="统计日期">
-                            <a-range-picker
-                                :ranges="{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }"
-                                :show-time="{ defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('00:00:00', 'HH:mm:ss')] }"
-                                format="YYYY/MM/DD HH:mm:ss"
-                                @change="onDateChange"
-                            />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="3" :sm="3">
                         <a-form-item label="产销类型">
-                            <a-select placeholder="产销类型" v-model="queryParam.type" @click="resetWay()">
+                            <a-select placeholder="产销类型" v-model="queryParam.type" @change="resetWay">
                                 <a-select-option value="1">产出</a-select-option>
                                 <a-select-option value="2">消耗</a-select-option>
                             </a-select>
@@ -48,7 +43,6 @@
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -82,7 +76,6 @@
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import PlayerItemLogModal from "./modules/PlayerItemLogModal";
-import { getAction } from "@/api/manage";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 import ASelectReadJsonSome from "@comp/gameserver/ASelectReadJsonSome";
 import JDate from "@/components/jeecg/JDate.vue";
@@ -95,7 +88,8 @@ export default {
         JDate,
         PlayerItemLogModal,
         ServerSelect,
-        ASelectReadJsonSome
+        ASelectReadJsonSome,
+        moment
     },
     data() {
         return {
@@ -168,8 +162,6 @@ export default {
             ],
             url: {
                 list: "player/playerItemLog/list",
-                delete: "player/playerItemLog/delete",
-                deleteBatch: "player/playerItemLog/deleteBatch",
                 exportXlsUrl: "player/playerItemLog/exportXls",
                 importExcelUrl: "player/playerItemLog/importExcel"
             },
@@ -183,45 +175,18 @@ export default {
     },
     methods: {
         initDictConfig() {},
-        selectServer(serverId) {
+        selectServerId(serverId) {
             this.queryParam.serverId = serverId;
         },
-        cleanDate() {
-            this.dataSource = [];
-            this.ipagination.current = 0;
-            this.ipagination.size = 0;
-            this.ipagination.total = 0;
-            this.ipagination.pages = 0;
-        },
-        searchQuery() {
-            let param = this.queryParam;
-            console.log(param);
-
-            getAction(this.url.list, param).then(res => {
-                if (res.success) {
-                    this.dataSource = res.result.records;
-                    this.ipagination.current = res.result.current;
-                    this.ipagination.size = res.result.size.toString();
-                    this.ipagination.total = res.result.total;
-                    this.ipagination.pages = res.result.pages;
-                } else {
-                    this.cleanDate();
-                    this.$message.error(res.message);
-                }
-            });
-        },
-        moment,
         onDateChange(dates, dateStrings) {
             this.queryParam.startDate = dateStrings[0];
             this.queryParam.endDate = dateStrings[1];
         },
         selectWay(way) {
-            console.log(way.length);
-            for (const key in way) {
-                this.queryParam.wayName = way + ",";
-            }
-            if (0 == way.length) {
-                this.queryParam.wayName = "";
+            if (way.length > 0) {
+                this.queryParam.wayName = way.join(",");
+            } else {
+                this.resetWay();
             }
         },
         resetWay() {
