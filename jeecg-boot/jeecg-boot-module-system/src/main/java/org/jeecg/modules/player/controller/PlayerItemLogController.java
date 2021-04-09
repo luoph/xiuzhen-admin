@@ -135,12 +135,13 @@ public class PlayerItemLogController extends JeecgController<GamePlayerItemLog, 
 
 		if (!StringUtils.isAllBlank(playerItemLog.getStartDate(), playerItemLog.getEndDate())) {
 			// 如果选择开始时间和结束时间是同一天
-			if (playerItemLog.getStartDate().equals(playerItemLog.getEndDate())) {
-				playerItemLog.setStartDate(playerItemLog.getStartDate() + " 00:00:00");
-				playerItemLog.setEndDate(playerItemLog.getEndDate() + " 23:59:59");
+			Date startDate = DateUtils.parseDate(playerItemLog.getStartDate());
+			Date endDate = DateUtils.parseDate(playerItemLog.getEndDate());
+			if (DateUtils.isSameDay(startDate, endDate)) {
+				startDate = DateUtils.startTimeOfDate(startDate);
+				endDate = DateUtils.endTimeOfDate(endDate);
 			}
-			queryWrapper.between(GamePlayerItemLog::getCreateTime, DateUtils.parseDate(playerItemLog.getStartDate()),
-					DateUtils.parseDate(playerItemLog.getEndDate()));
+			queryWrapper.between(GamePlayerItemLog::getCreateTime, startDate, endDate);
 		}
 
 		queryWrapper.orderByDesc(GamePlayerItemLog::getCreateTime);
