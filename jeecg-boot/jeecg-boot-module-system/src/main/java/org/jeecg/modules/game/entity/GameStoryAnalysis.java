@@ -43,7 +43,6 @@ public class GameStoryAnalysis implements Serializable {
 	 * 大关卡
 	 */
 	@ExcelIgnore
-	@TableField(exist = false)
 	private java.lang.Integer primeLevel;
 
 	/**
@@ -73,7 +72,7 @@ public class GameStoryAnalysis implements Serializable {
 	/**
 	 * 创建日期
 	 */
-	@Excel(name = "创建日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+	@ExcelIgnore
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
 	@DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
 	private java.util.Date createTime;
@@ -81,7 +80,7 @@ public class GameStoryAnalysis implements Serializable {
 	/**
 	 * 更新日期
 	 */
-	@Excel(name = "更新日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+	@ExcelIgnore
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
 	@DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
 	private java.util.Date updateTime;
