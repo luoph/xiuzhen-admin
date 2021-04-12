@@ -1,6 +1,8 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -19,65 +21,68 @@ import java.io.Serializable;
  * @date 2021-03-26
  */
 @Data
-@TableName("game_story_analysis")
+@TableName("main_story_level")
 @Accessors(chain = true)
 public class GameStoryAnalysis implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 分析日期
-     */
-    @Excel(name = "分析日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    private java.util.Date analysisDate;
+	/**
+	 * 主键ID
+	 */
+	@TableId(type = IdType.AUTO)
+	private java.lang.Long id;
 
-    /**
-     * 剧情小关卡
-     */
-    @Excel(name = "剧情小关卡", width = 15)
-    private java.lang.Integer storyCheckpoint;
+	/**
+	 * 玩家id
+	 */
+	@ExcelIgnore
+	private java.lang.Long playerId;
 
-    /**
-     * 停留活跃人数
-     */
-    @Excel(name = "停留活跃人数", width = 15)
-    private java.lang.Integer stayLiveNum;
+	/**
+	 * 大关卡
+	 */
+	@ExcelIgnore
+	@TableField(exist = false)
+	private java.lang.Integer primeLevel;
 
-    /**
-     * 活跃占比
-     */
-    @Excel(name = "活跃占比", width = 15)
-    private java.lang.Integer liveRate;
+	/**
+	 * 大关卡
+	 */
+	@ExcelIgnore
+	private java.lang.Integer minorLevel;
 
-    /**
-     * 停留流失人数
-     */
-    @Excel(name = "停留流失人数", width = 15)
-    private java.lang.Integer stayLeaveNum;
+	/**
+	 * 剧情
+	 */
+	@ExcelIgnore
+	private java.lang.Integer plotId;
 
-    /**
-     * 流失占比
-     */
-    @Excel(name = "流失占比", width = 15)
-    private java.lang.Integer leaveRate;
+	/**
+	 * 状态: 1.未完成, 2.已完成
+	 */
+	@ExcelIgnore
+	private java.lang.Integer status;
 
-    /**
-     * 总达成人数
-     */
-    @Excel(name = "总达成人数", width = 15)
-    private java.lang.Integer totalArriveNum;
+	/**
+	 * 进行中的阶段(story.group)
+	 */
+	@ExcelIgnore
+	private java.lang.Integer stage;
 
-    /**
-     * 总滞留人数
-     */
-    @Excel(name = "总滞留人数", width = 15)
-    private java.lang.Integer totalStayNum;
+	/**
+	 * 创建日期
+	 */
+	@Excel(name = "创建日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+	@DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+	private java.util.Date createTime;
 
-    /**
-     * 关卡滞留率
-     */
-    @Excel(name = "关卡滞留率", width = 15)
-    private java.lang.Integer checkpointStayRate;
+	/**
+	 * 更新日期
+	 */
+	@Excel(name = "更新日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+	@DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+	private java.util.Date updateTime;
 }
