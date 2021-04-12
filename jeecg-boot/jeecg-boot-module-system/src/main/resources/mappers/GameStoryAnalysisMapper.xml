@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.jeecg.modules.game.mapper.GameStoryAnalysisMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStoryAnalysisVO">
+        <result column="minor_level" property="minorLevel"/>
+        <result column="count_active_player" property="stayLiveNum"/>
+        <result column="count_loss_player" property="stayLeaveNum"/>
+    </resultMap>
+
+    <select id="queryGameStoryAnalysis" resultMap="BaseResultMap">
+        SELECT
+        m1.minor_level,
+        temp1.count_active_player,
+        temp2.count_loss_player
+        from
+        main_story_level m1,
+        (select
+        minor_level, count(player_id) AS count_active_player
+        from
+        main_story_level m2
+        group by minor_level) temp1,
+        (select
+        minor_level, count(player_id) AS count_loss_player
+        from
+        main_story_level m3
+        where
+        exists(select
+        p.id
+        from
+        player p
+        where
+        m3.player_id = p.id
+        and p.login_time &lt; #{3DaysAgoDate}
+        )
+        group by minor_level) temp2
+        where
+        m1.minor_level = temp1.minor_level
+        AND m1.minor_level = temp2.minor_level
+        AND m1.update_time &gt; #{startDate}
+        AND m1.update_time &lt; #{endDate}
+        GROUP BY m1.minor_level
+    </select>
+
+</mapper>
