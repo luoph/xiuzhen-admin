@@ -5,6 +5,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.xiuzhen.common.data.ConfigDataEnum;
 import cn.youai.xiuzhen.common.data.ConfigDataService;
 import cn.youai.xiuzhen.entity.pojo.ConfMainStory;
+import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -100,9 +102,9 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
 		// 总停留流失人数
 		int totalStayLeaveNum = 0;
 
-		HashMap<Integer, GameStoryAnalysisVO> gameStoryAnalysisVOMapByLevel = new HashMap<>();
+		HashMap<Integer, GameStoryAnalysisVO> gameStoryAnalysisVoMapByLevel = new HashMap<>();
 		for (GameStoryAnalysisVO gameStoryAnalysisVO : resultPage) {
-			gameStoryAnalysisVOMapByLevel.put(gameStoryAnalysisVO.getMinorLevel(), gameStoryAnalysisVO);
+			gameStoryAnalysisVoMapByLevel.put(gameStoryAnalysisVO.getMinorLevel(), gameStoryAnalysisVO);
 			totalStayLiveNum += gameStoryAnalysisVO.getStayLiveNum();
 			totalStayLeaveNum += gameStoryAnalysisVO.getStayLeaveNum();
 		}
@@ -114,7 +116,7 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
 
 
 		for (ConfMainStory confMainStory : confMainStories) {
-			GameStoryAnalysisVO gameStoryAnalysisVO = gameStoryAnalysisVOMapByLevel.get(confMainStory.getLevel());
+			GameStoryAnalysisVO gameStoryAnalysisVO = gameStoryAnalysisVoMapByLevel.get(confMainStory.getLevel());
 			if (gameStoryAnalysisVO != null) { // 有数据
 				// 关卡名称
 				gameStoryAnalysisVO.setStoryCheckpoint(confMainStory.getChapterNum());
@@ -131,19 +133,18 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
 			result.add(gameStoryAnalysisVO);
 		}
 
-		DecimalFormat df = new DecimalFormat("##0.00");
 		for (GameStoryAnalysisVO vo : resultPage) {
 			// 活跃占比
 			if (totalStayLiveNum != 0 && vo.getStayLiveNum() != null && vo.getStayLiveNum() != 0) {
-				vo.setLiveRate(df.format((vo.getStayLiveNum() / (double) totalStayLiveNum) * 100));
+				vo.setLiveRate(BigDecimalUtil.dividePercent(BigDecimalUtil.divide((double) vo.getStayLiveNum(), totalStayLiveNum, 4).doubleValue()).toString());
 			}
 			// 流失占比
 			if (totalStayLeaveNum != 0 && vo.getStayLeaveNum() != null && vo.getStayLeaveNum() != 0) {
-				vo.setLeaveRate(df.format((vo.getStayLeaveNum() / (double) totalStayLeaveNum) * 100));
+				vo.setLeaveRate(BigDecimalUtil.dividePercent(BigDecimalUtil.divide((double) vo.getStayLeaveNum(), totalStayLeaveNum, 4).doubleValue()).toString());
 			}
 			// 关卡滞留率
 			if (vo.getTotalArriveNum() != null && vo.getTotalArriveNum() != 0) {
-				vo.setCheckpointStayRate(df.format((vo.getTotalStayNum() / (double) vo.getTotalArriveNum()) * 100));
+				vo.setCheckpointStayRate(BigDecimalUtil.dividePercent(BigDecimalUtil.divide((double) vo.getTotalStayNum(), (double) vo.getTotalArriveNum(), 4).doubleValue()).toString());
 			}
 		}
 
@@ -193,7 +194,7 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
 	 * @return stayingOnPlayerMaxLevelMap<玩家ID ， max关卡ID>
 	 */
 	private Map<Long, Integer> getStayingOnPlayerMaxLevelMap(List<GameStoryAnalysis> datalist) {
-		Map<Long, Integer> stayingOnPlayerMaxLevelMap = new HashMap(datalist.size());
+		Map<Long, Integer> stayingOnPlayerMaxLevelMap = new HashMap<>(datalist.size());
 		datalist.forEach(e -> {
 			Integer level = stayingOnPlayerMaxLevelMap.get(e.getPlayerId());
 			if (level != null) {

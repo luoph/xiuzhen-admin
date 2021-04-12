@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelIgnore;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +18,7 @@ import java.io.Serializable;
  * @date 2021-04-10
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class GameStoryAnalysisVO extends GameStoryAnalysis implements Serializable {
 
 	private static final long serialVersionUID = -1960866186259048998L;
@@ -40,7 +42,7 @@ public class GameStoryAnalysisVO extends GameStoryAnalysis implements Serializab
 	/**
 	 * 分析日期
 	 */
-	@Excel(name = "分析日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
+	@ExcelIgnore
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
 	@DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
 	private java.util.Date analysisDate;
