@@ -53,14 +53,10 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
 		List<GameStoryAnalysisVO> resultPage = null;
 		List<Integer> levelIds = null;
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(gameStoryAnalysis.getAnalysisDate());
-		calendar.set(Calendar.DATE, calendar.get(Calendar.DATE) - 3);
-
 		try {
 			DataSourceHelper.useServerDatabase(gameStoryAnalysis.getServerId());
 			list = gameStoryAnalysisMapper.queryGameStoryAnalysis(DateUtils.startTimeOfDate(gameStoryAnalysis.getAnalysisDate()),
-					DateUtils.endTimeOfDate(gameStoryAnalysis.getAnalysisDate()), calendar.getTime());
+					DateUtils.endTimeOfDate(gameStoryAnalysis.getAnalysisDate()), DateUtils.minusDays(gameStoryAnalysis.getAnalysisDate(), 3));
 			resultPage = CollectionPageHelp.pageBySubList(list, pageSize, pageNo);
 			levelIds = resultPage.stream().map(GameStoryAnalysisVO::getMinorLevel).collect(Collectors.toList());
 
