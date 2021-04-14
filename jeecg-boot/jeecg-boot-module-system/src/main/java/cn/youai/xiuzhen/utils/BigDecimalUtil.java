@@ -71,8 +71,8 @@ public final class BigDecimalUtil {
     /**
      * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指 定精度，以后的数字四舍五入。
      *
-     * @param v1    除数
-     * @param v2    被除数
+     * @param v1    被除数
+     * @param v2    除数
      * @param scale 表示表示需要精确到小数点以后几位。
      * @return 两个参数的商
      */
