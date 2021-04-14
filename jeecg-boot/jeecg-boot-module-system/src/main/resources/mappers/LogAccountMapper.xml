@@ -18,63 +18,98 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, account, player_id, server_id, channel, `type`, ip, create_time, create_date
+        id
+        , account, player_id, server_id, channel, `type`, ip, create_time, create_date
     </sql>
 
     <select id="gerLoginRegisterPlayerNum" resultType="int">
-        SELECT COUNT( DISTINCT a.`player_id`) AS counNum FROM ${logTable} a
+        SELECT COUNT(DISTINCT a.`player_id`) AS counNum
+        FROM ${logTable} a
         WHERE a.`channel` = #{channel}
-        AND a.`server_id` = #{serverId}
-        AND a.`type` = #{type}
-        AND DATE(a.`create_time`) =  DATE(#{createTime});
+          AND a.`server_id` = #{serverId}
+          AND a.`type` = #{type}
+          AND DATE (a.`create_time`) = DATE (#{createTime});
     </select>
 
     <select id="getRegisterPayAmount" resultType="double">
-        SELECT IFNULL (sum(a.`pay_amount`),0) AS payAmount FROM `game_order` a
-        JOIN  ${logTable}  b
-        ON b.`player_id` = a.`player_id`
-        AND b.`channel` = a.`channel`
-        AND b.`server_id` = a.`server_id`
-        WHERE  b.`channel` = #{channel}
-        AND b.`server_id` = #{serverId}
-        AND b.`type` = 1
-        AND DATE(b.`create_time`) =  DATE(#{date})
-        AND a.`channel` = #{channel}
-        AND a.`server_id`= #{serverId}
-        AND DATE(a.`pay_time`) = DATE(#{date});
+        SELECT IFNULL(sum(a.`pay_amount`), 0) AS payAmount
+        FROM `game_order` a
+                 JOIN ${logTable} b
+                      ON b.`player_id` = a.`player_id`
+                          AND b.`channel` = a.`channel`
+                          AND b.`server_id` = a.`server_id`
+        WHERE b.`channel` = #{channel}
+          AND b.`server_id` = #{serverId}
+          AND b.`type` = 1
+          AND DATE (b.`create_time`) = DATE (#{date})
+          AND a.`channel` = #{channel}
+          AND a.`server_id`= #{serverId}
+          AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
 
     <select id="getRegisterPayPlayer" resultType="int">
-        SELECT count(DISTINCT a.`player_id`) AS payAmount FROM`game_order` a
-        JOIN  ${logTable}  b
-        ON b.`player_id` = a.`player_id`
-        AND b.`channel` = a.`channel`
-        AND b.`server_id` = a.`server_id`
-        WHERE  b.`channel` = #{channel}
-        AND b.`server_id` = #{serverId}
-        AND b.`type` = 1
-        AND DATE(b.`create_time`) =  DATE(#{date})
-        AND a.`channel` = #{channel}
-        AND a.`server_id`= #{serverId}
-        AND DATE(a.`pay_time`) =  DATE(#{date});
+        SELECT count(DISTINCT a.`player_id`) AS payAmount
+        FROM `game_order` a
+                 JOIN ${logTable} b
+                      ON b.`player_id` = a.`player_id`
+                          AND b.`channel` = a.`channel`
+                          AND b.`server_id` = a.`server_id`
+        WHERE b.`channel` = #{channel}
+          AND b.`server_id` = #{serverId}
+          AND b.`type` = 1
+          AND DATE (b.`create_time`) = DATE (#{date})
+          AND a.`channel` = #{channel}
+          AND a.`server_id`= #{serverId}
+          AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
 
     <select id="getDoublePayRegisterPlayer" resultType="int">
-        SELECT count(1) FROM(
-          SELECT count(a.`player_id`) AS addPayPlayer FROM `game_order` a
-          LEFT JOIN ${logTable} b
-          ON a.`player_id` = b.`player_id`
-          AND b.`channel` = a.`channel`
-          AND b.`server_id` = a.`server_id`
-          WHERE  b.`channel` =  #{channel}
-          AND b.`server_id` =  #{serverId}
-          AND b.`type` = 1
-          AND DATE(b.`create_time`) =  DATE(#{date})
-          AND a.`channel` = #{channel}
-          AND a.`server_id`= #{serverId}
-          AND DATE(a.`pay_time`) =  DATE(#{date})
-          GROUP BY a.`player_id`
-        ) c
+        SELECT count(1)
+        FROM (
+                 SELECT count(a.`player_id`) AS addPayPlayer
+                 FROM `game_order` a
+                          LEFT JOIN ${logTable} b
+                                    ON a.`player_id` = b.`player_id`
+                                        AND b.`channel` = a.`channel`
+                                        AND b.`server_id` = a.`server_id`
+                 WHERE b.`channel` = #{channel}
+                   AND b.`server_id` = #{serverId}
+                   AND b.`type` = 1
+                   AND DATE (b.`create_time`) =  DATE(#{date})
+            AND a.`channel` = #{channel}
+            AND a.`server_id`= #{serverId}
+            AND DATE (a.`pay_time`) = DATE (#{date})
+        GROUP BY a.`player_id`
+            ) c
         WHERE c.`addPayPlayer` >= 2;
+
+    </select>
+
+    <select id="getPlayerIdsByLoginDate" resultType="java.lang.Long">
+        SELECT a.`player_id`
+        FROM ${logTable} a
+        WHERE a.`server_id` = #{serverId}
+          AND a.`type` = 2
+          AND a.`create_date` = #{date}
+        group by a.`player_id`;
+    </select>
+
+    <select id="getPlayerIdsByNoLoginRangeDate" resultType="java.lang.Long">
+        <![CDATA[
+        select a.player_id
+        from ${logTable} a
+                 left join (select player_id
+                            from ${logTable}
+                            where type = 2
+                              and server_id = #{serverId}
+                              and create_date > #{startDate}
+                              and create_date <= #{endDate}
+                            group by player_id) temp_table
+                           on temp_table.player_id = a.player_id
+        where a.type = 2
+          and a.server_id = #{serverId}
+          and temp_table.player_id is null
+        group by a.player_id;
+        ]]>
     </select>
 </mapper>

@@ -7,7 +7,7 @@ import cn.youai.xiuzhen.common.data.ConfigDataService;
 import cn.youai.xiuzhen.entity.pojo.ConfMainStory;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -21,12 +21,10 @@ import org.jeecg.modules.game.entity.GameStoryAnalysis;
 import org.jeecg.modules.game.entity.GameStoryAnalysisVO;
 import org.jeecg.modules.game.mapper.GameStoryAnalysisMapper;
 import org.jeecg.modules.game.service.IGameStoryAnalysisService;
+import org.jeecg.modules.player.service.ILogAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,45 +37,43 @@ import java.util.stream.Collectors;
 @Service
 public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisMapper, GameStoryAnalysis> implements IGameStoryAnalysisService {
 
-	@Resource
-	private GameStoryAnalysisMapper gameStoryAnalysisMapper;
-
+	@Autowired
+	private ILogAccountService logAccountService;
 	@Autowired
 	private ConfigDataService configDataService;
 
 	@Override
 	public IPage<GameStoryAnalysisVO> queryGameStoryAnalysisList(GameStoryAnalysisVO gameStoryAnalysis, int pageSize, int pageNo) {
-
-		List<GameStoryAnalysis> datalist = null;
-		List<GameStoryAnalysisVO> list = null;
-		List<GameStoryAnalysisVO> resultPage = null;
-		List<Integer> levelIds = null;
-
+		List<GameStoryAnalysis> list = null;
 		try {
 			DataSourceHelper.useServerDatabase(gameStoryAnalysis.getServerId());
-			list = gameStoryAnalysisMapper.queryGameStoryAnalysis(DateUtils.startTimeOfDate(gameStoryAnalysis.getAnalysisDate()),
-					DateUtils.endTimeOfDate(gameStoryAnalysis.getAnalysisDate()), DateUtils.minusDays(gameStoryAnalysis.getAnalysisDate(), 3));
-			resultPage = CollectionPageHelp.pageBySubList(list, pageSize, pageNo);
-			levelIds = resultPage.stream().map(GameStoryAnalysisVO::getMinorLevel).collect(Collectors.toList());
-
-			LambdaQueryWrapper<GameStoryAnalysis> queryWrapper = Wrappers.lambdaQuery();
-			queryWrapper.select(GameStoryAnalysis::getPlayerId, GameStoryAnalysis::getMinorLevel)
-					.in(GameStoryAnalysis::getMinorLevel, levelIds);
-			datalist = this.list(queryWrapper);
+			list = playerReachLevel(gameStoryAnalysis);
 		} catch (Exception e) {
 			log.error("通过服务器id:" + gameStoryAnalysis.getServerId() + ",切换数据源异常", e);
+			return null;
 		} finally {
 			DataSourceHelper.useDefaultDatabase();
 		}
 
-		if (!CollUtil.isEmpty(datalist)) {
-			List<ConfMainStory> confMainStories = queryConfMainStory(levelIds);
+		if (CollUtil.isEmpty(list)) {
+			return null;
+		}
+
+		//各玩家最大到达关卡Map
+		Map<Long, Integer> maxMinorLevelByPlayerMap = list.stream().collect(Collectors.toMap(GameStoryAnalysis::getPlayerId, GameStoryAnalysis::getMinorLevel));
+
+		List<Integer> minorLevelList = list.stream().map(GameStoryAnalysis::getMinorLevel).distinct().collect(Collectors.toList());
+
+		if (CollUtil.isNotEmpty(minorLevelList)) {
+			Collections.sort(minorLevelList);
+			List<Integer> levels = CollectionPageHelp.pageBySubList(minorLevelList, pageSize, pageNo);
+			List<ConfMainStory> confMainStories = queryConfMainStory(levels);
 			if (CollectionUtil.isEmpty(confMainStories)) {
 				return null;
 			}
 
-			List<GameStoryAnalysisVO> result = genGameStoryAnalysisList(confMainStories, resultPage, datalist);
-			IPage<GameStoryAnalysisVO> iPage = new Page<>(pageNo, pageSize, list.size());
+			List<GameStoryAnalysisVO> result = genGameStoryAnalysisList(gameStoryAnalysis, confMainStories, maxMinorLevelByPlayerMap);
+			IPage<GameStoryAnalysisVO> iPage = new Page<>(pageNo, pageSize, minorLevelList.size());
 			iPage.setRecords(result);
 			return iPage;
 		}
@@ -87,64 +83,110 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
 	/**
 	 * 计算剧情分布列表各字段逻辑
 	 *
-	 * @param confMainStories 分页后的关卡list
-	 * @param resultPage      GameStoryAnalysisVOList
-	 * @param datalist        数据库结果集
+	 * @param gameStoryAnalysis          查询条件
+	 * @param confMainStories            关卡
+	 * @param stayingOnPlayerMaxLevelMap 各玩家停留的关卡Map
+	 * @return
 	 */
-	private List<GameStoryAnalysisVO> genGameStoryAnalysisList(List<ConfMainStory> confMainStories, List<GameStoryAnalysisVO> resultPage, List<GameStoryAnalysis> datalist) {
-		// 总停留活跃人数
-		int totalStayLiveNum = 0;
+	private List<GameStoryAnalysisVO> genGameStoryAnalysisList(GameStoryAnalysisVO gameStoryAnalysis,
+															   List<ConfMainStory> confMainStories,
+															   Map<Long, Integer> stayingOnPlayerMaxLevelMap) {
 
-		// 总停留流失人数
-		int totalStayLeaveNum = 0;
+		// 当天活跃用户
+		List<Long> playerIdsByLoginDate = logAccountService.getPlayerIdsByLoginDate(gameStoryAnalysis.getServerId(),
+				gameStoryAnalysis.getAnalysisDate());
+		// 3天内没登陆用户
+		List<Long> playerIdsByNoLoginRangeDate = logAccountService.getPlayerIdsByNoLoginRangeDate(
+				gameStoryAnalysis.getServerId(), gameStoryAnalysis.getAnalysisDate(), 3);
 
-		HashMap<Integer, GameStoryAnalysisVO> gameStoryAnalysisVoMapByLevel = new HashMap<>();
-		for (GameStoryAnalysisVO gameStoryAnalysisVO : resultPage) {
-			gameStoryAnalysisVoMapByLevel.put(gameStoryAnalysisVO.getMinorLevel(), gameStoryAnalysisVO);
-			totalStayLiveNum += gameStoryAnalysisVO.getStayLiveNum();
-			totalStayLeaveNum += gameStoryAnalysisVO.getStayLeaveNum();
+		// 统计停留活跃人数
+		Map<Integer, Integer> countLiveMap = new HashMap<>(playerIdsByLoginDate.size());
+		for (Long playerId : playerIdsByLoginDate) {
+			Integer minorLeve = stayingOnPlayerMaxLevelMap.get(playerId);
+			if (minorLeve != null) {
+				Integer num = countLiveMap.get(minorLeve);
+				if (num != null) {
+					num += 1;
+				} else {
+					num = 1;
+				}
+				countLiveMap.put(minorLeve, num);
+			}
 		}
+		// 总停留活跃人数
+		long totalStayLiveNum = countLiveMap.values().stream().collect(Collectors.summarizingInt(x -> x.intValue())).getSum();
+
+		// 统计停留流失人数
+		Map<Integer, Integer> countLeaveMap = new HashMap<>(playerIdsByNoLoginRangeDate.size());
+		for (Long playerId : playerIdsByNoLoginRangeDate) {
+			Integer minorLeve = stayingOnPlayerMaxLevelMap.get(playerId);
+			if (minorLeve != null) {
+				Integer num = countLeaveMap.get(minorLeve);
+				if (num != null) {
+					num += 1;
+				} else {
+					num = 1;
+				}
+				countLeaveMap.put(minorLeve, num);
+			}
+		}
+		// 总停留流失人数
+		long totalStayLeaveNum = countLeaveMap.values().stream().collect(Collectors.summarizingInt(x -> x.intValue())).getSum();
 
 		List<GameStoryAnalysisVO> result = new ArrayList<>(confMainStories.size());
 
-		// 总停留人数Map<玩家，最大关卡>
-		Map<Long, Integer> stayingOnPlayerMaxLevelMap = getStayingOnPlayerMaxLevelMap(datalist);
-
-
 		for (ConfMainStory confMainStory : confMainStories) {
-			GameStoryAnalysisVO gameStoryAnalysisVO = gameStoryAnalysisVoMapByLevel.get(confMainStory.getLevel());
-			if (gameStoryAnalysisVO != null) { // 有数据
-				// 关卡名称
-				gameStoryAnalysisVO.setStoryCheckpoint(confMainStory.getChapterNum());
-				// 总达成人数
-				gameStoryAnalysisVO.setTotalArriveNum(computeTotalConcludeNum(confMainStory.getLevel(), stayingOnPlayerMaxLevelMap));
-				// 总停留人数
-				gameStoryAnalysisVO.setTotalStayNum(computeTotalRemainNum(confMainStory.getLevel(), stayingOnPlayerMaxLevelMap));
+			GameStoryAnalysisVO gameStoryAnalysisVO = new GameStoryAnalysisVO(confMainStory.getLevel(), confMainStory.getChapterNum());
+			// 关卡名称
+			gameStoryAnalysisVO.setStoryCheckpoint(confMainStory.getChapterNum());
+			// 停留活跃人数
+			gameStoryAnalysisVO.setStayLiveNum(countLiveMap.get(confMainStory.getLevel()) != null ? countLiveMap.get(confMainStory.getLevel()) : 0);
+			// 停留流失人数
+			gameStoryAnalysisVO.setStayLeaveNum(countLeaveMap.get(confMainStory.getLevel()) != null ? countLeaveMap.get(confMainStory.getLevel()) : 0);
+			// 总达成人数
+			gameStoryAnalysisVO.setTotalArriveNum(computeTotalConcludeNum(confMainStory.getLevel(), stayingOnPlayerMaxLevelMap));
+			// 总停留人数
+			gameStoryAnalysisVO.setTotalStayNum(computeTotalRemainNum(confMainStory.getLevel(), stayingOnPlayerMaxLevelMap));
 
-				totalStayLiveNum += gameStoryAnalysisVO.getStayLiveNum();
-				totalStayLeaveNum += gameStoryAnalysisVO.getStayLeaveNum();
-			} else {
-				gameStoryAnalysisVO = new GameStoryAnalysisVO(confMainStory.getLevel(), confMainStory.getChapterNum());
-			}
 			result.add(gameStoryAnalysisVO);
 		}
 
-		for (GameStoryAnalysisVO vo : resultPage) {
+		for (GameStoryAnalysisVO vo : result) {
 			// 活跃占比
-			if (totalStayLiveNum != 0 && vo.getStayLiveNum() != null && vo.getStayLiveNum() != 0) {
+			if (totalStayLiveNum != 0 && vo.getStayLiveNum() != null) {
 				vo.setLiveRate(BigDecimalUtil.dividePercent(BigDecimalUtil.divide((double) vo.getStayLiveNum(), totalStayLiveNum, 4).doubleValue()).toString());
+			} else {
+				vo.setLiveRate("0");
 			}
 			// 流失占比
-			if (totalStayLeaveNum != 0 && vo.getStayLeaveNum() != null && vo.getStayLeaveNum() != 0) {
+			if (totalStayLeaveNum != 0 && vo.getStayLeaveNum() != null) {
 				vo.setLeaveRate(BigDecimalUtil.dividePercent(BigDecimalUtil.divide((double) vo.getStayLeaveNum(), totalStayLeaveNum, 4).doubleValue()).toString());
+			} else {
+				vo.setLeaveRate("0");
 			}
 			// 关卡滞留率
-			if (vo.getTotalArriveNum() != null && vo.getTotalArriveNum() != 0) {
+			if (vo.getTotalArriveNum() != null && vo.getTotalArriveNum() != 0 && vo.getTotalStayNum() != null) {
 				vo.setCheckpointStayRate(BigDecimalUtil.dividePercent(BigDecimalUtil.divide((double) vo.getTotalStayNum(), (double) vo.getTotalArriveNum(), 4).doubleValue()).toString());
+			} else {
+				vo.setCheckpointStayRate("0");
 			}
 		}
 
 		return result;
+	}
+
+	/**
+	 * 指定日期内，各玩家到达关卡的情况
+	 *
+	 * @param gameStoryAnalysis 指定日期
+	 * @return
+	 */
+	private List<GameStoryAnalysis> playerReachLevel(GameStoryAnalysisVO gameStoryAnalysis) {
+		QueryWrapper<GameStoryAnalysis> query = Wrappers.query();
+		query.select("player_id", "max(minor_level) as minor_level");
+		query.le("create_time", DateUtils.endTimeOfDate(gameStoryAnalysis.getAnalysisDate()));
+		query.groupBy("player_id");
+		return this.list(query);
 	}
 
 	/**

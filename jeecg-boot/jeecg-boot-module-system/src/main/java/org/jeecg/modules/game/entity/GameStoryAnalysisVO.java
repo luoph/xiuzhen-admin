@@ -33,6 +33,13 @@ public class GameStoryAnalysisVO extends GameStoryAnalysis implements Serializab
 	}
 
 	/**
+	 * 渠道
+	 */
+	@ExcelIgnore
+	@TableField(exist = false)
+	private java.lang.String channelId;
+
+	/**
 	 * 服务器id
 	 */
 	@ExcelIgnore

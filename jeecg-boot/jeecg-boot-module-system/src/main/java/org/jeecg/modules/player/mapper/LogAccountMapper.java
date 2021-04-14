@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.player.entity.LogAccount;
 
+import java.util.List;
+
 /**
  * <p>
  * 玩家登录、创角统计 Mapper 接口
@@ -56,4 +58,24 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @return
      */
     int getDoublePayRegisterPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+
+    /**
+     * 当前登陆玩家ids
+     * @param channel
+     * @param serverId
+     * @param date
+     * @param logTable
+     * @return
+     */
+    List<Long> getPlayerIdsByLoginDate(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+
+    /**
+     * 指定日期没登陆玩家id
+     * @param channel
+     * @param serverId
+     * @param date
+     * @param logTable
+     * @return
+     */
+    List<Long> getPlayerIdsByNoLoginRangeDate(@Param("serverId") int serverId, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("logTable") String logTable);
 }
