@@ -5,6 +5,7 @@ import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.entity.PlayerDTO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,31 +16,31 @@ import java.util.List;
  */
 public interface IPlayerService extends IService<Player> {
 
-	/**
-	 * 玩家查询
-	 *
-	 * @param playerDTO
-	 * @return
-	 */
-	List<Player> queryForList(PlayerDTO playerDTO);
+    /**
+     * 玩家查询
+     *
+     * @param playerDTO
+     * @return
+     */
+    List<Player> queryForList(PlayerDTO playerDTO);
 
-	/**
-	 * 查询玩家姓名
-	 *
-	 * @param playerId
-	 * @return
-	 */
-	String getNameById(Long playerId);
+    /**
+     * 查询玩家姓名
+     *
+     * @param playerId
+     * @return
+     */
+    String getNameById(Long playerId);
 
-	/**
-	 * 查询玩家行为
-	 *
-	 * @param rangeDateBegin
-	 * @param rangeDateEnd
-	 * @param nickname
-	 * @param days
-	 * @param serverId
-	 * @return
-	 */
-	List<PlayerBehavior> queryPlayerBehavior(String rangeDateBegin, String rangeDateEnd, String nickname, int days, int serverId);
+    /**
+     * 查询玩家行为
+     *
+     * @param rangeDateBegin
+     * @param rangeDateEnd
+     * @param nickname
+     * @param days
+     * @param serverId
+     * @return
+     */
+    List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, int days, int serverId);
 }

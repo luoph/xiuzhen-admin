@@ -106,7 +106,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             List<Map> allPlayerInfoList = playerMapper.selectAllPlayerInfo(playerDTO.getServerId());
             //查询所有用户登录信息
             List<Map> allLoginInfoList = playerMapper.selectAllLoginInfo(playerDTO.getServerId(), logTable);
-            //登录信息按照plaer_id分组
+            //登录信息按照player_id分组
             Map<String, List<Map>> allLoginInfoListMap_playerId = allLoginInfoList.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
             for (Map map : allPlayerInfoList) {
                 Player player = new Player();
@@ -193,21 +193,17 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     }
 
     @Override
-    public List<PlayerBehavior> queryPlayerBehavior(String rangeDateBegin, String rangeDateEnd, String nickname, int days, int serverId) {
-
+    public List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, int days, int serverId) {
         if (StringUtils.isBlank(nickname) && serverId <= 0) {
             return Collections.emptyList();
         }
 
-        Date rangeDateBeginTime = null;
-        Date rangeDateEndTime = null;
+        Date rangeDateBeginTime = rangeDateBegin;
+        Date rangeDateEndTime = rangeDateEnd;
         if (days <= 0) {
-            if (StringUtils.isBlank(rangeDateBegin) || StringUtils.isBlank(rangeDateEnd)) {
+            if (rangeDateBegin == null || rangeDateEnd == null) {
                 return Collections.emptyList();
             }
-
-            rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
-            rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
         } else {
             rangeDateBeginTime = DateUtils.addDays(DateUtils.now(), -days);
             rangeDateEndTime = DateUtils.now();

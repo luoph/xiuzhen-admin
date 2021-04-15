@@ -23,7 +23,7 @@
                     </a-col>
                     <a-col :md="5" :sm="5">
                         <a-form-item label="选择就近天数">
-                            <a-select placeholder="天数" v-model="queryParam.days">
+                            <a-select placeholder="天数" v-model="queryParam.daysType">
                                 <a-select-option value="0">不选择天数</a-select-option>
                                 <a-select-option value="7">近7天</a-select-option>
                                 <a-select-option value="15">近15天</a-select-option>
@@ -41,7 +41,7 @@
             </a-form>
         </div>
         <div class="table-operator">
-            <a-button type="primary" icon="download" @click="downloadExcel('玩家行为分析')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('玩家行为分析')">导出</a-button>
         </div>
         <!-- 查询区域-END -->
         <!-- table区域-begin -->
@@ -71,8 +71,6 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import { getAction } from "@/api/manage";
-import Vue from "vue";
-import { ACCESS_TOKEN } from "@/store/mutation-types";
 
 export default {
     name: "PlayerBehaviorList",
@@ -84,7 +82,7 @@ export default {
     },
     data() {
         return {
-            description: "行为分析管理页面",
+            description: "玩家行为分析",
             // 表头
             columns: [
                 {
@@ -383,8 +381,7 @@ export default {
             ],
             url: {
                 list: "game/player/behavior",
-                exportXlsUrl: "game/player/exportXls",
-                downloadExcel: "/game/player/download"
+                exportXlsUrl: "game/player/exportXls"
             },
             dictOptions: {}
         };
@@ -406,53 +403,6 @@ export default {
         onDateChange: function(value, dateStr) {
             this.queryParam.rangeDateBegin = dateStr[0];
             this.queryParam.rangeDateEnd = dateStr[1];
-        },
-        searchQuery() {
-            let param = {
-                days: this.queryParam.days,
-                channelId: this.queryParam.channelId,
-                serverId: this.queryParam.serverId,
-                nickname: this.queryParam.nickname,
-                rangeDateBegin: this.queryParam.rangeDateBegin,
-                rangeDateEnd: this.queryParam.rangeDateEnd,
-                pageNo: this.ipagination.current,
-                pageSize: this.ipagination.pageSize
-            };
-            getAction(this.url.list, param).then(res => {
-                if (res.success) {
-                    this.dataSource = res.result.records;
-                    this.ipagination.current = res.result.current;
-                    this.ipagination.size = res.result.size.toString();
-                    this.ipagination.total = res.result.total;
-                    this.ipagination.pages = res.result.pages;
-                } else {
-                    this.$message.error(res.message);
-                }
-            });
-        },
-        downloadExcel(filename) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("post", window._CONFIG["domainURL"] + this.url.downloadExcel, true);
-            xhr.responseType = "blob";
-            xhr.setRequestHeader("Content-Type", "application/json");
-            const token = Vue.ls.get(ACCESS_TOKEN);
-            console.log(token);
-            xhr.setRequestHeader("X-Access-Token", token);
-            xhr.onload = function() {
-                var blob = this.response;
-                var reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onload = function(e) {
-                    var a = document.createElement("a");
-                    a.download = filename + ".xlsx";
-                    a.href = e.target.result;
-                    a.click();
-                };
-            };
-            var a = this.queryParam;
-            var param = JSON.stringify(a);
-            console.log(param);
-            xhr.send(param);
         }
     }
 };
