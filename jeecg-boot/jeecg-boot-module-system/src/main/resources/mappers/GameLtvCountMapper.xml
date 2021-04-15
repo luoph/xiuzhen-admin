@@ -30,31 +30,23 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id,channel, server_id, count_date, register_num, d1_amount, d2_amount, d3_amount, d4_amount, d5_amount, d6_amount, d7_amount,
+        id
+        ,channel, server_id, count_date, register_num, d1_amount, d2_amount, d3_amount, d4_amount, d5_amount, d6_amount, d7_amount,
         d14_amount, d21_amount, d30_amount, d60_amount, d90_amount, d120_amount, d180_amount, d360_amount,  create_time
     </sql>
 
     <select id="getGameLtvCount" resultMap="BaseResultMap">
         <![CDATA[
-
-
-
-                                        SELECT
-                                            IFNULL(@register_date := #{date} ,now()) AS count_date,
-                                            @d_start := CONCAT(@register_date, ' 00:00:00'),
-                                            IFNULL(@channel := #{channel},'') AS channel,
-                                            IFNULL(@serverId := #{serverId},0) AS server_id,
-                                            @createTime := now(),
-
-                                            IFNULL(@register_num := (
-                                                SELECT COUNT(DISTINCT(a.`player_id`)) FROM  ${logTable} AS a
-                                                WHERE a. `type` = 1
-                                                AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                                AND a.`channel` = @channel AND a.`server_id` = @serverId),0) AS register_num
-
-
-
-
+        SELECT IFNULL(@register_date := #{date}, now()) AS count_date,
+               @d_start := CONCAT(@register_date, ' 00:00:00'),
+                                            IFNULL(@channel := #{channel}, '') AS channel,
+            IFNULL(@serverId :=
+               #{serverId}, 0) AS server_id,
+            @createTime := now(),
+            IFNULL(@register_num := (
+            SELECT COUNT (DISTINCT (a.`player_id`)) FROM
+               ${logTable} AS a WHERE a. `type` = 1 AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND a.`channel` = @channel AND a.`server_id` = @serverId), 0) AS register_num
         ]]>
     </select>
 
@@ -69,7 +61,7 @@
         </foreach>
     </insert>
 
-    <select id="selectLtv" resultType="double">
+    <select id="selectLtvAutoDate" resultType="double">
         <!--
             由于mbp 不支持mysql原生的set @a := xx 这样的变量方式
             但是支持select  @a := xx这种 select语句执行后会出现不必要的
@@ -96,6 +88,26 @@
                     AND o.`channel` = @channel AND o.`server_id` = @serverId
                   )),0.00) AS d_amount
               ) c;
+        ]]>
+    </select>
+
+    <select id="selectLtv" resultType="double">
+        <![CDATA[
+        SELECT IFNULL(IF(NOW() < #{targetDate}, NULL, (
+            SELECT SUM(o.`pay_amount`)
+            FROM `game_order` o
+                     LEFT JOIN `game_register_info` a
+                               ON o.`player_id` = a.`player_id`
+                                   AND o.`channel` = a.`channel`
+                                   AND o.`server_id` = a.`server_id`
+            WHERE a.`create_time` >= #{startRegisterDate}
+              AND a.`create_time` < #{endRegisterDate}
+              AND o.`create_time` < #{targetDate}
+              AND a.`channel` = #{channel}
+              AND a.`server_id` = #{serverId}
+              AND o.`channel` = #{channel}
+              AND o.`server_id` = #{serverId}
+        )), 0.00) AS d_amount;
         ]]>
     </select>
 
