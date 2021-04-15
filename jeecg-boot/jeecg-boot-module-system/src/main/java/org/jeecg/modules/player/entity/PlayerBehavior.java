@@ -376,7 +376,7 @@ public class PlayerBehavior implements Serializable {
      */
     @ColumnWidth(15)
     @ExcelProperty("统计日期")
-    @Excel(name = "统计日期", width = 15)
+    @Excel(name = "统计日期", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private Date createDate;

@@ -368,7 +368,7 @@ public final class DateUtils {
 	}
 
 	public static String formatDateTimeStr(Date date) {
-		return DateUtil.format(date, "yyyy-MM-dd HH:mm:ss");
+		return DateUtil.format(date, DatePattern.NORM_DATETIME_PATTERN);
 	}
 
 	public static Date parseDate(String date) {
@@ -540,6 +540,24 @@ public final class DateUtils {
 		return Duration.between(localDate.atTime(localTime), targetLocalDate.atTime(targetLocalTime)).toMillis();
 	}
 
+	/**
+	 * 如果startDate和endDate是同一天,则换成当天的0点与23:59:59点
+	 *
+	 * @param startDate
+	 * @param endDate
+	 */
+	public static Date[] queryDateOfSameDay(Date startDate, Date endDate) {
+		Date[] result = new Date[2];
+		if (isSameDay(startDate, endDate)) {
+			result[0] = DateUtils.startTimeOfDate(startDate);
+			result[1] = DateUtils.endTimeOfDate(endDate);
+		} else {
+			result[0] = startDate;
+			result[1] = endDate;
+		}
+		return result;
+	}
+
 	public static void main(String[] args) {
 		Date date = DateUtils.parseDate("2020-07-13 03:55:35");
 		System.out.println("now:" + date);
@@ -548,6 +566,6 @@ public final class DateUtils {
 		System.out.println("game day:" + DateUtils.formatDate(gameDate(date), "yyyy-MM-dd"));
 		System.out.println("game start of day:" + DateUtils.formatDate(gameStartTimeOfDate(date), "yyyy-MM-dd HH:mm:ss.SSS"));
 		System.out.println("game end of day:" + DateUtils.formatDate(gameEndTimeOfDate(date), "yyyy-MM-dd HH:mm:ss.SSS"));
-		
+
 	}
 }

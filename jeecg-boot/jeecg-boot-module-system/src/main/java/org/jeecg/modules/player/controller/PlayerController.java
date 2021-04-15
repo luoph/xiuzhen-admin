@@ -1,6 +1,5 @@
 package org.jeecg.modules.player.controller;
 
-import cn.hutool.core.date.DatePattern;
 import cn.youai.commons.model.DataResponse;
 import cn.youai.xiuzhen.entity.pojo.RoleAttr;
 import cn.youai.xiuzhen.utils.DateUtils;
@@ -11,7 +10,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -30,7 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -111,93 +108,66 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
      */
     @AutoLog(value = "玩家行为分析-查询")
     @GetMapping(value = "/behavior")
-    public Result<?> queryBehavior(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                   @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                   @RequestParam(name = "nickname", defaultValue = "") String nickname,
-                                   @RequestParam(name = "days", defaultValue = "0") int days,
-                                   @RequestParam(name = "serverId", defaultValue = "0") int serverId,
+    public Result<?> queryBehavior(PlayerBehaviorVO playerBehaviorVO,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+                                   @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize) {
+
+        //服务器校验
+        if (playerBehaviorVO.getServerId() == null || playerBehaviorVO.getServerId() <= 0) {
+            return Result.error("请选择服务器！");
+        }
+
         //日期空校验
-        if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if (0 == days){
+        if (playerBehaviorVO.getDaysType() == null || playerBehaviorVO.getDaysType() <= 0) {
+            if (playerBehaviorVO.getRangeDateBegin() == null || playerBehaviorVO.getRangeDateEnd() == null) {
                 return Result.error("请选择日期！");
             }
+            if (playerBehaviorVO.getRangeDateBegin() != null && playerBehaviorVO.getRangeDateEnd() != null) {
+                // 如果选择开始时间和结束时间是同一天
+                Date[] dates = DateUtils.queryDateOfSameDay(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd());
+                playerBehaviorVO.setRangeDateBegin(dates[0]);
+                playerBehaviorVO.setRangeDateEnd(dates[1]);
+            }
         }
-        Page<PlayerBehavior> page = new Page<>(pageNo, pageSize);
-        // 如果选择开始时间和结束时间是同一天
-        if (rangeDateBegin.equals(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
-        }
-        List<PlayerBehavior> list = playerService.queryPlayerBehavior(rangeDateBegin, rangeDateEnd, nickname, days, serverId);
 
+        Page<PlayerBehavior> page = new Page<>(pageNo, pageSize);
+        List<PlayerBehavior> list = playerService.queryPlayerBehavior(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd(),
+                playerBehaviorVO.getNickname(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
         page.setRecords(list).setTotal(list.size());
         return Result.ok(page);
     }
 
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(
-            @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-            @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-            @RequestParam(name = "nickname", defaultValue = "") String nickname,
-            @RequestParam(name = "days", defaultValue = "0") int days,
-            @RequestParam(name = "serverId", defaultValue = "0") int serverId,
-            HttpServletRequest request) {
+    public ModelAndView exportXls(PlayerBehaviorVO playerBehaviorVO,
+                                  HttpServletRequest request) {
 
-        if (StringUtils.isAllBlank(rangeDateBegin, rangeDateEnd)) {
+        //服务器校验
+        if (playerBehaviorVO.getServerId() == null || playerBehaviorVO.getServerId() <= 0) {
             return new ModelAndView();
         }
 
-        // TODO 复用博栋的写法 后面统一改
-        if (rangeDateBegin.equals(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
+        //日期空校验
+        if (playerBehaviorVO.getDaysType() == null || playerBehaviorVO.getDaysType() <= 0) {
+            if (playerBehaviorVO.getRangeDateBegin() == null || playerBehaviorVO.getRangeDateEnd() == null) {
+                return new ModelAndView();
+            }
+            if (playerBehaviorVO.getRangeDateBegin() != null && playerBehaviorVO.getRangeDateEnd() != null) {
+                // 如果选择开始时间和结束时间是同一天
+                Date[] dates = DateUtils.queryDateOfSameDay(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd());
+                playerBehaviorVO.setRangeDateBegin(dates[0]);
+                playerBehaviorVO.setRangeDateEnd(dates[1]);
+            }
         }
 
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        List<PlayerBehavior> list = playerService.queryPlayerBehavior(rangeDateBegin, rangeDateEnd, nickname, days, serverId);
+        List<PlayerBehavior> list = playerService.queryPlayerBehavior(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd(),
+                playerBehaviorVO.getNickname(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
         return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PlayerBehavior.class, "玩家行为分析");
-    }
-
-    @RequestMapping("/download")
-    public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws Exception {
-        String nickname = null == jsonObject.getString("nickname") ? "":jsonObject.getString("nickname");
-        String rangeDateBegin = null == jsonObject.getString("rangeDateBegin") ? "":jsonObject.getString("rangeDateBegin");;
-        String rangeDateEnd = null == jsonObject.getString("rangeDateEnd") ? "":jsonObject.getString("rangeDateEnd");;
-        Integer serverId =  null == jsonObject.getString("serverId") ? 0:Integer.parseInt(jsonObject.getString("serverId"));
-        Integer days =  null == jsonObject.getString("days") ? 0:Integer.parseInt(jsonObject.getString("days"));
-
-    //日期空校验
-    if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-        if (0 == days){
-            throw new Exception("导出文件，请选择日期！");
-        } else {
-            rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN) + " 23:59:59";;
-            rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN) + " 00:00:00";;
-        }
-    }
-
-    // TODO 复用博栋的写法 后面统一改
-    if (rangeDateBegin.equals(rangeDateEnd)) {
-        rangeDateBegin = rangeDateBegin + " 00:00:00";
-        rangeDateEnd = rangeDateEnd + " 23:59:59";
-    }
-
-
-    List<PlayerBehavior> list = playerService.queryPlayerBehavior(rangeDateBegin, rangeDateEnd, nickname, days, serverId);
-
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-
-        EasyExcel.write(response.getOutputStream(), PlayerBehavior.class).sheet("模板").doWrite(list);
     }
 
     @RequestMapping("/downloadPlayerInfo")
     public void downloadPlayerInfo(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws Exception {
-        PlayerDTO playerDTO  = JSON.parseObject(jsonObject.toJSONString(),PlayerDTO.class);
+        PlayerDTO playerDTO = JSON.parseObject(jsonObject.toJSONString(), PlayerDTO.class);
         List<Player> list = playerService.queryForList(playerDTO);
         if (list == null) {
             list = new ArrayList<>();
