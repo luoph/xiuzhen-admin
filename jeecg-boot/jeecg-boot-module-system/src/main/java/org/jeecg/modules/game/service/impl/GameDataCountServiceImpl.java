@@ -449,31 +449,45 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 		} else if (num > REMAIN[5] && num <= REMAIN[6]) {
 			if (maxDateNum > REMAIN[6]) {
 				return num == REMAIN[6];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > REMAIN[6] && num <= REMAIN[7]) {
 			if (maxDateNum > REMAIN[7]) {
 				return num == REMAIN[7];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > REMAIN[7] && num <= REMAIN[8]) {
 			if (maxDateNum > REMAIN[8]) {
 				return num == REMAIN[8];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > REMAIN[8] && num <= REMAIN[9]) {
 			if (maxDateNum > REMAIN[9]) {
 				return num == REMAIN[9];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > REMAIN[9] && num <= REMAIN[10]) {
 			if (maxDateNum > REMAIN[10]) {
 				return num == REMAIN[10];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > REMAIN[10] && num <= REMAIN[11]) {
 			if (maxDateNum > REMAIN[11]) {
 				return num == REMAIN[11];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > REMAIN[11] && num <= REMAIN[12]) {
 			if (maxDateNum > REMAIN[12]) {
 				return num == REMAIN[12];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		}
 		return false;
 	}
@@ -575,35 +589,51 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 		} else if (num > LTV[6] && num <= LTV[7]) {
 			if (maxDateNum > LTV[7]) {
 				return num == LTV[7];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > LTV[7] && num <= LTV[8]) {
 			if (maxDateNum > LTV[8]) {
 				return num == LTV[8];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > LTV[8] && num <= LTV[9]) {
 			if (maxDateNum > LTV[9]) {
 				return num == LTV[9];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > LTV[9] && num <= LTV[10]) {
 			if (maxDateNum > LTV[10]) {
 				return num == LTV[10];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > LTV[10] && num <= LTV[11]) {
 			if (maxDateNum > LTV[11]) {
 				return num == LTV[11];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > LTV[11] && num <= LTV[12]) {
 			if (maxDateNum > LTV[12]) {
 				return num == LTV[12];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > LTV[12] && num <= LTV[13]) {
 			if (maxDateNum > LTV[13]) {
 				return num == LTV[13];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		} else if (num > LTV[13] && num <= LTV[14]) {
 			if (maxDateNum > LTV[14]) {
 				return num == LTV[14];
-			} else return num == maxDateNum;
+			} else {
+				return num == maxDateNum;
+			}
 		}
 		return false;
 	}
