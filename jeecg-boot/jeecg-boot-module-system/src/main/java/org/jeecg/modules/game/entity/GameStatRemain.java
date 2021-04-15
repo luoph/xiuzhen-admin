@@ -122,12 +122,12 @@ public class GameStatRemain implements Serializable {
     private BigDecimal d120Remain;
 
     /**
-     * 120日留存率
+     * 180日留存率
      */
     private BigDecimal d180Remain;
 
     /**
-     * 120日留存率
+     * 360日留存率
      */
     private BigDecimal d360Remain;
 

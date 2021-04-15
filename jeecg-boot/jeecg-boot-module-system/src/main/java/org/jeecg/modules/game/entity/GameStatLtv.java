@@ -82,42 +82,42 @@ public class GameStatLtv implements Serializable {
     private BigDecimal d7Amount;
 
     /**
-     * 第8天充值
+     * 第14天充值
      */
     private BigDecimal d14Amount;
 
     /**
-     * 第9天充值
+     * 第21天充值
      */
     private BigDecimal d21Amount;
 
     /**
-     * 第10天充值
+     * 第30天充值
      */
     private BigDecimal d30Amount;
 
     /**
-     * 第11天充值
+     * 第60天充值
      */
     private BigDecimal d60Amount;
 
     /**
-     * 第12天充值
+     * 第90天充值
      */
     private BigDecimal d90Amount;
 
     /**
-     * 第13天充值
+     * 第120天充值
      */
     private BigDecimal d120Amount;
 
     /**
-     * 第12天充值
+     * 第180天充值
      */
     private BigDecimal d180Amount;
 
     /**
-     * 第13天充值
+     * 第360天充值
      */
     private BigDecimal d360Amount;
 

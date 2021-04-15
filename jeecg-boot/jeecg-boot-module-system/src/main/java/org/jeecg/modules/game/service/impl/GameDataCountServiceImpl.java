@@ -119,6 +119,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 		return list;
 	}
 
+	@Override
 	public Map<String, GameStatDaily> dailyCountMap(boolean isReturnIndex) {
 		List<GameStatDaily> dataCounts;
 		if (isReturnIndex) {
@@ -220,6 +221,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
 	@Override
 	public void doJobDataCountUpdate() {
+		long startTime = System.currentTimeMillis();
 		List<GameChannelServer> list = gameChannelServerService.list();
 		list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
 		Date date = DateUtils.addDays(DateUtils.todayDate(), -1);
@@ -229,7 +231,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 		context.put(KEY_GAME_STAT_REMAIN_COUNT_MAP, remainCountMap(false));
 		// ltv数据
 		context.put(KEY_GAME_STAT_LTV_COUNT_MAP, ltvCountMap(false));
-
+		context.put("num", 0);
+		context.put("sum", 0);
 		for (GameChannelServer gameChannelServer : list) {
 			GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
 			GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
@@ -237,19 +240,30 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 				continue;
 			}
 			try {
+				long updateRemainTaskStartTime = System.currentTimeMillis();
 				// 留存更新
 				updateRemainTask(context, gameChannel, gameServer, formatDate);
+				log.info("simpleName={},serverId={},执行【doJobDataCountUpdate-updateRemainTask】耗时：{}ms",
+						gameChannel.getSimpleName(), gameChannelServer.getServerId(),
+						(System.currentTimeMillis() - updateRemainTaskStartTime));
 			} catch (Exception e) {
 				log.error("updateRemainTask error!" + gameChannelServer.getChannelId() + "_" + gameChannelServer.getServerId());
 			}
 
 			try {
+				long updateLtvTaskStartTime = System.currentTimeMillis();
 				// ltv更新
 				updateLtvTask(context, gameChannel, gameServer, formatDate);
+				log.info("simpleName={},serverId={},执行【doJobDataCountUpdate-updateRemainTask】耗时：{}ms",
+						gameChannel.getSimpleName(), gameChannelServer.getServerId(),
+						(System.currentTimeMillis() - updateLtvTaskStartTime));
 			} catch (Exception e) {
 				log.error("updateLtvTask error!" + gameChannelServer.getChannelId() + "_" + gameChannelServer.getServerId());
 			}
 		}
+		log.info("【doJobDataCountUpdate】执行计算次数：" + context.get("num"));
+		log.info("【doJobDataCountUpdate】处理数据量：" + context.get("sum"));
+		log.info("【doJobDataCountUpdate】接口耗时：" + (System.currentTimeMillis() - startTime) + "ms");
 	}
 
 	@Override
@@ -286,6 +300,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 		return list;
 	}
 
+	@Override
 	public Map<String, GameStatRemain> remainCountMap(boolean isReturnIndex) {
 		List<GameStatRemain> dataCounts;
 		if (isReturnIndex) {
@@ -339,8 +354,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 		return list;
 	}
 
+	@Override
 	public Map<String, GameStatLtv> ltvCountMap(boolean isReturnIndex) {
-		List<GameStatLtv> dataCounts = null;
+		List<GameStatLtv> dataCounts;
 		if (isReturnIndex) {
 			LambdaQueryWrapper<GameStatLtv> queryWrapper = Wrappers.lambdaQuery();
 			queryWrapper.select(GameStatLtv::getChannel, GameStatLtv::getServerId, GameStatLtv::getCountDate);
@@ -379,6 +395,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 			map = remainCountMap(false);
 		}
 		int betweenNatural = betweenNatural(gameServer, countDate);
+		List<GameStatRemain> list = new ArrayList<>();
 		for (int i = 0; i <= betweenNatural; i++) {
 			Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
 			int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
@@ -389,15 +406,76 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 				continue;
 			}
 
+			Date startRegisterDate = DateUtils.startTimeOfDate(nextDate);
+			Date endRegisterDate = DateUtils.endTimeOfDate(nextDate);
 			for (int j = 1; j <= leftDays; j++) {
-				log.info("updateRemainTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
-				int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), logTable, j);
-				updateRemainCountField(gameRemainCount, j, remain);
+				if (isNeedStatRemain(j, leftDays)) {
+					log.info("updateRemainTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
+					int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(),
+							DateUtils.formatDateTimeStr(startRegisterDate),
+							DateUtils.formatDateTimeStr(endRegisterDate),
+							DateUtils.formatDateTimeStr(DateUtils.addDays(startRegisterDate, j)),
+							DateUtils.formatDateTimeStr(DateUtils.addDays(endRegisterDate, j)),
+							logTable);
+					updateRemainCountField(gameRemainCount, j, remain);
+					Integer num = (Integer) context.get("num");
+					num++;
+					context.put("num", num);
+				}
 			}
-			map.put(remainCountKey, gameRemainCount);
+//			map.put(remainCountKey, gameRemainCount);
+			list.add(gameRemainCount);
+			Integer sum = (Integer) context.get("sum");
+			sum++;
+			context.put("sum", sum);
 		}
-		List<GameStatRemain> remains = Lists.newArrayList(map.values());
-		gameDataRemainService.updateBatchById(remains);
+//		List<GameStatRemain> remains = Lists.newArrayList(map.values());
+		long l = System.currentTimeMillis();
+		gameDataRemainService.updateBatchById(list);
+		log.info("---------批量更新数量：" + list.size() + ",----------------------gameLtvCountService.updateBatchById(ltvCounts) 耗时：" + (System.currentTimeMillis() - l) + "ms");
+	}
+
+	/**
+	 * 是否需要统计计算
+	 * 跨越天数统计最大值
+	 * 1,2,3,4,5,6,---(跨越天数不统计)---15,---(跨越天数不统计)---30,---(跨越天数不统计)---60,---(跨越天数不统计)---90
+	 *
+	 * @param num        统计间隔
+	 * @param maxDateNum 最大时间间隔
+	 */
+	private boolean isNeedStatRemain(int num, int maxDateNum) {
+		if (num > 0 && num <= REMAIN[5]) {
+			return true;
+		} else if (num > REMAIN[5] && num <= REMAIN[6]) {
+			if (maxDateNum > REMAIN[6]) {
+				return num == REMAIN[6];
+			} else return num == maxDateNum;
+		} else if (num > REMAIN[6] && num <= REMAIN[7]) {
+			if (maxDateNum > REMAIN[7]) {
+				return num == REMAIN[7];
+			} else return num == maxDateNum;
+		} else if (num > REMAIN[7] && num <= REMAIN[8]) {
+			if (maxDateNum > REMAIN[8]) {
+				return num == REMAIN[8];
+			} else return num == maxDateNum;
+		} else if (num > REMAIN[8] && num <= REMAIN[9]) {
+			if (maxDateNum > REMAIN[9]) {
+				return num == REMAIN[9];
+			} else return num == maxDateNum;
+		} else if (num > REMAIN[9] && num <= REMAIN[10]) {
+			if (maxDateNum > REMAIN[10]) {
+				return num == REMAIN[10];
+			} else return num == maxDateNum;
+		} else if (num > REMAIN[10] && num <= REMAIN[11]) {
+			if (maxDateNum > REMAIN[11]) {
+				return num == REMAIN[11];
+			} else return num == maxDateNum;
+		} else if (num > REMAIN[11] && num <= REMAIN[12]) {
+			if (maxDateNum > REMAIN[12]) {
+				return num == REMAIN[12];
+			} else return num == maxDateNum;
+		}
+		return false;
 	}
 
 	private void updateRemainCountField(GameStatRemain gameDataRemain, int j, int remain) {
@@ -425,9 +503,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 			} else if (j > REMAIN[9] && j <= REMAIN[10]) {
 				gameDataRemain.setD120Remain(BigDecimal.valueOf(remain));
 			} else if (j > REMAIN[10] && j <= REMAIN[11]) {
-				gameDataRemain.setD120Remain(BigDecimal.valueOf(remain));
+				gameDataRemain.setD180Remain(BigDecimal.valueOf(remain));
 			} else if (j > REMAIN[11] && j <= REMAIN[12]) {
-				gameDataRemain.setD120Remain(BigDecimal.valueOf(remain));
+				gameDataRemain.setD360Remain(BigDecimal.valueOf(remain));
 			}
 		}
 	}
@@ -435,13 +513,15 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void updateLtvTask(Map<String, Object> context, GameChannel gameChannel, GameServer gameServer, String countDate) {
-		Map<String, GameStatLtv> map = null;
+		Map<String, GameStatLtv> map;
 		if (context != null) {
 			map = (Map<String, GameStatLtv>) context.get(KEY_GAME_STAT_LTV_COUNT_MAP);
 		} else {
 			map = ltvCountMap(false);
 		}
+
 		int betweenNatural = betweenNatural(gameServer, countDate);
+		List<GameStatLtv> list = new ArrayList<>();
 		for (int i = 0; i <= betweenNatural; i++) {
 			Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
 			int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
@@ -452,16 +532,80 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 				continue;
 			}
 
+			Date startRegisterDate = DateUtils.startTimeOfDate(nextDate);
+			Date endRegisterDate = DateUtils.endTimeOfDate(nextDate);
 			for (int j = 1; j <= leftDays; j++) {
-				log.info("updateLtvTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
-				double remain = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
-				updateLtvCountField(gameLtvCount, j, remain);
+				Integer num = (Integer) context.get("num");
+				if (isNeedStatLtvRemain(j, leftDays)) {
+					log.info("updateLtvTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
+					double remain = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), gameServer.getId(),
+							DateUtils.formatDateTimeStr(startRegisterDate),
+							DateUtils.formatDateTimeStr(endRegisterDate),
+							DateUtils.formatDateTimeStr(DateUtils.addDays(startRegisterDate, j)),
+							logTable);
+					updateLtvCountField(gameLtvCount, j, remain);
+				}
+				num++;
+				context.put("num", num);
 			}
-			map.put(ltvCountKey, gameLtvCount);
+			list.add(gameLtvCount);
+			Integer sum = (Integer) context.get("sum");
+			sum++;
+			context.put("sum", sum);
+//			map.put(ltvCountKey, gameLtvCount);
 		}
 		// 批量更新
-		List<GameStatLtv> ltvCounts = Lists.newArrayList(map.values());
-		gameLtvCountService.updateBatchById(ltvCounts);
+//		List<GameStatLtv> ltvCounts = Lists.newArrayList(map.values());
+		long l = System.currentTimeMillis();
+		gameLtvCountService.updateBatchById(list);
+		log.info("---------批量更新数量：" + list.size() + ",----------------------gameLtvCountService.updateBatchById(ltvCounts) 耗时：" + (System.currentTimeMillis() - l) + "ms");
+	}
+
+	/**
+	 * 是否需要统计计算
+	 * 跨越天数统计最大值
+	 * 1,2,3,4,5,6,7--(跨越天数不统计)--14,--(跨越天数不统计)--21,--(跨越天数不统计)---30,--(跨越天数不统计)---90...
+	 *
+	 * @param num        统计间隔
+	 * @param maxDateNum 最大时间间隔
+	 */
+	private boolean isNeedStatLtvRemain(int num, int maxDateNum) {
+		if (num > 0 && num <= LTV[6]) {
+			return true;
+		} else if (num > LTV[6] && num <= LTV[7]) {
+			if (maxDateNum > LTV[7]) {
+				return num == LTV[7];
+			} else return num == maxDateNum;
+		} else if (num > LTV[7] && num <= LTV[8]) {
+			if (maxDateNum > LTV[8]) {
+				return num == LTV[8];
+			} else return num == maxDateNum;
+		} else if (num > LTV[8] && num <= LTV[9]) {
+			if (maxDateNum > LTV[9]) {
+				return num == LTV[9];
+			} else return num == maxDateNum;
+		} else if (num > LTV[9] && num <= LTV[10]) {
+			if (maxDateNum > LTV[10]) {
+				return num == LTV[10];
+			} else return num == maxDateNum;
+		} else if (num > LTV[10] && num <= LTV[11]) {
+			if (maxDateNum > LTV[11]) {
+				return num == LTV[11];
+			} else return num == maxDateNum;
+		} else if (num > LTV[11] && num <= LTV[12]) {
+			if (maxDateNum > LTV[12]) {
+				return num == LTV[12];
+			} else return num == maxDateNum;
+		} else if (num > LTV[12] && num <= LTV[13]) {
+			if (maxDateNum > LTV[13]) {
+				return num == LTV[13];
+			} else return num == maxDateNum;
+		} else if (num > LTV[13] && num <= LTV[14]) {
+			if (maxDateNum > LTV[14]) {
+				return num == LTV[14];
+			} else return num == maxDateNum;
+		}
+		return false;
 	}
 
 	private void updateLtvCountField(GameStatLtv gameLtvCount, int j, double remain) {
@@ -567,10 +711,10 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 						double countValue;
 						// type 1-留存 2-ltv
 						if (type == 1) {
-							countValue = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(),
+							countValue = gameDataRemainMapper.selectRemainAutoDate(gameChannel.getSimpleName(),
 									gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), logTable, j);
 						} else {
-							countValue = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(),
+							countValue = gameLtvCountMapper.selectLtvAutoDate(gameChannel.getSimpleName(),
 									gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
 						}
 						ReflectUtils.invokeSetField(gameCountOngoing, countField, countValue);

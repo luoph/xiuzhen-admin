@@ -176,7 +176,7 @@ public class GameDataCountController {
 				channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
 				List<GameStatLtv> allCount = new ArrayList<>();
 				Map<String, Object> context = new HashMap<>();
-				context.put(gameDataCountService.KEY_GAME_STAT_REMAIN_COUNT_MAP, gameDataCountService.ltvCountMap(false));
+				context.put(IGameDataCountService.KEY_GAME_STAT_REMAIN_COUNT_MAP, gameDataCountService.ltvCountMap(false));
 				for (GameChannelServer channelServer : channelServers) {
 					GameServer gameServer = gameServerService.getById(channelServer.getServerId());
 					GameChannel gameChannel = gameChannelService.getById(channelServer.getChannelId());
@@ -257,19 +257,5 @@ public class GameDataCountController {
 			}
 			return Result.ok(list);
 		}
-	}
-
-	/**
-	 * 测试数据统计任务耗时
-	 *
-	 * @param req
-	 * @return
-	 */
-	@GetMapping(value = "/doJobDataCountTask")
-	public Result<?> doJobDataCountTask(HttpServletRequest req) {
-		long startTime = System.currentTimeMillis();
-		gameDataCountService.doJobDataCount();
-		log.debug("【gameDataCountService.doJobDataCount()】接口耗时：" + (System.currentTimeMillis() - startTime) + "s");
-		return Result.ok();
 	}
 }

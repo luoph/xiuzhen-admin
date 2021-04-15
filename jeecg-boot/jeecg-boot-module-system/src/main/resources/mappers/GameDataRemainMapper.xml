@@ -32,63 +32,47 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, d2_remain, d3_remain, d4_remain, d5_remain, d6_remain,
+        id
+        , channel, server_id, register_num, pay_num, free_num, pay_remain, free_remain, d2_remain, d3_remain, d4_remain, d5_remain, d6_remain,
         d7_remain, d15_remain, d30_remain, d60_remain, d90_remain, d120_remain, d180_remain, d360_remain, count_date, create_time
     </sql>
 
     <select id="gameRemainCount" resultMap="BaseResultMap">
     <![CDATA[
-
-
-
-                           SELECT
-                            IFNULL(@register_date := #{date}, now()) AS count_date,
-                            @d_start := CONCAT(@register_date, ' 00:00:00'),
+        SELECT IFNULL(@register_date := #{date}, now()) AS count_date,
+               @d_start := CONCAT(@register_date, ' 00:00:00'),
                             IFNULL(@channel := #{channel}, '') AS channel,
-                            IFNULL(@serverId := #{serverId}, 0) AS server_id,
-
-                             IFNULL(@register_num := (
-                                SELECT COUNT(DISTINCT(a.`player_id`)) FROM  ${logTable} AS a
-                                WHERE a. `type` = 1
-                                AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                AND a.`channel` = @channel AND a.`server_id` = @serverId),0) AS register_num,
-
-                             IFNULL(@pay_num := (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
-                                LEFT JOIN `game_register_info` p ON o.`player_id` = p.`player_id`
-                                AND o.`channel` = p.`channel`
-                                AND o.`server_id` = p.`server_id`
-                                WHERE p.`create_time` >= @d_start AND p.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                AND o.`pay_time` >= @d_start AND o.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                AND o.`channel` = @channel AND o.`server_id` = @serverId
-                                AND p.`channel` = @channel AND p.`server_id` = @serverId),0) AS pay_num,
-
-                            IFNULL(@free_num := @register_num - @pay_num, 0) AS free_num,
-
-                            IFNULL(@pay_remain := (SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
-                                LEFT JOIN `game_register_info` d ON l.`player_id` = d.`player_id`
-                                AND l.`channel` = d.`channel`
-                                AND l.`server_id` = d.`server_id`
-                                WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
-                                AND  d.`create_time` >= @d_start AND d.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                AND d.`channel` =@channel AND d.`server_id` = @serverId
-                                AND l.`channel` =@channel AND l.`server_id` = @serverId
-                                AND EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-                                AND b.`pay_time` >= @d_start AND b.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                AND b.`channel` =@channel AND b.`server_id` = @serverId)),0) AS pay_remain,
-
-                            IFNULL(@free_remain := (SELECT count( DISTINCT ( l.`player_id` )) FROM ${logTable} l
-                                LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id`
-                                AND l.`channel` = a.`channel`
-                                AND l.`server_id` = a.`server_id`
-                                WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
-                                AND  a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                AND a.`channel` = @channel AND a.`server_id` = @serverId
-                                AND l.`channel` = @channel AND l.`server_id` = @serverId
-                                AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-                                AND b.`pay_time` >= @d_start AND b.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-                                AND b.`channel` = @channel AND b.`server_id` = @serverId)),0) AS free_remain;
-
-
+            IFNULL(@serverId :=
+               #{serverId}, 0) AS server_id,
+            IFNULL(@register_num := (
+            SELECT COUNT (DISTINCT (a.`player_id`)) FROM
+               ${logTable} AS a WHERE a. `type` = 1 AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND a.`channel` = @channel AND a.`server_id` = @serverId), 0) AS register_num,
+            IFNULL(@pay_num := (SELECT COUNT (DISTINCT (o.`player_id`)) FROM `game_order` o
+            LEFT JOIN `game_register_info` p ON o.`player_id` = p.`player_id`
+            AND o.`channel` = p.`channel`
+            AND o.`server_id` = p.`server_id`
+            WHERE p.`create_time` >= @d_start AND p.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND o.`pay_time` >= @d_start AND o.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND o.`channel` = @channel AND o.`server_id` = @serverId
+            AND p.`channel` = @channel AND p.`server_id` = @serverId), 0) AS pay_num,
+            IFNULL(@free_num := @register_num - @pay_num, 0) AS free_num,
+            IFNULL(@pay_remain := (SELECT count ( DISTINCT ( l.`player_id` )) FROM
+               ${logTable} l LEFT JOIN `game_register_info` d ON l.`player_id` = d.`player_id` AND l.`channel` = d.`channel` AND l.`server_id` = d.`server_id` WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
+            AND d.`create_time` >= @d_start AND d.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND d.`channel` =@channel AND d.`server_id` = @serverId
+            AND l.`channel` =@channel AND l.`server_id` = @serverId
+            AND EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
+            AND b.`pay_time` >= @d_start AND b.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND b.`channel` =@channel AND b.`server_id` = @serverId)), 0) AS pay_remain,
+            IFNULL(@free_remain := (SELECT count ( DISTINCT ( l.`player_id` )) FROM
+               ${logTable} l LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id` AND l.`channel` = a.`channel` AND l.`server_id` = a.`server_id` WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
+            AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND a.`channel` = @channel AND a.`server_id` = @serverId
+            AND l.`channel` = @channel AND l.`server_id` = @serverId
+            AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
+            AND b.`pay_time` >= @d_start AND b.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            AND b.`channel` = @channel AND b.`server_id` = @serverId)), 0) AS free_remain;
         ]]>
    </select>
 
@@ -105,7 +89,7 @@
         </foreach>
     </insert>
 
-    <select id="selectRemain" resultType="int">
+    <select id="selectRemainAutoDate" resultType="int">
         <!--
            由于mbp 不支持mysql原生的set @a := xx 这样的变量方式
            但是支持select  @a := xx这种 select语句执行后会出现不必要的
@@ -130,6 +114,25 @@
                     AND l.`channel` = @channel AND l.`server_id` = @serverId
                 )),0)AS remain
             ) b;
+        ]]>
+    </select>
+
+    <select id="selectRemain" resultType="int">
+        <![CDATA[
+        SELECT IFNULL(IF(NOW() < #{startLoginDay}, NULL, (
+            SELECT count(DISTINCT (l.`player_id`))
+            FROM ${logTable} l
+                     LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id`
+                AND l.`channel` = a.`channel` AND l.`server_id` = a.`server_id`
+            WHERE l.`create_date` >= #{startLoginDay}
+              AND l.`create_date` < #{endLoginDay}
+              AND a.`create_time` >= #{startRegisterDate}
+              AND a.`create_time` < #{endRegisterDate}
+              AND a.`channel` = #{channel}
+              AND a.`server_id` = #{serverId}
+              AND l.`channel` = #{channel}
+              AND l.`server_id` = #{serverId}
+        )), 0) AS remain
         ]]>
     </select>
 </mapper>
