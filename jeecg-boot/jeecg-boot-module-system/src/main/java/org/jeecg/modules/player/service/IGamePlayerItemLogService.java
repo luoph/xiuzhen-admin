@@ -1,6 +1,7 @@
 package org.jeecg.modules.player.service;
 
 import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.GamePlayerItemLog;
@@ -75,4 +76,20 @@ public interface IGamePlayerItemLogService extends IService<GamePlayerItemLog> {
 	 * @return
 	 */
 	List<ConfItem> getConfItemList(Integer itemId, String itemName);
+
+	/**
+	 * 查询玩家日志列表
+	 *
+	 * @param playerItemLog
+	 * @return
+	 */
+	List<GamePlayerItemLog> queryPlayerItemLogList(GamePlayerItemLog playerItemLog);
+
+	/**
+	 * 查询玩家日志列表分页
+	 *
+	 * @param playerItemLog
+	 * @return
+	 */
+	IPage<GamePlayerItemLog> queryPlayerItemLogPageList(GamePlayerItemLog playerItemLog, int pageNo, int pageSize);
 }

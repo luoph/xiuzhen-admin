@@ -3,6 +3,7 @@
  */
 package org.jeecg.modules.player.service.impl;
 
+import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.player.entity.LogAccount;
@@ -54,13 +55,13 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
 
 	@Override
 	public List<Long> getPlayerIdsByLoginDate(int serverId, Date date) {
-		return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, "yyyy-MM-dd"), logTable);
+		return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN), logTable);
 	}
 
 	@Override
 	public List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate) {
-		String startDate = DateUtils.formatDate(DateUtils.minusDays(srcDate, beforeDate), "yyyy-MM-dd");
-		String endDate = DateUtils.formatDate(srcDate, "yyyy-MM-dd");
+		String startDate = DateUtils.formatDate(DateUtils.minusDays(srcDate, beforeDate), DatePattern.NORM_DATE_PATTERN);
+		String endDate = DateUtils.formatDate(srcDate, DatePattern.NORM_DATE_PATTERN);
 		return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate, logTable);
 	}
 }

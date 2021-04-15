@@ -51,7 +51,7 @@
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
-            <a-button type="primary" icon="download" @click="downloadExcel('道具日志')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('道具日志')">导出</a-button>
         </div>
         <!-- table区域-begin -->
         <div>
@@ -162,8 +162,7 @@ export default {
             ],
             url: {
                 list: "player/playerItemLog/list",
-                exportXlsUrl: "player/playerItemLog/exportXls",
-                importExcelUrl: "player/playerItemLog/importExcel"
+                exportXlsUrl: "player/playerItemLog/download"
             },
             dictOptions: {}
         };
