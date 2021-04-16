@@ -19,6 +19,20 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
+    public GameCampaignDirectPurchase() {
+    }
+
+    public GameCampaignDirectPurchase(GameCampaignDirectPurchase other) {
+        this.limitNum = other.getLimitNum();
+        this.price = other.getPrice();
+        this.discount = other.getDiscount();
+        this.amount = other.getAmount();
+        this.name = other.getName();
+        this.type = other.getType();
+        this.sort = other.getSort();
+        this.reward = other.getReward();
+    }
+
     /**
      * 已购数量
      */
