@@ -3,7 +3,6 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -77,7 +76,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     private IGameCampaignTypePartyProgressService campaignTypePartyProgressService;
 
     @Autowired
-    private IGameCampaignDirectPurchaseService gameCampaignDirectPurchaseService;
+    private IGameCampaignDirectPurchaseService campaignDirectPurchaseService;
 
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
@@ -204,10 +203,10 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     Wrapper<GameCampaignDirectPurchase> rewardsQuery = Wrappers.<GameCampaignDirectPurchase>lambdaQuery()
                             .eq(GameCampaignDirectPurchase::getCampaignId, campaignId)
                             .eq(GameCampaignDirectPurchase::getTypeId, model.getId());
-                    model.setRewardList(gameCampaignDirectPurchaseService.list(rewardsQuery));
+                    model.setRewardList(campaignDirectPurchaseService.list(rewardsQuery));
                 }
                 break;
-                
+
                 default:
                     break;
             }
@@ -688,6 +687,19 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                 }
                 break;
 
+                case DIRECT_PURCHASE: {
+                    List<GameCampaignDirectPurchase> copyDetails = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignDirectPurchase> details = (List<GameCampaignDirectPurchase>) model.getDetails();
+                    for (GameCampaignDirectPurchase directPurchase : details) {
+                        GameCampaignDirectPurchase copy = new GameCampaignDirectPurchase(directPurchase);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setType(copyCampaignType.getType());
+
+                        copyDetails.add(copy);
+                    }
+                    campaignDirectPurchaseService.saveBatch(copyDetails);
+                }
+                break;
                 default:
                     break;
             }

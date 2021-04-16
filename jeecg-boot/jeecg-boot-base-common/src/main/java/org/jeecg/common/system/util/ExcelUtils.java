@@ -179,6 +179,10 @@ public class ExcelUtils {
         boolean hasQuotation = false;
         int prevIndex = 0;
 
+        if (chars[chars.length - 1] != '\n') {
+            chars = (text + '\n').toCharArray();
+        }
+
         List<String> cellLine = new ArrayList<>();
         List<List<String>> textLine = new ArrayList<>();
 

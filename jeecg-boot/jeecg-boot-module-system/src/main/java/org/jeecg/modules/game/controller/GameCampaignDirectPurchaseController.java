@@ -13,7 +13,6 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.entity.GameCampaignDirectPurchase;
 import org.jeecg.modules.game.entity.GameCampaignType;
-import org.jeecg.modules.game.entity.GameCampaignTypeSword;
 import org.jeecg.modules.game.entity.ImportTextVO;
 import org.jeecg.modules.game.service.IGameCampaignDirectPurchaseService;
 import org.jeecg.modules.game.service.IGameCampaignTypeService;
@@ -160,7 +159,7 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
         return super.importExcel(request, response, GameCampaignDirectPurchase.class);
     }
 
-    
+
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         GameCampaignType campaignType = gameCampaignTypeService.getById(vo.getId());
@@ -170,15 +169,15 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
 
         String fileName = tempFolder + File.separator + GameCampaignDirectPurchase.class.getSimpleName() + ".xls";
 
-        List<GameCampaignDirectPurchase> swordList = ExcelUtils.importFromExcelText(vo.getText(), fileName, GameCampaignDirectPurchase.class);
-        if (CollUtil.isNotEmpty(swordList)) {
-            for (GameCampaignDirectPurchase directPurchase : swordList) {
+        List<GameCampaignDirectPurchase> directPurchaseList = ExcelUtils.importFromExcelText(vo.getText(), fileName, GameCampaignDirectPurchase.class);
+        if (CollUtil.isNotEmpty(directPurchaseList)) {
+            for (GameCampaignDirectPurchase directPurchase : directPurchaseList) {
                 directPurchase.setId(null);
                 directPurchase.setCampaignId(campaignType.getCampaignId());
                 directPurchase.setTypeId(campaignType.getId());
                 directPurchase.setCreateTime(DateUtils.now());
             }
-            gameCampaignDirectPurchaseService.saveBatch(swordList);
+            gameCampaignDirectPurchaseService.saveBatch(directPurchaseList);
         }
         return Result.ok(vo);
     }
