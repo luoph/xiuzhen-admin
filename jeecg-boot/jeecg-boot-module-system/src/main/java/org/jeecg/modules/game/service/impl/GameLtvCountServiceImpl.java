@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * <p>
@@ -55,7 +56,7 @@ public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, Gam
     }
 
     @Override
-    public GameStatLtv getGameLtvCount(String channel, int serverId, String date, String logTable) {
-        return gameLtvCountMapper.getGameLtvCount(channel, serverId, date, logTable);
+    public GameStatLtv getGameLtvCount(String channel, int serverId, String date, Date statDate, String logTable) {
+        return gameLtvCountMapper.getGameLtvCount(channel, serverId, date, statDate, logTable);
     }
 }
