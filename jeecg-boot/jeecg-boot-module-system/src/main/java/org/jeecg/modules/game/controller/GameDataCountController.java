@@ -263,13 +263,12 @@ public class GameDataCountController {
 
     @GetMapping(value = "/manualStatRemainAndLtv")
     public Result<?> statRemainAndLtv4RangeDate(@RequestParam(value = "startDate", defaultValue = "") String startDate,
-                                                @RequestParam(value = "endDate", defaultValue = "") String endDate) throws InterruptedException {
+                                                @RequestParam(value = "endDate", defaultValue = "") String endDate) {
         if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
             return Result.error("the params startDate and endDate is not empty!");
         }
         Date startTime = DateUtils.parseDate(startDate);
         Date endTime = DateUtils.parseDate(endDate);
-        log.info("startTime={},endTime={}",startDate,endDate);
 
         int daysBetween = DateUtils.daysBetween(startTime, endTime);
         for (int i = 1; i <= daysBetween; i++) {
