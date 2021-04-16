@@ -111,14 +111,14 @@ import GameCampaignTypeBuffList from "../GameCampaignTypeBuffList";
 import GameCampaignTypeFallList from "../GameCampaignTypeFallList";
 import GameCampaignTypeFallRewardList from "../GameCampaignTypeFallRewardList";
 import GameCampaignTypeFireworkList from "../GameCampaignTypeFireworkList";
-import GameCampaignTypeReduceList from "@views/game/GameCampaignTypeReduceList";
-import GameCampaignTypeSwordList from "@views/game/GameCampaignTypeSwordList";
-import GameCampaignTypeThrowingEggsList from "@views/game/GameCampaignTypeThrowingEggsList";
-import GameCampaignTypeThrowingEggsRankList from "@views/game/GameCampaignTypeThrowingEggsRankList";
-import GameCampaignTypeThrowingEggsGiftList from "@views/game/GameCampaignTypeThrowingEggsGiftList";
-import GameCampaignTypePartyProgressList from "@views/game/GameCampaignTypePartyProgressList";
-import GameCampaignTypePartyTaskList from "@views/game/GameCampaignTypePartyTaskList";
-import GameCampaignDirectPurchaseList from "@views/game/GameCampaignDirectPurchaseList";
+import GameCampaignTypeReduceList from "../GameCampaignTypeReduceList";
+import GameCampaignTypeSwordList from "../GameCampaignTypeSwordList";
+import GameCampaignTypeThrowingEggsList from "../GameCampaignTypeThrowingEggsList";
+import GameCampaignTypeThrowingEggsRankList from "../GameCampaignTypeThrowingEggsRankList";
+import GameCampaignTypeThrowingEggsGiftList from "../GameCampaignTypeThrowingEggsGiftList";
+import GameCampaignTypePartyProgressList from "../GameCampaignTypePartyProgressList";
+import GameCampaignTypePartyTaskList from "../GameCampaignTypePartyTaskList";
+import GameCampaignDirectPurchaseList from "../GameCampaignDirectPurchaseList";
 
 export default {
     name: "GameCampaignTypeModal",
