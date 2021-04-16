@@ -12,7 +12,7 @@
                     <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动页签"
                                     style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="已购数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="限购数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" placeholder="请输入已购数量"
                                     style="width: 100%" />
                 </a-form-item>
