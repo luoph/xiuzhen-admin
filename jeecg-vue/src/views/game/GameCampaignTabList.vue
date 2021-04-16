@@ -144,6 +144,8 @@ export default {
                             text = "13-砸蛋礼包";
                         } else if (value === 14) {
                             text = "14-节日派对";
+                        } else if (value === 15) {
+                            text = "15-直购礼包";
                         }
                         return text;
                     }

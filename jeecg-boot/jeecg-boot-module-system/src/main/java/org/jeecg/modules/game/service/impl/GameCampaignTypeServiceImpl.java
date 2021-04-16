@@ -76,6 +76,9 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignTypePartyProgressService campaignTypePartyProgressService;
 
+    @Autowired
+    private IGameCampaignDirectPurchaseService gameCampaignDirectPurchaseService;
+
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
@@ -196,6 +199,15 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     model.setRewardList(campaignTypePartyProgressService.list(rewardsQuery));
                 }
                 break;
+
+                case DIRECT_PURCHASE: {
+                    Wrapper<GameCampaignDirectPurchase> rewardsQuery = Wrappers.<GameCampaignDirectPurchase>lambdaQuery()
+                            .eq(GameCampaignDirectPurchase::getCampaignId, campaignId)
+                            .eq(GameCampaignDirectPurchase::getTypeId, model.getId());
+                    model.setRewardList(gameCampaignDirectPurchaseService.list(rewardsQuery));
+                }
+                break;
+                
                 default:
                     break;
             }

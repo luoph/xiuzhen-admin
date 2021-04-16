@@ -31,6 +31,7 @@ public enum CampaignFestivalType {
     THROWING_EGGS_GIFT("砸蛋礼包", 13, GameCampaignTypeThrowingEggsGift.class, GameCampaignTypeThrowingEggsGiftVO.class),
     PARTY("节日派对", 14, GameCampaignTypePartyTask.class, GameCampaignTypePartyTaskVO.class),
     // PARTY_PROGRESS("节日派对", 14, GameCampaignTypePartyProgress.class, GameCampaignTypePartyProgressVO.class),
+    DIRECT_PURCHASE("直购礼包", 15, GameCampaignDirectPurchase.class, GameCampaignDirectPurchaseVO.class),
     // end
     ;
 

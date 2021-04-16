@@ -4,41 +4,14 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="活动id">
-                            <a-input placeholder="请输入活动id" v-model="queryParam.campaignId"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="服务器id">
-                            <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
-                        </a-form-item>
-                    </a-col>
-                    <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="开启typeIds">
-                                <a-input placeholder="请输入开启typeIds" v-model="queryParam.typeIds"></a-input>
-                            </a-form-item>
-                        </a-col>
-                    </template>
-                    <a-col :md="6" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
-                            <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-                            <a style="margin-left: 8px" @click="handleToggleSearch">
-                                {{ toggleSearchStatus ? "收起" : "展开" }}
-                                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
-                            </a>
-                        </span>
-                    </a-col>
-                </a-row>
+                    </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('活动区服配置')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('直购礼包')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload>
@@ -53,8 +26,7 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -69,13 +41,14 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
+                
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
+                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
@@ -99,23 +72,23 @@
             </a-table>
         </div>
 
-        <game-campaign-support-modal ref="modalForm" @ok="modalFormOk"></game-campaign-support-modal>
+        <gameCampaignDirectPurchase-modal ref="modalForm" @ok="modalFormOk"></gameCampaignDirectPurchase-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import GameCampaignSupportModal from "./modules/GameCampaignSupportModal";
+import GameCampaignDirectPurchaseModal from "./modules/GameCampaignDirectPurchaseModal";
 
 export default {
-    name: "GameCampaignSupportList",
+    name: "GameCampaignDirectPurchaseList",
     mixins: [JeecgListMixin],
     components: {
-        GameCampaignSupportModal
+        GameCampaignDirectPurchaseModal
     },
     data() {
         return {
-            description: "活动区服配置管理页面",
+            description: "直购礼包管理页面",
             // 表头
             columns: [
                 {
@@ -129,43 +102,54 @@ export default {
                     }
                 },
                 {
-                    title: "id",
-                    align: "center",
-                    dataIndex: "id"
-                },
-                {
-                    title: "活动id",
+                    title: "主活动id",
                     align: "center",
                     dataIndex: "campaignId"
                 },
                 {
-                    title: "页签id",
+                    title: "子活动id",
                     align: "center",
                     dataIndex: "typeId"
                 },
                 {
-                    title: "服务器id",
+                    title: "已购数量",
                     align: "center",
-                    dataIndex: "serverId"
+                    dataIndex: "limitNum"
                 },
                 {
-                    title: "状态",
+                    title: "单价",
                     align: "center",
-                    dataIndex: "status",
-                    customRender: function(text) {
-                        let value = "--";
-                        if (text === "1") {
-                            value = "已开启";
-                        } else if (text === "0") {
-                            value = "已关闭";
-                        }
-                        return value;
-                    }
+                    dataIndex: "price"
                 },
                 {
-                    title: "创建时间",
+                    title: "折扣",
                     align: "center",
-                    dataIndex: "createTime"
+                    dataIndex: "discount"
+                },
+                {
+                    title: "原价",
+                    align: "center",
+                    dataIndex: "amount"
+                },
+                {
+                    title: "礼包名",
+                    align: "center",
+                    dataIndex: "name"
+                },
+                {
+                    title: "礼包组类型",
+                    align: "center",
+                    dataIndex: "type"
+                },
+                {
+                    title: "组排序",
+                    align: "center",
+                    dataIndex: "sort"
+                },
+                {
+                    title: "奖励列表",
+                    align: "center",
+                    dataIndex: "reward"
                 },
                 {
                     title: "操作",
@@ -175,13 +159,14 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameCampaignSupport/list",
-                delete: "game/gameCampaignSupport/delete",
-                deleteBatch: "game/gameCampaignSupport/deleteBatch",
-                exportXlsUrl: "game/gameCampaignSupport/exportXls",
-                importExcelUrl: "game/gameCampaignSupport/importExcel"
+                list: "game/gameCampaignDirectPurchase/list",
+                delete: "game/gameCampaignDirectPurchase/delete",
+                deleteBatch: "game/gameCampaignDirectPurchase/deleteBatch",
+                exportXlsUrl: "game/gameCampaignDirectPurchase/exportXls",
+                importExcelUrl: "game/gameCampaignDirectPurchase/importExcel"
             },
-            dictOptions: {}
+            dictOptions: {
+            }
         };
     },
     computed: {
@@ -190,7 +175,8 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {
+        }
     }
 };
 </script>
