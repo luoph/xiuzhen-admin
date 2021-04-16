@@ -13,11 +13,11 @@
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
             <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
             <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据"></a-textarea>
-            <!--<a-button type="primary" icon="download" @click="handleExportXls('直购礼包')">导出</a-button>-->
-            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+            <!--<a-button type="primary" icon="download" @click="handleExportXls('直购礼包')">导出</a-button>
+             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                  <a-button type="primary" icon="import">导入</a-button>
-             </a-upload>-->
-            <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
+             </a-upload>
+             <a-dropdown v-if="selectedRowKeys.length > 0">
                  <a-menu slot="overlay">
                      <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
                  </a-menu>
@@ -96,6 +96,8 @@ export default {
     data() {
         return {
             description: "直购礼包管理页面",
+            importText: "",
+            model: {},
             // 表头
             columns: [
                 {
@@ -119,7 +121,7 @@ export default {
                     dataIndex: "typeId"
                 },
                 {
-                    title: "已购数量",
+                    title: "限购数量",
                     align: "center",
                     dataIndex: "limitNum"
                 },
@@ -171,7 +173,7 @@ export default {
                 deleteBatch: "game/gameCampaignDirectPurchase/deleteBatch",
                 exportXlsUrl: "game/gameCampaignDirectPurchase/exportXls",
                 importExcelUrl: "game/gameCampaignDirectPurchase/importExcel",
-                importText: "game/gameCampaignDirectPurchase/importText"
+                importTextUrl: "game/gameCampaignDirectPurchase/importText"
             },
             dictOptions: {}
         };
