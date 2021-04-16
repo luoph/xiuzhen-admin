@@ -267,16 +267,21 @@ public class GameDataCountController {
         if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
             return Result.error("the params startDate and endDate is not empty!");
         }
+
         Date startTime = DateUtils.parseDate(startDate);
         Date endTime = DateUtils.parseDate(endDate);
 
-        int daysBetween = DateUtils.daysBetween(startTime, endTime);
-        for (int i = 1; i <= daysBetween; i++) {
-            Date currentDate = DateUtils.addDays(startTime, i);
-            gameDataCountService.doJobDataCount(currentDate);
+        int daysBetween = DateUtils.isSameDay(startTime, endTime) ? 1 : DateUtils.daysBetween(startTime, endTime);
+        if (daysBetween >= 1) {
+            for (int i = 1; i <= daysBetween; i++) {
+                Date currentDate = DateUtils.addDays(startTime, i);
+                gameDataCountService.doJobDataCount(currentDate);
 
-            gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN, currentDate);
-            gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV, currentDate);
+                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN, currentDate);
+                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV, currentDate);
+            }
+        } else {
+            return Result.error("endDate should more than startDate！！!");
         }
         return Result.ok("successes!");
     }
