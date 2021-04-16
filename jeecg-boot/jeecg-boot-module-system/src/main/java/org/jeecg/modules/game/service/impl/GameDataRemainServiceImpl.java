@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * <p>
@@ -54,7 +55,7 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     }
 
     @Override
-    public GameStatRemain getCountRemain(String channel, int serverId, String date) {
-        return gameDataRemainMapper.gameRemainCount(channel, serverId, date, logTable);
+    public GameStatRemain getCountRemain(String channel, int serverId, String date, Date statDate) {
+        return gameDataRemainMapper.gameRemainCount(channel, serverId, date, statDate, logTable);
     }
 }

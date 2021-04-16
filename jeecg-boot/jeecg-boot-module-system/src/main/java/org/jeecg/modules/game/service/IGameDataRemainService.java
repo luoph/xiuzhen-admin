@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameStatRemain;
 
+import java.util.Date;
+
 /**
  * <p>
  * 留存统计 服务类
@@ -35,7 +37,8 @@ public interface IGameDataRemainService extends IService<GameStatRemain> {
      * @param channel
      * @param serverId
      * @param date
+     * @param statDate 指定统计日期
      * @return
      */
-    GameStatRemain getCountRemain(String channel, int serverId, String date);
+    GameStatRemain getCountRemain(String channel, int serverId, String date, Date statDate);
 }
