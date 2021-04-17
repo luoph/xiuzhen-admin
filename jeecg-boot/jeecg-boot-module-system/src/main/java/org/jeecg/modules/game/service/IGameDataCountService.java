@@ -15,6 +15,12 @@ import java.util.Map;
  * @Date 2020-08-21 11:05
  */
 public interface IGameDataCountService {
+
+    /**
+     * 统计数据列表
+     */
+    int GAME_DATA_COUNT_TYPE_DAILY = 1;
+
     /**
      * 留存统计
      */
@@ -101,6 +107,8 @@ public interface IGameDataCountService {
 
     /**
      * 定时统计任务
+     * 默认 时间：当天
+     * 类型：全类型
      */
     void doJobDataCount();
 
@@ -108,8 +116,9 @@ public interface IGameDataCountService {
      * 定时统计任务 --指定日期
      *
      * @param currentDate 统计日期
+     * @param type        2-留存 3-ltv
      */
-    void doJobDataCount(Date currentDate);
+    void doJobDataCount(Date currentDate, int type);
 
     /**
      * 留存更新
@@ -134,17 +143,16 @@ public interface IGameDataCountService {
 
     /**
      * 30天连续统计
-     *
-     * @return
      */
     List<GameStatOngoing> countOngoings();
 
     /**
      * 30天连续统计--指定日期
+     *
      * @param currentDate 指定日期
-     * @return
+     * @param types       1-留存 2-ltv
      */
-    List<GameStatOngoing> countOngoings(Date currentDate);
+    List<GameStatOngoing> countOngoings(Date currentDate, int[] types);
 
     /**
      * 30日当天实时查询

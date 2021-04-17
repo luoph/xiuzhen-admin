@@ -36,6 +36,7 @@
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload>
+            <a-button @click="doQuartzJobRun" type="primary" icon="highlight">手动执行任务</a-button>
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
@@ -98,11 +99,13 @@
 
         <!-- 表单区域 -->
         <quartzJob-modal ref="modalForm" @ok="modalFormOk"></quartzJob-modal>
+        <quartzJobRun-modal ref="quartzJobRunModalForm" ></quartzJobRun-modal>
     </a-card>
 </template>
 
 <script>
 import QuartzJobModal from "./modules/QuartzJobModal";
+import QuartzJobRunModal from "./modules/QuartzJobRunModal";
 import { getAction } from "@/api/manage";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JEllipsis from "@/components/jeecg/JEllipsis";
@@ -112,6 +115,7 @@ export default {
     mixins: [JeecgListMixin],
     components: {
         QuartzJobModal,
+        QuartzJobRunModal,
         JEllipsis
     },
     data() {
@@ -244,6 +248,11 @@ export default {
                     });
                 }
             });
+        },
+        doQuartzJobRun: function(record) {
+            this.$refs.quartzJobRunModalForm.edit(record);
+            this.$refs.quartzJobRunModalForm.title = "手动执行任务";
+            this.$refs.quartzJobRunModalForm.disableSubmit = false;
         }
     }
 };

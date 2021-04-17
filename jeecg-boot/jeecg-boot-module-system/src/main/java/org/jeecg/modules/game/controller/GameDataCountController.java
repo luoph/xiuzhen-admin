@@ -18,10 +18,7 @@ import org.jeecg.modules.game.mapper.GameLtvCountMapper;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -259,30 +256,5 @@ public class GameDataCountController {
             }
             return Result.ok(list);
         }
-    }
-
-    @GetMapping(value = "/manualStatRemainAndLtv")
-    public Result<?> statRemainAndLtv4RangeDate(@RequestParam(value = "startDate", defaultValue = "") String startDate,
-                                                @RequestParam(value = "endDate", defaultValue = "") String endDate) {
-        if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
-            return Result.error("the params startDate and endDate is not empty!");
-        }
-
-        Date startTime = DateUtils.parseDate(startDate);
-        Date endTime = DateUtils.parseDate(endDate);
-
-        int daysBetween = DateUtils.isSameDay(startTime, endTime) ? 1 : DateUtils.daysBetween(startTime, endTime);
-        if (daysBetween >= 1) {
-            for (int i = 1; i <= daysBetween; i++) {
-                Date currentDate = DateUtils.addDays(startTime, i);
-                gameDataCountService.doJobDataCount(currentDate);
-
-                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN, currentDate);
-                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV, currentDate);
-            }
-        } else {
-            return Result.error("endDate should more than startDate！！!");
-        }
-        return Result.ok("successes!");
     }
 }
