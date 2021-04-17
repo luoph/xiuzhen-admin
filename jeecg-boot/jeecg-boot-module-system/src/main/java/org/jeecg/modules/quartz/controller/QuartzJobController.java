@@ -1,5 +1,6 @@
 package org.jeecg.modules.quartz.controller;
 
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -7,10 +8,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.service.IGameDataCountService;
 import org.jeecg.modules.quartz.entity.QuartzJob;
 import org.jeecg.modules.quartz.service.IQuartzJobService;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
@@ -31,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +53,8 @@ public class QuartzJobController {
     private IQuartzJobService quartzJobService;
     @Autowired
     private Scheduler scheduler;
+    @Autowired
+    private IGameDataCountService gameDataCountService;
 
     /**
      * 分页列表查询
@@ -249,5 +255,55 @@ public class QuartzJobController {
             }
         }
         return Result.error("文件导入失败！");
+    }
+
+    /**
+     * 手动执行定时任务 [开始日期,结束日期]
+     *
+     * @param quartzJobType 执行任务类型
+     * @param startDate     开始日期
+     * @param endDate       结束日期
+     */
+    @GetMapping(value = "/doQuartzJobByType")
+    public Result<?> doQuartzJobByType(@RequestParam(value = "quartzJobType", defaultValue = "0") int quartzJobType,
+                                       @RequestParam(value = "startDate", defaultValue = "") String startDate,
+                                       @RequestParam(value = "endDate", defaultValue = "") String endDate) {
+        if (quartzJobType <= 0) {
+            return Result.error("The params quartzJobType is not empty!");
+        }
+
+        if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
+            return Result.error("The params startDate and endDate is not empty!");
+        }
+
+        Date startTime = DateUtils.parseDate(startDate);
+        Date endTime = DateUtils.parseDate(endDate);
+
+        int daysBetween = DateUtils.isSameDay(startTime, endTime) ? 1 : DateUtils.daysBetween(startTime, endTime);
+        if (daysBetween < 1) {
+            return Result.error("EndDate should more than startDate!");
+        }
+        if (IGameDataCountService.GAME_DATA_COUNT_TYPE_DAILY == quartzJobType) {
+            for (int i = 1; i <= daysBetween; i++) {
+                Date currentDate = DateUtils.addDays(startTime, i);
+                gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_DAILY);
+            }
+        } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN == quartzJobType) {
+            for (int i = 1; i <= daysBetween; i++) {
+                Date currentDate = DateUtils.addDays(startTime, i);
+                gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN);
+                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN, currentDate);
+            }
+        } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV == quartzJobType) {
+            for (int i = 1; i <= daysBetween; i++) {
+                Date currentDate = DateUtils.addDays(startTime, i);
+                gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV);
+                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV, currentDate);
+            }
+        } else {
+            return Result.error("Please choose the right task type!");
+        }
+
+        return Result.ok("successes!");
     }
 }

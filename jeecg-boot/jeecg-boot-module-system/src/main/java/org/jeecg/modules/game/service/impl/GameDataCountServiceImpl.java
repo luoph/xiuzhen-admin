@@ -180,22 +180,39 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
     @Override
     public void doJobDataCount() {
-        doJobDataCount(DateUtils.todayDate());
+        doJobDataCount(DateUtils.todayDate(), GAME_DATA_COUNT_TYPE_DAILY);
+        doJobDataCount(DateUtils.todayDate(), GAME_DATA_COUNT_TYPE_REMAIN);
+        doJobDataCount(DateUtils.todayDate(), GAME_DATA_COUNT_TYPE_LTV);
     }
 
     @Override
-    public void doJobDataCount(Date currentDate) {
+    public void doJobDataCount(Date currentDate, int type) {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
         Date date = DateUtils.minusDays(currentDate, 1);
-        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
+        switch (type) {
+            case GAME_DATA_COUNT_TYPE_DAILY:
+                doJobDataCountToDaily(list, date);
+                break;
+            case GAME_DATA_COUNT_TYPE_REMAIN:
+                doJobDataCountToRemain(list, date, currentDate);
+                break;
+            case GAME_DATA_COUNT_TYPE_LTV:
+                doJobDataCountToLtv(list, date, currentDate);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 添加daily，每日统计新记录
+     */
+    private void doJobDataCountToDaily(List<GameChannelServer> list, Date date) {
         Map<String, Object> context = new HashMap<>(10);
-        // 统计数据
         context.put(KEY_GAME_STAT_DAILY_COUNT_MAP, dailyCountMap(true));
-        // 留存数据
-        context.put(KEY_GAME_STAT_REMAIN_COUNT_MAP, remainCountMap(true));
-        // ltv数据
-        context.put(KEY_GAME_STAT_LTV_COUNT_MAP, ltvCountMap(true));
+
+        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
 
         for (GameChannelServer gameChannelServer : list) {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
@@ -209,19 +226,65 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             if (CollUtil.isNotEmpty(gameDayDataCounts)) {
                 gameDayDataCountMapper.updateOrInsert(gameDayDataCounts);
             }
+        }
+    }
 
+    /**
+     * 添加remain，每日统计新记录
+     */
+    private void doJobDataCountToRemain(List<GameChannelServer> list, Date date, Date currentDate) {
+        Map<String, Object> context = new HashMap<>(10);
+        context.put(KEY_GAME_STAT_REMAIN_COUNT_MAP, remainCountMap(true));
+
+        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
+
+        for (GameChannelServer gameChannelServer : list) {
+            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
+            GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
+            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
+                continue;
+            }
+
+            String f = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATETIME_PATTERN);
             List<GameStatRemain> gameDataRemains = queryDataRemainCount(context, gameChannel, gameServer, f, formatDate, currentDate, false);
             if (CollUtil.isNotEmpty(gameDataRemains)) {
                 gameDataRemainMapper.updateOrInsert(gameDataRemains);
             }
+        }
 
+        List<GameStatOngoing> gameCountOngoings = countOngoings(currentDate, new int[]{GAME_DATA_COUNT_TYPE_REMAIN});
+        if (CollUtil.isNotEmpty(gameCountOngoings)) {
+            gameCountOngoingMapper.insertOrUpdateList(gameCountOngoings);
+        }
+    }
+
+    /**
+     * 添加ltv，每日统计新记录
+     */
+    private void doJobDataCountToLtv(List<GameChannelServer> list, Date date, Date currentDate) {
+        Map<String, Object> context = new HashMap<>(10);
+        context.put(KEY_GAME_STAT_LTV_COUNT_MAP, ltvCountMap(true));
+
+        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
+
+        for (GameChannelServer gameChannelServer : list) {
+            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
+            GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
+            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
+                continue;
+            }
+
+            String f = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATETIME_PATTERN);
             List<GameStatLtv> gameLtvCounts = queryDataLtvCount(context, gameChannel, gameServer, f, formatDate, currentDate);
             if (CollUtil.isNotEmpty(gameLtvCounts)) {
                 gameLtvCountMapper.updateOrInsert(gameLtvCounts);
             }
         }
-        List<GameStatOngoing> gameCountOngoings = countOngoings();
-        gameCountOngoingMapper.insertOrUpdateList(gameCountOngoings);
+
+        List<GameStatOngoing> gameCountOngoings = countOngoings(currentDate, new int[]{GAME_DATA_COUNT_TYPE_LTV});
+        if (CollUtil.isNotEmpty(gameCountOngoings)) {
+            gameCountOngoingMapper.insertOrUpdateList(gameCountOngoings);
+        }
     }
 
     @Override
@@ -676,16 +739,16 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
     @Override
     public List<GameStatOngoing> countOngoings() {
-        return countOngoings(DateUtils.todayDate());
+        return countOngoings(DateUtils.todayDate(), new int[]{1, 2});
     }
 
     @Override
-    public List<GameStatOngoing> countOngoings(Date currentDate) {
+    public List<GameStatOngoing> countOngoings(Date currentDate, int[] types) {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0
                 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
         Date countDate = DateUtils.addDays(currentDate, -1);
-        Map<String, GameStatOngoing> ongoingMap = countOngoingMap();
+        Map<String, GameStatOngoing> ongoingMap = countOngoingMap(types);
         for (GameChannelServer gameChannelServer : list) {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
             GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
@@ -693,7 +756,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             if (betweenNatural <= 0) {
                 continue;
             }
-            int[] types = new int[]{1, 2}; // 1-留存 2-ltv
             for (int type : types) {
                 countOngoingsByDays(gameChannel, gameServer, countDate, betweenNatural, type, ongoingMap);
             }
@@ -701,8 +763,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         return Lists.newArrayList(ongoingMap.values());
     }
 
-    private Map<String, GameStatOngoing> countOngoingMap() {
-        List<GameStatOngoing> list = gameCountOngoingService.list();
+    private Map<String, GameStatOngoing> countOngoingMap(int[] types) {
+        LambdaQueryWrapper<GameStatOngoing> queryWrapper = Wrappers.lambdaQuery();
+        if (types != null && types.length == 1) {
+            queryWrapper.eq(GameStatOngoing::getType, types[0]);
+        }
+        List<GameStatOngoing> list = gameCountOngoingService.list(queryWrapper);
         Map<String, GameStatOngoing> map = new HashMap<>(list.size());
         for (GameStatOngoing gameCountOngoing : list) {
             String mapKey = mapKey(gameCountOngoing);
@@ -746,15 +812,15 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                     BigDecimal getField = (BigDecimal) ReflectUtils.invokeGetField(gameCountOngoing, countField);
                     if (getField == null) {
                         double countValue = 0;
-                        // type 1-留存 2-ltv
-                        if (type == 1) {
+                        // type 2-留存 3-ltv
+                        if (type == GAME_DATA_COUNT_TYPE_REMAIN) {
                             countValue = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(),
                                     DateUtils.formatDateTimeStr(startRegisterDate),
                                     DateUtils.formatDateTimeStr(endRegisterDate),
                                     DateUtils.formatDateTimeStr(DateUtils.addDays(startRegisterDate, j)),
                                     DateUtils.formatDateTimeStr(DateUtils.addDays(endRegisterDate, j)),
                                     logTable);
-                        } else {
+                        } else if (type == GAME_DATA_COUNT_TYPE_LTV) {
                             countValue = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), gameServer.getId(),
                                     DateUtils.formatDateTimeStr(startRegisterDate),
                                     DateUtils.formatDateTimeStr(endRegisterDate),
