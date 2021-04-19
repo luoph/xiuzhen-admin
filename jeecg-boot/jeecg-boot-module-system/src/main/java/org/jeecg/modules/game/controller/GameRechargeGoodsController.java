@@ -1,13 +1,17 @@
 package org.jeecg.modules.game.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.vo.DictModel;
 import org.jeecg.modules.game.entity.GameRechargeGoods;
 import org.jeecg.modules.game.service.IGameRechargeGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -31,7 +37,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 
 	@Autowired
 	private IGameRechargeGoodsService gameRechargeGoodsService;
-	
+
 	/**
 	 * 分页列表查询
 	 *
@@ -52,7 +58,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 		IPage<GameRechargeGoods> pageList = gameRechargeGoodsService.page(page, queryWrapper);
 		return Result.ok(pageList);
 	}
-	
+
 	/**
 	 * 添加
 	 *
@@ -65,7 +71,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 		gameRechargeGoodsService.save(gameRechargeGoods);
 		return Result.ok("添加成功！");
 	}
-	
+
 	/**
 	 * 编辑
 	 *
@@ -78,7 +84,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 		gameRechargeGoodsService.updateById(gameRechargeGoods);
 		return Result.ok("编辑成功!");
 	}
-	
+
 	/**
 	 * 通过id删除
 	 *
@@ -91,7 +97,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 		gameRechargeGoodsService.removeById(id);
 		return Result.ok("删除成功!");
 	}
-	
+
 	/**
 	 *  批量删除
 	 *
@@ -104,7 +110,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 		this.gameRechargeGoodsService.removeByIds(Arrays.asList(ids.split(",")));
 		return Result.ok("批量删除成功！");
 	}
-	
+
 	/**
 	 * 通过id查询
 	 *
@@ -144,4 +150,23 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
         return super.importExcel(request, response, GameRechargeGoods.class);
     }
 
+	/**
+	 * 商品下拉选项列表
+	 */
+	@GetMapping(value = "/loadGoodsOptions")
+	public Result<List<GameRechargeGoods>> loadGoodsOptions() {
+		Result<List<GameRechargeGoods>> result = new Result<>();
+		List<GameRechargeGoods> goodsList;
+		LambdaQueryWrapper<GameRechargeGoods> queryWrapper = Wrappers.lambdaQuery();
+		queryWrapper.select(GameRechargeGoods::getId, GameRechargeGoods::getName);
+		try {
+			goodsList = gameRechargeGoodsService.list(queryWrapper);
+			result.setSuccess(true);
+			result.setResult(goodsList);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			result.error500("操作失败");
+		}
+		return result;
+	}
 }

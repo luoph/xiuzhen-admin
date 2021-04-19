@@ -95,6 +95,9 @@ const duplicateCheck = params => getAction("sys/duplicate/check", params);
 // 加载分类字典
 const loadCategoryData = params => getAction("sys/category/loadAllData", params);
 
+// 商品信息
+const loadGoodsOptions = params => getAction("game/gameRechargeGoods/loadGoodsOptions", params);
+
 export {
     // imgView,
     // doMain,
@@ -142,5 +145,6 @@ export {
     queryTreeListForRole,
     getSystemMenuList,
     getSystemSubmenu,
-    loadCategoryData
+    loadCategoryData,
+    loadGoodsOptions
 };
