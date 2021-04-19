@@ -4,6 +4,7 @@
             <a-form :form="form">
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="任务类型" hasFeedback>
                     <a-select placeholder="任务类型" v-decorator="['quartzJobType', {}]">
+                        <a-select-option value="1">每日数据统计</a-select-option>
                         <a-select-option value="2">留存统计</a-select-option>
                         <a-select-option value="3">ltv统计</a-select-option>
                     </a-select>
