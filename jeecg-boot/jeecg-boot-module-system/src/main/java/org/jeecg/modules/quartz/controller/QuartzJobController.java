@@ -283,25 +283,20 @@ public class QuartzJobController {
         if (daysBetween < 1) {
             return Result.error("EndDate should more than startDate!");
         }
-        if (IGameDataCountService.GAME_DATA_COUNT_TYPE_DAILY == quartzJobType) {
-            for (int i = 1; i <= daysBetween; i++) {
-                Date currentDate = DateUtils.addDays(startTime, i);
+
+        for (int i = 1; i <= daysBetween; i++) {
+            Date currentDate = DateUtils.addDays(startTime, i);
+            if (IGameDataCountService.GAME_DATA_COUNT_TYPE_DAILY == quartzJobType) {
                 gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_DAILY);
-            }
-        } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN == quartzJobType) {
-            for (int i = 1; i <= daysBetween; i++) {
-                Date currentDate = DateUtils.addDays(startTime, i);
+            } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN == quartzJobType) {
                 gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN);
                 gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN, currentDate);
-            }
-        } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV == quartzJobType) {
-            for (int i = 1; i <= daysBetween; i++) {
-                Date currentDate = DateUtils.addDays(startTime, i);
+            } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV == quartzJobType) {
                 gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV);
                 gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV, currentDate);
+            } else {
+                return Result.error("Please choose the right task type!");
             }
-        } else {
-            return Result.error("Please choose the right task type!");
         }
 
         return Result.ok("successes!");
