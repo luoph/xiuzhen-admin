@@ -115,7 +115,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
-                    width: 60,
+                    width: 40,
                     align: "center",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
@@ -124,21 +124,25 @@ export default {
                 {
                     title: "单价(创建订单实际价格)",
                     align: "center",
+                    width: 170,
                     dataIndex: "price"
                 },
                 {
                     title: "折扣",
                     align: "center",
+                    width: 60,
                     dataIndex: "discount"
                 },
                 {
                     title: "原价",
                     align: "center",
+                    width: 60,
                     dataIndex: "amount"
                 },
                 {
                     title: "商品名",
                     align: "center",
+                    width: 100,
                     dataIndex: "name"
                 },
                 {
@@ -149,16 +153,19 @@ export default {
                 {
                     title: "充值分类",
                     align: "center",
+                    width: 80,
                     dataIndex: "goodsType"
                 },
                 {
                     title: "是否记入累充（0 - 不计入 1 - 记入）",
                     align: "center",
+                    width: 180,
                     dataIndex: "amountStat"
                 },
                 {
                     title: "首次额外赠送",
                     align: "center",
+                    width: 80,
                     dataIndex: "addition"
                 },
                 {
@@ -169,12 +176,14 @@ export default {
                 {
                     title: "创建者",
                     align: "center",
+                    width: 80,
                     dataIndex: "createBy"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
+                    width: 120,
                     scopedSlots: { customRender: "action" }
                 }
             ],

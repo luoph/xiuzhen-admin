@@ -49,12 +49,12 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
+            width: 1100,
             visible: false,
             model: {},
             labelCol: {
-                xs: { span: 24 },
-                sm: { span: 5 }
+                xs: { span: 26 },
+                sm: { span: 7 }
             },
             wrapperCol: {
                 xs: { span: 24 },
