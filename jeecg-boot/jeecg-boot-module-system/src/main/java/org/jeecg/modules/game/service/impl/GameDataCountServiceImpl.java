@@ -519,47 +519,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private boolean isNeedStatRemain(int num, int maxDateNum) {
         if (num > 0 && num <= REMAIN[5]) {
             return true;
-        } else if (num > REMAIN[5] && num <= REMAIN[6]) {
-            if (maxDateNum > REMAIN[6]) {
-                return num == REMAIN[6];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > REMAIN[6] && num <= REMAIN[7]) {
-            if (maxDateNum > REMAIN[7]) {
-                return num == REMAIN[7];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > REMAIN[7] && num <= REMAIN[8]) {
-            if (maxDateNum > REMAIN[8]) {
-                return num == REMAIN[8];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > REMAIN[8] && num <= REMAIN[9]) {
-            if (maxDateNum > REMAIN[9]) {
-                return num == REMAIN[9];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > REMAIN[9] && num <= REMAIN[10]) {
-            if (maxDateNum > REMAIN[10]) {
-                return num == REMAIN[10];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > REMAIN[10] && num <= REMAIN[11]) {
-            if (maxDateNum > REMAIN[11]) {
-                return num == REMAIN[11];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > REMAIN[11] && num <= REMAIN[12]) {
-            if (maxDateNum > REMAIN[12]) {
-                return num == REMAIN[12];
-            } else {
-                return num == maxDateNum;
+        }
+        for (int i = 5; i < 12; ++i) {
+            int remain = REMAIN[i];
+            int nextRemain = REMAIN[i + 1];
+            if (num > remain && num <= nextRemain) {
+                return maxDateNum > nextRemain ? num == nextRemain : num == maxDateNum;
             }
         }
         return false;
