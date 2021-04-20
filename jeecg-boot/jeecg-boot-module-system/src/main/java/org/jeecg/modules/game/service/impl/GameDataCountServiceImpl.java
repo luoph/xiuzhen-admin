@@ -614,53 +614,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private boolean isNeedStatLtvRemain(int num, int maxDateNum) {
         if (num > 0 && num <= LTV[6]) {
             return true;
-        } else if (num > LTV[6] && num <= LTV[7]) {
-            if (maxDateNum > LTV[7]) {
-                return num == LTV[7];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > LTV[7] && num <= LTV[8]) {
-            if (maxDateNum > LTV[8]) {
-                return num == LTV[8];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > LTV[8] && num <= LTV[9]) {
-            if (maxDateNum > LTV[9]) {
-                return num == LTV[9];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > LTV[9] && num <= LTV[10]) {
-            if (maxDateNum > LTV[10]) {
-                return num == LTV[10];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > LTV[10] && num <= LTV[11]) {
-            if (maxDateNum > LTV[11]) {
-                return num == LTV[11];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > LTV[11] && num <= LTV[12]) {
-            if (maxDateNum > LTV[12]) {
-                return num == LTV[12];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > LTV[12] && num <= LTV[13]) {
-            if (maxDateNum > LTV[13]) {
-                return num == LTV[13];
-            } else {
-                return num == maxDateNum;
-            }
-        } else if (num > LTV[13] && num <= LTV[14]) {
-            if (maxDateNum > LTV[14]) {
-                return num == LTV[14];
-            } else {
-                return num == maxDateNum;
+        }
+        for (int i = 6; i < 14; ++i) {
+            int ltv = LTV[i];
+            int nextLtv = LTV[i + 1];
+            if (num > ltv && num <= nextLtv) {
+                return maxDateNum > nextLtv ? num == nextLtv : num == maxDateNum;
             }
         }
         return false;
