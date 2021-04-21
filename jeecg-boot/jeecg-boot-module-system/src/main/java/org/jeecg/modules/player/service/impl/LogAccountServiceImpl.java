@@ -3,9 +3,14 @@
  */
 package org.jeecg.modules.player.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.constant.CommonConstant;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.modules.player.entity.LogAccount;
 import org.jeecg.modules.player.mapper.LogAccountMapper;
 import org.jeecg.modules.player.service.ILogAccountService;
@@ -13,8 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -27,41 +31,111 @@ import java.util.List;
 @Service
 public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAccount> implements ILogAccountService {
 
-	@Resource
-	private LogAccountMapper logAccountMapper;
+    @Resource
+    private LogAccountMapper logAccountMapper;
 
-	@Value("${app.log.db.table}")
-	private String logTable;
+    @Value("${app.log.db.table}")
+    private String logTable;
 
-	@Override
-	public int loginRegisterPlayer(String channel, int serverId, String date, int type) {
-		return logAccountMapper.gerLoginRegisterPlayerNum(channel, serverId, date, type, logTable);
-	}
+    @Override
+    public int loginRegisterPlayer(String channel, int serverId, String date, int type) {
+        return logAccountMapper.gerLoginRegisterPlayerNum(channel, serverId, date, type, logTable);
+    }
 
-	@Override
-	public double registerPayAmount(String channel, int serverId, String date) {
-		return logAccountMapper.getRegisterPayAmount(channel, serverId, date, logTable);
-	}
+    @Override
+    public double registerPayAmount(String channel, int serverId, String date) {
+        return logAccountMapper.getRegisterPayAmount(channel, serverId, date, logTable);
+    }
 
-	@Override
-	public int registerPayPlayer(String channel, int serverId, String date) {
-		return logAccountMapper.getRegisterPayPlayer(channel, serverId, date, logTable);
-	}
+    @Override
+    public int registerPayPlayer(String channel, int serverId, String date) {
+        return logAccountMapper.getRegisterPayPlayer(channel, serverId, date, logTable);
+    }
 
-	@Override
-	public int doublePayRegisterPlayer(String channel, int serverId, String date) {
-		return logAccountMapper.getDoublePayRegisterPlayer(channel, serverId, date, logTable);
-	}
+    @Override
+    public int doublePayRegisterPlayer(String channel, int serverId, String date) {
+        return logAccountMapper.getDoublePayRegisterPlayer(channel, serverId, date, logTable);
+    }
 
-	@Override
-	public List<Long> getPlayerIdsByLoginDate(int serverId, Date date) {
-		return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN), logTable);
-	}
+    @Override
+    public List<Long> getPlayerIdsByLoginDate(int serverId, Date date) {
+        return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN), logTable);
+    }
 
-	@Override
-	public List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate) {
-		String startDate = DateUtils.formatDate(DateUtils.minusDays(srcDate, beforeDate), DatePattern.NORM_DATE_PATTERN);
-		String endDate = DateUtils.formatDate(srcDate, DatePattern.NORM_DATE_PATTERN);
-		return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate, logTable);
-	}
+    @Override
+    public List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate) {
+        String startDate = DateUtils.formatDate(DateUtils.minusDays(srcDate, beforeDate), DatePattern.NORM_DATE_PATTERN);
+        String endDate = DateUtils.formatDate(srcDate, DatePattern.NORM_DATE_PATTERN);
+        return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate, logTable);
+    }
+
+    @Override
+    public Map<String, List<Long>> getPlayerIdsByLoginDates(int serverId, List<JSONObject> dateList) {
+        if (CollectionUtil.isEmpty(dateList)) {
+            return null;
+        }
+        List<LogAccount> playerIdsByLoginDates = logAccountMapper.getPlayerIdsByLoginDates(serverId, dateList, logTable);
+        if (CollUtil.isNotEmpty(playerIdsByLoginDates)) {
+            Map<String, List<Long>> result = new HashMap<>(playerIdsByLoginDates.size());
+            playerIdsByLoginDates.forEach(e -> {
+                String formatDate = DateUtils.formatDate(e.getCreateDate(), DatePattern.NORM_DATE_PATTERN);
+                List<Long> longs = result.get(formatDate);
+                if (longs == null) {
+                    longs = new ArrayList<>();
+                }
+                longs.add(e.getPlayerId());
+                result.put(formatDate, longs);
+            });
+            return result;
+        }
+        return null;
+    }
+
+    @Override
+    public Map<String, Integer> getPlayerNumByLoginDates(int serverId, List<Date> dateList, int type) {
+        if (CollectionUtil.isEmpty(dateList)) {
+            return null;
+        }
+
+        List<JSONObject> dateJsonList = new ArrayList<>(dateList.size());
+        dateList.forEach(e -> {
+            Date[] startAndEnd;
+            if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
+                startAndEnd = DateUtils.monthStartAndEnd(e);
+            } else if (type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
+                startAndEnd = DateUtils.yearStartAndEnd(e);
+            } else {
+                startAndEnd = DateUtils.dateStartAndEnd(e);
+            }
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("startTime", startAndEnd[0]);
+            jsonParam.put("endTime", startAndEnd[1]);
+            dateJsonList.add(jsonParam);
+        });
+
+        Map<String, List<Long>> playerIdsByLoginDates = getPlayerIdsByLoginDates(serverId, dateJsonList);
+        if (CollUtil.isNotEmpty(playerIdsByLoginDates)) {
+            Map<String, Integer> map = new HashMap<>(dateList.size());
+            playerIdsByLoginDates.forEach((key, value) -> {
+                if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH || type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
+                    String dateKey;
+                    if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
+                        dateKey = DateUtils.formatDate(DateUtils.parseDate(key), TimeConstant.CHINESE_YEAR_MONTH_PATTERN);
+                    } else {
+                        dateKey = DateUtils.formatDate(DateUtils.parseDate(key), TimeConstant.CHINESE_YEAR_PATTERN);
+                    }
+                    Integer num = map.get(dateKey);
+                    if (num == null) {
+                        num = 0;
+                    }
+                    num += value == null ? 0 : value.size();
+                    map.put(dateKey, num);
+                } else {
+                    map.put(key, value == null ? 0 : value.size());
+                }
+            });
+            return map;
+        }
+        return null;
+    }
 }
