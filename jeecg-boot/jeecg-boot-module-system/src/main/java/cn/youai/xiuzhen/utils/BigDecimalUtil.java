@@ -32,6 +32,17 @@ public final class BigDecimalUtil {
     }
 
     /**
+     * 提供精确的加法运算。
+     *
+     * @param v1 被加数
+     * @param v2 加数
+     * @return 两个参数的和
+     */
+    public static BigDecimal add(BigDecimal v1, BigDecimal v2) {
+        return v1.add(v2);
+    }
+
+    /**
      * 提供精确的减法运算。
      *
      * @param v1 被减数

@@ -94,6 +94,25 @@
         group by a.`player_id`;
     </select>
 
+    <select id="getPlayerIdsByLoginDates" resultType="org.jeecg.modules.player.entity.LogAccount">
+        <foreach collection="dateList" item="date" index="index">
+            <if test="index != 0">
+                UNION ALL
+            </if>
+            SELECT a.`create_date`,
+            a.`player_id`
+            FROM ${logTable} a
+            WHERE a.`type` = 2
+            <if test="serverId > 0">
+                AND a.`server_id` = #{serverId}
+            </if>
+            AND a.`create_time` &gt;= #{date.startTime}
+            AND a.`create_time` &lt;= #{date.endTime}
+            GROUP BY a.`player_id`
+        </foreach>
+    </select>
+
+
     <select id="getPlayerIdsByNoLoginRangeDate" resultType="java.lang.Long">
         <![CDATA[
         select a.player_id

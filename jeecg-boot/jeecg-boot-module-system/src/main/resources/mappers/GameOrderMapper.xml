@@ -4,16 +4,36 @@
 <mapper namespace="org.jeecg.modules.player.mapper.GameOrderMapper">
 
     <select id="getSumPayAmount" resultType="double">
-        SELECT IFNULL(SUM(a.`pay_amount`),0) AS payAmount FROM `game_order` a
+        SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
+        FROM `game_order` a
         WHERE a.`channel` = #{channel}
-        AND a.`server_id` = #{serverId}
-        AND DATE(a.`pay_time`) =  DATE(#{payDate});
+          AND a.`server_id` = #{serverId}
+          AND DATE (a.`pay_time`) = DATE (#{payDate});
     </select>
 
     <select id="getCountPayPlayer" resultType="int">
-        SELECT COUNT(DISTINCT a.`player_id`) AS payPlayer FROM `game_order` a
+        SELECT COUNT(DISTINCT a.`player_id`) AS payPlayer
+        FROM `game_order` a
         WHERE a.`channel` = #{channel}
-        AND a.`server_id` = #{serverId}
-        AND DATE(a.`pay_time`) =  DATE(#{payDate});
+          AND a.`server_id` = #{serverId}
+          AND DATE (a.`pay_time`) = DATE (#{payDate});
+    </select>
+
+    <select id="getStatPlayerNumAmountByDates" resultType="org.jeecg.modules.player.entity.GameOrder">
+        <foreach collection="dateList" item="date" index="index">
+            <if test="index != 0">
+                UNION ALL
+            </if>
+                SELECT #{index} as `id`, a.`player_id`, SUM(a.`pay_amount`) AS `pay_amount`
+                FROM `game_order` a
+                where a.`order_status` &gt; 0
+                  AND a.`create_time` &gt; #{date.startTime}
+                  AND a.`create_time` &lt; #{date.endTime}
+                  <if test="serverId > 0">
+                    AND a.`server_id` = #{serverId}
+                  </if>
+                GROUP BY a.`player_id`
+        </foreach>
+
     </select>
 </mapper>

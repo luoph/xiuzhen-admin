@@ -209,4 +209,49 @@ public interface CommonConstant {
      */
     String DESIGN_FORM_URL_TYPE_VIEW = "view";
 
+    /**
+     * 按日期查询
+     */
+    int PAY_ORDER_STAT_TYPE_DATE = 1;
+
+    /**
+     * 按月份查询
+     */
+    int PAY_ORDER_STAT_TYPE_MONTH = 2;
+
+    /**
+     * 按年度查询
+     */
+    int PAY_ORDER_STAT_TYPE_YEAR = 3;
+
+    /**
+     * 数值的格式化，保留3位小数
+     */
+    String BIG_DECIMAL_NUMBER_FORMAT = "#.###";
+
+    /**
+     * 条件天数-查询自定义
+     */
+    int QUERY_CONDITION_DATE_TYPE_CUSTOM = 0;
+
+    /**
+     * 条件天数-查询近7天
+     */
+    int QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS = 7;
+
+    /**
+     * 条件天数-查询近15天
+     */
+    int QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS = 15;
+
+    /**
+     * 条件天数-查询近1个月
+     */
+    int QUERY_CONDITION_DATE_TYPE_LAST_MONTH = 30;
+
+    /**
+     * 条件天数-查询近2个月
+     */
+    int QUERY_CONDITION_DATE_TYPE_LAST_2_MONTHS = 60;
+
 }

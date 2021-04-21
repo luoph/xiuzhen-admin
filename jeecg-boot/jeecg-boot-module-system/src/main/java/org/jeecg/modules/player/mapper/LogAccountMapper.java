@@ -3,10 +3,12 @@
  */
 package org.jeecg.modules.player.mapper;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.player.entity.LogAccount;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -61,7 +63,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
 
     /**
      * 当前登陆玩家ids
-     * @param channel
+     *
      * @param serverId
      * @param date
      * @param logTable
@@ -70,12 +72,12 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     List<Long> getPlayerIdsByLoginDate(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
     /**
+     * 当前登陆玩家ids
+     */
+    List<LogAccount> getPlayerIdsByLoginDates(@Param("serverId") int serverId, @Param("dateList") List<JSONObject> dateList, @Param("logTable") String logTable);
+
+    /**
      * 指定日期没登陆玩家id
-     * @param channel
-     * @param serverId
-     * @param date
-     * @param logTable
-     * @return
      */
     List<Long> getPlayerIdsByNoLoginRangeDate(@Param("serverId") int serverId, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("logTable") String logTable);
 }
