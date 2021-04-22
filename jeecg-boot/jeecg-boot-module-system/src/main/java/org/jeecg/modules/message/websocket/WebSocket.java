@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.util.HashMap;
@@ -111,6 +108,17 @@ public class WebSocket {
             }
         }
 
+    }
+
+    /**
+     * 连接错误时执行
+     *
+     * @param session session
+     * @param throwable 异常
+     */
+    @OnError
+    public void onerror(Session session, Throwable throwable) {
+        log.info("【websocket消息】Session:{},捕获error:{}", session.getId(), throwable.toString());
     }
 
 }
