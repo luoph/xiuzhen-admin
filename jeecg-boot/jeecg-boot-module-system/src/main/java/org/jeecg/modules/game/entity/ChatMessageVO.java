@@ -27,6 +27,11 @@ public class ChatMessageVO implements Serializable {
     private String chatChannel;
 
     /**
+     * 聊天频道
+     */
+    private Integer serverId;
+
+    /**
      * 发送方玩家id
      */
     private Long sendPlayerId;
