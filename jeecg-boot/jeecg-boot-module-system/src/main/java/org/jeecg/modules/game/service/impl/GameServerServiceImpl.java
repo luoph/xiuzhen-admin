@@ -57,6 +57,9 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         Map<String, Response> responseMap = new HashMap<>(serverIds.size());
         for (String serverId : serverIds) {
             GameServer gameServer = getById(serverId);
+            if (gameServer == null) {
+                continue;
+            }
             if (StringUtils.contains(gameServer.getGmUrl(), "localhost")
                     || StringUtils.contains(gameServer.getGmUrl(), "127.0.0.1")) {
                 continue;
