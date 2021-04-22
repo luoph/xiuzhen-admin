@@ -12,7 +12,12 @@
             </a-col>
             <a-col :span="12">
                 <a-form-item label="服务器名" :label-col="{ span: 12 }" :wrapper-col="{ span: 16 }">
-                    <a-select placeholder="请选择区服" v-model="serverId" :initialValue="serverId" @change="onSelectServer">
+                    <a-select v-if="canMult" mode="multiple" allowClear show-search placeholder="请选择区服" v-model="serverId" :initialValue="serverId" @change="onSelectServer">
+                        <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
+                            {{ server.id + "-" + server.name }}
+                        </a-select-option>
+                    </a-select>
+                    <a-select v-else placeholder="请选择区服" v-model="serverId" :initialValue="serverId" @change="onSelectServer">
                         <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
                             {{ server.id + "-" + server.name }}
                         </a-select-option>
@@ -50,6 +55,12 @@ export default {
             }
         };
     },
+    props: {
+        canMult: {
+            type: Boolean,
+            default: false
+        }
+    },
     methods: {
         getChannelList() {
             getAction(this.url.channelUrl).then(res => {
@@ -68,8 +79,12 @@ export default {
             this.channelId = value;
         },
         onSelectServer(value) {
+            let result = value;
+            if (this.canMult) {
+                result = value.join(",");
+            }
             // 触发父容器的 selectServer 方法
-            this.$emit("onSelectServer", value);
+            this.$emit("onSelectServer", result);
         }
     },
     watch: {
