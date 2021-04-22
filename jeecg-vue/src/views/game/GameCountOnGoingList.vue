@@ -195,7 +195,7 @@ export default {
                     align: "center",
                     width: "120",
                     customRender: (text, record) => {
-                        return this.countRate(record.c12, record.registerNum, record.type);
+                        return this.countRate(record.c11, record.registerNum, record.type);
                     }
                 },
                 {
