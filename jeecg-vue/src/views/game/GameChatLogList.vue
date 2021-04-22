@@ -52,10 +52,8 @@
         </div>
         <!-- 查询区域-END -->
 
-
         <!-- table区域-begin -->
         <div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -65,14 +63,15 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
-
+                <template slot="onBannedOperation" slot-scope="text, record">
+                    <a-popconfirm v-if="dataSource.length" title="是否封禁账号?" @confirm="() => onBanned(record)">
+                        <a href="javascript:;">{{ text }}</a>
+                    </a-popconfirm>
+                </template>
             </a-table>
         </div>
-
     </a-card>
 </template>
 
@@ -80,8 +79,7 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import JDate from "@/components/jeecg/JDate.vue";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
-import { filterObj } from "@/utils/util";
-import { getAction } from "@/api/manage";
+import { getAction, putAction } from "@/api/manage";
 
 export default {
     name: "GameChatLogList",
@@ -114,7 +112,8 @@ export default {
                 {
                     title: "发送方",
                     align: "center",
-                    dataIndex: "sendPlayerName"
+                    dataIndex: "sendPlayerName",
+                    scopedSlots: { customRender: "onBannedOperation" }
                 },
                 {
                     title: "接收方",
@@ -130,13 +129,13 @@ export default {
                     title: "发送时间",
                     align: "center",
                     dataIndex: "messageTime"
-                },
+                }
             ],
             url: {
                 list: "game/chatLog/list",
+                banned: "game/gameForbidden/onBanned"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
@@ -179,6 +178,25 @@ export default {
                 } else {
                     this.$message.error(res.message);
                 }
+            });
+        },
+        onBanned(record) {
+            this.loading = true;
+            let obj = {
+                banValue: record.sendPlayerId,
+                serverId: record.serverId,
+                isForever: 1,
+                type: 2,
+                banKey: "playerId",
+                reason: record.chatChannel + "（聊天频道）发表不正当言论。"
+            };
+            putAction(this.url.banned, obj).then(res => {
+                if (res.success) {
+                    this.$message.success("封禁成功。");
+                } else {
+                    this.$message.warn(res.message);
+                }
+                this.loading = false;
             });
         }
     }

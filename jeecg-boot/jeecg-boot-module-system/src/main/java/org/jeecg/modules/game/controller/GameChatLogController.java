@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
@@ -96,6 +97,9 @@ public class GameChatLogController {
             list.addAll(list2);
             list.addAll(list3);
             List<ChatMessageVO> listAll = list.stream().sorted((s1, s2) -> s2.getMessageTime().compareTo(s1.getMessageTime())).collect(Collectors.toList());
+            // 从排id 防止前端vue报错
+            AtomicLong i = new AtomicLong(1);
+            listAll.forEach(chatMessageVO -> chatMessageVO.setId(i.getAndIncrement()));
             pageVo.setRecords(listAll).setTotal(listAll.size());
         }
         return Result.ok(pageVo);

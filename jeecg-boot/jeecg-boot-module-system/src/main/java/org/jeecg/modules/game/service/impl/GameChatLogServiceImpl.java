@@ -48,8 +48,12 @@ public class GameChatLogServiceImpl implements IGameChatLogService {
             //查询符合条件的所有世界聊天信息
             List<Map> worldMassageList = gameChatLogMapper.selectWorldMassageByAllKindOf(playerId, message, rangeTimeBegin, rangeTimeEnd);
             //遍历信息，并装填信息给前端返回
+            long i = 1;
             for (Map map : worldMassageList) {
                 ChatMessageVO chatMessageVO = new ChatMessageVO();
+                chatMessageVO.setId(i++);
+                chatMessageVO.setSendPlayerId((Long) map.get("player_id"));
+                chatMessageVO.setServerId(serverId);
                 chatMessageVO.setChatChannel("世界");
                 chatMessageVO.setSendPlayerName(allPlayerInfoMapPlayId.get(map.get("player_id").toString()).get(0).get("nickname").toString());
                 chatMessageVO.setReceivePlayerName("公共");
@@ -94,6 +98,7 @@ public class GameChatLogServiceImpl implements IGameChatLogService {
             }
             //查询符合条件的所有仙盟聊天信息
             worldMassageList = gameChatLogMapper.selectImmortalMessageByAllKindOf(playerId, message, rangeTimeBegin, rangeTimeEnd);
+            long i = 1;
             //遍历信息，并装填信息给前端返回
             for (Map map : worldMassageList) {
                 //排除系统消息
@@ -106,6 +111,9 @@ public class GameChatLogServiceImpl implements IGameChatLogService {
                 }
                 //装填信息
                 ChatMessageVO chatMessageVO = new ChatMessageVO();
+                chatMessageVO.setId(i++);
+                chatMessageVO.setServerId(serverId);
+                chatMessageVO.setSendPlayerId((Long) map.get("player_id"));
                 chatMessageVO.setChatChannel("仙盟");
                 chatMessageVO.setSendPlayerName(allPlayerInfoMapPlayId.get(map.get("player_id").toString()).get(0).get("nickname").toString());
                 chatMessageVO.setReceivePlayerName("公共");
@@ -150,6 +158,7 @@ public class GameChatLogServiceImpl implements IGameChatLogService {
             }
             //查询符合条件的所有私人聊天信息
             worldMassageList = gameChatLogMapper.selectSelfMessageByAllKindOf(playerId, message, rangeTimeBegin, rangeTimeEnd);
+            long i = 1;
             //遍历信息，并装填信息给前端返回
             for (Map map : worldMassageList) {
                 //排除系统消息
@@ -170,6 +179,9 @@ public class GameChatLogServiceImpl implements IGameChatLogService {
                 }
                 //装填信息
                 ChatMessageVO chatMessageVO = new ChatMessageVO();
+                chatMessageVO.setId(i++);
+                chatMessageVO.setServerId(serverId);
+                chatMessageVO.setSendPlayerId((Long) map.get("player_id"));
                 chatMessageVO.setChatChannel("私人");
                 chatMessageVO.setSendPlayerName(allPlayerInfoMapPlayId.get(map.get("player_id").toString()).get(0).get("nickname").toString());
                 chatMessageVO.setReceivePlayerName(allPlayerInfoMapPlayId.get(receviePlayerId).get(0).get("nickname").toString());

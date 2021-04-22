@@ -171,7 +171,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
      * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameForbidden entity) {
+    public ModelAndView exportXls(HttpServletRequest request, @RequestParam("obj") GameForbidden entity) {
         return super.exportXls(request, entity, GameForbidden.class, "game_forbidden");
     }
 
@@ -185,6 +185,23 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameForbidden.class);
+    }
+
+    /**
+     * 快捷封禁
+     */
+    @PutMapping(value = "/onBanned")
+    public Result<?> onBanned(HttpServletRequest request, @RequestBody GameForbidden gameForbidden) {
+        if (gameForbidden.getServerId() == null || gameForbidden.getType() == null
+                || gameForbidden.getBanKey() == null || gameForbidden.getBanValue() == null) {
+            return Result.error("封禁失败！");
+        }
+
+        GameForbidden existOne = selectExistOne(gameForbidden);
+        if (existOne != null) {
+            return Result.error("已封禁！");
+        }
+        return add(gameForbidden);
     }
 
     private void notifyForbiddenUpdate(GameForbidden gameForbidden) {
