@@ -9,9 +9,6 @@
                 <a-form-item label="折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="原价" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['amount', validatorRules.amount]" placeholder="请输入原价" style="width: 100%" />
-                </a-form-item>
                 <a-form-item label="商品名" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名"></a-input>
                 </a-form-item>
@@ -88,7 +85,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "price", "discount", "amount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
+                this.form.setFieldsValue(pick(this.model, "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
             });
         },
         close() {
@@ -132,7 +129,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "price", "discount", "amount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
+            this.form.setFieldsValue(pick(row, "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
         },
     }
 };

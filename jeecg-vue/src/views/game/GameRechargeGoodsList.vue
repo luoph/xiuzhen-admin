@@ -61,7 +61,7 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
+
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -132,12 +132,6 @@ export default {
                     align: "center",
                     width: 60,
                     dataIndex: "discount"
-                },
-                {
-                    title: "原价",
-                    align: "center",
-                    width: 60,
-                    dataIndex: "amount"
                 },
                 {
                     title: "商品名",
