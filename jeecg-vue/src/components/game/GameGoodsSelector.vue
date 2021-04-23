@@ -1,9 +1,9 @@
 <template>
-    <a-select :placeholder="placeholder" :disabled="disabled" :value="value" @change="handleInput">
+    <a-select showSearch placeholder="请选择渠道" v-model="goodsId" :initialValue="goodsId" @change="handleInput">
         <a-select-option value="">请选择</a-select-option>
-        <a-select-option v-for="(item, key) in goodsOptions" :key="key" :value="item.id">
+        <a-select-option v-for="item in goodsOptions" :key="item.name" :value="item.id">
             <span style="display: inline-block;width: 100%" :title="item.name">
-                {{ item.name }}
+                {{ item.id + "-" + item.name }}
             </span>
         </a-select-option>
     </a-select>
@@ -14,13 +14,9 @@ import { loadGoodsOptions } from "@/api/api";
 
 export default {
     name: "GameGoodsSelector",
-    props: {
-        placeholder: String,
-        disabled: Boolean,
-        value: String
-    },
     data() {
         return {
+            goodsId: undefined,
             goodsOptions: []
         };
     },
