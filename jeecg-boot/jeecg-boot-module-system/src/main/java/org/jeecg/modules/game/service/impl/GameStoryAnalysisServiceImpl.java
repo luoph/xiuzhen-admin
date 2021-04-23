@@ -67,6 +67,9 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
 		if (CollUtil.isNotEmpty(minorLevelList)) {
 			Collections.sort(minorLevelList);
 			List<Integer> levels = CollectionPageHelp.pageBySubList(minorLevelList, pageSize, pageNo);
+			if(CollectionUtil.isEmpty(levels)) {
+				return null;
+			}
 			List<ConfMainStory> confMainStories = queryConfMainStory(levels);
 			if (CollectionUtil.isEmpty(confMainStories)) {
 				return null;
