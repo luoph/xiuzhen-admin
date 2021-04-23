@@ -25,7 +25,7 @@ public interface MilitaryStrengthMapper {
     /**
      * 查询时间范围内所有注册的用户
      */
-    @Select("select account, player_id, name from game_register_info where channel = #{channel} and server_id = #{serverId} and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') ")
+    @Select("select account, player_id, name from game_register_info where server_id = #{serverId} and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') ")
     List<Map> selectAllRegisterUser(@Param("channel") String channel, @Param("serverId") int serverId, @Param("createDateBegin") String createDateBegin, @Param("createDateEnd") String createDateEnd);
 
     /**
@@ -37,7 +37,7 @@ public interface MilitaryStrengthMapper {
     /**
      * 根据name模糊查询用户
      */
-    @Select("select name, account, player_id from game_register_info where channel = #{channel} and server_id = #{serverId} and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') and name like CONCAT('%',#{name},'%') ")
+    @Select("select name, account, player_id from game_register_info where server_id = #{serverId} and create_date >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d') and create_date <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d') and name like CONCAT('%',#{name},'%') ")
     List<Map> selectRegisterUserByName(@Param("name") String name, @Param("channel") String channel, @Param("serverId") int serverId, @Param("createDateBegin") String createDateBegin, @Param("createDateEnd") String createDateEnd);
 
 
