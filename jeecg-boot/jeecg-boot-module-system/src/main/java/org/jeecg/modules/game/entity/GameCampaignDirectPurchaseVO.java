@@ -1,12 +1,8 @@
 package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.common.system.base.entity.BaseEntity;
-import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
  * @author jeecg-boot
@@ -27,20 +23,8 @@ public class GameCampaignDirectPurchaseVO {
     /**
      * 单价
      */
-    @ExcelProperty("单价s")
-    private java.math.BigDecimal price;
-
-    /**
-     * 折扣
-     */
-    @ExcelProperty("折扣")
-    private Integer discount;
-
-    /**
-     * 原价
-     */
-    @ExcelProperty("原价")
-    private java.math.BigDecimal amount;
+    @ExcelProperty("商品Id")
+    private java.lang.Long goodsId;
 
     /**
      * 礼包名
