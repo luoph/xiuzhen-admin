@@ -5,28 +5,21 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="主活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入主活动id"
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
+                                    placeholder="请输入主活动id"
                                     style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="子活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动页签"
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]"
+                                    placeholder="请输入子活动页签"
                                     style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="限购数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" placeholder="请输入已购数量"
                                     style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价"
-                                    style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣"
-                                    style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="原价" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['amount', validatorRules.amount]" placeholder="请输入原价"
-                                    style="width: 100%" />
+                <a-form-item label="商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <game-goods-selector disabled="true" @change="selectGoods"></game-goods-selector>
                 </a-form-item>
                 <a-form-item label="礼包名" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入礼包名"></a-input>
@@ -55,10 +48,13 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import GameGoodsSelector from "@comp/game/GameGoodsSelector";
 
 export default {
     name: "GameCampaignDirectPurchaseModal",
-    components: {},
+    components: {
+        GameGoodsSelector
+    },
     data() {
         return {
             form: this.$form.createForm(this),
@@ -79,9 +75,6 @@ export default {
                 campaignId: { rules: [{ required: true, message: "请输入主活动ID!" }] },
                 typeId: { rules: [{ required: true, message: "请输入子活动页签!" }] },
                 limitNum: { rules: [{ required: true, message: "请输入已购数量!" }] },
-                price: { rules: [{ required: true, message: "请输入单价!" }] },
-                discount: { rules: [{ required: true, message: "请输入折扣!" }] },
-                amount: { rules: [{ required: true, message: "请输入原价!" }] },
                 name: { rules: [{ required: true, message: "请输入礼包名!" }] },
                 type: { rules: [{ required: true, message: "请输入礼包组类型!" }] },
                 sort: { rules: [{ required: true, message: "请输入组排序!" }] },
@@ -150,6 +143,9 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "campaignId", "typeId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward"));
+        },
+        selectGoods(e) {
+            this.model.goodsId = e;
         }
     }
 };

@@ -24,14 +24,19 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
 
     public GameCampaignDirectPurchase(GameCampaignDirectPurchase other) {
         this.limitNum = other.getLimitNum();
-        this.price = other.getPrice();
-        this.discount = other.getDiscount();
-        this.amount = other.getAmount();
         this.name = other.getName();
         this.type = other.getType();
         this.sort = other.getSort();
         this.reward = other.getReward();
+        this.goodsId = other.getGoodsId();
     }
+
+    /**
+     * 已购数量
+     */
+    @Excel(name = "商品Id", width = 15)
+    @ExcelProperty("商品Id")
+    private java.lang.Long goodsId;
 
     /**
      * 已购数量
@@ -39,27 +44,6 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
     @Excel(name = "限购数量", width = 15)
     @ExcelProperty("限购数量")
     private java.lang.Integer limitNum;
-
-    /**
-     * 单价
-     */
-    @Excel(name = "单价", width = 15)
-    @ExcelProperty("单价")
-    private java.math.BigDecimal price;
-
-    /**
-     * 折扣
-     */
-    @Excel(name = "折扣", width = 15)
-    @ExcelProperty("折扣")
-    private java.lang.Integer discount;
-
-    /**
-     * 原价
-     */
-    @Excel(name = "原价", width = 15)
-    @ExcelProperty("原价")
-    private java.math.BigDecimal amount;
 
     /**
      * 礼包名

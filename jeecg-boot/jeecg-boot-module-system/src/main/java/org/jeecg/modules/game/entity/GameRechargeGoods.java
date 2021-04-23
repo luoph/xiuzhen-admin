@@ -24,73 +24,67 @@ import java.io.Serializable;
 public class GameRechargeGoods implements Serializable {
 
     private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * 自增id
 	 */
 	@TableId(type = IdType.AUTO)
     private java.lang.Integer id;
-	
+
 	/**
 	 * 单价(创建订单实际价格)
 	 */
 	@Excel(name = "单价(创建订单实际价格)", width = 15)
     private java.math.BigDecimal price;
-	
+
 	/**
 	 * 折扣
 	 */
 	@Excel(name = "折扣", width = 15)
     private java.lang.Integer discount;
-	
-	/**
-	 * 原价
-	 */
-	@Excel(name = "原价", width = 15)
-    private java.math.BigDecimal amount;
-	
+
 	/**
 	 * 商品名
 	 */
 	@Excel(name = "商品名", width = 15)
     private java.lang.String name;
-	
+
 	/**
 	 * 奖励列表
 	 */
 	@Excel(name = "奖励列表", width = 15)
     private java.lang.String items;
-	
+
 	/**
 	 * 充值分类
 	 */
 	@Excel(name = "充值分类", width = 15)
     private java.lang.Integer goodsType;
-	
+
 	/**
 	 * 是否记入累充（0 - 不计入 1 - 记入）
 	 */
 	@Excel(name = "是否记入累充（0 - 不计入 1 - 记入）", width = 15)
     private java.lang.Integer amountStat;
-	
+
 	/**
 	 * 首次额外赠送
 	 */
 	@Excel(name = "首次额外赠送", width = 15)
     private java.lang.String addition;
-	
+
 	/**
 	 * 游戏币与人民币(元)的兑换比例
 	 */
 	@Excel(name = "游戏币与人民币(元)的兑换比例", width = 15)
     private java.lang.Integer exchange;
-	
+
 	/**
 	 * 传闻
 	 */
 	@Excel(name = "传闻", width = 15)
     private java.lang.String rumor;
-	
+
 	/**
 	 * 创建时间
 	 */
@@ -98,13 +92,13 @@ public class GameRechargeGoods implements Serializable {
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date createTime;
-	
+
 	/**
 	 * 创建者
 	 */
 	@Excel(name = "创建者", width = 15)
     private java.lang.String createBy;
-	
+
 	/**
 	 * 更新时间
 	 */
@@ -112,7 +106,7 @@ public class GameRechargeGoods implements Serializable {
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date updateTime;
-	
+
 	/**
 	 * 更新者
 	 */

@@ -126,19 +126,9 @@ export default {
                     dataIndex: "limitNum"
                 },
                 {
-                    title: "单价",
+                    title: "商品Id",
                     align: "center",
-                    dataIndex: "price"
-                },
-                {
-                    title: "折扣",
-                    align: "center",
-                    dataIndex: "discount"
-                },
-                {
-                    title: "原价",
-                    align: "center",
-                    dataIndex: "amount"
+                    dataIndex: "goodsId"
                 },
                 {
                     title: "礼包名",
