@@ -1,5 +1,7 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.commons.model.Response;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -8,11 +10,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameRechargeGoods;
+import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.service.IGameRechargeGoodsService;
+import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +40,12 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 
     @Autowired
     private IGameRechargeGoodsService gameRechargeGoodsService;
+
+    @Autowired
+    private IGameServerService gameServerService;
+
+    @Value("${app.goods.refresh:/rechargeGoods/update}")
+    private String goodsRefresh;
 
     /**
      * 分页列表查询
@@ -165,5 +177,15 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
             result.error500("操作失败");
         }
         return result;
+    }
+
+
+    @GetMapping(value = "/updateGoods")
+    public Result<?> updateGoodsOptions() {
+        List<GameServer> gameServers = gameServerService.list();
+        for (GameServer gameServer : gameServers) {
+            JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + goodsRefresh), Response.class);
+        }
+        return Result.ok("刷新成功!");
     }
 }
