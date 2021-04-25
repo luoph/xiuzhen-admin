@@ -1,6 +1,5 @@
 package org.jeecg.modules.game.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -11,7 +10,6 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.common.system.vo.DictModel;
 import org.jeecg.modules.game.entity.GameRechargeGoods;
 import org.jeecg.modules.game.service.IGameRechargeGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -158,7 +155,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
         Result<List<GameRechargeGoods>> result = new Result<>();
         List<GameRechargeGoods> goodsList;
         LambdaQueryWrapper<GameRechargeGoods> queryWrapper = Wrappers.lambdaQuery();
-        queryWrapper.select(GameRechargeGoods::getId, GameRechargeGoods::getName);
+        queryWrapper.select(GameRechargeGoods::getGoodsId, GameRechargeGoods::getName);
         try {
             goodsList = gameRechargeGoodsService.list(queryWrapper);
             result.setSuccess(true);
