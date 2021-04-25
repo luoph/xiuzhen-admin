@@ -29,13 +29,13 @@ public class GameRechargeGoods implements Serializable {
      * 自增id
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 单价(创建订单实际价格)
      */
     @Excel(name = "商品Id", width = 15)
-    private java.lang.Long goodsId;
+    private java.lang.Integer goodsId;
 
     /**
      * 单价(创建订单实际价格)
