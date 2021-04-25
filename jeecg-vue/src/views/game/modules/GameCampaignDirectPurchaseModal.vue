@@ -19,7 +19,8 @@
                                     style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <game-goods-selector disabled="true" @change="selectGoods"></game-goods-selector>
+                    <game-goods-selector disabled="true" @change="selectGoods"
+                                         v-model="model.goodsId"></game-goods-selector>
                 </a-form-item>
                 <a-form-item label="礼包名" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入礼包名"></a-input>
