@@ -1,5 +1,5 @@
 <template>
-    <a-select showSearch placeholder="请选择渠道" v-model="goodsId" :initialValue="goodsId" @change="handleInput">
+    <a-select showSearch placeholder="请选择渠道" v-model="goodsId" value="goodsId" @change="handleInput">
         <a-select-option value="">请选择</a-select-option>
         <a-select-option v-for="item in goodsOptions" :key="item.name" :value="item.goodsId">
             <span style="display: inline-block;width: 100%" :title="item.name">
@@ -14,13 +14,19 @@ import { loadGoodsOptions } from "@/api/api";
 
 export default {
     name: "GameGoodsSelector",
+    props: {
+        shopId: {
+            type: Number,
+            default: null
+        }
+    },
     data() {
         return {
-            goodsId: undefined,
+            goodsId: this.shopId,
             goodsOptions: []
         };
     },
-    watch: {},
+
     created() {
         // 获取商品列表
         this.initDictData();
