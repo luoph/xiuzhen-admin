@@ -1,9 +1,9 @@
 <template>
     <a-select showSearch placeholder="请选择渠道" v-model="goodsId" :initialValue="goodsId" @change="handleInput">
         <a-select-option value="">请选择</a-select-option>
-        <a-select-option v-for="item in goodsOptions" :key="item.name" :value="item.id">
+        <a-select-option v-for="item in goodsOptions" :key="item.name" :value="item.goodsId">
             <span style="display: inline-block;width: 100%" :title="item.name">
-                {{ item.id + "-" + item.name }}
+                {{ item.goodsId + "-" + item.name }}
             </span>
         </a-select-option>
     </a-select>
