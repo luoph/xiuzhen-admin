@@ -1,10 +1,8 @@
 <template>
-    <a-select showSearch placeholder="请选择渠道" v-model="goodsId" value="goodsId" @change="handleInput">
+    <a-select showSearch placeholder="请选择渠道" v-model="goodsId" :initialValue="goodsId" @change="handleInput">
         <a-select-option value="">请选择</a-select-option>
         <a-select-option v-for="item in goodsOptions" :key="item.name" :value="item.goodsId">
-            <span style="display: inline-block;width: 100%" :title="item.name">
-                {{ item.goodsId + "-" + item.name }}
-            </span>
+            {{ item.goodsId + "-" + item.name }}
         </a-select-option>
     </a-select>
 </template>
@@ -27,7 +25,7 @@ export default {
         };
     },
 
-    created() {
+    mounted() {
         // 获取商品列表
         this.initDictData();
     },
