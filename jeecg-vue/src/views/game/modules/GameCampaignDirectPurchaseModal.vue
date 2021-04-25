@@ -78,7 +78,8 @@ export default {
                 name: { rules: [{ required: true, message: "请输入礼包名!" }] },
                 type: { rules: [{ required: true, message: "请输入礼包组类型!" }] },
                 sort: { rules: [{ required: true, message: "请输入组排序!" }] },
-                reward: { rules: [{ required: true, message: "请输入任务奖励!" }] }
+                reward: { rules: [{ required: true, message: "请输入任务奖励!" }] },
+                goodsId: { rules: [{ required: true, message: "请选择商品Id" }] }
             },
             url: {
                 add: "game/gameCampaignDirectPurchase/add",
@@ -104,6 +105,7 @@ export default {
         close() {
             this.$emit("close");
             this.visible = false;
+            this.model.goodsId = null;
         },
         handleOk() {
             const that = this;
