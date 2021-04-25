@@ -34,6 +34,12 @@ public class GameRechargeGoods implements Serializable {
     /**
      * 单价(创建订单实际价格)
      */
+    @Excel(name = "商品Id", width = 15)
+    private java.lang.Long goodsId;
+
+    /**
+     * 单价(创建订单实际价格)
+     */
     @Excel(name = "单价(创建订单实际价格)", width = 15)
     private java.math.BigDecimal price;
 
@@ -58,7 +64,7 @@ public class GameRechargeGoods implements Serializable {
     /**
      * 充值分类
      */
-    @Excel(name = "充值分类", width = 15)
+    @Excel(name = "商品分类", width = 15)
     private java.lang.Integer goodsType;
 
     /**
