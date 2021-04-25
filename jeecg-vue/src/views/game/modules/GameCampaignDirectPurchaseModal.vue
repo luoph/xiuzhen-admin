@@ -98,7 +98,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward"));
             });
         },
         close() {
@@ -142,7 +142,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward"));
         },
         selectGoods(e) {
             this.model.goodsId = e;
