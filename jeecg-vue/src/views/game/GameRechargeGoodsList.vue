@@ -122,6 +122,12 @@ export default {
                     }
                 },
                 {
+                    title: "商品Id",
+                    align: "center",
+                    width: 170,
+                    dataIndex: "goodsId"
+                },
+                {
                     title: "单价(创建订单实际价格)",
                     align: "center",
                     width: 170,
@@ -145,7 +151,7 @@ export default {
                     dataIndex: "items"
                 },
                 {
-                    title: "充值分类",
+                    title: "商品分类",
                     align: "center",
                     width: 80,
                     dataIndex: "goodsType"

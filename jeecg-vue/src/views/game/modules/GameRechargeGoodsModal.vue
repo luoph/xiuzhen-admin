@@ -4,6 +4,12 @@
              @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
+
+                <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id"
+                                    style="width: 100%" />
+                </a-form-item>
+
                 <a-form-item label="单价(创建订单实际价格)" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)"
                                     style="width: 100%" />
@@ -18,7 +24,10 @@
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['items']" rows="4" placeholder="请输入奖励列表" />
                 </a-form-item>
-                <a-form-item label="充值分类" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="首次额外赠送" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['addition']" rows="4" placeholder="首次额外赠送" />
+                </a-form-item>
+                <a-form-item label="商品分类" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['goodsType', validatorRules.goodsType]" placeholder="请输入充值分类"
                                     style="width: 100%" />
                 </a-form-item>
@@ -75,7 +84,8 @@ export default {
                 goodsType: { rules: [{ required: true, message: "请输入充值分类!" }] },
                 amountStat: { rules: [{ required: true, message: "请输入是否记入累充（0 - 不计入 1 - 记入）!" }] },
                 exchange: { rules: [{ required: true, message: "请输入游戏币与人民币(元)的兑换比例!" }] },
-                recommend: { rules: [{ required: true, message: "请输入特殊标记前端用!" }] }
+                recommend: { rules: [{ required: false, message: "请输入特殊标记前端用!" }] },
+                goodsId: { rules: [{ required: true, message: "请输入商品Id" }] }
             },
             url: {
                 add: "game/gameRechargeGoods/add",
@@ -94,7 +104,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
+                this.form.setFieldsValue(pick(this.model,"goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
             });
         },
         close() {
@@ -138,7 +148,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
+            this.form.setFieldsValue(pick(row,"goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
         }
     }
 };
