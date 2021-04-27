@@ -1,46 +1,46 @@
 <template>
-    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
-        <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                <a-form-item label="激活码活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit || isIncludeActivityModel" v-decorator="['activityId', validatorRules.activityId]" placeholder="请输入激活码活动id" style="width: 100%" />
+                <a-form-item label="名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入名称"></a-input>
                 </a-form-item>
-                <a-form-item label="激活码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]" placeholder="请输入激活码"></a-input>
+                <a-form-item label="分组说明" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-textarea v-decorator="['summary', validatorRules.summary]" placeholder="请输入分组说明"></a-textarea>
                 </a-form-item>
-                <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="请选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
-                        <a-select-option :value="0">无效</a-select-option>
-                        <a-select-option :value="1">有效</a-select-option>
-                    </a-select>
+                <a-form-item label="限制次数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['limitCount', validatorRules.limitCount]" placeholder="请输入限制次数" style="width: 100%" />
                 </a-form-item>
             </a-form>
+
+            <a-tabs v-if="isEdit" defaultActiveKey="1">
+                <a-tab-pane tab="分组活动配置" key="1">
+                    <redeem-activity-list ref="redeemActivityList" :disableMixinCreated="true"></redeem-activity-list>
+                </a-tab-pane>
+            </a-tabs>
         </a-spin>
-        <!-- </a-modal> -->
-        <a-button type="primary" @click="handleOk">确定</a-button>
-        <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer>
+    </a-modal>
 </template>
 
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
+import RedeemActivityList from "../RedeemActivityList";
 
 export default {
-    name: "RedeemCodeModal",
+    name: "GameRedeemConfigModal",
     components: {
-        JDate
+        JDate,
+        RedeemActivityList
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 800,
-            visible: false,
+            width: 1444,
             isEdit: false,
-            isIncludeActivityModel: false, 
+            visible: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -52,15 +52,13 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                activityId: { rules: [{ required: true, message: "请输入激活码活动id!" }] },
-                code: {},
-                status: { rules: [{ required: true, message: "请选择状态!" }] },
-                createTime: {},
-                updateTime: {}
+                name: { rules: [{ required: true, message: "请输入活动名称!" }] },
+                summary: { rules: [{ required: true, message: "请输入礼包说明!" }] },
+                limitCount: {}
             },
             url: {
-                add: "game/redeemCode/add",
-                edit: "game/redeemCode/edit"
+                add: "game/redeemActivityGroup/add",
+                edit: "game/redeemActivityGroup/edit"
             }
         };
     },
@@ -73,10 +71,14 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
-            this.isIncludeActivityModel = this.model.isIncludeActivityModel;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "activityId", "code", "status"));
+                if (this.isEdit) {
+                    // 手动渲染数据
+                    this.$refs.redeemActivityList.reset();
+                    this.$refs.redeemActivityList.loadDateById(record);
+                }
+                this.form.setFieldsValue(pick(this.model, "name", "summary", "limitCount"));
             });
         },
         close() {
@@ -120,7 +122,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "activityId", "code", "status", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "name", "summary", "limitCount"));
         }
     }
 };

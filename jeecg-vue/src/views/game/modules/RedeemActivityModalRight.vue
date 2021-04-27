@@ -1,5 +1,6 @@
 <template>
-    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
+        <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="激活码名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -12,7 +13,7 @@
                     <a-input-number v-decorator="['limitType', validatorRules.limitType]" placeholder="请输入限制类型" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isIncludeGroupModel" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
+                    <a-input-number v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="限制渠道id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['channelIds', validatorRules.channelIds]" placeholder="请输入限制渠道id, 使用半角','分割多个id"></a-textarea>
@@ -36,36 +37,29 @@
                     <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
                 </a-form-item>
             </a-form>
-
-            <a-tabs v-if="isEdit" defaultActiveKey="1">
-                <a-tab-pane tab="激活码配置" key="1">
-                    <redeem-code-list ref="redeemCodeList" :disableMixinCreated="true"></redeem-code-list>
-                </a-tab-pane>
-            </a-tabs>
         </a-spin>
-    </a-modal>
+        <!-- </a-modal> -->
+        <a-button type="primary" @click="handleOk">确定</a-button>
+        <a-button type="primary" @click="handleCancel">取消</a-button>
+    </a-drawer>
 </template>
 
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
-import RedeemCodeList from "../RedeemCodeList";
 
 export default {
     name: "RedeemActivityModal",
     components: {
-        JDate,
-        RedeemCodeList
+        JDate
     },
     data() {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 1024,
+            width: 800,
             visible: false,
-            isEdit: false,
-            isIncludeGroupModel: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -103,15 +97,8 @@ export default {
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
-            this.isEdit = this.model.id != null;
-            this.isIncludeGroupModel = this.model.isIncludeGroupModel;
             this.visible = true;
             this.$nextTick(() => {
-                if (this.isEdit) {
-                    // 手动渲染数据
-                    this.$refs.redeemCodeList.reset();
-                    this.$refs.redeemCodeList.loadDateById(record);
-                }
                 this.form.setFieldsValue(
                     pick(this.model, "name", "summary", "limitType", "groupId", "channelIds", "serverIds", "status", "reward", "remark", "startTime", "endTime")
                 );
