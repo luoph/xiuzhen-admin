@@ -83,9 +83,11 @@ export const JeecgListMixin = {
             }
             this.loading = true;
             getAction(this.url.list, params).then(res => {
-                if (res.success && res.result && res.result.records) {
+                if (res.success && res.result && res.result.records && res.result.records.length > 0) {
                     this.dataSource = res.result.records;
                     this.ipagination.total = res.result.total;
+                } else {
+                    this.dataSource = [];
                 }
                 if (res.code === 510 || res.code === 500) {
                     this.$message.warning(res.message);

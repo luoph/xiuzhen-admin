@@ -15,7 +15,7 @@
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="4" :sm="8">
+                        <a-col v-if="!isIncludeGroupModel" :md="4" :sm="8">
                             <a-form-item label="分组id">
                                 <a-input placeholder="请输入分组id" v-model="queryParam.groupId"></a-input>
                             </a-form-item>
@@ -57,13 +57,7 @@
 
         <!-- table区域-begin -->
         <div>
-            <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-                >项
-                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-            </div>
-
-            <a-table
+            <a-table 
                 ref="table"
                 size="middle"
                 bordered
@@ -88,17 +82,6 @@
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
-                    <!-- <a-divider type="vertical" />
-                    <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown> -->
                 </span>
             </a-table>
         </div>
@@ -117,9 +100,16 @@ export default {
     components: {
         RedeemActivityModal
     },
+    props: { // 作为子组件，禁止初始化table数据
+        disableMixinCreated: Boolean
+    },
     data() {
         return {
             description: "激活码活动管理页面",
+            queryParam: {
+                groupId: undefined
+            },
+            isIncludeGroupModel: false,
             // 表头
             columns: [
                 {
@@ -140,20 +130,20 @@ export default {
                 },
                 {
                     title: "激活码名称",
-                    align: "left",
+                    align: "center",
                     width: 120,
                     dataIndex: "name"
                 },
                 {
                     title: "礼包说明",
-                    align: "left",
+                    align: "center",
                     width: 180,
                     dataIndex: "summary"
                 },
                 {
                     title: "限制类型",
                     align: "center",
-                    width: 80,
+                    width: 90,
                     dataIndex: "limitType"
                 },
                 {
@@ -177,12 +167,12 @@ export default {
                 {
                     title: "活动状态",
                     align: "center",
-                    width: 80,
+                    width: 90,
                     dataIndex: "status"
                 },
                 {
                     title: "奖励",
-                    align: "left",
+                    align: "center",
                     width: 240,
                     dataIndex: "reward"
                 },
@@ -190,13 +180,13 @@ export default {
                     title: "开始时间",
                     align: "center",
                     width: 180,
-                    dataIndex: "startTime",
+                    dataIndex: "startTime"
                 },
                 {
                     title: "结束时间",
                     align: "center",
                     width: 180,
-                    dataIndex: "endTime",
+                    dataIndex: "endTime"
                 },
                 {
                     title: "操作",
@@ -221,7 +211,31 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        reset() {
+            this.queryParam = {};
+        },
+        searchReset() {
+            let groupId = this.queryParam.groupId;
+            this.queryParam = {};
+            if (this.isIncludeGroupModel) {
+                this.queryParam.groupId = groupId;
+            }
+            this.loadData(1);
+        },
+        handleAdd() {
+            this.$refs.modalForm.edit({
+                groupId: this.model.id,
+                isIncludeGroupModel: this.isIncludeGroupModel
+            });
+            this.$refs.modalForm.title = "新增活动配置";
+        },
+        loadDateById(record) {
+            this.model = record;
+            this.isIncludeGroupModel = this.model.id != null ? true : false;
+            this.queryParam.groupId = this.isIncludeGroupModel ? this.model.id : undefined;
+            this.loadData(1);
+        }
     }
 };
 </script>

@@ -4,27 +4,30 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="4" :sm="8">
+                    <a-col v-if="!isIncludeActivityModel" :md="6" :sm="8">
                         <a-form-item label="激活码活动id">
                             <a-input placeholder="请输入激活码活动id" v-model="queryParam.activityId"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="激活码">
                             <a-input placeholder="请输入激活码" v-model="queryParam.code"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="4" :sm="8">
-                            <a-form-item label="状态">
-                                <a-input placeholder="请输入状态" v-model="queryParam.status"></a-input>
-                            </a-form-item>
-                        </a-col>
-                        <a-col :md="6" :sm="16">
+                        <a-col :md="12" :sm="16">
                             <a-form-item label="创建时间">
                                 <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
                                 <span class="query-group-split-cust"></span>
                                 <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="6" :sm="8">
+                            <a-form-item label="状态">
+                                <a-select placeholder="请选择活动状态" v-model="queryParam.status" initialValue="1">
+                                    <a-select-option :value="0">无效</a-select-option>
+                                    <a-select-option :value="1">有效</a-select-option>
+                                </a-select>
                             </a-form-item>
                         </a-col>
                     </template>
@@ -89,6 +92,11 @@
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
 
+                <span slot="statuSlot" slot-scope="text">
+                    <a-tag v-if="text === 0" color="red">无效</a-tag>
+                    <a-tag v-else color="green">有效</a-tag>
+                </span>
+
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
@@ -122,9 +130,16 @@ export default {
         JDate,
         RedeemCodeModal
     },
+    props: { // 作为子组件，禁止初始化table数据
+        disableMixinCreated: Boolean
+    },
     data() {
         return {
             description: "激活码管理页面",
+            queryParam: {
+                activityId: undefined
+            },
+            isIncludeActivityModel: false,
             // 表头
             columns: [
                 {
@@ -150,7 +165,8 @@ export default {
                 {
                     title: "状态",
                     align: "center",
-                    dataIndex: "status"
+                    dataIndex: "status",
+                    scopedSlots: { customRender: "statuSlot" }
                 },
                 {
                     title: "创建时间",
@@ -180,7 +196,31 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {}
+        initDictConfig() {},
+        reset() {
+            this.queryParam = {};
+        },
+        searchReset() {
+            let activityId = this.queryParam.activityId;
+            this.queryParam = {};
+            if (this.isIncludeActivityModel) {
+                this.queryParam.activityId = activityId;
+            }
+            this.loadData(1);
+        },
+        handleAdd() {
+            this.$refs.modalForm.edit({
+                activityId: this.model.id,
+                isIncludeActivityModel: this.isIncludeActivityModel
+            });
+            this.$refs.modalForm.title = "新增激活码配置";
+        },
+        loadDateById(record) {
+            this.model = record;
+            this.isIncludeActivityModel = this.model.id != null ? true : false;
+            this.queryParam.activityId = this.isIncludeActivityModel ? this.model.id : undefined;
+            this.loadData(1);
+        }
     }
 };
 </script>

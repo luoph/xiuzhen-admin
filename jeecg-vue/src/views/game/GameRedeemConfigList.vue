@@ -4,24 +4,29 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="名称">
                             <a-input placeholder="请输入名称" v-model="queryParam.name"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="8">
-                        <a-form-item label="分组说明">
-                            <a-input placeholder="请输入分组说明" v-model="queryParam.summary"></a-input>
+                    <!-- <a-col :md="6" :sm="8">
+                        <a-form-item label="限制类型">
+                            <a-select placeholder="请选择限制类型:" v-model="queryParam.limitType">
+                                <a-select-option :value="0">0-通用</a-select-option>
+                                <a-select-option :value="1">1-指定渠道</a-select-option>
+                                <a-select-option :value="2">2-SERVER</a-select-option>
+                                <a-select-option :value="4">4-同一分组只能兑换一次</a-select-option>
+                            </a-select>
                         </a-form-item>
-                    </a-col>
+                    </a-col> -->
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="4" :sm="8">
+                        <a-col :md="6" :sm="8">
                             <a-form-item label="限制次数">
                                 <a-input placeholder="请输入限制次数" v-model="queryParam.limitCount"></a-input>
                             </a-form-item>
                         </a-col>
                     </template>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
@@ -38,7 +43,10 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-            <a-button type="primary" icon="download" @click="handleExportXls('激活码活动分组')">导出</a-button>
+            <a-button type="primary" icon="download" @click="handleExportXls('game_redeem_config')">导出</a-button>
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+                <a-button type="primary" icon="import">导入</a-button>
+            </a-upload> -->
         </div>
 
         <!-- table区域-begin -->
@@ -67,28 +75,28 @@
                 </template>
 
                 <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">编辑</a>
+                    <a @click="handleEdit(record)">分组信息</a>
                 </span>
             </a-table>
         </div>
 
-        <redeemActivityGroup-modal ref="modalForm" @ok="modalFormOk"></redeemActivityGroup-modal>
+        <gameRedeemConfig-modal ref="modalForm" @ok="modalFormOk"></gameRedeemConfig-modal>
     </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
-import RedeemActivityGroupModal from "./modules/RedeemActivityGroupModal";
+import GameRedeemConfigModal from "./modules/GameRedeemConfigModal";
 
 export default {
-    name: "RedeemActivityGroupList",
+    name: "GameRedeemConfigList",
     mixins: [JeecgListMixin],
     components: {
-        RedeemActivityGroupModal
+        GameRedeemConfigModal
     },
     data() {
         return {
-            description: "激活码活动分组管理页面",
+            description: "game_redeem_config管理页面",
             // 表头
             columns: [
                 {
@@ -135,7 +143,8 @@ export default {
                 exportXlsUrl: "game/redeemActivityGroup/exportXls",
                 importExcelUrl: "game/redeemActivityGroup/importExcel"
             },
-            dictOptions: {}
+            dictOptions: {},
+            tableScroll: { x: 12 * 147 + 50 }
         };
     },
     computed: {
