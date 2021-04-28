@@ -205,7 +205,7 @@ export default {
 
         unique(arr) {
             const res = new Map();
-            return arr.filter((arr) => !res.has(arr.itemid) && res.set(arr.itemid, arr.num));
+            return arr.filter((arr) => !res.has(arr.itemId) && res.set(arr.itemId, arr.num));
         }
     }
 };
