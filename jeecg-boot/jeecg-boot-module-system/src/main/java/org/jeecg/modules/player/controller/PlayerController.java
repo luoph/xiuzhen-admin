@@ -132,7 +132,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 
         Page<PlayerBehavior> page = new Page<>(pageNo, pageSize);
         List<PlayerBehavior> list = playerService.queryPlayerBehavior(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd(),
-                playerBehaviorVO.getNickname(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
+                playerBehaviorVO.getNickname(), playerBehaviorVO.getPlayerId(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
         page.setRecords(list).setTotal(list.size());
         return Result.ok(page);
     }
@@ -161,7 +161,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
 
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         List<PlayerBehavior> list = playerService.queryPlayerBehavior(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd(),
-                playerBehaviorVO.getNickname(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
+                playerBehaviorVO.getNickname(), playerBehaviorVO.getPlayerId(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
         return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PlayerBehavior.class, "玩家行为分析");
     }
 

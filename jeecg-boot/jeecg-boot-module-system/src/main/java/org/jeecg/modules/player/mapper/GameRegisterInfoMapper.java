@@ -41,5 +41,5 @@ public interface GameRegisterInfoMapper extends BaseMapper<GameRegisterInfo> {
     @Select("SELECT a.* FROM game_register_info a WHERE server_id = #{serverId}")
     List<GameRegisterInfo> getNameByServerId(int serverId);
 
-    List<PlayerBehavior> selectBehaviorCount(@Param("serverId") Integer serverId, @Param("nickname") String nickname, @Param("start") Date start, @Param("end") Date end, @Param("logTable") String logTable);
+    List<PlayerBehavior> selectBehaviorCount(@Param("serverId") Integer serverId, @Param("nickname") String nickname, @Param("playerId") Long playerId, @Param("start") Date start, @Param("end") Date end, @Param("logTable") String logTable);
 }

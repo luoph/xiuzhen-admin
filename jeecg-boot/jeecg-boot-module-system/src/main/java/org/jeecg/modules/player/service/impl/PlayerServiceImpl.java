@@ -193,7 +193,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
     }
 
     @Override
-    public List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, int days, int serverId) {
+    public List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, Long playerId, int days, int serverId) {
         if (StringUtils.isBlank(nickname) && serverId <= 0) {
             return Collections.emptyList();
         }
@@ -209,7 +209,7 @@ public class PlayerServiceImpl extends ServiceImpl<PlayerMapper, Player> impleme
             rangeDateEndTime = DateUtils.now();
         }
 
-        List<PlayerBehavior> playerBehaviorList = registerInfoMapper.selectBehaviorCount(serverId, nickname, rangeDateBeginTime, rangeDateEndTime, logTable);
+        List<PlayerBehavior> playerBehaviorList = registerInfoMapper.selectBehaviorCount(serverId, nickname, playerId, rangeDateBeginTime, rangeDateEndTime, logTable);
 
         return getPlayerBehaviorList(playerBehaviorList);
     }
