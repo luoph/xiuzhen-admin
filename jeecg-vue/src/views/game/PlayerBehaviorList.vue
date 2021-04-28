@@ -4,24 +4,29 @@
         <div class="table-page-search-wrapper">
 
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="45">
-                    <a-col :md="10" :sm="8">
+                <a-row :gutter="24">
+                    <a-col :md="12" :sm="16">
                         <!--@ = v-on:数据绑定 不是事件-->
                         <game-channel-server @onSelectChannel="onSelectChannel"
                                              @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
-                    <a-col :md="4" :sm="4">
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="角色昵称">
                             <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname"></a-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="10" :sm="8">
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="角色id">
+                            <a-input placeholder="请输入角色id" v-model="queryParam.playerId"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="创建日期">
                             <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']"
                                             @change="onDateChange" />
                         </a-form-item>
                     </a-col>
-                    <a-col :md="5" :sm="5">
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="选择就近天数">
                             <a-select placeholder="天数" v-model="queryParam.daysType">
                                 <a-select-option value="0">不选择天数</a-select-option>
@@ -83,6 +88,7 @@ export default {
     data() {
         return {
             description: "玩家行为分析",
+            disableMixinCreated: true, // 禁止初始化加载数据
             // 表头
             columns: [
                 {

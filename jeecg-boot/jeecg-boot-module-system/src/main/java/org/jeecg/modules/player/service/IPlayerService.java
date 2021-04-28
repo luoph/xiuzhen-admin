@@ -38,9 +38,10 @@ public interface IPlayerService extends IService<Player> {
      * @param rangeDateBegin
      * @param rangeDateEnd
      * @param nickname
+     * @param playerId
      * @param days
      * @param serverId
      * @return
      */
-    List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, int days, int serverId);
+    List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, Long playerId, int days, int serverId);
 }

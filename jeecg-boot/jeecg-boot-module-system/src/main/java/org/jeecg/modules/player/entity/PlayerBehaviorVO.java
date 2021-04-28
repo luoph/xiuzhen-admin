@@ -39,6 +39,11 @@ public class PlayerBehaviorVO implements Serializable {
 	private String nickname;
 
 	/**
+	 * 角色id
+	 */
+	private Long playerId;
+
+	/**
 	 * 创建日期-开始日期
 	 */
 	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)

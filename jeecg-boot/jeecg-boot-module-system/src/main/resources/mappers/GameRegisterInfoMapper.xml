@@ -76,6 +76,9 @@
             <if test="nickname != null and nickname != ''">
                 AND a.name LIKE CONCAT('%',#{nickname},'%')
             </if>
+            <if test="playerId > 0">
+                AND a.player_id = #{playerId}
+            </if>
             <if test="start != null and end != null">
                 AND b.create_time >= #{start} AND b.create_time <![CDATA[ <= ]]> #{end}
             </if>
