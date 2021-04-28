@@ -11,7 +11,12 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="限制类型">
-                            <a-input placeholder="请输入限制类型" v-model="queryParam.limitType"></a-input>
+                            <a-select placeholder="请选择限制类型" v-model="queryParam.limitType">
+                                <a-select-option :value="0">0 - 通用</a-select-option>
+                                <a-select-option :value="1">1 - 指定渠道</a-select-option>
+                                <a-select-option :value="2">2 - SERVER</a-select-option>
+                                <a-select-option :value="4">4 - 同一分组只能兑换一次</a-select-option>
+                            </a-select>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
@@ -44,20 +49,11 @@
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
             <a-button type="primary" icon="download" @click="handleExportXls('激活码活动')">导出</a-button>
-            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload> -->
-            <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown> -->
         </div>
 
         <!-- table区域-begin -->
         <div>
-            <a-table 
+            <a-table
                 ref="table"
                 size="middle"
                 bordered
@@ -80,6 +76,11 @@
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
 
+                <span slot="statuSlot" slot-scope="text">
+                    <a-tag v-if="text === 0" color="red">无效</a-tag>
+                    <a-tag v-else color="green">有效</a-tag>
+                </span>
+
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                 </span>
@@ -100,7 +101,8 @@ export default {
     components: {
         RedeemActivityModal
     },
-    props: { // 作为子组件，禁止初始化table数据
+    props: {
+        // 作为子组件，禁止初始化table数据
         disableMixinCreated: Boolean
     },
     data() {
@@ -168,7 +170,8 @@ export default {
                     title: "活动状态",
                     align: "center",
                     width: 90,
-                    dataIndex: "status"
+                    dataIndex: "status",
+                    scopedSlots: { customRender: "statuSlot" }
                 },
                 {
                     title: "奖励",
@@ -225,7 +228,7 @@ export default {
         },
         handleAdd() {
             this.$refs.modalForm.edit({
-                groupId: this.model.id,
+                groupId: this.isIncludeGroupModel ? this.model.id : undefined,
                 isIncludeGroupModel: this.isIncludeGroupModel
             });
             this.$refs.modalForm.title = "新增活动配置";

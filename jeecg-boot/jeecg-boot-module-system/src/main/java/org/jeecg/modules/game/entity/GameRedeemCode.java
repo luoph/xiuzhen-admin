@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -8,6 +9,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
+import org.jeecgframework.poi.excel.annotation.ExcelIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -24,6 +26,16 @@ import java.io.Serializable;
 public class GameRedeemCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public GameRedeemCode(){};
+
+    public GameRedeemCode(Integer activityId, String code, Integer totalNum, Integer usedNum, Integer status) {
+        this.activityId = activityId;
+        this.code = code;
+        this.totalNum = totalNum;
+        this.usedNum = usedNum;
+        this.status = status;
+    }
 
     /**
      * id
@@ -42,6 +54,25 @@ public class GameRedeemCode implements Serializable {
      */
     @Excel(name = "激活码", width = 15)
     private java.lang.String code;
+
+    /**
+     * 批量生成的激活码数量
+     */
+    @ExcelIgnore
+    @TableField(exist = false)
+    private java.lang.Integer batchNum;
+
+    /**
+     * 可使用总数
+     */
+    @Excel(name = "可使用总数", width = 15)
+    private java.lang.Integer totalNum;
+
+    /**
+     * 已使用数量
+     */
+    @Excel(name = "已使用数量", width = 15)
+    private java.lang.Integer usedNum;
 
     /**
      * 状态

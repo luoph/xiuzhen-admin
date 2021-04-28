@@ -47,7 +47,8 @@
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
-            <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
+            <a-button type="primary" icon="plus" @click="handleAdd(false)">新增</a-button>
+            <a-button type="primary" icon="plus" @click="handleAdd(true)">批量新增</a-button>
             <a-button type="primary" icon="download" @click="handleExportXls('激活码')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -130,7 +131,8 @@ export default {
         JDate,
         RedeemCodeModal
     },
-    props: { // 作为子组件，禁止初始化table数据
+    props: {
+        // 作为子组件，禁止初始化table数据
         disableMixinCreated: Boolean
     },
     data() {
@@ -161,6 +163,16 @@ export default {
                     title: "激活码",
                     align: "center",
                     dataIndex: "code"
+                },
+                {
+                    title: "可使用总数",
+                    align: "center",
+                    dataIndex: "totalNum"
+                },
+                {
+                    title: "已使用数量",
+                    align: "center",
+                    dataIndex: "usedNum"
                 },
                 {
                     title: "状态",
@@ -208,11 +220,16 @@ export default {
             }
             this.loadData(1);
         },
-        handleAdd() {
-            this.$refs.modalForm.edit({
-                activityId: this.model.id,
-                isIncludeActivityModel: this.isIncludeActivityModel
-            });
+        handleAdd(isBatchAdd) {
+            let editParam = {
+                activityId: this.isIncludeActivityModel ? this.model.id : undefined,
+                isIncludeActivityModel: this.isIncludeActivityModel,
+                isBatchAdd: false
+            };
+            if (isBatchAdd) {
+                editParam.isBatchAdd = true;
+            }
+            this.$refs.modalForm.edit(editParam);
             this.$refs.modalForm.title = "新增激活码配置";
         },
         loadDateById(record) {

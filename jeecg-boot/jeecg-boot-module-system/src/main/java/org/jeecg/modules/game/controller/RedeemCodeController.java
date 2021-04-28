@@ -8,6 +8,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.util.RandomStringUtils;
 import org.jeecg.modules.game.entity.GameRedeemCode;
 import org.jeecg.modules.game.service.IGameRedeemCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -62,7 +65,28 @@ public class RedeemCodeController extends JeecgController<GameRedeemCode, IGameR
     @AutoLog(value = "激活码-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameRedeemCode redeemCode) {
-        redeemCodeService.save(redeemCode);
+        if (redeemCode.getBatchNum() != null && redeemCode.getBatchNum() > 0) {
+            // 1.批量自动生成激活码
+            List<GameRedeemCode> gameRedeemCodes = new ArrayList<>(redeemCode.getBatchNum());
+            for (int i = 0; i < redeemCode.getBatchNum(); i++) {
+                // 自动生产激活码
+                String code = RandomStringUtils.genCdKeyCode();
+                gameRedeemCodes.add(new GameRedeemCode(redeemCode.getActivityId(), code, redeemCode.getTotalNum(), 0, redeemCode.getStatus()));
+            }
+            redeemCodeService.saveBatch(gameRedeemCodes, gameRedeemCodes.size());
+        } else if (redeemCode.getCode() != null && redeemCode.getCode().contains(",")) {
+            // 2.批量激活码字符串生成
+            String[] codes = redeemCode.getCode().split(",");
+            List<GameRedeemCode> gameRedeemCodes = new ArrayList<>(codes.length);
+            for (String code : codes) {
+                // 自动生产激活码
+                gameRedeemCodes.add(new GameRedeemCode(redeemCode.getActivityId(), code, redeemCode.getTotalNum(), 0, redeemCode.getStatus()));
+            }
+            redeemCodeService.saveBatch(gameRedeemCodes, gameRedeemCodes.size());
+        } else {
+            // 3.单个添加
+            redeemCodeService.save(redeemCode);
+        }
         return Result.ok("添加成功！");
     }
 

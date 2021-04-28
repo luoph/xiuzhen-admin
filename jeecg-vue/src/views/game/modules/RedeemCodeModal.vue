@@ -1,13 +1,24 @@
 <template>
-    <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible">
-        <!-- <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭"> -->
+    <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="激活码活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="isEdit || isIncludeActivityModel" v-decorator="['activityId', validatorRules.activityId]" placeholder="请输入激活码活动id" style="width: 100%" />
+                    <a-input-number
+                        :disabled="isEdit || isIncludeActivityModel"
+                        v-decorator="['activityId', validatorRules.activityId]"
+                        placeholder="请输入激活码活动id"
+                        style="width: 100%"
+                    />
                 </a-form-item>
-                <a-form-item label="激活码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]" placeholder="请输入激活码"></a-input>
+                <a-form-item v-if="isBatchAdd" label="批量生成激活码数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['batchNum', validatorRules.batchNum]" placeholder="请输入批量生成激活码数量" style="width: 100%" />
+                </a-form-item>
+                <a-form-item v-else label="激活码" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]" placeholder="请输入激活码, 使用半角','分割多个激活码"></a-input>
+                </a-form-item>
+                <a-form-item label="可使用总数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number :disabled="isEdit" v-decorator="['totalNum', validatorRules.totalNum]" placeholder="请输入可使用总数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="请选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
@@ -17,10 +28,10 @@
                 </a-form-item>
             </a-form>
         </a-spin>
-        <!-- </a-modal> -->
-        <a-button type="primary" @click="handleOk">确定</a-button>
-        <a-button type="primary" @click="handleCancel">取消</a-button>
-    </a-drawer>
+    </a-modal>
+    <!-- <a-button type="primary" @click="handleOk">确定</a-button>
+        <a-button type="primary" @click="handleCancel">取消</a-button> -->
+    <!-- </a-drawer> -->
 </template>
 
 <script>
@@ -40,7 +51,8 @@ export default {
             width: 800,
             visible: false,
             isEdit: false,
-            isIncludeActivityModel: false, 
+            isIncludeActivityModel: false,
+            isBatchAdd: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -53,7 +65,9 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 activityId: { rules: [{ required: true, message: "请输入激活码活动id!" }] },
-                code: {},
+                batchNum: {rules: [{ required: true, message: "请输入批量生成激活码数量!" }] },
+                code: {rules: [{ required: true, message: "请输入激活码!" }] },
+                totalNum: {rules: [{ required: true, message: "请输入可使用总数!" }]},
                 status: { rules: [{ required: true, message: "请选择状态!" }] },
                 createTime: {},
                 updateTime: {}
@@ -74,9 +88,10 @@ export default {
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
             this.isIncludeActivityModel = this.model.isIncludeActivityModel;
+            this.isBatchAdd = this.model.isBatchAdd;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "activityId", "code", "status"));
+                this.form.setFieldsValue(pick(this.model, "activityId", "batchNum", "code", "totalNum", "status"));
             });
         },
         close() {
@@ -120,7 +135,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "activityId", "code", "status", "createTime", "updateTime"));
+            this.form.setFieldsValue(pick(row, "activityId", "code", "status", "createTime", "totalNum", "updateTime"));
         }
     }
 };
