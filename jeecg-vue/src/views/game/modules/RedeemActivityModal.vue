@@ -9,7 +9,12 @@
                     <a-input v-decorator="['summary', validatorRules.summary]" placeholder="请输入礼包说明"></a-input>
                 </a-form-item>
                 <a-form-item label="限制类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['limitType', validatorRules.limitType]" placeholder="请输入限制类型" style="width: 100%" />
+                    <a-select placeholder="请选择限制类型" v-decorator="['limitType', validatorRules.limitType]" initialValue="4">
+                        <a-select-option :value="0">0 - 通用</a-select-option>
+                        <a-select-option :value="1">1 - 指定渠道</a-select-option>
+                        <a-select-option :value="2">2 - SERVER</a-select-option>
+                        <a-select-option :value="4">4 - 同一分组只能兑换一次</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number :disabled="isIncludeGroupModel" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
@@ -21,10 +26,18 @@
                     <a-textarea v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入限制区服id, 使用半角','分割多个id"></a-textarea>
                 </a-form-item>
                 <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['status', validatorRules.status]" placeholder="请输入活动状态" style="width: 100%" />
+                    <a-select placeholder="请选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
+                        <a-select-option :value="0">无效</a-select-option>
+                        <a-select-option :value="1">有效</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励"></a-textarea>
+                    <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
+                    <a-textarea
+                        v-decorator="['reward', { initialValue: itemTree }, validatorRules.reward]"
+                        placeholder="请输入奖励" :autoSize="{ minRows: 2, maxRows: 6 }" />
+                    <game-email-item-tree-modal ref="gameEmailItemTreeModal"
+                                                @func="getItemTreeJson"></game-email-item-tree-modal>
                 </a-form-item>
                 <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-textarea>
@@ -51,12 +64,14 @@ import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import RedeemCodeList from "../RedeemCodeList";
+import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
 
 export default {
     name: "RedeemActivityModal",
     components: {
         JDate,
-        RedeemCodeList
+        RedeemCodeList,
+        GameEmailItemTreeModal
     },
     data() {
         return {
@@ -66,6 +81,7 @@ export default {
             visible: false,
             isEdit: false,
             isIncludeGroupModel: false,
+            itemTree: null,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -79,14 +95,14 @@ export default {
             validatorRules: {
                 name: { rules: [{ required: true, message: "请输入激活码名称!" }] },
                 summary: { rules: [{ required: true, message: "请输入礼包说明!" }] },
-                limitType: { rules: [{ required: true, message: "请输入限制类型!" }] },
+                limitType: { rules: [{ required: true, message: "请选择限制类型!" }] },
                 groupId: {},
                 channelIds: {},
                 serverIds: {},
-                status: { rules: [{ required: true, message: "请输入活动状态!" }] },
+                status: { rules: [{ required: true, message: "请选择活动状态!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励!" }] },
                 remark: { rules: [{ required: true, message: "请输入备注!" }] },
-                startTime: {},
+                startTime: {rules: [{ required: true, message: "请选择开始时间!" }]},
                 endTime: {}
             },
             url: {
@@ -119,6 +135,7 @@ export default {
         },
         close() {
             this.$emit("close");
+            this.itemTree = null;
             this.visible = false;
         },
         handleOk() {
@@ -159,7 +176,18 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(pick(row, "name", "summary", "limitType", "groupId", "channelIds", "serverIds", "status", "reward", "remark", "startTime", "endTime"));
-        }
+        },
+        handleAddItem() {
+            this.$refs.gameEmailItemTreeModal.$emit("getItemTree");
+            this.reward = null;
+        },
+        getItemTreeJson(item) {
+            this.itemTree = null;
+            this.itemTree = item;
+            this.form.setFieldsValue({
+                reward: item
+            });
+        },
     }
 };
 </script>
