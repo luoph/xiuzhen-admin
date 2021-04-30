@@ -146,11 +146,68 @@ export default {
                 this.$message.warning("这是最后一页，不能再关闭了啦");
                 return;
             }
-            this.pageList = this.pageList.filter(item => item.fullPath !== key);
             let index = this.linkList.indexOf(key);
+            let currRoute = this.pageList[index];
+            this.cleanCache(currRoute.name); // 手动清理缓存
+            this.pageList = this.pageList.filter(item => item.fullPath !== key);
             this.linkList = this.linkList.filter(item => item !== key);
             index = index >= this.linkList.length ? this.linkList.length - 1 : index;
             this.activePage = this.linkList[index];
+        },
+        cleanCache(path) {
+            if (!path || path == "") {
+                return;
+            }
+            let name = path.split("-");
+            name = name[name.length - 1];
+            let AlayoutContentCompent = this.$vnode.componentInstance.$children[0].$children[0].$children[0].$children[1].$children[0].$children[1].$children[0];
+            if (AlayoutContentCompent != null) {
+                let children = AlayoutContentCompent.$children;
+                for (let i = 0; i < children.length; i++) {
+                    let item = children[i];
+                    if (item.isRouteView) {
+                        //匹配RouteView组件
+                        let routeViews = item.$children;
+                        let deleteKey;
+                        let deleteIndex;
+
+                        for (var j = 0; j < routeViews.length; j++) {
+                            let component = routeViews[j];
+                            let tags = component.$vnode.tag.split("-");
+                            if (tags[tags.length - 1] == name) {
+                                deleteKey = component.$vnode.componentOptions.Ctor.cid;
+                                deleteIndex = j;
+                            }
+                        }
+
+                        if (deleteKey && deleteKey > 0) {
+                            let component = routeViews[0];
+                            // 删除缓存
+                            if (
+                                component &&
+                                component.$vnode &&
+                                component.$vnode.parent &&
+                                component.$vnode.parent.componentInstance &&
+                                component.$vnode.parent.componentInstance.cache
+                            ) {
+                                let cache = component.$vnode.parent.componentInstance.cache;
+                                let keys = component.$vnode.parent.componentInstance.keys;
+                                if (cache[deleteKey]) {
+                                    cache[deleteKey].componentInstance.$destroy(true);
+
+                                    if (keys.length) {
+                                        let index = keys.indexOf(deleteKey + "");
+                                        if (index > -1) {
+                                            keys.splice(index, 1);
+                                        }
+                                    }
+                                    delete cache[deleteKey];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         },
         onContextmenu(e) {
             const pagekey = this.getPageKey(e.target);
@@ -194,6 +251,14 @@ export default {
         /* update_end author:wuxianquan date:20190828 for: 关闭当前tab页，供子页面调用->望菜单能配置外链，直接弹出新页面而不是嵌入iframe #428 */
         closeOthers(pageKey) {
             let index = this.linkList.indexOf(pageKey);
+            // 除了index的数据
+            for (var i = 0; i < this.linkList.length; i++) {
+                if (i != 0 && i != index) {
+                    let currRoute = this.pageList[i];
+                    this.cleanCache(currRoute.name);
+                }
+            }
+
             if (pageKey == indexKey || pageKey.indexOf("?ticke=") >= 0) {
                 this.linkList = this.linkList.slice(index, index + 1);
                 this.pageList = this.pageList.slice(index, index + 1);
@@ -214,6 +279,13 @@ export default {
             let tempList = [...this.pageList];
             let indexContent = tempList.slice(0, 1)[0];
             let index = this.linkList.indexOf(pageKey);
+            // 除了大于index的数据
+            for (var i = 0; i < this.linkList.length; i++) {
+                if (i != 0 && i < index) {
+                    let currRoute = this.pageList[i];
+                    this.cleanCache(currRoute.name);
+                }
+            }
             this.linkList = this.linkList.slice(index);
             this.pageList = this.pageList.slice(index);
             this.linkList.unshift(indexContent.fullPath);
@@ -224,6 +296,13 @@ export default {
         },
         closeRight(pageKey) {
             let index = this.linkList.indexOf(pageKey);
+            // 除了小于index的数据
+            for (var i = 0; i < this.linkList.length; i++) {
+                if (i != 0 && i > index) {
+                    let currRoute = this.pageList[i];
+                    this.cleanCache(currRoute.name);
+                }
+            }
             this.linkList = this.linkList.slice(0, index + 1);
             this.pageList = this.pageList.slice(0, index + 1);
             if (this.linkList.indexOf(this.activePage < 0)) {
