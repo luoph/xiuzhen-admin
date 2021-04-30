@@ -1,8 +1,10 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.commons.model.Response;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -27,7 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -70,6 +73,23 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
         QueryWrapper<GameVirtualOrder> queryWrapper = QueryGenerator.initQueryWrapper(gameVirtualOrder, req.getParameterMap());
         Page<GameVirtualOrder> page = new Page<>(pageNo, pageSize);
         IPage<GameVirtualOrder> pageList = gameVirtualOrderService.page(page, queryWrapper);
+
+        if (pageList.getRecords() != null && pageList.getRecords().size() > 0) {
+            HashSet<Long> playerIds = new HashSet<>(pageList.getRecords().size());
+            pageList.getRecords().forEach(e -> playerIds.add(e.getPlayerId()));
+
+            LambdaQueryWrapper<GameRegisterInfo> query = Wrappers.lambdaQuery();
+            query.select(GameRegisterInfo::getPlayerId, GameRegisterInfo::getName);
+            query.in(GameRegisterInfo::getPlayerId, playerIds);
+            query.groupBy(GameRegisterInfo::getPlayerId);
+            List<GameRegisterInfo> list = playerRegisterInfoService.list(query);
+
+            Map<Long, String> nameByPlayerId = CollectionUtil.isNotEmpty(list) ?
+                    list.stream().collect(Collectors.toMap(GameRegisterInfo::getPlayerId, GameRegisterInfo::getName,
+                            (item1, item2) -> item2)) : new HashMap<>(list.size());
+
+            pageList.getRecords().forEach(e -> e.setPlayerName(nameByPlayerId.get(e.getPlayerId()) != null ? nameByPlayerId.get(e.getPlayerId()) : ""));
+        }
         return Result.ok(pageList);
     }
 

@@ -148,6 +148,12 @@ export default {
                     dataIndex: "playerId"
                 },
                 {
+                    title: "玩家名",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "playerName"
+                },
+                {
                     title: "商品id",
                     align: "center",
                     dataIndex: "goodsId"
