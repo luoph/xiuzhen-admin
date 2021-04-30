@@ -3,6 +3,7 @@ package org.jeecg.modules.player.entity;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -38,6 +39,14 @@ public class GameOrder implements Serializable {
     @ExcelProperty("玩家id")
     @Excel(name = "玩家id", width = 15)
     private Long playerId;
+
+    /**
+     * 玩家名
+     */
+    @ExcelProperty("玩家名")
+    @Excel(name = "玩家名", width = 15)
+    @TableField(exist = false)
+    private String playerName;
 
     /**
      * 己方订单号

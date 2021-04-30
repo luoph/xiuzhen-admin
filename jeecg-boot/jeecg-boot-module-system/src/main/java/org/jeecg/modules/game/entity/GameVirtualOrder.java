@@ -1,6 +1,8 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -42,6 +44,14 @@ public class GameVirtualOrder implements Serializable {
      */
     @Excel(name = "玩家id", width = 15)
     private java.lang.Long playerId;
+
+    /**
+     * 玩家名
+     */
+    @ExcelProperty("玩家名")
+    @Excel(name = "玩家名", width = 15)
+    @TableField(exist = false)
+    private String playerName;
 
     /**
      * 商品id

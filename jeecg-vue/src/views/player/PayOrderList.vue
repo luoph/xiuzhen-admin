@@ -174,9 +174,15 @@ export default {
                 },
                 {
                     title: "玩家id",
-                    align: "left",
+                    align: "center",
                     width: 80,
                     dataIndex: "playerId"
+                },
+                {
+                    title: "玩家名",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "playerName"
                 },
                 {
                     title: "渠道",
