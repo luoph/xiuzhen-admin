@@ -47,4 +47,34 @@
         </if>
     </select>
 
+    <select id="queryGameMessageList" resultType="org.jeecg.modules.game.entity.ChatMessageVO">
+        SELECT
+        cm.id,
+        cm.server_id as serverId,
+        cm.sender_id as sendPlayerId,
+        cm.receiver_id as receivePlayerId,
+        cm.msg_content as message,
+        cm.create_time as messageTime
+        FROM
+        `game_chat`.chat_message cm
+        WHERE
+            cm.chat_type = 4
+            AND cm.msg_type = 1
+        <if test="serverId !=null ">
+            AND cm.server_id = #{serverId}
+        </if>
+        <if test="playerId !=null ">
+            AND cm.sender_id = #{playerId}
+        </if>
+        <if test="rangeTimeBeginDate !=null ">
+            AND cm.create_time >= #{rangeTimeBeginDate}
+        </if>
+        <if test="rangeTimeEndDate !=null ">
+            AND cm.create_time &lt;= #{rangeTimeEndDate}
+        </if>
+        <if test="message !=null ">
+            AND cm.msg_content LIKE CONCAT('%',#{message},'%')
+        </if>
+    </select>
+
 </mapper>

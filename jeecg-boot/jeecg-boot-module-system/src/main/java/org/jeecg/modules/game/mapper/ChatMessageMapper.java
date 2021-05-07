@@ -2,6 +2,7 @@ package org.jeecg.modules.game.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.ChatMessage;
+import org.jeecg.modules.game.entity.ChatMessageVO;
 
 import java.util.Date;
 import java.util.List;
@@ -20,4 +21,18 @@ public interface ChatMessageMapper {
                                    @Param("nickname") String nickname,
                                    @Param("message") String message);
 
+    /**
+     * 查询跨服的聊天记录
+     *
+     * @param rangeTimeBeginDate
+     * @param rangeTimeEndDate
+     * @param playerId
+     * @param message
+     * @return
+     */
+    List<ChatMessageVO> queryGameMessageList(@Param("rangeTimeBeginDate") String rangeTimeBeginDate,
+                                             @Param("rangeTimeEndDate") String rangeTimeEndDate,
+                                             @Param("serverId") Integer serverId,
+                                             @Param("playerId") Long playerId,
+                                             @Param("message") String message);
 }

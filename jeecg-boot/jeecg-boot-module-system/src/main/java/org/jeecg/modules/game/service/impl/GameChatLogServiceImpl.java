@@ -1,12 +1,25 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.database.DataSourceHelper;
+import org.jeecg.modules.game.entity.ChatMessage;
 import org.jeecg.modules.game.entity.ChatMessageVO;
+import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.game.mapper.ChatMessageMapper;
 import org.jeecg.modules.game.mapper.GameChatLogMapper;
 import org.jeecg.modules.game.service.IGameChatLogService;
+import org.jeecg.modules.game.service.IGameServerService;
+import org.jeecg.modules.player.entity.Player;
+import org.jeecg.modules.player.mapper.PlayerMapper;
+import org.jeecg.modules.player.service.IPlayerService;
+import org.jeecg.modules.player.service.impl.PlayerServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +38,14 @@ public class GameChatLogServiceImpl implements IGameChatLogService {
     @Resource
     private GameChatLogMapper gameChatLogMapper;
 
+    @Resource
+    private ChatMessageMapper chatMessageMapper;
+
+    @Autowired
+    private IPlayerService playerService;
+
+    @Autowired
+    private IGameServerService gameServerService;
 
     /**
      * 查询世界聊天信息
@@ -195,5 +216,65 @@ public class GameChatLogServiceImpl implements IGameChatLogService {
             DataSourceHelper.useDefaultDatabase();
         }
         return chatMessageVOList;
+    }
+
+    @Override
+    public List<ChatMessageVO> queryCrossServerChatLogList(String rangeTimeBegin, String rangeTimeEnd, Integer channelId, Integer serverId, Long playerId, String nickname, String message) {
+        List<ChatMessageVO> result = new ArrayList<>();
+
+        Player sendPlayer = null;
+
+        if (!StringUtils.isEmpty(nickname)) {
+            try {
+                // 通过serverId切换数据源
+                DataSourceHelper.useServerDatabase(serverId);
+                LambdaQueryWrapper<Player> wrapper = Wrappers.lambdaQuery();
+                wrapper.like(Player::getNickname, nickname);
+                sendPlayer = playerService.getOne(wrapper);
+                if (sendPlayer == null) {
+                    return result;
+                }
+            } finally {
+                DataSourceHelper.useDefaultDatabase();
+            }
+
+            if (playerId == null) {
+                playerId = sendPlayer.getId();
+            } else {
+                if (playerId != sendPlayer.getId()) {
+                    return result;
+                }
+            }
+        }
+
+        result = chatMessageMapper.queryGameMessageList(rangeTimeBegin, rangeTimeEnd, serverId, playerId, message);
+
+        if (CollectionUtil.isNotEmpty(result)) {
+            LambdaQueryWrapper<GameServer> gameServerWrapper = Wrappers.lambdaQuery();
+            gameServerWrapper.eq(GameServer::getId, serverId);
+            GameServer gameServer = gameServerService.getOne(gameServerWrapper);
+
+            Map<String, List<Map>> allPlayerInfoMapPlayId;
+            try {
+                // 通过serverId切换数据源
+                DataSourceHelper.useServerDatabase(serverId);
+                //查询所有用户信息
+                List<Map> allPlayerInfoList = gameChatLogMapper.selectPlayerInfoByPlayerId();
+                //用户信息以play_id分组
+                allPlayerInfoMapPlayId = allPlayerInfoList.stream().collect(Collectors.groupingBy(map -> map.get("id").toString()));
+            } finally {
+                DataSourceHelper.useDefaultDatabase();
+            }
+
+            for (ChatMessageVO chatMessageVO : result) {
+                chatMessageVO.setChatChannel("跨服");
+                String playerName = sendPlayer != null ? sendPlayer.getNickname() :
+                        allPlayerInfoMapPlayId.get(chatMessageVO.getSendPlayerId().toString()).get(0).get("nickname").toString();
+                String sendPlayerName = gameServer.getName() + "." + playerName;
+                chatMessageVO.setSendPlayerName(sendPlayerName);
+                chatMessageVO.setReceivePlayerName("公共");
+            }
+        }
+        return result;
     }
 }
