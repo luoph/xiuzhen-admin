@@ -15,6 +15,7 @@
                                 <a-select-option value="1">世界聊天</a-select-option>
                                 <a-select-option value="2">仙盟聊天</a-select-option>
                                 <a-select-option value="3">私聊</a-select-option>
+                                <a-select-option value="5">跨服</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -66,8 +67,9 @@
                 @change="handleTableChange"
             >
                 <template slot="onBannedOperation" slot-scope="text, record">
+                    {{ text.substr(0, text.lastIndexOf(".")+1) }}
                     <a-popconfirm v-if="dataSource.length" title="是否封禁账号?" @confirm="() => onBanned(record)">
-                        <a href="javascript:;">{{ text }}</a>
+                        <a href="javascript:;">{{ text.substr(text.lastIndexOf(".") + 1) }}</a>
                     </a-popconfirm>
                 </template>
             </a-table>
@@ -186,7 +188,7 @@ export default {
                 banValue: record.sendPlayerId,
                 serverId: record.serverId,
                 isForever: 1,
-                type: 2,
+                type: 1,
                 banKey: "playerId",
                 reason: record.chatChannel + "（聊天频道）发表不正当言论。"
             };

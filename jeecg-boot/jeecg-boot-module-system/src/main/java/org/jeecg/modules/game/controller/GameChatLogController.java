@@ -72,6 +72,8 @@ public class GameChatLogController {
         int selfType = 3;
         //所有
         int allType = 4;
+        //跨服
+        int crossServerType = 5;
 
         if (type == commonType) {
             // 公共聊天
@@ -92,15 +94,21 @@ public class GameChatLogController {
             List<ChatMessageVO> list2 = gameChatLogService.queryImmortalChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
             // 私聊
             List<ChatMessageVO> list3 = gameChatLogService.querySelfChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, nickname, playerId, message);
+            // 跨服
+            List<ChatMessageVO> crossServerChatMessages = gameChatLogService.queryCrossServerChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
             // 整合
             list.addAll(list1);
             list.addAll(list2);
             list.addAll(list3);
+            list.addAll(crossServerChatMessages);
             List<ChatMessageVO> listAll = list.stream().sorted((s1, s2) -> s2.getMessageTime().compareTo(s1.getMessageTime())).collect(Collectors.toList());
-            // 从排id 防止前端vue报错
+            // 重排id 防止前端vue报错
             AtomicLong i = new AtomicLong(1);
             listAll.forEach(chatMessageVO -> chatMessageVO.setId(i.getAndIncrement()));
             pageVo.setRecords(listAll).setTotal(listAll.size());
+        } else if (type == crossServerType) {
+            List<ChatMessageVO> crossServerChatMessages = gameChatLogService.queryCrossServerChatLogList(rangeTimeBegin, rangeTimeEnd, channelId, serverId, playerId, nickname, message);
+            pageVo.setRecords(crossServerChatMessages).setTotal(crossServerChatMessages.size());
         }
         return Result.ok(pageVo);
     }

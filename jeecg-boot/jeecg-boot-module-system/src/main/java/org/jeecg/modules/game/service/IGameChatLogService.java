@@ -49,5 +49,17 @@ public interface IGameChatLogService {
      */
     List<ChatMessageVO> querySelfChatLogList(String rangeTimeBegin, String rangeTimeEnd, Integer channelId, Integer serverId, String nickname, Long playerId, String message);
 
+    /**
+     * 查询跨服聊天信息
+     *
+     * @param rangeTimeBegin
+     * @param rangeTimeEnd
+     * @param channelId
+     * @param serverId
+     * @param playerId
+     * @param message
+     * @return
+     */
+    List<ChatMessageVO> queryCrossServerChatLogList(String rangeTimeBegin, String rangeTimeEnd, Integer channelId, Integer serverId, Long playerId, String nickname, String message);
 
 }
