@@ -95,7 +95,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
         }
 
         //查询时间范围内 所有注册的用户
-        List<Map> allRegisterUserList = militaryStrengthMapper.selectAllRegisterUser(channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allRegisterUserList = militaryStrengthMapper.selectAllRegisterUser(serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
         Map<String, List<Map>> allRegisterUserListMapPlayerId = allRegisterUserList.stream().collect(Collectors.groupingBy(map ->map.get("player_id").toString()));
         List<MilitaryStrengthVO> militaryStrengthVOList = new ArrayList<>();
         for (Map map : militaryStrengVoAllList) {
