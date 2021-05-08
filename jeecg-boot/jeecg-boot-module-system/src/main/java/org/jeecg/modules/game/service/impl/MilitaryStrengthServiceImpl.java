@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.druid.util.StringUtils;
@@ -77,10 +78,14 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
     @Override
     public List<MilitaryStrengthVO> getMilitaryStrengVoAllList(String userName, int serverId, String createDateBegin, String createDateEnd, String channel) {
         List<Map>  militaryStrengVoAllList;
+        List<MilitaryStrengthVO> militaryStrengthVOList = new ArrayList<>();
         if (StringUtils.isEmpty(userName)){
             militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAll(serverId, createDateBegin, createDateEnd,logPlayerTable);
         }else{
             List<Map> registerUserMap = militaryStrengthMapper.selectRegisterUserByName(userName,channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
+            if (CollectionUtil.isEmpty(registerUserMap)) {
+                return militaryStrengthVOList;
+            }
             //这个名字下所有player_id集合
             List<String> playerIdCollect =registerUserMap.stream().map(map -> map.get("player_id").toString()).collect(Collectors.toList());
             String playerIdCollectString = "";
@@ -91,13 +96,15 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
                     playerIdCollectString = playerIdCollectString + playerIdCollect.get(i) +",";
                 }
             }
+            if (StringUtils.isEmpty(playerIdCollectString)){
+                return militaryStrengthVOList;
+            }
             militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAllByPlayerId(serverId,"("+playerIdCollectString+")", createDateBegin, createDateEnd,logPlayerTable);
         }
 
         //查询时间范围内 所有注册的用户
-        List<Map> allRegisterUserList = militaryStrengthMapper.selectAllRegisterUser(serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allRegisterUserList = militaryStrengthMapper.selectAllRegisterUserNoChannel(serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
         Map<String, List<Map>> allRegisterUserListMapPlayerId = allRegisterUserList.stream().collect(Collectors.groupingBy(map ->map.get("player_id").toString()));
-        List<MilitaryStrengthVO> militaryStrengthVOList = new ArrayList<>();
         for (Map map : militaryStrengVoAllList) {
             MilitaryStrengthVO militaryStrengthVO = new MilitaryStrengthVO();
             if (null == allRegisterUserListMapPlayerId .get(map.get("player_id").toString())){
