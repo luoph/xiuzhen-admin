@@ -10,7 +10,13 @@
                     </a-col>
                     <a-col :md="12" :sm="16">
                         <a-form-item label="统计日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                            <a-range-picker
+                                format="YYYY-MM-DD"
+                                :disabled-date="disabledDate"
+                                @calendarChange="calendarChange"
+                                :placeholder="['开始日期', '结束日期']"
+                                @change="onDateChange"
+                            />
                         </a-form-item>
                     </a-col>
                     <a-col :md="12" :sm="16">
@@ -62,6 +68,7 @@ import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameChannelServer from "@/components/gameserver/GameChannelServer";
 import GameServerSelector from "@comp/gameserver/GameServerSelector";
 import JDate from "@/components/jeecg/JDate.vue";
+import moment from "moment";
 
 export default {
     name: "GameStatOrderList",
@@ -146,11 +153,13 @@ export default {
                 exportXlsUrl: "game/gameStatOrder/exportXls"
             },
             dictOptions: {},
-            tableScroll: { x: 9 * 147 + 50 }
+            tableScroll: { x: 9 * 147 + 50 },
+            choiceDate: ""
         };
     },
     computed: {},
     methods: {
+        moment,
         initDictConfig() {},
         onSelectServer(serverId) {
             this.queryParam.serverId = serverId;
@@ -161,9 +170,20 @@ export default {
         onDateChange(dates, dateStrings) {
             this.queryParam.startDate = dateStrings[0];
             this.queryParam.endDate = dateStrings[1];
+            this.choiceDate = "";
         },
         change(value) {
             this.queryParam.serverId = value.length > 0 ? value.join(",") : value;
+        },
+        calendarChange([startTime]) {
+            this.choiceDate = startTime;
+        },
+        disabledDate(current) {
+            if (this.choiceDate) {
+                return current.month() + 1 != moment(this.choiceDate).format("MM") || current > moment().endOf('day');
+            } else {
+                return current && current > moment().endOf("day");
+            }
         }
     }
 };

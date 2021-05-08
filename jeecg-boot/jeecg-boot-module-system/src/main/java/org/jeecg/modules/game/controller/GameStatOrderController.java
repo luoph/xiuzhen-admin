@@ -74,10 +74,6 @@ public class GameStatOrderController extends JeecgController<GameStatOrder, IGam
         }
 
         IPage<GameStatOrder> pageList = gameStatOrderService.queryGameStatOrderList(gameStatOrder, pageNo, pageSize);
-        if (pageList == null) {
-            pageList = new Page<>();
-            pageList.setRecords(Collections.EMPTY_LIST);
-        }
         return Result.ok(pageList);
     }
 

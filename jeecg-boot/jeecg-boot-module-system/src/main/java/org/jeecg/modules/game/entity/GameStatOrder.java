@@ -14,6 +14,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author jeecg-boot
@@ -27,6 +28,16 @@ import java.io.Serializable;
 public class GameStatOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public GameStatOrder() {}
+
+    public GameStatOrder(String date, int serverId, int ServerNum, int payNum, BigDecimal amount){
+        this.date = date;
+        this.serverId = serverId;
+        this.serverNum = ServerNum;
+        this.payNum = payNum;
+        this.amount = amount;
+    }
 
     /**
      * id

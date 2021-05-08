@@ -97,6 +97,17 @@ public class PayOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder>
                 }
                 result.put(formatDate, gameStatOrder);
             });
+
+            // 列表需要打印空的日期
+            if (type == CommonConstant.PAY_ORDER_STAT_TYPE_DATE) {
+                dateList.forEach(date -> {
+                    String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
+                    GameStatOrder gameStatOrder = result.get(formatDate);
+                    if (gameStatOrder == null) {
+                        result.put(formatDate, new GameStatOrder(formatDate, serverId, 1, 0, new BigDecimal(0)));
+                    }
+                });
+            }
             return new ArrayList<>(result.values());
         }
         return null;
