@@ -1,6 +1,8 @@
 package org.jeecg.modules.game.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.commons.model.Response;
+import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,8 +15,8 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.GameRechargeGoods;
-import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.common.system.util.ExcelUtils;
+import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.service.IGameRechargeGoodsService;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +49,9 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 
     @Value("${app.goods.refresh:/rechargeGoods/update}")
     private String goodsRefresh;
+
+    @Value("${app.folder.temp}")
+    private String tempFolder;
 
     /**
      * 分页列表查询
@@ -187,5 +193,20 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
             JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + goodsRefresh), Response.class);
         }
         return Result.ok("刷新成功!");
+    }
+
+    @RequestMapping(value = "/importText", method = RequestMethod.POST)
+    public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
+
+        String fileName = tempFolder + File.separator + GameRechargeGoods.class.getSimpleName() + ".xls";
+
+        List<GameRechargeGoods> goodsList = ExcelUtils.importFromExcelText(vo.getText(), fileName, GameRechargeGoods.class);
+        if (CollUtil.isNotEmpty(goodsList)) {
+            for (GameRechargeGoods goods : goodsList) {
+                goods.setCreateTime(DateUtils.now());
+            }
+            gameRechargeGoodsService.saveBatch(goodsList);
+        }
+        return Result.ok(vo);
     }
 }
