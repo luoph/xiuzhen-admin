@@ -20,11 +20,20 @@ public enum ConfigDataEnum {
 	 * 充值
 	 */
 	RECHARGE_GOODS("recharge_goods", ConfRechargeGoods.class),
-	//end
 	/**
 	 * 主剧情
 	 */
 	MAIN_STORY("main_story", ConfMainStory.class),
+
+	/**
+	 * 丹药
+	 */
+	REFINE_MEDICINE("refine_medicine", ConfMedicine.class),
+
+	/**
+	 * 炼器道具
+	 */
+	REFINE_EQUIP("refine_equip", ConfRefineEquip.class),
 	;
 
 	/**
