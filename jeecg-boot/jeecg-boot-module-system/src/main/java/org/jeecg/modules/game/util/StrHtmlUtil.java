@@ -17,6 +17,8 @@ public class StrHtmlUtil {
         input = input.replace("\n", "<br />");
         input = input.replace("<p>", "");
         input = input.replace("</p>", "");
+        input = input.replace("&lsquo;", "");
+        input = input.replace("&rsquo;", "");
         // strong 标签无效
         input = input.replace("<strong>", "");
         input = input.replace("</strong>", "");
