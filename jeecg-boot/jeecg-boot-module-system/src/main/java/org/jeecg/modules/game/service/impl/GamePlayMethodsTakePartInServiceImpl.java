@@ -1,12 +1,24 @@
 package org.jeecg.modules.game.service.impl;
 
+import cn.youai.xiuzhen.common.data.ConfigDataEnum;
+import cn.youai.xiuzhen.common.data.ConfigDataService;
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.xiuzhen.entity.pojo.ConfMedicine;
+import cn.youai.xiuzhen.entity.pojo.ConfRefineEquip;
+import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
+import com.googlecode.cqengine.query.Query;
+import com.googlecode.cqengine.query.QueryFactory;
+import com.googlecode.cqengine.query.logical.And;
+import com.googlecode.cqengine.query.option.QueryOptions;
+import com.googlecode.cqengine.query.simple.Equal;
 import org.jeecg.modules.game.entity.GamePlayMethodsTakePartInVO;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
 import org.jeecg.modules.game.mapper.PlayMethodsTakePartInMapper;
 import org.jeecg.modules.game.service.IGamePlayMethodsTakePartInService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,18 +43,30 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
     @Value("${app.log.db.table}")
     String logAccountTable;
 
+    @Autowired
+    private ConfigDataService configDataService;
+
     @Override
     public List<GamePlayMethodsTakePartInVO> playMethodsTakePartList(int fullTimes, int grade, String playMethodsType, Date createDateBegin, Date createDateEnd, int serverId) {
 
         List<GamePlayMethodsTakePartInVO> gamePlayMethodsTakePartInVOList = new ArrayList<>();
         // 查询时间范围内某玩法类型的玩家日志
         List<LogPlayer> playerLogList = playMethodsTakePartInMapper.conditionSelectPlayerLog(playMethodsType, createDateBegin, createDateEnd, logPlayerTable, serverId);
+
+        // 查询炼丹、炼器
+        boolean isRefineDanOrEquip = PlayerLogType.REFINE_DAN.getType() == Integer.parseInt(playMethodsType) || PlayerLogType.REFINE_EQUIP.getType() == Integer.parseInt(playMethodsType);
+        // 过滤极品丹药或者仙器
+        if (isRefineDanOrEquip) {
+            playerLogList = filterRefineDanOrEquip(playerLogList, playMethodsType);
+        }
+
         // 玩家日志日志以时间分组
         Map<Date, List<LogPlayer>> playerLogListMapCreateDate = playerLogList.stream().collect(Collectors.groupingBy(LogPlayer::getCreateDate));
         // 查询到达某等级用户的登录日志
         List<LogAccount> accountLogList = playMethodsTakePartInMapper.selectPlayLoginInfo(grade, logAccountTable, serverId);
         // 登录日志以时间分组
         Map<Date, List<LogAccount>> accountLogListCreateDate = accountLogList.stream().collect(Collectors.groupingBy(LogAccount::getCreateDate));
+
 
         for (Date s : playerLogListMapCreateDate.keySet()) {
             // 时间内玩家日志以用户id分组
@@ -119,5 +143,41 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
         }
         return gamePlayMethodsTakePartInVOList.stream().sorted((s1, s2) -> s2.getDate().compareTo(s1.getDate())).collect(Collectors.toList());
     }
+
+    /**
+     * 过滤炼丹或者炼器条件的日志集
+     * 炼丹:极品丹药
+     * 炼器:仙器以上
+     */
+    private List<LogPlayer> filterRefineDanOrEquip(List<LogPlayer> playerLogListMapCreateDatePlayerId, String playMethodsType) {
+        // 丹药、炼器id集合
+        List<Integer> ids = playerLogListMapCreateDatePlayerId.stream().filter(e -> e.getParam1() != null && e.getParam1() > 0)
+                .map(LogPlayer::getParam1).collect(Collectors.toList());
+
+        // 满足条件的id-Map
+        Map<Integer, Integer> filterIdMap;
+
+        // 丹药
+        if (PlayerLogType.REFINE_DAN.getType() == Integer.parseInt(playMethodsType)) {
+            QueryOptions queryOptions = QueryFactory.queryOptions(ConfMedicine.ITEM_ID);
+            Query<ConfMedicine> in = QueryFactory.in(ConfMedicine.ITEM_ID, ids);
+            // 极品丹药
+            Query<ConfMedicine> equal = QueryFactory.equal(ConfMedicine.QUA, 4);
+            And<ConfMedicine> and = QueryFactory.and(in, equal);
+            List<ConfMedicine> confMedicines = configDataService.selectList(ConfigDataEnum.REFINE_MEDICINE, ConfMedicine.class, and, queryOptions);
+            filterIdMap = confMedicines.stream().collect(Collectors.toMap(ConfMedicine::getItemId, ConfMedicine::getItemId, (k1, k2) -> k2));
+        } else {
+            QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfRefineEquip.ITEM_ID)));
+            Query<ConfRefineEquip> in = QueryFactory.in(ConfRefineEquip.ITEM_ID, ids);
+            // 仙器以上
+            Query<ConfRefineEquip> greaterThan = QueryFactory.greaterThan(ConfRefineEquip.SUIT_TYPE, 2);
+            And<ConfRefineEquip> and = QueryFactory.and(in, greaterThan);
+            List<ConfRefineEquip> confRefineEquips = configDataService.selectList(ConfigDataEnum.REFINE_EQUIP, ConfRefineEquip.class, and, queryOptions);
+            filterIdMap = confRefineEquips.stream().collect(Collectors.toMap(ConfRefineEquip::getItemId, ConfRefineEquip::getItemId, (k1, k2) -> k2));
+        }
+
+        return playerLogListMapCreateDatePlayerId.stream().filter(e -> filterIdMap.get(e.getParam1()) != null).collect(Collectors.toList());
+    }
+
 
 }

@@ -47,8 +47,8 @@ public class GamePlayMethodsTakePartInController {
     @RequestMapping("/list")
     public Result<?> playMethodsTakePartList(String rangeDateBegin,
                                              String rangeDateEnd,
-                                             int grade,
-                                             int fullTime,
+                                             @RequestParam(name = "grade", defaultValue = "0") int grade,
+                                             @RequestParam(name = "fullTime", defaultValue = "0") int fullTime,
                                              @RequestParam(name = "serverId", defaultValue = "0") int serverId,
                                              @RequestParam(name = "playMethodsType", defaultValue = "") String playMethodsType,
                                              @RequestParam(name = "days", defaultValue = "0") int days,

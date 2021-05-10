@@ -35,6 +35,7 @@ public enum PlayerLogType {
     // 剧情关卡
     MAIN_STORY_LEVEL(110, "剧情小关卡"),
     FACTION_BANQUET(111, "仙盟仙宴"),
+    MAIN_STORY_TRAVEL_QUICK(112, "剧情-快速挂机"),
 
     // 斗法
     ARENA_BATTLE(120, "福地夺宝/斗法-挑战"),
@@ -61,7 +62,7 @@ public enum PlayerLogType {
     WORLD_BOSS(143, "魔王入侵（世界boss）"),
     MATE_BOSS(144, "仙缘试炼"),
 
-    // 炼丹炼器
+    // 炼丹炼器, param1 为丹方、器方id
     REFINE_DAN(150, "成功炼丹次数"),
     REFINE_EQUIP(151, "成功炼器次数"),
 

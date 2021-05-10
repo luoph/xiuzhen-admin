@@ -53,6 +53,25 @@ public class GameCommonModuleController {
         record.add(getJsonObject(PlayerLogType.GOD_ROAD, 35, 3));
         // 符文秘境
         record.add(getJsonObject(PlayerLogType.LINGSHAN_CHECKPOINT, 39, 1));
+
+        // 须弥战境
+        record.add(getJsonObject(PlayerLogType.TEAM_BOSS, 59, 3));
+        // 结义副本
+        record.add(getJsonObject(PlayerLogType.MARRY_BOSS, 1, 3));
+        // 双修试练
+        record.add(getJsonObject(PlayerLogType.MATE_PRACTICE, 39, 3));
+        // 快速挂机
+        record.add(getJsonObject(PlayerLogType.MAIN_STORY_TRAVEL_QUICK, 36, 5));
+        // 修为秘境
+        record.add(getJsonObject(PlayerLogType.PRACTICE_MAP_EXPLORE, 32, 3));
+        // 灵石秘境
+        record.add(getJsonObject(PlayerLogType.SPIRIT_STONE_MAP_EXPLORE, 0, 3));
+        // 炼丹
+        record.add(getJsonObject(PlayerLogType.REFINE_DAN, 0, 1));
+        // 炼器
+        record.add(getJsonObject(PlayerLogType.REFINE_EQUIP, 0, 1));
+        // 谪仙台
+        record.add(getJsonObject(PlayerLogType.QUALIFYING, 38, 10));
         result.put("record", record);
         response.put("result", result);
         return response;

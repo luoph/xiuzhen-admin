@@ -226,6 +226,7 @@ export default {
                 grade: this.queryParam.playMethodsType.grade,
                 fullTime: this.queryParam.playMethodsType.fullTime
             };
+            this.loading = true;
             getAction(this.url.list, param).then((res) => {
                 if (res.success) {
                     this.dataSource = res.result.records;
@@ -236,6 +237,7 @@ export default {
                 } else {
                     this.$message.error(res.message);
                 }
+                this.loading = false;
             });
         },
         downloadExcel(filename) {
