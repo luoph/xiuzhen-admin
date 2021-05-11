@@ -56,8 +56,8 @@ public class GameCommonModuleController {
 
         // 须弥战境
         record.add(getJsonObject(PlayerLogType.TEAM_BOSS, 59, 3));
-        // 结义副本
-        record.add(getJsonObject(PlayerLogType.MARRY_BOSS, 1, 3));
+        // 结义副本(金兰副本)
+        record.add(getJsonObject(PlayerLogType.MARRY_BOSS, 31, 3));
         // 双修试练
         record.add(getJsonObject(PlayerLogType.MATE_PRACTICE, 39, 3));
         // 快速挂机
@@ -67,9 +67,9 @@ public class GameCommonModuleController {
         // 灵石秘境
         record.add(getJsonObject(PlayerLogType.SPIRIT_STONE_MAP_EXPLORE, 0, 3));
         // 炼丹
-        record.add(getJsonObject(PlayerLogType.REFINE_DAN, 0, 1));
+        record.add(getJsonObject(PlayerLogType.REFINE_DAN_OUTPUT, 0, 1));
         // 炼器
-        record.add(getJsonObject(PlayerLogType.REFINE_EQUIP, 0, 1));
+        record.add(getJsonObject(PlayerLogType.REFINE_EQUIP_OUTPUT, 0, 1));
         // 谪仙台
         record.add(getJsonObject(PlayerLogType.QUALIFYING, 38, 10));
         result.put("record", record);
