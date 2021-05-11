@@ -66,6 +66,10 @@ public enum PlayerLogType {
     REFINE_DAN(150, "成功炼丹次数"),
     REFINE_EQUIP(151, "成功炼器次数"),
 
+    // value：recipeId, param1:itemId param2:num
+    REFINE_DAN_OUTPUT(152, "炼丹产出"),
+    REFINE_EQUIP_OUTPUT(153, "炼器产出"),
+
     // 秘境扫荡
     SPIRIT_STONE_MAP_SWEEP(160, "灵石秘境扫荡"),
     PRACTICE_MAP_SWEEP(161, "修为秘境扫荡"),
