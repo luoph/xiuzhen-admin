@@ -1,22 +1,16 @@
 <template>
     <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-             @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="主活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
-                                    placeholder="请输入主活动id"
-                                    style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入主活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="子活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]"
-                                    placeholder="请输入子活动页签"
-                                    style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动页签" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="限购数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" placeholder="请输入已购数量"
-                                    style="width: 100%" />
+                    <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" placeholder="请输入已购数量" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <game-goods-selector @change="selectGoods" :shopId="model.goodsId"></game-goods-selector>
@@ -25,15 +19,16 @@
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入礼包名"></a-input>
                 </a-form-item>
                 <a-form-item label="礼包组类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['type', validatorRules.type]" placeholder="请输入礼包组类型"
-                                    style="width: 100%" />
+                    <a-input-number v-decorator="['type', validatorRules.type]" placeholder="请输入礼包组类型" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="组排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入组排序"
-                                    style="width: 100%" />
+                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入组排序" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入奖励" />
+                </a-form-item>
+                <a-form-item label="图标颜色" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['color', validatorRules.color]" placeholder="请输入图标颜色" style="width: 100%" />
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -79,6 +74,7 @@ export default {
                 type: { rules: [{ required: true, message: "请输入礼包组类型!" }] },
                 sort: { rules: [{ required: true, message: "请输入组排序!" }] },
                 reward: { rules: [{ required: true, message: "请输入任务奖励!" }] },
+                color: { rules: [{ required: true, message: "请输入图标颜色!" }] },
                 goodsId: { rules: [{ required: true, message: "请选择商品Id" }] }
             },
             url: {
@@ -87,8 +83,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add(record) {
             this.edit(record);
@@ -99,7 +94,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward", "color"));
             });
         },
         close() {
@@ -144,7 +139,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward", "color"));
         },
         selectGoods(e) {
             this.model.goodsId = e;
