@@ -72,4 +72,11 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
     @Excel(name = "奖励列表", width = 15)
     @ExcelProperty("奖励列表")
     private java.lang.String reward;
+
+    /**
+     * 图标颜色
+     */
+    @Excel(name = "图标颜色", width = 15)
+    @ExcelProperty("图标颜色")
+    private java.lang.Integer color;
 }

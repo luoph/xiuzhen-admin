@@ -3,8 +3,7 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                </a-row>
+                <a-row :gutter="24"> </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
@@ -43,28 +42,24 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-                         style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small"
-                              @click="uploadFile(text)"> 下载
-                    </a-button>
+                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -151,6 +146,11 @@ export default {
                     dataIndex: "reward"
                 },
                 {
+                    title: "图标颜色",
+                    align: "center",
+                    dataIndex: "color"
+                },
+                {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
@@ -174,8 +174,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        },
+        initDictConfig() {},
         loadData(arg) {
             if (!this.model.id) {
                 return;
@@ -245,8 +244,7 @@ export default {
             });
         }
     }
-}
-;
+};
 </script>
 
 <style scoped>
