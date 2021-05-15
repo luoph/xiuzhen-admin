@@ -1,8 +1,10 @@
 package org.jeecg;
 
+import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -12,6 +14,8 @@ import java.net.UnknownHostException;
 
 @Slf4j
 @EnableSwagger2
+@EnableCreateCacheAnnotation
+@EnableConfigurationProperties
 @SpringBootApplication(scanBasePackages = {"org.jeecg", "cn.youai.server", "cn.youai.xiuzhen"})
 public class Application {
 

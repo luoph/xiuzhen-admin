@@ -14,7 +14,7 @@ import org.jeecg.common.system.vo.DictModel;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.system.vo.SysDepartModel;
 import org.jeecg.common.util.IPUtils;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.message.websocket.WebSocket;
 import org.jeecg.modules.system.entity.*;
@@ -84,7 +84,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
         try {
             // 获取request
-            HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+            HttpServletRequest request = SpringWebContextUtils.getHttpServletRequest();
             // 设置IP地址
             sysLog.setIp(IPUtils.getIpAddr(request));
         } catch (Exception e) {
@@ -159,7 +159,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
     @Override
     public String getDatabaseType() throws SQLException {
-        DataSource dataSource = SpringContextUtils.getApplicationContext().getBean(DataSource.class);
+        DataSource dataSource = SpringWebContextUtils.getApplicationContext().getBean(DataSource.class);
         return getDatabaseTypeByDataSource(dataSource);
     }
 

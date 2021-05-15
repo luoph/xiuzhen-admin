@@ -11,7 +11,7 @@ import org.jeecg.common.constant.DataBaseConstant;
 import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,7 +111,7 @@ public class JwtUtil {
             key = key.substring(2, key.indexOf("}"));
         }
         if (oConvertUtils.isNotEmpty(key)) {
-            HttpSession session = SpringContextUtils.getHttpServletRequest().getSession();
+            HttpSession session = SpringWebContextUtils.getHttpServletRequest().getSession();
             returnValue = (String) session.getAttribute(key);
         }
         // 结果加上${} 后面的值
