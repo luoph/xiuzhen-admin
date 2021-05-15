@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.utils;
 
+import cn.youai.server.utils.NumberUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;

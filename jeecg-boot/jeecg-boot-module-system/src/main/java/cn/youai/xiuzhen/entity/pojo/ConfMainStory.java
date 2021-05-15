@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.entity.pojo;
 
+import cn.youai.server.model.ItemVO;
 import cn.youai.xiuzhen.entity.common.ConfigData;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -25,80 +26,80 @@ import java.util.List;
  */
 @Data
 public class ConfMainStory implements Serializable, ConfigData {
-	/**
-	 * 序列化id
-	 */
-	private static final long serialVersionUID = -5498993428282090432L;
+    /**
+     * 序列化id
+     */
+    private static final long serialVersionUID = -5498993428282090432L;
 
-	public static final SimpleAttribute<ConfMainStory, Integer> ID = new SimpleAttribute<ConfMainStory, Integer>("id") {
-		@Override
-		public Integer getValue(ConfMainStory model, QueryOptions queryOptions) {
-			return model.id;
-		}
-	};
+    public static final SimpleAttribute<ConfMainStory, Integer> ID = new SimpleAttribute<ConfMainStory, Integer>("id") {
+        @Override
+        public Integer getValue(ConfMainStory model, QueryOptions queryOptions) {
+            return model.id;
+        }
+    };
 
-	public static final SimpleAttribute<ConfMainStory, Integer> LEVEL = new SimpleAttribute<ConfMainStory, Integer>("level") {
-		@Override
-		public Integer getValue(ConfMainStory model, QueryOptions queryOptions) {
-			return model.level;
-		}
-	};
+    public static final SimpleAttribute<ConfMainStory, Integer> LEVEL = new SimpleAttribute<ConfMainStory, Integer>("level") {
+        @Override
+        public Integer getValue(ConfMainStory model, QueryOptions queryOptions) {
+            return model.level;
+        }
+    };
 
-	private Integer id;
+    private Integer id;
 
-	@JSONField(name = "level")
-	private Integer level;
+    @JSONField(name = "level")
+    private Integer level;
 
-	@JSONField(name = "prime_level")
-	private Integer primeLevel;
+    @JSONField(name = "prime_level")
+    private Integer primeLevel;
 
-	@JSONField(name = "prime_level")
-	private Integer preLevel;
+    @JSONField(name = "prime_level")
+    private Integer preLevel;
 
-	@JSONField(name = "show_grade")
-	private Integer showGrade;
+    @JSONField(name = "show_grade")
+    private Integer showGrade;
 
-	@JSONField(name = "unlock_grade")
-	private Integer unlockGrade;
+    @JSONField(name = "unlock_grade")
+    private Integer unlockGrade;
 
-	@JSONField(name = "unlock_level")
-	private Integer unlockLevel;
+    @JSONField(name = "unlock_level")
+    private Integer unlockLevel;
 
-	@JSONField(name = "plot")
-	private Integer plot;
+    @JSONField(name = "plot")
+    private Integer plot;
 
-	@JSONField(name = "chapter_num")
-	private String chapterNum;
+    @JSONField(name = "chapter_num")
+    private String chapterNum;
 
-	@JSONField(name = "rumor")
-	private Integer rumor;
+    @JSONField(name = "rumor")
+    private Integer rumor;
 
-	@JSONField(name = "chapter_name")
-	private String chapterName;
+    @JSONField(name = "chapter_name")
+    private String chapterName;
 
-	@JSONField(name = "reward")
-	private Integer reward;
+    @JSONField(name = "reward")
+    private Integer reward;
 
-	@JSONField(name = "help_battle_reward")
-	private String helpBattleReward;
+    @JSONField(name = "help_battle_reward")
+    private String helpBattleReward;
 
-	@JSONField(name = "show_mvp")
-	private Integer showMvp;
+    @JSONField(name = "show_mvp")
+    private Integer showMvp;
 
-	@JSONField(serialize = false, deserialize = false)
-	private List<ItemVO> itemList;
+    @JSONField(serialize = false, deserialize = false)
+    private List<ItemVO> itemList;
 
-	public static IndexedCollection<ConfMainStory> indexedCollection() {
-		IndexedCollection<ConfMainStory> indexedCollection = new ConcurrentIndexedCollection<>();
-		indexedCollection.addIndex(HashIndex.onAttribute(ID));
-		indexedCollection.addIndex(NavigableIndex.onAttribute(LEVEL));
-		return indexedCollection;
-	}
+    public static IndexedCollection<ConfMainStory> indexedCollection() {
+        IndexedCollection<ConfMainStory> indexedCollection = new ConcurrentIndexedCollection<>();
+        indexedCollection.addIndex(HashIndex.onAttribute(ID));
+        indexedCollection.addIndex(NavigableIndex.onAttribute(LEVEL));
+        return indexedCollection;
+    }
 
-	@Override
-	public void onload(JSONObject data) {
-		if (StringUtils.isNotEmpty(this.helpBattleReward)) {
-			this.itemList = JSON.parseArray(this.helpBattleReward, ItemVO.class);
-		}
-	}
+    @Override
+    public void onload(JSONObject data) {
+        if (StringUtils.isNotEmpty(this.helpBattleReward)) {
+            this.itemList = JSON.parseArray(this.helpBattleReward, ItemVO.class);
+        }
+    }
 }

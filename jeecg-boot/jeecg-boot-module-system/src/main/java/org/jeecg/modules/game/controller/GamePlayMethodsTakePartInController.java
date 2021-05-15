@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.controller;
 
-import cn.youai.xiuzhen.entity.pojo.DateRange;
+import cn.youai.server.model.DateRange;
 import cn.youai.xiuzhen.utils.ConvertUtils;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.excel.EasyExcel;

@@ -1,14 +1,13 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.json.JSONTokener;
 import cn.youai.commons.model.Response;
 import cn.youai.commons.model.ResponseCode;
+import cn.youai.server.model.ItemVO;
 import cn.youai.xiuzhen.common.data.ConfigDataEnum;
 import cn.youai.xiuzhen.common.data.ConfigDataService;
 import cn.youai.xiuzhen.entity.pojo.ConfItem;
-import cn.youai.xiuzhen.entity.pojo.ItemVO;
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.logical.And;
@@ -62,17 +61,8 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
                 response.setFailure("附件内容不能为空！");
                 return response;
             }
-            try {
-                Object typeObject = new JSONTokener(content).nextValue();
-                if (!(typeObject instanceof cn.hutool.json.JSONArray)) {
-                    response.setFailure("附件格式错误！");
-                    return response;
-                }
-            } catch (Exception e) {
-                log.error("gameEmail:{}" + gameEmail.toString(), e);
-            }
 
-            List<ItemVO> list = JSONArray.parseArray(content, ItemVO.class);
+            List<ItemVO> list = JSON.parseArray(content, ItemVO.class);
             if (CollUtil.isEmpty(list)) {
                 response.setFailure("附件格式错误！");
                 return response;

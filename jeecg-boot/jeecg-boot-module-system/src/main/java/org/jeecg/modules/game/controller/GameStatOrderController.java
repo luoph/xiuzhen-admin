@@ -1,9 +1,8 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.server.utils.NumberUtils;
 import cn.youai.xiuzhen.utils.DateUtils;
-import cn.youai.xiuzhen.utils.NumberUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -61,9 +59,9 @@ public class GameStatOrderController extends JeecgController<GameStatOrder, IGam
             Date now = DateUtils.now();
             gameStatOrder.setEndDate(now);
             if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.minusDays(now, CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS - 1));
+                gameStatOrder.setStartDate(DateUtils.addDays(now, CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS - 1));
             } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.minusDays(now, CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS - 1));
+                gameStatOrder.setStartDate(DateUtils.addDays(now, -(CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS - 1)));
             } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_MONTH == gameStatOrder.getDaysType()) {
                 gameStatOrder.setStartDate(DateUtils.startTimeOfMonth(now));
             } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_2_MONTHS == gameStatOrder.getDaysType()) {

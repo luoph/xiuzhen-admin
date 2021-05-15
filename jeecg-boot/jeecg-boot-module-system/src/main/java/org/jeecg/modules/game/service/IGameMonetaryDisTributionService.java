@@ -1,10 +1,7 @@
 package org.jeecg.modules.game.service;
 
-import cn.youai.xiuzhen.entity.pojo.DateRange;
-import org.apache.ibatis.annotations.*;
+import cn.youai.server.model.DateRange;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -17,17 +14,16 @@ import java.util.Map;
  */
 
 public interface IGameMonetaryDisTributionService {
-   /**
-    *
-    * @param channelId
-    * @param serverId
-    * @param rangeTimeBegin
-    * @param rangeTimeEnd
-    * @param productAndMarketTyep  产销类型：1：产出、2：消耗
-    * @param quantityType  货币类型：1010："仙石"、1002： "玉髓"、1001："灵石"
-    * @return
-    */
-   List<MonetaryDisTributionVO> monetaryDistributionList(int channelId, int serverId, String rangeTimeBegin, String rangeTimeEnd, int productAndMarketTyep, int quantityType);
+    /**
+     * @param channelId
+     * @param serverId
+     * @param rangeTimeBegin
+     * @param rangeTimeEnd
+     * @param productAndMarketTyep 产销类型：1：产出、2：消耗
+     * @param quantityType         货币类型：1010："仙石"、1002： "玉髓"、1001："灵石"
+     * @return
+     */
+    List<MonetaryDisTributionVO> monetaryDistributionList(int channelId, int serverId, String rangeTimeBegin, String rangeTimeEnd, int productAndMarketTyep, int quantityType);
 
     Map<Date, List<MonetaryDisTributionVO>> monetaryDistributionList(int channelId, int serverId, DateRange dateRange, int productAndMarketType, int quantityType);
 }

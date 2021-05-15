@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.xiuzhen.entity.pojo.DateRange;
+import cn.youai.server.model.DateRange;
 import cn.youai.xiuzhen.entity.pojo.OperationType;
 import cn.youai.xiuzhen.utils.ConvertUtils;
 import cn.youai.xiuzhen.utils.DateUtils;
@@ -98,7 +98,7 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
 
     @Override
     public Map<Date, List<MonetaryDisTributionVO>> monetaryDistributionList(int channelId, int serverId, DateRange dateRange, int productAndMarketType, int quantityType) {
-        if (null == dateRange || !dateRange.isValid()) {
+        if (null == dateRange) {
             return Collections.emptyMap();
         }
 
@@ -111,14 +111,14 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
         // 查询符合条件的背包物品出入信息
         List<BackpackLog> backpackLogList;
         try {
-           // 通过serverId切换数据源
-           DataSourceHelper.useServerDatabase(serverId);
-           backpackLogList = gameMonetaryDisTributionMapper.selectAllBackPackByTime2(dateRange.getStart(), dateRange.getEnd(), productAndMarketType, quantityType);
+            // 通过serverId切换数据源
+            DataSourceHelper.useServerDatabase(serverId);
+            backpackLogList = gameMonetaryDisTributionMapper.selectAllBackPackByTime2(dateRange.getStart(), dateRange.getEnd(), productAndMarketType, quantityType);
         } catch (Exception e) {
-           log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
-           throw e;
+            log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
+            throw e;
         } finally {
-           DataSourceHelper.useDefaultDatabase();
+            DataSourceHelper.useDefaultDatabase();
         }
 
         // 根据日期分组(天)

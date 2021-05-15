@@ -1,8 +1,11 @@
 package cn.youai.xiuzhen.common.data;
 
+import cn.youai.server.model.ReadonlyRoleAttr;
+import cn.youai.server.utils.CQEngineUtils;
 import cn.youai.xiuzhen.entity.common.ConfigData;
-import cn.youai.xiuzhen.entity.pojo.ReadonlyRoleAttr;
-import cn.youai.xiuzhen.utils.*;
+import cn.youai.xiuzhen.utils.CacheUtils;
+import cn.youai.xiuzhen.utils.ConfigUtils;
+import cn.youai.xiuzhen.utils.ConvertUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -13,6 +16,7 @@ import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.option.QueryOptions;
 import com.googlecode.cqengine.resultset.ResultSet;
 import lombok.extern.slf4j.Slf4j;
+import net.dreamlu.mica.core.utils.ReflectUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
