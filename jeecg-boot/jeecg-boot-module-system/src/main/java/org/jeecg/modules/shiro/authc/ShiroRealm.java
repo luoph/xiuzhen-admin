@@ -14,7 +14,7 @@ import org.jeecg.common.system.api.ISysBaseAPI;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.RedisUtil;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +93,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getCredentials();
         if (token == null) {
-            log.info("————————身份认证失败——————————IP地址:  " + oConvertUtils.getIpAddrByRequest(SpringContextUtils.getHttpServletRequest()));
+            log.info("————————身份认证失败——————————IP地址:  " + oConvertUtils.getIpAddrByRequest(SpringWebContextUtils.getHttpServletRequest()));
             throw new AuthenticationException("token为空!");
         }
         // 校验token有效性

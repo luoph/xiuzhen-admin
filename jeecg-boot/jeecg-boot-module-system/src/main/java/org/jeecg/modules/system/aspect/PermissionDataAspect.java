@@ -12,7 +12,7 @@ import org.jeecg.common.system.util.JeecgDataAutorUtils;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.SysPermissionDataRuleModel;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.system.entity.SysPermission;
 import org.jeecg.modules.system.entity.SysPermissionDataRule;
@@ -57,7 +57,7 @@ public class PermissionDataAspect {
 
     @Around("pointCut()")
     public Object arround(ProceedingJoinPoint point) throws Throwable {
-        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+        HttpServletRequest request = SpringWebContextUtils.getHttpServletRequest();
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         PermissionData pd = method.getAnnotation(PermissionData.class);
