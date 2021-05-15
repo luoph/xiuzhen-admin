@@ -1,11 +1,15 @@
 package org.jeecg;
 
+import cn.youai.server.component.ConfigManager;
+import cn.youai.xiuzhen.config.GameConfig;
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.env.Environment;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -35,5 +39,13 @@ public class Application {
                 "Doc: \t\thttp://" + ip + ":" + port + path + "/doc.html\n" +
                 "----------------------------------------------------------");
 
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void startup() {
+        // 加载缓存，设置父子依赖关系
+        GameConfig.init();
+        // 加载配置
+        ConfigManager.getInstance().load();
     }
 }

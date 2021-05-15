@@ -3,10 +3,10 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.commons.model.Response;
 import cn.youai.commons.model.ResponseCode;
+import cn.youai.server.component.ConfigManager;
 import cn.youai.server.model.ItemVO;
 import cn.youai.server.springboot.component.OkHttpHelper;
-import cn.youai.xiuzhen.common.data.ConfigDataEnum;
-import cn.youai.xiuzhen.common.data.ConfigDataService;
+import cn.youai.xiuzhen.config.GameConfig;
 import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
 import org.jeecg.modules.game.service.IGameEmailService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +47,6 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
 
     @Value("${app.send-email-path}")
     private String path;
-    @Autowired
-    private ConfigDataService configDataService;
 
     @Override
     public Response saveEmail(GameEmail gameEmail) {
@@ -100,15 +97,15 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
             Equal<ConfItem, String> query2 = QueryFactory.equal(ConfItem.NAME, itemName);
             And<ConfItem> and = QueryFactory.and(query1, query2);
-            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, and, queryOptions);
+            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, and, queryOptions);
         } else if (itemId != null) {
             Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
-            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, query1, queryOptions);
+            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, query1, queryOptions);
         } else if (itemName != null) {
             Equal<ConfItem, String> query2 = QueryFactory.equal(ConfItem.NAME, itemName);
-            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, query2, queryOptions);
+            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, query2, queryOptions);
         } else {
-            return configDataService.selectList(ConfigDataEnum.ITEM, ConfItem.class, queryOptions);
+            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, queryOptions);
         }
 
     }

@@ -162,29 +162,30 @@ public final class BigDecimalUtil {
     /**
      * 返回百分数格式的数字
      *
-     * @return 返回结果乘100,保留两位小数, 例: 0.1234 --> 12.34
+     * @return 返回结果乘100, 保留两位小数, 例: 0.1234 --> 12.34
      */
     public static BigDecimal dividePercent(double v1) {
-    	if (v1 == 0){
-    		return BigDecimal.ZERO;
-	    }
+        if (v1 == 0) {
+            return BigDecimal.ZERO;
+        }
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         BigDecimal multiply = multiply(v1, 100);
         String format = decimalFormat.format(multiply);
         return new BigDecimal(format);
     }
+
     /**
      * 返回结果保留两位小数的BigDecimal对象
      *
      * @return 返回结果保留两位小数
      */
     public static BigDecimal divideTwo(double v1) {
-	    if (v1 == 0){
-		    return BigDecimal.ZERO;
-	    }
+        if (v1 == 0) {
+            return BigDecimal.ZERO;
+        }
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
-	    BigDecimal bigDecimal = valueOf(v1);
-	    String format = decimalFormat.format(bigDecimal);
+        BigDecimal bigDecimal = valueOf(v1);
+        String format = decimalFormat.format(bigDecimal);
         return new BigDecimal(format);
     }
 
