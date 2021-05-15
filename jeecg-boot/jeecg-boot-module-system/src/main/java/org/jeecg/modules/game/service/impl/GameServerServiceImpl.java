@@ -2,12 +2,12 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.Response;
+import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.primitives.Ints;
 import org.apache.commons.lang3.StringUtils;
-import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;

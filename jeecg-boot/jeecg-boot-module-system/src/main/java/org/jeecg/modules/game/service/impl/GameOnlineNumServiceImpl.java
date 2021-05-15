@@ -1,11 +1,11 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.youai.commons.model.DataResponse;
+import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameChannelServer;
 import org.jeecg.modules.game.entity.GameOnlineNum;
