@@ -1,5 +1,7 @@
 package cn.youai.xiuzhen.entity.pojo;
 
+import cn.youai.server.model.ItemVO;
+import cn.youai.server.model.ReadonlyRoleAttr;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -126,8 +128,8 @@ public class ConfMedicine extends ReadonlyRoleAttr {
     private List<ItemVO> decomposeReward;
 
     @Override
-    public void onload(JSONObject data) {
-        super.onload(data);
+    public void onload(JSONObject data, String tableName) {
+        super.onload(data, tableName);
         if (StringUtils.isNotBlank(this.decompose)) {
             this.decomposeReward = JSONArray.parseArray(this.decompose, ItemVO.class);
         }

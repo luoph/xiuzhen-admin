@@ -1,7 +1,7 @@
 package org.jeecg.modules.player.controller;
 
 import cn.youai.commons.model.DataResponse;
-import cn.youai.xiuzhen.entity.pojo.RoleAttr;
+import cn.youai.server.model.RoleAttr;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
@@ -84,7 +84,7 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
      */
     @AutoLog(value = "玩家详情-查询")
     @GetMapping(value = "/detail")
-    public Result<?> queryDetai(@RequestParam(name = "playerId", defaultValue = "0") Integer playerId) {
+    public Result<?> queryDetail(@RequestParam(name = "playerId", defaultValue = "0") Integer playerId) {
         LambdaQueryWrapper<GameRegisterInfo> queryWrapper = Wrappers.<GameRegisterInfo>lambdaQuery().eq(GameRegisterInfo::getPlayerId, playerId);
         GameRegisterInfo registerInfo = playerRegisterInfoService.getOne(queryWrapper);
         if (null == registerInfo) {

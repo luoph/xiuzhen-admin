@@ -1,12 +1,11 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.date.DatePattern;
-import cn.youai.xiuzhen.entity.pojo.DateRange;
+import cn.youai.server.model.DateRange;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.modules.game.entity.ShopMallLog;
@@ -73,12 +72,12 @@ public class ShopMallLogController {
 
         //重新整理数据给前端
         Map<String, List<ShopMallLog>> shopMallLogListMapTime = shopMallLogs.stream().collect(Collectors.groupingBy(ShopMallLog::getCreateTimeString));
-        Map<String,List<ShopMallLog>> shopMallLogListMapTimeDesc = shopMallLogListMapTime .entrySet()
+        Map<String, List<ShopMallLog>> shopMallLogListMapTimeDesc = shopMallLogListMapTime.entrySet()
                 .stream()
                 .sorted(Collections
                         .reverseOrder(Map.Entry.comparingByKey()))
                 .collect(Collectors
-                        .toMap(Map.Entry::getKey, Map.Entry::getValue,(e1, e2) -> e1, LinkedHashMap::new));
+                        .toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
         List<OneDayDate> shopMallLogsOneDayDate = new ArrayList<>();
         for (String s : shopMallLogListMapTimeDesc.keySet()) {
@@ -90,7 +89,7 @@ public class ShopMallLogController {
                     shopMallLog.setItemNumRate(new BigDecimal(0));
                     continue;
                 }
-                shopMallLog.setItemNumRate(shopMallLog.getItemNum().divide(new BigDecimal(sum),2, BigDecimal.ROUND_HALF_UP));
+                shopMallLog.setItemNumRate(shopMallLog.getItemNum().divide(new BigDecimal(sum), 2, BigDecimal.ROUND_HALF_UP));
             }
             OneDayDate oneDayDate = new OneDayDate();
             oneDayDate.setTime(s);

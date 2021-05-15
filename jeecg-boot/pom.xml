@@ -9,7 +9,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.1.RELEASE</version>
+        <version>2.2.2.RELEASE</version>
     </parent>
 
     <modules>
@@ -40,42 +40,55 @@
         <java.version>1.8</java.version>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mybatis-plus.version>3.1.2</mybatis-plus.version>
-        <druid.version>1.1.20</druid.version>
-        <jwt.version>0.9.1</jwt.version>
-        <commons.version>2.6</commons.version>
         <aliyun-java-sdk-core.version>3.2.3</aliyun-java-sdk-core.version>
         <aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
         <aliyun.oss.version>3.6.0</aliyun.oss.version>
-        <fastjson.version>1.2.62</fastjson.version>
-        <shiro.version>1.4.2</shiro.version>
-        <hutool.version>5.0.7</hutool.version>
-        <httpclient.version>4.5.10</httpclient.version>
-        <sentry.version>1.7.29</sentry.version>
-        <okhttp3.version>3.14.4</okhttp3.version>
-        <cqengine.version>3.4.0</cqengine.version>
-        <easyexcel.version>2.2.7</easyexcel.version>
+        <apache-commons.version>2.6</apache-commons.version>
         <autopoi.version>1.2.4</autopoi.version>
         <concurrentlinkedhashmap.lru.version>1.4.2</concurrentlinkedhashmap.lru.version>
+        <druid.version>1.1.20</druid.version>
+        <easyexcel.version>2.2.7</easyexcel.version>
+        <fastjson.version>1.2.75</fastjson.version>
+        <httpclient.version>4.5.10</httpclient.version>
+        <hutool.version>5.6.4</hutool.version>
+        <java-jwt.version>3.7.0</java-jwt.version>
+        <jwt.version>0.9.1</jwt.version>
+        <mybatis-plus.version>3.1.2</mybatis-plus.version>
+        <mysql-connector.version>5.1.48</mysql-connector.version>
+        <sentry.version>1.7.30</sentry.version>
+        <shiro-redis.version>3.1.0</shiro-redis.version>
+        <shiro.version>1.4.2</shiro.version>
+        <!-- 框架依赖 -->
+        <entities.version>1.0.6-SNAPSHOT</entities.version>
+        <web-starter.version>0.0.2-SNAPSHOT</web-starter.version>
+        <server-common.version>0.0.2-SNAPSHOT</server-common.version>
     </properties>
 
     <dependencies>
-        <!--集成springmvc框架并实现自动配置 -->
+        <!-- Lombok -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
         </dependency>
-        <!-- Add Log4j2 Dependency -->
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <groupId>cn.youai</groupId>
+            <artifactId>entities</artifactId>
+            <version>${entities.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.youai.server</groupId>
+            <artifactId>web-starter</artifactId>
+            <version>${web-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.youai.server</groupId>
+            <artifactId>server-common</artifactId>
+            <version>${server-common.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
@@ -84,6 +97,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>asm</artifactId>
+                    <groupId>org.ow2.asm</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -93,6 +112,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!-- Quartz定时任务 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
+        </dependency>
+        <!-- freemarker -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+
         <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -103,18 +133,12 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons.version}</version>
+            <version>${apache-commons.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>${commons.version}</version>
-        </dependency>
-
-        <!-- freemarker -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
+            <version>${apache-commons.version}</version>
         </dependency>
 
         <dependency>
@@ -126,12 +150,6 @@
             <groupId>io.sentry</groupId>
             <artifactId>sentry-spring</artifactId>
             <version>${sentry.version}</version>
-        </dependency>
-
-        <!-- Lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
         </dependency>
 
         <!-- mybatis-plus -->
@@ -148,32 +166,31 @@
             <version>${druid.version}</version>
         </dependency>
 
-        <!-- json -->
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
 
-        <!--mysql-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.47</version>
-            <scope>runtime</scope>
-        </dependency>
-
-        <!-- Quartz定时任务 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-quartz</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
 
         <!--JWT-->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>3.7.0</version>
+            <version>${java-jwt.version}</version>
         </dependency>
 
         <!--shiro-->
@@ -186,11 +203,15 @@
         <dependency>
             <groupId>org.crazycake</groupId>
             <artifactId>shiro-redis</artifactId>
-            <version>3.1.0</version>
+            <version>${shiro-redis.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.shiro</groupId>
                     <artifactId>shiro-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -200,6 +221,16 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>swagger-annotations</artifactId>
+                    <groupId>io.swagger</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>swagger-models</artifactId>
+                    <groupId>io.swagger</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -256,18 +287,16 @@
                     <groupId>commons-codec</groupId>
                     <artifactId>commons-codec</artifactId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
             <version>${easyexcel.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
         </dependency>
 
         <!-- 阿里云短信 -->
@@ -318,35 +347,15 @@
             <version>${okhttp3.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>cn.youai</groupId>
-            <artifactId>commons</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
         <!-- aliyun oss -->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>${aliyun.oss.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.googlecode.cqengine</groupId>
-            <artifactId>cqengine</artifactId>
-            <version>${cqengine.version}</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>javassist</artifactId>
-                    <groupId>org.javassist</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>objenesis</artifactId>
-                    <groupId>org.objenesis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>sqlite-jdbc</artifactId>
-                    <groupId>org.xerial</groupId>
+                    <artifactId>aliyun-java-sdk-core</artifactId>
+                    <groupId>com.aliyun</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -385,6 +394,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -395,6 +405,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
@@ -403,6 +414,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
                 <configuration>
                     <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>woff</nonFilteredFileExtension>
