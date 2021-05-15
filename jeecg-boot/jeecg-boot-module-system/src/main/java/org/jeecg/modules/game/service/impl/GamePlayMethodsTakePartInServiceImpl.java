@@ -1,8 +1,7 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.xiuzhen.common.data.ConfigDataEnum;
-import cn.youai.xiuzhen.common.data.ConfigDataService;
-import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.server.component.ConfigManager;
+import cn.youai.xiuzhen.config.GameConfig;
 import cn.youai.xiuzhen.entity.pojo.ConfMedicine;
 import cn.youai.xiuzhen.entity.pojo.ConfRefineEquip;
 import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
@@ -12,13 +11,11 @@ import com.googlecode.cqengine.query.Query;
 import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.logical.And;
 import com.googlecode.cqengine.query.option.QueryOptions;
-import com.googlecode.cqengine.query.simple.Equal;
 import org.jeecg.modules.game.entity.GamePlayMethodsTakePartInVO;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
 import org.jeecg.modules.game.mapper.PlayMethodsTakePartInMapper;
 import org.jeecg.modules.game.service.IGamePlayMethodsTakePartInService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -42,9 +39,6 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
     String logPlayerTable;
     @Value("${app.log.db.table}")
     String logAccountTable;
-
-    @Autowired
-    private ConfigDataService configDataService;
 
     @Override
     public List<GamePlayMethodsTakePartInVO> playMethodsTakePartList(int fullTimes, int grade, String playMethodsType, Date createDateBegin, Date createDateEnd, int serverId) {
@@ -164,7 +158,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
             // 极品丹药
             Query<ConfMedicine> equal = QueryFactory.equal(ConfMedicine.QUA, 4);
             And<ConfMedicine> and = QueryFactory.and(in, equal);
-            List<ConfMedicine> confMedicines = configDataService.selectList(ConfigDataEnum.REFINE_MEDICINE, ConfMedicine.class, and, queryOptions);
+            List<ConfMedicine> confMedicines = ConfigManager.list(GameConfig.REFINE_MEDICINE, ConfMedicine.class, and, queryOptions);
             filterIdMap = confMedicines.stream().collect(Collectors.toMap(ConfMedicine::getItemId, ConfMedicine::getItemId, (k1, k2) -> k2));
         } else {
             QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfRefineEquip.ITEM_ID)));
@@ -172,7 +166,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
             // 仙器以上
             Query<ConfRefineEquip> greaterThan = QueryFactory.greaterThan(ConfRefineEquip.SUIT_TYPE, 2);
             And<ConfRefineEquip> and = QueryFactory.and(in, greaterThan);
-            List<ConfRefineEquip> confRefineEquips = configDataService.selectList(ConfigDataEnum.REFINE_EQUIP, ConfRefineEquip.class, and, queryOptions);
+            List<ConfRefineEquip> confRefineEquips = ConfigManager.list(GameConfig.REFINE_EQUIP, ConfRefineEquip.class, and, queryOptions);
             filterIdMap = confRefineEquips.stream().collect(Collectors.toMap(ConfRefineEquip::getItemId, ConfRefineEquip::getItemId, (k1, k2) -> k2));
         }
 

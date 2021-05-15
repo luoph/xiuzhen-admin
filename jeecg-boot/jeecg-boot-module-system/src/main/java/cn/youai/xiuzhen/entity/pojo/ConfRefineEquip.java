@@ -1,7 +1,6 @@
 package cn.youai.xiuzhen.entity.pojo;
 
-import cn.youai.xiuzhen.entity.common.ConfigData;
-import com.alibaba.fastjson.JSONObject;
+import cn.youai.server.model.ConfigData;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.googlecode.cqengine.ConcurrentIndexedCollection;
 import com.googlecode.cqengine.IndexedCollection;
@@ -65,10 +64,5 @@ public class ConfRefineEquip implements Serializable, ConfigData {
         indexedCollection.addIndex(NavigableIndex.onAttribute(RECIPE_ID));
         indexedCollection.addIndex(NavigableIndex.onAttribute(SUIT_TYPE));
         return indexedCollection;
-    }
-
-    @Override
-    public void onload(JSONObject data) {
-
     }
 }

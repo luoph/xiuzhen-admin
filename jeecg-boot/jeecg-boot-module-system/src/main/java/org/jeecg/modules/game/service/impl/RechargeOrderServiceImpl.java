@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.xiuzhen.common.data.ConfigDataEnum;
-import cn.youai.xiuzhen.common.data.ConfigDataService;
+import cn.youai.server.component.ConfigManager;
+import cn.youai.xiuzhen.config.GameConfig;
 import cn.youai.xiuzhen.entity.pojo.ConfRechargeGoods;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
@@ -16,7 +16,6 @@ import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
 import org.jeecg.modules.game.mapper.RechargeOrderMapper;
 import org.jeecg.modules.game.service.IRechargeOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -44,9 +43,6 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
 
     @Resource
     private PayOrderBillMapper payOrderBillMapper;
-
-    @Autowired
-    private ConfigDataService configDataService;
 
     @Value("${app.log.db.table}")
     private String logTable;
@@ -143,7 +139,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
      */
     private ConfRechargeGoods itemTree(Integer goodsId, int goodsType) {
         And<ConfRechargeGoods> and = and(equal(ConfRechargeGoods.ID, goodsId), equal(ConfRechargeGoods.GOODS_TYPE, goodsType));
-        return configDataService.selectOne(ConfigDataEnum.RECHARGE_GOODS, ConfRechargeGoods.class, and);
+        return ConfigManager.one(GameConfig.RECHARGE_GOODS, ConfRechargeGoods.class, and);
     }
 
 
@@ -167,7 +163,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
                 //查询时间范围内消耗明细
                 fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, DAILY_GIFT.getType());
                 //冲榜礼包（开服礼包）
-            } else if (goodsType.equals(OPEN_SERVICE_GIFT.getType().toString())){
+            } else if (goodsType.equals(OPEN_SERVICE_GIFT.getType().toString())) {
                 //查询时间范围内消耗明细
                 fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, OPEN_SERVICE_GIFT.getType());
                 //0元购
@@ -187,7 +183,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         List<Map> fairyJadeBuyInfoNewList = new ArrayList<>();
         for (Map map : fairyJadeBuyInfoList) {
             JSONArray dangweiPriceJsonArray = new JSONArray();
-            if (!("[null]").equals(map.get("price").toString()) && !("null").equals(map.get("price").toString()) ) {
+            if (!("[null]").equals(map.get("price").toString()) && !("null").equals(map.get("price").toString())) {
                 dangweiPriceJsonArray = JSONArray.parseArray(map.get("price").toString());
                 for (int i = 0; i < dangweiPriceJsonArray.size(); i++) {
                     Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
@@ -201,7 +197,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
                     fairyJadeBuyInfoNewMap.put("create_time", map.get("create_time").toString());
                     fairyJadeBuyInfoNewList.add(fairyJadeBuyInfoNewMap);
                 }
-            }else{
+            } else {
                 Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
                 fairyJadeBuyInfoNewMap.put("player_id", map.get("player_id").toString());
                 fairyJadeBuyInfoNewMap.put("type", map.get("type").toString());

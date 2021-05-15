@@ -1,7 +1,7 @@
 package cn.youai.xiuzhen.entity.pojo;
 
+import cn.youai.server.model.ConfigData;
 import cn.youai.server.model.ItemVO;
-import cn.youai.xiuzhen.entity.common.ConfigData;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -97,7 +97,7 @@ public class ConfMainStory implements Serializable, ConfigData {
     }
 
     @Override
-    public void onload(JSONObject data) {
+    public void onload(JSONObject data, String tableName) {
         if (StringUtils.isNotEmpty(this.helpBattleReward)) {
             this.itemList = JSON.parseArray(this.helpBattleReward, ItemVO.class);
         }
