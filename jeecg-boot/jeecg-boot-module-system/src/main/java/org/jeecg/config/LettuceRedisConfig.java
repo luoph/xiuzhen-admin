@@ -27,7 +27,7 @@ import static java.util.Collections.singletonMap;
  */
 @Configuration
 @EnableCaching
-public class RedisConfig extends CachingConfigurerSupport {
+public class LettuceRedisConfig extends CachingConfigurerSupport {
 
     @Resource
     private LettuceConnectionFactory lettuceConnectionFactory;

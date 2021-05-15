@@ -2,6 +2,7 @@ package org.jeecg.modules.player.controller;
 
 import cn.youai.commons.model.DataResponse;
 import cn.youai.server.model.RoleAttr;
+import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
@@ -13,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
-import org.jeecg.common.okhttp.OkHttpHelper;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.base.MultiDataSourceController;
