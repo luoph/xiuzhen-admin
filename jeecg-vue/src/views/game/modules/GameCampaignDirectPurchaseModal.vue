@@ -27,6 +27,9 @@
                 <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入奖励" />
                 </a-form-item>
+                <a-form-item label="礼包折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入礼包折扣" style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="图标颜色" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['color', validatorRules.color]" placeholder="请输入图标颜色" style="width: 100%" />
                 </a-form-item>
@@ -74,6 +77,7 @@ export default {
                 type: { rules: [{ required: true, message: "请输入礼包组类型!" }] },
                 sort: { rules: [{ required: true, message: "请输入组排序!" }] },
                 reward: { rules: [{ required: true, message: "请输入任务奖励!" }] },
+                discount: { rules: [{ required: true, message: "请输入礼包折扣!" }] },
                 color: { rules: [{ required: true, message: "请输入图标颜色!" }] },
                 goodsId: { rules: [{ required: true, message: "请选择商品Id" }] }
             },
@@ -94,7 +98,9 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward", "color"));
+                this.form.setFieldsValue(
+                    pick(this.model, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward", "color", "discount")
+                );
             });
         },
         close() {
@@ -139,7 +145,9 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward", "color"));
+            this.form.setFieldsValue(
+                pick(row, "campaignId", "typeId", "goodsId", "limitNum", "price", "discount", "amount", "name", "type", "sort", "reward", "color", "discount")
+            );
         },
         selectGoods(e) {
             this.model.goodsId = e;

@@ -29,6 +29,8 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
         this.sort = other.getSort();
         this.reward = other.getReward();
         this.goodsId = other.getGoodsId();
+        this.color = other.getColor();
+        this.discount = other.getDiscount();
     }
 
     /**
@@ -79,4 +81,11 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
     @Excel(name = "图标颜色", width = 15)
     @ExcelProperty("图标颜色")
     private java.lang.Integer color;
+
+    /**
+     * 礼包折扣
+     */
+    @Excel(name = "礼包折扣", width = 15)
+    @ExcelProperty("礼包折扣")
+    private java.lang.Integer discount;
 }
