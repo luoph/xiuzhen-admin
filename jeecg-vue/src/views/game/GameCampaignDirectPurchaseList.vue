@@ -146,6 +146,11 @@ export default {
                     dataIndex: "reward"
                 },
                 {
+                    title: "礼包折扣",
+                    align: "center",
+                    dataIndex: "discount"
+                },
+                {
                     title: "图标颜色",
                     align: "center",
                     dataIndex: "color"
