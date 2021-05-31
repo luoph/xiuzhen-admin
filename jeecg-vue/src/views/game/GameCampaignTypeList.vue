@@ -32,6 +32,7 @@
                                 <a-select-option :value="13">13-砸蛋礼包</a-select-option>
                                 <a-select-option :value="14">14-节日派对</a-select-option>
                                 <a-select-option :value="15">15-直购礼包</a-select-option>
+                                <a-select-option :value="16">16-返利狂欢</a-select-option>
                             </a-select>
                         </a-form-item>
                     </a-col>
@@ -236,6 +237,8 @@ export default {
                             re = "14-节日派对";
                         } else if (value === 15) {
                             re = "15-直购礼包";
+                        } else if (value === 16) {
+                            re = "16-返利狂欢";
                         }
                         return re;
                     }

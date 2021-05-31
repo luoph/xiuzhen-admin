@@ -32,6 +32,7 @@ public enum CampaignFestivalType {
     PARTY("节日派对", 14, GameCampaignTypePartyTask.class, GameCampaignTypePartyTaskVO.class),
     // PARTY_PROGRESS("节日派对", 14, GameCampaignTypePartyProgress.class, GameCampaignTypePartyProgressVO.class),
     DIRECT_PURCHASE("直购礼包", 15, GameCampaignDirectPurchase.class, GameCampaignDirectPurchaseVO.class),
+    REBATE_RECHARGE("返利狂欢", 16, GameCampaignTypeRebateRecharge.class, GameCampaignTypeRebateRechargeVo.class),
     // end
     ;
 

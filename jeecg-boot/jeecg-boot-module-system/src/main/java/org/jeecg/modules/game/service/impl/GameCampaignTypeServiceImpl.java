@@ -78,6 +78,9 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignDirectPurchaseService campaignDirectPurchaseService;
 
+    @Autowired
+    private IGameCampaignTypeRebateRechargeService campaignTypeRebateRechargeService;
+
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
@@ -204,6 +207,14 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                             .eq(GameCampaignDirectPurchase::getCampaignId, campaignId)
                             .eq(GameCampaignDirectPurchase::getTypeId, model.getId());
                     model.setRewardList(campaignDirectPurchaseService.list(rewardsQuery));
+                }
+                break;
+
+                case REBATE_RECHARGE: {
+                    Wrapper<GameCampaignTypeRebateRecharge> rewardsQuery = Wrappers.<GameCampaignTypeRebateRecharge>lambdaQuery()
+                            .eq(GameCampaignTypeRebateRecharge::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeRebateRecharge::getTypeId, model.getId());
+                    model.setRewardList(campaignTypeRebateRechargeService.list(rewardsQuery));
                 }
                 break;
 
@@ -698,6 +709,20 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         copyDetails.add(copy);
                     }
                     campaignDirectPurchaseService.saveBatch(copyDetails);
+                }
+                break;
+
+                case REBATE_RECHARGE: {
+                    List<GameCampaignTypeRebateRecharge> copyDetails = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeRebateRecharge> details = (List<GameCampaignTypeRebateRecharge>) model.getDetails();
+                    for (GameCampaignTypeRebateRecharge rebateRecharge : details) {
+                        GameCampaignTypeRebateRecharge copy = new GameCampaignTypeRebateRecharge(rebateRecharge);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+
+                        copyDetails.add(copy);
+                    }
+                    campaignTypeRebateRechargeService.saveBatch(copyDetails);
                 }
                 break;
                 default:
