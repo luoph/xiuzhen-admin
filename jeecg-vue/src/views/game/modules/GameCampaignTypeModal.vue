@@ -25,6 +25,7 @@
                         <a-select-option :value="13">13-砸蛋礼包</a-select-option>
                         <a-select-option :value="14">14-节日派对</a-select-option>
                         <a-select-option :value="15">15-直购礼包</a-select-option>
+                        <a-select-option :value="16">16-返利狂欢</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -93,6 +94,7 @@
             <game-campaign-type-party-task-list v-if="isEdit && model.type === 14" ref="partyTaskList" />
             <game-campaign-type-party-progress-list v-if="isEdit && model.type === 14" ref="partyProgressList" />
             <game-campaign-direct-purchase-list v-if="isEdit && model.type === 15" ref="directPurchaseList" />
+            <game-campaign-type-rebate-recharge-list v-if="isEdit && model.type === 16" ref="rebateRechargeList" />
         </a-spin>
     </a-modal>
 </template>
@@ -119,6 +121,7 @@ import GameCampaignTypeThrowingEggsGiftList from "../GameCampaignTypeThrowingEgg
 import GameCampaignTypePartyProgressList from "../GameCampaignTypePartyProgressList";
 import GameCampaignTypePartyTaskList from "../GameCampaignTypePartyTaskList";
 import GameCampaignDirectPurchaseList from "../GameCampaignDirectPurchaseList";
+import GameCampaignTypeRebateRechargeList from "../GameCampaignTypeRebateRechargeList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -140,7 +143,8 @@ export default {
         GameCampaignTypeThrowingEggsGiftList,
         GameCampaignTypePartyProgressList,
         GameCampaignTypePartyTaskList,
-        GameCampaignDirectPurchaseList
+        GameCampaignDirectPurchaseList,
+        GameCampaignTypeRebateRechargeList
     },
     data() {
         return {
@@ -239,6 +243,9 @@ export default {
                     }
                     if (this.$refs.directPurchaseList) {
                         this.$refs.directPurchaseList.edit(record);
+                    }
+                    if (this.$refs.rebateRechargeList) {
+                        this.$refs.rebateRechargeList.edit(record);
                     }
                 }
 
