@@ -1,25 +1,19 @@
 <template>
     <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-             @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-
                 <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id"
-                                    style="width: 100%" />
+                    <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
                 </a-form-item>
-
-                <a-form-item label="单价(创建订单实际价格)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)"
-                                    style="width: 100%" />
+                <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣"
-                                    style="width: 100%" />
+                    <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣后的价格" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="商品名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名"></a-input>
+                <a-form-item label="商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称"></a-input>
                 </a-form-item>
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['items']" rows="4" placeholder="请输入奖励列表" />
@@ -28,19 +22,37 @@
                     <a-textarea v-decorator="['addition']" rows="4" placeholder="首次额外赠送" />
                 </a-form-item>
                 <a-form-item label="商品分类" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['goodsType', validatorRules.goodsType]" placeholder="请输入充值分类"
-                                    style="width: 100%" />
+                    <a-select placeholder="选择商品分类" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0">
+                        <a-select-option :value="0">0-普通类型</a-select-option>
+                        <a-select-option :value="1">1-仙职</a-select-option>
+                        <a-select-option :value="2">2-月卡</a-select-option>
+                        <a-select-option :value="3">3-每日礼包</a-select-option>
+                        <a-select-option :value="4">4-首充</a-select-option>
+                        <a-select-option :value="5">5-周卡</a-select-option>
+                        <a-select-option :value="6">6-六道剑阵</a-select-option>
+                        <a-select-option :value="7">7-招财进宝</a-select-option>
+                        <a-select-option :value="8">8-高级天道令</a-select-option>
+                        <a-select-option :value="9">9-节日派对</a-select-option>
+                        <a-select-option :value="10">10-节日直购礼包</a-select-option>
+                        <a-select-option :value="11">11-精准礼包</a-select-option>
+                        <a-select-option :value="12">12-结义礼包</a-select-option>
+                    </a-select>
                 </a-form-item>
-                <a-form-item label="是否记入累充（0 - 不计入 1 - 记入）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['amountStat', validatorRules.amountStat]"
-                                    placeholder="请输入是否记入累充（0 - 不计入 1 - 记入）" style="width: 100%" />
+                <a-form-item label="是否记入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请输入是否记入累充" v-decorator="['amountStat', validatorRules.amountStat]" initialValue="1">
+                        <a-select-option :value="0">是</a-select-option>
+                        <a-select-option :value="1">否</a-select-option>
+                    </a-select>
                 </a-form-item>
-                <a-form-item label="游戏币与人民币(元)的兑换比例" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['exchange', validatorRules.exchange]" placeholder="请输入游戏币与人民币(元)的兑换比例"
-                                    style="width: 100%" />
+                <a-form-item label="兑换比例" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['exchange', validatorRules.exchange]" placeholder="请输入游戏币与人民币(元)的兑换比例" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="特殊标记前端用" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['recommend']" placeholder="请输入特殊标记前端用" style="width: 100%" />
+                <a-form-item label="特殊标签" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="选择特殊标签" v-decorator="['recommend', validatorRules.recommend]" initialValue="0">
+                        <a-select-option :value="0">无</a-select-option>
+                        <a-select-option :value="1">推荐</a-select-option>
+                        <a-select-option :value="2">礼包</a-select-option>
+                    </a-select>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -63,7 +75,7 @@ export default {
         return {
             form: this.$form.createForm(this),
             title: "操作",
-            width: 1100,
+            width: 1000,
             visible: false,
             model: {},
             labelCol: {
@@ -76,13 +88,12 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                price: { rules: [{ required: true, message: "请输入单价(创建订单实际价格)!" }] },
-                discount: { rules: [{ required: true, message: "请输入折扣!" }] },
-                amount: { rules: [{ required: true, message: "请输入原价!" }] },
-                name: { rules: [{ required: true, message: "请输入商品名!" }] },
-                items: { rules: [{ required: true, message: "请输入奖励列表!" }] },
+                price: { rules: [{ required: true, message: "请输入单价!" }] },
+                discount: { rules: [{ required: false, message: "请输入折扣!" }] },
+                name: { rules: [{ required: true, message: "请输入商品名称!" }] },
+                items: { rules: [{ required: false, message: "请输入奖励列表!" }] },
                 goodsType: { rules: [{ required: true, message: "请输入充值分类!" }] },
-                amountStat: { rules: [{ required: true, message: "请输入是否记入累充（0 - 不计入 1 - 记入）!" }] },
+                amountStat: { rules: [{ required: true, message: "请输入是否记入累充！" }] },
                 exchange: { rules: [{ required: true, message: "请输入游戏币与人民币(元)的兑换比例!" }] },
                 recommend: { rules: [{ required: false, message: "请输入特殊标记前端用!" }] },
                 goodsId: { rules: [{ required: true, message: "请输入商品Id" }] }
@@ -93,8 +104,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add() {
             this.edit({});
@@ -104,7 +114,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model,"goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
+                this.form.setFieldsValue(pick(this.model, "goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "recommend"));
             });
         },
         close() {
@@ -148,7 +158,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row,"goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
+            this.form.setFieldsValue(pick(row, "goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
         }
     }
 };
