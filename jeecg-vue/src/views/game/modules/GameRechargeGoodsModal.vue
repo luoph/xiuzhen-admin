@@ -45,7 +45,9 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item label="兑换比例" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['exchange', validatorRules.exchange]" placeholder="请输入游戏币与人民币(元)的兑换比例" style="width: 100%" />
+                    <a-select placeholder="选择兑换比例" v-decorator="['exchange', validatorRules.exchange]" initialValue="0">
+                        <a-select-option :value="10">10</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="特殊标签" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="选择特殊标签" v-decorator="['recommend', validatorRules.recommend]" initialValue="0">
