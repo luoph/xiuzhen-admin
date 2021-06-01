@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.server.springboot.component.OkHttpHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +14,7 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +36,9 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
 
     @Autowired
     private IGameChannelService gameChannelService;
+
+    @Value("${app.url.game-center}")
+    private String gameCenterUrl;
 
     /**
      * 分页列表查询
@@ -157,6 +162,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     public Result<?> updateAllServer(HttpServletRequest req) {
         try {
             gameChannelService.updateAllChannelConfig();
+            OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         } catch (Exception e) {
             log.error("updateAllServer error", e);
             return Result.error(e.getMessage());
@@ -168,6 +174,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @ApiOperation(value = "游戏渠道-刷新指定渠道区服json", notes = "游戏渠道-刷新指定渠道区服json")
     @GetMapping(value = "/updateChannelServer")
     public Result<?> updateChannelServer(@RequestParam(name = "id") String id) {
+        OkHttpHelper.get(gameCenterUrl + "/gm/reloadChannel");
         gameChannelService.updateChannelConfig(Integer.valueOf(id));
         return Result.ok("区服配置刷新成功");
     }
