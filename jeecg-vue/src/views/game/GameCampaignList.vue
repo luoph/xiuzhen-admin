@@ -105,9 +105,16 @@
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
                 <span slot="serverIdSlot" slot-scope="text, record">
-                    <a-tag v-if="!text" color="red">未设置</a-tag>
-                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                    <div class="large-text-container">
+                        <a-tag v-if="!text" color="red">未设置</a-tag>
+                        <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                    </div>
                 </span>
+                <template slot="largeText" slot-scope="text">
+                    <div class="large-text-container">
+                        <span class="large-text">{{ text }}</span>
+                    </div>
+                </template>
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">活动信息</a>
                     <a-divider type="vertical" />
@@ -348,7 +355,7 @@ export default {
                     that.confirmLoading = false;
                     that.loadData();
                 });
-        },
+        }
     }
 };
 </script>
@@ -360,5 +367,17 @@ export default {
     width: 100%;
     height: 100px;
     object-fit: scale-down;
+}
+
+.large-text-container {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.large-text {
+    white-space: normal;
+    word-break: break-word;
 }
 </style>
