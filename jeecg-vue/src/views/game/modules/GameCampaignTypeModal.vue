@@ -36,7 +36,9 @@
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="额外参数" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['extra', validatorRules.extra]" placeholder="请输入额外参数" />
+                    <a-textarea v-if="model.type === 16" v-decorator="['extra', validatorRules.extra]"
+                     placeholder='活动类型"16-狂欢返利" 时必填,格式如下:"{"emailId":71,"aaa":"bbb"}"' />
+                    <a-textarea v-else v-decorator="['extra', validatorRules.extra]" placeholder="请输入额外参数" />
                 </a-form-item>
 
                 <a-form-item label="资源类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
