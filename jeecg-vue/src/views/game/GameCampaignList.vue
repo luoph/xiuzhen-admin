@@ -105,10 +105,8 @@
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
                 <span slot="serverIdSlot" slot-scope="text, record">
-                    <div class="large-text-container">
-                        <a-tag v-if="!text" color="red">未设置</a-tag>
-                        <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
-                    </div>
+                    <a-tag v-if="!text" color="red">未设置</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
                 <template slot="largeText" slot-scope="text">
                     <div class="large-text-container">
