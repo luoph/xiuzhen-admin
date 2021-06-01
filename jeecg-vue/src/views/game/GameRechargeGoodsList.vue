@@ -210,11 +210,10 @@ export default {
                 {
                     title: "奖励列表",
                     align: "center",
-                    width: 320,
+                    width: 240,
                     dataIndex: "items",
                     scopedSlots: { customRender: "largeText" }
                 },
-
                 {
                     title: "首次额外赠送",
                     align: "center",
@@ -224,7 +223,7 @@ export default {
                 {
                     title: "特殊标签",
                     align: "center",
-                    width: 240,
+                    width: 120,
                     dataIndex: "recommend",
                     customRender: value => {
                         let text = "--";
