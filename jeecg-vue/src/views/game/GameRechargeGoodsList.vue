@@ -121,6 +121,7 @@ import { postAction } from "@api/manage";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameRechargeGoodsModal from "./modules/GameRechargeGoodsModal";
 import JInput from "@/components/jeecg/JInput";
+import { getAction } from "../../api/manage";
 
 export default {
     name: "GameRechargeGoodsList",
@@ -286,7 +287,14 @@ export default {
     methods: {
         initDictConfig() {},
         updateGoods() {
-            this.batchAction(this.url.updateGoods, false);
+            // 查询条件
+            this.loading = true;
+            getAction(this.url.updateGoods).then(res => {
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
         },
         handleImportText() {
             let params = {
