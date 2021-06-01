@@ -5,13 +5,18 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="单价(创建订单实际价格)">
-                            <a-input placeholder="请输入单价(创建订单实际价格)" v-model="queryParam.price"></a-input>
+                        <a-form-item label="商品ID">
+                            <a-input placeholder="请输入商品ID" v-model="queryParam.goodsId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="商品名">
-                            <a-input placeholder="请输入商品名" v-model="queryParam.name"></a-input>
+                        <a-form-item label="商品名称">
+                            <j-input placeholder="商品名称模糊查询" v-model="queryParam.name"></j-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
+                        <a-form-item label="单价">
+                            <a-input placeholder="请输入单价(创建订单实际价格)" v-model="queryParam.price"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -84,6 +89,11 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
+                <template slot="largeText" slot-scope="text">
+                    <div class="large-text-container">
+                        <span class="large-text">{{ text }}</span>
+                    </div>
+                </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -110,16 +120,18 @@
 import { postAction } from "@api/manage";
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import GameRechargeGoodsModal from "./modules/GameRechargeGoodsModal";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "GameRechargeGoodsList",
     mixins: [JeecgListMixin],
     components: {
-        GameRechargeGoodsModal
+        GameRechargeGoodsModal,
+        JInput
     },
     data() {
         return {
-            description: "game_recharge_goods管理页面",
+            description: "充值商品管理页面",
             importText: "",
             // 表头
             columns: [
@@ -136,60 +148,115 @@ export default {
                 {
                     title: "商品Id",
                     align: "center",
-                    width: 170,
+                    width: 80,
                     dataIndex: "goodsId"
                 },
                 {
-                    title: "单价(创建订单实际价格)",
+                    title: "商品名称",
                     align: "center",
-                    width: 170,
-                    dataIndex: "price"
-                },
-                {
-                    title: "折扣",
-                    align: "center",
-                    width: 60,
-                    dataIndex: "discount"
-                },
-                {
-                    title: "商品名",
-                    align: "center",
-                    width: 100,
+                    width: 180,
                     dataIndex: "name"
                 },
                 {
-                    title: "奖励列表",
+                    title: "单价",
                     align: "center",
-                    dataIndex: "items"
+                    width: 120,
+                    dataIndex: "price"
                 },
                 {
                     title: "商品分类",
                     align: "center",
-                    width: 80,
-                    dataIndex: "goodsType"
+                    width: 120,
+                    dataIndex: "goodsType",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "0-普通类型";
+                        } else if (value === 1) {
+                            text = "1-仙职";
+                        } else if (value === 2) {
+                            text = "2-月卡";
+                        } else if (value === 3) {
+                            text = "3-每日礼包";
+                        } else if (value === 4) {
+                            text = "4-首充";
+                        } else if (value === 5) {
+                            text = "5-周卡";
+                        } else if (value === 6) {
+                            text = "6-六道剑阵";
+                        } else if (value === 7) {
+                            text = "7-招财进宝/仙力护符";
+                        } else if (value === 8) {
+                            text = "8-高级天道令";
+                        } else if (value === 9) {
+                            text = "9-节日派对";
+                        } else if (value === 10) {
+                            text = "10-节日直购礼包";
+                        } else if (value === 11) {
+                            text = "11-精准礼包";
+                        } else if (value === 12) {
+                            text = "12-结义礼包";
+                        }
+                        return text;
+                    }
                 },
                 {
-                    title: "是否记入累充（0 - 不计入 1 - 记入）",
+                    title: "折扣",
                     align: "center",
-                    width: 180,
-                    dataIndex: "amountStat"
+                    width: 120,
+                    dataIndex: "discount"
                 },
+                {
+                    title: "奖励列表",
+                    align: "center",
+                    width: 320,
+                    dataIndex: "items",
+                    scopedSlots: { customRender: "largeText" }
+                },
+
                 {
                     title: "首次额外赠送",
                     align: "center",
-                    width: 80,
+                    width: 240,
                     dataIndex: "addition"
                 },
                 {
-                    title: "游戏币与人民币(元)的兑换比例",
+                    title: "特殊标签",
                     align: "center",
-                    dataIndex: "exchange"
+                    width: 240,
+                    dataIndex: "recommend",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "无(0)";
+                        } else if (value === 1) {
+                            text = "推荐(1)";
+                        } else if (value === 2) {
+                            text = "礼包(2)";
+                        }
+                        return text;
+                    }
                 },
                 {
-                    title: "创建者",
+                    title: "是否记入累充",
                     align: "center",
                     width: 80,
-                    dataIndex: "createBy"
+                    dataIndex: "amountStat",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "否";
+                        } else if (value === 1) {
+                            text = "是";
+                        }
+                        return text;
+                    }
+                },
+                {
+                    title: "游戏币兑换比例",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "exchange"
                 },
                 {
                     title: "操作",
@@ -245,5 +312,17 @@ export default {
 .import-text {
     margin-top: 8px;
     margin-bottom: -10px;
+}
+
+.large-text-container {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.large-text {
+    white-space: normal;
+    word-break: break-word;
 }
 </style>
