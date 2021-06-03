@@ -15,4 +15,5 @@ public class GameConfig {
     private String loginUrl;
     private String serverUrl;
     private String noticeUrl;
+    private String authUrl;
 }

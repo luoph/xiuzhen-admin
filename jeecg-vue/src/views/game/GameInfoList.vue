@@ -161,6 +161,12 @@ export default {
                     dataIndex: "loginUrl"
                 },
                 {
+                    title: "实名认证地址",
+                    align: "center",
+                    width: 200,
+                    dataIndex: "authUrl"
+                },
+                {
                     title: "游戏列表地址",
                     align: "center",
                     width: 200,
