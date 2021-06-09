@@ -20,6 +20,18 @@
                     <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
                     <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
                 </a-form-item>
+                <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
+                        <a-select-option :value="1">1-时间范围</a-select-option>
+                        <a-select-option :value="2">2-开服第N天</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数" style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-form-item>
                         <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
@@ -93,8 +105,11 @@ export default {
                 showName: { rules: [{ required: true, message: "请输入活动展示名称!" }] },
                 icon: { rules: [{ required: true, message: "请输入活动图标!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
-                startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] }
+                timeType: { rules: [{ required: true, message: "请输入时间类型!" }] },
+                startDay: { rules: [{ required: false, message: "请输入开始时间(开服第n天)!" }] },
+                duration: { rules: [{ required: false, message: "请输入持续天数!" }] },
+                startTime: { rules: [{ required: false, message: "请输入开始时间!" }] },
+                endTime: { rules: [{ required: false, message: "请输入结束时间!" }] }
             },
             url: {
                 add: "game/gameCampaign/add",
@@ -125,7 +140,25 @@ export default {
                 if (this.isEdit) {
                     this.$refs.tabList.edit(record);
                 }
-                this.form.setFieldsValue(pick(this.model, "type", "name", "description", "showName", "serverIds", "icon", "banner", "status", "autoOpen", "startTime", "endTime"));
+                this.form.setFieldsValue(
+                    pick(
+                        this.model,
+                        "type",
+                        "name",
+                        "description",
+                        "showName",
+                        "serverIds",
+                        "icon",
+                        "banner",
+                        "status",
+                        "autoOpen",
+                        "timeType",
+                        "startDay",
+                        "duration",
+                        "startTime",
+                        "endTime"
+                    )
+                );
 
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
@@ -182,7 +215,9 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "type", "name", "description", "showName", "icon", "banner", "status", "autoOpen", "startTime", "endTime"));
+            this.form.setFieldsValue(
+                pick(row, "type", "name", "description", "showName", "icon", "banner", "status", "autoOpen", "timeType", "startDay", "duration", "startTime", "endTime")
+            );
         },
         changeSelect(value) {
             this.form.setFieldsValue({
