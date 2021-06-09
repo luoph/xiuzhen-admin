@@ -42,8 +42,11 @@ public class GameCampaignType extends BaseEntity {
         this.extra = other.getExtra();
         this.animation = other.getAnimation();
         this.resType = other.getResType();
+        this.timeType = other.getTimeType();
         this.startTime = other.getStartTime();
         this.endTime = other.getEndTime();
+        this.startDay = other.getStartDay();
+        this.duration = other.getDuration();
         this.eggsIntegralGoods = other.getEggsIntegralGoods();
     }
 
@@ -109,6 +112,12 @@ public class GameCampaignType extends BaseEntity {
     private String eggsIntegralGoods;
 
     /**
+     * 时间类型: 1.具体时间范围, 2.开服第N天
+     */
+    @Excel(name = "时间类型", width = 15)
+    private Integer timeType;
+
+    /**
      * 开始时间
      */
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
@@ -123,6 +132,18 @@ public class GameCampaignType extends BaseEntity {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private Date endTime;
+
+    /**
+     * 开始时间(开服第n天, e.g. 0表示开服第1天)
+     */
+    @Excel(name = "开始天数", width = 15)
+    private Integer startDay;
+
+    /**
+     * 持续时间(天)
+     */
+    @Excel(name = "持续天数", width = 15)
+    private Integer duration;
 
     /**
      * 页签详细配置

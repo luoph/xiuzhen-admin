@@ -1,15 +1,12 @@
 <template>
-    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
-             @cancel="handleCancel" cancelText="关闭" okText="保存">
+    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                 <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
-                                    placeholder="请输入活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]"
-                              initialValue="1" @change="selectType">
+                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['type', validatorRules.type]" initialValue="1" @change="selectType">
                         <a-select-option :value="1">1-登录礼包</a-select-option>
                         <a-select-option :value="2">2-累计充值</a-select-option>
                         <a-select-option :value="3">3-节日兑换</a-select-option>
@@ -32,13 +29,11 @@
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名" />
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)"
-                         class="banner-image" />
+                    <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)" class="banner-image" />
                     <game-image-selector placeholder="请选择活动宣传图" v-model="model.typeImage" />
                 </a-form-item>
                 <a-form-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序"
-                                    style="width: 100%" />
+                    <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="额外参数" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['extra', validatorRules.extra]" placeholder="请输入额外参数" />
@@ -52,29 +47,41 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item label="骨骼动画" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['animation', validatorRules.animation]"
-                             placeholder="骨骼动画"></a-input>
+                    <a-input v-decorator="['animation', validatorRules.animation]" placeholder="骨骼动画"></a-input>
                 </a-form-item>
 
                 <a-form-item v-if="model.type === 11" label="砸蛋积分商品" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea
-                        v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
-                        placeholder='活动类型"11-砸蛋" 时必填,格式如下:"[{"goodsId":1,"itemId":1001,"integral":1,"stack":1,"num":100}]"' />
+                        v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]"
+                        rows="4"
+                        placeholder='活动类型"11-砸蛋" 时必填,格式如下:"[{"goodsId":1,"itemId":1001,"integral":1,"stack":1,"num":100}]"'
+                    />
                 </a-form-item>
 
                 <a-form-item v-if="model.type === 14" label="节日派对大奖" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea
-                        v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]" rows="4"
-                        placeholder='活动类型"14-节日派对" 时必填,格式如下:"[{"itemId":1001,"num":100}]"' />
+                        v-decorator="['eggsIntegralGoods', validatorRules.eggsIntegralGoods]"
+                        rows="4"
+                        placeholder='活动类型"14-节日派对" 时必填,格式如下:"[{"itemId":1001,"num":100}]"'
+                    />
                 </a-form-item>
-
+                <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
+                        <a-select-option :value="1">1-时间范围</a-select-option>
+                        <a-select-option :value="2">2-开服第N天</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数" style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="活动开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss"
-                                   v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss"
-                                   v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
                 </a-form-item>
             </a-form>
 
@@ -171,8 +178,11 @@ export default {
                 extra: { rules: [{ required: false, message: "请输入额外参数!" }] },
                 resType: { rules: [{ required: false, message: "请选择资源类型" }] },
                 animation: { rules: [{ required: false, message: "请输入资源类型!" }] },
-                startTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: true, message: "请输入结束时间!" }] },
+                timeType: { rules: [{ required: true, message: "请输入时间类型!" }] },
+                startDay: { rules: [{ required: false, message: "请输入开始时间(开服第n天)!" }] },
+                duration: { rules: [{ required: false, message: "请输入持续天数!" }] },
+                startTime: { rules: [{ required: false, message: "请输入开始时间!" }] },
+                endTime: { rules: [{ required: false, message: "请输入结束时间!" }] },
                 eggsIntegralGoods: { rules: [{ required: this.type === 11, message: "该活动需要对应的商品" }] }
             },
             url: {
@@ -181,8 +191,7 @@ export default {
             }
         };
     },
-    created() {
-    },
+    created() {},
     methods: {
         add(record) {
             this.edit(record);
@@ -249,7 +258,25 @@ export default {
                     }
                 }
 
-                this.form.setFieldsValue(pick(this.model, "campaignId", "name", "type", "typeImage", "sort", "extra", "resType", "animation", "eggsIntegralGoods", "startTime", "endTime"));
+                this.form.setFieldsValue(
+                    pick(
+                        this.model,
+                        "campaignId",
+                        "name",
+                        "type",
+                        "typeImage",
+                        "sort",
+                        "extra",
+                        "resType",
+                        "animation",
+                        "eggsIntegralGoods",
+                        "timeType",
+                        "startDay",
+                        "duration",
+                        "startTime",
+                        "endTime"
+                    )
+                );
                 // 时间格式化
                 this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
                 this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
@@ -300,7 +327,25 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "name", "type", "typeImage", "sort", "extra", "resType", "animation", "eggsIntegralGoods", "startTime", "endTime"));
+            this.form.setFieldsValue(
+                pick(
+                    row,
+                    "campaignId",
+                    "name",
+                    "type",
+                    "typeImage",
+                    "sort",
+                    "extra",
+                    "resType",
+                    "animation",
+                    "eggsIntegralGoods",
+                    "timeType",
+                    "startDay",
+                    "duration",
+                    "startTime",
+                    "endTime"
+                )
+            );
         },
         getImgView(text) {
             if (text && text.indexOf(",") > 0) {

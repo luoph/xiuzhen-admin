@@ -15,11 +15,25 @@
                 <a-form-item label="页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称"></a-input>
                 </a-form-item>
-                <a-form-item label="开始时间(开服第n天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始时间(开服第n天, 0表示开服第1天)" style="width: 100%" />
+                <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
+                        <a-select-option :value="1">1-时间范围</a-select-option>
+                        <a-select-option :value="2">2-开服第N天</a-select-option>
+                    </a-select>
                 </a-form-item>
-                <a-form-item label="持续时间(天)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续时间(天)" style="width: 100%" />
+                <a-form-item label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-form-item>
+                        <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
+                    </a-form-item>
+                    <a-form-item>
+                        <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
+                    </a-form-item>
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <img v-if="model.banner" :src="getImgView(model.banner)" :alt="getImgView(model.banner)" class="banner-image" />
@@ -56,6 +70,7 @@
 <script>
 import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
+import moment from "moment";
 import JDate from "@/components/jeecg/JDate";
 import GameImageSelector from "../components/GameImageSelector";
 
@@ -90,8 +105,11 @@ export default {
             validatorRules: {
                 campaignId: { rules: [{ required: true, message: "请输入开服活动id!" }] },
                 campaignTypeId: { rules: [{ required: true, message: "请输入页签id!" }] },
-                startDay: { rules: [{ required: true, message: "请输入开始时间(开服第n天)!" }] },
-                duration: { rules: [{ required: true, message: "请输入持续时间(天)!" }] },
+                timeType: { rules: [{ required: true, message: "请输入时间类型!" }] },
+                startDay: { rules: [{ required: false, message: "请输入开始时间(开服第n天)!" }] },
+                duration: { rules: [{ required: false, message: "请输入持续天数!" }] },
+                startTime: { rules: [{ required: false, message: "请输入开始时间!" }] },
+                endTime: { rules: [{ required: false, message: "请输入结束时间!" }] },
                 tabName: { rules: [{ required: true, message: "请输入页签名称!" }] },
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
                 banner: { rules: [{ required: false, message: "请输入活动宣传图!" }] },
@@ -128,8 +146,11 @@ export default {
                         this.model,
                         "campaignId",
                         "campaignTypeId",
+                        "timeType",
                         "startDay",
                         "duration",
+                        "startTime",
+                        "endTime",
                         "tabName",
                         "name",
                         "banner",
@@ -138,6 +159,10 @@ export default {
                         "helpMsg"
                     )
                 );
+
+                // 时间格式化
+                this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
+                this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
             });
         },
         close() {
@@ -182,7 +207,22 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(
-                pick(row, "campaignId", "campaignTypeId", "startDay", "duration", "tabName", "name", "banner", "consumeRewardEmailTitle", "consumeRewardEmailContent", "helpMsg")
+                pick(
+                    row,
+                    "campaignId",
+                    "campaignTypeId",
+                    "timeType",
+                    "startDay",
+                    "duration",
+                    "startTime",
+                    "endTime",
+                    "tabName",
+                    "name",
+                    "banner",
+                    "consumeRewardEmailTitle",
+                    "consumeRewardEmailContent",
+                    "helpMsg"
+                )
             );
         },
         getImgView(text) {

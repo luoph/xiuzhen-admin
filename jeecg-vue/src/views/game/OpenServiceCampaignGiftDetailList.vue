@@ -56,7 +56,16 @@
                         <span class="large-text">{{ text }}</span>
                     </div>
                 </template>
-
+                <span slot="timeSlot" slot-scope="text, record">
+                    <div v-if="record.timeType == 1">
+                        <a-tag color="blue">{{ record.startTime }}</a-tag>
+                        <a-tag color="blue">{{ record.endTime }}</a-tag>
+                    </div>
+                    <div v-if="record.timeType == 2">
+                        <a-tag color="green">开服第{{ record.startDay }}天</a-tag>
+                        <a-tag color="green">持续{{ record.duration }}天</a-tag>
+                    </div>
+                </span>
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
@@ -149,11 +158,51 @@ export default {
                     scopedSlots: { customRender: "imgSlot" }
                 },
                 {
-                    title: "开始时间",
+                    title: "时间类型",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "timeType",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 1) {
+                            text = "1-时间范围";
+                        } else if (value === 2) {
+                            text = "2-开服第N天";
+                        }
+                        return text;
+                    }
+                },
+                {
+                    title: "活动时间",
                     align: "center",
                     width: 80,
-                    dataIndex: "startDay"
+                    dataIndex: "startDay",
+                    scopedSlots: { customRender: "timeSlot" }
                 },
+                // {
+                //     title: "开始天数",
+                //     align: "center",
+                //     width: 80,
+                //     dataIndex: "startDay"
+                // },
+                // {
+                //     title: "持续天数",
+                //     align: "center",
+                //     width: 80,
+                //     dataIndex: "duration"
+                // },
+                // {
+                //     title: "活动开始时间",
+                //     align: "center",
+                //     width: 120,
+                //     dataIndex: "startTime"
+                // },
+                // {
+                //     title: "活动结束时间",
+                //     align: "center",
+                //     width: 120,
+                //     dataIndex: "endTime"
+                // },
                 {
                     title: "资源类型",
                     align: "center",
@@ -177,12 +226,6 @@ export default {
                     width: 180,
                     dataIndex: "skeleton",
                     scopedSlots: { customRender: "largeText" }
-                },
-                {
-                    title: "持续时间(天)",
-                    align: "center",
-                    dataIndex: "duration",
-                    width: 80
                 },
                 {
                     title: "帮助信息",

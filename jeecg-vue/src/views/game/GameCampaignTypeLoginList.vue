@@ -33,6 +33,11 @@
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
                     <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
+                <template slot="largeText" slot-scope="text">
+                    <div class="large-text-container">
+                        <span class="large-text">{{ text }}</span>
+                    </div>
+                </template>
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -207,5 +212,16 @@ export default {
     width: 100%;
     height: 100px;
     object-fit: scale-down;
+}
+.large-text-container {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.large-text {
+    white-space: normal;
+    word-break: break-word;
 }
 </style>
