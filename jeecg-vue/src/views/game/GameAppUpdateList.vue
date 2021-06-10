@@ -22,6 +22,7 @@
                     <a-col :md="6" :sm="8">
                         <a-form-item label="包渠道">
                             <a-select placeholder="请选择包渠道" v-model="queryParam.channel">
+                                <a-select-option value="test">开发(develop)</a-select-option>
                                 <a-select-option value="test">测试(test)</a-select-option>
                                 <a-select-option value="plan">策划(plan)</a-select-option>
                                 <a-select-option value="preview">预览(preview)</a-select-option>
