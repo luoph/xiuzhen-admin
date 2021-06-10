@@ -11,4 +11,9 @@ import org.jeecg.modules.game.entity.GameAppUpdate;
  */
 public interface IGameAppUpdateService extends IService<GameAppUpdate> {
 
+    /**
+     * 刷新配置文件
+     */
+    void updateConfig();
+
 }

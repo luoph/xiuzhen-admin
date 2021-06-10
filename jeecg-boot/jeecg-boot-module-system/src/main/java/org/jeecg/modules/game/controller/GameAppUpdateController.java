@@ -3,6 +3,7 @@ package org.jeecg.modules.game.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 客户端更新配置
+ * @description 客户端版本
  * @date 2021-06-10
  */
 @Slf4j
@@ -41,7 +42,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
      * @param req           请求
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "客户端更新配置-列表查询")
+    @AutoLog(value = "客户端版本-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameAppUpdate gameAppUpdate,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -59,7 +60,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
      * @param gameAppUpdate 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "客户端更新配置-添加")
+    @AutoLog(value = "客户端版本-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameAppUpdate gameAppUpdate) {
         gameAppUpdateService.save(gameAppUpdate);
@@ -72,7 +73,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
      * @param gameAppUpdate 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "客户端更新配置-编辑")
+    @AutoLog(value = "客户端版本-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameAppUpdate gameAppUpdate) {
         gameAppUpdateService.updateById(gameAppUpdate);
@@ -85,7 +86,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "客户端更新配置-通过id删除")
+    @AutoLog(value = "客户端版本-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         gameAppUpdateService.removeById(id);
@@ -98,7 +99,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
      * @param ids id列表，使用','分割的字符串
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "客户端更新配置-批量删除")
+    @AutoLog(value = "客户端版本-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.gameAppUpdateService.removeByIds(Arrays.asList(ids.split(",")));
@@ -111,7 +112,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "客户端更新配置-通过id查询")
+    @AutoLog(value = "客户端版本-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         GameAppUpdate gameAppUpdate = gameAppUpdateService.getById(id);
@@ -129,7 +130,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameAppUpdate gameAppUpdate) {
-        return super.exportXls(request, gameAppUpdate, GameAppUpdate.class, "客户端更新配置");
+        return super.exportXls(request, gameAppUpdate, GameAppUpdate.class, "客户端版本");
     }
 
     /**
@@ -144,4 +145,15 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
         return super.importExcel(request, response, GameAppUpdate.class);
     }
 
+    @AutoLog(value = "客户端版本-刷新版本配置")
+    @ApiOperation(value = "客户端版本-刷新版本配置", notes = "客户端版本-刷新版本配置")
+    @GetMapping(value = "/updateConfig")
+    public Result<?> updateConfig(HttpServletRequest req) {
+        try {
+            gameAppUpdateService.updateConfig();
+        } catch (Exception e) {
+            return Result.error(e.getMessage());
+        }
+        return Result.ok("刷新成功");
+    }
 }

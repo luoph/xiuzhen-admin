@@ -27,7 +27,7 @@ public class GameAppUpdate extends BaseEntity {
      * 自增主键
      */
     @TableId(type = IdType.AUTO)
-    private java.lang.Integer id;
+    private java.lang.Long id;
 
     /**
      * 游戏id
@@ -39,7 +39,13 @@ public class GameAppUpdate extends BaseEntity {
      * apk名称
      */
     @Excel(name = "名称", width = 15)
-    private java.lang.String name;
+    private java.lang.String appName;
+
+    /**
+     * 应用包名
+     */
+    @Excel(name = "应用包名", width = 15)
+    private java.lang.String packageName;
 
     /**
      * 版本号
