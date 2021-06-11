@@ -43,4 +43,16 @@ public class GameCampaignTypeExchangeVO {
      */
     @ExcelProperty("消耗列表")
     private String consume;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    private Integer maxLevel;
 }

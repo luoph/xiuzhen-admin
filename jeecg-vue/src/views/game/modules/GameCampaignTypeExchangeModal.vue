@@ -24,6 +24,12 @@
                 <a-form-item label="消耗列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['consume', validatorRules.consume]" placeholder="请输入消耗列表"></a-textarea>
                 </a-form-item>
+                <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%" />
+                </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -63,7 +69,9 @@ export default {
                 itemName: { rules: [{ required: true, message: "请输入道具名称!" }] },
                 maxExchangeNum: { rules: [{ required: true, message: "请输入最大兑换数量!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
-                consume: { rules: [{ required: true, message: "请输入消耗列表!" }] }
+                consume: { rules: [{ required: true, message: "请输入消耗列表!" }] },
+                minLevel: {rules: [{ required: true, message: "请输入最小世界等级!" }]},
+                maxLevel: {rules: [{ required: true, message: "请输入最大世界等级!" }]},
             },
             url: {
                 add: "game/gameCampaignTypeExchange/add",
@@ -84,7 +92,7 @@ export default {
             console.log("GameCampaignTypeExchangeModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume", "minLevel", "maxLevel"));
             });
         },
         close() {
@@ -128,7 +136,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "exchangeId", "itemName", "maxExchangeNum", "reward", "consume", "minLevel", "maxLevel"));
         }
     }
 };

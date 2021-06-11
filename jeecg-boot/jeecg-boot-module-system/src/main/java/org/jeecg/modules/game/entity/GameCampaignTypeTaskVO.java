@@ -52,4 +52,16 @@ public class GameCampaignTypeTaskVO {
      */
     @ExcelProperty("跳转id")
     private Integer jumpId;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    private Integer maxLevel;
 }

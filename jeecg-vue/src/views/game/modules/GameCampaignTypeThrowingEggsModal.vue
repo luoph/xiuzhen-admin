@@ -83,6 +83,12 @@
                     <a-textarea v-decorator="['showLuckyReward']" rows="4"
                                 placeholder='幸运奖励:[{"itemId":1001,"num":1001}]' />
                 </a-form-item>
+                <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%" />
+                </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -136,7 +142,9 @@ export default {
                 rewardAnim: { rules: [{ required: true, message: "请输入大奖动画!" }] },
                 showOrdinaryReward: { rules: [{ required: true, message: "请输入普通奖励!" }] },
                 showLuckyReward: { rules: [{ required: true, message: "请输入幸运奖励!" }] },
-                throwingEggsValue: { rules: [{ required: true, message: "请输入砸蛋值!" }] }
+                throwingEggsValue: { rules: [{ required: true, message: "请输入砸蛋值!" }] },
+                minLevel: {rules: [{ required: true, message: "请输入最小世界等级!" }]},
+                maxLevel: {rules: [{ required: true, message: "请输入最大世界等级!" }]},
             },
             url: {
                 add: "game/gameCampaignTypeThrowingEggs/add",
@@ -156,7 +164,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "eggType", "costItemId", "limitLuckyValue", "costNum", "throwingEggsValue", "lotteryIntegralMin", "lotteryIntegralMax", "luckyProbability", "probabilityPublicity", "rule", "ordinaryPool", "luckyPool", "ordinaryPoolItem", "luckyPoolItem", "rewardAnim", "showOrdinaryReward", "showLuckyReward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "eggType", "costItemId", "limitLuckyValue", "costNum", "throwingEggsValue", "lotteryIntegralMin", "lotteryIntegralMax", "luckyProbability", "probabilityPublicity", "rule", "ordinaryPool", "luckyPool", "ordinaryPoolItem", "luckyPoolItem", "rewardAnim", "showOrdinaryReward", "showLuckyReward", "minLevel", "maxLevel"));
             });
         },
         close() {
@@ -200,7 +208,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "eggType", "costItemId", "limitLuckyValue", "costNum", "throwingEggsValue", "lotteryIntegralMin", "lotteryIntegralMax", "luckyProbability", "probabilityPublicity", "rule", "ordinaryPool", "luckyPool", "ordinaryPoolItem", "luckyPoolItem", "rewardAnim", "showOrdinaryReward", "showLuckyReward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "eggType", "costItemId", "limitLuckyValue", "costNum", "throwingEggsValue", "lotteryIntegralMin", "lotteryIntegralMax", "luckyProbability", "probabilityPublicity", "rule", "ordinaryPool", "luckyPool", "ordinaryPoolItem", "luckyPoolItem", "rewardAnim", "showOrdinaryReward", "showLuckyReward", "minLevel", "maxLevel"));
         }
     }
 };

@@ -126,8 +126,18 @@ export default {
                     title: "奖励列表",
                     align: "center",
                     dataIndex: "reward",
-                    width: 280,
+                    width: 240,
                     scopedSlots: { customRender: "largeText" }
+                },
+                {
+                    title: "最小世界等级",
+                    align: "center",
+                    dataIndex: "minLevel"
+                },
+                {
+                    title: "最大世界等级",
+                    align: "center",
+                    dataIndex: "maxLevel"
                 },
                 {
                     title: "创建时间",

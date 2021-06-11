@@ -31,6 +31,8 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
         this.goodsId = other.getGoodsId();
         this.color = other.getColor();
         this.discount = other.getDiscount();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**
@@ -88,4 +90,19 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
     @Excel(name = "礼包折扣", width = 15)
     @ExcelProperty("礼包折扣")
     private java.lang.Integer discount;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
+
 }

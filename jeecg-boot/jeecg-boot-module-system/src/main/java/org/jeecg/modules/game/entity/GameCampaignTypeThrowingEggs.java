@@ -49,6 +49,8 @@ public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBase {
         this.showOrdinaryReward = other.getShowOrdinaryReward();
         this.showLuckyReward = other.getShowLuckyReward();
         this.throwingEggsValue = other.getThrowingEggsValue();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**
@@ -149,5 +151,16 @@ public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBase {
 
     @Excel(name = "砸蛋值", width = 15)
     private java.lang.Integer throwingEggsValue;
+    /**
+     * 最小世界等级
+     */
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
 
 }

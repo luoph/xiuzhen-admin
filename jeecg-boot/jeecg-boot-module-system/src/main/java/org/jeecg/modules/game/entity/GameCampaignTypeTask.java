@@ -30,6 +30,8 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
         this.args = other.getArgs();
         this.reward = other.getReward();
         this.jumpId = other.getJumpId();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**
@@ -79,4 +81,19 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
     @ExcelProperty("跳转id")
     @Excel(name = "跳转id", width = 15)
     private Integer jumpId;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
+
 }

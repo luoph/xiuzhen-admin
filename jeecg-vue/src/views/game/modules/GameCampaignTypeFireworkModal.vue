@@ -27,6 +27,12 @@
                 <a-form-item label="按钮标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['btnName', validatorRules.btnName]" placeholder="请输入按钮标题"></a-input>
                 </a-form-item>
+                <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%" />
+                </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -72,7 +78,9 @@ export default {
                 price: { rules: [{ required: true, message: "请输入价格!" }] },
                 discount: { rules: [{ required: true, message: "请输入折扣!" }] },
                 num: { rules: [{ required: true, message: "请输入单次购买数量!" }] },
-                btnName: { rules: [{ required: true, message: "请输入按钮标题!" }] }
+                btnName: { rules: [{ required: true, message: "请输入按钮标题!" }] },
+                minLevel: {rules: [{ required: true, message: "请输入最小世界等级!" }]},
+                maxLevel: {rules: [{ required: true, message: "请输入最大世界等级!" }]},
             },
             url: {
                 add: "game/gameCampaignTypeFirework/add",
@@ -93,7 +101,7 @@ export default {
             console.log("GameCampaignTypeFireworkModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "giftId", "times", "price", "discount", "num", "btnName"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "giftId", "times", "price", "discount", "num", "btnName", "minLevel", "maxLevel"));
             });
         },
         close() {
@@ -137,7 +145,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "giftId", "times", "price", "discount", "num", "btnName"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "giftId", "times", "price", "discount", "num", "btnName", "minLevel", "maxLevel"));
         }
     }
 };

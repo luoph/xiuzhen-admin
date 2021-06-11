@@ -31,4 +31,16 @@ public class GameCampaignTypeRechargeVO {
      */
     @ExcelProperty("奖励列表")
     private String reward;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    private Integer maxLevel;
 }
