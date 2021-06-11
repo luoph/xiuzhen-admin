@@ -21,7 +21,7 @@
                     <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
                 </a-form-item>
                 <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select :disabled="isEdit" placeholder="选择活动类型" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
+                    <a-select placeholder="选择活动类型" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
                         <a-select-option :value="1">1-时间范围</a-select-option>
                         <a-select-option :value="2">2-开服第N天</a-select-option>
                     </a-select>
