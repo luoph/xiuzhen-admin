@@ -18,6 +18,12 @@
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
+                <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%" />
+                </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -55,7 +61,9 @@ export default {
                 typeId: { rules: [{ required: true, message: "请输入页签id!" }] },
                 loginDay: { rules: [{ required: true, message: "请输入登录天数!" }] },
                 description: { rules: [{ required: true, message: "请输入描述!" }] },
-                reward: { rules: [{ required: true, message: "请输入奖励列表!" }] }
+                reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
+                minLevel: {rules: [{ required: true, message: "请输入最小世界等级!" }]},
+                maxLevel: {rules: [{ required: true, message: "请输入最大世界等级!" }]},
             },
             url: {
                 add: "game/gameCampaignTypeLogin/add",
@@ -76,7 +84,7 @@ export default {
             console.log("GameCampaignTypeLoginModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "loginDay", "description", "reward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "loginDay", "description", "reward", "minLevel", "maxLevel"));
             });
         },
         close() {
@@ -120,7 +128,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "loginDay", "description", "reward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "loginDay", "description", "reward", "minLevel", "maxLevel"));
         }
     }
 };

@@ -42,6 +42,12 @@
                 <a-form-item label="任务奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入任务奖励" />
                 </a-form-item>
+                <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%" />
+                </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -85,7 +91,9 @@ export default {
                 target: { rules: [{ required: true, message: "请输入任务规定数量!" }] },
                 costNum: { rules: [{ required: true, message: "请输入直接消耗数量!" }] },
                 jumpId: { rules: [{ required: true, message: "请输入跳转id!" }] },
-                reward: { rules: [{ required: true, message: "请输入任务奖励!" }] }
+                reward: { rules: [{ required: true, message: "请输入任务奖励!" }] },
+                minLevel: {rules: [{ required: true, message: "请输入最小世界等级!" }]},
+                maxLevel: {rules: [{ required: true, message: "请输入最大世界等级!" }]},
             },
             url: {
                 add: "game/gameCampaignTypePartyTask/add",
@@ -105,7 +113,7 @@ export default {
             this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "type", "moduleId", "args", "remark", "target", "costNum", "jumpId", "reward"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "type", "moduleId", "args", "remark", "target", "costNum", "jumpId", "reward", "minLevel", "maxLevel"));
             });
         },
         close() {
@@ -149,7 +157,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "moduleId", "args", "remark", "target", "costNum", "jumpId", "reward"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "type", "moduleId", "args", "remark", "target", "costNum", "jumpId", "reward", "minLevel", "maxLevel"));
         }
     }
 };

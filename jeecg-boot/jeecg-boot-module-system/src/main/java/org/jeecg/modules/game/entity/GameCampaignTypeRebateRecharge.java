@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -34,6 +35,8 @@ public class GameCampaignTypeRebateRecharge extends GameCampaignTypeBase {
         this.min = other.getMin();
         this.progressDesc = other.getProgressDesc();
         this.reward = other.getReward();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel= other.getMaxLevel();
     }
 
     /**
@@ -65,5 +68,19 @@ public class GameCampaignTypeRebateRecharge extends GameCampaignTypeBase {
      */
     @Excel(name = "奖励列表", width = 15)
     private java.lang.String reward;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
 
 }

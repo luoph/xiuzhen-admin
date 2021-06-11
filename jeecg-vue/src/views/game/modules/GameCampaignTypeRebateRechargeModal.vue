@@ -24,6 +24,12 @@
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
+                <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%" />
+                </a-form-item>
             </a-form>
         </a-spin>
     </a-modal>
@@ -68,6 +74,8 @@ export default {
                 min: { rules: [{ required: true, message: "请输入最低充值金额!" }] },
                 progressDesc: { rules: [{ required: true, message: "请输入进度描述" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表" }] },
+                minLevel: {rules: [{ required: true, message: "请输入奖励列表!" }]},
+                maxLevel: {rules: [{ required: true, message: "请输入奖励列表!" }]},
             },
             url: {
                 add: "game/gameCampaignTypeRebateRecharge/add",
@@ -87,7 +95,7 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(
-                    pick(this.model, "campaignId", "typeId", "rid", "totalDay", "min", "progressDesc", "reward")
+                    pick(this.model, "campaignId", "typeId", "rid", "totalDay", "min", "progressDesc", "reward","minLevel","maxLevel")
                 );
             });
         },
@@ -134,7 +142,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(
-                    pick(this.model, "campaignId", "typeId", "rid", "totalDay", "min", "progressDesc", "reward")
+                    pick(this.model, "campaignId", "typeId", "rid", "totalDay", "min", "progressDesc", "reward","minLevel","maxLevel")
             );
         },
         selectGoods(e) {

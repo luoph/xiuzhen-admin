@@ -27,6 +27,8 @@ public class GameCampaignTypeLogin extends GameCampaignTypeBase {
         this.loginDay = other.getLoginDay();
         this.description = other.getDescription();
         this.reward = other.getReward();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**
@@ -49,4 +51,18 @@ public class GameCampaignTypeLogin extends GameCampaignTypeBase {
     @ExcelProperty("奖励列表")
     @Excel(name = "奖励列表", width = 15)
     private String reward;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
 }

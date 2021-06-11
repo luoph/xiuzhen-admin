@@ -30,6 +30,8 @@ public class GameCampaignTypeFirework extends GameCampaignTypeBase {
         this.discount = other.getDiscount();
         this.num = other.getNum();
         this.btnName = other.getBtnName();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**
@@ -67,4 +69,16 @@ public class GameCampaignTypeFirework extends GameCampaignTypeBase {
      */
     @Excel(name = "按钮标题", width = 15)
     private java.lang.String btnName;
+
+    /**
+     * 最小世界等级
+     */
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
 }

@@ -30,6 +30,8 @@ public class GameCampaignTypeExchange extends GameCampaignTypeBase {
         this.maxExchangeNum = other.getMaxExchangeNum();
         this.reward = other.getReward();
         this.consume = other.getConsume();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel= other.getMaxLevel();
     }
 
     /**
@@ -66,4 +68,18 @@ public class GameCampaignTypeExchange extends GameCampaignTypeBase {
     @ExcelProperty("消耗列表")
     @Excel(name = "消耗列表", width = 15)
     private java.lang.String consume;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
 }

@@ -33,6 +33,9 @@ public class GameCampaignTypeReduce extends GameCampaignTypeBase {
         this.reduceItemId = other.getReduceItemId();
         this.limitNum = other.getLimitNum();
         this.reward = other.getReward();
+        this.minLevel = other.getMinLevel();
+        this.maxLevel = other.getMaxLevel();
+
     }
 
     /**
@@ -58,4 +61,15 @@ public class GameCampaignTypeReduce extends GameCampaignTypeBase {
      */
     @Excel(name = "奖励内容", width = 15)
     private java.lang.String reward;
+    /**
+     * 最小世界等级
+     */
+    @Excel(name = "最小世界等级", width = 15)
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @Excel(name = "最大世界等级", width = 15)
+    private Integer maxLevel;
 }

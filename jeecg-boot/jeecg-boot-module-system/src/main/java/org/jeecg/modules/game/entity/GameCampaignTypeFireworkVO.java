@@ -49,4 +49,16 @@ public class GameCampaignTypeFireworkVO {
      */
     @ExcelProperty("按钮标题")
     private String btnName;
+
+    /**
+     * 最小世界等级
+     */
+    @ExcelProperty("最小世界等级")
+    private Integer minLevel;
+
+    /**
+     * 最大世界等级
+     */
+    @ExcelProperty("最大世界等级")
+    private Integer maxLevel;
 }

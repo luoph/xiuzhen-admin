@@ -126,6 +126,16 @@ export default {
                     dataIndex: "createTime"
                 },
                 {
+                    title: "最小世界等级",
+                    align: "center",
+                    dataIndex: "minLevel"
+                },
+                {
+                    title: "最大世界等级",
+                    align: "center",
+                    dataIndex: "maxLevel"
+                },
+                {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
