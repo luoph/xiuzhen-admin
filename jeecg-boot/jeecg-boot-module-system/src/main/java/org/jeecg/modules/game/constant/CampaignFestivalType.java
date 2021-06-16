@@ -22,7 +22,6 @@ public enum CampaignFestivalType {
     BUFF_PRACTICE("修为加成", 5, GameCampaignTypeBuff.class, GameCampaignTypeBuffVO.class),
     BUFF_ANIMA("灵气加成", 6, GameCampaignTypeBuff.class, GameCampaignTypeBuffVO.class),
     FALL("节日掉落", 7, GameCampaignTypeFall.class, GameCampaignTypeBuffVO.class),
-    //    FALL_REWARD("节日掉落奖励", 7, GameCampaignTypeFallReward.class, GameCampaignTypeBuffVO.class),
     FIREWORK("烟火", 8, GameCampaignTypeFirework.class, GameCampaignTypeFireworkVO.class),
     REDUCE_RANK("消耗排行", 9, GameCampaignTypeReduce.class, GameCampaignTypeReduceVO.class),
     LIMIT_TIME_SWORD("限时仙剑", 10, GameCampaignTypeSword.class, GameCampaignTypeSwordVO.class),
@@ -30,7 +29,6 @@ public enum CampaignFestivalType {
     THROWING_EGGS_RANK("砸蛋榜", 12, GameCampaignTypeThrowingEggsRank.class, GameCampaignTypeThrowingEggsRankVO.class),
     THROWING_EGGS_GIFT("砸蛋礼包", 13, GameCampaignTypeThrowingEggsGift.class, GameCampaignTypeThrowingEggsGiftVO.class),
     PARTY("节日派对", 14, GameCampaignTypePartyTask.class, GameCampaignTypePartyTaskVO.class),
-    // PARTY_PROGRESS("节日派对", 14, GameCampaignTypePartyProgress.class, GameCampaignTypePartyProgressVO.class),
     DIRECT_PURCHASE("直购礼包", 15, GameCampaignDirectPurchase.class, GameCampaignDirectPurchaseVO.class),
     REBATE_RECHARGE("返利狂欢", 16, GameCampaignTypeRebateRecharge.class, GameCampaignTypeRebateRechargeVo.class),
     // end

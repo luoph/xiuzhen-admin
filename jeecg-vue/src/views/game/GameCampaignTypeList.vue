@@ -260,6 +260,21 @@ export default {
                     dataIndex: "sort"
                 },
                 {
+                    title: "是否跨服",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "cross",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "本服";
+                        } else if (value === 1) {
+                            text = "跨服";
+                        }
+                        return text;
+                    }
+                },
+                {
                     title: "活动时间",
                     align: "center",
                     width: 80,
