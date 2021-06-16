@@ -185,6 +185,10 @@ export default {
                         method = "put";
                     }
                     let formData = Object.assign(this.model, values);
+                    // 时间格式化
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
