@@ -38,24 +38,24 @@
                     </a-select>
                 </a-form-item>
                 <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="选择活动类型" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
+                    <a-select placeholder="选择活动类型" @change="handleTimeTypeChange" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
                         <a-select-option :value="1">1-时间范围</a-select-option>
                         <a-select-option :value="2">2-开服第N天</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item v-show="model.timeType == 1" label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-form-item>
                         <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
                     </a-form-item>
                     <a-form-item>
                         <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
                     </a-form-item>
+                </a-form-item>
+                <a-form-item v-show="model.timeType == 2" label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['startDay', validatorRules.startDay]" placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%" />
+                </a-form-item>
+                <a-form-item v-show="model.timeType == 2" label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <img v-if="model.banner" :src="getImgView(model.banner)" :alt="getImgView(model.banner)" class="banner-image" />
@@ -154,10 +154,10 @@ export default {
                 tabName: { rules: [{ required: true, message: "请输入页签名称!" }] },
                 rankType: { rules: [{ required: true, message: "请输入排行类型!" }] },
                 timeType: { rules: [{ required: true, message: "请输入时间类型!" }] },
-                startDay: { rules: [{ required: false, message: "请输入开始时间(开服第n天)!" }] },
-                duration: { rules: [{ required: false, message: "请输入持续天数!" }] },
-                startTime: { rules: [{ required: false, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: false, message: "请输入结束时间!" }] },
+                startTime: { rules: [{ required: this.timeType == 1, message: "请输入开始时间!" }] },
+                endTime: { rules: [{ required: this.timeType == 1, message: "请输入结束时间!" }] },
+                startDay: { rules: [{ required: this.timeType == 2, message: "请输入开始时间(开服第n天)!" }] },
+                duration: { rules: [{ required: this.timeType == 2, message: "请输入持续天数!" }] },
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 banner: { rules: [{ required: true, message: "请输入活动宣传图!" }] },
                 rewardImg: { rules: [{ required: true, message: "请输入奖励图!" }] },
@@ -183,6 +183,9 @@ export default {
             this.form.resetFields();
             this.model = Object.assign({}, record);
             this.isEdit = this.model.id != null;
+            if (!this.model.timeType) {
+                this.model.timeType = 1;
+            }
             this.visible = true;
             console.log("OpenServiceCampaignRankDetailModal, model:", JSON.stringify(this.model));
 
@@ -230,6 +233,26 @@ export default {
         },
         handleOk() {
             const that = this;
+            // 时间类型校验
+            if (this.model.timeType == 1) {
+                if (!this.model.startDay) {
+                    that.$message.error("请输入开始天数");
+                    return;
+                }
+                if (!this.model.duration) {
+                    that.$message.error("请输入持续天数");
+                    return;
+                }
+            } else if (this.model.timeType == 2) {
+                if (!this.model.startTime) {
+                    that.$message.error("请输入开始时间");
+                    return;
+                }
+                if (!this.model.endTime) {
+                    that.$message.error("请输入结束时间");
+                    return;
+                }
+            }
             // 触发表单验证
             this.form.validateFields((err, values) => {
                 if (!err) {
@@ -299,6 +322,9 @@ export default {
                 text = text.substring(0, text.indexOf(","));
             }
             return `${window._CONFIG["domainURL"]}/${text}`;
+        },
+        handleTimeTypeChange(value) {
+            this.model.timeType = value;
         }
     }
 };
