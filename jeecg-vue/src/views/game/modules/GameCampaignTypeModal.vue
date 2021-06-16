@@ -36,8 +36,11 @@
                     <a-input-number v-decorator="['sort', validatorRules.sort]" placeholder="请输入排序" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="额外参数" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-if="model.type === 16" v-decorator="['extra', validatorRules.extra]"
-                     placeholder='活动类型"16-狂欢返利" 时必填,格式如下:"{"emailId":71,"aaa":"bbb"}"' />
+                    <a-textarea
+                        v-if="model.type === 16"
+                        v-decorator="['extra', validatorRules.extra]"
+                        placeholder='活动类型"16-狂欢返利" 时必填,格式如下:"{"emailId":71,"aaa":"bbb"}"'
+                    />
                     <a-textarea v-else v-decorator="['extra', validatorRules.extra]" placeholder="请输入额外参数" />
                 </a-form-item>
 
@@ -66,6 +69,12 @@
                         rows="4"
                         placeholder='活动类型"14-节日派对" 时必填,格式如下:"[{"itemId":1001,"num":100}]"'
                     />
+                </a-form-item>
+                <a-form-item label="是否跨服" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="选择是否跨服" v-decorator="['cross', validatorRules.cross]" initialValue="0">
+                        <a-select-option :value="0">本服</a-select-option>
+                        <a-select-option :value="1">跨服</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="选择活动类型" v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
@@ -179,6 +188,7 @@ export default {
                 sort: { rules: [{ required: true, message: "请输入排序!" }] },
                 extra: { rules: [{ required: false, message: "请输入额外参数!" }] },
                 resType: { rules: [{ required: false, message: "请选择资源类型" }] },
+                cross: { rules: [{ required: true, message: "请选是否跨服" }] },
                 animation: { rules: [{ required: false, message: "请输入资源类型!" }] },
                 timeType: { rules: [{ required: true, message: "请输入时间类型!" }] },
                 startDay: { rules: [{ required: false, message: "请输入开始时间(开服第n天)!" }] },
@@ -270,6 +280,7 @@ export default {
                         "sort",
                         "extra",
                         "resType",
+                        "cross",
                         "animation",
                         "eggsIntegralGoods",
                         "timeType",
@@ -339,6 +350,7 @@ export default {
                     "sort",
                     "extra",
                     "resType",
+                    "cross",
                     "animation",
                     "eggsIntegralGoods",
                     "timeType",

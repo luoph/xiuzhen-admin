@@ -35,19 +35,20 @@ public class GameCampaignType extends BaseEntity {
     }
 
     public GameCampaignType(GameCampaignType other) {
-        this.name = other.getName();
-        this.type = other.getType();
-        this.typeImage = other.getTypeImage();
-        this.sort = other.getSort();
-        this.extra = other.getExtra();
-        this.animation = other.getAnimation();
-        this.resType = other.getResType();
-        this.timeType = other.getTimeType();
-        this.startTime = other.getStartTime();
-        this.endTime = other.getEndTime();
-        this.startDay = other.getStartDay();
-        this.duration = other.getDuration();
-        this.eggsIntegralGoods = other.getEggsIntegralGoods();
+        this.name = other.name;
+        this.type = other.type;
+        this.typeImage = other.typeImage;
+        this.sort = other.sort;
+        this.extra = other.extra;
+        this.animation = other.animation;
+        this.resType = other.resType;
+        this.cross = other.cross;
+        this.timeType = other.timeType;
+        this.startTime = other.startTime;
+        this.endTime = other.endTime;
+        this.startDay = other.startDay;
+        this.duration = other.duration;
+        this.eggsIntegralGoods = other.eggsIntegralGoods;
     }
 
     /**
@@ -110,6 +111,13 @@ public class GameCampaignType extends BaseEntity {
      */
     @Excel(name = "砸蛋商品", width = 15)
     private String eggsIntegralGoods;
+
+    /**
+     * 是否跨服
+     */
+    @Excel(name = "是否跨服", width = 15)
+    @TableField(value = "`cross`")
+    private Integer cross;
 
     /**
      * 时间类型: 1.具体时间范围, 2.开服第N天

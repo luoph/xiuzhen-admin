@@ -76,9 +76,6 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
         QueryWrapper<GameCampaignType> queryWrapper = QueryGenerator.initQueryWrapper(gameCampaignType, req.getParameterMap());
         Page<GameCampaignType> page = new Page<>(pageNo, pageSize);
         IPage<GameCampaignType> pageList = gameCampaignTypeService.page(page, queryWrapper);
-//        for (GameCampaignType record : pageList.getRecords()) {
-//            gameCampaignTypeService.fillTabDetail(record, true);
-//        }
         return Result.ok(pageList);
     }
 
