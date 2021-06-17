@@ -176,20 +176,20 @@ export default {
             const that = this;
             // 时间类型校验
             if (this.model.timeType == 1) {
-                if (!this.model.startDay) {
+                if (this.model.startDay === undefined || this.model.startDay === null) {
                     that.$message.error("请输入开始天数");
                     return;
                 }
-                if (!this.model.duration) {
+                if (this.model.duration === undefined || this.model.duration === null) {
                     that.$message.error("请输入持续天数");
                     return;
                 }
             } else if (this.model.timeType == 2) {
-                if (!this.model.startTime) {
+                if (this.model.startTime === undefined || this.model.startTime === null) {
                     that.$message.error("请输入开始时间");
                     return;
                 }
-                if (!this.model.endTime) {
+                if (this.model.endTime === undefined || this.model.endTime === null) {
                     that.$message.error("请输入结束时间");
                     return;
                 }
