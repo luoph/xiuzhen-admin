@@ -107,7 +107,7 @@ public class CommonController {
             }
             response.flushBuffer();
         } catch (IOException e) {
-            log.error("预览图片失败" + e.getMessage());
+//            log.error("预览图片失败" + e.getMessage());
         } finally {
             if (inputStream != null) {
                 try {
