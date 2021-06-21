@@ -18,10 +18,7 @@ import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.constant.CampaignStatus;
 import org.jeecg.modules.game.constant.SwitchStatus;
 import org.jeecg.modules.game.entity.*;
-import org.jeecg.modules.game.service.IGameCampaignService;
-import org.jeecg.modules.game.service.IGameCampaignSupportService;
-import org.jeecg.modules.game.service.IGameCampaignTypeService;
-import org.jeecg.modules.game.service.IGameServerService;
+import org.jeecg.modules.game.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +50,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
     @Autowired
     private IGameServerService gameServerService;
+
+    @Autowired
+    private IGameServerGroupItemService gameServerGroupItemService;
 
     @Value("${app.campaign-update-url:/campaign/update}")
     private String campaignUpdateUrl;
@@ -227,9 +227,12 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
         List<Integer> serverIds = new ArrayList<>();
         List<GameCampaignSupport> supports = campaignSupportService.list(query);
-        supports.forEach(t -> {
-            serverIds.add(t.getServerId());
-        });
+        supports.forEach(t -> serverIds.add(t.getServerId()));
+
+        // 通知跨服
+        List<GameServerGroupItem> gameServerGroupItemList = gameServerGroupItemService.list(Wrappers.<GameServerGroupItem>lambdaQuery()
+                .in(GameServerGroupItem::getServerId, serverIds).groupBy(GameServerGroupItem::getGroupId));
+        gameServerGroupItemList.forEach(gameServerGroupItem -> serverIds.add(gameServerGroupItem.getGroupId().intValue()));
 
         Map<Integer, Response> response = gameServerService.gameServerGet(serverIds, campaignUpdateUrl);
         log.info("sync id:{} response:{}", id, response);
