@@ -1,18 +1,13 @@
 <template>
     <a-card :bordered="false">
         <!-- 查询区域 -->
-        <div class="table-page-search-wrapper">
-            <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                    </a-row>
-            </a-form>
-        </div>
+        <div class="table-page-search-wrapper"></div>
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
             <a-button type="primary" icon="download" @click="handleExportXls('节日活动-结义排行榜奖励')">导出</a-button>
-            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+            <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload>
             <a-dropdown v-if="selectedRowKeys.length > 0">
@@ -20,7 +15,7 @@
                     <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
                 </a-menu>
                 <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown>
+            </a-dropdown> -->
         </div>
 
         <!-- table区域-begin -->
@@ -41,7 +36,7 @@
                 :loading="loading"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-                
+
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
@@ -78,6 +73,8 @@
 
 <script>
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
+import { getAction } from "../../api/manage";
+import { filterObj } from "@/utils/util";
 import GameCampaignTypeMarryRankRewardModal from "./modules/GameCampaignTypeMarryRankRewardModal";
 
 export default {
@@ -102,12 +99,12 @@ export default {
                     }
                 },
                 {
-                    title: "campaign.id, 活动id",
+                    title: "活动id",
                     align: "center",
                     dataIndex: "campaignId"
                 },
                 {
-                    title: "game_campaign_type.id",
+                    title: "页签id",
                     align: "center",
                     dataIndex: "typeId"
                 },
@@ -140,24 +137,6 @@ export default {
                     }
                 },
                 {
-                    title: "创建人",
-                    align: "center",
-                    dataIndex: "createBy"
-                },
-                {
-                    title: "更新时间",
-                    align: "center",
-                    dataIndex: "updateTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
-                },
-                {
-                    title: "修改人",
-                    align: "center",
-                    dataIndex: "updateBy"
-                },
-                {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
@@ -181,7 +160,59 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
+        initDictConfig() {},
+        loadData(arg) {
+            if (!this.model.id) {
+                return;
+            }
+
+            if (!this.url.list) {
+                this.$message.error("请设置url.list属性!");
+                return;
+            }
+
+            // 加载数据 若传入参数1则加载第一页的内容
+            if (arg === 1) {
+                this.ipagination.current = 1;
+            }
+
+            // 查询条件
+            var params = this.getQueryParams();
+            this.loading = true;
+            getAction(this.url.list, params).then(res => {
+                if (res.success && res.result && res.result.records) {
+                    this.dataSource = res.result.records;
+                    this.ipagination.total = res.result.total;
+                }
+                if (res.code === 510) {
+                    this.$message.warning(res.message);
+                }
+                this.loading = false;
+            });
+        },
+        edit(record) {
+            this.model = record;
+            this.loadData();
+        },
+        handleAdd() {
+            this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
+            this.$refs.modalForm.title = "新增结义排行配置";
+        },
+        getQueryParams() {
+            var param = Object.assign({}, this.queryParam);
+            param.field = this.getQueryField();
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // typeId、活动id
+            param.typeId = this.model.id;
+            param.campaignId = this.model.campaignId;
+            return filterObj(param);
+        },
+        getImgView(text) {
+            if (text && text.indexOf(",") > 0) {
+                text = text.substring(0, text.indexOf(","));
+            }
+            return `${window._CONFIG["domainURL"]}/${text}`;
         }
     }
 };
@@ -189,4 +220,16 @@ export default {
 
 <style scoped>
 @import "~@assets/less/common.less";
+
+.large-text-container {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.large-text {
+    white-space: normal;
+    word-break: break-word;
+}
 </style>

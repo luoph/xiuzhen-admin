@@ -148,6 +148,10 @@ export default {
                             text = "15-直购礼包";
                         } else if (value === 16) {
                             text = "16-返利狂欢";
+                        } else if (value === 17) {
+                            text = "17-赠酒排行榜";
+                        } else if (value === 18) {
+                            text = "18-魅力值排行榜";
                         }
                         return text;
                     }

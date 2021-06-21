@@ -31,6 +31,9 @@ public enum CampaignFestivalType {
     PARTY("节日派对", 14, GameCampaignTypePartyTask.class, GameCampaignTypePartyTaskVO.class),
     DIRECT_PURCHASE("直购礼包", 15, GameCampaignDirectPurchase.class, GameCampaignDirectPurchaseVO.class),
     REBATE_RECHARGE("返利狂欢", 16, GameCampaignTypeRebateRecharge.class, GameCampaignTypeRebateRechargeVo.class),
+    MARRY_RANK_WINE("结义排行榜-赠酒排行榜", 17, GameCampaignTypeMarryRank.class, GameCampaignTypeMarryRank.class),
+    MARRY_RANK_CHARM("结义排行榜-魅力值排行榜", 18, GameCampaignTypeMarryRank.class, GameCampaignTypeMarryRank.class),
+//    MARRY_RANK_GIFT("结义排行榜-结义礼包", 19, null, null),
     // end
     ;
 

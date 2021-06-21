@@ -47,7 +47,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
 
     @Autowired
     private IGameCampaignTypeFallService campaignTypeFallService;
-
     @Autowired
     private IGameCampaignTypeFallRewardService campaignTypeFallRewardService;
 
@@ -62,16 +61,13 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
 
     @Autowired
     private IGameCampaignTypeThrowingEggsService campaignTypeThrowingEggsService;
-
     @Autowired
     private IGameCampaignTypeThrowingEggsRankService campaignTypeThrowingEggsRankService;
-
     @Autowired
     private IGameCampaignTypeThrowingEggsGiftService campaignTypeThrowingEggsGiftService;
 
     @Autowired
     private IGameCampaignTypePartyTaskService campaignTypePartyTaskService;
-
     @Autowired
     private IGameCampaignTypePartyProgressService campaignTypePartyProgressService;
 
@@ -80,6 +76,11 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
 
     @Autowired
     private IGameCampaignTypeRebateRechargeService campaignTypeRebateRechargeService;
+
+    @Autowired
+    private IGameCampaignTypeMarryRankService gameCampaignTypeMarryRankService;
+    @Autowired
+    private IGameCampaignTypeMarryRankRewardService gameCampaignTypeMarryRankRewardService;
 
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
@@ -215,6 +216,20 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                             .eq(GameCampaignTypeRebateRecharge::getCampaignId, campaignId)
                             .eq(GameCampaignTypeRebateRecharge::getTypeId, model.getId());
                     model.setRewardList(campaignTypeRebateRechargeService.list(rewardsQuery));
+                }
+                break;
+
+                case MARRY_RANK_WINE:
+                case MARRY_RANK_CHARM: {
+                    Wrapper<GameCampaignTypeMarryRank> detailQuery = Wrappers.<GameCampaignTypeMarryRank>lambdaQuery()
+                            .eq(GameCampaignTypeMarryRank::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeMarryRank::getTypeId, model.getId());
+                    model.setDetails(gameCampaignTypeMarryRankService.list(detailQuery));
+
+                    Wrapper<GameCampaignTypeMarryRankReward> rewardQuery = Wrappers.<GameCampaignTypeMarryRankReward>lambdaQuery()
+                            .eq(GameCampaignTypeMarryRankReward::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeMarryRankReward::getTypeId, model.getId());
+                    model.setRewardList(gameCampaignTypeMarryRankRewardService.list(rewardQuery));
                 }
                 break;
 
@@ -723,6 +738,32 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         copyDetails.add(copy);
                     }
                     campaignTypeRebateRechargeService.saveBatch(copyDetails);
+                }
+                break;
+
+                case MARRY_RANK_WINE:
+                case MARRY_RANK_CHARM: {
+                    List<GameCampaignTypeMarryRank> copyDetails = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeMarryRank> details = (List<GameCampaignTypeMarryRank>) model.getDetails();
+                    for (GameCampaignTypeMarryRank detail : details) {
+                        GameCampaignTypeMarryRank copy = new GameCampaignTypeMarryRank(detail);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+                        copyDetails.add(copy);
+                    }
+                    gameCampaignTypeMarryRankService.saveBatch(copyDetails);
+
+                    if (CollUtil.isNotEmpty(model.getRewardList())) {
+                        List<GameCampaignTypeMarryRankReward> copyRewards = new ArrayList<>(model.getRewardList().size());
+                        List<GameCampaignTypeMarryRankReward> rewardList = (List<GameCampaignTypeMarryRankReward>) model.getRewardList();
+                        for (GameCampaignTypeMarryRankReward reward : rewardList) {
+                            GameCampaignTypeMarryRankReward copy = new GameCampaignTypeMarryRankReward(reward);
+                            copy.setCampaignId(copyCampaignId);
+                            copy.setTypeId(copyCampaignType.getId());
+                            copyRewards.add(copy);
+                        }
+                        gameCampaignTypeMarryRankRewardService.saveBatch(copyRewards);
+                    }
                 }
                 break;
                 default:
