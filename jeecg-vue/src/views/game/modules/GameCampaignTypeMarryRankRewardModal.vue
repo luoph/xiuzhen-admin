@@ -3,10 +3,10 @@
     <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
-                    <a-form-item label="campaign.id, 活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入campaign.id, 活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="game_campaign_type.id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入game_campaign_type.id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="排名最小值" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -20,18 +20,6 @@
                 </a-form-item>
                 <a-form-item label="奖励列表 e.g. [{"itemId":1001,"num":1}]" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表 e.g. [{"itemId":1001,"num":1}]"></a-input>
-                </a-form-item>
-                <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="创建人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入创建人"></a-input>
-                </a-form-item>
-                <a-form-item label="更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-date placeholder="请选择更新时间" v-decorator="['updateTime', validatorRules.updateTime]" :trigger-change="true" style="width: 100%" />
-                </a-form-item>
-                <a-form-item label="修改人" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['updateBy', validatorRules.updateBy]" placeholder="请输入修改人"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -70,16 +58,12 @@ export default {
             },
             confirmLoading: false,
             validatorRules: {
-                campaignId: {},
-                typeId: {},
-                minRank: {},
-                maxRank: {},
-                score: {},
-                reward: {},
-                createTime: {},
-                createBy: {},
-                updateTime: {},
-                updateBy: {},
+                campaignId: { rules: [{ required: true, message: "请输入活动id!" }] },
+                typeId: { rules: [{ required: true, message: "请输入页签id!" }] },
+                minRank: { rules: [{ required: true, message: "请输入排名最小值!" }] },
+                maxRank: { rules: [{ required: true, message: "请输入排名最大值!" }] },
+                score: { rules: [{ required: true, message: "请输入上榜最低积分!" }] },
+                reward: { rules: [{ required: true, message: "请输入奖励!" }] },
             },
             url: {
                 add: "game/gameCampaignTypeMarryRankReward/add",
@@ -98,7 +82,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "minRank", "maxRank", "score", "reward", "createTime", "createBy", "updateTime", "updateBy"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "minRank", "maxRank", "score", "reward"));
             });
         },
         close() {
@@ -142,7 +126,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "minRank", "maxRank", "score", "reward", "createTime", "createBy", "updateTime", "updateBy"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "minRank", "maxRank", "score", "reward"));
         },
     }
 };

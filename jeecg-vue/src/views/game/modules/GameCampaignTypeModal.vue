@@ -23,6 +23,8 @@
                         <a-select-option :value="14">14-节日派对</a-select-option>
                         <a-select-option :value="15">15-直购礼包</a-select-option>
                         <a-select-option :value="16">16-返利狂欢</a-select-option>
+                        <a-select-option :value="17">17-赠酒排行榜</a-select-option>
+                        <a-select-option :value="18">18-魅力值排行榜</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -115,6 +117,8 @@
             <game-campaign-type-party-progress-list v-if="isEdit && model.type === 14" ref="partyProgressList" />
             <game-campaign-direct-purchase-list v-if="isEdit && model.type === 15" ref="directPurchaseList" />
             <game-campaign-type-rebate-recharge-list v-if="isEdit && model.type === 16" ref="rebateRechargeList" />
+            <game-campaign-type-marry-rank-list v-if="isEdit && (model.type === 17 || model.type === 18)" ref="marryRankList" />
+            <game-campaign-type-marry-rank-reward-list v-if="isEdit && (model.type === 17 || model.type === 18)" ref="marryRankRewardList" />
         </a-spin>
     </a-modal>
 </template>
@@ -142,6 +146,8 @@ import GameCampaignTypePartyProgressList from "../GameCampaignTypePartyProgressL
 import GameCampaignTypePartyTaskList from "../GameCampaignTypePartyTaskList";
 import GameCampaignDirectPurchaseList from "../GameCampaignDirectPurchaseList";
 import GameCampaignTypeRebateRechargeList from "../GameCampaignTypeRebateRechargeList";
+import GameCampaignTypeMarryRankList from "../GameCampaignTypeMarryRankList";
+import GameCampaignTypeMarryRankRewardList from "../GameCampaignTypeMarryRankRewardList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -164,7 +170,9 @@ export default {
         GameCampaignTypePartyProgressList,
         GameCampaignTypePartyTaskList,
         GameCampaignDirectPurchaseList,
-        GameCampaignTypeRebateRechargeList
+        GameCampaignTypeRebateRechargeList,
+        GameCampaignTypeMarryRankList,
+        GameCampaignTypeMarryRankRewardList
     },
     data() {
         return {
@@ -273,6 +281,9 @@ export default {
                     if (this.$refs.rebateRechargeList) {
                         this.$refs.rebateRechargeList.edit(record);
                     }
+                    if (this.$refs.marryRankList) {
+                        this.$refs.marryRankList.edit(record);
+                    }
                 }
 
                 this.form.setFieldsValue(
@@ -306,23 +317,27 @@ export default {
         },
         handleOk() {
             const that = this;
+            if (this.model.cross == 1 && this.model.timeType == 2) {
+                that.$message.error("跨服的时间类型必须为时间范围");
+                return;
+            }
             // 时间类型校验
             if (this.model.timeType == 1) {
-                if (this.model.startDay === undefined || this.model.startDay === null) {
-                    that.$message.error("请输入开始天数");
-                    return;
-                }
-                if (this.model.duration === undefined || this.model.duration === null) {
-                    that.$message.error("请输入持续天数");
-                    return;
-                }
-            } else if (this.model.timeType == 2) {
                 if (this.model.startTime === undefined || this.model.startTime === null) {
                     that.$message.error("请输入开始时间");
                     return;
                 }
                 if (this.model.endTime === undefined || this.model.endTime === null) {
                     that.$message.error("请输入结束时间");
+                    return;
+                }
+            } else if (this.model.timeType == 2) {
+                if (this.model.startDay === undefined || this.model.startDay === null) {
+                    that.$message.error("请输入开始天数");
+                    return;
+                }
+                if (this.model.duration === undefined || this.model.duration === null) {
+                    that.$message.error("请输入持续天数");
                     return;
                 }
             }
