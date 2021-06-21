@@ -124,7 +124,7 @@ export default {
                     dataIndex: "score"
                 },
                 {
-                    title: "奖励列表 e.g. [{"itemId":1001,"num":1}]",
+                    title: "奖励列表",
                     align: "center",
                     dataIndex: "reward"
                 },
