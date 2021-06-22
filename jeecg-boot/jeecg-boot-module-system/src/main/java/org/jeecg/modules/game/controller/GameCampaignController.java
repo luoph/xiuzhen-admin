@@ -97,13 +97,19 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             if (record.getStatus() == SwitchStatus.OFF.getValue()) {
                 record.setCampaignStatus(CampaignStatus.CLOSED.getValue());
             } else if (record.getStatus() == SwitchStatus.ON.getValue()) {
-                if (now.before(campaignType.getStartTime())) {
-                    record.setCampaignStatus(CampaignStatus.NOT_STARTED.getValue());
-                } else if (now.after(campaignType.getEndTime())) {
-                    record.setCampaignStatus(CampaignStatus.COMPLETED.getValue());
-                } else {
-                    record.setCampaignStatus(CampaignStatus.IN_PROGRESS.getValue());
+                Date startTime = null;
+                Date endTime = null;
+                if (campaignType.getTimeType() == 1) {
+                    startTime = campaignType.getStartTime();
+                    endTime = campaignType.getEndTime();
+                } else if (campaignType.getTimeType() == 2) {
+                    startTime = DateUtils.startTimeOfDate(cn.youai.server.utils.DateUtils.addDays(record.getOpenTime(), campaignType.getStartDay()));
+                    endTime = DateUtils.endTimeOfDate(cn.youai.server.utils.DateUtils.addDays(record.getOpenTime(),
+                            Math.max(campaignType.getStartDay() + campaignType.getDuration() - 1, 0)));
                 }
+                record.setCampaignStatus(now.before(startTime) ? CampaignStatus.NOT_STARTED.getValue()
+                        : now.after(endTime) ? CampaignStatus.COMPLETED.getValue()
+                        : CampaignStatus.IN_PROGRESS.getValue());
             } else {
                 record.setCampaignStatus(CampaignStatus.NONE.getValue());
             }
