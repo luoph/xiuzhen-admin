@@ -236,9 +236,11 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         supports.forEach(t -> serverIds.add(t.getServerId()));
 
         // 通知跨服
-        List<GameServerGroupItem> gameServerGroupItemList = gameServerGroupItemService.list(Wrappers.<GameServerGroupItem>lambdaQuery()
-                .in(GameServerGroupItem::getServerId, serverIds).groupBy(GameServerGroupItem::getGroupId));
-        gameServerGroupItemList.forEach(gameServerGroupItem -> serverIds.add(gameServerGroupItem.getGroupId().intValue()));
+        if (!serverIds.isEmpty()) {
+            List<GameServerGroupItem> gameServerGroupItemList = gameServerGroupItemService.list(Wrappers.<GameServerGroupItem>lambdaQuery()
+                    .in(GameServerGroupItem::getServerId, serverIds).groupBy(GameServerGroupItem::getGroupId));
+            gameServerGroupItemList.forEach(gameServerGroupItem -> serverIds.add(gameServerGroupItem.getGroupId().intValue()));
+        }
 
         Map<Integer, Response> response = gameServerService.gameServerGet(serverIds, campaignUpdateUrl);
         log.info("sync id:{} response:{}", id, response);
