@@ -197,7 +197,7 @@ export default {
         },
         handleAdd() {
             this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
-            this.$refs.modalForm.title = "新增结义排行配置";
+            this.$refs.modalForm.title = "新增结义排行奖励配置";
         },
         getQueryParams() {
             var param = Object.assign({}, this.queryParam);

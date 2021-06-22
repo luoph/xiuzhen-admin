@@ -71,7 +71,7 @@ export default {
                 bigRewardFight: {},
                 rankNum: { rules: [{ required: true, message: "请输入排行玩家数量!" }] },
                 rankRewardEmail: { rules: [{ required: true, message: "请输入排名奖励邮件id!" }] },
-                callOnMessage: { rules: [{ required: true, message: "请输入号召赠酒传闻id!" }] },
+                callOnMessage: { rules: [{ required: false, message: "请输入号召赠酒传闻id!" }] },
                 helpMsg: {},
             },
             url: {
