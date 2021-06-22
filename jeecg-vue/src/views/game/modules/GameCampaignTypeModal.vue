@@ -284,6 +284,9 @@ export default {
                     if (this.$refs.marryRankList) {
                         this.$refs.marryRankList.edit(record);
                     }
+                    if (this.$refs.marryRankRewardList) {
+                        this.$refs.marryRankRewardList.edit(record);
+                    }
                 }
 
                 this.form.setFieldsValue(

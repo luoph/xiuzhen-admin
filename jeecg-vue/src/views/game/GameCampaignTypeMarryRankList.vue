@@ -86,6 +86,7 @@ export default {
     data() {
         return {
             description: "节日活动-结义排行榜管理页面",
+            model: {},
             // 表头
             columns: [
                 {

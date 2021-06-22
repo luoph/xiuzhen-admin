@@ -4,10 +4,10 @@
         <a-spin :spinning="confirmLoading">
             <a-form :form="form">
                     <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入campaign.id, 活动id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入campaign.id, 活动id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入game_campaign_type.id" style="width: 100%" />
+                    <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入game_campaign_type.id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="排名最小值" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['minRank', validatorRules.minRank]" placeholder="请输入排名最小值" style="width: 100%" />
@@ -18,8 +18,8 @@
                 <a-form-item label="上榜最低积分" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['score', validatorRules.score]" placeholder="请输入上榜最低积分" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="奖励列表 e.g. [{"itemId":1001,"num":1}]" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表 e.g. [{"itemId":1001,"num":1}]"></a-input>
+                <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-input>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -47,6 +47,7 @@ export default {
             title: "操作",
             width: 800,
             visible: false,
+            isEdit: false,
             model: {},
             labelCol: {
                 xs: { span: 24 },
@@ -74,12 +75,13 @@ export default {
     created() {
     },
     methods: {
-        add() {
-            this.edit({});
+        add(record) {
+            this.edit(record);
         },
         edit(record) {
             this.form.resetFields();
             this.model = Object.assign({}, record);
+            this.isEdit = this.model.id != null;
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "minRank", "maxRank", "score", "reward"));
