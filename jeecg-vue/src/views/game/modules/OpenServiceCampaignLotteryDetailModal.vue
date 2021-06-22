@@ -256,26 +256,6 @@ export default {
         },
         handleOk() {
             const that = this;
-            // 时间类型校验
-            if (this.model.timeType == 1) {
-                if (this.model.startDay === undefined || this.model.startDay === null) {
-                    that.$message.error("请输入开始天数");
-                    return;
-                }
-                if (this.model.duration === undefined || this.model.duration === null) {
-                    that.$message.error("请输入持续天数");
-                    return;
-                }
-            } else if (this.model.timeType == 2) {
-                if (this.model.startTime === undefined || this.model.startTime === null) {
-                    that.$message.error("请输入开始时间");
-                    return;
-                }
-                if (this.model.endTime === undefined || this.model.endTime === null) {
-                    that.$message.error("请输入结束时间");
-                    return;
-                }
-            }
             // 触发表单验证
             this.form.validateFields((err, values) => {
                 if (!err) {
@@ -293,6 +273,30 @@ export default {
                     // 时间格式化
                     formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    // 时间类型校验
+                    if (formData.timeType == 1) {
+                        if (formData.startTime === undefined || formData.startTime === null) {
+                            that.$message.error("请输入开始时间");
+                            that.confirmLoading = false;
+                            return;
+                        }
+                        if (formData.endTime === undefined || formData.endTime === null) {
+                            that.$message.error("请输入结束时间");
+                            that.confirmLoading = false;
+                            return;
+                        }
+                    } else if (formData.timeType == 2) {
+                        if (formData.startDay === undefined || formData.startDay === null) {
+                            that.$message.error("请输入开始天数");
+                            that.confirmLoading = false;
+                            return;
+                        }
+                        if (formData.duration === undefined || formData.duration === null) {
+                            that.$message.error("请输入持续天数");
+                            that.confirmLoading = false;
+                            return;
+                        }
+                    }
 
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
