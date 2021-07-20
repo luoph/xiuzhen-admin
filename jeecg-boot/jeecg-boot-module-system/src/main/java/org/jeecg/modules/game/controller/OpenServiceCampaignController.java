@@ -3,6 +3,7 @@ package org.jeecg.modules.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.Response;
+import cn.youai.server.springboot.component.OkHttpHelper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -52,6 +53,9 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
 
     @Value("${app.campaign-reload-url:/campaign/reload}")
     private String campaignReloadUrl;
+
+    @Value("${app.url.game-center}")
+    private String gameCenterUrl;
 
     /**
      * 分页列表查询
@@ -194,6 +198,9 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         List<String> currentIds = StrUtil.splitTrim(campaign.getServerIds(), ",");
         Set<String> allIds = new HashSet<>(lastIds);
         allIds.addAll(currentIds);
+
+        // 通知中心服重新加载
+        OkHttpHelper.get(gameCenterUrl + "/openServiceCampaign/reload");
 
         Map<String, Object> params = new HashMap<>(allIds.size());
         params.put("id", id);
