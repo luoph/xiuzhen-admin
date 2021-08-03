@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -50,6 +51,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
     @Autowired
     private IGameServerService gameServerService;
+
+    @Autowired
+    private IGameServerGroupService gameServerGroupService;
 
     @Autowired
     private IGameServerGroupItemService gameServerGroupItemService;
@@ -227,23 +231,17 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             return Result.error("找不到对应活动配置!");
         }
 
-        Wrapper<GameCampaignSupport> query = Wrappers.<GameCampaignSupport>lambdaQuery()
+        // 通知游戏服
+        List<GameCampaignSupport> supports = campaignSupportService.list(Wrappers.<GameCampaignSupport>lambdaQuery()
                 .eq(GameCampaignSupport::getCampaignId, id)
-                .groupBy(GameCampaignSupport::getServerId);
-
-        List<Integer> serverIds = new ArrayList<>();
-        List<GameCampaignSupport> supports = campaignSupportService.list(query);
-        supports.forEach(t -> serverIds.add(t.getServerId()));
-
-        // 通知跨服
-        if (!serverIds.isEmpty()) {
-            List<GameServerGroupItem> gameServerGroupItemList = gameServerGroupItemService.list(Wrappers.<GameServerGroupItem>lambdaQuery()
-                    .in(GameServerGroupItem::getServerId, serverIds).groupBy(GameServerGroupItem::getGroupId));
-            gameServerGroupItemList.forEach(gameServerGroupItem -> serverIds.add(gameServerGroupItem.getGroupId().intValue()));
-        }
-
+                .groupBy(GameCampaignSupport::getServerId));
+        List<Integer> serverIds = supports.stream().map(GameCampaignSupport::getServerId).collect(Collectors.toList());
         Map<Integer, Response> response = gameServerService.gameServerGet(serverIds, campaignUpdateUrl);
         log.info("sync id:{} response:{}", id, response);
+
+        // 通知跨服
+        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(serverIds, campaignUpdateUrl);
+        log.info("sync id:{} response:{}", id, gameServerGroupResponse);
         return Result.ok("编辑成功!");
     }
 
