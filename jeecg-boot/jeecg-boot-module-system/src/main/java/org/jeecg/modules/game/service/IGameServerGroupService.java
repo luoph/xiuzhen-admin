@@ -4,7 +4,7 @@
 package org.jeecg.modules.game.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.game.entity.GameServerGroupItem;
+import org.jeecg.modules.game.entity.GameServerGroup;
 
 /**
  * <p>
@@ -12,8 +12,8 @@ import org.jeecg.modules.game.entity.GameServerGroupItem;
  * </p>
  *
  * @author luopeihuan
- * @since 2021-04-22
+ * @since 2021-08-03
  */
-public interface IGameServerGroupItemService extends IService<GameServerGroupItem> {
+public interface IGameServerGroupService extends IService<GameServerGroup> {
 
 }
