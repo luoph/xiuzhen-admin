@@ -55,9 +55,6 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @Autowired
     private IGameServerGroupService gameServerGroupService;
 
-    @Autowired
-    private IGameServerGroupItemService gameServerGroupItemService;
-
     @Value("${app.campaign-update-url:/campaign/update}")
     private String campaignUpdateUrl;
 
