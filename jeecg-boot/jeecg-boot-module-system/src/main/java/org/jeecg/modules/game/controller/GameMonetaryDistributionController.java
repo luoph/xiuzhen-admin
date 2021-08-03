@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.date.DatePattern;
-import cn.youai.server.model.DateRange;
+import cn.youai.commons.model.DateRange;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
