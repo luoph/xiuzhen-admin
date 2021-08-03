@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.server.model.DateRange;
+import cn.youai.commons.model.DateRange;
 import cn.youai.server.utils.ConvertUtils;
 import cn.youai.xiuzhen.entity.pojo.OperationType;
 import cn.youai.xiuzhen.utils.DateUtils;
