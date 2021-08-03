@@ -3,8 +3,13 @@
  */
 package org.jeecg.modules.game.service;
 
+import cn.youai.commons.model.Response;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameServerGroup;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -16,4 +21,9 @@ import org.jeecg.modules.game.entity.GameServerGroup;
  */
 public interface IGameServerGroupService extends IService<GameServerGroup> {
 
+    List<GameServerGroup> getGameServerGroupList(Collection<Integer> serverIds);
+
+    Map<Long, Response> gameServerGroupGet(Collection<GameServerGroup> gameServerGroups, String path);
+
+    Map<Long, Response> gameServerGroupGetByServerIds(Collection<Integer> serverIds, String path);
 }
