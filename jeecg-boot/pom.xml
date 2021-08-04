@@ -59,9 +59,9 @@
         <shiro-redis.version>3.1.0</shiro-redis.version>
         <shiro.version>1.4.2</shiro.version>
         <!-- 框架依赖 -->
-        <entities.version>0.0.5-SNAPSHOT</entities.version>
-        <web-starter.version>0.0.5-SNAPSHOT</web-starter.version>
-        <server-common.version>0.0.5-SNAPSHOT</server-common.version>
+        <entities.version>0.0.5</entities.version>
+        <web-starter.version>0.0.5</web-starter.version>
+        <server-common.version>0.0.5</server-common.version>
     </properties>
 
     <dependencies>
