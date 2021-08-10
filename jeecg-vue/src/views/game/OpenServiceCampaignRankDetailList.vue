@@ -162,31 +162,19 @@ export default {
                         } else if (value === 2) {
                             text = "2-仙兽排行";
                         } else if (value === 3) {
-                            text = "3-法宝排行";
+                            text = "3-义戒排行";
                         } else if (value === 4) {
-                            text = "4-圣灵排行";
+                            text = "4-飞剑排行";
                         } else if (value === 5) {
-                            text = "5-情缘排行";
+                            text = "5-天书排行";
                         } else if (value === 6) {
-                            text = "6-飞剑排行";
+                            text = "6-圣灵排行";
                         } else if (value === 7) {
-                            text = "7-天书排行";
+                            text = "7-法宝排行";
                         } else if (value === 8) {
-                            text = "8-仙器排行";
-                        } else if (value === 9) {
-                            text = "9-仙兽排行";
-                        } else if (value === 10) {
-                            text = "10-法宝排行";
-                        } else if (value === 11) {
-                            text = "11-圣灵排行";
-                        } else if (value === 12) {
-                            text = "12-情缘排行";
-                        } else if (value === 13) {
-                            text = "13-飞剑排行";
-                        } else if (value === 14) {
-                            text = "14-天书排行";
-                        } else if (value === 15) {
-                            text = "15-仙器排行";
+                            text = "8-情饰排行";
+                        } else {
+                            text = "大于8-过期类型";
                         }
                         return text;
                     }
