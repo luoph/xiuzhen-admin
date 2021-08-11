@@ -18,7 +18,8 @@ public class GameServerVO {
     private String name;
     private String host;
     private String loginUrl;
-    private Integer status;
+    private String gmUrl;
+    private String gmStatus;
     private Integer isMaintain;
     private Integer recommend;
     private String warning;
@@ -26,4 +27,5 @@ public class GameServerVO {
     private Integer maxVersion;
     private Long openTime;
     private Long onlineTime;
+
 }
