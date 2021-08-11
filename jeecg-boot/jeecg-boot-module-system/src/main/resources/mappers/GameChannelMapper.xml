@@ -7,8 +7,8 @@
                s.`game_id`,
                s.`name`,
                s.`host`,
-               UNIX_TIMESTAMP(s.`open_time`)           as `open_time`,
-               UNIX_TIMESTAMP(s.`online_time`)         as `online_time`,
+               UNIX_TIMESTAMP(s.`open_time`)           AS `open_time`,
+               UNIX_TIMESTAMP(s.`online_time`)         AS `online_time`,
                s.`login_url`,
                IF(s.`gm_status` = 1, s.`gm_url`, NULL) AS `gm_url`,
                s.`status`,
@@ -26,9 +26,9 @@
     </select>
 
     <select id="queryChannelNameById" resultType="java.lang.String">
-        SELECT simple_name
-        FROM game_channel
-        WHERE id = #{channelId}
+        SELECT `simple_name`
+        FROM `game_channel`
+        WHERE `id` = #{channelId}
     </select>
 
 
