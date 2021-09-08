@@ -17,6 +17,7 @@ public class GameServerVO {
     private Integer gameId;
     private String name;
     private String host;
+    private Integer status;
     private String loginUrl;
     private String gmUrl;
     private String gmStatus;
