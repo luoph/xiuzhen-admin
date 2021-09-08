@@ -46,7 +46,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
         List<GameChannel> channelList = list();
         if (CollUtil.isNotEmpty(channelList)) {
             for (GameChannel channel : channelList) {
-                refreshChannelServerJson(channel);
+                updateChannelServerJson(channel);
             }
         }
     }
@@ -55,7 +55,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     public void updateChannelConfig(Integer channelId) {
         GameChannel gameChannel = getById(channelId);
         if (gameChannel != null) {
-            refreshChannelServerJson(gameChannel);
+            updateChannelServerJson(gameChannel);
         }
     }
 
@@ -77,7 +77,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
         }
     }
 
-    private void refreshChannelServerJson(GameChannel channel) {
+    private void updateChannelServerJson(GameChannel channel) {
         List<GameServerVO> servers = selectServerListByChannelId(channel.getId());
         UpdateConfig updateConfig = new UpdateConfig()
                 .setVersionCode(channel.getVersionCode())

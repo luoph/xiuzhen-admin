@@ -163,14 +163,14 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     }
 
     @GetMapping(value = "/updateNoticeConfig")
-    public Result<?> updateServerConfig(HttpServletRequest req) {
+    public Result<?> updateNoticeConfig(HttpServletRequest req) {
         try {
             List<GameNotice> noticeList = gameNoticeService.list();
             for (GameNotice gameNotice : noticeList) {
                 updateNoticeJson(gameNotice);
             }
         } catch (Exception e) {
-            log.error("updateServerConfig error", e);
+            log.error("updateNoticeConfig error", e);
             return Result.error(e.getMessage());
         }
         return Result.ok("刷新成功");
