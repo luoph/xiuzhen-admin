@@ -21,9 +21,10 @@ import java.io.Serializable;
  * @date 2018-12-29
  */
 @Data
+@TableName("demo")
 @Accessors(chain = true)
 @ApiModel(value = "测试DEMO对象", description = "测试DEMO")
-@TableName("demo")
+@EqualsAndHashCode(callSuper = true)
 public class JeecgDemo extends JeecgEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /**

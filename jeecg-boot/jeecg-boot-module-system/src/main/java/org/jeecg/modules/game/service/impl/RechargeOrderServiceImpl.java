@@ -1,21 +1,22 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.server.component.ConfigManager;
-import cn.youai.xiuzhen.config.GameConfig;
-import cn.youai.xiuzhen.entity.pojo.ConfRechargeGoods;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.googlecode.cqengine.query.logical.And;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.GameChalcedonyOrder;
+import org.jeecg.modules.game.entity.GameRechargeGoods;
 import org.jeecg.modules.game.entity.PayOrderBill;
 import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.mapper.PayOrderBillMapper;
 import org.jeecg.modules.game.mapper.RechargeOrderMapper;
+import org.jeecg.modules.game.service.IGameRechargeGoodsService;
 import org.jeecg.modules.game.service.IRechargeOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.googlecode.cqengine.query.QueryFactory.and;
-import static com.googlecode.cqengine.query.QueryFactory.equal;
 import static org.jeecg.modules.game.constant.FairyJadeBuyType.*;
 
 /**
@@ -40,6 +39,9 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
 
     @Resource
     private RechargeOrderMapper rechargeOrderMapper;
+
+    @Autowired
+    private IGameRechargeGoodsService rechargeGoodsService;
 
     @Resource
     private PayOrderBillMapper payOrderBillMapper;
@@ -103,14 +105,13 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             PayOrderBill payOrderBill = payOrderBillMapper.queryPayOrderList(rangeDateBeginTime, rangeDateEndTime, serverId, channel, dau, goodsId);
 
             // 获取充值商品
-            ConfRechargeGoods rechargeGoods = itemTree(goodsId, goodsType);
+            LambdaQueryWrapper<GameRechargeGoods> queryWrapper = Wrappers.<GameRechargeGoods>lambdaQuery()
+                    .eq(GameRechargeGoods::getGoodsId, goodsId)
+                    .eq(GameRechargeGoods::getGoodsType, goodsType);
+            GameRechargeGoods rechargeGoods = rechargeGoodsService.getOne(queryWrapper);
 
-            if (rechargeGoods == null) {
-                // 可能存在数据不一致的情况
-                rechargeGoods.setName("该商品不存在");
-            }
             // 填充数据对象返回给前端
-            rechargeOrder.setGoodsName(rechargeGoods.getName());
+            rechargeOrder.setGoodsName(rechargeGoods != null ? rechargeGoods.getName() : "该商品不存在");
             rechargeOrder.setGoodsId(goodsId);
             rechargeOrder.setDau(dau);
             rechargeOrder.setPayNum(payOrderBill.getPayNumSum());
@@ -128,20 +129,6 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
 
         return rechargeOrderList;
     }
-
-
-    /**
-     * 通过商品id和商品类型获取充值商品(策划表中的数据)
-     *
-     * @param goodsId
-     * @param goodsType
-     * @return
-     */
-    private ConfRechargeGoods itemTree(Integer goodsId, int goodsType) {
-        And<ConfRechargeGoods> and = and(equal(ConfRechargeGoods.ID, goodsId), equal(ConfRechargeGoods.GOODS_TYPE, goodsType));
-        return ConfigManager.one(GameConfig.RECHARGE_GOODS, ConfRechargeGoods.class, and);
-    }
-
 
     /**
      * 获取消耗礼包数据处理

@@ -48,20 +48,20 @@
         <concurrentlinkedhashmap.lru.version>1.4.2</concurrentlinkedhashmap.lru.version>
         <druid.version>1.1.20</druid.version>
         <easyexcel.version>2.2.7</easyexcel.version>
-        <fastjson.version>1.2.75</fastjson.version>
-        <httpclient.version>4.5.10</httpclient.version>
-        <hutool.version>5.6.4</hutool.version>
+        <fastjson.version>1.2.78</fastjson.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <hutool.version>5.7.3</hutool.version>
         <java-jwt.version>3.7.0</java-jwt.version>
         <jwt.version>0.9.1</jwt.version>
         <mybatis-plus.version>3.1.2</mybatis-plus.version>
-        <mysql-connector.version>5.1.48</mysql-connector.version>
-        <sentry.version>1.7.30</sentry.version>
+        <mysql-connector.version>5.1.49</mysql-connector.version>
+        <sentry.version>5.1.2</sentry.version>
         <shiro-redis.version>3.1.0</shiro-redis.version>
         <shiro.version>1.4.2</shiro.version>
         <!-- 框架依赖 -->
-        <entities.version>0.0.5</entities.version>
-        <web-starter.version>0.0.5</web-starter.version>
-        <server-common.version>0.0.5</server-common.version>
+        <entities.version>0.0.9-SNAPSHOT</entities.version>
+        <web-starter.version>0.0.9-SNAPSHOT</web-starter.version>
+        <server-common.version>0.0.9-SNAPSHOT</server-common.version>
     </properties>
 
     <dependencies>

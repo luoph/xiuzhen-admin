@@ -6,6 +6,7 @@ package org.jeecg.modules.player.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.map.MapUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -114,7 +115,7 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
         });
 
         Map<String, List<Long>> playerIdsByLoginDates = getPlayerIdsByLoginDates(serverId, dateJsonList);
-        if (CollUtil.isNotEmpty(playerIdsByLoginDates)) {
+        if (MapUtil.isNotEmpty(playerIdsByLoginDates)) {
             Map<String, Integer> map = new HashMap<>(dateList.size());
             playerIdsByLoginDates.forEach((key, value) -> {
                 if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH || type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {

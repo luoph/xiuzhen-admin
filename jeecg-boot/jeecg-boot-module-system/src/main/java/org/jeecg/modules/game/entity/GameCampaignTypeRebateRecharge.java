@@ -1,17 +1,11 @@
 package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @author jeecg-boot
@@ -20,8 +14,9 @@ import java.io.Serializable;
  * @date 2021-05-31
  */
 @Data
-@TableName("game_campaign_type_rebate_recharge")
 @Accessors(chain = true)
+@TableName("game_campaign_type_rebate_recharge")
+@EqualsAndHashCode(callSuper = true)
 public class GameCampaignTypeRebateRecharge extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;

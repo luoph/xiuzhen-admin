@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
@@ -21,6 +22,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @TableName("game_email")
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class GameEmail extends BaseEntity {
 
     /**

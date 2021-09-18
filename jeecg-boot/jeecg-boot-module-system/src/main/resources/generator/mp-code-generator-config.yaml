@@ -11,8 +11,8 @@ globalConfig:
   fileOverride: true
 
 dataSourceConfig:
-#  url: jdbc:mysql://10.21.211.35:3306/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true
-  url: jdbc:mysql://dev.1101stu.com:7733/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true
+#  url: jdbc:mysql://10.21.211.35:3306/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+  url: jdbc:mysql://dev.1101stu.com:7733/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
   driverName: com.mysql.jdbc.Driver
   username: gamecenter
   password: ubj8sf}xEpb&892P
@@ -47,4 +47,4 @@ strategyConfig:
   tablePrefix:
   include:
     # 表名
-    - game_count_ongoing
+    - game_recharge_goods
