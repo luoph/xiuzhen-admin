@@ -6,6 +6,9 @@
                 <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
                 </a-form-item>
+                <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['sku', validatorRules.sku]" placeholder="请输入sku" style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)" style="width: 100%" />
                 </a-form-item>
@@ -98,7 +101,8 @@ export default {
                 amountStat: { rules: [{ required: true, message: "请输入是否记入累充！" }] },
                 exchange: { rules: [{ required: true, message: "请输入游戏币与人民币(元)的兑换比例!" }] },
                 recommend: { rules: [{ required: false, message: "请输入特殊标记前端用!" }] },
-                goodsId: { rules: [{ required: true, message: "请输入商品Id" }] }
+                goodsId: { rules: [{ required: true, message: "请输入商品Id" }] },
+                sku: { rules: [{ required: true, message: "请输入sku" }] }
             },
             url: {
                 add: "game/gameRechargeGoods/add",
@@ -160,7 +164,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
+            this.form.setFieldsValue(pick(row, "goodsId", "sku", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "createBy"));
         }
     }
 };

@@ -44,6 +44,13 @@ public class GameRechargeGoods implements Serializable {
     /**
      * 单价(创建订单实际价格)
      */
+    @Excel(name = "sku", width = 15)
+    @ExcelProperty(value = "sku")
+    private java.lang.String sku;
+
+    /**
+     * 单价(创建订单实际价格)
+     */
     @Excel(name = "单价(创建订单实际价格)", width = 15)
     @ExcelProperty(value = "单价(创建订单实际价格)")
     private java.math.BigDecimal price;

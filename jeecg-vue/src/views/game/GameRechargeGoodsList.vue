@@ -10,6 +10,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
+                        <a-form-item label="SKU">
+                            <a-input placeholder="请输入sku" v-model="queryParam.sku"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="6" :sm="8">
                         <a-form-item label="商品名称">
                             <j-input placeholder="商品名称模糊查询" v-model="queryParam.name"></j-input>
                         </a-form-item>
@@ -151,6 +156,12 @@ export default {
                     align: "center",
                     width: 80,
                     dataIndex: "goodsId"
+                },
+                {
+                    title: "sku",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "sku"
                 },
                 {
                     title: "商品名称",
