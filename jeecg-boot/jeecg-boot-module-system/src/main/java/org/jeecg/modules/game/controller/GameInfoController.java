@@ -12,7 +12,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameInfo;
-import org.jeecg.modules.game.model.GameConfig;
+import org.jeecg.modules.game.model.GameClientConfig;
 import org.jeecg.modules.game.service.IGameInfoService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,9 +163,9 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
         try {
             List<GameInfo> gameInfoList = gameInfoService.list();
             for (GameInfo gameInfo : gameInfoList) {
-                GameConfig gameConfig = new GameConfig();
-                BeanUtils.copyProperties(gameInfo, gameConfig);
-                JsonFileUtils.writeJsonFile(gameConfig, gameFolder, gameInfo.getYaSimpleName());
+                GameClientConfig gameClientConfig = new GameClientConfig();
+                BeanUtils.copyProperties(gameInfo, gameClientConfig);
+                JsonFileUtils.writeJsonFile(gameClientConfig, gameFolder, gameInfo.getYaSimpleName());
             }
         } catch (Exception e) {
             log.error("updateServerConfig error", e);

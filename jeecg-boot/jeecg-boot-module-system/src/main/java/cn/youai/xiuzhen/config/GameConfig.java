@@ -2,7 +2,10 @@ package cn.youai.xiuzhen.config;
 
 import cn.youai.server.model.ConfigTable;
 import cn.youai.server.utils.ReflectUtils;
-import cn.youai.xiuzhen.entity.pojo.*;
+import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.xiuzhen.entity.pojo.ConfMainStory;
+import cn.youai.xiuzhen.entity.pojo.ConfMedicine;
+import cn.youai.xiuzhen.entity.pojo.ConfRefineEquip;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
@@ -28,8 +31,6 @@ public class GameConfig {
      * 道具
      */
     public static final ConfigTable ITEM = ConfigTable.valueOf("item", ConfItem.class);
-    public static final ConfigTable RECHARGE_GOODS = ConfigTable.valueOf("recharge_goods", ConfRechargeGoods.class);
-
     /**
      * 主剧情
      */

@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.map.MapUtil;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -21,7 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -84,7 +88,7 @@ public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, G
         // 活跃玩家
         Map<String, Integer> activePlayerByLoginDates = logAccountService.getPlayerNumByLoginDates(gameStatOrder.getServerId() != null ?
                 gameStatOrder.getServerId() : 0, dateList, type);
-        if (CollectionUtil.isEmpty(activePlayerByLoginDates)) {
+        if (MapUtil.isEmpty(activePlayerByLoginDates)) {
             return null;
         }
         // body

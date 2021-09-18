@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class GameConfig {
+public class GameClientConfig {
     private String name;
     private String loginUrl;
     private String serverUrl;
