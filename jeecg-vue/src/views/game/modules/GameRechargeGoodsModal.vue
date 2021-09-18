@@ -120,7 +120,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "goodsId", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "recommend"));
+                this.form.setFieldsValue(pick(this.model, "goodsId", "sku", "price", "discount", "name", "items", "goodsType", "amountStat", "addition", "exchange", "recommend"));
             });
         },
         close() {

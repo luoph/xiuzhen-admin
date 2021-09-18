@@ -11,7 +11,7 @@
                     </a-col>
                     <a-col :md="6" :sm="8">
                         <a-form-item label="SKU">
-                            <a-input placeholder="请输入sku" v-model="queryParam.sku"></a-input>
+                            <j-input placeholder="请输入sku模糊查询" v-model="queryParam.sku"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -19,11 +19,13 @@
                             <j-input placeholder="商品名称模糊查询" v-model="queryParam.name"></j-input>
                         </a-form-item>
                     </a-col>
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="单价">
-                            <a-input placeholder="请输入单价(创建订单实际价格)" v-model="queryParam.price"></a-input>
-                        </a-form-item>
-                    </a-col>
+                    <template v-if="toggleSearchStatus">
+                        <a-col :md="4" :sm="8">
+                            <a-form-item label="单价">
+                                <a-input placeholder="请输入单价" v-model="queryParam.price"></a-input>
+                            </a-form-item>
+                        </a-col>
+                    </template>
                     <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -166,13 +168,13 @@ export default {
                 {
                     title: "商品名称",
                     align: "center",
-                    width: 180,
+                    width: 120,
                     dataIndex: "name"
                 },
                 {
                     title: "单价",
                     align: "center",
-                    width: 120,
+                    width: 80,
                     dataIndex: "price"
                 },
                 {
@@ -221,14 +223,14 @@ export default {
                 {
                     title: "奖励列表",
                     align: "center",
-                    width: 240,
+                    width: 180,
                     dataIndex: "items",
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "首次额外赠送",
                     align: "center",
-                    width: 240,
+                    width: 180,
                     dataIndex: "addition"
                 },
                 {
