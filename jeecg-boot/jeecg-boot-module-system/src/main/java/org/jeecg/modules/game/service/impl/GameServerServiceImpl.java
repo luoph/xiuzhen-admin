@@ -12,6 +12,7 @@ import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params) {
+        StopWatch stopWatch = new StopWatch();
         Map<String, Response> responseMap = new HashMap<>(serverIds.size());
         for (String serverId : serverIds) {
             GameServer gameServer = getById(serverId);
@@ -65,13 +67,16 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
                 continue;
             }
 
+            stopWatch.start("游戏服重新加载: serverId=" + serverId);
             try {
                 Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
                 responseMap.put(serverId, response);
             } catch (Exception e) {
                 log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
             }
+            stopWatch.stop();
         }
+        log.error(stopWatch.prettyPrint());
         return responseMap;
     }
 
