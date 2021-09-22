@@ -22,6 +22,7 @@ import org.jeecg.modules.game.service.IOpenServiceCampaignService;
 import org.jeecg.modules.game.service.IOpenServiceCampaignTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -199,20 +200,29 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         Set<String> allIds = new HashSet<>(lastIds);
         allIds.addAll(currentIds);
 
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start("通知中心服重新加载");
         // 通知中心服重新加载
         OkHttpHelper.get(gameCenterUrl + "/openServiceCampaign/reload");
+        stopWatch.stop();
 
+        stopWatch.start("通知各游戏服重新加载");
+        // 通知各游戏服重新加载
         Map<String, Object> params = new HashMap<>(allIds.size());
         params.put("id", id);
         params.put("name", "OpenService");
         Map<String, Response> response = gameServerService.gameServerGet(allIds, campaignReloadUrl, params);
         log.info("sync id:{} response:{}", id, response);
+        stopWatch.stop();
 
+        stopWatch.start("更新已刷新的服务器id");
         // 更新已刷新的服务器id
         Collections.sort(currentIds);
         campaign.setLastServerIds(StrUtil.join(",", currentIds));
         campaignService.updateById(new OpenServiceCampaign().setId(campaign.getId()).setLastServerIds(campaign.getLastServerIds()));
+        stopWatch.stop();
 
+        log.error(stopWatch.prettyPrint());
         return Result.ok("同步成功!");
     }
 
