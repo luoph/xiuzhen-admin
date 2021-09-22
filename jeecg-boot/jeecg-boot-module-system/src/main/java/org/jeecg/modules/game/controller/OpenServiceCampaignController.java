@@ -99,7 +99,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     /**
      * 编辑
      *
-     * @param model 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动(1级)-编辑")
