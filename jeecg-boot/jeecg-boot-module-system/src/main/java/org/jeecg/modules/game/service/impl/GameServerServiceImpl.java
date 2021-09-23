@@ -59,7 +59,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     @Override
     public Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params) {
         Map<String, Response> responseMap = new ConcurrentHashMap<>(serverIds.size());
-//        StopWatch stopWatch = new StopWatch();
+        StopWatch stopWatch = new StopWatch();
         CountDownLatch latch = new CountDownLatch(serverIds.size());
         for (String serverId : serverIds) {
             GameServer gameServer = getById(serverId);
@@ -74,14 +74,14 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             }
 
             new Fiber<>(() -> {
-//                stopWatch.start("游戏服重新加载: serverId=" + serverId);
+                stopWatch.start("游戏服重新加载: serverId=" + serverId);
                 try {
                     Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
                     responseMap.put(serverId, response);
                 } catch (Exception e) {
                     log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
                 }
-//                stopWatch.stop();
+                stopWatch.stop();
                 latch.countDown();
             }).start();
         }
@@ -91,7 +91,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         } catch (InterruptedException e) {
             log.error("gameServerGet error", e);
         }
-//        log.error(stopWatch.prettyPrint());
+        log.error(stopWatch.prettyPrint());
         return responseMap;
     }
 
