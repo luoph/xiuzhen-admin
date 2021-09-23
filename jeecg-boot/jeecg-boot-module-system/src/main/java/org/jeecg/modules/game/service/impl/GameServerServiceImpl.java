@@ -3,6 +3,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.commons.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
+import co.paralleluniverse.fibers.Fiber;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -18,6 +19,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author jeecg-boot
@@ -55,26 +58,38 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params) {
+        Map<String, Response> responseMap = new ConcurrentHashMap<>(serverIds.size());
         StopWatch stopWatch = new StopWatch();
-        Map<String, Response> responseMap = new HashMap<>(serverIds.size());
+        CountDownLatch latch = new CountDownLatch(serverIds.size());
         for (String serverId : serverIds) {
             GameServer gameServer = getById(serverId);
             if (gameServer == null) {
+                latch.countDown();
                 continue;
             }
             if (StringUtils.contains(gameServer.getGmUrl(), "localhost")
                     || StringUtils.contains(gameServer.getGmUrl(), "127.0.0.1")) {
+                latch.countDown();
                 continue;
             }
 
-            stopWatch.start("游戏服重新加载: serverId=" + serverId);
-            try {
-                Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
-                responseMap.put(serverId, response);
-            } catch (Exception e) {
-                log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
-            }
-            stopWatch.stop();
+            new Fiber<>(() -> {
+                stopWatch.start("游戏服重新加载: serverId=" + serverId);
+                try {
+                    Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
+                    responseMap.put(serverId, response);
+                } catch (Exception e) {
+                    log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
+                }
+                stopWatch.stop();
+                latch.countDown();
+            }).start();
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            log.error("gameServerGet error", e);
         }
         log.error(stopWatch.prettyPrint());
         return responseMap;
