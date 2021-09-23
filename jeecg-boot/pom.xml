@@ -58,6 +58,7 @@
         <sentry.version>5.1.2</sentry.version>
         <shiro-redis.version>3.1.0</shiro-redis.version>
         <shiro.version>1.4.2</shiro.version>
+        <quasar.core.version>0.7.10</quasar.core.version>
         <!-- 框架依赖 -->
         <entities.version>0.0.9-SNAPSHOT</entities.version>
         <web-starter.version>0.0.9-SNAPSHOT</web-starter.version>
@@ -374,6 +375,13 @@
             <groupId>com.googlecode.concurrentlinkedhashmap</groupId>
             <artifactId>concurrentlinkedhashmap-lru</artifactId>
             <version>${concurrentlinkedhashmap.lru.version}</version>
+        </dependency>
+
+        <!-- java协程 -->
+        <dependency>
+            <groupId>co.paralleluniverse</groupId>
+            <artifactId>quasar-core</artifactId>
+            <version>${quasar.core.version}</version>
         </dependency>
 
     </dependencies>
