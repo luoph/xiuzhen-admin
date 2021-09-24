@@ -203,7 +203,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         StopWatch stopWatch = new StopWatch();
         stopWatch.start("通知中心服重新加载");
         // 通知中心服重新加载
-        OkHttpHelper.get(gameCenterUrl + "/openServiceCampaign/reload");
+        OkHttpHelper.getAsync(gameCenterUrl + "/openServiceCampaign/reloadId?id=" + id, null);
         stopWatch.stop();
 
         stopWatch.start("通知各游戏服重新加载");
