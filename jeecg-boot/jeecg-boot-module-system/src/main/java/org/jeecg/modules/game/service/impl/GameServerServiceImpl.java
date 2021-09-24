@@ -8,6 +8,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.primitives.Ints;
+import okhttp3.Call;
+import okhttp3.Callback;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
@@ -15,6 +17,7 @@ import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +62,6 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     @Override
     public Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params) {
         Map<String, Response> responseMap = new ConcurrentHashMap<>(serverIds.size());
-//        StopWatch stopWatch = new StopWatch();
         CountDownLatch latch = new CountDownLatch(serverIds.size());
         for (String serverId : serverIds) {
             GameServer gameServer = getById(serverId);
@@ -73,17 +75,33 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
                 continue;
             }
 
-            new Fiber<>(() -> {
-//                stopWatch.start("游戏服重新加载: serverId=" + serverId);
-                try {
-                    Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
-                    responseMap.put(serverId, response);
-                } catch (Exception e) {
-                    log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
+            // 协程
+//            new Fiber<>(() -> {
+//                try {
+//                    Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
+//                    responseMap.put(serverId, response);
+//                } catch (Exception e) {
+//                    log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
+//                }
+//                latch.countDown();
+//            }).start();
+
+            // 异步
+            OkHttpHelper.getAsync(gameServer.getGmUrl() + path, params, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    log.error("gameServerGet onFailure", e);
+                    latch.countDown();
                 }
-//                stopWatch.stop();
-                latch.countDown();
-            }).start();
+
+                @Override
+                public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                    if (OkHttpHelper.isSuccess(response)) {
+                        responseMap.put(serverId, JSON.parseObject(response.body().string(), Response.class));
+                    }
+                    latch.countDown();
+                }
+            });
         }
 
         try {
@@ -91,7 +109,6 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         } catch (InterruptedException e) {
             log.error("gameServerGet error", e);
         }
-//        log.error(stopWatch.prettyPrint());
         return responseMap;
     }
 
