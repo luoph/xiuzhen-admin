@@ -7,7 +7,7 @@
                     <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['sku', validatorRules.sku]" placeholder="请输入sku" style="width: 100%" />
+                    <a-input v-decorator="['sku', validatorRules.sku]" placeholder="请输入sku" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)" style="width: 100%" />
