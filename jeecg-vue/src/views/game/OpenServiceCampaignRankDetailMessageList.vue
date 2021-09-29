@@ -37,7 +37,7 @@
                 :pagination="ipagination"
                 :loading="loading"
                 @change="handleTableChange"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
