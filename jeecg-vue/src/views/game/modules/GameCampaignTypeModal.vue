@@ -25,6 +25,7 @@
                         <a-select-option :value="16">16-返利狂欢</a-select-option>
                         <a-select-option :value="17">17-赠酒排行榜</a-select-option>
                         <a-select-option :value="18">18-魅力值排行榜</a-select-option>
+                        <a-select-option :value="20">20-自选特惠</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -119,6 +120,8 @@
             <game-campaign-type-rebate-recharge-list v-if="isEdit && model.type === 16" ref="rebateRechargeList" />
             <game-campaign-type-marry-rank-list v-if="isEdit && (model.type === 17 || model.type === 18)" ref="marryRankList" />
             <game-campaign-type-marry-rank-reward-list v-if="isEdit && (model.type === 17 || model.type === 18)" ref="marryRankRewardList" />
+            <game-campaign-type-select-discount-item-list v-if="isEdit && model.type === 20" ref="selectDiscountItemList" />
+            <game-campaign-type-select-discount-message-list v-if="isEdit && model.type === 20" ref="selectDiscountMessageList" />
         </a-spin>
     </a-modal>
 </template>
@@ -148,6 +151,8 @@ import GameCampaignDirectPurchaseList from "../GameCampaignDirectPurchaseList";
 import GameCampaignTypeRebateRechargeList from "../GameCampaignTypeRebateRechargeList";
 import GameCampaignTypeMarryRankList from "../GameCampaignTypeMarryRankList";
 import GameCampaignTypeMarryRankRewardList from "../GameCampaignTypeMarryRankRewardList";
+import GameCampaignTypeSelectDiscountItemList from "../GameCampaignTypeSelectDiscountItemList";
+import GameCampaignTypeSelectDiscountMessageList from "../GameCampaignTypeSelectDiscountMessageList";
 
 export default {
     name: "GameCampaignTypeModal",
@@ -172,7 +177,9 @@ export default {
         GameCampaignDirectPurchaseList,
         GameCampaignTypeRebateRechargeList,
         GameCampaignTypeMarryRankList,
-        GameCampaignTypeMarryRankRewardList
+        GameCampaignTypeMarryRankRewardList,
+        GameCampaignTypeSelectDiscountItemList,
+        GameCampaignTypeSelectDiscountMessageList
     },
     data() {
         return {
@@ -286,6 +293,12 @@ export default {
                     }
                     if (this.$refs.marryRankRewardList) {
                         this.$refs.marryRankRewardList.edit(record);
+                    }
+                    if (this.$refs.selectDiscountItemList) {
+                        this.$refs.selectDiscountItemList.edit(record);
+                    }
+                    if (this.$refs.selectDiscountMessageList) {
+                        this.$refs.selectDiscountMessageList.edit(record);
                     }
                 }
 

@@ -152,6 +152,8 @@ export default {
                             text = "17-赠酒排行榜";
                         } else if (value === 18) {
                             text = "18-魅力值排行榜";
+                        } else if (value === 20) {
+                            text = "20-自选特惠";
                         }
                         return text;
                     }
