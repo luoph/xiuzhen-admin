@@ -210,6 +210,8 @@ export default {
                             text = "11-精准礼包";
                         } else if (value === 12) {
                             text = "12-结义礼包";
+                        } else if (value === 13) {
+                            text = "13-自选特惠";
                         }
                         return text;
                     }
