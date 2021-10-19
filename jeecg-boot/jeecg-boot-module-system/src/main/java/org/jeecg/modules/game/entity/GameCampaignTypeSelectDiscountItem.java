@@ -34,6 +34,7 @@ public class GameCampaignTypeSelectDiscountItem extends GameCampaignTypeBase  {
         this.goodsId = other.goodsId;
         this.chooseItems = other.chooseItems;
         this.freeItems = other.freeItems;
+        this.free = other.free;
     }
 
     /**
@@ -65,6 +66,11 @@ public class GameCampaignTypeSelectDiscountItem extends GameCampaignTypeBase  {
      * 免费物品
      */
     private String freeItems;
+
+    /**
+     * 本组商品是否免费领取
+     */
+    private Boolean free;
 
 
 

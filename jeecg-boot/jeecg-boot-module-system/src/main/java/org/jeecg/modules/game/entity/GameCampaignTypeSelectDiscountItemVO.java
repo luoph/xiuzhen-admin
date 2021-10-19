@@ -53,5 +53,9 @@ public class GameCampaignTypeSelectDiscountItemVO {
     @ExcelProperty("免费物品")
     private String freeItems;
 
-
+    /**
+     * 本组商品是否免费领取
+     */
+    @ExcelProperty("本组商品是否免费领取")
+    private Boolean free;
 }

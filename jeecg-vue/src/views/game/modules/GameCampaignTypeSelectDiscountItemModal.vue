@@ -15,17 +15,20 @@
                 <a-form-item label="商品描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['itemDesc', validatorRules.itemDesc]" placeholder="请输入商品描述"></a-input>
                 </a-form-item>
-                <a-form-item label="限购次数" :labelCol="labelCol" :wrapperCol="wrapperCol" extra="0不限购">
-                    <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" placeholder="请输入限购次数" :min="0" style="width: 100%" />
-                </a-form-item>
                 <a-form-item label="商品id" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品id" style="width: 100%" />
+                </a-form-item>
+                <a-form-item label="免费领取" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-checkbox v-decorator="['free']" :checked="form.getFieldValue('free')">本组商品是否免费领取</a-checkbox>
+                </a-form-item>
+                <a-form-item :label="form.getFieldValue('free') ? '免费领取次数': '限购次数'" :extra="form.getFieldValue('free') ? '':'0不限购'" :labelCol="labelCol" :wrapperCol="wrapperCol"">
+                    <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" :min="form.getFieldValue('free') ? 1: 0 " style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="可选物品" :labelCol="labelCol" :wrapperCol="wrapperCol" extra='格式(1、2为第N个自选组)：{"1":[{ "itemId":1,"num":2},{"itemId":5,"num":6}],"2":[{"itemId":8,"num":9}]}'>
                     <a-textarea v-decorator="['chooseItems', validatorRules.chooseItems]" rows="4" placeholder="请输入可选物品"/>
                 </a-form-item>
-                <a-form-item label="免费物品" :labelCol="labelCol" :wrapperCol="wrapperCol" extra='格式list：[{"itemId":1,"num":2},{"itemId":3,"num":4}]'>
-                    <a-textarea v-decorator="['freeItems']" rows="4" placeholder="请输入免费物品"/>
+                <a-form-item label="免费物品" :labelCol="labelCol" :wrapperCol="wrapperCol" extra='格式list：[{"itemId":1,"num":2},{"itemId":3,"num":4}]' >
+                    <a-textarea v-decorator="['freeItems']" rows="4"/>
                 </a-form-item>
             </a-form>
         </a-spin>
@@ -71,7 +74,6 @@ export default {
                 limitNum: { initialValue: 0 ,rules: [{ required: true, message: "请输入限购次数!" }] },
                 goodsId: { rules: [{ required: true, message: "请输入商品id!" }] },
                 chooseItems: { rules: [{ required: true, message: "请输入可选物品!" }] },
-                freeItems: {},
             },
             url: {
                 add: "game/gameCampaignTypeSelectDiscountItem/add",
@@ -90,7 +92,7 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "showOrder", "itemDesc", "limitNum", "goodsId", "chooseItems", "freeItems"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "showOrder", "itemDesc", "free", "limitNum", "goodsId", "chooseItems", "freeItems"));
             });
         },
         close() {
@@ -134,7 +136,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "showOrder", "itemDesc", "limitNum", "goodsId", "chooseItems", "freeItems"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "showOrder", "itemDesc", "free", "limitNum", "goodsId", "chooseItems", "freeItems"));
         },
     }
 };

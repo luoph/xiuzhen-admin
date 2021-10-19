@@ -95,16 +95,6 @@ export default {
             // 表头
             columns: [
                 {
-                    title: "#",
-                    dataIndex: "",
-                    key: "rowIndex",
-                    width: 60,
-                    align: "center",
-                    customRender: function(t, r, index) {
-                        return parseInt(index) + 1;
-                    }
-                },
-                {
                     title: "主活动id",
                     align: "center",
                     dataIndex: "campaignId"
@@ -127,7 +117,15 @@ export default {
                 {
                     title: "限购次数",
                     align: "center",
-                    dataIndex: "limitOfferNum"
+                    dataIndex: "limitNum"
+                },
+                {
+                    title: "是否免费",
+                    align: "center",
+                    dataIndex: "free",
+                    customRender: function(t, r, index) {
+                        return r.free===true ? '是' : '否';
+                    }
                 },
                 {
                     title: "商品id",
