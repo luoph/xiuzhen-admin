@@ -102,13 +102,13 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['mergeTime', {}]" />
                 </a-form-item>
-                <a-form-item label="onlineStat" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="在线统计开关">
                     <a-select placeholder="在线统计开关" v-decorator="['onlineStat', validatorRules.payCallbackStatus]" initialValue="1">
                         <a-select-option :value="0">关闭</a-select-option>
                         <a-select-option :value="1">开启</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="payCallbackStatus" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付回调开关">
                     <a-select placeholder="支付回调开关" v-decorator="['payCallbackStatus', validatorRules.payCallbackStatus]" initialValue="1">
                         <a-select-option :value="0">关闭</a-select-option>
                         <a-select-option :value="1">开启</a-select-option>
