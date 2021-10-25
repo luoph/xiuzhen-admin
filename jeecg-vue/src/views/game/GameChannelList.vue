@@ -247,7 +247,7 @@ export default {
                 {
                     title: "备注",
                     align: "center",
-                    width: 200,
+                    width: 120,
                     dataIndex: "remark"
                 },
                 {
