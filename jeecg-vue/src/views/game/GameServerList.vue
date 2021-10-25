@@ -93,7 +93,7 @@
                 :pagination="ipagination"
                 :loading="loading"
                 @change="handleTableChange"
-                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -238,9 +238,9 @@ export default {
                     dataIndex: "gmStatus",
                     customRender: value => {
                         let text = "--";
-                        if (value === 0) {
+                        if (value === 1) {
                             text = "开启";
-                        } else if (value === 2) {
+                        } else if (value === 0) {
                             text = "关闭";
                         }
                         return text;
@@ -253,9 +253,9 @@ export default {
                     dataIndex: "taStatistics",
                     customRender: value => {
                         let text = "--";
-                        if (value === 0) {
+                        if (value === 1) {
                             text = "开启";
-                        } else if (value === 2) {
+                        } else if (value === 0) {
                             text = "关闭";
                         }
                         return text;
