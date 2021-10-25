@@ -143,6 +143,41 @@ public class GameServer extends BaseEntity {
     private java.lang.String gmUrl;
 
     /**
+     * 是否上传ta统计 0-关 1-开
+     */
+    @Excel(name = "是否上传ta统计", width = 15)
+    @ApiModelProperty(value = "是否上传ta统计")
+    private Integer taStatistics;
+
+    /**
+     * GM开关 0-关 1-开
+     */
+    @Excel(name = "GM开关", width = 15)
+    @ApiModelProperty(value = "GM开关")
+    private Integer gmStatus;
+
+    /**
+     * GM可用的IP，半角逗号分割
+     */
+    @Excel(name = "GM可用的IP", width = 15)
+    @ApiModelProperty(value = "GM可用的IP")
+    private String gmIp;
+
+    /**
+     * GM可用的玩家id，半角逗号分割
+     */
+    @Excel(name = "GM可用的玩家id", width = 15)
+    @ApiModelProperty(value = "GM可用的玩家id")
+    private String gmPlayerId;
+
+    /**
+     * 处理支付回调开关 0-关 1-开
+     */
+    @Excel(name = "处理支付回调开关", width = 15)
+    @ApiModelProperty(value = "处理支付回调开关")
+    private Integer payCallbackStatus;
+
+    /**
      * 是否统计在线人数
      */
     @Excel(name = "是否统计在线人数", width = 15)
