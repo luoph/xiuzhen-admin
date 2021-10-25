@@ -206,6 +206,32 @@ export default {
                     dataIndex: "versionName"
                 },
                 {
+                    title: "数数统计",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "taStatistics",
+                    customRender: function(text) {
+                        if (text === 0) {
+                            return "关闭";
+                        } else if (text === 1) {
+                            return "开启";
+                        }
+                    }
+                },
+                {
+                    title: "允许网页登录",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "testLogin",
+                    customRender: function(text) {
+                        if (text === 0) {
+                            return "关闭";
+                        } else if (text === 1) {
+                            return "开启";
+                        }
+                    }
+                },
+                {
                     title: "IP白名单",
                     align: "left",
                     width: 280,
