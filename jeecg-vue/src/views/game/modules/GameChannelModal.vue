@@ -28,13 +28,13 @@
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['versionUpdateTime', validatorRules.versionUpdateTime]" />
                 </a-form-item>
                 <a-form-item label="数数统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="" v-decorator="['taStatistics', validatorRules.taStatistics]" initialValue="1">
+                    <a-select placeholder="数数统计" v-decorator="['taStatistics', validatorRules.taStatistics]" initialValue="1">
                         <a-select-option :value="0">关闭</a-select-option>
                         <a-select-option :value="1">开启</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="网页登录" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="" v-decorator="['testLogin', validatorRules.testLogin]" initialValue="0">
+                    <a-select placeholder="网页登录" v-decorator="['testLogin', validatorRules.testLogin]" initialValue="0">
                         <a-select-option :value="0">关闭</a-select-option>
                         <a-select-option :value="1">开启</a-select-option>
                     </a-select>
