@@ -62,17 +62,19 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     @Override
     public void updateIpWhiteListConfig() {
         List<GameChannel> channelList = list();
-        if (CollUtil.isNotEmpty(channelList)) {
-            for (GameChannel channel : channelList) {
-                if (StringUtils.isNotBlank(channel.getIpWhitelist())) {
-                    String[] array = channel.getIpWhitelist().split(",");
-                    List<String> ipList = new ArrayList<>();
-                    for (String s : array) {
-                        ipList.add(s.trim());
-                    }
+        if (CollUtil.isEmpty(channelList)) {
+            return;
+        }
 
-                    JsonFileUtils.writeJsonFile(ipList, ipWhitelistFolder, channel.getSimpleName());
+        for (GameChannel channel : channelList) {
+            if (StringUtils.isNotBlank(channel.getIpWhitelist())) {
+                String[] array = channel.getIpWhitelist().split(",");
+                List<String> ipList = new ArrayList<>();
+                for (String s : array) {
+                    ipList.add(s.trim());
                 }
+
+                JsonFileUtils.writeJsonFile(ipList, ipWhitelistFolder, channel.getSimpleName());
             }
         }
     }
@@ -84,7 +86,8 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
                 .setVersionName(channel.getVersionName())
                 .setVersionUpdateTime(channel.getVersionUpdateTime());
 
-        JsonFileUtils.writeJsonFile(new ChannelConfig(channel.getNoticeId(), updateConfig, servers),
+        boolean enableTa = channel.getTaStatistics() != null && channel.getTaStatistics() == 1;
+        JsonFileUtils.writeJsonFile(new ChannelConfig(channel.getNoticeId(), updateConfig, servers, enableTa),
                 serverFolder, channel.getSimpleName());
     }
 }

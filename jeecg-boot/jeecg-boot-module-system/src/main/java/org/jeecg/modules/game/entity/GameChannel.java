@@ -33,18 +33,21 @@ public class GameChannel extends BaseEntity {
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "自增主键")
     private java.lang.Integer id;
+
     /**
      * 渠道名称
      */
     @Excel(name = "渠道名称", width = 15)
     @ApiModelProperty(value = "渠道名称")
     private java.lang.String name;
+
     /**
      * 唯一标识
      */
     @Excel(name = "唯一标识", width = 15)
     @ApiModelProperty(value = "唯一标识")
     private java.lang.String simpleName;
+
     /**
      * 公告id
      */
@@ -58,12 +61,14 @@ public class GameChannel extends BaseEntity {
     @Excel(name = "版本号", width = 15)
     @ApiModelProperty(value = "版本号")
     private java.lang.Integer versionCode;
+
     /**
      * 版本名
      */
     @Excel(name = "版本名", width = 15)
     @ApiModelProperty(value = "版本名")
     private java.lang.String versionName;
+
     /**
      * 版本更新时间
      */
@@ -74,29 +79,47 @@ public class GameChannel extends BaseEntity {
     private java.util.Date versionUpdateTime;
 
     /**
+     * 是否允许测试登录 0-关 1-开
+     */
+    @Excel(name = "是否允许测试登录", width = 15)
+    @ApiModelProperty(value = "是否允许测试登录")
+    private Integer testLogin;
+
+    /**
+     * 是否上传ta统计 0-关 1-开
+     */
+    @Excel(name = "是否允许测试登录", width = 15)
+    @ApiModelProperty(value = "是否允许测试登录")
+    private Integer taStatistics;
+
+    /**
      * ip白名单
      */
     @Excel(name = "ip白名单", width = 15)
     @ApiModelProperty(value = "ip白名单")
     private java.lang.String ipWhitelist;
+
     /**
      * 大渠道描述
      */
     @Excel(name = "大渠道描述", width = 15)
     @ApiModelProperty(value = "大渠道描述")
     private java.lang.String remark;
+
     /**
      * 扩展字段
      */
     @Excel(name = "扩展字段", width = 15)
     @ApiModelProperty(value = "扩展字段")
     private java.lang.String extra;
+
     /**
      * 游戏编号
      */
     @Excel(name = "游戏编号", width = 15)
     @ApiModelProperty(value = "游戏编号")
     private java.lang.Integer gameId;
+
     /**
      * 分组
      */

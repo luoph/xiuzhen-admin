@@ -27,6 +27,18 @@
                 <a-form-item label="版本更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['versionUpdateTime', validatorRules.versionUpdateTime]" />
                 </a-form-item>
+                <a-form-item label="数数统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="" v-decorator="['taStatistics', validatorRules.taStatistics]" initialValue="1">
+                        <a-select-option :value="0">关闭</a-select-option>
+                        <a-select-option :value="1">开启</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="网页登录" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="" v-decorator="['testLogin', validatorRules.testLogin]" initialValue="0">
+                        <a-select-option :value="0">关闭</a-select-option>
+                        <a-select-option :value="1">开启</a-select-option>
+                    </a-select>
+                </a-form-item>
                 <a-form-item label="IP白名单" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['ipWhitelist', validatorRules.ipWhitelist]" placeholder="请输入IP白名单(使用半角,分割)"></a-textarea>
                 </a-form-item>
@@ -73,6 +85,8 @@ export default {
                 versionCode: { rules: [{ required: true, message: "请输入版本号!" }] },
                 versionName: { rules: [{ required: true, message: "请输入版本名!" }] },
                 versionUpdateTime: { rules: [{ required: true, message: "请选择版本更新时间!" }] },
+                testLogin: { rules: [{ required: true, message: "请选择网页登录开关!" }] },
+                taStatistics: { rules: [{ required: true, message: "请选择数数统计开关!" }] },
                 ipWhitelist: {},
                 remark: {},
                 extra: {}
@@ -93,7 +107,9 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "name", "simpleName", "gameId", "noticeId", "versionCode", "versionName", "ipWhitelist", "remark", "extra"));
+                this.form.setFieldsValue(
+                    pick(this.model, "name", "simpleName", "gameId", "noticeId", "versionCode", "versionName", "taStatistics", "testLogin", "ipWhitelist", "remark", "extra")
+                );
                 // 时间格式化
                 this.form.setFieldsValue({ versionUpdateTime: this.model.versionUpdateTime ? moment(this.model.versionUpdateTime) : null });
             });
@@ -142,7 +158,23 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(
-                pick(row, "name", "simpleName", "position", "gameId", "noticeId", "versionCode", "versionName", "versionUpdateTime", "ipWhitelist", "remark", "extra", "groupName")
+                pick(
+                    row,
+                    "name",
+                    "simpleName",
+                    "position",
+                    "gameId",
+                    "noticeId",
+                    "versionCode",
+                    "versionName",
+                    "versionUpdateTime",
+                    "taStatistics",
+                    "testLogin",
+                    "ipWhitelist",
+                    "remark",
+                    "extra",
+                    "groupName"
+                )
             );
         }
     }
