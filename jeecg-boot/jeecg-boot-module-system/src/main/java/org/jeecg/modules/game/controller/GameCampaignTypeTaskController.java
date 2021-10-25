@@ -2,6 +2,7 @@ package org.jeecg.modules.game.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -76,6 +77,11 @@ public class GameCampaignTypeTaskController extends JeecgController<GameCampaign
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaignTypeTask gameCampaignTypeTask) {
         gameCampaignTypeTaskService.updateById(gameCampaignTypeTask);
+        if (gameCampaignTypeTask.getJumpId() == null) {
+            GameCampaignTypeTask task = new GameCampaignTypeTask();
+            task.setId(gameCampaignTypeTask.getId());
+            gameCampaignTypeTaskService.update(Wrappers.lambdaUpdate(task).set(GameCampaignTypeTask::getJumpId, null));
+        }
         return Result.ok("编辑成功!");
     }
 
