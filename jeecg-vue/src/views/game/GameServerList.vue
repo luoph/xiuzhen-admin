@@ -213,12 +213,12 @@ export default {
                     width: 120,
                     dataIndex: "loginUrl"
                 },
-                {
-                    title: "GM地址",
-                    align: "left",
-                    width: 120,
-                    dataIndex: "gmUrl"
-                },
+                // {
+                //     title: "GM地址",
+                //     align: "left",
+                //     width: 120,
+                //     dataIndex: "gmUrl"
+                // },
                 {
                     title: "在线人数",
                     align: "center",
@@ -227,6 +227,36 @@ export default {
                     customRender: text => {
                         if (text === null || text === "" || text === undefined) {
                             return "N/A";
+                        }
+                        return text;
+                    }
+                },
+                {
+                    title: "GM开关",
+                    align: "left",
+                    width: 60,
+                    dataIndex: "gmStatus",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "开启";
+                        } else if (value === 2) {
+                            text = "关闭";
+                        }
+                        return text;
+                    }
+                },
+                {
+                    title: "数数开关",
+                    align: "left",
+                    width: 60,
+                    dataIndex: "taStatistics",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "开启";
+                        } else if (value === 2) {
+                            text = "关闭";
                         }
                         return text;
                     }

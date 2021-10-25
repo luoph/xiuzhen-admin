@@ -48,6 +48,24 @@
                         <a-select-option :value="3">推荐新服</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="数数统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="" v-decorator="['taStatistics', validatorRules.taStatistics]" initialValue="1">
+                        <a-select-option :value="0">关闭</a-select-option>
+                        <a-select-option :value="1">开启</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="GM开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="" v-decorator="['gmStatus', validatorRules.gmStatus]" initialValue="0">
+                        <a-select-option :value="0">关闭</a-select-option>
+                        <a-select-option :value="1">开启</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="GM可用IP" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['gmIp', validatorRules.gmIp]" />
+                </a-form-item>
+                <a-form-item label="GM可用玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['gmPlayerId', validatorRules.gmPlayerId]" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">
                     <a-input placeholder="请输入出错提示信息" v-decorator="['warning', {}]" />
                 </a-form-item>
@@ -83,6 +101,18 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['mergeTime', {}]" />
+                </a-form-item>
+                <a-form-item label="onlineStat" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="在线统计开关" v-decorator="['onlineStat', validatorRules.payCallbackStatus]" initialValue="1">
+                        <a-select-option :value="0">关闭</a-select-option>
+                        <a-select-option :value="1">开启</a-select-option>
+                    </a-select>
+                </a-form-item>
+                <a-form-item label="payCallbackStatus" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="支付回调开关" v-decorator="['payCallbackStatus', validatorRules.payCallbackStatus]" initialValue="1">
+                        <a-select-option :value="0">关闭</a-select-option>
+                        <a-select-option :value="1">开启</a-select-option>
+                    </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
                     <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
@@ -202,6 +232,12 @@ export default {
                         "dbName",
                         "type",
                         "pid",
+                        "taStatistics",
+                        "gmStatus",
+                        "gmIp",
+                        "gmPlayerId",
+                        "payCallbackStatus",
+                        "onlineStat",
                         "extra"
                     )
                 );
@@ -260,6 +296,39 @@ export default {
         },
         handleCancel() {
             this.close();
+        },
+        popupCallback(row) {
+            this.form.setFieldsValue(
+                pick(
+                    row,
+                    "id",
+                    "name",
+                    "remark",
+                    "host",
+                    "loginUrl",
+                    "gmUrl",
+                    "status",
+                    "isMaintain",
+                    "recommend",
+                    "warning",
+                    "minVersion",
+                    "maxVersion",
+                    "dbHost",
+                    "dbPort",
+                    "dbUser",
+                    "dbPassword",
+                    "dbName",
+                    "type",
+                    "pid",
+                    "taStatistics",
+                    "gmStatus",
+                    "gmIp",
+                    "gmPlayerId",
+                    "payCallbackStatus",
+                    "onlineStat",
+                    "extra"
+                )
+            );
         }
     }
 };
