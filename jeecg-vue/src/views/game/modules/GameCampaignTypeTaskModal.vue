@@ -27,6 +27,10 @@
                 <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
                 </a-form-item>
+                <a-form-item label="跳转id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['jumpId', validatorRules.jumpId]" placeholder="请输入跳转id"
+                                    style="width: 100%" />
+                </a-form-item>
                 <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%" />
                 </a-form-item>
@@ -80,6 +84,7 @@ export default {
                 target: { rules: [{ required: true, message: "请输入任务完成条件!" }] },
                 args: { rules: [{ required: true, message: "请输入任务参数!" }] },
                 reward: { rules: [{ required: true, message: "请输入奖励列表!" }] },
+                jumpId: { rules: [{ required: false, message: "请输入跳转id!" }] },
                 minLevel: {rules: [{ required: true, message: "请输入最小世界等级!" }]},
                 maxLevel: {rules: [{ required: true, message: "请输入最大世界等级!" }]},
             },
@@ -102,7 +107,7 @@ export default {
             console.log("GameCampaignTypeTaskModal, model:", JSON.stringify(this.model));
 
             this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "args", "reward", "minLevel", "maxLevel"));
+                this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "args", "reward", "jumpId", "minLevel", "maxLevel"));
             });
         },
         close() {
@@ -146,7 +151,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "reward", "minLevel", "maxLevel"));
+            this.form.setFieldsValue(pick(row, "campaignId", "typeId", "taskId", "description", "moduleId", "target", "reward", "jumpId", "minLevel", "maxLevel"));
         }
     }
 };
