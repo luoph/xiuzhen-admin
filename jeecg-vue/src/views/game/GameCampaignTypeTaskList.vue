@@ -145,6 +145,11 @@ export default {
                     dataIndex: "createTime"
                 },
                 {
+                    title: "跳转id",
+                    align: "center",
+                    dataIndex: "jumpId"
+                },
+                {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
