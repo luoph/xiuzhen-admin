@@ -88,8 +88,8 @@ public class GameChannel extends BaseEntity {
     /**
      * 是否上传ta统计 0-关 1-开
      */
-    @Excel(name = "是否允许测试登录", width = 15)
-    @ApiModelProperty(value = "是否允许测试登录")
+    @Excel(name = "是否上传ta统计", width = 15)
+    @ApiModelProperty(value = "是否上传ta统计")
     private Integer taStatistics;
 
     /**
