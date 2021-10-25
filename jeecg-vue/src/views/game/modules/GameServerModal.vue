@@ -160,6 +160,7 @@ export default {
 
             confirmLoading: false,
             form: this.$form.createForm(this),
+
             validatorRules: {
                 id: { rules: [{ required: true, message: "请输入区服id" }] },
                 gameId: { rules: [{ required: true, message: "请选择游戏id!" }] },
@@ -174,7 +175,13 @@ export default {
                 dbUser: { rules: [{ required: true, message: "请输入数据库帐号!" }] },
                 dbPassword: { rules: [{ required: true, message: "请输入数据库密码!" }] },
                 dbName: { rules: [{ required: true, message: "请输入数据库名称!" }] },
-                gmUrl: { rules: [{ required: true, message: "请输入GM地址!" }] }
+                gmUrl: { rules: [{ required: true, message: "请输入GM地址!" }] },
+                gmIp: { rules: [{ required: true, message: "请输入GM可用ip!" }] },
+                gmPlayerId: { rules: [{ required: false, message: "请输入GM可用玩家id!" }] },
+                gmStatus: { rules: [{ required: true, message: "请设置GM开关!" }] },
+                taStatistics: { rules: [{ required: true, message: "请设置TA开关!" }] },
+                onlineStat: { rules: [{ required: true, message: "请设置在线统计开关!" }] },
+                payCallbackStatus: { rules: [{ required: true, message: "请设置支付回调开关!" }] }
             },
             url: {
                 add: "game/gameServer/add",
