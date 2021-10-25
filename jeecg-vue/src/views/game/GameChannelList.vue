@@ -208,7 +208,7 @@ export default {
                 {
                     title: "数数统计",
                     align: "center",
-                    width: 120,
+                    width: 80,
                     dataIndex: "taStatistics",
                     customRender: function(text) {
                         if (text === 0) {
@@ -219,9 +219,9 @@ export default {
                     }
                 },
                 {
-                    title: "允许网页登录",
+                    title: "网页登录",
                     align: "center",
-                    width: 120,
+                    width: 80,
                     dataIndex: "testLogin",
                     customRender: function(text) {
                         if (text === 0) {
@@ -239,16 +239,16 @@ export default {
                     scopedSlots: { customRender: "ipTags" }
                 },
                 {
-                    title: "大渠道描述",
-                    align: "center",
-                    width: 200,
-                    dataIndex: "remark"
-                },
-                {
                     title: "版本更新时间",
                     align: "center",
                     width: 120,
                     dataIndex: "versionUpdateTime"
+                },
+                {
+                    title: "备注",
+                    align: "center",
+                    width: 200,
+                    dataIndex: "remark"
                 },
                 {
                     title: "操作",
