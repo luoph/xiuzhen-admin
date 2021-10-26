@@ -427,7 +427,7 @@ export default {
     display: flex;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 200px;
+    height: 200px;
 }
 
 .large-text {
@@ -436,7 +436,7 @@ export default {
 }
 
 .action {
-    max-height: 200px;
+    height: 200px;
     display: flex;
     align-items: center;
 }
