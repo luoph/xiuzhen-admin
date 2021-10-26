@@ -94,7 +94,7 @@
                 :loading="loading"
                 :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
-                :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
@@ -214,12 +214,12 @@ export default {
                     width: 120,
                     dataIndex: "loginUrl"
                 },
-                // {
-                //     title: "GM地址",
-                //     align: "left",
-                //     width: 120,
-                //     dataIndex: "gmUrl"
-                // },
+                {
+                    title: "GM地址",
+                    align: "left",
+                    width: 120,
+                    dataIndex: "gmUrl"
+                },
                 {
                     title: "在线人数",
                     align: "center",
@@ -303,7 +303,6 @@ export default {
                 {
                     title: "操作",
                     align: "center",
-                    width: 80,
                     dataIndex: "action",
                     scopedSlots: { customRender: "action" }
                 }
