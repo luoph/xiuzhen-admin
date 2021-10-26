@@ -92,6 +92,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
+                :scroll="{ x: 'max-content' }"
                 @change="handleTableChange"
                 :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
             >
