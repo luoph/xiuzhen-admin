@@ -19,7 +19,7 @@
                     <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品id" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="免费领取" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-checkbox v-decorator="['free']" :checked="form.getFieldValue('free')">本组商品是否免费领取</a-checkbox>
+                    <a-checkbox v-decorator="['free', {initialValue:false} ]" :checked="form.getFieldValue('free')">本组商品是否免费领取</a-checkbox>
                 </a-form-item>
                 <a-form-item :label="form.getFieldValue('free') ? '免费领取次数': '限购次数'" :extra="form.getFieldValue('free') ? '':'0不限购'" :labelCol="labelCol" :wrapperCol="wrapperCol"">
                     <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" :min="form.getFieldValue('free') ? 1: 0 " style="width: 100%" />
