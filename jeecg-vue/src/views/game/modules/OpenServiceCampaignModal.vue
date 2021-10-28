@@ -10,6 +10,12 @@
                     <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" class="icon-image" />
                     <game-image-selector placeholder="请选择活动图标" v-decorator="['icon', validatorRules.icon]" />
                 </a-form-item>
+                <a-form-item label="是否跨服" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="选择是否跨服" v-decorator="['cross', validatorRules.cross]" initialValue="0">
+                        <a-select-option :value="0">本服</a-select-option>
+                        <a-select-option :value="1">跨服</a-select-option>
+                    </a-select>
+                </a-form-item>
                 <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
                     <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
@@ -81,6 +87,7 @@ export default {
             confirmLoading: false,
             validatorRules: {
                 name: { rules: [{ required: true, message: "请输入活动名称!" }] },
+                cross: { rules: [{ required: true, message: "请选是否跨服" }] },
                 serverIds: { rules: [{ required: true, message: "请输入服务器id!" }] },
                 icon: { rules: [{ required: true, message: "请输入活动图标!" }] },
                 status: { rules: [{ required: true, message: "请输入活动状态!" }] },
@@ -117,7 +124,7 @@ export default {
                 if (this.isEdit) {
                     this.$refs.typeList.edit(record);
                 }
-                this.form.setFieldsValue(pick(this.model, "name", "serverIds", "icon", "status", "autoOpen", "remark"));
+                this.form.setFieldsValue(pick(this.model, "name", "cross", "serverIds", "icon", "status", "autoOpen", "remark"));
             });
         },
         close() {
@@ -168,7 +175,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "name", "serverIds", "icon", "status", "autoOpen", "remark"));
+            this.form.setFieldsValue(pick(row, "name", "cross","serverIds", "icon", "status", "autoOpen", "remark"));
         },
         changeSelect(value) {
             this.model.serverIds = value.join(",");

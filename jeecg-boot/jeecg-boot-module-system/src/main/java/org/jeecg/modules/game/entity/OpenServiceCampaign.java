@@ -32,6 +32,7 @@ public class OpenServiceCampaign extends BaseEntity {
     public OpenServiceCampaign(OpenServiceCampaign other) {
 //        this.id = other.id;
         this.name = other.name;
+//        this.cross = other.cross;
 //        this.serverIds = other.serverIds;
 //        this.lastServerIds = other.lastServerIds;
         this.icon = other.icon;
@@ -51,6 +52,13 @@ public class OpenServiceCampaign extends BaseEntity {
      */
     @Excel(name = "活动名称", width = 15)
     private java.lang.String name;
+
+    /**
+     * 是否跨服
+     */
+    @Excel(name = "是否跨服", width = 15)
+    @TableField(value = "`cross`")
+    private Integer cross;
 
     /**
      * 服务器id，使用,分割
