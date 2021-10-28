@@ -175,7 +175,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "name", "cross","serverIds", "icon", "status", "autoOpen", "remark"));
+            this.form.setFieldsValue(pick(row, "name", "cross", "serverIds", "icon", "status", "autoOpen", "remark"));
         },
         changeSelect(value) {
             this.model.serverIds = value.join(",");
