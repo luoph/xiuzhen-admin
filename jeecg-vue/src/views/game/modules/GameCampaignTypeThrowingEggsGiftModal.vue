@@ -12,13 +12,13 @@
                     <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]"
                                     placeholder="请输入子活动id" style="width: 100%" />
                 </a-form-item>
-                <a-form-item label="消耗道具" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input-number v-decorator="['costItemId', validatorRules.costItemId]" placeholder="请输入消耗道具"
-                                    style="width: 100%" />
-                </a-form-item>
                 <a-form-item label="礼包名" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['giftName', validatorRules.giftName]"
                              placeholder="请输入礼包名"></a-input>
+                </a-form-item>
+                <a-form-item label="消耗道具" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input-number v-decorator="['costItemId', validatorRules.costItemId]" placeholder="请输入消耗道具"
+                                    style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="消耗道具数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['costNum', validatorRules.costNum]" placeholder="请输入消耗道具数量"
@@ -85,8 +85,8 @@ export default {
                 costItemId: { rules: [{ required: true, message: "请输入消耗道具!" }] },
                 costNum: { rules: [{ required: true, message: "请输入消耗道具数量!" }] },
                 stack: { rules: [{ required: true, message: "请输入库存!" }] },
-                amount: {},
-                discount: {},
+                amount: {rules: [{ required: true, message: "请输入原价!" }]},
+                discount: {initialValue: 0},
                 limitCondition: {},
                 reward: { rules: [{ required: true, message: "请输入奖励内容!" }] },
                 giftName: { rules: [{ required: true, message: "请输入奖励内容!" }] }
