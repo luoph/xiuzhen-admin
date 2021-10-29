@@ -135,17 +135,19 @@ export default {
                     dataIndex: "discount"
                 },
                 {
+                    title: "奖励",
+                    align: "center",
+                    dataIndex: "reward",
+                },
+                {
+                    title: "限购条件",
+                    align: "center",
+                    dataIndex: "limitCondition",
+                },
+                {
                     title: "创建时间",
                     align: "center",
                     dataIndex: "createTime",
-                    customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
-                    }
-                },
-                {
-                    title: "更新时间",
-                    align: "center",
-                    dataIndex: "updateTime",
                     customRender: function(text) {
                         return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
                     }
