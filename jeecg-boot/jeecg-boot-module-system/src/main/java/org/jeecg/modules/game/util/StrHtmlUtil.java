@@ -1,5 +1,7 @@
 package org.jeecg.modules.game.util;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 /**
  * @ClassName StrHtmlUtil
  * @Description html字符串工具
@@ -19,10 +21,12 @@ public class StrHtmlUtil {
         input = input.replace("</p>", "");
         input = input.replace("&lsquo;", "");
         input = input.replace("&rsquo;", "");
+        input = input.replace("&nbsp;", "");
+        input = input.replace("......", "...");
         // strong 标签无效
         input = input.replace("<strong>", "");
         input = input.replace("</strong>", "");
-        input = input.replace("......", "...");
-        return input;
+        // 越南语特殊字符
+        return StringEscapeUtils.unescapeHtml(input);
     }
 }
