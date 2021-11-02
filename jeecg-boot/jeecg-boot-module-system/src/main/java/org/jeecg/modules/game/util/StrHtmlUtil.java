@@ -27,6 +27,8 @@ public class StrHtmlUtil {
         input = input.replace("<strong>", "");
         input = input.replace("</strong>", "");
         // 越南语特殊字符
-        return StringEscapeUtils.unescapeHtml(input);
+        input = StringEscapeUtils.unescapeHtml(input);
+        input = input.replace("&", "&amp;");
+        return input;
     }
 }
