@@ -148,6 +148,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
+                    fixed: "left",
                     width: 40,
                     align: "center",
                     customRender: function(t, r, index) {
@@ -155,16 +156,18 @@ export default {
                     }
                 },
                 {
-                    title: "商品名称",
-                    align: "center",
-                    width: 120,
-                    dataIndex: "name"
-                },
-                {
                     title: "商品Id",
                     align: "center",
+                    fixed: "left",
                     width: 80,
                     dataIndex: "goodsId"
+                },
+                {
+                    title: "商品名称",
+                    align: "center",
+                    fixed: "left",
+                    width: 120,
+                    dataIndex: "name"
                 },
                 {
                     title: "商品分类",
@@ -226,27 +229,65 @@ export default {
                 {
                     title: "折扣",
                     align: "center",
-                    width: 120,
+                    width: 80,
                     dataIndex: "discount"
-                },
-                {
-                    title: "奖励列表",
-                    align: "center",
-                    width: 180,
-                    dataIndex: "items",
-                    scopedSlots: { customRender: "largeText" }
-                },
-                {
-                    title: "首次额外赠送",
-                    align: "center",
-                    width: 180,
-                    dataIndex: "addition"
                 },
                 {
                     title: "货币",
                     align: "center",
                     width: 80,
                     dataIndex: "currency"
+                },
+                {
+                    title: "特殊标签",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "recommend",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "无(0)";
+                        } else if (value === 1) {
+                            text = "推荐(1)";
+                        } else if (value === 2) {
+                            text = "礼包(2)";
+                        }
+                        return text;
+                    }
+                },
+                {
+                    title: "奖励列表",
+                    align: "center",
+                    width: 220,
+                    dataIndex: "items",
+                    scopedSlots: { customRender: "largeText" }
+                },
+                {
+                    title: "是否计入累充",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "amountStat",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "否";
+                        } else if (value === 1) {
+                            text = "是";
+                        }
+                        return text;
+                    }
+                },
+                {
+                    title: "兑换比例",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "exchange"
+                },
+                {
+                    title: "首次额外赠送",
+                    align: "center",
+                    width: 180,
+                    dataIndex: "addition"
                 },
                 {
                     title: "当地价格",
@@ -273,47 +314,10 @@ export default {
                     dataIndex: "webDisplayPrice"
                 },
                 {
-                    title: "特殊标签",
-                    align: "center",
-                    width: 120,
-                    dataIndex: "recommend",
-                    customRender: value => {
-                        let text = "--";
-                        if (value === 0) {
-                            text = "无(0)";
-                        } else if (value === 1) {
-                            text = "推荐(1)";
-                        } else if (value === 2) {
-                            text = "礼包(2)";
-                        }
-                        return text;
-                    }
-                },
-                {
-                    title: "是否记入累充",
-                    align: "center",
-                    width: 80,
-                    dataIndex: "amountStat",
-                    customRender: value => {
-                        let text = "--";
-                        if (value === 0) {
-                            text = "否";
-                        } else if (value === 1) {
-                            text = "是";
-                        }
-                        return text;
-                    }
-                },
-                {
-                    title: "兑换比例",
-                    align: "center",
-                    width: 80,
-                    dataIndex: "exchange"
-                },
-                {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
+                    fixed: "right",
                     width: 120,
                     scopedSlots: { customRender: "action" }
                 }

@@ -9,11 +9,11 @@
                 <a-form-item label="商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称"></a-input>
                 </a-form-item>
-                <a-form-item label="SKU" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['sku', validatorRules.sku]" placeholder="请输入内购sku" style="width: 100%" />
+                <a-form-item label="内购SKU" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['sku', validatorRules.sku]" placeholder="请输入内购SKU" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="网页支付SKU" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['webSku', validatorRules.webSku]" placeholder="请输网页支付Sku" style="width: 100%" />
+                    <a-input v-decorator="['webSku', validatorRules.webSku]" placeholder="请输网页支付SKU" style="width: 100%" />
                 </a-form-item>
                 <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)" style="width: 100%" />
@@ -57,8 +57,8 @@
                         <a-select-option :value="13">13-自选特惠</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item label="是否记入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-select placeholder="请输入是否记入累充" v-decorator="['amountStat', validatorRules.amountStat]" initialValue="1">
+                <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-select placeholder="请输入是否计入累充" v-decorator="['amountStat', validatorRules.amountStat]" initialValue="1">
                         <a-select-option :value="0">是</a-select-option>
                         <a-select-option :value="1">否</a-select-option>
                     </a-select>
@@ -121,7 +121,7 @@ export default {
                 name: { rules: [{ required: true, message: "请输入商品名称!" }] },
                 items: { rules: [{ required: false, message: "请输入奖励列表!" }] },
                 goodsType: { rules: [{ required: true, message: "请输入充值分类!" }] },
-                amountStat: { rules: [{ required: true, message: "请输入是否记入累充！" }] },
+                amountStat: { rules: [{ required: true, message: "请输入是否计入累充！" }] },
                 exchange: { rules: [{ required: true, message: "请输入游戏币与人民币(元)的兑换比例!" }] },
                 recommend: { rules: [{ required: false, message: "请输入特殊标记前端用!" }] },
                 goodsId: { rules: [{ required: true, message: "请输入商品Id" }] },

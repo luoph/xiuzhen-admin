@@ -140,11 +140,20 @@ public class GameRechargeGoods extends BaseEntity {
      * 传闻
      */
     @Excel(name = "传闻", width = 15)
+    @ExcelProperty(value = "传闻")
     private java.lang.String rumor;
 
     /**
      * 商品特殊标记
      */
     @Excel(name = "特殊标记", width = 15)
+    @ExcelProperty(value = "特殊标记")
     private Integer recommend;
+
+    /**
+     * 货币
+     */
+    @Excel(name = "货币", width = 15)
+    @ExcelProperty(value = "货币")
+    private String currency;
 }
