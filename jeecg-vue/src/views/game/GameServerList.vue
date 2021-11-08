@@ -169,6 +169,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
+                    fixed: "left",
                     width: 40,
                     align: "center",
                     customRender: function(t, r, index) {
@@ -178,12 +179,14 @@ export default {
                 {
                     title: "区服id",
                     align: "center",
+                    fixed: "left",
                     width: 80,
                     dataIndex: "id"
                 },
                 {
                     title: "名字",
                     align: "left",
+                    fixed: "left",
                     width: 100,
                     dataIndex: "name"
                 },
@@ -303,6 +306,7 @@ export default {
                 {
                     title: "操作",
                     align: "center",
+                    fixed: "right",
                     dataIndex: "action",
                     scopedSlots: { customRender: "action" }
                 }
