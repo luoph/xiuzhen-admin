@@ -82,6 +82,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
+                :scroll="{ x: 'max-content' }"
                 :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
@@ -154,28 +155,16 @@ export default {
                     }
                 },
                 {
-                    title: "商品Id",
-                    align: "center",
-                    width: 80,
-                    dataIndex: "goodsId"
-                },
-                {
-                    title: "sku",
-                    align: "center",
-                    width: 120,
-                    dataIndex: "sku"
-                },
-                {
                     title: "商品名称",
                     align: "center",
                     width: 120,
                     dataIndex: "name"
                 },
                 {
-                    title: "单价",
+                    title: "商品Id",
                     align: "center",
                     width: 80,
-                    dataIndex: "price"
+                    dataIndex: "goodsId"
                 },
                 {
                     title: "商品分类",
@@ -217,6 +206,24 @@ export default {
                     }
                 },
                 {
+                    title: "内购SKU",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "sku"
+                },
+                {
+                    title: "网页支付SKU",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "webSku"
+                },
+                {
+                    title: "单价",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "price"
+                },
+                {
                     title: "折扣",
                     align: "center",
                     width: 120,
@@ -234,6 +241,36 @@ export default {
                     align: "center",
                     width: 180,
                     dataIndex: "addition"
+                },
+                {
+                    title: "货币",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "currency"
+                },
+                {
+                    title: "当地价格",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "localPrice"
+                },
+                {
+                    title: "网页支付价格",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "webLocalPrice"
+                },
+                {
+                    title: "显示价格",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "displayPrice"
+                },
+                {
+                    title: "网页显示价格",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "webDisplayPrice"
                 },
                 {
                     title: "特殊标签",
@@ -268,7 +305,7 @@ export default {
                     }
                 },
                 {
-                    title: "游戏币兑换比例",
+                    title: "兑换比例",
                     align: "center",
                     width: 80,
                     dataIndex: "exchange"
