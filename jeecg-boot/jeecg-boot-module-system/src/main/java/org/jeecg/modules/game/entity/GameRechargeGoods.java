@@ -2,18 +2,14 @@ package org.jeecg.modules.game.entity;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.alibaba.excel.converters.string.StringNumberConverter;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import org.jeecg.common.constant.TimeConstant;
+import lombok.EqualsAndHashCode;
+import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecg.modules.converter.CustomStringToBigDecimalConverter;
 import org.jeecgframework.poi.excel.annotation.Excel;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @author jeecg-boot
@@ -23,7 +19,8 @@ import java.io.Serializable;
  */
 @Data
 @TableName("game_recharge_goods")
-public class GameRechargeGoods implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class GameRechargeGoods extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,27 +39,6 @@ public class GameRechargeGoods implements Serializable {
     private java.lang.Integer goodsId;
 
     /**
-     * 单价(创建订单实际价格)
-     */
-    @Excel(name = "sku", width = 15)
-    @ExcelProperty(value = "sku")
-    private java.lang.String sku;
-
-    /**
-     * 单价(创建订单实际价格)
-     */
-    @Excel(name = "单价(创建订单实际价格)", width = 15)
-    @ExcelProperty(value = "单价(创建订单实际价格)")
-    private java.math.BigDecimal price;
-
-    /**
-     * 折扣
-     */
-    @Excel(name = "折扣", width = 15)
-    @ExcelProperty(value = "折扣", converter = CustomStringToBigDecimalConverter.class)
-    private java.math.BigDecimal discount;
-
-    /**
      * 商品名
      */
     @Excel(name = "商品名", width = 15)
@@ -77,17 +53,73 @@ public class GameRechargeGoods implements Serializable {
     private java.lang.String items;
 
     /**
-     * 充值分类
+     * 商品分类
      */
     @Excel(name = "商品分类", width = 15)
     @ExcelProperty(value = "商品分类")
     private java.lang.Integer goodsType;
 
     /**
+     * SKU
+     */
+    @Excel(name = "sku", width = 15)
+    @ExcelProperty(value = "sku")
+    private java.lang.String sku;
+
+    /**
+     * webSku
+     */
+    @Excel(name = "webSku", width = 15)
+    @ExcelProperty(value = "webSku")
+    private java.lang.String webSku;
+
+    /**
+     * 单价(创建订单实际价格)
+     */
+    @Excel(name = "单价(创建订单实际价格)", width = 15)
+    @ExcelProperty(value = "单价(创建订单实际价格)", converter = CustomStringToBigDecimalConverter.class)
+    private java.math.BigDecimal price;
+
+    /**
+     * 当地货币价格
+     */
+    @Excel(name = "当地货币价格", width = 15)
+    @ExcelProperty(value = "当地货币价格", converter = CustomStringToBigDecimalConverter.class)
+    private java.math.BigDecimal localPrice;
+
+    /**
+     * web支付当地货币价格
+     */
+    @Excel(name = "web支付当地货币价格", width = 15)
+    @ExcelProperty(value = "web支付当地货币价格", converter = CustomStringToBigDecimalConverter.class)
+    private java.math.BigDecimal webLocalPrice;
+
+    /**
+     * 显示价格
+     */
+    @Excel(name = "显示价格", width = 15)
+    @ExcelProperty(value = "显示价格", converter = CustomStringToBigDecimalConverter.class)
+    private java.math.BigDecimal displayPrice;
+
+    /**
+     * web支付当地货币显示价格
+     */
+    @Excel(name = "web显示价格", width = 15)
+    @ExcelProperty(value = "web显示价格", converter = CustomStringToBigDecimalConverter.class)
+    private java.math.BigDecimal webDisplayPrice;
+
+    /**
+     * 折扣
+     */
+    @Excel(name = "折扣", width = 15)
+    @ExcelProperty(value = "折扣", converter = CustomStringToBigDecimalConverter.class)
+    private java.math.BigDecimal discount;
+
+    /**
      * 是否记入累充（0 - 不计入 1 - 记入）
      */
-    @Excel(name = "是否记入累充（0 - 不计入 1 - 记入）", width = 15)
-    @ExcelProperty(value = "是否记入累充（0 - 不计入 1 - 记入）")
+    @Excel(name = "是否记入累充", width = 15)
+    @ExcelProperty(value = "是否记入累充")
     private java.lang.Integer amountStat;
 
     /**
@@ -98,10 +130,10 @@ public class GameRechargeGoods implements Serializable {
     private java.lang.String addition;
 
     /**
-     * 游戏币与人民币(元)的兑换比例
+     * 游戏币与货币的兑换比例
      */
-    @Excel(name = "游戏币与人民币(元)的兑换比例", width = 15)
-    @ExcelProperty(value = "游戏币与人民币(元)的兑换比例")
+    @Excel(name = "兑换比例", width = 15)
+    @ExcelProperty(value = "兑换比例")
     private java.lang.Integer exchange;
 
     /**
@@ -115,32 +147,4 @@ public class GameRechargeGoods implements Serializable {
      */
     @Excel(name = "特殊标记", width = 15)
     private Integer recommend;
-
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    private java.util.Date createTime;
-
-    /**
-     * 创建者
-     */
-    @Excel(name = "创建者", width = 15)
-    private java.lang.String createBy;
-
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-    private java.util.Date updateTime;
-
-    /**
-     * 更新者
-     */
-    @Excel(name = "更新者", width = 15)
-    private java.lang.String updateBy;
 }
