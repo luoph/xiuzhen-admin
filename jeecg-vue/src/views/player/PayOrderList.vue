@@ -148,7 +148,7 @@ import { filterObj } from "@/utils/util";
 import JInput from "@/components/jeecg/JInput";
 import PayOrderModal from "./modules/PayOrderModal";
 import Vue from "vue";
-import { ACCESS_TOKEN } from "@/store/mutation-types"
+import { ACCESS_TOKEN } from "@/store/mutation-types";
 
 export default {
     name: "PayOrderList",
@@ -203,6 +203,12 @@ export default {
                 //     dataIndex: "orderId"
                 // },
                 {
+                    title: "商品id",
+                    align: "center",
+                    width: 80,
+                    dataIndex: "productId"
+                },
+                {
                     title: "平台订单号",
                     align: "center",
                     dataIndex: "queryId"
@@ -246,12 +252,6 @@ export default {
                         }
                         return re;
                     }
-                },
-                {
-                    title: "商品id",
-                    align: "center",
-                    width: 80,
-                    dataIndex: "productId"
                 },
                 // {
                 //     title: "ip地址",
@@ -299,7 +299,6 @@ export default {
                 list: "player/payOrder/list",
                 exportXlsUrl: "player/payOrder/exportXls",
                 downloadExcel: "/player/payOrder/download"
-                
             },
             dictOptions: {}
         };
@@ -330,17 +329,17 @@ export default {
         },
         downlodaExcel(filename) {
             var xhr = new XMLHttpRequest();
-            xhr.open("post", window._CONFIG["domainURL"] +this.url.downloadExcel, true);
+            xhr.open("post", window._CONFIG["domainURL"] + this.url.downloadExcel, true);
             xhr.responseType = "blob";
             xhr.setRequestHeader("Content-Type", "application/json");
             const token = Vue.ls.get(ACCESS_TOKEN);
             console.log(token);
             xhr.setRequestHeader("X-Access-Token", token);
-            xhr.onload = function () {
+            xhr.onload = function() {
                 var blob = this.response;
                 var reader = new FileReader();
                 reader.readAsDataURL(blob);
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     var a = document.createElement("a");
                     a.download = filename + ".xlsx";
                     a.href = e.target.result;
