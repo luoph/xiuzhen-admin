@@ -50,12 +50,6 @@ public class PayOrderGift implements Serializable {
     private String channel;
 
     /**
-     * 渠道key
-     */
-    @Excel(name = "渠道key", width = 15)
-    private String channelKey;
-
-    /**
      * 服务器id
      */
     @Excel(name = "服务器id", width = 15)

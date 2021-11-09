@@ -74,14 +74,6 @@ public class GameOrder implements Serializable {
     private String channel;
 
     /**
-     * SDK平台渠道key
-     */
-    @ColumnWidth(15)
-    @ExcelProperty("渠道key")
-    @Excel(name = "渠道key", width = 15)
-    private String channelKey;
-
-    /**
      * 服务器id
      */
     @ColumnWidth(15)

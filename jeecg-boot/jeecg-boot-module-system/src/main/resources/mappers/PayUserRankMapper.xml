@@ -56,7 +56,6 @@
         SELECT
         po.id,
         po.channel,
-        po.channel_key,
         po.server_id,
         pri.account,
         po.player_id,
@@ -82,11 +81,9 @@
     </select>
 
     <select id="getPlayerLastLoginTime" resultType="date">
-        SELECT
-        MAX(create_time) loginDate
+        SELECT MAX(create_time) loginDate
         FROM ${logTable}
-        WHERE
-        player_id = #{playerId}
+        WHERE player_id = #{playerId}
     </select>
 
     <select id="getPlayerLastLoginAndRegisterTime" resultMap="PlayerResultMap">
