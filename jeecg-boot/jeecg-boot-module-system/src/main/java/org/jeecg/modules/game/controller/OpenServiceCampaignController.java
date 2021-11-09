@@ -17,6 +17,7 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.OpenServiceCampaign;
 import org.jeecg.modules.game.entity.OpenServiceCampaignType;
+import org.jeecg.modules.game.service.IGameServerGroupService;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IOpenServiceCampaignService;
 import org.jeecg.modules.game.service.IOpenServiceCampaignTypeService;
@@ -45,6 +46,9 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
 
     @Autowired
     private IGameServerService gameServerService;
+
+    @Autowired
+    private IGameServerGroupService gameServerGroupService;
 
     @Autowired
     private IOpenServiceCampaignService campaignService;
@@ -214,6 +218,10 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         Map<String, Response> response = gameServerService.gameServerGet(allIds, campaignReloadUrl, params);
         log.info("sync id:{} response:{}", id, response);
         stopWatch.stop();
+
+        // 通知跨服
+        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(allIds.stream().map(Integer::parseInt).collect(Collectors.toSet()), campaignReloadUrl, params);
+        log.info("sync id:{} response:{}", id, gameServerGroupResponse);
 
         stopWatch.start("更新已刷新的服务器id");
         // 更新已刷新的服务器id

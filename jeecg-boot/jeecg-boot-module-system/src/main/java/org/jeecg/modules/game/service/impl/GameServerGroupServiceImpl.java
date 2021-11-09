@@ -48,7 +48,7 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
     }
 
     @Override
-    public Map<Long, Response> gameServerGroupGet(Collection<GameServerGroup> gameServerGroups, String path) {
+    public Map<Long, Response> gameServerGroupGet(Collection<GameServerGroup> gameServerGroups, String path, Map<String, Object> params) {
         Map<Long, Response> responseMap = new HashMap<>(gameServerGroups.size());
         for (GameServerGroup gameServerGroup : gameServerGroups) {
             if (null == gameServerGroup || StringUtils.contains(gameServerGroup.getGmUrl(), "localhost") || StringUtils.contains(gameServerGroup.getGmUrl(), "127.0.0.1")) {
@@ -56,7 +56,7 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
             }
 
             try {
-                Response response = JSON.parseObject(OkHttpHelper.get(gameServerGroup.getGmUrl() + path), Response.class);
+                Response response = JSON.parseObject(OkHttpHelper.get(gameServerGroup.getGmUrl() + path, params), Response.class);
                 responseMap.put(gameServerGroup.getId(), response);
             } catch (Exception e) {
                 log.error("gameServerGet error, serverId:" + gameServerGroup + ", path:" + path, e);
@@ -66,8 +66,9 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
     }
 
     @Override
-    public Map<Long, Response> gameServerGroupGetByServerIds(Collection<Integer> serverIds, String path) {
+    public Map<Long, Response> gameServerGroupGetByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params) {
         List<GameServerGroup> gameServerGroupList = getGameServerGroupList(serverIds);
-        return gameServerGroupGet(gameServerGroupList, path);
+        return gameServerGroupGet(gameServerGroupList, path, params);
     }
+
 }
