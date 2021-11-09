@@ -125,16 +125,19 @@ export default {
                 {
                     title: "key",
                     align: "left",
+                    width: 180,
                     dataIndex: "dictKey"
                 },
                 {
                     title: "value",
                     align: "left",
+                    width: 360,
                     dataIndex: "dictValue"
                 },
                 {
                     title: "描述",
                     align: "left",
+                    width: 180,
                     dataIndex: "remark"
                 },
                 {
