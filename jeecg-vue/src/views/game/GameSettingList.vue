@@ -125,25 +125,26 @@ export default {
                 {
                     title: "key",
                     align: "left",
-                    width: 180,
+                    width: 240,
                     dataIndex: "dictKey"
                 },
                 {
                     title: "value",
                     align: "left",
-                    width: 360,
+                    width: 400,
                     dataIndex: "dictValue"
                 },
                 {
                     title: "描述",
                     align: "left",
-                    width: 180,
+                    width: 240,
                     dataIndex: "remark"
                 },
                 {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
+                    width: 140,
                     scopedSlots: { customRender: "action" }
                 }
             ],
