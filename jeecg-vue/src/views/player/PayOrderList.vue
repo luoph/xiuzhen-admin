@@ -196,17 +196,17 @@ export default {
                     width: 80,
                     dataIndex: "serverId"
                 },
-                {
-                    title: "支付订单号",
-                    align: "center",
-                    width: 200,
-                    dataIndex: "orderId"
-                },
                 // {
-                //     title: "平台订单号",
+                //     title: "支付订单号",
                 //     align: "center",
-                //     dataIndex: "queryId"
+                //     width: 200,
+                //     dataIndex: "orderId"
                 // },
+                {
+                    title: "平台订单号",
+                    align: "center",
+                    dataIndex: "queryId"
+                },
                 {
                     title: "支付金额",
                     align: "center",
