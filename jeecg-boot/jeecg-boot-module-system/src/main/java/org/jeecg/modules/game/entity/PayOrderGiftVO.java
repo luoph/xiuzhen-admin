@@ -47,11 +47,6 @@ public class PayOrderGiftVO implements Serializable {
     private String channel;
 
     /**
-     * 渠道key
-     */
-    private String channelKey;
-
-    /**
      * 服务器id
      */
     private Integer serverId;

@@ -58,13 +58,6 @@ public class PayOrderBill implements Serializable {
     private java.lang.String channel;
 
     /**
-     * 渠道key
-     */
-    @ExcelIgnore
-    //@Excel(name = "渠道key", width = 15)
-    private java.lang.String channelKey;
-
-    /**
      * 服务器id
      */
     @ExcelIgnore
