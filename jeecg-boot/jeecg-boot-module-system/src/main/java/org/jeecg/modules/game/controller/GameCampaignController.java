@@ -237,7 +237,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         log.info("sync id:{} response:{}", id, response);
 
         // 通知跨服
-        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(serverIds, campaignUpdateUrl);
+        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(serverIds, campaignUpdateUrl, null);
         log.info("sync id:{} response:{}", id, gameServerGroupResponse);
         return Result.ok("编辑成功!");
     }

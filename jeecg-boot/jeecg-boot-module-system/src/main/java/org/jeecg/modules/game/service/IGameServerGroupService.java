@@ -23,7 +23,7 @@ public interface IGameServerGroupService extends IService<GameServerGroup> {
 
     List<GameServerGroup> getGameServerGroupList(Collection<Integer> serverIds);
 
-    Map<Long, Response> gameServerGroupGet(Collection<GameServerGroup> gameServerGroups, String path);
+    Map<Long, Response> gameServerGroupGet(Collection<GameServerGroup> gameServerGroups, String path, Map<String, Object> params);
 
-    Map<Long, Response> gameServerGroupGetByServerIds(Collection<Integer> serverIds, String path);
+    Map<Long, Response> gameServerGroupGetByServerIds(Collection<Integer> serverIds, String path, Map<String, Object> params);
 }
