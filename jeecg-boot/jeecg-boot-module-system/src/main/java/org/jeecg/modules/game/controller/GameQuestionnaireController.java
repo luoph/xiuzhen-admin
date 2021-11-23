@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.youai.commons.model.Response;
+import cn.youai.basics.model.Response;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

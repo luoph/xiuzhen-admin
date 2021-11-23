@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.youai.commons.model.Response;
+import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;

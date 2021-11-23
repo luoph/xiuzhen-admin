@@ -1,6 +1,6 @@
 package org.jeecg.database;
 
-import cn.youai.commons.utils.ObjectReference;
+import cn.youai.basics.utils.ObjectReference;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;

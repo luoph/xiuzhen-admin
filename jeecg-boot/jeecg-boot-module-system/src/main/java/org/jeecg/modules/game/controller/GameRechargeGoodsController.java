@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.youai.commons.model.Response;
+import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSON;

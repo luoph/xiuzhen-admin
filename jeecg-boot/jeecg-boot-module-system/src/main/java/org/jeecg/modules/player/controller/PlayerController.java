@@ -1,6 +1,6 @@
 package org.jeecg.modules.player.controller;
 
-import cn.youai.commons.model.DataResponse;
+import cn.youai.basics.model.DataResponse;
 import cn.youai.server.model.RoleAttr;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.utils.DateUtils;

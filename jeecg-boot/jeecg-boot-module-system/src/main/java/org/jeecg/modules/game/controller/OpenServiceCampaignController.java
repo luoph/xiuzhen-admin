@@ -2,7 +2,7 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.youai.commons.model.Response;
+import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

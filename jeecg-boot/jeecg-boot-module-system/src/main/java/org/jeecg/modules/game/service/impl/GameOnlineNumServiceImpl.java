@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.commons.model.DataResponse;
+import cn.youai.basics.model.DataResponse;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSON;

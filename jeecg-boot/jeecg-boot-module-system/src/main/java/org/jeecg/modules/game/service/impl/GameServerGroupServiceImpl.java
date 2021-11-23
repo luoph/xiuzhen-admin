@@ -4,7 +4,7 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.youai.commons.model.Response;
+import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
