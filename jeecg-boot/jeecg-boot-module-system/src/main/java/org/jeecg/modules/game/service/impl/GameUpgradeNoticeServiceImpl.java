@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.youai.commons.model.Response;
+import cn.youai.basics.model.Response;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.entity.GameUpgradeNotice;

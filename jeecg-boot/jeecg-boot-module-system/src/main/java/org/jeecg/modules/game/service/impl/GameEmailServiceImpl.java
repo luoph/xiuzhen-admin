@@ -1,8 +1,8 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.youai.commons.model.Response;
-import cn.youai.commons.model.ResponseCode;
+import cn.youai.basics.model.Response;
+import cn.youai.basics.model.ResponseCode;
 import cn.youai.server.component.ConfigManager;
 import cn.youai.server.model.ItemVO;
 import cn.youai.server.springboot.component.OkHttpHelper;

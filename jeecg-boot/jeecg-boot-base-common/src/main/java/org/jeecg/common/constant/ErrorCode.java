@@ -1,6 +1,6 @@
 package org.jeecg.common.constant;
 
-import cn.youai.commons.model.ResponseCode;
+import cn.youai.basics.model.ResponseCode;
 
 /**
  * 接口报错或者业务异常响应给客户端的接口

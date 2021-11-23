@@ -2,7 +2,7 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
-import cn.youai.commons.model.ResponseCode;
+import cn.youai.basics.model.ResponseCode;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

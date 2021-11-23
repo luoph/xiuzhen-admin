@@ -1,6 +1,6 @@
 package org.jeecg.modules.player.controller;
 
-import cn.youai.commons.model.DataResponse;
+import cn.youai.basics.model.DataResponse;
 import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

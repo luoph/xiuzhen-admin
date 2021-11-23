@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.service;
 
-import cn.youai.commons.model.DateRange;
+import cn.youai.basics.model.DateRange;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 
 import java.util.Date;

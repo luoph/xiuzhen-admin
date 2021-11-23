@@ -1,6 +1,6 @@
 package org.jeecg.modules.player.service.impl;
 
-import cn.youai.commons.model.ResponseCode;
+import cn.youai.basics.model.ResponseCode;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;

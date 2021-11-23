@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.controller;
 
-import cn.youai.commons.model.Response;
+import cn.youai.basics.model.Response;
 import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
