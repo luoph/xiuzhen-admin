@@ -62,7 +62,7 @@ logger "==> time_zone: ${time_zone}"
 default_time_zone=$(cat ${time_zone_java} | grep 'DEFAULT_TIMEZONE' | cut -d'=' -f2 | cut -d'"' -f2)
 
 if [[ "${time_zone}" != "${default_time_zone}" ]]; then
-    logger "==> repalce timezone ${default_time_zone} --> ${time_zone}"
+    logger "==> replace timezone ${default_time_zone} --> ${time_zone}"
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed -i "" "s|${default_time_zone}|${time_zone}|g" ${time_zone_java}
     else
