@@ -15,16 +15,12 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.modules.game.entity.GameStoryAnalysis;
+import org.jeecg.modules.game.service.IGamePlayerService;
 import org.jeecg.modules.player.entity.GameOrder;
-import org.jeecg.modules.player.entity.GameRegisterInfo;
-import org.jeecg.modules.player.service.IGameRegisterInfoService;
 import org.jeecg.modules.player.service.IPayOrderService;
-import org.jeecg.modules.player.service.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.terracotta.quartz.wrappers.WrapperFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +44,7 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
     private IPayOrderService payOrderService;
 
     @Autowired
-    private IGameRegisterInfoService registerInfoService;
+    private IGamePlayerService playerService;
 
     /**
      * 分页列表查询
@@ -72,17 +68,17 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
             HashSet<Long> playerIds = new HashSet<>(pageList.getRecords().size());
             pageList.getRecords().forEach(e -> playerIds.add(e.getPlayerId()));
 
-            LambdaQueryWrapper<GameRegisterInfo> query = Wrappers.lambdaQuery();
-            query.select(GameRegisterInfo::getPlayerId, GameRegisterInfo::getName);
-            query.in(GameRegisterInfo::getPlayerId, playerIds);
-            query.groupBy(GameRegisterInfo::getPlayerId);
-            List<GameRegisterInfo> list = registerInfoService.list(query);
+            LambdaQueryWrapper<GamePlayer> query = Wrappers.lambdaQuery();
+            query.select(GamePlayer::getPlayerId, GamePlayer::getNickname);
+            query.in(GamePlayer::getPlayerId, playerIds);
+            query.groupBy(GamePlayer::getPlayerId);
+            List<GamePlayer> list = playerService.list(query);
 
-            Map<Long, String> nameByPlayerId = CollectionUtil.isNotEmpty(list) ?
-                    list.stream().collect(Collectors.toMap(GameRegisterInfo::getPlayerId, GameRegisterInfo::getName,
+            Map<Long, String> nameMap = CollectionUtil.isNotEmpty(list) ?
+                    list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname,
                             (item1, item2) -> item2)) : new HashMap<>(list.size());
 
-            pageList.getRecords().forEach(e -> e.setPlayerName(nameByPlayerId.get(e.getPlayerId()) != null ? nameByPlayerId.get(e.getPlayerId()) : ""));
+            pageList.getRecords().forEach(e -> e.setPlayerName(nameMap.get(e.getPlayerId())));
         }
         return Result.ok(pageList);
     }

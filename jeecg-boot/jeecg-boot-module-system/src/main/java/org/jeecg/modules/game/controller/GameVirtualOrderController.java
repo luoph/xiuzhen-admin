@@ -2,6 +2,7 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.basics.model.Response;
+import cn.youai.entities.GamePlayer;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -18,10 +19,10 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameVirtualOrder;
+import org.jeecg.modules.game.service.IGamePlayerService;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IGameVirtualOrderService;
 import org.jeecg.modules.player.entity.GameRegisterInfo;
-import org.jeecg.modules.player.service.IGameRegisterInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
     private IGameVirtualOrderService gameVirtualOrderService;
 
     @Autowired
-    private IGameRegisterInfoService playerRegisterInfoService;
+    private IGamePlayerService playerService;
 
     @Autowired
     private IGameServerService gameServerService;
@@ -78,17 +79,17 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
             HashSet<Long> playerIds = new HashSet<>(pageList.getRecords().size());
             pageList.getRecords().forEach(e -> playerIds.add(e.getPlayerId()));
 
-            LambdaQueryWrapper<GameRegisterInfo> query = Wrappers.lambdaQuery();
-            query.select(GameRegisterInfo::getPlayerId, GameRegisterInfo::getName);
-            query.in(GameRegisterInfo::getPlayerId, playerIds);
-            query.groupBy(GameRegisterInfo::getPlayerId);
-            List<GameRegisterInfo> list = playerRegisterInfoService.list(query);
+            LambdaQueryWrapper<GamePlayer> query = Wrappers.lambdaQuery();
+            query.select(GamePlayer::getPlayerId, GamePlayer::getNickname);
+            query.in(GamePlayer::getPlayerId, playerIds);
+            query.groupBy(GamePlayer::getPlayerId);
+            List<GamePlayer> list = playerService.list(query);
 
-            Map<Long, String> nameByPlayerId = CollectionUtil.isNotEmpty(list) ?
-                    list.stream().collect(Collectors.toMap(GameRegisterInfo::getPlayerId, GameRegisterInfo::getName,
+            Map<Long, String> nameMap = CollectionUtil.isNotEmpty(list) ?
+                    list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname,
                             (item1, item2) -> item2)) : new HashMap<>(list.size());
 
-            pageList.getRecords().forEach(e -> e.setPlayerName(nameByPlayerId.get(e.getPlayerId()) != null ? nameByPlayerId.get(e.getPlayerId()) : ""));
+            pageList.getRecords().forEach(e -> e.setPlayerName(nameMap.get(e.getPlayerId())));
         }
         return Result.ok(pageList);
     }
@@ -105,16 +106,16 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
         if (gameVirtualOrder.getPlayerId() == null) {
             return Result.error("请输入玩家id");
         }
-        Wrapper<GameRegisterInfo> query = Wrappers.<GameRegisterInfo>lambdaQuery().eq(GameRegisterInfo::getPlayerId, gameVirtualOrder.getPlayerId());
-        GameRegisterInfo registerInfo = playerRegisterInfoService.getOne(query);
-        if (registerInfo == null) {
+        Wrapper<GamePlayer> query = Wrappers.<GamePlayer>lambdaQuery().eq(GamePlayer::getPlayerId, gameVirtualOrder.getPlayerId());
+        GamePlayer playerInfo = playerService.getOne(query);
+        if (playerInfo == null) {
             return Result.error("找不到玩家信息:" + gameVirtualOrder.getPlayerId());
         }
-        gameVirtualOrder.setServerId(registerInfo.getServerId());
+        gameVirtualOrder.setServerId(playerInfo.getServerId());
 
-        GameServer gameServer = gameServerService.getById(registerInfo.getServerId());
+        GameServer gameServer = gameServerService.getById(playerInfo.getServerId());
         if (gameServer == null) {
-            return Result.error("找不到区服信息:" + registerInfo.getServerId());
+            return Result.error("找不到区服信息:" + playerInfo.getServerId());
         }
 
         ImmutableMap<String, Object> params = ImmutableMap.of("playerId", gameVirtualOrder.getPlayerId(),
