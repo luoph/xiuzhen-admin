@@ -218,6 +218,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
         if (playerItemLog == null) {
             return null;
         }
+
         List<ConfItem> itemList = getConfItemList(playerItemLog.getItemId(), playerItemLog.getItemIdName());
         if (!CollectionUtils.isEmpty(itemList)) {
             Map<Integer, String> itemMapById = new HashMap<>(itemList.size());
