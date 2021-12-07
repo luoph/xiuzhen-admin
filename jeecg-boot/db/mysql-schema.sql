@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : xiuzhen-studio(10.21.211.35)
+ Source Server         : xiuzhen-studio(192.168.16.159)
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
