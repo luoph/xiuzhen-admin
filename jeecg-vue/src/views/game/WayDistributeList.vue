@@ -56,10 +56,8 @@
         </div>
         <!-- 查询区域-END -->
 
-
         <!-- table区域-begin -->
         <div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -71,12 +69,9 @@
                 :loading="loading"
                 :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
-
             </a-table>
         </div>
-
     </a-card>
 </template>
 
@@ -137,13 +132,12 @@ export default {
                     customRender: function(text) {
                         return text + "%";
                     }
-                },
+                }
             ],
             url: {
-                list: "player/playerItemLog/wayDistributeList",
+                list: "player/playerItemLog/wayDistributeList"
             },
-            dictOptions: {
-            }
+            dictOptions: {}
         };
     },
     computed: {
