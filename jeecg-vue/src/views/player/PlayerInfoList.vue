@@ -209,7 +209,7 @@ export default {
                     title: "是否跳过战斗动画",
                     align: "center",
                     dataIndex: "skipCartoon"
-                },
+                }
                 // {
                 //     title: "操作",
                 //     dataIndex: "action",

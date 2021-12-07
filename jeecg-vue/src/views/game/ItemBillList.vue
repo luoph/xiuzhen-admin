@@ -6,8 +6,7 @@
                 <a-row :gutter="45">
                     <a-col :md="10" :sm="8">
                         <!--@ = v-on:数据绑定 不是事件-->
-                        <game-channel-server @onSelectChannel="onSelectChannel"
-                                             @onSelectServer="onSelectServer"></game-channel-server>
+                        <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
                     <a-col :md="4" :sm="4">
                         <a-form-item label="玩家id">
@@ -21,8 +20,7 @@
                     </a-col>
                     <a-col :md="10" :sm="8">
                         <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']"
-                                            @change="onDateChange" />
+                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="3" :sm="3">
@@ -34,13 +32,11 @@
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="5">
-                        <a-form-item v-if="queryParam.type === '1'" key='1' label="产销点">
-                            <a-select-read-json json-file="item_fall_rule" placeholder="途径"
-                                                @onSelectOption="change"></a-select-read-json>
+                        <a-form-item v-if="queryParam.type === '1'" key="1" label="产销点">
+                            <a-select-read-json json-file="item_fall_rule" placeholder="途径" @onSelectOption="change"></a-select-read-json>
                         </a-form-item>
-                        <a-form-item v-if="queryParam.type === '2'" key='2' label="产销点">
-                            <a-select-read-json json-file="item_expend" placeholder="途径"
-                                                @onSelectOption="change"></a-select-read-json>
+                        <a-form-item v-if="queryParam.type === '2'" key="2" label="产销点">
+                            <a-select-read-json json-file="item_expend" placeholder="途径" @onSelectOption="change"></a-select-read-json>
                         </a-form-item>
                     </a-col>
 
@@ -58,10 +54,8 @@
         </div>
         <!-- 查询区域-END -->
 
-
         <!-- table区域-begin -->
         <div>
-
             <a-table
                 ref="table"
                 size="middle"
@@ -73,12 +67,9 @@
                 :loading="loading"
                 :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
-
             </a-table>
         </div>
-
     </a-card>
 </template>
 
@@ -177,8 +168,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        },
+        initDictConfig() {},
         onSelectChannel: function(channelId) {
             this.queryParam.channelId = channelId;
         },

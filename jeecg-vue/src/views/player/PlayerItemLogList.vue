@@ -27,6 +27,7 @@
                     <a-col :md="3" :sm="3">
                         <a-form-item label="产销类型">
                             <a-select placeholder="产销类型" v-model="queryParam.type" @change="resetWay">
+                                <a-select-option value="">全部</a-select-option>
                                 <a-select-option value="1">产出</a-select-option>
                                 <a-select-option value="2">消耗</a-select-option>
                             </a-select>
@@ -36,7 +37,7 @@
                         <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
                             <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径" @onSelectOptionSome="selectWay"></a-select-read-json-some>
                         </a-form-item>
-                        <a-form-item v-if="queryParam.type === '2'" key="2" label="消耗途径">
+                        <a-form-item v-else-if="queryParam.type === '2'" key="2" label="消耗途径">
                             <a-select-read-json-some json-file="item_expend" placeholder="请选择途径" @onSelectOptionSome="selectWay"></a-select-read-json-some>
                         </a-form-item>
                     </a-col>
