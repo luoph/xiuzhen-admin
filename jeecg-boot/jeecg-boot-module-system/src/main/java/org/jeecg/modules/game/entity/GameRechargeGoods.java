@@ -109,10 +109,10 @@ public class GameRechargeGoods extends BaseEntity {
     private java.math.BigDecimal webDisplayPrice;
 
     /**
-     * 折扣
+     * 折扣(打折后的价格)
      */
-    @Excel(name = "折扣", width = 15)
-    @ExcelProperty(value = "折扣", converter = CustomStringToBigDecimalConverter.class)
+    @Excel(name = "折扣价", width = 15)
+    @ExcelProperty(value = "折扣价", converter = CustomStringToBigDecimalConverter.class)
     private java.math.BigDecimal discount;
 
     /**

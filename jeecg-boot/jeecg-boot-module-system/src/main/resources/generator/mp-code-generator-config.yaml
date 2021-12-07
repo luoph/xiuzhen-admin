@@ -11,7 +11,7 @@ globalConfig:
   fileOverride: true
 
 dataSourceConfig:
-#  url: jdbc:mysql://10.21.211.35:3306/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+#  url: jdbc:mysql://192.168.16.159:3306/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
   url: jdbc:mysql://dev.1101stu.com:7733/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
   driverName: com.mysql.jdbc.Driver
   username: gamecenter
