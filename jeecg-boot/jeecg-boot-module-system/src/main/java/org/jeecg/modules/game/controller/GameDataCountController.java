@@ -2,6 +2,7 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.ResponseCode;
 import cn.youai.server.utils.DateUtils;
@@ -70,14 +71,7 @@ public class GameDataCountController {
 
 
     @GetMapping(value = "/dayCount")
-    public Result<?> queryGameDataCountList(
-            @RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
-            @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
-            @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-            @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-            HttpServletRequest req) {
+    public Result<?> queryGameDataCountList(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId, @RequestParam(value = "serverId", defaultValue = "0") Integer serverId, @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin, @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd, @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 
         Page<GameStatDaily> page = new Page<>(pageNo, pageSize);
         if (channelId <= 0 || serverId <= 0) {
@@ -87,30 +81,23 @@ public class GameDataCountController {
         Date now = DateUtils.now();
         // 默认查询最近两天的数据
         if (StrUtil.isEmpty(rangeDateBegin)) {
-            rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(now, -1), DatePattern.NORM_DATE_PATTERN);
+            rangeDateBegin = DateUtil.formatDate(DateUtils.addDays(now, -1));
         }
         if (StrUtil.isEmpty(rangeDateEnd)) {
-            rangeDateEnd = DateUtils.formatDate(now, DatePattern.NORM_DATE_PATTERN);
+            rangeDateEnd = DateUtil.formatDate(now);
         }
 
-        return rsp(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 1);
+        return queryDailyData(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 1);
     }
 
     @GetMapping(value = "/remainRate")
-    public Result<?> queryGameRemainCount(
-            @RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
-            @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
-            @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-            @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-            HttpServletRequest req) {
+    public Result<?> queryGameRemainCount(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId, @RequestParam(value = "serverId", defaultValue = "0") Integer serverId, @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin, @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd, @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         Page<GameStatRemain> page = new Page<>(pageNo, pageSize);
 
         boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
-            return rsp(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 2);
+            return queryDailyData(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 2);
         } else {
             if (paramValidCheck) {
                 return Result.ok(page);
@@ -140,19 +127,13 @@ public class GameDataCountController {
     }
 
     @GetMapping(value = "/ltvCount")
-    public Result<?> queryGameLtvCount(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
-                                       @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
-                                       @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                       @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                       @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-                                       @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                       HttpServletRequest req) {
+    public Result<?> queryGameLtvCount(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId, @RequestParam(value = "serverId", defaultValue = "0") Integer serverId, @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin, @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd, @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 
         Page<GameStatLtv> page = new Page<>(pageNo, pageSize);
         boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
-            return rsp(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 3);
+            return queryDailyData(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 3);
         } else {
             if (paramValidCheck) {
                 return Result.ok(page);
@@ -183,7 +164,7 @@ public class GameDataCountController {
     /**
      * @param type 1-daily 2-remain 3-ltv
      */
-    private Result<?> rsp(int serverId, int channelId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
+    private Result<?> queryDailyData(int serverId, int channelId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
         GameServer gameServer = gameServerService.getById(serverId);
         GameChannel gameChannel = gameChannelService.getById(channelId);
         ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
@@ -204,14 +185,7 @@ public class GameDataCountController {
     }
 
     @GetMapping(value = "/ongoing")
-    public Result<?> queryGameCountOngoing(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
-                                           @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
-                                           @RequestParam(value = "type", defaultValue = "0") Integer type,
-                                           @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                           @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                           @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-                                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                           HttpServletRequest req) {
+    public Result<?> queryGameCountOngoing(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId, @RequestParam(value = "serverId", defaultValue = "0") Integer serverId, @RequestParam(value = "type", defaultValue = "0") Integer type, @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin, @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd, @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 
         Page<GameStatOngoing> page = new Page<>(pageNo, pageSize);
         boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
