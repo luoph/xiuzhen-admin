@@ -16,15 +16,10 @@ import java.util.List;
 public interface GameOrderMapper extends BaseMapper<GameOrder> {
     /**
      * 计算当天支付金额
-     *
-     * @param channel
-     * @param serverId
-     * @param payDate
-     * @return
      */
-    double getSumPayAmount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("payDate") String payDate);
+    double getSumPayAmount(@Param("serverId") int serverId, @Param("payDate") String payDate);
 
-    int getCountPayPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("payDate") String payDate);
+    int getCountPayPlayer(@Param("serverId") int serverId, @Param("payDate") String payDate);
 
     /**
      * 统计日期内，付费玩家数，付费金额

@@ -22,7 +22,7 @@ public interface IPayOrderService extends IService<GameOrder> {
      * @param date     日期
      * @return 付费总金额
      */
-    double sumPayAmount(String channel, int serverId, String date);
+    double sumPayAmount(int serverId, String date);
 
     /**
      * 付费角色数
@@ -32,7 +32,7 @@ public interface IPayOrderService extends IService<GameOrder> {
      * @param date
      * @return
      */
-    int countPayPlayer(String channel, int serverId, String date);
+    int countPayPlayer(int serverId, String date);
 
     /**
      * 统计日期内，付费玩家数，付费金额

@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.player.entity.LogAccount;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,14 +21,8 @@ import java.util.List;
 public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
      * 当天登录/注册玩家数
-     *
-     * @param channel
-     * @param serverId
-     * @param createTime
-     * @param type
-     * @return
      */
-    int gerLoginRegisterPlayerNum(@Param("channel") String channel, @Param("serverId") int serverId, @Param("createTime") String createTime, @Param("type") int type, @Param("logTable") String logTable);
+    int gerLoginRegisterPlayerNum(@Param("serverId") int serverId, @Param("createTime") String createTime, @Param("type") int type, @Param("logTable") String logTable);
 
     /**
      * 新增注册付费总额
@@ -39,7 +32,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @param date
      * @return
      */
-    double getRegisterPayAmount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    double getRegisterPayAmount(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
     /**
      * 新增注册付费玩家
@@ -49,7 +42,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @param date
      * @return
      */
-    int getRegisterPayPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    int getRegisterPayPlayer(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
     /**
      * 注册二次付费玩家
@@ -59,7 +52,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * @param date
      * @return
      */
-    int getDoublePayRegisterPlayer(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    int getDoublePayRegisterPlayer(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
 
     /**
      * 当前登陆玩家ids
