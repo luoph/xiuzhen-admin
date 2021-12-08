@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @SuppressWarnings("unchecked")
-public class PlayerDataSourceController<T, S extends IService<T>> extends MultiDataSourceController {
+public class PlayerDataSourceController<T, S extends IService<T>> extends MultiDataSourceController<T, S> {
 
     @Autowired
     private IGamePlayerService playerService;

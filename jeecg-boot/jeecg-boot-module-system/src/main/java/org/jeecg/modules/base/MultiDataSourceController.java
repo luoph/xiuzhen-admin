@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author luopeihuan
@@ -42,26 +41,29 @@ public class MultiDataSourceController<T, S extends IService<T>> {
         DataSourceHelper.useDefaultDatabase();
     }
 
-    protected QueryWrapper<T> prepareQuery(T model, Map<String, String[]> parameterMap) {
-        return QueryGenerator.initQueryWrapper(model, parameterMap);
+    protected QueryWrapper<T> prepareQuery(T entity, HttpServletRequest req) {
+        return QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
+    }
+
+    protected IPage<T> pageList(Page<T> page, QueryWrapper<T> queryWrapper) {
+        return service.page(page, queryWrapper);
     }
 
     /**
      * 分页列表查询
      *
-     * @param model    数据实体
+     * @param entity   数据实体
      * @param pageNo   页码
      * @param pageSize 分页大小
      * @param req      请求
      * @return {@linkplain Result}
      */
-    public Result<?> queryPageList(T model, Integer pageNo, Integer pageSize, Integer serverId, HttpServletRequest req) {
-        QueryWrapper<T> queryWrapper = prepareQuery(model, req.getParameterMap());
+    public Result<?> queryPageList(T entity, Integer pageNo, Integer pageSize, Integer serverId, HttpServletRequest req) {
+        QueryWrapper<T> queryWrapper = prepareQuery(entity, req);
         Page<T> page = new Page<>(pageNo, pageSize);
         try {
             useServerDatabase(serverId);
-            IPage<T> pageList = service.page(page, queryWrapper);
-            return Result.ok(pageList);
+            return Result.ok(pageList(page, queryWrapper));
         } finally {
             useDefaultDatabase();
         }
@@ -70,13 +72,13 @@ public class MultiDataSourceController<T, S extends IService<T>> {
     /**
      * 添加
      *
-     * @param model 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
-    public Result<?> add(T model, Integer serverId) {
+    public Result<?> add(T entity, Integer serverId) {
         try {
             useServerDatabase(serverId);
-            service.save(model);
+            service.save(entity);
             return Result.ok("添加成功！");
         } finally {
             useDefaultDatabase();
@@ -86,13 +88,13 @@ public class MultiDataSourceController<T, S extends IService<T>> {
     /**
      * 编辑
      *
-     * @param model 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
-    public Result<?> edit(T model, Integer serverId) {
+    public Result<?> edit(T entity, Integer serverId) {
         try {
             useServerDatabase(serverId);
-            service.updateById(model);
+            service.updateById(entity);
             return Result.ok("编辑成功!");
         } finally {
             useDefaultDatabase();
@@ -140,11 +142,11 @@ public class MultiDataSourceController<T, S extends IService<T>> {
     public Result<?> queryById(String id, Integer serverId) {
         try {
             useServerDatabase(serverId);
-            T model = service.getById(id);
-            if (model == null) {
+            T entity = service.getById(id);
+            if (entity == null) {
                 return Result.error("未找到对应数据");
             }
-            return Result.ok(model);
+            return Result.ok(entity);
         } finally {
             useDefaultDatabase();
         }
