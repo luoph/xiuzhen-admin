@@ -35,12 +35,10 @@
         FROM `game_order` a
                  JOIN ${logTable} b
                       ON b.`player_id` = a.`player_id`
-                          AND b.`channel` = a.`channel`
                           AND b.`server_id` = a.`server_id`
         WHERE b.`server_id` = #{serverId}
           AND b.`type` = 1
           AND DATE (b.`create_time`) = DATE (#{date})
-          AND a.`channel` = #{channel}
           AND a.`server_id`= #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
@@ -50,12 +48,10 @@
         FROM `game_order` a
                  JOIN ${logTable} b
                       ON b.`player_id` = a.`player_id`
-                          AND b.`channel` = a.`channel`
                           AND b.`server_id` = a.`server_id`
         WHERE b.`server_id` = #{serverId}
           AND b.`type` = 1
           AND DATE (b.`create_time`) = DATE (#{date})
-          AND a.`channel` = #{channel}
           AND a.`server_id`= #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
@@ -67,7 +63,6 @@
                  FROM `game_order` a
                           LEFT JOIN ${logTable} b
                                     ON a.`player_id` = b.`player_id`
-                                        AND b.`channel` = a.`channel`
                                         AND b.`server_id` = a.`server_id`
                  WHERE b.`server_id` = #{serverId}
                    AND b.`type` = 1
