@@ -1,9 +1,10 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
-import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -18,6 +19,9 @@ import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IGameStatOrderService;
 import org.jeecg.modules.player.service.ILogAccountService;
 import org.jeecg.modules.player.service.IPayOrderService;
+import org.joda.time.DateTime;
+import org.joda.time.Months;
+import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +55,7 @@ public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, G
         int num = DateUtils.daysBetween(gameStatOrder.getStartDate(), gameStatOrder.getEndDate());
         List<Date> dateList = new ArrayList<>(num);
         for (int i = 0; i <= num; i++) {
-            dateList.add(DateUtils.minusDays(gameStatOrder.getEndDate(), i));
+            dateList.add(DateUtils.addDays(gameStatOrder.getEndDate(), -i));
         }
         List<Date> datePageList = CollectionPageHelp.pageBySubList(dateList, pageSize, pageNo);
 
@@ -86,14 +90,12 @@ public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, G
 
     private List<GameStatOrder> queryGameStatOrderList(GameStatOrder gameStatOrder, List<Date> dateList, int type) {
         // 活跃玩家
-        Map<String, Integer> activePlayerByLoginDates = logAccountService.getPlayerNumByLoginDates(gameStatOrder.getServerId() != null ?
-                gameStatOrder.getServerId() : 0, dateList, type);
+        Map<String, Integer> activePlayerByLoginDates = logAccountService.getPlayerNumByLoginDates(gameStatOrder.getServerId() != null ? gameStatOrder.getServerId() : 0, dateList, type);
         if (MapUtil.isEmpty(activePlayerByLoginDates)) {
             return null;
         }
         // body
-        List<GameStatOrder> gameStatOrders = payOrderService.statOrderByDates(gameStatOrder.getServerId() != null ?
-                gameStatOrder.getServerId() : 0, dateList, type);
+        List<GameStatOrder> gameStatOrders = payOrderService.statOrderByDates(gameStatOrder.getServerId() != null ? gameStatOrder.getServerId() : 0, dateList, type);
 
         if (CollectionUtil.isEmpty(gameStatOrders)) {
             return null;
@@ -111,10 +113,11 @@ public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, G
         GameServer server = gameServerService.getOne(wrapper.eq(GameServer::getId, gameStatOrder.getServerId()));
         Date openTime = server.getOpenTime();
         Date todayDate = DateUtils.todayDate();
-        int num = DateUtils.monthsBetween(openTime, todayDate);
+        int num = Months.monthsBetween(new DateTime(DateUtil.beginOfMonth(openTime)), new DateTime(DateUtil.beginOfMonth(todayDate))).getMonths();
         List<Date> monthsDateList = new ArrayList<>(num);
         for (int i = 0; i <= num; i++) {
-            monthsDateList.add(DateUtils.minusDays(todayDate, i));
+            // TODO WTF 计算月份差距，转换成天数？
+            monthsDateList.add(DateUtils.addDays(todayDate, -i));
         }
         return queryGameStatOrderList(gameStatOrder, monthsDateList, CommonConstant.PAY_ORDER_STAT_TYPE_MONTH);
     }
@@ -123,10 +126,11 @@ public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, G
      * 统计年度
      */
     private List<GameStatOrder> queryGameStatOrderListByYear(GameStatOrder gameStatOrder) {
-        int num = DateUtils.yearsBetween(gameStatOrder.getStartDate(), gameStatOrder.getEndDate());
+        int num = Years.yearsBetween(new DateTime(gameStatOrder.getStartDate()), new DateTime(gameStatOrder.getEndDate())).getYears();
         List<Date> yearsDateList = new ArrayList<>(num);
         for (int i = 0; i <= num; i++) {
-            yearsDateList.add(DateUtils.minusDays(gameStatOrder.getEndDate(), i));
+            // TODO WTF 计算年份差距，转换成天数？
+            yearsDateList.add(DateUtils.addDays(gameStatOrder.getEndDate(), -i));
         }
         return queryGameStatOrderList(gameStatOrder, yearsDateList, CommonConstant.PAY_ORDER_STAT_TYPE_YEAR);
     }
@@ -161,8 +165,7 @@ public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, G
 
             // 服均充值
             if (item.getServerNum() != null && item.getServerNum() != 0) {
-                item.setServerAverageAmount(item.getAmount() != null ?
-                        BigDecimalUtil.divide(item.getAmount().doubleValue(), (double) item.getServerNum()) : BigDecimal.valueOf(0.00));
+                item.setServerAverageAmount(item.getAmount() != null ? BigDecimalUtil.divide(item.getAmount().doubleValue(), (double) item.getServerNum()) : BigDecimal.valueOf(0.00));
             } else {
                 item.setServerAverageAmount(BigDecimal.valueOf(0.00));
             }

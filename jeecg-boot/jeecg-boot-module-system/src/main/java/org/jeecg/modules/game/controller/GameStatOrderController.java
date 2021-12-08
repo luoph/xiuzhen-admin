@@ -1,13 +1,12 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.server.utils.DateUtils;
 import cn.youai.server.utils.NumberUtils;
-import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
-import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
@@ -48,9 +47,7 @@ public class GameStatOrderController extends JeecgController<GameStatOrder, IGam
      */
     @AutoLog(value = "game_stat_order-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameStatOrder gameStatOrder,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+    public Result<?> queryPageList(GameStatOrder gameStatOrder, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
         if (NumberUtils.isZero(gameStatOrder.getServerId())) {
             return Result.error("请选择服务器！");
         }
@@ -58,17 +55,7 @@ public class GameStatOrderController extends JeecgController<GameStatOrder, IGam
         if (gameStatOrder.getStartDate() == null || gameStatOrder.getEndDate() == null) {
             Date now = DateUtils.now();
             gameStatOrder.setEndDate(now);
-            if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.addDays(now, CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS - 1));
-            } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.addDays(now, -(CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS - 1)));
-            } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_MONTH == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.startTimeOfMonth(now));
-            } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_2_MONTHS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.startTimeOfMonth(DateUtils.minusMonths(now, 1)));
-            } else {
-                return Result.error("请选择查询日期！");
-            }
+            gameStatOrder.setStartDate(DateUtils.addDays(now, -gameStatOrder.getDaysType()));
         }
 
         IPage<GameStatOrder> pageList = gameStatOrderService.queryGameStatOrderList(gameStatOrder, pageNo, pageSize);
@@ -90,17 +77,7 @@ public class GameStatOrderController extends JeecgController<GameStatOrder, IGam
         if (gameStatOrder.getStartDate() == null || gameStatOrder.getEndDate() == null) {
             Date now = DateUtils.now();
             gameStatOrder.setEndDate(now);
-            if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.minusDays(now, CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_7_DAYS - 1));
-            } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.minusDays(now, CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_15_DAYS - 1));
-            } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_MONTH == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.startTimeOfMonth(now));
-            } else if (CommonConstant.QUERY_CONDITION_DATE_TYPE_LAST_2_MONTHS == gameStatOrder.getDaysType()) {
-                gameStatOrder.setStartDate(DateUtils.startTimeOfMonth(DateUtils.minusMonths(now, 1)));
-            } else {
-                return new ModelAndView();
-            }
+            gameStatOrder.setStartDate(DateUtils.addDays(now, -gameStatOrder.getDaysType()));
         }
 
         IPage<GameStatOrder> pageList = gameStatOrderService.queryGameStatOrderList(gameStatOrder, 1, Integer.MAX_VALUE);

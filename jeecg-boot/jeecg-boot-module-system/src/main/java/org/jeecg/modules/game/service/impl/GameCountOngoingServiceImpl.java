@@ -38,7 +38,7 @@ public class GameCountOngoingServiceImpl extends ServiceImpl<GameCountOngoingMap
         if (type > 0) {
             queryWrapper.eq("type", type);
         }
-        boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);
             queryWrapper.ge("count_date", rangeDateBegin);

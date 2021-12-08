@@ -2,7 +2,7 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.date.DatePattern;
 import cn.youai.basics.model.DateRange;
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;

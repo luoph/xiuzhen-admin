@@ -1,6 +1,6 @@
 package org.jeecg.modules.player.service.impl;
 
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.player.entity.GameRegisterInfo;
 import org.jeecg.modules.player.mapper.GameRegisterInfoMapper;

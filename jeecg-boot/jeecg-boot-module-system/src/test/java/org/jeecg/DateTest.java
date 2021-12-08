@@ -1,7 +1,7 @@
 package org.jeecg;
 
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

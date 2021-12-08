@@ -2,8 +2,9 @@ package org.jeecg.modules.player.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
+import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
-import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.constant.CommonConstant;
@@ -47,14 +48,15 @@ public class PayOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder>
         }
 
         List<JSONObject> dateJsonList = new ArrayList<>(dateList.size());
+        Date now = DateUtils.now();
         dateList.forEach(e -> {
             Date[] startAndEnd = null;
             if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
-                startAndEnd = DateUtils.monthStartAndEnd(e);
+                startAndEnd = new Date[]{DateUtil.beginOfMonth(now), DateUtil.endOfMonth(now)};
             } else if (type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
-                startAndEnd = DateUtils.monthStartAndEnd(e);
+                startAndEnd = new Date[]{DateUtil.beginOfYear(now), DateUtil.endOfYear(now)};
             } else {
-                startAndEnd = DateUtils.dateStartAndEnd(e);
+                startAndEnd = new Date[]{DateUtil.beginOfDay(now), DateUtil.endOfDay(now)};
             }
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("startTime", startAndEnd[0]);

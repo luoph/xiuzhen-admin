@@ -42,7 +42,7 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     @Override
     public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         LambdaQueryWrapper<GameStatRemain> queryWrapper = Wrappers.<GameStatRemain>lambdaQuery();
-        boolean paramValidCheck = ParamValidUtil.isParamInValidCheck(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             queryWrapper.between(GameStatRemain::getCountDate, rangeDateBegin, rangeDateEnd);
             GameChannel gameChannel = gameChannelService.getById(channelId);

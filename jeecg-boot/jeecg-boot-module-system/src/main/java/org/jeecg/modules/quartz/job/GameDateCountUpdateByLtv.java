@@ -1,6 +1,6 @@
 package org.jeecg.modules.quartz.job;
 
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.service.IGameDataCountService;
 import org.quartz.Job;
