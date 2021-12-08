@@ -4,8 +4,8 @@
 package org.jeecg.modules.player.service;
 
 import com.alibaba.fastjson.JSONObject;
-import org.jeecg.modules.player.entity.LogAccount;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.modules.player.entity.LogAccount;
 
 import java.util.Date;
 import java.util.List;
@@ -92,7 +92,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 指定日期没登陆玩家id
      *
-     * @param serverId 服务器
+     * @param serverId   服务器
      * @param srcDate    目标日期
      * @param beforeDate 指定前几天
      * @return 玩家ids
