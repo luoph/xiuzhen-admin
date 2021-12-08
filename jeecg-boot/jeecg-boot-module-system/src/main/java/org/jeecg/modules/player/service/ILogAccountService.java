@@ -29,44 +29,25 @@ public interface ILogAccountService extends IService<LogAccount> {
      * @param type
      * @return
      */
-    int loginRegisterPlayer(String channel, int serverId, String date, int type);
+    int loginRegisterPlayer(int serverId, String date, int type);
 
     /**
      * 新注册付费总额
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @return
      */
-    double registerPayAmount(String channel, int serverId, String date);
+    double registerPayAmount(int serverId, String date);
 
     /**
      * 新注册付费玩家
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @return
      */
-    int registerPayPlayer(String channel, int serverId, String date);
+    int registerPayPlayer(int serverId, String date);
 
     /**
      * 二次付费玩家
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @return
      */
-    int doublePayRegisterPlayer(String channel, int serverId, String date);
+    int doublePayRegisterPlayer(int serverId, String date);
 
     /**
      * 当前登陆玩家ids
-     *
-     * @param serverId
-     * @param date
-     * @return
      */
     List<Long> getPlayerIdsByLoginDate(int serverId, Date date);
 

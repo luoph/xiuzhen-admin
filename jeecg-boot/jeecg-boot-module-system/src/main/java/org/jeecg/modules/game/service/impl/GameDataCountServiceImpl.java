@@ -130,21 +130,36 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     public GameStatDaily gameDataCount(GameChannel gameChannel, GameServer gameServer, String date) {
 
         //当天付费总金额
-        double sumPayAmount = payOrderService.sumPayAmount(gameChannel.getSimpleName(), gameServer.getId(), date);
+        double sumPayAmount = payOrderService.sumPayAmount(gameServer.getId(), date);
         // 支付玩家数
-        int countPay = payOrderService.countPayPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
+        int countPay = payOrderService.countPayPlayer(gameServer.getId(), date);
         // 当天登录角色数
-        int loginNum = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 2);
+        int loginNum = logAccountService.loginRegisterPlayer(gameServer.getId(), date, 2);
         // 当天注册角色数
-        int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date, 1);
+        int registerPlayer = logAccountService.loginRegisterPlayer(gameServer.getId(), date, 1);
         // 注册付费总金额
-        double registerPayAmount = logAccountService.registerPayAmount(gameChannel.getSimpleName(), gameServer.getId(), date);
+        double registerPayAmount = logAccountService.registerPayAmount(gameServer.getId(), date);
         // 注册付费玩家
-        int registerPayPlayer = logAccountService.registerPayPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
+        int registerPayPlayer = logAccountService.registerPayPlayer(gameServer.getId(), date);
         // 注册二次付费玩家
-        int doublePayPlayer = logAccountService.doublePayRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
+        int doublePayPlayer = logAccountService.doublePayRegisterPlayer(gameServer.getId(), date);
 
-        return new GameStatDaily().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount)).setLoginNum(loginNum).setPayNum(countPay).setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false)).setArppu(BigDecimalUtil.divideZero(sumPayAmount, countPay, false)).setPayRate(BigDecimalUtil.divideZero(countPay, loginNum, true)).setAddNum(registerPlayer).setAddPayNum(registerPayPlayer).setAddPayAmount(BigDecimalUtil.valueOf(registerPayAmount)).setAddPayRate(BigDecimalUtil.divideZero(registerPayPlayer, registerPlayer, true)).setDoublePay(doublePayPlayer).setDoublePayRate(BigDecimalUtil.divideZero(doublePayPlayer, registerPayPlayer, true)).setAddArpu(BigDecimalUtil.divideZero(registerPayAmount, registerPlayer, false)).setAddArppu(BigDecimalUtil.divideZero(registerPayAmount, registerPayPlayer, false)).setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId()).setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
+        return new GameStatDaily().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount))
+                .setLoginNum(loginNum).setPayNum(countPay)
+                .setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false))
+                .setArppu(BigDecimalUtil.divideZero(sumPayAmount, countPay, false))
+                .setPayRate(BigDecimalUtil.divideZero(countPay, loginNum, true))
+                .setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
+                .setAddPayAmount(BigDecimalUtil.valueOf(registerPayAmount))
+                .setAddPayRate(BigDecimalUtil.divideZero(registerPayPlayer, registerPlayer, true))
+                .setDoublePay(doublePayPlayer)
+                .setDoublePayRate(BigDecimalUtil.divideZero(doublePayPlayer, registerPayPlayer, true))
+                .setAddArpu(BigDecimalUtil.divideZero(registerPayAmount, registerPlayer, false))
+                .setAddArppu(BigDecimalUtil.divideZero(registerPayAmount, registerPayPlayer, false))
+                .setChannel(gameChannel.getSimpleName())
+                .setServerId(gameServer.getId())
+                .setCountDate(DateUtils.parseDate(date))
+                .setCreateTime(DateUtils.now());
     }
 
     @Override
@@ -669,7 +684,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             GameStatOngoing gameCountOngoing = ongoingMap.get(mapKey);
             if (gameCountOngoing == null) {
                 // 插入新纪录
-                int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDate(nextDate, DatePattern.NORM_DATE_PATTERN), 1);
+                int registerPlayer = logAccountService.loginRegisterPlayer(gameServer.getId(), DateUtil.formatDate(nextDate), 1);
                 keyObj.setRegisterNum((long) registerPlayer);
                 gameCountOngoing = keyObj;
             }
@@ -713,8 +728,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            int registerPlayer = logAccountService.loginRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), dateOnly, 1);
-
+            int registerPlayer = logAccountService.loginRegisterPlayer(gameServer.getId(), dateOnly, 1);
             GameStatOngoing gameCountOngoing = new GameStatOngoing().setChannel(gameChannel.getSimpleName()).setServerId(gameServer.getId()).setCountDate(DateUtils.parseDate(dateOnly)).setRegisterNum((long) registerPlayer).setType(type).setC1(BigDecimal.valueOf(100));
             list.add(gameCountOngoing);
         }

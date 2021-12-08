@@ -32,13 +32,13 @@ public class PayOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder>
     private GameOrderMapper gameOrderMapper;
 
     @Override
-    public double sumPayAmount(String channel, int serverId, String date) {
-        return gameOrderMapper.getSumPayAmount(channel, serverId, date);
+    public double sumPayAmount(int serverId, String date) {
+        return gameOrderMapper.getSumPayAmount(serverId, date);
     }
 
     @Override
-    public int countPayPlayer(String channel, int serverId, String date) {
-        return gameOrderMapper.getCountPayPlayer(channel, serverId, date);
+    public int countPayPlayer(int serverId, String date) {
+        return gameOrderMapper.getCountPayPlayer(serverId, date);
     }
 
     @Override

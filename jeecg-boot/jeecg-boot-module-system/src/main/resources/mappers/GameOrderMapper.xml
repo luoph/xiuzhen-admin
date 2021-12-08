@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.player.mapper.GameOrderMapper">
 
     <select id="getSumPayAmount" resultType="double">
         SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
         FROM `game_order` a
-        WHERE a.`channel` = #{channel}
-          AND a.`server_id` = #{serverId}
+        WHERE a.`server_id` = #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{payDate});
     </select>
 
     <select id="getCountPayPlayer" resultType="int">
         SELECT COUNT(DISTINCT a.`player_id`) AS payPlayer
         FROM `game_order` a
-        WHERE a.`channel` = #{channel}
-          AND a.`server_id` = #{serverId}
+        WHERE a.`server_id` = #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{payDate});
     </select>
 
@@ -24,15 +22,15 @@
             <if test="index != 0">
                 UNION ALL
             </if>
-                SELECT #{index} as `id`, a.`player_id`, SUM(a.`pay_amount`) AS `pay_amount`
-                FROM `game_order` a
-                where a.`order_status` &gt; 0
-                  AND a.`create_time` &gt; #{date.startTime}
-                  AND a.`create_time` &lt; #{date.endTime}
-                  <if test="serverId > 0">
-                    AND a.`server_id` = #{serverId}
-                  </if>
-                GROUP BY a.`player_id`
+            SELECT #{index} as `id`, a.`player_id`, SUM(a.`pay_amount`) AS `pay_amount`
+            FROM `game_order` a
+            where a.`order_status` &gt; 0
+            AND a.`create_time` &gt; #{date.startTime}
+            AND a.`create_time` &lt; #{date.endTime}
+            <if test="serverId > 0">
+                AND a.`server_id` = #{serverId}
+            </if>
+            GROUP BY a.`player_id`
         </foreach>
 
     </select>

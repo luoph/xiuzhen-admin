@@ -25,8 +25,7 @@
     <select id="gerLoginRegisterPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT a.`player_id`) AS counNum
         FROM ${logTable} a
-        WHERE a.`channel` = #{channel}
-          AND a.`server_id` = #{serverId}
+        WHERE a.`server_id` = #{serverId}
           AND a.`type` = #{type}
           AND DATE (a.`create_time`) = DATE (#{createTime});
     </select>
@@ -38,8 +37,7 @@
                       ON b.`player_id` = a.`player_id`
                           AND b.`channel` = a.`channel`
                           AND b.`server_id` = a.`server_id`
-        WHERE b.`channel` = #{channel}
-          AND b.`server_id` = #{serverId}
+        WHERE b.`server_id` = #{serverId}
           AND b.`type` = 1
           AND DATE (b.`create_time`) = DATE (#{date})
           AND a.`channel` = #{channel}
@@ -54,8 +52,7 @@
                       ON b.`player_id` = a.`player_id`
                           AND b.`channel` = a.`channel`
                           AND b.`server_id` = a.`server_id`
-        WHERE b.`channel` = #{channel}
-          AND b.`server_id` = #{serverId}
+        WHERE b.`server_id` = #{serverId}
           AND b.`type` = 1
           AND DATE (b.`create_time`) = DATE (#{date})
           AND a.`channel` = #{channel}
@@ -72,11 +69,9 @@
                                     ON a.`player_id` = b.`player_id`
                                         AND b.`channel` = a.`channel`
                                         AND b.`server_id` = a.`server_id`
-                 WHERE b.`channel` = #{channel}
-                   AND b.`server_id` = #{serverId}
+                 WHERE b.`server_id` = #{serverId}
                    AND b.`type` = 1
                    AND DATE (b.`create_time`) =  DATE(#{date})
-            AND a.`channel` = #{channel}
             AND a.`server_id`= #{serverId}
             AND DATE (a.`pay_time`) = DATE (#{date})
         GROUP BY a.`player_id`
