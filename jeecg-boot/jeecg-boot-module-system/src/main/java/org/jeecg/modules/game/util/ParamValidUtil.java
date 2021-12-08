@@ -3,7 +3,8 @@ package org.jeecg.modules.game.util;
 import cn.hutool.core.date.DatePattern;
 import cn.youai.basics.model.DateRange;
 import cn.youai.basics.model.ResponseCode;
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.constant.ErrorCode;
 
@@ -27,7 +28,7 @@ public final class ParamValidUtil {
     private ParamValidUtil() {
     }
 
-    public static boolean isParamInValidCheck(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
+    public static boolean isParamInValid(int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
         return channelId <= 0 || serverId <= 0 || StringUtils.isBlank(rangeDateBegin) || StringUtils.isBlank(rangeDateEnd);
     }
 

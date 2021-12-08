@@ -2,8 +2,9 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
+import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
-import cn.youai.xiuzhen.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.common.collect.Lists;
@@ -131,7 +132,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
         Map<String, GameStatDaily> map = new HashMap<>(dataCounts.size());
         for (GameStatDaily dataCount : dataCounts) {
-            String formatDate = DateUtils.formatDate(dataCount.getCountDate(), DatePattern.NORM_DATE_PATTERN);
+            String formatDate = DateUtil.formatDate(dataCount.getCountDate());
             String countKey = dailyCountKey(dataCount.getChannel(), dataCount.getServerId(), formatDate);
             map.put(countKey, dataCount);
         }
@@ -162,7 +163,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         // 注册二次付费玩家
         int doublePayPlayer = logAccountService.doublePayRegisterPlayer(gameChannel.getSimpleName(), gameServer.getId(), date);
 
-
         return new GameStatDaily().setPayAmount(BigDecimalUtil.valueOf(sumPayAmount)).setLoginNum(loginNum)
                 .setPayNum(countPay).setArpu(BigDecimalUtil.divideZero(sumPayAmount, loginNum, false))
                 .setArppu(BigDecimalUtil.divideZero(sumPayAmount, countPay, false))
@@ -189,7 +189,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     public void doJobDataCount(Date currentDate, int type) {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
-        Date date = DateUtils.minusDays(currentDate, 1);
+        Date date = DateUtils.addDays(currentDate, -1);
         switch (type) {
             case GAME_DATA_COUNT_TYPE_DAILY:
                 doJobDataCountToDaily(list, date);
@@ -409,7 +409,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private void doDataCountUpdateByRemain(Date currentDate) {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
-        Date date = DateUtils.minusDays(currentDate, 1);
+        Date date = DateUtils.addDays(currentDate, -1);
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
         Map<String, Object> context = new HashMap<>(10);
         // 留存数据
@@ -435,7 +435,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private void doDataCountUpdateByLtv(Date currentDate) {
         List<GameChannelServer> list = gameChannelServerService.list();
         list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
-        Date date = DateUtils.minusDays(currentDate, 1);
+        Date date = DateUtils.addDays(currentDate, -1);
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
         Map<String, Object> context = new HashMap<>(10);
         // ltv数据
@@ -493,12 +493,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             Date endRegisterDate = DateUtils.endTimeOfDate(nextDate);
             for (int j = 1; j <= leftDays; j++) {
                 if (isNeedStatRemain(j, leftDays)) {
-                    log.info("updateRemainTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
+                    log.info("updateRemainTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtil.formatDateTime(nextDate), j);
                     int remain = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(),
-                            DateUtils.formatDateTimeStr(startRegisterDate),
-                            DateUtils.formatDateTimeStr(endRegisterDate),
-                            DateUtils.formatDateTimeStr(DateUtils.addDays(startRegisterDate, j)),
-                            DateUtils.formatDateTimeStr(DateUtils.addDays(endRegisterDate, j)),
+                            DateUtil.formatDateTime(startRegisterDate),
+                            DateUtil.formatDateTime(endRegisterDate),
+                            DateUtil.formatDateTime(DateUtils.addDays(startRegisterDate, j)),
+                            DateUtil.formatDateTime(DateUtils.addDays(endRegisterDate, j)),
                             logTable);
                     updateRemainCountField(gameRemainCount, j, remain);
                 }
@@ -588,11 +588,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             Date endRegisterDate = DateUtils.endTimeOfDate(nextDate);
             for (int j = 1; j <= leftDays; j++) {
                 if (isNeedStatLtvRemain(j, leftDays)) {
-                    log.info("updateLtvTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtils.formatDateTimeStr(nextDate), j);
+                    log.info("updateLtvTask param is,simpleName={}, serverId={}, nextDate={}, leftDays={}", gameChannel.getSimpleName(), gameServer.getId(), DateUtil.formatDateTime(nextDate), j);
                     double remain = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), gameServer.getId(),
-                            DateUtils.formatDateTimeStr(startRegisterDate),
-                            DateUtils.formatDateTimeStr(endRegisterDate),
-                            DateUtils.formatDateTimeStr(DateUtils.addDays(startRegisterDate, j)),
+                            DateUtil.formatDateTime(startRegisterDate),
+                            DateUtil.formatDateTime(endRegisterDate),
+                            DateUtil.formatDateTime(DateUtils.addDays(startRegisterDate, j)),
                             logTable);
                     updateLtvCountField(gameLtvCount, j, remain);
                 }
@@ -739,16 +739,16 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                         // type 2-留存 3-ltv
                         if (type == GAME_DATA_COUNT_TYPE_REMAIN) {
                             countValue = gameDataRemainMapper.selectRemain(gameChannel.getSimpleName(), gameServer.getId(),
-                                    DateUtils.formatDateTimeStr(startRegisterDate),
-                                    DateUtils.formatDateTimeStr(endRegisterDate),
-                                    DateUtils.formatDateTimeStr(DateUtils.addDays(startRegisterDate, j)),
-                                    DateUtils.formatDateTimeStr(DateUtils.addDays(endRegisterDate, j)),
+                                    DateUtil.formatDateTime(startRegisterDate),
+                                    DateUtil.formatDateTime(endRegisterDate),
+                                    DateUtil.formatDateTime(DateUtils.addDays(startRegisterDate, j)),
+                                    DateUtil.formatDateTime(DateUtils.addDays(endRegisterDate, j)),
                                     logTable);
                         } else if (type == GAME_DATA_COUNT_TYPE_LTV) {
                             countValue = gameLtvCountMapper.selectLtv(gameChannel.getSimpleName(), gameServer.getId(),
-                                    DateUtils.formatDateTimeStr(startRegisterDate),
-                                    DateUtils.formatDateTimeStr(endRegisterDate),
-                                    DateUtils.formatDateTimeStr(DateUtils.addDays(startRegisterDate, j)),
+                                    DateUtil.formatDateTime(startRegisterDate),
+                                    DateUtil.formatDateTime(endRegisterDate),
+                                    DateUtil.formatDateTime(DateUtils.addDays(startRegisterDate, j)),
                                     logTable);
                         }
                         ReflectUtils.invokeSetField(gameCountOngoing, countField, countValue);

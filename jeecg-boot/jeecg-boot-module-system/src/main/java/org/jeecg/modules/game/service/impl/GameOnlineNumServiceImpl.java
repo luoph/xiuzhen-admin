@@ -2,7 +2,7 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.youai.basics.model.DataResponse;
 import cn.youai.server.springboot.component.OkHttpHelper;
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

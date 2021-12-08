@@ -1,6 +1,6 @@
 package org.jeecg.modules.quartz.controller;
 
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

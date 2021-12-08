@@ -6,8 +6,9 @@ package org.jeecg.modules.player.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.constant.CommonConstant;
@@ -65,8 +66,8 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
 
     @Override
     public List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate) {
-        String startDate = DateUtils.formatDate(DateUtils.minusDays(srcDate, beforeDate), DatePattern.NORM_DATE_PATTERN);
-        String endDate = DateUtils.formatDate(srcDate, DatePattern.NORM_DATE_PATTERN);
+        String startDate = DateUtil.formatDate(DateUtils.addDays(srcDate, -beforeDate));
+        String endDate = DateUtil.formatDate(srcDate);
         return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate, logTable);
     }
 
@@ -101,12 +102,13 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
         List<JSONObject> dateJsonList = new ArrayList<>(dateList.size());
         dateList.forEach(e -> {
             Date[] startAndEnd;
+            Date now = DateUtils.now();
             if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
-                startAndEnd = DateUtils.monthStartAndEnd(e);
+                startAndEnd = new Date[]{DateUtil.beginOfMonth(now), DateUtil.endOfMonth(now)};
             } else if (type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
-                startAndEnd = DateUtils.yearStartAndEnd(e);
+                startAndEnd = new Date[]{DateUtil.beginOfYear(now), DateUtil.endOfYear(now)};
             } else {
-                startAndEnd = DateUtils.dateStartAndEnd(e);
+                startAndEnd = new Date[]{DateUtil.beginOfDay(now), DateUtil.endOfDay(now)};
             }
             JSONObject jsonParam = new JSONObject();
             jsonParam.put("startTime", startAndEnd[0]);

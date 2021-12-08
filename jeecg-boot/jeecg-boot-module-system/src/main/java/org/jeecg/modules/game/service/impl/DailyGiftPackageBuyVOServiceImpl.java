@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.DailyGiftPackageBuyVO;

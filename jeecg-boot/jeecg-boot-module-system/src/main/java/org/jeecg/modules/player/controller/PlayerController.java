@@ -1,9 +1,10 @@
 package org.jeecg.modules.player.controller;
 
+import cn.hutool.core.date.DateUtil;
 import cn.youai.basics.model.DataResponse;
 import cn.youai.server.model.RoleAttr;
 import cn.youai.server.springboot.component.OkHttpHelper;
-import cn.youai.xiuzhen.utils.DateUtils;
+import cn.youai.server.utils.DateUtils;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -30,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -124,9 +124,10 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
             }
             if (playerBehaviorVO.getRangeDateBegin() != null && playerBehaviorVO.getRangeDateEnd() != null) {
                 // 如果选择开始时间和结束时间是同一天
-                Date[] dates = DateUtils.queryDateOfSameDay(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd());
-                playerBehaviorVO.setRangeDateBegin(dates[0]);
-                playerBehaviorVO.setRangeDateEnd(dates[1]);
+                if (DateUtils.isSameDay(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd())) {
+                    playerBehaviorVO.setRangeDateBegin(DateUtil.beginOfDay(playerBehaviorVO.getRangeDateBegin()));
+                    playerBehaviorVO.setRangeDateEnd(DateUtil.endOfDay(playerBehaviorVO.getRangeDateBegin()));
+                }
             }
         }
 
@@ -153,9 +154,10 @@ public class PlayerController extends MultiDataSourceController<Player, IPlayerS
             }
             if (playerBehaviorVO.getRangeDateBegin() != null && playerBehaviorVO.getRangeDateEnd() != null) {
                 // 如果选择开始时间和结束时间是同一天
-                Date[] dates = DateUtils.queryDateOfSameDay(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd());
-                playerBehaviorVO.setRangeDateBegin(dates[0]);
-                playerBehaviorVO.setRangeDateEnd(dates[1]);
+                if (DateUtils.isSameDay(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd())) {
+                    playerBehaviorVO.setRangeDateBegin(DateUtil.beginOfDay(playerBehaviorVO.getRangeDateBegin()));
+                    playerBehaviorVO.setRangeDateEnd(DateUtil.endOfDay(playerBehaviorVO.getRangeDateBegin()));
+                }
             }
         }
 
