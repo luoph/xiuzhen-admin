@@ -16,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGamePlayerService extends IService<GamePlayer> {
 
+    GamePlayer getPlayer(long playerId);
+
 }

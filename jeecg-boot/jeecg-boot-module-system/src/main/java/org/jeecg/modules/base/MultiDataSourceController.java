@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author luopeihuan
@@ -41,6 +42,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
         DataSourceHelper.useDefaultDatabase();
     }
 
+    protected QueryWrapper<T> prepareQuery(T model, Map<String, String[]> parameterMap) {
+        return QueryGenerator.initQueryWrapper(model, parameterMap);
+    }
 
     /**
      * 分页列表查询
@@ -52,7 +56,7 @@ public class MultiDataSourceController<T, S extends IService<T>> {
      * @return {@linkplain Result}
      */
     public Result<?> queryPageList(T model, Integer pageNo, Integer pageSize, Integer serverId, HttpServletRequest req) {
-        QueryWrapper<T> queryWrapper = QueryGenerator.initQueryWrapper(model, req.getParameterMap());
+        QueryWrapper<T> queryWrapper = prepareQuery(model, req.getParameterMap());
         Page<T> page = new Page<>(pageNo, pageSize);
         try {
             useServerDatabase(serverId);

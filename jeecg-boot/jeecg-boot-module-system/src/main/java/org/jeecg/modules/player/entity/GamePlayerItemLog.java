@@ -62,15 +62,6 @@ public class GamePlayerItemLog implements Serializable {
     private java.lang.Integer itemId;
 
     /**
-     * 道具名称
-     */
-    @ColumnWidth(15)
-    @ExcelProperty("道具名称")
-    @TableField(exist = false)
-    @Excel(name = "道具名称", width = 15)
-    private java.lang.String itemIdName;
-
-    /**
      * 数量
      */
     @ColumnWidth(15)
@@ -161,9 +152,11 @@ public class GamePlayerItemLog implements Serializable {
     /**
      * 道具名称
      */
-    @ExcelIgnore
+    @ColumnWidth(15)
+    @ExcelProperty("道具名称")
     @TableField(exist = false)
-    private String itemName;
+    @Excel(name = "道具名称", width = 15)
+    private java.lang.String itemName;
 
     /**
      * 道具的数量汇总
@@ -241,13 +234,6 @@ public class GamePlayerItemLog implements Serializable {
     @ExcelIgnore
     @TableField(exist = false)
     private String playerName;
-
-    /**
-     * 关联玩家注册信息
-     */
-    @ExcelIgnore
-    @TableField(exist = false)
-    private GameRegisterInfo registerInfo;
 
     @ExcelIgnore
     @TableField(exist = false)

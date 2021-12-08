@@ -172,8 +172,6 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
         Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
         List<GamePlayerItemLog> list = playerItemLogMapper.queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
         for (GamePlayerItemLog playerItemLog : list) {
-            // 玩家名
-            playerItemLog.setPlayerName(playerItemLog.getRegisterInfo().getName());
             // 通过道具获取物品名称
             ConfItem confItem = itemTree(playerItemLog.getItemId());
             if (confItem == null) {
@@ -219,7 +217,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
             return null;
         }
 
-        List<ConfItem> itemList = getConfItemList(playerItemLog.getItemId(), playerItemLog.getItemIdName());
+        List<ConfItem> itemList = getConfItemList(playerItemLog.getItemId(), playerItemLog.getItemName());
         if (!CollectionUtils.isEmpty(itemList)) {
             Map<Integer, String> itemMapById = new HashMap<>(itemList.size());
             List<Integer> itemIds = new ArrayList<>(itemList.size());
@@ -240,7 +238,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
 
             if (iPage != null && iPage.getSize() > 0) {
                 iPage.getRecords().forEach(p -> {
-                    p.setItemIdName(itemMapById.get(p.getItemId()));
+                    p.setItemName(itemMapById.get(p.getItemId()));
                     p.setWayName(ItemRuleId.valueOf(p.getWay()).getName());
                 });
             }
