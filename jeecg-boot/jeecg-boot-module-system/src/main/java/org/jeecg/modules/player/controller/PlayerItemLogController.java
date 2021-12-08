@@ -1,13 +1,20 @@
 package org.jeecg.modules.player.controller;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.youai.server.conf.ConfItem;
+import cn.youai.server.constant.ItemReduce;
+import cn.youai.server.constant.ItemRuleId;
+import cn.youai.xiuzhen.entity.pojo.OperationType;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.modules.base.PlayerDataSourceController;
-import org.jeecg.modules.game.service.IGamePlayerService;
 import org.jeecg.modules.player.entity.GamePlayerItemLog;
 import org.jeecg.modules.player.service.IGamePlayerItemLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,8 +33,33 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("player/playerItemLog")
 public class PlayerItemLogController extends PlayerDataSourceController<GamePlayerItemLog, IGamePlayerItemLogService> {
 
-    @Autowired
-    private IGamePlayerService playerService;
+    @Override
+    protected QueryWrapper<GamePlayerItemLog> prepareQuery(GamePlayerItemLog entity, HttpServletRequest req) {
+        QueryWrapper<GamePlayerItemLog> queryWrapper = super.prepareQuery(entity, req);
+        queryWrapper.orderByDesc("create_time");
+        return queryWrapper;
+    }
+
+    @Override
+    protected IPage<GamePlayerItemLog> pageList(Page<GamePlayerItemLog> page, QueryWrapper<GamePlayerItemLog> queryWrapper) {
+        IPage<GamePlayerItemLog> pageList = super.pageList(page, queryWrapper);
+        if (CollUtil.isNotEmpty(pageList.getRecords())) {
+            pageList.getRecords().forEach(t -> {
+                ConfItem confItem = GameConfigUtils.getItemById(t.getItemId());
+                t.setItemName(confItem != null ? confItem.getName() : "");
+
+                // 设置产销点名字
+                if (t.getType() == OperationType.INCREASE.getType()) {
+                    ItemRuleId itemRuleId = ItemRuleId.valueOf(t.getWay());
+                    t.setWayName(itemRuleId != null ? itemRuleId.getName() : "未知");
+                } else if (t.getType() == OperationType.REDUCE.getType()) {
+                    ItemReduce itemReduce = ItemReduce.valueOf(t.getWay());
+                    t.setWayName(itemReduce != null ? itemReduce.getName() : "未知");
+                }
+            });
+        }
+        return pageList;
+    }
 
     /**
      * 分页列表查询
