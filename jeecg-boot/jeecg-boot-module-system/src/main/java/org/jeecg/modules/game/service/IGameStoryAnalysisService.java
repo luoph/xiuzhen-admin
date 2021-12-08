@@ -1,13 +1,10 @@
 package org.jeecg.modules.game.service;
 
 
-import cn.youai.xiuzhen.entity.pojo.ConfMainStory;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameStoryAnalysis;
 import org.jeecg.modules.game.entity.GameStoryAnalysisVO;
-
-import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -17,22 +14,13 @@ import java.util.List;
  */
 public interface IGameStoryAnalysisService extends IService<GameStoryAnalysis> {
 
-	/**
-	 * 查询剧情列表
-	 *
-	 * @param gameStoryAnalysis
-	 * @param pageSize
-	 * @param pageNo
-	 * @return
-	 */
-	IPage<GameStoryAnalysisVO> queryGameStoryAnalysisList(GameStoryAnalysisVO gameStoryAnalysis, int pageSize, int pageNo);
-
-	/**
-	 * 查询主剧情关卡
-	 *
-	 * @param levelIds
-	 * @return
-	 */
-	List<ConfMainStory> queryConfMainStory(List<Integer> levelIds);
-
+    /**
+     * 查询剧情列表
+     *
+     * @param gameStoryAnalysis
+     * @param pageSize
+     * @param pageNo
+     * @return
+     */
+    IPage<GameStoryAnalysisVO> queryGameStoryAnalysisList(GameStoryAnalysisVO gameStoryAnalysis, int pageSize, int pageNo);
 }

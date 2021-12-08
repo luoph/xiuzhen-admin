@@ -1,13 +1,13 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.youai.basics.model.DateRange;
+import cn.youai.server.constant.ItemReduce;
+import cn.youai.server.constant.ItemRuleId;
 import cn.youai.server.utils.ConvertUtils;
 import cn.youai.xiuzhen.entity.pojo.OperationType;
 import cn.youai.xiuzhen.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.database.DataSourceHelper;
-import org.jeecg.modules.game.constant.ItemReduce;
-import org.jeecg.modules.game.constant.ItemRuleId;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.jeecg.modules.game.mapper.GameMonetaryDisTributionMapper;
 import org.jeecg.modules.game.service.IGameMonetaryDisTributionService;
@@ -50,12 +50,12 @@ public class GameMonetaryDisTributionServiceImpl implements IGameMonetaryDisTrib
             //存入
             if (1 == quantityType) {
                 for (ItemRuleId value : ItemRuleId.values()) {
-                    fairyJadeBuyTypeMap.put(value.getId(), value.getName());
+                    fairyJadeBuyTypeMap.put(value.getType(), value.getName());
                 }
                 //消耗
             } else if (2 == quantityType) {
                 for (ItemReduce value : ItemReduce.values()) {
-                    fairyJadeBuyTypeMap.put(value.getId(), value.getName());
+                    fairyJadeBuyTypeMap.put(value.getType(), value.getName());
                 }
             }
 

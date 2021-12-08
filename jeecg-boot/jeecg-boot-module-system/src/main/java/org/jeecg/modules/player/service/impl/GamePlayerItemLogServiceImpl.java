@@ -1,8 +1,8 @@
 package org.jeecg.modules.player.service.impl;
 
-import cn.youai.server.component.ConfigManager;
-import cn.youai.xiuzhen.config.GameConfig;
-import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.server.conf.ConfItem;
+import cn.youai.server.constant.ItemReduce;
+import cn.youai.server.constant.ItemRuleId;
 import cn.youai.xiuzhen.entity.pojo.OperationType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
@@ -11,18 +11,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.googlecode.cqengine.query.QueryFactory;
-import com.googlecode.cqengine.query.logical.And;
-import com.googlecode.cqengine.query.option.QueryOptions;
-import com.googlecode.cqengine.query.simple.Equal;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.database.DataSourceHelper;
-import org.jeecg.modules.game.constant.ItemReduce;
-import org.jeecg.modules.game.constant.ItemRuleId;
 import org.jeecg.modules.player.entity.BackpackLog;
 import org.jeecg.modules.player.entity.GamePlayerItemLog;
 import org.jeecg.modules.player.mapper.GamePlayerItemLogMapper;
 import org.jeecg.modules.player.service.IGamePlayerItemLogService;
+import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -30,8 +25,6 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static com.googlecode.cqengine.query.QueryFactory.equal;
 
 /**
  * @author jeecg-boot
@@ -47,10 +40,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
 
     @Override
     public GamePlayerItemLog writePlayerItemLog(Integer serverId, BackpackLog backpacklog) {
-        return new GamePlayerItemLog().setServerId(serverId).setPlayerId(backpacklog.getPlayerId()).setType(backpacklog.getType())
-                .setWay(backpacklog.getWay()).setSyncTime(backpacklog.getCreateDate()).setItemId(backpacklog.getItemId())
-                .setBeforeNum(backpacklog.getBeforeNum()).setAfterNum(backpacklog.getAfterNum())
-                .setNum(backpacklog.getNum()).setCreateTime(backpacklog.getCreateTime()).setUpdateTime(DateUtils.now());
+        return new GamePlayerItemLog().setServerId(serverId).setPlayerId(backpacklog.getPlayerId()).setType(backpacklog.getType()).setWay(backpacklog.getWay()).setSyncTime(backpacklog.getCreateDate()).setItemId(backpacklog.getItemId()).setBeforeNum(backpacklog.getBeforeNum()).setAfterNum(backpacklog.getAfterNum()).setNum(backpacklog.getNum()).setCreateTime(backpacklog.getCreateTime()).setUpdateTime(DateUtils.now());
     }
 
     @Override
@@ -173,7 +163,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
         List<GamePlayerItemLog> list = playerItemLogMapper.queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
         for (GamePlayerItemLog playerItemLog : list) {
             // 通过道具获取物品名称
-            ConfItem confItem = itemTree(playerItemLog.getItemId());
+            ConfItem confItem = GameConfigUtils.getItemById(playerItemLog.getItemId());
             if (confItem == null) {
                 playerItemLog.setItemName("该物品不存在");
             } else {
@@ -181,9 +171,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
             }
             // 设置物品名称
             ItemReduce itemReduce = ItemReduce.valueOf(playerItemLog.getWay());
-            String itemReduceName = itemReduce.getName();
-            // 产销点
-            playerItemLog.setWayName(itemReduceName);
+            playerItemLog.setWayName(itemReduce.getName());
             String typeName = OperationType.getName(playerItemLog.getType());
             // 产销类型
             playerItemLog.setTypeName(typeName);
@@ -193,31 +181,12 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
     }
 
     @Override
-    public List<ConfItem> getConfItemList(Integer itemId, String itemName) {
-        QueryOptions queryOptions = QueryFactory.queryOptions(ConfItem.ITEM_ID);
-        if (itemId != null && itemName != null) {
-            Equal<ConfItem, Integer> equalItemId = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
-            Equal<ConfItem, String> equalName = equal(ConfItem.NAME, itemName);
-            And<ConfItem> and = QueryFactory.and(equalItemId, equalName);
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, and, queryOptions);
-        } else if (itemId != null) {
-            Equal<ConfItem, Integer> equal = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, equal, queryOptions);
-        } else if (itemName != null) {
-            Equal<ConfItem, String> equal = equal(ConfItem.NAME, itemName);
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, equal, queryOptions);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
     public IPage<GamePlayerItemLog> queryPlayerItemLogPageList(GamePlayerItemLog playerItemLog, int pageNo, int pageSize) {
         if (playerItemLog == null) {
             return null;
         }
 
-        List<ConfItem> itemList = getConfItemList(playerItemLog.getItemId(), playerItemLog.getItemName());
+        List<ConfItem> itemList = GameConfigUtils.getConfItemList(playerItemLog.getItemId(), playerItemLog.getItemName());
         if (!CollectionUtils.isEmpty(itemList)) {
             Map<Integer, String> itemMapById = new HashMap<>(itemList.size());
             List<Integer> itemIds = new ArrayList<>(itemList.size());
@@ -289,16 +258,5 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
         queryWrapper.orderByDesc(GamePlayerItemLog::getCreateTime);
 
         return queryWrapper;
-    }
-
-    /**
-     * 通物品id获取充值商品(策划表中的数据)
-     *
-     * @param itemId
-     * @return
-     */
-    private ConfItem itemTree(Integer itemId) {
-        Equal<ConfItem, Integer> equal = equal(ConfItem.ITEM_ID, itemId);
-        return ConfigManager.one(GameConfig.ITEM, ConfItem.class, equal);
     }
 }

@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.youai.basics.model.Response;
-import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.server.conf.ConfItem;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +13,7 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.service.IGameEmailService;
+import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -169,7 +170,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
                 itemName = null;
             }
         }
-        List<ConfItem> items = gameEmailService.itemTree(itemId, itemName);
+        List<ConfItem> items = GameConfigUtils.getConfItemList(itemId, itemName);
         return Result.ok(items);
     }
 
