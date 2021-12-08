@@ -3,21 +3,16 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.model.ResponseCode;
-import cn.youai.server.component.ConfigManager;
+import cn.youai.server.conf.ConfItem;
 import cn.youai.server.model.ItemVO;
 import cn.youai.server.springboot.component.OkHttpHelper;
-import cn.youai.xiuzhen.config.GameConfig;
-import cn.youai.xiuzhen.entity.pojo.ConfItem;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.googlecode.cqengine.query.QueryFactory;
-import com.googlecode.cqengine.query.logical.And;
-import com.googlecode.cqengine.query.option.QueryOptions;
-import com.googlecode.cqengine.query.simple.Equal;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
 import org.jeecg.modules.game.service.IGameEmailService;
+import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -92,21 +87,15 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
 
     @Override
     public List<ConfItem> itemTree(Integer itemId, String itemName) {
-        QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfItem.ITEM_ID)));
-        if (itemId != null && itemName != null) {
-            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
-            Equal<ConfItem, String> query2 = QueryFactory.equal(ConfItem.NAME, itemName);
-            And<ConfItem> and = QueryFactory.and(query1, query2);
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, and, queryOptions);
-        } else if (itemId != null) {
-            Equal<ConfItem, Integer> query1 = QueryFactory.equal(ConfItem.ITEM_ID, itemId);
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, query1, queryOptions);
+        if (itemId != null) {
+            ConfItem confItem = GameConfigUtils.getItemById(itemId);
+            if (confItem != null) {
+                return CollUtil.newArrayList(confItem);
+            }
+            return CollUtil.newArrayList();
         } else if (itemName != null) {
-            Equal<ConfItem, String> query2 = QueryFactory.equal(ConfItem.NAME, itemName);
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, query2, queryOptions);
-        } else {
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, queryOptions);
+            return GameConfigUtils.getItemListByName(itemName);
         }
-
+        return CollUtil.newArrayList();
     }
 }

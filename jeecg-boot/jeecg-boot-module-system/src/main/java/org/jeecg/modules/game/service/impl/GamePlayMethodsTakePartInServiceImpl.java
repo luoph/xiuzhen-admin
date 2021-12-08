@@ -1,21 +1,16 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.server.component.ConfigManager;
-import cn.youai.xiuzhen.config.GameConfig;
 import cn.youai.xiuzhen.entity.pojo.ConfMedicine;
 import cn.youai.xiuzhen.entity.pojo.ConfRefineEquip;
 import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
-import com.googlecode.cqengine.query.Query;
-import com.googlecode.cqengine.query.QueryFactory;
-import com.googlecode.cqengine.query.logical.And;
-import com.googlecode.cqengine.query.option.QueryOptions;
 import org.jeecg.modules.game.entity.GamePlayMethodsTakePartInVO;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
 import org.jeecg.modules.game.mapper.PlayMethodsTakePartInMapper;
 import org.jeecg.modules.game.service.IGamePlayMethodsTakePartInService;
+import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -109,14 +104,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
                         playerLogListMapCreateDatePlayerIdFullTimes.put(mapKey, playerLogListMapCreateDatePlayerId.get(mapKey));
                     }
                 }
-                gamePlayMethodsTakePartInVOList.add(new GamePlayMethodsTakePartInVO()
-                        .setDate(s)
-                        .setTakePlayInPlayerNum(takePlayerNum)
-                        .setPlayerNum(playerNum)
-                        .setTakePlayInRate(BigDecimalUtil.divide(takePlayerNum * 100, playerNum, 2))
-                        .setAllTakePlayInPlayerNum(playerLogListMapCreateDatePlayerIdFullTimes.size())
-                        .setAllTakePlayInRate(BigDecimalUtil.divide(playerLogListMapCreateDatePlayerIdFullTimes.size() * 100, playerNum, 2))
-                        .setSecondGlanceRate(0 == yesterdayHasLoginInTodaySum ? BigDecimal.ZERO : BigDecimalUtil.divide(yesterdayHasPlayInTodaySum * 100, yesterdayHasLoginInTodaySum, 2)));
+                gamePlayMethodsTakePartInVOList.add(new GamePlayMethodsTakePartInVO().setDate(s).setTakePlayInPlayerNum(takePlayerNum).setPlayerNum(playerNum).setTakePlayInRate(BigDecimalUtil.divide(takePlayerNum * 100, playerNum, 2)).setAllTakePlayInPlayerNum(playerLogListMapCreateDatePlayerIdFullTimes.size()).setAllTakePlayInRate(BigDecimalUtil.divide(playerLogListMapCreateDatePlayerIdFullTimes.size() * 100, playerNum, 2)).setSecondGlanceRate(0 == yesterdayHasLoginInTodaySum ? BigDecimal.ZERO : BigDecimalUtil.divide(yesterdayHasPlayInTodaySum * 100, yesterdayHasLoginInTodaySum, 2)));
                 // 100以下记录的是最大值
             } else {
                 List<LogPlayer> playerOneDayPlayLogFullTimes = new ArrayList<>();
@@ -125,14 +113,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
                     // 过滤出最大值 达到满次的数据
                     playerOneDayPlayLogFullTimes = playerOneDayPlayLog.stream().filter(logPlayer -> logPlayer.getValue() >= fullTimes).collect(Collectors.toList());
                 }
-                gamePlayMethodsTakePartInVOList.add(new GamePlayMethodsTakePartInVO()
-                        .setDate(s)
-                        .setTakePlayInPlayerNum(takePlayerNum)
-                        .setPlayerNum(playerNum)
-                        .setTakePlayInRate(BigDecimalUtil.divide(takePlayerNum * 100, playerNum, 2))
-                        .setAllTakePlayInPlayerNum(playerOneDayPlayLogFullTimes.size())
-                        .setAllTakePlayInRate(BigDecimalUtil.divide(playerOneDayPlayLogFullTimes.size() * 100, playerNum, 2))
-                        .setSecondGlanceRate(0 == yesterdayHasLoginInTodaySum ? BigDecimal.ZERO : BigDecimalUtil.divide(yesterdayHasPlayInTodaySum * 100, yesterdayHasLoginInTodaySum, 2)));
+                gamePlayMethodsTakePartInVOList.add(new GamePlayMethodsTakePartInVO().setDate(s).setTakePlayInPlayerNum(takePlayerNum).setPlayerNum(playerNum).setTakePlayInRate(BigDecimalUtil.divide(takePlayerNum * 100, playerNum, 2)).setAllTakePlayInPlayerNum(playerOneDayPlayLogFullTimes.size()).setAllTakePlayInRate(BigDecimalUtil.divide(playerOneDayPlayLogFullTimes.size() * 100, playerNum, 2)).setSecondGlanceRate(0 == yesterdayHasLoginInTodaySum ? BigDecimal.ZERO : BigDecimalUtil.divide(yesterdayHasPlayInTodaySum * 100, yesterdayHasLoginInTodaySum, 2)));
             }
         }
         return gamePlayMethodsTakePartInVOList.stream().sorted((s1, s2) -> s2.getDate().compareTo(s1.getDate())).collect(Collectors.toList());
@@ -145,28 +126,17 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
      */
     private List<LogPlayer> filterRefineDanOrEquip(List<LogPlayer> playerLogListMapCreateDatePlayerId, String playMethodsType) {
         // 丹药、炼器id集合
-        List<Integer> ids = playerLogListMapCreateDatePlayerId.stream().filter(e -> e.getParam1() != null && e.getParam1() > 0)
-                .map(LogPlayer::getParam1).collect(Collectors.toList());
+        List<Integer> ids = playerLogListMapCreateDatePlayerId.stream().filter(e -> e.getParam1() != null && e.getParam1() > 0).map(LogPlayer::getParam1).collect(Collectors.toList());
 
         // 满足条件的id-Map
         Map<Integer, Integer> filterIdMap;
 
         // 丹药
         if (PlayerLogType.REFINE_DAN.getType() == Integer.parseInt(playMethodsType)) {
-            QueryOptions queryOptions = QueryFactory.queryOptions(ConfMedicine.ITEM_ID);
-            Query<ConfMedicine> in = QueryFactory.in(ConfMedicine.ITEM_ID, ids);
-            // 极品丹药
-            Query<ConfMedicine> equal = QueryFactory.equal(ConfMedicine.QUA, 4);
-            And<ConfMedicine> and = QueryFactory.and(in, equal);
-            List<ConfMedicine> confMedicines = ConfigManager.list(GameConfig.REFINE_MEDICINE, ConfMedicine.class, and, queryOptions);
+            List<ConfMedicine> confMedicines = GameConfigUtils.getConfMedicineList(ids);
             filterIdMap = confMedicines.stream().collect(Collectors.toMap(ConfMedicine::getItemId, ConfMedicine::getItemId, (k1, k2) -> k2));
         } else {
-            QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfRefineEquip.ITEM_ID)));
-            Query<ConfRefineEquip> in = QueryFactory.in(ConfRefineEquip.ITEM_ID, ids);
-            // 仙器以上
-            Query<ConfRefineEquip> greaterThan = QueryFactory.greaterThan(ConfRefineEquip.SUIT_TYPE, 2);
-            And<ConfRefineEquip> and = QueryFactory.and(in, greaterThan);
-            List<ConfRefineEquip> confRefineEquips = ConfigManager.list(GameConfig.REFINE_EQUIP, ConfRefineEquip.class, and, queryOptions);
+            List<ConfRefineEquip> confRefineEquips = GameConfigUtils.getConfRefineEquipList(ids);
             filterIdMap = confRefineEquips.stream().collect(Collectors.toMap(ConfRefineEquip::getItemId, ConfRefineEquip::getItemId, (k1, k2) -> k2));
         }
 

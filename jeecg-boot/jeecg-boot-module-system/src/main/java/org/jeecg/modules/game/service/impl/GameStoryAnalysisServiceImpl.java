@@ -2,8 +2,6 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.youai.server.component.ConfigManager;
-import cn.youai.xiuzhen.config.GameConfig;
 import cn.youai.xiuzhen.entity.pojo.ConfMainStory;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
@@ -12,9 +10,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.googlecode.cqengine.query.Query;
-import com.googlecode.cqengine.query.QueryFactory;
-import com.googlecode.cqengine.query.option.QueryOptions;
 import org.jeecg.common.util.CollectionPageHelp;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.GameStoryAnalysis;
@@ -22,6 +17,7 @@ import org.jeecg.modules.game.entity.GameStoryAnalysisVO;
 import org.jeecg.modules.game.mapper.GameStoryAnalysisMapper;
 import org.jeecg.modules.game.service.IGameStoryAnalysisService;
 import org.jeecg.modules.player.service.ILogAccountService;
+import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +64,7 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
             if (CollectionUtil.isEmpty(levels)) {
                 return null;
             }
-            List<ConfMainStory> confMainStories = queryConfMainStory(levels);
+            List<ConfMainStory> confMainStories = GameConfigUtils.getConfMainStoryList(levels);
             if (CollectionUtil.isEmpty(confMainStories)) {
                 return null;
             }
@@ -224,34 +220,5 @@ public class GameStoryAnalysisServiceImpl extends ServiceImpl<GameStoryAnalysisM
             }
         }
         return totalRemainNum;
-    }
-
-    /**
-     * 玩家停留的最大关卡
-     *
-     * @param datalist 关卡信息
-     * @return stayingOnPlayerMaxLevelMap<玩家ID ， max关卡ID>
-     */
-    private Map<Long, Integer> getStayingOnPlayerMaxLevelMap(List<GameStoryAnalysis> datalist) {
-        Map<Long, Integer> stayingOnPlayerMaxLevelMap = new HashMap<>(datalist.size());
-        datalist.forEach(e -> {
-            Integer level = stayingOnPlayerMaxLevelMap.get(e.getPlayerId());
-            if (level != null) {
-                if (e.getMinorLevel() > level) {
-                    stayingOnPlayerMaxLevelMap.put(e.getPlayerId(), e.getMinorLevel());
-                }
-            } else {
-                stayingOnPlayerMaxLevelMap.put(e.getPlayerId(), e.getMinorLevel());
-            }
-        });
-
-        return stayingOnPlayerMaxLevelMap;
-    }
-
-    @Override
-    public List<ConfMainStory> queryConfMainStory(List<Integer> levelIds) {
-        QueryOptions queryOptions = QueryFactory.queryOptions(QueryFactory.orderBy(QueryFactory.ascending(ConfMainStory.LEVEL)));
-        Query<ConfMainStory> in = QueryFactory.in(ConfMainStory.LEVEL, levelIds);
-        return ConfigManager.list(GameConfig.MAIN_STORY, ConfMainStory.class, in, queryOptions);
     }
 }

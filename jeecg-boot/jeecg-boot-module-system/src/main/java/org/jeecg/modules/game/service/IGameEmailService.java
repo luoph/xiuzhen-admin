@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.service;
 
 import cn.youai.basics.model.Response;
-import cn.youai.xiuzhen.entity.pojo.ConfItem;
+import cn.youai.server.conf.ConfItem;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameEmail;
 

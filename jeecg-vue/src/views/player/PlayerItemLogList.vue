@@ -5,18 +5,13 @@
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
                     <a-col :md="5" :sm="8">
-                        <a-form-item label="区服id">
-                            <server-select @select="selectServerId"></server-select>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="5" :sm="8">
                         <a-form-item label="玩家id">
                             <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="8">
-                        <a-form-item label="道具名">
-                            <a-input placeholder="请输入道具名" v-model="queryParam.itemIdName"></a-input>
+                        <a-form-item label="道具id">
+                            <a-input placeholder="请输入道具id" v-model="queryParam.itemId"></a-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="9" :sm="6">
@@ -120,7 +115,7 @@ export default {
                 {
                     title: "道具名",
                     align: "center",
-                    dataIndex: "itemIdName"
+                    dataIndex: "itemName"
                 },
                 {
                     title: "数量",

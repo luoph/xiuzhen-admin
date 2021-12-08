@@ -1,13 +1,13 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DatePattern;
+import cn.youai.server.constant.ItemReduce;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.xiuzhen.utils.DateUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.database.DataSourceHelper;
-import org.jeecg.modules.game.constant.ItemReduce;
 import org.jeecg.modules.game.entity.ShopMallLog;
 import org.jeecg.modules.game.mapper.ShopMallLogMapper;
 import org.jeecg.modules.game.service.IShopMallLogService;
@@ -99,7 +99,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
         //道具id和名称map
         Map<String, String> wayNameMap = new HashMap<>(16);
         for (int i = 0; i < jsonArray.size(); i++) {
-            wayNameMap.put(jsonArray.getJSONObject(i).getString("item_id"),jsonArray.getJSONObject(i).getString("name"));
+            wayNameMap.put(jsonArray.getJSONObject(i).getString("item_id"), jsonArray.getJSONObject(i).getString("name"));
         }
         List<ShopMallLog> list = null;
         try {
@@ -119,15 +119,17 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
         Map<String, List<ShopMallLog>> shopMallLogListMapCreateTime = list.stream().collect(Collectors.groupingBy(shopmalllog -> DateUtils.formatDate(DateUtils.dateOnly(shopmalllog.getCreateTime()), DatePattern.NORM_DATE_PATTERN)));
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         for (int i = 0; i <= dateRangeBetween; i++) {
-            String dayStringYmd =  DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i), DatePattern.NORM_DATE_PATTERN);
+            String dayStringYmd = DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i), DatePattern.NORM_DATE_PATTERN);
             //获取当前日期的购买信息
-            List<ShopMallLog> shopMallLogListOneDay = shopMallLogListMapCreateTime .get(dayStringYmd);
-            if (null == shopMallLogListOneDay) { continue;}
+            List<ShopMallLog> shopMallLogListOneDay = shopMallLogListMapCreateTime.get(dayStringYmd);
+            if (null == shopMallLogListOneDay) {
+                continue;
+            }
             System.out.println(i);
             //道具名称收集
             Map<Integer, List<ShopMallLog>> shopMallLogListOneDayMapWayName = shopMallLogListOneDay.stream().collect(Collectors.groupingBy(ShopMallLog::getItemId));
-            for (Integer s : shopMallLogListOneDayMapWayName .keySet()) {
-                List<ShopMallLog> shopMallLogListOneDayMapWayNameOneWayName = shopMallLogListOneDayMapWayName .get(s);
+            for (Integer s : shopMallLogListOneDayMapWayName.keySet()) {
+                List<ShopMallLog> shopMallLogListOneDayMapWayNameOneWayName = shopMallLogListOneDayMapWayName.get(s);
                 ShopMallLog shopMallLog = new ShopMallLog();
                 //道具名称
                 shopMallLog.setWayName(wayNameMap.get(s.toString()));
@@ -136,7 +138,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
                 shopMallLog.setItemNum(new BigDecimal(sum));
                 Map<Long, List<ShopMallLog>> shopMallLogListOneDayMapWayNameOneWayNameMapPlayerId = shopMallLogListOneDayMapWayNameOneWayName.stream().collect(Collectors.groupingBy(ShopMallLog::getPlayerId));
                 //人数
-                shopMallLog.setPlayerNum(new BigDecimal(shopMallLogListOneDayMapWayNameOneWayNameMapPlayerId .size()));
+                shopMallLog.setPlayerNum(new BigDecimal(shopMallLogListOneDayMapWayNameOneWayNameMapPlayerId.size()));
                 //次数
                 shopMallLog.setItemCount(new BigDecimal(shopMallLogListOneDayMapWayNameOneWayName.size()));
                 //时间
