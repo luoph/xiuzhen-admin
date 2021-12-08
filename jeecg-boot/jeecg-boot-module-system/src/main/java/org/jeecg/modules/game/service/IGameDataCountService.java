@@ -50,13 +50,6 @@ public interface IGameDataCountService {
     List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
     /**
-     * 统计数据列表
-     *
-     * @param context 上下文
-     */
-    List<GameStatDaily> queryDateRangeDataCount(Map<String, Object> context, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
-
-    /**
      * 按照日期统计每日数据
      *
      * @param gameChannel

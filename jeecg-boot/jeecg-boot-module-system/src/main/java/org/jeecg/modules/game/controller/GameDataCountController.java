@@ -84,7 +84,7 @@ public class GameDataCountController {
             rangeDateBegin = DateUtil.formatDate(DateUtils.addDays(now, -1));
         }
         if (StrUtil.isEmpty(rangeDateEnd)) {
-            rangeDateEnd = DateUtil.formatDate(now);
+            rangeDateEnd = DateUtil.formatDate(DateUtils.addDays(now, 1));
         }
 
         return queryDailyData(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 1);
