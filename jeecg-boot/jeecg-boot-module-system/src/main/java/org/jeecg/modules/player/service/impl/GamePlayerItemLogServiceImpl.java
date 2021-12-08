@@ -209,7 +209,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
             Equal<ConfItem, String> equal = equal(ConfItem.NAME, itemName);
             return ConfigManager.list(GameConfig.ITEM, ConfItem.class, equal, queryOptions);
         } else {
-            return ConfigManager.list(GameConfig.ITEM, ConfItem.class, queryOptions);
+            return null;
         }
     }
 
