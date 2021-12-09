@@ -21,24 +21,11 @@ import java.util.Date;
 public interface IGameDataRemainService extends IService<GameStatRemain> {
     /**
      * 留存统计
-     *
-     * @param page
-     * @param channelId
-     * @param serverId
-     * @param rangeDateBegin
-     * @param rangeDateEnd
-     * @return
      */
-    IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 留存统计
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @param statDate 指定统计日期
-     * @return
      */
-    GameStatRemain getCountRemain(String channel, int serverId, String date, Date statDate);
+    GameStatRemain getCountRemain(int serverId, String date, Date statDate);
 }

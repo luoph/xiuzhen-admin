@@ -21,24 +21,11 @@ import java.util.Date;
 public interface IGameLtvCountService extends IService<GameStatLtv> {
     /**
      * 留存统计
-     *
-     * @param page
-     * @param channelId
-     * @param serverId
-     * @param rangeDateBegin
-     * @param rangeDateEnd
-     * @return
      */
-    IPage<GameStatLtv> selectList(Page<GameStatLtv> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+    IPage<GameStatLtv> selectList(Page<GameStatLtv> page, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 统计留存
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @param logTable
-     * @return
      */
-    GameStatLtv getGameLtvCount(String channel, int serverId, String date, Date statDate , String logTable);
+    GameStatLtv getGameLtvCount(int serverId, String date, Date statDate, String logTable);
 }

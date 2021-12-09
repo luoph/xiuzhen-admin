@@ -31,8 +31,6 @@ public interface IGameDataCountService {
      */
     int GAME_DATA_COUNT_TYPE_LTV = 3;
 
-    String KEY_GAME_STAT_DAILY_COUNT_MAP = "GameStatDailyCountMap";
-
     String KEY_GAME_STAT_REMAIN_COUNT_MAP = "GameStatRemainCountMap";
 
     String KEY_GAME_STAT_LTV_COUNT_MAP = "GameStatLtvCountMap";
@@ -40,63 +38,23 @@ public interface IGameDataCountService {
     /**
      * 统计数据列表
      *
-     * @param gameChannel     渠道id
-     * @param gameServer      服务器id
-     * @param rangeDateBegin  开始日期
-     * @param rangeDateEnd    结束日期
-     * @param isOpenDateCount
-     * @return 统计列表
+     * @param serverId       服务器id
+     * @param rangeDateBegin 开始日期
+     * @param rangeDateEnd   结束日期
      */
-    List<GameStatDaily> queryDateRangeDataCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
+    List<GameStatDaily> queryDateRangeDataCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
     /**
      * 按照日期统计每日数据
-     *
-     * @param gameChannel
-     * @param gameServer
-     * @param date
-     * @return
      */
-    GameStatDaily gameDataCount(GameChannel gameChannel, GameServer gameServer, String date);
+    GameStatDaily gameDataCount(int serverId, String date);
+
+    List<GameStatRemain> queryDataRemainCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
     /**
      * 留存统计
-     *
-     * @param gameChannel
-     * @param gameServer
-     * @param rangeDateBegin
-     * @param rangeDateEnd
-     * @return
      */
-    List<GameStatRemain> queryDataRemainCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
-
-    /**
-     * 留存统计
-     *
-     * @param context  上下文
-     * @param statDate 指定统计日期
-     */
-    List<GameStatRemain> queryDataRemainCount(Map<String, Object> context, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, Date statDate, boolean isOpenDateCount);
-
-    /**
-     * ltv 统计
-     *
-     * @param gameChannel
-     * @param gameServer
-     * @param rangeDateBegin
-     * @param rangeDateEnd
-     * @return
-     */
-    List<GameStatLtv> queryDataLtvCount(GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
-
-    /**
-     * ltv 统计
-     *
-     * @param context  上下文
-     * @param statDate 指定统计日期
-     */
-    List<GameStatLtv> queryDataLtvCount(Map<String, Object> context, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd, Date statDate);
-
+    List<GameStatRemain> queryDataRemainCount(int serverId, String rangeDateBegin, String rangeDateEnd, Date statDate, boolean isOpenDateCount);
 
     /**
      * 定时统计任务
@@ -115,24 +73,14 @@ public interface IGameDataCountService {
 
     /**
      * 留存更新
-     *
-     * @param context     上下文 作缓存
-     * @param gameChannel
-     * @param gameServer
-     * @param countDate
      */
-    void updateRemainTask(Map<String, Object> context, GameChannel gameChannel, GameServer gameServer, String countDate);
+    void updateRemainTask(Map<String, Object> context, GameServer gameServer, String countDate);
 
 
     /**
      * ltv任务更新
-     *
-     * @param context     上下文 作缓存
-     * @param gameChannel
-     * @param gameServer
-     * @param countDate
      */
-    void updateLtvTask(Map<String, Object> context, GameChannel gameChannel, GameServer gameServer, String countDate);
+    void updateLtvTask(Map<String, Object> context, GameServer gameServer, String countDate);
 
     /**
      * 30天连续统计
@@ -149,45 +97,24 @@ public interface IGameDataCountService {
 
     /**
      * 30日当天实时查询
-     *
-     * @param type
-     * @param gameChannel
-     * @param gameServer
-     * @param rangeDateBegin
-     * @param rangeDateEnd
-     * @return
      */
-    List<GameStatOngoing> queryCountOnGoing(int type, GameChannel gameChannel, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
-
-    /**
-     * 获取k-v 统计数据列表
-     *
-     * @param isReturnIndex 是否只返回索引
-     * @return Map<channel_ServerId_formatDate, GameStatDaily>
-     */
-    Map<String, GameStatDaily> dailyCountMap(boolean isReturnIndex);
+    List<GameStatOngoing> queryCountOnGoing(int type, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 获取k-v 留存列表
-     *
-     * @param isReturnIndex 是否只返回索引
-     * @return Map<channel_ServerId_formatDate, GameStatLtv>
      */
     Map<String, GameStatRemain> remainCountMap(boolean isReturnIndex);
 
-    /**
-     * 获取k-v ltv数据列表
-     *
-     * @param isReturnIndex 是否只返回索引
-     * @return Map<channel_ServerId_formatDate, GameStatLtv>
-     */
+    List<GameStatLtv> queryDataLtvCount(int serverId, String rangeDateBegin, String rangeDateEnd, Date statDate);
+
     Map<String, GameStatLtv> ltvCountMap(boolean isReturnIndex);
 
     /**
+     * 获取k-v ltv数据列表
+     * Map<String, GameStatLtv> ltvCountMap(boolean isReturnIndex);
+     * <p>
+     * /**
      * 按类型-统计数据更新
-     *
-     * @param type        类型
-     * @param currentDate 指定日期
      */
     void doJobDataCountUpdateByType(int type, Date currentDate);
 
