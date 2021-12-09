@@ -6,7 +6,7 @@
                 <a-row :gutter="24">
                     <a-col :md="4" :sm="8">
                         <a-form-item label="玩家id">
-                            <a-input placeholder="请输入玩家id" v-model="queryParam.id" />
+                            <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -176,7 +176,7 @@ export default {
                     title: "玩家id",
                     fixed: "left",
                     align: "center",
-                    dataIndex: "id"
+                    dataIndex: "playerId"
                 },
                 {
                     title: "角色昵称",
