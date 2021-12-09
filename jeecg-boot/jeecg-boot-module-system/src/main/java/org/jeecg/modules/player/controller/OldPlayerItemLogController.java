@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -60,7 +59,7 @@ public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLo
     public Result<?> queryPageList(GamePlayerItemLog playerItemLog,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
-                                   HttpServletRequest req) throws UnsupportedEncodingException {
+                                   HttpServletRequest req) {
         return Result.ok(playerItemLogService.queryPlayerItemLogPageList(playerItemLog, pageNo, pageSize));
     }
 
