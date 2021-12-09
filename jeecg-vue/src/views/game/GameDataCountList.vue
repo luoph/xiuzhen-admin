@@ -182,7 +182,7 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameDataCountController/dayCount"
+                list: "game/statistics/dayCount"
             },
             dictOptions: {}
         };

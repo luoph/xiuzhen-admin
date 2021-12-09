@@ -200,7 +200,7 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameDataCountController/ltvCount"
+                list: "game/statistics/ltvCount"
             },
             dictOptions: {}
         };
@@ -240,10 +240,10 @@ export default {
             });
         },
         countRate: function(n, r) {
-            if(n === null || n === undefined){
-                return '--'
+            if (n === null || n === undefined) {
+                return "--";
             }
-            return  r > 0 ? parseFloat(n / r).toFixed(2) : parseFloat(0).toFixed(2);
+            return r > 0 ? parseFloat(n / r).toFixed(2) : parseFloat(0).toFixed(2);
         }
     }
 };
