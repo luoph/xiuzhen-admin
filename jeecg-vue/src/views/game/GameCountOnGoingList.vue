@@ -371,7 +371,7 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameDataCountController/ongoing"
+                list: "game/statistics/ongoing"
             },
             dictOptions: {}
         };

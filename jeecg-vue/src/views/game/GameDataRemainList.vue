@@ -224,7 +224,7 @@ export default {
                 }
             ],
             url: {
-                list: "game/gameDataCountController/remainRate"
+                list: "game/statistics/remainRate"
             },
             dictOptions: {}
         };
