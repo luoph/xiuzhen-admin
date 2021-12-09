@@ -31,9 +31,6 @@ public class GameStatLtv implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-
-    private String channel;
-
     private Integer serverId;
 
     /**
@@ -121,11 +118,8 @@ public class GameStatLtv implements Serializable {
      */
     private BigDecimal d360Amount;
 
-
     /**
      * 创建时间
      */
     private Date createTime;
-
-
 }

@@ -294,7 +294,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         List<GameStatLtv> dataCounts;
         if (isReturnIndex) {
             LambdaQueryWrapper<GameStatLtv> queryWrapper = Wrappers.lambdaQuery();
-            queryWrapper.select(GameStatLtv::getChannel, GameStatLtv::getServerId, GameStatLtv::getCountDate);
+            queryWrapper.select(GameStatLtv::getServerId, GameStatLtv::getCountDate);
             dataCounts = gameLtvCountService.list(queryWrapper);
         } else {
             dataCounts = gameLtvCountService.list();
