@@ -10,9 +10,10 @@ import com.alibaba.excel.util.StringUtils;
 import java.math.BigDecimal;
 
 /**
+ * easyexcel String转BigDecimal 转换器
+ *
  * @author lijunchi
  * @version 1.0
- * @description: easyexcel String转BigDecimal 转换器
  * @date 2021-5-8 16:14
  */
 public class CustomStringToBigDecimalConverter implements Converter<BigDecimal> {

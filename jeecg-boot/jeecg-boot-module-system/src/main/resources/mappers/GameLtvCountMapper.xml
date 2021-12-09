@@ -3,48 +3,13 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.game.mapper.GameLtvCountMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameStatLtv">
-        <id column="id" property="id"/>
-        <result column="count_date" property="countDate"/>
-        <result column="register_num" property="registerNum"/>
-        <result column="channel" property="channel"/>
-        <result column="server_id" property="serverId"/>
-        <result column="d1_amount" property="d1Amount"/>
-        <result column="d2_amount" property="d2Amount"/>
-        <result column="d3_amount" property="d3Amount"/>
-        <result column="d4_amount" property="d4Amount"/>
-        <result column="d5_amount" property="d5Amount"/>
-        <result column="d6_amount" property="d6Amount"/>
-        <result column="d7_amount" property="d7Amount"/>
-        <result column="d14_amount" property="d14Amount"/>
-        <result column="d21_amount" property="d21Amount"/>
-        <result column="d30_amount" property="d30Amount"/>
-        <result column="d60_amount" property="d60Amount"/>
-        <result column="d90_amount" property="d90Amount"/>
-        <result column="d120_amount" property="d120Amount"/>
-        <result column="d180_amount" property="d180Amount"/>
-        <result column="d360_amount" property="d360Amount"/>
-        <result column="create_time" property="createTime"/>
-    </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id
-        ,channel, server_id, count_date, register_num, d1_amount, d2_amount, d3_amount, d4_amount, d5_amount, d6_amount, d7_amount,
-        d14_amount, d21_amount, d30_amount, d60_amount, d90_amount, d120_amount, d180_amount, d360_amount,  create_time
-    </sql>
-
-    <select id="getGameLtvCount" resultMap="BaseResultMap">
+    <select id="getGameLtvCount" resultType="org.jeecg.modules.game.entity.GameStatLtv">
         <![CDATA[
-        SELECT IFNULL(@register_date := #{date}, #{statDate}) AS count_date,
-               @d_start := CONCAT(@register_date, ' 00:00:00'),
-            IFNULL(@serverId :=#{serverId}, 0) AS server_id,
-            @createTime :=
-               #{statDate}, IFNULL(@register_num := (
-            SELECT COUNT (DISTINCT (a.`player_id`)) FROM
-               ${logTable} AS a WHERE a. `type` = 1 AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
-            AND a.`server_id` = @serverId), 0) AS register_num
+        SELECT @register_date := DATE(#{date}) AS count_date,
+            @d_start := CONCAT(@register_date, ' 00:00:00'),
+            @serverId :=#{serverId} AS server_id,
+            (SELECT COUNT(*) FROM `game_player` WHERE `server_id` =
+               #{serverId} AND `create_time` >= @d_start AND `create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)) AS register_num
         ]]>
     </select>
 

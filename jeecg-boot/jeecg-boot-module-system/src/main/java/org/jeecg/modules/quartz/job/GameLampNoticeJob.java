@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * QuartzJobList 配置的定时任务
  * @ClassName GameLampNoticeJob
  * @Description 跑马灯消息定时广播
  * @Author buliangliang
