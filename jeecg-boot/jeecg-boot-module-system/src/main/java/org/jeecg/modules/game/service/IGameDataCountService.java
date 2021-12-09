@@ -98,7 +98,7 @@ public interface IGameDataCountService {
     /**
      * 30日当天实时查询
      */
-    List<GameStatOngoing> queryCountOnGoing(int type, GameServer gameServer, String rangeDateBegin, String rangeDateEnd);
+    List<GameStatOngoing> queryCountOnGoing(int type, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 获取k-v 留存列表

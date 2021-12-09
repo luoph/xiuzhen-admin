@@ -41,7 +41,7 @@ public class MybatisInterceptor implements Interceptor {
         if (SqlCommandType.INSERT == sqlCommandType) {
             Field[] fields = oConvertUtils.getAllFields(parameter);
             for (Field field : fields) {
-                log.debug("------field.name------{}", field.getName());
+//                log.debug("------field.name------{}", field.getName());
                 try {
                     //update-begin--Author:scott  Date:20190828 for：关于使用Quzrtz 开启线程任务， #465
                     // 获取登录用户信息
@@ -127,7 +127,7 @@ public class MybatisInterceptor implements Interceptor {
             }
 
             for (Field field : fields) {
-                log.debug("------field.name------{}", field.getName());
+//                log.debug("------field.name------{}", field.getName());
                 try {
                     if ("updateBy".equals(field.getName())) {
                         // 获取登录用户信息

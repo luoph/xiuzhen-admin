@@ -651,7 +651,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     }
 
     @Override
-    public List<GameStatOngoing> queryCountOnGoing(int type, GameServer gameServer, String rangeDateBegin, String rangeDateEnd) {
+    public List<GameStatOngoing> queryCountOnGoing(int type, int serverId, String rangeDateBegin, String rangeDateEnd) {
         List<GameStatOngoing> list = new ArrayList<>();
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
@@ -660,8 +660,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            int registerPlayer = logAccountService.loginRegisterPlayer(gameServer.getId(), dateOnly, 1);
-            GameStatOngoing gameCountOngoing = new GameStatOngoing().setServerId(gameServer.getId()).setCountDate(DateUtils.parseDate(dateOnly)).setRegisterNum((long) registerPlayer).setType(type).setC1(BigDecimal.valueOf(100));
+            int registerPlayer = logAccountService.loginRegisterPlayer(serverId, dateOnly, 1);
+            GameStatOngoing gameCountOngoing = new GameStatOngoing().setServerId(serverId).setCountDate(DateUtils.parseDate(dateOnly)).setRegisterNum((long) registerPlayer).setType(type).setC1(BigDecimal.valueOf(100));
             list.add(gameCountOngoing);
         }
         return list;
