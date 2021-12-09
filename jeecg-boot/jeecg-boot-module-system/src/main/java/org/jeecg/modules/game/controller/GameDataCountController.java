@@ -48,20 +48,11 @@ public class GameDataCountController {
     @Autowired
     private IGameDataRemainService dataRemainService;
     @Autowired
-    private IGameLtvCountService ltvCountService;
-    @Autowired
     private IGameChannelServerService channelServerService;
     @Autowired
     private IGameServerService serverService;
     @Resource
-    private GameLtvCountMapper ltvCountMapper;
-    @Resource
     private GameDataRemainMapper dataRemainMapper;
-    @Autowired
-    private IGameCountOngoingService countOngoingService;
-    @Resource
-    private GameCountOngoingMapper countOngoingMapper;
-
 
     @GetMapping(value = "/dayCount")
     public Result<?> queryGameDataCountList(@RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
@@ -128,41 +119,27 @@ public class GameDataCountController {
     }
 
     @GetMapping(value = "/ltvCount")
-    public Result<?> queryGameLtvCount(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
-                                       @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
+    public Result<?> queryGameLtvCount(@RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
                                        @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                        @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                                        @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
                                        @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+
         Page<GameStatLtv> page = new Page<>(pageNo, pageSize);
-        boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
-        if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
-            // 验证通过
-            return queryDailyData(serverId, rangeDateBegin, rangeDateEnd, page, 3);
-        } else {
-            if (paramValidCheck) {
-                return Result.ok(page);
-            }
-            IPage<GameStatLtv> list = ltvCountService.selectList(page, serverId, rangeDateBegin, rangeDateEnd);
-            if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
-                // 同步
-                List<GameChannelServer> channelServers = channelServerService.list();
-                channelServers = channelServers.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
-                List<GameStatLtv> allCount = new ArrayList<>();
-                Map<String, Object> context = new HashMap<>();
-                context.put(IGameDataCountService.KEY_GAME_STAT_REMAIN_COUNT_MAP, dataCountService.ltvCountMap(false));
-                for (GameChannelServer channelServer : channelServers) {
-                    GameServer gameServer = serverService.getById(channelServer.getServerId());
-                    rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
-                    rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
-                    List<GameStatLtv> gameLtvCounts = dataCountService.queryDataLtvCount(channelServer.getServerId(), rangeDateBegin, rangeDateEnd, DateUtils.now());
-                    allCount.addAll(gameLtvCounts);
-                }
-                list.setRecords(allCount).setTotal(allCount.size());
-                ltvCountMapper.updateOrInsert(allCount);
-            }
-            return Result.ok(list);
+        if (serverId <= 0) {
+            return Result.ok(page);
         }
+
+        Date now = DateUtils.now();
+        // 默认查询最近两天的数据
+        if (StrUtil.isEmpty(rangeDateBegin)) {
+            rangeDateBegin = DateUtil.formatDate(DateUtils.addDays(now, -1));
+        }
+        if (StrUtil.isEmpty(rangeDateEnd)) {
+            rangeDateEnd = DateUtil.formatDate(DateUtils.addDays(now, 1));
+        }
+        // 验证通过
+        return queryDailyData(serverId, rangeDateBegin, rangeDateEnd, page, 3);
     }
 
     /**
@@ -187,8 +164,7 @@ public class GameDataCountController {
     }
 
     @GetMapping(value = "/ongoing")
-    public Result<?> queryGameCountOngoing(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
-                                           @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
+    public Result<?> queryGameCountOngoing(@RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
                                            @RequestParam(value = "type", defaultValue = "0") Integer type,
                                            @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                            @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
@@ -196,29 +172,21 @@ public class GameDataCountController {
                                            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 
         Page<GameStatOngoing> page = new Page<>(pageNo, pageSize);
-        boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
-        if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(DateUtils.now()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(DateUtils.now()), DateUtils.parseDate(rangeDateEnd))) {
-            // 直接取数据 实时的
-            GameServer gameServer = serverService.getById(serverId);
-            ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
-            if (!responseCode.isSuccess() || type <= 0) {
-                return Result.error(responseCode.getDesc());
-            }
-            List<GameStatOngoing> ongoings = dataCountService.queryCountOnGoing(type, gameServer, rangeDateBegin, rangeDateEnd);
-            page.setRecords(ongoings).setTotal(ongoings.size());
+        if (serverId <= 0) {
             return Result.ok(page);
-        } else {
-            if (paramValidCheck) {
-                return Result.ok(page);
-            }
-            IPage<GameStatOngoing> list = countOngoingService.selectList(page, channelId, serverId, type, rangeDateBegin, rangeDateEnd);
-            if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
-                // 同步
-                List<GameStatOngoing> countOngoings = dataCountService.countOngoings();
-                list.setRecords(countOngoings).setTotal(countOngoings.size());
-                countOngoingMapper.insertOrUpdateList(countOngoings);
-            }
-            return Result.ok(list);
         }
+
+        Date now = DateUtils.now();
+        // 默认查询最近两天的数据
+        if (StrUtil.isEmpty(rangeDateBegin)) {
+            rangeDateBegin = DateUtil.formatDate(DateUtils.addDays(now, -1));
+        }
+        if (StrUtil.isEmpty(rangeDateEnd)) {
+            rangeDateEnd = DateUtil.formatDate(DateUtils.addDays(now, 1));
+        }
+
+        List<GameStatOngoing> ongoings = dataCountService.queryCountOnGoing(type, serverId, rangeDateBegin, rangeDateEnd);
+        page.setRecords(ongoings).setTotal(ongoings.size());
+        return Result.ok(page);
     }
 }
