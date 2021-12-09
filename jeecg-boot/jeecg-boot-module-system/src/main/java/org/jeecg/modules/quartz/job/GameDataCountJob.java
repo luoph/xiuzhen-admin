@@ -8,6 +8,8 @@ import org.quartz.JobExecutionException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
+ * QuartzJobList 配置的定时任务
+ *
  * @ClassName GameDataCountJob
  * @Description 游戏数据统计
  * @Author buliangliang

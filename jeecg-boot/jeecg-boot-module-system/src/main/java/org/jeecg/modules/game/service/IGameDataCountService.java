@@ -1,6 +1,8 @@
 package org.jeecg.modules.game.service;
 
+import org.jeecg.modules.game.constant.CoreStatisticType;
 import org.jeecg.modules.game.entity.*;
+import org.springframework.context.support.StaticApplicationContext;
 
 import java.util.Date;
 import java.util.List;
@@ -15,21 +17,6 @@ import java.util.Map;
  * @Date 2020-08-21 11:05
  */
 public interface IGameDataCountService {
-
-    /**
-     * 统计数据列表
-     */
-    int GAME_DATA_COUNT_TYPE_DAILY = 1;
-
-    /**
-     * 留存统计
-     */
-    int GAME_DATA_COUNT_TYPE_REMAIN = 2;
-
-    /**
-     * ltv统计
-     */
-    int GAME_DATA_COUNT_TYPE_LTV = 3;
 
     String KEY_GAME_STAT_REMAIN_COUNT_MAP = "GameStatRemainCountMap";
 
@@ -66,10 +53,10 @@ public interface IGameDataCountService {
     /**
      * 定时统计任务 --指定日期
      *
-     * @param currentDate 统计日期
-     * @param type        2-留存 3-ltv
+     * @param registerDate 统计日期
+     * @param type         2-留存 3-ltv
      */
-    void doJobDataCount(Date currentDate, int type);
+    void doJobDataCount(Date registerDate, CoreStatisticType type);
 
     /**
      * 留存更新
@@ -116,6 +103,6 @@ public interface IGameDataCountService {
      * /**
      * 按类型-统计数据更新
      */
-    void doJobDataCountUpdateByType(int type, Date currentDate);
+    void doJobDataCountUpdateByType(CoreStatisticType type, Date currentDate);
 
 }

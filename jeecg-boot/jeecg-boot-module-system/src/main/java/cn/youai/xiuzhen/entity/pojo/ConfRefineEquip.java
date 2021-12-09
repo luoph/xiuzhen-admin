@@ -14,9 +14,10 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
+ * 炼器道具
+ *
  * @author lijunchi
  * @version 1.0
- * @description: 炼器道具
  * @date 2021-5-10 17:58
  */
 @Data

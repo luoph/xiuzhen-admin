@@ -1,5 +1,6 @@
 package org.jeecg.modules.quartz.controller;
 
+import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,6 +14,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.game.constant.CoreStatisticType;
 import org.jeecg.modules.game.service.IGameDataCountService;
 import org.jeecg.modules.quartz.entity.QuartzJob;
 import org.jeecg.modules.quartz.service.IQuartzJobService;
@@ -66,8 +68,7 @@ public class QuartzJobController {
      * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Result<?> queryPageList(QuartzJob quartzJob, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryPageList(QuartzJob quartzJob, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         QueryWrapper<QuartzJob> queryWrapper = QueryGenerator.initQueryWrapper(quartzJob, req.getParameterMap());
         Page<QuartzJob> page = new Page<>(pageNo, pageSize);
         IPage<QuartzJob> pageList = quartzJobService.page(page, queryWrapper);
@@ -260,43 +261,36 @@ public class QuartzJobController {
     /**
      * 手动执行定时任务 [开始日期,结束日期]
      *
-     * @param quartzJobType 执行任务类型
-     * @param startDate     开始日期
-     * @param endDate       结束日期
+     * @param jobType   执行任务类型
+     * @param startDate 开始日期
+     * @param endDate   结束日期
      */
     @GetMapping(value = "/doQuartzJobByType")
-    public Result<?> doQuartzJobByType(@RequestParam(value = "quartzJobType", defaultValue = "0") int quartzJobType,
-                                       @RequestParam(value = "startDate", defaultValue = "") String startDate,
-                                       @RequestParam(value = "endDate", defaultValue = "") String endDate) {
-        if (quartzJobType <= 0) {
-            return Result.error("The params quartzJobType is not empty!");
+    public Result<?> runCoreStatisticManually(@RequestParam(value = "jobType", defaultValue = "0") int jobType, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate) {
+        if (jobType <= 0) {
+            return Result.error("未设置任务类型");
         }
 
         if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
-            return Result.error("The params startDate and endDate is not empty!");
+            return Result.error("未设置开始和结束时间");
         }
 
-        Date startTime = DateUtils.parseDate(startDate);
-        Date endTime = DateUtils.parseDate(endDate);
+        Date startDay = DateUtils.dateOnly(DateUtil.parseDate(startDate));
+        Date endDay = DateUtils.dateOnly(DateUtil.parseDate(endDate));
 
-        int daysBetween = DateUtils.isSameDay(startTime, endTime) ? 1 : DateUtils.daysBetween(startTime, endTime);
-        if (daysBetween < 1) {
-            return Result.error("EndDate should more than startDate!");
+        int daysBetween = DateUtils.daysBetween(startDay, endDay);
+        if (daysBetween < 0) {
+            return Result.error("结束时间必须大于等于开始时间");
         }
 
-        for (int i = 1; i <= daysBetween; i++) {
-            Date currentDate = DateUtils.addDays(startTime, i);
-            if (IGameDataCountService.GAME_DATA_COUNT_TYPE_DAILY == quartzJobType) {
-                gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_DAILY);
-            } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN == quartzJobType) {
-                gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN);
-                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_REMAIN, currentDate);
-            } else if (IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV == quartzJobType) {
-                gameDataCountService.doJobDataCount(currentDate, IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV);
-                gameDataCountService.doJobDataCountUpdateByType(IGameDataCountService.GAME_DATA_COUNT_TYPE_LTV, currentDate);
-            } else {
-                return Result.error("Please choose the right task type!");
-            }
+        CoreStatisticType statisticType = CoreStatisticType.valueOf(jobType);
+        if (statisticType == null) {
+            return Result.error("找不到对应的任务类型");
+        }
+
+        for (int i = 0; i <= daysBetween; i++) {
+            Date registerDate = DateUtils.addDays(startDay, i);
+            gameDataCountService.doJobDataCount(registerDate, statisticType);
         }
 
         return Result.ok("successes!");
