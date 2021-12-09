@@ -21,20 +21,11 @@ import java.util.List;
 public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
     /**
      * 统计ltv
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @param logTable
-     * @return
      */
-    GameStatLtv getGameLtvCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("statDate") Date statDate, @Param("logTable") String logTable);
+    GameStatLtv getGameLtvCount(@Param("serverId") int serverId, @Param("date") String date, @Param("statDate") Date statDate, @Param("logTable") String logTable);
 
     /**
      * 插入或更新
-     *
-     * @param list
-     * @return
      */
     int updateOrInsert(List<GameStatLtv> list);
 
@@ -42,7 +33,6 @@ public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
      * 查询留存
      * 优化-需要手动处理日期
      *
-     * @param channel           渠道
      * @param serverId          服务器
      * @param startRegisterDate 当天0点注册时间
      * @param endRegisterDate   当天24点注册时间
@@ -50,8 +40,7 @@ public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
      * @param logTable          logTable
      * @return 金额
      */
-    double selectLtv(@Param("channel") String channel,
-                     @Param("serverId") int serverId,
+    double selectLtv(@Param("serverId") int serverId,
                      @Param("startRegisterDate") String startRegisterDate,
                      @Param("endRegisterDate") String endRegisterDate,
                      @Param("targetDate") String targetDate,

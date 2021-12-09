@@ -8,12 +8,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameStatRemain;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameDataRemainService;
-import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -40,22 +38,16 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
     private String logTable;
 
     @Override
-    public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        LambdaQueryWrapper<GameStatRemain> queryWrapper = Wrappers.<GameStatRemain>lambdaQuery();
-        boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
-        if (!paramValidCheck) {
-            queryWrapper.between(GameStatRemain::getCountDate, rangeDateBegin, rangeDateEnd);
-            GameChannel gameChannel = gameChannelService.getById(channelId);
-            if (gameChannel != null) {
-                queryWrapper.eq(GameStatRemain::getChannel, gameChannel.getSimpleName()).eq(GameStatRemain::getServerId, serverId);
-            }
-        }
+    public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
+        LambdaQueryWrapper<GameStatRemain> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.between(GameStatRemain::getCountDate, rangeDateBegin, rangeDateEnd);
+        queryWrapper.eq(GameStatRemain::getServerId, serverId);
         queryWrapper.orderByDesc(GameStatRemain::getCountDate);
         return page(page, queryWrapper);
     }
 
     @Override
-    public GameStatRemain getCountRemain(String channel, int serverId, String date, Date statDate) {
-        return gameDataRemainMapper.gameRemainCount(channel, serverId, date, statDate, logTable);
+    public GameStatRemain getCountRemain(int serverId, String date, Date statDate) {
+        return gameDataRemainMapper.gameRemainCount(serverId, date, statDate, logTable);
     }
 }

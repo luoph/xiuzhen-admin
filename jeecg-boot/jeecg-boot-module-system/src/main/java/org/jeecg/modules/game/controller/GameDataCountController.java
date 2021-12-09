@@ -58,23 +58,20 @@ public class GameDataCountController {
     @Resource
     private GameDataRemainMapper dataRemainMapper;
     @Autowired
-    private IGameChannelService channelService;
-    @Autowired
     private IGameCountOngoingService countOngoingService;
     @Resource
     private GameCountOngoingMapper countOngoingMapper;
 
 
     @GetMapping(value = "/dayCount")
-    public Result<?> queryGameDataCountList(@RequestParam(value = "channelId", defaultValue = "0") Integer channelId,
-                                            @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
+    public Result<?> queryGameDataCountList(@RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
                                             @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                             @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                                             @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
                                             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                             HttpServletRequest req) {
         Page<GameStatDaily> page = new Page<>(pageNo, pageSize);
-        if (channelId <= 0 || serverId <= 0) {
+        if (serverId <= 0) {
             return Result.ok(page);
         }
 
@@ -87,7 +84,7 @@ public class GameDataCountController {
             rangeDateEnd = DateUtil.formatDate(DateUtils.addDays(now, 1));
         }
 
-        return queryDailyData(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 1);
+        return queryDailyData(serverId, rangeDateBegin, rangeDateEnd, page, 1);
     }
 
     @GetMapping(value = "/remainRate")
@@ -102,12 +99,12 @@ public class GameDataCountController {
         boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
-            return queryDailyData(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 2);
+            return queryDailyData(serverId, rangeDateBegin, rangeDateEnd, page, 2);
         } else {
             if (paramValidCheck) {
                 return Result.ok(page);
             }
-            IPage<GameStatRemain> list = dataRemainService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
+            IPage<GameStatRemain> list = dataRemainService.selectList(page, serverId, rangeDateBegin, rangeDateEnd);
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 // 同步
                 List<GameChannelServer> channelServers = channelServerService.list();
@@ -117,10 +114,9 @@ public class GameDataCountController {
                 context.put(IGameDataCountService.KEY_GAME_STAT_REMAIN_COUNT_MAP, dataCountService.remainCountMap(false));
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = serverService.getById(channelServer.getServerId());
-                    GameChannel gameChannel = channelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
-                    List<GameStatRemain> gameLtvCounts = dataCountService.queryDataRemainCount(context, gameChannel, gameServer, rangeDateBegin, rangeDateEnd, DateUtils.todayDate(), false);
+                    List<GameStatRemain> gameLtvCounts = dataCountService.queryDataRemainCount(channelServer.getServerId(), rangeDateBegin, rangeDateEnd, DateUtils.todayDate(), false);
                     allCount.addAll(gameLtvCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
@@ -142,12 +138,12 @@ public class GameDataCountController {
         boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(new Date()), DateUtils.parseDate(rangeDateEnd))) {
             // 验证通过
-            return queryDailyData(serverId, channelId, rangeDateBegin, rangeDateEnd, page, 3);
+            return queryDailyData(serverId, rangeDateBegin, rangeDateEnd, page, 3);
         } else {
             if (paramValidCheck) {
                 return Result.ok(page);
             }
-            IPage<GameStatLtv> list = ltvCountService.selectList(page, channelId, serverId, rangeDateBegin, rangeDateEnd);
+            IPage<GameStatLtv> list = ltvCountService.selectList(page, serverId, rangeDateBegin, rangeDateEnd);
             if (StringUtils.isBlank(rangeDateBegin) && StringUtils.isBlank(rangeDateEnd) && CollUtil.isEmpty(list.getRecords())) {
                 // 同步
                 List<GameChannelServer> channelServers = channelServerService.list();
@@ -157,10 +153,9 @@ public class GameDataCountController {
                 context.put(IGameDataCountService.KEY_GAME_STAT_REMAIN_COUNT_MAP, dataCountService.ltvCountMap(false));
                 for (GameChannelServer channelServer : channelServers) {
                     GameServer gameServer = serverService.getById(channelServer.getServerId());
-                    GameChannel gameChannel = channelService.getById(channelServer.getChannelId());
                     rangeDateBegin = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATE_PATTERN);
                     rangeDateEnd = DateUtils.formatDate(DateUtils.addDays(DateUtils.now(), -1), DatePattern.NORM_DATE_PATTERN);
-                    List<GameStatLtv> gameLtvCounts = dataCountService.queryDataLtvCount(context, gameChannel, gameServer, rangeDateBegin, rangeDateEnd, DateUtils.now());
+                    List<GameStatLtv> gameLtvCounts = dataCountService.queryDataLtvCount(channelServer.getServerId(), rangeDateBegin, rangeDateEnd, DateUtils.now());
                     allCount.addAll(gameLtvCounts);
                 }
                 list.setRecords(allCount).setTotal(allCount.size());
@@ -173,21 +168,19 @@ public class GameDataCountController {
     /**
      * @param type 1-daily 2-remain 3-ltv
      */
-    private Result<?> queryDailyData(int serverId, int channelId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
-        GameServer gameServer = serverService.getById(serverId);
-        GameChannel gameChannel = channelService.getById(channelId);
+    private Result<?> queryDailyData(int serverId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
         ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
         if (!responseCode.isSuccess()) {
             return Result.error(responseCode.getDesc());
         }
         if (type == 1) {
-            List<GameStatDaily> gameDayDataCounts = dataCountService.queryDateRangeDataCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
+            List<GameStatDaily> gameDayDataCounts = dataCountService.queryDateRangeDataCount(serverId, rangeDateBegin, rangeDateEnd, false);
             page.setRecords(gameDayDataCounts).setTotal(gameDayDataCounts.size());
         } else if (type == 2) {
-            List<GameStatRemain> gameDataRemains = dataCountService.queryDataRemainCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd, false);
+            List<GameStatRemain> gameDataRemains = dataCountService.queryDataRemainCount(serverId, rangeDateBegin, rangeDateEnd, false);
             page.setRecords(gameDataRemains).setTotal(gameDataRemains.size());
         } else {
-            List<GameStatLtv> gameLtvCounts = dataCountService.queryDataLtvCount(gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+            List<GameStatLtv> gameLtvCounts = dataCountService.queryDataLtvCount(serverId, rangeDateBegin, rangeDateEnd, DateUtils.now());
             page.setRecords(gameLtvCounts).setTotal(gameLtvCounts.size());
         }
         return Result.ok(page);
@@ -207,12 +200,11 @@ public class GameDataCountController {
         if (!paramValidCheck && DateUtils.isSameDay(DateUtils.dateOnly(DateUtils.now()), DateUtils.parseDate(rangeDateBegin)) && DateUtils.isSameDay(DateUtils.dateOnly(DateUtils.now()), DateUtils.parseDate(rangeDateEnd))) {
             // 直接取数据 实时的
             GameServer gameServer = serverService.getById(serverId);
-            GameChannel gameChannel = channelService.getById(channelId);
             ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
             if (!responseCode.isSuccess() || type <= 0) {
                 return Result.error(responseCode.getDesc());
             }
-            List<GameStatOngoing> ongoings = dataCountService.queryCountOnGoing(type, gameChannel, gameServer, rangeDateBegin, rangeDateEnd);
+            List<GameStatOngoing> ongoings = dataCountService.queryCountOnGoing(type, gameServer, rangeDateBegin, rangeDateEnd);
             page.setRecords(ongoings).setTotal(ongoings.size());
             return Result.ok(page);
         } else {

@@ -21,22 +21,11 @@ import java.util.List;
 public interface GameDataRemainMapper extends BaseMapper<GameStatRemain> {
     /**
      * 留存统计
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @param logTable
-     * @param statDate 执行统计日期
-     * @return
      */
-    GameStatRemain gameRemainCount(@Param("channel") String channel, @Param("serverId") int serverId, @Param("date") String date, @Param("statDate") Date statDate, @Param("logTable") String logTable);
-
+    GameStatRemain gameRemainCount(@Param("serverId") int serverId, @Param("date") String date, @Param("statDate") Date statDate, @Param("logTable") String logTable);
 
     /**
      * 批量插入更新
-     *
-     * @param list
-     * @return
      */
     int updateOrInsert(List<GameStatRemain> list);
 
@@ -44,7 +33,6 @@ public interface GameDataRemainMapper extends BaseMapper<GameStatRemain> {
      * 从开服起统计留存
      * 优化-需要手动处理日期
      *
-     * @param channel           渠道
      * @param serverId          服务器
      * @param startRegisterDate 当天0点注册日期
      * @param endRegisterDate   当天24点注册日期
@@ -53,8 +41,7 @@ public interface GameDataRemainMapper extends BaseMapper<GameStatRemain> {
      * @param logTable          logTable
      * @return 玩家人数
      */
-    int selectRemain(@Param("channel") String channel,
-                     @Param("serverId") int serverId,
+    int selectRemain(@Param("serverId") int serverId,
                      @Param("startRegisterDate") String startRegisterDate,
                      @Param("endRegisterDate") String endRegisterDate,
                      @Param("startLoginDay") String startLoginDay,
