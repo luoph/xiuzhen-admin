@@ -4,25 +4,54 @@
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
                 <a-row :gutter="24">
-                    <a-col :md="6" :sm="8">
-                        <a-form-item label="区服Id">
-                            <server-select @select="change"></server-select>
-                        </a-form-item>
-                    </a-col>
-                    <a-col :md="6" :sm="8">
+                    <a-col :md="4" :sm="8">
                         <a-form-item label="玩家id">
-                            <a-input placeholder="请输入玩家id" v-model="queryParam.id"></a-input>
+                            <a-input placeholder="请输入玩家id" v-model="queryParam.id" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="昵称">
+                            <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="区服id">
+                            <a-input placeholder="请输入区服id" v-model="queryParam.serverId" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="渠道">
+                            <a-input placeholder="请输入渠道编码" v-model="queryParam.channel" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="账号">
+                            <a-input placeholder="请输入账号" v-model="queryParam.account" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="境界">
+                            <a-input placeholder="请输入境界" v-model="queryParam.realm" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
-                        <a-form-item label="角色昵称">
-                            <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname"></a-input>
+                        <a-form-item label="等级">
+                            <a-input placeholder="最小等级" class="query-group-cust" v-model="queryParam.level_begin"></a-input>
+                            <span class="query-group-split-cust"></span>
+                            <a-input placeholder="最大等级" class="query-group-cust" v-model="queryParam.level_end"></a-input>
                         </a-form-item>
                     </a-col>
                     <template v-if="toggleSearchStatus">
-                        <a-col :md="6" :sm="8">
-                            <a-form-item label="性别">
-                                <a-input placeholder="请输入性别" v-model="queryParam.sex"></a-input>
+                        <a-col :md="6" :sm="16">
+                            <a-form-item label="战力范围">
+                                <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin"></a-input>
+                                <span class="query-group-split-cust"></span>
+                                <a-input placeholder="最大战力值" class="query-group-cust" v-model="queryParam.combatPower_end"></a-input>
+                            </a-form-item>
+                        </a-col>
+                        <a-col :md="8" :sm="8">
+                            <a-form-item label="创建时间">
+                                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                             </a-form-item>
                         </a-col>
                     </template>
@@ -72,6 +101,7 @@
                 :dataSource="dataSource"
                 :pagination="ipagination"
                 :loading="loading"
+                :scroll="{ x: 'max-content' }"
                 :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             >
@@ -112,7 +142,8 @@
 import { JeecgListMixin } from "@/mixins/JeecgListMixin";
 import { getAction } from "@/api/manage";
 import PlayerInfoModal from "./modules/PlayerInfoModal";
-import ServerSelect from "@/components/gameserver/ServerSelect";
+import { filterObj } from "@/utils/util";
+import JInput from "@/components/jeecg/JInput";
 
 export default {
     name: "PlayerInfoList",
@@ -120,7 +151,7 @@ export default {
     components: {
         PlayerInfoModal,
         getAction,
-        ServerSelect
+        JInput
     },
     data() {
         return {
@@ -134,6 +165,7 @@ export default {
                     title: "#",
                     dataIndex: "",
                     key: "rowIndex",
+                    fixed: "left",
                     width: 60,
                     align: "center",
                     customRender: function(t, r, index) {
@@ -142,32 +174,65 @@ export default {
                 },
                 {
                     title: "玩家id",
+                    fixed: "left",
                     align: "center",
                     dataIndex: "id"
                 },
                 {
                     title: "角色昵称",
+                    fixed: "left",
                     align: "center",
                     dataIndex: "nickname"
                 },
                 {
+                    title: "区服id",
+                    align: "center",
+                    fixed: "left",
+                    dataIndex: "serverId"
+                },
+                {
+                    title: "账号",
+                    align: "center",
+                    dataIndex: "account"
+                },
+                // {
+                //     title: "distinctId",
+                //     align: "center",
+                //     dataIndex: "distinctId"
+                // },
+                {
+                    title: "渠道",
+                    align: "center",
+                    dataIndex: "channel"
+                },
+                {
                     title: "等级",
                     align: "center",
+                    width: 60,
                     dataIndex: "level"
                 },
                 {
                     title: "境界",
                     align: "center",
+                    width: 60,
                     dataIndex: "realm"
+                },
+                {
+                    title: "跳过动画",
+                    align: "center",
+                    width: 60,
+                    dataIndex: "skipCartoon"
                 },
                 {
                     title: "背包大小",
                     align: "center",
+                    width: 60,
                     dataIndex: "backpackSize"
                 },
                 {
                     title: "背包等级",
                     align: "center",
+                    width: 60,
                     dataIndex: "backpackLevel"
                 },
                 {
@@ -178,6 +243,7 @@ export default {
                 {
                     title: "修炼年数",
                     align: "center",
+                    width: 60,
                     dataIndex: "practiceYear"
                 },
                 {
@@ -186,14 +252,44 @@ export default {
                     dataIndex: "combatPower"
                 },
                 {
+                    title: "魅力值",
+                    align: "center",
+                    dataIndex: "charmValue"
+                },
+                {
+                    title: "本命灵根",
+                    align: "center",
+                    dataIndex: "spiritRootCode"
+                },
+                {
                     title: "修为加持状态",
                     align: "center",
+                    width: 60,
                     dataIndex: "practiceState"
                 },
                 {
                     title: "渡劫增加成功率",
                     align: "center",
+                    width: 60,
                     dataIndex: "successRate"
+                },
+                {
+                    title: "修为结算时间",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "settleTime"
+                },
+                {
+                    title: "等级升级时间",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "levelUpdateTime"
+                },
+                {
+                    title: "登录时间",
+                    align: "center",
+                    width: 120,
+                    dataIndex: "loginTime"
                 },
                 {
                     title: "登录IP",
@@ -201,14 +297,11 @@ export default {
                     dataIndex: "loginIp"
                 },
                 {
-                    title: "登录时间",
+                    title: "创角时间",
                     align: "center",
-                    dataIndex: "loginTime"
-                },
-                {
-                    title: "是否跳过战斗动画",
-                    align: "center",
-                    dataIndex: "skipCartoon"
+                    width: 120,
+                    fixed: "right",
+                    dataIndex: "createTime"
                 }
                 // {
                 //     title: "操作",
@@ -219,11 +312,7 @@ export default {
             ],
             url: {
                 list: "player/playerInfo/list",
-                delete: "player/playerInfo/delete",
-                deleteBatch: "player/playerInfo/deleteBatch",
-                exportXlsUrl: "player/playerInfo/exportXls",
-                importExcelUrl: "player/playerInfo/importExcel",
-                serverListUrl: "game/gameServer/all"
+                exportXlsUrl: "player/playerInfo/exportXls"
             },
             dictOptions: {}
         };
@@ -236,8 +325,19 @@ export default {
     },
     methods: {
         initDictConfig() {},
-        change(serverId) {
-            this.queryParam.serverId = serverId;
+        getQueryParams() {
+            console.log(this.queryParam.createTimeRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.createTimeRange;
+            return filterObj(param);
+        },
+        onDateChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.createTime_begin = dateString[0];
+            this.queryParam.createTime_end = dateString[1];
         }
     }
 };

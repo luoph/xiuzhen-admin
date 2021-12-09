@@ -1,9 +1,9 @@
 package org.jeecg.modules.game.entity;
 
+import cn.youai.entities.GamePlayer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.modules.player.entity.Player;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -50,5 +50,5 @@ public class ChatMessage implements Serializable {
     /**
      * 玩家
      */
-    private Player player;
+    private GamePlayer player;
 }
