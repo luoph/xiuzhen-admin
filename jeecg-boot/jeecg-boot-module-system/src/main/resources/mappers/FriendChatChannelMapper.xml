@@ -14,10 +14,6 @@
         <result column="send_time" property="sendTime"/>
         <result column="read_time" property="readTime"/>
         <result column="update_time" property="updateTime"/>
-        <association property="player" javaType="org.jeecg.modules.player.entity.Player">
-            <id column="p_id" property="id"/>
-            <result column="p_nickname" property="nickname"/>
-        </association>
         <association property="friendChatMessage" javaType="org.jeecg.modules.game.entity.FriendChatMessage">
             <id column="fcm_id" property="id"/>
             <result column="receive_player_id" property="playerId"/>

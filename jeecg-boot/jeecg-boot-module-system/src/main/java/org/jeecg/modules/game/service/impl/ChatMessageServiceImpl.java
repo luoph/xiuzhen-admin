@@ -11,7 +11,8 @@ import org.jeecg.modules.game.mapper.ChatMessageMapper;
 import org.jeecg.modules.game.mapper.FriendChatChannelMapper;
 import org.jeecg.modules.game.mapper.FriendChatMessageMapper;
 import org.jeecg.modules.game.service.IChatMessageService;
-import org.jeecg.modules.player.mapper.PlayerMapper;
+import org.jeecg.modules.game.service.IGamePlayerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,8 +38,8 @@ public class ChatMessageServiceImpl implements IChatMessageService {
     @Resource
     private FriendChatMessageMapper friendChatMessageMapper;
 
-    @Resource
-    private PlayerMapper playerMapper;
+    @Autowired
+    private IGamePlayerService playerService;
 
 
     @Override
@@ -83,7 +84,7 @@ public class ChatMessageServiceImpl implements IChatMessageService {
                 ChatMessageVO chatMessageVO = new ChatMessageVO();
                 chatMessageVO.setChatChannel("私聊频道");
                 Long receivePlayerId = friendChatChannel.getFriendChatMessage().getPlayerId();
-                String receivePlayerName = playerMapper.getNameById(receivePlayerId);
+                String receivePlayerName = playerService.getPlayer(receivePlayerId).getNickname();
                 chatMessageVO.setReceivePlayerName(receivePlayerName);
                 chatMessageVO.setSendPlayerName(friendChatChannel.getPlayer().getNickname());
                 chatMessageVO.setMessage(friendChatChannel.getFriendChatMessage().getMessage());
@@ -96,7 +97,7 @@ public class ChatMessageServiceImpl implements IChatMessageService {
                 ChatMessageVO chatMessageVO = new ChatMessageVO();
                 chatMessageVO.setChatChannel("私聊频道");
                 Long senderPlayerId = friendChatMessage.getFriendChatChannel().getPlayerId();
-                String senderPlayerName = playerMapper.getNameById(senderPlayerId);
+                String senderPlayerName = playerService.getPlayer(senderPlayerId).getNickname();
                 chatMessageVO.setReceivePlayerName(friendChatMessage.getPlayer().getNickname());
                 chatMessageVO.setSendPlayerName(senderPlayerName);
                 chatMessageVO.setMessage(friendChatMessage.getMessage());

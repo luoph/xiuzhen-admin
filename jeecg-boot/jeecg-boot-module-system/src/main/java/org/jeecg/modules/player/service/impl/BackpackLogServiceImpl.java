@@ -1,18 +1,18 @@
 package org.jeecg.modules.player.service.impl;
 
 import cn.youai.basics.model.ResponseCode;
+import cn.youai.entities.GamePlayer;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.database.DataSourceHelper;
+import org.jeecg.modules.game.service.IGamePlayerService;
 import org.jeecg.modules.player.entity.BackpackLog;
-import org.jeecg.modules.player.entity.Player;
 import org.jeecg.modules.player.entity.GamePlayerItemLog;
 import org.jeecg.modules.player.mapper.BackpackLogMapper;
 import org.jeecg.modules.player.service.BackpackLogService;
 import org.jeecg.modules.player.service.IGamePlayerItemLogService;
-import org.jeecg.modules.player.service.IPlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, Backp
     private IGamePlayerItemLogService playerItemLogService;
 
     @Autowired
-    private IPlayerService playerService;
+    private IGamePlayerService playerService;
 
     @Override
     public ResponseCode syncBackpackLog(BackpackLog model, long playerId, int serverId, Map<String, String[]> paramMap, String syncTimeBegin, String syncTimeEnd) {
@@ -48,7 +48,7 @@ public class BackpackLogServiceImpl extends ServiceImpl<BackpackLogMapper, Backp
                 // 手动同步防止数据量过大而超时 指定同步具体玩家的数据
                 queryWrapper.eq("player_id", playerId);
 
-                Player player = playerService.getById(playerId);
+                GamePlayer player = playerService.getPlayer(playerId);
                 if (player == null) {
                     return ResponseCode.SYS_PLAYER_EXIST;
                 }

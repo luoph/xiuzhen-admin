@@ -1,9 +1,9 @@
 package org.jeecg.modules.game.mapper;
 
+import cn.youai.entities.GamePlayer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.PayUserRank;
-import org.jeecg.modules.player.entity.Player;
 
 import java.util.Date;
 import java.util.List;
@@ -28,5 +28,5 @@ public interface PayUserRankMapper extends BaseMapper<PayUserRank> {
 
     Date getPlayerLastLoginTime(@Param("playerId") Long playerId, @Param("logTable") String logTable);
 
-    List<Player> getPlayerLastLoginAndRegisterTime(@Param("serverId") int serverId, @Param("logTable") String logTable);
+    List<GamePlayer> getPlayerLastLoginAndRegisterTime(@Param("serverId") int serverId, @Param("logTable") String logTable);
 }

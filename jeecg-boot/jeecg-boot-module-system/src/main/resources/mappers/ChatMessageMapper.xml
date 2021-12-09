@@ -11,10 +11,6 @@
         <result column="channel" property="channel"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
-        <association property="player" javaType="org.jeecg.modules.player.entity.Player">
-            <id column="p_id" property="id"/>
-            <result column="p_nickname" property="nickname"/>
-        </association>
     </resultMap>
 
     <select id="queryForList" resultMap="BaseResultMap">

@@ -5,6 +5,11 @@ package org.jeecg.modules.game.mapper;
 
 import cn.youai.entities.GamePlayer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+import org.jeecg.modules.player.entity.PlayerBehavior;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +21,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface GamePlayerMapper extends BaseMapper<GamePlayer> {
 
+    List<PlayerBehavior> queryPlayerBehavior(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
+                                             @Param("rangeDateEndTime") Date rangeDateEndTime,
+                                             @Param("playerId") Long playerId,
+                                             @Param("logTable") String logTable);
 }
