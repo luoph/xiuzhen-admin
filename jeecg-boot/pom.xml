@@ -54,6 +54,7 @@
         <java-jwt.version>3.7.0</java-jwt.version>
         <jwt.version>0.9.1</jwt.version>
         <mybatis-plus.version>3.1.2</mybatis-plus.version>
+        <p6spy.version>3.8.7</p6spy.version>
         <mysql-connector.version>5.1.49</mysql-connector.version>
         <sentry.version>5.1.2</sentry.version>
         <shiro-redis.version>3.1.0</shiro-redis.version>
@@ -164,6 +165,13 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <!-- 执行 SQL 分析打印 -->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>${p6spy.version}</version>
         </dependency>
 
         <!-- druid -->
