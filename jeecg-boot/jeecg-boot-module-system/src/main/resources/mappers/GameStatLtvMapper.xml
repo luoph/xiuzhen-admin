@@ -5,13 +5,12 @@
 
     <select id="getGameStatLtv" resultType="org.jeecg.modules.game.entity.GameStatLtv">
         <![CDATA[
-        SELECT @registerDate := #{registerDate} AS `count_date`,
-            @createTime := CONCAT(@registerDate, ' 00:00:00'),
-            @serverId :=#{serverId} AS `server_id`,
+        SELECT #{registerDate} AS `count_date`,
+            #{serverId} AS `server_id`,
             (SELECT COUNT(*) FROM `game_player`
                 WHERE `server_id` = #{serverId}
-                    AND `create_time` >= @createTime
-                    AND `create_time` < DATE_ADD(@createTime, INTERVAL 1 DAY)) AS register_num
+                    AND `create_time` >= #{registerDate}
+                    AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS register_num
         ]]>
     </select>
 
@@ -45,16 +44,15 @@
     <select id="getLtvAmount" resultType="org.jeecg.modules.game.entity.ServerLtvAmount">
         <![CDATA[
         SELECT
-        @serverId := #{serverId} AS serverId,
-        @days := #{days} AS days,
-        @registerDate := #{registerDate} AS registerDate,
-        @createTime := CONCAT(@registerDate, ' 00:00:00') AS createTime,
+        #{serverId} AS serverId,
+        #{days} AS days,
+        #{registerDate} AS registerDate,
         IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`create_time` >= @createTime AND p.`create_time` < DATE_ADD(@createTime, INTERVAL 1 DAY)
-        AND o.`create_time` <= DATE_ADD(@createTime, INTERVAL @days DAY)
-        AND p.`server_id` = @serverId
+        WHERE p.`create_time` >= #{registerDate} AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+        AND o.`create_time` <= DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+        AND p.`server_id` = #{serverId}
         ]]>
     </select>
 

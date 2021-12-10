@@ -145,8 +145,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         List<GameChannelServer> list = gameChannelServerService.list(query);
         Map<Integer, GameChannelServer> serverMap = list.stream().collect(Collectors.toMap(GameChannelServer::getServerId, Function.identity(), (key1, key2) -> key2));
 
-        Date today = DateUtils.todayDate();
-        int days = DateUtils.daysBetween(registerDate, today);
+        int days = DateUtils.daysBetweenNatural(registerDate, DateUtils.now());
         if (days < 0) {
             return;
         }
