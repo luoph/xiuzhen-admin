@@ -18,7 +18,7 @@ import java.util.Date;
  * @author buliangliang
  * @since 2020-08-26
  */
-public interface IGameLtvCountService extends IService<GameStatLtv> {
+public interface IGameStatLtvService extends IService<GameStatLtv> {
     /**
      * 留存统计
      */
@@ -27,5 +27,5 @@ public interface IGameLtvCountService extends IService<GameStatLtv> {
     /**
      * 统计留存
      */
-    GameStatLtv getGameLtvCount(int serverId, Date registerDate);
+    GameStatLtv getGameStatLtv(int serverId, Date registerDate);
 }

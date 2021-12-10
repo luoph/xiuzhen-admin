@@ -16,7 +16,7 @@ import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.mapper.GameCountOngoingMapper;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
 import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
-import org.jeecg.modules.game.mapper.GameLtvCountMapper;
+import org.jeecg.modules.game.mapper.GameStatLtvMapper;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.game.util.ParamValidUtil;
 import org.jeecg.modules.player.service.ILogAccountService;
@@ -75,11 +75,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Autowired
     private IGameDataRemainService gameDataRemainService;
     @Autowired
-    private IGameLtvCountService gameLtvCountService;
+    private IGameStatLtvService gameLtvCountService;
     @Resource
     private GameDayDataCountMapper gameDayDataCountMapper;
     @Resource
-    private GameLtvCountMapper gameLtvCountMapper;
+    private GameStatLtvMapper gameLtvCountMapper;
     @Resource
     private GameDataRemainMapper gameDataRemainMapper;
     @Autowired
@@ -141,9 +141,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
     @Override
     public void doJobDataCount(Date registerDate, CoreStatisticType type) {
-        Wrapper<GameChannelServer> query = Wrappers.<GameChannelServer>lambdaQuery()
-                .eq(GameChannelServer::getDelFlag, 0)
-                .eq(GameChannelServer::getNoNeedCount, 0);
+        Wrapper<GameChannelServer> query = Wrappers.<GameChannelServer>lambdaQuery().eq(GameChannelServer::getDelFlag, 0).eq(GameChannelServer::getNoNeedCount, 0);
         List<GameChannelServer> list = gameChannelServerService.list(query);
         Map<Integer, GameChannelServer> serverMap = list.stream().collect(Collectors.toMap(GameChannelServer::getServerId, Function.identity(), (key1, key2) -> key2));
 
@@ -217,9 +215,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 continue;
             }
 
-            LambdaQueryWrapper<GameStatLtv> query = Wrappers.<GameStatLtv>lambdaQuery()
-                    .eq(GameStatLtv::getServerId, serverId)
-                    .eq(GameStatLtv::getCountDate, registerDate);
+            LambdaQueryWrapper<GameStatLtv> query = Wrappers.<GameStatLtv>lambdaQuery().eq(GameStatLtv::getServerId, serverId).eq(GameStatLtv::getCountDate, registerDate);
 
             GameStatLtv gameStatLtv = gameLtvCountMapper.selectOne(QueryUtils.safeSelectOneQuery(query));
             if (gameStatLtv == null) {
@@ -331,7 +327,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         List<GameStatLtv> list = new ArrayList<>(dateRangeBetween);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            GameStatLtv gameLtvCount = gameLtvCountService.getGameLtvCount(serverId, DateUtils.addDays(dates[0], i));
+            GameStatLtv gameLtvCount = gameLtvCountService.getGameStatLtv(serverId, DateUtils.addDays(dates[0], i));
             list.add(gameLtvCount);
         }
         return list;
