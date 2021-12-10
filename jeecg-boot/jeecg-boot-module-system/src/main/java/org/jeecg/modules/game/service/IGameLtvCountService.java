@@ -27,5 +27,5 @@ public interface IGameLtvCountService extends IService<GameStatLtv> {
     /**
      * 统计留存
      */
-    GameStatLtv getGameLtvCount(int serverId, String date, Date statDate, String logTable);
+    GameStatLtv getGameLtvCount(int serverId, Date registerDate);
 }

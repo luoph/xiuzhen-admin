@@ -47,7 +47,7 @@ public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, Gam
     }
 
     @Override
-    public GameStatLtv getGameLtvCount(int serverId, String date, Date statDate, String logTable) {
-        return gameLtvCountMapper.getGameLtvCount(serverId, date, statDate, logTable);
+    public GameStatLtv getGameLtvCount(int serverId, Date registerDate) {
+        return gameLtvCountMapper.getGameStatLtv(serverId, registerDate);
     }
 }

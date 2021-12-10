@@ -3,13 +3,15 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.game.mapper.GameLtvCountMapper">
 
-    <select id="getGameLtvCount" resultType="org.jeecg.modules.game.entity.GameStatLtv">
+    <select id="getGameStatLtv" resultType="org.jeecg.modules.game.entity.GameStatLtv">
         <![CDATA[
-        SELECT @register_date := DATE(#{date}) AS count_date,
-            @d_start := CONCAT(@register_date, ' 00:00:00'),
-            @serverId :=#{serverId} AS server_id,
-            (SELECT COUNT(*) FROM `game_player` WHERE `server_id` =
-               #{serverId} AND `create_time` >= @d_start AND `create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)) AS register_num
+        SELECT @registerDate := DATE(#{registerDate}) AS `count_date`,
+            @createTime := CONCAT(@registerDate, ' 00:00:00'),
+            @serverId :=#{serverId} AS `server_id`,
+            (SELECT COUNT (*) FROM `game_player`
+                WHERE `server_id` = #{serverId}
+                    AND `create_time` >= @createTime
+                    AND `create_time` < DATE_ADD(@createTime, INTERVAL 1 DAY)) AS register_num
         ]]>
     </select>
 
@@ -37,6 +39,22 @@
               AND a.`server_id` = #{serverId}
               AND o.`server_id` = #{serverId}
         )), 0.00) AS d_amount;
+        ]]>
+    </select>
+
+    <select id="getLtvAmount" resultType="java.math.BigDecimal">
+        <![CDATA[
+        SELECT
+        @serverId := #{serverId} AS serverId,
+        @days := #{days} AS days,
+        @registerDate := DATE(#{registerDate}) AS registerDate,
+        @createTime := CONCAT(@registerDate, ' 00:00:00') AS createTime,
+        IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`create_time` >= @createTime AND p.`create_time` < DATE_ADD(@createTime, INTERVAL 1 DAY)
+        AND o.`create_time` <= DATE_ADD(@createTime, INTERVAL @days DAY)
+        AND p.`server_id` = @serverId
         ]]>
     </select>
 

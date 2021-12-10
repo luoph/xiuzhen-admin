@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.GameStatLtv;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
     /**
      * 统计ltv
      */
-    GameStatLtv getGameLtvCount(@Param("serverId") int serverId, @Param("date") String date, @Param("statDate") Date statDate, @Param("logTable") String logTable);
+    GameStatLtv getGameStatLtv(@Param("serverId") int serverId,
+                               @Param("registerDate") Date registerDate);
 
     /**
      * 插入或更新
@@ -45,4 +47,17 @@ public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
                      @Param("endRegisterDate") String endRegisterDate,
                      @Param("targetDate") String targetDate,
                      @Param("logTable") String logTable);
+
+
+    /**
+     * 查询LTV充值金额
+     *
+     * @param serverId     服务器ID
+     * @param days         天数
+     * @param registerDate 注册日期
+     * @return 充值金额
+     */
+    BigDecimal getLtvAmount(@Param("serverId") int serverId,
+                            @Param("registerDate") Date registerDate,
+                            @Param("days") int days);
 }
