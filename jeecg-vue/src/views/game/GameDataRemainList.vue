@@ -13,9 +13,10 @@
                             <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                         </span>
                     </a-col>
                 </a-row>
