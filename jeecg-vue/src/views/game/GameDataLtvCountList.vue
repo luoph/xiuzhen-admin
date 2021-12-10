@@ -13,9 +13,10 @@
                             <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
-                    <a-col :md="4" :sm="8">
+                    <a-col :md="6" :sm="8">
                         <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                         </span>
                     </a-col>
                 </a-row>
@@ -28,12 +29,13 @@
                 ref="table"
                 size="middle"
                 bordered
-                :rowKey="record => (record.id != null ? record.id : '0')"
+                rowKey="id"
                 :loading="loading"
                 :columns="columns"
                 :dataSource="dataSource"
                 :pagination="ipagination"
-                :scroll="{ x: 1500, y: 800 }"
+                :scroll="{ x: 'max-content' }"
+                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             ></a-table>
         </div>
@@ -62,8 +64,8 @@ export default {
                 {
                     title: "#",
                     dataIndex: "",
-                    width: "4%",
                     align: "center",
+                    width: "60",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
@@ -71,65 +73,65 @@ export default {
                 {
                     title: "日期",
                     dataIndex: "countDate",
-                    width: "6%",
                     align: "center",
+                    width: "140",
                     customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
                     title: "区服id",
-                    dataIndex: "serverId",
                     align: "center",
-                    width: "5%"
+                    width: "80",
+                    dataIndex: "serverId"
                 },
                 {
                     title: "新增角色",
-                    dataIndex: "registerNum",
                     align: "center",
-                    width: "5%"
+                    width: "60",
+                    dataIndex: "registerNum"
                 },
                 {
                     title: "LTV1",
-                    dataIndex: "d1AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d1AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d1Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV2",
-                    dataIndex: "d2AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d2AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d2Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV3",
-                    dataIndex: "d3AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d3AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d3Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV4",
-                    dataIndex: "d4AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d4AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d4Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV5",
-                    dataIndex: "d5AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d5AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d5Amount, record.registerNum);
                     }
@@ -138,7 +140,6 @@ export default {
                     title: "LTV6",
                     dataIndex: "d6AmountRate",
                     align: "center",
-                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d6Amount, record.registerNum);
                     }
@@ -147,63 +148,80 @@ export default {
                     title: "LTV7",
                     dataIndex: "d7AmountRate",
                     align: "center",
-                    width: "5%",
                     customRender: (text, record) => {
                         return this.countRate(record.d7Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV14",
-                    dataIndex: "d14AmountRata",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d14AmountRata",
                     customRender: (text, record) => {
                         return this.countRate(record.d14Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV21",
-                    dataIndex: "d21AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d21AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d21Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV30",
-                    dataIndex: "d30AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d30AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d30Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV60",
-                    dataIndex: "d60AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d60AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d60Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV90",
-                    dataIndex: "d90AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d90AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d90Amount, record.registerNum);
                     }
                 },
                 {
                     title: "LTV120",
-                    dataIndex: "d120AmountRate",
                     align: "center",
-                    width: "5%",
+                    width: "60",
+                    dataIndex: "d120AmountRate",
                     customRender: (text, record) => {
                         return this.countRate(record.d120Amount, record.registerNum);
+                    }
+                },
+                {
+                    title: "LTV180",
+                    align: "center",
+                    width: "60",
+                    dataIndex: "d180AmountRate",
+                    customRender: (text, record) => {
+                        return this.countRate(record.d180Amount, record.registerNum);
+                    }
+                },
+                {
+                    title: "LTV360",
+                    align: "center",
+                    width: "60",
+                    dataIndex: "d360AmountRate",
+                    customRender: (text, record) => {
+                        return this.countRate(record.d360Amount, record.registerNum);
                     }
                 }
             ],
