@@ -8,10 +8,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameStatLtv;
-import org.jeecg.modules.game.mapper.GameLtvCountMapper;
-import org.jeecg.modules.game.service.IGameChannelService;
-import org.jeecg.modules.game.service.IGameLtvCountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jeecg.modules.game.mapper.GameStatLtvMapper;
+import org.jeecg.modules.game.service.IGameStatLtvService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +25,11 @@ import java.util.Date;
  * @since 2020-08-26
  */
 @Service
-public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, GameStatLtv> implements IGameLtvCountService {
+public class GameStatLtvServiceImpl extends ServiceImpl<GameStatLtvMapper, GameStatLtv> implements IGameStatLtvService {
 
-    @Autowired
-    private IGameChannelService gameChannelService;
     @Resource
-    private GameLtvCountMapper gameLtvCountMapper;
+    private GameStatLtvMapper gameLtvCountMapper;
+
     @Value("${app.log.db.table}")
     private String logTable;
 
@@ -47,7 +44,7 @@ public class GameLtvCountServiceImpl extends ServiceImpl<GameLtvCountMapper, Gam
     }
 
     @Override
-    public GameStatLtv getGameLtvCount(int serverId, Date registerDate) {
+    public GameStatLtv getGameStatLtv(int serverId, Date registerDate) {
         return gameLtvCountMapper.getGameStatLtv(serverId, registerDate);
     }
 }

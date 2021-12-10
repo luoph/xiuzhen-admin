@@ -19,7 +19,7 @@ import java.util.List;
  * @author buliangliang
  * @since 2020-08-26
  */
-public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
+public interface GameStatLtvMapper extends BaseMapper<GameStatLtv> {
     /**
      * 统计ltv
      */
