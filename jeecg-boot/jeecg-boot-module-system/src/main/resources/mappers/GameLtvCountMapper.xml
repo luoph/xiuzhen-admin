@@ -8,7 +8,7 @@
         SELECT @registerDate := DATE(#{registerDate}) AS `count_date`,
             @createTime := CONCAT(@registerDate, ' 00:00:00'),
             @serverId :=#{serverId} AS `server_id`,
-            (SELECT COUNT (*) FROM `game_player`
+            (SELECT COUNT(*) FROM `game_player`
                 WHERE `server_id` = #{serverId}
                     AND `create_time` >= @createTime
                     AND `create_time` < DATE_ADD(@createTime, INTERVAL 1 DAY)) AS register_num
@@ -42,7 +42,7 @@
         ]]>
     </select>
 
-    <select id="getLtvAmount" resultType="java.math.BigDecimal">
+    <select id="getLtvAmount" resultType="org.jeecg.modules.game.entity.ServerLtvAmount">
         <![CDATA[
         SELECT
         @serverId := #{serverId} AS serverId,

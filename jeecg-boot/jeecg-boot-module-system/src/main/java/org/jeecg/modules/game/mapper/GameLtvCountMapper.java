@@ -6,8 +6,8 @@ package org.jeecg.modules.game.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.GameStatLtv;
+import org.jeecg.modules.game.entity.ServerLtvAmount;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +57,7 @@ public interface GameLtvCountMapper extends BaseMapper<GameStatLtv> {
      * @param registerDate 注册日期
      * @return 充值金额
      */
-    BigDecimal getLtvAmount(@Param("serverId") int serverId,
-                            @Param("registerDate") Date registerDate,
-                            @Param("days") int days);
+    ServerLtvAmount getLtvAmount(@Param("serverId") int serverId,
+                                 @Param("registerDate") Date registerDate,
+                                 @Param("days") int days);
 }
