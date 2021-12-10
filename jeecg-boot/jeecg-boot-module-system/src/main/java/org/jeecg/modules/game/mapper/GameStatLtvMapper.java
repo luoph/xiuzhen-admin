@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.GameStatLtv;
 import org.jeecg.modules.game.entity.ServerLtvAmount;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ public interface GameStatLtvMapper extends BaseMapper<GameStatLtv> {
      * 统计ltv
      */
     GameStatLtv getGameStatLtv(@Param("serverId") int serverId,
-                               @Param("registerDate") Date registerDate);
+                               @Param("registerDate") String registerDate);
 
     /**
      * 插入或更新
@@ -58,6 +57,6 @@ public interface GameStatLtvMapper extends BaseMapper<GameStatLtv> {
      * @return 充值金额
      */
     ServerLtvAmount getLtvAmount(@Param("serverId") int serverId,
-                                 @Param("registerDate") Date registerDate,
+                                 @Param("registerDate") String registerDate,
                                  @Param("days") int days);
 }

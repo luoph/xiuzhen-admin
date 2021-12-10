@@ -63,12 +63,6 @@ public interface IGameDataCountService {
      */
     void updateRemainTask(Map<String, Object> context, GameServer gameServer, String countDate);
 
-
-    /**
-     * ltv任务更新
-     */
-    void updateLtvTask(Map<String, Object> context, GameServer gameServer, String countDate);
-
     /**
      * 30天连续统计
      */
@@ -91,10 +85,6 @@ public interface IGameDataCountService {
      * 获取k-v 留存列表
      */
     Map<String, GameStatRemain> remainCountMap(boolean isReturnIndex);
-
-    List<GameStatLtv> queryDataLtvCount(int serverId, String rangeDateBegin, String rangeDateEnd, Date statDate);
-
-    Map<String, GameStatLtv> ltvCountMap(boolean isReturnIndex);
 
     /**
      * 获取k-v ltv数据列表

@@ -5,7 +5,7 @@
 
     <select id="getGameStatLtv" resultType="org.jeecg.modules.game.entity.GameStatLtv">
         <![CDATA[
-        SELECT @registerDate := DATE(#{registerDate}) AS `count_date`,
+        SELECT @registerDate := #{registerDate} AS `count_date`,
             @createTime := CONCAT(@registerDate, ' 00:00:00'),
             @serverId :=#{serverId} AS `server_id`,
             (SELECT COUNT(*) FROM `game_player`
@@ -47,7 +47,7 @@
         SELECT
         @serverId := #{serverId} AS serverId,
         @days := #{days} AS days,
-        @registerDate := DATE(#{registerDate}) AS registerDate,
+        @registerDate := #{registerDate} AS registerDate,
         @createTime := CONCAT(@registerDate, ' 00:00:00') AS createTime,
         IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
 
 /**
  * <p>
@@ -44,7 +43,7 @@ public class GameStatLtvServiceImpl extends ServiceImpl<GameStatLtvMapper, GameS
     }
 
     @Override
-    public GameStatLtv getGameStatLtv(int serverId, Date registerDate) {
+    public GameStatLtv getGameStatLtv(int serverId, String registerDate) {
         return gameLtvCountMapper.getGameStatLtv(serverId, registerDate);
     }
 }

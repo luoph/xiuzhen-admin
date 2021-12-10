@@ -154,9 +154,6 @@ public class GameDataCountController {
         } else if (type == 2) {
             List<GameStatRemain> gameDataRemains = dataCountService.queryDataRemainCount(serverId, rangeDateBegin, rangeDateEnd, false);
             page.setRecords(gameDataRemains).setTotal(gameDataRemains.size());
-        } else {
-            List<GameStatLtv> gameLtvCounts = dataCountService.queryDataLtvCount(serverId, rangeDateBegin, rangeDateEnd, DateUtils.now());
-            page.setRecords(gameLtvCounts).setTotal(gameLtvCounts.size());
         }
         return Result.ok(page);
     }

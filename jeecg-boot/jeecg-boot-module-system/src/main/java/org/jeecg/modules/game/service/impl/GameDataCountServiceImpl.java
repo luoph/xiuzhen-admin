@@ -209,28 +209,30 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
      * 添加ltv，每日统计新记录
      */
     private void doJobDataCountToLtv(Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
+        String date = DateUtil.formatDate(registerDate);
         for (Integer serverId : serverIds) {
             GameServer gameServer = gameServerService.getById(serverId);
             if (gameServer == null || gameServer.getOpenTime().getTime() > registerDate.getTime()) {
                 continue;
             }
 
-            LambdaQueryWrapper<GameStatLtv> query = Wrappers.<GameStatLtv>lambdaQuery().eq(GameStatLtv::getServerId, serverId).eq(GameStatLtv::getCountDate, registerDate);
+            LambdaQueryWrapper<GameStatLtv> query = Wrappers.<GameStatLtv>lambdaQuery()
+                    .eq(GameStatLtv::getServerId, serverId).eq(GameStatLtv::getCountDate, registerDate);
 
             GameStatLtv gameStatLtv = gameLtvCountMapper.selectOne(QueryUtils.safeSelectOneQuery(query));
             if (gameStatLtv == null) {
-                gameStatLtv = gameLtvCountMapper.getGameStatLtv(serverId, registerDate);
+                gameStatLtv = gameLtvCountMapper.getGameStatLtv(serverId, date);
             }
 
             if (updateAll) {
                 // 更新全部字段
                 for (int i : LTV) {
                     if (days >= i) {
-                        calcLtvAmount(gameStatLtv, serverId, registerDate, i);
+                        calcLtvAmount(gameStatLtv, serverId, date, i);
                     }
                 }
             }
-            calcLtvAmount(gameStatLtv, serverId, registerDate, days);
+            calcLtvAmount(gameStatLtv, serverId, date, days);
 
             if (gameStatLtv.getId() != null) {
                 gameLtvCountMapper.updateById(gameStatLtv);
@@ -240,7 +242,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
     }
 
-    private void calcLtvAmount(GameStatLtv gameStatLtv, int serverId, Date registerDate, int days) {
+    private void calcLtvAmount(GameStatLtv gameStatLtv, int serverId, String registerDate, int days) {
         ServerLtvAmount ltvAmount = gameLtvCountMapper.getLtvAmount(serverId, registerDate, days);
         if (days <= 1) {
             gameStatLtv.setD1Amount(ltvAmount.getTotalAmount());
@@ -316,48 +318,10 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         return map;
     }
 
-
-    @Override
-    public List<GameStatLtv> queryDataLtvCount(int serverId, String rangeDateBegin, String rangeDateEnd, Date statDate) {
-        Date dateBegin = DateUtils.parseDate(rangeDateBegin);
-        Date dateEnd = DateUtils.parseDate(rangeDateEnd);
-        // 数组第一个元素为开始统计的第一个日期
-        Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
-        List<GameStatLtv> list = new ArrayList<>(dateRangeBetween);
-        for (int i = 0; i <= dateRangeBetween; i++) {
-            String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            GameStatLtv gameLtvCount = gameLtvCountService.getGameStatLtv(serverId, DateUtils.addDays(dates[0], i));
-            list.add(gameLtvCount);
-        }
-        return list;
-    }
-
-    @Override
-    public Map<String, GameStatLtv> ltvCountMap(boolean isReturnIndex) {
-        List<GameStatLtv> dataCounts;
-        if (isReturnIndex) {
-            LambdaQueryWrapper<GameStatLtv> queryWrapper = Wrappers.lambdaQuery();
-            queryWrapper.select(GameStatLtv::getServerId, GameStatLtv::getCountDate);
-            dataCounts = gameLtvCountService.list(queryWrapper);
-        } else {
-            dataCounts = gameLtvCountService.list();
-        }
-        Map<String, GameStatLtv> map = new HashMap<>(dataCounts.size());
-        for (GameStatLtv ltvCount : dataCounts) {
-            String formatDate = DateUtil.formatDate(ltvCount.getCountDate());
-            String countKey = dailyCountKey(ltvCount.getServerId(), formatDate);
-            map.put(countKey, ltvCount);
-        }
-        return map;
-    }
-
     @Override
     public void doJobDataCountUpdateByType(CoreStatisticType type, Date current) {
         if (CoreStatisticType.REMAIN == type) {
             doDataCountUpdateByRemain(current);
-        } else if (CoreStatisticType.LTV == type) {
-            doDataCountUpdateByLtv(current);
         }
     }
 
@@ -374,7 +338,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         context.put(KEY_GAME_STAT_REMAIN_COUNT_MAP, remainCountMap(false));
         for (GameChannelServer gameChannelServer : list) {
             GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
-            GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
             if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
                 continue;
             }
@@ -386,34 +349,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             }
         }
     }
-
-    /**
-     * ltv统计 计算and更新
-     */
-    private void doDataCountUpdateByLtv(Date currentDate) {
-        List<GameChannelServer> list = gameChannelServerService.list();
-        list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
-        Date date = DateUtils.addDays(currentDate, -1);
-        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
-        Map<String, Object> context = new HashMap<>(10);
-        // ltv数据
-        context.put(KEY_GAME_STAT_LTV_COUNT_MAP, ltvCountMap(false));
-
-        for (GameChannelServer gameChannelServer : list) {
-            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
-            GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
-            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
-                continue;
-            }
-            try {
-                // ltv更新
-                updateLtvTask(context, gameServer, formatDate);
-            } catch (Exception e) {
-                log.error("updateLtvTask error!" + gameChannelServer.getChannelId() + "_" + gameChannelServer.getServerId());
-            }
-        }
-    }
-
 
     private int betweenNatural(GameServer gameServer, String countDate) {
         Date openTime = gameServer.getOpenTime();
@@ -512,42 +447,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 gameDataRemain.setD360Remain(BigDecimal.valueOf(remain));
             }
         }
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void updateLtvTask(Map<String, Object> context, GameServer gameServer, String countDate) {
-        Map<String, GameStatLtv> map;
-        if (context != null) {
-            map = (Map<String, GameStatLtv>) context.get(KEY_GAME_STAT_LTV_COUNT_MAP);
-        } else {
-            map = ltvCountMap(false);
-        }
-
-        int betweenNatural = betweenNatural(gameServer, countDate);
-        List<GameStatLtv> list = new ArrayList<>();
-        for (int i = 0; i <= betweenNatural; i++) {
-            Date nextDate = DateUtils.addDays(gameServer.getOpenTime(), i);
-            int leftDays = DateUtils.daysBetweenNatural(nextDate, DateUtils.parseDate(countDate));
-            String formatDate = DateUtils.formatDate(nextDate, DatePattern.NORM_DATE_PATTERN);
-            String ltvCountKey = dailyCountKey(gameServer.getId(), formatDate);
-            GameStatLtv gameLtvCount = map.get(ltvCountKey);
-            if (gameLtvCount == null || gameLtvCount.getD360Amount() != null) {
-                continue;
-            }
-
-            Date startRegisterDate = DateUtils.startTimeOfDate(nextDate);
-            Date endRegisterDate = DateUtils.endTimeOfDate(nextDate);
-            for (int j = 1; j <= leftDays; j++) {
-                if (isNeedStatLtvRemain(j, leftDays)) {
-                    double remain = gameLtvCountMapper.selectLtv(gameServer.getId(), DateUtil.formatDateTime(startRegisterDate), DateUtil.formatDateTime(endRegisterDate), DateUtil.formatDateTime(DateUtils.addDays(startRegisterDate, j)), logTable);
-                    updateLtvCountField(gameLtvCount, j, remain);
-                }
-            }
-            list.add(gameLtvCount);
-        }
-        // 批量更新
-        gameLtvCountService.updateBatchById(list);
     }
 
     /**
