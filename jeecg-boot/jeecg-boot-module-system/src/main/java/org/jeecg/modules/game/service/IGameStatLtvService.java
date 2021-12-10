@@ -8,8 +8,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameStatLtv;
 
-import java.util.Date;
-
 /**
  * <p>
  * LTV统计 服务类
@@ -27,5 +25,5 @@ public interface IGameStatLtvService extends IService<GameStatLtv> {
     /**
      * 统计留存
      */
-    GameStatLtv getGameStatLtv(int serverId, Date registerDate);
+    GameStatLtv getGameStatLtv(int serverId, String registerDate);
 }
