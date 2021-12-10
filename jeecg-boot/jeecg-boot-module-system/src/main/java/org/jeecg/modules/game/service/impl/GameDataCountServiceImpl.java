@@ -160,7 +160,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 doJobDataCountToRemain(serverMap.keySet(), date, registerDate);
                 break;
             case LTV:
-                doJobDataCountToLtv(serverMap.keySet(), registerDate, days, true);
+                doJobDataCountToLtv(serverMap.keySet(), registerDate, days + 1, true);
                 break;
             default:
                 break;
