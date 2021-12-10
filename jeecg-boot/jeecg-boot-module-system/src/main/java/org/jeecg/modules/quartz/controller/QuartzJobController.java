@@ -265,8 +265,10 @@ public class QuartzJobController {
      * @param startDate 开始日期
      * @param endDate   结束日期
      */
-    @GetMapping(value = "/doQuartzJobByType")
-    public Result<?> runCoreStatisticManually(@RequestParam(value = "jobType", defaultValue = "0") int jobType, @RequestParam(value = "startDate", defaultValue = "") String startDate, @RequestParam(value = "endDate", defaultValue = "") String endDate) {
+    @GetMapping(value = "/runCoreStatisticManually")
+    public Result<?> runCoreStatisticManually(@RequestParam(value = "jobType", defaultValue = "0") int jobType,
+                                              @RequestParam(value = "startDate", defaultValue = "") String startDate,
+                                              @RequestParam(value = "endDate", defaultValue = "") String endDate) {
         if (jobType <= 0) {
             return Result.error("未设置任务类型");
         }
@@ -275,8 +277,13 @@ public class QuartzJobController {
             return Result.error("未设置开始和结束时间");
         }
 
+        Date now = DateUtils.now();
         Date startDay = DateUtils.dateOnly(DateUtil.parseDate(startDate));
         Date endDay = DateUtils.dateOnly(DateUtil.parseDate(endDate));
+        // 设置最晚不超过当前时间
+        if (endDay.after(now)) {
+            endDay = DateUtils.dateOnly(now);
+        }
 
         int daysBetween = DateUtils.daysBetween(startDay, endDay);
         if (daysBetween < 0) {

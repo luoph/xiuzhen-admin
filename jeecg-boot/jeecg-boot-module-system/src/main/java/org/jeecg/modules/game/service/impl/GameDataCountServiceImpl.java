@@ -18,7 +18,6 @@ import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
 import org.jeecg.modules.game.mapper.GameLtvCountMapper;
 import org.jeecg.modules.game.service.*;
 import org.jeecg.modules.game.util.ParamValidUtil;
-import org.jeecg.modules.game.util.ReflectUtils;
 import org.jeecg.modules.player.service.ILogAccountService;
 import org.jeecg.modules.player.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,16 +146,22 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         List<GameChannelServer> list = gameChannelServerService.list(query);
         Map<Integer, GameChannelServer> serverMap = list.stream().collect(Collectors.toMap(GameChannelServer::getServerId, Function.identity(), (key1, key2) -> key2));
 
+        Date today = DateUtils.todayDate();
+        int days = DateUtils.daysBetween(registerDate, today);
+        if (days < 0) {
+            return;
+        }
+
         Date date = DateUtils.addDays(registerDate, -1);
         switch (type) {
             case DAILY:
-                doJobDataCountToDaily(list, date);
+                doJobDataCountToDaily(serverMap.keySet(), date);
                 break;
             case REMAIN:
-                doJobDataCountToRemain(list, date, registerDate);
+                doJobDataCountToRemain(serverMap.keySet(), date, registerDate);
                 break;
             case LTV:
-                doJobDataCountToLtv(list, date, registerDate);
+                doJobDataCountToLtv(serverMap.keySet(), registerDate, days, true);
                 break;
             default:
                 break;
@@ -166,11 +171,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     /**
      * 添加daily，每日统计新记录
      */
-    private void doJobDataCountToDaily(List<GameChannelServer> list, Date date) {
+    private void doJobDataCountToDaily(Collection<Integer> serverIds, Date date) {
         String formatDate = DateUtil.formatDate(date);
-        for (GameChannelServer gameChannelServer : list) {
-            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
-            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
+        for (Integer serverId : serverIds) {
+            GameServer gameServer = gameServerService.getById(serverId);
+            if (gameServer.getOpenTime().getTime() <= date.getTime()) {
                 continue;
             }
 
@@ -185,15 +190,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     /**
      * 添加remain，每日统计新记录
      */
-    private void doJobDataCountToRemain(List<GameChannelServer> list, Date date, Date currentDate) {
-        Map<String, Object> context = new HashMap<>(10);
-        context.put(KEY_GAME_STAT_REMAIN_COUNT_MAP, remainCountMap(true));
-
+    private void doJobDataCountToRemain(Collection<Integer> serverIds, Date date, Date currentDate) {
         String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
-
-        for (GameChannelServer gameChannelServer : list) {
-            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
-            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
+        for (Integer serverId : serverIds) {
+            GameServer gameServer = gameServerService.getById(serverId);
+            if (gameServer.getOpenTime().getTime() <= date.getTime()) {
                 continue;
             }
 
@@ -208,23 +209,72 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     /**
      * 添加ltv，每日统计新记录
      */
-    private void doJobDataCountToLtv(List<GameChannelServer> list, Date date, Date currentDate) {
-        Map<String, Object> context = new HashMap<>(10);
-        context.put(KEY_GAME_STAT_LTV_COUNT_MAP, ltvCountMap(true));
-
-        String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
-
-        for (GameChannelServer gameChannelServer : list) {
-            GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
-            if (DateUtils.daysBetween(gameServer.getOpenTime(), date) < 0) {
+    private void doJobDataCountToLtv(Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
+        for (Integer serverId : serverIds) {
+            GameServer gameServer = gameServerService.getById(serverId);
+            if (gameServer == null || gameServer.getOpenTime().getTime() > registerDate.getTime()) {
                 continue;
             }
 
-            String f = DateUtils.formatDate(gameServer.getOpenTime(), DatePattern.NORM_DATETIME_PATTERN);
-            List<GameStatLtv> gameLtvCounts = queryDataLtvCount(gameServer.getId(), f, formatDate, currentDate);
-            if (CollUtil.isNotEmpty(gameLtvCounts)) {
-                gameLtvCountMapper.updateOrInsert(gameLtvCounts);
+            Wrapper<GameStatLtv> query = Wrappers.<GameStatLtv>lambdaQuery()
+                    .eq(GameStatLtv::getServerId, serverId)
+                    .eq(GameStatLtv::getCountDate, registerDate);
+
+            GameStatLtv gameStatLtv = gameLtvCountMapper.selectOne(query);
+            if (gameStatLtv == null) {
+                gameStatLtv = gameLtvCountMapper.getGameStatLtv(serverId, registerDate);
             }
+
+            if (updateAll) {
+                // 更新全部字段
+                for (int i : LTV) {
+                    if (days >= i) {
+                        calcLtvAmount(gameStatLtv, serverId, registerDate, i);
+                    }
+                }
+            }
+            calcLtvAmount(gameStatLtv, serverId, registerDate, days);
+
+            if (gameStatLtv.getId() != null) {
+                gameLtvCountMapper.updateById(gameStatLtv);
+            } else {
+                gameLtvCountMapper.insert(gameStatLtv);
+            }
+        }
+    }
+
+    private void calcLtvAmount(GameStatLtv gameStatLtv, int serverId, Date registerDate, int days) {
+        BigDecimal ltvAmount = gameLtvCountMapper.getLtvAmount(serverId, registerDate, days);
+        if (days <= 1) {
+            gameStatLtv.setD1Amount(ltvAmount);
+        } else if (days <= 2) {
+            gameStatLtv.setD2Amount(ltvAmount);
+        } else if (days <= 3) {
+            gameStatLtv.setD3Amount(ltvAmount);
+        } else if (days <= 4) {
+            gameStatLtv.setD4Amount(ltvAmount);
+        } else if (days <= 5) {
+            gameStatLtv.setD5Amount(ltvAmount);
+        } else if (days <= 6) {
+            gameStatLtv.setD6Amount(ltvAmount);
+        } else if (days <= 7) {
+            gameStatLtv.setD7Amount(ltvAmount);
+        } else if (days <= 14) {
+            gameStatLtv.setD14Amount(ltvAmount);
+        } else if (days <= 21) {
+            gameStatLtv.setD21Amount(ltvAmount);
+        } else if (days <= 30) {
+            gameStatLtv.setD30Amount(ltvAmount);
+        } else if (days <= 60) {
+            gameStatLtv.setD60Amount(ltvAmount);
+        } else if (days <= 90) {
+            gameStatLtv.setD90Amount(ltvAmount);
+        } else if (days <= 120) {
+            gameStatLtv.setD120Amount(ltvAmount);
+        } else if (days <= 180) {
+            gameStatLtv.setD180Amount(ltvAmount);
+        } else if (days <= 360) {
+            gameStatLtv.setD360Amount(ltvAmount);
         }
     }
 
@@ -280,7 +330,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         List<GameStatLtv> list = new ArrayList<>(dateRangeBetween);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);
-            GameStatLtv gameLtvCount = gameLtvCountService.getGameLtvCount(serverId, dateOnly, statDate, logTable);
+            GameStatLtv gameLtvCount = gameLtvCountService.getGameLtvCount(serverId, DateUtils.addDays(dates[0], i));
             list.add(gameLtvCount);
         }
         return list;
