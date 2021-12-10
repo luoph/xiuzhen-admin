@@ -10,7 +10,7 @@
                     </a-col>
                     <a-col :md="8" :sm="8">
                         <a-form-item label="日期">
-                            <a-range-picker v-model="queryParam.countRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                            <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
