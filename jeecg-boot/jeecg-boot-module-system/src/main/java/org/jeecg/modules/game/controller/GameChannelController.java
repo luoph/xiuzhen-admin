@@ -174,6 +174,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @ApiOperation(value = "游戏渠道-刷新指定渠道区服json", notes = "游戏渠道-刷新指定渠道区服json")
     @GetMapping(value = "/updateChannelServer")
     public Result<?> updateChannelServer(@RequestParam(name = "id") String id) {
+        OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadChannel");
         gameChannelService.updateChannelConfig(Integer.valueOf(id));
         return Result.ok("区服配置刷新成功");
