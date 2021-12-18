@@ -218,9 +218,14 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             LambdaQueryWrapper<GameStatLtv> query = Wrappers.<GameStatLtv>lambdaQuery()
                     .eq(GameStatLtv::getServerId, serverId).eq(GameStatLtv::getCountDate, registerDate);
 
+            // 重新查询注册数量
+            GameStatLtv updatedLtv = gameLtvCountMapper.getGameStatLtv(serverId, date);
+
             GameStatLtv gameStatLtv = gameLtvCountMapper.selectOne(QueryUtils.safeSelectOneQuery(query));
             if (gameStatLtv == null) {
-                gameStatLtv = gameLtvCountMapper.getGameStatLtv(serverId, date);
+                gameStatLtv = updatedLtv;
+            } else {
+                gameStatLtv.setRegisterNum(updatedLtv.getRegisterNum());
             }
 
             if (updateAll) {
@@ -241,38 +246,44 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
     }
 
-    private void calcLtvAmount(GameStatLtv gameStatLtv, int serverId, String registerDate, int days) {
+    private void calcLtvAmount(GameStatLtv entity, int serverId, String registerDate, int days) {
         ServerLtvAmount ltvAmount = gameLtvCountMapper.getLtvAmount(serverId, registerDate, days);
+        int registerNum = entity.getRegisterNum() != null ? entity.getRegisterNum() : 0;
+        // 注册为0, 直接返回
+        if (registerNum <= 0) {
+            return;
+        }
+
         if (days <= 1) {
-            gameStatLtv.setD1Amount(ltvAmount.getTotalAmount());
+            entity.setD1Amount(ltvAmount.getTotalAmount());
         } else if (days <= 2) {
-            gameStatLtv.setD2Amount(ltvAmount.getTotalAmount());
+            entity.setD2Amount(ltvAmount.getTotalAmount());
         } else if (days <= 3) {
-            gameStatLtv.setD3Amount(ltvAmount.getTotalAmount());
+            entity.setD3Amount(ltvAmount.getTotalAmount());
         } else if (days <= 4) {
-            gameStatLtv.setD4Amount(ltvAmount.getTotalAmount());
+            entity.setD4Amount(ltvAmount.getTotalAmount());
         } else if (days <= 5) {
-            gameStatLtv.setD5Amount(ltvAmount.getTotalAmount());
+            entity.setD5Amount(ltvAmount.getTotalAmount());
         } else if (days <= 6) {
-            gameStatLtv.setD6Amount(ltvAmount.getTotalAmount());
+            entity.setD6Amount(ltvAmount.getTotalAmount());
         } else if (days <= 7) {
-            gameStatLtv.setD7Amount(ltvAmount.getTotalAmount());
+            entity.setD7Amount(ltvAmount.getTotalAmount());
         } else if (days <= 14) {
-            gameStatLtv.setD14Amount(ltvAmount.getTotalAmount());
+            entity.setD14Amount(ltvAmount.getTotalAmount());
         } else if (days <= 21) {
-            gameStatLtv.setD21Amount(ltvAmount.getTotalAmount());
+            entity.setD21Amount(ltvAmount.getTotalAmount());
         } else if (days <= 30) {
-            gameStatLtv.setD30Amount(ltvAmount.getTotalAmount());
+            entity.setD30Amount(ltvAmount.getTotalAmount());
         } else if (days <= 60) {
-            gameStatLtv.setD60Amount(ltvAmount.getTotalAmount());
+            entity.setD60Amount(ltvAmount.getTotalAmount());
         } else if (days <= 90) {
-            gameStatLtv.setD90Amount(ltvAmount.getTotalAmount());
+            entity.setD90Amount(ltvAmount.getTotalAmount());
         } else if (days <= 120) {
-            gameStatLtv.setD120Amount(ltvAmount.getTotalAmount());
+            entity.setD120Amount(ltvAmount.getTotalAmount());
         } else if (days <= 180) {
-            gameStatLtv.setD180Amount(ltvAmount.getTotalAmount());
+            entity.setD180Amount(ltvAmount.getTotalAmount());
         } else if (days <= 360) {
-            gameStatLtv.setD360Amount(ltvAmount.getTotalAmount());
+            entity.setD360Amount(ltvAmount.getTotalAmount());
         }
     }
 
