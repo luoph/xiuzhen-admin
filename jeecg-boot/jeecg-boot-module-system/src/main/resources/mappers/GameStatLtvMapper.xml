@@ -36,7 +36,6 @@
               AND a.`create_time` < #{endRegisterDate}
               AND o.`create_time` < #{targetDate}
               AND a.`server_id` = #{serverId}
-              AND o.`server_id` = #{serverId}
         )), 0.00) AS d_amount;
         ]]>
     </select>

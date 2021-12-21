@@ -8,9 +8,9 @@
                         <!--@ = v-on:数据绑定 不是事件-->
                         <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
-                    <a-col :md="10" :sm="8">
-                        <a-form-item label="创建日期">
-                            <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+                    <a-col :md="8" :sm="8">
+                        <a-form-item label="日期">
+                            <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="6" :sm="8">
@@ -29,12 +29,13 @@
                 ref="table"
                 size="middle"
                 bordered
-                :rowKey="record => (record.id != null ? record.id : '0')"
+                rowKey="id"
                 :loading="loading"
                 :columns="columns"
                 :dataSource="dataSource"
                 :pagination="ipagination"
-                :scroll="{ x: 1500, y: 800 }"
+                :scroll="{ x: 'max-content' }"
+                :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
             ></a-table>
         </div>
@@ -63,9 +64,8 @@ export default {
                 {
                     title: "#",
                     dataIndex: "",
-                    key: "rowIndex",
-                    width: "4%",
                     align: "center",
+                    width: "60",
                     customRender: function(t, r, index) {
                         return parseInt(index) + 1;
                     }
@@ -74,158 +74,164 @@ export default {
                     title: "日期",
                     dataIndex: "countDate",
                     align: "center",
-                    width: "6%",
+                    width: "140",
                     customRender: function(text) {
                         return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
+                    title: "区服id",
+                    align: "center",
+                    width: "80",
+                    dataIndex: "serverId"
+                },
+                {
                     title: "新增角色",
-                    dataIndex: "registerNum",
-                    width: "5%",
-                    align: "center"
+                    align: "center",
+                    width: "60",
+                    dataIndex: "registerNum"
                 },
                 {
                     title: "首日免费角色",
                     dataIndex: "freeNum",
-                    width: "5%",
+                    width: "60",
                     align: "center"
                 },
                 {
                     title: "首日付费角色",
                     dataIndex: "payNum",
-                    width: "5%",
+                    width: "60",
                     align: "center"
                 },
                 {
                     title: "首日付费率",
-                    dataIndex: "payNum",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "payNum",
                     customRender: (text, record) => {
                         return this.countRate(record.payNum, record.registerNum);
                     }
                 },
                 {
                     title: "免费角色次留率",
-                    dataIndex: "freeRemain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "freeRemain",
                     customRender: (text, record) => {
                         return this.countRate(record.freeRemain, record.freeNum);
                     }
                 },
                 {
                     title: "付费角色次留率",
-                    dataIndex: "payRemain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "payRemain",
                     customRender: (text, record) => {
                         return this.countRate(record.payRemain, record.payNum);
                     }
                 },
                 {
                     title: "次留率",
-                    dataIndex: "d2Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d2Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d2Remain, record.registerNum);
                     }
                 },
                 {
                     title: "3留率",
-                    dataIndex: "d3Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d3Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d3Remain, record.registerNum);
                     }
                 },
                 {
                     title: "4留率",
-                    dataIndex: "d4Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d4Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d4Remain, record.registerNum);
                     }
                 },
                 {
                     title: "5留率",
-                    dataIndex: "d5Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d5Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d5Remain, record.registerNum);
                     }
                 },
                 {
                     title: "6留率",
-                    dataIndex: "d6Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d6Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d6Remain, record.registerNum);
                     }
                 },
                 {
                     title: "7留率",
-                    dataIndex: "d7Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d7Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d7Remain, record.registerNum);
                     }
                 },
                 {
                     title: "15留率",
-                    dataIndex: "d15Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d15Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d15Remain, record.registerNum);
                     }
                 },
                 {
                     title: "30留率",
-                    dataIndex: "d30Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d30Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d30Remain, record.registerNum);
                     }
                 },
                 {
                     title: "60留率",
-                    dataIndex: "d60Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d60Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d60Remain, record.registerNum);
                     }
                 },
                 {
                     title: "90留率",
-                    dataIndex: "d90Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d90Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d90Remain, record.registerNum);
                     }
                 },
                 {
                     title: "120留率",
-                    dataIndex: "d120Remain",
-                    width: "5%",
                     align: "center",
+                    width: "60",
+                    dataIndex: "d120Remain",
                     customRender: (text, record) => {
                         return this.countRate(record.d120Remain, record.registerNum);
                     }
                 }
             ],
             url: {
-                list: "game/statistics/remain"
+                list: "gameStat/remain/list"
             },
             dictOptions: {}
         };
@@ -239,30 +245,19 @@ export default {
         onSelectServer: function(serverId) {
             this.queryParam.serverId = serverId;
         },
-        onDateChange: function(value, dateStr) {
-            this.queryParam.rangeDateBegin = dateStr[0];
-            this.queryParam.rangeDateEnd = dateStr[1];
+        getQueryParams() {
+            console.log(this.queryParam.countDateRange);
+            var param = Object.assign({}, this.queryParam, this.isorter);
+            param.pageNo = this.ipagination.current;
+            param.pageSize = this.ipagination.pageSize;
+            // 范围参数不传递后台
+            delete param.countDateRange;
+            return filterObj(param);
         },
-        searchQuery() {
-            let param = {
-                channelId: this.queryParam.channelId,
-                serverId: this.queryParam.serverId,
-                rangeDateBegin: this.queryParam.rangeDateBegin,
-                rangeDateEnd: this.queryParam.rangeDateEnd,
-                pageNo: this.ipagination.current,
-                pageSize: this.ipagination.pageSize
-            };
-            getAction(this.url.list, param).then(res => {
-                if (res.success) {
-                    this.dataSource = res.result.records;
-                    this.ipagination.current = res.result.current;
-                    this.ipagination.size = res.result.size.toString();
-                    this.ipagination.total = res.result.total;
-                    this.ipagination.pages = res.result.pages;
-                } else {
-                    this.$message.error(res.message);
-                }
-            });
+        onDateChange: function(value, dateString) {
+            console.log(dateString[0], dateString[1]);
+            this.queryParam.countDate_begin = dateString[0];
+            this.queryParam.countDate_end = dateString[1];
         },
         countRate: function(n, r) {
             if (n === null || n === undefined) {

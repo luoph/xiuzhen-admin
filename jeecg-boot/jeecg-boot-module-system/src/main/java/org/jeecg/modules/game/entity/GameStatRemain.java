@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -69,67 +68,67 @@ public class GameStatRemain implements Serializable {
     /**
      * 2日留存率
      */
-    private BigDecimal d2Remain;
+    private Integer d2Remain;
 
     /**
      * 3日留存率
      */
-    private BigDecimal d3Remain;
+    private Integer d3Remain;
 
     /**
      * 4日留存率
      */
-    private BigDecimal d4Remain;
+    private Integer d4Remain;
 
     /**
      * 5日留存率
      */
-    private BigDecimal d5Remain;
+    private Integer d5Remain;
 
     /**
      * 6日留存率
      */
-    private BigDecimal d6Remain;
+    private Integer d6Remain;
 
     /**
      * 7日留存率
      */
-    private BigDecimal d7Remain;
+    private Integer d7Remain;
 
     /**
      * 15日留存率
      */
-    private BigDecimal d15Remain;
+    private Integer d15Remain;
 
     /**
      * 30日留存率
      */
-    private BigDecimal d30Remain;
+    private Integer d30Remain;
 
     /**
      * 60日留存率
      */
-    private BigDecimal d60Remain;
+    private Integer d60Remain;
 
     /**
      * 90日留存率
      */
-    private BigDecimal d90Remain;
+    private Integer d90Remain;
 
     /**
      * 120日留存率
      */
-    private BigDecimal d120Remain;
+    private Integer d120Remain;
 
     /**
      * 180日留存率
      */
-    private BigDecimal d180Remain;
+    private Integer d180Remain;
 
     /**
      * 360日留存率
      */
-    private BigDecimal d360Remain;
+    private Integer d360Remain;
 
     /**
      * 统计日期
