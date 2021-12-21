@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.modules.game.entity.GameStatLtv;
-import org.jeecg.modules.game.service.IGameStatLtvService;
+import org.jeecg.modules.game.entity.GameStatRemain;
+import org.jeecg.modules.game.service.IGameStatRemainService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,21 +24,24 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-@RequestMapping("/gameStat/ltv")
-public class GameStatLtvController extends JeecgController<GameStatLtv, IGameStatLtvService> {
+@RequestMapping("/gameStat/remain")
+public class GameStatRemainController extends JeecgController<GameStatRemain, IGameStatRemainService> {
 
     @Override
-    protected QueryWrapper<GameStatLtv> prepareQuery(GameStatLtv entity, HttpServletRequest request) {
-        QueryWrapper<GameStatLtv> queryWrapper = super.prepareQuery(entity, request);
+    protected QueryWrapper<GameStatRemain> prepareQuery(GameStatRemain entity, HttpServletRequest request) {
+        QueryWrapper<GameStatRemain> queryWrapper = super.prepareQuery(entity, request);
         queryWrapper.orderByDesc("count_date");
         return queryWrapper;
     }
 
     @Override
-    @AutoLog(value = "LTV查询")
-    @ApiOperation(value = "LTV查询", notes = "LTV查询")
+    @AutoLog(value = "留存查询")
+    @ApiOperation(value = "留存查询", notes = "留存查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameStatLtv entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryPageList(GameStatRemain entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -48,10 +51,11 @@ public class GameStatLtvController extends JeecgController<GameStatLtv, IGameSta
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "LTV-通过id查询")
+    @AutoLog(value = "留存查询-通过id查询")
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameStatLtv entity = service.getById(Long.parseLong(id));
+    public Result<?> queryById(
+            @RequestParam(name = "id") String id) {
+        GameStatRemain entity = service.getById(Long.parseLong(id));
         if (entity == null) {
             return Result.error("未找到记录");
         }
@@ -65,8 +69,8 @@ public class GameStatLtvController extends JeecgController<GameStatLtv, IGameSta
      * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameStatLtv entity) {
-        return super.exportXls(request, entity, GameStatLtv.class, "ltv");
+    public ModelAndView exportXls(HttpServletRequest request, GameStatRemain entity) {
+        return super.exportXls(request, entity, GameStatRemain.class, "ltv");
     }
 
 }

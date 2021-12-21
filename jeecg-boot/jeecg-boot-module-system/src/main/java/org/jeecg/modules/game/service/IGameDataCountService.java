@@ -1,8 +1,8 @@
 package org.jeecg.modules.game.service;
 
 import org.jeecg.modules.game.constant.CoreStatisticType;
-import org.jeecg.modules.game.entity.*;
-import org.springframework.context.support.StaticApplicationContext;
+import org.jeecg.modules.game.entity.GameStatDaily;
+import org.jeecg.modules.game.entity.GameStatRemain;
 
 import java.util.Date;
 import java.util.List;
@@ -17,10 +17,6 @@ import java.util.Map;
  * @Date 2020-08-21 11:05
  */
 public interface IGameDataCountService {
-
-    String KEY_GAME_STAT_REMAIN_COUNT_MAP = "GameStatRemainCountMap";
-
-    String KEY_GAME_STAT_LTV_COUNT_MAP = "GameStatLtvCountMap";
 
     /**
      * 统计数据列表
@@ -57,29 +53,6 @@ public interface IGameDataCountService {
      * @param type         2-留存 3-ltv
      */
     void doJobDataCount(Date registerDate, CoreStatisticType type);
-
-    /**
-     * 留存更新
-     */
-    void updateRemainTask(Map<String, Object> context, GameServer gameServer, String countDate);
-
-    /**
-     * 30天连续统计
-     */
-    List<GameStatOngoing> countOngoings();
-
-    /**
-     * 30天连续统计--指定日期
-     *
-     * @param currentDate 指定日期
-     * @param types       1-留存 2-ltv
-     */
-    List<GameStatOngoing> countOngoings(Date currentDate, int[] types);
-
-    /**
-     * 30日当天实时查询
-     */
-    List<GameStatOngoing> queryCountOnGoing(int type, int serverId, String rangeDateBegin, String rangeDateEnd);
 
     /**
      * 获取k-v 留存列表

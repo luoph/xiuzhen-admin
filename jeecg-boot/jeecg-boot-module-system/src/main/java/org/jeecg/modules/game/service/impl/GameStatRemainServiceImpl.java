@@ -7,9 +7,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.modules.game.entity.GameStatLtv;
-import org.jeecg.modules.game.mapper.GameStatLtvMapper;
-import org.jeecg.modules.game.service.IGameStatLtvService;
+import org.jeecg.modules.game.entity.GameStatRemain;
+import org.jeecg.modules.game.mapper.GameStatRemainMapper;
+import org.jeecg.modules.game.service.IGameStatRemainService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,14 +23,14 @@ import javax.annotation.Resource;
  * @since 2020-08-26
  */
 @Service
-public class GameStatLtvServiceImpl extends ServiceImpl<GameStatLtvMapper, GameStatLtv> implements IGameStatLtvService {
+public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper, GameStatRemain> implements IGameStatRemainService {
 
     @Resource
-    private GameStatLtvMapper gameLtvCountMapper;
+    private GameStatRemainMapper gameLtvCountMapper;
 
     @Override
-    public IPage<GameStatLtv> selectList(Page<GameStatLtv> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameStatLtv> queryWrapper = new QueryWrapper<>();
+    public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
+        QueryWrapper<GameStatRemain> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("count_date");
         queryWrapper.ge("count_date", rangeDateBegin);
         queryWrapper.le("count_date", rangeDateEnd);
@@ -39,7 +39,7 @@ public class GameStatLtvServiceImpl extends ServiceImpl<GameStatLtvMapper, GameS
     }
 
     @Override
-    public GameStatLtv getGameStatLtv(int serverId, String registerDate) {
-        return gameLtvCountMapper.getGameStatLtv(serverId, registerDate);
+    public GameStatRemain getGameStatRemain(int serverId, String registerDate) {
+        return gameLtvCountMapper.getGameStatRemain(serverId, registerDate);
     }
 }
