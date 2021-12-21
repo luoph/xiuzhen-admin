@@ -207,6 +207,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             // 更新免费玩家数量
             gameStatRemain.setFreeNum(updatedRemain.getRegisterNum() - updatedRemain.getPayNum());
 
+            // 免费、付费留存
+            if (days == 2 || updateAll) {
+                gameStatRemain.setPayRemain(gameStatRemainMapper.getPayRemain(serverId, date, logDb));
+                gameStatRemain.setFreeRemain(gameStatRemainMapper.getFreeRemain(serverId, date, logDb));
+            }
+
             if (updateAll) {
                 // 更新全部字段
                 for (int i : REMAIN) {
