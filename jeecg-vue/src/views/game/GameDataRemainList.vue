@@ -99,7 +99,7 @@ export default {
                 },
                 {
                     title: "首日付费率",
-                    dataIndex: "payRate",
+                    dataIndex: "payNum",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -108,7 +108,7 @@ export default {
                 },
                 {
                     title: "免费角色次留率",
-                    dataIndex: "freeRemainRate",
+                    dataIndex: "freeRemain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -117,7 +117,7 @@ export default {
                 },
                 {
                     title: "付费角色次留率",
-                    dataIndex: "payRemainRate",
+                    dataIndex: "payRemain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -126,7 +126,7 @@ export default {
                 },
                 {
                     title: "次留率",
-                    dataIndex: "d2RemainRate",
+                    dataIndex: "d2Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -135,7 +135,7 @@ export default {
                 },
                 {
                     title: "3留率",
-                    dataIndex: "d3RemainRate",
+                    dataIndex: "d3Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -144,7 +144,7 @@ export default {
                 },
                 {
                     title: "4留率",
-                    dataIndex: "d4RemainRate",
+                    dataIndex: "d4Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -153,7 +153,7 @@ export default {
                 },
                 {
                     title: "5留率",
-                    dataIndex: "d5RemainRate",
+                    dataIndex: "d5Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -162,7 +162,7 @@ export default {
                 },
                 {
                     title: "6留率",
-                    dataIndex: "d6RemainRate",
+                    dataIndex: "d6Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -171,7 +171,7 @@ export default {
                 },
                 {
                     title: "7留率",
-                    dataIndex: "d7RemainRate",
+                    dataIndex: "d7Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -180,7 +180,7 @@ export default {
                 },
                 {
                     title: "15留率",
-                    dataIndex: "d15RemainRate",
+                    dataIndex: "d15Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -189,7 +189,7 @@ export default {
                 },
                 {
                     title: "30留率",
-                    dataIndex: "d30RemainRate",
+                    dataIndex: "d30Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -198,7 +198,7 @@ export default {
                 },
                 {
                     title: "60留率",
-                    dataIndex: "d60RemainRate",
+                    dataIndex: "d60Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -207,7 +207,7 @@ export default {
                 },
                 {
                     title: "90留率",
-                    dataIndex: "d90RemainRate",
+                    dataIndex: "d90Remain",
                     width: "5%",
                     align: "center",
                     customRender: (text, record) => {
@@ -225,7 +225,7 @@ export default {
                 }
             ],
             url: {
-                list: "game/statistics/remainRate"
+                list: "game/statistics/remain"
             },
             dictOptions: {}
         };
