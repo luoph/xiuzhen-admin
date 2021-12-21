@@ -248,6 +248,10 @@ export default {
                     }
                 }
             ],
+            isorter: {
+                column: "countDate",
+                order: "desc"
+            },
             url: {
                 list: "gameStat/remain/list"
             },

@@ -1,6 +1,5 @@
 package org.jeecg.modules.game.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -28,17 +27,13 @@ import javax.servlet.http.HttpServletRequest;
 public class GameStatLtvController extends JeecgController<GameStatLtv, IGameStatLtvService> {
 
     @Override
-    protected QueryWrapper<GameStatLtv> prepareQuery(GameStatLtv entity, HttpServletRequest request) {
-        QueryWrapper<GameStatLtv> queryWrapper = super.prepareQuery(entity, request);
-        queryWrapper.orderByDesc("count_date");
-        return queryWrapper;
-    }
-
-    @Override
     @AutoLog(value = "LTV查询")
     @ApiOperation(value = "LTV查询", notes = "LTV查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameStatLtv entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryPageList(GameStatLtv entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -66,7 +61,7 @@ public class GameStatLtvController extends JeecgController<GameStatLtv, IGameSta
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatLtv entity) {
-        return super.exportXls(request, entity, GameStatLtv.class, "ltv");
+        return super.exportXls(request, entity, GameStatLtv.class, "留存统计");
     }
 
 }

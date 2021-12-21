@@ -28,13 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 public class GameStatRemainController extends JeecgController<GameStatRemain, IGameStatRemainService> {
 
     @Override
-    protected QueryWrapper<GameStatRemain> prepareQuery(GameStatRemain entity, HttpServletRequest request) {
-        QueryWrapper<GameStatRemain> queryWrapper = super.prepareQuery(entity, request);
-        queryWrapper.orderByDesc("count_date");
-        return queryWrapper;
-    }
-
-    @Override
     @AutoLog(value = "留存查询")
     @ApiOperation(value = "留存查询", notes = "留存查询")
     @GetMapping(value = "/list")
@@ -70,7 +63,7 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatRemain entity) {
-        return super.exportXls(request, entity, GameStatRemain.class, "ltv");
+        return super.exportXls(request, entity, GameStatRemain.class, "LTV统计");
     }
 
 }
