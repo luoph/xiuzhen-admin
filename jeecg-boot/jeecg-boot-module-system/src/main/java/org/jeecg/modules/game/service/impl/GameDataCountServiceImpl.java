@@ -49,9 +49,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Value("${app.log.db}")
     private String logDb;
 
-    @Value("${app.log.db.table}")
-    private String logTable;
-
     /**
      * 留存间隔查询
      */
