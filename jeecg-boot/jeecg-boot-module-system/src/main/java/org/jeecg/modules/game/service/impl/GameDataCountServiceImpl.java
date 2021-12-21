@@ -277,31 +277,31 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
 
         ServerRemain serverRemain = gameStatRemainMapper.selectRemain(serverId, registerDate, days, logDb);
-        if (days == 2) {
+        if (days <= 2) {
             entity.setD2Remain(serverRemain.getRemain());
-        } else if (days == 3) {
+        } else if (days <= 3) {
             entity.setD3Remain(serverRemain.getRemain());
-        } else if (days == 4) {
+        } else if (days <= 4) {
             entity.setD4Remain(serverRemain.getRemain());
-        } else if (days == 5) {
+        } else if (days <= 5) {
             entity.setD5Remain(serverRemain.getRemain());
-        } else if (days == 6) {
+        } else if (days <= 6) {
             entity.setD6Remain(serverRemain.getRemain());
-        } else if (days == 7) {
+        } else if (days <= 7) {
             entity.setD7Remain(serverRemain.getRemain());
-        } else if (days == 15) {
+        } else if (days <= 15) {
             entity.setD15Remain(serverRemain.getRemain());
-        } else if (days == 30) {
+        } else if (days <= 30) {
             entity.setD30Remain(serverRemain.getRemain());
-        } else if (days == 60) {
+        } else if (days <= 60) {
             entity.setD60Remain(serverRemain.getRemain());
-        } else if (days == 90) {
+        } else if (days <= 90) {
             entity.setD90Remain(serverRemain.getRemain());
-        } else if (days == 120) {
+        } else if (days <= 120) {
             entity.setD120Remain(serverRemain.getRemain());
-        } else if (days == 180) {
+        } else if (days <= 180) {
             entity.setD180Remain(serverRemain.getRemain());
-        } else if (days == 360) {
+        } else if (days <= 360) {
             entity.setD360Remain(serverRemain.getRemain());
         }
     }

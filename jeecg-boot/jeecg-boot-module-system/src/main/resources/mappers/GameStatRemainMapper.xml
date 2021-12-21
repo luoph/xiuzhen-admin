@@ -33,7 +33,7 @@
                 WHERE l.`player_id` = o.`player_id`
                   AND o.`pay_time` >= #{registerDate}
                   AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-                );
+                )
         ]]>
     </select>
 
@@ -51,7 +51,7 @@
             WHERE l.`player_id` = o.`player_id`
               AND o.`pay_time` >= #{registerDate}
               AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-            );
+            )
         ]]>
     </select>
 
