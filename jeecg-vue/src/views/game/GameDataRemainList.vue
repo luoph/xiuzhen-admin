@@ -228,6 +228,24 @@ export default {
                     customRender: (text, record) => {
                         return this.countRate(record.d120Remain, record.registerNum);
                     }
+                },
+                {
+                    title: "180留率",
+                    align: "center",
+                    width: "60",
+                    dataIndex: "d180Remain",
+                    customRender: (text, record) => {
+                        return this.countRate(record.d180Remain, record.registerNum);
+                    }
+                },
+                {
+                    title: "360留率",
+                    align: "center",
+                    width: "60",
+                    dataIndex: "d360Remain",
+                    customRender: (text, record) => {
+                        return this.countRate(record.d360Remain, record.registerNum);
+                    }
                 }
             ],
             url: {
