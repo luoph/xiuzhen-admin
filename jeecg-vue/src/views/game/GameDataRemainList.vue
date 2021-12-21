@@ -113,7 +113,7 @@ export default {
                     }
                 },
                 {
-                    title: "免费角色次留率",
+                    title: "免费次留率",
                     align: "center",
                     width: "60",
                     dataIndex: "freeRemain",
@@ -122,7 +122,7 @@ export default {
                     }
                 },
                 {
-                    title: "付费角色次留率",
+                    title: "付费次留率",
                     align: "center",
                     width: "60",
                     dataIndex: "payRemain",
