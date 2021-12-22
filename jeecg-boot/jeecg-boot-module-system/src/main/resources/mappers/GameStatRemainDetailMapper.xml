@@ -2,4 +2,71 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.game.mapper.GameStatRemainDetailMapper">
 
+
+    <select id="getGameStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+        <![CDATA[
+        SELECT #{registerDate} AS `count_date`,
+               #{serverId} AS `server_id`,
+               #{roleType} AS `role_type`,
+               (SELECT COUNT(*) FROM `game_player`
+                WHERE `server_id` = #{serverId}
+                  AND `create_time` >= #{registerDate}
+                  AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS d1,
+               (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
+                LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                WHERE p.`create_time` >= #{registerDate} AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+                  AND o.`pay_time` >= #{registerDate} AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+                  AND o.`server_id` = #{serverId}) AS `pay_num`
+        ]]>
+    </select>
+
+    <select id="getPayGameStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+        <![CDATA[
+        SELECT #{registerDate} AS `count_date`,
+               #{serverId} AS `server_id`,
+               #{roleType} AS `role_type`,
+               (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
+                LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                WHERE p.`create_time` >= #{registerDate} AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+                  AND o.`pay_time` >= #{registerDate} AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+                  AND o.`server_id` = #{serverId}) AS d1
+        ]]>
+    </select>
+
+    <select id="selectRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+        <![CDATA[
+        SELECT
+            #{serverId} AS serverId,
+            #{days} AS days,
+            #{registerDate} AS registerDate,
+            (SELECT COUNT(DISTINCT ( l.`player_id` ))) AS remain
+        FROM ${logDb}.`log_account` l
+                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        WHERE l.`server_id` = #{serverId} AND l.`type` = 2
+          AND l.`create_date` = DATE(DATE_ADD( #{registerDate}, INTERVAL #{days} DAY ))
+          AND p.`create_time` >= #{registerDate}
+          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+        ]]>
+    </select>
+
+    <select id="selectPayRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+        <![CDATA[
+        SELECT
+            #{serverId} AS serverId,
+            #{days} AS days,
+            #{registerDate} AS registerDate,
+            (SELECT COUNT(DISTINCT ( l.`player_id` ))) AS remain
+        FROM ${logDb}.`log_account` l
+                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                 INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
+        WHERE l.`server_id` = #{serverId} AND l.`type` = 2
+          AND l.`create_date` = DATE(DATE_ADD( #{registerDate}, INTERVAL #{days} DAY ))
+          AND p.`create_time` >= #{registerDate}
+          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND o.`pay_time` >= #{registerDate}
+          AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+        ]]>
+    </select>
+
+
 </mapper>
