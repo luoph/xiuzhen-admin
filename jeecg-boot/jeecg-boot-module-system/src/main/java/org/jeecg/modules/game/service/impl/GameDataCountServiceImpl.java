@@ -482,7 +482,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             } else if (roleType == RoleType.PAID) {
                 serverRemain = gameStatRemainDetailMapper.selectPayRemain(serverId, registerDate, days, logDb);
             }
-            if (serverRemain != null && serverRemain.getRemain() != null) {
+
+            if (serverRemain != null) {
+                if (serverRemain.getRemain() == null) {
+                    serverRemain.setRemain(0);
+                }
                 field.getFunction().accept(entity, serverRemain.getRemain());
             }
         }
