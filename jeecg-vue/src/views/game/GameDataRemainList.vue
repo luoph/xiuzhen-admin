@@ -89,9 +89,18 @@ export default {
                 },
                 {
                     title: "区服id",
-                    align: "center",
+                    align: "用户类型",
                     width: "80",
-                    dataIndex: "serverId"
+                    dataIndex: "roleType",
+                    customRender: value => {
+                        let text = "--";
+                        if (value === 0) {
+                            text = "所有用户";
+                        } else if (value === 1) {
+                            text = "付费用户";
+                        }
+                        return text;
+                    }
                 },
                 {
                     title: "新增角色",
@@ -117,7 +126,7 @@ export default {
                     width: "60",
                     dataIndex: "payNum",
                     customRender: (text, record) => {
-                        return this.countRate(record.payNum, record.registerNum);
+                        return this.toRate(record.payNum, record.registerNum);
                     }
                 },
                 {
@@ -126,7 +135,7 @@ export default {
                     width: "60",
                     dataIndex: "freeRemain",
                     customRender: (text, record) => {
-                        return this.countRate(record.freeRemain, record.freeNum);
+                        return this.toRate(record.freeRemain, record.freeNum);
                     }
                 },
                 {
@@ -135,7 +144,7 @@ export default {
                     width: "60",
                     dataIndex: "payRemain",
                     customRender: (text, record) => {
-                        return this.countRate(record.payRemain, record.payNum);
+                        return this.toRate(record.payRemain, record.payNum);
                     }
                 },
                 {
@@ -144,7 +153,7 @@ export default {
                     width: "60",
                     dataIndex: "d2Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d2Remain, record.registerNum);
+                        return this.countRate(record.d2Remain, record);
                     }
                 },
                 {
@@ -153,7 +162,7 @@ export default {
                     width: "60",
                     dataIndex: "d3Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d3Remain, record.registerNum);
+                        return this.countRate(record.d3Remain, record);
                     }
                 },
                 {
@@ -162,7 +171,7 @@ export default {
                     width: "60",
                     dataIndex: "d4Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d4Remain, record.registerNum);
+                        return this.countRate(record.d4Remain, record);
                     }
                 },
                 {
@@ -171,7 +180,7 @@ export default {
                     width: "60",
                     dataIndex: "d5Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d5Remain, record.registerNum);
+                        return this.countRate(record.d5Remain, record);
                     }
                 },
                 {
@@ -180,7 +189,7 @@ export default {
                     width: "60",
                     dataIndex: "d6Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d6Remain, record.registerNum);
+                        return this.countRate(record.d6Remain, record);
                     }
                 },
                 {
@@ -189,7 +198,7 @@ export default {
                     width: "60",
                     dataIndex: "d7Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d7Remain, record.registerNum);
+                        return this.countRate(record.d7Remain, record);
                     }
                 },
                 {
@@ -198,7 +207,7 @@ export default {
                     width: "60",
                     dataIndex: "d15Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d15Remain, record.registerNum);
+                        return this.countRate(record.d15Remain, record);
                     }
                 },
                 {
@@ -207,7 +216,7 @@ export default {
                     width: "60",
                     dataIndex: "d30Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d30Remain, record.registerNum);
+                        return this.countRate(record.d30Remain, record);
                     }
                 },
                 {
@@ -216,7 +225,7 @@ export default {
                     width: "60",
                     dataIndex: "d60Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d60Remain, record.registerNum);
+                        return this.countRate(record.d60Remain, record);
                     }
                 },
                 {
@@ -225,7 +234,7 @@ export default {
                     width: "60",
                     dataIndex: "d90Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d90Remain, record.registerNum);
+                        return this.countRate(record.d90Remain, record);
                     }
                 },
                 {
@@ -234,7 +243,7 @@ export default {
                     width: "60",
                     dataIndex: "d120Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d120Remain, record.registerNum);
+                        return this.countRate(record.d120Remain, record);
                     }
                 },
                 {
@@ -243,7 +252,7 @@ export default {
                     width: "60",
                     dataIndex: "d180Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d180Remain, record.registerNum);
+                        return this.countRate(record.d180Remain, record);
                     }
                 },
                 {
@@ -252,7 +261,7 @@ export default {
                     width: "60",
                     dataIndex: "d360Remain",
                     customRender: (text, record) => {
-                        return this.countRate(record.d360Remain, record.registerNum);
+                        return this.countRate(record.d360Remain, record);
                     }
                 }
             ],
@@ -289,12 +298,19 @@ export default {
             this.queryParam.countDate_begin = dateString[0];
             this.queryParam.countDate_end = dateString[1];
         },
-        countRate: function(n, r) {
+        toRate: function(n, r) {
             if (n === null || n === undefined) {
                 return "--";
             }
             let rate = r > 0 ? parseFloat((n / r) * 100).toFixed(2) : parseFloat(0).toFixed(2);
             return rate + "%";
+        },
+        countRate: function(n, record) {
+            let baseNum = record.registerNum;
+            if (record.roleType == 1) {
+                baseNum = record.payNum;
+            }
+            return this.toRate(n, baseNum);
         }
     }
 };
