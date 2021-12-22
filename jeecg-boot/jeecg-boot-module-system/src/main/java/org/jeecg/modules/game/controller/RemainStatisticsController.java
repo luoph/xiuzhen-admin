@@ -2,6 +2,7 @@ package org.jeecg.modules.game.controller;
 
 
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -40,8 +41,10 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
     @Resource
     IGameChannelService gameChannelService;
+
     @Resource
     private IRemainStatisticsService remainStatisticsService;
+
     @Value("${app.log.db.table}")
     private String logTable;
 
@@ -71,13 +74,15 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             if (days == 0) {
                 return Result.error("时间不能为空！");
             } else {
-                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
-                rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
+                Date now = DateUtils.now();
+                rangeDateEnd = DateUtil.formatDate(now);
+                rangeDateBegin = DateUtil.formatDate(DateUtils.addDays(now, -1 * days + 1));
             }
         }
+
         String channelName = gameChannelService.queryChannelNameById(channelId);
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
-        //查询并计算新增留存
+        // 查询并计算新增留存
         List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfNewUserlListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
         List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
@@ -91,10 +96,10 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             }
             jsonObject.put(s, jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
         }
+
         jsonObjectList2.add(jsonObject);
         jsonObjectList2.addAll(jsonObjectList);
         page2.setRecords(jsonObjectList2).setTotal(jsonObjectList2.size());
-
         return Result.ok(page2);
     }
 
@@ -119,17 +124,19 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
-        //时间相关参数校验和转换
+
+        // 时间相关参数校验和转换
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
             if (days == 0) {
                 return Result.error("时间不能为空！");
             } else {
-                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
-                rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
+                Date now = DateUtils.now();
+                rangeDateEnd = DateUtil.formatDate(now);
+                rangeDateBegin = DateUtil.formatDate(DateUtils.addDays(now, -1 * days + 1));
             }
         }
-        String channelName = gameChannelService.queryChannelNameById(channelId);
 
+        String channelName = gameChannelService.queryChannelNameById(channelId);
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
         List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfDownPaymentListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
@@ -173,7 +180,8 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
-        //时间相关参数校验和转换
+
+        // 时间相关参数校验和转换
         Date[] dateParamValid = ParamValidUtil.convertDateParam(rangeDateBegin, rangeDateEnd, days);
         if (null != dateParamValid) {
             rangeDateEnd = DateUtils.formatDate(dateParamValid[1], "YYYY-MM-DD");
@@ -197,10 +205,10 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
             }
             jsonObject.put(s, jsonObjectList.stream().mapToLong(jso -> Long.parseLong(jso.getString(s))).sum());
         }
+
         jsonObjectList2.add(jsonObject);
         jsonObjectList2.addAll(jsonObjectList);
         page2.setRecords(jsonObjectList2).setTotal(jsonObjectList2.size());
-
         return Result.ok(page2);
     }
 
@@ -226,6 +234,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         if (0 == serverId) {
             return Result.error("请选择服务器!");
         }
+
         //时间相关参数校验和转换
         Date[] dateParamValid = ParamValidUtil.convertDateParam(rangeDateBegin, rangeDateEnd, days);
         if (null != dateParamValid) {
@@ -238,7 +247,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         String channelName = gameChannelService.queryChannelNameById(channelId);
 
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
-        //查询并计算新增留存
+        // 查询并计算新增留存
         List<JSONObject> jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn, grade);
         List<JSONObject> jsonObjectList = jsonObjectList1.stream().sorted(Comparator.comparingInt(s -> Integer.parseInt(s.getString("countDate").split("-")[0]))).collect(Collectors.toList());
         List<JSONObject> jsonObjectList2 = new ArrayList<>();
@@ -256,7 +265,6 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         jsonObjectList2.add(jsonObject);
         jsonObjectList2.addAll(jsonObjectList);
         page2.setRecords(jsonObjectList2).setTotal(jsonObjectList2.size());
-
         return Result.ok(page2);
     }
 
