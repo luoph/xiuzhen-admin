@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.server.utils.QueryUtils;
+import cn.youai.xiuzhen.constant.RemainDetailField;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -16,6 +17,7 @@ import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
 import org.jeecg.modules.game.mapper.GameStatLtvMapper;
+import org.jeecg.modules.game.mapper.GameStatRemainDetailMapper;
 import org.jeecg.modules.game.mapper.GameStatRemainMapper;
 import org.jeecg.modules.game.service.IGameChannelServerService;
 import org.jeecg.modules.game.service.IGameDataCountService;
@@ -75,6 +77,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private GameStatLtvMapper gameLtvCountMapper;
     @Resource
     private GameStatRemainMapper gameStatRemainMapper;
+
+    @Resource
+    private GameStatRemainDetailMapper gameStatRemainDetailMapper;
 
     @Override
     public List<GameStatDaily> queryDateRangeDataCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount) {
@@ -154,6 +159,10 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 break;
             case LTV:
                 doJobDataCountToLtv(serverMap.keySet(), registerDate, days + 1, true);
+                break;
+            case REMAIN_DETAIL:
+                calcRemainDetailStat(RoleType.ALL, serverMap.keySet(), registerDate, days + 1, true);
+                calcRemainDetailStat(RoleType.PAID, serverMap.keySet(), registerDate, days + 1, true);
                 break;
             default:
                 break;
@@ -407,5 +416,75 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     @Override
     public void doJobDataCountUpdateByType(CoreStatisticType type, Date current) {
         // TODO 处理ltv、留存每日更新任务
+    }
+
+    /**
+     * 每日留存统计详情
+     */
+    private void calcRemainDetailStat(RoleType roleType, Collection<Integer> serverIds,
+                                      Date registerDate, int days, boolean updateAll) {
+        String date = DateUtil.formatDate(registerDate);
+        for (Integer serverId : serverIds) {
+            GameServer gameServer = gameServerService.getById(serverId);
+            if (gameServer == null || gameServer.getOpenTime().after(registerDate)) {
+                continue;
+            }
+
+            LambdaQueryWrapper<GameStatRemainDetail> query = Wrappers.<GameStatRemainDetail>lambdaQuery()
+                    .eq(GameStatRemainDetail::getServerId, serverId)
+                    .eq(GameStatRemainDetail::getRoleType, roleType.getValue())
+                    .eq(GameStatRemainDetail::getCountDate, registerDate);
+
+            // 重新查询注册数量
+            GameStatRemainDetail updatedEntity = null;
+            if (roleType == RoleType.ALL) {
+                updatedEntity = gameStatRemainDetailMapper.getGameStatRemainDetail(roleType.getValue(), serverId, date);
+            } else if (roleType == RoleType.PAID) {
+                updatedEntity = gameStatRemainDetailMapper.getPayGameStatRemainDetail(roleType.getValue(), serverId, date);
+            }
+
+            GameStatRemainDetail entity = gameStatRemainDetailMapper.selectOne(QueryUtils.safeSelectOneQuery(query));
+            if (entity == null) {
+                entity = updatedEntity;
+            }
+
+            if (updateAll) {
+                // 更新全部字段
+                for (RemainDetailField value : RemainDetailField.values()) {
+                    if (days < value.getDays()) {
+                        break;
+                    }
+                    updateRemainDetailField(roleType, entity, serverId, date, value.getDays());
+                }
+            }
+            updateRemainDetailField(roleType, entity, serverId, date, days);
+
+            if (entity.getId() != null) {
+                gameStatRemainDetailMapper.updateById(entity);
+            } else {
+                gameStatRemainDetailMapper.insert(entity);
+            }
+        }
+    }
+
+    private void updateRemainDetailField(RoleType roleType, GameStatRemainDetail entity, int serverId, String registerDate, int days) {
+        int baseNum = entity.getD1() != null ? entity.getD1() : 0;
+        // 注册为0, 直接返回
+        if (baseNum <= 0 || days <= 1) {
+            return;
+        }
+
+        RemainDetailField field = RemainDetailField.valueOf(days);
+        if (field != null) {
+            ServerRemain serverRemain = null;
+            if (roleType == RoleType.ALL) {
+                serverRemain = gameStatRemainDetailMapper.selectRemain(serverId, registerDate, days, logDb);
+            } else if (roleType == RoleType.PAID) {
+                serverRemain = gameStatRemainDetailMapper.selectPayRemain(serverId, registerDate, days, logDb);
+            }
+            if (serverRemain != null && serverRemain.getRemain() != null) {
+                field.getFunction().accept(entity, serverRemain.getRemain());
+            }
+        }
     }
 }

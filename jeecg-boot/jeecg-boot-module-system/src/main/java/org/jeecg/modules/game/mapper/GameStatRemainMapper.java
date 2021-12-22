@@ -54,12 +54,4 @@ public interface GameStatRemainMapper extends BaseMapper<GameStatRemain> {
                                  @Param("days") int days,
                                  @Param("logDb") String logDb);
 
-    /**
-     * 免费留存
-     */
-    ServerRemain selectFreeRemain(@Param("serverId") int serverId,
-                                  @Param("registerDate") String registerDate,
-                                  @Param("days") int days,
-                                  @Param("logDb") String logDb);
-
 }
