@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.constant.CoreStatisticType;
+import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.*;
 import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
 import org.jeecg.modules.game.mapper.GameStatLtvMapper;
@@ -148,7 +149,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 doJobDataCountToDaily(serverMap.keySet(), date);
                 break;
             case REMAIN:
-                doJobDataCountToRemain(serverMap.keySet(), registerDate, days + 1, true);
+                doJobDataCountToRemain(RoleType.ALL, serverMap.keySet(), registerDate, days + 1, true);
+                doJobDataCountToRemain(RoleType.PAID, serverMap.keySet(), registerDate, days + 1, true);
                 break;
             case LTV:
                 doJobDataCountToLtv(serverMap.keySet(), registerDate, days + 1, true);
@@ -180,7 +182,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     /**
      * 添加remain，每日统计新记录
      */
-    private void doJobDataCountToRemain(Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
+    private void doJobDataCountToRemain(RoleType roleType, Collection<Integer> serverIds,
+                                        Date registerDate, int days, boolean updateAll) {
         String date = DateUtil.formatDate(registerDate);
         for (Integer serverId : serverIds) {
             GameServer gameServer = gameServerService.getById(serverId);
@@ -190,10 +193,11 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
 
             LambdaQueryWrapper<GameStatRemain> query = Wrappers.<GameStatRemain>lambdaQuery()
                     .eq(GameStatRemain::getServerId, serverId)
+                    .eq(GameStatRemain::getRoleType, roleType.getValue())
                     .eq(GameStatRemain::getCountDate, registerDate);
 
             // 重新查询注册数量
-            GameStatRemain updatedRemain = gameStatRemainMapper.getGameStatRemain(serverId, date);
+            GameStatRemain updatedRemain = gameStatRemainMapper.getGameStatRemain(roleType.getValue(), serverId, date);
             GameStatRemain gameStatRemain = gameStatRemainMapper.selectOne(QueryUtils.safeSelectOneQuery(query));
             if (gameStatRemain == null) {
                 gameStatRemain = updatedRemain;
@@ -216,10 +220,10 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                     if (days < i) {
                         break;
                     }
-                    calcRemainAmount(gameStatRemain, serverId, date, i);
+                    calcRemainAmount(roleType, gameStatRemain, serverId, date, i);
                 }
             }
-            calcRemainAmount(gameStatRemain, serverId, date, days);
+            calcRemainAmount(roleType, gameStatRemain, serverId, date, days);
 
             if (gameStatRemain.getId() != null) {
                 gameStatRemainMapper.updateById(gameStatRemain);
@@ -272,14 +276,23 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
     }
 
-    private void calcRemainAmount(GameStatRemain entity, int serverId, String registerDate, int days) {
+    private void calcRemainAmount(RoleType roleType, GameStatRemain entity, int serverId, String registerDate, int days) {
         int registerNum = entity.getRegisterNum() != null ? entity.getRegisterNum() : 0;
         // 注册为0, 直接返回
         if (registerNum <= 0 || days <= 1 || !ArrayUtil.contains(REMAIN, days)) {
             return;
         }
+        ServerRemain serverRemain = null;
+        if (roleType == RoleType.ALL) {
+            serverRemain = gameStatRemainMapper.selectRemain(serverId, registerDate, days, logDb);
+        } else if (roleType == RoleType.PAID) {
+            serverRemain = gameStatRemainMapper.selectPayRemain(serverId, registerDate, days, logDb);
+        }
 
-        ServerRemain serverRemain = gameStatRemainMapper.selectRemain(serverId, registerDate, days, logDb);
+        if (serverRemain == null) {
+            return;
+        }
+
         if (days <= 2) {
             entity.setD2Remain(serverRemain.getRemain());
         } else if (days <= 3) {

@@ -8,6 +8,14 @@
                         <!--@ = v-on:数据绑定 不是事件-->
                         <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
                     </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="用户类型">
+                            <a-select placeholder="请选择用户类型" v-model="queryParam.roleType">
+                                <a-select-option value="0">所有用户</a-select-option>
+                                <a-select-option value="1">付费用户</a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col>
                     <a-col :md="8" :sm="8">
                         <a-form-item label="日期">
                             <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />

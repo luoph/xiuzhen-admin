@@ -3,32 +3,32 @@ package org.jeecg.modules.game.constant;
 import lombok.Getter;
 
 /**
- * 统计类型
+ * 玩家类型
  */
 @Getter
-public enum CoreStatisticType {
+public enum RoleType {
     /**
      * 统计类型
      */
-    DAILY("日常统计", 1),
-    REMAIN("留存统计", 2),
-    LTV("LTV统计", 3),
+    ALL("所有玩家", 0),
+    PAID("付费玩家", 1),
+    FREE("免费玩家", 2),
     ;
 
     private final String name;
     private final int value;
 
-    CoreStatisticType(String name, int value) {
+    RoleType(String name, int value) {
         this.name = name;
         this.value = value;
     }
 
-    public static CoreStatisticType valueOf(int type) {
-        for (CoreStatisticType e : CoreStatisticType.values()) {
+    public static RoleType valueOf(int type) {
+        for (RoleType e : RoleType.values()) {
             if (e.getValue() == type) {
                 return e;
             }
         }
-        return null;
+        return ALL;
     }
 }
