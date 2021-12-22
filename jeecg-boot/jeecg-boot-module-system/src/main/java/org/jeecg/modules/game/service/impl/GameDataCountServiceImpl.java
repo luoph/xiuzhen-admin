@@ -474,8 +474,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             return;
         }
 
+        Date now = DateUtils.now();
         RemainDetailField field = RemainDetailField.valueOf(days);
-        if (field != null) {
+        if (field != null && now.after(DateUtils.addDays(entity.getCountDate(), days))) {
             ServerRemain serverRemain = null;
             if (roleType == RoleType.ALL) {
                 serverRemain = gameStatRemainDetailMapper.selectRemain(serverId, registerDate, days, logDb);
