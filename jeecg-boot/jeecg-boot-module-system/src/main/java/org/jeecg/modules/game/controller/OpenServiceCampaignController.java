@@ -205,26 +205,27 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         allIds.addAll(currentIds);
 
         StopWatch stopWatch = new StopWatch("开服活动同步");
+        // 1.通知中心服
         stopWatch.start("通知中心服重新加载");
-        // 通知中心服重新加载
         OkHttpHelper.get(gameCenterUrl + "/openServiceCampaign/reloadId?id=" + id);
         stopWatch.stop();
 
-        stopWatch.start("通知各游戏服重新加载");
-        // 通知各游戏服重新加载
         Map<String, Object> params = new HashMap<>(allIds.size());
         params.put("id", id);
         params.put("name", "OpenService");
+
+        // 2.通知游戏服
+        stopWatch.start("通知各游戏服重新加载");
         Map<String, Response> response = gameServerService.gameServerGet(allIds, campaignReloadUrl, params);
         log.info("sync id:{} response:{}", id, response);
         stopWatch.stop();
 
-        // 通知跨服
+        // 3.通知跨服
         Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(allIds.stream().map(Integer::parseInt).collect(Collectors.toSet()), campaignReloadUrl, params);
         log.info("sync id:{} response:{}", id, gameServerGroupResponse);
 
+        // 4.更新已刷新的服务器id
         stopWatch.start("更新已刷新的服务器id");
-        // 更新已刷新的服务器id
         Collections.sort(currentIds);
         campaign.setLastServerIds(StrUtil.join(",", currentIds));
         campaignService.updateById(new OpenServiceCampaign().setId(campaign.getId()).setLastServerIds(campaign.getLastServerIds()));
