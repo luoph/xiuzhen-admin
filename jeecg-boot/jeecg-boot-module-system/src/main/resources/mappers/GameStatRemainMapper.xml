@@ -7,6 +7,7 @@
         <![CDATA[
         SELECT #{registerDate} AS `count_date`,
             #{serverId} AS `server_id`,
+            #{roleType} AS `role_type`,
             (SELECT COUNT(*) FROM `game_player`
                 WHERE `server_id` = #{serverId}
                     AND `create_time` >= #{registerDate}
@@ -24,7 +25,7 @@
         <![CDATA[
         SELECT COUNT(DISTINCT (l.`player_id`)) AS remain
         FROM ${logDb}.`log_account` l
-        LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2 AND l.`server_id` = #{serverId}
           AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL 1 DAY))
             AND p.`create_time` >= #{registerDate} AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
@@ -42,7 +43,7 @@
         <![CDATA[
         SELECT COUNT(DISTINCT (l.`player_id`)) AS remain
         FROM ${logDb}.`log_account` l
-                 LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2 AND l.`server_id` = #{serverId}
           AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL 1 DAY))
           AND p.`create_time` >= #{registerDate} AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
@@ -61,13 +62,32 @@
             #{serverId} AS serverId,
             #{days} AS days,
             #{registerDate} AS registerDate,
-            (SELECT COUNT(DISTINCT( l.`player_id` ))
-             FROM  ${logDb}.`log_account` l
-                    LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
-             WHERE l.`server_id` = #{serverId} AND l.`type` = 2
-               AND l.`create_date` = DATE(DATE_ADD( #{registerDate}, INTERVAL #{days} DAY ))
-            AND p.`create_time` >= #{registerDate}
-            AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS remain
+            (SELECT COUNT(DISTINCT ( l.`player_id` ))) AS remain
+            FROM ${logDb}.`log_account` l
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            WHERE l.`server_id` = #{serverId} AND l.`type` = 2
+              AND l.`create_date` = DATE(DATE_ADD( #{registerDate}, INTERVAL #{days} DAY ))
+              AND p.`create_time` >= #{registerDate}
+              AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+        ]]>
+    </select>
+
+    <select id="selectPayRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+        <![CDATA[
+        SELECT
+            #{serverId} AS serverId,
+            #{days} AS days,
+            #{registerDate} AS registerDate,
+            (SELECT COUNT(DISTINCT ( l.`player_id` ))) AS remain
+            FROM ${logDb}.`log_account` l
+                INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
+            WHERE l.`server_id` = #{serverId} AND l.`type` = 2
+              AND l.`create_date` = DATE(DATE_ADD( #{registerDate}, INTERVAL #{days} DAY ))
+              AND p.`create_time` >= #{registerDate}
+              AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+              AND o.`pay_time` >= #{registerDate}
+              AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
         ]]>
     </select>
 

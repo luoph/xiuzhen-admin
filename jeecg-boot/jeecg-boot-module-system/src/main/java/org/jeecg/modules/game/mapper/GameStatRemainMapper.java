@@ -20,7 +20,8 @@ public interface GameStatRemainMapper extends BaseMapper<GameStatRemain> {
     /**
      * 统计ltv
      */
-    GameStatRemain getGameStatRemain(@Param("serverId") int serverId,
+    GameStatRemain getGameStatRemain(@Param("roleType") int roleType,
+                                     @Param("serverId") int serverId,
                                      @Param("registerDate") String registerDate);
 
     /**
@@ -44,5 +45,21 @@ public interface GameStatRemainMapper extends BaseMapper<GameStatRemain> {
                               @Param("registerDate") String registerDate,
                               @Param("days") int days,
                               @Param("logDb") String logDb);
+
+    /**
+     * 付费留存
+     */
+    ServerRemain selectPayRemain(@Param("serverId") int serverId,
+                                 @Param("registerDate") String registerDate,
+                                 @Param("days") int days,
+                                 @Param("logDb") String logDb);
+
+    /**
+     * 免费留存
+     */
+    ServerRemain selectFreeRemain(@Param("serverId") int serverId,
+                                  @Param("registerDate") String registerDate,
+                                  @Param("days") int days,
+                                  @Param("logDb") String logDb);
 
 }

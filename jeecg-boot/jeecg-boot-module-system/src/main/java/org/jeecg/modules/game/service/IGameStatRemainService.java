@@ -21,9 +21,4 @@ public interface IGameStatRemainService extends IService<GameStatRemain> {
      * 留存统计
      */
     IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd);
-
-    /**
-     * 统计留存
-     */
-    GameStatRemain getGameStatRemain(int serverId, String registerDate);
 }

@@ -12,8 +12,6 @@ import org.jeecg.modules.game.mapper.GameStatRemainMapper;
 import org.jeecg.modules.game.service.IGameStatRemainService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-
 /**
  * <p>
  * LTV统计 服务实现类
@@ -25,9 +23,6 @@ import javax.annotation.Resource;
 @Service
 public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper, GameStatRemain> implements IGameStatRemainService {
 
-    @Resource
-    private GameStatRemainMapper gameLtvCountMapper;
-
     @Override
     public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
         QueryWrapper<GameStatRemain> queryWrapper = new QueryWrapper<>();
@@ -36,10 +31,5 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
         queryWrapper.le("count_date", rangeDateEnd);
         queryWrapper.eq("server_id", serverId);
         return page(page, queryWrapper);
-    }
-
-    @Override
-    public GameStatRemain getGameStatRemain(int serverId, String registerDate) {
-        return gameLtvCountMapper.getGameStatRemain(serverId, registerDate);
     }
 }

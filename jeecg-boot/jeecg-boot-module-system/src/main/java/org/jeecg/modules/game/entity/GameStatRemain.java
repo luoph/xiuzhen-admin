@@ -36,6 +36,10 @@ public class GameStatRemain implements Serializable {
     private String channel;
 
     /**
+     * 角色类型
+     */
+    private Integer roleType;
+    /**
      * 服务器id
      */
     private Integer serverId;
