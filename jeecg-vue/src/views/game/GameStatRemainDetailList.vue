@@ -89,7 +89,13 @@ export default {
                 },
                 {
                     title: "区服id",
-                    align: "用户类型",
+                    align: "center",
+                    width: "80",
+                    dataIndex: "serverId"
+                },
+                {
+                    title: "用户类型",
+                    align: "center",
                     width: "80",
                     dataIndex: "roleType",
                     customRender: value => {
