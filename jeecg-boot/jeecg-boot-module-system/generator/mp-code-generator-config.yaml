@@ -12,7 +12,7 @@ globalConfig:
 
 dataSourceConfig:
     #  url: jdbc:mysql://192.168.16.159:3306/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
-    url: jdbc:mysql://dev.1101stu.com:7733/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://49.235.114.251:7733/gamecenter?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
     driverName: com.mysql.jdbc.Driver
     username: gamecenter
     password: ubj8sf}xEpb&892P
@@ -47,4 +47,5 @@ strategyConfig:
     tablePrefix:
     include:
         # 表名
-        - game_player
+        - game_stat_remain_detail
+        - game_stat_ltv_detail
