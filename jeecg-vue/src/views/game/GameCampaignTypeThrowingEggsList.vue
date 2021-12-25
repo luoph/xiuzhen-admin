@@ -3,19 +3,18 @@
         <!-- 查询区域 -->
         <div class="table-page-search-wrapper">
             <a-form layout="inline" @keyup.enter.native="searchQuery">
-                <a-row :gutter="24">
-                </a-row>
+                <a-row :gutter="24"> </a-row>
             </a-form>
         </div>
         <!-- 查询区域-END -->
         <!-- 操作按钮区域 -->
         <div class="table-operator">
             <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-<!--            <a-button type="primary" icon="download" @click="handleExportXls('节日砸蛋')">导出</a-button>-->
-<!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader"-->
-<!--                      :action="importExcelUrl" @change="handleImportExcel">-->
-<!--                <a-button type="primary" icon="import">导入</a-button>-->
-<!--            </a-upload>-->
+            <!--            <a-button type="primary" icon="download" @click="handleExportXls('节日砸蛋')">导出</a-button>-->
+            <!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader"-->
+            <!--                      :action="importExcelUrl" @change="handleImportExcel">-->
+            <!--                <a-button type="primary" icon="import">导入</a-button>-->
+            <!--            </a-upload>-->
             <a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel">
@@ -23,7 +22,8 @@
                         删除
                     </a-menu-item>
                 </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作
+                <a-button style="margin-left: 8px">
+                    批量操作
                     <a-icon type="down" />
                 </a-button>
             </a-dropdown>
@@ -32,8 +32,8 @@
         <!-- table区域-begin -->
         <div>
             <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-                style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>
 
@@ -48,35 +48,31 @@
                 :loading="loading"
                 :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
                 @change="handleTableChange"
-
             >
                 <template slot="htmlSlot" slot-scope="text">
                     <div v-html="text"></div>
                 </template>
                 <template slot="imgSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-                         style="max-width:80px;font-size: 12px;font-style: italic;" />
+                    <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
                 </template>
                 <template slot="fileSlot" slot-scope="text">
                     <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-                    <a-button v-else :ghost="true" type="primary" icon="download" size="small"
-                              @click="uploadFile(text)"> 下载
-                    </a-button>
+                    <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
                 </template>
                 <span slot="ordinaryPool" slot-scope="text, record">
                     <a-tag v-if="!text" color="red">未设置</a-tag>
-                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
                 <span slot="luckyPool" slot-scope="text, record">
                     <a-tag v-if="!text" color="red">未设置</a-tag>
-                    <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
+                    <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
                 </span>
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleEdit(record)">编辑</a>
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
+                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -125,14 +121,14 @@ export default {
                     title: "砸蛋类型",
                     align: "center",
                     dataIndex: "eggType",
-                    customRender:value=>{
+                    customRender: value => {
                         let text = "--";
-                        if(value === 1){
-                            text = "1-金蛋"
-                        }else if(value === 2){
-                            text = "2-铂金单"
-                        }else if(value === 3){
-                            text = "3-钻石蛋"
+                        if (value === 1) {
+                            text = "1-金蛋";
+                        } else if (value === 2) {
+                            text = "2-铂金单";
+                        } else if (value === 3) {
+                            text = "3-钻石蛋";
                         }
                         return text;
                     }
@@ -189,7 +185,7 @@ export default {
                     align: "center",
                     dataIndex: "createTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -197,7 +193,7 @@ export default {
                     align: "center",
                     dataIndex: "updateTime",
                     customRender: function(text) {
-                        return !text ? "" : (text.length > 10 ? text.substr(0, 10) : text);
+                        return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
                     }
                 },
                 {
@@ -223,8 +219,7 @@ export default {
         }
     },
     methods: {
-        initDictConfig() {
-        },
+        initDictConfig() {},
         loadData(arg) {
             if (!this.model.id) {
                 return;
