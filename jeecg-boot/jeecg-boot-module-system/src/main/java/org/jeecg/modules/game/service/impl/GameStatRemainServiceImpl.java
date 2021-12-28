@@ -7,10 +7,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.youai.server.utils.QueryUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.GameServer;
@@ -48,12 +45,9 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
     @Autowired
     private IGameServerService gameServerService;
 
-    /**
-     * 添加remain，每日统计新记录
-     */
     @Override
-    public void doJobDataCountToRemain(RoleType roleType, Collection<Integer> serverIds,
-                                       Date registerDate, int days, boolean updateAll) {
+    public void calcRemainStat(RoleType roleType, Collection<Integer> serverIds,
+                               Date registerDate, int days, boolean updateAll) {
         String date = DateUtil.formatDate(registerDate);
         for (Integer serverId : serverIds) {
             GameServer gameServer = gameServerService.getById(serverId);
@@ -102,17 +96,6 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
             }
         }
     }
-
-    @Override
-    public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameStatRemain> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("count_date");
-        queryWrapper.ge("count_date", rangeDateBegin);
-        queryWrapper.le("count_date", rangeDateEnd);
-        queryWrapper.eq("server_id", serverId);
-        return page(page, queryWrapper);
-    }
-
 
     private void calcRemainAmount(RoleType roleType, GameStatRemain entity, int serverId, String registerDate, int days) {
         int registerNum = entity.getRegisterNum() != null ? entity.getRegisterNum() : 0;

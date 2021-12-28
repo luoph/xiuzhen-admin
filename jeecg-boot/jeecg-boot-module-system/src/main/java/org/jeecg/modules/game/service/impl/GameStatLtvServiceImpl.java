@@ -6,10 +6,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.QueryUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameStatLtv;
@@ -18,7 +15,6 @@ import org.jeecg.modules.game.mapper.GameStatLtvMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IGameStatLtvService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -39,32 +35,11 @@ public class GameStatLtvServiceImpl extends ServiceImpl<GameStatLtvMapper, GameS
      */
     private static final int[] LTV = new int[]{1, 2, 3, 4, 5, 6, 7, 14, 21, 30, 60, 90, 120, 180, 360};
 
-    @Value("${app.log.db}")
-    private String logDb;
-
     @Autowired
     private IGameServerService gameServerService;
 
     @Override
-    public IPage<GameStatLtv> selectList(Page<GameStatLtv> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameStatLtv> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("count_date");
-        queryWrapper.ge("count_date", rangeDateBegin);
-        queryWrapper.le("count_date", rangeDateEnd);
-        queryWrapper.eq("server_id", serverId);
-        return page(page, queryWrapper);
-    }
-
-    @Override
-    public GameStatLtv getGameStatLtv(int serverId, String registerDate) {
-        return getBaseMapper().getGameStatLtv(serverId, registerDate);
-    }
-
-    /**
-     * 添加ltv，每日统计新记录
-     */
-    @Override
-    public void doJobDataCountToLtv(Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
+    public void calcLtvStat(Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
         String date = DateUtil.formatDate(registerDate);
         for (Integer serverId : serverIds) {
             GameServer gameServer = gameServerService.getById(serverId);
@@ -77,7 +52,7 @@ public class GameStatLtvServiceImpl extends ServiceImpl<GameStatLtvMapper, GameS
                     .eq(GameStatLtv::getCountDate, registerDate);
 
             // 重新查询注册数量
-            GameStatLtv updatedLtv = getGameStatLtv(serverId, date);
+            GameStatLtv updatedLtv = getBaseMapper().getGameStatLtv(serverId, date);
             GameStatLtv gameStatLtv = getOne(QueryUtils.safeSelectOneQuery(query));
             if (gameStatLtv == null) {
                 gameStatLtv = updatedLtv;

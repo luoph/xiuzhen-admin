@@ -42,37 +42,15 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
 
     @Autowired
     private IPayOrderService payOrderService;
+
     @Autowired
     private ILogAccountService logAccountService;
 
     @Autowired
     private IGameServerService gameServerService;
 
-    @Autowired
-    private IGameChannelService gameChannelService;
-
     @Override
-    public IPage<GameStatDaily> selectList(Page<GameStatDaily> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd) {
-        QueryWrapper<GameStatDaily> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByDesc("count_date");
-        boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
-        if (!paramValidCheck) {
-            GameChannel gameChannel = gameChannelService.getById(channelId);
-            queryWrapper.ge("count_date", rangeDateBegin);
-            queryWrapper.le("count_date", rangeDateEnd);
-            if (gameChannel != null) {
-                queryWrapper.eq("channel", gameChannel.getSimpleName());
-                queryWrapper.eq("server_id", serverId);
-            }
-        }
-        return page(page, queryWrapper);
-    }
-
-    /**
-     * 添加daily，每日统计新记录
-     */
-    @Override
-    public void doJobDataCountToDaily(Collection<Integer> serverIds, Date date) {
+    public void calcDailyStat(Collection<Integer> serverIds, Date date) {
         String formatDate = DateUtil.formatDate(date);
         for (Integer serverId : serverIds) {
             GameServer gameServer = gameServerService.getById(serverId);

@@ -3,8 +3,6 @@
  */
 package org.jeecg.modules.game.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameStatLtv;
 
@@ -20,15 +18,7 @@ import java.util.Date;
  * @since 2020-08-26
  */
 public interface IGameStatLtvService extends IService<GameStatLtv> {
-    /**
-     * 留存统计
-     */
-    IPage<GameStatLtv> selectList(Page<GameStatLtv> page, int serverId, String rangeDateBegin, String rangeDateEnd);
 
-    /**
-     * 统计留存
-     */
-    GameStatLtv getGameStatLtv(int serverId, String registerDate);
+    void calcLtvStat(Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll);
 
-    void doJobDataCountToLtv(Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll);
 }
