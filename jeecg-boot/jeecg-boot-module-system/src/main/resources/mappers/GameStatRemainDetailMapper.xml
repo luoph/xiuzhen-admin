@@ -11,12 +11,7 @@
                (SELECT COUNT(*) FROM `game_player`
                 WHERE `server_id` = #{serverId}
                   AND `create_time` >= #{registerDate}
-                  AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS d1,
-               (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
-                LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-                WHERE p.`create_time` >= #{registerDate} AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-                  AND o.`pay_time` >= #{registerDate} AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-                  AND o.`server_id` = #{serverId}) AS `pay_num`
+                  AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS d1
         ]]>
     </select>
 
@@ -39,13 +34,13 @@
             #{serverId} AS serverId,
             #{days} AS days,
             #{registerDate} AS registerDate,
-            (SELECT COUNT(DISTINCT ( l.`player_id` ))) AS remain
+            (SELECT COUNT(DISTINCT (l.`player_id`))) AS remain
         FROM ${logDb}.`log_account` l
                  INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`server_id` = #{serverId} AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD( #{registerDate}, INTERVAL #{days} DAY ))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+          AND p.`create_time` >= CONCAT(#{registerDate}, ' 00:00:00')
+          AND p.`create_time` <= CONCAT(#{registerDate}, ' 23:59:59')
         ]]>
     </select>
 
@@ -55,16 +50,16 @@
             #{serverId} AS serverId,
             #{days} AS days,
             #{registerDate} AS registerDate,
-            (SELECT COUNT(DISTINCT ( l.`player_id` ))) AS remain
+            (SELECT COUNT(DISTINCT (l.`player_id`))) AS remain
         FROM ${logDb}.`log_account` l
                  INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
                  INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
         WHERE l.`server_id` = #{serverId} AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD( #{registerDate}, INTERVAL #{days} DAY ))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-          AND o.`pay_time` >= #{registerDate}
-          AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+          AND p.`create_time` >= CONCAT(#{registerDate}, ' 00:00:00')
+          AND p.`create_time` <= CONCAT(#{registerDate}, ' 23:59:59')
+          AND o.`pay_time` >= CONCAT(#{registerDate}, ' 00:00:00')
+          AND o.`pay_time` <= CONCAT(#{registerDate}, ' 23:59:59')
         ]]>
     </select>
 

@@ -4,6 +4,7 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.youai.server.utils.DateUtils;
 import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.constant.RemainDetailField;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -73,7 +74,7 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
             if (updateAll) {
                 // 更新全部字段
                 for (RemainDetailField value : RemainDetailField.values()) {
-                    if (days < value.getDays()) {
+                    if (days + 1 < value.getDays()) {
                         break;
                     }
                     updateRemainDetailField(roleType, entity, serverId, date, value.getDays());
@@ -92,12 +93,13 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
     private void updateRemainDetailField(RoleType roleType, GameStatRemainDetail entity, int serverId, String registerDate, int days) {
         int baseNum = entity.getD1() != null ? entity.getD1() : 0;
         // 注册为0, 直接返回
-        if (baseNum <= 0 || days <= 1) {
+        if (baseNum <= 0) {
             return;
         }
 
         RemainDetailField field = RemainDetailField.valueOf(days);
-        if (field != null) {
+        Date tomorrow = DateUtils.endTimeOfDate(DateUtils.now());
+        if (field != null && tomorrow.after(DateUtils.addDays(entity.getCountDate(), days))) {
             ServerRemain serverRemain = null;
             if (roleType == RoleType.ALL) {
                 serverRemain = getBaseMapper().selectRemain(serverId, registerDate, days, logDb);
