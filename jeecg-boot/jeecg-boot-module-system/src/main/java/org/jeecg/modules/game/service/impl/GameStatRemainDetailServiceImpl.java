@@ -7,9 +7,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.constant.RemainDetailField;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameStatRemainDetail;
@@ -32,6 +34,7 @@ import java.util.Date;
  * @author buliangliang
  * @since 2021-12-22
  */
+@Slf4j
 @Service
 public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainDetailMapper, GameStatRemainDetail> implements IGameStatRemainDetailService {
 
@@ -106,6 +109,8 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
             } else if (roleType == RoleType.PAID) {
                 serverRemain = getBaseMapper().selectPayRemain(serverId, registerDate, days, logDb);
             }
+            log.info("updateRemainDetailField type:{}, days:{}, registerDate:{}, serverId:{}, serverRemain:{}",
+                    roleType, days, registerDate, serverId, JSON.toJSON(serverRemain));
 
             if (serverRemain != null) {
                 if (serverRemain.getRemain() == null) {
