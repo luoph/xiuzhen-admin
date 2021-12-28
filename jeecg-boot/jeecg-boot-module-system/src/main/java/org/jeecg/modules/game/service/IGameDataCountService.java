@@ -50,11 +50,6 @@ public interface IGameDataCountService {
     void doJobDataCount(Date registerDate, CoreStatisticType type);
 
     /**
-     * 获取k-v 留存列表
-     */
-    Map<String, GameStatRemain> remainCountMap(boolean isReturnIndex);
-
-    /**
      * 获取k-v ltv数据列表
      * Map<String, GameStatLtv> ltvCountMap(boolean isReturnIndex);
      * <p>

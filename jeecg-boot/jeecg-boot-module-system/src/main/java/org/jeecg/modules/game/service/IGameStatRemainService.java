@@ -3,8 +3,6 @@
  */
 package org.jeecg.modules.game.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.GameStatRemain;
@@ -22,11 +20,7 @@ import java.util.Date;
  */
 public interface IGameStatRemainService extends IService<GameStatRemain> {
 
-    void doJobDataCountToRemain(RoleType roleType, Collection<Integer> serverIds,
-                                Date registerDate, int days, boolean updateAll);
+    void calcRemainStat(RoleType roleType, Collection<Integer> serverIds,
+                        Date registerDate, int days, boolean updateAll);
 
-    /**
-     * 留存统计
-     */
-    IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd);
 }

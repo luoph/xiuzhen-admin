@@ -4,7 +4,6 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.constant.CoreStatisticType;
@@ -17,7 +16,10 @@ import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -67,10 +69,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         return list;
     }
 
-    private String dailyCountKey(int serverId, String countDate) {
-        return serverId + "_" + countDate;
-    }
-
     @Override
     public void doJobDataCount() {
         doJobDataCount(DateUtils.todayDate(), DAILY);
@@ -92,21 +90,24 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         Date date = DateUtils.addDays(registerDate, -1);
         switch (type) {
             case DAILY:
-                dayDataCountService.doJobDataCountToDaily(serverMap.keySet(), date);
+                dayDataCountService.calcDailyStat(serverMap.keySet(), date);
                 break;
 
             case REMAIN:
-                statRemainService.doJobDataCountToRemain(RoleType.ALL, serverMap.keySet(), registerDate, days + 1, true);
-                statRemainService.doJobDataCountToRemain(RoleType.PAID, serverMap.keySet(), registerDate, days + 1, true);
+                statRemainService.calcRemainStat(RoleType.ALL, serverMap.keySet(), registerDate, days + 1, true);
+                statRemainService.calcRemainStat(RoleType.PAID, serverMap.keySet(), registerDate, days + 1, true);
                 break;
 
             case LTV:
-                statLtvService.doJobDataCountToLtv(serverMap.keySet(), registerDate, days + 1, true);
+                statLtvService.calcLtvStat(serverMap.keySet(), registerDate, days + 1, true);
                 break;
 
             case REMAIN_DETAIL:
                 statRemainDetailService.calcRemainDetailStat(RoleType.ALL, serverMap.keySet(), registerDate, days + 1, true);
                 statRemainDetailService.calcRemainDetailStat(RoleType.PAID, serverMap.keySet(), registerDate, days + 1, true);
+                break;
+
+            case LTV_DETAIL:
                 break;
 
             default:
@@ -134,25 +135,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             list.add(gameDataRemain);
         }
         return list;
-    }
-
-    @Override
-    public Map<String, GameStatRemain> remainCountMap(boolean isReturnIndex) {
-        List<GameStatRemain> dataCounts;
-        if (isReturnIndex) {
-            LambdaQueryWrapper<GameStatRemain> queryWrapper = Wrappers.lambdaQuery();
-            queryWrapper.select(GameStatRemain::getChannel, GameStatRemain::getServerId, GameStatRemain::getCountDate);
-            dataCounts = gameDataRemainService.list(queryWrapper);
-        } else {
-            dataCounts = gameDataRemainService.list();
-        }
-        Map<String, GameStatRemain> map = new HashMap<>(dataCounts.size());
-        for (GameStatRemain remainCount : dataCounts) {
-            String formatDate = DateUtil.formatDate(remainCount.getCountDate());
-            String countKey = dailyCountKey(remainCount.getServerId(), formatDate);
-            map.put(countKey, remainCount);
-        }
-        return map;
     }
 
     @Override

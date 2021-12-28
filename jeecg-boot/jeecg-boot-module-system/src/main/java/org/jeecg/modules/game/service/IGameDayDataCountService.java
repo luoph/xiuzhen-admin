@@ -20,13 +20,8 @@ import java.util.Date;
  * @since 2020-08-22
  */
 public interface IGameDayDataCountService extends IService<GameStatDaily> {
-    /**
-     * 分页查询
-     *
-     */
-    IPage<GameStatDaily> selectList(Page<GameStatDaily> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
 
-    void doJobDataCountToDaily(Collection<Integer> serverIds, Date date);
+    void calcDailyStat(Collection<Integer> serverIds, Date date);
 
     GameStatDaily gameDataCount(int serverId, String date);
 }
