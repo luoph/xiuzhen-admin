@@ -4,7 +4,6 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DateUtil;
-import cn.youai.server.utils.DateUtils;
 import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.constant.RemainDetailField;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -97,9 +96,8 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
             return;
         }
 
-        Date now = DateUtils.now();
         RemainDetailField field = RemainDetailField.valueOf(days);
-        if (field != null && now.after(DateUtils.addDays(entity.getCountDate(), days))) {
+        if (field != null) {
             ServerRemain serverRemain = null;
             if (roleType == RoleType.ALL) {
                 serverRemain = getBaseMapper().selectRemain(serverId, registerDate, days, logDb);
