@@ -467,15 +467,14 @@ export default {
             this.queryParam.countDate_begin = dateString[0];
             this.queryParam.countDate_end = dateString[1];
         },
-        toRate: function(n, r) {
-            if (n === null || n === undefined) {
+        toLtv: function(n, r) {
+            if (n === null || n === undefined || r == 0) {
                 return "--";
             }
-            let rate = r > 0 ? parseFloat((n / r) * 100).toFixed(2) : parseFloat(0).toFixed(2);
-            return rate + "%";
+            return parseFloat(n / r).toFixed(2);
         },
         countRate: function(n, record) {
-            return this.toRate(n, record.num);
+            return this.toLtv(n, record.num);
         }
     }
 };
