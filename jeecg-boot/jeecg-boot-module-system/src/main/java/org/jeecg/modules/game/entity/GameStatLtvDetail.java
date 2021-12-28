@@ -44,6 +44,11 @@ public class GameStatLtvDetail implements Serializable {
     private Integer serverId;
 
     /**
+     * 新增用户数
+     */
+    private Integer num;
+
+    /**
      * 首日金额
      */
     private BigDecimal d1;

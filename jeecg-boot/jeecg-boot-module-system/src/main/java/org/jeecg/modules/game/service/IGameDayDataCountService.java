@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameStatDaily;
 
+import java.util.Collection;
+import java.util.Date;
+
 /**
  * <p>
  * 每日数据统计 服务类
@@ -20,12 +23,10 @@ public interface IGameDayDataCountService extends IService<GameStatDaily> {
     /**
      * 分页查询
      *
-     * @param page
-     * @param channelId
-     * @param serverId
-     * @param rangeDateBegin
-     * @param rangeDateEnd
-     * @return
      */
     IPage<GameStatDaily> selectList(Page<GameStatDaily> page, int channelId, int serverId, String rangeDateBegin, String rangeDateEnd);
+
+    void doJobDataCountToDaily(Collection<Integer> serverIds, Date date);
+
+    GameStatDaily gameDataCount(int serverId, String date);
 }

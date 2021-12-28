@@ -27,11 +27,6 @@ public interface IGameDataCountService {
      */
     List<GameStatDaily> queryDateRangeDataCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
-    /**
-     * 按照日期统计每日数据
-     */
-    GameStatDaily gameDataCount(int serverId, String date);
-
     List<GameStatRemain> queryDataRemainCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
 
     /**

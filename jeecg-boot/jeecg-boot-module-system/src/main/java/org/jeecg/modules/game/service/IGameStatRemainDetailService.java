@@ -3,8 +3,12 @@
 */
 package org.jeecg.modules.game.service;
 
+import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.GameStatRemainDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.Collection;
+import java.util.Date;
 
 /**
  * <p>
@@ -16,4 +20,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGameStatRemainDetailService extends IService<GameStatRemainDetail> {
 
+    void calcRemainDetailStat(RoleType roleType, Collection<Integer> serverIds,
+                              Date registerDate, int days, boolean updateAll);
 }
