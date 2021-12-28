@@ -92,7 +92,7 @@ export default {
                     align: "center"
                 },
                 {
-                    title: "1日LTV",
+                    title: "1日",
                     align: "center",
                     width: "60",
                     dataIndex: "d1",
@@ -101,7 +101,7 @@ export default {
                     }
                 },
                 {
-                    title: "2日LTV",
+                    title: "2日",
                     align: "center",
                     width: "60",
                     dataIndex: "d2",
@@ -110,7 +110,7 @@ export default {
                     }
                 },
                 {
-                    title: "2日LTV",
+                    title: "2日",
                     align: "center",
                     width: "60",
                     dataIndex: "d3",
@@ -119,7 +119,7 @@ export default {
                     }
                 },
                 {
-                    title: "4日LTV",
+                    title: "4日",
                     align: "center",
                     width: "60",
                     dataIndex: "d4",
@@ -128,7 +128,7 @@ export default {
                     }
                 },
                 {
-                    title: "5日LTV",
+                    title: "5日",
                     align: "center",
                     width: "60",
                     dataIndex: "d5",
@@ -137,7 +137,7 @@ export default {
                     }
                 },
                 {
-                    title: "6日LTV",
+                    title: "6日",
                     align: "center",
                     width: "60",
                     dataIndex: "d6",
@@ -146,7 +146,7 @@ export default {
                     }
                 },
                 {
-                    title: "7日LTV",
+                    title: "7日",
                     align: "center",
                     width: "60",
                     dataIndex: "d7",
@@ -155,7 +155,7 @@ export default {
                     }
                 },
                 {
-                    title: "8日LTV",
+                    title: "8日",
                     align: "center",
                     width: "60",
                     dataIndex: "d8",
@@ -164,7 +164,7 @@ export default {
                     }
                 },
                 {
-                    title: "9日LTV",
+                    title: "9日",
                     align: "center",
                     width: "60",
                     dataIndex: "d9",
@@ -173,7 +173,7 @@ export default {
                     }
                 },
                 {
-                    title: "10日LTV",
+                    title: "10日",
                     align: "center",
                     width: "60",
                     dataIndex: "d10",
@@ -182,7 +182,7 @@ export default {
                     }
                 },
                 {
-                    title: "11日LTV",
+                    title: "11日",
                     align: "center",
                     width: "60",
                     dataIndex: "d11",
@@ -191,7 +191,7 @@ export default {
                     }
                 },
                 {
-                    title: "12日LTV",
+                    title: "12日",
                     align: "center",
                     width: "60",
                     dataIndex: "d12",
@@ -200,7 +200,7 @@ export default {
                     }
                 },
                 {
-                    title: "13日LTV",
+                    title: "13日",
                     align: "center",
                     width: "60",
                     dataIndex: "d13",
@@ -209,7 +209,7 @@ export default {
                     }
                 },
                 {
-                    title: "14日LTV",
+                    title: "14日",
                     align: "center",
                     width: "60",
                     dataIndex: "d14",
@@ -218,7 +218,7 @@ export default {
                     }
                 },
                 {
-                    title: "15日LTV",
+                    title: "15日",
                     align: "center",
                     width: "60",
                     dataIndex: "d15",
@@ -227,7 +227,7 @@ export default {
                     }
                 },
                 {
-                    title: "16日LTV",
+                    title: "16日",
                     align: "center",
                     width: "60",
                     dataIndex: "d16",
@@ -236,7 +236,7 @@ export default {
                     }
                 },
                 {
-                    title: "17日LTV",
+                    title: "17日",
                     align: "center",
                     width: "60",
                     dataIndex: "d17",
@@ -245,7 +245,7 @@ export default {
                     }
                 },
                 {
-                    title: "18日LTV",
+                    title: "18日",
                     align: "center",
                     width: "60",
                     dataIndex: "d18",
@@ -254,7 +254,7 @@ export default {
                     }
                 },
                 {
-                    title: "19日LTV",
+                    title: "19日",
                     align: "center",
                     width: "60",
                     dataIndex: "d19",
@@ -263,7 +263,7 @@ export default {
                     }
                 },
                 {
-                    title: "20日LTV",
+                    title: "20日",
                     align: "center",
                     width: "60",
                     dataIndex: "d20",
@@ -272,7 +272,7 @@ export default {
                     }
                 },
                 {
-                    title: "21日LTV",
+                    title: "21日",
                     align: "center",
                     width: "60",
                     dataIndex: "d21",
@@ -281,7 +281,7 @@ export default {
                     }
                 },
                 {
-                    title: "22日LTV",
+                    title: "22日",
                     align: "center",
                     width: "60",
                     dataIndex: "d22",
@@ -290,7 +290,7 @@ export default {
                     }
                 },
                 {
-                    title: "23日LTV",
+                    title: "23日",
                     align: "center",
                     width: "60",
                     dataIndex: "d23",
@@ -299,7 +299,7 @@ export default {
                     }
                 },
                 {
-                    title: "24日LTV",
+                    title: "24日",
                     align: "center",
                     width: "60",
                     dataIndex: "d24",
@@ -308,7 +308,7 @@ export default {
                     }
                 },
                 {
-                    title: "25日LTV",
+                    title: "25日",
                     align: "center",
                     width: "60",
                     dataIndex: "d25",
@@ -317,7 +317,7 @@ export default {
                     }
                 },
                 {
-                    title: "26日LTV",
+                    title: "26日",
                     align: "center",
                     width: "60",
                     dataIndex: "d26",
@@ -326,7 +326,7 @@ export default {
                     }
                 },
                 {
-                    title: "27日LTV",
+                    title: "27日",
                     align: "center",
                     width: "60",
                     dataIndex: "d27",
@@ -335,7 +335,7 @@ export default {
                     }
                 },
                 {
-                    title: "28日LTV",
+                    title: "28日",
                     align: "center",
                     width: "60",
                     dataIndex: "d28",
@@ -344,7 +344,7 @@ export default {
                     }
                 },
                 {
-                    title: "29日LTV",
+                    title: "29日",
                     align: "center",
                     width: "60",
                     dataIndex: "d29",
@@ -353,7 +353,7 @@ export default {
                     }
                 },
                 {
-                    title: "30日LTV",
+                    title: "30日",
                     align: "center",
                     width: "60",
                     dataIndex: "d30",
@@ -362,7 +362,7 @@ export default {
                     }
                 },
                 {
-                    title: "45日LTV",
+                    title: "45日",
                     align: "center",
                     width: "60",
                     dataIndex: "d45",
@@ -371,7 +371,7 @@ export default {
                     }
                 },
                 {
-                    title: "60日LTV",
+                    title: "60日",
                     align: "center",
                     width: "60",
                     dataIndex: "d60",
@@ -380,7 +380,7 @@ export default {
                     }
                 },
                 {
-                    title: "90日LTV",
+                    title: "90日",
                     align: "center",
                     width: "60",
                     dataIndex: "d90",
@@ -389,7 +389,7 @@ export default {
                     }
                 },
                 {
-                    title: "120日LTV",
+                    title: "120日",
                     align: "center",
                     width: "60",
                     dataIndex: "d120",
@@ -398,7 +398,7 @@ export default {
                     }
                 },
                 {
-                    title: "150日LTV",
+                    title: "150日",
                     align: "center",
                     width: "60",
                     dataIndex: "d150",
@@ -407,7 +407,7 @@ export default {
                     }
                 },
                 {
-                    title: "180日LTV",
+                    title: "180日",
                     align: "center",
                     width: "60",
                     dataIndex: "d180",
@@ -416,7 +416,7 @@ export default {
                     }
                 },
                 {
-                    title: "270日LTV",
+                    title: "270日",
                     align: "center",
                     width: "60",
                     dataIndex: "d270",
@@ -425,7 +425,7 @@ export default {
                     }
                 },
                 {
-                    title: "360日LTV",
+                    title: "360日",
                     align: "center",
                     width: "60",
                     dataIndex: "d360",
