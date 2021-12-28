@@ -8,7 +8,6 @@
                         <a-select-option value="2">留存统计</a-select-option>
                         <a-select-option value="3">LTV统计</a-select-option>
                         <a-select-option value="4">留存详细统计</a-select-option>
-                        <a-select-option value="5">LTV详细统计</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="指定日期" hasFeedback>
