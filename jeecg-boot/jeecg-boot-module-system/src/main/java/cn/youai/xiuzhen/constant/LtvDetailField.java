@@ -36,7 +36,7 @@ public enum LtvDetailField {
     D19(19, GameStatLtvDetail::setD19),
     D20(20, GameStatLtvDetail::setD20),
     D21(21, GameStatLtvDetail::setD21),
-    D22(23, GameStatLtvDetail::setD23),
+    D22(22, GameStatLtvDetail::setD22),
     D23(23, GameStatLtvDetail::setD23),
     D24(24, GameStatLtvDetail::setD24),
     D25(25, GameStatLtvDetail::setD25),

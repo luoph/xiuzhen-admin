@@ -87,9 +87,9 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             return;
         }
 
-        Date date = DateUtils.addDays(registerDate, -1);
         switch (type) {
             case DAILY:
+                Date date = DateUtils.addDays(registerDate, -1);
                 dayDataCountService.calcDailyStat(serverMap.keySet(), date);
                 break;
 

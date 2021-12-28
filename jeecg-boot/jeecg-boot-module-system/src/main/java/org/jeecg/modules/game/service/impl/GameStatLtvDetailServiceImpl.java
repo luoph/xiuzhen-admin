@@ -86,7 +86,6 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
             return;
         }
 
-        Date now = DateUtils.now();
         LtvDetailField field = LtvDetailField.valueOf(days);
         if (field != null) {
             ServerLtvAmount ltvAmount = getBaseMapper().getLtvAmount(serverId, registerDate, days);

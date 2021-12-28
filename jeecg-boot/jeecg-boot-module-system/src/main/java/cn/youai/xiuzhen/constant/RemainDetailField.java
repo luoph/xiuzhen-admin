@@ -34,7 +34,7 @@ public enum RemainDetailField {
     D19(19, GameStatRemainDetail::setD19),
     D20(20, GameStatRemainDetail::setD20),
     D21(21, GameStatRemainDetail::setD21),
-    D22(23, GameStatRemainDetail::setD23),
+    D22(22, GameStatRemainDetail::setD22),
     D23(23, GameStatRemainDetail::setD23),
     D24(24, GameStatRemainDetail::setD24),
     D25(25, GameStatRemainDetail::setD25),
