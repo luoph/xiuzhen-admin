@@ -46,8 +46,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private IGameDayDataCountService dayDataCountService;
 
     @Autowired
-    private IGameStatLtvService statLtvService;
-    @Autowired
     private IGameStatRemainService statRemainService;
     @Autowired
     private IGameStatRemainDetailService statRemainDetailService;
@@ -99,16 +97,12 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 break;
 
             case LTV:
-                statLtvService.calcLtvStat(serverMap.keySet(), registerDate, days + 1, true);
+                statLtvDetailService.calcLtvDetailStat(serverMap.keySet(), serverMap.keySet(), registerDate, days + 1, true);
                 break;
 
             case REMAIN_DETAIL:
                 statRemainDetailService.calcRemainDetailStat(RoleType.ALL, serverMap.keySet(), registerDate, days + 1, true);
                 statRemainDetailService.calcRemainDetailStat(RoleType.PAID, serverMap.keySet(), registerDate, days + 1, true);
-                break;
-
-            case LTV_DETAIL:
-                statLtvDetailService.calcLtvDetailStat(serverMap.keySet(), serverMap.keySet(), registerDate, days + 1, true);
                 break;
 
             default:

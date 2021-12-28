@@ -14,7 +14,6 @@ public enum CoreStatisticType {
     REMAIN("留存统计", 2),
     LTV("LTV统计", 3),
     REMAIN_DETAIL("留存详细统计", 4),
-    LTV_DETAIL("LTV详细统计", 5),
     ;
 
     private final String name;
