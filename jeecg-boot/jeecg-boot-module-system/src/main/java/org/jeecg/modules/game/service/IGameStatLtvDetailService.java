@@ -1,10 +1,14 @@
 /*
-* create by mybatis-plus-generator  https://github.com/xiweile
-*/
+ * create by mybatis-plus-generator  https://github.com/xiweile
+ */
 package org.jeecg.modules.game.service;
 
-import org.jeecg.modules.game.entity.GameStatLtvDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.modules.game.entity.GameStatLtvDetail;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.Set;
 
 /**
  * <p>
@@ -16,4 +20,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGameStatLtvDetailService extends IService<GameStatLtvDetail> {
 
+    void calcLtvDetailStat(Set<Integer> keySet, Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll);
+    
 }

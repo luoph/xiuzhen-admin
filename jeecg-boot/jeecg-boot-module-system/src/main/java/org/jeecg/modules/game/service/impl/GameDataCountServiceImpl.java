@@ -108,6 +108,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
                 break;
 
             case LTV_DETAIL:
+                statLtvDetailService.calcLtvDetailStat(serverMap.keySet(), serverMap.keySet(), registerDate, days + 1, true);
                 break;
 
             default:
