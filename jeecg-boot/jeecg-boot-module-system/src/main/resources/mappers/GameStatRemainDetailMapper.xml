@@ -40,7 +40,7 @@
                     AND NOT EXISTS (SELECT o.`player_id` FROM `game_order` o
                                     WHERE p.`player_id` = o.`player_id`
                                         AND o.`pay_time` >= #{registerDate}
-                                        AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS d1
+                                        AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY))) AS d1
         ]]>
     </select>
 
