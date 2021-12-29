@@ -116,7 +116,7 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
             }
 
             log.info("updateRemainDetailField type:{}, date:{}, serverId:{}, days:{}, field:{}, remain:{}",
-                    roleType, registerDate, serverId, days, field, JSON.toJSONStringWithDateFormat(serverRemain, TimeConstant.DEFAULT_TIME_FORMAT));
+                    roleType, registerDate, serverId, days, field, JSON.toJSONStringWithDateFormat(serverRemain, TimeConstant.DEFAULT_DATE_FORMAT));
 
             if (serverRemain != null) {
                 if (serverRemain.getRemain() == null) {
