@@ -109,8 +109,8 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
             } else if (roleType == RoleType.PAID) {
                 serverRemain = getBaseMapper().selectPayRemain(serverId, registerDate, days, logDb);
             }
-            log.info("updateRemainDetailField type:{}, days:{}, registerDate:{}, serverId:{}, serverRemain:{}",
-                    roleType, days, registerDate, serverId, JSON.toJSON(serverRemain));
+//            log.info("updateRemainDetailField type:{}, days:{}, registerDate:{}, serverId:{}, serverRemain:{}",
+//                    roleType, days, registerDate, serverId, JSON.toJSON(serverRemain));
 
             if (serverRemain != null) {
                 if (serverRemain.getRemain() == null) {
