@@ -103,6 +103,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
             case REMAIN_DETAIL:
                 statRemainDetailService.calcRemainDetailStat(RoleType.ALL, serverMap.keySet(), registerDate, days, true);
                 statRemainDetailService.calcRemainDetailStat(RoleType.PAID, serverMap.keySet(), registerDate, days, true);
+                statRemainDetailService.calcRemainDetailStat(RoleType.FREE, serverMap.keySet(), registerDate, days, true);
                 break;
 
             default:
