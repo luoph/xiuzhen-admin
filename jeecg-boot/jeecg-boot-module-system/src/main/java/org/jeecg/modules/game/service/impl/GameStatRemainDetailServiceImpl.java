@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameStatRemainDetail;
@@ -114,8 +115,8 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
                 serverRemain = getBaseMapper().selectFreeRemain(serverId, registerDate, days, logDb);
             }
 
-            log.info("updateRemainDetailField type:{}, days:{}, registerDate:{}, serverId:{}, field:{}, serverRemain:{}",
-                    roleType, days, registerDate, serverId, field, JSON.toJSON(serverRemain));
+            log.info("updateRemainDetailField type:{}, date:{}, serverId:{}, days:{}, field:{}, remain:{}",
+                    roleType, days, registerDate, serverId, field, JSON.toJSONStringWithDateFormat(serverRemain, TimeConstant.DEFAULT_TIME_FORMAT));
 
             if (serverRemain != null) {
                 if (serverRemain.getRemain() == null) {
