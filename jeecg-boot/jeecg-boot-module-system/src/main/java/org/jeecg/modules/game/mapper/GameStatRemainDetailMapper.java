@@ -19,18 +19,24 @@ import org.jeecg.modules.game.entity.ServerRemain;
 public interface GameStatRemainDetailMapper extends BaseMapper<GameStatRemainDetail> {
 
     /**
-     * 统计ltv
+     * 留存
      */
-    GameStatRemainDetail getGameStatRemainDetail(@Param("roleType") int roleType,
-                                                 @Param("serverId") int serverId,
-                                                 @Param("registerDate") String registerDate);
+    GameStatRemainDetail getStatRemainDetail(@Param("roleType") int roleType,
+                                             @Param("serverId") int serverId,
+                                             @Param("registerDate") String registerDate);
 
     /**
-     * 统计ltv
+     * 付费留存
      */
-    GameStatRemainDetail getPayGameStatRemainDetail(@Param("roleType") int roleType,
-                                                    @Param("serverId") int serverId,
-                                                    @Param("registerDate") String registerDate);
+    GameStatRemainDetail getPayStatRemainDetail(@Param("roleType") int roleType,
+                                                @Param("serverId") int serverId,
+                                                @Param("registerDate") String registerDate);
+    /**
+     * 免费留存
+     */
+    GameStatRemainDetail getFreeStatRemainDetail(@Param("roleType") int roleType,
+                                                @Param("serverId") int serverId,
+                                                @Param("registerDate") String registerDate);
 
     /**
      * 查询留存

@@ -64,9 +64,11 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
             // 重新查询注册数量
             GameStatRemainDetail updatedEntity = null;
             if (roleType == RoleType.ALL) {
-                updatedEntity = getBaseMapper().getGameStatRemainDetail(roleType.getValue(), serverId, date);
+                updatedEntity = getBaseMapper().getStatRemainDetail(roleType.getValue(), serverId, date);
             } else if (roleType == RoleType.PAID) {
-                updatedEntity = getBaseMapper().getPayGameStatRemainDetail(roleType.getValue(), serverId, date);
+                updatedEntity = getBaseMapper().getPayStatRemainDetail(roleType.getValue(), serverId, date);
+            } else if (roleType == RoleType.FREE) {
+                updatedEntity = getBaseMapper().getFreeStatRemainDetail(roleType.getValue(), serverId, date);
             }
 
             GameStatRemainDetail entity = getOne(QueryUtils.safeSelectOneQuery(query));

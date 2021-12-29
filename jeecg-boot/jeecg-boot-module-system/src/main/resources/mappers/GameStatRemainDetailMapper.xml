@@ -3,7 +3,7 @@
 <mapper namespace="org.jeecg.modules.game.mapper.GameStatRemainDetailMapper">
 
 
-    <select id="getGameStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+    <select id="getStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
         <![CDATA[
         SELECT #{registerDate} AS `count_date`,
                #{serverId} AS `server_id`,
@@ -15,7 +15,7 @@
         ]]>
     </select>
 
-    <select id="getPayGameStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+    <select id="getPayStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
         <![CDATA[
         SELECT #{registerDate} AS `count_date`,
                #{serverId} AS `server_id`,
@@ -27,6 +27,23 @@
                   AND o.`server_id` = #{serverId}) AS d1
         ]]>
     </select>
+
+    <select id="getFreeStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+        <![CDATA[
+        SELECT #{registerDate} AS `count_date`,
+               #{serverId} AS `server_id`,
+               #{roleType} AS `role_type`,
+               (SELECT COUNT(DISTINCT(p.`player_id`)) FROM `game_player` p
+                WHERE p.`server_id` = #{serverId}
+                    AND p.`create_time` >= #{registerDate}
+                    AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+                    AND NOT EXISTS (SELECT o.`player_id` FROM `game_order` o
+                                    WHERE p.`player_id` = o.`player_id`
+                                        AND o.`pay_time` >= #{registerDate}
+                                        AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS d1
+        ]]>
+    </select>
+
 
     <select id="selectRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
         <![CDATA[
