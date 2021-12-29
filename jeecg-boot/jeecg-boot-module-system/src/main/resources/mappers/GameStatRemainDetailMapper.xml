@@ -76,10 +76,10 @@
           AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
           AND p.`create_time` >= #{registerDate}
           AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-          AND NOT EXISTS (SELECT * FROM `game_order` o
+          AND NOT EXISTS (SELECT o.`player_id` FROM `game_order` o
                             WHERE l.`player_id` = o.`player_id`
                                 AND o.`pay_time` >= #{registerDate}
-                                AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)));
+                                AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY));
         ]]>
     </select>
 
