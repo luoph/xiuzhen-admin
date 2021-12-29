@@ -63,7 +63,7 @@ public enum RemainDetailField {
 
     public static RemainDetailField valueOf(int days) {
         for (RemainDetailField value : RemainDetailField.values()) {
-            if (value.getDays() <= days) {
+            if (value.getDays() == days) {
                 return value;
             }
         }
