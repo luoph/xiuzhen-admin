@@ -34,9 +34,9 @@
             #{serverId} AS serverId,
             #{days} AS days,
             #{registerDate} AS registerDate,
-            COUNT(DISTINCT ( l.`player_id` )) AS remain
+            COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM ${logDb}.`log_account` l
-                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`server_id` = #{serverId} AND l.`type` = 2
           AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
           AND p.`create_time` >= #{registerDate}
@@ -50,16 +50,36 @@
             #{serverId} AS serverId,
             #{days} AS days,
             #{registerDate} AS registerDate,
-            COUNT(DISTINCT (l.`player_id` )) AS remain
+            COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM ${logDb}.`log_account` l
-                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
-                 INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
         WHERE l.`server_id` = #{serverId} AND l.`type` = 2
           AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
           AND p.`create_time` >= #{registerDate}
           AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
           AND o.`pay_time` >= #{registerDate}
           AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+        ]]>
+    </select>
+
+    <select id="selectFreeRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+        <![CDATA[
+        SELECT
+            #{serverId} AS serverId,
+            #{days} AS days,
+            #{registerDate} AS registerDate,
+            COUNT(DISTINCT(l.`player_id`)) AS remain
+        FROM ${logDb}.`log_account` l
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        WHERE l.`server_id` = #{serverId} AND l.`type` = 2
+          AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+          AND p.`create_time` >= #{registerDate}
+          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND NOT EXISTS (SELECT * FROM `game_order` o
+                            WHERE l.`player_id` = o.`player_id`
+                                AND o.`pay_time` >= #{registerDate}
+                                AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)));
         ]]>
     </select>
 
