@@ -161,6 +161,12 @@ export default {
                     dataIndex: "loginUrl"
                 },
                 {
+                    title: "角色信息地址",
+                    align: "center",
+                    width: 200,
+                    dataIndex: "roleUrl"
+                },
+                {
                     title: "实名认证地址",
                     align: "center",
                     width: 200,
