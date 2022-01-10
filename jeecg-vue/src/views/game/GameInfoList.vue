@@ -123,21 +123,18 @@ export default {
                 {
                     title: "游戏Id",
                     align: "center",
-                    width: 120,
                     dataIndex: "id"
                 },
                 {
                     title: "游戏名称",
                     align: "center",
-                    width: 200,
                     dataIndex: "name"
                 },
-                // {
-                //     title: "唯一标识",
-                //     align: "center",
-                //     width: 120,
-                //     dataIndex: "yaSimpleName"
-                // },
+                {
+                    title: "唯一标识",
+                    align: "center",
+                    dataIndex: "yaSimpleName"
+                },
                 // {
                 //     title: "YA_APPID",
                 //     align: "center",
@@ -157,37 +154,31 @@ export default {
                 {
                     title: "帐号登录地址",
                     align: "center",
-                    width: 200,
                     dataIndex: "loginUrl"
                 },
                 {
                     title: "角色信息地址",
                     align: "center",
-                    width: 200,
                     dataIndex: "roleUrl"
                 },
                 {
                     title: "实名认证地址",
                     align: "center",
-                    width: 200,
                     dataIndex: "authUrl"
                 },
                 {
                     title: "游戏列表地址",
                     align: "center",
-                    width: 200,
                     dataIndex: "serverUrl"
                 },
                 {
                     title: "公告列表地址",
                     align: "center",
-                    width: 200,
                     dataIndex: "noticeUrl"
                 },
                 {
                     title: "描述",
                     align: "center",
-                    width: 200,
                     dataIndex: "remark"
                 },
                 {
