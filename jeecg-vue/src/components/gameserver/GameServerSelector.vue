@@ -96,7 +96,7 @@ export default {
         value: {
             immediate: true,
             handler(value) {
-                this.selectValue = value != null ? value.split(",") : [];
+                this.selectValue = value != null ? value.split(",").sort() : [];
                 this.getServerList();
             }
         },
