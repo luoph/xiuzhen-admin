@@ -173,6 +173,10 @@ export default {
     data() {
         return {
             description: "活动信息",
+            isorter: {
+                column: "id",
+                order: "desc"
+            },
             // 表头
             columns: [
                 {

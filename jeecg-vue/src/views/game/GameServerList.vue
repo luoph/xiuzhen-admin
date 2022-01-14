@@ -161,7 +161,7 @@ export default {
             gameList: [],
             isorter: {
                 column: "id",
-                order: "asc"
+                order: "desc"
             },
             // 表头
             columns: [
