@@ -177,6 +177,11 @@ export default {
                     dataIndex: "noticeUrl"
                 },
                 {
+                    title: "关闭注册天数",
+                    align: "center",
+                    dataIndex: "offRegisterDay"
+                },
+                {
                     title: "描述",
                     align: "center",
                     dataIndex: "remark"

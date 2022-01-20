@@ -92,6 +92,13 @@ public class GameInfo extends BaseEntity {
     @Excel(name = "gameAppKey", width = 15)
     @ApiModelProperty(value = "gameAppKey")
     private java.lang.String yaGameKey;
+
+    /**
+     * 根据服务器的开服天数，达到指定开服天数后，关闭服务器的注册功能
+     */
+    @Excel(name = "关闭注册天数", width = 15)
+    @ApiModelProperty(value = "off_register_day")
+    private java.lang.Integer offRegisterDay;
     /**
      * 描述
      */

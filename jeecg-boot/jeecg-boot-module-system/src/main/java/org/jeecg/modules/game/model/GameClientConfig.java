@@ -17,4 +17,5 @@ public class GameClientConfig {
     private String noticeUrl;
     private String roleUrl;
     private String authUrl;
+    private Integer offRegisterDay;
 }

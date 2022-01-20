@@ -33,6 +33,9 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告列表地址">
                     <a-input placeholder="请输入公告列表地址(不包含域名)" v-decorator="['noticeUrl', validatorRules.noticeUrl]" />
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="关闭注册天数">
+                    <a-input placeholder="请输入关闭注册天数" v-decorator="['offRegisterDay', validatorRules.offRegisterDay]" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
                     <a-textarea rows="4" placeholder="请输入描述" v-decorator="['remark', validatorRules.remark]" />
                 </a-form-item>
@@ -79,6 +82,7 @@ export default {
                 authUrl: { rules: [{ required: true, message: "请输入实名认证地址!" }] },
                 serverUrl: { rules: [{ required: true, message: "请输入服务器列表地址!" }] },
                 noticeUrl: { rules: [{ required: true, message: "请输入公告列表地址!" }] },
+                offRegisterDay: { rules: [{ required: true, message: "请输入关闭注册天数!" }] },
                 remark: { rules: [{ required: false, message: "请输入描述!" }] }
             },
             url: {
@@ -99,7 +103,7 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(
-                    pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "loginUrl", "roleUrl", "serverUrl", "noticeUrl", "authUrl", "remark")
+                    pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "loginUrl", "roleUrl", "serverUrl", "noticeUrl", "authUrl", "offRegisterDay", "remark")
                 );
             });
         },
