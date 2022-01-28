@@ -62,7 +62,7 @@ public interface IGameServerService extends IService<GameServer> {
      * @param data      请求数据
      * @return 响应列表
      */
-    Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, JSONObject data);
+    Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, Object data);
 
 
     /**
@@ -73,7 +73,7 @@ public interface IGameServerService extends IService<GameServer> {
      * @param data      请求数据
      * @return 响应列表
      */
-    Map<Integer, Response> gameServerPost(int[] serverIds, String path, JSONObject data);
+    Map<Integer, Response> gameServerPost(int[] serverIds, String path, Object data);
 
 
     /**
@@ -84,7 +84,7 @@ public interface IGameServerService extends IService<GameServer> {
      * @param data      请求数据
      * @return 响应列表
      */
-    Map<Integer, Response> gameServerPost(String serverIds, String path, JSONObject data);
+    Map<Integer, Response> gameServerPost(String serverIds, String path, Object data);
 
 
     void updateGameServerMaintain(List<Integer> serverIds, int isMaintain);

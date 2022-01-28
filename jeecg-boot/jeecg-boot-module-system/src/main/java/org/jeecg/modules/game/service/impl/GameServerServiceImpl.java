@@ -3,7 +3,6 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
-import co.paralleluniverse.fibers.Fiber;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,7 +14,6 @@ import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -118,7 +116,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, JSONObject data) {
+    public Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, Object data) {
         Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
@@ -138,12 +136,12 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public Map<Integer, Response> gameServerPost(int[] serverIds, String path, JSONObject data) {
+    public Map<Integer, Response> gameServerPost(int[] serverIds, String path, Object data) {
         return gameServerPost(Ints.asList(serverIds), path, data);
     }
 
     @Override
-    public Map<Integer, Response> gameServerPost(String serverIds, String path, JSONObject data) {
+    public Map<Integer, Response> gameServerPost(String serverIds, String path, Object data) {
         return gameServerPost(StrUtil.splitToInt(serverIds, ","), path, data);
     }
 

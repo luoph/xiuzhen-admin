@@ -186,7 +186,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         gameEmail.setValidState(1);
         gameEmailService.updateById(new GameEmail().setId(gameEmail.getId()).setValidState(1));
 
-        Response response = gameEmailService.sendEmailToGameCenterServer(gameEmail);
+        Response response = gameEmailService.dispatchEmail(gameEmail);
         if (!response.isSuccess()) {
             return Result.error(response.getDesc());
         }

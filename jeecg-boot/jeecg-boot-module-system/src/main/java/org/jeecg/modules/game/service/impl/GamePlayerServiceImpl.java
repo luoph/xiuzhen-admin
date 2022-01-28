@@ -44,6 +44,12 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
         return getOne(Wrappers.<GamePlayer>lambdaQuery().eq(GamePlayer::getPlayerId, playerId));
     }
 
+    @Override
+    public List<GamePlayer> getPlayerList(List<Long> playerIds) {
+        return list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getPlayerId, playerIds)
+                .orderByAsc(GamePlayer::getPlayerId));
+    }
+
     // TODO 优化玩家行为分析
     @Override
     public List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, Long playerId, int days, int serverId) {

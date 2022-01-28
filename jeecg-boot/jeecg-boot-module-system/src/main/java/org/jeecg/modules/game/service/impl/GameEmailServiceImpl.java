@@ -1,22 +1,33 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.model.ResponseCode;
+import cn.youai.entities.GamePlayer;
 import cn.youai.server.conf.ConfItem;
 import cn.youai.server.model.ItemVO;
-import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.jeecg.modules.game.constant.EmailReceiver;
+import org.jeecg.modules.game.constant.EmailType;
 import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
 import org.jeecg.modules.game.service.IGameEmailService;
+import org.jeecg.modules.game.service.IGamePlayerService;
+import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.utils.GameConfigUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -27,28 +38,23 @@ import java.util.List;
 @Service
 public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail> implements IGameEmailService {
 
-    /**
-     * 有附件的邮件 1无附件 2有附件
-     */
-    private static final int EMAIL_CONTENT_TYPE = 2;
+    @Value("${app.send-email-url}")
+    private String sendMailUrl;
 
-    /**
-     * 目标类型 1玩家 2全服
-     */
-    private static final int TARGET_BODY_TYPE = 1;
+    @Value("${app.sync-email-url}")
+    private String syncMailUrl;
 
-    @Value("${app.url.game-center}")
-    private String gameCenterUrl;
+    @Autowired
+    private IGamePlayerService gamePlayerService;
 
-    @Value("${app.send-email-path}")
-    private String path;
+    @Autowired
+    private IGameServerService gameServerService;
 
     @Override
-    public Response saveEmail(GameEmail gameEmail) {
+    public Response saveEmail(GameEmail entity) {
         Response response = new Response();
-        Integer emailType = gameEmail.getEmailType();
-        if (emailType == EMAIL_CONTENT_TYPE) {
-            String content = gameEmail.getContent();
+        if (entity.getEmailType() == EmailType.ATTACHMENT.getType()) {
+            String content = entity.getContent();
             if (StringUtils.isBlank(content)) {
                 response.setFailure("附件内容不能为空！");
                 return response;
@@ -61,12 +67,13 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             }
         }
 
-        String[] targetBodyStr = StringUtils.split(gameEmail.getTargetBodyIds(), ",");
+        String[] targetBodyStr = StringUtils.split(entity.getTargetBodyIds(), ",");
         if (targetBodyStr == null || targetBodyStr.length <= 0) {
             response.setFailure("投放目标不存在！");
             return response;
         }
-        if (super.save(gameEmail)) {
+
+        if (super.save(entity)) {
             return response;
         }
         response.setFailure("创建失败！");
@@ -74,13 +81,41 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     }
 
     @Override
-    public Response sendEmailToGameCenterServer(GameEmail gameEmail) {
+    public Response dispatchEmail(GameEmail entity) {
         Response response = new Response();
-        if (gameEmail == null) {
+        if (entity == null) {
             response.setErrorCode(ResponseCode.FAILURE);
             return response;
         }
-        OkHttpHelper.post(gameCenterUrl + path, gameEmail);
+
+        GameEmail copy = new GameEmail();
+        BeanUtils.copyProperties(entity, copy);
+
+        Integer targetBodyType = entity.getTargetBodyType();
+        if (targetBodyType == EmailReceiver.PLAYER.getType()) {
+            long[] playerIds = StrUtil.splitToLong(entity.getTargetBodyIds(), ",");
+            List<Long> list = Arrays.stream(playerIds).boxed().collect(Collectors.toList());
+            List<GamePlayer> playerList = gamePlayerService.getPlayerList(list);
+
+            Set<Integer> serverIds = new HashSet<>();
+            playerList.forEach(t -> {
+                copy.setTargetBodyId(t.getPlayerId());
+
+                gameServerService.gameServerPost(CollUtil.newArrayList(t.getServerId()), sendMailUrl, copy);
+                serverIds.add(t.getServerId());
+            });
+
+            gameServerService.gameServerGet(serverIds, syncMailUrl);
+        } else if (targetBodyType == EmailReceiver.SERVER.getType()) {
+            int[] serverIds = StrUtil.splitToInt(entity.getTargetBodyIds(), ",");
+            for (int server : serverIds) {
+                copy.setTargetBodyId((long) server);
+                gameServerService.gameServerPost(CollUtil.newArrayList(server), sendMailUrl, copy);
+            }
+
+            gameServerService.gameServerGet(serverIds, syncMailUrl);
+        }
+
         response.setErrorCode(ResponseCode.SUCCESS);
         return response;
     }

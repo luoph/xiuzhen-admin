@@ -22,6 +22,8 @@ public interface IGamePlayerService extends IService<GamePlayer> {
 
     GamePlayer getPlayer(long playerId);
 
+    List<GamePlayer> getPlayerList(List<Long> playerIds);
+
     /**
      * 查询玩家行为
      */
