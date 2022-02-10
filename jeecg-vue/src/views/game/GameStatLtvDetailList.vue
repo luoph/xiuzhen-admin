@@ -110,7 +110,7 @@ export default {
                     }
                 },
                 {
-                    title: "2日",
+                    title: "3日",
                     align: "center",
                     width: "60",
                     dataIndex: "d3",
