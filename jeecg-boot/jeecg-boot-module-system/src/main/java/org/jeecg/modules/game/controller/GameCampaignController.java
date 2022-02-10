@@ -198,8 +198,8 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         batchSwitchOff(gameCampaign.getId(), removeList);
 
         // 处理新增区服id
-        if (CollUtil.isNotEmpty(addList)) {
-            String serverIds = StrUtil.join(",", addList);
+        if (CollUtil.isNotEmpty(newServerIds)) {
+            String serverIds = StrUtil.join(",", newServerIds);
             List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign);
             for (GameCampaignType model : typeList) {
                 GameCampaignServer campaignServer = new GameCampaignServer()
@@ -321,13 +321,12 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         int[] ids = StrUtil.splitToInt(model.getServer(), ",");
         List<GameCampaignSupport> addList = new ArrayList<>();
         List<GameCampaignSupport> updateList = new ArrayList<>();
-        for (int serverId : ids) {
-            Wrapper<GameCampaignSupport> query = Wrappers.<GameCampaignSupport>lambdaQuery()
-                    .eq(GameCampaignSupport::getCampaignId, model.getCampaignId())
-                    .eq(GameCampaignSupport::getTypeId, model.getTypeId())
-                    .eq(GameCampaignSupport::getServerId, serverId);
 
-            GameCampaignSupport campaignSupport = campaignSupportService.getOne(query);
+        List<GameCampaignSupport> list = campaignSupportService.list(Wrappers.<GameCampaignSupport>lambdaQuery()
+                .eq(GameCampaignSupport::getCampaignId, model.getCampaignId())
+                .eq(GameCampaignSupport::getTypeId, model.getTypeId()));
+        for (int serverId : ids) {
+            GameCampaignSupport campaignSupport = list.stream().filter(e -> e.getServerId() == serverId).findFirst().orElse(null);
             if (campaignSupport == null) {
                 campaignSupport = new GameCampaignSupport()
                         .setStatus(model.getStatus())
