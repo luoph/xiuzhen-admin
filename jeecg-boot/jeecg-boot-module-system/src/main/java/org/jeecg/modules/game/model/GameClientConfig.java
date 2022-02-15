@@ -17,5 +17,6 @@ public class GameClientConfig {
     private String noticeUrl;
     private String roleUrl;
     private String authUrl;
+    private String oauthRedirectUrl;
     private Integer offRegisterDay;
 }

@@ -80,6 +80,11 @@ public class GameInfo extends BaseEntity {
     @Excel(name = "实名认证地址", width = 15)
     @ApiModelProperty(value = "authUrl")
     private java.lang.String authUrl;
+
+    @Excel(name = "苹果登录回调", width = 15)
+    @ApiModelProperty(value = "oauthRedirectUrl")
+    private java.lang.String oauthRedirectUrl;
+
     /**
      * gameSimpleName
      */

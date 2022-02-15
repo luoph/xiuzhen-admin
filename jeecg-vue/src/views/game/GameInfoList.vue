@@ -167,6 +167,11 @@ export default {
                     dataIndex: "authUrl"
                 },
                 {
+                    title: "苹果登录回调",
+                    align: "center",
+                    dataIndex: "oauthRedirectUrl"
+                },
+                {
                     title: "游戏列表地址",
                     align: "center",
                     dataIndex: "serverUrl"

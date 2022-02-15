@@ -27,6 +27,9 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="实名认证地址">
                     <a-input placeholder="请输入实名认证地址(不包含域名)" v-decorator="['authUrl', validatorRules.authUrl]" />
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="苹果登录回调">
+                    <a-input placeholder="请输入苹果登录回调(不包含域名)" v-decorator="['oauthRedirectUrl', validatorRules.oauthRedirectUrl]" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器列表地址">
                     <a-input placeholder="请输入服务器列表地址(不包含域名)" v-decorator="['serverUrl', validatorRules.serverUrl]" />
                 </a-form-item>
@@ -80,6 +83,7 @@ export default {
                 loginUrl: { rules: [{ required: true, message: "请输入帐号登录地址!" }] },
                 roleUrl: { rules: [{ required: true, message: "请输入角色信息地址!" }] },
                 authUrl: { rules: [{ required: true, message: "请输入实名认证地址!" }] },
+                oauthRedirectUrl: { rules: [{ required: true, message: "请输入苹果登录回调地址!" }] },
                 serverUrl: { rules: [{ required: true, message: "请输入服务器列表地址!" }] },
                 noticeUrl: { rules: [{ required: true, message: "请输入公告列表地址!" }] },
                 offRegisterDay: { rules: [{ required: true, message: "请输入关闭注册天数!" }] },
@@ -103,7 +107,22 @@ export default {
             this.visible = true;
             this.$nextTick(() => {
                 this.form.setFieldsValue(
-                    pick(this.model, "name", "yaAppId", "yaAppKey", "yaSimpleName", "yaGameKey", "loginUrl", "roleUrl", "serverUrl", "noticeUrl", "authUrl", "offRegisterDay", "remark")
+                    pick(
+                        this.model,
+                        "name",
+                        "yaAppId",
+                        "yaAppKey",
+                        "yaSimpleName",
+                        "yaGameKey",
+                        "loginUrl",
+                        "roleUrl",
+                        "serverUrl",
+                        "noticeUrl",
+                        "authUrl",
+                        "oauthRedirectUrl",
+                        "offRegisterDay",
+                        "remark"
+                    )
                 );
             });
         },
