@@ -77,9 +77,9 @@
                 </a-form-item>
                 <a-form-item label="货币" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-select placeholder="选择货币" v-decorator="['currency', validatorRules.currency]" initialValue="CNY">
-                        <a-select-option :value="CNY">人民币</a-select-option>
-                        <a-select-option :value="TWD">台币</a-select-option>
-                        <a-select-option :value="VND">越南盾</a-select-option>
+                        <a-select-option value="CNY">人民币</a-select-option>
+                        <a-select-option value="TWD">台币</a-select-option>
+                        <a-select-option value="VND">越南盾</a-select-option>
                     </a-select>
                 </a-form-item>
             </a-form>
@@ -227,6 +227,7 @@ export default {
                     "amountStat",
                     "addition",
                     "exchange",
+                    "recommend",
                     "webSku",
                     "localPrice",
                     "webLocalPrice",
