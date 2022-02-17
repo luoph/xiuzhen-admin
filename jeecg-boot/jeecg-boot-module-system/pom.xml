@@ -35,7 +35,7 @@
 
             <!-- mybatis-plus generator 自动生成代码插件 -->
             <plugin>
-                <groupId>cn.youai</groupId>
+                <groupId>cn.youai.generator</groupId>
                 <artifactId>mybatis-plus-generator-maven-plugin</artifactId>
                 <version>1.0.3</version>
                 <configuration>
