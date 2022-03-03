@@ -114,6 +114,15 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok(gameServerService.list(query));
     }
 
+    @AutoLog(value = "游戏服配置-待合服列表查询")
+    @ApiOperation(value = "游戏服配置-待合服列表查询", notes = "游戏服配置-待合服列表查询")
+    @GetMapping(value = "/mergeServerList")
+    public Result<?> mergeServerList(@RequestParam(name = "days", defaultValue = "5") Integer days,
+                                     @RequestParam(name = "minAvgPlayers", defaultValue = "50") Integer minAvgPlayers,
+                                     @RequestParam(name = "minAvgPayAmount", defaultValue = "200") Double minAvgPayAmount) {
+        return Result.ok(gameServerService.getMergeServerList(days, minAvgPlayers, minAvgPayAmount));
+    }
+
     /**
      * 添加
      *

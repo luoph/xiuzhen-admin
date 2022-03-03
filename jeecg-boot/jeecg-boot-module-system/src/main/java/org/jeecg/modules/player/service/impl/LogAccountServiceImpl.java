@@ -13,21 +13,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
-import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.player.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
-import org.jeecg.modules.player.mapper.GameOrderMapper;
 import org.jeecg.modules.player.mapper.LogAccountMapper;
 import org.jeecg.modules.player.service.ILogAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -42,12 +36,6 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
 
     @Resource
     private LogAccountMapper logAccountMapper;
-
-    @Resource
-    private GameOrderMapper gameOrderMapper;
-
-    @Autowired
-    private IGameServerService gameServerService;
 
     @Value("${app.log.db.table}")
     private String logTable;
@@ -156,25 +144,7 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount) {
-        Date endTime = DateUtils.endTimeOfDate(DateUtils.now());
-        Date startTime = DateUtils.startTimeOfDate(DateUtils.addDays(endTime, -days + 1));
-        Map<Integer, MergeServerVO> serverLoginNumMap = logAccountMapper.getServerLoginNum(logTable, DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime))
-                .stream().collect(Collectors.toConcurrentMap(MergeServerVO::getServerId, Function.identity(), (key1, key2) -> key2));
-        Map<Integer, MergeServerVO> serverPayAmountMap = gameOrderMapper.getGameOrderRangeDate(startTime, endTime)
-                .stream().collect(Collectors.toConcurrentMap(MergeServerVO::getServerId, Function.identity(), (key1, key2) -> key2));
-
-        Set<Integer> serverIds = gameServerService.getServerIds();
-        Map<Integer, MergeServerVO> map = new HashMap<>(serverIds.size());
-        serverIds.forEach(serverId -> {
-            MergeServerVO serverLoginNum = serverLoginNumMap.get(serverId);
-            MergeServerVO serverPayAmount = serverPayAmountMap.get(serverId);
-            int avgPlayers = null != serverLoginNum ? serverLoginNum.getNum() / days : 0;
-            double avgPayAmount = null != serverPayAmount ? serverPayAmount.getPayAmount().doubleValue() / days : 0;
-            if (null == serverLoginNum || avgPlayers < minAvgPlayers || null == serverPayAmount || avgPayAmount < minAvgPayAmount) {
-                map.put(serverId, new MergeServerVO().setServerId(serverId).setNum(avgPlayers).setPayAmount(BigDecimal.valueOf(avgPayAmount)));
-            }
-        });
-        return new ArrayList<>(map.values());
+    public List<MergeServerVO> getServerLoginNum(Date startTime, Date endTime) {
+        return logAccountMapper.getServerLoginNum(logTable, DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime));
     }
 }

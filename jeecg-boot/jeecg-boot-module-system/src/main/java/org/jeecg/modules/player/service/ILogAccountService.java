@@ -81,5 +81,5 @@ public interface ILogAccountService extends IService<LogAccount> {
      */
     List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate);
 
-    List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount);
+    List<MergeServerVO> getServerLoginNum(Date startTime, Date endTime);
 }

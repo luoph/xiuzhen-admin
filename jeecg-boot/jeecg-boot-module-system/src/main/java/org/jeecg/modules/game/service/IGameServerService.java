@@ -4,6 +4,7 @@ import cn.youai.basics.model.Response;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameServer;
+import org.jeecg.modules.player.entity.MergeServerVO;
 
 import java.util.Collection;
 import java.util.List;
@@ -91,4 +92,6 @@ public interface IGameServerService extends IService<GameServer> {
     void updateGameServerMaintain(List<Integer> serverIds, int isMaintain);
 
     Set<Integer> getServerIds();
+
+    List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount);
 }

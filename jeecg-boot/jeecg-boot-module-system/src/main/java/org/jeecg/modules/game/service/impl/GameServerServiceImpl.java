@@ -3,6 +3,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
+import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,12 +14,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
+import org.jeecg.modules.player.entity.MergeServerVO;
+import org.jeecg.modules.player.mapper.GameOrderMapper;
+import org.jeecg.modules.player.service.ILogAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +37,12 @@ import java.util.stream.Collectors;
  */
 @Service
 public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameServer> implements IGameServerService {
+
+    @Resource
+    private GameOrderMapper gameOrderMapper;
+
+    @Autowired
+    private ILogAccountService logAccountService;
 
     @Override
     public Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path) {
@@ -151,5 +165,28 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     @Override
     public Set<Integer> getServerIds() {
         return list(Wrappers.<GameServer>lambdaQuery().select(GameServer::getId)).stream().map(GameServer::getId).collect(Collectors.toSet());
+    }
+
+    @Override
+    public List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount) {
+        Date endTime = DateUtils.endTimeOfDate(DateUtils.now());
+        Date startTime = DateUtils.startTimeOfDate(DateUtils.addDays(endTime, -days + 1));
+        Map<Integer, MergeServerVO> serverLoginNumMap = logAccountService.getServerLoginNum(startTime, endTime)
+                .stream().collect(Collectors.toConcurrentMap(MergeServerVO::getServerId, Function.identity(), (key1, key2) -> key2));
+        Map<Integer, MergeServerVO> serverPayAmountMap = gameOrderMapper.getGameOrderRangeDate(startTime, endTime)
+                .stream().collect(Collectors.toConcurrentMap(MergeServerVO::getServerId, Function.identity(), (key1, key2) -> key2));
+
+        Set<Integer> serverIds = getServerIds();
+        Map<Integer, MergeServerVO> map = new HashMap<>(serverIds.size());
+        serverIds.forEach(serverId -> {
+            MergeServerVO serverLoginNum = serverLoginNumMap.get(serverId);
+            MergeServerVO serverPayAmount = serverPayAmountMap.get(serverId);
+            int avgPlayers = null != serverLoginNum ? serverLoginNum.getNum() / days : 0;
+            double avgPayAmount = null != serverPayAmount ? serverPayAmount.getPayAmount().doubleValue() / days : 0;
+            if (null == serverLoginNum || avgPlayers < minAvgPlayers || null == serverPayAmount || avgPayAmount < minAvgPayAmount) {
+                map.put(serverId, new MergeServerVO().setServerId(serverId).setNum(avgPlayers).setPayAmount(BigDecimal.valueOf(avgPayAmount)));
+            }
+        });
+        return new ArrayList<>(map.values());
     }
 }
