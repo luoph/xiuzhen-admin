@@ -34,4 +34,12 @@
         </foreach>
 
     </select>
+
+    <select id="getGameOrderRangeDate" resultType="org.jeecg.modules.player.entity.MergeServerVO">
+        select server_id as serverId, sum(pay_amount) as payAmount from game_order
+        where order_status = 4
+        <if test="null != startTime">and create_time &gt;= #{startTime}</if>
+        <if test="null != endTime">and create_time &lt;= #{endTime}</if>
+        group by server_id
+    </select>
 </mapper>

@@ -121,4 +121,12 @@
         group by a.player_id;
         ]]>
     </select>
+
+    <select id="getServerLoginNum" resultType="org.jeecg.modules.player.entity.MergeServerVO">
+        select server_id as serverId, count(distinct player_id) as num from ${logTable}
+        where type = 2
+        <if test="null != startTime">and create_date &gt;= #{startTime}</if>
+        <if test="null != endTime">and create_date &lt;= #{endTime}</if>
+        group by server_id;
+    </select>
 </mapper>

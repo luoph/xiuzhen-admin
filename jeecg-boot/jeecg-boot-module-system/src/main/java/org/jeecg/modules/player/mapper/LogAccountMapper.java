@@ -7,7 +7,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.player.entity.LogAccount;
+import org.jeecg.modules.player.entity.MergeServerVO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,4 +75,6 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
      * 指定日期没登陆玩家id
      */
     List<Long> getPlayerIdsByNoLoginRangeDate(@Param("serverId") int serverId, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("logTable") String logTable);
+
+    List<MergeServerVO> getServerLoginNum(@Param("logTable") String logTable, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

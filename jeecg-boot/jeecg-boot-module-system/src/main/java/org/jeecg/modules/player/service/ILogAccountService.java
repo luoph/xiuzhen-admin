@@ -6,6 +6,7 @@ package org.jeecg.modules.player.service;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.player.entity.LogAccount;
+import org.jeecg.modules.player.entity.MergeServerVO;
 
 import java.util.Date;
 import java.util.List;
@@ -79,4 +80,6 @@ public interface ILogAccountService extends IService<LogAccount> {
      * @return 玩家ids
      */
     List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate);
+
+    List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount);
 }

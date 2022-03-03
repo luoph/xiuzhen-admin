@@ -8,6 +8,7 @@ import org.jeecg.modules.game.entity.GameServer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author jeecg-boot
@@ -88,4 +89,6 @@ public interface IGameServerService extends IService<GameServer> {
 
 
     void updateGameServerMaintain(List<Integer> serverIds, int isMaintain);
+
+    Set<Integer> getServerIds();
 }

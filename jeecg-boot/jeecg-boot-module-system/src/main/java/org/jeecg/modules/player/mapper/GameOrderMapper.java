@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.player.entity.GameOrder;
+import org.jeecg.modules.player.entity.MergeServerVO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,4 +31,6 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
      * @return GameOrder id对应参数date集合下标
      */
     List<GameOrder> getStatPlayerNumAmountByDates(@Param("serverId") int serverId, @Param("dateList") List<JSONObject> dates);
+
+    List<MergeServerVO> getGameOrderRangeDate(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

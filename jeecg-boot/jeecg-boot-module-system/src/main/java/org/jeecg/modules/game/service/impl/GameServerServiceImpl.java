@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.primitives.Ints;
 import okhttp3.Call;
@@ -16,12 +16,10 @@ import org.jeecg.modules.game.service.IGameServerService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -150,4 +148,8 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         getBaseMapper().updateGameServerMaintain(serverIds, isMaintain);
     }
 
+    @Override
+    public Set<Integer> getServerIds() {
+        return list(Wrappers.<GameServer>lambdaQuery().select(GameServer::getId)).stream().map(GameServer::getId).collect(Collectors.toSet());
+    }
 }
