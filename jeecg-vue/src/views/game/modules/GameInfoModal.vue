@@ -27,14 +27,17 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="实名认证地址">
                     <a-input placeholder="请输入实名认证地址(不包含域名)" v-decorator="['authUrl', validatorRules.authUrl]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="苹果登录回调">
-                    <a-input placeholder="请输入苹果登录回调(不包含域名)" v-decorator="['oauthRedirectUrl', validatorRules.oauthRedirectUrl]" />
-                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器列表地址">
                     <a-input placeholder="请输入服务器列表地址(不包含域名)" v-decorator="['serverUrl', validatorRules.serverUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告列表地址">
                     <a-input placeholder="请输入公告列表地址(不包含域名)" v-decorator="['noticeUrl', validatorRules.noticeUrl]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付验证地址">
+                    <a-input placeholder="请输入支付验证地址(不包含域名)" v-decorator="['payUrl', validatorRules.payUrl]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="苹果登录回调">
+                    <a-input placeholder="请输入苹果登录回调(不包含域名)" v-decorator="['oauthRedirectUrl', validatorRules.oauthRedirectUrl]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="关闭注册天数">
                     <a-input placeholder="请输入关闭注册天数" v-decorator="['offRegisterDay', validatorRules.offRegisterDay]" />
@@ -82,6 +85,7 @@ export default {
                 yaSimpleName: { rules: [{ required: true, message: "请输入gameSimpleName!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入帐号登录地址!" }] },
                 roleUrl: { rules: [{ required: true, message: "请输入角色信息地址!" }] },
+                payUrl: { rules: [{ required: true, message: "请输入支付验证地址!" }] },
                 authUrl: { rules: [{ required: true, message: "请输入实名认证地址!" }] },
                 oauthRedirectUrl: { rules: [{ required: true, message: "请输入苹果登录回调地址!" }] },
                 serverUrl: { rules: [{ required: true, message: "请输入服务器列表地址!" }] },
@@ -116,6 +120,7 @@ export default {
                         "yaGameKey",
                         "loginUrl",
                         "roleUrl",
+                        "payUrl",
                         "serverUrl",
                         "noticeUrl",
                         "authUrl",
@@ -150,7 +155,7 @@ export default {
 
                     console.log(formData);
                     httpAction(httpUrl, formData, method)
-                        .then(res => {
+                        .then((res) => {
                             if (res.success) {
                                 that.$message.success(res.message);
                                 that.$emit("ok");

@@ -75,6 +75,13 @@ public class GameInfo extends BaseEntity {
     private java.lang.String roleUrl;
 
     /**
+     * 支付验证地址
+     */
+    @Excel(name = "支付验证地址", width = 15)
+    @ApiModelProperty(value = "payUrl")
+    private java.lang.String payUrl;
+
+    /**
      * 实名认证地址
      */
     @Excel(name = "实名认证地址", width = 15)

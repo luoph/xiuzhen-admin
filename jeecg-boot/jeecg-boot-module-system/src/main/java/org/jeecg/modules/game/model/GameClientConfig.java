@@ -16,6 +16,7 @@ public class GameClientConfig {
     private String serverUrl;
     private String noticeUrl;
     private String roleUrl;
+    private String payUrl;
     private String authUrl;
     private String oauthRedirectUrl;
     private Integer offRegisterDay;

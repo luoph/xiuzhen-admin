@@ -167,6 +167,11 @@ export default {
                     dataIndex: "authUrl"
                 },
                 {
+                    title: "支付验证地址",
+                    align: "center",
+                    dataIndex: "payUrl"
+                },
+                {
                     title: "苹果登录回调",
                     align: "center",
                     dataIndex: "oauthRedirectUrl"
