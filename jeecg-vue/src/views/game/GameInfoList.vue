@@ -22,7 +22,7 @@
                         </a-col>
                     </template>
                     <a-col :md="6" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                        <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                             <a @click="handleToggleSearch" style="margin-left: 8px">
@@ -49,7 +49,7 @@
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
                 </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
             </a-dropdown>
         </div>
 
@@ -71,7 +71,7 @@
 
                     <a-divider type="vertical" />
                     <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+                        <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
                         <a-menu slot="overlay">
                             <a-menu-item>
                                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -116,7 +116,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -172,6 +172,16 @@ export default {
                     dataIndex: "payUrl"
                 },
                 {
+                    title: "请输入账号注册地址",
+                    align: "center",
+                    dataIndex: "accountRegisterUrl"
+                },
+                {
+                    title: "请输入账号登录地址",
+                    align: "center",
+                    dataIndex: "accountLoginUrl"
+                },
+                {
                     title: "苹果登录回调",
                     align: "center",
                     dataIndex: "oauthRedirectUrl"
@@ -214,7 +224,7 @@ export default {
         };
     },
     computed: {
-        importExcelUrl: function() {
+        importExcelUrl: function () {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
@@ -222,7 +232,7 @@ export default {
         updateGameConfig() {
             // 开始刷新游戏配置
             console.log("开始刷新游戏配置");
-            getAction(this.url.updateGameConfigUrl).then(res => {
+            getAction(this.url.updateGameConfigUrl).then((res) => {
                 if (res.success) {
                     this.$message.success("游戏配置刷新成功");
                 } else {

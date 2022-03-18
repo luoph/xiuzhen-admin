@@ -92,6 +92,14 @@ public class GameInfo extends BaseEntity {
     @ApiModelProperty(value = "oauthRedirectUrl")
     private java.lang.String oauthRedirectUrl;
 
+    @Excel(name = "账号注册地址", width = 15)
+    @ApiModelProperty(value = "accountRegisterUrl")
+    private java.lang.String accountRegisterUrl;
+
+    @Excel(name = "账号登录地址", width = 15)
+    @ApiModelProperty(value = "accountLoginUrl")
+    private java.lang.String accountLoginUrl;
+
     /**
      * gameSimpleName
      */

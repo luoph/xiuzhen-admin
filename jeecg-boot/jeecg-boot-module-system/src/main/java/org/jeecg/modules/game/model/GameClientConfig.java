@@ -19,5 +19,7 @@ public class GameClientConfig {
     private String payUrl;
     private String authUrl;
     private String oauthRedirectUrl;
+    private String accountRegisterUrl;
+    private String accountLoginUrl;
     private Integer offRegisterDay;
 }

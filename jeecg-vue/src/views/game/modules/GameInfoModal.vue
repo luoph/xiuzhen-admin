@@ -39,6 +39,12 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="苹果登录回调">
                     <a-input placeholder="请输入苹果登录回调(不包含域名)" v-decorator="['oauthRedirectUrl', validatorRules.oauthRedirectUrl]" />
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号注册地址">
+                    <a-input placeholder="请输入账号注册地址(不包含域名)" v-decorator="['accountRegisterUrl', validatorRules.accountRegisterUrl]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号登录地址">
+                    <a-input placeholder="请输入账号登录地址(不包含域名)" v-decorator="['accountLoginUrl', validatorRules.accountLoginUrl]" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="关闭注册天数">
                     <a-input placeholder="请输入关闭注册天数" v-decorator="['offRegisterDay', validatorRules.offRegisterDay]" />
                 </a-form-item>
@@ -85,9 +91,11 @@ export default {
                 yaSimpleName: { rules: [{ required: true, message: "请输入gameSimpleName!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入帐号登录地址!" }] },
                 roleUrl: { rules: [{ required: true, message: "请输入角色信息地址!" }] },
-                payUrl: { rules: [{ required: true, message: "请输入支付验证地址!" }] },
-                authUrl: { rules: [{ required: true, message: "请输入实名认证地址!" }] },
-                oauthRedirectUrl: { rules: [{ required: true, message: "请输入苹果登录回调地址!" }] },
+                payUrl: { rules: [{ required: false, message: "请输入支付验证地址!" }] },
+                authUrl: { rules: [{ required: false, message: "请输入实名认证地址!" }] },
+                accountRegisterUrl: { rules: [{ required: false, message: "请输入请输入账号登录地址!" }] },
+                accountLoginUrl: { rules: [{ required: false, message: "请输入请输入账号注册地址!" }] },
+                oauthRedirectUrl: { rules: [{ required: false, message: "请输入苹果登录回调地址!" }] },
                 serverUrl: { rules: [{ required: true, message: "请输入服务器列表地址!" }] },
                 noticeUrl: { rules: [{ required: true, message: "请输入公告列表地址!" }] },
                 offRegisterDay: { rules: [{ required: true, message: "请输入关闭注册天数!" }] },
@@ -124,6 +132,8 @@ export default {
                         "serverUrl",
                         "noticeUrl",
                         "authUrl",
+                        "accountRegisterUrl",
+                        "accountLoginUrl",
                         "oauthRedirectUrl",
                         "offRegisterDay",
                         "remark"
