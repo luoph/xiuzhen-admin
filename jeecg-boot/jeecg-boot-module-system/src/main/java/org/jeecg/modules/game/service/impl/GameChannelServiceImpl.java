@@ -32,7 +32,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     private String ipWhitelistFolder;
 
     @Override
-    public List<GameServerVO> selectServerListByChannelId(Integer channelId) {
+    public List<GameServerVO> selectChannelServerList(Integer channelId) {
         return getBaseMapper().selectServerListByChannelId(channelId);
     }
 
@@ -80,14 +80,14 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     }
 
     private void updateChannelServerJson(GameChannel channel) {
-        List<GameServerVO> servers = selectServerListByChannelId(channel.getId());
+        List<GameServerVO> servers = selectChannelServerList(channel.getId());
         UpdateConfig updateConfig = new UpdateConfig()
                 .setVersionCode(channel.getVersionCode())
                 .setVersionName(channel.getVersionName())
                 .setVersionUpdateTime(channel.getVersionUpdateTime());
 
         boolean enableTa = channel.getTaStatistics() != null && channel.getTaStatistics() == 1;
-        JsonFileUtils.writeJsonFile(new ChannelConfig(channel.getNoticeId(), updateConfig, servers, enableTa),
+        JsonFileUtils.writeJsonFile(ChannelConfig.of(channel.getNoticeId(), updateConfig, servers, enableTa),
                 serverFolder, channel.getSimpleName());
     }
 }

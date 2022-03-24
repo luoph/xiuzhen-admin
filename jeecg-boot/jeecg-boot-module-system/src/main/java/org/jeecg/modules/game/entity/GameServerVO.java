@@ -28,5 +28,6 @@ public class GameServerVO {
     private Integer maxVersion;
     private Long openTime;
     private Long onlineTime;
+    private String tag;
 
 }

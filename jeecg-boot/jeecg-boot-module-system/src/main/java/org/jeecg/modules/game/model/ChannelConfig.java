@@ -28,4 +28,8 @@ public class ChannelConfig {
         this.serverList.addAll(serverList);
         this.taStatistics = taStatistics;
     }
+
+    public static ChannelConfig of(Long noticeId, UpdateConfig updateConfig, List<GameServerVO> serverList, boolean taStatistics) {
+        return new ChannelConfig(noticeId, updateConfig, serverList, taStatistics);
+    }
 }

@@ -58,6 +58,13 @@ public class GameServer extends BaseEntity {
     private java.lang.String remark;
 
     /**
+     * 标签ID
+     */
+    @Excel(name = "标签ID", width = 15)
+    @ApiModelProperty(value = "标签ID")
+    private java.lang.Long tagId;
+
+    /**
      * 服务器路径
      */
     @Excel(name = "服务器Host", width = 15)
