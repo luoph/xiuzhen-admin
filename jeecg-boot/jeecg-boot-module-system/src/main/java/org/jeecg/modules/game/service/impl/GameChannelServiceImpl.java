@@ -33,7 +33,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
 
     @Override
     public List<GameServerVO> selectChannelServerList(Integer channelId) {
-        return getBaseMapper().selectServerListByChannelId(channelId);
+        return getBaseMapper().selectChannelServerList(channelId);
     }
 
     @Override

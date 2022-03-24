@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.game.mapper.GameChannelMapper">
 
-    <select id="selectServerListByChannelId" resultType="org.jeecg.modules.game.entity.GameServerVO">
+    <select id="selectChannelServerList" resultType="org.jeecg.modules.game.entity.GameServerVO">
         SELECT s.`id`,
                s.`game_id`,
                s.`name`,
