@@ -62,7 +62,7 @@ public class GameServer extends BaseEntity {
      */
     @Excel(name = "标签ID", width = 15)
     @ApiModelProperty(value = "标签ID")
-    private java.lang.Long tagId;
+    private java.lang.Integer tagId;
 
     /**
      * 服务器路径
@@ -246,4 +246,9 @@ public class GameServer extends BaseEntity {
 
     @TableField(exist = false)
     private List<Integer> channelIds;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value = "标签")
+    private String tag;
+
 }

@@ -9,13 +9,15 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服名字">
                     <a-input placeholder="请输入区服名字" v-decorator="['name', validatorRules.name]" />
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="标签">
+                    <j-dict-select-tag :triggerChange="true" v-decorator="['tagId', validatorRules.tagId]" placeholder="请选择标签" dictCode="game_server_tag,name,id" />
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服备注">
                     <a-input placeholder="请输入区服备注" v-decorator="['remark', validatorRules.remark]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
-                    <a-select placeholder="请选择游戏编号" v-model="model.gameId">
-                        <a-select-option v-for="game in gameList" :key="game.name" :value="game.id"> {{ game.name }}({{ game.id }}) </a-select-option>
-                    </a-select>
+                    <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
+                    <j-dict-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号" dictCode="game_info,name,id" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Host">
                     <a-input placeholder="请输入区服Host" v-decorator="['host', validatorRules.host]" />
@@ -135,10 +137,9 @@
 </template>
 
 <script>
-import { getAction, httpAction } from "@/api/manage";
+import { httpAction } from "@/api/manage";
 import pick from "lodash.pick";
 import moment from "moment";
-import { filterObj } from "@/utils/util";
 
 export default {
     name: "GameServerModal",
@@ -166,6 +167,7 @@ export default {
                 gameId: { rules: [{ required: true, message: "请选择游戏id!" }] },
                 name: { rules: [{ required: true, message: "请输入区服名字!" }] },
                 remark: { rules: [{ required: true, message: "请输入区服备注!" }] },
+                tagId: { rules: [{ required: true, message: "请选择标签!" }] },
                 host: { rules: [{ required: true, message: "请输入前端HOST!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入登录地址!" }] },
                 status: { rules: [{ required: true, message: "请输入区服状态!" }] },
@@ -186,29 +188,11 @@ export default {
             },
             url: {
                 add: "game/gameServer/add",
-                edit: "game/gameServer/edit",
-                gameInfoListUrl: "game/gameInfo/list"
+                edit: "game/gameServer/edit"
             }
         };
     },
-    created() {
-        this.queryGameInfoList();
-    },
     methods: {
-        queryGameInfoList() {
-            let that = this;
-            getAction(that.url.gameInfoListUrl).then(res => {
-                if (res.success) {
-                    if (res.result instanceof Array) {
-                        this.gameList = res.result;
-                    } else if (res.result.records instanceof Array) {
-                        this.gameList = res.result.records;
-                    }
-                } else {
-                    this.gameList = [];
-                }
-            });
-        },
         add() {
             this.edit({});
         },
@@ -217,6 +201,13 @@ export default {
             this.model = Object.assign({}, record);
             this.visible = true;
             this.isEdit = this.model.id != null;
+            // 转换成 string 格式
+            if (this.model.tagId) {
+                this.model.tagId = this.model.tagId + "";
+            }
+            if (this.model.gameId) {
+                this.model.gameId = this.model.gameId + "";
+            }
             this.$nextTick(() => {
                 this.form.setFieldsValue(
                     pick(
@@ -224,6 +215,8 @@ export default {
                         "id",
                         "name",
                         "remark",
+                        "gameId",
+                        "tagId",
                         "host",
                         "loginUrl",
                         "gmUrl",
@@ -287,7 +280,7 @@ export default {
 
                     console.log(formData);
                     httpAction(httpurl, formData, method)
-                        .then(res => {
+                        .then((res) => {
                             if (res.success) {
                                 that.$message.success(res.message);
                                 that.$emit("ok");
@@ -312,6 +305,8 @@ export default {
                     "id",
                     "name",
                     "remark",
+                    "gameId",
+                    "tagId",
                     "host",
                     "loginUrl",
                     "gmUrl",

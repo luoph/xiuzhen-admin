@@ -6,13 +6,19 @@
                 <a-row :gutter="24">
                     <a-col :md="4" :sm="8">
                         <a-form-item label="游戏编号">
+                            <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
                             <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="名字">
-                            <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库，java接口：SysDictController#getDictItems-->
+                            <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
                             <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id" />
+                        </a-form-item>
+                    </a-col>
+                    <a-col :md="4" :sm="8">
+                        <a-form-item label="标签">
+                            <j-dict-select-tag v-model="queryParam.tagId" placeholder="请选择标签" dictCode="game_server_tag,name,id" />
                         </a-form-item>
                     </a-col>
                     <a-col :md="4" :sm="8">
@@ -48,7 +54,7 @@
                         </a-col>
                     </template>
                     <a-col :md="4" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                        <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
                             <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                             <a @click="handleToggleSearch" style="margin-left: 8px">
@@ -111,6 +117,9 @@
                         </a-menu>
                     </a-dropdown>
                 </span>
+                <span slot="tagSlot" slot-scope="text, record">
+                    <a-tag color="orange">{{ text }}</a-tag>
+                </span>
                 <span slot="maintainSlot" slot-scope="text, record">
                     <a-tag v-if="record.isMaintain == 1" color="red">维护中</a-tag>
                     <a-tag v-else color="green">运行中</a-tag>
@@ -172,7 +181,7 @@ export default {
                     fixed: "left",
                     width: 40,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -191,6 +200,13 @@ export default {
                     dataIndex: "name"
                 },
                 {
+                    title: "标签",
+                    align: "center",
+                    width: 100,
+                    dataIndex: "tag",
+                    scopedSlots: { customRender: "tagSlot" }
+                },
+                {
                     title: "备注",
                     align: "left",
                     width: 100,
@@ -201,7 +217,7 @@ export default {
                     align: "center",
                     width: 100,
                     dataIndex: "gameId",
-                    customRender: text => {
+                    customRender: (text) => {
                         return filterGameIdText(this.gameList, text);
                     }
                 },
@@ -228,7 +244,7 @@ export default {
                     align: "center",
                     width: 60,
                     dataIndex: "onlineNum",
-                    customRender: text => {
+                    customRender: (text) => {
                         if (text === null || text === "" || text === undefined) {
                             return "N/A";
                         }
@@ -240,7 +256,7 @@ export default {
                     align: "left",
                     width: 60,
                     dataIndex: "gmStatus",
-                    customRender: value => {
+                    customRender: (value) => {
                         let text = "--";
                         if (value === 1) {
                             text = "开启";
@@ -255,7 +271,7 @@ export default {
                     align: "left",
                     width: 60,
                     dataIndex: "taStatistics",
-                    customRender: value => {
+                    customRender: (value) => {
                         let text = "--";
                         if (value === 1) {
                             text = "开启";
@@ -328,7 +344,7 @@ export default {
         };
     },
     computed: {
-        importExcelUrl: function() {
+        importExcelUrl: function () {
             return `${window._CONFIG["domainURL"]}/${this.url.importExcelUrl}`;
         }
     },
@@ -338,7 +354,7 @@ export default {
     methods: {
         queryGameInfoList() {
             let that = this;
-            getAction(that.url.gameInfoListUrl).then(res => {
+            getAction(that.url.gameInfoListUrl).then((res) => {
                 if (res.success) {
                     if (res.result instanceof Array) {
                         this.gameList = res.result;
@@ -363,12 +379,12 @@ export default {
             delete param.openTimeRange;
             return filterObj(param);
         },
-        onCreateDateChange: function(value, dateString) {
+        onCreateDateChange: function (value, dateString) {
             console.log(dateString[0], dateString[1]);
             this.queryParam.createTime_begin = dateString[0];
             this.queryParam.createTime_end = dateString[1];
         },
-        onOpenDateChange: function(value, dateString) {
+        onOpenDateChange: function (value, dateString) {
             console.log(dateString[0], dateString[1]);
             this.queryParam.openTime_begin = dateString[0];
             this.queryParam.openTime_end = dateString[1];
@@ -376,16 +392,16 @@ export default {
         onDateOk(value) {
             console.log(value);
         },
-        updateActivity: function() {
+        updateActivity: function () {
             this.batchAction(this.url.updateActivity, false);
         },
-        updateSetting: function() {
+        updateSetting: function () {
             this.batchAction(this.url.updateSetting, false);
         },
-        startMaintain: function() {
+        startMaintain: function () {
             this.batchAction(this.url.startMaintain, true, "确定开启维护状态？", "开启维护状态将导致所有玩家掉线");
         },
-        stopMaintain: function() {
+        stopMaintain: function () {
             this.batchAction(this.url.stopMaintain, true, "确定关闭维护状态？", "关闭维护状态将允许玩家上线");
         }
     }

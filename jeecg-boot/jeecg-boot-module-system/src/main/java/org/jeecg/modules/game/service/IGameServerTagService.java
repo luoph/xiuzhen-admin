@@ -3,6 +3,8 @@ package org.jeecg.modules.game.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameServerTag;
 
+import java.util.List;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -10,5 +12,7 @@ import org.jeecg.modules.game.entity.GameServerTag;
  * @date 2022-03-25
  */
 public interface IGameServerTagService extends IService<GameServerTag> {
+
+    List<GameServerTag> selectTags();
 
 }
