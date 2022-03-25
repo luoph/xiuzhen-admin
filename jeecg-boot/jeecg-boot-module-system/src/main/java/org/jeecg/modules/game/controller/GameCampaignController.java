@@ -424,12 +424,13 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         }
 
         removeServerIds.removeIf(reserveServerIds::contains);
-        removeServerIds.addAll(serverIds.stream().filter(serverId -> !reserveServerIds.contains(serverId)).collect(Collectors.toSet()));
         if (removeServerIds.isEmpty()) {
             return Result.ok("没有可移除的区服");
         }
 
-        campaignService.updateById(new GameCampaign().setId(campaignId).setServerIds(StrUtil.join(",", reserveServerIds)));
+        if (serverIds.removeIf(removeServerIds::contains)) {
+            campaignService.updateById(new GameCampaign().setId(campaignId).setServerIds(StrUtil.join(",", serverIds)));
+        }
         campaignSupportService.remove(Wrappers.<GameCampaignSupport>lambdaQuery().eq(GameCampaignSupport::getCampaignId, campaignId).in(GameCampaignSupport::getServerId, removeServerIds));
         return Result.ok("已移除" + removeServerIds.size() + "个区服");
     }
