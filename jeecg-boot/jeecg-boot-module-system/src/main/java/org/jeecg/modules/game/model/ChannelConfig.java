@@ -2,6 +2,7 @@ package org.jeecg.modules.game.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.jeecg.modules.game.entity.GameServerTag;
 import org.jeecg.modules.game.entity.GameServerVO;
 
 import java.util.ArrayList;
@@ -20,16 +21,18 @@ public class ChannelConfig {
     private UpdateConfig updateConfig;
     // 是否上传数数统计
     private boolean taStatistics;
-    private List<GameServerVO> serverList = new ArrayList<>();
 
-    public ChannelConfig(Long noticeId, UpdateConfig updateConfig, List<GameServerVO> serverList, boolean taStatistics) {
+    private List<GameServerVO> serverList = new ArrayList<>();
+    private List<GameServerTag> tagList = new ArrayList<>();
+
+    public ChannelConfig(Long noticeId, UpdateConfig updateConfig, List<GameServerTag> tagList, List<GameServerVO> serverList, boolean taStatistics) {
         this.noticeId = noticeId;
         this.updateConfig = updateConfig;
         this.serverList.addAll(serverList);
         this.taStatistics = taStatistics;
     }
 
-    public static ChannelConfig of(Long noticeId, UpdateConfig updateConfig, List<GameServerVO> serverList, boolean taStatistics) {
-        return new ChannelConfig(noticeId, updateConfig, serverList, taStatistics);
+    public static ChannelConfig of(Long noticeId, UpdateConfig updateConfig, List<GameServerTag> tagList, List<GameServerVO> serverList, boolean taStatistics) {
+        return new ChannelConfig(noticeId, updateConfig, tagList, serverList, taStatistics);
     }
 }

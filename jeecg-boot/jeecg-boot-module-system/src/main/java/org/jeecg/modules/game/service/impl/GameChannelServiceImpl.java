@@ -1,15 +1,20 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.jeecg.JsonFileUtils;
 import org.jeecg.modules.game.entity.GameChannel;
+import org.jeecg.modules.game.entity.GameServerTag;
 import org.jeecg.modules.game.entity.GameServerVO;
 import org.jeecg.modules.game.mapper.GameChannelMapper;
 import org.jeecg.modules.game.model.ChannelConfig;
 import org.jeecg.modules.game.model.UpdateConfig;
 import org.jeecg.modules.game.service.IGameChannelService;
+import org.jeecg.modules.game.service.IGameServerTagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +35,9 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
 
     @Value("${app.folder.ip-whitelist}")
     private String ipWhitelistFolder;
+
+    @Autowired
+    private IGameServerTagService serverTagService;
 
     @Override
     public List<GameServerVO> selectChannelServerList(Integer channelId) {
@@ -79,6 +87,13 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
         }
     }
 
+    private List<GameServerTag> getTagList() {
+        Wrapper<GameServerTag> query = Wrappers.<GameServerTag>lambdaQuery()
+                .select(GameServerTag::getId, GameServerTag::getName)
+                .orderByDesc(GameServerTag::getPosition);
+        return serverTagService.list(query);
+    }
+
     private void updateChannelServerJson(GameChannel channel) {
         List<GameServerVO> servers = selectChannelServerList(channel.getId());
         UpdateConfig updateConfig = new UpdateConfig()
@@ -86,8 +101,9 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
                 .setVersionName(channel.getVersionName())
                 .setVersionUpdateTime(channel.getVersionUpdateTime());
 
+        List<GameServerTag> tagList = getTagList();
         boolean enableTa = channel.getTaStatistics() != null && channel.getTaStatistics() == 1;
-        JsonFileUtils.writeJsonFile(ChannelConfig.of(channel.getNoticeId(), updateConfig, servers, enableTa),
+        JsonFileUtils.writeJsonFile(ChannelConfig.of(channel.getNoticeId(), updateConfig, tagList, servers, enableTa),
                 serverFolder, channel.getSimpleName());
     }
 }
