@@ -124,13 +124,11 @@
                     </div>
                 </template>
                 <span slot="action" slot-scope="text, record">
-                    <a @click="handleEdit(record)">活动信息</a>
-                    <a-divider type="vertical" />
-                    <a @click="handleServerList(record)">活动状态</a>
-                    <a-divider type="vertical" />
-                    <a @click="handleDuplicate(record)">复制</a>
-                    <a-divider type="vertical" />
-                    <a @click="handleSyncCampaign(record)">同步到区服</a>
+                    <a @click="handleEdit(record)">活动信息</a><br/>
+                    <a @click="handleServerList(record)">活动状态</a><br/>
+                    <a @click="handleDuplicate(record)">复制</a><br/>
+                    <a @click="handleSyncCampaign(record)">同步到区服</a><br/>
+                    <a @click="removeCompletedServer(record)">移除已结束区服</a>
                     <!-- <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
                         <a-menu slot="overlay">
@@ -314,6 +312,7 @@ export default {
                     title: "操作",
                     dataIndex: "action",
                     align: "center",
+                    width: 130,
                     scopedSlots: { customRender: "action" }
                 }
             ],
@@ -324,7 +323,8 @@ export default {
                 duplicate: "game/gameCampaign/duplicate",
                 deleteBatch: "game/gameCampaign/deleteBatch",
                 exportXlsUrl: "game/gameCampaign/exportXls",
-                importExcelUrl: "game/gameCampaign/importExcel"
+                importExcelUrl: "game/gameCampaign/importExcel",
+                removeCompletedServerUrl: "game/gameCampaign/removeCompletedServer"
             },
             dictOptions: {}
         };
@@ -395,6 +395,22 @@ export default {
                         that.$message.success("复制成功");
                     } else {
                         that.$message.error("复制失败");
+                    }
+                })
+                .finally(() => {
+                    that.confirmLoading = false;
+                    that.loadData();
+                });
+        },
+        removeCompletedServer: function(record) {
+            const that = this;
+            that.confirmLoading = true;
+            getAction(that.url.removeCompletedServerUrl, { id: record.id })
+                .then(res => {
+                    if (res.success) {
+                        that.$message.success(res.message);
+                    } else {
+                        that.$message.error("移除失败");
                     }
                 })
                 .finally(() => {

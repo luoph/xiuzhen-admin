@@ -384,4 +384,75 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         }
         return Result.error("复制失败!");
     }
+
+    @GetMapping(value = "/removeCompletedServer")
+    public Result<?> removeCompletedServer(@RequestParam(name = "id", defaultValue = "0") String id) {
+        long campaignId = Long.parseLong(id);
+        GameCampaign gameCampaign = campaignService.getById(campaignId);
+        if (null == gameCampaign) {
+            return Result.error("主活动为空");
+        }
+
+        Set<String> serverIds = new HashSet<>(StrUtil.splitTrim(gameCampaign.getServerIds(), ","));
+        if (serverIds.isEmpty()) {
+            return Result.ok("该活动没有支持的区服");
+        }
+
+        List<GameCampaignType> campaignTypeList = campaignTypeService.list(Wrappers.<GameCampaignType>lambdaQuery().eq(GameCampaignType::getCampaignId, campaignId));
+        if (campaignTypeList.isEmpty()) {
+            return Result.ok("该活动没有支持的区服");
+        }
+
+        Date now = DateUtils.now();
+        Set<String> reserveServerIds = new HashSet<>(serverIds.size());
+        Set<String> removeServerIds = new HashSet<>(serverIds.size());
+        Page<GameServer> page = new Page<>(1, Integer.MAX_VALUE);
+        for (GameCampaignType campaignType : campaignTypeList) {
+            IPage<GameCampaignServer> pageList = campaignService.serverList(page, campaignType.getCampaignId(), campaignType.getId(), null);
+            for (GameCampaignServer record : pageList.getRecords()) {
+                String strServerId = String.valueOf(record.getServerId());
+                if (reserveServerIds.contains(strServerId)) {
+                    continue;
+                }
+                setCampaignStatus(record, campaignType, now);
+                if (record.getCampaignStatus() == CampaignStatus.COMPLETED.getValue()) {
+                    removeServerIds.add(strServerId);
+                } else {
+                    reserveServerIds.add(strServerId);
+                }
+            }
+        }
+
+        removeServerIds.removeIf(reserveServerIds::contains);
+        removeServerIds.addAll(serverIds.stream().filter(serverId -> !reserveServerIds.contains(serverId)).collect(Collectors.toSet()));
+        if (removeServerIds.isEmpty()) {
+            return Result.ok("没有可移除的区服");
+        }
+
+        campaignService.updateById(new GameCampaign().setId(campaignId).setServerIds(StrUtil.join(",", reserveServerIds)));
+        campaignSupportService.remove(Wrappers.<GameCampaignSupport>lambdaQuery().eq(GameCampaignSupport::getCampaignId, campaignId).in(GameCampaignSupport::getServerId, removeServerIds));
+        return Result.ok("已移除" + removeServerIds.size() + "个区服");
+    }
+
+    private void setCampaignStatus(GameCampaignServer record, GameCampaignType campaignType, Date date) {
+        if (record.getStatus() == SwitchStatus.OFF.getValue()) {
+            record.setCampaignStatus(CampaignStatus.CLOSED.getValue());
+        } else if (record.getStatus() == SwitchStatus.ON.getValue()) {
+            Date startTime = null;
+            Date endTime = null;
+            if (campaignType.getTimeType() == 1) {
+                startTime = campaignType.getStartTime();
+                endTime = campaignType.getEndTime();
+            } else if (campaignType.getTimeType() == 2) {
+                startTime = DateUtils.startTimeOfDate(DateUtils.addDays(record.getOpenTime(), campaignType.getStartDay()));
+                endTime = DateUtils.endTimeOfDate(DateUtils.addDays(record.getOpenTime(),
+                        Math.max(campaignType.getStartDay() + campaignType.getDuration() - 1, 0)));
+            }
+            record.setCampaignStatus(date.before(startTime) ? CampaignStatus.NOT_STARTED.getValue()
+                    : date.after(endTime) ? CampaignStatus.COMPLETED.getValue()
+                    : CampaignStatus.IN_PROGRESS.getValue());
+        } else {
+            record.setCampaignStatus(CampaignStatus.NONE.getValue());
+        }
+    }
 }
