@@ -29,6 +29,7 @@ public class ChannelConfig {
         this.noticeId = noticeId;
         this.updateConfig = updateConfig;
         this.serverList.addAll(serverList);
+        this.tagList.addAll(tagList);
         this.taStatistics = taStatistics;
     }
 
