@@ -7,7 +7,7 @@
                s.`game_id`,
                s.`name`,
                s.`host`,
-               t.`name`                                AS `tag`,
+               s.`tag_id`,
                UNIX_TIMESTAMP(s.`open_time`)           AS `open_time`,
                UNIX_TIMESTAMP(s.`online_time`)         AS `online_time`,
                s.`login_url`,
@@ -21,7 +21,6 @@
                s.`max_version`
         FROM `game_server` s
                  LEFT JOIN `game_channel_server` c ON c.`server_id` = s.`id`
-                 LEFT JOIN `game_server_tag` t ON s.`tag_id` = t.`id`
         WHERE c.`channel_id` = #{channel_id}
           AND c.`del_flag` = 0
         ORDER BY c.`position` DESC
