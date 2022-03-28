@@ -22,8 +22,7 @@ public class GameServerTagServiceImpl extends ServiceImpl<GameServerTagMapper, G
     @Override
     public List<GameServerTag> selectTags() {
         Wrapper<GameServerTag> query = Wrappers.<GameServerTag>lambdaQuery()
-                .select(GameServerTag::getId, GameServerTag::getName)
-                .orderByDesc(GameServerTag::getPosition);
+                .select(GameServerTag::getId, GameServerTag::getName, GameServerTag::getPosition);
         return list(query);
     }
 
