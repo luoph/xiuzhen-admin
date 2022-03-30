@@ -167,7 +167,7 @@ export default {
                 gameId: { rules: [{ required: true, message: "请选择游戏id!" }] },
                 name: { rules: [{ required: true, message: "请输入区服名字!" }] },
                 remark: { rules: [{ required: true, message: "请输入区服备注!" }] },
-                tagId: { rules: [{ required: true, message: "请选择标签!" }] },
+                tagId: { rules: [{ required: false, message: "请选择标签!" }] },
                 host: { rules: [{ required: true, message: "请输入前端HOST!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入登录地址!" }] },
                 status: { rules: [{ required: true, message: "请输入区服状态!" }] },
