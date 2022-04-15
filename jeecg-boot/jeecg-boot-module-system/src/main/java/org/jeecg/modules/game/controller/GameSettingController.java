@@ -31,9 +31,6 @@ import java.util.Arrays;
 @RequestMapping("game/gameSetting")
 public class GameSettingController extends JeecgController<GameSetting, IGameSettingService> {
 
-    @Value("${app.url.game-center}")
-    private String gameCenterUrl;
-
     @Autowired
     private IGameSettingService gameSettingService;
 
@@ -68,7 +65,6 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameSetting gameSetting) {
         gameSettingService.save(gameSetting);
-        refreshGameSetting();
         return Result.ok("添加成功！");
     }
 
@@ -82,7 +78,6 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameSetting gameSetting) {
         gameSettingService.updateById(gameSetting);
-        refreshGameSetting();
         return Result.ok("编辑成功!");
     }
 
@@ -96,7 +91,6 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         gameSettingService.removeById(id);
-        refreshGameSetting();
         return Result.ok("删除成功!");
     }
 
@@ -110,7 +104,6 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         this.gameSettingService.removeByIds(Arrays.asList(ids.split(",")));
-        refreshGameSetting();
         return Result.ok("批量删除成功！");
     }
 
@@ -151,12 +144,5 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameSetting.class);
-    }
-
-    /**
-     * 刷新中心服缓存
-     */
-    private void refreshGameSetting() {
-        OkHttpHelper.get(gameCenterUrl + "/setting/update");
     }
 }
