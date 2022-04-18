@@ -209,8 +209,8 @@ public class GameServer extends BaseEntity {
     /**
      * 合服时母服id
      */
-    @Excel(name = "合服时母服id", width = 15)
-    @ApiModelProperty(value = "合服时母服id")
+    @Excel(name = "合服后的母服id", width = 15)
+    @ApiModelProperty(value = "合服后的母服id")
     private java.lang.Integer pid;
     /**
      * 合服时间
@@ -220,12 +220,28 @@ public class GameServer extends BaseEntity {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @ApiModelProperty(value = "合服时间")
     private java.util.Date mergeTime;
+
+    /**
+     * 合服，修改指定开服活动的统计开始时间
+     */
+    @Excel(name = "合服时开服排行id", width = 15)
+    @ApiModelProperty(value = "扩展字段")
+    private java.lang.String mergeOscDetailIds;
+
+    /**
+     * 合服，修改指定节日活动的统计开始时间
+     */
+    @Excel(name = "合服时节日活动id", width = 15)
+    @ApiModelProperty(value = "扩展字段")
+    private java.lang.String mergeCampaignTypeIds;
+
     /**
      * 扩展字段
      */
     @Excel(name = "扩展字段", width = 15)
     @ApiModelProperty(value = "扩展字段")
-    private java.lang.Object extra;
+    private java.lang.String extra;
+    
     /**
      * 服务器开服时间
      */
