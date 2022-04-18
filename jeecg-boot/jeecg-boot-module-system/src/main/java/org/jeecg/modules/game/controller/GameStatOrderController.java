@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.controller;
 
 import cn.youai.server.utils.DateUtils;
-import cn.youai.server.utils.NumberUtils;
+import cn.youai.basics.utils.NumberUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;

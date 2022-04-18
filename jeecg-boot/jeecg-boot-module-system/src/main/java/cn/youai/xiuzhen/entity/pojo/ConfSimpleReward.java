@@ -1,7 +1,7 @@
 
 package cn.youai.xiuzhen.entity.pojo;
 
-import cn.youai.server.model.ConfigData;
+import cn.youai.basics.model.ConfigData;
 import cn.youai.server.model.ItemVO;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

@@ -2,7 +2,7 @@ package cn.youai.xiuzhen.config;
 
 import cn.youai.server.conf.ConfItem;
 import cn.youai.server.model.ConfigTable;
-import cn.youai.server.utils.ReflectUtils;
+import cn.youai.basics.utils.ReflectUtils;
 import cn.youai.xiuzhen.entity.pojo.ConfMainStory;
 import cn.youai.xiuzhen.entity.pojo.ConfMedicine;
 import cn.youai.xiuzhen.entity.pojo.ConfRefineEquip;
