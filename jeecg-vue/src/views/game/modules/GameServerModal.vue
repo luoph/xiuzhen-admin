@@ -98,6 +98,12 @@
                         <a-select-option :value="1">专服</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付回调开关">
+                    <a-select placeholder="合并状态" v-decorator="['outdated', validatorRules.outdated]" initialValue="0">
+                        <a-select-option :value="0">未合并</a-select-option>
+                        <a-select-option :value="1">已合并</a-select-option>
+                    </a-select>
+                </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时母服id">
                     <a-input-number v-decorator="['pid', {}]" />
                 </a-form-item>
@@ -118,6 +124,12 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
                     <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时跨服排行活动id">
+                    <a-input placeholder="请输入合服时跨服排行活动id" v-decorator="['mergeOscDetailIds', {}]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时节日活动id">
+                    <a-input placeholder="请输入合服时节日活动id" v-decorator="['mergeCampaignTypeIds', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
                     <a-date-picker showTime format="YYYY-MM-DD" v-decorator="['openTime', {}]" />
@@ -173,6 +185,7 @@ export default {
                 status: { rules: [{ required: true, message: "请输入区服状态!" }] },
                 isMaintain: { rules: [{ required: true, message: "请选择是否开启维护!" }] },
                 type: { rules: [{ required: true, message: "请输入区服类型!" }] },
+                outdated: { rules: [{ required: true, message: "请选择是否废弃!" }] },
                 dbHost: { rules: [{ required: true, message: "请输入数据库Host!" }] },
                 dbUser: { rules: [{ required: true, message: "请输入数据库帐号!" }] },
                 dbPassword: { rules: [{ required: true, message: "请输入数据库密码!" }] },
@@ -232,6 +245,7 @@ export default {
                         "dbPassword",
                         "dbName",
                         "type",
+                        "outdated",
                         "pid",
                         "taStatistics",
                         "gmStatus",
@@ -239,6 +253,8 @@ export default {
                         "gmPlayerId",
                         "payCallbackStatus",
                         "onlineStat",
+                        "mergeOscDetailIds",
+                        "mergeCampaignTypeIds",
                         "extra"
                     )
                 );
@@ -322,6 +338,7 @@ export default {
                     "dbPassword",
                     "dbName",
                     "type",
+                    "outdated",
                     "pid",
                     "taStatistics",
                     "gmStatus",
@@ -329,6 +346,8 @@ export default {
                     "gmPlayerId",
                     "payCallbackStatus",
                     "onlineStat",
+                    "mergeOscDetailIds",
+                    "mergeCampaignTypeIds",
                     "extra"
                 )
             );

@@ -4,32 +4,31 @@
 
     <select id="selectChannelServerList" resultType="org.jeecg.modules.game.entity.GameServerVO">
         SELECT s.`id`,
-               s.`game_id`,
-               s.`name`,
-               s.`host`,
-               s.`tag_id`,
-               UNIX_TIMESTAMP(s.`open_time`)           AS `open_time`,
-               UNIX_TIMESTAMP(s.`online_time`)         AS `online_time`,
-               s.`login_url`,
-               IF(s.`gm_status` = 1, s.`gm_url`, NULL) AS `gm_url`,
-               s.`status`,
-               s.`gm_url`,
-               s.`is_maintain`,
-               s.`recommend`,
-               s.`warning`,
-               s.`min_version`,
-               s.`max_version`
+        s.`game_id`,
+        s.`name`,
+        s.`host`,
+        s.`tag_id`,
+        UNIX_TIMESTAMP(s.`open_time`) AS `open_time`,
+        UNIX_TIMESTAMP(s.`online_time`) AS `online_time`,
+        s.`login_url`,
+        IF(s.`gm_status` = 1, s.`gm_url`, NULL) AS `gm_url`,
+        s.`status`,
+        s.`outdated`,
+        s.`gm_url`,
+        s.`is_maintain`,
+        s.`recommend`,
+        s.`warning`,
+        s.`min_version`,
+        s.`max_version`
         FROM `game_server` s
-                 LEFT JOIN `game_channel_server` c ON c.`server_id` = s.`id`
+        LEFT JOIN `game_channel_server` c ON c.`server_id` = s.`id`
         WHERE c.`channel_id` = #{channel_id}
-          AND c.`del_flag` = 0
+        AND c.`del_flag` = 0
         ORDER BY c.`position` DESC
     </select>
 
     <select id="queryChannelNameById" resultType="java.lang.String">
-        SELECT `simple_name`
-        FROM `game_channel`
-        WHERE `id` = #{channelId}
+        SELECT `simple_name` FROM `game_channel` WHERE `id` = #{channelId}
     </select>
 
 
