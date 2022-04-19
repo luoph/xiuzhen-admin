@@ -2,6 +2,7 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.entity.GameUpgradeNotice;
@@ -33,9 +34,8 @@ public class GameUpgradeNoticeServiceImpl extends ServiceImpl<GameUpgradeNoticeM
     @Override
     public void syncServerAll(GameUpgradeNotice gameUpgradeNotice) {
 
-        List<String> lastIds = StrUtil.splitTrim(gameUpgradeNotice.getLastServerIds(), ",");
-        List<String> currentIds = StrUtil.splitTrim(gameUpgradeNotice.getServerIds(), ",");
-        Set<String> allIds = new HashSet<>(lastIds);
+        Set<String> currentIds = StringUtils.split2Set(gameUpgradeNotice.getServerIds());
+        Set<String> allIds = StringUtils.split2Set(gameUpgradeNotice.getLastServerIds());
         allIds.addAll(currentIds);
 
         Map<String, Object> params = new HashMap<>(allIds.size());
@@ -47,7 +47,6 @@ public class GameUpgradeNoticeServiceImpl extends ServiceImpl<GameUpgradeNoticeM
         log.info("sync id:{} response:{}", gameUpgradeNotice.getId(), response);
 
         // 更新已刷新的服务器id
-        Collections.sort(currentIds);
         gameUpgradeNotice.setLastServerIds(StrUtil.join(",", currentIds));
         updateById(new GameUpgradeNotice().setId(gameUpgradeNotice.getId()).setLastServerIds(gameUpgradeNotice.getLastServerIds()));
     }

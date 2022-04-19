@@ -3,6 +3,7 @@ package org.jeecg.modules.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DataResponse;
 import cn.youai.basics.model.Response;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -35,6 +36,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -237,7 +239,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @GetMapping(value = "/startMaintain")
     @RequiresPermissions("game:server:admin")
     public Result<?> startMaintain(@RequestParam(name = "ids") String ids) {
-        List<Integer> serverIds = Arrays.stream(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        List<Integer> serverIds = StringUtils.split2Int(ids);
         if (CollUtil.isNotEmpty(serverIds)) {
             serverService.updateGameServerMaintain(serverIds, 1);
         }
@@ -253,7 +255,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @RequiresPermissions("game:server:admin")
     @GetMapping(value = "/stopMaintain")
     public Result<?> stopMaintain(@RequestParam(name = "ids") String ids) {
-        List<Integer> serverIds = Arrays.stream(ids.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+        List<Integer> serverIds = StringUtils.split2Int(ids);
         if (CollUtil.isNotEmpty(serverIds)) {
             serverService.updateGameServerMaintain(serverIds, 0);
         }

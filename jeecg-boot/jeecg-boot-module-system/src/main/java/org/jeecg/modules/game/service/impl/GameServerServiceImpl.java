@@ -2,6 +2,7 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson.JSON;
@@ -10,7 +11,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.primitives.Ints;
 import okhttp3.Call;
 import okhttp3.Callback;
-import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
@@ -49,8 +49,8 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
-            if (gameServer == null || StringUtils.contains(gameServer.getGmUrl(), "localhost")
-                    || StringUtils.contains(gameServer.getGmUrl(), "127.0.0.1")) {
+            if (gameServer == null || StrUtil.contains(gameServer.getGmUrl(), "localhost")
+                    || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1")) {
                 continue;
             }
 
@@ -66,7 +66,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Map<Integer, Response> gameServerGet(String serverIds, String path) {
-        return gameServerGet(StrUtil.splitToInt(serverIds, ","), path);
+        return gameServerGet(StringUtils.split2Int(serverIds), path);
     }
 
     @Override
@@ -79,8 +79,8 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
                 latch.countDown();
                 continue;
             }
-            if (StringUtils.contains(gameServer.getGmUrl(), "localhost")
-                    || StringUtils.contains(gameServer.getGmUrl(), "127.0.0.1")) {
+            if (StrUtil.contains(gameServer.getGmUrl(), "localhost")
+                    || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1")) {
                 latch.countDown();
                 continue;
             }
@@ -132,8 +132,8 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
-            if (StringUtils.contains(gameServer.getGmUrl(), "localhost")
-                    || StringUtils.contains(gameServer.getGmUrl(), "127.0.0.1")) {
+            if (StrUtil.contains(gameServer.getGmUrl(), "localhost")
+                    || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1")) {
                 continue;
             }
 
@@ -154,7 +154,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Map<Integer, Response> gameServerPost(String serverIds, String path, Object data) {
-        return gameServerPost(StrUtil.splitToInt(serverIds, ","), path, data);
+        return gameServerPost(StringUtils.split2Int(serverIds), path, data);
     }
 
     @Override

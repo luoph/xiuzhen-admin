@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author jeecg-boot
@@ -76,8 +78,8 @@ public class RedeemCodeController extends JeecgController<GameRedeemCode, IGameR
             redeemCodeService.saveBatch(gameRedeemCodes, gameRedeemCodes.size());
         } else if (redeemCode.getCode() != null && redeemCode.getCode().contains(",")) {
             // 2.批量激活码字符串生成
-            String[] codes = redeemCode.getCode().split(",");
-            List<GameRedeemCode> gameRedeemCodes = new ArrayList<>(codes.length);
+            Set<String> codes = StringUtils.split2Set(redeemCode.getCode());
+            List<GameRedeemCode> gameRedeemCodes = new ArrayList<>(codes.size());
             for (String code : codes) {
                 // 自动生产激活码
                 gameRedeemCodes.add(new GameRedeemCode(redeemCode.getActivityId(), code, redeemCode.getTotalNum(), 0, redeemCode.getStatus()));

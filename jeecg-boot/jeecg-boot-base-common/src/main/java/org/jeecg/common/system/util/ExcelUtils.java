@@ -1,6 +1,7 @@
 package org.jeecg.common.system.util;
 
 import cn.hutool.core.io.FileUtil;
+import cn.youai.basics.utils.StringUtils;
 import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +70,7 @@ public class ExcelUtils {
         List<T> exportList = null;
         // 过滤选中数据
         if (oConvertUtils.isNotEmpty(selections)) {
-            List<String> selectionList = Arrays.asList(selections.split(","));
+            List<String> selectionList = StringUtils.split2List(selections);
             exportList = pageList.stream().filter(item -> selectionList.contains(getId(item))).collect(Collectors.toList());
         } else {
             exportList = pageList;

@@ -1,8 +1,8 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang.StringUtils;
 import org.jeecg.JsonFileUtils;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.entity.GameServerTag;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author jeecg-boot
@@ -74,12 +75,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
 
         for (GameChannel channel : channelList) {
             if (StringUtils.isNotBlank(channel.getIpWhitelist())) {
-                String[] array = channel.getIpWhitelist().split(",");
-                List<String> ipList = new ArrayList<>();
-                for (String s : array) {
-                    ipList.add(s.trim());
-                }
-
+                Set<String> ipList = StringUtils.split2Set(channel.getIpWhitelist());
                 JsonFileUtils.writeJsonFile(ipList, ipWhitelistFolder, channel.getSimpleName());
             }
         }

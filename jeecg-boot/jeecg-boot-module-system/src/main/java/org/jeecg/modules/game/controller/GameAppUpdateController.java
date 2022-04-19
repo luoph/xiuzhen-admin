@@ -1,5 +1,6 @@
 package org.jeecg.modules.game.controller;
 
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -102,7 +103,7 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
     @AutoLog(value = "客户端版本-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameAppUpdateService.removeByIds(Arrays.asList(ids.split(",")));
+        this.gameAppUpdateService.removeByIds(StringUtils.split2Set(ids));
         return Result.ok("批量删除成功！");
     }
 

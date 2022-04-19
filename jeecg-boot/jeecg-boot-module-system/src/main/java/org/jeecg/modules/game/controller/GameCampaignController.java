@@ -3,6 +3,7 @@ package org.jeecg.modules.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -173,8 +174,8 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
         GameCampaign dbEntity = campaignService.getById(gameCampaign.getId());
-        Set<String> dbServerIds = new HashSet<>(StrUtil.splitTrim(dbEntity.getServerIds(), ","));
-        Set<String> newServerIds = new HashSet<>(StrUtil.splitTrim(gameCampaign.getServerIds(), ","));
+        Set<String> dbServerIds = StringUtils.split2Set(dbEntity.getServerIds());
+        Set<String> newServerIds = StringUtils.split2Set(gameCampaign.getServerIds());
 
         // 去重处理
         gameCampaign.setServerIds(StrUtil.join(",", newServerIds));

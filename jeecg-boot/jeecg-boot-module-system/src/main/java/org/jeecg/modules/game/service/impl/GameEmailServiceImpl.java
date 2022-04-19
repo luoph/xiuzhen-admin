@@ -4,12 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.model.ResponseCode;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.entities.GamePlayer;
 import cn.youai.server.conf.ConfItem;
 import cn.youai.server.model.ItemVO;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.constant.EmailReceiver;
 import org.jeecg.modules.game.constant.EmailType;
 import org.jeecg.modules.game.entity.GameEmail;
@@ -67,8 +67,8 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             }
         }
 
-        String[] targetBodyStr = StringUtils.split(entity.getTargetBodyIds(), ",");
-        if (targetBodyStr == null || targetBodyStr.length <= 0) {
+        Set<String> targetBodyIdSet = StringUtils.split2Set(entity.getTargetBodyIds());
+        if (CollUtil.isEmpty(targetBodyIdSet)) {
             response.setFailure("投放目标不存在！");
             return response;
         }
@@ -93,9 +93,8 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
 
         Integer targetBodyType = entity.getTargetBodyType();
         if (targetBodyType == EmailReceiver.PLAYER.getType()) {
-            long[] playerIds = StrUtil.splitToLong(entity.getTargetBodyIds(), ",");
-            List<Long> list = Arrays.stream(playerIds).boxed().collect(Collectors.toList());
-            List<GamePlayer> playerList = gamePlayerService.getPlayerList(list);
+            List<Long> playerIds = StringUtils.split2Long(entity.getTargetBodyIds());
+            List<GamePlayer> playerList = gamePlayerService.getPlayerList(playerIds);
 
             Set<Integer> serverIds = new HashSet<>();
             playerList.forEach(t -> {
