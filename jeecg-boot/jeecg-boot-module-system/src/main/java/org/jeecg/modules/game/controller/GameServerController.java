@@ -108,8 +108,10 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
                 }
             }
 
-            // 增加在线人数统计
-            if (record.getOnlineStat() == 1) {
+            // 已废弃服务器不统计在线人数
+            if (record.getOutdated() == 1) {
+                record.setOnlineNum(0);
+            } else if (record.getOnlineStat() == 1) {
                 DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(record.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
                 if (response != null) {
                     record.setOnlineNum(response.getData());
@@ -220,6 +222,10 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     public Result<?> getOnlineNum(@RequestParam(name = "id") String id) {
         GameServer gameServer = serverService.getById(id);
         if (gameServer != null) {
+            if (gameServer.getOutdated() == 1) {
+                return Result.ok(String.valueOf(0));
+            }
+
             DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
             return Result.ok(String.valueOf(response.getData()));
         }

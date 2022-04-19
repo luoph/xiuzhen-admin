@@ -206,6 +206,14 @@ public class GameServer extends BaseEntity {
     @ApiModelProperty(value = "服务器类型 0-混服 1-专服")
     @Dict(dicCode = "server_type")
     private java.lang.Integer type;
+
+    /**
+     * 是否废弃 0-正常 1-已废弃
+     */
+    @Excel(name = "是否废弃", width = 15)
+    @ApiModelProperty(value = "是否废弃")
+    private java.lang.Integer outdated;
+
     /**
      * 合服时母服id
      */
@@ -241,7 +249,7 @@ public class GameServer extends BaseEntity {
     @Excel(name = "扩展字段", width = 15)
     @ApiModelProperty(value = "扩展字段")
     private java.lang.String extra;
-    
+
     /**
      * 服务器开服时间
      */
@@ -259,9 +267,6 @@ public class GameServer extends BaseEntity {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @ApiModelProperty(value = "上线时间")
     private java.util.Date onlineTime;
-
-    @TableField(exist = false)
-    private List<Integer> channelIds;
 
     @TableField(exist = false)
     @ApiModelProperty(value = "标签")

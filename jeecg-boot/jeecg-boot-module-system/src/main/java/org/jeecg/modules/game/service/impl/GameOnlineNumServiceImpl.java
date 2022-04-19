@@ -65,7 +65,7 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
                 Integer serverId = gameServer.getId();
                 String channel = gameChannel.getSimpleName();
 
-                if (gameServer.getOnlineStat() == 1) {
+                if (gameServer.getOnlineStat() == 1 && gameServer.getOutdated() == 0) {
                     // http调用查询在线人数
                     DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
                     GameOnlineNum gameOnlineNum = new GameOnlineNum();
