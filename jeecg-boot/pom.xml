@@ -43,9 +43,9 @@
         <shiro.version>1.4.2</shiro.version>
         <quasar.core.version>0.7.10</quasar.core.version>
         <!-- 框架依赖 -->
-        <entities.version>0.0.16-SNAPSHOT</entities.version>
-        <web-starter.version>0.0.16-SNAPSHOT</web-starter.version>
-        <server-common.version>0.0.16-SNAPSHOT</server-common.version>
+        <entities.version>0.0.16</entities.version>
+        <web-starter.version>0.0.16</web-starter.version>
+        <server-common.version>0.0.16</server-common.version>
     </properties>
 
     <dependencies>
