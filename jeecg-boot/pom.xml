@@ -58,7 +58,7 @@
         </dependency>
 
         <dependency>
-            <groupId>cn.youai</groupId>
+            <groupId>cn.youai.server</groupId>
             <artifactId>entities</artifactId>
             <version>${entities.version}</version>
         </dependency>
