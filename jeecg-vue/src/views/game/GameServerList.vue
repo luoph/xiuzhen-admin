@@ -10,6 +10,13 @@
                             <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id" />
                         </a-form-item>
                     </a-col>
+                    <a-col :md="6" :sm="16">
+                        <a-form-item label="区服id">
+                            <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin"></a-input>
+                            <span class="query-group-split-cust"></span>
+                            <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end"></a-input>
+                        </a-form-item>
+                    </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="名字">
                             <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
