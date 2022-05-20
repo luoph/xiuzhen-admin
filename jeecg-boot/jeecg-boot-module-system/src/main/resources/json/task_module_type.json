@@ -1,0 +1,1694 @@
+[
+    {
+        "id": 1,
+        "module_id": 1,
+        "request": 0,
+        "name": "Nghiệp vụ giao diện chính"
+    },
+    {
+        "id": 2,
+        "module_id": 101,
+        "request": 0,
+        "name": "Tích lũy đăng nhập"
+    },
+    {
+        "id": 3,
+        "module_id": 102,
+        "request": 0,
+        "name": "Tăng cảnh giới"
+    },
+    {
+        "id": 4,
+        "module_id": 103,
+        "request": 0,
+        "name": "Ải cốt truyện"
+    },
+    {
+        "id": 5,
+        "module_id": 104,
+        "request": 0,
+        "name": "Tăng cảnh giới"
+    },
+    {
+        "id": 6,
+        "module_id": 10301,
+        "request": 0,
+        "name": "Số lần vượt ải cốt truyện"
+    },
+    {
+        "id": 7,
+        "module_id": 10302,
+        "request": 0,
+        "name": "Cốt truyện cấp tốc Du Ngoạn N Lần"
+    },
+    {
+        "id": 8,
+        "module_id": 10303,
+        "request": 0,
+        "name": "Nhận Thưởng Treo Máy Cốt Truyện N Lần"
+    },
+    {
+        "id": 9,
+        "module_id": 104,
+        "request": 0,
+        "name": "Văn Khúc Hạ Phàm"
+    },
+    {
+        "id": 10,
+        "module_id": 10401,
+        "request": 0,
+        "name": "Trả lời đúng tích lũy"
+    },
+    {
+        "id": 11,
+        "module_id": 105,
+        "request": 0,
+        "name": "Mua tại Tiệm"
+    },
+    {
+        "id": 12,
+        "module_id": 10501,
+        "request": 0,
+        "name": "Số lần Mua tại Tiệm"
+    },
+    {
+        "id": 13,
+        "module_id": 10502,
+        "request": 0,
+        "name": "Số lượng Mua tại Tiệm"
+    },
+    {
+        "id": 14,
+        "module_id": 2,
+        "request": 0,
+        "name": "Nghiệp vụ Động Phủ"
+    },
+    {
+        "id": 15,
+        "module_id": 201,
+        "request": 0,
+        "name": "Xây dựng Linh Điền"
+    },
+    {
+        "id": 16,
+        "module_id": 20101,
+        "request": 0,
+        "name": "Số lần tăng cấp Linh Điền"
+    },
+    {
+        "id": 17,
+        "module_id": 20102,
+        "request": 0,
+        "name": "Tổng cấp Linh Điền"
+    },
+    {
+        "id": 18,
+        "module_id": 202,
+        "request": 0,
+        "name": "Linh Căn"
+    },
+    {
+        "id": 19,
+        "module_id": 20201,
+        "request": 0,
+        "name": "Tụ Linh Châu"
+    },
+    {
+        "id": 20,
+        "module_id": 20202,
+        "request": 0,
+        "name": "Số lần tăng cấp Linh Căn"
+    },
+    {
+        "id": 21,
+        "module_id": 20203,
+        "request": 0,
+        "name": "Tổng cấp của tất cả Linh Căn"
+    },
+    {
+        "id": 22,
+        "module_id": 204,
+        "request": 0,
+        "name": "Luyện đan"
+    },
+    {
+        "id": 23,
+        "module_id": 20401,
+        "request": 0,
+        "name": "Số lần Luyện Đan tích lũy (Thống kê lúc bắt đầu)"
+    },
+    {
+        "id": 24,
+        "module_id": 20402,
+        "request": 0,
+        "name": "Số lần Luyện Đan tích lũy (Thống kê lúc tổng kết)"
+    },
+    {
+        "id": 25,
+        "module_id": 205,
+        "request": 0,
+        "name": "Luyện khí"
+    },
+    {
+        "id": 26,
+        "module_id": 20501,
+        "request": 0,
+        "name": "Số lần Luyện Khí tích lũy (Thống kê lúc bắt đầu)"
+    },
+    {
+        "id": 27,
+        "module_id": 20502,
+        "request": 0,
+        "name": "Số lần Luyện Khí tích lũy (Thống kê lúc tổng kết)"
+    },
+    {
+        "id": 28,
+        "module_id": 206,
+        "request": 0,
+        "name": "Ghép"
+    },
+    {
+        "id": 29,
+        "module_id": 20601,
+        "request": 0,
+        "name": "Số lần Ghép tích lũy"
+    },
+    {
+        "id": 30,
+        "module_id": 207,
+        "request": 0,
+        "name": "Công pháp mới"
+    },
+    {
+        "id": 31,
+        "module_id": 20701,
+        "request": 0,
+        "name": "Số quyển Công pháp đã lĩnh ngộ tích lũy"
+    },
+    {
+        "id": 32,
+        "module_id": 20702,
+        "request": 0,
+        "name": "Số tổ kích hoạt tích lũy"
+    },
+    {
+        "id": 33,
+        "module_id": 20703,
+        "request": 0,
+        "name": "Số lần tăng sao Công pháp tích lũy"
+    },
+    {
+        "id": 34,
+        "module_id": 20704,
+        "request": 0,
+        "name": "Lĩnh ngộ công pháp"
+    },
+    {
+        "id": 35,
+        "module_id": 20705,
+        "request": 0,
+        "name": "XX Toàn bộ Công pháp lĩnh ngộ đến N Tầng"
+    },
+    {
+        "id": 36,
+        "module_id": 20706,
+        "request": 0,
+        "name": "Tích lũy kích hoạt & Tăng bậc x Số quyển Công pháp Cảnh Giới"
+    },
+    {
+        "id": 37,
+        "module_id": 20707,
+        "request": 0,
+        "name": "Tích lũy kích hoạt & Tăng bậc x Số quyển Công pháp Cảnh Giới"
+    },
+    {
+        "id": 38,
+        "module_id": 3,
+        "request": 0,
+        "name": "Nghiệp vụ Pháp Bảo"
+    },
+    {
+        "id": 39,
+        "module_id": 301,
+        "request": 0,
+        "name": "Tinh luyện Pháp Bảo"
+    },
+    {
+        "id": 40,
+        "module_id": 30101,
+        "request": 0,
+        "name": "Tổng cấp Tinh luyện tích lũy của tất cả Pháp Bảo và"
+    },
+    {
+        "id": 41,
+        "module_id": 30102,
+        "request": 0,
+        "name": "4 Pháp Bảo Nhân Giới đạt đến cấp Tinh luyện"
+    },
+    {
+        "id": 42,
+        "module_id": 30103,
+        "request": 0,
+        "name": "Số lần Tinh luyện Pháp Bảo"
+    },
+    {
+        "id": 43,
+        "module_id": 30104,
+        "request": 0,
+        "name": "Set đồ kích hoạt Pháp Bảo"
+    },
+    {
+        "id": 44,
+        "module_id": 302,
+        "request": 0,
+        "name": "Khắc sao"
+    },
+    {
+        "id": 45,
+        "module_id": 30201,
+        "request": 0,
+        "name": "Cấp Khắc sao tích lũy"
+    },
+    {
+        "id": 46,
+        "module_id": 303,
+        "request": 0,
+        "name": "Phù Văn"
+    },
+    {
+        "id": 47,
+        "module_id": 30301,
+        "request": 0,
+        "name": "Tổng số lượng Khảm Phù Văn"
+    },
+    {
+        "id": 48,
+        "module_id": 30302,
+        "request": 0,
+        "name": "Cấp Tinh luyện Khe Phù Văn bất kỳ"
+    },
+    {
+        "id": 49,
+        "module_id": 304,
+        "request": 0,
+        "name": "Tinh hoa"
+    },
+    {
+        "id": 50,
+        "module_id": 30401,
+        "request": 0,
+        "name": "Số lần Tăng thêm Pháp Bảo"
+    },
+    {
+        "id": 51,
+        "module_id": 305,
+        "request": 0,
+        "name": "Luyện linh Pháp Bảo"
+    },
+    {
+        "id": 52,
+        "module_id": 30501,
+        "request": 0,
+        "name": "Số lần Luyện linh tích lũy của tất cả Pháp Bảo"
+    },
+    {
+        "id": 53,
+        "module_id": 30502,
+        "request": 0,
+        "name": "Cấp Pháp Bảo Luyện linh"
+    },
+    {
+        "id": 54,
+        "module_id": 306,
+        "request": 0,
+        "name": "Bộ Pháp Bảo"
+    },
+    {
+        "id": 55,
+        "module_id": 30601,
+        "request": 0,
+        "name": "Kích hoạt bất kỳ/ Chỉ định ID Set đồ Pháp Bảo của"
+    },
+    {
+        "id": 56,
+        "module_id": 30602,
+        "request": 0,
+        "name": "Trang bị bất kỳ/ Chỉ định ID Một món Pháp Bảo N Pháp Bảo trên bậc"
+    },
+    {
+        "id": 57,
+        "module_id": 30603,
+        "request": 0,
+        "name": "Ghép bất kỳ/ Chỉ định ID Một món Pháp Bảo"
+    },
+    {
+        "id": 58,
+        "module_id": 30604,
+        "request": 0,
+        "name": "Tách N Lần Pháp Bảo"
+    },
+    {
+        "id": 59,
+        "module_id": 30605,
+        "request": 0,
+        "name": "Kích hoạt 1 món set đồ Pháp Bảo bất kỳ"
+    },
+    {
+        "id": 60,
+        "module_id": 307,
+        "request": 0,
+        "name": "Khí Linh Pháp Bảo"
+    },
+    {
+        "id": 61,
+        "module_id": 30701,
+        "request": 0,
+        "name": "Cấp Khí Linh đạt N cấp"
+    },
+    {
+        "id": 62,
+        "module_id": 4,
+        "request": 0,
+        "name": "Nghiệp vụ Tiên Thú"
+    },
+    {
+        "id": 63,
+        "module_id": 401,
+        "request": 0,
+        "name": "Tiên Thú"
+    },
+    {
+        "id": 64,
+        "module_id": 40101,
+        "request": 0,
+        "name": "Triệu Hồi Tiên Thú"
+    },
+    {
+        "id": 65,
+        "module_id": 40102,
+        "request": 0,
+        "name": "Tăng Tiên Thú đến X cấp"
+    },
+    {
+        "id": 66,
+        "module_id": 40103,
+        "request": 0,
+        "name": "Tăng Tiên Thú đến X Sao"
+    },
+    {
+        "id": 67,
+        "module_id": 40104,
+        "request": 0,
+        "name": "Số lần Nuôi dưỡng Tiên Thú"
+    },
+    {
+        "id": 68,
+        "module_id": 40105,
+        "request": 0,
+        "name": "Tổng cấp tất cả Tiên Thú"
+    },
+    {
+        "id": 69,
+        "module_id": 40106,
+        "request": 0,
+        "name": "Số lượng Tiên Thú được kích hoạt tích lũy"
+    },
+    {
+        "id": 70,
+        "module_id": 402,
+        "request": 0,
+        "name": "Trang Bị"
+    },
+    {
+        "id": 71,
+        "module_id": 40201,
+        "request": 0,
+        "name": "Tăng trang bị của Tiên Thú bất kỳ đến X cấp"
+    },
+    {
+        "id": 72,
+        "module_id": 403,
+        "request": 0,
+        "name": "Số lần Triệu hồi Tiên Thú ở Tiên Thú Cung"
+    },
+    {
+        "id": 73,
+        "module_id": 404,
+        "request": 0,
+        "name": "X Giới Tiên Thú toàn bộ đạt N Sao"
+    },
+    {
+        "id": 74,
+        "module_id": 5,
+        "request": 0,
+        "name": "Nghiệp vụ Tiên Minh"
+    },
+    {
+        "id": 75,
+        "module_id": 501,
+        "request": 0,
+        "name": "Số lần Đóng góp tích lũy Tiên Minh"
+    },
+    {
+        "id": 76,
+        "module_id": 502,
+        "request": 0,
+        "name": "Số lần tham gia Tiệc Tiên Tiên Minh"
+    },
+    {
+        "id": 77,
+        "module_id": 503,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Yêu Linh Tiên Minh tích lũy"
+    },
+    {
+        "id": 78,
+        "module_id": 504,
+        "request": 0,
+        "name": "Gia nhập Tiên Minh"
+    },
+    {
+        "id": 79,
+        "module_id": 505,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Yêu Thú Tiên Minh"
+    },
+    {
+        "id": 80,
+        "module_id": 506,
+        "request": 0,
+        "name": "Trở thành Minh Chủ"
+    },
+    {
+        "id": 81,
+        "module_id": 507,
+        "request": 0,
+        "name": "Tiên Minh Tranh Bá Vị Diện đạt N hạng"
+    },
+    {
+        "id": 82,
+        "module_id": 508,
+        "request": 0,
+        "name": "Tham gia Tranh Bá Vị Diện n Lần"
+    },
+    {
+        "id": 83,
+        "module_id": 509,
+        "request": 0,
+        "name": "Số lần Đào Kho Báu"
+    },
+    {
+        "id": 84,
+        "module_id": 510,
+        "request": 0,
+        "name": "Số lần Mở Kho Báu"
+    },
+    {
+        "id": 85,
+        "module_id": 511,
+        "request": 0,
+        "name": "Số lần Trợ giúp Kho Báu"
+    },
+    {
+        "id": 86,
+        "module_id": 512,
+        "request": 0,
+        "name": "Số lần Kho Báu được Trợ giúp"
+    },
+    {
+        "id": 87,
+        "module_id": 513,
+        "request": 0,
+        "name": "Số lần Gửi Cầu cứu"
+    },
+    {
+        "id": 88,
+        "module_id": 6,
+        "request": 0,
+        "name": "Nghiệp vụ trong Túi Dự Trữ"
+    },
+    {
+        "id": 89,
+        "module_id": 601,
+        "request": 0,
+        "name": "Cấp Tiên Thuật"
+    },
+    {
+        "id": 90,
+        "module_id": 602,
+        "request": 0,
+        "name": "Luyện thể"
+    },
+    {
+        "id": 91,
+        "module_id": 60201,
+        "request": 0,
+        "name": "Cấp Thiên Mệnh"
+    },
+    {
+        "id": 92,
+        "module_id": 60202,
+        "request": 0,
+        "name": "Cấp Tụ Linh"
+    },
+    {
+        "id": 93,
+        "module_id": 603,
+        "request": 0,
+        "name": "Thời trang"
+    },
+    {
+        "id": 94,
+        "module_id": 60301,
+        "request": 0,
+        "name": "Kích hoạt 1 Món thời trang với loại hình tương ứng"
+    },
+    {
+        "id": 95,
+        "module_id": 60302,
+        "request": 0,
+        "name": "X -Nghê Thường toàn bộ kích hoạt đến N Sao"
+    },
+    {
+        "id": 96,
+        "module_id": 60303,
+        "request": 0,
+        "name": "X -Avatar kích hoạt đến N Sao"
+    },
+    {
+        "id": 97,
+        "module_id": 60304,
+        "request": 0,
+        "name": "X -Khung Chat kích hoạt đến N Sao"
+    },
+    {
+        "id": 98,
+        "module_id": 60305,
+        "request": 0,
+        "name": "X -Danh Thiếp kích hoạt đến N Sao"
+    },
+    {
+        "id": 99,
+        "module_id": 604,
+        "request": 0,
+        "name": "Phi Kiếm"
+    },
+    {
+        "id": 100,
+        "module_id": 60401,
+        "request": 0,
+        "name": "Số lần Mài dũa Phi Kiếm"
+    },
+    {
+        "id": 101,
+        "module_id": 60402,
+        "request": 0,
+        "name": "X Giới Phi Kiếm toàn bộ Rèn đến N Sao"
+    },
+    {
+        "id": 102,
+        "module_id": 7,
+        "request": 0,
+        "name": "Đấu Pháp"
+    },
+    {
+        "id": 103,
+        "module_id": 701,
+        "request": 0,
+        "name": "Chiến Trường"
+    },
+    {
+        "id": 104,
+        "module_id": 70101,
+        "request": 0,
+        "name": "Số lần chiến thắng tích lũy tại Chiến Trường Thần Ma"
+    },
+    {
+        "id": 105,
+        "module_id": 70102,
+        "request": 0,
+        "name": "Số lần tham gia Chiến Trường Thần Ma"
+    },
+    {
+        "id": 106,
+        "module_id": 702,
+        "request": 0,
+        "name": "Đoạt Bảo"
+    },
+    {
+        "id": 107,
+        "module_id": 70201,
+        "request": 0,
+        "name": "Số lần Tranh đoạt tại Đoạt Bảo Phúc Địa"
+    },
+    {
+        "id": 108,
+        "module_id": 70202,
+        "request": 0,
+        "name": "Thứ hạng tuần của Đoạt Bảo Phúc Địa đạt đến N hạng"
+    },
+    {
+        "id": 109,
+        "module_id": 703,
+        "request": 0,
+        "name": "Số lần Du Ngoạn Di Tích Thượng Cổ"
+    },
+    {
+        "id": 110,
+        "module_id": 70301,
+        "request": 0,
+        "name": "Số lần Tranh đoạt tại Di Tích Thượng Cổ"
+    },
+    {
+        "id": 111,
+        "module_id": 704,
+        "request": 0,
+        "name": "Đấu linh"
+    },
+    {
+        "id": 112,
+        "module_id": 70401,
+        "request": 0,
+        "name": "Khiêu chiến Đấu Linh N Lần"
+    },
+    {
+        "id": 113,
+        "module_id": 70402,
+        "request": 0,
+        "name": "Thứ hạng cao nhất trong lịch sử Đấu Linh đạt N"
+    },
+    {
+        "id": 114,
+        "module_id": 70403,
+        "request": 0,
+        "name": "Khiêu chiến Đấu Linh giành chiến thắng N Lần"
+    },
+    {
+        "id": 115,
+        "module_id": 705,
+        "request": 0,
+        "name": "Công Pháp"
+    },
+    {
+        "id": 116,
+        "module_id": 70501,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Bí Cảnh Thiên Thư"
+    },
+    {
+        "id": 117,
+        "module_id": 70502,
+        "request": 0,
+        "name": "Sát thương tích lũy tại Bí Cảnh Thiên Thư"
+    },
+    {
+        "id": 118,
+        "module_id": 70503,
+        "request": 0,
+        "name": "Sát thương 1 lần tại Bí Cảnh Thiên Thư"
+    },
+    {
+        "id": 119,
+        "module_id": 706,
+        "request": 0,
+        "name": "Trích Tiên Đài"
+    },
+    {
+        "id": 120,
+        "module_id": 70601,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Trích Tiên Đài"
+    },
+    {
+        "id": 121,
+        "module_id": 70602,
+        "request": 0,
+        "name": "Cấp bậc lịch sử của Trích Tiên Đài(Tính năng chưa thực hiện)"
+    },
+    {
+        "id": 122,
+        "module_id": 70603,
+        "request": 0,
+        "name": "Thứ hạng cao nhất trong lịch sử Trích Tiên Đài đạt N(Tính năng chưa thực hiện)"
+    },
+    {
+        "id": 123,
+        "module_id": 70604,
+        "request": 0,
+        "name": "Cấp bậc mùa giải Trích Tiên Đài hiện tại"
+    },
+    {
+        "id": 124,
+        "module_id": 8,
+        "request": 0,
+        "name": "Phong Ma"
+    },
+    {
+        "id": 125,
+        "module_id": 801,
+        "request": 0,
+        "name": "Bắc Minh"
+    },
+    {
+        "id": 126,
+        "module_id": 80101,
+        "request": 0,
+        "name": "Số lần khiêu chiến thành công Bắc Minh Ma Hải"
+    },
+    {
+        "id": 127,
+        "module_id": 802,
+        "request": 0,
+        "name": "Bất Tử"
+    },
+    {
+        "id": 128,
+        "module_id": 80201,
+        "request": 0,
+        "name": "Số lần khiêu chiến thành công Hang Ma Bất Tử"
+    },
+    {
+        "id": 129,
+        "module_id": 803,
+        "request": 0,
+        "name": "Ma Vương Xâm Nhập"
+    },
+    {
+        "id": 130,
+        "module_id": 80301,
+        "request": 0,
+        "name": "Số lần tham gia Ma Vương Xâm Lược"
+    },
+    {
+        "id": 131,
+        "module_id": 804,
+        "request": 0,
+        "name": "Hang Ma Xà Lăng"
+    },
+    {
+        "id": 132,
+        "module_id": 80401,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Thủ Lĩnh Hang Ma Xà Linh"
+    },
+    {
+        "id": 133,
+        "module_id": 80402,
+        "request": 0,
+        "name": "Số lần đánh bại thủ lĩnh Hang Ma Xà Linh"
+    },
+    {
+        "id": 134,
+        "module_id": 9,
+        "request": 0,
+        "name": "Bí Cảnh"
+    },
+    {
+        "id": 135,
+        "module_id": 901,
+        "request": 0,
+        "name": "Bí Cảnh Công Pháp"
+    },
+    {
+        "id": 136,
+        "module_id": 90101,
+        "request": 0,
+        "name": "Số ải Bí Cảnh Công Pháp"
+    },
+    {
+        "id": 137,
+        "module_id": 90102,
+        "request": 0,
+        "name": "Số lần Càn quét Con Rối"
+    },
+    {
+        "id": 138,
+        "module_id": 90103,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Bí Cảnh Công Pháp"
+    },
+    {
+        "id": 139,
+        "module_id": 902,
+        "request": 0,
+        "name": "Tiên Thú"
+    },
+    {
+        "id": 140,
+        "module_id": 90201,
+        "request": 0,
+        "name": "Số ải Bí Cảnh Tiên Thú"
+    },
+    {
+        "id": 141,
+        "module_id": 90202,
+        "request": 0,
+        "name": "Số lần Thần du Bí Cảnh Tiên Thú"
+    },
+    {
+        "id": 142,
+        "module_id": 90203,
+        "request": 0,
+        "name": "Khiêu chiến bất kỳ/ Bí Cảnh Tiên Thú chỉ định N Lần"
+    },
+    {
+        "id": 143,
+        "module_id": 903,
+        "request": 0,
+        "name": "Đan Dược"
+    },
+    {
+        "id": 144,
+        "module_id": 90301,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Bí Cảnh Đan Dược"
+    },
+    {
+        "id": 145,
+        "module_id": 90302,
+        "request": 0,
+        "name": "Số lần vượt ải Bí Cảnh Đan Dược"
+    },
+    {
+        "id": 146,
+        "module_id": 904,
+        "request": 0,
+        "name": "Tiên Khí"
+    },
+    {
+        "id": 147,
+        "module_id": 90401,
+        "request": 0,
+        "name": "Số lần Khiêu chiến ải Bí Cảnh Tiên Khí"
+    },
+    {
+        "id": 148,
+        "module_id": 90402,
+        "request": 0,
+        "name": "Số lần Khiêu chiến Bí Cảnh Tiên Khí tích lũy"
+    },
+    {
+        "id": 149,
+        "module_id": 905,
+        "request": 0,
+        "name": "Bí Cảnh Linh Thạch"
+    },
+    {
+        "id": 150,
+        "module_id": 90501,
+        "request": 0,
+        "name": "Khiêu chiến Bí Cảnh Linh Thạch N Lần"
+    },
+    {
+        "id": 151,
+        "module_id": 906,
+        "request": 0,
+        "name": "Bí cảnh Tiên Vi"
+    },
+    {
+        "id": 152,
+        "module_id": 90601,
+        "request": 0,
+        "name": "Khiêu chiến Bí Cảnh Tu Vi N Lần"
+    },
+    {
+        "id": 153,
+        "module_id": 907,
+        "request": 0,
+        "name": "Pháp Bảo"
+    },
+    {
+        "id": 154,
+        "module_id": 90701,
+        "request": 0,
+        "name": "Số Ải khiêu chiến Bí Cảnh Pháp Bảo"
+    },
+    {
+        "id": 155,
+        "module_id": 90702,
+        "request": 0,
+        "name": "Số ải Bí Cảnh Pháp Bảo tích lũy"
+    },
+    {
+        "id": 156,
+        "module_id": 10,
+        "request": 0,
+        "name": "Bộ (Tiên Khí)"
+    },
+    {
+        "id": 157,
+        "module_id": 1001,
+        "request": 0,
+        "name": "Kích hoạt bộ Tiên Khí nào đó"
+    },
+    {
+        "id": 158,
+        "module_id": 1002,
+        "request": 0,
+        "name": "Kích hoạt bộ phận bất kỳ của Tiên Khí chỉ định"
+    },
+    {
+        "id": 159,
+        "module_id": 1003,
+        "request": 0,
+        "name": "Kích hoạt hiệu quả set đồ bất kỳ của Tiên Khí chỉ định"
+    },
+    {
+        "id": 160,
+        "module_id": 1004,
+        "request": 0,
+        "name": "Chú Linh Tiên Khí"
+    },
+    {
+        "id": 161,
+        "module_id": 11,
+        "request": 0,
+        "name": "Nạp"
+    },
+    {
+        "id": 162,
+        "module_id": 1101,
+        "request": 1,
+        "name": "Nạp Tích Luỹ"
+    },
+    {
+        "id": 163,
+        "module_id": 1102,
+        "request": 0,
+        "name": "Nạp lần đầu"
+    },
+    {
+        "id": 164,
+        "module_id": 1103,
+        "request": 0,
+        "name": "Kích hoạt Tiên Chức"
+    },
+    {
+        "id": 165,
+        "module_id": 1104,
+        "request": 0,
+        "name": "Kích hoạt Thẻ Tháng"
+    },
+    {
+        "id": 166,
+        "module_id": 1105,
+        "request": 0,
+        "name": "Nạp tích luỹ mỗi ngày (Hoạt động Vận Hành)"
+    },
+    {
+        "id": 167,
+        "module_id": 1106,
+        "request": 0,
+        "name": "Thẻ Tuần Tiên Phúc"
+    },
+    {
+        "id": 168,
+        "module_id": 1107,
+        "request": 0,
+        "name": "Nạp tích lũy mỗi ngày đạt N Đ"
+    },
+    {
+        "id": 169,
+        "module_id": 12,
+        "request": 0,
+        "name": "Tiêu hao đạo cụ"
+    },
+    {
+        "id": 170,
+        "module_id": 1201,
+        "request": 1,
+        "name": "Tiêu hao đạo cụ tích lũy"
+    },
+    {
+        "id": 173,
+        "module_id": 14,
+        "request": 0,
+        "name": "Phi thăng"
+    },
+    {
+        "id": 174,
+        "module_id": 1401,
+        "request": 0,
+        "name": "Phi thăng đến X Giới"
+    },
+    {
+        "id": 175,
+        "module_id": 15,
+        "request": 0,
+        "name": "Phúc lợi"
+    },
+    {
+        "id": 176,
+        "module_id": 1501,
+        "request": 0,
+        "name": "Số lần Giao dịch Thương Nhân Linh Thạch"
+    },
+    {
+        "id": 177,
+        "module_id": 16,
+        "request": 0,
+        "name": "Chat"
+    },
+    {
+        "id": 178,
+        "module_id": 1601,
+        "request": 0,
+        "name": "Truyền âm N Lần"
+    },
+    {
+        "id": 179,
+        "module_id": 17,
+        "request": 0,
+        "name": "Thánh linh"
+    },
+    {
+        "id": 180,
+        "module_id": 1701,
+        "request": 0,
+        "name": "Tăng cấp Thánh Linh N Lần"
+    },
+    {
+        "id": 181,
+        "module_id": 1702,
+        "request": 0,
+        "name": "Tăng cấp Thánh Linh đến N cấp"
+    },
+    {
+        "id": 182,
+        "module_id": 1703,
+        "request": 0,
+        "name": "Huyễn Hóa hình tượng Thánh Linh chỉ định"
+    },
+    {
+        "id": 183,
+        "module_id": 1704,
+        "request": 0,
+        "name": "Thánh linh XX Ảo hoá đến N Sao"
+    },
+    {
+        "id": 184,
+        "module_id": 70301,
+        "request": 0,
+        "name": "Số lần Tranh đoạt tại Di Tích Thượng Cổ"
+    },
+    {
+        "id": 185,
+        "module_id": 18,
+        "request": 0,
+        "name": "Luận bàn"
+    },
+    {
+        "id": 186,
+        "module_id": 1801,
+        "request": 0,
+        "name": "Với bất kỳ/ Tiến hành Luận bàn với Tiên Lữ chỉ định N Lần"
+    },
+    {
+        "id": 187,
+        "module_id": 1802,
+        "request": 0,
+        "name": "Khiêu chiến Thí Luyện Tiên Duyên bất kỳ/ Chỉ định BOSS N Lần"
+    },
+    {
+        "id": 188,
+        "module_id": 1803,
+        "request": 0,
+        "name": "Với bất kỳ/ Cấp Thân Mật của Tiên Lữ chỉ định đạt N cấp"
+    },
+    {
+        "id": 189,
+        "module_id": 1804,
+        "request": 0,
+        "name": "Với bất kỳ/ Kết duyên với Tiên Lữ chỉ định"
+    },
+    {
+        "id": 190,
+        "module_id": 1805,
+        "request": 0,
+        "name": "Số lượng Tiên Lữ kết duyên đạt N cái"
+    },
+    {
+        "id": 191,
+        "module_id": 1806,
+        "request": 0,
+        "name": "Đến bất kỳ/ Tầm duyên tại Tiên Sơn chỉ định N Lần"
+    },
+    {
+        "id": 192,
+        "module_id": 1807,
+        "request": 0,
+        "name": "Cường hóa Tín Vật bất kỳ N Lần"
+    },
+    {
+        "id": 193,
+        "module_id": 1808,
+        "request": 0,
+        "name": "Bất kỳ/ Cấp cao nhất của Tín Vật tại bộ phận bất kỳ đạt N cấp"
+    },
+    {
+        "id": 194,
+        "module_id": 1809,
+        "request": 0,
+        "name": "Tổng cấp của tất cả Tín Vật đạt N cấp"
+    },
+    {
+        "id": 195,
+        "module_id": 1810,
+        "request": 0,
+        "name": "Ghép bất kỳ/ Tín Vật chỉ định N Lần"
+    },
+    {
+        "id": 196,
+        "module_id": 1811,
+        "request": 0,
+        "name": "Trong ngày Tặng Rượu N Lần"
+    },
+    {
+        "id": 197,
+        "module_id": 1812,
+        "request": 0,
+        "name": "Cho N Tên Đạo hữu Tặng Rượu"
+    },
+    {
+        "id": 198,
+        "module_id": 19,
+        "request": 0,
+        "name": "Mục tiêu cảnh giới"
+    },
+    {
+        "id": 199,
+        "module_id": 1901,
+        "request": 0,
+        "name": "Số Điểm Cảnh Giới nhận được của Cảnh Giới chỉ định"
+    },
+    {
+        "id": 200,
+        "module_id": 20,
+        "request": 0,
+        "name": "Khiêu chiến Cảnh Giới"
+    },
+    {
+        "id": 201,
+        "module_id": 2001,
+        "request": 0,
+        "name": "Vượt Khiêu chiến Cảnh Giới Nguyên Anh bậc 5"
+    },
+    {
+        "id": 202,
+        "module_id": 2002,
+        "request": 0,
+        "name": "Thí Luyện Lực Chiến"
+    },
+    {
+        "id": 203,
+        "module_id": 21,
+        "request": 0,
+        "name": "Thiên Thư"
+    },
+    {
+        "id": 204,
+        "module_id": 2101,
+        "request": 0,
+        "name": "Tăng cấp Thiên Thư N Lần"
+    },
+    {
+        "id": 205,
+        "module_id": 2102,
+        "request": 0,
+        "name": "Tăng cấp Thiên Thư đến N cấp"
+    },
+    {
+        "id": 206,
+        "module_id": 2103,
+        "request": 0,
+        "name": "Kích hoạt ngoại hình Thiên Thư chỉ định"
+    },
+    {
+        "id": 207,
+        "module_id": 2104,
+        "request": 0,
+        "name": "X -Thiên Thư kích hoạt đến X Sao"
+    },
+    {
+        "id": 208,
+        "module_id": 2201,
+        "request": 0,
+        "name": "Kết hôn"
+    },
+    {
+        "id": 209,
+        "module_id": 220101,
+        "request": 0,
+        "name": "Thành công Kết duyên với người chơi khác N Lần"
+    },
+    {
+        "id": 210,
+        "module_id": 220102,
+        "request": 0,
+        "name": "Gửi Thiếp Hồng Trần tích lũy N Lần"
+    },
+    {
+        "id": 211,
+        "module_id": 220103,
+        "request": 0,
+        "name": "Cấp Thiện Cảm tăng N Lần"
+    },
+    {
+        "id": 212,
+        "module_id": 220104,
+        "request": 0,
+        "name": "Cấp Thiện Cảm tăng đến N cấp"
+    },
+    {
+        "id": 213,
+        "module_id": 220105,
+        "request": 0,
+        "name": "Số ngày Kết Duyên đạt N Ngày"
+    },
+    {
+        "id": 214,
+        "module_id": 220106,
+        "request": 0,
+        "name": "Cấp Nhẫn Thề đạt N cấp"
+    },
+    {
+        "id": 215,
+        "module_id": 220107,
+        "request": 0,
+        "name": "Cấp Nhẫn Thề tăng N Lần"
+    },
+    {
+        "id": 216,
+        "module_id": 220108,
+        "request": 0,
+        "name": "Số cấp bậc Cộng Minh của Nhẫn Thề đạt N Bậc"
+    },
+    {
+        "id": 217,
+        "module_id": 220109,
+        "request": 0,
+        "name": "Kích hoạt vẻ ngoài Nhẫn Thề"
+    },
+    {
+        "id": 218,
+        "module_id": 220110,
+        "request": 0,
+        "name": "Khiêu chiến Phó Bản Kim Lan N Lần"
+    },
+    {
+        "id": 219,
+        "module_id": 220111,
+        "request": 0,
+        "name": "Kích hoạt N Cái Tình Sức"
+    },
+    {
+        "id": 220,
+        "module_id": 220112,
+        "request": 0,
+        "name": "Tăng Tình Sức đến N Cấp bậc"
+    },
+    {
+        "id": 221,
+        "module_id": 220113,
+        "request": 0,
+        "name": "Tăng cấp Tình Sức N Lần"
+    },
+    {
+        "id": 222,
+        "module_id": 220114,
+        "request": 0,
+        "name": "Tăng sao Tình Sức đến N Sao"
+    },
+    {
+        "id": 223,
+        "module_id": 220115,
+        "request": 0,
+        "name": "Cộng Minh Tình Sức đạt N Bậc"
+    },
+    {
+        "id": 224,
+        "module_id": 23,
+        "request": 0,
+        "name": "Đại sư luyện đan"
+    },
+    {
+        "id": 225,
+        "module_id": 2301,
+        "request": 0,
+        "name": "Số Đan Dược luyện chế"
+    },
+    {
+        "id": 226,
+        "module_id": 2302,
+        "request": 0,
+        "name": "Số Đan Dược-Cực luyện chế"
+    },
+    {
+        "id": 227,
+        "module_id": 2303,
+        "request": 0,
+        "name": "Số Đan Dược đã dùng"
+    },
+    {
+        "id": 228,
+        "module_id": 2304,
+        "request": 0,
+        "name": "Số Đan Dược-Cực đã dùng"
+    },
+    {
+        "id": 229,
+        "module_id": 2305,
+        "request": 0,
+        "name": "Cấp Luyện Đan Sư"
+    },
+    {
+        "id": 230,
+        "module_id": 24,
+        "request": 0,
+        "name": "Đại sư luyện khí"
+    },
+    {
+        "id": 231,
+        "module_id": 2401,
+        "request": 0,
+        "name": "Cấp Luyện Khí Sư"
+    },
+    {
+        "id": 232,
+        "module_id": 2402,
+        "request": 0,
+        "name": "Số lượng đạo cụ luyện chế"
+    },
+    {
+        "id": 233,
+        "module_id": 25,
+        "request": 0,
+        "name": "Đập Trứng"
+    },
+    {
+        "id": 234,
+        "module_id": 2501,
+        "request": 0,
+        "name": "Điểm Đập Trứng nhận được tích lũy"
+    },
+    {
+        "id": 235,
+        "module_id": 26,
+        "request": 0,
+        "name": "Chú Kiếm Linh Khí"
+    },
+    {
+        "id": 236,
+        "module_id": 2600,
+        "request": 0,
+        "name": "Chú Kiếm Linh Khí - Giúp tạo thành Phi Kiếm"
+    },
+    {
+        "id": 237,
+        "module_id": 2601,
+        "request": 0,
+        "name": "Linh Khí Chú Kiếm nhận chỉ định/ Phi Kiếm bất kỳ"
+    },
+    {
+        "id": 238,
+        "module_id": 2602,
+        "request": 0,
+        "name": "Số Linh Khí Chú Kiếm hoàn thành Nhiệm vụ Phi Kiếm chỉ định"
+    },
+    {
+        "id": 239,
+        "module_id": 27,
+        "request": 0,
+        "name": "Chiêm ngưỡng"
+    },
+    {
+        "id": 240,
+        "module_id": 2701,
+        "request": 0,
+        "name": "Ngưỡng mộ người chơi bất kỳ N Lần"
+    },
+    {
+        "id": 241,
+        "module_id": 28,
+        "request": 0,
+        "name": "BXH"
+    },
+    {
+        "id": 242,
+        "module_id": 2801,
+        "request": 0,
+        "name": "XX Hạng thứ N hạng (Hoạt động Vận Hành hậu đài khống chế)"
+    },
+    {
+        "id": 243,
+        "module_id": 29,
+        "request": 0,
+        "name": "Thánh Trang"
+    },
+    {
+        "id": 244,
+        "module_id": 2901,
+        "request": 0,
+        "name": "Kích hoạt XX Trang bị Thánh đến N Bậc"
+    },
+    {
+        "id": 245,
+        "module_id": 30,
+        "request": 0,
+        "name": "Công Pháp Tự Tạo"
+    },
+    {
+        "id": 246,
+        "module_id": 3001,
+        "request": 0,
+        "name": "Kích hoạt vẻ ngoài của 1 Công Pháp Tự Tạo mới"
+    },
+    {
+        "id": 247,
+        "module_id": 3002,
+        "request": 0,
+        "name": "Vẻ ngoài Công Pháp Tự Tạo tăng sao N Lần"
+    },
+    {
+        "id": 248,
+        "module_id": 3003,
+        "request": 0,
+        "name": "Người chơi lần đầu ghép ra X Thần Văn"
+    },
+    {
+        "id": 249,
+        "module_id": 3004,
+        "request": 0,
+        "name": "Người chơi lần đầu ghép ra Thần Văn X Lần"
+    },
+    {
+        "id": 250,
+        "module_id": 3005,
+        "request": 0,
+        "name": "Số Thần Văn mà người chơi đang Khảm trên Công Pháp Tự Tạo lúc này"
+    },
+    {
+        "id": 251,
+        "module_id": 3006,
+        "request": 0,
+        "name": "Cấp Công Pháp Tự Tạo hiện tại của người chơi"
+    },
+    {
+        "id": 252,
+        "module_id": 31,
+        "request": 0,
+        "name": "Vân Du Tầm Trân"
+    },
+    {
+        "id": 253,
+        "module_id": 3101,
+        "request": 0,
+        "name": "Người chơi bật mỗi ngày đúng giờ làm mới Điểm Linh Tê N Lần"
+    },
+    {
+        "id": 254,
+        "module_id": 3102,
+        "request": 0,
+        "name": "Người chơi mở hiệu ứng đặc biệt & Điểm Linh Tê N Lần"
+    },
+    {
+        "id": 255,
+        "module_id": 3103,
+        "request": 0,
+        "name": "Người chơi tiến hành tìm kiếm Vân Du Tầm Trân N Lần"
+    },
+    {
+        "id": 256,
+        "module_id": 32,
+        "request": 0,
+        "name": "Ngoài trận boss Nhiệm vụ"
+    },
+    {
+        "id": 257,
+        "module_id": 3201,
+        "request": 0,
+        "name": "Kích sát tương ứng boss"
+    },
+    {
+        "id": 258,
+        "module_id": 33,
+        "request": 0,
+        "name": "Chuyển bàn tiên lực"
+    },
+    {
+        "id": 259,
+        "module_id": 3301,
+        "request": 0,
+        "name": "Vòng Quay Tiên Lực N Lần"
+    },
+    {
+        "id": 260,
+        "module_id": 34,
+        "request": 0,
+        "name": "Vòng Quay Cảnh Giới N Lần"
+    },
+    {
+        "id": 261,
+        "module_id": 3401,
+        "request": 0,
+        "name": "Vòng Quay Cảnh Giới N Lần"
+    },
+    {
+        "id": 262,
+        "module_id": 35,
+        "request": 0,
+        "name": "Tăng cấp Hồn Tiên Thú"
+    },
+    {
+        "id": 263,
+        "module_id": 3501,
+        "request": 0,
+        "name": "Tăng cấp Hồn Tiên Thú N Lần"
+    },
+    {
+        "id": 264,
+        "module_id": 3502,
+        "request": 0,
+        "name": "Tăng cấp Hồn Tiên Thú đạt cấp chỉ định"
+    },
+    {
+        "id": 265,
+        "module_id": 36,
+        "request": 0,
+        "name": "Tăng cấp Hồn Phi Kiếm"
+    },
+    {
+        "id": 266,
+        "module_id": 3601,
+        "request": 0,
+        "name": "Tăng cấp Hồn Phi Kiếm N Lần"
+    },
+    {
+        "id": 267,
+        "module_id": 3602,
+        "request": 0,
+        "name": "Tăng cấp Hồn Phi Kiếm đạt cấp chỉ định"
+    },
+    {
+        "id": 268,
+        "module_id": 37,
+        "request": 0,
+        "name": "Nhận Thưởng Mở Tính Năng"
+    },
+    {
+        "id": 269,
+        "module_id": 3701,
+        "request": 0,
+        "name": "Nhận chỉ định/ Phần thưởng bất kỳ"
+    },
+    {
+        "id": 270,
+        "module_id": 38,
+        "request": 0,
+        "name": "Liên server boss"
+    },
+    {
+        "id": 271,
+        "module_id": 3801,
+        "request": 0,
+        "name": "Khiêu chiến bất kỳ/ Liên server tầng nào đó bossN Lần"
+    },
+    {
+        "id": 272,
+        "module_id": 39,
+        "request": 0,
+        "name": "Động Thiên Phúc Địa"
+    },
+    {
+        "id": 273,
+        "module_id": 3901,
+        "request": 0,
+        "name": "Khiêu chiến bất kỳ/ Phẩm chất Động Thiên Phúc Địa N Lần"
+    },
+    {
+        "id": 274,
+        "module_id": 3902,
+        "request": 0,
+        "name": "Nhận N Lần/ Phẩm chất thưởng treo máy Động Thiên Phúc Địa"
+    },
+    {
+        "id": 275,
+        "module_id": 40,
+        "request": 0,
+        "name": "U Minh Ma Vực"
+    },
+    {
+        "id": 276,
+        "module_id": 4001,
+        "request": 0,
+        "name": "Nhận Ma Vực U Minh 1 Lần Thưởng"
+    },
+    {
+        "id": 277,
+        "module_id": 4002,
+        "request": 0,
+        "name": "Tham gia Ma Vực U Minh (Nhấp vào khiêu chiến tính ngay)"
+    },
+    {
+        "id": 278,
+        "module_id": 4003,
+        "request": 0,
+        "name": "Tích luỹ nhận Ma Vực U Minh 1 Lần Thưởng"
+    },
+    {
+        "id": 279,
+        "module_id": 4004,
+        "request": 0,
+        "name": "Tích luỹ tham gia Ma Vực U Minh (Nhấp vào khiêu chiến tính ngay)"
+    },
+    {
+        "id": 280,
+        "module_id": 50,
+        "request": 0,
+        "name": "Tranh Bá Thiên Đế"
+    },
+    {
+        "id": 281,
+        "module_id": 5001,
+        "request": 0,
+        "name": "Báo danh tham gia Tranh Bá Thiên Đế N Lần (Báo danh thành công xem như hoàn thành 1 Lần)"
+    },
+    {
+        "id": 282,
+        "module_id": 5002,
+        "request": 0,
+        "name": "Tham gia đoán Thiên Đế Tranh Bá N Lần (Thi đố 1 lần tính hoàn thành 1 Lần, Một mùa giải đoán nhiều lần tính hoàn thành nhiều lần)"
+    },
+    {
+        "id": 283,
+        "module_id": 5003,
+        "request": 0,
+        "name": "Chung kết Thiên Đế Tranh Bá nhận X Vị trí"
+    },
+    {
+        "id": 284,
+        "module_id": 5004,
+        "request": 0,
+        "name": "Đấu tư cách Thiên Đế Tranh Bá nhận hạng N trở lên (Lớn hơn hoặc bằng N Xem như hoàn thành nhiệm vụ)"
+    }
+]

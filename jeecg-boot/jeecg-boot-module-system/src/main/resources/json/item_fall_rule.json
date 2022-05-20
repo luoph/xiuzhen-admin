@@ -1,0 +1,2292 @@
+[
+    {
+        "id": 1,
+        "type": 0,
+        "name": "Mặc định hệ thống",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 2,
+        "type": 1,
+        "name": "GM Nhận lệnh",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 3,
+        "type": 2,
+        "name": "Thao tác Gmtool",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 4,
+        "type": 11,
+        "name": "Mã đổi",
+        "reward_type": 3,
+        "title": "Nhận được đạo cụ",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 5,
+        "type": 12,
+        "name": "Hoá đơn thanh toán",
+        "reward_type": 3,
+        "title": "Túi Trữ Vật đã đầy",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 6,
+        "type": 13,
+        "name": "Thưởng tăng cảnh giới",
+        "reward_type": 3,
+        "title": "Thưởng tăng cảnh giới",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 7,
+        "type": 14,
+        "name": "Tính năng mở",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 8,
+        "type": 15,
+        "name": "Truyền thư",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 9,
+        "type": 16,
+        "name": "Phúc lợi - Phần thưởng tu luyện",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 10,
+        "type": 17,
+        "name": "Túi - Ghép",
+        "reward_type": 2,
+        "title": "Đạo cụ ghép",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 11,
+        "type": 18,
+        "name": "Túi Trữ Vật - Đạo cụ bán ra",
+        "reward_type": 3,
+        "title": "Đạo cụ bán ra",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 12,
+        "type": 19,
+        "name": "Túi Trữ Vật - Dùng đạo cụ không phải gói quà",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 13,
+        "type": 20,
+        "name": "Túi Trữ Vật - Dùng đạo cụ gói quà",
+        "reward_type": 3,
+        "title": "Túi Trữ Vật đã đầy",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 14,
+        "type": 21,
+        "name": "Đạo cụ không đủ mua nhanh",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 15,
+        "type": 22,
+        "name": "Cửa Hàng",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 16,
+        "type": 23,
+        "name": "Động Phủ - Công Pháp",
+        "reward_type": 3,
+        "title": "Lĩnh ngộ công pháp",
+        "describe": "Túi Công Pháp đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 17,
+        "type": 24,
+        "name": "Động Phủ - Luyện đan",
+        "reward_type": 3,
+        "title": "Thưởng Luyện Đan",
+        "describe": "Phòng Trữ Đan đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 0
+    },
+    {
+        "id": 18,
+        "type": 25,
+        "name": "Động Phủ - Luyện khí",
+        "reward_type": 3,
+        "title": "Thưởng Luyện Khí",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 0
+    },
+    {
+        "id": 19,
+        "type": 26,
+        "name": "Động Phủ - Bảng Tiên - Danh Thiếp",
+        "reward_type": 3,
+        "title": "Thưởng Ngưỡng Mộ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 20,
+        "type": 27,
+        "name": "Linh Căn",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 1,
+        "merge": 1
+    },
+    {
+        "id": 21,
+        "type": 28,
+        "name": "Linh Điền",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 22,
+        "type": 29,
+        "name": "Nhiệm vụ chính",
+        "reward_type": 3,
+        "title": "Thưởng Chính",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 23,
+        "type": 30,
+        "name": "Thưởng phi thăng giới",
+        "reward_type": 3,
+        "title": "Thưởng phi thăng giới",
+        "describe": "Túi Dự Trữ đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 24,
+        "type": 31,
+        "name": "Công Pháp",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 25,
+        "type": 32,
+        "name": "Công Pháp - Đổi",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 26,
+        "type": 33,
+        "name": "Công Pháp - Tách",
+        "reward_type": 3,
+        "title": "Thưởng Tách Công Pháp",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 27,
+        "type": 34,
+        "name": "Công Pháp - Lĩnh ngộ",
+        "reward_type": 3,
+        "title": "Thưởng lĩnh ngộ Công Pháp",
+        "describe": "Túi Dự Trữ đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 28,
+        "type": 35,
+        "name": "Cốt truyện",
+        "reward_type": 3,
+        "title": "Thưởng Ải Cốt Truyện",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 29,
+        "type": 36,
+        "name": "Cốt truyện - Du ngoạn cốt truyện",
+        "reward_type": 3,
+        "title": "Thưởng Treo Máy Cốt Truyện",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 30,
+        "type": 37,
+        "name": "Cốt truyện - Bảng vạn tiên",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 31,
+        "type": 38,
+        "name": "Cốt truyện - Hành Trình Tu Chân",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 32,
+        "type": 39,
+        "name": "Hằng ngày - Thưởng Độ Sôi Nổi",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 33,
+        "type": 40,
+        "name": "Hằng ngày - Thưởng hoàn thành nhiệm vụ",
+        "reward_type": 3,
+        "title": "Thưởng Nhiệm Vụ Hàng Ngày",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 34,
+        "type": 41,
+        "name": "Hằng ngày - Thưởng kinh nghiệm",
+        "reward_type": 3,
+        "title": "Thưởng Kinh Nghiệm Hàng Ngày",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 35,
+        "type": 42,
+        "name": "Tìm lại hằng ngày",
+        "reward_type": 3,
+        "title": "Phần thưởng tìm lại",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 36,
+        "type": 43,
+        "name": "Cung Tiên Thú",
+        "reward_type": 3,
+        "title": "Thưởng Cung Tiên Thú",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 37,
+        "type": 44,
+        "name": "Cung Tiên Thú - Rút thưởng rơi thêm",
+        "reward_type": 3,
+        "title": "Nhận được đạo cụ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 38,
+        "type": 45,
+        "name": "Cung Tiên Thú - Cộng Minh - Thưởng cứu viện",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 39,
+        "type": 46,
+        "name": "Vinh Dự - Thành tựu - Thưởng thành tựu",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 40,
+        "type": 47,
+        "name": "Vinh Dự - Bảng Tiên - Hành lễ",
+        "reward_type": 3,
+        "title": "Thưởng Hành Lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 41,
+        "type": 48,
+        "name": "Đấu Pháp - Cổ Vực",
+        "reward_type": 3,
+        "title": "Cổ Vực - Thưởng Đấu Linh",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 42,
+        "type": 49,
+        "name": "Đấu Pháp - Đoạt Bảo - Thưởng BXH",
+        "reward_type": 3,
+        "title": "Thưởng Bảng Đoạt Bảo Phúc Địa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 43,
+        "type": 50,
+        "name": "Đấu Pháp - Đoạt Bảo - Đổi",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 44,
+        "type": 51,
+        "name": "Đấu Pháp - Đoạt Bảo - Thưởng Điểm Tích Lũy",
+        "reward_type": 2,
+        "title": "Thưởng Điểm Tích Lũy",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 45,
+        "type": 52,
+        "name": "Đấu Pháp - Đoạt Bảo - Tranh đoạt",
+        "reward_type": 3,
+        "title": "Thưởng Đoạt Bảo Phúc Địa",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 46,
+        "type": 53,
+        "name": "Đấu Pháp - Di Tích - Nhận thưởng",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 47,
+        "type": 54,
+        "name": "Đấu Pháp - Di Tích - Tranh đoạt",
+        "reward_type": 3,
+        "title": "Thưởng Tranh Đoạt Di Tích Thượng Cổ",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 48,
+        "type": 55,
+        "name": "Đấu Pháp - Chiến Trường - Thưởng Mỗi ngày",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 49,
+        "type": 56,
+        "name": "Đấu Pháp - Chiến Trường - Thưởng chiến đấu",
+        "reward_type": 3,
+        "title": "Thưởng Chiến Trường Thần Ma",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 50,
+        "type": 57,
+        "name": "Phong Ma - Cảnh Linh",
+        "reward_type": 3,
+        "title": "Thưởng Cảnh Linh",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 51,
+        "type": 58,
+        "name": "Phong Ma - Ma Vương Xâm Nhập",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 52,
+        "type": 59,
+        "name": "Phong Ma - Hang Ma Xà Lăng",
+        "reward_type": 3,
+        "title": "Thưởng Hang Ma Xà Lăng",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 53,
+        "type": 60,
+        "name": "Phong Ma - Tâm Ma",
+        "reward_type": 3,
+        "title": "Thưởng Bắc Minh Ma Hải",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 54,
+        "type": 61,
+        "name": "Phúc lợi - Thưởng cảnh giới",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 55,
+        "type": 62,
+        "name": "Phúc lợi - Thương Nhân Linh Thạch",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 56,
+        "type": 63,
+        "name": "Phúc lợi - Điểm danh",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 57,
+        "type": 64,
+        "name": "Phúc lợi - Thưởng online",
+        "reward_type": 3,
+        "title": "Thưởng online",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 58,
+        "type": 65,
+        "name": "Bí Cảnh - Đan Dược - Rương",
+        "reward_type": 3,
+        "title": "Thưởng Rương Bí Cảnh Đan Dược",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 59,
+        "type": 66,
+        "name": "Bí Cảnh - Đan Dược - Mua đạo cụ",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 60,
+        "type": 67,
+        "name": "Bí Cảnh - Đan Dược - Thưởng chiến đấu",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Đan Dược",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 61,
+        "type": 68,
+        "name": "Bí Cảnh - Phù Văn - Thám Hiểm Con Rối",
+        "reward_type": 3,
+        "title": "Thưởng Càn Quét Thần Hồn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 62,
+        "type": 69,
+        "name": "Bí Cảnh - Phù Văn - Khiêu chiến",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Phù Văn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 63,
+        "type": 70,
+        "name": "Bí Cảnh - Bí Cảnh Linh Thạch - Rương",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Linh Thạch",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 64,
+        "type": 71,
+        "name": "Bí Cảnh - Bí Cảnh Linh Thạch - Quái",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Linh Thạch",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 65,
+        "type": 72,
+        "name": "Bí Cảnh - Bí Cảnh Bộ - Rương",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Tiên Khí",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 66,
+        "type": 73,
+        "name": "Bí Cảnh - Bí Cảnh Bộ - Quái",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Tiên Khí",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 67,
+        "type": 74,
+        "name": "Bí Cảnh - Tiên Thú - Rương",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Tiên Thú",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 68,
+        "type": 75,
+        "name": "Bí Cảnh - Tiên Thú - Nhận Tiên Lễ",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 69,
+        "type": 76,
+        "name": "Bí Cảnh - Tiên Thú - Thần du",
+        "reward_type": 3,
+        "title": "Thưởng Thần Du",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 70,
+        "type": 77,
+        "name": "Bí Cảnh - Tiên Thú - Chiến đấu",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Tiên Thú",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 71,
+        "type": 78,
+        "name": "Bí Cảnh - Bí cảnh Tiên Vi - Rương",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Tu Vi",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 72,
+        "type": 79,
+        "name": "Bí Cảnh - Bí cảnh Tiên Vi - Quái",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Tu Vi",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 73,
+        "type": 80,
+        "name": "Tiên Minh - Kho",
+        "reward_type": 3,
+        "title": "Thưởng Kho Tiên Minh",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 74,
+        "type": 81,
+        "name": "Tiên Minh - Đại Điện - Đóng góp",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 75,
+        "type": 82,
+        "name": "Tiên Minh - Tiệm",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 76,
+        "type": 83,
+        "name": "Tiên Minh - Phúc lợi",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 77,
+        "type": 84,
+        "name": "Tiên Minh - Lì xì",
+        "reward_type": 3,
+        "title": "Lì Xì Tiên Minh",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 78,
+        "type": 85,
+        "name": "Tiên Minh - Yêu Linh Tiên Minh",
+        "reward_type": 3,
+        "title": "Thưởng Yêu Linh Tiên Minh",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 79,
+        "type": 86,
+        "name": "Tiên Minh - Yêu Thú Tiên Minh",
+        "reward_type": 3,
+        "title": "Thưởng Yêu Thú Tiên Minh",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 80,
+        "type": 87,
+        "name": "Đặc quyền cảnh giới (Vứt bỏ)",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 81,
+        "type": 88,
+        "name": "Đặc quyền cảnh giới - Thưởng Mỗi ngày",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 82,
+        "type": 89,
+        "name": "Đặc quyền cảnh giới - Gói Quà Mỗi Ngày",
+        "reward_type": 3,
+        "title": "Gói Quà Cảnh Giới",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 83,
+        "type": 90,
+        "name": "Tiên duyên - Cấp bậc Thân mật",
+        "reward_type": 3,
+        "title": "Thưởng Độ Thân Mật",
+        "describe": "Túi Tín Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 84,
+        "type": 91,
+        "name": "Tiên duyên - Thí luyện",
+        "reward_type": 3,
+        "title": "Thưởng Thí Luyện Tiên Duyên",
+        "describe": "Túi Tín Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 85,
+        "type": 92,
+        "name": "Tiên duyên - Luận bàn - Ghép",
+        "reward_type": 3,
+        "title": "Thưởng Luận Bàn",
+        "describe": "Túi Tín Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 86,
+        "type": 93,
+        "name": "Tiên duyên - Tìm duyên",
+        "reward_type": 3,
+        "title": "Thưởng Tìm Duyên",
+        "describe": "Túi Tín Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 87,
+        "type": 94,
+        "name": "Trừ Ma Lục - Vân Du - Thưởng treo thưởng",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 88,
+        "type": 95,
+        "name": "Tiên Khí - Phần thưởng",
+        "reward_type": 3,
+        "title": "Thưởng Truyền Thuyết",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 89,
+        "type": 96,
+        "name": "Khiêu chiến Kiếm Tiên",
+        "reward_type": 3,
+        "title": "Thưởng Khiêu Chiến Kiếm Tiên",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 90,
+        "type": 97,
+        "name": "Giám Bảo - Thưởng thường",
+        "reward_type": 3,
+        "title": "Thưởng Giám Bảo",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 91,
+        "type": 98,
+        "name": "Giám Bảo - Thưởng hiếm",
+        "reward_type": 3,
+        "title": "Thưởng Giám Bảo",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 92,
+        "type": 99,
+        "name": "Danh Thiếp - Chiêm ngưỡng",
+        "reward_type": 3,
+        "title": "Thưởng Ngưỡng Mộ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 93,
+        "type": 100,
+        "name": "Khiêu chiến Tiên Tôn rơi",
+        "reward_type": 3,
+        "title": "Thưởng Tiên Tôn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 94,
+        "type": 101,
+        "name": "Văn Khúc Hạ Phàm",
+        "reward_type": 3,
+        "title": "Thưởng Văn Khúc Hạ Phàm",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 95,
+        "type": 102,
+        "name": "Thần Điện Chí Tôn",
+        "reward_type": 3,
+        "title": "Thưởng Thần Điện Chí Tôn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 96,
+        "type": 103,
+        "name": "Thưởng Chiến Lệnh",
+        "reward_type": 3,
+        "title": "Thưởng Chiến Lệnh",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 97,
+        "type": 104,
+        "name": "EXP Chiến Lệnh chuyển hoá xu",
+        "reward_type": 3,
+        "title": "Thưởng Chiến Lệnh",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 98,
+        "type": 105,
+        "name": "Tàng Bảo Các",
+        "reward_type": 3,
+        "title": "Thưởng Tàng Bảo Các",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 99,
+        "type": 106,
+        "name": "Tầm Bảo - Tầm Bảo",
+        "reward_type": 2,
+        "title": "Thưởng Tầm Bảo",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 0
+    },
+    {
+        "id": 100,
+        "type": 107,
+        "name": "Hoạt động -0 VNĐ mua",
+        "reward_type": 3,
+        "title": "",
+        "describe": "Túi Tín Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 101,
+        "type": 108,
+        "name": "Hoạt động -0 VNĐ mua nhận",
+        "reward_type": 2,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 102,
+        "type": 109,
+        "name": "Hoạt động - Thưởng Quỹ Trưởng Thành",
+        "reward_type": 3,
+        "title": "Thưởng Quỹ Trưởng Thành",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 103,
+        "type": 110,
+        "name": "Hoạt động - Thưởng Đăng Nhập",
+        "reward_type": 3,
+        "title": "Thưởng Đăng Nhập",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 104,
+        "type": 111,
+        "name": "Hoạt động - HĐ Ngày Lễ - Đổi",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 105,
+        "type": 112,
+        "name": "Hoạt động - HĐ Ngày Lễ - Nạp",
+        "reward_type": 2,
+        "title": "Thưởng Nạp Tích Lũy Ngày Lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 106,
+        "type": 113,
+        "name": "Hoạt động - HĐ Ngày Lễ - Điểm danh",
+        "reward_type": 2,
+        "title": "Thưởng Điểm Danh Ngày Lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 107,
+        "type": 114,
+        "name": "Hoạt động - HĐ Ngày Lễ - Nhiệm vụ",
+        "reward_type": 3,
+        "title": "Thưởng Nhiệm Vụ Ngày Lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 108,
+        "type": 115,
+        "name": "Hoạt động - Gói Quà Hôm Nay",
+        "reward_type": 3,
+        "title": "Gói Quà Hôm Nay",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 109,
+        "type": 116,
+        "name": "Hoạt động - Hạng Mở Server",
+        "reward_type": 3,
+        "title": "Thưởng Xếp Hạng Mở Server",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 110,
+        "type": 117,
+        "name": "Hoạt động - Nạp số ngày tích luỹ",
+        "reward_type": 3,
+        "title": "Thưởng Số Ngày Nạp Tích Lũy",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 111,
+        "type": 118,
+        "name": "Hoạt động - Nạp mỗi ngày",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 112,
+        "type": 119,
+        "name": "Hoạt động - Nạp lần đầu",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 113,
+        "type": 120,
+        "name": "Hoạt động - Nạp Tích Lũy",
+        "reward_type": 3,
+        "title": "Thưởng Nạp Tích Lũy Hạn Giờ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 114,
+        "type": 121,
+        "name": "Tiên Phúc - Quan chức",
+        "reward_type": 3,
+        "title": "Thưởng Tiên Chức",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 115,
+        "type": 122,
+        "name": "Tiên Phúc - Liên tục Nạp",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 116,
+        "type": 123,
+        "name": "Tiên Phúc - Gói Quà Mỗi Ngày",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 117,
+        "type": 124,
+        "name": "Tiên Phúc - Thẻ Tháng - Mua",
+        "reward_type": 3,
+        "title": "Thưởng Thẻ Tháng",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 118,
+        "type": 125,
+        "name": "Tiên Phúc - Thẻ Tháng - Nhận thưởng",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 119,
+        "type": 126,
+        "name": "Tiên Giới - Tiên Giới boss",
+        "reward_type": 3,
+        "title": "Thưởng Tiên Tôn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 120,
+        "type": 127,
+        "name": "Thưởng điểm Mục Tiêu 7 Ngày",
+        "reward_type": 3,
+        "title": "Thưởng điểm Mục Tiêu 7 Ngày",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 121,
+        "type": 128,
+        "name": "Gói Quà Mục Tiêu 7 Ngày",
+        "reward_type": 3,
+        "title": "Thưởng điểm Mục Tiêu 7 Ngày",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 122,
+        "type": 129,
+        "name": "Thưởng nhiệm vụ Mục Tiêu 7 Ngày",
+        "reward_type": 3,
+        "title": "Thưởng nhiệm vụ Mục Tiêu 7 Ngày",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 123,
+        "type": 130,
+        "name": "Thưởng nhiệm vụ Thiên Kiếp",
+        "reward_type": 3,
+        "title": "Thưởng nhiệm vụ Thiên Kiếp",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 124,
+        "type": 131,
+        "name": "Ghép Pháp Bảo",
+        "reward_type": 1,
+        "title": "Ghép Pháp Bảo",
+        "describe": "Túi Trữ Vật Pháp Bảo đã full, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 125,
+        "type": 132,
+        "name": "Mèo Chiêu Tài",
+        "reward_type": 3,
+        "title": "Thưởng Mèo Thần Tài",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 126,
+        "type": 133,
+        "name": "Bán Pháp Bảo",
+        "reward_type": 3,
+        "title": "Pháp Bảo đã bán",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 127,
+        "type": 134,
+        "name": "Bí Cảnh - Bí Cảnh Linh Thạch - Càn quét",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Linh Thạch",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 128,
+        "type": 135,
+        "name": "Bí Cảnh - Bí cảnh Tiên Vi - Càn quét",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Tu Vi",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 129,
+        "type": 136,
+        "name": "Tiên Chức",
+        "reward_type": 3,
+        "title": "Tiên Chức",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 130,
+        "type": 137,
+        "name": "hoạt động mở server - Hạng Mở Server - Thưởng",
+        "reward_type": 3,
+        "title": "Thưởng",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 131,
+        "type": 138,
+        "name": "hoạt động mở server - Hạng Mở Server - Thưởng Đạt Mục Tiêu",
+        "reward_type": 3,
+        "title": "Thưởng Đạt Mục Tiêu",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 132,
+        "type": 139,
+        "name": "hoạt động mở server - Gói Quà Mở Server",
+        "reward_type": 3,
+        "title": "Gói Quà Mở Server",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 133,
+        "type": 140,
+        "name": "hoạt động mở server - Gói Quà Đơn",
+        "reward_type": 3,
+        "title": "Gói Quà Đơn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 134,
+        "type": 141,
+        "name": "hoạt động mở server - Đoạt bảo xếp hạng - Thưởng trúng thưởng",
+        "reward_type": 3,
+        "title": "Thưởng trúng thưởng",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 135,
+        "type": 142,
+        "name": "hoạt động mở server - Đoạt bảo xếp hạng - Thưởng",
+        "reward_type": 3,
+        "title": "Thưởng",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 136,
+        "type": 143,
+        "name": "hoạt động mở server - Đoạt bảo xếp hạng - Thưởng Điểm Tích Lũy",
+        "reward_type": 3,
+        "title": "Thưởng Điểm Tích Lũy",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 137,
+        "type": 144,
+        "name": "hoạt động mở server - Tiêu có quà",
+        "reward_type": 3,
+        "title": "Tiêu có quà",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 138,
+        "type": 145,
+        "name": "Đấu Pháp - Công Pháp - Thưởng Sát Thương",
+        "reward_type": 3,
+        "title": "Thưởng Sát Thương Bí Cảnh Thiên Thư",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 139,
+        "type": 146,
+        "name": "Đấu Pháp - Công Pháp - Thưởng hạng ST đơn tuần",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 140,
+        "type": 147,
+        "name": "Đấu Pháp - Công Pháp - Thưởng hạng ST tích luỹ tuần",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 141,
+        "type": 148,
+        "name": "Đấu Pháp - Công Pháp - Thưởng trợ chiến",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 142,
+        "type": 149,
+        "name": "Vòng Quay Lực Chiến",
+        "reward_type": 3,
+        "title": "Thưởng Vòng Quay Lực Chiến",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 5,
+        "merge": 1
+    },
+    {
+        "id": 143,
+        "type": 150,
+        "name": "Càn quét Bí Cảnh Tiên Khí",
+        "reward_type": 3,
+        "title": "Thưởng Càn Quét Bí Cảnh Tiên Khí",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 144,
+        "type": 151,
+        "name": "Bí Cảnh - Phù Văn - Treo thưởng Bí Cảnh",
+        "reward_type": 2,
+        "title": "Treo Thưởng Bí Cảnh Phù Văn",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 145,
+        "type": 152,
+        "name": "HĐ Ngày Lễ - Pháo Lễ",
+        "reward_type": 3,
+        "title": "Thưởng Pháo Hoa Ngày Lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 146,
+        "type": 153,
+        "name": "Càn quét Bí Cảnh Pháp Bảo",
+        "reward_type": 3,
+        "title": "Thưởng Càn Quét Bí Cảnh Pháp Bảo",
+        "describe": "Túi Trữ Vật Pháp Bảo đã full, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 147,
+        "type": 154,
+        "name": "Bí Cảnh - Pháp Bảo - Rương",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Pháp Bảo",
+        "describe": "Túi Trữ Vật Pháp Bảo đã full, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 148,
+        "type": 155,
+        "name": "Bí Cảnh - Pháp Bảo - Quái",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Pháp Bảo",
+        "describe": "Túi Trữ Vật Pháp Bảo đã full, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 149,
+        "type": 156,
+        "name": "Thưởng nhiệm vụ Kim Lan",
+        "reward_type": 3,
+        "title": "Thưởng nhiệm vụ Kim Lan",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 150,
+        "type": 157,
+        "name": "Thưởng kết nghĩa",
+        "reward_type": 3,
+        "title": "Thưởng kết nghĩa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 151,
+        "type": 158,
+        "name": "Quà Tình Nghĩa - Trả về",
+        "reward_type": 3,
+        "title": "Quà Tình Nghĩa - Trả về",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 152,
+        "type": 159,
+        "name": "Thưởng kết nghĩa",
+        "reward_type": 3,
+        "title": "Thưởng kết nghĩa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 153,
+        "type": 160,
+        "name": "Lì xì Nghĩa Kết Kim Lan",
+        "reward_type": 3,
+        "title": "Lì xì Nghĩa Kết Kim Lan",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 154,
+        "type": 161,
+        "name": "Thưởng Độ Thân Mật kết nghĩa",
+        "reward_type": 3,
+        "title": "Thưởng Độ Thân Mật kết nghĩa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 155,
+        "type": 162,
+        "name": "Thưởng phó bản Kết Nghĩa",
+        "reward_type": 3,
+        "title": "Thưởng phó bản Kết Nghĩa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 156,
+        "type": 163,
+        "name": "Tàng Bảo Các",
+        "reward_type": 3,
+        "title": "Thưởng Tàng Bảo Các",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 157,
+        "type": 164,
+        "name": "Chuyển bàn cảnh giới",
+        "reward_type": 3,
+        "title": "Thưởng Vòng Quay Cảnh Giới",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 5,
+        "merge": 1
+    },
+    {
+        "id": 158,
+        "type": 165,
+        "name": "Điểm rút thưởng Tiên Thú",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 159,
+        "type": 166,
+        "name": "Càn quét Bí Cảnh Đan Dược",
+        "reward_type": 3,
+        "title": "Thưởng Bí Cảnh Đan Dược",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 160,
+        "type": 167,
+        "name": "HĐ Ngày Lễ - Hạng tiêu phí",
+        "reward_type": 3,
+        "title": "Thưởng Xếp Hạng Mở Server",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 161,
+        "type": 168,
+        "name": "Thưởng Mua Thẻ Tuần",
+        "reward_type": 3,
+        "title": "Thưởng Mua Thẻ Tuần",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 162,
+        "type": 169,
+        "name": "Thưởng truyền thừa Cổ Thần",
+        "reward_type": 3,
+        "title": "Thưởng truyền thừa Cổ Thần",
+        "describe": "",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 163,
+        "type": 170,
+        "name": "Thưởng khiêu chiến mỗi ngày Trích Tiên Đài",
+        "reward_type": 3,
+        "title": "Thưởng khiêu chiến mỗi ngày Trích Tiên Đài",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 164,
+        "type": 171,
+        "name": "Thưởng cấp bậc mỗi ngày Trích Tiên Đài",
+        "reward_type": 3,
+        "title": "Thưởng cấp bậc mỗi ngày Trích Tiên Đài",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 165,
+        "type": 172,
+        "name": "Thưởng tăng cấp bậc mỗi ngày Trích Tiên Đài",
+        "reward_type": 3,
+        "title": "Thưởng tăng cấp bậc mỗi ngày Trích Tiên Đài",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 166,
+        "type": 173,
+        "name": "Thưởng hạng mùa giải Trích Tiên Đài",
+        "reward_type": 3,
+        "title": "Thưởng hạng mùa giải Trích Tiên Đài",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 167,
+        "type": 174,
+        "name": "Thưởng chiến đấu mùa giải Trích Tiên Đài",
+        "reward_type": 3,
+        "title": "Thưởng Chiến Đấu Trích Tiên Đài",
+        "describe": "Túi Dự Trữ Kỳ Trân đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 168,
+        "type": 175,
+        "name": "Thưởng HĐ Lục Đạo Kiếm Trận",
+        "reward_type": 2,
+        "title": "Thưởng HĐ Lục Đạo Kiếm Trận",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 169,
+        "type": 176,
+        "name": "Thưởng HĐ Hộ Phù Lực Chiến",
+        "reward_type": 2,
+        "title": "Thưởng HĐ Hộ Phù Lực Chiến",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 170,
+        "type": 177,
+        "name": "Thưởng HĐ Chiêu Tài Tiến Bảo",
+        "reward_type": 2,
+        "title": "Thưởng HĐ Chiêu Tài Tiến Bảo",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 171,
+        "type": 178,
+        "name": "Thưởng thông báo cập nhật",
+        "reward_type": 2,
+        "title": "Thưởng thông báo cập nhật",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 172,
+        "type": 179,
+        "name": "Càn quét boss Rơi",
+        "reward_type": 3,
+        "title": "Càn quét boss Rơi",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 173,
+        "type": 180,
+        "name": "Thưởng hành lễ",
+        "reward_type": 2,
+        "title": "Thưởng hành lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 174,
+        "type": 181,
+        "name": "Đập Trứng",
+        "reward_type": 3,
+        "title": "Thưởng Đập Trứng",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 175,
+        "type": 182,
+        "name": "Tiệm Đập Trứng",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 176,
+        "type": 183,
+        "name": "Gói Quà Đập Trứng",
+        "reward_type": 1,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 177,
+        "type": 184,
+        "name": "Luyện đan - Hoàn trả",
+        "reward_type": 3,
+        "title": "Hoàn trả nguyên liệu luyện Đan",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 178,
+        "type": 185,
+        "name": "Luyện khí - Hoàn trả",
+        "reward_type": 3,
+        "title": "Hoàn trả nguyên liệu luyện Khí",
+        "describe": "Túi Dự Trữ Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 179,
+        "type": 186,
+        "name": "Hệ thống trợ chiến - Phần thưởng",
+        "reward_type": 3,
+        "title": "Thưởng trợ chiến",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 180,
+        "type": 187,
+        "name": "Tiệc Ngày Lễ",
+        "reward_type": 3,
+        "title": "Rơi ngày lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 181,
+        "type": 188,
+        "name": "Tranh Bá Tiên Tông",
+        "reward_type": 3,
+        "title": "Tranh Bá Tiên Tông rơi",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 182,
+        "type": 189,
+        "name": "Hoạt động - Gói Quà Mua Ngay",
+        "reward_type": 3,
+        "title": "Gói Quà Mua Ngay",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 183,
+        "type": 190,
+        "name": "Tách Đan Dược",
+        "reward_type": 3,
+        "title": "Tách Đan Dược",
+        "describe": "",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 184,
+        "type": 191,
+        "name": "Gói Quà Đề Xuất Tinh Chuẩn",
+        "reward_type": 3,
+        "title": "Gói Quà Đề Xuất Tinh Chuẩn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 185,
+        "type": 192,
+        "name": "Tặng rượu",
+        "reward_type": 3,
+        "title": "Tặng rượu",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 186,
+        "type": 193,
+        "name": "Gói Quà Kết Nghĩa",
+        "reward_type": 3,
+        "title": "Gói Quà Kết Nghĩa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 187,
+        "type": 194,
+        "name": "Chú Kiếm Linh Khí",
+        "reward_type": 3,
+        "title": "Thưởng Linh Khí Chú Kiếm",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 188,
+        "type": 195,
+        "name": "BXH Kết Nghĩa",
+        "reward_type": 3,
+        "title": "BXH Kết Nghĩa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 189,
+        "type": 196,
+        "name": "Hoàn Trả Vui Vẻ",
+        "reward_type": 3,
+        "title": "Thưởng Hoàn Lợi Vui Vẻ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 190,
+        "type": 197,
+        "name": "Tuyến chính tân thủ",
+        "reward_type": 3,
+        "title": "Tuyến chính tân thủ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 191,
+        "type": 198,
+        "name": "Túi Trữ Vật - Dùng đạo cụ gói quà (Mở không cộng dồn)",
+        "reward_type": 3,
+        "title": "Túi Trữ Vật đã đầy",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 192,
+        "type": 199,
+        "name": "Công Pháp Tự Tạo - Linh Đài",
+        "reward_type": 3,
+        "title": "Công Pháp Tự Tạo",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 193,
+        "type": 200,
+        "name": "Công Pháp Tự Tạo - Thanh Nang",
+        "reward_type": 3,
+        "title": "Ghép thành Thần Văn",
+        "describe": "Túi Thần Văn đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 194,
+        "type": 201,
+        "name": "Công Pháp Tự Tạo - Vân Du Tầm Trân",
+        "reward_type": 3,
+        "title": "Vân Du Tầm Trân",
+        "describe": "Túi Linh Tài đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 0
+    },
+    {
+        "id": 195,
+        "type": 202,
+        "name": "Thiên Ma",
+        "reward_type": 3,
+        "title": "Thiên Ma",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 196,
+        "type": 203,
+        "name": "Lợi ích đạo cụ thời gian",
+        "reward_type": 3,
+        "title": "Lợi ích đạo cụ thời gian",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 197,
+        "type": 204,
+        "name": "Kho Báu Tiên Minh",
+        "reward_type": 3,
+        "title": "Kho Báu Tiên Minh",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 198,
+        "type": 205,
+        "name": "Ngoài trận boss",
+        "reward_type": 3,
+        "title": "Ngoài trận boss",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 199,
+        "type": 206,
+        "name": "Thưởng hẹn trước",
+        "reward_type": 3,
+        "title": "Thưởng hẹn trước",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 200,
+        "type": 207,
+        "name": "Đoạt Bảo - Liên thắng",
+        "reward_type": 3,
+        "title": "Đoạt Bảo - Liên thắng",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 201,
+        "type": 208,
+        "name": "Động Thiên Phúc Địa",
+        "reward_type": 3,
+        "title": "Động Thiên Phúc Địa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 202,
+        "type": 209,
+        "name": "Dự cáo phân thân",
+        "reward_type": 3,
+        "title": "Dự cáo phân thân",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 203,
+        "type": 210,
+        "name": "Hệ thống Phân Thân",
+        "reward_type": 3,
+        "title": "Hệ thống Phân Thân",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 204,
+        "type": 211,
+        "name": "Điểm danh Tiểu Thuyết",
+        "reward_type": 3,
+        "title": "Điểm danh Tiểu Thuyết",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 205,
+        "type": 212,
+        "name": "Thưởng mỗi ngày Lục Đạo Kiếm Trận",
+        "reward_type": 3,
+        "title": "Thưởng mỗi ngày Lục Đạo Kiếm Trận",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 206,
+        "type": 213,
+        "name": "Phúc lợi cuối tuần",
+        "reward_type": 3,
+        "title": "",
+        "describe": "",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 207,
+        "type": 214,
+        "name": "Tranh đoạt Động Thiên Phúc Địa",
+        "reward_type": 3,
+        "title": "Tranh đoạt Động Thiên Phúc Địa",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 208,
+        "type": 215,
+        "name": "Ưu đãi tự chọn",
+        "reward_type": 3,
+        "title": "Gói Quà Ưu Đãi Tự Chọn",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 209,
+        "type": 216,
+        "name": "Thi Đoán Tranh Bá Vị Diện",
+        "reward_type": 3,
+        "title": "Thi Đoán Tranh Bá Vị Diện",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 210,
+        "type": 217,
+        "name": "Thí Luyện Tiên Lực",
+        "reward_type": 3,
+        "title": "Thưởng Thí Luyện Tiên Lực",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 211,
+        "type": 218,
+        "name": "Nhiệm vụ tuần",
+        "reward_type": 3,
+        "title": "Nhiệm vụ tuần",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 212,
+        "type": 219,
+        "name": "Thế Giới boss",
+        "reward_type": 3,
+        "title": "Thế Giới boss",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 213,
+        "type": 220,
+        "name": "U Minh Ma Vực",
+        "reward_type": 3,
+        "title": "U Minh Ma Vực",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 4,
+        "merge": 1
+    },
+    {
+        "id": 214,
+        "type": 221,
+        "name": "Mùa giải Chiến Trường Thần Ma-Thưởng tổng kết SV",
+        "reward_type": 3,
+        "title": "Mùa giải Chiến Trường Thần Ma-Thưởng tổng kết SV",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 215,
+        "type": 222,
+        "name": "Mùa giải Bí Cảnh Chiên Thư-Thưởng tổng kết SV",
+        "reward_type": 3,
+        "title": "Mùa giải Bí Cảnh Chiên Thư-Thưởng tổng kết SV",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 216,
+        "type": 223,
+        "name": "Động Thiên Phúc Địa (BXH)",
+        "reward_type": 3,
+        "title": "Động Thiên Phúc Địa (BXH)",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 217,
+        "type": 224,
+        "name": "Động Thiên Phúc Địa (Cửa Hàng Phi Kiếm)",
+        "reward_type": 3,
+        "title": "Động Thiên Phúc Địa (Cửa Hàng Phi Kiếm)",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 218,
+        "type": 225,
+        "name": "Ghép Tín Vật",
+        "reward_type": 3,
+        "title": "Ghép Tín Vật",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 219,
+        "type": 226,
+        "name": "Cốt truyện boss- Càn quét",
+        "reward_type": 3,
+        "title": "Động Thiên Phúc Địa (Cửa Hàng Phi Kiếm)",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 220,
+        "type": 227,
+        "name": "Phong Ma - Cảnh Linh - Càn quét(Linh Thú boss/ Đặc quyền boss)",
+        "reward_type": 3,
+        "title": "Phong Ma - Cảnh Linh - Càn quét(Linh Thú boss/ Đặc quyền boss)",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 221,
+        "type": 228,
+        "name": "Vòng tư cách-Thưởng chiến đấu",
+        "reward_type": 3,
+        "title": "Vòng tư cách-Thưởng chiến đấu",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 222,
+        "type": 229,
+        "name": "Vòng tổng kết-Thưởng chiến đấu",
+        "reward_type": 3,
+        "title": "Vòng tổng kết-Thưởng chiến đấu",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 223,
+        "type": 230,
+        "name": "Vòng tư cách-Thưởng XH",
+        "reward_type": 3,
+        "title": "Vòng tư cách-Thưởng XH",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 224,
+        "type": 231,
+        "name": "Vòng tổng kết-Thưởng XH",
+        "reward_type": 3,
+        "title": "Vòng tổng kết-Thưởng XH",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 225,
+        "type": 232,
+        "name": "Tranh Bá Thiên Đế - Thưởng gộp máy chủ quán quân chung kết",
+        "reward_type": 3,
+        "title": "Tranh Bá Thiên Đế - Thưởng gộp máy chủ quán quân chung kết",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 226,
+        "type": 233,
+        "name": "Thưởng Hành Lễ",
+        "reward_type": 3,
+        "title": "Thưởng Hành Lễ",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 227,
+        "type": 234,
+        "name": "Thưởng thi đố",
+        "reward_type": 3,
+        "title": "Thưởng thi đố",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 228,
+        "type": 235,
+        "name": "Tranh Bá Thiên Đế - Đổi",
+        "reward_type": 3,
+        "title": "Tranh Bá Thiên Đế - Đổi",
+        "describe": "Túi Trữ Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 229,
+        "type": 236,
+        "name": "Tiên duyên - Tầm Duyên nhanh",
+        "reward_type": 3,
+        "title": "Thưởng Tìm Duyên",
+        "describe": "Túi Tín Vật đã đầy, Đạo cụ gửi qua Truyền Thư",
+        "notice_type": 0,
+        "merge": 1
+    }
+]
