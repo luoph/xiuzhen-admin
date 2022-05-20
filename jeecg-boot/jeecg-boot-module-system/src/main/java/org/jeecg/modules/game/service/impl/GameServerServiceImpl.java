@@ -8,7 +8,6 @@ import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.primitives.Ints;
 import okhttp3.Call;
 import okhttp3.Callback;
 import org.jeecg.modules.game.entity.GameServer;
@@ -123,11 +122,6 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public Map<Integer, Response> gameServerGet(int[] serverIds, String path) {
-        return gameServerGet(Ints.asList(serverIds), path);
-    }
-
-    @Override
     public Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, Object data) {
         Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
@@ -145,16 +139,6 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             }
         }
         return responseMap;
-    }
-
-    @Override
-    public Map<Integer, Response> gameServerPost(int[] serverIds, String path, Object data) {
-        return gameServerPost(Ints.asList(serverIds), path, data);
-    }
-
-    @Override
-    public Map<Integer, Response> gameServerPost(String serverIds, String path, Object data) {
-        return gameServerPost(StringUtils.split2Int(serverIds), path, data);
     }
 
     @Override

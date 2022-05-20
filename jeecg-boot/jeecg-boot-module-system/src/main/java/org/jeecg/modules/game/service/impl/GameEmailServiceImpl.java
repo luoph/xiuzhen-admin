@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.constant.EmailReceiver;
 import org.jeecg.modules.game.constant.EmailType;
 import org.jeecg.modules.game.entity.GameEmail;
+import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameEmailMapper;
 import org.jeecg.modules.game.service.IGameEmailService;
 import org.jeecg.modules.game.service.IGamePlayerService;
@@ -23,11 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -107,12 +106,29 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             gameServerService.gameServerGet(serverIds, syncMailUrl);
         } else if (targetBodyType == EmailReceiver.SERVER.getType()) {
             int[] serverIds = StrUtil.splitToInt(entity.getTargetBodyIds(), ",");
+            // 此处需要处理已合服的情况
+            Set<Integer> affectedServerIds = new HashSet<>();
             for (int server : serverIds) {
-                copy.setTargetBodyId((long) server);
-                gameServerService.gameServerPost(CollUtil.newArrayList(server), sendMailUrl, copy);
+                GameServer gameServer = gameServerService.getById(server);
+                if (gameServer != null) {
+                    if (gameServer.getPid() != null && gameServer.getPid() > 0) {
+                        GameServer parent = gameServerService.getById(gameServer.getPid());
+                        if (parent != null) {
+                            affectedServerIds.add(parent.getId());
+                        }
+                    } else {
+                        affectedServerIds.add(gameServer.getId());
+                    }
+                }
             }
 
-            gameServerService.gameServerGet(serverIds, syncMailUrl);
+            if (CollUtil.isNotEmpty(affectedServerIds)) {
+                for (Integer serverId : affectedServerIds) {
+                    copy.setTargetBodyId((long) serverId);
+                    gameServerService.gameServerPost(CollUtil.newArrayList(serverId), sendMailUrl, copy);
+                }
+                gameServerService.gameServerGet(affectedServerIds, syncMailUrl);
+            }
         }
 
         response.setErrorCode(ResponseCode.SUCCESS);

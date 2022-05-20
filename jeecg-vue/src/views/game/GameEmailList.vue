@@ -38,16 +38,14 @@
                         </a-col>
                         <a-col :md="10" :sm="8">
                             <a-form-item label="时间">
-                                <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']"
-                                                @change="onDateChange" />
+                                <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
                             </a-form-item>
                         </a-col>
                     </template>
                     <a-col :md="4" :sm="8">
-                        <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+                        <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
                             <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-                            <a-button type="primary" icon="reload" style="margin-left: 8px"
-                                      @click="searchReset">重置</a-button>
+                            <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
                             <a style="margin-left: 8px" @click="handleToggleSearch">
                                 {{ toggleSearchStatus ? "收起" : "展开" }}
                                 <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
@@ -80,7 +78,6 @@
                         <span class="large-text">{{ text }}</span>
                     </div>
                 </template>
-
 
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleCopy(record)">复制</a>
@@ -132,7 +129,7 @@ export default {
                     key: "rowIndex",
                     width: 60,
                     align: "center",
-                    customRender: function(t, r, index) {
+                    customRender: function (t, r, index) {
                         return parseInt(index) + 1;
                     }
                 },
@@ -154,7 +151,7 @@ export default {
                     align: "center",
                     width: 80,
                     dataIndex: "emailType",
-                    customRender: function(text) {
+                    customRender: function (text) {
                         return text === 1 ? "无附件" : "有附件";
                     }
                 },
@@ -170,7 +167,7 @@ export default {
                     align: "center",
                     width: 80,
                     dataIndex: "validState",
-                    customRender: function(text) {
+                    customRender: function (text) {
                         return text === 1 ? "已审核发送" : "未审核";
                     }
                 },
@@ -179,7 +176,7 @@ export default {
                     align: "center",
                     width: 80,
                     dataIndex: "targetBodyType",
-                    customRender: function(text) {
+                    customRender: function (text) {
                         return text === 1 ? "玩家" : "全服";
                     }
                 },
@@ -226,36 +223,36 @@ export default {
         };
     },
     computed: {
-        importExcelUrl: function() {
+        importExcelUrl: function () {
             return `${window._CONFIG["domianURL"]}/${this.url.importExcelUrl}`;
         }
     },
-    mounted() {
-    },
+    mounted() {},
     methods: {
-        initDictConfig() {
-        },
+        initDictConfig() {},
 
-        onDateChange: function(value, dateStr) {
+        onDateChange: function (value, dateStr) {
             this.queryParam.validStarTime_begin = dateStr[0];
             this.queryParam.validStarTime_end = dateStr[1];
         },
 
-        handleCopy: function(record) {
+        handleCopy: function (record) {
             this.$refs.modalForm.add(record);
         },
 
-        handleCheck: function(record) {
+        handleCheck: function (record) {
             const that = this;
-            getAction(that.url.isCheck, { id: record.id }).then(res => {
-                if (res.success) {
-                    that.$message.success("审核成功！");
-                } else {
-                    that.$message.error("审核发送失败！");
-                }
-            }).finally(() => {
-                that.loadData();
-            });
+            getAction(that.url.isCheck, { id: record.id })
+                .then((res) => {
+                    if (res.success) {
+                        that.$message.success("审核成功！");
+                    } else {
+                        that.$message.error("审核发送失败！");
+                    }
+                })
+                .finally(() => {
+                    that.loadData();
+                });
         }
     }
 };
