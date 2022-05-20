@@ -104,11 +104,17 @@
                         <a-select-option :value="1">已合并</a-select-option>
                     </a-select>
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时母服id">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服后母服id">
                     <a-input-number v-decorator="['pid', {}]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="保留玩家id">
+                    <a-input-number v-decorator="['reservePlayerId', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时间">
                     <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['mergeTime', {}]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="单服活动结算时间">
+                    <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['singleSettleTime', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="在线统计开关">
                     <a-select placeholder="在线统计开关" v-decorator="['onlineStat', validatorRules.payCallbackStatus]" initialValue="1">
@@ -124,12 +130,6 @@
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
                     <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时跨服排行活动id">
-                    <a-input placeholder="请输入合服时跨服排行活动id" v-decorator="['mergeOscDetailIds', {}]" />
-                </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服时节日活动id">
-                    <a-input placeholder="请输入合服时节日活动id" v-decorator="['mergeCampaignTypeIds', {}]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
                     <a-date-picker showTime format="YYYY-MM-DD" v-decorator="['openTime', {}]" />
@@ -246,6 +246,8 @@ export default {
                         "dbName",
                         "type",
                         "outdated",
+                        "reservePlayerId",
+                        "singleSettleTime",
                         "pid",
                         "taStatistics",
                         "gmStatus",
@@ -253,8 +255,6 @@ export default {
                         "gmPlayerId",
                         "payCallbackStatus",
                         "onlineStat",
-                        "mergeOscDetailIds",
-                        "mergeCampaignTypeIds",
                         "extra"
                     )
                 );
@@ -263,6 +263,7 @@ export default {
                 this.form.setFieldsValue({ openTime: this.model.openTime ? moment(this.model.openTime) : null });
                 this.form.setFieldsValue({ onlineTime: this.model.onlineTime ? moment(this.model.onlineTime) : null });
                 this.form.setFieldsValue({ mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null });
+                this.form.setFieldsValue({ singleSettleTime: this.model.singleSettleTime ? moment(this.model.singleSettleTime) : null });
                 this.form.setFieldsValue({ createTime: this.model.createTime ? moment(this.model.createTime) : null });
             });
         },
@@ -289,6 +290,7 @@ export default {
                     // 时间格式化
                     formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD") : null;
                     formData.mergeTime = formData.mergeTime ? formData.mergeTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.singleSettleTime = formData.singleSettleTime ? formData.singleSettleTime.format("YYYY-MM-DD HH:mm:ss") : null;
                     formData.onlineTime = formData.onlineTime ? formData.onlineTime.format("YYYY-MM-DD HH:mm:ss") : null;
 
                     // 创建时间参数不传递后台
@@ -339,6 +341,8 @@ export default {
                     "dbName",
                     "type",
                     "outdated",
+                    "reservePlayerId",
+                    "singleSettleTime",
                     "pid",
                     "taStatistics",
                     "gmStatus",
@@ -346,8 +350,6 @@ export default {
                     "gmPlayerId",
                     "payCallbackStatus",
                     "onlineStat",
-                    "mergeOscDetailIds",
-                    "mergeCampaignTypeIds",
                     "extra"
                 )
             );
