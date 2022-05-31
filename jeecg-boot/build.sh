@@ -71,7 +71,7 @@ if [[ "${time_zone}" != "${default_time_zone}" ]]; then
 fi
 
 logger "==> start building"
-mvnd clean package -DskipTests
+mvn clean package -DskipTests
 
 if [[ ! -d "target" ]]; then
     mkdir -p "target"
