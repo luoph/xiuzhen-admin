@@ -51,6 +51,9 @@
                 <a-form-item label="自动开启" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-switch checkedChildren="启用" unCheckedChildren="禁用" @change="onAutoOpenChose" v-model="isAutoOpen" />
                 </a-form-item>
+                <a-form-item label="优先级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级"></a-input>
+                </a-form-item>
             </a-form>
 
             <a-tabs v-if="isEdit" defaultActiveKey="1">
@@ -109,7 +112,8 @@ export default {
                 startDay: { rules: [{ required: false, message: "请输入开始时间(开服第n天)!" }] },
                 duration: { rules: [{ required: false, message: "请输入持续天数!" }] },
                 startTime: { rules: [{ required: false, message: "请输入开始时间!" }] },
-                endTime: { rules: [{ required: false, message: "请输入结束时间!" }] }
+                endTime: { rules: [{ required: false, message: "请输入结束时间!" }] },
+                priority: { rules: [{ required: true, message: "请输入优先级!" }] }
             },
             url: {
                 add: "game/gameCampaign/add",
@@ -159,7 +163,8 @@ export default {
                         "startDay",
                         "duration",
                         "startTime",
-                        "endTime"
+                        "endTime",
+                        "priority"
                     )
                 );
 
@@ -243,7 +248,7 @@ export default {
         },
         popupCallback(row) {
             this.form.setFieldsValue(
-                pick(row, "type", "name", "description", "showName", "icon", "banner", "status", "autoOpen", "timeType", "startDay", "duration", "startTime", "endTime")
+                pick(row, "type", "name", "description", "showName", "icon", "banner", "status", "autoOpen", "timeType", "startDay", "duration", "startTime", "endTime", "priority")
             );
         },
         changeSelect(value) {

@@ -41,6 +41,7 @@ public class GameCampaign extends BaseEntity {
         this.icon = other.getIcon();
         this.banner = other.getBanner();
         this.status = other.getStatus();
+        this.priority = other.getPriority();
         this.autoOpen = other.getAutoOpen();
         this.timeType = other.getTimeType();
         this.startTime = other.getStartTime();
@@ -96,6 +97,12 @@ public class GameCampaign extends BaseEntity {
      */
     @Excel(name = "活动状态", width = 15)
     private Integer status;
+
+    /**
+     * 优先级
+     */
+    @Excel(name = "优先级", width = 15)
+    private Integer priority;
 
     /**
      * 自动开启

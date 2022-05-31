@@ -235,6 +235,11 @@ export default {
                     }
                 },
                 {
+                    title: "优先级",
+                    align: "center",
+                    dataIndex: "priority"
+                },
+                {
                     title: "区服id",
                     align: "center",
                     width: 200,

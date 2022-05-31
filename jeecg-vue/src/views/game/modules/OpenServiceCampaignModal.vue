@@ -35,6 +35,9 @@
                         <a-select-option :value="1">开启</a-select-option>
                     </a-select>
                 </a-form-item>
+                <a-form-item label="优先级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+                    <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级"></a-input>
+                </a-form-item>
             </a-form>
 
             <a-tabs v-if="isEdit" defaultActiveKey="1">
@@ -92,7 +95,8 @@ export default {
                 icon: { rules: [{ required: true, message: "请输入活动图标!" }] },
                 status: { rules: [{ required: true, message: "请输入活动状态!" }] },
                 autoOpen: { rules: [{ required: true, message: "请输入自动开启!" }] },
-                remark: { rules: [{ required: true, message: "请输入活动备注!" }] }
+                remark: { rules: [{ required: true, message: "请输入活动备注!" }] },
+                priority: { rules: [{ required: true, message: "请输入优先级!" }] }
             },
             url: {
                 add: "game/openServiceCampaign/add",
@@ -124,7 +128,7 @@ export default {
                 if (this.isEdit) {
                     this.$refs.typeList.edit(record);
                 }
-                this.form.setFieldsValue(pick(this.model, "name", "cross", "serverIds", "icon", "status", "autoOpen", "remark"));
+                this.form.setFieldsValue(pick(this.model, "name", "cross", "serverIds", "icon", "status", "autoOpen", "remark", "priority"));
             });
         },
         close() {
@@ -175,7 +179,7 @@ export default {
             this.close();
         },
         popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "name", "cross", "serverIds", "icon", "status", "autoOpen", "remark"));
+            this.form.setFieldsValue(pick(row, "name", "cross", "serverIds", "icon", "status", "autoOpen", "remark", "priority"));
         },
         changeSelect(value) {
             this.model.serverIds = value.join(",");

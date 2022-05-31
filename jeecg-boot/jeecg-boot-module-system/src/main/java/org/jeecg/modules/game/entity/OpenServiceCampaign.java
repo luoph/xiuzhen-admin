@@ -37,6 +37,7 @@ public class OpenServiceCampaign extends BaseEntity {
 //        this.lastServerIds = other.lastServerIds;
         this.icon = other.icon;
         this.status = other.status;
+        this.priority = other.priority;
         this.autoOpen = other.autoOpen;
         this.remark = other.remark;
     }
@@ -83,6 +84,9 @@ public class OpenServiceCampaign extends BaseEntity {
      */
     @Excel(name = "活动状态", width = 15)
     private java.lang.Integer status;
+
+    @Excel(name = "优先级", width = 15)
+    private java.lang.Integer priority;
 
     /**
      * 自动开启

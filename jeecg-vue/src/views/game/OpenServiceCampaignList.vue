@@ -220,6 +220,11 @@ export default {
                     scopedSlots: { customRender: "statuSlot" }
                 },
                 {
+                    title: "优先级",
+                    align: "center",
+                    dataIndex: "priority"
+                },
+                {
                     title: "自动开启",
                     align: "center",
                     dataIndex: "autoOpen",
