@@ -60,6 +60,10 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
             list = list.stream().filter(gameChannelServer -> gameChannelServer.getDelFlag() == 0 && gameChannelServer.getNoNeedCount() == 0).collect(Collectors.toList());
             for (GameChannelServer gameChannelServer : list) {
                 GameServer gameServer = gameServerService.getById(gameChannelServer.getServerId());
+                if (gameServer == null) {
+                    continue;
+                }
+
                 GameChannel gameChannel = gameChannelService.getById(gameChannelServer.getChannelId());
                 // 获取服务器id和服务器名字
                 Integer serverId = gameServer.getId();

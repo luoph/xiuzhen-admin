@@ -26,7 +26,7 @@ import java.lang.reflect.Field;
 @Component
 public class DataSourceHelper implements InitializingBean {
 
-    private static final String JDBC_URL_PATTERN = "jdbc:mysql://%s:%d/%s?zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&allowMultiQueries=true";
+    private static final String JDBC_URL_PATTERN = "jdbc:mysql://%s:%d/%s?useSSL=false&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true";
 
     private static final ObjectReference<DataSourceHelper> REFERENCE = new ObjectReference<>();
 
