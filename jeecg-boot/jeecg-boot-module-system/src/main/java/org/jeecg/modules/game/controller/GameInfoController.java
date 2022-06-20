@@ -159,7 +159,7 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     }
 
     @GetMapping(value = "/updateGameConfig")
-    public Result<?> updateServerConfig(HttpServletRequest req) {
+    public Result<?> updateGameConfig(HttpServletRequest req) {
         try {
             List<GameInfo> gameInfoList = gameInfoService.list();
             for (GameInfo gameInfo : gameInfoList) {

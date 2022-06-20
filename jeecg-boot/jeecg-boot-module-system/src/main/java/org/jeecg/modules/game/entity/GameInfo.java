@@ -82,6 +82,13 @@ public class GameInfo extends BaseEntity {
     private java.lang.String payUrl;
 
     /**
+     * 微信审核状态
+     */
+    @Excel(name = "微信审核状态", width = 15)
+    @ApiModelProperty(value = "weixinReview")
+    private java.lang.String weixinReview;
+
+    /**
      * 实名认证地址
      */
     @Excel(name = "实名认证地址", width = 15)

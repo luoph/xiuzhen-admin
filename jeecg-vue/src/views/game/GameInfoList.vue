@@ -135,6 +135,11 @@ export default {
                     align: "center",
                     dataIndex: "yaSimpleName"
                 },
+                {
+                    title: "微信审核版本",
+                    align: "center",
+                    dataIndex: "weixinReview"
+                },
                 // {
                 //     title: "YA_APPID",
                 //     align: "center",

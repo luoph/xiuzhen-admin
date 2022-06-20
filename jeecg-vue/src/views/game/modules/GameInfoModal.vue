@@ -9,14 +9,17 @@
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
                     <a-input :disabled="isEdit" placeholder="请输入唯一标识" v-decorator="['yaSimpleName', validatorRules.yaSimpleName]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPID">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APP_ID">
                     <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', validatorRules.yaAppId]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APPKEY">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APP_KEY">
                     <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', validatorRules.yaAppKey]" />
                 </a-form-item>
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="gameAppKey">
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_GAME_KEY">
                     <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', validatorRules.yaGameKey]" />
+                </a-form-item>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="微信审核版本">
+                    <a-input placeholder="请输入微信审核版本号" v-decorator="['weixinReview', validatorRules.weixinReview]" />
                 </a-form-item>
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="帐号登录地址">
                     <a-input placeholder="请输入帐号登录地址(不包含域名)" v-decorator="['loginUrl', validatorRules.loginUrl]" />
@@ -89,6 +92,7 @@ export default {
                 yaAppKey: { rules: [{ required: true, message: "请输入YA_APPKEY!" }] },
                 yaGameKey: { rules: [{ required: true, message: "请输入gameAppKey!" }] },
                 yaSimpleName: { rules: [{ required: true, message: "请输入gameSimpleName!" }] },
+                weixinReview: { rules: [{ required: false, message: "请输入微信审核版本号!" }] },
                 loginUrl: { rules: [{ required: true, message: "请输入帐号登录地址!" }] },
                 roleUrl: { rules: [{ required: true, message: "请输入角色信息地址!" }] },
                 payUrl: { rules: [{ required: false, message: "请输入支付验证地址!" }] },
@@ -126,6 +130,7 @@ export default {
                         "yaAppKey",
                         "yaSimpleName",
                         "yaGameKey",
+                        "weixinReview",
                         "loginUrl",
                         "roleUrl",
                         "payUrl",
