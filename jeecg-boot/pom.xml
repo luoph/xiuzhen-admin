@@ -35,17 +35,18 @@
         <hutool.version>5.7.3</hutool.version>
         <java-jwt.version>3.7.0</java-jwt.version>
         <jwt.version>0.9.1</jwt.version>
+        <lombok.version>1.18.24</lombok.version>
         <mybatis-plus.version>3.1.2</mybatis-plus.version>
-        <p6spy.version>3.8.7</p6spy.version>
         <mysql-connector.version>5.1.49</mysql-connector.version>
+        <p6spy.version>3.8.7</p6spy.version>
+        <quasar.core.version>0.7.10</quasar.core.version>
         <sentry.version>5.1.2</sentry.version>
         <shiro-redis.version>3.1.0</shiro-redis.version>
         <shiro.version>1.4.2</shiro.version>
-        <quasar.core.version>0.7.10</quasar.core.version>
         <!-- 框架依赖 -->
-        <entities.version>0.0.17.1</entities.version>
-        <web-starter.version>0.0.17.1</web-starter.version>
-        <server-common.version>0.0.17.1</server-common.version>
+        <entities.version>0.0.18-SNAPSHOT</entities.version>
+        <web-starter.version>0.0.18-SNAPSHOT</web-starter.version>
+        <server-common.version>0.0.18-SNAPSHOT</server-common.version>
     </properties>
 
     <dependencies>

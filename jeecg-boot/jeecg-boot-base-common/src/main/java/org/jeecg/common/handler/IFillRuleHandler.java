@@ -1,6 +1,6 @@
 package org.jeecg.common.handler;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 /**
  * 填值规则接口

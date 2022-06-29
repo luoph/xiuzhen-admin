@@ -1,6 +1,6 @@
 package org.jeecg.modules.ngalain.service;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson2.JSONArray;
 
 import java.util.List;
 import java.util.Map;

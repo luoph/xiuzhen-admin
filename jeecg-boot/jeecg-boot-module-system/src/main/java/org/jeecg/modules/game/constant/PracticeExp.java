@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.constant;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -35,7 +36,7 @@ public class PracticeExp {
                 dest = m.replaceAll("");
             }
             file1 = dest;
-            JSONArray jsonArray = JSONArray.parseArray(file1);
+            JSONArray jsonArray = JSON.parseArray(file1);
             //道具id和名称map
             for (int i = 0; i < jsonArray.size(); i++) {
                 LEVEL_TO_NAME.put(jsonArray.getJSONObject(i).getLong("practice_level"),jsonArray.getJSONObject(i).getString("practice_name"));

@@ -2,9 +2,10 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.youai.server.constant.ItemReduce;
-import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.server.utils.DateUtils;
-import com.alibaba.fastjson.JSONArray;
+import cn.youai.xiuzhen.utils.BigDecimalUtil;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.database.DataSourceHelper;
@@ -95,7 +96,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
         Matcher m = p.matcher(file1);
         dest = m.replaceAll("");
         file1 = dest;
-        JSONArray jsonArray = JSONArray.parseArray(file1);
+        JSONArray jsonArray = JSON.parseArray(file1);
         //道具id和名称map
         Map<String, String> wayNameMap = new HashMap<>(16);
         for (int i = 0; i < jsonArray.size(); i++) {

@@ -1,6 +1,6 @@
 package org.jeecg.common.util;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.jeecg.common.api.vo.Result;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

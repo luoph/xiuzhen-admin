@@ -1,7 +1,8 @@
 package org.jeecg;
 
 import cn.hutool.core.io.FileUtil;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
 import org.jeecg.common.constant.TimeConstant;
 
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,7 @@ public final class JsonFileUtils {
      * @param fileName 不包含 .json 的文件名
      */
     public static void writeJsonFile(Object object, String folder, String fileName) {
-        String content = JSON.toJSONStringWithDateFormat(object, TimeConstant.DEFAULT_TIME_FORMAT);
+        String content = JSON.toJSONString(object, TimeConstant.DEFAULT_TIME_FORMAT, JSONWriter.Feature.WriteNonStringValueAsString);
         String filePath = folder + "/" + fileName + ".json";
         if (FileUtil.exist(filePath)) {
             FileUtil.del(filePath);

@@ -7,12 +7,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.constant.RemainDetailField;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.modules.game.constant.RoleType;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameStatRemainDetail;
@@ -116,7 +115,7 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
             }
 
             log.info("updateRemainDetailField type:{}, date:{}, serverId:{}, days:{}, field:{}, remain:{}",
-                    roleType, registerDate, serverId, days, field, JSON.toJSONStringWithDateFormat(serverRemain, TimeConstant.DEFAULT_DATE_FORMAT));
+                    roleType, registerDate, serverId, days, field, JSON.toJSON(serverRemain));
 
             if (serverRemain != null) {
                 if (serverRemain.getRemain() == null) {

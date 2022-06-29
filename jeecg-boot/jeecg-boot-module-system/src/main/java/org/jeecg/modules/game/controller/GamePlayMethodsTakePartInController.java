@@ -4,7 +4,7 @@ import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.ConvertUtils;
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;

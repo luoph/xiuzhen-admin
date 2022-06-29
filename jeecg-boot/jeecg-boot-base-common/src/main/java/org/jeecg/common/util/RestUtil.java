@@ -1,12 +1,9 @@
 package org.jeecg.common.util;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * 调用 Restful 接口 Util
@@ -192,13 +189,10 @@ public class RestUtil {
      * 将 JSONObject 转为 a=1&b=2&c=3...&n=n 的形式
      */
     public static String asUrlVariables(JSONObject variables) {
-        Map<String, Object> source = variables.getInnerMap();
-        Iterator<String> it = source.keySet().iterator();
         StringBuilder urlVariables = new StringBuilder();
-        while (it.hasNext()) {
-            String key = it.next();
+        for (String key : variables.keySet()) {
             String value = "";
-            Object object = source.get(key);
+            Object object = variables.get(key);
             if (object != null) {
                 if (!StringUtils.isEmpty(object.toString())) {
                     value = object.toString();

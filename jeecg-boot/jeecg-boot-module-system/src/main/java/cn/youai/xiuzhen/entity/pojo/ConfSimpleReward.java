@@ -3,9 +3,9 @@ package cn.youai.xiuzhen.entity.pojo;
 
 import cn.youai.basics.model.ConfigData;
 import cn.youai.server.model.ItemVO;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Data;
 
 import java.io.Serializable;

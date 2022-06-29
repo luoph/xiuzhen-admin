@@ -1,7 +1,7 @@
 package cn.youai.xiuzhen.entity.pojo;
 
 import cn.youai.basics.model.ConfigData;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson2.annotation.JSONField;
 import com.googlecode.cqengine.ConcurrentIndexedCollection;
 import com.googlecode.cqengine.IndexedCollection;
 import com.googlecode.cqengine.attribute.SimpleAttribute;

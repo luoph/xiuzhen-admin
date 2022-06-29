@@ -1,6 +1,6 @@
 package org.jeecg.modules.message.util;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import org.jeecg.modules.message.entity.SysMessage;
 import org.jeecg.modules.message.entity.SysMessageTemplate;
 import org.jeecg.modules.message.handle.enums.SendMsgStatusEnum;

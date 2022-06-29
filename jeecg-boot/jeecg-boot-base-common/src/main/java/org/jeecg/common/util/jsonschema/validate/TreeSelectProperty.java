@@ -1,6 +1,6 @@
 package org.jeecg.common.util.jsonschema.validate;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jeecg.common.util.jsonschema.CommonProperty;

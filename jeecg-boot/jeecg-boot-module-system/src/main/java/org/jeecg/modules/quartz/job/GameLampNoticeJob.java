@@ -1,7 +1,7 @@
 package org.jeecg.modules.quartz.job;
 
 import cn.youai.server.utils.DateUtils;
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameLampNotice;
@@ -49,7 +49,7 @@ public class GameLampNoticeJob implements Job {
                 }
                 String gameServerList = gameLampNotice.getGameServerList();
                 if (StringUtils.isNoneBlank(gameServerList)) {
-                    List<Integer> serverIds = JSONArray.parseArray(gameServerList, Integer.class);
+                    List<Integer> serverIds = JSON.parseArray(gameServerList, Integer.class);
                     gameLampNoticeService.sendLampNoticeToGameServer(serverIds, gameLampNotice);
                 }
             }

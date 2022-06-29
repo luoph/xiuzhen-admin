@@ -2,22 +2,21 @@ package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.youai.server.utils.DateUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameRemainStatistisc;
 import org.jeecg.modules.game.mapper.RemainStatisticsMapper;
 import org.jeecg.modules.game.service.IRemainStatisticsService;
-import org.jeecg.modules.game.util.*;
+import org.jeecg.modules.game.util.ParamValidUtil;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.annotation.Resource;
 
 /**
  * 留存统计实现类
@@ -352,7 +351,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             gameRemainStatistiscJsonObjectMap.put("channel", channelName);
             gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
-            gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
+            gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
         }
         return gameRemainStatistiscJsonObjectList;
@@ -647,8 +646,9 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
             gameRemainStatistiscJsonObjectMap.put("channel", channelName);
             gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
+            // WTF???
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
-            gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
+            gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
         }
         return gameRemainStatistiscJsonObjectList;
@@ -1118,7 +1118,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             gameRemainStatistiscJsonObjectMap.put("channel", channelName);
             gameRemainStatistiscJsonObjectMap.put("serverId", serverId);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
-            JSONObject gameRemainStatistiscJsonObject  = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
+            JSONObject gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
         }
         return gameRemainStatistiscJsonObjectList;
@@ -1634,7 +1634,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
 
             gameRemainStatistiscJsonObjectMap.put("countDate",s);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
-            gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString,Feature.OrderedField);
+            gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);
         }
         return gameRemainStatistiscJsonObjectList;

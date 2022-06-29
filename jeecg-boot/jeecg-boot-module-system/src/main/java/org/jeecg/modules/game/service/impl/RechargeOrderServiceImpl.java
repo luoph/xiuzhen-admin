@@ -1,9 +1,10 @@
 package org.jeecg.modules.game.service.impl;
 
-import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.server.utils.DateUtils;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import cn.youai.xiuzhen.utils.BigDecimalUtil;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -171,7 +172,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         for (Map map : fairyJadeBuyInfoList) {
             JSONArray dangweiPriceJsonArray = new JSONArray();
             if (!("[null]").equals(map.get("price").toString()) && !("null").equals(map.get("price").toString())) {
-                dangweiPriceJsonArray = JSONArray.parseArray(map.get("price").toString());
+                dangweiPriceJsonArray = JSON.parseArray(map.get("price").toString());
                 for (int i = 0; i < dangweiPriceJsonArray.size(); i++) {
                     Map<String, String> fairyJadeBuyInfoNewMap = new HashMap<>();
                     fairyJadeBuyInfoNewMap.put("player_id", map.get("player_id").toString());
