@@ -55,7 +55,7 @@
                         <a-select-option :value="11">11-精准礼包</a-select-option>
                         <a-select-option :value="12">12-结义礼包</a-select-option>
                         <a-select-option :value="13">13-自选特惠</a-select-option>
-                        <a-select-option :value="13">14-灵兽抽奖礼包</a-select-option>
+                        <a-select-option :value="14">14-灵兽抽奖礼包</a-select-option>
                     </a-select>
                 </a-form-item>
                 <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
