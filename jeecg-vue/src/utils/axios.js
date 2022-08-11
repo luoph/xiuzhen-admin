@@ -9,7 +9,7 @@ const VueAxios = {
 
         if (!instance) {
             // eslint-disable-next-line no-console
-            console.error("You have to install axios");
+            console.error('You have to install axios');
             return;
         }
 
@@ -31,7 +31,7 @@ const VueAxios = {
 };
 
 export {
-    VueAxios
+    VueAxios,
     // eslint-disable-next-line no-undef
     //instance as axios
-};
+}

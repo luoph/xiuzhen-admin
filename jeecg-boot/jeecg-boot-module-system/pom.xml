@@ -4,18 +4,20 @@
     <modelVersion>4.0.0</modelVersion>
     <name>jeecg-boot</name>
     <artifactId>jeecg-boot-module-system</artifactId>
-    <version>2.1.2</version>
+	<version>3.3.0</version>
 
     <parent>
         <groupId>org.jeecgframework.boot</groupId>
         <artifactId>jeecg-boot-parent</artifactId>
-        <version>2.1.2</version>
+		<version>3.3.0</version>
     </parent>
 
     <dependencies>
+        <!-- jeecg-boot-base-common -->
         <dependency>
             <groupId>org.jeecgframework.boot</groupId>
             <artifactId>jeecg-boot-base-common</artifactId>
+            <version>${jeecgboot.version}</version>
         </dependency>
 
         <!-- joda-time -->
@@ -33,6 +35,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--SpringCloud运行环境 ,值改为true跳过SpringBoot启动打包插件 -->
+                    <skip>${skip.springboot.maven}</skip>
+                </configuration>
             </plugin>
 
             <!-- mybatis-plus generator 自动生成代码插件 -->

@@ -1,22 +1,27 @@
 package org.jeecg.modules.system.entity;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.io.Serializable;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
  * 角色权限表
  * </p>
  *
- * @author scott
+ * @Author scott
  * @since 2018-12-21
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysRolePermission implements Serializable {
 
@@ -25,9 +30,9 @@ public class SysRolePermission implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
-
+    
     /**
      * 角色id
      */
@@ -37,18 +42,30 @@ public class SysRolePermission implements Serializable {
      * 权限id
      */
     private String permissionId;
-
+    
     /**
      * 数据权限
      */
     private String dataRuleIds;
 
-    public SysRolePermission() {
-    }
+    /**
+     * 操作时间
+     */
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date operateDate;
 
-    public SysRolePermission(String roleId, String permissionId) {
-        this.roleId = roleId;
-        this.permissionId = permissionId;
-    }
+    /**
+     * 操作ip
+     */
+    private String operateIp;
+
+    public SysRolePermission() {
+   	}
+       
+   	public SysRolePermission(String roleId, String permissionId) {
+   		this.roleId = roleId;
+   		this.permissionId = permissionId;
+   	}
 
 }

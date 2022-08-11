@@ -1,12 +1,13 @@
 <#list subTables as subTab>
 #segment#${subTab.entityName}Modal.vue
 <template>
-  <a-modal
+  <j-modal
     :title="title"
     :width="800"
     :visible="visible"
     :okButtonProps="{ props: {disabled: disableSubmit} }"
     :confirmLoading="confirmLoading"
+    switchFullscreen
     @ok="handleOk"
     @cancel="handleCancel"
     cancelText="关闭">
@@ -14,7 +15,7 @@
       <a-form :form="form">
 <#list subTab.colums as po><#rt/>
 
-<#if po.fieldName !='id'><#rt/>
+<#if po.fieldName !='id' && po.filedComment !='外键'><#rt/>
         <a-form-item
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
@@ -41,7 +42,7 @@
 </#list>
       </a-form>
     </a-spin>
-  </a-modal>
+  </j-modal>
 </template>
 
 <script>
@@ -148,7 +149,7 @@
               method = 'put';
             }
             let formData = Object.assign(this.model, values);
-            // 时间格式化
+            //时间格式化
             <#list subTab.colums as po>
             <#if po.fieldName !='id' && po.fieldType =='date'>
             formData.${po.fieldName} = formData.${po.fieldName}?formData.${po.fieldName}.format():null;

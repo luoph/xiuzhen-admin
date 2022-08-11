@@ -1,10 +1,11 @@
 package org.jeecg.common.util;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.handler.IFillRuleHandler;
 
 
@@ -14,6 +15,7 @@ import org.jeecg.common.handler.IFillRuleHandler;
  * @author qinfeng
  * @举例： 自动生成订单号；自动生成当前日期
  */
+@Slf4j
 public class FillRuleUtil {
 
     /**
@@ -25,11 +27,15 @@ public class FillRuleUtil {
         if (!StringUtils.isEmpty(ruleCode)) {
             try {
                 // 获取 Service
-                ServiceImpl impl = (ServiceImpl) SpringWebContextUtils.getBean("sysFillRuleServiceImpl");
+                ServiceImpl impl = (ServiceImpl) SpringContextUtils.getBean("sysFillRuleServiceImpl");
                 // 根据 ruleCode 查询出实体
                 QueryWrapper queryWrapper = new QueryWrapper();
                 queryWrapper.eq("rule_code", ruleCode);
                 JSONObject entity = JSON.parseObject(JSON.toJSONString(impl.getOne(queryWrapper)));
+                if (entity == null) {
+                    log.warn("填值规则：" + ruleCode + " 不存在");
+                    return null;
+                }
                 // 获取必要的参数
                 String ruleClass = entity.getString("ruleClass");
                 JSONObject params = entity.getJSONObject("ruleParams");

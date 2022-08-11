@@ -1,59 +1,49 @@
 <script>
-import Tooltip from "ant-design-vue/es/tooltip";
-import { cutStrByFullLength, getStrFullLength } from "@/components/_util/StringUtil";
-/*
-  const isSupportLineClamp = document.body.style.webkitLineClamp !== undefined;
+  import { cutStrByFullLength, getStrFullLength } from '@/components/_util/StringUtil'
 
-  const TooltipOverlayStyle = {
-    overflowWrap: 'break-word',
-    wordWrap: 'break-word',
-  };
-*/
-
-export default {
-    name: "Ellipsis",
-    components: {
-        Tooltip
-    },
+  export default {
+    name: 'Ellipsis',
     props: {
-        prefixCls: {
-            type: String,
-            default: "ant-pro-ellipsis"
-        },
-        tooltip: {
-            type: Boolean
-        },
-        length: {
-            type: Number,
-            required: true
-        },
-        lines: {
-            type: Number,
-            default: 1
-        },
-        fullWidthRecognition: {
-            type: Boolean,
-            default: false
-        }
+      prefixCls: {
+        type: String,
+        default: 'ant-pro-ellipsis'
+      },
+      tooltip: {
+        type: Boolean,
+        default: true,
+      },
+      length: {
+        type: Number,
+        default: 25,
+      },
+      lines: {
+        type: Number,
+        default: 1
+      },
+      fullWidthRecognition: {
+        type: Boolean,
+        default: false
+      }
     },
-    methods: {
-        getStrDom(str) {
-            return <span>{cutStrByFullLength(str, this.length) + "..."}</span>;
-        },
-        getTooltip(fullStr) {
-            return (
-                <Tooltip>
-                    <template slot="title">{fullStr}</template>
-                    {this.getStrDom(fullStr)}
-                </Tooltip>
-            );
-        }
-    },
+    methods: {},
     render() {
-        const { tooltip, length } = this.$props;
-        let str = this.$slots.default.map(vNode => vNode.text).join("");
-        const strDom = tooltip && getStrFullLength(str) > length ? this.getTooltip(str) : this.getStrDom(str);
-        return strDom;
+      const { tooltip, length } = this.$props
+      let text = ''
+      // 处理没有default插槽时的特殊情况
+      if (this.$slots.default) {
+        text = this.$slots.default.map(vNode => vNode.text).join('')
+      }
+      // 判断是否显示 tooltip
+      if (tooltip && getStrFullLength(text) > length) {
+        return (
+          <a-tooltip>
+            <template slot="title">{text}</template>
+            <span>{cutStrByFullLength(text, this.length) + '…'}</span>
+          </a-tooltip>
+        )
+      } else {
+        return (<span>{text}</span>)
+      }
     }
-};
+  }
 </script>

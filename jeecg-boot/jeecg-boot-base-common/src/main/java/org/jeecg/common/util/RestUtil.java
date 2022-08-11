@@ -1,21 +1,69 @@
 package org.jeecg.common.util;
 
-import com.alibaba.fastjson2.JSONObject;
-import org.apache.commons.lang.StringUtils;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * 调用 Restful 接口 Util
  *
  * @author sunjianlei
  */
+@Slf4j
 public class RestUtil {
+
+    private static String domain = null;
+
+    public static String getDomain() {
+        if (domain == null) {
+            domain = SpringContextUtils.getDomain();
+            // issues/2959
+            // 微服务版集成企业微信单点登录
+            // 因为微服务版没有端口号，导致 SpringContextUtils.getDomain() 方法获取的域名的端口号变成了:-1所以出问题了，只需要把这个-1给去掉就可以了。
+            String port=":-1";
+            if (domain.endsWith(port)) {
+                domain = domain.substring(0, domain.length() - 3);
+            }
+        }
+        return domain;
+    }
+
+    public static String path = null;
+
+    public static String getPath() {
+        if (path == null) {
+            path = SpringContextUtils.getApplicationContext().getEnvironment().getProperty("server.servlet.context-path");
+        }
+        return oConvertUtils.getString(path);
+    }
+
+    public static String getBaseUrl() {
+        String basepath = getDomain() + getPath();
+        log.info(" RestUtil.getBaseUrl: " + basepath);
+        return basepath;
+    }
 
     /**
      * RestAPI 调用器
      */
-    private final static RestTemplate RT = new RestTemplate();
+    private final static RestTemplate RT;
+
+    static {
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(3000);
+        requestFactory.setReadTimeout(3000);
+        RT = new RestTemplate(requestFactory);
+        // 解决乱码问题
+        RT.getMessageConverters().set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
+    }
 
     public static RestTemplate getRestTemplate() {
         return RT;
@@ -144,7 +192,8 @@ public class RestUtil {
      * @param responseType 返回类型
      * @return ResponseEntity<responseType>
      */
-    public static <T> ResponseEntity<T> request(String url, HttpMethod method, HttpHeaders headers, JSONObject variables, JSONObject params, Class<T> responseType) {
+    public static <T> ResponseEntity<T> request(String url, HttpMethod method, HttpHeaders headers, JSONObject variables, Object params, Class<T> responseType) {
+        log.info(" RestUtil  --- request ---  url = "+ url);
         if (StringUtils.isEmpty(url)) {
             throw new RuntimeException("url 不能为空");
         }
@@ -157,10 +206,15 @@ public class RestUtil {
         // 请求体
         String body = "";
         if (params != null) {
-            body = params.toJSONString();
+            if (params instanceof JSONObject) {
+                body = ((JSONObject) params).toJSONString();
+
+            } else {
+                body = params.toString();
+            }
         }
         // 拼接 url 参数
-        if (variables != null) {
+        if (variables != null && !variables.isEmpty()) {
             url += ("?" + asUrlVariables(variables));
         }
         // 发送请求
@@ -171,14 +225,14 @@ public class RestUtil {
     /**
      * 获取JSON请求头
      */
-    private static HttpHeaders getHeaderApplicationJson() {
+    public static HttpHeaders getHeaderApplicationJson() {
         return getHeader(MediaType.APPLICATION_JSON_UTF8_VALUE);
     }
 
     /**
      * 获取请求头
      */
-    private static HttpHeaders getHeader(String mediaType) {
+    public static HttpHeaders getHeader(String mediaType) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(mediaType));
         headers.add("Accept", mediaType);
@@ -189,10 +243,13 @@ public class RestUtil {
      * 将 JSONObject 转为 a=1&b=2&c=3...&n=n 的形式
      */
     public static String asUrlVariables(JSONObject variables) {
+        Map<String, Object> source = variables.getInnerMap();
+        Iterator<String> it = source.keySet().iterator();
         StringBuilder urlVariables = new StringBuilder();
-        for (String key : variables.keySet()) {
+        while (it.hasNext()) {
+            String key = it.next();
             String value = "";
-            Object object = variables.get(key);
+            Object object = source.get(key);
             if (object != null) {
                 if (!StringUtils.isEmpty(object.toString())) {
                     value = object.toString();

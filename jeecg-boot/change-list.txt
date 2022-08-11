@@ -1,0 +1,10 @@
+jeecg-boot-base-common/src/main/java/org/jeecg/common/constant/CommonConstant.java
+jeecg-boot-base-common/src/main/java/org/jeecg/common/system/base/controller/JeecgController.java
+jeecg-boot-base-common/src/main/java/org/jeecg/common/system/controller/CommonController.java
+jeecg-boot-base-common/src/main/java/org/jeecg/common/system/util/JwtUtil.java
+jeecg-boot-base-common/src/main/java/org/jeecg/common/util/BrowserUtils.java
+jeecg-boot-module-system/src/main/java/org/jeecg/Application.java
+jeecg-boot-module-system/src/main/java/org/jeecg/config/MybatisPlusConfig.java
+jeecg-boot-module-system/src/main/java/org/jeecg/modules/message/entity/SysMessage.java
+jeecg-boot-module-system/src/main/java/org/jeecg/modules/quartz/controller/QuartzJobController.java
+jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/aspect/AutoLogAspect.java

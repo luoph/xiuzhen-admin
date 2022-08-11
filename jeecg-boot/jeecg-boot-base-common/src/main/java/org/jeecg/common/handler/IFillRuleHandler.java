@@ -1,6 +1,6 @@
 package org.jeecg.common.handler;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 填值规则接口
@@ -11,13 +11,12 @@ import com.alibaba.fastjson2.JSONObject;
 public interface IFillRuleHandler {
 
     /**
-     * 填值规则接口
-     *
-     * @param params
-     * @param formData
+     * 填值规则
+     * @param params 页面配置固定参数
+     * @param formData  动态表单参数
      * @return
      */
-    Object execute(JSONObject params, JSONObject formData);
+    public Object execute(JSONObject params, JSONObject formData);
 
 }
 

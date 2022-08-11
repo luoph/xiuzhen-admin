@@ -1,26 +1,34 @@
 package org.jeecg.common.system.query;
 
-import lombok.Getter;
 import org.jeecg.common.util.oConvertUtils;
 
 /**
  * 查询链接规则
  *
- * @author Sunjianlei
+ * @Author Sunjianlei
  */
 public enum MatchTypeEnum {
 
-    /**
-     * 查询链接规则
-     */
+    /**查询链接规则 AND*/
     AND("AND"),
+    /**查询链接规则 OR*/
     OR("OR");
 
-    @Getter
     private String value;
 
     MatchTypeEnum(String value) {
         this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public static MatchTypeEnum getByValue(Object value) {
+        if (oConvertUtils.isEmpty(value)) {
+            return null;
+        }
+        return getByValue(value.toString());
     }
 
     public static MatchTypeEnum getByValue(String value) {

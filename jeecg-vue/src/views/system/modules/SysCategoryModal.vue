@@ -1,173 +1,160 @@
 <template>
-    <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" :destroyOnClose="true" cancelText="关闭">
-        <a-spin :spinning="confirmLoading">
-            <a-form :form="form">
-                <a-form-item label="父级节点" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <j-tree-select ref="treeSelect" placeholder="请选择父级节点" v-decorator="['pid', validatorRules.pid]" dict="sys_category,name,id" pidField="pid" pidValue="0">
-                    </j-tree-select>
-                </a-form-item>
+  <a-modal
+    :title="title"
+    :width="width"
+    :visible="visible"
+    :confirmLoading="confirmLoading"
+    @ok="handleOk"
+    @cancel="handleCancel"
+    :destroyOnClose="true"
+    cancelText="关闭">
+    <a-spin :spinning="confirmLoading">
+      <a-form-model ref="form" :model="model" :rules="validatorRules">
 
-                <a-form-item label="类型名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入类型名称"></a-input>
-                </a-form-item>
+        <a-form-model-item label="父级节点" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="pid">
+          <j-tree-select
+            ref="treeSelect"
+            placeholder="请选择父级节点"
+            v-model="model.pid"
+            dict="sys_category,name,id"
+            pidField="pid"
+            pidValue="0"
+           :disabled="disabled">
+          </j-tree-select>
+        </a-form-model-item>
 
-                <!--<a-form-item label="类型编码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="[ 'code', validatorRules.code]" placeholder="请输入类型编码"></a-input>
-        </a-form-item>-->
+        <a-form-model-item label="分类名称" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="name">
+          <a-input v-model="model.name" placeholder="请输入分类名称"></a-input>
+        </a-form-model-item>
 
-                <!--<a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <span style="font-size: 12px;color:red" slot="label">编码规则(注)</span>
-          <span style="font-size: 12px;color:red">
-            编码值前缀需和父节点保持一致,比如父级节点编码是A01则当前编码必须以A01开头
-          </span>
-        </a-form-item>-->
-            </a-form>
-        </a-spin>
-    </a-modal>
+      </a-form-model>
+    </a-spin>
+  </a-modal>
 </template>
 
 <script>
-import { httpAction, getAction } from "@/api/manage";
-import pick from "lodash.pick";
-import JTreeSelect from "@/components/jeecg/JTreeSelect";
 
-export default {
+  import { httpAction,getAction } from '@/api/manage'
+  import JTreeSelect from '@/components/jeecg/JTreeSelect'
+
+  export default {
     name: "SysCategoryModal",
     components: {
-        JTreeSelect
+      JTreeSelect
     },
-    data() {
-        return {
-            form: this.$form.createForm(this),
-            title: "操作",
-            width: 800,
-            visible: false,
-            model: {},
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 5 }
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 }
-            },
+    data () {
+      return {
+        title:"操作",
+        width:800,
+        visible: false,
+        model: {},
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 5 },
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 16 },
+        },
 
-            confirmLoading: false,
-            validatorRules: {
-                code: {
-                    rules: [
-                        {
-                            required: true,
-                            message: "请输入类型编码!"
-                        },
-                        {
-                            validator: this.validateMyCode
-                        }
-                    ]
-                },
-                pid: {},
-                name: {}
-            },
-            url: {
-                add: "sys/category/add",
-                edit: "sys/category/edit",
-                checkCode: "sys/category/checkCode"
-            },
-            expandedRowKeys: [],
-            pidField: "pid"
-        };
+        confirmLoading: false,
+        validatorRules:{
+          pid:{},
+          name: [{ required: true, message: '请输入类型名称!' }]
+        },
+        url: {
+          add: "/sys/category/add",
+          edit: "/sys/category/edit",
+          checkCode:"/sys/category/checkCode",
+        },
+        expandedRowKeys:[],
+        pidField:"pid",
+        subExpandedKeys:[]
+
+      }
     },
-    created() {},
+    created () {
+    },
+    computed : {
+      disabled() {
+          return this.model.id?true : false;
+      }
+    },
     methods: {
-        add() {
-            this.edit({});
-        },
-        edit(record) {
-            this.form.resetFields();
-            this.model = Object.assign({}, record);
-            this.visible = true;
-            this.$nextTick(() => {
-                this.form.setFieldsValue(pick(this.model, "pid", "name", "code"));
-            });
-        },
-        close() {
-            this.$emit("close");
-            this.visible = false;
-        },
-        handleOk() {
-            const that = this;
-            // 触发表单验证
-            this.form.validateFields((err, values) => {
-                if (!err) {
-                    that.confirmLoading = true;
-                    let httpurl = "";
-                    let method = "";
-                    if (!this.model.id) {
-                        httpurl += this.url.add;
-                        method = "post";
-                    } else {
-                        httpurl += this.url.edit;
-                        method = "put";
-                    }
-                    let formData = Object.assign(this.model, values);
-                    console.log("表单提交数据", formData);
-                    httpAction(httpurl, formData, method)
-                        .then(res => {
-                            if (res.success) {
-                                that.$message.success(res.message);
-                                that.submitSuccess(formData);
-                            } else {
-                                that.$message.warning(res.message);
-                            }
-                        })
-                        .finally(() => {
-                            that.confirmLoading = false;
-                            that.close();
-                        });
-                }
-            });
-        },
-        handleCancel() {
-            this.close();
-        },
-        popupCallback(row) {
-            this.form.setFieldsValue(pick(row, "pid", "name", "code"));
-        },
-        submitSuccess(formData) {
-            if (!formData.id) {
-                let treeData = this.$refs.treeSelect.getCurrTreeData();
-                this.expandedRowKeys = [];
-                this.getExpandKeysByPid(formData[this.pidField], treeData, treeData);
-                this.$emit("ok", formData, this.expandedRowKeys.reverse());
-            } else {
-                this.$emit("ok", formData);
+      add () {
+        this.edit({});
+      },
+      edit (record) {
+        this.model = Object.assign({}, record);
+        this.visible = true;
+      },
+      close () {
+        this.$emit('close');
+        this.visible = false;
+        this.$refs.form.resetFields();
+      },
+      handleOk () {
+        const that = this;
+        // 触发表单验证
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            that.confirmLoading = true;
+            let httpurl = '';
+            let method = '';
+            if(!this.model.id){
+              httpurl+=this.url.add;
+              method = 'post';
+            }else{
+              httpurl+=this.url.edit;
+               method = 'put';
             }
-        },
-        getExpandKeysByPid(pid, arr, all) {
-            if (pid && arr && arr.length > 0) {
-                for (let i = 0; i < arr.length; i++) {
-                    if (arr[i].key == pid) {
-                        this.expandedRowKeys.push(arr[i].key);
-                        this.getExpandKeysByPid(arr[i]["parentId"], all, all);
-                    } else {
-                        this.getExpandKeysByPid(pid, arr[i].children, all);
-                    }
-                }
+            httpAction(httpurl,this.model,method).then((res)=>{
+              if(res.success){
+                that.$message.success(res.message);
+                // close的时候清空了表单的值 导致model为空 修改值在列表页没有变 此处需要复制一下model
+                that.submitSuccess({...this.model})
+              }else{
+                that.$message.warning(res.message);
+              }
+            }).finally(() => {
+              that.confirmLoading = false;
+              that.close();
+            })
+          }else{
+            return false;
+          }
+
+        })
+      },
+      handleCancel () {
+        this.close()
+      },
+      submitSuccess(formData){
+        if(!formData.id){
+          let treeData = this.$refs.treeSelect.getCurrTreeData()
+          this.expandedRowKeys=[]
+          this.getExpandKeysByPid(formData[this.pidField],treeData,treeData)
+          if(formData.pid && this.expandedRowKeys.length==0){
+            this.expandedRowKeys = this.subExpandedKeys;
+          }
+          this.$emit('ok',formData,this.expandedRowKeys.reverse());
+        }else{
+          this.$emit('ok',formData);
+      }
+      },
+      getExpandKeysByPid(pid,arr,all){
+        if(pid && arr && arr.length>0){
+          for(let i=0;i<arr.length;i++){
+            if(arr[i].key==pid){
+              this.expandedRowKeys.push(arr[i].key)
+              this.getExpandKeysByPid(arr[i]['parentId'],all,all)
+            }else{
+              this.getExpandKeysByPid(pid,arr[i].children,all)
             }
-        },
-        validateMyCode(rule, value, callback) {
-            let params = {
-                pid: this.form.getFieldValue("pid"),
-                code: value
-            };
-            getAction(this.url.checkCode, params).then(res => {
-                if (res.success) {
-                    callback();
-                } else {
-                    callback(res.message);
-                }
-            });
+          }
         }
+      },
+
     }
-};
+  }
 </script>

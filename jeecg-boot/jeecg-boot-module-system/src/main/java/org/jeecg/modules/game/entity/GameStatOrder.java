@@ -84,7 +84,7 @@ public class GameStatOrder implements Serializable {
     /**
      * 付费金额
      */
-    @Excel(name = "付费金额", width = 15, numFormat = CommonConstant.BIG_DECIMAL_NUMBER_FORMAT)
+    @Excel(name = "付费金额", width = 15)
     private java.math.BigDecimal amount;
 
     /**
@@ -96,19 +96,19 @@ public class GameStatOrder implements Serializable {
     /**
      * 每用户平均收入
      */
-    @Excel(name = "arpu", width = 15, numFormat = CommonConstant.BIG_DECIMAL_NUMBER_FORMAT)
+    @Excel(name = "arpu", width = 15)
     private java.math.BigDecimal arpu;
 
     /**
      * 每付费用户平均收益
      */
-    @Excel(name = "arppu", width = 15, numFormat = CommonConstant.BIG_DECIMAL_NUMBER_FORMAT)
+    @Excel(name = "arppu", width = 15)
     private java.math.BigDecimal arppu;
 
     /**
      * 服均充值
      */
-    @Excel(name = "服均充值", width = 15, numFormat = CommonConstant.BIG_DECIMAL_NUMBER_FORMAT)
+    @Excel(name = "服均充值", width = 15)
     private java.math.BigDecimal serverAverageAmount;
 
     /**

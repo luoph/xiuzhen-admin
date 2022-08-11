@@ -1,9 +1,10 @@
 <template>
-  <a-modal
+  <j-modal
     :title="title"
     :width="1000"
     :visible="visible"
     :confirmLoading="confirmLoading"
+    switchFullscreen
     @ok="handleOk"
     @cancel="handleCancel">
     <a-spin :spinning="confirmLoading">
@@ -29,7 +30,7 @@
         </#list>
       </a-form>
     </a-spin>
-  </a-modal>
+  </j-modal>
 </template>
 
 <script>
@@ -68,8 +69,8 @@
 </#list>
         },
         url: {
-          add: "${entityPackage}/${entityName?uncap_first}/add",
-          edit: "${entityPackage}/${entityName?uncap_first}/edit",
+          add: "/${entityPackage}/${entityName?uncap_first}/add",
+          edit: "/${entityPackage}/${entityName?uncap_first}/edit",
 <#list subTables as sub><#rt/>
           ${sub.entityName?uncap_first}List: '/${entityPackage}/${entityName?uncap_first}/query${sub.entityName}ByMainId',
 </#list>
@@ -116,7 +117,7 @@
               method = 'put';
             }
             let formData = Object.assign(this.model, values);
-            // 时间格式化
+            //时间格式化
             <#list columns as po>
             <#if po.fieldName !='id' && po.fieldType =='date'>
             formData.${po.fieldName} = formData.${po.fieldName}?formData.${po.fieldName}.format():null;

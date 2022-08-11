@@ -1,28 +1,73 @@
 package org.jeecg.common.system.query;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 
-@Data
-@Accessors(chain = true)
+/**
+ * @Description: QueryCondition
+ * @author: jeecg-boot
+ */
 public class QueryCondition implements Serializable {
 
-    private static final long serialVersionUID = 4740166316629191651L;
+	private static final long serialVersionUID = 4740166316629191651L;
+	
+	private String field;
+	/** 组件的类型（例如：input、select、radio） */
+	private String type;
+	/**
+	 * 对应的数据库字段的类型
+	 * 支持：int、bigDecimal、short、long、float、double、boolean
+	 */
+	private String dbType;
+	private String rule;
+	private String val;
+	
+	public String getField() {
+		return field;
+	}
 
-    private String field;
-    private String type;
-    private String rule;
-    private String val;
+	public void setField(String field) {
+		this.field = field;
+	}
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        if (field == null || "".equals(field)) {
-            return "";
-        }
-        sb.append(this.field).append(" ").append(this.rule).append(" ").append(this.type).append(" ").append(this.val);
-        return sb.toString();
-    }
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getDbType() {
+		return dbType;
+	}
+
+	public void setDbType(String dbType) {
+		this.dbType = dbType;
+	}
+
+	public String getRule() {
+		return rule;
+	}
+
+	public void setRule(String rule) {
+		this.rule = rule;
+	}
+
+	public String getVal() {
+		return val;
+	}
+
+	public void setVal(String val) {
+		this.val = val;
+	}
+
+	@Override
+	public String toString(){
+		StringBuffer sb =new StringBuffer();
+		if(field == null || "".equals(field)){
+			return "";
+		}
+		sb.append(this.field).append(" ").append(this.rule).append(" ").append(this.type).append(" ").append(this.dbType).append(" ").append(this.val);
+		return sb.toString();
+	}
 }

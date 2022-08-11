@@ -1,7 +1,7 @@
 package org.jeecg.modules.system.controller;
 
-import com.alibaba.fastjson2.JSONArray;
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,10 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
- * @author jeecg-boot
- * @version V1.0
- * @description 填值规则
- * @date 2019-11-07
+ * @Description: 填值规则
+ * @Author: jeecg-boot
+ * @Date: 2019-11-07
+ * @Version: V1.0
  */
 @Slf4j
 @Api(tags = "填值规则")
@@ -46,8 +46,8 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
      * @param req
      * @return
      */
-    @AutoLog(value = "填值规则-列表查询")
-    @ApiOperation(value = "填值规则-列表查询", notes = "填值规则-列表查询")
+    @AutoLog(value = "填值规则-分页列表查询")
+    @ApiOperation(value = "填值规则-分页列表查询", notes = "填值规则-分页列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(SysFillRule sysFillRule,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -93,7 +93,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
      */
     @AutoLog(value = "填值规则-编辑")
     @ApiOperation(value = "填值规则-编辑", notes = "填值规则-编辑")
-    @PutMapping(value = "/edit")
+    @RequestMapping(value = "/edit", method = {RequestMethod.PUT,RequestMethod.POST})
     public Result<?> edit(@RequestBody SysFillRule sysFillRule) {
         sysFillRuleService.updateById(sysFillRule);
         return Result.ok("编辑成功!");
@@ -108,7 +108,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
     @AutoLog(value = "填值规则-通过id删除")
     @ApiOperation(value = "填值规则-通过id删除", notes = "填值规则-通过id删除")
     @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id") String id) {
+    public Result<?> delete(@RequestParam(name = "id", required = true) String id) {
         sysFillRuleService.removeById(id);
         return Result.ok("删除成功!");
     }
@@ -122,7 +122,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
     @AutoLog(value = "填值规则-批量删除")
     @ApiOperation(value = "填值规则-批量删除", notes = "填值规则-批量删除")
     @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
+    public Result<?> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         this.sysFillRuleService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok("批量删除成功！");
     }
@@ -136,7 +136,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
     @AutoLog(value = "填值规则-通过id查询")
     @ApiOperation(value = "填值规则-通过id查询", notes = "填值规则-通过id查询")
     @GetMapping(value = "/queryById")
-    public Result<?> queryById(@RequestParam(name = "id") String id) {
+    public Result<?> queryById(@RequestParam(name = "id", required = true) String id) {
         SysFillRule sysFillRule = sysFillRuleService.getById(id);
         return Result.ok(sysFillRule);
     }
@@ -184,6 +184,7 @@ public class SysFillRuleController extends JeecgController<SysFillRule, ISysFill
      * @param ruleData 要执行的填值规则JSON数组：
      *                 示例： { "commonFormData": {}, rules: [ { "ruleCode": "xxx", "formData": null } ] }
      * @return 运行后的结果，返回示例： [{"ruleCode": "order_num_rule", "result": "CN2019111117212984"}]
+     *
      */
     @PutMapping("/executeRuleByCodeBatch")
     public Result executeByRuleCodeBatch(@RequestBody JSONObject ruleData) {

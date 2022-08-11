@@ -1,5 +1,5 @@
-import api from "./index";
-import { axios } from "@/utils/request";
+import api from './index'
+import { axios } from '@/utils/request'
 
 /**
  * login func
@@ -13,46 +13,75 @@ import { axios } from "@/utils/request";
  * @returns {*}
  */
 export function login(parameter) {
-    return axios({
-        url: "sys/login",
-        method: "post",
-        data: parameter
-    });
+  return axios({
+    url: '/sys/login',
+    method: 'post',
+    data: parameter
+  })
 }
 
 export function phoneLogin(parameter) {
-    return axios({
-        url: "sys/phoneLogin",
-        method: "post",
-        data: parameter
-    });
+  return axios({
+    url: '/sys/phoneLogin',
+    method: 'post',
+    data: parameter
+  })
 }
 
 export function getSmsCaptcha(parameter) {
-    return axios({
-        url: api.SendSms,
-        method: "post",
-        data: parameter
-    });
+  return axios({
+    url: api.SendSms,
+    method: 'post',
+    data: parameter
+  })
 }
 
-export function getInfo() {
-    return axios({
-        url: "api/user/info",
-        method: "get",
-        headers: {
-            "Content-Type": "application/json;charset=UTF-8"
-        }
-    });
-}
+// export function getInfo() {
+//   return axios({
+//     url: '/api/user/info',
+//     method: 'get',
+//     headers: {
+//       'Content-Type': 'application/json;charset=UTF-8'
+//     }
+//   })
+// }
 
 export function logout(logoutToken) {
-    return axios({
-        url: "sys/logout",
-        method: "post",
-        headers: {
-            "Content-Type": "application/json;charset=UTF-8",
-            "X-Access-Token": logoutToken
-        }
-    });
+  return axios({
+    url: '/sys/logout',
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'X-Access-Token':  logoutToken
+    }
+  })
+}
+
+/**
+ * 第三方登录
+ * @param token
+ * @param thirdType
+ * @returns {*}
+ */
+export function thirdLogin(token,thirdType) {
+  return axios({
+    url: `/sys/thirdLogin/getLoginUser/${token}/${thirdType}`,
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+}
+
+/**
+ * 强退其他账号
+ * @param token
+ * @returns {*}
+ */
+export function forceLogout(parameter) {
+  return axios({
+    url: '/sys/online/forceLogout',
+    method: 'post',
+    data: parameter
+  })
 }

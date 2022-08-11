@@ -1,8 +1,8 @@
 'use strict'
 const path = require('path')
 
-function resolve(dir) {
-    return path.join(__dirname, '.', dir)
+function resolve (dir) {
+  return path.join(__dirname, '.', dir)
 }
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
-            config: resolve('config'),
+            'config': resolve('config'),
             '@': resolve('src'),
             '@views': resolve('src/views'),
             '@comp': resolve('src/components'),
@@ -20,5 +20,5 @@ module.exports = {
             '@router': resolve('src/router'),
             '@store': resolve('src/store')
         }
-    }
+    },
 }

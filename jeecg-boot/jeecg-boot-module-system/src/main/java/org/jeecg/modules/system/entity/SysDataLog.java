@@ -1,59 +1,73 @@
 package org.jeecg.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
-import org.jeecg.common.constant.TimeConstant;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * @Description: 系统数据日志
+ * @author: jeecg-boot
+ */
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysDataLog implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    @TableId(type = IdType.ID_WORKER_STR)
+	private static final long serialVersionUID = 1L;
+	
+	@TableId(type = IdType.ASSIGN_ID)
     /**
-     * id'
+     * id
      */
-    private String id;
+	private String id;
+
     /**
      * 创建人登录名称
      */
-    private String createBy;
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+	private String createBy;
+
     /**
      * 创建日期
      */
-    private Date createTime;
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private Date createTime;
+
     /**
      * 更新人登录名称
      */
-    private String updateBy;
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+	private String updateBy;
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+
     /**
      * 更新日期
      */
     private Date updateTime;
+
     /**
      * 表名
      */
     private String dataTable;
+
     /**
      * 数据ID
      */
     private String dataId;
+
     /**
      * 数据内容
      */
     private String dataContent;
+
     /**
      * 版本号
      */

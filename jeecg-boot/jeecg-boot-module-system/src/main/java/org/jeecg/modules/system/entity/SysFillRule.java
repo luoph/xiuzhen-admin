@@ -9,18 +9,18 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
- * @author jeecg-boot
- * @version V1.0
- * @description 填值规则
- * @date 2019-11-07
+ * @Description: 填值规则
+ * @Author: jeecg-boot
+ * @Date: 2019-11-07
+ * @Version: V1.0
  */
 @Data
 @TableName("sys_fill_rule")
+@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value = "sys_fill_rule对象", description = "填值规则")
 public class SysFillRule {
@@ -28,7 +28,7 @@ public class SysFillRule {
     /**
      * 主键ID
      */
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.ASSIGN_ID)
     @ApiModelProperty(value = "主键ID")
     private java.lang.String id;
     /**
@@ -64,9 +64,9 @@ public class SysFillRule {
     /**
      * 修改时间
      */
-    @Excel(name = "修改时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @Excel(name = "修改时间", width = 20, format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "修改时间")
     private java.util.Date updateTime;
     /**
@@ -78,9 +78,9 @@ public class SysFillRule {
     /**
      * 创建时间
      */
-    @Excel(name = "创建时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @Excel(name = "创建时间", width = 20, format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "创建时间")
     private java.util.Date createTime;
 }

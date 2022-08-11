@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
  * 角色表 服务类
  * </p>
  *
- * @author scott
+ * @Author scott
  * @since 2018-12-19
  */
 public interface ISysRoleService extends IService<SysRole> {
@@ -25,5 +25,19 @@ public interface ISysRoleService extends IService<SysRole> {
      * @throws Exception
      */
     Result importExcelCheckRoleCode(MultipartFile file, ImportParams params) throws Exception;
+
+    /**
+     * 删除角色
+     * @param roleid
+     * @return
+     */
+    public boolean deleteRole(String roleid);
+
+    /**
+     * 批量删除角色
+     * @param roleids
+     * @return
+     */
+    public boolean deleteBatchRole(String[] roleids);
 
 }

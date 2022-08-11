@@ -5,7 +5,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator" :md="24" :sm="24" style="margin: 0px 0px 20px 0px">
-      <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
+      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
 
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
@@ -100,9 +100,9 @@
           scopedSlots: {customRender: 'action'},
         }],
         url: {
-          list: "${entityPackage}/${entityName?uncap_first}/list${subTab.entityName}ByMainId",
-          delete: "${entityPackage}/${entityName?uncap_first}/delete${subTab.entityName}",
-          deleteBatch: "${entityPackage}/${entityName?uncap_first}/deleteBatch${subTab.entityName}",
+          list: "/${entityPackage}/${entityName?uncap_first}/list${subTab.entityName}ByMainId",
+          delete: "/${entityPackage}/${entityName?uncap_first}/delete${subTab.entityName}",
+          deleteBatch: "/${entityPackage}/${entityName?uncap_first}/deleteBatch${subTab.entityName}",
         }
       }
     },

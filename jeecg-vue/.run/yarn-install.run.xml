@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="yarn install" type="NodeJSConfigurationType" application-parameters=" install" path-to-js-file="/usr/local/lib/node_modules/yarn/bin/yarn.js" working-dir="$PROJECT_DIR$">
+    <method v="2" />
+  </configuration>
+</component>

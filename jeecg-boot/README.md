@@ -1,17 +1,17 @@
-Jeecg-Boot 快速开发平台
+Jeecg-Boot 低代码开发平台
 ===============
 
-当前最新版本： 2.1.2（发布日期：20191122）
+当前最新版本： 3.3.0（发布日期：20220725）
 
 
 ## 后端技术架构
-- 基础框架：Spring Boot 2.1.3.RELEASE
+- 基础框架：Spring Boot 2.6.6
 
-- 持久层框架：Mybatis-plus_3.1.2
+- 持久层框架：Mybatis-plus 3.5.1
 
-- 安全框架：Apache Shiro 1.4.0，Jwt_3.7.0
+- 安全框架：Apache Shiro 1.8.0，Jwt 3.11.0
 
-- 数据库连接池：阿里巴巴Druid 1.1.10
+- 数据库连接池：阿里巴巴Druid 1.1.22
 
 - 缓存框架：redis
 
@@ -29,7 +29,7 @@ Jeecg-Boot 快速开发平台
 
 - 依赖管理：Maven
 
-- 数据库：MySQL5.0  &  Oracle 11g
+- 数据库：MySQL5.7+  &  Oracle 11g & SqlServer & postgresql & 国产等更多数据库
 
 - 缓存：Redis
 
@@ -37,13 +37,51 @@ Jeecg-Boot 快速开发平台
 ## 技术文档
 
 
-- 在线演示 ：  [http://boot.jeecg.org](http://boot.jeecg.org)
+- 在线演示 ：  [http://boot.jeecg.com](http://boot.jeecg.com)
 
-- 在线文档：  [http://doc.jeecg.com/1273753](http://doc.jeecg.com/1273753)
+- 在线文档：  [http://doc.jeecg.com](http://doc.jeecg.com)
 
-- 常见问题：  [入门常见问题大全](http://www.jeecg.org/forum.php?mod=viewthread&tid=7816&extra=page%3D1)
+- 常见问题：  [http://jeecg.com/doc/qa](http://jeecg.com/doc/qa)
 
-- QQ交流群 ：  ①284271917、②769925425
+- QQ交流群 ： ⑤860162132、④774126647(满)、③816531124(满)、②769925425(满)、①284271917(满)
+
+
+## Docker镜像启动后台
+
+
+- Docker镜像单体启动 ：  http://doc.jeecg.com/2043889
+- Docker镜像微服务启动： http://doc.jeecg.com/2656147
+
+
+下面是单体启动步骤：
+ ``` 
+
+注意： 如果本地安装了mysql和redis,启动容器前先停掉本地服务，不然会端口冲突。
+       net stop redis
+       net stop mysql
+ 
+# 1.配置host
+    127.0.0.1   jeecg-boot-redis
+    127.0.0.1   jeecg-boot-mysql
+    127.0.0.1   jeecg-boot-system
+  
+# 2.修改application-dev.yml文件的数据库和redis链接
+    修改数据库连接和redis连接，将连接改成host方式
+
+# 3.进jeecg-boot根目录，执行maven命令
+    mvn clean package
+
+# 4.启动镜像组
+    docker-compose up -d
+
+# 5.访问后台项目（等待2分钟左右后）
+    http://localhost:8080/jeecg-boot/doc.html
+``` 
+
+其他： 重新构建镜像组（当你改变本地代码，也可重新构建镜像）
+```
+   docker-compose build
+```
 
 
 ## 专项文档
@@ -100,7 +138,7 @@ QueryWrapper<?> queryWrapper = QueryGenerator.initQueryWrapper(?, req.getParamet
 > 功能说明：   一键生成的代码（包括：controller、service、dao、mapper、entity、vue）
  
  - 模板位置： src/main/resources/jeecg/code-template
- - 技术文档： http://doc.jeecg.com
+ - 技术文档： http://doc.jeecg.com/2043916
 
 
 
@@ -156,3 +194,5 @@ code: {
         }
       },
 ```
+
+

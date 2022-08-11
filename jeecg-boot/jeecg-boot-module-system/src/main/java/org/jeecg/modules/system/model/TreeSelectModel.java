@@ -1,33 +1,94 @@
 package org.jeecg.modules.system.model;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * 树形下拉框
+  * 树形下拉框
+  * @author: jeecg-boot
  */
-@Data
-@Accessors(chain = true)
 public class TreeSelectModel implements Serializable {
 
-    private static final long serialVersionUID = 9016390975325574747L;
+	private static final long serialVersionUID = 9016390975325574747L;
 
-    private String key;
+	private String key;
+	
+	private String title;
+	
+	private boolean isLeaf;
+	
+	private String icon;
+	
+	private String parentId;
+	
+	private String value;
+	
+	private String code;
+	
+	public String getValue() {
+		return value;
+	}
 
-    private String title;
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    private boolean isLeaf;
+	public String getParentId() {
+		return parentId;
+	}
 
-    private String icon;
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
-    private String parentId;
+	public String getKey() {
+		return key;
+	}
 
-    private String value;
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    private String code;
+	public String getTitle() {
+		return title;
+	}
 
-    private List<TreeSelectModel> children;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public boolean isLeaf() {
+		return isLeaf;
+	}
+
+	public void setLeaf(boolean isLeaf) {
+		this.isLeaf = isLeaf;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	private List<TreeSelectModel> children;
+
+	public List<TreeSelectModel> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<TreeSelectModel> children) {
+		this.children = children;
+	}
+
 }

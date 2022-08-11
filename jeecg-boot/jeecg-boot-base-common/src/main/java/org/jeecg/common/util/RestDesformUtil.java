@@ -1,6 +1,6 @@
 package org.jeecg.common.util;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.jeecg.common.api.vo.Result;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,20 +18,20 @@ public class RestDesformUtil {
     private static String path = null;
 
     static {
-        domain = SpringWebContextUtils.getDomain();
-        path = SpringWebContextUtils.getApplicationContext().getEnvironment().getProperty("server.servlet.context-path");
+        domain = SpringContextUtils.getDomain();
+        path = oConvertUtils.getString(SpringContextUtils.getApplicationContext().getEnvironment().getProperty("server.servlet.context-path"));
     }
 
     /**
      * 查询数据
      *
-     * @param desFormCode
+     * @param desformCode
      * @param dataId
      * @param token
      * @return
      */
-    public static Result queryOne(String desFormCode, String dataId, String token) {
-        String url = getBaseUrl(desFormCode, dataId).toString();
+    public static Result queryOne(String desformCode, String dataId, String token) {
+        String url = getBaseUrl(desformCode, dataId).toString();
         HttpHeaders headers = getHeaders(token);
         ResponseEntity<JSONObject> result = RestUtil.request(url, HttpMethod.GET, headers, null, null, JSONObject.class);
         return packageReturn(result);
@@ -40,29 +40,29 @@ public class RestDesformUtil {
     /**
      * 新增数据
      *
-     * @param desFormCode
+     * @param desformCode
      * @param formData
      * @param token
      * @return
      */
-    public static Result addOne(String desFormCode, JSONObject formData, String token) {
-        return addOrEditOne(desFormCode, formData, token, HttpMethod.POST);
+    public static Result addOne(String desformCode, JSONObject formData, String token) {
+        return addOrEditOne(desformCode, formData, token, HttpMethod.POST);
     }
 
     /**
      * 修改数据
      *
-     * @param desFormCode
+     * @param desformCode
      * @param formData
      * @param token
      * @return
      */
-    public static Result editOne(String desFormCode, JSONObject formData, String token) {
-        return addOrEditOne(desFormCode, formData, token, HttpMethod.PUT);
+    public static Result editOne(String desformCode, JSONObject formData, String token) {
+        return addOrEditOne(desformCode, formData, token, HttpMethod.PUT);
     }
 
-    private static Result addOrEditOne(String desFormCode, JSONObject formData, String token, HttpMethod method) {
-        String url = getBaseUrl(desFormCode).toString();
+    private static Result addOrEditOne(String desformCode, JSONObject formData, String token, HttpMethod method) {
+        String url = getBaseUrl(desformCode).toString();
         HttpHeaders headers = getHeaders(token);
         ResponseEntity<JSONObject> result = RestUtil.request(url, method, headers, null, formData, JSONObject.class);
         return packageReturn(result);
@@ -71,13 +71,13 @@ public class RestDesformUtil {
     /**
      * 删除数据
      *
-     * @param desFormCode
+     * @param desformCode
      * @param dataId
      * @param token
      * @return
      */
-    public static Result removeOne(String desFormCode, String dataId, String token) {
-        String url = getBaseUrl(desFormCode, dataId).toString();
+    public static Result removeOne(String desformCode, String dataId, String token) {
+        String url = getBaseUrl(desformCode, dataId).toString();
         HttpHeaders headers = getHeaders(token);
         ResponseEntity<JSONObject> result = RestUtil.request(url, HttpMethod.DELETE, headers, null, null, JSONObject.class);
         return packageReturn(result);
@@ -96,17 +96,17 @@ public class RestDesformUtil {
         return builder;
     }
 
-    private static StringBuilder getBaseUrl(String desFormCode, String dataId) {
+    private static StringBuilder getBaseUrl(String desformCode, String dataId) {
         StringBuilder builder = getBaseUrl();
-        builder.append("/").append(desFormCode);
+        builder.append("/").append(desformCode);
         if (dataId != null) {
             builder.append("/").append(dataId);
         }
         return builder;
     }
 
-    private static StringBuilder getBaseUrl(String desFormCode) {
-        return getBaseUrl(desFormCode, null);
+    private static StringBuilder getBaseUrl(String desformCode) {
+        return getBaseUrl(desformCode, null);
     }
 
     private static HttpHeaders getHeaders(String token) {

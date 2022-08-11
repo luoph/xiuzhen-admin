@@ -1,26 +1,67 @@
 package org.jeecg.modules.quartz.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
+
 import org.jeecg.modules.quartz.entity.QuartzJob;
 import org.quartz.SchedulerException;
 
-import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * @author jeecg-boot
- * @version V1.1
- * @description 定时任务在线管理
- * @date 2019-04-28
+ * @Description: 定时任务在线管理
+ * @Author: jeecg-boot
+ * @Date: 2019-04-28
+ * @Version: V1.1
  */
 public interface IQuartzJobService extends IService<QuartzJob> {
 
-    List<QuartzJob> findByJobClassName(String jobClassName);
+    /**
+     * 通过类名寻找定时任务
+     * @param jobClassName 类名
+     * @return List<QuartzJob>
+     */
+	List<QuartzJob> findByJobClassName(String jobClassName);
 
-    boolean saveAndScheduleJob(QuartzJob quartzJob);
+    /**
+     * 保存定时任务
+     * @param quartzJob
+     * @return boolean
+     */
+	boolean saveAndScheduleJob(QuartzJob quartzJob);
 
-    boolean editAndScheduleJob(QuartzJob quartzJob) throws SchedulerException;
+    /**
+     * 编辑定时任务
+     * @param quartzJob
+     * @return boolean
+     * @throws SchedulerException
+     */
+	boolean editAndScheduleJob(QuartzJob quartzJob) throws SchedulerException;
 
-    boolean deleteAndStopJob(QuartzJob quartzJob);
+    /**
+     * 删除定时任务
+     * @param quartzJob
+     * @return boolean
+     */
+	boolean deleteAndStopJob(QuartzJob quartzJob);
 
-    boolean resumeJob(QuartzJob quartzJob);
+    /**
+     * 恢复定时任务
+     * @param quartzJob
+     * @return
+     */
+	boolean resumeJob(QuartzJob quartzJob);
+
+	/**
+	 * 执行定时任务
+	 * @param quartzJob
+     * @throws Exception
+	 */
+	void execute(QuartzJob quartzJob) throws Exception;
+
+	/**
+	 * 暂停任务
+	 * @param quartzJob
+	 * @throws SchedulerException
+	 */
+	void pause(QuartzJob quartzJob);
 }
