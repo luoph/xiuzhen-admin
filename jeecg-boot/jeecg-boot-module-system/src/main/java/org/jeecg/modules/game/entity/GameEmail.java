@@ -41,13 +41,14 @@ public class GameEmail extends BaseEntity {
      * 描述
      */
     @Excel(name = "描述", width = 15)
-    private java.lang.String remark;
+    @TableField(value = "`describe`")
+    private java.lang.String describe;
 
     /**
      * 类型
      */
     @Excel(name = "类型", width = 15)
-    private java.lang.Integer emailType;
+    private java.lang.Integer type;
 
     /**
      * 附件
@@ -59,19 +60,19 @@ public class GameEmail extends BaseEntity {
      * 状态
      */
     @Excel(name = "状态", width = 15)
-    private java.lang.Integer validState;
+    private java.lang.Integer state;
 
     /**
      * 目标类型
      */
     @Excel(name = "目标类型", width = 15)
-    private java.lang.Integer targetBodyType;
+    private java.lang.Integer receiverType;
 
     /**
      * 目标主体
      */
     @Excel(name = "目标主体:服务器id/玩家id", width = 15)
-    private java.lang.String targetBodyIds;
+    private java.lang.String receiverIds;
 
     /**
      * 生效时间
@@ -87,7 +88,7 @@ public class GameEmail extends BaseEntity {
     @Excel(name = "开始时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date validStarTime;
+    private java.util.Date startTime;
 
     /**
      * 结束时间
@@ -95,8 +96,8 @@ public class GameEmail extends BaseEntity {
     @Excel(name = "结束时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date validEndTime;
+    private java.util.Date endTime;
 
     @TableField(exist = false)
-    private Long targetBodyId;
+    private Long receiverId;
 }

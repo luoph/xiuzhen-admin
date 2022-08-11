@@ -11,17 +11,17 @@
                     </a-col>
                     <a-col :md="4" :sm="8">
                         <a-form-item label="描述">
-                            <j-input placeholder="请输入描述模糊查询" v-model="queryParam.remark"></j-input>
+                            <j-input placeholder="请输入描述模糊查询" v-model="queryParam.describe"></j-input>
                         </a-form-item>
                     </a-col>
                     <a-col :md="5" :sm="8">
                         <a-form-item label="目标主体">
-                            <j-input placeholder="请输入玩家id/区服id模糊查询" v-model="queryParam.targetBodyIds"></j-input>
+                            <j-input placeholder="请输入玩家id/区服id模糊查询" v-model="queryParam.receiverIds"></j-input>
                         </a-form-item>
                     </a-col>
                     <!--                    <a-col :md="4" :sm="8">-->
                     <!--                        <a-form-item label="类型">-->
-                    <!--                            <a-select placeholder="目标类型" ref="targetSelector" v-model="queryParam.targetBodyType" @change="selectTarget">-->
+                    <!--                            <a-select placeholder="目标类型" ref="targetSelector" v-model="queryParam.receiverType" @change="selectTarget">-->
                     <!--                                <a-select-option :value="1">玩家</a-select-option>-->
                     <!--                                <a-select-option :value="2">全服</a-select-option>-->
                     <!--                            </a-select>-->
@@ -30,7 +30,7 @@
                     <template v-if="toggleSearchStatus">
                         <a-col :md="4" :sm="8">
                             <a-form-item label="状态">
-                                <a-select placeholder="邮件状态" v-model="queryParam.validState">
+                                <a-select placeholder="邮件状态" v-model="queryParam.state">
                                     <a-select-option :value="0">未审核</a-select-option>
                                     <a-select-option :value="1">已审核发送</a-select-option>
                                 </a-select>
@@ -82,10 +82,10 @@
                 <span slot="action" slot-scope="text, record">
                     <a @click="handleCopy(record)">复制</a>
                     <a-divider type="vertical" />
-                    <a v-if="record.validState === 0" @click="handleCheck(record)">审核</a>
+                    <a v-if="record.state === 0" @click="handleCheck(record)">审核</a>
                     <a v-else>已发送</a>
-                    <a-divider v-if="record.validState === 0" type="vertical" />
-                    <a v-if="record.validState === 0" @click="handleEdit(record)">编辑</a>
+                    <a-divider v-if="record.state === 0" type="vertical" />
+                    <a v-if="record.state === 0" @click="handleEdit(record)">编辑</a>
                 </span>
             </a-table>
         </div>
@@ -117,8 +117,8 @@ export default {
         return {
             description: "游戏下发邮件管理页面",
             queryParam: {
-                validState: undefined,
-                targetBodyType: undefined
+                state: undefined,
+                receiverType: undefined
             },
 
             // 表头
@@ -143,16 +143,16 @@ export default {
                     title: "描述",
                     align: "left",
                     width: 240,
-                    dataIndex: "remark",
+                    dataIndex: "describe",
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
                     title: "类型",
                     align: "center",
                     width: 80,
-                    dataIndex: "emailType",
+                    dataIndex: "type",
                     customRender: function (text) {
-                        return text === 1 ? "无附件" : "有附件";
+                        return text === 1 ? "有附件" : "无附件";
                     }
                 },
                 {
@@ -166,7 +166,7 @@ export default {
                     title: "状态",
                     align: "center",
                     width: 80,
-                    dataIndex: "validState",
+                    dataIndex: "state",
                     customRender: function (text) {
                         return text === 1 ? "已审核发送" : "未审核";
                     }
@@ -175,7 +175,7 @@ export default {
                     title: "目标类型",
                     align: "center",
                     width: 80,
-                    dataIndex: "targetBodyType",
+                    dataIndex: "receiverType",
                     customRender: function (text) {
                         return text === 1 ? "玩家" : "全服";
                     }
@@ -184,7 +184,7 @@ export default {
                     title: "目标主体",
                     align: "left",
                     width: 220,
-                    dataIndex: "targetBodyIds",
+                    dataIndex: "receiverIds",
                     scopedSlots: { customRender: "largeText" }
                 },
                 {
@@ -195,12 +195,12 @@ export default {
                 {
                     title: "开始时间",
                     align: "center",
-                    dataIndex: "validStarTime"
+                    dataIndex: "startTime"
                 },
                 {
                     title: "结束时间",
                     align: "center",
-                    dataIndex: "validEndTime"
+                    dataIndex: "endTime"
                 },
                 {
                     title: "创建时间",
@@ -232,8 +232,8 @@ export default {
         initDictConfig() {},
 
         onDateChange: function (value, dateStr) {
-            this.queryParam.validStarTime_begin = dateStr[0];
-            this.queryParam.validStarTime_end = dateStr[1];
+            this.queryParam.startTime_begin = dateStr[0];
+            this.queryParam.startTime_end = dateStr[1];
         },
 
         handleCopy: function (record) {

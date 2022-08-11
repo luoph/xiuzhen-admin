@@ -8,15 +8,15 @@
                     <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"></a-input>
                 </a-form-item>
                 <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入描述"
-                                :autosize="{ minRows: 2, maxRows: 6 }" />
+                    <a-textarea v-decorator="['describe', validatorRules.describe]" placeholder="请输入描述"
+                                :autosize="{ minRows: 2, maxRows: 6 }"/>
                 </a-form-item>
                 <a-form-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-radio-group @change="contentType($event.target.value)"
-                                   v-decorator="['emailType', { initialValue: 1 }, validatorRules.emailType]"
+                                   v-decorator="['type', { initialValue: 1 }, validatorRules.type]"
                                    style="width: 100%;">
-                        <a-radio-button :value="1">无附件</a-radio-button>
-                        <a-radio-button :value="2">有附件</a-radio-button>
+                        <a-radio-button :value="1">有附件</a-radio-button>
+                        <a-radio-button :value="2">无附件</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
                 <a-form-item v-if="contentData" :visible.sync="contentData" label="附件" :labelCol="labelCol"
@@ -24,18 +24,18 @@
                     <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
                     <a-textarea
                         v-decorator="['content', { initialValue: itemTree }, validatorRules.content]"
-                        placeholder="请输入附件" :autoSize="{ minRows: 2, maxRows: 6 }" />
+                        placeholder="请输入附件" :autoSize="{ minRows: 2, maxRows: 6 }"/>
                     <game-email-item-tree-modal ref="gameEmailItemTreeModal"
                                                 @func="getItemTreeJson"></game-email-item-tree-modal>
                 </a-form-item>
                 <a-form-item v-show="false" label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group v-decorator="['validState', { initialValue: 0 }]" dict style="width: 100%;">
+                    <a-radio-group v-decorator="['state', { initialValue: 0 }]" dict style="width: 100%;">
                         <a-radio-button :value="0">有效</a-radio-button>
                     </a-radio-group>
                 </a-form-item>
                 <a-form-item label="目标类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <a-radio-group @change="selectTarget($event.target.value)"
-                                   v-decorator="['targetBodyType', { initialValue: 1 }]" dict
+                    <a-radio-group @change="selectReceiver($event.target.value)"
+                                   v-decorator="['receiverType', { initialValue: 1 }]" dict
                                    style="width: 100%;">
                         <a-radio-button :value="1">玩家</a-radio-button>
                         <a-radio-button :value="2">服务器</a-radio-button>
@@ -43,15 +43,15 @@
                 </a-form-item>
                 <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-textarea
-                        v-decorator="['targetBody', { initialValue: '' }]"
+                        v-decorator="['receiverIds', { initialValue: '' }]"
                         placeholder="请以英文“,”分割输入多个玩家ID"
                         style="width: 100%;"
                         :autoSize="{ minRows: 2, maxRows: 6 }"
                     />
                 </a-form-item>
                 <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-                    <game-server-selector v-decorator="['targetBodyIds', { initialValue: '' }]"
-                                          @onSelectServer="change" />
+                    <game-server-selector v-decorator="['receiverIds', { initialValue: '' }]"
+                                          @onSelectServer="onServerSelected"/>
                 </a-form-item>
                 <a-form-item label="生效时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker
@@ -59,14 +59,14 @@
                         showTime
                         format="YYYY-MM-DD HH:mm:ss"
                         v-decorator="['sendTime', validatorRules.sendTime]"
-                        style="width: 100%;" />
+                        style="width: 100%;"/>
                 </a-form-item>
                 <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-date-picker
                         placeholder="请选择开始时间"
                         showTime
                         format="YYYY-MM-DD HH:mm:ss"
-                        v-decorator="['validStarTime', validatorRules.validStarTime]"
+                        v-decorator="['startTime', validatorRules.startTime]"
                         style="width: 100%;"
                     />
                 </a-form-item>
@@ -75,7 +75,7 @@
                         placeholder="请选择结束时间"
                         showTime
                         format="YYYY-MM-DD HH:mm:ss"
-                        v-decorator="['validEndTime', validatorRules.validEndTime]"
+                        v-decorator="['endTime', validatorRules.endTime]"
                         style="width: 100%;"
                     />
                 </a-form-item>
@@ -88,11 +88,11 @@
 </template>
 
 <script>
-import { httpAction } from "@/api/manage";
+import {httpAction} from "@/api/manage";
 import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 import JSearchSelectTag from "@/components/dict/JSearchSelectTag";
-import { Button } from "ant-design-vue";
+import {Button} from "ant-design-vue";
 import GameEmailItemTreeModal from "./GameEmailItemTreeModal";
 import ServerSelect from "@/components/gameserver/ServerSelect";
 import GameServerSelector from "@comp/gameserver/GameServerSelector";
@@ -118,25 +118,25 @@ export default {
             model: {},
             itemTree: null,
             labelCol: {
-                xs: { span: 24 },
-                sm: { span: 5 }
+                xs: {span: 24},
+                sm: {span: 5}
             },
             wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 }
+                xs: {span: 24},
+                sm: {span: 16}
             },
             confirmLoading: false,
             validatorRules: {
-                title: { rules: [{ required: true, message: "请输入标题!" }] },
-                remark: { rules: [{ required: true, message: "请输入描述!" }] },
-                emailType: { rules: [{ required: true, message: "请选择类型!" }] },
-                content: { rules: [{ required: true, message: "请添加附件!" }] },
-                validState: { rules: [{ required: true, message: "请选择状态!" }] },
-                targetBodyType: { rules: [{ required: true, message: "请选择目标类型!" }] },
-                targetBodyIds: { rules: [{ required: false, message: "请以英文“,”分割输入多个玩家ID！" }] },
-                sendTime: { rules: [{ required: true, message: "请输入生效时间!" }] },
-                validStarTime: { rules: [{ required: true, message: "请输入开始时间!" }] },
-                validEndTime: { rules: [{ required: false, message: "请输入结束时间!" }] }
+                title: {rules: [{required: true, message: "请输入标题!"}]},
+                describe: {rules: [{required: true, message: "请输入描述!"}]},
+                type: {rules: [{required: true, message: "请选择类型!"}]},
+                content: {rules: [{required: true, message: "请添加附件!"}]},
+                state: {rules: [{required: true, message: "请选择状态!"}]},
+                receiverType: {rules: [{required: true, message: "请选择目标类型!"}]},
+                receiverIds: {rules: [{required: false, message: "请以英文“,”分割输入多个玩家ID/区服Id！"}]},
+                sendTime: {rules: [{required: true, message: "请输入生效时间!"}]},
+                startTime: {rules: [{required: false, message: "请输入开始时间!"}]},
+                endTime: {rules: [{required: false, message: "请输入结束时间!"}]}
             },
             serverType: false,
             playerType: true,
@@ -173,23 +173,22 @@ export default {
                         this.model,
                         "id",
                         "title",
-                        "remark",
-                        "emailType",
+                        "describe",
+                        "type",
                         "content",
-                        "validState",
-                        "targetBodyType",
-                        "targetBodyIds",
-                        "targetBody"
+                        "state",
+                        "receiverType",
+                        "receiverIds",
                     )
                 );
-                this.form.setFieldsValue({ sendTime: this.model.sendTime ? moment(this.model.sendTime) : null });
-                this.form.setFieldsValue({ validStarTime: this.model.validStarTime ? moment(this.model.validStarTime) : null });
-                this.form.setFieldsValue({ validEndTime: this.model.validEndTime ? moment(this.model.validEndTime) : null });
-                this.form.setFieldsValue({ targetBody: this.model.targetBodyIds ? this.model.targetBodyIds : null });
+                this.form.setFieldsValue({sendTime: this.model.sendTime ? moment(this.model.sendTime) : null});
+                this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null});
+                this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
+                this.form.setFieldsValue({receiverIds: this.model.receiverIds ? this.model.receiverIds : null});
             });
 
-            this.selectTarget(record.targetBodyType);
-            this.contentType(record.emailType);
+            this.selectReceiver(record.receiverType);
+            this.contentType(record.type);
         },
         close() {
             this.$emit("close");
@@ -199,7 +198,7 @@ export default {
             this.validatorRules.content = null;
             this.contentData = false;
             this.itemTree = null;
-            this.targetBody = "";
+            this.receiverIds = "";
         },
         handleOk() {
             const that = this;
@@ -216,16 +215,17 @@ export default {
                         httpUrl += this.url.edit;
                         method = "put";
                     }
+
                     let formData = Object.assign(this.model, values);
                     // 时间格式化
                     formData.sendTime = formData.sendTime ? formData.sendTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.validStarTime = formData.validStarTime ? formData.validStarTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    formData.validEndTime = formData.validEndTime ? formData.validEndTime.format("YYYY-MM-DD HH:mm:ss") : null;
-                    if (formData.validState === 1) {
-                        formData.validState = 0;
+                    formData.startTime = formData.startTime ? formData.startTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    formData.endTime = formData.endTime ? formData.endTime.format("YYYY-MM-DD HH:mm:ss") : null;
+                    if (formData.state === 1) {
+                        formData.state = 0;
                     }
 
-                    this.inputTargetBody(formData);
+                    this.updateReceiverIds(formData);
                     console.log("表单提交数据", formData);
                     httpAction(httpUrl, formData, method)
                         .then(res => {
@@ -257,20 +257,19 @@ export default {
                     row,
                     "id",
                     "title",
-                    "remark",
-                    "emailType",
+                    "describe",
+                    "type",
                     "content",
-                    "validState",
-                    "targetBodyType",
-                    "targetBodyIds",
+                    "state",
+                    "receiverType",
+                    "receiverIds",
                     "sendTime",
-                    "validStarTime",
-                    "validEndTime",
-                    "targetBody"
+                    "startTime",
+                    "endTime"
                 )
             );
         },
-        selectTarget(e) {
+        selectReceiver(e) {
             // 1-玩家 2-服务器
             if (e === 1) {
                 this.serverType = false;
@@ -279,25 +278,22 @@ export default {
                 this.serverType = true;
                 this.playerType = false;
             }
-            this.validatorRules.targetBodyIds = "";
-            this.targetBody = "";
+            this.validatorRules.receiverIds = "";
+            this.receiverIds = "";
         },
-
         contentType(e) {
-            if (e === 1) {
-                this.contentData = false;
-            } else if (e === 2) {
+            // 邮件分类 1- 有附件， 2-没有附件
+            this.contentData = e === 1;
+            if (this.contentData) {
                 this.contentData = true;
-                this.validatorRules.content = { rules: [{ required: true, message: "请添加附件!" }] };
+                this.validatorRules.content = {rules: [{required: true, message: "请添加附件!"}]};
                 this.validatorRules.content = "";
             }
         },
-
         handleAddItem() {
             this.$refs.gameEmailItemTreeModal.$emit("getItemTree");
             this.content = null;
         },
-
         getItemTreeJson(item) {
             this.itemTree = null;
             this.itemTree = item;
@@ -305,18 +301,16 @@ export default {
                 content: item
             });
         },
-
-        change(value) {
+        onServerSelected(value) {
             this.form.setFieldsValue({
-                targetBodyIds: value.length > 0 ? value.join(",") : value
+                receiverIds: value.length > 0 ? value.join(",") : value
             });
         },
-
-        inputTargetBody(formData) {
+        updateReceiverIds(formData) {
             if (this.playerType) {
-                let a = this.form.getFieldValue("targetBody");
+                let a = this.form.getFieldValue("receiverIds");
                 if (a !== null && a !== "" && a !== undefined) {
-                    formData.targetBodyIds = a;
+                    formData.receiverIds = a;
                 }
             }
         }

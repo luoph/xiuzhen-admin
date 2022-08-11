@@ -67,10 +67,10 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @AutoLog(value = "游戏下发邮件-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameEmail gameEmail) {
-        log.info("gameEmail:{}", gameEmail.toString());
-        String targetBodyIds = gameEmail.getTargetBodyIds();
-        if (StringUtils.isBlank(targetBodyIds)) {
-            return Result.error("所选投放对象不允许为空！");
+        log.info("add mail:{}", gameEmail);
+        String receiverIds = gameEmail.getReceiverIds();
+        if (StringUtils.isBlank(receiverIds)) {
+            return Result.error("邮件接受者不允许为空！");
         }
         gameEmailService.saveEmail(gameEmail);
         return Result.ok("添加成功！");
@@ -180,13 +180,13 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         if (gameEmail == null) {
             return Result.error("邮件不存在！");
         }
-        if (gameEmail.getValidState() == 1) {
+        if (gameEmail.getState() == 1) {
             return Result.error("已审核发送！");
         }
-        gameEmail.setValidState(1);
-        gameEmailService.updateById(new GameEmail().setId(gameEmail.getId()).setValidState(1));
+        gameEmail.setState(1);
+        gameEmailService.updateById(new GameEmail().setId(gameEmail.getId()).setState(1));
 
-        Response response = gameEmailService.dispatchEmail(gameEmail);
+        Response response = gameEmailService.sendEmail(gameEmail);
         if (!response.isSuccess()) {
             return Result.error(response.getDesc());
         }

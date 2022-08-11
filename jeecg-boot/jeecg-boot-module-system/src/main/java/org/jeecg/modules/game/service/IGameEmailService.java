@@ -35,5 +35,5 @@ public interface IGameEmailService extends IService<GameEmail> {
      *
      * @param gameEmail
      */
-    Response dispatchEmail(GameEmail gameEmail);
+    Response sendEmail(GameEmail gameEmail);
 }
