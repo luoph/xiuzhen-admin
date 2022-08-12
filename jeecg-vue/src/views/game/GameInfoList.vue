@@ -140,6 +140,11 @@ export default {
                     align: "center",
                     dataIndex: "weixinReview"
                 },
+                {
+                    title: "审核渠道",
+                    align: "center",
+                    dataIndex: "reviewChannel"
+                },
                 // {
                 //     title: "YA_APPID",
                 //     align: "center",

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.dreamlu.mica.core.utils.$;
 import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -161,10 +162,10 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     @GetMapping(value = "/updateGameConfig")
     public Result<?> updateGameConfig(HttpServletRequest req) {
         try {
-            List<GameInfo> gameInfoList = gameInfoService.list();
-            for (GameInfo gameInfo : gameInfoList) {
+            List<GameInfo> list = gameInfoService.list();
+            for (GameInfo gameInfo : list) {
                 GameClientConfig gameClientConfig = new GameClientConfig();
-                BeanUtils.copyProperties(gameInfo, gameClientConfig);
+                $.copy(gameInfo, gameClientConfig);
                 JsonFileUtils.writeJsonFile(gameClientConfig, gameFolder, gameInfo.getYaSimpleName());
             }
         } catch (Exception e) {
