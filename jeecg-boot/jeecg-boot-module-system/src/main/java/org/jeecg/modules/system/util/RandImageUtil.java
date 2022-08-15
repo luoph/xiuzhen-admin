@@ -118,7 +118,7 @@ public class RandImageUtil {
             graphics.setColor(Color.BLACK);
             // 设置字体样式
 //			graphics.setFont(new Font("Arial Black", Font.ITALIC, 18));
-            graphics.setFont(new Font("Times New Roman", Font.BOLD, 24));
+            graphics.setFont(new Font("Arial", Font.BOLD, 24));
             // 设置字符，字符间距，上边距
             graphics.drawString(String.valueOf(resultCode.charAt(i)), (23 * i) + 8, 26);
         }

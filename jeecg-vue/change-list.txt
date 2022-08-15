@@ -12,3 +12,4 @@ jeecg-vue/src/views/system/modules/PasswordModal.vue
 jeecg-vue/src/views/system/modules/UserModal.vue
 jeecg-vue/src/views/user/Login.vue
 jeecg-vue/src/views/user/Register.vue
+jeecg-vue/src/components/layouts/UserLayout.vue

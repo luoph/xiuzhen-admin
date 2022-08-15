@@ -11,3 +11,5 @@ jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/aspect/AutoLogAs
 jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/RestTemplateConfig.java
 jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/WebMvcConfiguration.java
 jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/WebSocketConfig.java
+jeecg-boot/jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/controller/LoginController.java
+jeecg-boot/jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/util/RandImageUtil.java

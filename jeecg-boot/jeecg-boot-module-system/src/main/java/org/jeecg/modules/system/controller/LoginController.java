@@ -62,7 +62,7 @@ public class LoginController {
 	@Resource
 	private BaseCommonService baseCommonService;
 
-	private final String BASE_CHECK_CODES = "qwertyuiplkjhgfdsazxcvbnmQWERTYUPLKJHGFDSAZXCVBNM1234567890";
+	private final static String BASE_CHECK_CODES = "1234567890";
 
 	@ApiOperation("登录接口")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -473,10 +473,10 @@ public class LoginController {
 	public Result<String> randomImage(HttpServletResponse response,@PathVariable("key") String key){
 		Result<String> res = new Result<String>();
 		try {
-			//生成验证码
+			// 生成验证码
 			String code = RandomUtil.randomString(BASE_CHECK_CODES,4);
 
-			//存到redis中
+			// 存到redis中
 			String lowerCaseCode = code.toLowerCase();
 			String realKey = Md5Util.md5Encode(lowerCaseCode+key, "utf-8");
             log.info("获取验证码，Redis checkCode = {}，key = {}", code, key);
