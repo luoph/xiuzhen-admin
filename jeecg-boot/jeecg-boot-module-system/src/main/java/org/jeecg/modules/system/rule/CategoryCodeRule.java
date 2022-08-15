@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.handler.IFillRuleHandler;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.YouBianCodeUtil;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.system.entity.SysCategory;
@@ -51,7 +51,7 @@ public class CategoryCodeRule implements IFillRuleHandler {
          * */
         //找同类 确定上一个最大的code值
         LambdaQueryWrapper<SysCategory> query = new LambdaQueryWrapper<SysCategory>().eq(SysCategory::getPid, categoryPid).isNotNull(SysCategory::getCode).orderByDesc(SysCategory::getCode);
-        SysCategoryMapper baseMapper = (SysCategoryMapper) SpringContextUtils.getBean("sysCategoryMapper");
+        SysCategoryMapper baseMapper = (SysCategoryMapper) SpringWebContextUtils.getBean("sysCategoryMapper");
         List<SysCategory> list = baseMapper.selectList(query);
         if (list == null || list.size() == 0) {
             if (ROOT_PID_VALUE.equals(categoryPid)) {

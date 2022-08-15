@@ -8,7 +8,7 @@ import org.jeecg.modules.base.mapper.BaseCommonMapper;
 import org.jeecg.modules.base.service.BaseCommonService;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.IpUtils;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +52,7 @@ public class BaseCommonServiceImpl implements BaseCommonService {
         sysLog.setOperateType(operatetype);
         try {
             //获取request
-            HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+            HttpServletRequest request = SpringWebContextUtils.getHttpServletRequest();
             //设置IP地址
             sysLog.setIp(IpUtils.getIpAddr(request));
         } catch (Exception e) {

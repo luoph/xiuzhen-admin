@@ -207,7 +207,7 @@ public class CommonUtils {
         if(oConvertUtils.isNotEmpty(DB_TYPE)){
             return DB_TYPE;
         }
-        DataSource dataSource = SpringContextUtils.getApplicationContext().getBean(DataSource.class);
+        DataSource dataSource = SpringWebContextUtils.getApplicationContext().getBean(DataSource.class);
         try {
             return getDatabaseTypeByDataSource(dataSource);
         } catch (SQLException e) {
@@ -226,7 +226,7 @@ public class CommonUtils {
             return dbTypeEnum;
         }
         try {
-            DataSource dataSource = SpringContextUtils.getApplicationContext().getBean(DataSource.class);
+            DataSource dataSource = SpringWebContextUtils.getApplicationContext().getBean(DataSource.class);
             dbTypeEnum = JdbcUtils.getDbType(dataSource.getConnection().getMetaData().getURL());
             return dbTypeEnum;
         } catch (SQLException e) {
@@ -241,7 +241,7 @@ public class CommonUtils {
      * @return
      */
     public static DataSourceProperty getDataSourceProperty(String sourceKey){
-        DynamicDataSourceProperties prop = SpringContextUtils.getApplicationContext().getBean(DynamicDataSourceProperties.class);
+        DynamicDataSourceProperties prop = SpringWebContextUtils.getApplicationContext().getBean(DynamicDataSourceProperties.class);
         Map<String, DataSourceProperty> map = prop.getDatasource();
         DataSourceProperty db = (DataSourceProperty)map.get(sourceKey);
         return db;
@@ -257,7 +257,7 @@ public class CommonUtils {
         if (oConvertUtils.isEmpty(sourceKey)) {
             sourceKey = "master";
         }
-        DynamicDataSourceProperties prop = SpringContextUtils.getApplicationContext().getBean(DynamicDataSourceProperties.class);
+        DynamicDataSourceProperties prop = SpringWebContextUtils.getApplicationContext().getBean(DynamicDataSourceProperties.class);
         Map<String, DataSourceProperty> map = prop.getDatasource();
         DataSourceProperty db = (DataSourceProperty)map.get(sourceKey);
         if(db==null){

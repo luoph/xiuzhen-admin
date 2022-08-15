@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.netty.util.internal.StringUtil;
 import org.jeecg.common.handler.IFillRuleHandler;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.YouBianCodeUtil;
 import org.jeecg.modules.system.entity.SysDepart;
 import org.jeecg.modules.system.service.ISysDepartService;
@@ -21,7 +21,7 @@ public class OrgCodeRule implements IFillRuleHandler {
 
     @Override
     public Object execute(JSONObject params, JSONObject formData) {
-        ISysDepartService sysDepartService = (ISysDepartService) SpringContextUtils.getBean("sysDepartServiceImpl");
+        ISysDepartService sysDepartService = (ISysDepartService) SpringWebContextUtils.getBean("sysDepartServiceImpl");
 
         LambdaQueryWrapper<SysDepart> query = new LambdaQueryWrapper<SysDepart>();
         LambdaQueryWrapper<SysDepart> query1 = new LambdaQueryWrapper<SysDepart>();

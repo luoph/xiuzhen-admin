@@ -16,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author: jeecg-boot
  */
 @Component
-public class SpringContextUtils implements ApplicationContextAware {
+public class SpringWebContextUtils implements ApplicationContextAware {
 
 	/**
 	 * 上下文对象实例
@@ -25,7 +25,7 @@ public class SpringContextUtils implements ApplicationContextAware {
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		SpringContextUtils.applicationContext = applicationContext;
+		SpringWebContextUtils.applicationContext = applicationContext;
 	}
 
 	/**

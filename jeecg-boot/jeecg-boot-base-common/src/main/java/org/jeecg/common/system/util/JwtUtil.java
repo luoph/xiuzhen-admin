@@ -25,7 +25,7 @@ import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jeecg.common.util.DateUtils;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 
 /**
@@ -147,7 +147,7 @@ public class JwtUtil {
 			key = key.substring(2,key.indexOf("}"));
 		}
 		if (oConvertUtils.isNotEmpty(key)) {
-			HttpSession session = SpringContextUtils.getHttpServletRequest().getSession();
+			HttpSession session = SpringWebContextUtils.getHttpServletRequest().getSession();
 			returnValue = (String) session.getAttribute(key);
 		}
 		//结果加上${} 后面的值
@@ -237,7 +237,7 @@ public class JwtUtil {
 			returnValue = sysUser.getRelTenantIds();
             boolean flag = returnValue != null && returnValue.indexOf(SymbolConstant.COMMA) > 0;
             if(oConvertUtils.isEmpty(returnValue) || flag){
-				returnValue = SpringContextUtils.getHttpServletRequest().getHeader(CommonConstant.TENANT_ID);
+				returnValue = SpringWebContextUtils.getHttpServletRequest().getHeader(CommonConstant.TENANT_ID);
 			}
 		}
 		//update-end-author:taoyan date:20210330 for:多租户ID作为系统变量

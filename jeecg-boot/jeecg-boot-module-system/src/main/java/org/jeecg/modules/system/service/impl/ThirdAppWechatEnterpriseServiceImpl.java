@@ -22,7 +22,7 @@ import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.util.PasswordUtil;
 import org.jeecg.common.util.RestUtil;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.config.thirdapp.ThirdAppConfig;
 import org.jeecg.modules.system.entity.*;
@@ -233,7 +233,7 @@ public class ThirdAppWechatEnterpriseServiceImpl implements IThirdAppService {
             syncInfo.addFailInfo("企业微信部门信息获取失败！");
             return syncInfo;
         }
-        String username = JwtUtil.getUserNameByToken(SpringContextUtils.getHttpServletRequest());
+        String username = JwtUtil.getUserNameByToken(SpringWebContextUtils.getHttpServletRequest());
         // 将list转为tree
         List<JwDepartmentTreeVo> departmentTreeList = JwDepartmentTreeVo.listToTree(departments);
         // 递归同步部门

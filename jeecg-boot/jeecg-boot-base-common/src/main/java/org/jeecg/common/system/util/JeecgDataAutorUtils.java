@@ -2,7 +2,7 @@ package org.jeecg.common.system.util;
 
 import org.jeecg.common.system.vo.SysPermissionDataRuleModel;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,7 +52,7 @@ public class JeecgDataAutorUtils {
 	 */
 	@SuppressWarnings("unchecked")
 	public static synchronized List<SysPermissionDataRuleModel> loadDataSearchConditon() {
-		return (List<SysPermissionDataRuleModel>) SpringContextUtils.getHttpServletRequest().getAttribute(MENU_DATA_AUTHOR_RULES);
+		return (List<SysPermissionDataRuleModel>) SpringWebContextUtils.getHttpServletRequest().getAttribute(MENU_DATA_AUTHOR_RULES);
 				
 	}
 
@@ -62,7 +62,7 @@ public class JeecgDataAutorUtils {
 	 * @return
 	 */
 	public static synchronized String loadDataSearchConditonSqlString() {
-		return (String) SpringContextUtils.getHttpServletRequest().getAttribute(MENU_DATA_AUTHOR_RULE_SQL);
+		return (String) SpringWebContextUtils.getHttpServletRequest().getAttribute(MENU_DATA_AUTHOR_RULE_SQL);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class JeecgDataAutorUtils {
 	 * @param userinfo
 	 */
 	public static synchronized void installUserInfo(SysUserCacheInfo userinfo) {
-		SpringContextUtils.getHttpServletRequest().setAttribute(SYS_USER_INFO, userinfo);
+		SpringWebContextUtils.getHttpServletRequest().setAttribute(SYS_USER_INFO, userinfo);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class JeecgDataAutorUtils {
 	 * @return
 	 */
 	public static synchronized SysUserCacheInfo loadUserInfo() {
-		return (SysUserCacheInfo) SpringContextUtils.getHttpServletRequest().getAttribute(SYS_USER_INFO);
+		return (SysUserCacheInfo) SpringWebContextUtils.getHttpServletRequest().getAttribute(SYS_USER_INFO);
 				
 	}
 }

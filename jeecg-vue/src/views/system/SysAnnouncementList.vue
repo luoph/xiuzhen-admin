@@ -112,7 +112,7 @@
 
 <script>
   import SysAnnouncementModal from './modules/SysAnnouncementModal'
-  import {doReleaseData, doReovkeData} from '@/api/api'
+  import {doReleaseData, doRevokeData} from '@/api/api'
   import {getAction} from '@/api/manage'
   import {JeecgListMixin} from '@/mixins/JeecgListMixin'
   import { ACCESS_TOKEN } from '@/store/mutation-types'
@@ -249,7 +249,7 @@
           delete: "/sys/annountCement/delete",
           deleteBatch: "/sys/annountCement/deleteBatch",
           releaseDataUrl: "/sys/annountCement/doReleaseData",
-          reovkeDataUrl: "sys/annountCement/doReovkeData",
+          reovkeDataUrl: "sys/annountCement/doRevokeData",
           exportXlsUrl: "sys/annountCement/exportXls",
           importExcelUrl: "sys/annountCement/importExcel",
         },
@@ -277,7 +277,7 @@
       //执行撤销操作
       reovkeData: function (id) {
         var that = this;
-        doReovkeData({id: id}).then((res) => {
+        doRevokeData({id: id}).then((res) => {
           if (res.success) {
             that.$message.success(res.message);
             that.loadData(1);

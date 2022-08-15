@@ -49,6 +49,7 @@
   }
 </script>
 
+<!-- https://github.com/vueComponent/ant-design-vue-pro/issues/1361-->
 <style lang="less" scoped>
-  @import "index";
+  //@import "index";
 </style>

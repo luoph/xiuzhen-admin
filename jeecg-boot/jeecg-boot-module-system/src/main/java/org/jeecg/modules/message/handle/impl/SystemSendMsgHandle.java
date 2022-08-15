@@ -6,7 +6,7 @@ import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.WebsocketConst;
 import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.api.ISysBaseAPI;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.message.handle.ISendMsgHandle;
 import org.jeecg.modules.message.websocket.WebSocket;
@@ -55,7 +55,7 @@ public class SystemSendMsgHandle implements ISendMsgHandle {
         if(oConvertUtils.isEmpty(esReceiver)){
             throw  new JeecgBootException("被发送人不能为空");
         }
-        ISysBaseAPI sysBaseApi = SpringContextUtils.getBean(ISysBaseAPI.class);
+        ISysBaseAPI sysBaseApi = SpringWebContextUtils.getBean(ISysBaseAPI.class);
         MessageDTO messageDTO = new MessageDTO(FROM_USER,esReceiver,esTitle,esContent);
         sysBaseApi.sendSysAnnouncement(messageDTO);
     }

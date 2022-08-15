@@ -27,7 +27,7 @@ public class FillRuleUtil {
         if (!StringUtils.isEmpty(ruleCode)) {
             try {
                 // 获取 Service
-                ServiceImpl impl = (ServiceImpl) SpringContextUtils.getBean("sysFillRuleServiceImpl");
+                ServiceImpl impl = (ServiceImpl) SpringWebContextUtils.getBean("sysFillRuleServiceImpl");
                 // 根据 ruleCode 查询出实体
                 QueryWrapper queryWrapper = new QueryWrapper();
                 queryWrapper.eq("rule_code", ruleCode);

@@ -3,7 +3,7 @@ package org.jeecg.modules.system.service.impl;
 import java.util.*;
 
 import org.jeecg.common.util.IpUtils;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.system.entity.SysRolePermission;
 import org.jeecg.modules.system.mapper.SysRolePermissionMapper;
@@ -33,7 +33,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 		String ip = "";
 		try {
 			//获取request
-			HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+			HttpServletRequest request = SpringWebContextUtils.getHttpServletRequest();
 			//获取IP地址
 			ip = IpUtils.getIpAddr(request);
 		} catch (Exception e) {
@@ -59,7 +59,7 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 		String ip = "";
 		try {
 			//获取request
-			HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+			HttpServletRequest request = SpringWebContextUtils.getHttpServletRequest();
 			//获取IP地址
 			ip = IpUtils.getIpAddr(request);
 		} catch (Exception e) {

@@ -8,3 +8,6 @@ jeecg-boot-module-system/src/main/java/org/jeecg/config/MybatisPlusConfig.java
 jeecg-boot-module-system/src/main/java/org/jeecg/modules/message/entity/SysMessage.java
 jeecg-boot-module-system/src/main/java/org/jeecg/modules/quartz/controller/QuartzJobController.java
 jeecg-boot-module-system/src/main/java/org/jeecg/modules/system/aspect/AutoLogAspect.java
+jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/RestTemplateConfig.java
+jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/WebMvcConfiguration.java
+jeecg-boot/jeecg-boot-base-common/src/main/java/org/jeecg/config/WebSocketConfig.java

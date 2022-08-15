@@ -6,7 +6,7 @@ import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.jeecg.common.datasource.DataSourceKey;
 import org.jeecg.common.datasource.DataSourceSwitch;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.config.DataSourceConfig;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
@@ -78,7 +78,7 @@ public class DataSourceHelper implements InitializingBean {
         if (dataSource != null) {
             // 修改MyBatis的数据源
             try {
-                SqlSessionFactory sqlSessionFactory = SpringContextUtils.getBean(SqlSessionFactory.class);
+                SqlSessionFactory sqlSessionFactory = SpringWebContextUtils.getBean(SqlSessionFactory.class);
                 Environment environment = sqlSessionFactory.getConfiguration().getEnvironment();
                 Field dataSourceField = environment.getClass().getDeclaredField("dataSource");
                 dataSourceField.setAccessible(true);

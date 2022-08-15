@@ -40,7 +40,7 @@ public class ImportExcelUtil {
     }
 
     public static List<String> importDateSave(List<?> list, Class serviceClass, List<String> errorMessage, String errorFlag)  {
-        IService bean =(IService) SpringContextUtils.getBean(serviceClass);
+        IService bean =(IService) SpringWebContextUtils.getBean(serviceClass);
         for (int i = 0; i < list.size(); i++) {
             try {
                 boolean save = bean.save(list.get(i));
@@ -69,7 +69,7 @@ public class ImportExcelUtil {
     }
 
     public static List<String> importDateSaveOne(Object obj, Class serviceClass,List<String> errorMessage,int i,String errorFlag)  {
-        IService bean =(IService) SpringContextUtils.getBean(serviceClass);
+        IService bean =(IService) SpringWebContextUtils.getBean(serviceClass);
         try {
             boolean save = bean.save(obj);
             if(!save){

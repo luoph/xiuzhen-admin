@@ -26,7 +26,7 @@ import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.util.PasswordUtil;
 import org.jeecg.common.util.RestUtil;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.config.thirdapp.ThirdAppConfig;
 import org.jeecg.config.thirdapp.ThirdAppTypeItemVo;
@@ -207,7 +207,7 @@ public class ThirdAppDingtalkServiceImpl implements IThirdAppService {
         }
         // 获取【钉钉】所有的部门
         List<Department> departments = JdtDepartmentAPI.listAll(accessToken);
-        String username = JwtUtil.getUserNameByToken(SpringContextUtils.getHttpServletRequest());
+        String username = JwtUtil.getUserNameByToken(SpringWebContextUtils.getHttpServletRequest());
         List<JdtDepartmentTreeVo> departmentTreeList = JdtDepartmentTreeVo.listToTree(departments);
         // 递归同步部门
         this.syncDepartmentToLocalRecursion(departmentTreeList, null, username, syncInfo, accessToken);

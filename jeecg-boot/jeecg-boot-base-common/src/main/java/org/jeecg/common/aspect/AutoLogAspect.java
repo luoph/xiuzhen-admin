@@ -18,7 +18,7 @@ import org.jeecg.common.constant.enums.OperateTypeEnum;
 import org.jeecg.modules.base.service.BaseCommonService;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.IpUtils;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
@@ -94,7 +94,7 @@ public class AutoLogAspect {
         }
 
         //获取request
-        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
+        HttpServletRequest request = SpringWebContextUtils.getHttpServletRequest();
         //请求的参数
         dto.setRequestParam(getReqestParams(request,joinPoint));
         //设置IP地址

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.constant.SymbolConstant;
 import org.jeecg.common.exception.JeecgBootException;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.config.JeecgBaseConfig;
 import org.springframework.util.DigestUtils;
@@ -48,7 +48,7 @@ public class SignUtil {
         String paramsJsonStr = JSONObject.toJSONString(params);
         log.info("Param paramsJsonStr : {}", paramsJsonStr);
         //设置签名秘钥
-        JeecgBaseConfig jeecgBaseConfig = SpringContextUtils.getBean(JeecgBaseConfig.class);
+        JeecgBaseConfig jeecgBaseConfig = SpringWebContextUtils.getBean(JeecgBaseConfig.class);
         String signatureSecret = jeecgBaseConfig.getSignatureSecret();
         String curlyBracket = SymbolConstant.DOLLAR + SymbolConstant.LEFT_CURLY_BRACKET;
         if(oConvertUtils.isEmpty(signatureSecret) || signatureSecret.contains(curlyBracket)){

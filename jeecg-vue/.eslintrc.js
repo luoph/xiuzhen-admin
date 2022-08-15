@@ -50,6 +50,6 @@ module.exports = {
         "vue/no-use-v-if-with-v-for": "off",
         "vue/order-in-components": "off",
         "vue/singleline-html-element-content-newline": "off",
-        indent: ["error", 4, { SwitchCase: 1 }]
+        indent: ["off", 2, { SwitchCase: 1 }]
     }
 };

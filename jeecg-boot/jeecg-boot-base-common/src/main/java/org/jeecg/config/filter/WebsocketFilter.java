@@ -3,7 +3,7 @@ package org.jeecg.config.filter;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.CommonAPI;
 import org.jeecg.common.util.RedisUtil;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.TokenUtils;
 
 import javax.servlet.*;
@@ -28,10 +28,10 @@ public class WebsocketFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         if (commonApi == null) {
-            commonApi = SpringContextUtils.getBean(CommonAPI.class);
+            commonApi = SpringWebContextUtils.getBean(CommonAPI.class);
         }
         if (redisUtil == null) {
-            redisUtil = SpringContextUtils.getBean(RedisUtil.class);
+            redisUtil = SpringWebContextUtils.getBean(RedisUtil.class);
         }
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         String token = request.getHeader(TOKEN_KEY);

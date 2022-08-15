@@ -14,7 +14,7 @@ import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.RedisUtil;
-import org.jeecg.common.util.SpringContextUtils;
+import org.jeecg.common.util.SpringWebContextUtils;
 import org.jeecg.common.util.TokenUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.config.mybatis.TenantContext;
@@ -93,7 +93,7 @@ public class ShiroRealm extends AuthorizingRealm {
         log.debug("===============Shiro身份认证开始============doGetAuthenticationInfo==========");
         String token = (String) auth.getCredentials();
         if (token == null) {
-            HttpServletRequest req = SpringContextUtils.getHttpServletRequest();
+            HttpServletRequest req = SpringWebContextUtils.getHttpServletRequest();
             log.info("————————身份认证失败——————————IP地址:  "+ oConvertUtils.getIpAddrByRequest(req) +"，URL:"+req.getRequestURI());
             throw new AuthenticationException("token为空!");
         }
@@ -102,7 +102,7 @@ public class ShiroRealm extends AuthorizingRealm {
         try {
             loginUser = this.checkUserTokenIsEffect(token);
         } catch (AuthenticationException e) {
-            JwtUtil.responseError(SpringContextUtils.getHttpServletResponse(),401,e.getMessage());
+            JwtUtil.responseError(SpringWebContextUtils.getHttpServletResponse(),401,e.getMessage());
             e.printStackTrace();
             return null;
         }
