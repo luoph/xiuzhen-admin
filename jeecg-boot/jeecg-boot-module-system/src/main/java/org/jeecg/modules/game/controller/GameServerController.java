@@ -80,7 +80,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     /**
      * 分页列表查询
      *
-     * @param gameServer
+     * @param entity
      * @param pageNo
      * @param pageSize
      * @param req
@@ -89,16 +89,13 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @AutoLog(value = "游戏服配置-列表查询")
     @ApiOperation(value = "游戏服配置-列表查询", notes = "游戏服配置-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameServer gameServer,
+    public Result<?> queryPageList(GameServer entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameServer> queryWrapper = QueryGenerator.initQueryWrapper(gameServer, req.getParameterMap());
-        Page<GameServer> page = new Page<>(pageNo, pageSize);
-
         List<GameServerTag> serverTags = serverTagService.selectTags();
         Map<Integer, GameServerTag> tagMap = serverTags.stream().collect(Collectors.toMap(GameServerTag::getId, Function.identity(), (key1, key2) -> key2));
-        IPage<GameServer> pageList = serverService.page(page, queryWrapper);
+        IPage<GameServer> pageList = pageList(entity, pageNo, pageSize, req);
         for (GameServer record : pageList.getRecords()) {
             // 设置标签
             if (record.getTagId() != null) {
@@ -145,28 +142,28 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     /**
      * 添加
      *
-     * @param gameServer
+     * @param entity
      * @return
      */
     @AutoLog(value = "游戏服配置-添加")
     @ApiOperation(value = "游戏服配置-添加", notes = "游戏服配置-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameServer gameServer) {
-        serverService.save(gameServer);
+    public Result<?> add(@RequestBody GameServer entity) {
+        serverService.save(entity);
         return Result.ok("添加成功！");
     }
 
     /**
      * 编辑
      *
-     * @param gameServer
+     * @param entity
      * @return
      */
     @AutoLog(value = "游戏服配置-编辑")
     @ApiOperation(value = "游戏服配置-编辑", notes = "游戏服配置-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameServer gameServer) {
-        serverService.updateById(gameServer);
+    public Result<?> edit(@RequestBody GameServer entity) {
+        serverService.updateById(entity);
         return Result.ok("编辑成功!");
     }
 

@@ -42,14 +42,18 @@ public class DataSourceHelper implements InitializingBean {
         return REFERENCE.get();
     }
 
-    private GameServer getGameServerById(Integer serverId) {
-        return gameServerMapper.selectById(serverId);
+    private GameServer selectGameServerById(Integer serverId) {
+        GameServer gameServer = gameServerMapper.selectById(serverId);
+        if (gameServer != null && gameServer.getOutdated() == 1 && gameServer.getPid() != null) {
+            return gameServerMapper.selectById(gameServer.getPid());
+        }
+        return gameServer;
     }
 
     private void loadDataSourceByServerId(Integer serverId) {
         DataSource dataSource = DataSourceConfig.getDataSource(DataSourceKey.SERVER_DATA_SOURCE_KEY + serverId);
         if (dataSource == null) {
-            GameServer gameServer = getGameServerById(serverId);
+            GameServer gameServer = selectGameServerById(serverId);
             if (gameServer != null) {
                 String jdbcUrl = String.format(JDBC_URL_PATTERN, gameServer.getDbHost(), gameServer.getDbPort(), gameServer.getDbName());
                 dataSource = DataSourceConfig.createDataSource(jdbcUrl, gameServer.getDbUser(), gameServer.getDbPassword());

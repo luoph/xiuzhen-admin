@@ -1,13 +1,20 @@
 package org.jeecg.common.system.base.controller;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.desensitization.annotation.SensitiveField;
+import org.jeecg.common.desensitization.enums.SensitiveEnum;
+import org.jeecg.common.desensitization.util.SensitiveInfoUtil;
+import org.jeecg.common.system.annotation.HiddenField;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
@@ -29,6 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,7 +50,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class JeecgController<T, S extends IService<T>> {
-    /**issues/2933 JeecgController注入service时改用protected修饰，能避免重复引用service*/
+    /**
+     * issues/2933 JeecgController注入service时改用protected修饰，能避免重复引用service
+     */
     @Autowired
     protected S service;
 
@@ -51,14 +63,47 @@ public class JeecgController<T, S extends IService<T>> {
         return QueryGenerator.initQueryWrapper(entity, request.getParameterMap());
     }
 
+    public IPage<T> pageList(T entity, Integer pageNo, Integer pageSize, HttpServletRequest request) {
+        QueryWrapper<T> queryWrapper = prepareQuery(entity, request);
+        Page<T> page = new Page<>(pageNo, pageSize);
+        return pageList(page, queryWrapper);
+    }
+
     protected IPage<T> pageList(Page<T> page, QueryWrapper<T> queryWrapper) {
-        return service.page(page, queryWrapper);
+        Page<T> pageList = service.page(page, queryWrapper);
+        return hideField(pageList);
+    }
+
+    private IPage<T> hideField(Page<T> pageList) {
+        List<T> records = pageList.getRecords();
+        if (CollUtil.isNotEmpty(records)) {
+            records.forEach(this::hideField);
+        }
+        return pageList;
+    }
+
+    private void hideField(T obj) {
+        // 判断是不是一个对象
+        Field[] fields = ReflectUtil.getFields(obj.getClass());
+        for (Field field : fields) {
+            HiddenField annotation = field.getAnnotation(HiddenField.class);
+            if (annotation != null) {
+                Method setMethod = ReflectUtil.getMethodByNameIgnoreCase(obj.getClass(), "set" + field.getName());
+                try {
+                    if (setMethod != null) {
+                        setMethod.invoke(obj, (Object) null);
+                    } else {
+                        field.set(obj, null);
+                    }
+                } catch (IllegalAccessException | InvocationTargetException e) {
+                    log.error("hideField error, obj:" + obj, e);
+                }
+            }
+        }
     }
 
     public Result<?> queryPageList(T entity, Integer pageNo, Integer pageSize, HttpServletRequest request) {
-        QueryWrapper<T> queryWrapper = prepareQuery(entity, request);
-        Page<T> page = new Page<>(pageNo, pageSize);
-        return Result.ok(pageList(page, queryWrapper));
+        return Result.ok(pageList(entity, pageNo, pageSize, request));
     }
 
     /**
@@ -76,7 +121,11 @@ public class JeecgController<T, S extends IService<T>> {
     }
 
     protected T getById(Serializable id) {
-        return service.getById(id);
+        T obj = service.getById(id);
+        if (obj != null) {
+            hideField(obj);
+        }
+        return obj;
     }
 
     public Result<?> queryById(@RequestParam(name = "id") Serializable id) {
@@ -97,49 +146,54 @@ public class JeecgController<T, S extends IService<T>> {
 
         // Step.2 获取导出数据
         List<T> pageList = service.list(queryWrapper);
+        if (CollUtil.isNotEmpty(pageList)) {
+            pageList.forEach(this::hideField);
+        }
         return ExcelUtils.exportXls(sysUser.getRealname(), pageList, request.getParameter("selections"), clazz, title);
     }
 
     /**
      * 根据每页sheet数量导出多sheet
      *
-     * @param request
-     * @param object 实体类
-     * @param clazz 实体类class
-     * @param title 标题
+     * @param request      请求
+     * @param object       实体类
+     * @param clazz        实体类class
+     * @param title        标题
      * @param exportFields 导出字段自定义
-     * @param pageNum 每个sheet的数据条数
-     * @param request
+     * @param pageNum      每个sheet的数据条数
      */
-    protected ModelAndView exportXlsSheet(HttpServletRequest request, T object, Class<T> clazz, String title,String exportFields,Integer pageNum) {
+    protected ModelAndView exportXlsSheet(HttpServletRequest request, T object, Class<T> clazz, String title, String exportFields, Integer pageNum) {
         // Step.1 组装查询条件
         QueryWrapper<T> queryWrapper = QueryGenerator.initQueryWrapper(object, request.getParameterMap());
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         // Step.2 计算分页sheet数据
         double total = service.count();
-        int count = (int)Math.ceil(total/pageNum);
+        int count = (int) Math.ceil(total / pageNum);
         //update-begin-author:liusq---date:20220629--for: 多sheet导出根据选择导出写法调整 ---
         // Step.3  过滤选中数据
         String selections = request.getParameter("selections");
         if (oConvertUtils.isNotEmpty(selections)) {
             List<String> selectionList = Arrays.asList(selections.split(","));
-            queryWrapper.in("id",selectionList);
+            queryWrapper.in("id", selectionList);
         }
         //update-end-author:liusq---date:20220629--for: 多sheet导出根据选择导出写法调整 ---
         // Step.4 多sheet处理
         List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
-        for (int i = 1; i <=count ; i++) {
+        for (int i = 1; i <= count; i++) {
             Page<T> page = new Page<T>(i, pageNum);
             IPage<T> pageList = service.page(page, queryWrapper);
             List<T> exportList = pageList.getRecords();
+            if (CollUtil.isNotEmpty(exportList)) {
+                exportList.forEach(this::hideField);
+            }
             Map<String, Object> map = new HashMap<>(5);
-            ExportParams  exportParams=new ExportParams(title + "报表", "导出人:" + sysUser.getRealname(), title+i,upLoadPath);
+            ExportParams exportParams = new ExportParams(title + "报表", "导出人:" + sysUser.getRealname(), title + i, upLoadPath);
             exportParams.setType(ExcelType.XSSF);
             //map.put("title",exportParams);
             //表格Title
-            map.put(NormalExcelConstants.PARAMS,exportParams);
+            map.put(NormalExcelConstants.PARAMS, exportParams);
             //表格对应实体
-            map.put(NormalExcelConstants.CLASS,clazz);
+            map.put(NormalExcelConstants.CLASS, clazz);
             //数据集合
             map.put(NormalExcelConstants.DATA_LIST, exportList);
             listMap.add(map);
@@ -155,12 +209,10 @@ public class JeecgController<T, S extends IService<T>> {
 
     /**
      * 根据权限导出excel，传入导出字段参数
-     *
-     * @param request
      */
-    protected ModelAndView exportXls(HttpServletRequest request, T object, Class<T> clazz, String title,String exportFields) {
-        ModelAndView mv = this.exportXls(request,object,clazz,title);
-        mv.addObject(NormalExcelConstants.EXPORT_FIELDS,exportFields);
+    protected ModelAndView exportXls(HttpServletRequest request, T object, Class<T> clazz, String title, String exportFields) {
+        ModelAndView mv = this.exportXls(request, object, clazz, title);
+        mv.addObject(NormalExcelConstants.EXPORT_FIELDS, exportFields);
         return mv;
     }
 

@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
+import org.jeecg.common.system.annotation.HiddenField;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -113,28 +114,24 @@ public class GameServer extends BaseEntity {
     @ApiModelProperty(value = "客户端最大版本号")
     private java.lang.Integer maxVersion;
     /**
-     * 数据库路径
+     * 数据库主机
      */
-    @Excel(name = "数据库路径", width = 15)
-    @ApiModelProperty(value = "数据库路径")
+    @HiddenField
     private java.lang.String dbHost;
     /**
      * 数据库端口
      */
-    @Excel(name = "数据库端口", width = 15)
-    @ApiModelProperty(value = "数据库端口")
+    @HiddenField
     private java.lang.Integer dbPort;
     /**
      * 数据库用户名
      */
-    @Excel(name = "数据库用户名", width = 15)
-    @ApiModelProperty(value = "数据库用户名")
+    @HiddenField
     private java.lang.String dbUser;
     /**
      * 数据库密码
      */
-    @Excel(name = "数据库密码", width = 15)
-    @ApiModelProperty(value = "数据库密码")
+    @HiddenField
     private java.lang.String dbPassword;
     /**
      * 数据库名
