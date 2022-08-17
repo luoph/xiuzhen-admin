@@ -2,6 +2,7 @@ package org.jeecg.common.system.base.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.desensitization.annotation.SensitiveField;
 import org.jeecg.common.desensitization.enums.SensitiveEnum;
 import org.jeecg.common.desensitization.util.SensitiveInfoUtil;
@@ -27,7 +29,7 @@ import org.jeecgframework.poi.excel.entity.enmus.ExcelType;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -111,9 +113,9 @@ public class JeecgController<T, S extends IService<T>> {
      *
      * @return
      */
-    private String getId(T item) {
+    private String getId(T entity) {
         try {
-            return PropertyUtils.getProperty(item, "id").toString();
+            return PropertyUtils.getProperty(entity, "id").toString();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -134,6 +136,50 @@ public class JeecgController<T, S extends IService<T>> {
             return Result.error("未找到数据库记录");
         }
         return Result.ok(entity);
+    }
+
+    /**
+     * 添加
+     *
+     * @param entity 数据实体
+     * @return {@linkplain Result}
+     */
+    public Result<?> add(@RequestBody T entity) {
+        service.save(entity);
+        return Result.ok("添加成功！");
+    }
+
+    /**
+     * 编辑
+     *
+     * @param entity 数据实体
+     * @return {@linkplain Result}
+     */
+    public Result<?> edit(@RequestBody T entity) {
+        service.updateById(entity);
+        return Result.ok("编辑成功!");
+    }
+
+    /**
+     * 通过id删除
+     *
+     * @param id 实体id
+     * @return {@linkplain Result}
+     */
+    public Result<?> delete(@RequestParam(name = "id") String id) {
+        service.removeById(id);
+        return Result.ok("删除成功!");
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids id列表，使用','分割的字符串
+     * @return {@linkplain Result}
+     */
+    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
+        service.removeByIds(StringUtils.split2Set(ids));
+        return Result.ok("批量删除成功！");
     }
 
     /**
