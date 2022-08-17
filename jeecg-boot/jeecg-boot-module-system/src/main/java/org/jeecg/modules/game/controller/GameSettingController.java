@@ -1,24 +1,16 @@
 package org.jeecg.modules.game.controller;
 
-import cn.youai.server.springboot.component.OkHttpHelper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameSetting;
 import org.jeecg.modules.game.service.IGameSettingService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * @author jeecg-boot
@@ -31,54 +23,46 @@ import java.util.Arrays;
 @RequestMapping("game/gameSetting")
 public class GameSettingController extends JeecgController<GameSetting, IGameSettingService> {
 
-    @Autowired
-    private IGameSettingService gameSettingService;
-
     /**
      * 分页列表查询
      *
-     * @param gameSetting 数据实体
-     * @param pageNo      页码
-     * @param pageSize    分页大小
-     * @param req         请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏设置-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameSetting gameSetting,
+    public Result<?> queryPageList(GameSetting entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameSetting> queryWrapper = QueryGenerator.initQueryWrapper(gameSetting, req.getParameterMap());
-        Page<GameSetting> page = new Page<>(pageNo, pageSize);
-        IPage<GameSetting> pageList = gameSettingService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param gameSetting 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏设置-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameSetting gameSetting) {
-        gameSettingService.save(gameSetting);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody GameSetting entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param gameSetting 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏设置-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameSetting gameSetting) {
-        gameSettingService.updateById(gameSetting);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody GameSetting entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -90,8 +74,7 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @AutoLog(value = "游戏设置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameSettingService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -103,8 +86,7 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @AutoLog(value = "游戏设置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameSettingService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -116,22 +98,18 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @AutoLog(value = "游戏设置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameSetting gameSetting = gameSettingService.getById(id);
-        if (gameSetting == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(gameSetting);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request     请求
-     * @param gameSetting 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameSetting gameSetting) {
-        return super.exportXls(request, gameSetting, GameSetting.class, "游戏设置");
+    public ModelAndView exportXls(HttpServletRequest request, GameSetting entity) {
+        return super.exportXls(request, entity, GameSetting.class, "游戏设置");
     }
 
     /**

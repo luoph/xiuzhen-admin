@@ -31,22 +31,19 @@ import java.util.List;
 public class DailyGiftPackageBuyController extends JeecgController<DailyGiftPackageBuy, IDailyGiftPackageBuyService> {
 
     @Autowired
-    private IDailyGiftPackageBuyService dailyGiftPackageBuyService;
-
-    @Autowired
     private IDailyGiftPackageBuyVOService dailyGiftPackageBuyVOService;
 
     /**
      * 分页列表查询
      *
-     * @param dailyGiftPackageBuy 数据实体
-     * @param pageNo              页码
-     * @param pageSize            分页大小
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
     @AutoLog(value = "daily_gift_package_buy-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(DailyGiftPackageBuy dailyGiftPackageBuy,
+    public Result<?> queryPageList(DailyGiftPackageBuy entity,
                                    @RequestParam(name = "createTimeBegin", defaultValue = "") String createTimeBegin,
                                    @RequestParam(name = "createTimeEnd", defaultValue = "") String createTimeEnd,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,

@@ -3,15 +3,11 @@ package org.jeecg.modules.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.Response;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameForbidden;
 import org.jeecg.modules.game.entity.GameForbiddenRecord;
 import org.jeecg.modules.game.service.IGameForbiddenRecordService;
@@ -42,9 +38,6 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     private IGameServerService gameServerService;
 
     @Autowired
-    private IGameForbiddenService forbiddenService;
-
-    @Autowired
     private IGameForbiddenRecordService forbiddenRecordService;
 
     @Value("${app.forbidden-update-url:/forbidden/update}")
@@ -65,10 +58,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameForbidden> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
-        Page<GameForbidden> page = new Page<>(pageNo, pageSize);
-        IPage<GameForbidden> pageList = forbiddenService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
@@ -84,14 +74,13 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
                 || entity.getBanKey() == null || entity.getBanValue() == null) {
             return Result.error("添加失败！");
         }
-
         GameForbidden existOne = selectExistOne(entity);
         if (existOne == null) {
-            forbiddenService.save(entity);
+            service.save(entity);
             addForbiddenRecord("add", entity);
         } else {
             existOne.copy(entity);
-            forbiddenService.updateById(existOne);
+            service.updateById(existOne);
             addForbiddenRecord("update", existOne);
         }
 
@@ -108,10 +97,9 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "game_forbidden-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameForbidden entity) {
-        forbiddenService.updateById(entity);
         addForbiddenRecord("update", entity);
         notifyForbiddenUpdate(entity);
-        return Result.ok("编辑成功!");
+        return super.edit(entity);
     }
 
     /**
@@ -123,8 +111,8 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "game_forbidden-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        GameForbidden entity = forbiddenService.getById(id);
-        forbiddenService.removeById(id);
+        GameForbidden entity = service.getById(id);
+        service.removeById(id);
         addForbiddenRecord("delete", entity);
         notifyForbiddenUpdate(entity);
         return Result.ok("删除成功!");
@@ -141,8 +129,8 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
         Wrapper<GameForbidden> query = Wrappers.<GameForbidden>lambdaQuery().in(GameForbidden::getId, idList);
-        List<GameForbidden> list = forbiddenService.list(query);
-        this.forbiddenService.removeByIds(idList);
+        List<GameForbidden> list = service.list(query);
+        this.service.removeByIds(idList);
         addForbiddenRecordList("delete", list);
         notifyForbiddenUpdate(list);
         return Result.ok("批量删除成功！");
@@ -157,11 +145,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @AutoLog(value = "game_forbidden-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameForbidden gameForbidden = forbiddenService.getById(id);
-        if (gameForbidden == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(gameForbidden);
+        return super.queryById(id);
     }
 
     /**
@@ -228,7 +212,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
                 .eq(GameForbidden::getType, entity.getType())
                 .eq(GameForbidden::getBanKey, entity.getBanKey())
                 .eq(GameForbidden::getBanValue, entity.getBanValue());
-        return forbiddenService.getOne(query);
+        return service.getOne(query);
     }
 
     private void addForbiddenRecord(String operation, GameForbidden entity) {

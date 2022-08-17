@@ -31,9 +31,6 @@ import java.util.List;
 public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOrderGiftService> {
 
     @Autowired
-    private IPayOrderGiftService payOrderGiftService;
-
-    @Autowired
     private IPayOrderGiftVOService payOrderGiftVOService;
 
     @Autowired
@@ -42,14 +39,14 @@ public class PayOrderGiftController extends JeecgController<PayOrderGift, IPayOr
     /**
      * 分页列表查询
      *
-     * @param payOrderGift 数据实体
-     * @param pageNo       页码
-     * @param pageSize     分页大小
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
     @AutoLog(value = "直充道具-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(PayOrderGift payOrderGift,
+    public Result<?> queryPageList(PayOrderGift entity,
                                    @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
                                    @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,

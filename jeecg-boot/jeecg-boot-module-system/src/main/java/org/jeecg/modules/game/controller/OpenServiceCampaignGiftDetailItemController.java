@@ -39,9 +39,6 @@ import java.util.List;
 public class OpenServiceCampaignGiftDetailItemController extends JeecgController<OpenServiceCampaignGiftDetailItem, IOpenServiceCampaignGiftDetailItemService> {
 
     @Autowired
-    private IOpenServiceCampaignGiftDetailItemService openServiceCampaignGiftDetailItemService;
-
-    @Autowired
     private IOpenServiceCampaignGiftDetailService openServiceCampaignGiftDetailService;
 
     @Value("${app.folder.temp}")
@@ -50,49 +47,47 @@ public class OpenServiceCampaignGiftDetailItemController extends JeecgController
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignGiftDetailItem 数据实体
-     * @param pageNo                            页码
-     * @param pageSize                          分页大小
-     * @param req                               请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服开服礼包-礼包明细-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignGiftDetailItem openServiceCampaignGiftDetailItem,
+    public Result<?> queryPageList(OpenServiceCampaignGiftDetailItem entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignGiftDetailItem> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignGiftDetailItem, req.getParameterMap());
+        QueryWrapper<OpenServiceCampaignGiftDetailItem> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
         queryWrapper.orderByAsc("sort");
         Page<OpenServiceCampaignGiftDetailItem> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignGiftDetailItem> pageList = openServiceCampaignGiftDetailItemService.page(page, queryWrapper);
+        IPage<OpenServiceCampaignGiftDetailItem> pageList = pageList(page, queryWrapper);
         return Result.ok(pageList);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaignGiftDetailItem 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服开服礼包-礼包明细-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignGiftDetailItem openServiceCampaignGiftDetailItem) {
-        openServiceCampaignGiftDetailItemService.save(openServiceCampaignGiftDetailItem);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignGiftDetailItem entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaignGiftDetailItem 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服开服礼包-礼包明细-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignGiftDetailItem openServiceCampaignGiftDetailItem) {
-        openServiceCampaignGiftDetailItemService.updateById(openServiceCampaignGiftDetailItem);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignGiftDetailItem entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -104,8 +99,7 @@ public class OpenServiceCampaignGiftDetailItemController extends JeecgController
     @AutoLog(value = "开服活动-开服开服礼包-礼包明细-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignGiftDetailItemService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -117,8 +111,7 @@ public class OpenServiceCampaignGiftDetailItemController extends JeecgController
     @AutoLog(value = "开服活动-开服开服礼包-礼包明细-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignGiftDetailItemService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -130,22 +123,18 @@ public class OpenServiceCampaignGiftDetailItemController extends JeecgController
     @AutoLog(value = "开服活动-开服开服礼包-礼包明细-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignGiftDetailItem openServiceCampaignGiftDetailItem = openServiceCampaignGiftDetailItemService.getById(id);
-        if (openServiceCampaignGiftDetailItem == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignGiftDetailItem);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                           请求
-     * @param openServiceCampaignGiftDetailItem 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignGiftDetailItem openServiceCampaignGiftDetailItem) {
-        return super.exportXls(request, openServiceCampaignGiftDetailItem, OpenServiceCampaignGiftDetailItem.class, "开服活动-开服开服礼包-礼包明细");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignGiftDetailItem entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignGiftDetailItem.class, "开服活动-开服开服礼包-礼包明细");
     }
 
     /**
@@ -179,7 +168,7 @@ public class OpenServiceCampaignGiftDetailItemController extends JeecgController
         }
 
         if (CollUtil.isNotEmpty(entityList)) {
-            openServiceCampaignGiftDetailItemService.saveBatch(entityList);
+            service.saveBatch(entityList);
         }
         return Result.ok(vo);
     }

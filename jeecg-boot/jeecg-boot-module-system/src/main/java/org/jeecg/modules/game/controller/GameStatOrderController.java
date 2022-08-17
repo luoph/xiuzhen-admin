@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.controller;
 
-import cn.youai.server.utils.DateUtils;
 import cn.youai.basics.utils.NumberUtils;
+import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -12,7 +12,6 @@ import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.game.entity.GameStatOrder;
 import org.jeecg.modules.game.service.IGameStatOrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,31 +33,28 @@ import java.util.List;
 @RequestMapping("game/gameStatOrder")
 public class GameStatOrderController extends JeecgController<GameStatOrder, IGameStatOrderService> {
 
-    @Autowired
-    private IGameStatOrderService gameStatOrderService;
-
     /**
      * 分页列表查询
      *
-     * @param gameStatOrder 数据实体
-     * @param pageNo        页码
-     * @param pageSize      分页大小
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
     @AutoLog(value = "game_stat_order-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameStatOrder gameStatOrder, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        if (NumberUtils.isZero(gameStatOrder.getServerId())) {
+    public Result<?> queryPageList(GameStatOrder entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        if (NumberUtils.isZero(entity.getServerId())) {
             return Result.error("请选择服务器！");
         }
 
-        if (gameStatOrder.getStartDate() == null || gameStatOrder.getEndDate() == null) {
+        if (entity.getStartDate() == null || entity.getEndDate() == null) {
             Date now = DateUtils.now();
-            gameStatOrder.setEndDate(now);
-            gameStatOrder.setStartDate(DateUtils.addDays(now, -gameStatOrder.getDaysType()));
+            entity.setEndDate(now);
+            entity.setStartDate(DateUtils.addDays(now, -entity.getDaysType()));
         }
 
-        IPage<GameStatOrder> pageList = gameStatOrderService.queryGameStatOrderList(gameStatOrder, pageNo, pageSize);
+        IPage<GameStatOrder> pageList = service.queryGameStatOrderList(entity, pageNo, pageSize);
         return Result.ok(pageList);
     }
 
@@ -80,7 +76,7 @@ public class GameStatOrderController extends JeecgController<GameStatOrder, IGam
             gameStatOrder.setStartDate(DateUtils.addDays(now, -gameStatOrder.getDaysType()));
         }
 
-        IPage<GameStatOrder> pageList = gameStatOrderService.queryGameStatOrderList(gameStatOrder, 1, Integer.MAX_VALUE);
+        IPage<GameStatOrder> pageList = service.queryGameStatOrderList(gameStatOrder, 1, Integer.MAX_VALUE);
         if (pageList != null) {
             List<GameStatOrder> list = pageList.getRecords();
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();

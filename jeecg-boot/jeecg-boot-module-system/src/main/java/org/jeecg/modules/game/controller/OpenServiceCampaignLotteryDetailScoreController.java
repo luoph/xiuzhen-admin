@@ -2,14 +2,10 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.entity.ImportTextVO;
 import org.jeecg.modules.game.entity.OpenServiceCampaignLotteryDetail;
@@ -24,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,9 +34,6 @@ import java.util.List;
 public class OpenServiceCampaignLotteryDetailScoreController extends JeecgController<OpenServiceCampaignLotteryDetailScore, IOpenServiceCampaignLotteryDetailScoreService> {
 
     @Autowired
-    private IOpenServiceCampaignLotteryDetailScoreService openServiceCampaignLotteryDetailScoreService;
-
-    @Autowired
     private IOpenServiceCampaignLotteryDetailService openServiceCampaignLotteryDetailService;
 
     @Value("${app.folder.temp}")
@@ -50,48 +42,43 @@ public class OpenServiceCampaignLotteryDetailScoreController extends JeecgContro
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignLotteryDetailScore 数据实体
-     * @param pageNo                                页码
-     * @param pageSize                              分页大小
-     * @param req                                   请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服夺宝积分-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignLotteryDetailScore openServiceCampaignLotteryDetailScore,
+    public Result<?> queryPageList(OpenServiceCampaignLotteryDetailScore entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignLotteryDetailScore> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignLotteryDetailScore, req.getParameterMap());
-        Page<OpenServiceCampaignLotteryDetailScore> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignLotteryDetailScore> pageList = openServiceCampaignLotteryDetailScoreService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaignLotteryDetailScore 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服夺宝积分-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignLotteryDetailScore openServiceCampaignLotteryDetailScore) {
-        openServiceCampaignLotteryDetailScoreService.save(openServiceCampaignLotteryDetailScore);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignLotteryDetailScore entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaignLotteryDetailScore 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服夺宝积分-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignLotteryDetailScore openServiceCampaignLotteryDetailScore) {
-        openServiceCampaignLotteryDetailScoreService.updateById(openServiceCampaignLotteryDetailScore);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignLotteryDetailScore entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -103,8 +90,7 @@ public class OpenServiceCampaignLotteryDetailScoreController extends JeecgContro
     @AutoLog(value = "开服夺宝积分-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignLotteryDetailScoreService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -116,8 +102,7 @@ public class OpenServiceCampaignLotteryDetailScoreController extends JeecgContro
     @AutoLog(value = "开服夺宝积分-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignLotteryDetailScoreService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -129,22 +114,18 @@ public class OpenServiceCampaignLotteryDetailScoreController extends JeecgContro
     @AutoLog(value = "开服夺宝积分-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignLotteryDetailScore openServiceCampaignLotteryDetailScore = openServiceCampaignLotteryDetailScoreService.getById(id);
-        if (openServiceCampaignLotteryDetailScore == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignLotteryDetailScore);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                               请求
-     * @param openServiceCampaignLotteryDetailScore 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignLotteryDetailScore openServiceCampaignLotteryDetailScore) {
-        return super.exportXls(request, openServiceCampaignLotteryDetailScore, OpenServiceCampaignLotteryDetailScore.class, "开服夺宝积分");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignLotteryDetailScore entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignLotteryDetailScore.class, "开服夺宝积分");
     }
 
     /**
@@ -178,7 +159,7 @@ public class OpenServiceCampaignLotteryDetailScoreController extends JeecgContro
         }
 
         if (CollUtil.isNotEmpty(entityList)) {
-            openServiceCampaignLotteryDetailScoreService.saveBatch(entityList);
+            service.saveBatch(entityList);
         }
         return Result.ok(vo);
     }

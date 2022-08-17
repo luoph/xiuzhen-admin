@@ -41,8 +41,6 @@ import java.util.List;
 public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLog, IGamePlayerItemLogService> {
 
     @Autowired
-    private IGamePlayerItemLogService playerItemLogService;
-    @Autowired
     private IGameServerService gameServerService;
     @Autowired
     private BackpackLogService backpackLogService;
@@ -50,17 +48,17 @@ public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLo
     /**
      * 分页列表查询
      *
-     * @param playerItemLog 数据实体
-     * @param req           请求
+     * @param entity 数据实体
+     * @param req    请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "game_player_item_log-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GamePlayerItemLog playerItemLog,
+    public Result<?> queryPageList(GamePlayerItemLog entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
                                    HttpServletRequest req) {
-        return Result.ok(playerItemLogService.queryPlayerItemLogPageList(playerItemLog, pageNo, pageSize));
+        return Result.ok(service.queryPlayerItemLogPageList(entity, pageNo, pageSize));
     }
 
     private LambdaQueryWrapper<GamePlayerItemLog> getQueryWrapper(GamePlayerItemLog playerItemLog, String itemIdStr) {
@@ -143,7 +141,7 @@ public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLo
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
 
-        List<GamePlayerItemLog> playerItemLogs = playerItemLogService.queryCurrencyPayIncomeList(rangeDateBegin, rangeDateEnd, days, serverId, itemId);
+        List<GamePlayerItemLog> playerItemLogs = service.queryCurrencyPayIncomeList(rangeDateBegin, rangeDateEnd, days, serverId, itemId);
         page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
         return Result.ok(page);
     }
@@ -179,7 +177,7 @@ public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLo
             rangeDateBegin = rangeDateBegin + " 00:00:00";
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
-        List<GamePlayerItemLog> playerItemLogs = playerItemLogService.queryWayDistributeList(rangeDateBegin, rangeDateEnd, days, serverId, itemId, type);
+        List<GamePlayerItemLog> playerItemLogs = service.queryWayDistributeList(rangeDateBegin, rangeDateEnd, days, serverId, itemId, type);
         page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
         return Result.ok(page);
     }
@@ -214,7 +212,7 @@ public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLo
             rangeDateBegin = rangeDateBegin + " 00:00:00";
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
-        List<GamePlayerItemLog> playerItemLogs = playerItemLogService.queryItemBillList(rangeDateBegin, rangeDateEnd, way, serverId, itemId, type, playerId);
+        List<GamePlayerItemLog> playerItemLogs = service.queryItemBillList(rangeDateBegin, rangeDateEnd, way, serverId, itemId, type, playerId);
         page.setRecords(playerItemLogs).setTotal(playerItemLogs.size());
         return Result.ok(page);
     }
@@ -231,7 +229,7 @@ public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLo
             DataSourceHelper.useServerDatabase(gamePlayerItemLog.getServerId());
             LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
 
-            List<GamePlayerItemLog> list = playerItemLogService.list(queryWrapper);
+            List<GamePlayerItemLog> list = service.list(queryWrapper);
             return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), GamePlayerItemLog.class, "玩家道具产销日志");
         } finally {
             DataSourceHelper.useDefaultDatabase();
@@ -253,7 +251,7 @@ public class OldPlayerItemLogController extends JeecgController<GamePlayerItemLo
         }
 
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        List<GamePlayerItemLog> list = playerItemLogService.queryPlayerItemLogList(playerItemLog);
+        List<GamePlayerItemLog> list = service.queryPlayerItemLogList(playerItemLog);
         return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), GamePlayerItemLog.class, "玩家道具日志");
     }
 

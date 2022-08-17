@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -41,29 +40,24 @@ import java.util.stream.Collectors;
 public class PayOrderController extends JeecgController<GameOrder, IPayOrderService> {
 
     @Autowired
-    private IPayOrderService payOrderService;
-
-    @Autowired
     private IGamePlayerService playerService;
 
     /**
      * 分页列表查询
      *
-     * @param gameOrder 数据实体
-     * @param pageNo    页码
-     * @param pageSize  分页大小
-     * @param req       请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "充值订单-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameOrder gameOrder,
+    public Result<?> queryPageList(GameOrder entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameOrder> queryWrapper = QueryGenerator.initQueryWrapper(gameOrder, req.getParameterMap());
-        Page<GameOrder> page = new Page<>(pageNo, pageSize);
-        IPage<GameOrder> pageList = payOrderService.page(page, queryWrapper);
+        IPage<GameOrder> pageList = pageList(entity, pageNo, pageSize, req);
         if (pageList.getRecords() != null && pageList.getRecords().size() > 0) {
             HashSet<Long> playerIds = new HashSet<>(pageList.getRecords().size());
             pageList.getRecords().forEach(e -> playerIds.add(e.getPlayerId()));
@@ -83,19 +77,6 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
         return Result.ok(pageList);
     }
 
-//    /**
-//     * 添加
-//     *
-//     * @param payOrder 数据实体
-//     * @return {@linkplain Result}
-//     */
-//    @AutoLog(value = "充值订单-添加")
-//    @PostMapping(value = "/add")
-//    public Result<?> add(@RequestBody PayOrder payOrder) {
-//        payOrderService.save(payOrder);
-//        return Result.ok("添加成功！");
-//    }
-
     /**
      * 通过id查询
      *
@@ -105,22 +86,40 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
     @AutoLog(value = "充值订单-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameOrder gameOrder = payOrderService.getById(id);
-        if (gameOrder == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(gameOrder);
+        return super.queryById(id);
+    }
+
+    /**
+     * 添加
+     *
+     * @param entity 数据实体
+     * @return {@linkplain Result}
+     */
+    @AutoLog(value = "充值订单-添加")
+    @PostMapping(value = "/add")
+    public Result<?> add(@RequestBody GameOrder entity) {
+        return Result.ok("不支持！");
+    }
+
+    @Override
+    public Result<?> delete(String id) {
+        return Result.ok("不支持！");
+    }
+
+    @Override
+    public Result<?> deleteBatch(String ids) {
+        return Result.ok("不支持！");
     }
 
     /**
      * 导出excel
      *
-     * @param request   请求
-     * @param gameOrder 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameOrder gameOrder) {
-        return super.exportXls(request, gameOrder, GameOrder.class, "充值订单");
+    public ModelAndView exportXls(HttpServletRequest request, GameOrder entity) {
+        return super.exportXls(request, entity, GameOrder.class, "充值订单");
     }
 
     @RequestMapping("download")
@@ -136,7 +135,7 @@ public class PayOrderController extends JeecgController<GameOrder, IPayOrderServ
             data.put(entry.getKey(), a);
         }
         QueryWrapper<GameOrder> queryWrapper = QueryGenerator.initQueryWrapper(gameOrder, data);
-        List<GameOrder> gameOrderList = payOrderService.list(queryWrapper);
+        List<GameOrder> gameOrderList = service.list(queryWrapper);
 
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");

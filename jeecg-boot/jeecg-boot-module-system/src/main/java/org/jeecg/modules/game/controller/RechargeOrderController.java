@@ -10,14 +10,13 @@ import org.jeecg.modules.game.entity.GameChalcedonyOrder;
 import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IRechargeOrderService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -39,10 +38,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
      */
     private static final int[] GOODS_TYPE = {0, 1, 2, 3, 4,};
 
-    @Resource
-    private IRechargeOrderService rechargeOrderService;
-
-    @Resource
+    @Autowired
     private IGameChannelService gameChannelService;
 
 
@@ -77,7 +73,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[0]);
+        List<RechargeOrder> rechargeOrders = service.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[0]);
         page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
         return Result.ok(page);
     }
@@ -114,7 +110,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[3]);
+        List<RechargeOrder> rechargeOrders = service.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[3]);
         page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
         return Result.ok(page);
     }
@@ -151,7 +147,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[4]);
+        List<RechargeOrder> rechargeOrders = service.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[4]);
         page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
         return Result.ok(page);
     }
@@ -189,7 +185,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[1]);
+        List<RechargeOrder> rechargeOrders = service.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[1]);
         page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
         return Result.ok(page);
     }
@@ -226,7 +222,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<RechargeOrder> rechargeOrders = rechargeOrderService.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[2]);
+        List<RechargeOrder> rechargeOrders = service.queryGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, GOODS_TYPE[2]);
         page.setRecords(rechargeOrders).setTotal(rechargeOrders.size());
         return Result.ok(page);
     }
@@ -263,7 +259,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameChalcedonyOrder> gameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, DAILY_GIFT.getType().toString());
+        List<GameChalcedonyOrder> gameChalcedonyOrders = service.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, DAILY_GIFT.getType().toString());
         page.setRecords(gameChalcedonyOrders).setTotal(gameChalcedonyOrders.size());
         return Result.ok(page);
     }
@@ -300,7 +296,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameChalcedonyOrder> gameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, OPEN_SERVICE_GIFT.getType().toString());
+        List<GameChalcedonyOrder> gameChalcedonyOrders = service.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, OPEN_SERVICE_GIFT.getType().toString());
         page.setRecords(gameChalcedonyOrders).setTotal(gameChalcedonyOrders.size());
         return Result.ok(page);
     }
@@ -336,7 +332,7 @@ public class RechargeOrderController extends JeecgController<RechargeOrder, IRec
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameChalcedonyOrder> gameChalcedonyOrders = rechargeOrderService.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, ZERO_BUY.getType().toString());
+        List<GameChalcedonyOrder> gameChalcedonyOrders = service.queryExpendGiftList(rangeDateBegin, rangeDateEnd, days, serverId, channel, ZERO_BUY.getType().toString());
         page.setRecords(gameChalcedonyOrders).setTotal(gameChalcedonyOrders.size());
         return Result.ok(page);
     }

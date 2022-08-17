@@ -1,22 +1,16 @@
 package org.jeecg.modules.game.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.OpenServiceCampaignRankType;
 import org.jeecg.modules.game.service.IOpenServiceCampaignRankTypeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * @author jeecg-boot
@@ -29,54 +23,46 @@ import java.util.Arrays;
 @RequestMapping("game/openServiceCampaignRankType")
 public class OpenServiceCampaignRankTypeController extends JeecgController<OpenServiceCampaignRankType, IOpenServiceCampaignRankTypeService> {
 
-    @Autowired
-    private IOpenServiceCampaignRankTypeService openServiceCampaignRankTypeService;
-
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignRankType 数据实体
-     * @param pageNo                      页码
-     * @param pageSize                    分页大小
-     * @param req                         请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-类型库-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignRankType openServiceCampaignRankType,
+    public Result<?> queryPageList(OpenServiceCampaignRankType entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignRankType> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignRankType, req.getParameterMap());
-        Page<OpenServiceCampaignRankType> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignRankType> pageList = openServiceCampaignRankTypeService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaignRankType 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-类型库-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignRankType openServiceCampaignRankType) {
-        openServiceCampaignRankTypeService.save(openServiceCampaignRankType);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignRankType entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaignRankType 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-类型库-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignRankType openServiceCampaignRankType) {
-        openServiceCampaignRankTypeService.updateById(openServiceCampaignRankType);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignRankType entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -88,8 +74,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignRankTypeService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -101,8 +86,7 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignRankTypeService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -114,22 +98,18 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
     @AutoLog(value = "开服活动-开服排行-类型库-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignRankType openServiceCampaignRankType = openServiceCampaignRankTypeService.getById(id);
-        if (openServiceCampaignRankType == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignRankType);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                     请求
-     * @param openServiceCampaignRankType 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankType openServiceCampaignRankType) {
-        return super.exportXls(request, openServiceCampaignRankType, OpenServiceCampaignRankType.class, "开服活动-开服排行-类型库");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankType entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignRankType.class, "开服活动-开服排行-类型库");
     }
 
     /**

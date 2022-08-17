@@ -39,9 +39,6 @@ import java.util.List;
 public class OpenServiceCampaignLotteryDetailController extends JeecgController<OpenServiceCampaignLotteryDetail, IOpenServiceCampaignLotteryDetailService> {
 
     @Autowired
-    private IOpenServiceCampaignLotteryDetailService openServiceCampaignLotteryDetailService;
-
-    @Autowired
     private IOpenServiceCampaignTypeService openServiceCampaignTypeService;
 
     @Value("${app.folder.temp}")
@@ -50,48 +47,43 @@ public class OpenServiceCampaignLotteryDetailController extends JeecgController<
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignLotteryDetail 数据实体
-     * @param pageNo                           页码
-     * @param pageSize                         分页大小
-     * @param req                              请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服夺宝详情-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignLotteryDetail openServiceCampaignLotteryDetail,
+    public Result<?> queryPageList(OpenServiceCampaignLotteryDetail entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignLotteryDetail> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignLotteryDetail, req.getParameterMap());
-        Page<OpenServiceCampaignLotteryDetail> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignLotteryDetail> pageList = openServiceCampaignLotteryDetailService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaignLotteryDetail 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服夺宝详情-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignLotteryDetail openServiceCampaignLotteryDetail) {
-        openServiceCampaignLotteryDetailService.save(openServiceCampaignLotteryDetail);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignLotteryDetail entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaignLotteryDetail 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服夺宝详情-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignLotteryDetail openServiceCampaignLotteryDetail) {
-        openServiceCampaignLotteryDetailService.updateById(openServiceCampaignLotteryDetail);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignLotteryDetail entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -103,8 +95,7 @@ public class OpenServiceCampaignLotteryDetailController extends JeecgController<
     @AutoLog(value = "开服夺宝详情-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignLotteryDetailService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -116,8 +107,7 @@ public class OpenServiceCampaignLotteryDetailController extends JeecgController<
     @AutoLog(value = "开服夺宝详情-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignLotteryDetailService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -129,22 +119,18 @@ public class OpenServiceCampaignLotteryDetailController extends JeecgController<
     @AutoLog(value = "开服夺宝详情-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignLotteryDetail openServiceCampaignLotteryDetail = openServiceCampaignLotteryDetailService.getById(id);
-        if (openServiceCampaignLotteryDetail == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignLotteryDetail);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                          请求
-     * @param openServiceCampaignLotteryDetail 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignLotteryDetail openServiceCampaignLotteryDetail) {
-        return super.exportXls(request, openServiceCampaignLotteryDetail, OpenServiceCampaignLotteryDetail.class, "开服夺宝详情");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignLotteryDetail entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignLotteryDetail.class, "开服夺宝详情");
     }
 
     /**
@@ -177,7 +163,7 @@ public class OpenServiceCampaignLotteryDetailController extends JeecgController<
         }
 
         if (CollUtil.isNotEmpty(entityList)) {
-            openServiceCampaignLotteryDetailService.saveBatch(entityList);
+            service.saveBatch(entityList);
         }
         return Result.ok(vo);
     }

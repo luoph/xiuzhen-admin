@@ -7,7 +7,6 @@ import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.constant.CampaignStatus;
 import org.jeecg.modules.game.constant.SwitchStatus;
 import org.jeecg.modules.game.entity.*;
@@ -42,9 +40,6 @@ import java.util.stream.Collectors;
 public class GameCampaignController extends JeecgController<GameCampaign, IGameCampaignService> {
 
     @Autowired
-    private IGameCampaignService campaignService;
-
-    @Autowired
     private IGameCampaignTypeService campaignTypeService;
 
     @Autowired
@@ -62,22 +57,19 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     /**
      * 分页列表查询
      *
-     * @param gameCampaign 数据实体
-     * @param pageNo       页码
-     * @param pageSize     分页大小
-     * @param req          请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "活动配置-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameCampaign gameCampaign,
+    public Result<?> queryPageList(GameCampaign entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameCampaign> queryWrapper = QueryGenerator.initQueryWrapper(gameCampaign, req.getParameterMap());
-        Page<GameCampaign> page = new Page<>(pageNo, pageSize);
-        IPage<GameCampaign> pageList = campaignService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     @GetMapping(value = "/serverList")
@@ -93,7 +85,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         Date now = DateUtils.now();
 
         GameCampaignType campaignType = campaignTypeService.getById(campaignServer.getTypeId());
-        IPage<GameCampaignServer> pageList = campaignService.serverList(page, campaignServer.getCampaignId(),
+        IPage<GameCampaignServer> pageList = service.serverList(page, campaignServer.getCampaignId(),
                 campaignServer.getTypeId(), campaignServer.getServer());
         for (GameCampaignServer record : pageList.getRecords()) {
             if (record.getStatus() == SwitchStatus.OFF.getValue()) {
@@ -154,14 +146,13 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     /**
      * 添加
      *
-     * @param gameCampaign 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "活动配置-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameCampaign gameCampaign) {
-        campaignService.save(gameCampaign);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody GameCampaign entity) {
+        return super.add(entity);
     }
 
     /**
@@ -173,7 +164,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
-        GameCampaign dbEntity = campaignService.getById(gameCampaign.getId());
+        GameCampaign dbEntity = service.getById(gameCampaign.getId());
         Set<String> dbServerIds = StringUtils.split2Set(dbEntity.getServerIds());
         Set<String> newServerIds = StringUtils.split2Set(gameCampaign.getServerIds());
 
@@ -193,7 +184,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             }
         }
 
-        campaignService.updateById(gameCampaign);
+        service.updateById(gameCampaign);
 
         // 批量关闭
         batchSwitchOff(gameCampaign.getId(), removeList);
@@ -224,7 +215,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-同步到区服")
     @GetMapping(value = "/sync")
     public Result<?> sync(@RequestParam(name = "id") String id) {
-        GameCampaign gameCampaign = campaignService.getById(id);
+        GameCampaign gameCampaign = service.getById(id);
         if (gameCampaign == null) {
             return Result.error("找不到对应活动配置!");
         }
@@ -252,8 +243,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        campaignService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -265,8 +255,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.campaignService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -278,7 +267,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "活动配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameCampaign gameCampaign = campaignService.getById(id);
+        GameCampaign gameCampaign = service.getById(id);
         if (gameCampaign == null) {
             return Result.error("未找到对应数据");
         }
@@ -370,12 +359,12 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "节日活动配置-复制")
     @GetMapping(value = "/duplicate")
     public Result<?> duplicate(@RequestParam(name = "id") String id) {
-        GameCampaign gameCampaign = campaignService.getById(id);
+        GameCampaign gameCampaign = service.getById(id);
         if (gameCampaign == null) {
             return Result.error("找不到对应活动配置!");
         }
         GameCampaign copy = new GameCampaign(gameCampaign);
-        if (campaignService.save(copy)) {
+        if (service.save(copy)) {
             List<GameCampaignType> campaignTypeList = campaignTypeService.list(Wrappers.<GameCampaignType>lambdaQuery()
                     .eq(GameCampaignType::getCampaignId, gameCampaign.getId()).orderByAsc(GameCampaignType::getSort));
             for (GameCampaignType gameCampaignType : campaignTypeList) {
@@ -389,7 +378,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @GetMapping(value = "/removeCompletedServer")
     public Result<?> removeCompletedServer(@RequestParam(name = "id", defaultValue = "0") String id) {
         long campaignId = Long.parseLong(id);
-        GameCampaign gameCampaign = campaignService.getById(campaignId);
+        GameCampaign gameCampaign = service.getById(campaignId);
         if (null == gameCampaign) {
             return Result.error("主活动为空");
         }
@@ -409,7 +398,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         Set<String> removeServerIds = new HashSet<>(serverIds.size());
         Page<GameServer> page = new Page<>(1, Integer.MAX_VALUE);
         for (GameCampaignType campaignType : campaignTypeList) {
-            IPage<GameCampaignServer> pageList = campaignService.serverList(page, campaignType.getCampaignId(), campaignType.getId(), null);
+            IPage<GameCampaignServer> pageList = service.serverList(page, campaignType.getCampaignId(), campaignType.getId(), null);
             for (GameCampaignServer record : pageList.getRecords()) {
                 String strServerId = String.valueOf(record.getServerId());
                 if (reserveServerIds.contains(strServerId)) {
@@ -430,7 +419,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         }
 
         if (serverIds.removeIf(removeServerIds::contains)) {
-            campaignService.updateById(new GameCampaign().setId(campaignId).setServerIds(StrUtil.join(",", serverIds)));
+            service.updateById(new GameCampaign().setId(campaignId).setServerIds(StrUtil.join(",", serverIds)));
         }
         campaignSupportService.remove(Wrappers.<GameCampaignSupport>lambdaQuery().eq(GameCampaignSupport::getCampaignId, campaignId).in(GameCampaignSupport::getServerId, removeServerIds));
         return Result.ok("已移除" + removeServerIds.size() + "个区服");

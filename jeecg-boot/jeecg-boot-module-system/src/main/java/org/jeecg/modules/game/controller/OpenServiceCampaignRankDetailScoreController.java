@@ -2,14 +2,10 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.entity.ImportTextVO;
 import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetail;
@@ -24,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,9 +34,6 @@ import java.util.List;
 public class OpenServiceCampaignRankDetailScoreController extends JeecgController<OpenServiceCampaignRankDetailScore, IOpenServiceCampaignRankDetailScoreService> {
 
     @Autowired
-    private IOpenServiceCampaignRankDetailScoreService openServiceCampaignRankDetailScoreService;
-
-    @Autowired
     private IOpenServiceCampaignRankDetailService openServiceCampaignRankDetailService;
 
     @Value("${app.folder.temp}")
@@ -50,22 +42,19 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignRankDetailScore 数据实体
-     * @param pageNo                             页码
-     * @param pageSize                           分页大小
-     * @param req                                请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignRankDetailScore openServiceCampaignRankDetailScore,
+    public Result<?> queryPageList(OpenServiceCampaignRankDetailScore entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignRankDetailScore> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignRankDetailScore, req.getParameterMap());
-        Page<OpenServiceCampaignRankDetailScore> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignRankDetailScore> pageList = openServiceCampaignRankDetailScoreService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
@@ -84,14 +73,13 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
     /**
      * 编辑
      *
-     * @param openServiceCampaignRankDetailScore 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignRankDetailScore openServiceCampaignRankDetailScore) {
-        openServiceCampaignRankDetailScoreService.updateById(openServiceCampaignRankDetailScore);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignRankDetailScore entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -103,8 +91,7 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignRankDetailScoreService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -116,8 +103,7 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignRankDetailScoreService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -129,22 +115,18 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignRankDetailScore openServiceCampaignRankDetailScore = openServiceCampaignRankDetailScoreService.getById(id);
-        if (openServiceCampaignRankDetailScore == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignRankDetailScore);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                            请求
-     * @param openServiceCampaignRankDetailScore 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankDetailScore openServiceCampaignRankDetailScore) {
-        return super.exportXls(request, openServiceCampaignRankDetailScore, OpenServiceCampaignRankDetailScore.class, "开服活动-开服排行-活动明细-消耗道具分数");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankDetailScore entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignRankDetailScore.class, "开服活动-开服排行-活动明细-消耗道具分数");
     }
 
     /**
@@ -178,7 +160,7 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
         }
 
         if (CollUtil.isNotEmpty(entityList)) {
-            openServiceCampaignRankDetailScoreService.saveBatch(entityList);
+            service.saveBatch(entityList);
         }
         return Result.ok(vo);
     }

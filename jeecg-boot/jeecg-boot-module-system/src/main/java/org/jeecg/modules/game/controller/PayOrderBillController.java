@@ -42,22 +42,19 @@ import java.util.List;
 public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOrderBillService> {
 
     @Autowired
-    private IPayOrderBillService payOrderBillService;
-
-    @Autowired
     private IGameChannelService gameChannelService;
 
     /**
      * 分页列表查询
      *
-     * @param payOrderBill 数据实体
-     * @param pageNo       页码
-     * @param pageSize     分页大小
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
     @AutoLog(value = "服务器流水-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(PayOrderBill payOrderBill,
+    public Result<?> queryPageList(PayOrderBill entity,
                                    @RequestParam(name = "payTimeBegin", defaultValue = "") String payTimeBegin,
                                    @RequestParam(name = "payTimeEnd", defaultValue = "") String payTimeEnd,
                                    @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
@@ -71,7 +68,7 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
             return Result.ok(pageVo);
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        BigDecimal billSum = payOrderBillService.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
+        BigDecimal billSum = service.queryBillSumByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
         // 查不到流水总额,设置流水总额为0
         if (billSum == null) {
             billSum = new BigDecimal(0);
@@ -113,33 +110,34 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         }
         //日期空校验
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days) {
+            if (0 == days) {
                 return Result.error("请选择日期！");
             } else {
-                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);;
+                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
+                ;
                 rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
-                days = 0 ;
+                days = 0;
             }
-        }else{
-            days = 0 ;
+        } else {
+            days = 0;
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
 
-        List<PayOrderBill> list = payOrderBillService.queryForList(payRank, rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<PayOrderBill> list = service.queryForList(payRank, rangeDateBegin, rangeDateEnd, days, serverId, channel);
         Integer sumPayuser = list.stream().mapToInt(payorderBill -> payorderBill.getPayNumSum()).sum();
         Double sumPayuserPayAmount = list.stream().mapToDouble(payorderBill -> payorderBill.getPayAmountSum().doubleValue()).sum();
         for (PayOrderBill payOrderBill : list) {
-            if(0 == sumPayuser) {
+            if (0 == sumPayuser) {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
-            }else {
+            } else {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(BigDecimalUtil.divide(payOrderBill.getPayNumSum() * 100, sumPayuser, 2));//a÷b);
             }
-            if(0 == sumPayuserPayAmount) {
+            if (0 == sumPayuserPayAmount) {
                 //设置 金额占比
                 payOrderBill.setPayAmountSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
-            }else {
+            } else {
                 //设置 金额占比
                 payOrderBill.setPayAmountSumRate(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue() * 100, sumPayuserPayAmount, 2));
             }
@@ -168,7 +166,7 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         List<PayOrderBill> list = new ArrayList<>();
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String channel = gameChannelService.queryChannelNameById(channelId);
-        PayOrderBill payOrderBill = payOrderBillService.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
+        PayOrderBill payOrderBill = service.queryPayGradeByDateRange(rangeDateBegin, rangeDateEnd, payRank, days, serverId, channel);
         payOrderBill.setPayRank(payRank);
         list.add(payOrderBill);
         return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PayOrderBill.class, "付费结构");
@@ -176,14 +174,16 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
 
     @RequestMapping(value = "/download")
     public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws Exception {
-        String rangeDateBegin = null == jsonObject.getString("rangeDateBegin") ? "":jsonObject.getString("rangeDateBegin");;
-        String rangeDateEnd = null == jsonObject.getString("rangeDateEnd") ? "":jsonObject.getString("rangeDateEnd");;
-        String payRank = null == jsonObject.getString("payRank") ? "":jsonObject.getString("payRank");
-        Integer days =  null == jsonObject.getString("days") ? 0:Integer.parseInt(jsonObject.getString("days"));
-        Integer serverId =  null == jsonObject.getString("serverId") ? 0:Integer.parseInt(jsonObject.getString("serverId"));
-        Integer channelId =  null == jsonObject.getString("channelId") ? 0:Integer.parseInt(jsonObject.getString("channelId"));
-        Integer pageNo =  null == jsonObject.getString("pageNo") ? 1:Integer.parseInt(jsonObject.getString("pageNo"));
-        Integer pageSize  =  null == jsonObject.getString("pageSize") ? 20:Integer.parseInt(jsonObject.getString("pageSize"));
+        String rangeDateBegin = null == jsonObject.getString("rangeDateBegin") ? "" : jsonObject.getString("rangeDateBegin");
+        ;
+        String rangeDateEnd = null == jsonObject.getString("rangeDateEnd") ? "" : jsonObject.getString("rangeDateEnd");
+        ;
+        String payRank = null == jsonObject.getString("payRank") ? "" : jsonObject.getString("payRank");
+        Integer days = null == jsonObject.getString("days") ? 0 : Integer.parseInt(jsonObject.getString("days"));
+        Integer serverId = null == jsonObject.getString("serverId") ? 0 : Integer.parseInt(jsonObject.getString("serverId"));
+        Integer channelId = null == jsonObject.getString("channelId") ? 0 : Integer.parseInt(jsonObject.getString("channelId"));
+        Integer pageNo = null == jsonObject.getString("pageNo") ? 1 : Integer.parseInt(jsonObject.getString("pageNo"));
+        Integer pageSize = null == jsonObject.getString("pageSize") ? 20 : Integer.parseInt(jsonObject.getString("pageSize"));
 
         // 没有传入查询参数返回空的数据
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && StringUtils.isEmpty(payRank)
@@ -192,33 +192,34 @@ public class PayOrderBillController extends JeecgController<PayOrderBill, IPayOr
         }
         //日期空校验
         if (StringUtils.isEmpty(rangeDateBegin) || StringUtils.isEmpty(rangeDateEnd)) {
-            if(0 == days) {
+            if (0 == days) {
                 log.error("请选择日期！");
             } else {
-                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);;
+                rangeDateEnd = DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN);
+                ;
                 rangeDateBegin = DateUtils.formatDate(DateUtils.addDays(new Date(), days * (-1) + 1), DatePattern.NORM_DATE_PATTERN);
-                days = 0 ;
+                days = 0;
             }
-        }else{
-            days = 0 ;
+        } else {
+            days = 0;
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
 
-        List<PayOrderBill> list = payOrderBillService.queryForList(payRank, rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<PayOrderBill> list = service.queryForList(payRank, rangeDateBegin, rangeDateEnd, days, serverId, channel);
         Integer sumPayuser = list.stream().mapToInt(payorderBill -> payorderBill.getPayNumSum()).sum();
         Double sumPayuserPayAmount = list.stream().mapToDouble(payorderBill -> payorderBill.getPayAmountSum().doubleValue()).sum();
         for (PayOrderBill payOrderBill : list) {
-            if(0 == sumPayuser) {
+            if (0 == sumPayuser) {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
-            }else {
+            } else {
                 //设置人数占比
                 payOrderBill.setPayNumSumRate(BigDecimalUtil.divide(payOrderBill.getPayNumSum() * 100, sumPayuser, 2));//a÷b);
             }
-            if(0 == sumPayuserPayAmount) {
+            if (0 == sumPayuserPayAmount) {
                 //设置 金额占比
                 payOrderBill.setPayAmountSumRate(new BigDecimal("0.00").setScale(2, BigDecimal.ROUND_HALF_UP));
-            }else {
+            } else {
                 //设置 金额占比
                 payOrderBill.setPayAmountSumRate(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue() * 100, sumPayuserPayAmount, 2));
             }

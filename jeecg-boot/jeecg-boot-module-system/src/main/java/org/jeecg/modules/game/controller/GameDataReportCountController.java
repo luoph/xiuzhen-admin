@@ -34,22 +34,19 @@ import java.util.List;
 public class GameDataReportCountController extends JeecgController<GameDataReportCount, IGameDataReportCountService> {
 
     @Autowired
-    private IGameDataReportCountService gameDataReportCountService;
-
-    @Autowired
     private IGameChannelService gameChannelService;
 
     /**
      * 分页列表查询
      *
-     * @param gameDataReportCount 数据实体
-     * @param pageNo              页码
-     * @param pageSize            分页大小
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
     @AutoLog(value = "数据报表-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameDataReportCount gameDataReportCount,
+    public Result<?> queryPageList(GameDataReportCount entity,
                                    @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                    @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
                                    @RequestParam(name = "days", defaultValue = "0") int days,
@@ -69,7 +66,7 @@ public class GameDataReportCountController extends JeecgController<GameDataRepor
             rangeDateEnd = rangeDateEnd + " 23:59:59";
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameDataReportCount> gameDataReportCountList = gameDataReportCountService.queryDataReportByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<GameDataReportCount> gameDataReportCountList = service.queryDataReportByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
         page.setRecords(gameDataReportCountList).setTotal(gameDataReportCountList.size());
         return Result.ok(page);
     }
@@ -87,7 +84,7 @@ public class GameDataReportCountController extends JeecgController<GameDataRepor
         // 获取导出数据
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameDataReportCount> gameDataReportCountList = gameDataReportCountService.queryDataReportByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<GameDataReportCount> gameDataReportCountList = service.queryDataReportByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
         return ExcelUtils.exportXls(sysUser.getRealname(), gameDataReportCountList, request.getParameter("selections"), GameDataReportCount.class, "数据报表");
     }
 

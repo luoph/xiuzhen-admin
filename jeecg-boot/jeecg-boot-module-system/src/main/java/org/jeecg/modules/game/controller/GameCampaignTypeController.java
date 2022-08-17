@@ -1,16 +1,12 @@
 package org.jeecg.modules.game.controller;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.constant.CampaignFestivalType;
 import org.jeecg.modules.game.entity.*;
@@ -26,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -40,9 +35,6 @@ import java.util.List;
 @RestController
 @RequestMapping("game/gameCampaignType")
 public class GameCampaignTypeController extends JeecgController<GameCampaignType, IGameCampaignTypeService> {
-
-    @Autowired
-    private IGameCampaignTypeService gameCampaignTypeService;
 
     @Autowired
     private IGameCampaignService gameCampaignService;
@@ -61,7 +53,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     /**
      * 分页列表查询
      *
-     * @param gameCampaignType 数据实体
+     * @param entity 数据实体
      * @param pageNo           页码
      * @param pageSize         分页大小
      * @param req              请求
@@ -69,44 +61,39 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
      */
     @AutoLog(value = "活动类型配置-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameCampaignType gameCampaignType,
+    public Result<?> queryPageList(GameCampaignType entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameCampaignType> queryWrapper = QueryGenerator.initQueryWrapper(gameCampaignType, req.getParameterMap());
-        Page<GameCampaignType> page = new Page<>(pageNo, pageSize);
-        IPage<GameCampaignType> pageList = gameCampaignTypeService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param gameCampaignType 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "活动类型配置-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameCampaignType gameCampaignType) {
-        String eggsIntegralGoods = gameCampaignType.getEggsIntegralGoods();
-        if (gameCampaignType.getType() == CampaignFestivalType.THROWING_EGGS.getValue() && StringUtils.isBlank(eggsIntegralGoods)) {
+    public Result<?> add(@RequestBody GameCampaignType entity) {
+        String eggsIntegralGoods = entity.getEggsIntegralGoods();
+        if (entity.getType() == CampaignFestivalType.THROWING_EGGS.getValue() && StringUtils.isBlank(eggsIntegralGoods)) {
             return Result.error("积分商品丢失!");
         }
-        gameCampaignTypeService.save(gameCampaignType);
-        return Result.ok("添加成功！");
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param gameCampaignType 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "活动类型配置-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameCampaignType gameCampaignType) {
-        gameCampaignTypeService.updateById(gameCampaignType);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody GameCampaignType entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -118,8 +105,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     @AutoLog(value = "活动类型配置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameCampaignTypeService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -131,8 +117,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     @AutoLog(value = "活动类型配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameCampaignTypeService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -144,11 +129,11 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     @AutoLog(value = "活动类型配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameCampaignType record = gameCampaignTypeService.getById(id);
+        GameCampaignType record = service.getById(id);
         if (record == null) {
             return Result.error("未找到对应数据");
         }
-        gameCampaignTypeService.fillTabDetail(record, true);
+        service.fillTabDetail(record, true);
         return Result.ok(record);
     }
 
@@ -192,7 +177,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
                 .eq(GameCampaignType::getCampaignId, campaignId)
                 .orderByAsc(GameCampaignType::getSort);
 
-        List<GameCampaignType> typeList = gameCampaignTypeService.list(query);
+        List<GameCampaignType> typeList = service.list(query);
         for (GameCampaignType campaignType : typeList) {
             CampaignFestivalType festivalType = CampaignFestivalType.valueOf(campaignType.getType());
             if (festivalType == null) {

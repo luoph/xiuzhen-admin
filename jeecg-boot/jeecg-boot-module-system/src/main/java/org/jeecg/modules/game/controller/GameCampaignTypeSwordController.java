@@ -2,20 +2,14 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import freemarker.template.utility.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.entity.GameCampaignType;
 import org.jeecg.modules.game.entity.GameCampaignTypeSword;
 import org.jeecg.modules.game.entity.ImportTextVO;
-import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetailRanking;
 import org.jeecg.modules.game.service.IGameCampaignTypeService;
 import org.jeecg.modules.game.service.IGameCampaignTypeSwordService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,9 +34,6 @@ import java.util.List;
 public class GameCampaignTypeSwordController extends JeecgController<GameCampaignTypeSword, IGameCampaignTypeSwordService> {
 
     @Autowired
-    private IGameCampaignTypeSwordService gameCampaignTypeSwordService;
-
-    @Autowired
     private IGameCampaignTypeService gameCampaignTypeService;
 
     @Value("${app.folder.temp}")
@@ -52,48 +42,43 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     /**
      * 分页列表查询
      *
-     * @param gameCampaignTypeSword 数据实体
-     * @param pageNo                页码
-     * @param pageSize              分页大小
-     * @param req                   请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "game_campaign_type_sword-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameCampaignTypeSword gameCampaignTypeSword,
+    public Result<?> queryPageList(GameCampaignTypeSword entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameCampaignTypeSword> queryWrapper = QueryGenerator.initQueryWrapper(gameCampaignTypeSword, req.getParameterMap());
-        Page<GameCampaignTypeSword> page = new Page<>(pageNo, pageSize);
-        IPage<GameCampaignTypeSword> pageList = gameCampaignTypeSwordService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param gameCampaignTypeSword 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "game_campaign_type_sword-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameCampaignTypeSword gameCampaignTypeSword) {
-        gameCampaignTypeSwordService.save(gameCampaignTypeSword);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody GameCampaignTypeSword entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param gameCampaignTypeSword 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "game_campaign_type_sword-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameCampaignTypeSword gameCampaignTypeSword) {
-        gameCampaignTypeSwordService.updateById(gameCampaignTypeSword);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody GameCampaignTypeSword entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -105,8 +90,7 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     @AutoLog(value = "game_campaign_type_sword-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameCampaignTypeSwordService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -118,8 +102,7 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     @AutoLog(value = "game_campaign_type_sword-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameCampaignTypeSwordService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -131,22 +114,18 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     @AutoLog(value = "game_campaign_type_sword-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameCampaignTypeSword gameCampaignTypeSword = gameCampaignTypeSwordService.getById(id);
-        if (gameCampaignTypeSword == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(gameCampaignTypeSword);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request               请求
-     * @param gameCampaignTypeSword 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSword gameCampaignTypeSword) {
-        return super.exportXls(request, gameCampaignTypeSword, GameCampaignTypeSword.class, "game_campaign_type_sword");
+    public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSword entity) {
+        return super.exportXls(request, entity, GameCampaignTypeSword.class, "game_campaign_type_sword");
     }
 
     /**
@@ -178,7 +157,7 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
                 typeSword.setTypeId(campaignType.getId());
                 typeSword.setCreateTime(DateUtils.now());
             }
-            gameCampaignTypeSwordService.saveBatch(swordList);
+            service.saveBatch(swordList);
         }
         return Result.ok(vo);
     }

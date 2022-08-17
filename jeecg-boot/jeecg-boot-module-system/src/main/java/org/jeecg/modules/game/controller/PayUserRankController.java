@@ -34,9 +34,6 @@ import java.util.List;
 public class PayUserRankController extends JeecgController<PayUserRank, IPayUserRankService> {
 
     @Autowired
-    private IPayUserRankService payUserRankService;
-
-    @Autowired
     private IGameChannelService gameChannelService;
 
     /**
@@ -60,7 +57,7 @@ public class PayUserRankController extends JeecgController<PayUserRank, IPayUser
             return Result.ok(page);
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<PayUserRank> payUserRankList = payUserRankService.queryUserRankByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
+        List<PayUserRank> payUserRankList = service.queryUserRankByDateRange(payTimeBegin, payTimeEnd, serverId, channel);
         page.setRecords(payUserRankList).setTotal(payUserRankList.size());
         return Result.ok(page);
     }
@@ -88,7 +85,7 @@ public class PayUserRankController extends JeecgController<PayUserRank, IPayUser
             return Result.ok(page);
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<PayUserRank> payUserRankList = payUserRankService.queryPayRankByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<PayUserRank> payUserRankList = service.queryPayRankByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
         page.setRecords(payUserRankList).setTotal(payUserRankList.size());
         return Result.ok(page);
     }
@@ -105,7 +102,7 @@ public class PayUserRankController extends JeecgController<PayUserRank, IPayUser
                                   HttpServletRequest request) {
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<PayUserRank> payUserRankList = payUserRankService.queryPayRankByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<PayUserRank> payUserRankList = service.queryPayRankByDateRange(rangeDateBegin, rangeDateEnd, days, serverId, channel);
         return ExcelUtils.exportXls(sysUser.getRealname(), payUserRankList, request.getParameter("selections"), PayUserRank.class, "付费排行");
     }
 

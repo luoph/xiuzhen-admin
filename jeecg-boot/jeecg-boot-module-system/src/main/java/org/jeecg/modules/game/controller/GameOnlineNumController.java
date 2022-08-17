@@ -36,23 +36,21 @@ import java.util.stream.Collectors;
 public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGameOnlineNumService> {
 
     @Resource
-    private IGameOnlineNumService gameOnlineNumService;
-
-    @Resource
     private IGameChannelService gameChannelService;
 
     /**
      * 分页列表查询
+     *
      * @return {@linkplain Result}
      */
     @AutoLog(value = "在线情况-列表查询")
     @GetMapping(value = "/list")
     public JSONObject queryPageList(
-                                   @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                   @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                   @RequestParam(name = "days", defaultValue = "0") int days,
-                                   @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                   @RequestParam(name = "channelId", defaultValue = "0") Integer channelId
+            @RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+            @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+            @RequestParam(name = "days", defaultValue = "0") int days,
+            @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+            @RequestParam(name = "channelId", defaultValue = "0") Integer channelId
     ) {
         if (0 == serverId) {
             JSONObject res = new JSONObject();
@@ -69,18 +67,18 @@ public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGam
             }
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameOnlineNum> gameOnlineNumList = gameOnlineNumService.queryGameOnlineNumByRangDate(rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<GameOnlineNum> gameOnlineNumList = service.queryGameOnlineNumByRangDate(rangeDateBegin, rangeDateEnd, days, serverId, channel);
         JSONObject jsonObject = new JSONObject();
         //所有
         jsonObject.put("gameOnlineNumListAll", gameOnlineNumList);
         //分钟排序
-        Map<String, List<GameOnlineNum>> gameOnlineNumListSeconds = gameOnlineNumList.stream().collect(Collectors.groupingBy( g -> DateUtils.formatDate(g.getCreateTime(), DatePattern.NORM_DATETIME_MINUTE_PATTERN)));
+        Map<String, List<GameOnlineNum>> gameOnlineNumListSeconds = gameOnlineNumList.stream().collect(Collectors.groupingBy(g -> DateUtils.formatDate(g.getCreateTime(), DatePattern.NORM_DATETIME_MINUTE_PATTERN)));
         jsonObject.put("gameOnlineNumListSeconds", sortMap(gameOnlineNumListSeconds));
         //小时排序
-        Map<String, List<GameOnlineNum>> gameOnlineNumListHours = gameOnlineNumList.stream().collect(Collectors.groupingBy( g -> DateUtils.formatDate(g.getCreateTime(), "yyyy-MM-dd HH")));
+        Map<String, List<GameOnlineNum>> gameOnlineNumListHours = gameOnlineNumList.stream().collect(Collectors.groupingBy(g -> DateUtils.formatDate(g.getCreateTime(), "yyyy-MM-dd HH")));
         jsonObject.put("gameOnlineNumListHours", sortMap(gameOnlineNumListHours));
         //天排序
-        Map<String, List<GameOnlineNum>> gameOnlineNumListDay= gameOnlineNumList.stream().collect(Collectors.groupingBy( g -> DateUtils.formatDate(g.getCreateTime(), DatePattern.NORM_DATE_PATTERN)));
+        Map<String, List<GameOnlineNum>> gameOnlineNumListDay = gameOnlineNumList.stream().collect(Collectors.groupingBy(g -> DateUtils.formatDate(g.getCreateTime(), DatePattern.NORM_DATE_PATTERN)));
         jsonObject.put("gameOnlineNumListDays", sortMap(gameOnlineNumListDay));
         JSONObject res = new JSONObject();
         res.put("result", jsonObject);
@@ -110,7 +108,7 @@ public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGam
             return Result.ok(page);
         }
         String channel = gameChannelService.queryChannelNameById(channelId);
-        List<GameOnlineNum> gameOnlineNumList = gameOnlineNumService.queryGameOnlineCollectByRangDate(rangeDateBegin, rangeDateEnd, days, serverId, channel);
+        List<GameOnlineNum> gameOnlineNumList = service.queryGameOnlineCollectByRangDate(rangeDateBegin, rangeDateEnd, days, serverId, channel);
         page.setRecords(gameOnlineNumList).setTotal(gameOnlineNumList.size());
         return Result.ok(page);
     }
@@ -124,7 +122,7 @@ public class GameOnlineNumController extends JeecgController<GameOnlineNum, IGam
                 .stream()
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors
-                        .toMap(Map.Entry::getKey, Map.Entry::getValue,(e1, e2) -> e1, LinkedHashMap::new));
+                        .toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
         for (String s : sortMapDescDaySeconds.keySet()) {
             JSONObject gameOnlineNumListSecondsJsonObject = new JSONObject();
             Long sum = gameOnlineNumListSeconds.get(s).stream().mapToLong(gameOnlineNum -> gameOnlineNum.getOnlineNum()).sum();

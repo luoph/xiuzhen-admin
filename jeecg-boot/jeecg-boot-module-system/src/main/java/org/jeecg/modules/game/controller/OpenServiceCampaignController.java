@@ -5,16 +5,12 @@ import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.OpenServiceCampaign;
 import org.jeecg.modules.game.entity.OpenServiceCampaignType;
 import org.jeecg.modules.game.service.IGameServerGroupService;
@@ -51,9 +47,6 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     private IGameServerGroupService gameServerGroupService;
 
     @Autowired
-    private IOpenServiceCampaignService campaignService;
-
-    @Autowired
     private IOpenServiceCampaignTypeService campaignTypeService;
 
     @Value("${app.campaign-reload-url:/campaign/reload}")
@@ -65,39 +58,32 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaign 数据实体
-     * @param pageNo              页码
-     * @param pageSize            分页大小
-     * @param req                 请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动(1级)-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaign openServiceCampaign,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                                   HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaign> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaign, req.getParameterMap());
-        Page<OpenServiceCampaign> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaign> pageList = campaignService.page(page, queryWrapper);
-        return Result.ok(pageList);
+    public Result<?> queryPageList(OpenServiceCampaign entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param model 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动(1级)-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaign model) {
+    public Result<?> add(@RequestBody OpenServiceCampaign entity) {
         // 排序区服id
-        List<String> serverIds = StrUtil.splitTrim(model.getServerIds() != null ? model.getServerIds() : "", ",");
+        List<String> serverIds = StrUtil.splitTrim(entity.getServerIds() != null ? entity.getServerIds() : "", ",");
         Collections.sort(serverIds);
-        model.setServerIds(StrUtil.join(",", serverIds));
-        campaignService.save(model);
-        return Result.ok("添加成功！");
+        entity.setServerIds(StrUtil.join(",", serverIds));
+        return super.add(entity);
     }
 
     /**
@@ -116,8 +102,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         if (StringUtils.equals(newServerIds, entity.getServerIds())) {
             entity.setServerIds(newServerIds);
         }
-        campaignService.updateById(entity);
-        return Result.ok("编辑成功!");
+        return super.edit(entity);
     }
 
     /**
@@ -129,8 +114,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "开服活动(1级)-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        campaignService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -142,8 +126,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "开服活动(1级)-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.campaignService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -155,22 +138,18 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "开服活动(1级)-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaign openServiceCampaign = campaignService.getById(id);
-        if (openServiceCampaign == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaign);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
      * @param request 请求
-     * @param model   实体
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaign model) {
-        return super.exportXls(request, model, OpenServiceCampaign.class, "开服活动(1级)");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaign entity) {
+        return super.exportXls(request, entity, OpenServiceCampaign.class, "开服活动(1级)");
     }
 
     /**
@@ -194,7 +173,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "活动配置-同步到区服")
     @GetMapping(value = "/sync")
     public Result<?> sync(@RequestParam(name = "id") String id) {
-        OpenServiceCampaign campaign = campaignService.getById(id);
+        OpenServiceCampaign campaign = service.getById(id);
         if (campaign == null) {
             return Result.error("找不到对应活动配置!");
         }
@@ -228,7 +207,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         stopWatch.start("更新已刷新的服务器id");
         Collections.sort(currentIds);
         campaign.setLastServerIds(StrUtil.join(",", currentIds));
-        campaignService.updateById(new OpenServiceCampaign().setId(campaign.getId()).setLastServerIds(campaign.getLastServerIds()));
+        service.updateById(new OpenServiceCampaign().setId(campaign.getId()).setLastServerIds(campaign.getLastServerIds()));
         stopWatch.stop();
 
         log.error(stopWatch.prettyPrint());
@@ -238,13 +217,13 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     @AutoLog(value = "活动配置-复制")
     @GetMapping(value = "/duplicate")
     public Result<?> duplicate(@RequestParam(name = "id") String id) {
-        OpenServiceCampaign campaign = campaignService.getById(id);
+        OpenServiceCampaign campaign = service.getById(id);
         if (campaign == null) {
             return Result.error("找不到对应活动配置!");
         }
 
         OpenServiceCampaign copy = new OpenServiceCampaign(campaign);
-        campaignService.save(copy);
+        service.save(copy);
 
         List<OpenServiceCampaignType> typeList = getCampaignTypeList(campaign);
         if (CollUtil.isNotEmpty(typeList)) {
@@ -316,9 +295,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
 
     private List<OpenServiceCampaignType> getCampaignTypeList(OpenServiceCampaign openServiceCampaign) {
         long campaignId = openServiceCampaign.getId();
-        LambdaQueryWrapper<OpenServiceCampaignType> query = Wrappers.<OpenServiceCampaignType>lambdaQuery()
-                .eq(OpenServiceCampaignType::getCampaignId, campaignId)
-                .orderByAsc(OpenServiceCampaignType::getSort);
+        LambdaQueryWrapper<OpenServiceCampaignType> query = Wrappers.<OpenServiceCampaignType>lambdaQuery().eq(OpenServiceCampaignType::getCampaignId, campaignId).orderByAsc(OpenServiceCampaignType::getSort);
 
         List<OpenServiceCampaignType> list = campaignTypeService.list(query);
         for (OpenServiceCampaignType model : list) {

@@ -1,26 +1,20 @@
 package org.jeecg.modules.game.controller;
 
 import cn.youai.server.springboot.component.OkHttpHelper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameChannel;
 import org.jeecg.modules.game.service.IGameChannelService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * @author jeecg-boot
@@ -34,60 +28,52 @@ import java.util.Arrays;
 @RequestMapping("/game/gameChannel")
 public class GameChannelController extends JeecgController<GameChannel, IGameChannelService> {
 
-    @Autowired
-    private IGameChannelService gameChannelService;
-
     @Value("${app.url.game-center}")
     private String gameCenterUrl;
 
     /**
      * 分页列表查询
      *
-     * @param gameChannel 数据实体
-     * @param pageNo      页码
-     * @param pageSize    分页大小
-     * @param req         请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道-列表查询")
     @ApiOperation(value = "游戏渠道-列表查询", notes = "游戏渠道-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameChannel gameChannel,
+    public Result<?> queryPageList(GameChannel entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameChannel> queryWrapper = QueryGenerator.initQueryWrapper(gameChannel, req.getParameterMap());
-        Page<GameChannel> page = new Page<>(pageNo, pageSize);
-        IPage<GameChannel> pageList = gameChannelService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param gameChannel 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道-添加")
     @ApiOperation(value = "游戏渠道-添加", notes = "游戏渠道-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameChannel gameChannel) {
-        gameChannelService.save(gameChannel);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody GameChannel entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param gameChannel 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏渠道-编辑")
     @ApiOperation(value = "游戏渠道-编辑", notes = "游戏渠道-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameChannel gameChannel) {
-        gameChannelService.updateById(gameChannel);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody GameChannel entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -100,8 +86,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @ApiOperation(value = "游戏渠道-通过id删除", notes = "游戏渠道-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameChannelService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -114,8 +99,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @ApiOperation(value = "游戏渠道-批量删除", notes = "游戏渠道-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameChannelService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -128,19 +112,18 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @ApiOperation(value = "游戏渠道-通过id查询", notes = "游戏渠道-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameChannel gameChannel = gameChannelService.getById(id);
-        return Result.ok(gameChannel);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request     请求
-     * @param gameChannel 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameChannel gameChannel) {
-        return super.exportXls(request, gameChannel, GameChannel.class, "游戏渠道");
+    public ModelAndView exportXls(HttpServletRequest request, GameChannel entity) {
+        return super.exportXls(request, entity, GameChannel.class, "游戏渠道");
     }
 
     /**
@@ -161,7 +144,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @GetMapping(value = "/updateAllServer")
     public Result<?> updateAllServer(HttpServletRequest req) {
         try {
-            gameChannelService.updateAllChannelConfig();
+            service.updateAllChannelConfig();
             OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         } catch (Exception e) {
             log.error("updateAllServer error", e);
@@ -176,14 +159,14 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     public Result<?> updateChannelServer(@RequestParam(name = "id") String id) {
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadChannel");
-        gameChannelService.updateChannelConfig(Integer.valueOf(id));
+        service.updateChannelConfig(Integer.valueOf(id));
         return Result.ok("区服配置刷新成功");
     }
 
     @GetMapping(value = "/updateIpWhitelist")
     public Result<?> updateIpWhitelist(HttpServletRequest req) {
         try {
-            gameChannelService.updateIpWhiteListConfig();
+            service.updateIpWhiteListConfig();
         } catch (Exception e) {
             log.error("updateIpWhitelist error", e);
             return Result.error(e.getMessage());

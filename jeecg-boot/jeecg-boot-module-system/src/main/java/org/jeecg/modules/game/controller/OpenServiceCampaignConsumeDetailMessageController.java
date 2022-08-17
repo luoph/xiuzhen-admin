@@ -2,14 +2,10 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.entity.ImportTextVO;
 import org.jeecg.modules.game.entity.OpenServiceCampaignConsumeDetail;
@@ -24,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,9 +34,6 @@ import java.util.List;
 public class OpenServiceCampaignConsumeDetailMessageController extends JeecgController<OpenServiceCampaignConsumeDetailMessage, IOpenServiceCampaignConsumeDetailMessageService> {
 
     @Autowired
-    private IOpenServiceCampaignConsumeDetailMessageService openServiceCampaignConsumeDetailMessageService;
-
-    @Autowired
     private IOpenServiceCampaignConsumeDetailService openServiceCampaignConsumeDetailService;
 
     @Value("${app.folder.temp}")
@@ -50,48 +42,43 @@ public class OpenServiceCampaignConsumeDetailMessageController extends JeecgCont
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignConsumeDetailMessage 数据实体
-     * @param pageNo                                  页码
-     * @param pageSize                                分页大小
-     * @param req                                     请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动消耗传闻-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignConsumeDetailMessage openServiceCampaignConsumeDetailMessage,
+    public Result<?> queryPageList(OpenServiceCampaignConsumeDetailMessage entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignConsumeDetailMessage> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignConsumeDetailMessage, req.getParameterMap());
-        Page<OpenServiceCampaignConsumeDetailMessage> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignConsumeDetailMessage> pageList = openServiceCampaignConsumeDetailMessageService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaignConsumeDetailMessage 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动消耗传闻-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignConsumeDetailMessage openServiceCampaignConsumeDetailMessage) {
-        openServiceCampaignConsumeDetailMessageService.save(openServiceCampaignConsumeDetailMessage);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignConsumeDetailMessage entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaignConsumeDetailMessage 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动消耗传闻-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignConsumeDetailMessage openServiceCampaignConsumeDetailMessage) {
-        openServiceCampaignConsumeDetailMessageService.updateById(openServiceCampaignConsumeDetailMessage);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignConsumeDetailMessage entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -103,8 +90,7 @@ public class OpenServiceCampaignConsumeDetailMessageController extends JeecgCont
     @AutoLog(value = "开服活动消耗传闻-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignConsumeDetailMessageService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -116,8 +102,7 @@ public class OpenServiceCampaignConsumeDetailMessageController extends JeecgCont
     @AutoLog(value = "开服活动消耗传闻-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignConsumeDetailMessageService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -129,22 +114,18 @@ public class OpenServiceCampaignConsumeDetailMessageController extends JeecgCont
     @AutoLog(value = "开服活动消耗传闻-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignConsumeDetailMessage openServiceCampaignConsumeDetailMessage = openServiceCampaignConsumeDetailMessageService.getById(id);
-        if (openServiceCampaignConsumeDetailMessage == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignConsumeDetailMessage);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                                 请求
-     * @param openServiceCampaignConsumeDetailMessage 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignConsumeDetailMessage openServiceCampaignConsumeDetailMessage) {
-        return super.exportXls(request, openServiceCampaignConsumeDetailMessage, OpenServiceCampaignConsumeDetailMessage.class, "开服活动消耗传闻");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignConsumeDetailMessage entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignConsumeDetailMessage.class, "开服活动消耗传闻");
     }
 
     /**
@@ -178,7 +159,7 @@ public class OpenServiceCampaignConsumeDetailMessageController extends JeecgCont
         }
 
         if (CollUtil.isNotEmpty(entityList)) {
-            openServiceCampaignConsumeDetailMessageService.saveBatch(entityList);
+            service.saveBatch(entityList);
         }
         return Result.ok(vo);
     }

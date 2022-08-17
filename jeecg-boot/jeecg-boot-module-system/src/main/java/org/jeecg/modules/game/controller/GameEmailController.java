@@ -2,25 +2,19 @@ package org.jeecg.modules.game.controller;
 
 import cn.youai.basics.model.Response;
 import cn.youai.server.conf.ConfItem;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameEmail;
 import org.jeecg.modules.game.service.IGameEmailService;
 import org.jeecg.modules.utils.GameConfigUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,59 +28,51 @@ import java.util.List;
 @RequestMapping("game/gameEmail")
 public class GameEmailController extends JeecgController<GameEmail, IGameEmailService> {
 
-    @Autowired
-    private IGameEmailService gameEmailService;
-
     /**
      * 分页列表查询
      *
-     * @param gameEmail 数据实体
-     * @param pageNo    页码
-     * @param pageSize  分页大小
-     * @param req       请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏下发邮件-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameEmail gameEmail,
+    public Result<?> queryPageList(GameEmail entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameEmail> queryWrapper = QueryGenerator.initQueryWrapper(gameEmail, req.getParameterMap());
-        Page<GameEmail> page = new Page<>(pageNo, pageSize);
-        IPage<GameEmail> pageList = gameEmailService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param gameEmail 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏下发邮件-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameEmail gameEmail) {
-        log.info("gameEmail:{}", gameEmail.toString());
-        String targetBodyIds = gameEmail.getTargetBodyIds();
+    public Result<?> add(@RequestBody GameEmail entity) {
+        log.info("gameEmail:{}", entity.toString());
+        String targetBodyIds = entity.getTargetBodyIds();
         if (StringUtils.isBlank(targetBodyIds)) {
             return Result.error("所选投放对象不允许为空！");
         }
-        gameEmailService.saveEmail(gameEmail);
-        return Result.ok("添加成功！");
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param gameEmail 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "游戏下发邮件-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameEmail gameEmail) {
-        gameEmailService.updateById(gameEmail);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody GameEmail entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -98,8 +84,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @AutoLog(value = "游戏下发邮件-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        gameEmailService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -111,8 +96,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @AutoLog(value = "游戏下发邮件-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.gameEmailService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -124,22 +108,18 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @AutoLog(value = "游戏下发邮件-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameEmail gameEmail = gameEmailService.getById(id);
-        if (gameEmail == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(gameEmail);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request   请求
-     * @param gameEmail 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameEmail gameEmail) {
-        return super.exportXls(request, gameEmail, GameEmail.class, "游戏下发邮件");
+    public ModelAndView exportXls(HttpServletRequest request, GameEmail entity) {
+        return super.exportXls(request, entity, GameEmail.class, "游戏下发邮件");
     }
 
     /**
@@ -176,7 +156,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)
     public Result<?> isCheck(@RequestParam("id") long id) {
-        GameEmail gameEmail = gameEmailService.getById(id);
+        GameEmail gameEmail = service.getById(id);
         if (gameEmail == null) {
             return Result.error("邮件不存在！");
         }
@@ -184,9 +164,9 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
             return Result.error("已审核发送！");
         }
         gameEmail.setValidState(1);
-        gameEmailService.updateById(new GameEmail().setId(gameEmail.getId()).setValidState(1));
+        service.updateById(new GameEmail().setId(gameEmail.getId()).setValidState(1));
 
-        Response response = gameEmailService.dispatchEmail(gameEmail);
+        Response response = service.dispatchEmail(gameEmail);
         if (!response.isSuccess()) {
             return Result.error(response.getDesc());
         }

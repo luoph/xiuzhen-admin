@@ -41,32 +41,32 @@ public class PlayerController extends JeecgController<GamePlayer, IGamePlayerSer
      */
     @AutoLog(value = "玩家行为分析-查询")
     @GetMapping(value = "/behavior")
-    public Result<?> queryBehavior(PlayerBehaviorVO playerBehaviorVO,
+    public Result<?> queryBehavior(PlayerBehaviorVO entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize) {
 
         //服务器校验
-        if (playerBehaviorVO.getServerId() == null || playerBehaviorVO.getServerId() <= 0) {
+        if (entity.getServerId() == null || entity.getServerId() <= 0) {
             return Result.error("请选择服务器！");
         }
 
         //日期空校验
-        if (playerBehaviorVO.getDaysType() == null || playerBehaviorVO.getDaysType() <= 0) {
-            if (playerBehaviorVO.getRangeDateBegin() == null || playerBehaviorVO.getRangeDateEnd() == null) {
+        if (entity.getDaysType() == null || entity.getDaysType() <= 0) {
+            if (entity.getRangeDateBegin() == null || entity.getRangeDateEnd() == null) {
                 return Result.error("请选择日期！");
             }
-            if (playerBehaviorVO.getRangeDateBegin() != null && playerBehaviorVO.getRangeDateEnd() != null) {
+            if (entity.getRangeDateBegin() != null && entity.getRangeDateEnd() != null) {
                 // 如果选择开始时间和结束时间是同一天
-                if (DateUtils.isSameDay(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd())) {
-                    playerBehaviorVO.setRangeDateBegin(DateUtil.beginOfDay(playerBehaviorVO.getRangeDateBegin()));
-                    playerBehaviorVO.setRangeDateEnd(DateUtil.endOfDay(playerBehaviorVO.getRangeDateBegin()));
+                if (DateUtils.isSameDay(entity.getRangeDateBegin(), entity.getRangeDateEnd())) {
+                    entity.setRangeDateBegin(DateUtil.beginOfDay(entity.getRangeDateBegin()));
+                    entity.setRangeDateEnd(DateUtil.endOfDay(entity.getRangeDateBegin()));
                 }
             }
         }
 
         Page<PlayerBehavior> page = new Page<>(pageNo, pageSize);
-        List<PlayerBehavior> list = service.queryPlayerBehavior(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd(),
-                playerBehaviorVO.getNickname(), playerBehaviorVO.getPlayerId(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
+        List<PlayerBehavior> list = service.queryPlayerBehavior(entity.getRangeDateBegin(), entity.getRangeDateEnd(),
+                entity.getNickname(), entity.getPlayerId(), entity.getDaysType() == null ? 0 : entity.getDaysType(), entity.getServerId());
         page.setRecords(list).setTotal(list.size());
         return Result.ok(page);
     }

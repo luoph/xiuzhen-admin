@@ -1,22 +1,16 @@
 package org.jeecg.modules.game.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameCampaignTypeFirework;
 import org.jeecg.modules.game.service.IGameCampaignTypeFireworkService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * @author jeecg-boot
@@ -28,9 +22,6 @@ import java.util.Arrays;
 @RestController
 @RequestMapping("game/gameCampaignTypeFirework")
 public class GameCampaignTypeFireworkController extends JeecgController<GameCampaignTypeFirework, IGameCampaignTypeFireworkService> {
-
-    @Autowired
-    private IGameCampaignTypeFireworkService campaignTypeFireworkService;
 
     /**
      * 分页列表查询
@@ -47,10 +38,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<GameCampaignTypeFirework> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
-        Page<GameCampaignTypeFirework> page = new Page<>(pageNo, pageSize);
-        IPage<GameCampaignTypeFirework> pageList = campaignTypeFireworkService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
@@ -62,8 +50,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
     @AutoLog(value = "节日烟花-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaignTypeFirework entity) {
-        campaignTypeFireworkService.save(entity);
-        return Result.ok("添加成功！");
+        return super.add(entity);
     }
 
     /**
@@ -75,8 +62,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
     @AutoLog(value = "节日烟花-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaignTypeFirework entity) {
-        campaignTypeFireworkService.updateById(entity);
-        return Result.ok("编辑成功!");
+        return super.edit(entity);
     }
 
     /**
@@ -88,8 +74,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
     @AutoLog(value = "节日烟花-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        campaignTypeFireworkService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -101,8 +86,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
     @AutoLog(value = "节日烟花-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.campaignTypeFireworkService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -114,11 +98,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
     @AutoLog(value = "节日烟花-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameCampaignTypeFirework gameCampaignTypeFirework = campaignTypeFireworkService.getById(id);
-        if (gameCampaignTypeFirework == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(gameCampaignTypeFirework);
+        return super.queryById(id);
     }
 
     /**

@@ -24,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,9 +38,6 @@ import java.util.List;
 public class OpenServiceCampaignConsumeDetailItemController extends JeecgController<OpenServiceCampaignConsumeDetailItem, IOpenServiceCampaignConsumeDetailItemService> {
 
     @Autowired
-    private IOpenServiceCampaignConsumeDetailItemService openServiceCampaignConsumeDetailItemService;
-
-    @Autowired
     private IOpenServiceCampaignConsumeDetailService openServiceCampaignConsumeDetailService;
 
     @Value("${app.folder.temp}")
@@ -50,49 +46,47 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignConsumeDetailItem 数据实体
-     * @param pageNo                               页码
-     * @param pageSize                             分页大小
-     * @param req                                  请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动消耗道具-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignConsumeDetailItem openServiceCampaignConsumeDetailItem,
+    public Result<?> queryPageList(OpenServiceCampaignConsumeDetailItem entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignConsumeDetailItem> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignConsumeDetailItem, req.getParameterMap());
+        QueryWrapper<OpenServiceCampaignConsumeDetailItem> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
         Page<OpenServiceCampaignConsumeDetailItem> page = new Page<>(pageNo, pageSize);
         queryWrapper.orderByAsc("sort");
-        IPage<OpenServiceCampaignConsumeDetailItem> pageList = openServiceCampaignConsumeDetailItemService.page(page, queryWrapper);
+        IPage<OpenServiceCampaignConsumeDetailItem> pageList = super.pageList(page, queryWrapper);
         return Result.ok(pageList);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaignConsumeDetailItem 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动消耗道具-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignConsumeDetailItem openServiceCampaignConsumeDetailItem) {
-        openServiceCampaignConsumeDetailItemService.save(openServiceCampaignConsumeDetailItem);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignConsumeDetailItem entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaignConsumeDetailItem 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动消耗道具-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignConsumeDetailItem openServiceCampaignConsumeDetailItem) {
-        openServiceCampaignConsumeDetailItemService.updateById(openServiceCampaignConsumeDetailItem);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignConsumeDetailItem entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -104,8 +98,7 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
     @AutoLog(value = "开服活动消耗道具-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignConsumeDetailItemService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -117,8 +110,7 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
     @AutoLog(value = "开服活动消耗道具-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignConsumeDetailItemService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -130,22 +122,18 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
     @AutoLog(value = "开服活动消耗道具-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignConsumeDetailItem openServiceCampaignConsumeDetailItem = openServiceCampaignConsumeDetailItemService.getById(id);
-        if (openServiceCampaignConsumeDetailItem == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignConsumeDetailItem);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                              请求
-     * @param openServiceCampaignConsumeDetailItem 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignConsumeDetailItem openServiceCampaignConsumeDetailItem) {
-        return super.exportXls(request, openServiceCampaignConsumeDetailItem, OpenServiceCampaignConsumeDetailItem.class, "开服活动消耗道具");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignConsumeDetailItem entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignConsumeDetailItem.class, "开服活动消耗道具");
     }
 
     /**
@@ -179,7 +167,7 @@ public class OpenServiceCampaignConsumeDetailItemController extends JeecgControl
         }
 
         if (CollUtil.isNotEmpty(entityList)) {
-            openServiceCampaignConsumeDetailItemService.saveBatch(entityList);
+            service.saveBatch(entityList);
         }
         return Result.ok(vo);
     }

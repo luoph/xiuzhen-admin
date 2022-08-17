@@ -8,10 +8,8 @@ import cn.youai.server.springboot.component.OkHttpHelper;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +17,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.entity.GameServerTag;
 import org.jeecg.modules.game.service.IGameChannelService;
@@ -52,9 +49,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     private static final Type RESPONSE_ONLINE_NUM = new TypeReference<DataResponse<Integer>>() {
     }.getType();
-
-    @Autowired
-    private IGameServerService serverService;
 
     @Autowired
     private IGameChannelService channelService;
@@ -127,7 +121,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
                         GameServer::getHost, GameServer::getStatus, GameServer::getOpenTime,
                         GameServer::getOnlineTime)
                 .orderByAsc(GameServer::getId);
-        return Result.ok(serverService.list(query));
+        return Result.ok(service.list(query));
     }
 
     @AutoLog(value = "游戏服配置-待合服列表查询")
@@ -136,7 +130,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     public Result<?> mergeServerList(@RequestParam(name = "days", defaultValue = "5") Integer days,
                                      @RequestParam(name = "minAvgPlayers", defaultValue = "50") Integer minAvgPlayers,
                                      @RequestParam(name = "minAvgPayAmount", defaultValue = "200") Double minAvgPayAmount) {
-        return Result.ok(serverService.getMergeServerList(days, minAvgPlayers, minAvgPayAmount));
+        return Result.ok(service.getMergeServerList(days, minAvgPlayers, minAvgPayAmount));
     }
 
     /**
@@ -149,7 +143,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-添加", notes = "游戏服配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameServer entity) {
-        serverService.save(entity);
+        service.save(entity);
         return Result.ok("添加成功！");
     }
 
@@ -163,7 +157,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-编辑", notes = "游戏服配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameServer entity) {
-        serverService.updateById(entity);
+        service.updateById(entity);
         return Result.ok("编辑成功!");
     }
 
@@ -177,7 +171,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-通过id删除", notes = "游戏服配置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        serverService.removeById(id);
+        service.removeById(id);
         return Result.ok("删除成功!");
     }
 
@@ -199,7 +193,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-刷新活动配置", notes = "游戏服配置-刷新活动配置")
     @GetMapping(value = "/updateActivity")
     public Result<?> updateActivity(@RequestParam(name = "ids") String ids) {
-        Map<Integer, Response> responseMap = serverService.gameServerGet(ids, updateActivityUrl);
+        Map<Integer, Response> responseMap = service.gameServerGet(ids, updateActivityUrl);
         log.info("updateActivity response:{}", responseMap);
         return Result.ok("刷新活动配置成功！");
     }
@@ -208,7 +202,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-刷新游戏配置", notes = "游戏服配置-刷新游戏配置")
     @GetMapping(value = "/updateSetting")
     public Result<?> updateSetting(@RequestParam(name = "ids") String ids) {
-        Map<Integer, Response> responseMap = serverService.gameServerGet(ids, updateSettingUrl);
+        Map<Integer, Response> responseMap = service.gameServerGet(ids, updateSettingUrl);
         log.info("updateSetting response:{}", responseMap);
         return Result.ok("刷新游戏配置成功！");
     }
@@ -217,7 +211,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-查询在线人数", notes = "游戏服配置-查询在线人数")
     @GetMapping(value = "/getOnlineNum")
     public Result<?> getOnlineNum(@RequestParam(name = "id") String id) {
-        GameServer gameServer = serverService.getById(id);
+        GameServer gameServer = service.getById(id);
         if (gameServer != null) {
             if (gameServer.getOutdated() == 1) {
                 return Result.ok(String.valueOf(0));
@@ -236,11 +230,11 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     public Result<?> startMaintain(@RequestParam(name = "ids") String ids) {
         List<Integer> serverIds = StringUtils.split2Int(ids);
         if (CollUtil.isNotEmpty(serverIds)) {
-            serverService.updateGameServerMaintain(serverIds, 1);
+            service.updateGameServerMaintain(serverIds, 1);
         }
         channelService.updateAllChannelConfig();
 
-        Map<Integer, Response> responseMap = serverService.gameServerGet(ids, startMaintainUrl);
+        Map<Integer, Response> responseMap = service.gameServerGet(ids, startMaintainUrl);
         log.info("startMaintain response:{}", responseMap);
         return Result.ok("开启维护状态成功！");
     }
@@ -252,11 +246,11 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     public Result<?> stopMaintain(@RequestParam(name = "ids") String ids) {
         List<Integer> serverIds = StringUtils.split2Int(ids);
         if (CollUtil.isNotEmpty(serverIds)) {
-            serverService.updateGameServerMaintain(serverIds, 0);
+            service.updateGameServerMaintain(serverIds, 0);
         }
         channelService.updateAllChannelConfig();
 
-        Map<Integer, Response> responseMap = serverService.gameServerGet(ids, stopMaintainUrl);
+        Map<Integer, Response> responseMap = service.gameServerGet(ids, stopMaintainUrl);
         log.info("stopMaintain response:{}", responseMap);
         return Result.ok("关闭维护状态成功！");
     }
@@ -271,7 +265,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @ApiOperation(value = "游戏服配置-通过id查询", notes = "游戏服配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameServer gameServer = serverService.getById(id);
+        GameServer gameServer = service.getById(id);
         return Result.ok(gameServer);
     }
 

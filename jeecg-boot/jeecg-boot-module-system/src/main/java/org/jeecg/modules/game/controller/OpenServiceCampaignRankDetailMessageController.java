@@ -2,14 +2,10 @@ package org.jeecg.modules.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.modules.game.entity.ImportTextVO;
 import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetail;
@@ -24,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,9 +34,6 @@ import java.util.List;
 public class OpenServiceCampaignRankDetailMessageController extends JeecgController<OpenServiceCampaignRankDetailMessage, IOpenServiceCampaignRankDetailMessageService> {
 
     @Autowired
-    private IOpenServiceCampaignRankDetailMessageService openServiceCampaignRankDetailMessageService;
-
-    @Autowired
     private IOpenServiceCampaignRankDetailService openServiceCampaignRankDetailService;
 
     @Value("${app.folder.temp}")
@@ -50,48 +42,43 @@ public class OpenServiceCampaignRankDetailMessageController extends JeecgControl
     /**
      * 分页列表查询
      *
-     * @param openServiceCampaignRankDetailMessage 数据实体
-     * @param pageNo                               页码
-     * @param pageSize                             分页大小
-     * @param req                                  请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-活动明细-传闻-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaignRankDetailMessage openServiceCampaignRankDetailMessage,
+    public Result<?> queryPageList(OpenServiceCampaignRankDetailMessage entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        QueryWrapper<OpenServiceCampaignRankDetailMessage> queryWrapper = QueryGenerator.initQueryWrapper(openServiceCampaignRankDetailMessage, req.getParameterMap());
-        Page<OpenServiceCampaignRankDetailMessage> page = new Page<>(pageNo, pageSize);
-        IPage<OpenServiceCampaignRankDetailMessage> pageList = openServiceCampaignRankDetailMessageService.page(page, queryWrapper);
-        return Result.ok(pageList);
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     /**
      * 添加
      *
-     * @param openServiceCampaignRankDetailMessage 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-活动明细-传闻-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignRankDetailMessage openServiceCampaignRankDetailMessage) {
-        openServiceCampaignRankDetailMessageService.save(openServiceCampaignRankDetailMessage);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignRankDetailMessage entity) {
+        return super.add(entity);
     }
 
     /**
      * 编辑
      *
-     * @param openServiceCampaignRankDetailMessage 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-活动明细-传闻-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody OpenServiceCampaignRankDetailMessage openServiceCampaignRankDetailMessage) {
-        openServiceCampaignRankDetailMessageService.updateById(openServiceCampaignRankDetailMessage);
-        return Result.ok("编辑成功!");
+    public Result<?> edit(@RequestBody OpenServiceCampaignRankDetailMessage entity) {
+        return super.edit(entity);
     }
 
     /**
@@ -103,8 +90,7 @@ public class OpenServiceCampaignRankDetailMessageController extends JeecgControl
     @AutoLog(value = "开服活动-开服排行-活动明细-传闻-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        openServiceCampaignRankDetailMessageService.removeById(id);
-        return Result.ok("删除成功!");
+        return super.delete(id);
     }
 
     /**
@@ -116,8 +102,7 @@ public class OpenServiceCampaignRankDetailMessageController extends JeecgControl
     @AutoLog(value = "开服活动-开服排行-活动明细-传闻-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        this.openServiceCampaignRankDetailMessageService.removeByIds(Arrays.asList(ids.split(",")));
-        return Result.ok("批量删除成功！");
+        return super.deleteBatch(ids);
     }
 
     /**
@@ -129,22 +114,18 @@ public class OpenServiceCampaignRankDetailMessageController extends JeecgControl
     @AutoLog(value = "开服活动-开服排行-活动明细-传闻-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignRankDetailMessage openServiceCampaignRankDetailMessage = openServiceCampaignRankDetailMessageService.getById(id);
-        if (openServiceCampaignRankDetailMessage == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignRankDetailMessage);
+        return super.queryById(id);
     }
 
     /**
      * 导出excel
      *
-     * @param request                              请求
-     * @param openServiceCampaignRankDetailMessage 实体
+     * @param request 请求
+     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankDetailMessage openServiceCampaignRankDetailMessage) {
-        return super.exportXls(request, openServiceCampaignRankDetailMessage, OpenServiceCampaignRankDetailMessage.class, "开服活动-开服排行-活动明细-传闻");
+    public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankDetailMessage entity) {
+        return super.exportXls(request, entity, OpenServiceCampaignRankDetailMessage.class, "开服活动-开服排行-活动明细-传闻");
     }
 
     /**
@@ -178,7 +159,7 @@ public class OpenServiceCampaignRankDetailMessageController extends JeecgControl
         }
 
         if (CollUtil.isNotEmpty(entityList)) {
-            openServiceCampaignRankDetailMessageService.saveBatch(entityList);
+            service.saveBatch(entityList);
         }
         return Result.ok(vo);
     }
