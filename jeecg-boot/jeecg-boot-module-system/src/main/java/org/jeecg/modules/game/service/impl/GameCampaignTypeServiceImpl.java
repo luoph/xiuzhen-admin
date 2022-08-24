@@ -82,6 +82,11 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignTypeMarryRankRewardService gameCampaignTypeMarryRankRewardService;
 
+    @Autowired
+    private IGameCampaignTypeSelectDiscountItemService gameCampaignTypeSelectDiscountItemService;
+    @Autowired
+    private IGameCampaignTypeSelectDiscountMessageService gameCampaignTypeSelectDiscountMessageService;
+
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
@@ -207,7 +212,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     Wrapper<GameCampaignDirectPurchase> rewardsQuery = Wrappers.<GameCampaignDirectPurchase>lambdaQuery()
                             .eq(GameCampaignDirectPurchase::getCampaignId, campaignId)
                             .eq(GameCampaignDirectPurchase::getTypeId, model.getId());
-                    model.setRewardList(campaignDirectPurchaseService.list(rewardsQuery));
+                    model.setDetails(campaignDirectPurchaseService.list(rewardsQuery));
                 }
                 break;
 
@@ -215,7 +220,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     Wrapper<GameCampaignTypeRebateRecharge> rewardsQuery = Wrappers.<GameCampaignTypeRebateRecharge>lambdaQuery()
                             .eq(GameCampaignTypeRebateRecharge::getCampaignId, campaignId)
                             .eq(GameCampaignTypeRebateRecharge::getTypeId, model.getId());
-                    model.setRewardList(campaignTypeRebateRechargeService.list(rewardsQuery));
+                    model.setDetails(campaignTypeRebateRechargeService.list(rewardsQuery));
                 }
                 break;
 
@@ -232,6 +237,18 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     model.setRewardList(gameCampaignTypeMarryRankRewardService.list(rewardQuery));
                 }
                 break;
+
+                case SELECT_DISCOUNT_ITEM:
+                    Wrapper<GameCampaignTypeSelectDiscountItem> detailQuery = Wrappers.<GameCampaignTypeSelectDiscountItem>lambdaQuery()
+                            .eq(GameCampaignTypeSelectDiscountItem::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeSelectDiscountItem::getTypeId, model.getId());
+                    model.setDetails(gameCampaignTypeSelectDiscountItemService.list(detailQuery));
+
+                    Wrapper<GameCampaignTypeSelectDiscountMessage> rewardQuery = Wrappers.<GameCampaignTypeSelectDiscountMessage>lambdaQuery()
+                            .eq(GameCampaignTypeSelectDiscountMessage::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeSelectDiscountMessage::getTypeId, model.getId());
+                    model.setRewardList(gameCampaignTypeSelectDiscountMessageService.list(rewardQuery));
+                    break;
 
                 default:
                     break;
@@ -500,7 +517,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
         CampaignFestivalType festivalType = CampaignFestivalType.valueOf(copyCampaignType.getType());
         if (save(copyCampaignType) && festivalType != null) {
             fillTabDetail(model, false);
-            if (CollUtil.isEmpty(model.getDetails())) {
+            if (CollUtil.isEmpty(model.getDetails()) && CollUtil.isEmpty(model.getRewardList())) {
                 return;
             }
             switch (festivalType) {
@@ -511,7 +528,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeLogin copy = new GameCampaignTypeLogin(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeLoginService.saveBatch(list);
@@ -525,7 +541,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeRecharge copy = new GameCampaignTypeRecharge(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeRechargeService.saveBatch(list);
@@ -539,7 +554,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeExchange copy = new GameCampaignTypeExchange(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeExchangeService.saveBatch(list);
@@ -553,7 +567,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeTask copy = new GameCampaignTypeTask(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeTaskService.saveBatch(list);
@@ -568,7 +581,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeBuff copy = new GameCampaignTypeBuff(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeBuffService.saveBatch(list);
@@ -582,7 +594,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeFall copy = new GameCampaignTypeFall(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         copyDetails.add(copy);
                     }
                     campaignTypeFallService.saveBatch(copyDetails);
@@ -594,7 +605,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                             GameCampaignTypeFallReward copy = new GameCampaignTypeFallReward(reward);
                             copy.setCampaignId(copyCampaignId);
                             copy.setTypeId(copyCampaignType.getId());
-
                             copyRewards.add(copy);
                         }
                         campaignTypeFallRewardService.saveBatch(copyRewards);
@@ -609,7 +619,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeFirework copy = new GameCampaignTypeFirework(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeFireworkService.saveBatch(list);
@@ -623,7 +632,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeReduce copy = new GameCampaignTypeReduce(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeReduceService.saveBatch(list);
@@ -637,7 +645,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeSword copy = new GameCampaignTypeSword(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeSwordService.saveBatch(list);
@@ -651,7 +658,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeThrowingEggs copy = new GameCampaignTypeThrowingEggs(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeThrowingEggsService.saveBatch(list);
@@ -665,7 +671,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeThrowingEggsRank copy = new GameCampaignTypeThrowingEggsRank(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeThrowingEggsRankService.saveBatch(list);
@@ -679,7 +684,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeThrowingEggsGift copy = new GameCampaignTypeThrowingEggsGift(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         list.add(copy);
                     }
                     campaignTypeThrowingEggsGiftService.saveBatch(list);
@@ -693,7 +697,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypePartyTask copy = new GameCampaignTypePartyTask(detail);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         copyDetails.add(copy);
                     }
                     campaignTypePartyTaskService.saveBatch(copyDetails);
@@ -705,7 +708,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                             GameCampaignTypePartyProgress copy = new GameCampaignTypePartyProgress(reward);
                             copy.setCampaignId(copyCampaignId);
                             copy.setTypeId(copyCampaignType.getId());
-
                             copyRewards.add(copy);
                         }
                         campaignTypePartyProgressService.saveBatch(copyRewards);
@@ -719,8 +721,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     for (GameCampaignDirectPurchase directPurchase : details) {
                         GameCampaignDirectPurchase copy = new GameCampaignDirectPurchase(directPurchase);
                         copy.setCampaignId(copyCampaignId);
-                        copy.setType(copyCampaignType.getType());
-
+                        copy.setTypeId(copyCampaignType.getId());
                         copyDetails.add(copy);
                     }
                     campaignDirectPurchaseService.saveBatch(copyDetails);
@@ -734,7 +735,6 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         GameCampaignTypeRebateRecharge copy = new GameCampaignTypeRebateRecharge(rebateRecharge);
                         copy.setCampaignId(copyCampaignId);
                         copy.setTypeId(copyCampaignType.getId());
-
                         copyDetails.add(copy);
                     }
                     campaignTypeRebateRechargeService.saveBatch(copyDetails);
@@ -766,6 +766,33 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                     }
                 }
                 break;
+
+                case SELECT_DISCOUNT_ITEM:
+                    if (CollUtil.isNotEmpty(model.getDetails())) {
+                        List<GameCampaignTypeSelectDiscountItem> copyDetails = new ArrayList<>(model.getDetails().size());
+                        List<GameCampaignTypeSelectDiscountItem> details = (List<GameCampaignTypeSelectDiscountItem>) model.getDetails();
+                        for (GameCampaignTypeSelectDiscountItem detail : details) {
+                            GameCampaignTypeSelectDiscountItem copy = new GameCampaignTypeSelectDiscountItem(detail);
+                            copy.setCampaignId(copyCampaignId);
+                            copy.setTypeId(copyCampaignType.getId());
+                            copyDetails.add(copy);
+                        }
+                        gameCampaignTypeSelectDiscountItemService.saveBatch(copyDetails);
+                    }
+
+                    if (CollUtil.isNotEmpty(model.getRewardList())) {
+                        List<GameCampaignTypeSelectDiscountMessage> copyRewards = new ArrayList<>(model.getRewardList().size());
+                        List<GameCampaignTypeSelectDiscountMessage> rewardList = (List<GameCampaignTypeSelectDiscountMessage>) model.getRewardList();
+                        for (GameCampaignTypeSelectDiscountMessage reward : rewardList) {
+                            GameCampaignTypeSelectDiscountMessage copy = new GameCampaignTypeSelectDiscountMessage(reward);
+                            copy.setCampaignId(copyCampaignId);
+                            copy.setTypeId(copyCampaignType.getId());
+                            copyRewards.add(copy);
+                        }
+                        gameCampaignTypeSelectDiscountMessageService.saveBatch(copyRewards);
+                    }
+                    break;
+
                 default:
                     break;
             }

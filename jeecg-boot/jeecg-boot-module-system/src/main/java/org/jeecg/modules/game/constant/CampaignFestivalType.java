@@ -33,7 +33,8 @@ public enum CampaignFestivalType {
     REBATE_RECHARGE("返利狂欢", 16, GameCampaignTypeRebateRecharge.class, GameCampaignTypeRebateRechargeVo.class),
     MARRY_RANK_WINE("结义排行榜-赠酒排行榜", 17, GameCampaignTypeMarryRank.class, GameCampaignTypeMarryRank.class),
     MARRY_RANK_CHARM("结义排行榜-魅力值排行榜", 18, GameCampaignTypeMarryRank.class, GameCampaignTypeMarryRank.class),
-//    MARRY_RANK_GIFT("结义排行榜-结义礼包", 19, null, null),
+    //    MARRY_RANK_GIFT("结义排行榜-结义礼包", 19, null, null),
+    SELECT_DISCOUNT_ITEM("自选特惠", 20, GameCampaignTypeSelectDiscountItem.class, GameCampaignTypeSelectDiscountItemVO.class),
     // end
     ;
 
