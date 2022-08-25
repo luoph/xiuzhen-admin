@@ -64,6 +64,8 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
                 response.setFailure("附件格式错误！");
                 return response;
             }
+        } else if (entity.getType() == MailType.NO_ATTACHMENT.getType()) {
+            entity.setContent(StringUtils.EMPTY);
         }
 
         Set<String> receiverIdSet = StringUtils.split2Set(entity.getReceiverIds());
