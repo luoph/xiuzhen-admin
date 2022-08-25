@@ -122,11 +122,7 @@ public class OpenServiceCampaignSingleGiftDetailController extends JeecgControll
     @AutoLog(value = "开服活动-单笔好礼活动参数-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        OpenServiceCampaignSingleGiftDetail openServiceCampaignSingleGiftDetail = openServiceCampaignSingleGiftDetailService.getById(id);
-        if (openServiceCampaignSingleGiftDetail == null) {
-            return Result.error("未找到对应数据");
-        }
-        return Result.ok(openServiceCampaignSingleGiftDetail);
+        return super.queryById(id);
     }
 
     /**

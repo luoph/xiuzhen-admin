@@ -60,14 +60,13 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
     /**
      * 添加
      *
-     * @param openServiceCampaignRankDetailScore 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody OpenServiceCampaignRankDetailScore openServiceCampaignRankDetailScore) {
-        openServiceCampaignRankDetailScoreService.save(openServiceCampaignRankDetailScore);
-        return Result.ok("添加成功！");
+    public Result<?> add(@RequestBody OpenServiceCampaignRankDetailScore entity) {
+        return super.add(entity);
     }
 
     /**

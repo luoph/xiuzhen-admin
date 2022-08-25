@@ -49,7 +49,7 @@
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
       </a-dropdown>
     </div>
 
@@ -61,7 +61,7 @@
 
           <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -106,7 +106,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -129,6 +129,11 @@ export default {
           title: '微信审核版本',
           align: 'center',
           dataIndex: 'weixinReview'
+        },
+        {
+          title: '审核渠道',
+          align: 'center',
+          dataIndex: 'reviewChannel'
         },
         // {
         //     title: "YA_APPID",
@@ -219,7 +224,7 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
@@ -227,7 +232,7 @@ export default {
     updateGameConfig() {
       // 开始刷新游戏配置
       console.log('开始刷新游戏配置');
-      getAction(this.url.updateGameConfigUrl).then(res => {
+      getAction(this.url.updateGameConfigUrl).then((res) => {
         if (res.success) {
           this.$message.success('游戏配置刷新成功');
         } else {

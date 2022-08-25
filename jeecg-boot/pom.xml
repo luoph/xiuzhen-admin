@@ -68,9 +68,9 @@
         <!-- 积木报表-->
         <jimureport-spring-boot-starter.version>1.5.2</jimureport-spring-boot-starter.version>
         <!-- 框架依赖 -->
-        <entities.version>0.0.18</entities.version>
-        <web-starter.version>0.0.18</web-starter.version>
-        <server-common.version>0.0.18</server-common.version>
+        <entities.version>0.0.19</entities.version>
+        <web-starter.version>0.0.19</web-starter.version>
+        <server-common.version>0.0.19</server-common.version>
 	</properties>
 
 	<dependencies>

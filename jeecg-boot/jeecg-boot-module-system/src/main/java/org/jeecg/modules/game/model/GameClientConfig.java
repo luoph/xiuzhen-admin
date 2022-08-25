@@ -23,4 +23,5 @@ public class GameClientConfig {
     private String accountLoginUrl;
     private Integer offRegisterDay;
     private String weixinReview;
+    private String reviewChannel;
 }
