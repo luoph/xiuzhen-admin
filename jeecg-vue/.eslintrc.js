@@ -33,7 +33,7 @@ module.exports = {
         "no-unused-vars": "warn",
         // "prefer-const": ["error", { ignoreReadBeforeAssign: false }],
         "semi-spacing": ["error", { before: false, after: true }],
-        "spaced-comment": ["error", "always", { markers: ["global", "globals", "eslint", "eslint-disable", "*package", "!", ","] }],
+        "spaced-comment": ["warn", "always", { markers: ["global", "globals", "eslint", "eslint-disable", "*package", "!", ","] }],
         "vue/attribute-hyphenation": "off",
         "vue/attributes-order": "off",
         "vue/component-name-in-template-casing": "off",
