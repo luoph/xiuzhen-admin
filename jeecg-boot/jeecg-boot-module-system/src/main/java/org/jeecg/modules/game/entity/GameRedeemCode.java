@@ -27,7 +27,10 @@ public class GameRedeemCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public GameRedeemCode(){};
+    public GameRedeemCode() {
+    }
+
+    ;
 
     public GameRedeemCode(Integer activityId, String code, Integer totalNum, Integer usedNum, Integer status) {
         this.activityId = activityId;

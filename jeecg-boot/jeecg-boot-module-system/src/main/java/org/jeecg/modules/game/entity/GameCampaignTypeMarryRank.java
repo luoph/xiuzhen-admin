@@ -20,51 +20,52 @@ public class GameCampaignTypeMarryRank extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
-    public GameCampaignTypeMarryRank() {}
+    public GameCampaignTypeMarryRank() {
+    }
 
-	public GameCampaignTypeMarryRank(GameCampaignTypeMarryRank entity) {
-    	this.bigReward = entity.getBigReward();
-    	this.bigRewardFight = entity.getBigRewardFight();
-    	this.rankNum = entity.getRankNum();
-    	this.rankRewardEmail = entity.getRankRewardEmail();
-    	this.callOnMessage = entity.getCallOnMessage();
-    	this.helpMsg = entity.getHelpMsg();
-	}
-	
-	/**
-	 * 大奖展示
-	 */
-	@Excel(name = "大奖展示", width = 15)
+    public GameCampaignTypeMarryRank(GameCampaignTypeMarryRank entity) {
+        this.bigReward = entity.getBigReward();
+        this.bigRewardFight = entity.getBigRewardFight();
+        this.rankNum = entity.getRankNum();
+        this.rankRewardEmail = entity.getRankRewardEmail();
+        this.callOnMessage = entity.getCallOnMessage();
+        this.helpMsg = entity.getHelpMsg();
+    }
+
+    /**
+     * 大奖展示
+     */
+    @Excel(name = "大奖展示", width = 15)
     private java.lang.String bigReward;
-	
-	/**
-	 * 大奖战力
-	 */
-	@Excel(name = "大奖战力", width = 15)
+
+    /**
+     * 大奖战力
+     */
+    @Excel(name = "大奖战力", width = 15)
     private java.lang.Integer bigRewardFight;
-	
-	/**
-	 * 排行玩家数量(上榜人数限制)
-	 */
-	@Excel(name = "排行玩家数量(上榜人数限制)", width = 15)
+
+    /**
+     * 排行玩家数量(上榜人数限制)
+     */
+    @Excel(name = "排行玩家数量(上榜人数限制)", width = 15)
     private java.lang.Integer rankNum;
-	
-	/**
-	 * 排名奖励邮件id
-	 */
-	@Excel(name = "排名奖励邮件id", width = 15)
+
+    /**
+     * 排名奖励邮件id
+     */
+    @Excel(name = "排名奖励邮件id", width = 15)
     private java.lang.Integer rankRewardEmail;
-	
-	/**
-	 * 号召赠酒传闻id
-	 */
-	@Excel(name = "号召赠酒传闻id", width = 15)
+
+    /**
+     * 号召赠酒传闻id
+     */
+    @Excel(name = "号召赠酒传闻id", width = 15)
     private java.lang.Integer callOnMessage;
-	
-	/**
-	 * 帮助信息
-	 */
-	@Excel(name = "帮助信息", width = 15)
+
+    /**
+     * 帮助信息
+     */
+    @Excel(name = "帮助信息", width = 15)
     private java.lang.String helpMsg;
-	
+
 }

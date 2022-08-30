@@ -21,5 +21,5 @@ import java.util.Set;
 public interface IGameStatLtvDetailService extends IService<GameStatLtvDetail> {
 
     void calcLtvDetailStat(Set<Integer> keySet, Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll);
-    
+
 }

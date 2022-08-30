@@ -45,6 +45,7 @@ public interface PayOrderBillMapper extends BaseMapper<PayOrderBill> {
                            @Param("channel") String channel);
 
     List<GameOrder> getPayAmountSum(@Param("serverId") int serverId);
+
     /**
      * 查询日期范围内所有用户的支付订单
      */

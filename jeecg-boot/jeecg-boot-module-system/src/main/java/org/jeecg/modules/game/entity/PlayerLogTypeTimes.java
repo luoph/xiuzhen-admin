@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 玩家行为次数统计类
+ *
  * @author huli
  */
 @Data

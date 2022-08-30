@@ -1,8 +1,8 @@
 package org.jeecg.modules.game.mapper;
 
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.jeecg.modules.player.entity.BackpackLog;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;

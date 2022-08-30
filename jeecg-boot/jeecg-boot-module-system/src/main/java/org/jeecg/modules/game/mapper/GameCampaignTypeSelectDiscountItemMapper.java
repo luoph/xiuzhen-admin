@@ -1,6 +1,6 @@
 /*
-* create by mybatis-plus-generator  https://github.com/xiweile
-*/
+ * create by mybatis-plus-generator  https://github.com/xiweile
+ */
 package org.jeecg.modules.game.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

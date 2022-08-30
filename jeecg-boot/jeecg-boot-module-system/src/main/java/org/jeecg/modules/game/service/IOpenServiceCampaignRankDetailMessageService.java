@@ -1,8 +1,6 @@
 package org.jeecg.modules.game.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.game.entity.OpenServiceCampaign;
-import org.jeecg.modules.game.entity.OpenServiceCampaignGiftDetail;
 import org.jeecg.modules.game.entity.OpenServiceCampaignRankDetailMessage;
 
 import java.util.List;

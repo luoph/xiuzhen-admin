@@ -14,9 +14,10 @@ public interface IGameStatOrderService extends IService<GameStatOrder> {
 
     /**
      * 查询充值统计列表
+     *
      * @param gameStatOrder 查询条件
-     * @param pageNo 页码
-     * @param pageSize 分页大小
+     * @param pageNo        页码
+     * @param pageSize      分页大小
      * @return 结果
      */
     IPage<GameStatOrder> queryGameStatOrderList(GameStatOrder gameStatOrder, Integer pageNo, Integer pageSize);

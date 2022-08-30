@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * 留存统计实现类
+ *
  * @author huli
  */
 @Service
@@ -178,8 +179,8 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     if (null != userMap3.get(map.get("player_id").toString())) {
                         if (0 == j) {
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("player_id",map.get("player_id").toString());
-                            jsonObject.put("createTime",map.get("create_date").toString());
+                            jsonObject.put("player_id", map.get("player_id").toString());
+                            jsonObject.put("createTime", map.get("create_date").toString());
                             jsonArray.add(jsonObject);
                         }
                         num++;
@@ -245,7 +246,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     @Override
     public List<JSONObject> queryRemainStatistiscOfNewUserlListJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) {
         List<Integer> dayList = new ArrayList<Integer>();
-        if (!StringUtils.isEmpty(daysRange)){
+        if (!StringUtils.isEmpty(daysRange)) {
             dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
@@ -254,10 +255,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 int daysRangeEnd = Integer.parseInt(daysRangeArray[1]);
                 for (int i = daysRangeBegain; i <= daysRangeEnd; i++) {
                     System.out.println(i);
-                    dayList.add(i-1);
+                    dayList.add(i - 1);
                 }
             }
-        }else{//使用Array.asList()会有bug
+        } else {//使用Array.asList()会有bug
             dayList.add(0);
             dayList.add(1);
             dayList.add(2);
@@ -295,13 +296,13 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             Map<String, Object> gameRemainStatistiscJsonObjectMap = new TreeMap<>(new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
-                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2 ) {
-                        try{
-                            int a = Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
-                        }catch (NumberFormatException e) {
+                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2) {
+                        try {
+                            int a = Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
+                        } catch (NumberFormatException e) {
                             return 1;
                         }
-                        return Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
+                        return Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
                     }
                     return 1;
                 }
@@ -317,10 +318,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 //获取登录日期里所有用户
                 List<Map> userMap2 = prodMap2.get(loginTimeString);
                 if (null == userMap1 || null == userMap2) {
-                    if (0 == dayList.get(j)){
-                        gameRemainStatistiscJsonObjectMap.put("registerNum",0);
-                    }else{
-                        gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
+                    if (0 == dayList.get(j)) {
+                        gameRemainStatistiscJsonObjectMap.put("registerNum", 0);
+                    } else {
+                        gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), 0);
                     }
                     continue;
                 }
@@ -333,18 +334,18 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     if (null != userMap3.get(map.get("player_id").toString())) {
                         if (0 == j) {
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("player_id",map.get("player_id").toString());
-                            jsonObject.put("createTime",map.get("create_date").toString());
+                            jsonObject.put("player_id", map.get("player_id").toString());
+                            jsonObject.put("createTime", map.get("create_date").toString());
                             jsonArray.add(jsonObject);
                         }
                         num++;
                     }
                 }
-                if (0 == dayList.get(j)){
-                    gameRemainStatistiscJsonObjectMap.put("userJsonArray",jsonArray);
-                    gameRemainStatistiscJsonObjectMap.put("registerNum",num);
-                }else{
-                    gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
+                if (0 == dayList.get(j)) {
+                    gameRemainStatistiscJsonObjectMap.put("userJsonArray", jsonArray);
+                    gameRemainStatistiscJsonObjectMap.put("registerNum", num);
+                } else {
+                    gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), num);
                 }
             }
             gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
@@ -452,8 +453,8 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     if (null != userMap3.get(map.get("player_id").toString()) && ynCanNum) {
                         if (0 == j) {
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("player_id",map.get("player_id").toString());
-                            jsonObject.put("createTime",map.get("create_time").toString());
+                            jsonObject.put("player_id", map.get("player_id").toString());
+                            jsonObject.put("createTime", map.get("create_time").toString());
                             jsonArray.add(jsonObject);
                         }
                         num++;
@@ -520,7 +521,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     @Override
     public List<JSONObject> queryRemainStatistiscOfDownPaymentListJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) {
         List<Integer> dayList = new ArrayList<Integer>();
-        if (!StringUtils.isEmpty(daysRange)){
+        if (!StringUtils.isEmpty(daysRange)) {
             dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
@@ -529,10 +530,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 int daysRangeEnd = Integer.parseInt(daysRangeArray[1]);
                 for (int i = daysRangeBegain; i <= daysRangeEnd; i++) {
                     System.out.println(i);
-                    dayList.add(i-1);
+                    dayList.add(i - 1);
                 }
             }
-        }else{//使用Array.asList()会有bug
+        } else {//使用Array.asList()会有bug
             dayList.add(0);
             dayList.add(1);
             dayList.add(2);
@@ -572,19 +573,19 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             Map<String, Object> gameRemainStatistiscJsonObjectMap = new TreeMap<>(new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
-                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2 ) {
-                        try{
-                            int a = Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
-                        }catch (NumberFormatException e) {
+                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2) {
+                        try {
+                            int a = Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
+                        } catch (NumberFormatException e) {
                             return 1;
                         }
-                        return Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
+                        return Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
                     }
                     return 1;
                 }
             });
 
-            for (int j = 0;  j< dayList.size(); j++) {
+            for (int j = 0; j < dayList.size(); j++) {
                 //需要判断的登录日期
                 Date loginTime = DateUtils.addDays(registerTime, dayList.get(j));
                 String loginTimeString = DateUtils.formatDate(loginTime, DatePattern.NORM_DATE_PATTERN);
@@ -594,10 +595,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 List<Map> userMap2 = prodMap2.get(loginTimeString);
                 if (null == userMap1 || null == userMap2) {
 
-                    if (0 == dayList.get(j)){
-                        gameRemainStatistiscJsonObjectMap.put("registerNum",0);
-                    }else{
-                        gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
+                    if (0 == dayList.get(j)) {
+                        gameRemainStatistiscJsonObjectMap.put("registerNum", 0);
+                    } else {
+                        gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), 0);
                     }
                     continue;
 
@@ -628,19 +629,19 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                     if (null != userMap3.get(map.get("player_id").toString()) && ynCanNum) {
                         if (0 == j) {
                             JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("player_id",map.get("player_id").toString());
-                            jsonObject.put("createTime",map.get("create_time").toString());
+                            jsonObject.put("player_id", map.get("player_id").toString());
+                            jsonObject.put("createTime", map.get("create_time").toString());
                             jsonArray.add(jsonObject);
                         }
                         num++;
                     }
                 }
 
-                if (0 == dayList.get(j)){
-                    gameRemainStatistiscJsonObjectMap.put("userJsonArray",jsonArray);
-                    gameRemainStatistiscJsonObjectMap.put("registerNum",num);
-                }else{
-                    gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
+                if (0 == dayList.get(j)) {
+                    gameRemainStatistiscJsonObjectMap.put("userJsonArray", jsonArray);
+                    gameRemainStatistiscJsonObjectMap.put("registerNum", num);
+                } else {
+                    gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), num);
                 }
             }
             gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
@@ -793,29 +794,30 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     }
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
     @Override
     public List<GameRemainStatistisc> queryRemainStatistiscOfFreeListB(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName) throws Exception {
         List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
         //新增留存
-        List<GameRemainStatistisc>  remainStatistiscOfNewUserlList = queryRemainStatistiscOfNewUserlListB(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        List<GameRemainStatistisc> remainStatistiscOfNewUserlList = queryRemainStatistiscOfNewUserlListB(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
         //首付留存
-        List<GameRemainStatistisc>  remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        List<GameRemainStatistisc> remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
         JSONArray jsonArrayOfNewUser = new JSONArray();
         JSONArray jsonArrayOfDownPayMent = new JSONArray();
-        if (null != remainStatistiscOfNewUserlList.get(0).getUserJsonArray()){
+        if (null != remainStatistiscOfNewUserlList.get(0).getUserJsonArray()) {
             jsonArrayOfNewUser = remainStatistiscOfNewUserlList.get(0).getUserJsonArray();
-        }else{
+        } else {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("player_id","");
-            jsonObject.put("createTime","");
+            jsonObject.put("player_id", "");
+            jsonObject.put("createTime", "");
             jsonArrayOfNewUser.add(jsonObject);
         }
-        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()){
+        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()) {
             jsonArrayOfDownPayMent = remainStatistiscOfDownPaymentList.get(0).getUserJsonArray();
-        }else{
+        } else {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("player_id","");
-            jsonObject.put("createTime","");
+            jsonObject.put("player_id", "");
+            jsonObject.put("createTime", "");
             jsonArrayOfDownPayMent.add(jsonObject);
         }
 
@@ -823,10 +825,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         //新增留存-首付留存=免费留存用户
         for (int i = 0; i < jsonArrayOfNewUser.size(); i++) {
             for (int i1 = 0; i1 < jsonArrayOfDownPayMent.size(); i1++) {
-                if (jsonArrayOfNewUser.getJSONObject(i).getString("player_id").equals(jsonArrayOfDownPayMent.getJSONObject(i1).getString("player_id"))){
+                if (jsonArrayOfNewUser.getJSONObject(i).getString("player_id").equals(jsonArrayOfDownPayMent.getJSONObject(i1).getString("player_id"))) {
                     break;
                 }
-                if (i1 == jsonArrayOfDownPayMent.size()-1) {
+                if (i1 == jsonArrayOfDownPayMent.size() - 1) {
                     jsonArrayOfFree.add(jsonArrayOfNewUser.getJSONObject(i));
                 }
             }
@@ -835,17 +837,16 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<Map> freeList = new ArrayList<>();
         for (int i = 0; i < jsonArrayOfFree.size(); i++) {
             Map<String, String> freeMap = new HashMap<>();
-            freeMap.put("createTime",jsonArrayOfFree.getJSONObject(i).getString("createTime"));
-            freeMap.put("player_id",jsonArrayOfFree.getJSONObject(i).getString("player_id"));
+            freeMap.put("createTime", jsonArrayOfFree.getJSONObject(i).getString("createTime"));
+            freeMap.put("player_id", jsonArrayOfFree.getJSONObject(i).getString("player_id"));
             freeList.add(freeMap);
         }
-        Map<String, List<Map>> freeMap_createDate= freeList.stream().collect(Collectors.groupingBy(map -> map.get("createTime").toString().substring(0,10)));
+        Map<String, List<Map>> freeMap_createDate = freeList.stream().collect(Collectors.groupingBy(map -> map.get("createTime").toString().substring(0, 10)));
 
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
         List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, tableName, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集登陆信息
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
-
 
 
         //计算开始时间和结束时间的相差天数
@@ -864,7 +865,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 List<Map> userMap2 = prodMap2.get(loginTimeString);
                 //注册日期内免费用户
                 List<Map> prodMap3 = freeMap_createDate.get(registerTimeString);
-                if (null == userMap2 ||null ==prodMap3) {
+                if (null == userMap2 || null == prodMap3) {
                     if (0 == DAY[j]) {
                         gameRemainStatistisc.setRegisterNum((long) 0);
                     }
@@ -975,7 +976,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     @Override
     public List<JSONObject> queryRemainStatistiscOfFreeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange) throws Exception {
         List<Integer> dayList = new ArrayList<Integer>();
-        if (!StringUtils.isEmpty(daysRange)){
+        if (!StringUtils.isEmpty(daysRange)) {
             dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
@@ -984,10 +985,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 int daysRangeEnd = Integer.parseInt(daysRangeArray[1]);
                 for (int i = daysRangeBegain; i <= daysRangeEnd; i++) {
                     System.out.println(i);
-                    dayList.add(i-1);
+                    dayList.add(i - 1);
                 }
             }
-        }else{//使用Array.asList()会有bug
+        } else {//使用Array.asList()会有bug
             dayList.add(0);
             dayList.add(1);
             dayList.add(2);
@@ -1004,25 +1005,25 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<JSONObject> gameRemainStatistiscJsonObjectList = new ArrayList<>();
 
         //新增留存
-        List<GameRemainStatistisc>  remainStatistiscOfNewUserlList = queryRemainStatistiscOfNewUserlListB(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        List<GameRemainStatistisc> remainStatistiscOfNewUserlList = queryRemainStatistiscOfNewUserlListB(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
         //首付留存
-        List<GameRemainStatistisc>  remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        List<GameRemainStatistisc> remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
         JSONArray jsonArrayOfNewUser = new JSONArray();
         JSONArray jsonArrayOfDownPayMent = new JSONArray();
-        if (null != remainStatistiscOfNewUserlList.get(0).getUserJsonArray()){
+        if (null != remainStatistiscOfNewUserlList.get(0).getUserJsonArray()) {
             jsonArrayOfNewUser = remainStatistiscOfNewUserlList.get(0).getUserJsonArray();
-        }else{
+        } else {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("player_id","");
-            jsonObject.put("createTime","");
+            jsonObject.put("player_id", "");
+            jsonObject.put("createTime", "");
             jsonArrayOfNewUser.add(jsonObject);
         }
-        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()){
+        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()) {
             jsonArrayOfDownPayMent = remainStatistiscOfDownPaymentList.get(0).getUserJsonArray();
-        }else{
+        } else {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("player_id","");
-            jsonObject.put("createTime","");
+            jsonObject.put("player_id", "");
+            jsonObject.put("createTime", "");
             jsonArrayOfDownPayMent.add(jsonObject);
         }
 
@@ -1030,10 +1031,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         //新增留存-首付留存=免费留存用户
         for (int i = 0; i < jsonArrayOfNewUser.size(); i++) {
             for (int i1 = 0; i1 < jsonArrayOfDownPayMent.size(); i1++) {
-                if (jsonArrayOfNewUser.getJSONObject(i).getString("player_id").equals(jsonArrayOfDownPayMent.getJSONObject(i1).getString("player_id"))){
+                if (jsonArrayOfNewUser.getJSONObject(i).getString("player_id").equals(jsonArrayOfDownPayMent.getJSONObject(i1).getString("player_id"))) {
                     break;
                 }
-                if (i1 == jsonArrayOfDownPayMent.size()-1) {
+                if (i1 == jsonArrayOfDownPayMent.size() - 1) {
                     jsonArrayOfFree.add(jsonArrayOfNewUser.getJSONObject(i));
                 }
             }
@@ -1042,17 +1043,16 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<Map> freeList = new ArrayList<>();
         for (int i = 0; i < jsonArrayOfFree.size(); i++) {
             Map<String, String> freeMap = new HashMap<>();
-            freeMap.put("createTime",jsonArrayOfFree.getJSONObject(i).getString("createTime"));
-            freeMap.put("player_id",jsonArrayOfFree.getJSONObject(i).getString("player_id"));
+            freeMap.put("createTime", jsonArrayOfFree.getJSONObject(i).getString("createTime"));
+            freeMap.put("player_id", jsonArrayOfFree.getJSONObject(i).getString("player_id"));
             freeList.add(freeMap);
         }
-        Map<String, List<Map>> freeMap_createDate= freeList.stream().collect(Collectors.groupingBy(map -> map.get("createTime").toString().substring(0,10)));
+        Map<String, List<Map>> freeMap_createDate = freeList.stream().collect(Collectors.groupingBy(map -> map.get("createTime").toString().substring(0, 10)));
 
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
         List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, tableName, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集登陆信息
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
-
 
 
         //计算开始时间和结束时间的相差天数
@@ -1067,20 +1067,20 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             Map<String, Object> gameRemainStatistiscJsonObjectMap = new TreeMap<>(new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
-                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2 ) {
-                        try{
-                            int a = Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
-                        }catch (NumberFormatException e) {
+                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2) {
+                        try {
+                            int a = Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
+                        } catch (NumberFormatException e) {
                             return 1;
                         }
-                        return Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
+                        return Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
                     }
                     return 1;
                 }
 
             });
 
-            for (int j = 0;  j< dayList.size(); j++) {
+            for (int j = 0; j < dayList.size(); j++) {
                 //需要判断的登录日期
                 Date loginTime = DateUtils.addDays(registerTime, dayList.get(j));
                 String loginTimeString = DateUtils.formatDate(loginTime, DatePattern.NORM_DATE_PATTERN);
@@ -1089,10 +1089,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 //注册日期内免费用户
                 List<Map> prodMap3 = freeMap_createDate.get(registerTimeString);
                 if (null == userMap2 || null == prodMap3) {
-                    if (0 == dayList.get(j)){
-                        gameRemainStatistiscJsonObjectMap.put("registerNum",0);
-                    }else{
-                        gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
+                    if (0 == dayList.get(j)) {
+                        gameRemainStatistiscJsonObjectMap.put("registerNum", 0);
+                    } else {
+                        gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), 0);
                     }
                     continue;
                 }
@@ -1108,10 +1108,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                         num++;
                     }
                 }
-                if (0 == dayList.get(j)){
-                    gameRemainStatistiscJsonObjectMap.put("registerNum",num);
-                }else{
-                    gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
+                if (0 == dayList.get(j)) {
+                    gameRemainStatistiscJsonObjectMap.put("registerNum", num);
+                } else {
+                    gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), num);
                 }
             }
             gameRemainStatistiscJsonObjectMap.put("countDate", DateUtils.formatDate(registerTime, DatePattern.NORM_DATE_PATTERN));
@@ -1290,15 +1290,15 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<GameRemainStatistisc> queryRemainStatistiscOfGradeListB(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName) {
         List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
         //首付留存
-        List<GameRemainStatistisc>  remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        List<GameRemainStatistisc> remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
         //首付留存的用户(唯一)
         JSONArray jsonArrayOfDownPayMent = new JSONArray();
-        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()){
+        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()) {
             jsonArrayOfDownPayMent = remainStatistiscOfDownPaymentList.get(0).getUserJsonArray();
-        }else{
+        } else {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("player_id","");
-            jsonObject.put("createTime","");
+            jsonObject.put("player_id", "");
+            jsonObject.put("createTime", "");
             jsonArrayOfDownPayMent.add(jsonObject);
         }
 
@@ -1314,8 +1314,8 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<Map> downPayMentList = new ArrayList<>();
         for (int i = 0; i < jsonArrayOfDownPayMent.size(); i++) {
             Map<String, String> freeMap = new HashMap<>();
-            freeMap.put("createTime",jsonArrayOfDownPayMent.getJSONObject(i).getString("createTime"));
-            freeMap.put("player_id",jsonArrayOfDownPayMent.getJSONObject(i).getString("player_id"));
+            freeMap.put("createTime", jsonArrayOfDownPayMent.getJSONObject(i).getString("createTime"));
+            freeMap.put("player_id", jsonArrayOfDownPayMent.getJSONObject(i).getString("player_id"));
             downPayMentList.add(freeMap);
         }
 //        //首付留存用户按player_id分组
@@ -1409,7 +1409,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 List<String> g = grade_downPaymentMap.get(s);
                 int num = 0;
                 for (String s1 : g) {
-                    if (null != userMap3.get(s1)){
+                    if (null != userMap3.get(s1)) {
                         num += 1;
                     }
                 }
@@ -1470,12 +1470,12 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<JSONObject> queryRemainStatistiscOfGradeListBJsonObjectList(String rangeDateBegin, String rangeDateEnd, String tableName, int serverId, String channelName, String daysRange, String grade) {
         //档位自定义
         List<String> gradeList = new ArrayList<>();
-        if (!StringUtils.isEmpty(grade)){
+        if (!StringUtils.isEmpty(grade)) {
             String[] daysRangeArrayAll = grade.split(",");
             for (String s : daysRangeArrayAll) {
                 gradeList.add(s);
             }
-        }else{//使用Array.asList()会有bug
+        } else {//使用Array.asList()会有bug
             gradeList.add("1-6");
             gradeList.add("7-29");
             gradeList.add("30-67");
@@ -1487,7 +1487,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         }
         //天数自定义
         List<Integer> dayList = new ArrayList<Integer>();
-        if (!StringUtils.isEmpty(daysRange)){
+        if (!StringUtils.isEmpty(daysRange)) {
             dayList.add(0);
             String[] daysRangeArrayAll = daysRange.split(",");
             for (String s : daysRangeArrayAll) {
@@ -1496,10 +1496,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 int daysRangeEnd = Integer.parseInt(daysRangeArray[1]);
                 for (int i = daysRangeBegain; i <= daysRangeEnd; i++) {
                     System.out.println(i);
-                    dayList.add(i-1);
+                    dayList.add(i - 1);
                 }
             }
-        }else{//使用Array.asList()会有bug
+        } else {//使用Array.asList()会有bug
             dayList.add(0);
             dayList.add(1);
             dayList.add(2);
@@ -1516,15 +1516,15 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<JSONObject> gameRemainStatistiscJsonObjectList = new ArrayList<>();
 
         //首付留存
-        List<GameRemainStatistisc>  remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
+        List<GameRemainStatistisc> remainStatistiscOfDownPaymentList = queryRemainStatistiscOfDownPaymentList(rangeDateBegin, rangeDateEnd, tableName, serverId, channelName);
         //首付留存的用户(唯一)
         JSONArray jsonArrayOfDownPayMent = new JSONArray();
-        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()){
+        if (null != remainStatistiscOfDownPaymentList.get(0).getUserJsonArray()) {
             jsonArrayOfDownPayMent = remainStatistiscOfDownPaymentList.get(0).getUserJsonArray();
-        }else{
+        } else {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("player_id","");
-            jsonObject.put("createTime","");
+            jsonObject.put("player_id", "");
+            jsonObject.put("createTime", "");
             jsonArrayOfDownPayMent.add(jsonObject);
         }
 
@@ -1540,8 +1540,8 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<Map> downPayMentList = new ArrayList<>();
         for (int i = 0; i < jsonArrayOfDownPayMent.size(); i++) {
             Map<String, String> freeMap = new HashMap<>();
-            freeMap.put("createTime",jsonArrayOfDownPayMent.getJSONObject(i).getString("createTime"));
-            freeMap.put("player_id",jsonArrayOfDownPayMent.getJSONObject(i).getString("player_id"));
+            freeMap.put("createTime", jsonArrayOfDownPayMent.getJSONObject(i).getString("createTime"));
+            freeMap.put("player_id", jsonArrayOfDownPayMent.getJSONObject(i).getString("player_id"));
             downPayMentList.add(freeMap);
         }
 //        //首付留存用户按player_id分组
@@ -1588,13 +1588,13 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
             Map<String, Object> gameRemainStatistiscJsonObjectMap = new TreeMap<>(new Comparator<String>() {
                 @Override
                 public int compare(String o1, String o2) {
-                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2 ) {
-                        try{
-                            int a = Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
-                        }catch (NumberFormatException e) {
+                    if (o1.split("c").length >= 2 && o2.split("c").length >= 2) {
+                        try {
+                            int a = Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
+                        } catch (NumberFormatException e) {
                             return 1;
                         }
-                        return Integer.parseInt(o1.split("c")[1] ) - Integer.parseInt(o2.split("c")[1]);
+                        return Integer.parseInt(o1.split("c")[1]) - Integer.parseInt(o2.split("c")[1]);
                     }
                     return 1;
                 }
@@ -1608,10 +1608,10 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 //获取登录日期里所有用户
                 List<Map> userMap2 = prodMap2.get(loginTimeString);
                 if (null == userMap2) {
-                    if (0 == dayList.get(j)){
-                        gameRemainStatistiscJsonObjectMap.put("registerNum",0);
-                    }else{
-                        gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),0);
+                    if (0 == dayList.get(j)) {
+                        gameRemainStatistiscJsonObjectMap.put("registerNum", 0);
+                    } else {
+                        gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), 0);
                     }
                     continue;
                 }
@@ -1620,19 +1620,19 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
                 List<String> g = grade_downPaymentMap.get(s);
                 int num = 0;
                 for (String s1 : g) {
-                    if (null != userMap3.get(s1)){
+                    if (null != userMap3.get(s1)) {
                         num += 1;
                     }
                 }
                 //设置登录留存数
-                if (0 == dayList.get(j)){
-                    gameRemainStatistiscJsonObjectMap.put("registerNum",num);
-                }else{
-                    gameRemainStatistiscJsonObjectMap.put("c"+(dayList.get(j)+1),num);
+                if (0 == dayList.get(j)) {
+                    gameRemainStatistiscJsonObjectMap.put("registerNum", num);
+                } else {
+                    gameRemainStatistiscJsonObjectMap.put("c" + (dayList.get(j) + 1), num);
                 }
             }
 
-            gameRemainStatistiscJsonObjectMap.put("countDate",s);
+            gameRemainStatistiscJsonObjectMap.put("countDate", s);
             String gameRemainStatistiscJsonObjectMapJsonString = JSON.toJSONString(gameRemainStatistiscJsonObjectMap);
             gameRemainStatistiscJsonObject = JSONObject.parseObject(gameRemainStatistiscJsonObjectMapJsonString);
             gameRemainStatistiscJsonObjectList.add(gameRemainStatistiscJsonObject);

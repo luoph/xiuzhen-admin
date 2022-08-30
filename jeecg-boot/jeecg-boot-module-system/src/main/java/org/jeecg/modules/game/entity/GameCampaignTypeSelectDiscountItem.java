@@ -1,6 +1,6 @@
 /*
-* create by mybatis-plus-generator  https://github.com/xiweile
-*/
+ * create by mybatis-plus-generator  https://github.com/xiweile
+ */
 package org.jeecg.modules.game.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("game_campaign_type_select_discount_item")
-public class GameCampaignTypeSelectDiscountItem extends GameCampaignTypeBase  {
+public class GameCampaignTypeSelectDiscountItem extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
 
@@ -71,7 +71,6 @@ public class GameCampaignTypeSelectDiscountItem extends GameCampaignTypeBase  {
      * 本组商品是否免费领取
      */
     private Boolean free;
-
 
 
 }

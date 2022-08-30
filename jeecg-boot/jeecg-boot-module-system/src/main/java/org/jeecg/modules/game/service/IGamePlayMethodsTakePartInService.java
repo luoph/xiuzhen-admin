@@ -14,12 +14,13 @@ import java.util.List;
 public interface IGamePlayMethodsTakePartInService {
     /**
      * 玩法参与查询
-     * @param times 玩法对应满次数
-     * @param grade 玩法对应等级
+     *
+     * @param times           玩法对应满次数
+     * @param grade           玩法对应等级
      * @param playMethodsType 玩法
      * @param createDateBegin 开始时间
-     * @param createDateEnd 结束时间
-     * @param serverId 服务器id
+     * @param createDateEnd   结束时间
+     * @param serverId        服务器id
      * @return List<GamePlayMethodsTakePartInVO>
      */
     List<GamePlayMethodsTakePartInVO> playMethodsTakePartList(int times, int grade, String playMethodsType,

@@ -16,7 +16,7 @@ public enum ShopType {
     FASHION_SHOP_NAMECARD(100203, "时装坊市--名帖"),
     HONOR_SHOP(1003, "荣誉坊市"),
     IMMORTAL_WAY(3001, "成仙路"),
-    DEFAULT(0,"不存在的类型，请检查！");
+    DEFAULT(0, "不存在的类型，请检查！");
 
     private final Integer shopId;
     private final String name;

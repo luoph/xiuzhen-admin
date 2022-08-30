@@ -1,12 +1,13 @@
 package org.jeecg.modules.game.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.game.entity.GameRankListVO;
 import org.jeecg.modules.game.service.IGameRankListService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import javax.annotation.Resource;
 import java.io.UnsupportedEncodingException;

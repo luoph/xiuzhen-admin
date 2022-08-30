@@ -1,7 +1,7 @@
 package org.jeecg.modules.game.mapper;
 
-import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +15,7 @@ import java.util.Map;
 public interface MilitaryStrengthMapper {
     /**
      * 查询时间范围内 所有 渡劫 战力变更信息
+     *
      * @param createDateBegin
      * @param createDateEnd
      * @return

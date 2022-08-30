@@ -31,7 +31,7 @@ public class GameCampaignTypeRebateRecharge extends GameCampaignTypeBase {
         this.progressDesc = other.getProgressDesc();
         this.reward = other.getReward();
         this.minLevel = other.getMinLevel();
-        this.maxLevel= other.getMaxLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**

@@ -53,10 +53,10 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     /**
      * 分页列表查询
      *
-     * @param entity 数据实体
-     * @param pageNo           页码
-     * @param pageSize         分页大小
-     * @param req              请求
+     * @param entity   数据实体
+     * @param pageNo   页码
+     * @param pageSize 分页大小
+     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "活动类型配置-列表查询")

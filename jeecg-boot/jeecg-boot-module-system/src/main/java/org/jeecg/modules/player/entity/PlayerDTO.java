@@ -80,17 +80,17 @@ public class PlayerDTO implements Serializable {
     /**
      * 等级范围
      */
-    private String  level;
+    private String level;
 
     /**
      * 等级范围开始
      */
-    private Integer  levelBegin;
+    private Integer levelBegin;
 
     /**
      * 等级范围结束
      */
-    private Integer  levelEnd;
+    private Integer levelEnd;
 
     /**
      * 充值范围

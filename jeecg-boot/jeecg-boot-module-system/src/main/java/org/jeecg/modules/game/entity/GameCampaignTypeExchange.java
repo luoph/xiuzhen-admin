@@ -31,7 +31,7 @@ public class GameCampaignTypeExchange extends GameCampaignTypeBase {
         this.reward = other.getReward();
         this.consume = other.getConsume();
         this.minLevel = other.getMinLevel();
-        this.maxLevel= other.getMaxLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**

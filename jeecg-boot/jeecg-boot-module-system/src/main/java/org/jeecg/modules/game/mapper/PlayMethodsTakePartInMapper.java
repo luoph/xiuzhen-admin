@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.mapper;
 
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
 
@@ -26,10 +26,10 @@ public interface PlayMethodsTakePartInMapper {
      * @return List<Map < String, Object>>
      */
     List<LogPlayer> conditionSelectPlayerLog(@Param("type") String type,
-                                                       @Param("createDateBegin") Date createDateBegin,
-                                                       @Param("createDateEnd") Date createDateEnd,
-                                                       @Param("logPlayerTable") String logPlayerTable,
-                                                       @Param("serverId") int serverId);
+                                             @Param("createDateBegin") Date createDateBegin,
+                                             @Param("createDateEnd") Date createDateEnd,
+                                             @Param("logPlayerTable") String logPlayerTable,
+                                             @Param("serverId") int serverId);
 
     /**
      * 查询符合等级的用户登录信息

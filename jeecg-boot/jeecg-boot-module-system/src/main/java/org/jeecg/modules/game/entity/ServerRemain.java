@@ -3,7 +3,6 @@ package org.jeecg.modules.game.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**

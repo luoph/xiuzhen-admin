@@ -15,59 +15,59 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class UserOnlineRecord  implements Serializable{
+public class UserOnlineRecord implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
+    private Long id;
 
-	/**
-	 * 账户
-	 */
-	private String account;
+    /**
+     * 账户
+     */
+    private String account;
 
-	/**
-	 * 玩家id
-	 */
-	private Long playerId;
+    /**
+     * 玩家id
+     */
+    private Long playerId;
 
-	/**
-	 * 设备id
-	 */
-	private String deviceId;
+    /**
+     * 设备id
+     */
+    private String deviceId;
 
-	/**
-	 * 渠道
-	 */
-	private String channel;
+    /**
+     * 渠道
+     */
+    private String channel;
 
-	/**
-	 * 开始时间
-	 */
-	private Date startTime;
+    /**
+     * 开始时间
+     */
+    private Date startTime;
 
-	/**
-	 * 结束时间
-	 */
-	private Date endTime;
+    /**
+     * 结束时间
+     */
+    private Date endTime;
 
-	/**
-	 * 在线时长(秒)
-	 */
-	private Long duration;
+    /**
+     * 在线时长(秒)
+     */
+    private Long duration;
 
-	/**
-	 * 在线时长(分)
-	 */
-	private Long durationMinutes;
+    /**
+     * 在线时长(分)
+     */
+    private Long durationMinutes;
 
-	/**
-	 * 创建时间
-	 */
-	private Date createTime;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
-	/**
-	 * 创建日期
-	 */
-	private Date createDate;
+    /**
+     * 创建日期
+     */
+    private Date createDate;
 }

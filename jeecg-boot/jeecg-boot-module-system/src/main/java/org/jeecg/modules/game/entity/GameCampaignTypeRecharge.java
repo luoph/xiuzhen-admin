@@ -30,7 +30,7 @@ public class GameCampaignTypeRecharge extends GameCampaignTypeBase {
         this.rechargeAmount = other.getRechargeAmount();
         this.reward = other.getReward();
         this.minLevel = other.getMinLevel();
-        this.maxLevel= other.getMaxLevel();
+        this.maxLevel = other.getMaxLevel();
     }
 
     /**

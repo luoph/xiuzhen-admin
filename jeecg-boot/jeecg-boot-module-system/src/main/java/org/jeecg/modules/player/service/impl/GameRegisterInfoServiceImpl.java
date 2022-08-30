@@ -21,30 +21,30 @@ import java.util.List;
 @Service
 public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMapper, GameRegisterInfo> implements IGameRegisterInfoService {
 
-	@Value("${app.log.db.table}")
-	private String logTable;
+    @Value("${app.log.db.table}")
+    private String logTable;
 
-	@Resource
-	private GameRegisterInfoMapper registerInfoMapper;
+    @Resource
+    private GameRegisterInfoMapper registerInfoMapper;
 
-	@Override
-	public List<GameRegisterInfo> queryLoginList(String rangeDateBegin, String rangeDateEnd, Long playerId, Integer serverId) {
-		Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
-		Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
-		List<GameRegisterInfo> list = registerInfoMapper.queryLoginList(rangeDateBeginTime, rangeDateEndTime, playerId);
-		for (GameRegisterInfo registerInfo : list) {
-			Date createDate = registerInfo.getUserOnlineRecord().getCreateDate();
-			Long duration = registerInfo.getUserOnlineRecord().getDuration();
-			if (duration > 0 && duration != null) {
-				registerInfo.getUserOnlineRecord().setDurationMinutes(duration / 60);
-			} else {
-				registerInfo.getUserOnlineRecord().setDurationMinutes((long) 0);
-			}
-			// 查询ip
-			String ip = registerInfoMapper.queryPlayerIp(playerId, DateUtils.dateOnly(createDate), logTable);
-			registerInfo.setIp(ip);
+    @Override
+    public List<GameRegisterInfo> queryLoginList(String rangeDateBegin, String rangeDateEnd, Long playerId, Integer serverId) {
+        Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
+        Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
+        List<GameRegisterInfo> list = registerInfoMapper.queryLoginList(rangeDateBeginTime, rangeDateEndTime, playerId);
+        for (GameRegisterInfo registerInfo : list) {
+            Date createDate = registerInfo.getUserOnlineRecord().getCreateDate();
+            Long duration = registerInfo.getUserOnlineRecord().getDuration();
+            if (duration > 0 && duration != null) {
+                registerInfo.getUserOnlineRecord().setDurationMinutes(duration / 60);
+            } else {
+                registerInfo.getUserOnlineRecord().setDurationMinutes((long) 0);
+            }
+            // 查询ip
+            String ip = registerInfoMapper.queryPlayerIp(playerId, DateUtils.dateOnly(createDate), logTable);
+            registerInfo.setIp(ip);
 
-		}
-		return list;
-	}
+        }
+        return list;
+    }
 }

@@ -8,7 +8,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -29,9 +28,10 @@ public class GameStatOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public GameStatOrder() {}
+    public GameStatOrder() {
+    }
 
-    public GameStatOrder(String date, int serverId, int ServerNum, int payNum, BigDecimal amount){
+    public GameStatOrder(String date, int serverId, int ServerNum, int payNum, BigDecimal amount) {
         this.date = date;
         this.serverId = serverId;
         this.serverNum = ServerNum;

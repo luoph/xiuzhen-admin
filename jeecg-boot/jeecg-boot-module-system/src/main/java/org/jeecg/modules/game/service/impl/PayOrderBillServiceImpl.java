@@ -1,8 +1,8 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.hutool.core.date.DatePattern;
-import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.PayOrderBill;
@@ -86,9 +86,9 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
     @Override
     public List<PayOrderBill> queryForList(String payRankString, String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel) {
         List<String> payRankList = new ArrayList<>();
-        if(!StringUtils.isEmpty(payRankString)){
+        if (!StringUtils.isEmpty(payRankString)) {
             payRankList.add(payRankString);
-        }else{
+        } else {
             for (String payrank : PAYRANKS) {
                 payRankList.add(payrank);
             }
@@ -99,7 +99,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         //查询日期范围内所有支付订单
         List<Map> allPayInfoList0 = payOrderBillMapper.selectAllPayInfoByTimeRange(DateUtils.formatDate(rangeDateBeginTime, DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(rangeDateEndTime, DatePattern.NORM_DATETIME_PATTERN), serverId, channel);
         //支付订单player_id分组
-        Map<String, List<Map>> allPayInfoList0Map_playerId= allPayInfoList0.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
+        Map<String, List<Map>> allPayInfoList0Map_playerId = allPayInfoList0.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
         //每个用户当天支付总额
         Map<String, Double> playerPaySum = new HashMap<>();
         for (String s : allPayInfoList0Map_playerId.keySet()) {
@@ -117,7 +117,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 BigDecimal payRankBegin = new BigDecimal(payRanks[0]).setScale(4, BigDecimal.ROUND_HALF_UP);
                 BigDecimal payRankEnd = new BigDecimal(payRanks[1]).setScale(4, BigDecimal.ROUND_HALF_UP);
                 BigDecimal pay = new BigDecimal(playerPaySum.get(s).toString()).setScale(4, BigDecimal.ROUND_HALF_UP);
-                if(payRankBegin.compareTo(pay) < 1 && pay.compareTo(payRankEnd) < 1) {
+                if (payRankBegin.compareTo(pay) < 1 && pay.compareTo(payRankEnd) < 1) {
 
                     playerMap.put(s, playerPaySum.get(s).toString());
                 }
@@ -130,7 +130,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         for (String payRank : payRankList) {
             PayOrderBill payOrderBill = new PayOrderBill();
             Map<String, String> allPayInfoList = prodMap.get(payRank);
-            if(null == allPayInfoList) {
+            if (null == allPayInfoList) {
                 //设置 付费人数
                 payOrderBill.setPayNumSum(0);
                 //设置 充值档位
@@ -138,14 +138,14 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 //设置 付费金额
                 payOrderBill.setPayAmountSum(new BigDecimal("0.00").setScale(4, BigDecimal.ROUND_HALF_UP));
                 //设置 ARPPU（付费金额 除以 付费人数）
-                if(0 == payOrderBill.getPayNumSum()){
+                if (0 == payOrderBill.getPayNumSum()) {
                     payOrderBill.setArppu(new BigDecimal("0").setScale(4, BigDecimal.ROUND_HALF_UP));
-                }else{
-                    payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(),payOrderBill.getPayNumSum(),4));
+                } else {
+                    payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(), payOrderBill.getPayNumSum(), 4));
                 }
 
                 list.add(payOrderBill);
-            }else{
+            } else {
 
                 //设置 付费人数
                 payOrderBill.setPayNumSum(allPayInfoList.size());
@@ -162,10 +162,10 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 //设置 金额占比
 //            payOrderBill.setPayAmountSumRate();
                 //设置 ARPPU（付费金额 除以 付费人数）
-                if(0 == payOrderBill.getPayNumSum()){
+                if (0 == payOrderBill.getPayNumSum()) {
                     payOrderBill.setArppu(new BigDecimal("0").setScale(4, BigDecimal.ROUND_HALF_UP));
-                }else{
-                    payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(),payOrderBill.getPayNumSum(),4));
+                } else {
+                    payOrderBill.setArppu(BigDecimalUtil.divide(payOrderBill.getPayAmountSum().doubleValue(), payOrderBill.getPayNumSum(), 4));
                 }
 
                 list.add(payOrderBill);

@@ -21,84 +21,84 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 public class GameStoryAnalysisVO extends GameStoryAnalysis implements Serializable {
 
-	private static final long serialVersionUID = -1960866186259048998L;
+    private static final long serialVersionUID = -1960866186259048998L;
 
-	public GameStoryAnalysisVO() {
-	}
+    public GameStoryAnalysisVO() {
+    }
 
-	public GameStoryAnalysisVO(Integer minorLevel, String chapterName) {
-		super();
-		setMinorLevel(minorLevel);
-		setStoryCheckpoint(chapterName);
-	}
+    public GameStoryAnalysisVO(Integer minorLevel, String chapterName) {
+        super();
+        setMinorLevel(minorLevel);
+        setStoryCheckpoint(chapterName);
+    }
 
-	/**
-	 * 渠道
-	 */
-	@ExcelIgnore
-	@TableField(exist = false)
-	private java.lang.String channelId;
+    /**
+     * 渠道
+     */
+    @ExcelIgnore
+    @TableField(exist = false)
+    private java.lang.String channelId;
 
-	/**
-	 * 服务器id
-	 */
-	@ExcelIgnore
-	@TableField(exist = false)
-	private java.lang.Integer serverId;
+    /**
+     * 服务器id
+     */
+    @ExcelIgnore
+    @TableField(exist = false)
+    private java.lang.Integer serverId;
 
-	/**
-	 * 分析日期
-	 */
-	@ExcelIgnore
-	@JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-	@DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
-	private java.util.Date analysisDate;
+    /**
+     * 分析日期
+     */
+    @ExcelIgnore
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    private java.util.Date analysisDate;
 
-	/**
-	 * 剧情小关卡
-	 */
-	@Excel(name = "剧情小关卡", width = 15)
-	private java.lang.String storyCheckpoint;
+    /**
+     * 剧情小关卡
+     */
+    @Excel(name = "剧情小关卡", width = 15)
+    private java.lang.String storyCheckpoint;
 
-	/**
-	 * 停留活跃人数
-	 */
-	@Excel(name = "停留活跃人数", width = 15)
-	private java.lang.Integer stayLiveNum;
+    /**
+     * 停留活跃人数
+     */
+    @Excel(name = "停留活跃人数", width = 15)
+    private java.lang.Integer stayLiveNum;
 
-	/**
-	 * 活跃占比
-	 */
-	@Excel(name = "活跃占比", width = 15)
-	private java.lang.String liveRate;
+    /**
+     * 活跃占比
+     */
+    @Excel(name = "活跃占比", width = 15)
+    private java.lang.String liveRate;
 
-	/**
-	 * 停留流失人数
-	 */
-	@Excel(name = "停留流失人数", width = 15)
-	private java.lang.Integer stayLeaveNum;
+    /**
+     * 停留流失人数
+     */
+    @Excel(name = "停留流失人数", width = 15)
+    private java.lang.Integer stayLeaveNum;
 
-	/**
-	 * 流失占比
-	 */
-	@Excel(name = "流失占比", width = 15)
-	private java.lang.String leaveRate;
+    /**
+     * 流失占比
+     */
+    @Excel(name = "流失占比", width = 15)
+    private java.lang.String leaveRate;
 
-	/**
-	 * 总达成人数
-	 */
-	@Excel(name = "总达成人数", width = 15)
-	private java.lang.Integer totalArriveNum;
+    /**
+     * 总达成人数
+     */
+    @Excel(name = "总达成人数", width = 15)
+    private java.lang.Integer totalArriveNum;
 
-	/**
-	 * 总滞留人数
-	 */
-	@Excel(name = "总滞留人数", width = 15)
-	private java.lang.Integer totalStayNum;
+    /**
+     * 总滞留人数
+     */
+    @Excel(name = "总滞留人数", width = 15)
+    private java.lang.Integer totalStayNum;
 
-	/**
-	 * 关卡滞留率
-	 */
-	@Excel(name = "关卡滞留率", width = 15)
-	private java.lang.String checkpointStayRate;
+    /**
+     * 关卡滞留率
+     */
+    @Excel(name = "关卡滞留率", width = 15)
+    private java.lang.String checkpointStayRate;
 }

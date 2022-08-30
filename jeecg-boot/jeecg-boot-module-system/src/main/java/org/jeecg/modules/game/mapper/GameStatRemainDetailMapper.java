@@ -31,12 +31,13 @@ public interface GameStatRemainDetailMapper extends BaseMapper<GameStatRemainDet
     GameStatRemainDetail getPayStatRemainDetail(@Param("roleType") int roleType,
                                                 @Param("serverId") int serverId,
                                                 @Param("registerDate") String registerDate);
+
     /**
      * 免费留存
      */
     GameStatRemainDetail getFreeStatRemainDetail(@Param("roleType") int roleType,
-                                                @Param("serverId") int serverId,
-                                                @Param("registerDate") String registerDate);
+                                                 @Param("serverId") int serverId,
+                                                 @Param("registerDate") String registerDate);
 
     /**
      * 查询留存
