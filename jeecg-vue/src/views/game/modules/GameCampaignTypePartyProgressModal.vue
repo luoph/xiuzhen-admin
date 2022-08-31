@@ -1,22 +1,27 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
+                          placeholder="请输入活动id" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动id" style="width: 100%" />
+          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="任务规定数量" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['target', validatorRules.target]" placeholder="请输入任务规定数量" style="width: 100%" />
+          <a-input-number v-decorator="['target', validatorRules.target]" placeholder="请输入任务规定数量"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="进度百分比" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['percent', validatorRules.percent]" placeholder="请输入进度百分比" style="width: 100%" />
+          <a-input-number v-decorator="['percent', validatorRules.percent]" placeholder="请输入进度百分比"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="任务奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入任务奖励" />
+          <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入任务奖励"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -29,7 +34,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 
 export default {
@@ -43,20 +48,20 @@ export default {
       visible: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: { rules: [{ required: true, message: '请输入活动id!' }] },
-        typeId: { rules: [{ required: true, message: '请输入子活动id!' }] },
-        target: { rules: [{ required: true, message: '请输入任务规定数量!' }] },
-        percent: { rules: [{ required: true, message: '请输入进度百分比!' }] },
-        reward: { rules: [{ required: true, message: '请输入任务奖励!' }] }
+        campaignId: {rules: [{required: true, message: '请输入活动id!'}]},
+        typeId: {rules: [{required: true, message: '请输入子活动id!'}]},
+        target: {rules: [{required: true, message: '请输入任务规定数量!'}]},
+        percent: {rules: [{required: true, message: '请输入进度百分比!'}]},
+        reward: {rules: [{required: true, message: '请输入任务奖励!'}]}
       },
       url: {
         add: 'game/gameCampaignTypePartyProgress/add',
@@ -64,7 +69,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add(record) {
       this.edit(record);

@@ -10,9 +10,14 @@
       <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+          <a-menu-item key="1" @click="batchDel">
+            <a-icon type="delete"/>
+            删除
+          </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+        <a-button style="margin-left: 8px"> 批量操作
+          <a-icon type="down"/>
+        </a-button>
       </a-dropdown>
       <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据"></a-textarea>
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -23,8 +28,9 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -45,16 +51,17 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width: 180px" />
+          <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width: 180px"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -69,14 +76,15 @@
       </a-table>
     </div>
 
-    <open-service-campaign-single-gift-item-modal ref="modalForm" @ok="modalFormOk"></open-service-campaign-single-gift-item-modal>
+    <open-service-campaign-single-gift-item-modal ref="modalForm"
+                                                  @ok="modalFormOk"></open-service-campaign-single-gift-item-modal>
   </a-card>
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { getAction, postAction } from '../../api/manage';
-import { filterObj } from '@/utils/util';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {getAction, postAction} from '../../api/manage';
+import {filterObj} from '@/utils/util';
 import OpenServiceCampaignSingleGiftItemModal from './modules/OpenServiceCampaignSingleGiftItemModal';
 
 export default {
@@ -158,7 +166,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -174,7 +182,8 @@ export default {
   },
   computed: {},
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     loadData(arg) {
       if (!this.model.id) {
         return;

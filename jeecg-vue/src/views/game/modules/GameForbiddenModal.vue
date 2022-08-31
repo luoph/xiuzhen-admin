@@ -1,10 +1,12 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
+          <a-input v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id"
+                   style="width: 100%"/>
         </a-form-item>
         <a-form-item label="封禁功能" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请选择封禁功能" v-decorator="['type', validatorRules.type]">
@@ -20,10 +22,10 @@
           </a-select>
         </a-form-item>
         <a-form-item label="封禁值" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入封禁值" />
+          <a-input v-decorator="['banValue', validatorRules.banValue]" placeholder="请输入封禁值"/>
         </a-form-item>
         <a-form-item label="封禁原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因" />
+          <a-textarea v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因"/>
         </a-form-item>
         <!-- <a-form-item label="数据状态	" :labelCol="labelCol" :wrapperCol="wrapperCol">
                     <a-input disabled v-decorator="['delFlag', validatorRules.delFlag]" placeholder="请输入删除状态：0-未删除 1-已删除	" initialValue="0" style="width: 100%" />
@@ -36,10 +38,12 @@
         </a-form-item>
         <a-form-item label="封禁时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-col :md="10" :sm="8">
-            <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" />
+            <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss"
+                           v-decorator="['startTime', validatorRules.startTime]"/>
           </a-col>
           <a-col :md="10" :sm="8">
-            <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
+            <a-date-picker placeholder="结束时间" showTime format="YYYY-MM-DD HH:mm:ss"
+                           v-decorator="['endTime', validatorRules.endTime]"/>
           </a-col>
         </a-form-item>
       </a-form>
@@ -53,7 +57,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 import moment from 'moment';
@@ -72,21 +76,21 @@ export default {
       isEdit: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        serverId: { rules: [{ required: true, message: '请输入服务器id!' }] },
-        type: { rules: [{ required: true, message: '请输入封禁功能' }] },
-        banKey: { rules: [{ required: true, message: '请输入封禁依据' }] },
-        banValue: { rules: [{ required: true, message: '请输入对应封禁值!' }] },
-        reason: { rules: [{ required: true, message: '请输入封禁原因!' }] },
-        isForever: { rules: [{ required: true, message: '请选择是否永久封禁' }] },
+        serverId: {rules: [{required: true, message: '请输入服务器id!'}]},
+        type: {rules: [{required: true, message: '请输入封禁功能'}]},
+        banKey: {rules: [{required: true, message: '请输入封禁依据'}]},
+        banValue: {rules: [{required: true, message: '请输入对应封禁值!'}]},
+        reason: {rules: [{required: true, message: '请输入封禁原因!'}]},
+        isForever: {rules: [{required: true, message: '请选择是否永久封禁'}]},
         startTime: {},
         endTime: {}
       },
@@ -96,7 +100,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});
@@ -112,8 +117,8 @@ export default {
           this.form.setFieldsValue(pick(this.model, 'serverId', 'type', 'banKey', 'banValue', 'reason', 'isForever', 'startTime', 'endTime'));
 
           // 时间格式化
-          this.form.setFieldsValue({ startTime: this.model.startTime ? moment(this.model.startTime) : null });
-          this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
+          this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null});
+          this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
         });
       });
     },
@@ -169,7 +174,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

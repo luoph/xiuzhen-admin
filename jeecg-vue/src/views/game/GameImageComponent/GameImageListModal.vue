@@ -1,5 +1,6 @@
 <template>
-  <a-modal centered :title="name + '选择'" :width="1200" :visible="visible" @ok="handleOk" @cancel="close" cancelText="关闭">
+  <a-modal centered :title="name + '选择'" :width="1200" :visible="visible" @ok="handleOk" @cancel="close"
+           cancelText="关闭">
     <a-row :gutter="18">
       <!-- 查询区域 -->
       <div class="table-page-search-wrapper">
@@ -48,7 +49,7 @@
       >
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
+          <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image"/>
         </template>
       </a-table>
     </a-row>
@@ -56,7 +57,7 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JInput from '@/components/jeecg/JInput';
 
 export default {
@@ -87,12 +88,12 @@ export default {
     return {
       description: '游戏图片列表',
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       // 表头
       columns: [
@@ -126,7 +127,7 @@ export default {
           align: 'center',
           dataIndex: 'imgUrl',
           width: 320,
-          scopedSlots: { customRender: 'imgSlot' }
+          scopedSlots: {customRender: 'imgSlot'}
         },
         {
           title: '文件名',
@@ -174,7 +175,7 @@ export default {
     dataSource: {
       deep: true,
       handler(val) {
-        let options = val.map((data) => ({ label: data[this.valueKey], value: data[this.valueKey] }));
+        let options = val.map((data) => ({label: data[this.valueKey], value: data[this.valueKey]}));
         this.$emit('ok', options);
         this.valueWatchHandler(this.value);
       }

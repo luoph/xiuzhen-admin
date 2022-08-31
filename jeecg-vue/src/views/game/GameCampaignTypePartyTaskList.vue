@@ -37,22 +37,25 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>-->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -72,10 +75,10 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameCampaignTypePartyTaskModal from './modules/GameCampaignTypePartyTaskModal';
-import { getAction, postAction } from '@api/manage';
-import { filterObj } from '@/utils/util';
+import {getAction, postAction} from '@api/manage';
+import {filterObj} from '@/utils/util';
 
 export default {
   name: 'GameCampaignTypePartyTaskList',
@@ -95,7 +98,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -143,7 +146,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -158,12 +161,13 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     loadData(arg) {
       if (!this.model.id) {
         return;
@@ -198,7 +202,7 @@ export default {
       this.loadData();
     },
     handleAdd() {
-      this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
+      this.$refs.modalForm.add({typeId: this.model.id, campaignId: this.model.campaignId});
       this.$refs.modalForm.title = '新增节日派对活动任务配置';
     },
     getQueryParams() {

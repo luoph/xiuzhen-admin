@@ -1,13 +1,16 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+          <a-input-number v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
+          <a-input-number v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="开启typeIds" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['typeIds', validatorRules.typeIds]" placeholder="请输入开启typeIds"></a-input>
@@ -21,7 +24,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 
 export default {
@@ -35,18 +38,18 @@ export default {
       visible: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: { rules: [{ required: true, message: '请输入活动id!' }] },
-        serverId: { rules: [{ required: true, message: '请输入服务器id!' }] },
-        typeIds: { rules: [{ required: true, message: '请输入开启typeIds' }] }
+        campaignId: {rules: [{required: true, message: '请输入活动id!'}]},
+        serverId: {rules: [{required: true, message: '请输入服务器id!'}]},
+        typeIds: {rules: [{required: true, message: '请输入开启typeIds'}]}
       },
       url: {
         add: 'game/gameCampaignSupport/add',
@@ -54,7 +57,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});
@@ -114,7 +118,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

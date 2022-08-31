@@ -1,5 +1,6 @@
 <template>
-  <a-modal :title="title" :width="1200" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="1200" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-card :bordered="false">
       <!-- 抽屉 -->
       <!-- <a-drawer :title="title" :width="1000" placement="right" :closable="false" @close="close" :visible="visible"> -->
@@ -40,7 +41,7 @@
           >
             <span slot="action" slot-scope="text, record">
               <a @click="handleEdit(record)">编辑</a>
-              <a-divider type="vertical" />
+              <a-divider type="vertical"/>
               <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
                 <a>删除</a>
               </a-popconfirm>
@@ -69,9 +70,8 @@
 
 <script>
 import GameChannelServerModal from './modules/GameChannelServerModal';
-import { getAction } from '@/api/manage';
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { filterObj } from '@/utils/util';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {filterObj} from '@/utils/util';
 import pick from 'lodash.pick';
 
 export default {
@@ -96,7 +96,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -134,19 +134,19 @@ export default {
           title: '区服状态',
           align: 'center',
           dataIndex: 'serverStatus',
-          scopedSlots: { customRender: 'statSlot' }
+          scopedSlots: {customRender: 'statSlot'}
         },
         {
           title: '维护状态',
           align: 'center',
           dataIndex: 'isMaintain',
-          scopedSlots: { customRender: 'maintainSlot' }
+          scopedSlots: {customRender: 'maintainSlot'}
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       queryParam: {
@@ -159,12 +159,12 @@ export default {
       model: {},
       channelId: '',
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       form: this.$form.createForm(this),
       url: {
@@ -175,11 +175,12 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
-  created() {},
+  created() {
+  },
   methods: {
     add(channelId) {
       this.channelId = channelId;
@@ -222,7 +223,7 @@ export default {
       if (this.dataSource && this.dataSource.length > 0) {
         position = this.dataSource[0].position;
       }
-      this.$refs.modalForm.edit({ channelId: this.channelId, delFlag: 0, position: position + 1 });
+      this.$refs.modalForm.edit({channelId: this.channelId, delFlag: 0, position: position + 1});
       this.$refs.modalForm.title = '新增';
     },
     handleCancel() {

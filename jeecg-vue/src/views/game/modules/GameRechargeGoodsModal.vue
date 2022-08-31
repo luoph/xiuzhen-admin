@@ -1,43 +1,51 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="商品Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
+          <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称"></a-input>
         </a-form-item>
         <a-form-item label="内购SKU" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['sku', validatorRules.sku]" placeholder="请输入内购SKU" style="width: 100%" />
+          <a-input v-decorator="['sku', validatorRules.sku]" placeholder="请输入内购SKU" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="网页支付SKU" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['webSku', validatorRules.webSku]" placeholder="请输网页支付SKU" style="width: 100%" />
+          <a-input v-decorator="['webSku', validatorRules.webSku]" placeholder="请输网页支付SKU" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="单价" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)" style="width: 100%" />
+          <a-input-number v-decorator="['price', validatorRules.price]" placeholder="请输入单价(创建订单实际价格)"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣后的价格" style="width: 100%" />
+          <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入折扣后的价格"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="当地货币价格(内购)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['localPrice', validatorRules.localPrice]" placeholder="当地货币价格(内购)" style="width: 100%" />
+          <a-input-number v-decorator="['localPrice', validatorRules.localPrice]" placeholder="当地货币价格(内购)"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="当地货币价格(网页)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['webLocalPrice', validatorRules.webLocalPrice]" placeholder="当地货币价格(网页)" style="width: 100%" />
+          <a-input-number v-decorator="['webLocalPrice', validatorRules.webLocalPrice]" placeholder="当地货币价格(网页)"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="显示价格(内购)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['displayPrice', validatorRules.displayPrice]" placeholder="显示价格(内购)" style="width: 100%" />
+          <a-input-number v-decorator="['displayPrice', validatorRules.displayPrice]" placeholder="显示价格(内购)"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="显示价格(网页)" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['webDisplayPrice', validatorRules.webDisplayPrice]" placeholder="显示价格(网页)" style="width: 100%" />
+          <a-input-number v-decorator="['webDisplayPrice', validatorRules.webDisplayPrice]" placeholder="显示价格(网页)"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['items']" rows="4" placeholder="请输入奖励列表" />
+          <a-textarea v-decorator="['items']" rows="4" placeholder="请输入奖励列表"/>
         </a-form-item>
         <a-form-item label="首次额外赠送" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['addition']" rows="4" placeholder="首次额外赠送" />
+          <a-textarea v-decorator="['addition']" rows="4" placeholder="首次额外赠送"/>
         </a-form-item>
         <a-form-item label="商品分类" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择商品分类" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0">
@@ -59,7 +67,8 @@
           </a-select>
         </a-form-item>
         <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="请输入是否计入累充" v-decorator="['amountStat', validatorRules.amountStat]" initialValue="1">
+          <a-select placeholder="请输入是否计入累充" v-decorator="['amountStat', validatorRules.amountStat]"
+                    initialValue="1">
             <a-select-option :value="0">是</a-select-option>
             <a-select-option :value="1">否</a-select-option>
           </a-select>
@@ -94,7 +103,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 
 export default {
@@ -108,31 +117,31 @@ export default {
       visible: false,
       model: {},
       labelCol: {
-        xs: { span: 26 },
-        sm: { span: 7 }
+        xs: {span: 26},
+        sm: {span: 7}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        price: { rules: [{ required: true, message: '请输入单价!' }] },
-        discount: { rules: [{ required: false, message: '请输入折扣价格!' }] },
-        name: { rules: [{ required: true, message: '请输入商品名称!' }] },
-        items: { rules: [{ required: false, message: '请输入奖励列表!' }] },
-        goodsType: { rules: [{ required: true, message: '请输入充值分类!' }] },
-        amountStat: { rules: [{ required: true, message: '请输入是否计入累充！' }] },
-        exchange: { rules: [{ required: true, message: '请输入游戏币与人民币(元)的兑换比例!' }] },
-        recommend: { rules: [{ required: false, message: '请输入特殊标记前端用!' }] },
-        goodsId: { rules: [{ required: true, message: '请输入商品Id' }] },
-        sku: { rules: [{ required: true, message: '请输入sku' }] },
-        webSku: { rules: [{ required: false, message: '请输入网页支付Sku' }] },
-        localPrice: { rules: [{ required: false, message: '请输入当地支付价格（内购）' }] },
-        webLocalPrice: { rules: [{ required: false, message: '请输入当地支付价格（网页）' }] },
-        displayPrice: { rules: [{ required: false, message: '请输入当地支付价格（内购）' }] },
-        webDisplayPrice: { rules: [{ required: false, message: '请输入当地显示价格（网页）' }] },
-        currency: { rules: [{ required: true, message: '请选择货币' }] }
+        price: {rules: [{required: true, message: '请输入单价!'}]},
+        discount: {rules: [{required: false, message: '请输入折扣价格!'}]},
+        name: {rules: [{required: true, message: '请输入商品名称!'}]},
+        items: {rules: [{required: false, message: '请输入奖励列表!'}]},
+        goodsType: {rules: [{required: true, message: '请输入充值分类!'}]},
+        amountStat: {rules: [{required: true, message: '请输入是否计入累充！'}]},
+        exchange: {rules: [{required: true, message: '请输入游戏币与人民币(元)的兑换比例!'}]},
+        recommend: {rules: [{required: false, message: '请输入特殊标记前端用!'}]},
+        goodsId: {rules: [{required: true, message: '请输入商品Id'}]},
+        sku: {rules: [{required: true, message: '请输入sku'}]},
+        webSku: {rules: [{required: false, message: '请输入网页支付Sku'}]},
+        localPrice: {rules: [{required: false, message: '请输入当地支付价格（内购）'}]},
+        webLocalPrice: {rules: [{required: false, message: '请输入当地支付价格（网页）'}]},
+        displayPrice: {rules: [{required: false, message: '请输入当地支付价格（内购）'}]},
+        webDisplayPrice: {rules: [{required: false, message: '请输入当地显示价格（网页）'}]},
+        currency: {rules: [{required: true, message: '请选择货币'}]}
       },
       url: {
         add: 'game/gameRechargeGoods/add',
@@ -140,7 +149,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});

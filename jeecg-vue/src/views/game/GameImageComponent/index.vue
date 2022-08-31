@@ -2,11 +2,12 @@
   <a-row class="j-select-biz-component-box" type="flex" :gutter="8">
     <a-col class="full" :class="{ full: !buttons }">
       <a-input :placeholder="placeholder" :disabled="disabled" style="width: 100%" v-model="selectValue" allowClear>
-        <a-icon slot="addonAfter" type="setting" @click="visible = true" />
+        <a-icon slot="addonAfter" type="setting" @click="visible = true"/>
       </a-input>
     </a-col>
 
-    <game-image-list-modal v-model="selectValue" :name="name" :returnKeys="returnKeys" :visible.sync="visible" :valueKey="valueKey" @ok="selectOptions = $event" />
+    <game-image-list-modal v-model="selectValue" :name="name" :returnKeys="returnKeys" :visible.sync="visible"
+                           :valueKey="valueKey" @ok="selectOptions = $event"/>
   </a-row>
 </template>
 
@@ -15,7 +16,7 @@ import GameImageListModal from './GameImageListModal';
 
 export default {
   name: 'GameImageComponent',
-  components: { GameImageListModal },
+  components: {GameImageListModal},
   props: {
     value: {
       type: String,
@@ -105,18 +106,18 @@ export default {
 </style>
 <style lang="less" scoped>
 .j-select-biz-component-box {
-    width: 40px;
+  width: 40px;
 
-    .left {
-        width: calc(100% - 40 - 8px);
-    }
+  .left {
+    width: calc(100% - 40 - 8px);
+  }
 
-    .right {
-        width: 40;
-    }
+  .right {
+    width: 40;
+  }
 
-    .full {
-        width: 100%;
-    }
+  .full {
+    width: 100%;
+  }
 }
 </style>

@@ -1,28 +1,35 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
+                          placeholder="请输入活动id" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
+          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="关卡id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['checkpointId', validatorRules.checkpointId]" placeholder="请输入关卡id" style="width: 100%" />
+          <a-input-number v-decorator="['checkpointId', validatorRules.checkpointId]" placeholder="请输入关卡id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="怪物id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['monsterId', validatorRules.monsterId]" placeholder="请输入怪物id" style="width: 100%" />
+          <a-input-number v-decorator="['monsterId', validatorRules.monsterId]" placeholder="请输入怪物id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="推荐战力" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['combatPower', validatorRules.combatPower]" placeholder="请输入推荐战力" style="width: 100%" />
+          <a-input-number v-decorator="['combatPower', validatorRules.combatPower]" placeholder="请输入推荐战力"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="解锁关卡" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['unlockCheckpointId', validatorRules.unlockCheckpointId]" placeholder="请输入解锁关卡" style="width: 100%" />
+          <a-input-number v-decorator="['unlockCheckpointId', validatorRules.unlockCheckpointId]"
+                          placeholder="请输入解锁关卡" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入奖励" />
+          <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入奖励"/>
         </a-form-item>
         <a-form-item label="关卡名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['checkpointName', validatorRules.checkpointName]" placeholder="请输入关卡名"></a-input>
@@ -38,7 +45,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 
 export default {
@@ -52,23 +59,23 @@ export default {
       visible: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: { rules: [{ required: true, message: '请输入活动id!' }] },
-        typeId: { rules: [{ required: true, message: '请输入页签id!' }] },
-        checkpointId: { rules: [{ required: true, message: '请输入关卡ID!' }] },
-        monsterId: { rules: [{ required: true, message: '请输入怪物ID!' }] },
-        combatPower: { rules: [{ required: true, message: '请输入推荐战力!' }] },
-        unlockCheckpointId: { rules: [{ required: true, message: '请输入解锁关卡!' }] },
-        reward: { rules: [{ required: true, message: '请输入奖励!' }] },
-        checkpointName: { rules: [{ required: true, message: '请输入关卡名!' }] }
+        campaignId: {rules: [{required: true, message: '请输入活动id!'}]},
+        typeId: {rules: [{required: true, message: '请输入页签id!'}]},
+        checkpointId: {rules: [{required: true, message: '请输入关卡ID!'}]},
+        monsterId: {rules: [{required: true, message: '请输入怪物ID!'}]},
+        combatPower: {rules: [{required: true, message: '请输入推荐战力!'}]},
+        unlockCheckpointId: {rules: [{required: true, message: '请输入解锁关卡!'}]},
+        reward: {rules: [{required: true, message: '请输入奖励!'}]},
+        checkpointName: {rules: [{required: true, message: '请输入关卡名!'}]}
       },
       url: {
         add: 'game/gameCampaignTypeSword/add',
@@ -76,7 +83,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add(record) {
       this.edit(record);

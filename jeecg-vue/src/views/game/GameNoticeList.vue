@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="公告类型">
-              <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type" />
+              <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -42,7 +42,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -62,17 +62,23 @@
             </a-upload> -->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+          <a-menu-item key="1" @click="batchDel">
+            <a-icon type="delete"/>
+            删除
+          </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+        <a-button style="margin-left: 8px"> 批量操作
+          <a-icon type="down"/>
+        </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -93,19 +99,21 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="100px" alt="图片不存在" style="max-width: 280px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="100px" alt="图片不存在"
+               style="max-width: 280px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a @click="handlePreview(record)">公告预览</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a @click="refreshNotice(record)">刷新公告</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -129,13 +137,12 @@
 </template>
 
 <script>
-import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
-import { getAction } from '@/api/manage';
+import {getAction} from '@/api/manage';
 import GameHtmlPreviewModal from './modules/GameHtmlPreviewModal';
 
 import GameNoticeModal from './modules/GameNoticeModal';
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 
 export default {
   name: 'GameNoticeList',
@@ -156,7 +163,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -183,7 +190,7 @@ export default {
           align: 'left',
           width: 600,
           dataIndex: 'content',
-          scopedSlots: { customRender: 'htmlSlot' }
+          scopedSlots: {customRender: 'htmlSlot'}
         },
         {
           title: '开始时间',
@@ -213,7 +220,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -229,7 +236,7 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
@@ -252,8 +259,8 @@ export default {
       this.$confirm({
         title: '是否刷新渠道公告？',
         content: '点击刷新渠道公告',
-        onOk: function() {
-          getAction(that.url.noticeRefresh, { id: record.id }).then(res => {
+        onOk: function () {
+          getAction(that.url.noticeRefresh, {id: record.id}).then(res => {
             if (res.success) {
               that.$message.success('公告刷新成功');
             } else {

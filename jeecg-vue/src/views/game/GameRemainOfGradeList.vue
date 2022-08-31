@@ -6,21 +6,22 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="10" :sm="8">
             <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="10" :sm="8">
             <a-form-item label="天数">
-              <a-input v-model="queryParam.showColumn" placeholder="请输入型如这样的数据：1-2,8-12,4-4" style="width: 100%" />
+              <a-input v-model="queryParam.showColumn" placeholder="请输入型如这样的数据：1-2,8-12,4-4"
+                       style="width: 100%"/>
             </a-form-item>
           </a-col>
           <a-col :md="10" :sm="8">
             <a-form-item label="档位">
-              <a-input v-model="queryParam.grade" placeholder="请输入型如这样的数据：1-2,8-12,6-6" style="width: 100%" />
+              <a-input v-model="queryParam.grade" placeholder="请输入型如这样的数据：1-2,8-12,6-6" style="width: 100%"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -51,10 +52,10 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import { getAction } from '@/api/manage';
+import {getAction} from '@/api/manage';
 
 export default {
   description: '分档位留存',
@@ -74,7 +75,7 @@ export default {
           dataIndex: '',
           width: '100',
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -83,7 +84,7 @@ export default {
           dataIndex: 'countDate',
           width: '120',
           align: 'center',
-          customRender: function(text) {
+          customRender: function (text) {
             return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
           }
         },
@@ -201,18 +202,19 @@ export default {
   },
   computed: {},
   methods: {
-    initDictConfig() {},
-    onSelectChannel: function(channelId) {
+    initDictConfig() {
+    },
+    onSelectChannel: function (channelId) {
       this.queryParam.channelId = channelId;
     },
-    onSelectServer: function(serverId) {
+    onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function(value, dateStr) {
+    onDateChange: function (value, dateStr) {
       this.queryParam.rangeDateBegin = dateStr[0];
       this.queryParam.rangeDateEnd = dateStr[1];
     },
-    pushByValue: function(arr, title, dataIndex) {
+    pushByValue: function (arr, title, dataIndex) {
       let column = {
         title: title,
         dataIndex: dataIndex,
@@ -225,7 +227,7 @@ export default {
       arr.push(column);
     },
     sortBykey(ary, key) {
-      return ary.sort(function(a, b) {
+      return ary.sort(function (a, b) {
         let x = a[key];
         let y = b[key];
         return x < y ? -1 : x > y ? 1 : 0;
@@ -240,7 +242,7 @@ export default {
             dataIndex: '',
             width: '100',
             align: 'center',
-            customRender: function(t, r, index) {
+            customRender: function (t, r, index) {
               return parseInt(index) + 1;
             }
           },
@@ -249,7 +251,7 @@ export default {
             dataIndex: 'countDate',
             width: '120',
             align: 'center',
-            customRender: function(text) {
+            customRender: function (text) {
               return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
             }
           },
@@ -284,7 +286,7 @@ export default {
             }
             break;
           }
-          this.columsHead.sort(function(a, b) {
+          this.columsHead.sort(function (a, b) {
             let x = parseInt(a);
             let y = parseInt(b);
             return x < y ? -1 : x > y ? 1 : 0;
@@ -302,7 +304,7 @@ export default {
         }
       });
     },
-    countRate: function(n, r) {
+    countRate: function (n, r) {
       if (n === null || n === undefined) {
         return '--';
       }

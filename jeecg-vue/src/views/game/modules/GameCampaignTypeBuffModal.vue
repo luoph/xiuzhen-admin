@@ -1,13 +1,16 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]" placeholder="请输入活动id" style="width: 100%" />
+          <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
+                          placeholder="请输入活动id" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id" style="width: 100%" />
+          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="加成类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择加成类型" v-decorator="['type', validatorRules.type]" initialValue="5">
@@ -16,16 +19,19 @@
           </a-select>
         </a-form-item>
         <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['startTime', validatorRules.startTime]" style="width: 100%" />
+          <a-date-picker placeholder="请选择开始时间" showTime format="YYYY-MM-DD HH:mm:ss"
+                         v-decorator="['startTime', validatorRules.startTime]" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" style="width: 100%" />
+          <a-date-picker placeholder="请选择结束时间" showTime format="YYYY-MM-DD HH:mm:ss"
+                         v-decorator="['endTime', validatorRules.endTime]" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-textarea>
         </a-form-item>
         <a-form-item label="加成" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成" style="width: 100%" />
+          <a-input-number v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成"
+                          style="width: 100%"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -36,7 +42,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 import moment from 'moment';
 import JDate from '@/components/jeecg/JDate';
@@ -55,22 +61,22 @@ export default {
       isEdit: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: { rules: [{ required: true, message: '请输入活动id!' }] },
-        typeId: { rules: [{ required: true, message: '请输入页签id!' }] },
-        type: { rules: [{ required: true, message: '请输入活动类型!' }] },
-        startTime: { rules: [{ required: true, message: '请输入开始时间!' }] },
-        endTime: { rules: [{ required: true, message: '请输入结束时间!' }] },
-        description: { rules: [{ required: true, message: '请输入描述!' }] },
-        addition: { rules: [{ required: true, message: '请输入加成!' }] }
+        campaignId: {rules: [{required: true, message: '请输入活动id!'}]},
+        typeId: {rules: [{required: true, message: '请输入页签id!'}]},
+        type: {rules: [{required: true, message: '请输入活动类型!'}]},
+        startTime: {rules: [{required: true, message: '请输入开始时间!'}]},
+        endTime: {rules: [{required: true, message: '请输入结束时间!'}]},
+        description: {rules: [{required: true, message: '请输入描述!'}]},
+        addition: {rules: [{required: true, message: '请输入加成!'}]}
       },
       url: {
         add: 'game/gameCampaignTypeBuff/add',
@@ -78,7 +84,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add(record) {
       this.edit(record);
@@ -92,8 +99,8 @@ export default {
 
       this.$nextTick(() => {
         this.form.setFieldsValue(pick(this.model, 'campaignId', 'typeId', 'type', 'startTime', 'endTime', 'description', 'addition'));
-        this.form.setFieldsValue({ startTime: this.startTime ? moment(this.startTime) : null });
-        this.form.setFieldsValue({ endtTime: this.endtTime ? moment(this.endtTime) : null });
+        this.form.setFieldsValue({startTime: this.startTime ? moment(this.startTime) : null});
+        this.form.setFieldsValue({endtTime: this.endtTime ? moment(this.endtTime) : null});
       });
     },
     close() {
@@ -147,7 +154,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

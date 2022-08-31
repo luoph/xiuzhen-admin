@@ -6,7 +6,7 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="用户类型">
@@ -18,7 +18,8 @@
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="日期">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -51,11 +52,11 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import { filterObj } from '@/utils/util';
-import { getAction } from '@/api/manage';
+import {filterObj} from '@/utils/util';
+import {getAction} from '@/api/manage';
 
 export default {
   description: '留存率',
@@ -74,7 +75,7 @@ export default {
           dataIndex: '',
           align: 'center',
           width: '60',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -83,7 +84,7 @@ export default {
           dataIndex: 'countDate',
           align: 'center',
           width: '140',
-          customRender: function(text) {
+          customRender: function (text) {
             return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
           }
         },
@@ -277,11 +278,12 @@ export default {
   },
   computed: {},
   methods: {
-    initDictConfig() {},
-    onSelectChannel: function(channelId) {
+    initDictConfig() {
+    },
+    onSelectChannel: function (channelId) {
       this.queryParam.channelId = channelId;
     },
-    onSelectServer: function(serverId) {
+    onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
     getQueryParams() {
@@ -293,19 +295,19 @@ export default {
       delete param.countDateRange;
       return filterObj(param);
     },
-    onDateChange: function(value, dateString) {
+    onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.countDate_begin = dateString[0];
       this.queryParam.countDate_end = dateString[1];
     },
-    toRate: function(n, r) {
+    toRate: function (n, r) {
       if (n === null || n === undefined) {
         return '--';
       }
       let rate = r > 0 ? parseFloat((n / r) * 100).toFixed(2) : parseFloat(0).toFixed(2);
       return rate + '%';
     },
-    countRate: function(n, record) {
+    countRate: function (n, record) {
       let baseNum = record.registerNum;
       if (record.roleType == 1) {
         baseNum = record.payNum;

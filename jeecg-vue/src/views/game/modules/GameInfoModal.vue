@@ -1,61 +1,67 @@
 <template>
   <!-- <a-drawer :title="title" :width="1000" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏名称">
-          <a-input placeholder="请输入游戏名称" v-decorator="['name', validatorRules.name]" />
+          <a-input placeholder="请输入游戏名称" v-decorator="['name', validatorRules.name]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="唯一标识">
-          <a-input :disabled="isEdit" placeholder="请输入唯一标识" v-decorator="['yaSimpleName', validatorRules.yaSimpleName]" />
+          <a-input :disabled="isEdit" placeholder="请输入唯一标识"
+                   v-decorator="['yaSimpleName', validatorRules.yaSimpleName]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APP_ID">
-          <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', validatorRules.yaAppId]" />
+          <a-input placeholder="请输入YA_APPID" v-decorator="['yaAppId', validatorRules.yaAppId]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_APP_KEY">
-          <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', validatorRules.yaAppKey]" />
+          <a-input placeholder="请输入YA_APPKEY" v-decorator="['yaAppKey', validatorRules.yaAppKey]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_GAME_KEY">
-          <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', validatorRules.yaGameKey]" />
+          <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', validatorRules.yaGameKey]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="微信审核版本">
-          <a-input placeholder="请输入微信审核版本号" v-decorator="['weixinReview', validatorRules.weixinReview]" />
+          <a-input placeholder="请输入微信审核版本号" v-decorator="['weixinReview', validatorRules.weixinReview]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="审核渠道">
-          <a-input placeholder="请输入审核渠道" v-decorator="['reviewChannel', validatorRules.reviewChannel]" />
+          <a-input placeholder="请输入审核渠道" v-decorator="['reviewChannel', validatorRules.reviewChannel]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="帐号登录地址">
-          <a-input placeholder="请输入帐号登录地址(不包含域名)" v-decorator="['loginUrl', validatorRules.loginUrl]" />
+          <a-input placeholder="请输入帐号登录地址(不包含域名)" v-decorator="['loginUrl', validatorRules.loginUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="角色信息地址">
-          <a-input placeholder="请输入角色信息地址(不包含域名)" v-decorator="['roleUrl', validatorRules.roleUrl]" />
+          <a-input placeholder="请输入角色信息地址(不包含域名)" v-decorator="['roleUrl', validatorRules.roleUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="实名认证地址">
-          <a-input placeholder="请输入实名认证地址(不包含域名)" v-decorator="['authUrl', validatorRules.authUrl]" />
+          <a-input placeholder="请输入实名认证地址(不包含域名)" v-decorator="['authUrl', validatorRules.authUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="服务器列表地址">
-          <a-input placeholder="请输入服务器列表地址(不包含域名)" v-decorator="['serverUrl', validatorRules.serverUrl]" />
+          <a-input placeholder="请输入服务器列表地址(不包含域名)"
+                   v-decorator="['serverUrl', validatorRules.serverUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告列表地址">
-          <a-input placeholder="请输入公告列表地址(不包含域名)" v-decorator="['noticeUrl', validatorRules.noticeUrl]" />
+          <a-input placeholder="请输入公告列表地址(不包含域名)" v-decorator="['noticeUrl', validatorRules.noticeUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付验证地址">
-          <a-input placeholder="请输入支付验证地址(不包含域名)" v-decorator="['payUrl', validatorRules.payUrl]" />
+          <a-input placeholder="请输入支付验证地址(不包含域名)" v-decorator="['payUrl', validatorRules.payUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="苹果登录回调">
-          <a-input placeholder="请输入苹果登录回调(不包含域名)" v-decorator="['oauthRedirectUrl', validatorRules.oauthRedirectUrl]" />
+          <a-input placeholder="请输入苹果登录回调(不包含域名)"
+                   v-decorator="['oauthRedirectUrl', validatorRules.oauthRedirectUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号注册地址">
-          <a-input placeholder="请输入账号注册地址(不包含域名)" v-decorator="['accountRegisterUrl', validatorRules.accountRegisterUrl]" />
+          <a-input placeholder="请输入账号注册地址(不包含域名)"
+                   v-decorator="['accountRegisterUrl', validatorRules.accountRegisterUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="账号登录地址">
-          <a-input placeholder="请输入账号登录地址(不包含域名)" v-decorator="['accountLoginUrl', validatorRules.accountLoginUrl]" />
+          <a-input placeholder="请输入账号登录地址(不包含域名)"
+                   v-decorator="['accountLoginUrl', validatorRules.accountLoginUrl]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="关闭注册天数">
-          <a-input placeholder="请输入关闭注册天数" v-decorator="['offRegisterDay', validatorRules.offRegisterDay]" />
+          <a-input placeholder="请输入关闭注册天数" v-decorator="['offRegisterDay', validatorRules.offRegisterDay]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
-          <a-textarea rows="4" placeholder="请输入描述" v-decorator="['remark', validatorRules.remark]" />
+          <a-textarea rows="4" placeholder="请输入描述" v-decorator="['remark', validatorRules.remark]"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -66,9 +72,8 @@
 </template>
 
 <script>
-import { getAction, putAction, httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
-import moment from 'moment';
 
 export default {
   name: 'GameInfoModal',
@@ -79,35 +84,35 @@ export default {
       isEdit: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
 
       confirmLoading: false,
       form: this.$form.createForm(this),
       validatorRules: {
-        name: { rules: [{ required: true, message: '请输入游戏名称!' }] },
-        yaAppId: { rules: [{ required: true, message: '请输入YA_APPID!' }] },
-        yaAppKey: { rules: [{ required: true, message: '请输入YA_APPKEY!' }] },
-        yaGameKey: { rules: [{ required: true, message: '请输入gameAppKey!' }] },
-        yaSimpleName: { rules: [{ required: true, message: '请输入gameSimpleName!' }] },
-        weixinReview: { rules: [{ required: false, message: '请输入微信审核版本!' }] },
-        reviewChannel: { rules: [{ required: false, message: '请输入审核渠道!' }] },
-        loginUrl: { rules: [{ required: true, message: '请输入帐号登录地址!' }] },
-        roleUrl: { rules: [{ required: true, message: '请输入角色信息地址!' }] },
-        payUrl: { rules: [{ required: false, message: '请输入支付验证地址!' }] },
-        authUrl: { rules: [{ required: false, message: '请输入实名认证地址!' }] },
-        accountRegisterUrl: { rules: [{ required: false, message: '请输入请输入账号登录地址!' }] },
-        accountLoginUrl: { rules: [{ required: false, message: '请输入请输入账号注册地址!' }] },
-        oauthRedirectUrl: { rules: [{ required: false, message: '请输入苹果登录回调地址!' }] },
-        serverUrl: { rules: [{ required: true, message: '请输入服务器列表地址!' }] },
-        noticeUrl: { rules: [{ required: true, message: '请输入公告列表地址!' }] },
-        offRegisterDay: { rules: [{ required: true, message: '请输入关闭注册天数!' }] },
-        remark: { rules: [{ required: false, message: '请输入描述!' }] }
+        name: {rules: [{required: true, message: '请输入游戏名称!'}]},
+        yaAppId: {rules: [{required: true, message: '请输入YA_APPID!'}]},
+        yaAppKey: {rules: [{required: true, message: '请输入YA_APPKEY!'}]},
+        yaGameKey: {rules: [{required: true, message: '请输入gameAppKey!'}]},
+        yaSimpleName: {rules: [{required: true, message: '请输入gameSimpleName!'}]},
+        weixinReview: {rules: [{required: false, message: '请输入微信审核版本!'}]},
+        reviewChannel: {rules: [{required: false, message: '请输入审核渠道!'}]},
+        loginUrl: {rules: [{required: true, message: '请输入帐号登录地址!'}]},
+        roleUrl: {rules: [{required: true, message: '请输入角色信息地址!'}]},
+        payUrl: {rules: [{required: false, message: '请输入支付验证地址!'}]},
+        authUrl: {rules: [{required: false, message: '请输入实名认证地址!'}]},
+        accountRegisterUrl: {rules: [{required: false, message: '请输入请输入账号登录地址!'}]},
+        accountLoginUrl: {rules: [{required: false, message: '请输入请输入账号注册地址!'}]},
+        oauthRedirectUrl: {rules: [{required: false, message: '请输入苹果登录回调地址!'}]},
+        serverUrl: {rules: [{required: true, message: '请输入服务器列表地址!'}]},
+        noticeUrl: {rules: [{required: true, message: '请输入公告列表地址!'}]},
+        offRegisterDay: {rules: [{required: true, message: '请输入关闭注册天数!'}]},
+        remark: {rules: [{required: false, message: '请输入描述!'}]}
       },
       url: {
         add: 'game/gameInfo/add',
@@ -115,7 +120,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});

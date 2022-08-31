@@ -1,5 +1,6 @@
 <template>
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="激活码名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -17,13 +18,16 @@
           </a-select>
         </a-form-item>
         <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isIncludeGroupModel" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
+          <a-input-number :disabled="isIncludeGroupModel" v-decorator="['groupId', validatorRules.groupId]"
+                          placeholder="请输入分组id" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="限制渠道id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['channelIds', validatorRules.channelIds]" placeholder="请输入限制渠道id, 使用半角','分割多个id"></a-textarea>
+          <a-textarea v-decorator="['channelIds', validatorRules.channelIds]"
+                      placeholder="请输入限制渠道id, 使用半角','分割多个id"></a-textarea>
         </a-form-item>
         <a-form-item label="限制区服id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入限制区服id, 使用半角','分割多个id"></a-textarea>
+          <a-textarea v-decorator="['serverIds', validatorRules.serverIds]"
+                      placeholder="请输入限制区服id, 使用半角','分割多个id"></a-textarea>
         </a-form-item>
         <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
@@ -33,17 +37,20 @@
         </a-form-item>
         <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-button type="danger" icon="plus" @click="handleAddItem">奖励选择</a-button>
-          <a-textarea v-decorator="['reward', { initialValue: itemTree }, validatorRules.reward]" placeholder="请输入奖励" :autoSize="{ minRows: 2, maxRows: 6 }" />
+          <a-textarea v-decorator="['reward', { initialValue: itemTree }, validatorRules.reward]"
+                      placeholder="请输入奖励" :autoSize="{ minRows: 2, maxRows: 6 }"/>
           <game-email-item-tree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></game-email-item-tree-modal>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-textarea>
         </a-form-item>
         <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />
+          <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]"
+                  :trigger-change="true" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
+          <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true"
+                  style="width: 100%"/>
         </a-form-item>
       </a-form>
 
@@ -57,7 +64,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 import RedeemCodeList from '../RedeemCodeList';
@@ -81,25 +88,25 @@ export default {
       itemTree: null,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        name: { rules: [{ required: true, message: '请输入激活码名称!' }] },
-        summary: { rules: [{ required: true, message: '请输入礼包说明!' }] },
-        limitType: { rules: [{ required: true, message: '请选择限制类型!' }] },
+        name: {rules: [{required: true, message: '请输入激活码名称!'}]},
+        summary: {rules: [{required: true, message: '请输入礼包说明!'}]},
+        limitType: {rules: [{required: true, message: '请选择限制类型!'}]},
         groupId: {},
         channelIds: {},
         serverIds: {},
-        status: { rules: [{ required: true, message: '请选择活动状态!' }] },
-        reward: { rules: [{ required: true, message: '请输入奖励!' }] },
-        remark: { rules: [{ required: true, message: '请输入备注!' }] },
-        startTime: { rules: [{ required: true, message: '请选择开始时间!' }] },
+        status: {rules: [{required: true, message: '请选择活动状态!'}]},
+        reward: {rules: [{required: true, message: '请输入奖励!'}]},
+        remark: {rules: [{required: true, message: '请输入备注!'}]},
+        startTime: {rules: [{required: true, message: '请选择开始时间!'}]},
         endTime: {}
       },
       url: {
@@ -108,7 +115,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});
@@ -187,7 +195,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

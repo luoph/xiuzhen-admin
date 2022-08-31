@@ -25,12 +25,14 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="8" :sm="16">
               <a-form-item label="开始时间">
-                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
+                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="16">
               <a-form-item label="结束时间">
-                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
+                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>
               </a-form-item>
             </a-col>
           </template>
@@ -40,7 +42,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -52,22 +54,29 @@
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('问卷调查')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
-          <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+          <a-menu-item key="1" @click="batchDel">
+            <a-icon type="delete"/>
+            删除
+          </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+        <a-button style="margin-left: 8px"> 批量操作
+          <a-icon type="down"/>
+        </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -88,11 +97,13 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
         <span slot="serverIdSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -101,9 +112,9 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a @click="handleSync(record)">同步到区服</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -123,12 +134,12 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JInput from '@/components/jeecg/JInput';
 import GameQuestionnaireModal from './modules/GameQuestionnaireModal';
 import JDate from '@/components/jeecg/JDate.vue';
-import { filterObj } from '@/utils/util';
-import { getAction } from '@/api/manage';
+import {filterObj} from '@/utils/util';
+import {getAction} from '@/api/manage';
 
 export default {
   name: 'GameQuestionnaireList',
@@ -150,7 +161,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -163,7 +174,7 @@ export default {
           title: '服务器id',
           align: 'center',
           dataIndex: 'serverIds',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: {customRender: 'serverIdSlot'}
         },
         {
           title: '问卷调查地址',
@@ -208,7 +219,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -224,12 +235,13 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);
@@ -240,20 +252,20 @@ export default {
       delete param.endTimeRange;
       return filterObj(param);
     },
-    onStartTimeChange: function(value, dateString) {
+    onStartTimeChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.startTime_begin = dateString[0];
       this.queryParam.startTime_end = dateString[1];
     },
-    onEndTimeChange: function(value, dateString) {
+    onEndTimeChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.endTime_begin = dateString[0];
       this.queryParam.endTime_end = dateString[1];
     },
-    handleDuplicate: function(record) {
+    handleDuplicate: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.duplicate, { id: record.id })
+      getAction(that.url.duplicate, {id: record.id})
         .then(res => {
           if (res.success) {
             that.$message.success('复制成功');
@@ -265,10 +277,10 @@ export default {
           that.confirmLoading = false;
         });
     },
-    handleSync: function(record) {
+    handleSync: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.sync, { id: record.id })
+      getAction(that.url.sync, {id: record.id})
         .then(res => {
           if (res.success) {
             that.$message.success('同步成功');

@@ -5,14 +5,14 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="12" :sm="16">
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="12" :sm="8">
             <a-form-item label="分析日期">
               <j-date placeholder="请选择分析日期" v-model="queryParam.analysisDate"></j-date>
             </a-form-item>
           </a-col>
-          <a-col :md="10" :sm="10" />
+          <a-col :md="10" :sm="10"/>
           <a-col :md="6" :sm="4">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
 
@@ -73,7 +73,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -133,16 +133,17 @@ export default {
         importExcelUrl: 'game/gameStoryAnalysis/importExcel'
       },
       dictOptions: {},
-      tableScroll: { x: 11 * 147 + 50 }
+      tableScroll: {x: 11 * 147 + 50}
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     onSelectServer(serverId) {
       this.queryParam.serverId = serverId;
     },

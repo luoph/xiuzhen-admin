@@ -33,7 +33,8 @@
             </a-col>
             <a-col :md="12" :sm="16">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onCreateTimeChange" />
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onCreateTimeChange"/>
               </a-form-item>
             </a-col>
           </template>
@@ -43,7 +44,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -55,19 +56,20 @@
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('开服活动(1级)')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete" />
+            <a-icon type="delete"/>
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down" />
+          <a-icon type="down"/>
         </a-button>
       </a-dropdown>
     </div>
@@ -75,8 +77,9 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -97,11 +100,12 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
+          <img v-else :src="getImgView(text)" alt="图片不存在" class="image"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
         <span slot="serverIdSlot" slot-scope="text">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -113,12 +117,12 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">活动信息</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a @click="handleDuplicate(record)">复制</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <!-- <a @click="handleTabList(record)">页签配置</a> -->
           <a @click="handleSync(record)">同步到区服</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -140,9 +144,9 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { getAction } from '@/api/manage';
-import { filterObj } from '@/utils/util';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {getAction} from '@/api/manage';
+import {filterObj} from '@/utils/util';
 import OpenServiceCampaignModal from './modules/OpenServiceCampaignModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import JInput from '@/components/jeecg/JInput';
@@ -167,7 +171,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -200,19 +204,19 @@ export default {
           title: '服务器id',
           align: 'center',
           dataIndex: 'serverIds',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: {customRender: 'serverIdSlot'}
         },
         {
           title: '活动图标',
           align: 'center',
           dataIndex: 'icon',
-          scopedSlots: { customRender: 'imgSlot' }
+          scopedSlots: {customRender: 'imgSlot'}
         },
         {
           title: '活动状态',
           align: 'center',
           dataIndex: 'status',
-          scopedSlots: { customRender: 'statuSlot' }
+          scopedSlots: {customRender: 'statuSlot'}
         },
         {
           title: '优先级',
@@ -252,7 +256,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -268,12 +272,13 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);
@@ -283,20 +288,20 @@ export default {
       delete param.createTimeRange;
       return filterObj(param);
     },
-    onCreateTimeChange: function(value, dateString) {
+    onCreateTimeChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.createTime_begin = dateString[0];
       this.queryParam.createTime_end = dateString[1];
     },
-    handleEdit: function(record) {
+    handleEdit: function (record) {
       this.$refs.modalForm.edit(record);
       this.$refs.modalForm.title = '活动信息';
       this.$refs.modalForm.disableSubmit = false;
     },
-    handleDuplicate: function(record) {
+    handleDuplicate: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.duplicate, { id: record.id })
+      getAction(that.url.duplicate, {id: record.id})
         .then(res => {
           if (res.success) {
             that.$message.success('复制成功');
@@ -309,10 +314,10 @@ export default {
           that.loadData();
         });
     },
-    handleSync: function(record) {
+    handleSync: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.sync, { id: record.id })
+      getAction(that.url.sync, {id: record.id})
         .then(res => {
           if (res.success) {
             that.$message.success('同步成功');
@@ -324,11 +329,11 @@ export default {
           that.confirmLoading = false;
         });
     },
-    handleServerList: function(record) {
+    handleServerList: function (record) {
       this.$refs.serverListModal.edit(record);
       this.$refs.serverListModal.title = '活动信息';
     },
-    handleTabList: function(record) {
+    handleTabList: function (record) {
       this.$refs.tabListModal.edit(record);
       this.$refs.tabListModal.title = '页签配置';
       this.$refs.tabListModal.disableSubmit = false;

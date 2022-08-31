@@ -6,11 +6,11 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="10" :sm="8">
             <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="5" :sm="5">
@@ -45,7 +45,8 @@
     <!-- 查询区域-END -->
     <div class="lateral-sliding" v-if="ynShowPicture">
       <div class="" v-for="(item, index) in items" :key="index">
-        <lineChartMultid class="" :style="{ width: pictureWidth }" title="折线图(数据量过大只会展示前1200条数据)" :fields="c" :dataSource="dataSourceLineChat" :height="420" />
+        <lineChartMultid class="" :style="{ width: pictureWidth }" title="折线图(数据量过大只会展示前1200条数据)"
+                         :fields="c" :dataSource="dataSourceLineChat" :height="420"/>
       </div>
     </div>
     <!-- table区域-begin -->
@@ -68,14 +69,12 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import { filterObj } from '@/utils/util';
-import { getAction } from '@/api/manage';
+import {getAction} from '@/api/manage';
 
 import LineChartMultid from '@/components/chart/LineChartMultid';
-import Vue from 'vue';
 
 export default {
   name: 'GameOnlineNumList',
@@ -104,7 +103,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -127,7 +126,7 @@ export default {
           title: '日期',
           align: 'center',
           dataIndex: 'getTime',
-          customRender: function(text) {
+          customRender: function (text) {
             return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
           }
         },
@@ -144,23 +143,24 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
-    onSelectChannel: function(channelId) {
+    initDictConfig() {
+    },
+    onSelectChannel: function (channelId) {
       this.queryParam.channelId = channelId;
     },
-    onSelectServer: function(serverId) {
+    onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function(value, dateStr) {
+    onDateChange: function (value, dateStr) {
       this.queryParam.rangeDateBegin = dateStr[0];
       this.queryParam.rangeDateEnd = dateStr[1];
     },
-    onChangeLineType: function(lineType) {
+    onChangeLineType: function (lineType) {
       this.queryParam.lineType = lineType;
     },
     searchQuery2() {
@@ -185,21 +185,21 @@ export default {
           this.dataSource = res.result.gameOnlineNumListAll;
           if ('seconds' == this.queryParam.lineType) {
             res.result.gameOnlineNumListSeconds.forEach(element => {
-              let lineDate = { type: element.getTime, pepole: element.onlineNum };
+              let lineDate = {type: element.getTime, pepole: element.onlineNum};
               if (this.dataSourceLineChat.length < 1200) {
                 this.dataSourceLineChat.push(lineDate);
               }
             });
           } else if ('days' == this.queryParam.lineType) {
             res.result.gameOnlineNumListDays.forEach(element => {
-              let lineDate = { type: element.getTime, pepole: element.onlineNum };
+              let lineDate = {type: element.getTime, pepole: element.onlineNum};
               if (this.dataSourceLineChat.length < 1200) {
                 this.dataSourceLineChat.push(lineDate);
               }
             });
           } else {
             res.result.gameOnlineNumListHours.forEach(element => {
-              let lineDate = { type: element.getTime, pepole: element.onlineNum };
+              let lineDate = {type: element.getTime, pepole: element.onlineNum};
               if (this.dataSourceLineChat.length < 1200) {
                 this.dataSourceLineChat.push(lineDate);
               }
@@ -240,6 +240,7 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
 .lateral-sliding {
   display: flex;
   overflow-y: hidden;

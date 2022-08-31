@@ -1,14 +1,15 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
         </a-form-item>
         <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" class="icon-image" />
-          <game-image-selector placeholder="请选择活动图标" v-decorator="['icon', validatorRules.icon]" />
+          <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" class="icon-image"/>
+          <game-image-selector placeholder="请选择活动图标" v-decorator="['icon', validatorRules.icon]"/>
         </a-form-item>
         <a-form-item label="是否跨服" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择是否跨服" v-decorator="['cross', validatorRules.cross]" initialValue="0">
@@ -18,7 +19,7 @@
         </a-form-item>
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
-          <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect" />
+          <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
         <a-form-item label="活动备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入活动备注"></a-input>
@@ -30,7 +31,8 @@
           </a-select>
         </a-form-item>
         <a-form-item label="自动开启" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="请选择自动开启状态" v-decorator="['autoOpen', validatorRules.autoOpen]" initialValue="0">
+          <a-select placeholder="请选择自动开启状态" v-decorator="['autoOpen', validatorRules.autoOpen]"
+                    initialValue="0">
             <a-select-option :value="0">关闭</a-select-option>
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
@@ -55,7 +57,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 import GameServerSelector from '@/components/gameserver/GameServerSelector';
@@ -80,23 +82,23 @@ export default {
       isAutoOpen: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        name: { rules: [{ required: true, message: '请输入活动名称!' }] },
-        cross: { rules: [{ required: true, message: '请选是否跨服' }] },
-        serverIds: { rules: [{ required: true, message: '请输入服务器id!' }] },
-        icon: { rules: [{ required: true, message: '请输入活动图标!' }] },
-        status: { rules: [{ required: true, message: '请输入活动状态!' }] },
-        autoOpen: { rules: [{ required: true, message: '请输入自动开启!' }] },
-        remark: { rules: [{ required: true, message: '请输入活动备注!' }] },
-        priority: { rules: [{ required: true, message: '请输入优先级!' }] }
+        name: {rules: [{required: true, message: '请输入活动名称!'}]},
+        cross: {rules: [{required: true, message: '请选是否跨服'}]},
+        serverIds: {rules: [{required: true, message: '请输入服务器id!'}]},
+        icon: {rules: [{required: true, message: '请输入活动图标!'}]},
+        status: {rules: [{required: true, message: '请输入活动状态!'}]},
+        autoOpen: {rules: [{required: true, message: '请输入自动开启!'}]},
+        remark: {rules: [{required: true, message: '请输入活动备注!'}]},
+        priority: {rules: [{required: true, message: '请输入优先级!'}]}
       },
       url: {
         add: 'game/openServiceCampaign/add',
@@ -104,7 +106,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});
@@ -200,7 +203,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 .icon-image {
   width: auto;

@@ -6,32 +6,32 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="昵称">
-              <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname" />
+              <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入区服id" v-model="queryParam.serverId" />
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="渠道">
-              <a-input placeholder="请输入渠道编码" v-model="queryParam.channel" />
+              <a-input placeholder="请输入渠道编码" v-model="queryParam.channel"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="账号">
-              <a-input placeholder="请输入账号" v-model="queryParam.account" />
+              <a-input placeholder="请输入账号" v-model="queryParam.account"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="境界">
-              <a-input placeholder="请输入境界" v-model="queryParam.realm" />
+              <a-input placeholder="请输入境界" v-model="queryParam.realm"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -44,14 +44,17 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="16">
               <a-form-item label="战力范围">
-                <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin"></a-input>
+                <a-input placeholder="最小战力值" class="query-group-cust"
+                         v-model="queryParam.combatPower_begin"></a-input>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="最大战力值" class="query-group-cust" v-model="queryParam.combatPower_end"></a-input>
+                <a-input placeholder="最大战力值" class="query-group-cust"
+                         v-model="queryParam.combatPower_end"></a-input>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
               </a-form-item>
             </a-col>
           </template>
@@ -61,7 +64,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -87,8 +90,9 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -110,16 +114,18 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -139,10 +145,10 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { getAction } from '@/api/manage';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {getAction} from '@/api/manage';
 import PlayerInfoModal from './modules/PlayerInfoModal';
-import { filterObj } from '@/utils/util';
+import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 
 export default {
@@ -168,7 +174,7 @@ export default {
           fixed: 'left',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -317,14 +323,16 @@ export default {
       dictOptions: {}
     };
   },
-  created() {},
+  created() {
+  },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);
@@ -334,7 +342,7 @@ export default {
       delete param.createTimeRange;
       return filterObj(param);
     },
-    onDateChange: function(value, dateString) {
+    onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.createTime_begin = dateString[0];
       this.queryParam.createTime_end = dateString[1];

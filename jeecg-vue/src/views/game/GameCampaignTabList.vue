@@ -6,7 +6,8 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                @change="handleImportExcel">
         <a-button type="primary" icon="import">导入活动配置</a-button>
       </a-upload>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('节日活动页签配置')">导出</a-button> -->
@@ -14,22 +15,24 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image" />
+          <img v-else :src="getImgView(text)" alt="图片不存在" class="list-image"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -49,9 +52,9 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { getAction } from '../../api/manage';
-import { filterObj } from '@/utils/util';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {getAction} from '../../api/manage';
+import {filterObj} from '@/utils/util';
 import GameCampaignTypeModal from './modules/GameCampaignTypeModal';
 import JDate from '@/components/jeecg/JDate.vue';
 
@@ -74,7 +77,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -150,7 +153,7 @@ export default {
           align: 'center',
           width: 400,
           dataIndex: 'typeImage',
-          scopedSlots: { customRender: 'imgSlot' }
+          scopedSlots: {customRender: 'imgSlot'}
         },
         {
           title: '排序',
@@ -180,7 +183,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -195,7 +198,8 @@ export default {
   },
   computed: {},
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     loadData(arg) {
       if (!this.model.id) {
         return;
@@ -230,7 +234,7 @@ export default {
       this.loadData();
     },
     handleAdd() {
-      this.$refs.modalForm.add({ campaignId: this.model.id });
+      this.$refs.modalForm.add({campaignId: this.model.id});
       this.$refs.modalForm.title = '新增节日页签配置';
     },
     getQueryParams() {

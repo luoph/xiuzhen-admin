@@ -1,28 +1,30 @@
 <template>
   <!-- <a-drawer :title="title" :width="1000" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="1000" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item v-if="isEdit" :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告id">
-          <a-input :disabled="isEdit" placeholder="公告id" v-model="model.id" />
+          <a-input :disabled="isEdit" placeholder="公告id" v-model="model.id"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告类型">
-          <a-select :disabled="isEdit" placeholder="请选择公告类型" v-decorator="['noticeType', validatorRules.noticeType]">
+          <a-select :disabled="isEdit" placeholder="请选择公告类型"
+                    v-decorator="['noticeType', validatorRules.noticeType]">
             <a-select-option :value="1">渠道公告</a-select-option>
             <a-select-option :value="2">滚动公告</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告标题">
-          <a-input placeholder="请输入标题" v-decorator="['title', {}]" />
+          <a-input placeholder="请输入标题" v-decorator="['title', {}]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告内容">
-          <j-editor v-model="contentHtml" />
+          <j-editor v-model="contentHtml"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开始时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]" />
+          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="结束时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]" />
+          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['endTime', validatorRules.endTime]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
           <a-select placeholder="请选择状态" v-decorator="['status', validatorRules.status]" initialValue="1">
@@ -31,7 +33,7 @@
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="滚动公告间隔(秒)">
-          <a-input-number v-decorator="['intervalSeconds', {}]" />
+          <a-input-number v-decorator="['intervalSeconds', {}]"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -42,11 +44,10 @@
 </template>
 
 <script>
-import { getAction, putAction, httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import JEditor from '@/components/jeecg/JEditor';
 import pick from 'lodash.pick';
 import moment from 'moment';
-import Vue from 'vue';
 
 export default {
   name: 'GameNoticeModal',
@@ -61,21 +62,21 @@ export default {
       model: {},
       contentHtml: '',
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       form: this.$form.createForm(this),
       validatorRules: {
-        noticeType: { rules: [{ required: true, message: '请选择公告类型!' }] },
-        content: { rules: [{ required: true, message: '请输入公告内容!' }] },
-        beginTime: { rules: [{ required: true, message: '请输入开始时间!' }] },
-        endTime: { rules: [{ required: true, message: '请输入结束时间!' }] },
-        status: { rules: [{ required: true, message: '请选择状态!' }] }
+        noticeType: {rules: [{required: true, message: '请选择公告类型!'}]},
+        content: {rules: [{required: true, message: '请输入公告内容!'}]},
+        beginTime: {rules: [{required: true, message: '请输入开始时间!'}]},
+        endTime: {rules: [{required: true, message: '请输入结束时间!'}]},
+        status: {rules: [{required: true, message: '请选择状态!'}]}
       },
       url: {
         add: 'game/gameNotice/add',
@@ -83,11 +84,12 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       // 新增默认值
-      this.edit({ noticeType: 1, status: 1, intervalSeconds: 0 });
+      this.edit({noticeType: 1, status: 1, intervalSeconds: 0});
     },
     edit(record) {
       this.form.resetFields();
@@ -100,8 +102,8 @@ export default {
       this.$nextTick(() => {
         this.form.setFieldsValue(pick(this.model, 'noticeType', 'title', 'status', 'intervalSeconds'));
         // 时间格式化
-        this.form.setFieldsValue({ beginTime: this.model.beginTime ? moment(this.model.beginTime) : null });
-        this.form.setFieldsValue({ endTime: this.model.endTime ? moment(this.model.endTime) : null });
+        this.form.setFieldsValue({beginTime: this.model.beginTime ? moment(this.model.beginTime) : null});
+        this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
       });
     },
     close() {
@@ -154,7 +156,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

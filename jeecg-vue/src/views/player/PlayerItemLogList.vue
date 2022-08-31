@@ -25,15 +25,18 @@
           </a-col>
           <a-col :md="8" :sm="16">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="16">
             <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
-              <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径" @onSelectOptionSome="selectWay"></a-select-read-json-some>
+              <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径"
+                                       @onSelectOptionSome="selectWay"></a-select-read-json-some>
             </a-form-item>
             <a-form-item v-else-if="queryParam.type === '2'" key="2" label="消耗途径">
-              <a-select-read-json-some json-file="item_expend" placeholder="请选择途径" @onSelectOptionSome="selectWay"></a-select-read-json-some>
+              <a-select-read-json-some json-file="item_expend" placeholder="请选择途径"
+                                       @onSelectOptionSome="selectWay"></a-select-read-json-some>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -52,7 +55,8 @@
     </div>
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
       </a-table>
     </div>
 
@@ -61,12 +65,12 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import PlayerItemLogModal from './modules/PlayerItemLogModal';
 import ServerSelect from '@/components/gameserver/ServerSelect';
 import ASelectReadJsonSome from '@comp/gameserver/ASelectReadJsonSome';
 import JDate from '@/components/jeecg/JDate.vue';
-import { filterObj } from '@/utils/util';
+import {filterObj} from '@/utils/util';
 import moment from 'moment';
 
 export default {
@@ -90,7 +94,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -138,7 +142,7 @@ export default {
           title: '方式',
           align: 'center',
           dataIndex: 'type',
-          customRender: function(text) {
+          customRender: function (text) {
             return text === 1 ? '获得' : '消耗';
           }
         },
@@ -156,12 +160,13 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);

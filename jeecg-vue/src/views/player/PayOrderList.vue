@@ -44,7 +44,8 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -55,9 +56,11 @@
             </a-col>
             <a-col :md="6" :sm="16">
               <a-form-item label="金额">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"></a-input>
+                <a-input placeholder="请输入最小值" class="query-group-cust"
+                         v-model="queryParam.payAmount_begin"></a-input>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end"></a-input>
+                <a-input placeholder="请输入最大值" class="query-group-cust"
+                         v-model="queryParam.payAmount_end"></a-input>
               </a-form-item>
             </a-col>
           </template>
@@ -67,7 +70,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -98,17 +101,20 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="status">
           <div v-html="status"></div>
         </template>
         <template slot="imgSlot" slot-scope="status">
           <span v-if="!status" style="font-size: 12px;font-style: italic;">无此图片</span>
-          <img v-else :src="getImgView(status)" height="25px" alt="图片不存在" style="max-width:80px;font-size: 12px;font-style: italic;" />
+          <img v-else :src="getImgView(status)" height="25px" alt="图片不存在"
+               style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="status">
           <span v-if="!status" style="font-size: 12px;font-style: italic;">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="status, record">
@@ -133,12 +139,12 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { filterObj } from '@/utils/util';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import PayOrderModal from './modules/PayOrderModal';
 import Vue from 'vue';
-import { ACCESS_TOKEN } from '@/store/mutation-types';
+import {ACCESS_TOKEN} from '@/store/mutation-types';
 
 export default {
   name: 'PayOrderList',
@@ -158,7 +164,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -282,7 +288,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 80,
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -294,12 +300,13 @@ export default {
     };
   },
   computed: {
-    importExcelUrl: function() {
+    importExcelUrl: function () {
       return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
-    initDictConfig() {},
+    initDictConfig() {
+    },
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);
@@ -309,7 +316,7 @@ export default {
       delete param.createTimeRange;
       return filterObj(param);
     },
-    onDateChange: function(value, dateString) {
+    onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.createTime_begin = dateString[0];
       this.queryParam.createTime_end = dateString[1];
@@ -325,11 +332,11 @@ export default {
       const token = Vue.ls.get(ACCESS_TOKEN);
       console.log(token);
       xhr.setRequestHeader('X-Access-Token', token);
-      xhr.onload = function() {
+      xhr.onload = function () {
         var blob = this.response;
         var reader = new FileReader();
         reader.readAsDataURL(blob);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           var a = document.createElement('a');
           a.download = filename + '.xlsx';
           a.href = e.target.result;

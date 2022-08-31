@@ -1,6 +1,7 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="游戏id" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -15,7 +16,8 @@
           <a-input v-decorator="['packageName', validatorRules.packageName]" placeholder="请输入应用包名"></a-input>
         </a-form-item>
         <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入版本号" style="width: 100%" />
+          <a-input-number v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入版本号"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="版本名" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['versionName', validatorRules.versionName]" placeholder="请输入版本名"></a-input>
@@ -37,13 +39,13 @@
           </a-select>
         </a-form-item>
         <a-form-item label="更新标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['updateTitle', validatorRules.updateTitle]" placeholder="请输入更新标题" />
+          <a-textarea v-decorator="['updateTitle', validatorRules.updateTitle]" placeholder="请输入更新标题"/>
         </a-form-item>
         <a-form-item label="更新内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['updateContent', validatorRules.updateContent]" placeholder="请输入更新内容" />
+          <a-textarea v-decorator="['updateContent', validatorRules.updateContent]" placeholder="请输入更新内容"/>
         </a-form-item>
         <a-form-item label="下载地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['downloadUrl', validatorRules.downloadUrl]" placeholder="请输入下载地址" />
+          <a-textarea v-decorator="['downloadUrl', validatorRules.downloadUrl]" placeholder="请输入下载地址"/>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
@@ -59,7 +61,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 
@@ -76,25 +78,25 @@ export default {
       visible: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
-        gameId: { rules: [{ required: true, message: '请输入游戏id!' }] },
-        appName: { rules: [{ required: true, message: '请输入应用名称!' }] },
-        packageName: { rules: [{ required: true, message: '请输入应用包名!' }] },
-        versionCode: { rules: [{ required: true, message: '请输入版本号!' }] },
-        versionName: { rules: [{ required: true, message: '请输入版本名!' }] },
-        platform: { rules: [{ required: true, message: '请输入平台!' }] },
-        channel: { rules: [{ required: true, message: '请输入包渠道!' }] },
-        downloadUrl: { rules: [{ required: true, message: '请输入下载地址!' }] },
-        updateTitle: { rules: [{ required: true, message: '请输入更新标题!' }] },
-        updateContent: { rules: [{ required: true, message: '请输入更新内容!' }] },
+        gameId: {rules: [{required: true, message: '请输入游戏id!'}]},
+        appName: {rules: [{required: true, message: '请输入应用名称!'}]},
+        packageName: {rules: [{required: true, message: '请输入应用包名!'}]},
+        versionCode: {rules: [{required: true, message: '请输入版本号!'}]},
+        versionName: {rules: [{required: true, message: '请输入版本名!'}]},
+        platform: {rules: [{required: true, message: '请输入平台!'}]},
+        channel: {rules: [{required: true, message: '请输入包渠道!'}]},
+        downloadUrl: {rules: [{required: true, message: '请输入下载地址!'}]},
+        updateTitle: {rules: [{required: true, message: '请输入更新标题!'}]},
+        updateContent: {rules: [{required: true, message: '请输入更新内容!'}]},
         remark: {}
       },
       url: {
@@ -103,7 +105,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});
@@ -167,7 +170,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

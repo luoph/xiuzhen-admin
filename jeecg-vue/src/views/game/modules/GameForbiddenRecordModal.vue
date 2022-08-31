@@ -1,19 +1,24 @@
 <template>
   <!-- <a-drawer :title="title" :width="width" placement="right" :closable="false" @close="close" :visible="visible"> -->
-  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk" @cancel="handleCancel" cancelText="关闭" okText="保存">
+  <a-modal :title="title" :width="width" :visible="visible" :confirmLoading="confirmLoading" @ok="handleOk"
+           @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="执行的增删改操作类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['operation', validatorRules.operation]" placeholder="请输入执行的增删改操作类型"></a-input>
+          <a-input v-decorator="['operation', validatorRules.operation]"
+                   placeholder="请输入执行的增删改操作类型"></a-input>
         </a-form-item>
         <a-form-item label="封号禁言表id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['forbiddenId', validatorRules.forbiddenId]" placeholder="请输入封号禁言表id" style="width: 100%" />
+          <a-input-number v-decorator="['forbiddenId', validatorRules.forbiddenId]" placeholder="请输入封号禁言表id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="服务器id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id" style="width: 100%" />
+          <a-input-number v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入服务器id"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="1-登录 2-聊天" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['type', validatorRules.type]" placeholder="请输入1-登录 2-聊天" style="width: 100%" />
+          <a-input-number v-decorator="['type', validatorRules.type]" placeholder="请输入1-登录 2-聊天"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="playerId/ip/deviceId" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['banKey', validatorRules.banKey]" placeholder="请输入playerId/ip/deviceId"></a-input>
@@ -25,16 +30,20 @@
           <a-input v-decorator="['reason', validatorRules.reason]" placeholder="请输入封禁原因"></a-input>
         </a-form-item>
         <a-form-item label="0-临时 1-永久" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['isForever', validatorRules.isForever]" placeholder="请输入0-临时 1-永久" style="width: 100%" />
+          <a-input-number v-decorator="['isForever', validatorRules.isForever]" placeholder="请输入0-临时 1-永久"
+                          style="width: 100%"/>
         </a-form-item>
         <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />
+          <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]"
+                  :trigger-change="true" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="结束时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true" style="width: 100%" />
+          <j-date placeholder="请选择结束时间" v-decorator="['endTime', validatorRules.endTime]" :trigger-change="true"
+                  style="width: 100%"/>
         </a-form-item>
         <a-form-item label="创建时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-date placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]" :trigger-change="true" style="width: 100%" />
+          <j-date placeholder="请选择创建时间" v-decorator="['createTime', validatorRules.createTime]"
+                  :trigger-change="true" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="操作人" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['createBy', validatorRules.createBy]" placeholder="请输入操作人"></a-input>
@@ -50,7 +59,7 @@
 </template>
 
 <script>
-import { httpAction } from '@/api/manage';
+import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 
@@ -67,23 +76,23 @@ export default {
       visible: false,
       model: {},
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 5 }
+        xs: {span: 24},
+        sm: {span: 5}
       },
       wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 }
+        xs: {span: 24},
+        sm: {span: 16}
       },
       confirmLoading: false,
       validatorRules: {
         operation: {},
-        forbiddenId: { rules: [{ required: true, message: '请输入封号禁言表id!' }] },
-        serverId: { rules: [{ required: true, message: '请输入服务器id!' }] },
+        forbiddenId: {rules: [{required: true, message: '请输入封号禁言表id!'}]},
+        serverId: {rules: [{required: true, message: '请输入服务器id!'}]},
         type: {},
-        banKey: { rules: [{ required: true, message: '请输入playerId/ip/deviceId!' }] },
-        banValue: { rules: [{ required: true, message: '请输入对应 ban_type 的值!' }] },
-        reason: { rules: [{ required: true, message: '请输入封禁原因!' }] },
-        isForever: { rules: [{ required: true, message: '请输入0-临时 1-永久!' }] },
+        banKey: {rules: [{required: true, message: '请输入playerId/ip/deviceId!'}]},
+        banValue: {rules: [{required: true, message: '请输入对应 ban_type 的值!'}]},
+        reason: {rules: [{required: true, message: '请输入封禁原因!'}]},
+        isForever: {rules: [{required: true, message: '请输入0-临时 1-永久!'}]},
         startTime: {},
         endTime: {},
         createTime: {},
@@ -95,7 +104,8 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+  },
   methods: {
     add() {
       this.edit({});
@@ -159,7 +169,8 @@ export default {
 };
 </script>
 
-// <style lang="less" scoped></style>
+//
+<style lang="less" scoped></style>
 <style lang="less" scoped>
 /** Button按钮间距 */
 .ant-btn {

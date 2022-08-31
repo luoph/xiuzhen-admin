@@ -6,11 +6,11 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="10" :sm="8">
             <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="5" :sm="5">
@@ -65,7 +65,8 @@
             :pagination="false"
             :scroll="{ x: 'max-content' }"
           >
-            <div slot="title" class="word-v-middle">{{ colu.time }}</div></a-table
+            <div slot="title" class="word-v-middle">{{ colu.time }}</div>
+          </a-table
           >
         </div>
       </a-col>
@@ -74,10 +75,10 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import { getAction } from '@/api/manage';
+import {getAction} from '@/api/manage';
 
 export default {
   description: '货币分布',
@@ -100,18 +101,19 @@ export default {
   },
   computed: {},
   methods: {
-    initDictConfig() {},
-    onSelectChannel: function(channelId) {
+    initDictConfig() {
+    },
+    onSelectChannel: function (channelId) {
       this.queryParam.channelId = channelId;
     },
-    onSelectServer: function(serverId) {
+    onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function(value, dateStr) {
+    onDateChange: function (value, dateStr) {
       this.queryParam.rangeDateBegin = dateStr[0];
       this.queryParam.rangeDateEnd = dateStr[1];
     },
-    removeByValue: function(arr, attr, value) {
+    removeByValue: function (arr, attr, value) {
       for (var j = 0; j < arr.length; j++) {
         console.log(arr[j].dataIndex);
         console.log(value);
@@ -123,7 +125,7 @@ export default {
         }
       }
     },
-    pushByValue: function(arr, title, dataIndex) {
+    pushByValue: function (arr, title, dataIndex) {
       let column = {
         title: '新增玩家',
         dataIndex: 'registerNum',
@@ -171,7 +173,7 @@ export default {
                   dataIndex: 'productAndMarket',
                   width: '120',
                   align: 'center',
-                  customRender: function(text) {
+                  customRender: function (text) {
                     return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
                   }
                 },
@@ -219,14 +221,15 @@ export default {
         }
       });
     },
-    countRate: function(n) {
+    countRate: function (n) {
       if (n === null || n === undefined) {
         return '--';
       }
       return Number(parseFloat(n * 100).toFixed(2)) + '%';
     }
   },
-  mounted: function() {}
+  mounted: function () {
+  }
 };
 </script>
 

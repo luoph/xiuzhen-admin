@@ -5,12 +5,13 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="12" :sm="16">
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"></game-channel-server>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
             <!-- <game-server-selector @onSelectServer="change" /> -->
           </a-col>
           <a-col :md="12" :sm="16">
             <a-form-item label="统计日期">
-              <a-range-picker format="YYYY-MM-DD" :disabled-date="disabledDate" @calendarChange="calendarChange" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
+              <a-range-picker format="YYYY-MM-DD" :disabled-date="disabledDate" @calendarChange="calendarChange"
+                              :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="16">
@@ -58,7 +59,7 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import GameServerSelector from '@comp/gameserver/GameServerSelector';
 import JDate from '@/components/jeecg/JDate.vue';
@@ -86,7 +87,7 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
-          customRender: function(t, r, index) {
+          customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
@@ -94,7 +95,7 @@ export default {
           title: '统计日期',
           align: 'center',
           dataIndex: 'date',
-          customRender: function(text) {
+          customRender: function (text) {
             return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
           }
         },
@@ -147,14 +148,15 @@ export default {
         exportXlsUrl: 'game/gameStatOrder/exportXls'
       },
       dictOptions: {},
-      tableScroll: { x: 9 * 147 + 50 },
+      tableScroll: {x: 9 * 147 + 50},
       choiceDate: ''
     };
   },
   computed: {},
   methods: {
     moment,
-    initDictConfig() {},
+    initDictConfig() {
+    },
     onSelectServer(serverId) {
       this.queryParam.serverId = serverId;
     },
