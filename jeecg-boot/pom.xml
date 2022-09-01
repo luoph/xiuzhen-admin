@@ -26,9 +26,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- 微服务属性 -->
         <skip.springboot.maven>false</skip.springboot.maven>
-        <aliyun-java-sdk-core.version>3.2.3</aliyun-java-sdk-core.version>
-        <aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
-        <aliyun.oss.version>3.6.0</aliyun.oss.version>
         <minio.version>4.0.0</minio.version>
         <apache-commons.version>2.6</apache-commons.version>
         <commons-dbcp.version>1.4</commons-dbcp.version>
@@ -331,18 +328,6 @@
             <version>${easyexcel.version}</version>
         </dependency>
 
-        <!-- 阿里云短信 -->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-            <version>${aliyun-java-sdk-dysmsapi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>${aliyun-java-sdk-core.version}</version>
-        </dependency>
-
         <!-- 第三方登录  -->
         <dependency>
             <groupId>com.xkcoding.justauth</groupId>
@@ -387,13 +372,6 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>4.4.1</version>
-        </dependency>
-
-        <!-- aliyun oss -->
-        <dependency>
-            <groupId>com.aliyun.oss</groupId>
-            <artifactId>aliyun-sdk-oss</artifactId>
-            <version>${aliyun.oss.version}</version>
         </dependency>
 
         <!-- 企业微信和钉钉 api -->
