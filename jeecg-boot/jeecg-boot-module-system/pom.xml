@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
     <name>jeecg-boot</name>
     <artifactId>jeecg-boot-module-system</artifactId>
-	<version>3.3.0</version>
+    <version>3.3.0</version>
 
     <parent>
         <groupId>org.jeecgframework.boot</groupId>
         <artifactId>jeecg-boot-parent</artifactId>
-		<version>3.3.0</version>
+        <version>3.3.0</version>
     </parent>
 
     <dependencies>

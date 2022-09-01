@@ -10,9 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameStatRemain;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
-import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameDataRemainService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +28,6 @@ import java.util.Date;
 @Service
 public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper, GameStatRemain> implements IGameDataRemainService {
 
-    @Autowired
-    private IGameChannelService gameChannelService;
     @Resource
     private GameDataRemainMapper gameDataRemainMapper;
     @Value("${app.log.db.table}")
