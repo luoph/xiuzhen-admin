@@ -3,6 +3,8 @@ package org.jeecg.database;
 import cn.youai.basics.utils.ObjectReference;
 import cn.youai.server.web.datasource.DataSourceSwitch;
 import cn.youai.xiuzhen.config.DataSourceConfig;
+import cn.youai.xiuzhen.config.DataSourceProperties;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.lang.reflect.Field;
 
@@ -31,6 +34,10 @@ public class DataSourceHelper implements InitializingBean {
 
     @Autowired
     private GameServerMapper gameServerMapper;
+
+    @Getter
+    @Resource
+    private DataSourceProperties properties;
 
     @Override
     public void afterPropertiesSet() {

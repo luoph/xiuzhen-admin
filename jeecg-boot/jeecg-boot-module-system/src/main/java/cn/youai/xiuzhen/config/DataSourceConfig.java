@@ -10,6 +10,8 @@ import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourcePrope
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import lombok.extern.slf4j.Slf4j;
+import net.dreamlu.mica.core.utils.$;
+import org.jeecg.database.DataSourceHelper;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
@@ -108,6 +110,7 @@ public class DataSourceConfig {
      * 创建数据库
      */
     public static DataSource createDataSource(String url, String username, String password) {
+        DataSourceProperties sourceProperties = DataSourceHelper.getInstance().getProperties();
         Map<String, String> properties = new HashMap<>(4);
         properties.put(DruidDataSourceFactory.PROP_URL, url);
         properties.put(DruidDataSourceFactory.PROP_USERNAME, username);
@@ -115,14 +118,8 @@ public class DataSourceConfig {
         properties.put(DruidDataSourceFactory.PROP_DRIVERCLASSNAME, DRIVER_NAME);
         try {
             DruidDataSource dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
-            dataSource.setBreakAfterAcquireFailure(true);
-            dataSource.setRemoveAbandoned(false);
-            dataSource.setRemoveAbandonedTimeout(600);
-            dataSource.setLogAbandoned(true);
-            dataSource.setBreakAfterAcquireFailure(true);
-            dataSource.setTimeBetweenConnectErrorMillis(60);
-            dataSource.setConnectionErrorRetryAttempts(10);
-            dataSource.setMaxWait(3000);
+            // 拷贝属性
+            $.copy(sourceProperties, dataSource);
             // 这行代码很重要，如果不加不会立即建立数据库连接，也就无法检测连接是否正确
             dataSource.getConnection();
             return dataSource;
