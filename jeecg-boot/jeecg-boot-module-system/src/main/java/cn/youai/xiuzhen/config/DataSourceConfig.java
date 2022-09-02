@@ -3,14 +3,21 @@ package cn.youai.xiuzhen.config;
 import cn.youai.server.web.datasource.DynamicMultipleDataSource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
+import com.baomidou.dynamic.datasource.provider.AbstractDataSourceProvider;
+import com.baomidou.dynamic.datasource.provider.DynamicDataSourceProvider;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Slf4j
 @Configuration
+@AutoConfigureBefore({DynamicDataSourceAutoConfiguration.class, SpringBootConfiguration.class})
 public class DataSourceConfig {
     /**
      * 多数据源key : 默认数据源
@@ -32,20 +40,49 @@ public class DataSourceConfig {
     public static final String DRIVER_NAME = "com.mysql.jdbc.Driver";
     private static final Map<Object, Object> DATA_SOURCE_MAP = new ConcurrentHashMap<>();
 
+    @Resource
+    private DynamicDataSourceProperties properties;
+
+    @Lazy
+    @Resource(name = "shardingSphereDataSource")
+    private DataSource shardingSphereDataSource;
+
+    /**
+     * 将动态数据源设置为首选的
+     * 当spring存在多个数据源时, 自动注入的是首选的对象
+     * 设置为主要的数据源之后，就可以支持shardingjdbc原生的配置方式了
+     */
     @Primary
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.druid.default")
-    public DataSource dataSourceDefault() {
-        DataSource defaultDataSource = DruidDataSourceBuilder.create().build();
-        addDataSource(DEFAULT_DATA_SOURCE_KEY, defaultDataSource);
-        return defaultDataSource;
+    public DataSource dataSource() {
+        DynamicRoutingDataSource dataSource = new DynamicRoutingDataSource();
+        dataSource.setPrimary(properties.getPrimary());
+        dataSource.setStrict(properties.getStrict());
+        dataSource.setStrategy(properties.getStrategy());
+        dataSource.setP6spy(properties.getP6spy());
+        dataSource.setSeata(properties.getSeata());
+        addDataSource(DEFAULT_DATA_SOURCE_KEY, dataSource);
+        return dataSource;
+    }
+
+    @Bean
+    public DynamicDataSourceProvider dynamicDataSourceProvider() {
+        Map<String, DataSourceProperty> datasourceMap = properties.getDatasource();
+        return new AbstractDataSourceProvider() {
+            @Override
+            public Map<String, DataSource> loadDataSources() {
+                Map<String, DataSource> dataSourceMap = createDataSourceMap(datasourceMap);
+                dataSourceMap.put("shardingSphere", shardingSphereDataSource);
+                return dataSourceMap;
+            }
+        };
     }
 
     /**
      * 动态数据源配置
      */
     @Bean
-    public DynamicMultipleDataSource multipleDataSource(@Qualifier(DEFAULT_DATA_SOURCE_KEY) DataSource dataSource) {
+    public DynamicMultipleDataSource multipleDataSource(DataSource dataSource) {
         DynamicMultipleDataSource dynamicMultipleDataSource = new DynamicMultipleDataSource();
         dynamicMultipleDataSource.setTargetDataSources(DATA_SOURCE_MAP);
         dynamicMultipleDataSource.setDefaultTargetDataSource(dataSource);
