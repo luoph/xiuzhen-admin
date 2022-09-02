@@ -1,13 +1,12 @@
 package org.jeecg.database;
 
 import cn.youai.basics.utils.ObjectReference;
+import cn.youai.server.web.datasource.DataSourceSwitch;
+import cn.youai.xiuzhen.config.DataSourceConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.jeecg.common.datasource.DataSourceKey;
-import org.jeecg.common.datasource.DataSourceSwitch;
 import org.jeecg.common.util.SpringWebContextUtils;
-import org.jeecg.config.DataSourceConfig;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.springframework.beans.factory.InitializingBean;
@@ -51,14 +50,14 @@ public class DataSourceHelper implements InitializingBean {
     }
 
     private void loadDataSourceByServerId(Integer serverId) {
-        DataSource dataSource = DataSourceConfig.getDataSource(DataSourceKey.SERVER_DATA_SOURCE_KEY + serverId);
+        DataSource dataSource = DataSourceConfig.getDataSource(DataSourceConfig.SERVER_DATA_SOURCE_KEY + serverId);
         if (dataSource == null) {
             GameServer gameServer = selectGameServerById(serverId);
             if (gameServer != null) {
                 String jdbcUrl = String.format(JDBC_URL_PATTERN, gameServer.getDbHost(), gameServer.getDbPort(), gameServer.getDbName());
                 dataSource = DataSourceConfig.createDataSource(jdbcUrl, gameServer.getDbUser(), gameServer.getDbPassword());
                 // 添加到数据源池
-                DataSourceConfig.addDataSource(DataSourceKey.SERVER_DATA_SOURCE_KEY + serverId, dataSource);
+                DataSourceConfig.addDataSource(DataSourceConfig.SERVER_DATA_SOURCE_KEY + serverId, dataSource);
             }
         }
     }
@@ -70,7 +69,7 @@ public class DataSourceHelper implements InitializingBean {
      */
     public static void useServerDatabase(Integer serverId) {
         getInstance().loadDataSourceByServerId(serverId);
-        switchDataSource(DataSourceKey.SERVER_DATA_SOURCE_KEY + serverId);
+        switchDataSource(DataSourceConfig.SERVER_DATA_SOURCE_KEY + serverId);
     }
 
     public static void useDatabase(String dataSource) {
@@ -99,6 +98,6 @@ public class DataSourceHelper implements InitializingBean {
      * 切换到默认数据源
      */
     public static void useDefaultDatabase() {
-        switchDataSource(DataSourceKey.DEFAULT_DATA_SOURCE_KEY);
+        switchDataSource(DataSourceConfig.DEFAULT_DATA_SOURCE_KEY);
     }
 }

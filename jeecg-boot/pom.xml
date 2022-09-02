@@ -53,6 +53,7 @@
         <p6spy.version>3.8.7</p6spy.version>
         <quasar.core.version>0.7.10</quasar.core.version>
         <sentry.version>5.1.2</sentry.version>
+        <shardingsphere.version>5.1.2</shardingsphere.version>
         <!-- shiro -->
         <shiro.version>1.9.1</shiro.version>
         <java-jwt.version>3.11.0</java-jwt.version>
@@ -65,9 +66,9 @@
         <!-- 积木报表-->
         <jimureport-spring-boot-starter.version>1.5.2</jimureport-spring-boot-starter.version>
         <!-- 框架依赖 -->
-        <entities.version>0.0.19</entities.version>
-        <web-starter.version>0.0.19</web-starter.version>
-        <server-common.version>0.0.19</server-common.version>
+        <entities.version>0.0.20-SNAPSHOT</entities.version>
+        <web-starter.version>0.0.20-SNAPSHOT</web-starter.version>
+        <server-common.version>0.0.20-SNAPSHOT</server-common.version>
     </properties>
 
     <dependencies>
@@ -188,6 +189,13 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <!-- shardingsphere -->
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>shardingsphere-jdbc-core</artifactId>
+            <version>${shardingsphere.version}</version>
         </dependency>
 
         <!-- 执行 SQL 分析打印 -->
