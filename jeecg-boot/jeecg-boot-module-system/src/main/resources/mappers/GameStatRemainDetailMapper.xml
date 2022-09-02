@@ -52,7 +52,7 @@
             #{days} AS days,
             #{registerDate} AS registerDate,
             COUNT(DISTINCT(l.`player_id`)) AS remain
-        FROM ${logDb}.`log_account` l
+        FROM `log_account` l
             INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`server_id` = #{serverId} AND l.`type` = 2
           AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
@@ -68,7 +68,7 @@
             #{days} AS days,
             #{registerDate} AS registerDate,
             COUNT(DISTINCT(l.`player_id`)) AS remain
-        FROM ${logDb}.`log_account` l
+        FROM `log_account` l
             INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
             INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
         WHERE l.`server_id` = #{serverId} AND l.`type` = 2
@@ -87,7 +87,7 @@
             #{days} AS days,
             #{registerDate} AS registerDate,
             COUNT(DISTINCT(l.`player_id`)) AS remain
-        FROM ${logDb}.`log_account` l
+        FROM `log_account` l
             INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`server_id` = #{serverId} AND l.`type` = 2
           AND l.`create_date` = DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)

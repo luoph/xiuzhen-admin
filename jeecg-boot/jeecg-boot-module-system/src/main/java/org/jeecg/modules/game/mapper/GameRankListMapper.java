@@ -37,8 +37,8 @@ public interface GameRankListMapper {
     /**
      * 查询用户登录等级
      */
-    @Select("select player_id, value from ${logAccountTable} where type = 2")
-    List<LogAccount> selectLogAccount(@Param("logAccountTable") String logAccountTable);
+    @Select("select `player_id`, `value` from `log_account` where `type` = 2")
+    List<LogAccount> selectLogAccount();
 
     /**
      * 查询log_player中type>=100的类型行为总数

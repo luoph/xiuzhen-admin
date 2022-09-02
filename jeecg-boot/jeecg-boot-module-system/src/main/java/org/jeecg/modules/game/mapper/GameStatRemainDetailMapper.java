@@ -44,22 +44,19 @@ public interface GameStatRemainDetailMapper extends BaseMapper<GameStatRemainDet
      */
     ServerRemain selectRemain(@Param("serverId") int serverId,
                               @Param("registerDate") String registerDate,
-                              @Param("days") int days,
-                              @Param("logDb") String logDb);
+                              @Param("days") int days);
 
     /**
      * 付费留存
      */
     ServerRemain selectPayRemain(@Param("serverId") int serverId,
                                  @Param("registerDate") String registerDate,
-                                 @Param("days") int days,
-                                 @Param("logDb") String logDb);
+                                 @Param("days") int days);
 
     /**
      * 免费留存
      */
     ServerRemain selectFreeRemain(@Param("serverId") int serverId,
                                   @Param("registerDate") String registerDate,
-                                  @Param("days") int days,
-                                  @Param("logDb") String logDb);
+                                  @Param("days") int days);
 }

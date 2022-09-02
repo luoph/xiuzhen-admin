@@ -10,7 +10,6 @@ import org.jeecg.modules.game.mapper.GameRankListMapper;
 import org.jeecg.modules.game.service.IGameRankListService;
 import org.jeecg.modules.game.util.ParamValidUtil;
 import org.jeecg.modules.player.entity.GameRegisterInfo;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,13 +29,9 @@ public class GameRankListServiceImpl implements IGameRankListService {
     @Resource
     GameRankListMapper gameRankListMapper;
 
-    @Value("${app.log.db.table}")
-    String logAccountTable;
-
     /**
      * 查询排行榜列表
      *
-     * @param logPlayerTable
      * @param gameRankListVO
      * @return
      */
@@ -57,7 +52,7 @@ public class GameRankListServiceImpl implements IGameRankListService {
         List<GameRegisterInfo> gameRegisterInfoList = gameRankListMapper.selectRegisterInfo();
         Map<Long, List<GameRegisterInfo>> gameRegisterInfoListMapPlayerId = gameRegisterInfoList.stream().collect(Collectors.groupingBy(GameRegisterInfo::getPlayerId));
         // 查询登录等级信息
-        List<LogAccount> logAccountList = gameRankListMapper.selectLogAccount(logAccountTable);
+        List<LogAccount> logAccountList = gameRankListMapper.selectLogAccount();
         Map<Long, List<LogAccount>> logAccountListMapPlayerId = logAccountList.stream().collect(Collectors.groupingBy(LogAccount::getPlayerId));
 
         List<GameRankListVO> gameRankListVOList = new ArrayList<>();

@@ -40,9 +40,6 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
     @Value("${app.online-num-url:/game/onlineNum}")
     private String onlineNumUrl;
 
-    @Value("${app.log.db.table}")
-    private String logTable;
-
     @Autowired
     private IGameChannelServerService gameChannelServerService;
     @Autowired
@@ -137,7 +134,7 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
         List<GameOnlineNum> gameOnlineNumList = gameOnlineNumMapper.queryGameOnlineCollectByRangDate(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
         for (GameOnlineNum gameOnlineNum : gameOnlineNumList) {
             Date getTime = gameOnlineNum.getGetTime();
-            gameOnlineNum.setDau(gameOnlineNumMapper.queryDau(getTime, logTable));
+            gameOnlineNum.setDau(gameOnlineNumMapper.queryDau(getTime));
         }
         return gameOnlineNumList;
     }

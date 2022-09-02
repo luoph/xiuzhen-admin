@@ -24,8 +24,7 @@ public interface RechargeOrderMapper extends BaseMapper<RechargeOrder> {
     Long queryDAU(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
                   @Param("rangeDateEndTime") Date rangeDateEndTime,
                   @Param("serverId") Integer serverId,
-                  @Param("channel") String channel,
-                  @Param("logTable") String logTable);
+                  @Param("channel") String channel);
 
     /**
      * 查询时间范围内消耗玉髓明细

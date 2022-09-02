@@ -26,7 +26,7 @@ public interface PayUserRankMapper extends BaseMapper<PayUserRank> {
                                               @Param("serverId") Integer serverId,
                                               @Param("channel") String channel);
 
-    Date getPlayerLastLoginTime(@Param("playerId") Long playerId, @Param("logTable") String logTable);
+    Date getPlayerLastLoginTime(@Param("playerId") Long playerId);
 
     List<GamePlayer> getPlayerLastLoginAndRegisterTime(@Param("serverId") int serverId, @Param("logTable") String logTable);
 }

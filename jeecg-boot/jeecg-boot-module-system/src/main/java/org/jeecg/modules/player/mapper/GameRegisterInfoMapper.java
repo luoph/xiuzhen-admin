@@ -21,9 +21,7 @@ public interface GameRegisterInfoMapper extends BaseMapper<GameRegisterInfo> {
                                           @Param("playerId") Long playerId);
 
 
-    String queryPlayerIp(@Param("playerId") Long playerId,
-                         @Param("createDate") Date createDate,
-                         @Param("logTable") String logTable);
+    String queryPlayerIp(@Param("playerId") Long playerId, @Param("createDate") Date createDate);
 
     List<PlayerBehavior> selectBehaviorCount(@Param("serverId") Integer serverId, @Param("nickname") String nickname, @Param("playerId") Long playerId, @Param("start") Date start, @Param("end") Date end);
 }

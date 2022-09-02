@@ -11,7 +11,6 @@ import org.jeecg.modules.game.entity.LogPlayer;
 import org.jeecg.modules.game.mapper.PlayMethodsTakePartInMapper;
 import org.jeecg.modules.game.service.IGamePlayMethodsTakePartInService;
 import org.jeecg.modules.utils.GameConfigUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -31,9 +30,6 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
     @Resource
     PlayMethodsTakePartInMapper playMethodsTakePartInMapper;
 
-    @Value("${app.log.db.table}")
-    String logAccountTable;
-
     @Override
     public List<GamePlayMethodsTakePartInVO> playMethodsTakePartList(int fullTimes, int grade, String playMethodsType, Date createDateBegin, Date createDateEnd, int serverId) {
 
@@ -51,7 +47,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
         // 玩家日志日志以时间分组
         Map<Date, List<LogPlayer>> playerLogListMapCreateDate = playerLogList.stream().collect(Collectors.groupingBy(LogPlayer::getCreateDate));
         // 查询到达某等级用户的登录日志
-        List<LogAccount> accountLogList = playMethodsTakePartInMapper.selectPlayLoginInfo(grade, logAccountTable, serverId);
+        List<LogAccount> accountLogList = playMethodsTakePartInMapper.selectPlayLoginInfo(grade, serverId);
         // 登录日志以时间分组
         Map<Date, List<LogAccount>> accountLogListCreateDate = accountLogList.stream().collect(Collectors.groupingBy(LogAccount::getCreateDate));
 

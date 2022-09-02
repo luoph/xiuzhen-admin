@@ -26,6 +26,5 @@ public interface GameOnlineNumMapper extends BaseMapper<GameOnlineNum> {
                                                          @Param("serverId") Integer serverId,
                                                          @Param("channel") String channel);
 
-    BigDecimal queryDau(@Param("getTime") Date getTime,
-                        @Param("logTable") String logTable);
+    BigDecimal queryDau(@Param("getTime") Date getTime);
 }

@@ -36,18 +36,18 @@
         <if test="createDateEnd != null">
             and create_date &lt;= #{createDateEnd}
         </if>
-        <if test="serverId != 0">
+        <if test="serverId > 0">
             and server_id = #{serverId}
         </if>
         order by create_date
     </select>
 
     <select id="selectPlayLoginInfo" resultMap="LogAccountResultMap">
-        SELECT create_date,value as value,player_id
-        from ${logAccountTable}
-        where type = 2 and value >= #{grade}
-        <if test="serverId != 0">
-            and server_id = #{serverId}
+        SELECT `create_date`,`value`,,`player_id`
+        FROM `log_account`
+        WHERE `type` = 2 AND `value` >= #{grade}
+        <if test="serverId > 0">
+            AND `server_id` = #{serverId}
         </if>
     </select>
 </mapper>

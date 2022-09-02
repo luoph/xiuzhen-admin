@@ -32,12 +32,9 @@ public interface PlayMethodsTakePartInMapper {
     /**
      * 查询符合等级的用户登录信息
      *
-     * @param grade           等级
-     * @param logAccountTable 表名
-     * @param serverId        服务器名称
+     * @param grade    等级
+     * @param serverId 服务器名称
      * @return List<Map < String, Object>>
      */
-    List<LogAccount> selectPlayLoginInfo(@Param("grade") int grade,
-                                         @Param("logAccountTable") String logAccountTable,
-                                         @Param("serverId") int serverId);
+    List<LogAccount> selectPlayLoginInfo(@Param("grade") int grade, @Param("serverId") int serverId);
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jeecg.modules.player.mapper.LogAccountMapper">
 
     <!-- 通用查询映射结果 -->
@@ -24,7 +24,7 @@
 
     <select id="gerLoginRegisterPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT a.`player_id`) AS counNum
-        FROM ${logTable} a
+        FROM `log_account` a
         WHERE a.`server_id` = #{serverId}
           AND a.`type` = #{type}
           AND DATE (a.`create_time`) = DATE (#{createTime});
@@ -33,7 +33,7 @@
     <select id="getRegisterPayAmount" resultType="double">
         SELECT IFNULL(sum(a.`pay_amount`), 0) AS payAmount
         FROM `game_order` a
-                 JOIN ${logTable} b
+                 JOIN `log_account` b
                       ON b.`player_id` = a.`player_id`
                           AND b.`server_id` = a.`server_id`
         WHERE b.`server_id` = #{serverId}
@@ -46,7 +46,7 @@
     <select id="getRegisterPayPlayer" resultType="int">
         SELECT count(DISTINCT a.`player_id`) AS payAmount
         FROM `game_order` a
-                 JOIN ${logTable} b
+                 JOIN `log_account` b
                       ON b.`player_id` = a.`player_id`
                           AND b.`server_id` = a.`server_id`
         WHERE b.`server_id` = #{serverId}
@@ -58,15 +58,14 @@
 
     <select id="getDoublePayRegisterPlayer" resultType="int">
         SELECT count(1)
-        FROM (
-                 SELECT count(a.`player_id`) AS addPayPlayer
-                 FROM `game_order` a
-                          LEFT JOIN ${logTable} b
-                                    ON a.`player_id` = b.`player_id`
-                                        AND b.`server_id` = a.`server_id`
-                 WHERE b.`server_id` = #{serverId}
-                   AND b.`type` = 1
-                   AND DATE (b.`create_time`) =  DATE(#{date})
+        FROM (SELECT count(a.`player_id`) AS addPayPlayer
+              FROM `game_order` a
+                       LEFT JOIN `log_account` b
+                                 ON a.`player_id` = b.`player_id`
+                                     AND b.`server_id` = a.`server_id`
+              WHERE b.`server_id` = #{serverId}
+                AND b.`type` = 1
+                AND DATE (b.`create_time`) =  DATE(#{date})
             AND a.`server_id`= #{serverId}
             AND DATE (a.`pay_time`) = DATE (#{date})
         GROUP BY a.`player_id`
@@ -77,7 +76,7 @@
 
     <select id="getPlayerIdsByLoginDate" resultType="java.lang.Long">
         SELECT a.`player_id`
-        FROM ${logTable} a
+        FROM `log_account` a
         WHERE a.`server_id` = #{serverId}
           AND a.`type` = 2
           AND a.`create_date` = #{date}
@@ -91,7 +90,7 @@
             </if>
             SELECT a.`create_date`,
             a.`player_id`
-            FROM ${logTable} a
+            FROM `log_account` a
             WHERE a.`type` = 2
             <if test="serverId > 0">
                 AND a.`server_id` = #{serverId}
@@ -105,28 +104,28 @@
 
     <select id="getPlayerIdsByNoLoginRangeDate" resultType="java.lang.Long">
         <![CDATA[
-        select a.player_id
-        from ${logTable} a
-                 left join (select player_id
-                            from ${logTable}
-                            where type = 2
-                              and server_id = #{serverId}
-                              and create_date > #{startDate}
-                              and create_date <= #{endDate}
-                            group by player_id) temp_table
-                           on temp_table.player_id = a.player_id
-        where a.type = 2
-          and a.server_id = #{serverId}
-          and temp_table.player_id is null
-        group by a.player_id;
+        select a.`player_id`
+        from `log_account` a
+                 left join (select `player_id`
+                            from `log_account`
+                            where `type` = 2
+                              and `server_id` = #{serverId}
+                              and `create_date` > #{startDate}
+                              and `create_date` <= #{endDate}
+                            group by `player_id`) temp_table
+                           on temp_table.`player_id` = a.`player_id`
+        where a.`type` = 2
+          and a.`server_id` = #{serverId}
+          and `temp_table`.`player_id` is null
+        group by a.`player_id`;
         ]]>
     </select>
 
     <select id="getServerLoginNum" resultType="org.jeecg.modules.player.entity.MergeServerVO">
-        select server_id as serverId, count(distinct player_id) as num from ${logTable}
-        where type = 2
+        select `server_id` as serverId, count(distinct `player_id`) as `num` from `log_account`
+        where `type` = 2
         <if test="null != startTime">and create_date &gt;= #{startTime}</if>
         <if test="null != endTime">and create_date &lt;= #{endTime}</if>
-        group by server_id;
+        group by `server_id`;
     </select>
 </mapper>

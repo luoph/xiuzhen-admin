@@ -15,7 +15,6 @@ import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IRechargeOrderService;
 import org.jeecg.modules.game.service.IRemainStatisticsService;
 import org.jeecg.modules.game.util.ParamValidUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,9 +42,6 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
     @Resource
     private IRemainStatisticsService remainStatisticsService;
-
-    @Value("${app.log.db.table}")
-    private String logTable;
 
     /**
      * 新增留存查询
@@ -82,7 +78,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         String channelName = gameChannelService.queryChannelNameById(channelId);
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         // 查询并计算新增留存
-        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfNewUserlListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfNewUserlListJsonObjectList(rangeDateBegin, rangeDateEnd, serverId, channelName, showColumn);
         List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
@@ -138,7 +134,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         String channelName = gameChannelService.queryChannelNameById(channelId);
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfDownPaymentListJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfDownPaymentListJsonObjectList(rangeDateBegin, rangeDateEnd, serverId, channelName, showColumn);
         List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
@@ -191,7 +187,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         String channelName = gameChannelService.queryChannelNameById(channelId);
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         //查询并计算新增留存
-        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfFreeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn);
+        List<JSONObject> jsonObjectList = remainStatisticsService.queryRemainStatistiscOfFreeListBJsonObjectList(rangeDateBegin, rangeDateEnd, serverId, channelName, showColumn);
         List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();
         for (String s : jsonObjectList.get(0).keySet()) {
@@ -247,7 +243,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
 
         Page<JSONObject> page2 = new Page<>(pageNo, pageSize);
         // 查询并计算新增留存
-        List<JSONObject> jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, logTable, serverId, channelName, showColumn, grade);
+        List<JSONObject> jsonObjectList1 = remainStatisticsService.queryRemainStatistiscOfGradeListBJsonObjectList(rangeDateBegin, rangeDateEnd, serverId, channelName, showColumn, grade);
         List<JSONObject> jsonObjectList = jsonObjectList1.stream().sorted(Comparator.comparingInt(s -> Integer.parseInt(s.getString("countDate").split("-")[0]))).collect(Collectors.toList());
         List<JSONObject> jsonObjectList2 = new ArrayList<>();
         JSONObject jsonObject = new JSONObject();

@@ -44,7 +44,7 @@
             IFNULL(@serverId := #{serverId}, 0) AS server_id,
             IFNULL(@register_num := (
             SELECT COUNT (DISTINCT (a.`player_id`)) FROM
-               ${logTable} AS a WHERE a. `type` = 1 AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
+            `log_account` AS a WHERE a.`type` = 1 AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
             AND a.`server_id` = @serverId), 0) AS register_num,
             IFNULL(@pay_num := (SELECT COUNT (DISTINCT (o.`player_id`)) FROM `game_order` o
             LEFT JOIN `game_register_info` p ON o.`player_id` = p.`player_id`
@@ -55,14 +55,14 @@
             AND p.`server_id` = @serverId), 0) AS pay_num,
             IFNULL(@free_num := @register_num - @pay_num, 0) AS free_num,
             IFNULL(@pay_remain := (SELECT count ( DISTINCT ( l.`player_id` )) FROM
-               ${logTable} l LEFT JOIN `game_register_info` d ON l.`player_id` = d.`player_id` AND l.`server_id` = d.`server_id` WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
+            `log_account` l LEFT JOIN `game_register_info` d ON l.`player_id` = d.`player_id` AND l.`server_id` = d.`server_id` WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
             AND d.`create_time` >= @d_start AND d.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
             AND d.`server_id` = @serverId AND l.`server_id` = @serverId
             AND EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
             AND b.`pay_time` >= @d_start AND b.`pay_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
             AND b.`server_id` = @serverId)), 0) AS pay_remain,
             IFNULL(@free_remain := (SELECT count ( DISTINCT ( l.`player_id` )) FROM
-               ${logTable} l LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id` AND l.`server_id` = a.`server_id` WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
+            `log_account` l LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id` AND l.`server_id` = a.`server_id` WHERE l.`create_date` >= DATE_ADD(@d_start, INTERVAL 1 DAY) && l.`create_date` < DATE_ADD(@d_start, INTERVAL 2 DAY)
             AND a.`create_time` >= @d_start AND a.`create_time` < DATE_ADD(@d_start, INTERVAL 1 DAY)
             AND a.`server_id` = @serverId AND l.`server_id` = @serverId
             AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
@@ -86,18 +86,17 @@
 
     <select id="selectRemain" resultType="int">
         <![CDATA[
-        SELECT IFNULL(IF(NOW() < #{startLoginDay}, NULL, (
-            SELECT count(DISTINCT (l.`player_id`))
-            FROM ${logTable} l
-                     LEFT JOIN `game_register_info` a ON l.`player_id` = a.`player_id`
-                AND l.`server_id` = a.`server_id`
-            WHERE l.`create_date` >= #{startLoginDay}
-              AND l.`create_date` < #{endLoginDay}
-              AND a.`create_time` >= #{startRegisterDate}
-              AND a.`create_time` < #{endRegisterDate}
-              AND a.`server_id` = #{serverId}
-              AND l.`server_id` = #{serverId}
-        )), 0) AS remain
+        SELECT IFNULL(IF(NOW() < #{startLoginDay}, NULL, (SELECT count(DISTINCT (l.`player_id`))
+                                                          FROM `log_account` l
+                                                                   LEFT JOIN `game_register_info` a
+                                                                             ON l.`player_id` = a.`player_id`
+                                                                                 AND l.`server_id` = a.`server_id`
+                                                          WHERE l.`create_date` >= #{startLoginDay}
+                                                            AND l.`create_date` < #{endLoginDay}
+                                                            AND a.`create_time` >= #{startRegisterDate}
+                                                            AND a.`create_time` < #{endRegisterDate}
+                                                            AND a.`server_id` = #{serverId}
+                                                            AND l.`server_id` = #{serverId})), 0) AS remain
         ]]>
     </select>
 </mapper>

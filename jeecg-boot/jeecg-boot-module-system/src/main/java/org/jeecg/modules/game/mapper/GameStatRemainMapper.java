@@ -27,31 +27,21 @@ public interface GameStatRemainMapper extends BaseMapper<GameStatRemain> {
     /**
      * 付费次留
      */
-    Integer getPayRemain(@Param("serverId") int serverId,
-                         @Param("registerDate") String registerDate,
-                         @Param("logDb") String logDb);
+    Integer getPayRemain(@Param("serverId") int serverId, @Param("registerDate") String registerDate);
 
     /**
      * 免费次留
      */
-    Integer getFreeRemain(@Param("serverId") int serverId,
-                          @Param("registerDate") String registerDate,
-                          @Param("logDb") String logDb);
+    Integer getFreeRemain(@Param("serverId") int serverId, @Param("registerDate") String registerDate);
 
     /**
      * 查询留存
      */
-    ServerRemain selectRemain(@Param("serverId") int serverId,
-                              @Param("registerDate") String registerDate,
-                              @Param("days") int days,
-                              @Param("logDb") String logDb);
+    ServerRemain selectRemain(@Param("serverId") int serverId, @Param("registerDate") String registerDate, @Param("days") int days);
 
     /**
      * 付费留存
      */
-    ServerRemain selectPayRemain(@Param("serverId") int serverId,
-                                 @Param("registerDate") String registerDate,
-                                 @Param("days") int days,
-                                 @Param("logDb") String logDb);
+    ServerRemain selectPayRemain(@Param("serverId") int serverId, @Param("registerDate") String registerDate, @Param("days") int days);
 
 }

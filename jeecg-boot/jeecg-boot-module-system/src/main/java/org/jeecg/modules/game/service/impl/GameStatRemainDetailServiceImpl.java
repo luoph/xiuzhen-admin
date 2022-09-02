@@ -20,7 +20,6 @@ import org.jeecg.modules.game.mapper.GameStatRemainDetailMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IGameStatRemainDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -37,9 +36,6 @@ import java.util.Date;
 @Slf4j
 @Service
 public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainDetailMapper, GameStatRemainDetail> implements IGameStatRemainDetailService {
-
-    @Value("${app.log.db}")
-    private String logDb;
 
     @Autowired
     private IGameServerService gameServerService;
@@ -107,11 +103,11 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
         if (field != null && tomorrow.after(DateUtils.addDays(entity.getCountDate(), days))) {
             ServerRemain serverRemain = null;
             if (roleType == RoleType.ALL) {
-                serverRemain = getBaseMapper().selectRemain(serverId, registerDate, days, logDb);
+                serverRemain = getBaseMapper().selectRemain(serverId, registerDate, days);
             } else if (roleType == RoleType.PAID) {
-                serverRemain = getBaseMapper().selectPayRemain(serverId, registerDate, days, logDb);
+                serverRemain = getBaseMapper().selectPayRemain(serverId, registerDate, days);
             } else if (roleType == RoleType.FREE) {
-                serverRemain = getBaseMapper().selectFreeRemain(serverId, registerDate, days, logDb);
+                serverRemain = getBaseMapper().selectFreeRemain(serverId, registerDate, days);
             }
 
             log.info("updateRemainDetailField type:{}, date:{}, serverId:{}, days:{}, field:{}, remain:{}",

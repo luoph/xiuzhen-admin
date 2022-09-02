@@ -31,72 +31,68 @@
 
     <select id="queryUserRankByDateRange" resultMap="BaseResultMap">
         SELECT
-        po.id,
-        po.player_id,
-        pri.name,
-        SUM(po.pay_amount) pay_amount_sum
-        FROM game_order po
-        LEFT JOIN game_register_info pri
-        ON po.player_id = pri.player_id
-        WHERE
-        po.pay_time >= #{payTimeBeginDate} AND pay_time &lt;= #{payTimeEndDate}
-        AND po.order_status > 0
-        <if test="serverId != 0">
-            AND po.server_id = #{serverId}
+        po.`id`,
+        po.`player_id`,
+        pri.`name`,
+        SUM(po.`pay_amount`) pay_amount_sum
+        FROM `game_order` po
+        LEFT JOIN `game_register_info` pri
+        ON po.`player_id` = pri.`player_id`
+        WHERE po.`pay_time` >= #{payTimeBeginDate} AND `pay_time` &lt;= #{payTimeEndDate}
+        AND po.`order_status` > 0
+        <if test="serverId > 0">
+            AND po.`server_id` = #{serverId}
         </if>
         <if test="channel != null">
-            AND po.channel = #{channel}
+            AND po.`channel` = #{channel}
         </if>
-        GROUP BY po.player_id
+        GROUP BY po.`player_id`
         ORDER BY pay_amount_sum DESC
         LIMIT 100
     </select>
 
     <select id="queryPayRankByDateRange" resultMap="BaseResultMap">
         SELECT
-        po.id,
-        po.channel,
-        po.server_id,
-        pri.account,
-        po.player_id,
-        pri.name,
-        SUM(po.pay_amount) pay_amount_sum,
-        pri.create_time,
-        MAX(po.pay_time) pay_time_max
-
-        FROM game_order po
-        LEFT JOIN game_register_info pri
-        ON po.player_id = pri.player_id
-        WHERE
-        po.pay_time >= #{rangeDateBeginTime} AND pay_time &lt;= #{rangeDateEndTime}
-        AND po.order_status > 0
+        po.`id`,
+        po.`channel`,
+        po.`server_id`,
+        pri.`account`,
+        po.`player_id`,
+        pri.`name`,
+        SUM(po.`pay_amount`) pay_amount_sum,
+        pri.`create_time`,
+        MAX(po.`pay_time`) pay_time_max
+        FROM `game_order` po
+        LEFT JOIN `game_register_info` pri
+        ON po.`player_id` = pri.`player_id`
+        WHERE po.`pay_time` >= #{rangeDateBeginTime} AND `pay_time` &lt;= #{rangeDateEndTime}
+        AND po.`order_status` > 0
         <if test="serverId != 0">
-            AND po.server_id = #{serverId}
+            AND po.`server_id` = #{serverId}
         </if>
         <if test="channel != null">
-            AND po.channel = #{channel}
+            AND po.`channel` = #{channel}
         </if>
-        GROUP BY po.player_id
+        GROUP BY po.`player_id`
         ORDER BY pay_amount_sum DESC
     </select>
 
     <select id="getPlayerLastLoginTime" resultType="date">
-        SELECT MAX(create_time) loginDate
-        FROM ${logTable}
-        WHERE player_id = #{playerId}
+        SELECT MAX(`create_time`) loginDate
+        FROM `log_account`
+        WHERE `player_id` = #{playerId}
     </select>
 
     <select id="getPlayerLastLoginAndRegisterTime" resultMap="PlayerResultMap">
         SELECT
-        a.player_id player_id,
-        a.create_time register_time,
-        MAX(b.create_time) last_login_time
-        FROM ${logTable} a LEFT JOIN ${logTable} b ON a.player_id = b.player_id
-        WHERE
-        a.type = 1 AND b.type = 2
+        a.`player_id` player_id,
+        a.`create_time` register_time,
+        MAX(b.`create_time`) last_login_time
+        FROM `log_account` a LEFT JOIN `log_account` b ON a.`player_id` = b.`player_id`
+        WHERE a.`type` = 1 AND b.`type` = 2
         <if test="serverId !=null ">
-            AND a.server_id = #{serverId}
+            AND a.`server_id` = #{serverId}
         </if>
-        GROUP BY a.player_id
+        GROUP BY a.`player_id`
     </select>
 </mapper>

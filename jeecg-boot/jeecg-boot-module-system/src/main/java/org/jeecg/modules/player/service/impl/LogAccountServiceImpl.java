@@ -17,7 +17,6 @@ import org.jeecg.modules.player.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
 import org.jeecg.modules.player.mapper.LogAccountMapper;
 import org.jeecg.modules.player.service.ILogAccountService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,39 +36,36 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     @Resource
     private LogAccountMapper logAccountMapper;
 
-    @Value("${app.log.db.table}")
-    private String logTable;
-
     @Override
     public int loginRegisterPlayer(int serverId, String date, int type) {
-        return logAccountMapper.gerLoginRegisterPlayerNum(serverId, date, type, logTable);
+        return logAccountMapper.gerLoginRegisterPlayerNum(serverId, date, type);
     }
 
     @Override
     public double registerPayAmount(int serverId, String date) {
-        return logAccountMapper.getRegisterPayAmount(serverId, date, logTable);
+        return logAccountMapper.getRegisterPayAmount(serverId, date);
     }
 
     @Override
     public int registerPayPlayer(int serverId, String date) {
-        return logAccountMapper.getRegisterPayPlayer(serverId, date, logTable);
+        return logAccountMapper.getRegisterPayPlayer(serverId, date);
     }
 
     @Override
     public int doublePayRegisterPlayer(int serverId, String date) {
-        return logAccountMapper.getDoublePayRegisterPlayer(serverId, date, logTable);
+        return logAccountMapper.getDoublePayRegisterPlayer(serverId, date);
     }
 
     @Override
     public List<Long> getPlayerIdsByLoginDate(int serverId, Date date) {
-        return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN), logTable);
+        return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN));
     }
 
     @Override
     public List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate) {
         String startDate = DateUtil.formatDate(DateUtils.addDays(srcDate, -beforeDate));
         String endDate = DateUtil.formatDate(srcDate);
-        return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate, logTable);
+        return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate);
     }
 
     @Override
@@ -77,7 +73,7 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
         if (CollectionUtil.isEmpty(dateList)) {
             return null;
         }
-        List<LogAccount> playerIdsByLoginDates = logAccountMapper.getPlayerIdsByLoginDates(serverId, dateList, logTable);
+        List<LogAccount> playerIdsByLoginDates = logAccountMapper.getPlayerIdsByLoginDates(serverId, dateList);
         if (CollUtil.isNotEmpty(playerIdsByLoginDates)) {
             Map<String, List<Long>> result = new HashMap<>(playerIdsByLoginDates.size());
             playerIdsByLoginDates.forEach(e -> {
@@ -145,6 +141,6 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
 
     @Override
     public List<MergeServerVO> getServerLoginNum(Date startTime, Date endTime) {
-        return logAccountMapper.getServerLoginNum(logTable, DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime));
+        return logAccountMapper.getServerLoginNum(DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime));
     }
 }

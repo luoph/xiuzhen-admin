@@ -34,7 +34,7 @@
         <if test="channel != null">
             AND channel = #{channel}
         </if>
-        order by create_time desc
+        ORDER BY create_time DESC
     </select>
 
     <select id="queryGameOnlineCollectByRangDate" resultMap="BaseResultMap">
@@ -54,12 +54,10 @@
         GROUP BY get_time DESC
     </select>
     <select id="queryDau" resultType="decimal">
-        SELECT
-        COUNT(DISTINCT(player_id)) dau
-        FROM ${logTable}
-        WHERE
-        create_date = #{getTime}
-        AND type = 2
+        SELECT COUNT(DISTINCT (player_id)) dau
+        FROM `log_account`
+        WHERE create_date = #{getTime}
+          AND type = 2
     </select>
 
 </mapper>

@@ -18,7 +18,6 @@ import org.jeecg.modules.game.mapper.RechargeOrderMapper;
 import org.jeecg.modules.game.service.IGameRechargeGoodsService;
 import org.jeecg.modules.game.service.IRechargeOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,9 +45,6 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
 
     @Resource
     private PayOrderBillMapper payOrderBillMapper;
-
-    @Value("${app.log.db.table}")
-    private String logTable;
 
     @Override
     public List<RechargeOrder> queryGiftList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, int goodsType) {
@@ -101,7 +97,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             // 在默认数据源下查询 dau 和 礼包信息
             DataSourceHelper.useDefaultDatabase();
             // 通过登录日志统计当前时间段的dau
-            Long dau = rechargeOrderMapper.queryDAU(rangeDateBeginTime, rangeDateEndTime, serverId, channel, logTable);
+            Long dau = rechargeOrderMapper.queryDAU(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
             // 通过商品id和dau 获取封装数据的统计对象
             PayOrderBill payOrderBill = payOrderBillMapper.queryPayOrderList(rangeDateBeginTime, rangeDateEndTime, serverId, channel, dau, goodsId);
 
@@ -215,7 +211,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         //遍历获取日期内的消耗玉髓明细数据
         for (String s : fairyJadeBuyInfoMapTimeSort.keySet()) {
             // 通过登录日志统计当前时间段的dau
-            Long dau = rechargeOrderMapper.queryDAU(DateUtils.dateOnly(DateUtils.parseDate(s)), DateUtils.dateOnly(DateUtils.parseDate(s)), serverId, channel, logTable);
+            Long dau = rechargeOrderMapper.queryDAU(DateUtils.dateOnly(DateUtils.parseDate(s)), DateUtils.dateOnly(DateUtils.parseDate(s)), serverId, channel);
             List<Map> oneDayFairyJadeBuyInfoList = fairyJadeBuyInfoMapTimeSort.get(s);
             //以档位分组
             Map<String, List<Map>> oneDayFairyJadeBuyInfoListItemNum = oneDayFairyJadeBuyInfoList.stream().collect(Collectors.groupingBy(map -> map.get("itemNum").toString()));

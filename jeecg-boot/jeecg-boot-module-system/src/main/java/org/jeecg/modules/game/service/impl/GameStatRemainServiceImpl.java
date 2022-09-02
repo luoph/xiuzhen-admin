@@ -17,7 +17,6 @@ import org.jeecg.modules.game.mapper.GameStatRemainMapper;
 import org.jeecg.modules.game.service.IGameServerService;
 import org.jeecg.modules.game.service.IGameStatRemainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -39,15 +38,11 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
      */
     private static final int[] REMAIN = new int[]{2, 3, 4, 5, 6, 7, 15, 30, 60, 90, 120, 180, 360};
 
-    @Value("${app.log.db}")
-    private String logDb;
-
     @Autowired
     private IGameServerService gameServerService;
 
     @Override
-    public void calcRemainStat(RoleType roleType, Collection<Integer> serverIds,
-                               Date registerDate, int days, boolean updateAll) {
+    public void calcRemainStat(RoleType roleType, Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
         String date = DateUtil.formatDate(registerDate);
         for (Integer serverId : serverIds) {
             GameServer gameServer = gameServerService.getById(serverId);
@@ -74,8 +69,8 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
 
             // 免费、付费留存
             if (days == 2 || updateAll) {
-                gameStatRemain.setPayRemain(getBaseMapper().getPayRemain(serverId, date, logDb));
-                gameStatRemain.setFreeRemain(getBaseMapper().getFreeRemain(serverId, date, logDb));
+                gameStatRemain.setPayRemain(getBaseMapper().getPayRemain(serverId, date));
+                gameStatRemain.setFreeRemain(getBaseMapper().getFreeRemain(serverId, date));
             }
 
             if (updateAll) {
@@ -105,9 +100,9 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
         }
         ServerRemain serverRemain = null;
         if (roleType == RoleType.ALL) {
-            serverRemain = getBaseMapper().selectRemain(serverId, registerDate, days, logDb);
+            serverRemain = getBaseMapper().selectRemain(serverId, registerDate, days);
         } else if (roleType == RoleType.PAID) {
-            serverRemain = getBaseMapper().selectPayRemain(serverId, registerDate, days, logDb);
+            serverRemain = getBaseMapper().selectPayRemain(serverId, registerDate, days);
         }
 
         if (serverRemain == null) {

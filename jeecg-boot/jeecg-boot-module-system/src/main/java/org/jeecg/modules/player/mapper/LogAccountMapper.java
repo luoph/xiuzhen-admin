@@ -24,57 +24,37 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
      * 当天登录/注册玩家数
      */
-    int gerLoginRegisterPlayerNum(@Param("serverId") int serverId, @Param("createTime") String createTime, @Param("type") int type, @Param("logTable") String logTable);
+    int gerLoginRegisterPlayerNum(@Param("serverId") int serverId, @Param("createTime") String createTime, @Param("type") int type);
 
     /**
      * 新增注册付费总额
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @return
      */
-    double getRegisterPayAmount(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    double getRegisterPayAmount(@Param("serverId") int serverId, @Param("date") String date);
 
     /**
      * 新增注册付费玩家
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @return
      */
-    int getRegisterPayPlayer(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    int getRegisterPayPlayer(@Param("serverId") int serverId, @Param("date") String date);
 
     /**
      * 注册二次付费玩家
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @return
      */
-    int getDoublePayRegisterPlayer(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
-
-    /**
-     * 当前登陆玩家ids
-     *
-     * @param serverId
-     * @param date
-     * @param logTable
-     * @return
-     */
-    List<Long> getPlayerIdsByLoginDate(@Param("serverId") int serverId, @Param("date") String date, @Param("logTable") String logTable);
+    int getDoublePayRegisterPlayer(@Param("serverId") int serverId, @Param("date") String date);
 
     /**
      * 当前登陆玩家ids
      */
-    List<LogAccount> getPlayerIdsByLoginDates(@Param("serverId") int serverId, @Param("dateList") List<JSONObject> dateList, @Param("logTable") String logTable);
+    List<Long> getPlayerIdsByLoginDate(@Param("serverId") int serverId, @Param("date") String date);
+
+    /**
+     * 当前登陆玩家ids
+     */
+    List<LogAccount> getPlayerIdsByLoginDates(@Param("serverId") int serverId, @Param("dateList") List<JSONObject> dateList);
 
     /**
      * 指定日期没登陆玩家id
      */
-    List<Long> getPlayerIdsByNoLoginRangeDate(@Param("serverId") int serverId, @Param("startDate") String startDate, @Param("endDate") String endDate, @Param("logTable") String logTable);
+    List<Long> getPlayerIdsByNoLoginRangeDate(@Param("serverId") int serverId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
-    List<MergeServerVO> getServerLoginNum(@Param("logTable") String logTable, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    List<MergeServerVO> getServerLoginNum(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 }

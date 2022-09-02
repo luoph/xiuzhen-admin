@@ -7,7 +7,6 @@ import org.jeecg.modules.game.entity.GameRegisterInfoVO;
 import org.jeecg.modules.game.entity.PayUserRank;
 import org.jeecg.modules.game.mapper.PayUserRankMapper;
 import org.jeecg.modules.game.service.IPayUserRankService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,9 +26,6 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
 
     @Resource
     private PayUserRankMapper payUserRankMapper;
-
-    @Value("${app.log.db.table}")
-    private String logTable;
 
     @Override
     public List<PayUserRank> queryUserRankByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
@@ -92,7 +88,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             playerRegisterInfo.setPayWarningDays(payWarningDays);
 
             //获取玩家最后登录时间和注册时间
-            Date loginDate = payUserRankMapper.getPlayerLastLoginTime(payUserRank.getPlayerId(), logTable);
+            Date loginDate = payUserRankMapper.getPlayerLastLoginTime(payUserRank.getPlayerId());
 
             int loginWarningDays = DateUtils.daysBetween(loginDate, nowDate);
             //设置最后登录时间

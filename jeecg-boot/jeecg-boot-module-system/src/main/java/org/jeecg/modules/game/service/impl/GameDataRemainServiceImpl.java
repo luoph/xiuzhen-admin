@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameStatRemain;
 import org.jeecg.modules.game.mapper.GameDataRemainMapper;
 import org.jeecg.modules.game.service.IGameDataRemainService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -30,8 +29,6 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
 
     @Resource
     private GameDataRemainMapper gameDataRemainMapper;
-    @Value("${app.log.db.table}")
-    private String logTable;
 
     @Override
     public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
@@ -44,6 +41,6 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
 
     @Override
     public GameStatRemain getCountRemain(int serverId, String date, Date statDate) {
-        return gameDataRemainMapper.gameRemainCount(serverId, date, statDate, logTable);
+        return gameDataRemainMapper.gameRemainCount(serverId, date, statDate);
     }
 }

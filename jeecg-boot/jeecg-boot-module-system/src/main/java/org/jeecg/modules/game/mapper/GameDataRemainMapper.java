@@ -22,7 +22,7 @@ public interface GameDataRemainMapper extends BaseMapper<GameStatRemain> {
     /**
      * 留存统计
      */
-    GameStatRemain gameRemainCount(@Param("serverId") int serverId, @Param("date") String date, @Param("statDate") Date statDate, @Param("logTable") String logTable);
+    GameStatRemain gameRemainCount(@Param("serverId") int serverId, @Param("date") String date, @Param("statDate") Date statDate);
 
     /**
      * 批量插入更新
