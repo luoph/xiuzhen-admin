@@ -21,14 +21,12 @@ public interface PlayMethodsTakePartInMapper {
      * @param type            日志记录类型
      * @param createDateBegin 开始时间
      * @param createDateEnd   结束时间
-     * @param logPlayerTable  表名
      * @param serverId        服务器id
      * @return List<Map < String, Object>>
      */
     List<LogPlayer> conditionSelectPlayerLog(@Param("type") String type,
                                              @Param("createDateBegin") Date createDateBegin,
                                              @Param("createDateEnd") Date createDateEnd,
-                                             @Param("logPlayerTable") String logPlayerTable,
                                              @Param("serverId") int serverId);
 
     /**

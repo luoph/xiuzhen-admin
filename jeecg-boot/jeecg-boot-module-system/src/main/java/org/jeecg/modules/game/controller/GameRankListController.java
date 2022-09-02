@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.game.entity.GameRankListVO;
 import org.jeecg.modules.game.service.IGameRankListService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +21,6 @@ import java.util.List;
 @RestController
 @RequestMapping("game/gameRankList")
 public class GameRankListController {
-
-    @Value("${app.log.db.table_log_player}")
-    String logPlayerTable;
 
     @Resource
     IGameRankListService gameRankListService;
@@ -51,7 +47,7 @@ public class GameRankListController {
         }
 
         Page<GameRankListVO> pageVo = new Page<>(pageNo, pageSize);
-        List<GameRankListVO> list = gameRankListService.selectGameRankList(logPlayerTable, gameRankListVO);
+        List<GameRankListVO> list = gameRankListService.selectGameRankList(gameRankListVO);
         pageVo.setRecords(list).setTotal(list.size());
         return Result.ok(pageVo);
     }

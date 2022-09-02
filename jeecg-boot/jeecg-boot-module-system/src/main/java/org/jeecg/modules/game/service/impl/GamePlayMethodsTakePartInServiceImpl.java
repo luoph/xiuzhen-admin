@@ -30,8 +30,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
 
     @Resource
     PlayMethodsTakePartInMapper playMethodsTakePartInMapper;
-    @Value("${app.log.db.table_log_player}")
-    String logPlayerTable;
+
     @Value("${app.log.db.table}")
     String logAccountTable;
 
@@ -40,7 +39,7 @@ public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTak
 
         List<GamePlayMethodsTakePartInVO> gamePlayMethodsTakePartInVOList = new ArrayList<>();
         // 查询时间范围内某玩法类型的玩家日志
-        List<LogPlayer> playerLogList = playMethodsTakePartInMapper.conditionSelectPlayerLog(playMethodsType, createDateBegin, createDateEnd, logPlayerTable, serverId);
+        List<LogPlayer> playerLogList = playMethodsTakePartInMapper.conditionSelectPlayerLog(playMethodsType, createDateBegin, createDateEnd, serverId);
 
         // 查询炼丹、炼器
         boolean isRefineDanOrEquip = PlayerLogType.REFINE_DAN.getType() == Integer.parseInt(playMethodsType) || PlayerLogType.REFINE_EQUIP.getType() == Integer.parseInt(playMethodsType);

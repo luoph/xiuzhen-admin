@@ -68,7 +68,7 @@
         b.create_date create_date
         FROM
         game_register_info a
-        LEFT JOIN ${logTable} b ON a.player_id = b.player_id
+        LEFT JOIN `log_player` b ON a.player_id = b.player_id
         <where>
             <if test="serverId > 0">
                 a.server_id = #{serverId}

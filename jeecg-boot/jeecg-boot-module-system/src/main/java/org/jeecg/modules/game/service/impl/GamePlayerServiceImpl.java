@@ -15,7 +15,6 @@ import org.jeecg.modules.game.mapper.GamePlayerMapper;
 import org.jeecg.modules.game.service.IGamePlayerService;
 import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.mapper.GameRegisterInfoMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,9 +31,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePlayer> implements IGamePlayerService {
-
-    @Value("${app.log.db.table_log_player}")
-    private String logTable;
 
     @Resource
     private GameRegisterInfoMapper registerInfoMapper;
@@ -68,8 +64,7 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
             rangeDateEndTime = DateUtils.now();
         }
 
-        List<PlayerBehavior> playerBehaviorList = registerInfoMapper.selectBehaviorCount(serverId, nickname, playerId, rangeDateBeginTime, rangeDateEndTime, logTable);
-
+        List<PlayerBehavior> playerBehaviorList = registerInfoMapper.selectBehaviorCount(serverId, nickname, playerId, rangeDateBeginTime, rangeDateEndTime);
         return getPlayerBehaviorList(playerBehaviorList);
     }
 

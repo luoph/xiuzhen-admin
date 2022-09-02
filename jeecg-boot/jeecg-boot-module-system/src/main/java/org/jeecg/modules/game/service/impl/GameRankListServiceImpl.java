@@ -41,7 +41,7 @@ public class GameRankListServiceImpl implements IGameRankListService {
      * @return
      */
     @Override
-    public List<GameRankListVO> selectGameRankList(String logPlayerTable, GameRankListVO gameRankListVO) throws UnsupportedEncodingException {
+    public List<GameRankListVO> selectGameRankList(GameRankListVO gameRankListVO) throws UnsupportedEncodingException {
         Date createTime = DateUtils.endTimeOfDate(gameRankListVO.getDate());
         if (null != gameRankListVO.getHour() && gameRankListVO.getHour() >= 0) {
             createTime = ParamValidUtil.getHourEnd(createTime, gameRankListVO.getHour() - 1);
@@ -49,9 +49,9 @@ public class GameRankListServiceImpl implements IGameRankListService {
         // 查询操作日志
         List<LogPlayer> logPlayerValueList;
         if (100 > gameRankListVO.getRankListType()) {
-            logPlayerValueList = gameRankListMapper.selectSum(logPlayerTable, gameRankListVO.getRankListType(), createTime, gameRankListVO.getServerId());
+            logPlayerValueList = gameRankListMapper.selectSum(gameRankListVO.getRankListType(), createTime, gameRankListVO.getServerId());
         } else {
-            logPlayerValueList = gameRankListMapper.selectCount(logPlayerTable, gameRankListVO.getRankListType(), createTime, gameRankListVO.getServerId());
+            logPlayerValueList = gameRankListMapper.selectCount(gameRankListVO.getRankListType(), createTime, gameRankListVO.getServerId());
         }
         // 查询注册信息
         List<GameRegisterInfo> gameRegisterInfoList = gameRankListMapper.selectRegisterInfo();
