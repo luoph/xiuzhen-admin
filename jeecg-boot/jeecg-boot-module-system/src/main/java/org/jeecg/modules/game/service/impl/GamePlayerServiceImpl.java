@@ -14,10 +14,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.mapper.GamePlayerMapper;
 import org.jeecg.modules.game.service.IGamePlayerService;
 import org.jeecg.modules.player.entity.PlayerBehavior;
-import org.jeecg.modules.player.mapper.GameRegisterInfoMapper;
+import org.jeecg.modules.player.service.ILogAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,8 +32,8 @@ import java.util.stream.Collectors;
 @Service
 public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePlayer> implements IGamePlayerService {
 
-    @Resource
-    private GameRegisterInfoMapper registerInfoMapper;
+    @Autowired
+    private ILogAccountService logAccountService;
 
     @Override
     public GamePlayer getPlayer(long playerId) {
@@ -64,7 +64,7 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
             rangeDateEndTime = DateUtils.now();
         }
 
-        List<PlayerBehavior> playerBehaviorList = registerInfoMapper.selectBehaviorCount(serverId, nickname, playerId, rangeDateBeginTime, rangeDateEndTime);
+        List<PlayerBehavior> playerBehaviorList = logAccountService.selectBehaviorCount(serverId, nickname, playerId, rangeDateBeginTime, rangeDateEndTime);
         return getPlayerBehaviorList(playerBehaviorList);
     }
 

@@ -10,16 +10,19 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
+import org.jeecg.modules.player.entity.PlayerBehavior;
 import org.jeecg.modules.player.mapper.LogAccountMapper;
 import org.jeecg.modules.player.service.ILogAccountService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -31,10 +34,27 @@ import java.util.*;
  * @since 2020-08-21
  */
 @Service
+@DS("shardingSphere")
 public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAccount> implements ILogAccountService {
 
     @Resource
     private LogAccountMapper logAccountMapper;
+
+
+    @Override
+    public BigDecimal queryDau(Date getTime) {
+        return logAccountMapper.queryDau(getTime);
+    }
+
+    @Override
+    public String queryPlayerIp(Long playerId, Date createDate) {
+        return logAccountMapper.queryPlayerIp(playerId, createDate);
+    }
+
+    @Override
+    public List<PlayerBehavior> selectBehaviorCount(Integer serverId, String nickname, Long playerId, Date start, Date end) {
+        return logAccountMapper.selectBehaviorCount(serverId, nickname, playerId, start, end);
+    }
 
     @Override
     public int loginRegisterPlayer(int serverId, String date, int type) {

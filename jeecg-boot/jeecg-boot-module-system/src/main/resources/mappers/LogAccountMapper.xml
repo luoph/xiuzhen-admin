@@ -22,6 +22,49 @@
         , account, player_id, server_id, channel, `type`, ip, create_time, create_date
     </sql>
 
+    <select id="queryDau" resultType="decimal">
+        SELECT COUNT(DISTINCT (player_id)) dau
+        FROM `log_account`
+        WHERE create_date = #{getTime}
+          AND type = 2
+    </select>
+
+    <select id="queryPlayerIp" resultType="string">
+        SELECT `ip`
+        FROM `log_account`
+        WHERE `player_id` = #{playerId}
+          AND `create_date` = #{createDate}
+        ORDER BY `create_time` DESC LIMIT 1
+    </select>
+
+    <select id="selectBehaviorCount"
+            resultType="org.jeecg.modules.player.entity.PlayerBehavior">
+        SELECT
+        a.server_id server_id,
+        a.player_id player_id,
+        a. `name` nickName,
+        b. `type` `type`,
+        b. `value` `value`,
+        b.create_date create_date
+        FROM
+        game_register_info a
+        LEFT JOIN `log_player` b ON a.player_id = b.player_id
+        <where>
+            <if test="serverId > 0">
+                a.server_id = #{serverId}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                AND a.name LIKE CONCAT('%',#{nickname},'%')
+            </if>
+            <if test="playerId > 0">
+                AND a.player_id = #{playerId}
+            </if>
+            <if test="start != null and end != null">
+                AND b.create_time >= #{start} AND b.create_time <![CDATA[ <= ]]> #{end}
+            </if>
+        </where>
+    </select>
+
     <select id="gerLoginRegisterPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT a.`player_id`) AS counNum
         FROM `log_account` a

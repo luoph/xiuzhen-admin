@@ -6,6 +6,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.constant.LtvDetailField;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -32,6 +33,7 @@ import java.util.Set;
  * @since 2021-12-22
  */
 @Service
+@DS("shardingSphere")
 public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailMapper, GameStatLtvDetail> implements IGameStatLtvDetailService {
 
     @Autowired

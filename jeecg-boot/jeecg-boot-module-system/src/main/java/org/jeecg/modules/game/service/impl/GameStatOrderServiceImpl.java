@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -38,6 +39,7 @@ import java.util.Map;
  * @date 2021-04-20
  */
 @Service
+@DS("shardingSphere")
 public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, GameStatOrder> implements IGameStatOrderService {
 
     @Autowired

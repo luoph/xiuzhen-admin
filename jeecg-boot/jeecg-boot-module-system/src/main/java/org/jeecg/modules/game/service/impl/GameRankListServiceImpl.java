@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.youai.server.utils.DateUtils;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.modules.game.constant.PracticeExp;
 import org.jeecg.modules.game.entity.GameRankListVO;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@DS("shardingSphere")
 public class GameRankListServiceImpl implements IGameRankListService {
 
     @Resource

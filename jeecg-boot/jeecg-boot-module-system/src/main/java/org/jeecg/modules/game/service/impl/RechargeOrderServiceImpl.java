@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,6 +36,7 @@ import static org.jeecg.modules.game.constant.FairyJadeBuyType.*;
  * @date 2020-10-13
  */
 @Service
+@DS("shardingSphere")
 public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, RechargeOrder> implements IRechargeOrderService {
 
     @Resource

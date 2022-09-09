@@ -53,11 +53,5 @@
         </if>
         GROUP BY get_time DESC
     </select>
-    <select id="queryDau" resultType="decimal">
-        SELECT COUNT(DISTINCT (player_id)) dau
-        FROM `log_account`
-        WHERE create_date = #{getTime}
-          AND type = 2
-    </select>
 
 </mapper>

@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
+import org.jeecg.modules.player.entity.PlayerBehavior;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +23,17 @@ import java.util.List;
  * @since 2020-08-21
  */
 public interface LogAccountMapper extends BaseMapper<LogAccount> {
+
+    BigDecimal queryDau(@Param("getTime") Date getTime);
+
+    String queryPlayerIp(@Param("playerId") Long playerId, @Param("createDate") Date createDate);
+
+    List<PlayerBehavior> selectBehaviorCount(@Param("serverId") Integer serverId,
+                                             @Param("nickname") String nickname,
+                                             @Param("playerId") Long playerId,
+                                             @Param("start") Date start,
+                                             @Param("end") Date end);
+
     /**
      * 当天登录/注册玩家数
      */

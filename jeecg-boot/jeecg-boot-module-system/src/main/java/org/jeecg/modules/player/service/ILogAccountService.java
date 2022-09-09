@@ -7,7 +7,9 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
+import org.jeecg.modules.player.entity.PlayerBehavior;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,14 +23,15 @@ import java.util.Map;
  * @since 2020-08-21
  */
 public interface ILogAccountService extends IService<LogAccount> {
+
+    BigDecimal queryDau(Date getTime);
+
+    String queryPlayerIp(Long playerId, Date createDate);
+
+    List<PlayerBehavior> selectBehaviorCount(Integer serverId, String nickname, Long playerId, Date start, Date end);
+
     /**
      * 登录注册角色数
-     *
-     * @param channel
-     * @param serverId
-     * @param date
-     * @param type
-     * @return
      */
     int loginRegisterPlayer(int serverId, String date, int type);
 

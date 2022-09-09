@@ -1,6 +1,7 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.youai.server.utils.DateUtils;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameRegisterInfoVO;
 import org.jeecg.modules.game.entity.PayUserRank;
@@ -19,6 +20,7 @@ import java.util.List;
  * @date 2020-10-09
  */
 @Service
+@DS("shardingSphere")
 public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUserRank> implements IPayUserRankService {
 
     @Resource

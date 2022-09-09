@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.player.entity.GameRegisterInfo;
 import org.jeecg.modules.player.mapper.GameRegisterInfoMapper;
 import org.jeecg.modules.player.service.IGameRegisterInfoService;
+import org.jeecg.modules.player.service.ILogAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,6 +25,9 @@ public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMap
     @Resource
     private GameRegisterInfoMapper registerInfoMapper;
 
+    @Autowired
+    private ILogAccountService logAccountService;
+
     @Override
     public List<GameRegisterInfo> queryLoginList(String rangeDateBegin, String rangeDateEnd, Long playerId, Integer serverId) {
         Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
@@ -37,7 +42,7 @@ public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMap
                 registerInfo.getUserOnlineRecord().setDurationMinutes((long) 0);
             }
             // 查询ip
-            String ip = registerInfoMapper.queryPlayerIp(playerId, DateUtils.dateOnly(createDate));
+            String ip = logAccountService.queryPlayerIp(playerId, DateUtils.dateOnly(createDate));
             registerInfo.setIp(ip);
 
         }

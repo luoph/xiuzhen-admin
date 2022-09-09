@@ -5,6 +5,7 @@ import cn.youai.server.utils.DateUtils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
  * @author huli
  */
 @Service
+@DS("shardingSphere")
 public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, GameRemainStatistisc> implements IRemainStatisticsService {
 
     /**

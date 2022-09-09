@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.constant.PlayerLogType;
 import cn.youai.xiuzhen.entity.pojo.ConfMedicine;
 import cn.youai.xiuzhen.entity.pojo.ConfRefineEquip;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.jeecg.modules.game.entity.GamePlayMethodsTakePartInVO;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
  */
 
 @Service
+@DS("shardingSphere")
 public class GamePlayMethodsTakePartInServiceImpl implements IGamePlayMethodsTakePartInService {
 
     @Resource

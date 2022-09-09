@@ -8,6 +8,7 @@ import cn.youai.server.utils.DateUtils;
 import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.constant.RemainDetailField;
 import com.alibaba.fastjson2.JSON;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,6 +36,7 @@ import java.util.Date;
  */
 @Slf4j
 @Service
+@DS("shardingSphere")
 public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainDetailMapper, GameStatRemainDetail> implements IGameStatRemainDetailService {
 
     @Autowired

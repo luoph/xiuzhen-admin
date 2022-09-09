@@ -15,6 +15,7 @@ import org.jeecg.modules.game.service.IGameChannelServerService;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameOnlineNumService;
 import org.jeecg.modules.game.service.IGameServerService;
+import org.jeecg.modules.player.service.ILogAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,9 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
     private IGameChannelService gameChannelService;
     @Autowired
     private IGameServerService gameServerService;
+
+    @Autowired
+    private ILogAccountService logAccountService;
 
     @Resource
     private GameOnlineNumMapper gameOnlineNumMapper;
@@ -123,18 +127,12 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
 
     /**
      * 获取数据处理
-     *
-     * @param rangeDateBeginTime
-     * @param rangeDateEndTime
-     * @param serverId
-     * @param channel
-     * @return
      */
     private List<GameOnlineNum> getDataTreating(Date rangeDateBeginTime, Date rangeDateEndTime, Integer serverId, String channel) {
         List<GameOnlineNum> gameOnlineNumList = gameOnlineNumMapper.queryGameOnlineCollectByRangDate(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
         for (GameOnlineNum gameOnlineNum : gameOnlineNumList) {
             Date getTime = gameOnlineNum.getGetTime();
-            gameOnlineNum.setDau(gameOnlineNumMapper.queryDau(getTime));
+            gameOnlineNum.setDau(logAccountService.queryDau(getTime));
         }
         return gameOnlineNumList;
     }
