@@ -4,7 +4,7 @@
 <mapper namespace="org.jeecg.modules.player.mapper.LogAccountMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.player.entity.LogAccount">
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.LogAccount">
         <id column="id" property="id"/>
         <result column="account" property="account"/>
         <result column="player_id" property="playerId"/>
@@ -83,7 +83,7 @@
         group by a.`player_id`;
     </select>
 
-    <select id="getPlayerIdsByLoginDates" resultType="org.jeecg.modules.player.entity.LogAccount">
+    <select id="getPlayerIdsByLoginDates" resultType="org.jeecg.modules.game.entity.LogAccount">
         <foreach collection="dateList" item="date" index="index">
             <if test="index != 0">
                 UNION ALL

@@ -13,7 +13,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
-import org.jeecg.modules.player.entity.LogAccount;
+import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
 import org.jeecg.modules.player.mapper.LogAccountMapper;
 import org.jeecg.modules.player.service.ILogAccountService;

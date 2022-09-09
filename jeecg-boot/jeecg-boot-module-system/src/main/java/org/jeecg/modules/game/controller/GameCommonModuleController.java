@@ -1,6 +1,6 @@
 package org.jeecg.modules.game.controller;
 
-import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
+import cn.youai.xiuzhen.constant.PlayerLogType;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Data;

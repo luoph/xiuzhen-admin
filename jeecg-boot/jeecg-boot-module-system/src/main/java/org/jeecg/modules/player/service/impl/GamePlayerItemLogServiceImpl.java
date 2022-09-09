@@ -4,7 +4,7 @@ import cn.youai.server.conf.ConfItem;
 import cn.youai.server.constant.ItemReduce;
 import cn.youai.server.constant.ItemRuleId;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.entity.pojo.OperationType;
+import cn.youai.xiuzhen.constant.OperationType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

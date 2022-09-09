@@ -5,7 +5,7 @@ import cn.youai.server.constant.ItemReduce;
 import cn.youai.server.constant.ItemRuleId;
 import cn.youai.server.utils.ConvertUtils;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.entity.pojo.OperationType;
+import cn.youai.xiuzhen.constant.OperationType;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;

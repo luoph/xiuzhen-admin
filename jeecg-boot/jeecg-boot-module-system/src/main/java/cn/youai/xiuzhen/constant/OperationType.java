@@ -1,4 +1,4 @@
-package cn.youai.xiuzhen.entity.pojo;
+package cn.youai.xiuzhen.constant;
 
 
 import cn.youai.server.constant.ItemReduce;

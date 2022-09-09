@@ -1,7 +1,6 @@
 package org.jeecg.modules.game.service.impl;
 
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.entity.pojo.OrderStatus;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.modules.game.entity.GameRegisterInfoVO;
 import org.jeecg.modules.game.entity.PayUserRank;
@@ -11,9 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -99,24 +96,6 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             payUserRank.setGameRegisterInfoVO(playerRegisterInfo);
         }
         return list;
-    }
-
-    /**
-     * 获取订单状态的枚举Map
-     *
-     * @return
-     */
-    private Map getOrderStatusMap() {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        String paid = OrderStatus.PAID.getName();
-        String forward = OrderStatus.FORWARD.getName();
-        String issuing = OrderStatus.ISSUING.getName();
-        String complete = OrderStatus.COMPLETE.getName();
-        map.put(paid, OrderStatus.PAID.getType());
-        map.put(forward, OrderStatus.FORWARD.getType());
-        map.put(issuing, OrderStatus.ISSUING.getType());
-        map.put(complete, OrderStatus.COMPLETE.getType());
-        return map;
     }
 
 }

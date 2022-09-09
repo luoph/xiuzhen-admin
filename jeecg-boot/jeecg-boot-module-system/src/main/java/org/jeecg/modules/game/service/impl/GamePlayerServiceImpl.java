@@ -6,7 +6,7 @@ package org.jeecg.modules.game.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.entities.GamePlayer;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.entity.pojo.PlayerLogType;
+import cn.youai.xiuzhen.constant.PlayerLogType;
 import cn.youai.xiuzhen.utils.BigDecimalUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

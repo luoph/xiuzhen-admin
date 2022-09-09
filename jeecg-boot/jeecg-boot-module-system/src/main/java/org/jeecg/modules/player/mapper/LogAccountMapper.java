@@ -6,7 +6,7 @@ package org.jeecg.modules.player.mapper;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.modules.player.entity.LogAccount;
+import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
 
 import java.util.Date;

@@ -5,7 +5,7 @@ package org.jeecg.modules.player.service;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.player.entity.LogAccount;
+import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.player.entity.MergeServerVO;
 
 import java.util.Date;
