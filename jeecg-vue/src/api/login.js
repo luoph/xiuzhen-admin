@@ -1,5 +1,5 @@
 import api from './index'
-import { axios } from '@/utils/request'
+import {axios} from '@/utils/request'
 
 /**
  * login func
@@ -52,7 +52,7 @@ export function logout(logoutToken) {
     method: 'post',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
-      'X-Access-Token':  logoutToken
+      'X-Access-Token': logoutToken
     }
   })
 }
@@ -63,7 +63,7 @@ export function logout(logoutToken) {
  * @param thirdType
  * @returns {*}
  */
-export function thirdLogin(token,thirdType) {
+export function thirdLogin(token, thirdType) {
   return axios({
     url: `/sys/thirdLogin/getLoginUser/${token}/${thirdType}`,
     method: 'get',
@@ -78,10 +78,10 @@ export function thirdLogin(token,thirdType) {
  * @param token
  * @returns {*}
  */
-export function forceLogout(parameter) {
+export function forceLogout(token) {
   return axios({
     url: '/sys/online/forceLogout',
     method: 'post',
-    data: parameter
+    data: token
   })
 }
