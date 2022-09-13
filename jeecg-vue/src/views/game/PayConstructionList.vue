@@ -148,7 +148,7 @@ export default {
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
@@ -189,7 +189,7 @@ export default {
     },
     downloadExcel(filename) {
       var xhr = new XMLHttpRequest();
-      xhr.open('post', window._CONFIG['domianURL'] + this.url.downloadExcela, true);
+      xhr.open('post', window._CONFIG['domainURL'] + this.url.downloadExcela, true);
       xhr.responseType = 'blob';
       xhr.setRequestHeader('Content-Type', 'application/json');
       const token = Vue.ls.get(ACCESS_TOKEN);

@@ -162,7 +162,7 @@ export default {
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domianURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
     }
   },
   methods: {
@@ -219,7 +219,7 @@ export default {
       if (text && text.indexOf(',') > 0) {
         text = text.substring(0, text.indexOf(','));
       }
-      return `${window._CONFIG['domianURL']}/${text}`;
+      return `${window._CONFIG['domainURL']}/${text}`;
     },
     handleImportText() {
       let params = {

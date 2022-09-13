@@ -368,11 +368,11 @@ export default {
       if (text && text.indexOf(',') > 0) {
         text = text.substring(0, text.indexOf(','));
       }
-      return `${window._CONFIG['domianURL']}/${text}`;
+      return `${window._CONFIG['domainURL']}/${text}`;
     },
     importExcelUrl() {
-      let domianURL = window._CONFIG['domianURL'];
-      return `${domianURL}/${this.url.importExcelUrl}`;
+      let domainURL = window._CONFIG['domainURL'];
+      return `${domainURL}/${this.url.importExcelUrl}`;
     },
     handleImportText() {
       let params = {

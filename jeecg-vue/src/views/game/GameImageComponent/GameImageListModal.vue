@@ -200,7 +200,7 @@ export default {
       if (text && text.indexOf(',') > 0) {
         text = text.substring(0, text.indexOf(','));
       }
-      return `${window._CONFIG['domianURL']}/${text}`;
+      return `${window._CONFIG['domainURL']}/${text}`;
     },
     valueWatchHandler(val) {
       let dataSource = [];

@@ -257,8 +257,8 @@ export default {
       return filterObj(param);
     },
     importExcelUrl() {
-      let domianURL = window._CONFIG['domianURL'];
-      return `${domianURL}/${this.url.importExcelUrl}`;
+      let domainURL = window._CONFIG['domainURL'];
+      return `${domainURL}/${this.url.importExcelUrl}`;
     },
     handleImportText() {
       let params = {

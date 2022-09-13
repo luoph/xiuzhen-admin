@@ -202,7 +202,7 @@
       initWebSocket: function () {
         // WebSocket与普通的请求所用协议有所不同，ws等同于http，wss等同于https
         var userId = store.getters.userInfo.id;
-        var url = window._CONFIG['domianURL'].replace("https://","wss://").replace("http://","ws://")+"/websocket/"+userId;
+        var url = window._CONFIG['domainURL'].replace("https://","wss://").replace("http://","ws://")+"/websocket/"+userId;
         //console.log(url);
         //update-begin-author:taoyan date:2022-4-22 for:  v2.4.6 的 websocket 服务端，存在性能和安全问题。 #3278
         let token = Vue.ls.get(ACCESS_TOKEN)

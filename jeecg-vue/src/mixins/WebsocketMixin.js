@@ -22,7 +22,7 @@ export const WebsocketMixin = {
       if(!this.socketUrl.endsWith('/')){
         this.socketUrl = this.socketUrl + '/'
       }
-      var url = window._CONFIG['domianURL'].replace("https://","wss://").replace("http://","ws://") + this.socketUrl + userId + "/" + token;
+      var url = window._CONFIG['domainURL'].replace("https://","wss://").replace("http://","ws://") + this.socketUrl + userId + "/" + token;
       //update-begin-author:taoyan date:2022-4-22 for:  v2.4.6 的 websocket 服务端，存在性能和安全问题。 #3278
       this.websock = new WebSocket(url, [token]);
       //update-end-author:taoyan date:2022-4-22 for:  v2.4.6 的 websocket 服务端，存在性能和安全问题。 #3278

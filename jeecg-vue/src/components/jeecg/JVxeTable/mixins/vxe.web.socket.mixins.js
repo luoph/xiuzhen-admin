@@ -52,7 +52,7 @@ const vs = {
   initialWebSocket() {
     if (this.ws === null) {
       const userId = store.getters.userInfo.id
-      const domain = window._CONFIG['domianURL'].replace('https://', 'wss://').replace('http://', 'ws://')
+      const domain = window._CONFIG['domainURL'].replace('https://', 'wss://').replace('http://', 'ws://')
       const url = `${domain}/vxeSocket/${userId}/${this.pageId}`
 
       //update-begin-author:taoyan date:2022-4-22 for:  v2.4.6 的 websocket 服务端，存在性能和安全问题。 #3278

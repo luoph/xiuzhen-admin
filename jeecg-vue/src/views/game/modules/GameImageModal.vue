@@ -88,7 +88,7 @@ export default {
       url: {
         add: 'game/gameImage/add',
         edit: 'game/gameImage/edit',
-        imageUpload: window._CONFIG['domianURL'] + '/game/gameImage/upload'
+        imageUpload: window._CONFIG['domainURL'] + '/game/gameImage/upload'
       }
     };
   },
@@ -190,7 +190,7 @@ export default {
       }
     },
     getImageView() {
-      return `${window._CONFIG['domianURL']}/${this.model.imgUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.model.imgUrl}`;
     }
   }
 };
