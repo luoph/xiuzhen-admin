@@ -9,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.MilitaryStrengthVO;
 import org.jeecg.modules.game.mapper.MilitaryStrengthMapper;
+import org.jeecg.modules.game.service.ILogPlayerService;
 import org.jeecg.modules.game.service.IMilitaryStrengthService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -20,6 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * TODO 优化统计查询
  * @author 胡立
  * @Description: MilitaryStrengthServiceImpl
  * @date 2021/1/4 11:54
@@ -30,6 +33,9 @@ import java.util.stream.Collectors;
 public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
     @Resource
     MilitaryStrengthMapper militaryStrengthMapper;
+
+    @Autowired
+    private ILogPlayerService logPlayerService;
 
     @Override
     public List<MilitaryStrengthVO> getMilitaryStrengVoDujieList(int serverId, String createDateBegin, String createDateEnd, String channel) {
@@ -77,7 +83,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
         List<Map> militaryStrengVoAllList;
         List<MilitaryStrengthVO> militaryStrengthVOList = new ArrayList<>();
         if (StringUtils.isEmpty(userName)) {
-            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAll(serverId, createDateBegin, createDateEnd);
+            militaryStrengVoAllList = logPlayerService.selectMilitaryStrengVoAll(serverId, createDateBegin, createDateEnd);
         } else {
             List<Map> registerUserMap = militaryStrengthMapper.selectRegisterUserByName(userName, channel, serverId, "2000-01-01", DateUtils.formatDate(new Date(), DatePattern.NORM_DATE_PATTERN));
             if (CollectionUtil.isEmpty(registerUserMap)) {
@@ -96,7 +102,7 @@ public class MilitaryStrengthServiceImpl implements IMilitaryStrengthService {
             if (StringUtils.isEmpty(playerIdCollectString)) {
                 return militaryStrengthVOList;
             }
-            militaryStrengVoAllList = militaryStrengthMapper.selectMilitaryStrengVoAllByPlayerId(serverId, "(" + playerIdCollectString + ")", createDateBegin, createDateEnd);
+            militaryStrengVoAllList = logPlayerService.selectMilitaryStrengVoAllByPlayerId(serverId, "(" + playerIdCollectString + ")", createDateBegin, createDateEnd);
         }
 
         //查询时间范围内 所有注册的用户
