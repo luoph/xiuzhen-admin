@@ -23,10 +23,10 @@
     </sql>
 
     <select id="queryDau" resultType="decimal">
-        SELECT COUNT(DISTINCT (player_id)) dau
+        SELECT COUNT(DISTINCT (`player_id`)) dau
         FROM `log_account`
-        WHERE create_date = #{getTime}
-          AND type = 2
+        WHERE `create_date` = #{getTime}
+          AND `type` = 2
     </select>
 
     <select id="queryPlayerIp" resultType="string">
@@ -40,28 +40,26 @@
     <select id="selectBehaviorCount"
             resultType="org.jeecg.modules.player.entity.PlayerBehavior">
         SELECT
-        a.server_id server_id,
-        a.player_id player_id,
-        a. `name` nickName,
-        b. `type` `type`,
-        b. `value` `value`,
-        b.create_date create_date
-        FROM
-        game_register_info a
-        LEFT JOIN `log_player` b ON a.player_id = b.player_id
+        a.`server_id` server_id,
+        a.`player_id` player_id,
+        a.`nickname` nickName,
+        b.`type` `type`,
+        b.`value` `value`,
+        b.`create_date` create_date
+        FROM `game_player` a
+        INNER JOIN `log_player` b ON a.`player_id` = b.`player_id`
         <where>
             <if test="serverId > 0">
-                a.server_id = #{serverId}
+                a.`server_id` = #{serverId}
             </if>
             <if test="nickname != null and nickname != ''">
-                AND a.name LIKE CONCAT('%',#{nickname},'%')
+                AND a.`nickname` LIKE CONCAT('%', #{nickname},'%')
             </if>
             <if test="playerId > 0">
-                AND a.player_id = #{playerId}
+                AND a.`player_id` = #{playerId}
             </if>
-            <if test="start != null and end != null">
-                AND b.create_time >= #{start} AND b.create_time <![CDATA[ <= ]]> #{end}
-            </if>
+            <if test="null != start"><![CDATA[AND b.`create_time` >= #{start}]]></if>
+            <if test="null != end"><![CDATA[AND b.`create_time` <= #{end}]]></if>
         </where>
     </select>
 
@@ -111,10 +109,8 @@
                 AND DATE (b.`create_time`) =  DATE(#{date})
             AND a.`server_id`= #{serverId}
             AND DATE (a.`pay_time`) = DATE (#{date})
-        GROUP BY a.`player_id`
-            ) c
+        GROUP BY a.`player_id`) c
         WHERE c.`addPayPlayer` >= 2;
-
     </select>
 
     <select id="getPlayerIdsByLoginDate" resultType="java.lang.Long">
@@ -147,28 +143,28 @@
 
     <select id="getPlayerIdsByNoLoginRangeDate" resultType="java.lang.Long">
         <![CDATA[
-        select a.`player_id`
-        from `log_account` a
-                 left join (select `player_id`
-                            from `log_account`
-                            where `type` = 2
-                              and `server_id` = #{serverId}
-                              and `create_date` > #{startDate}
-                              and `create_date` <= #{endDate}
-                            group by `player_id`) temp_table
-                           on temp_table.`player_id` = a.`player_id`
-        where a.`type` = 2
-          and a.`server_id` = #{serverId}
-          and `temp_table`.`player_id` is null
-        group by a.`player_id`;
+        SELECT a.`player_id`
+        FROM `log_account` a
+                 LEFT JOIN (SELECT `player_id`
+                            FROM `log_account`
+                            WHERE `type` = 2
+                              AND `server_id` = #{serverId}
+                              AND `create_date` > #{startDate}
+                              AND `create_date` <= #{endDate}
+                            GROUP BY `player_id`) tmp
+                           ON tmp.`player_id` = a.`player_id`
+        WHERE a.`type` = 2
+          AND a.`server_id` = #{serverId}
+          AND `tmp`.`player_id` IS NULL
+        GROUP BY a.`player_id`;
         ]]>
     </select>
 
     <select id="getServerLoginNum" resultType="org.jeecg.modules.player.entity.MergeServerVO">
-        select `server_id` as serverId, count(distinct `player_id`) as `num` from `log_account`
-        where `type` = 2
-        <if test="null != startTime">and create_date &gt;= #{startTime}</if>
-        <if test="null != endTime">and create_date &lt;= #{endTime}</if>
-        group by `server_id`;
+        SELECT `server_id` as serverId, COUNT(DISTINCT `player_id`) AS `num` FROM `log_account`
+        WHERE `type` = 2
+        <if test="null != startTime"><![CDATA[AND `create_date` >= #{startTime}]]></if>
+        <if test="null != endTime"><![CDATA[AND `create_date` <= #{endTime}]]></if>
+        GROUP BY `server_id`;
     </select>
 </mapper>
