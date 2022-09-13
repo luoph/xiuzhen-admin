@@ -17,6 +17,10 @@ logger "==> project:[${project}]"
 
 logger "==> start building"
 
+if [ -x "$(command -v nvm)" ]; then
+    nvm use 12
+fi
+
 # 清空上次的目录
 if [[ -d "${output}" ]]; then
     rm -rf "${output}"
