@@ -27,10 +27,11 @@
             <a-form-item label="选择就近天数">
               <a-select placeholder="天数" v-model="queryParam.daysType">
                 <a-select-option value="0">不选择天数</a-select-option>
+                <a-select-option value="3">近3天</a-select-option>
                 <a-select-option value="7">近7天</a-select-option>
                 <a-select-option value="15">近15天</a-select-option>
-                <a-select-option value="30">近一个月</a-select-option>
-                <a-select-option value="60">近两个月</a-select-option>
+                <a-select-option value="30">近1个月</a-select-option>
+                <a-select-option value="60">近2个月</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
