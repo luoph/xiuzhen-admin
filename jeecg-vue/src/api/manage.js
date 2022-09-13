@@ -12,8 +12,12 @@ const api = {
 
 export default api
 
+function getTimeout(timeout) {
+  return timeout <= 0 ? window._CONFIG.REQUEST_TIMEOUT : timeout;
+}
+
 //post
-export function postAction(url, parameter) {
+export function postAction(url, parameter, timeout = 0) {
   let sign = signMd5Utils.getSign(url, parameter);
   //将签名和时间戳，添加在请求接口 Header
   // update-begin--author:taoyan---date:20220421--for: VUEN-410【签名改造】 X-TIMESTAMP牵扯
@@ -24,12 +28,13 @@ export function postAction(url, parameter) {
     url: url,
     method: 'post',
     data: parameter,
+    timeout: getTimeout(timeout),
     headers: signHeader
   })
 }
 
 //post method= {post | put}
-export function httpAction(url, parameter, method) {
+export function httpAction(url, parameter, method, timeout = 0) {
   let sign = signMd5Utils.getSign(url, parameter);
   //将签名和时间戳，添加在请求接口 Header
   // update-begin--author:taoyan---date:20220421--for: VUEN-410【签名改造】 X-TIMESTAMP牵扯
@@ -40,21 +45,23 @@ export function httpAction(url, parameter, method) {
     url: url,
     method: method,
     data: parameter,
+    timeout: getTimeout(timeout),
     headers: signHeader
   })
 }
 
 //put
-export function putAction(url, parameter) {
+export function putAction(url, parameter, timeout = 0) {
   return axios({
     url: url,
     method: 'put',
-    data: parameter
+    data: parameter,
+    timeout: getTimeout(timeout)
   })
 }
 
 //get
-export function getAction(url, parameter) {
+export function getAction(url, parameter, timeout = 0) {
   let sign = signMd5Utils.getSign(url, parameter);
   //将签名和时间戳，添加在请求接口 Header
   // update-begin--author:taoyan---date:20220421--for: VUEN-410【签名改造】 X-TIMESTAMP牵扯
@@ -65,16 +72,18 @@ export function getAction(url, parameter) {
     url: url,
     method: 'get',
     params: parameter,
+    timeout: getTimeout(timeout),
     headers: signHeader
   })
 }
 
 //deleteAction
-export function deleteAction(url, parameter) {
+export function deleteAction(url, parameter, timeout = 0) {
   return axios({
     url: url,
     method: 'delete',
-    params: parameter
+    params: parameter,
+    timeout: getTimeout(timeout),
   })
 }
 
@@ -178,13 +187,15 @@ export function downloadFile(url, fileName, parameter) {
  * 文件上传 用于富文本上传图片
  * @param url
  * @param parameter
+ * @param timeout
  * @returns {*}
  */
-export function uploadAction(url, parameter) {
+export function uploadAction(url, parameter, timeout = 0) {
   return axios({
     url: url,
     data: parameter,
     method: 'post',
+    timeout: getTimeout(timeout),
     headers: {
       'Content-Type': 'multipart/form-data',  // 文件上传
     },
@@ -203,7 +214,7 @@ export function getFileAccessHttpUrl(avatar, subStr) {
     if (avatar && avatar.startsWith(subStr)) {
       return avatar;
     } else {
-      if (avatar && avatar.length > 0 && avatar.indexOf('[') == -1) {
+      if (avatar && avatar.length > 0 && avatar.indexOf('[') === -1) {
         return window._CONFIG['staticDomainURL'] + "/" + avatar;
       }
     }

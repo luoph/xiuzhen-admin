@@ -4,7 +4,7 @@
  * data中url定义 list为查询列表  delete为删除单条记录  deleteBatch为批量删除
  */
 import {filterObj} from '@/utils/util';
-import {deleteAction, getAction, downFile, getFileAccessHttpUrl} from '@/api/manage'
+import {deleteAction, downFile, getAction, getFileAccessHttpUrl} from '@/api/manage'
 import Vue from 'vue'
 import {ACCESS_TOKEN, TENANT_ID} from "@/store/mutation-types"
 import store from '@/store'
@@ -16,6 +16,10 @@ export const JeecgListMixin = {
       queryParam: {},
       /* 数据源 */
       dataSource: [],
+      /* 默认超时*/
+      timeout: 0,
+      /* 是否需要选择serverId，默认不需要 */
+      serverIdOption: false,
       /* 分页参数 */
       ipagination: {
         current: 1,
@@ -80,7 +84,7 @@ export const JeecgListMixin = {
         this.$message.error("请设置url.list属性!")
         return
       }
-      //加载数据 若传入参数1则加载第一页的内容
+      // 加载数据 若传入参数1则加载第一页的内容
       if (arg === 1) {
         this.ipagination.current = 1;
       }
@@ -91,16 +95,16 @@ export const JeecgListMixin = {
         return;
       }
       this.loading = true;
-      getAction(this.url.list, params).then((res) => {
+      getAction(this.url.list, params, this.timeout).then((res) => {
         if (res.success) {
-          //update-begin---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
+          // update-begin---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
           this.dataSource = res.result.records || res.result;
           if (res.result.total) {
             this.ipagination.total = res.result.total;
           } else {
             this.ipagination.total = 0;
           }
-          //update-end---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
+          // update-end---author:zhangyafei    Date:20201118  for：适配不分页的数据列表------------
         } else {
           this.$message.warning(res.message)
         }
@@ -112,7 +116,7 @@ export const JeecgListMixin = {
       // console.log("--这是一个假的方法!")
     },
     handleSuperQuery(params, matchType) {
-      //高级查询方法
+      // 高级查询方法
       if (!params) {
         this.superQueryParams = ''
         this.superQueryFlag = false
@@ -124,7 +128,7 @@ export const JeecgListMixin = {
       this.loadData(1)
     },
     getQueryParams() {
-      //获取查询条件
+      // 获取查询条件
       let sqp = {}
       if (this.superQueryParams) {
         sqp['superQueryParams'] = encodeURI(this.superQueryParams)
@@ -138,14 +142,13 @@ export const JeecgListMixin = {
       return filterObj(param);
     },
     getQueryField() {
-      //TODO 字段权限控制
+      // TODO 字段权限控制
       var str = "id,";
       this.columns.forEach(function (value) {
         str += "," + value.dataIndex;
       });
       return str;
     },
-
     onSelectChange(selectedRowKeys, selectionRows) {
       this.selectedRowKeys = selectedRowKeys;
       this.selectionRows = selectionRows;
@@ -171,9 +174,7 @@ export const JeecgListMixin = {
     doBatch: function (batchUrl, ids) {
       var that = this;
       that.loading = true;
-      getAction(batchUrl, {
-        ids: ids
-      })
+      getAction(batchUrl, {ids: ids}, this.timeout)
         .then(res => {
           if (res.success) {
             that.$message.success(res.message);
@@ -234,9 +235,9 @@ export const JeecgListMixin = {
           content: "是否删除选中数据?",
           onOk: function () {
             that.loading = true;
-            deleteAction(that.url.deleteBatch, {ids: ids}).then((res) => {
+            deleteAction(that.url.deleteBatch, {ids: ids}, that.timeout).then((res) => {
               if (res.success) {
-                //重新计算分页问题
+                // 重新计算分页问题
                 that.reCalculatePage(that.selectedRowKeys.length)
                 that.$message.success(res.message);
                 that.loadData();
@@ -257,9 +258,9 @@ export const JeecgListMixin = {
         return
       }
       var that = this;
-      deleteAction(that.url.delete, {id: id}).then((res) => {
+      deleteAction(that.url.delete, {id: id}, that.timeout).then((res) => {
         if (res.success) {
-          //重新计算分页问题
+          // 重新计算分页问题
           that.reCalculatePage(1)
           that.$message.success(res.message);
           that.loadData();
@@ -269,11 +270,11 @@ export const JeecgListMixin = {
       });
     },
     reCalculatePage(count) {
-      //总数量-count
+      // 总数量-count
       let total = this.ipagination.total - count;
-      //获取删除后的分页数
+      // 获取删除后的分页数
       let currentIndex = Math.ceil(total / this.ipagination.pageSize);
-      //删除后的分页数<所在当前页
+      // 删除后的分页数<所在当前页
       if (currentIndex < this.ipagination.current) {
         this.ipagination.current = currentIndex;
       }
@@ -290,11 +291,11 @@ export const JeecgListMixin = {
       this.$refs.modalForm.disableSubmit = false;
     },
     handleTableChange(pagination, filters, sorter) {
-      //分页、排序、筛选变化时触发
-      //TODO 筛选
+      // 分页、排序、筛选变化时触发
+      // TODO 筛选
       if (Object.keys(sorter).length > 0) {
         this.isorter.column = sorter.field;
-        this.isorter.order = "ascend" == sorter.order ? "asc" : "desc"
+        this.isorter.order = "ascend" === sorter.order ? "asc" : "desc"
       }
       this.ipagination = pagination;
       this.loadData();
@@ -309,7 +310,7 @@ export const JeecgListMixin = {
     modalFormOk() {
       // 新增/修改 成功时，重载列表
       this.loadData();
-      //清空列表选中
+      // 清空列表选中
       this.onClearSelected()
     },
     handleDetail: function (record) {
@@ -347,8 +348,8 @@ export const JeecgListMixin = {
           link.setAttribute('download', fileName + '.xls')
           document.body.appendChild(link)
           link.click()
-          document.body.removeChild(link); //下载完成移除元素
-          window.URL.revokeObjectURL(url); //释放掉blob对象
+          document.body.removeChild(link); // 下载完成移除元素
+          window.URL.revokeObjectURL(url); // 释放掉blob对象
         }
       })
     },
@@ -443,5 +444,4 @@ export const JeecgListMixin = {
       });
     }
   }
-
 }

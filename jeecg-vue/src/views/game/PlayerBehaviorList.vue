@@ -83,6 +83,7 @@ export default {
   data() {
     return {
       description: '玩家行为分析',
+      timeout: 30000,
       disableMixinCreated: true, // 禁止初始化加载数据
       // 表头
       columns: [

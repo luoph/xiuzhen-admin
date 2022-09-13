@@ -1,4 +1,6 @@
 jeecg-vue/public/index.html
+jeecg-vue/public/static/config.js
+jeecg-vue/src/api/manage.js
 jeecg-vue/src/components/jeecg/JEditor.vue
 jeecg-vue/src/components/layouts/RouteView.vue
 jeecg-vue/src/components/layouts/TabLayout.vue
