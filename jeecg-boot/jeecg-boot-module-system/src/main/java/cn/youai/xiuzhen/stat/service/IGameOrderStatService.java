@@ -13,11 +13,10 @@ import java.util.List;
  * @description 充值订单
  * @date 2020-01-05
  */
-public interface IPayOrderService extends IService<GameOrder> {
+public interface IGameOrderStatService extends IService<GameOrder> {
     /**
      * 付费金额总和
      *
-     * @param channel  渠道
      * @param serverId 服务器id
      * @param date     日期
      * @return 付费总金额
@@ -27,7 +26,6 @@ public interface IPayOrderService extends IService<GameOrder> {
     /**
      * 付费角色数
      *
-     * @param channel
      * @param serverId
      * @param date
      * @return

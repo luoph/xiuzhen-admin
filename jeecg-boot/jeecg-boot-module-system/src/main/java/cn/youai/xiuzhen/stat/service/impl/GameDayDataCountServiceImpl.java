@@ -11,8 +11,8 @@ import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
 import cn.youai.xiuzhen.stat.mapper.GameDayDataCountMapper;
 import cn.youai.xiuzhen.stat.service.IGameDayDataCountService;
+import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
-import cn.youai.xiuzhen.stat.service.IPayOrderService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import cn.youai.xiuzhen.utils.ParamUtils;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -38,7 +38,7 @@ import java.util.List;
 public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMapper, GameStatDaily> implements IGameDayDataCountService {
 
     @Autowired
-    private IPayOrderService payOrderService;
+    private IGameOrderStatService payOrderService;
 
     @Autowired
     private ILogAccountService logAccountService;

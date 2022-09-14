@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.entities.GamePlayer;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
-import cn.youai.xiuzhen.stat.service.IPayOrderService;
+import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @RequestMapping("player/payOrder")
-public class PayOrderController extends JeecgController<GameOrder, IPayOrderService> {
+public class PayOrderController extends JeecgController<GameOrder, IGameOrderStatService> {
 
     @Autowired
     private IGamePlayerService playerService;

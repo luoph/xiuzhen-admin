@@ -8,9 +8,9 @@ import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
 import cn.youai.xiuzhen.stat.mapper.GameStatOrderMapper;
+import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import cn.youai.xiuzhen.stat.service.IGameStatOrderService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
-import cn.youai.xiuzhen.stat.service.IPayOrderService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -43,7 +43,7 @@ import java.util.Map;
 public class GameStatOrderServiceImpl extends ServiceImpl<GameStatOrderMapper, GameStatOrder> implements IGameStatOrderService {
 
     @Autowired
-    IPayOrderService payOrderService;
+    IGameOrderStatService payOrderService;
 
     @Autowired
     ILogAccountService logAccountService;

@@ -7,7 +7,7 @@ import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
-import cn.youai.xiuzhen.stat.service.IPayOrderService;
+import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -16,7 +16,6 @@ import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -28,19 +27,16 @@ import java.util.*;
  */
 @Service
 @DS("shardingSphere")
-public class PayOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder> implements IPayOrderService {
-
-    @Resource
-    private GameOrderMapper gameOrderMapper;
+public class GameOrderStatServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder> implements IGameOrderStatService {
 
     @Override
     public double sumPayAmount(int serverId, String date) {
-        return gameOrderMapper.getSumPayAmount(serverId, date);
+        return getBaseMapper().getSumPayAmount(serverId, date);
     }
 
     @Override
     public int countPayPlayer(int serverId, String date) {
-        return gameOrderMapper.getCountPayPlayer(serverId, date);
+        return getBaseMapper().getCountPayPlayer(serverId, date);
     }
 
     @Override
@@ -66,7 +62,7 @@ public class PayOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder>
             dateJsonList.add(jsonParam);
         });
 
-        List<GameOrder> statPlayerNumAmountByDates = gameOrderMapper.getStatPlayerNumAmountByDates(serverId, dateJsonList);
+        List<GameOrder> statPlayerNumAmountByDates = getBaseMapper().getStatPlayerNumAmountByDates(serverId, dateJsonList);
         if (CollUtil.isNotEmpty(statPlayerNumAmountByDates)) {
             Map<String, GameStatOrder> result = new HashMap<>(dateList.size());
             statPlayerNumAmountByDates.forEach(item -> {
