@@ -37,13 +37,13 @@ public class WebsocketFilter implements Filter {
         String token = request.getHeader(TOKEN_KEY);
 
         log.info("websocket连接 Token安全校验，Path = {}，token:{}", request.getRequestURI(), token);
-
         try {
             TokenUtils.verifyToken(token, commonApi, redisUtil);
         } catch (Exception exception) {
-            log.error("websocket连接校验失败，{}，token:{}", exception.getMessage(), token);
+//            log.error("websocket连接校验失败，{}，token:{}", exception.getMessage(), token);
             return;
         }
+
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         response.setHeader(TOKEN_KEY, token);
         filterChain.doFilter(servletRequest, servletResponse);
