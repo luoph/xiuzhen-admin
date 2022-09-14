@@ -80,22 +80,22 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户端最大版本号">
           <a-input-number v-decorator="['maxVersion', {}]"/>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库Host">
-          <a-input :disabled="isEdit" placeholder="请输入数据库Host" v-decorator="['dbHost', validatorRules.dbHost]"/>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库端口">
-          <a-input-number :disabled="isEdit" v-decorator="['dbPort', validatorRules.dbPort]"/>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库用户名">
-          <a-input :disabled="isEdit" placeholder="请输入数据库用户名" v-decorator="['dbUser', validatorRules.dbUser]"/>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库密码">
-          <a-input-password :disabled="isEdit" placeholder="请输入数据库密码"
-                            v-decorator="['dbPassword', validatorRules.dbPassword]"/>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">
-          <a-input :disabled="isEdit" placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]"/>
-        </a-form-item>
+        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库Host">-->
+        <!--          <a-input :disabled="isEdit" placeholder="请输入数据库Host" v-decorator="['dbHost', validatorRules.dbHost]"/>-->
+        <!--        </a-form-item>-->
+        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库端口">-->
+        <!--          <a-input-number :disabled="isEdit" v-decorator="['dbPort', validatorRules.dbPort]"/>-->
+        <!--        </a-form-item>-->
+        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库用户名">-->
+        <!--          <a-input :disabled="isEdit" placeholder="请输入数据库用户名" v-decorator="['dbUser', validatorRules.dbUser]"/>-->
+        <!--        </a-form-item>-->
+        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库密码">-->
+        <!--          <a-input-password :disabled="isEdit" placeholder="请输入数据库密码"-->
+        <!--                            v-decorator="['dbPassword', validatorRules.dbPassword]"/>-->
+        <!--        </a-form-item>-->
+        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">-->
+        <!--          <a-input :disabled="isEdit" placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]"/>-->
+        <!--        </a-form-item>-->
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服类型">
           <a-select v-decorator="['type', {}]" placeholder="请选择区服类型">
             <a-select-option :value="0">混服</a-select-option>
@@ -192,10 +192,10 @@ export default {
         isMaintain: {rules: [{required: true, message: "请选择是否开启维护!"}]},
         type: {rules: [{required: true, message: "请输入区服类型!"}]},
         outdated: {rules: [{required: true, message: "请选择是否废弃!"}]},
-        dbHost: {rules: [{required: true, message: "请输入数据库Host!"}]},
-        dbUser: {rules: [{required: true, message: "请输入数据库帐号!"}]},
-        dbPassword: {rules: [{required: true, message: "请输入数据库密码!"}]},
-        dbName: {rules: [{required: true, message: "请输入数据库名称!"}]},
+        // dbHost: {rules: [{required: true, message: "请输入数据库Host!"}]},
+        // dbUser: {rules: [{required: true, message: "请输入数据库帐号!"}]},
+        // dbPassword: {rules: [{required: true, message: "请输入数据库密码!"}]},
+        // dbName: {rules: [{required: true, message: "请输入数据库名称!"}]},
         gmUrl: {rules: [{required: true, message: "请输入GM地址!"}]},
         gmIp: {rules: [{required: false, message: "请输入GM可用ip!"}]},
         recommend: {rules: [{required: true, message: "请选择推荐标识!"}]},
@@ -245,11 +245,6 @@ export default {
             "warning",
             "minVersion",
             "maxVersion",
-            "dbHost",
-            "dbPort",
-            "dbUser",
-            "dbPassword",
-            "dbName",
             "type",
             "outdated",
             "reservePlayerId",
@@ -340,11 +335,6 @@ export default {
           "warning",
           "minVersion",
           "maxVersion",
-          "dbHost",
-          "dbPort",
-          "dbUser",
-          "dbPassword",
-          "dbName",
           "type",
           "outdated",
           "reservePlayerId",
