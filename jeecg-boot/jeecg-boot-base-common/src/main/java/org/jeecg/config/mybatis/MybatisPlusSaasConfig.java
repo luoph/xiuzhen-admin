@@ -1,31 +1,29 @@
 package org.jeecg.config.mybatis;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.util.oConvertUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
-import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.LongValue;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 单数据源配置（jeecg.datasource.open = false时生效）
- * @Author zhoujf
  *
+ * @Author zhoujf
  */
 @Configuration
-@MapperScan(value={"org.jeecg.modules.**.mapper*"})
+@MapperScan(value = {"org.jeecg.modules.**.mapper*", "cn.youai.xiuzhen.**.mapper*"})
 public class MybatisPlusSaasConfig {
     /**
      * tenant_id 字段名
@@ -53,20 +51,20 @@ public class MybatisPlusSaasConfig {
         interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
             @Override
             public Expression getTenantId() {
-                String tenantId = oConvertUtils.getString(TenantContext.getTenant(),"0");
+                String tenantId = oConvertUtils.getString(TenantContext.getTenant(), "0");
                 return new LongValue(tenantId);
             }
 
             @Override
-            public String getTenantIdColumn(){
+            public String getTenantIdColumn() {
                 return TENANT_FIELD_NAME;
             }
 
             // 返回 true 表示不走租户逻辑
             @Override
             public boolean ignoreTable(String tableName) {
-                for(String temp: TENANT_TABLE){
-                    if(temp.equalsIgnoreCase(tableName)){
+                for (String temp : TENANT_TABLE) {
+                    if (temp.equalsIgnoreCase(tableName)) {
                         return false;
                     }
                 }
@@ -82,6 +80,7 @@ public class MybatisPlusSaasConfig {
 
     /**
      * 动态表名切换拦截器,用于适配vue2和vue3同一个表有多个的情况,如sys_role_index在vue3情况下表名为sys_role_index_v3
+     *
      * @return
      */
     private DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor() {
