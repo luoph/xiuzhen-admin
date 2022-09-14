@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameRegisterInfo;
+import cn.youai.xiuzhen.game.entity.UserOnlineRecord;
 import cn.youai.xiuzhen.game.mapper.GameRegisterInfoMapper;
 import cn.youai.xiuzhen.game.service.IGameRegisterInfoService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
@@ -27,21 +28,27 @@ public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMap
     private ILogAccountService logAccountService;
 
     @Override
-    public List<GameRegisterInfo> queryLoginList(String rangeDateBegin, String rangeDateEnd, Long playerId, Integer serverId) {
-        Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
-        Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
-        List<GameRegisterInfo> list = getBaseMapper().queryLoginList(rangeDateBeginTime, rangeDateEndTime, playerId);
+    public List<GameRegisterInfo> queryLoginList(int serverId, long playerId, String rangeDateBegin, String rangeDateEnd) {
+        List<GameRegisterInfo> list = getBaseMapper().queryLoginList(serverId, playerId, DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         for (GameRegisterInfo registerInfo : list) {
-            Date createDate = registerInfo.getUserOnlineRecord().getCreateDate();
-            Long duration = registerInfo.getUserOnlineRecord().getDuration();
-            if (duration > 0 && duration != null) {
-                registerInfo.getUserOnlineRecord().setDurationMinutes(duration / 60);
-            } else {
-                registerInfo.getUserOnlineRecord().setDurationMinutes((long) 0);
+            UserOnlineRecord userOnlineRecord = registerInfo.getUserOnlineRecord();
+            if (userOnlineRecord == null) {
+                continue;
             }
+
+            Date createDate = userOnlineRecord.getCreateDate();
+            Long duration = userOnlineRecord.getDuration();
+            if (duration > 0) {
+                userOnlineRecord.setDurationMinutes(duration / 60);
+            } else {
+                userOnlineRecord.setDurationMinutes((long) 0);
+            }
+
             // 查询ip
-            String ip = logAccountService.queryPlayerIp(playerId, DateUtils.dateOnly(createDate));
-            registerInfo.setIp(ip);
+            if (createDate != null) {
+                String ip = logAccountService.queryPlayerIp(playerId, DateUtils.dateOnly(createDate));
+                registerInfo.setIp(ip);
+            }
 
         }
         return list;

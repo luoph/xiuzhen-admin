@@ -128,22 +128,17 @@ public class PlayerRegisterInfoController extends JeecgController<GameRegisterIn
 
     @AutoLog(value = "登录流水-列表查询")
     @GetMapping(value = "/loginList")
-    public Result<?> loginList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                               @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+    public Result<?> loginList(@RequestParam(name = "startDate", defaultValue = "") String startDate,
+                               @RequestParam(name = "endDate", defaultValue = "") String endDate,
                                @RequestParam(name = "playerId", defaultValue = "0") Long playerId,
                                @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
                                @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
         Page<GameRegisterInfo> page = new Page<>(pageNo, pageSize);
-        if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && playerId == 0) {
+        if (StringUtils.isEmpty(startDate) && StringUtils.isEmpty(endDate) && serverId == 0 && playerId == 0) {
             return Result.ok(page);
         }
-        // 如果选择开始时间和结束时间是同一天
-        if (rangeDateBegin.equals(rangeDateEnd)) {
-            rangeDateBegin = rangeDateBegin + " 00:00:00";
-            rangeDateEnd = rangeDateEnd + " 23:59:59";
-        }
-        List<GameRegisterInfo> list = service.queryLoginList(rangeDateBegin, rangeDateEnd, playerId, serverId);
+        List<GameRegisterInfo> list = service.queryLoginList(serverId, playerId, startDate, endDate);
         page.setRecords(list).setTotal(list.size());
         return Result.ok(page);
     }

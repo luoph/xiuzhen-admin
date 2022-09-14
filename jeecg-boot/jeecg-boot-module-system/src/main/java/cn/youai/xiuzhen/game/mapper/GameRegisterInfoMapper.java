@@ -15,8 +15,9 @@ import java.util.List;
  */
 public interface GameRegisterInfoMapper extends BaseMapper<GameRegisterInfo> {
 
-    List<GameRegisterInfo> queryLoginList(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-                                          @Param("rangeDateEndTime") Date rangeDateEndTime,
-                                          @Param("playerId") Long playerId);
+    List<GameRegisterInfo> queryLoginList(@Param("serverId") int serverId,
+                                          @Param("playerId") long playerId,
+                                          @Param("startTime") Date startTime,
+                                          @Param("endTime") Date endTime);
 
 }

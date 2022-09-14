@@ -75,6 +75,7 @@ export default {
           dataIndex: '',
           key: 'rowIndex',
           width: 60,
+          timeout: 60000,
           align: 'center',
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
@@ -151,7 +152,8 @@ export default {
         pageNo: this.ipagination.current,
         pageSize: this.ipagination.pageSize
       };
-      getAction(this.url.list, param).then(res => {
+      this.loading = true;
+      getAction(this.url.list, param, this.timeout).then(res => {
         if (res.success) {
           this.dataSource = res.result.records;
           this.ipagination.current = res.result.current;
@@ -161,6 +163,8 @@ export default {
         } else {
           this.$message.error(res.message);
         }
+      }).finally(() => {
+        this.loading = false
       });
     }
   }

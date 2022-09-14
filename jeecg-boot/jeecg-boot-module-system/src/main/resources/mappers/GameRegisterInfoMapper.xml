@@ -23,26 +23,23 @@
 
     <select id="queryLoginList" resultMap="BaseResultMap">
         SELECT
-        pri.id,
-        pri.account,
-        pri.name,
-        pri.network,
-        pri.model,
-        pri.player_id,
-        uor.duration uor_duration,
-        uor.create_time uor_create_time,
-        uor.create_date uor_create_date
+        pri.`id`,
+        pri.`account`,
+        pri.`name`,
+        pri.`network`,
+        pri.`model`,
+        pri.`player_id`,
+        uor.`duration` uor_duration,
+        uor.`create_time` uor_create_time,
+        uor.`create_date` uor_create_date
         FROM
-        game_register_info pri
-        LEFT JOIN `game_user_online_record` uor ON pri.player_id = uor.player_id
-        WHERE
-        pri.player_id = #{playerId}
-        <if test="rangeDateBeginTime !=null ">
-            AND uor.create_time >= #{rangeDateBeginTime}
-        </if>
-        <if test="rangeDateEndTime !=null ">
-            AND uor.create_time &lt;= #{rangeDateEndTime}
-        </if>
+        `game_register_info` pri
+        LEFT JOIN `game_user_online_record` uor ON pri.`player_id` = uor.`player_id`
+        WHERE 1=1
+        <if test="playerId > 0"><![CDATA[ AND pri.`player_id` = #{playerId}]]></if>
+        <if test="serverId > 0"><![CDATA[ AND pri.`server_id` = #{serverId}]]></if>
+        <if test="startTime != null"><![CDATA[ AND uor.`create_date` >= #{startTime}]]></if>
+        <if test="endTime != null "><![CDATA[ AND uor.`create_date` <= #{endTime}]]></if>
     </select>
 
 </mapper>
