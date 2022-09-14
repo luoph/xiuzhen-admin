@@ -36,8 +36,8 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @RestController
-@RequestMapping("player/payOrder")
-public class PayOrderController extends JeecgController<GameOrder, IGameOrderStatService> {
+@RequestMapping("player/gameOrder")
+public class GameOrderController extends JeecgController<GameOrder, IGameOrderStatService> {
 
     @Autowired
     private IGamePlayerService playerService;
@@ -72,7 +72,7 @@ public class PayOrderController extends JeecgController<GameOrder, IGameOrderSta
                     list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname,
                             (item1, item2) -> item2)) : new HashMap<>(list.size());
 
-            pageList.getRecords().forEach(e -> e.setPlayerName(nameMap.get(e.getPlayerId())));
+            pageList.getRecords().forEach(e -> e.setNickname(nameMap.get(e.getPlayerId())));
         }
         return Result.ok(pageList);
     }

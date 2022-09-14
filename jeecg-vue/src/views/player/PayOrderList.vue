@@ -51,7 +51,7 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="渠道">
-                <a-input placeholder="请输入渠道Id" v-model="queryParam.channel"></a-input>
+                <a-input placeholder="请输入渠道标识" v-model="queryParam.channel"></a-input>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="16">
@@ -292,9 +292,9 @@ export default {
         }
       ],
       url: {
-        list: 'player/payOrder/list',
-        exportXlsUrl: 'player/payOrder/exportXls',
-        downloadExcel: '/player/payOrder/download'
+        list: 'player/gameOrder/list',
+        exportXlsUrl: 'player/gameOrder/exportXls',
+        downloadExcel: '/player/gameOrder/download'
       },
       dictOptions: {}
     };

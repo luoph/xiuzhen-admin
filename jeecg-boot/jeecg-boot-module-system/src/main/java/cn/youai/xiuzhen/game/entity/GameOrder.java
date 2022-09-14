@@ -46,7 +46,7 @@ public class GameOrder implements Serializable {
     @ExcelProperty("玩家名")
     @Excel(name = "玩家名", width = 15)
     @TableField(exist = false)
-    private String playerName;
+    private String nickname;
 
     /**
      * 己方订单号

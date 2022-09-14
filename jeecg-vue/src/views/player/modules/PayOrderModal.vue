@@ -159,8 +159,8 @@ export default {
         createTime: {}
       },
       url: {
-        add: "player/payOrder/add",
-        edit: "player/payOrder/edit"
+        add: "player/gameOrder/add",
+        edit: "player/gameOrder/edit"
       }
     };
   },
