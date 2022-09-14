@@ -2,15 +2,11 @@ package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.core.database.DataSourceHelper;
-import cn.youai.xiuzhen.game.service.IGamePlayerService;
-import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.entity.ChatMessageVO;
-import cn.youai.xiuzhen.stat.mapper.ChatMessageMapper;
 import cn.youai.xiuzhen.stat.mapper.GameChatLogMapper;
 import cn.youai.xiuzhen.stat.service.IGameChatLogService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,15 +24,6 @@ import java.util.stream.Collectors;
 public class GameChatLogServiceImpl implements IGameChatLogService {
     @Resource
     private GameChatLogMapper gameChatLogMapper;
-
-    @Resource
-    private ChatMessageMapper chatMessageMapper;
-
-    @Autowired
-    private IGamePlayerService playerService;
-
-    @Autowired
-    private IGameServerService gameServerService;
 
     /**
      * 查询世界聊天信息

@@ -21,7 +21,6 @@ import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -34,9 +33,6 @@ import java.util.*;
  */
 @Service
 public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogMapper, GamePlayerItemLog> implements IGamePlayerItemLogService {
-
-    @Resource
-    private GamePlayerItemLogMapper playerItemLogMapper;
 
     @Override
     public GamePlayerItemLog writePlayerItemLog(Integer serverId, BackpackLog backpacklog) {
@@ -73,14 +69,14 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
         // 消耗 type
         int reduce = OperationType.REDUCE.getType();
         // 查询道具新增的数量汇总
-        List<GamePlayerItemLog> incomeList = playerItemLogMapper.queryCurrencyPayIncomeList(rangeDateBeginTime, rangeDateEndTime, serverId, increase, itemId);
+        List<GamePlayerItemLog> incomeList = getBaseMapper().queryCurrencyPayIncomeList(rangeDateBeginTime, rangeDateEndTime, serverId, increase, itemId);
         for (GamePlayerItemLog incomeItemLog : incomeList) {
             // 遍历新增的list
             BigDecimal addItemNum = incomeItemLog.getAddItemNum();
             Date syncTime = incomeItemLog.getSyncTime();
 
             // 查单条获取消耗道具数
-            BigDecimal consumeItemNum = playerItemLogMapper.getBySyncTime(syncTime, itemId, reduce, serverId);
+            BigDecimal consumeItemNum = getBaseMapper().getBySyncTime(syncTime, itemId, reduce, serverId);
             if (consumeItemNum == null) {
                 consumeItemNum = BigDecimal.ZERO;
             }
@@ -130,7 +126,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
             rangeDateBeginTime = DateUtils.dateOnly(DateUtils.addDays(rangeDateEndTime, days * (-1)));
         }
 
-        List<GamePlayerItemLog> list = playerItemLogMapper.queryWayDistributeList(rangeDateBeginTime, rangeDateEndTime, serverId, itemId, type);
+        List<GamePlayerItemLog> list = getBaseMapper().queryWayDistributeList(rangeDateBeginTime, rangeDateEndTime, serverId, itemId, type);
         for (GamePlayerItemLog playerItemLog : list) {
             Integer way = playerItemLog.getWay();
 
@@ -138,9 +134,9 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
             BigDecimal itemNum = playerItemLog.getItemNum();
 
             // 全途径下的道具次数总和
-            BigDecimal itemNumSum = playerItemLogMapper.queryItemSum(rangeDateBeginTime, rangeDateEndTime, serverId, type);
+            BigDecimal itemNumSum = getBaseMapper().queryItemSum(rangeDateBeginTime, rangeDateEndTime, serverId, type);
             // 次数
-            BigDecimal itemCount = playerItemLogMapper.queryItemCount(rangeDateBeginTime, rangeDateEndTime, serverId, type, itemId);
+            BigDecimal itemCount = getBaseMapper().queryItemCount(rangeDateBeginTime, rangeDateEndTime, serverId, type, itemId);
 
             // 占比
             BigDecimal itemNumRate = BigDecimalUtils.divideFour(itemNum.doubleValue(), itemNumSum.doubleValue(), true);
@@ -160,7 +156,7 @@ public class GamePlayerItemLogServiceImpl extends ServiceImpl<GamePlayerItemLogM
     public List<GamePlayerItemLog> queryItemBillList(String rangeDateBegin, String rangeDateEnd, int way, Integer serverId, int itemId, int type, Long playerId) {
         Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
         Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
-        List<GamePlayerItemLog> list = playerItemLogMapper.queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
+        List<GamePlayerItemLog> list = getBaseMapper().queryItemBillList(rangeDateBeginTime, rangeDateEndTime, way, playerId, itemId, type);
         for (GamePlayerItemLog playerItemLog : list) {
             // 通过道具获取物品名称
             ConfItem confItem = GameConfigUtils.getItemById(playerItemLog.getItemId());

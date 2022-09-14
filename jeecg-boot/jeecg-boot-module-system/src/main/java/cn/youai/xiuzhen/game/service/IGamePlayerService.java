@@ -4,10 +4,8 @@
 package cn.youai.xiuzhen.game.service;
 
 import cn.youai.entities.GamePlayer;
-import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,10 +21,5 @@ public interface IGamePlayerService extends IService<GamePlayer> {
     GamePlayer getPlayer(long playerId);
 
     List<GamePlayer> getPlayerList(List<Long> playerIds);
-
-    /**
-     * 查询玩家行为
-     */
-    List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, Long playerId, int days, int serverId);
 
 }

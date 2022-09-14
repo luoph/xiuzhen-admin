@@ -21,7 +21,6 @@ import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -37,55 +36,51 @@ import java.util.*;
 @DS("shardingSphere")
 public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAccount> implements ILogAccountService {
 
-    @Resource
-    private LogAccountMapper logAccountMapper;
-
-
     @Override
     public BigDecimal queryDau(Date getTime) {
-        return logAccountMapper.queryDau(getTime);
+        return getBaseMapper().queryDau(getTime);
     }
 
     @Override
     public String queryPlayerIp(Long playerId, Date createDate) {
-        return logAccountMapper.queryPlayerIp(playerId, createDate);
+        return getBaseMapper().queryPlayerIp(playerId, createDate);
     }
 
     @Override
     public List<PlayerBehavior> selectBehaviorCount(Integer serverId, String nickname, Long playerId, Date start, Date end) {
-        return logAccountMapper.selectBehaviorCount(serverId, nickname, playerId, start, end);
+        return getBaseMapper().selectBehaviorCount(serverId, nickname, playerId, start, end);
     }
 
     @Override
     public int loginRegisterPlayer(int serverId, String date, int type) {
-        return logAccountMapper.gerLoginRegisterPlayerNum(serverId, date, type);
+        return getBaseMapper().gerLoginRegisterPlayerNum(serverId, date, type);
     }
 
     @Override
     public double registerPayAmount(int serverId, String date) {
-        return logAccountMapper.getRegisterPayAmount(serverId, date);
+        return getBaseMapper().getRegisterPayAmount(serverId, date);
     }
 
     @Override
     public int registerPayPlayer(int serverId, String date) {
-        return logAccountMapper.getRegisterPayPlayer(serverId, date);
+        return getBaseMapper().getRegisterPayPlayer(serverId, date);
     }
 
     @Override
     public int doublePayRegisterPlayer(int serverId, String date) {
-        return logAccountMapper.getDoublePayRegisterPlayer(serverId, date);
+        return getBaseMapper().getDoublePayRegisterPlayer(serverId, date);
     }
 
     @Override
     public List<Long> getPlayerIdsByLoginDate(int serverId, Date date) {
-        return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN));
+        return getBaseMapper().getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN));
     }
 
     @Override
     public List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate) {
         String startDate = DateUtil.formatDate(DateUtils.addDays(srcDate, -beforeDate));
         String endDate = DateUtil.formatDate(srcDate);
-        return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate);
+        return getBaseMapper().getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate);
     }
 
     @Override
@@ -93,7 +88,7 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
         if (CollectionUtil.isEmpty(dateList)) {
             return null;
         }
-        List<LogAccount> playerIdsByLoginDates = logAccountMapper.getPlayerIdsByLoginDates(serverId, dateList);
+        List<LogAccount> playerIdsByLoginDates = getBaseMapper().getPlayerIdsByLoginDates(serverId, dateList);
         if (CollUtil.isNotEmpty(playerIdsByLoginDates)) {
             Map<String, List<Long>> result = new HashMap<>(playerIdsByLoginDates.size());
             playerIdsByLoginDates.forEach(e -> {
@@ -161,6 +156,6 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
 
     @Override
     public List<MergeServerVO> getServerLoginNum(Date startTime, Date endTime) {
-        return logAccountMapper.getServerLoginNum(DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime));
+        return getBaseMapper().getServerLoginNum(DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime));
     }
 }

@@ -10,11 +10,6 @@ import java.util.List;
 
 public interface IRemainStatisticsService extends IService<GameRemainStatistisc> {
     /**
-     * 查询新增留存数---直接操作数据库方式(缺点，时间跨度大会很慢)(废弃)
-     */
-    List<GameRemainStatistisc> queryRemainStatistiscOfNewUserlListA(String rangeDateBegin, String rangeDateEnd, int serverId, String channelName);
-
-    /**
      * 查询新增留存数---减少操作数据库方式
      */
     List<GameRemainStatistisc> queryRemainStatistiscOfNewUserlListB(String rangeDateBegin, String rangeDateEnd, int serverId, String channelName);

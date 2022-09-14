@@ -9,7 +9,6 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -22,9 +21,6 @@ import java.util.List;
 @Service
 @DS("shardingSphere")
 public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUserRank> implements IPayUserRankService {
-
-    @Resource
-    private PayUserRankMapper payUserRankMapper;
 
     @Override
     public List<PayUserRank> queryUserRankByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
@@ -39,7 +35,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             payTimeBeginDate = dates[0];
             payTimeEndDate = dates[1];
         }
-        return payUserRankMapper.queryUserRankByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
+        return getBaseMapper().queryUserRankByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
     }
 
     @Override
@@ -57,13 +53,13 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
                 rangeDateBeginTime = dates[0];
                 rangeDateEndTime = dates[1];
             }
-            list = payUserRankMapper.queryPayRankByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
+            list = getBaseMapper().queryPayRankByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
             return getDataTreating(list);
         }
         //如果有选天数,就使用就近天数查询
         //获取过去第几天的日期
         Date pastDate = DateUtils.addDays(nowDate, days * (-1));
-        list = payUserRankMapper.queryPayRankByDateRange(pastDate, nowDate, serverId, channel);
+        list = getBaseMapper().queryPayRankByDateRange(pastDate, nowDate, serverId, channel);
         return getDataTreating(list);
     }
 
@@ -87,7 +83,7 @@ public class PayUserRankServiceImpl extends ServiceImpl<PayUserRankMapper, PayUs
             playerRegisterInfo.setPayWarningDays(payWarningDays);
 
             //获取玩家最后登录时间和注册时间
-            Date loginDate = payUserRankMapper.getPlayerLastLoginTime(payUserRank.getPlayerId());
+            Date loginDate = getBaseMapper().getPlayerLastLoginTime(payUserRank.getPlayerId());
 
             int loginWarningDays = DateUtils.daysBetween(loginDate, nowDate);
             //设置最后登录时间

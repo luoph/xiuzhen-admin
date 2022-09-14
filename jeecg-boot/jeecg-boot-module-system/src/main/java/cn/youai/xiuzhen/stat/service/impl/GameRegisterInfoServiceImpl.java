@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +23,6 @@ import java.util.List;
 @DS("shardingSphere")
 public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMapper, GameRegisterInfo> implements IGameRegisterInfoService {
 
-    @Resource
-    private GameRegisterInfoMapper registerInfoMapper;
-
     @Autowired
     private ILogAccountService logAccountService;
 
@@ -34,7 +30,7 @@ public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMap
     public List<GameRegisterInfo> queryLoginList(String rangeDateBegin, String rangeDateEnd, Long playerId, Integer serverId) {
         Date rangeDateBeginTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateBegin));
         Date rangeDateEndTime = DateUtils.dateOnly(DateUtils.parseDate(rangeDateEnd));
-        List<GameRegisterInfo> list = registerInfoMapper.queryLoginList(rangeDateBeginTime, rangeDateEndTime, playerId);
+        List<GameRegisterInfo> list = getBaseMapper().queryLoginList(rangeDateBeginTime, rangeDateEndTime, playerId);
         for (GameRegisterInfo registerInfo : list) {
             Date createDate = registerInfo.getUserOnlineRecord().getCreateDate();
             Long duration = registerInfo.getUserOnlineRecord().getDuration();

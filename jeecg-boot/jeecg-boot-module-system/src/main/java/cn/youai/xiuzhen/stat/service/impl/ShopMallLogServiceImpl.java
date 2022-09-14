@@ -15,7 +15,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -38,9 +37,6 @@ import static java.util.regex.Pattern.compile;
 @Service
 @Slf4j
 public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopMallLog> implements IShopMallLogService {
-    @Resource
-    private ShopMallLogMapper shopMallLogMapper;
-
 
     @Override
     public List<ShopMallLog> queryShopMallList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, int type) {
@@ -58,15 +54,15 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
             DataSourceHelper.useServerDatabase(serverId);
 
             // 全途径下的道具次数总和
-            BigDecimal itemNumSum = shopMallLogMapper.queryItemSum(rangeDateBeginTime, rangeDateEndTime, type);
+            BigDecimal itemNumSum = getBaseMapper().queryItemSum(rangeDateBeginTime, rangeDateEndTime, type);
 
-            list = shopMallLogMapper.queryShopMallList(rangeDateBeginTime, rangeDateEndTime, type);
+            list = getBaseMapper().queryShopMallList(rangeDateBeginTime, rangeDateEndTime, type);
 
             for (ShopMallLog shopMallLog : list) {
 
                 Integer itemId = shopMallLog.getItemId();
                 // 次数
-                BigDecimal itemCount = shopMallLogMapper.queryItemCount(rangeDateBeginTime, rangeDateEndTime, shopMallLog.getType(), itemId);
+                BigDecimal itemCount = getBaseMapper().queryItemCount(rangeDateBeginTime, rangeDateEndTime, shopMallLog.getType(), itemId);
 
                 BigDecimal itemNum = shopMallLog.getItemNum();
                 shopMallLog.setItemCount(itemCount);
@@ -106,7 +102,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
         try {
             DataSourceHelper.useServerDatabase(serverId);
             //时间段内某商店类型中所有的购买信息
-            list = shopMallLogMapper.queryShopMallListNew(rangeDateBegin, rangeDateEnd, type);
+            list = getBaseMapper().queryShopMallListNew(rangeDateBegin, rangeDateEnd, type);
         } catch (Exception e) {
             log.error("数据源切换异常,serverId:" + serverId, e);
         } finally {

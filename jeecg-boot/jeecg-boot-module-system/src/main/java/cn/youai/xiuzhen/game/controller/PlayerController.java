@@ -6,6 +6,7 @@ import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import cn.youai.xiuzhen.stat.entity.PlayerBehaviorVO;
+import cn.youai.xiuzhen.stat.service.IPlayerStatService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -14,6 +15,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +35,9 @@ import java.util.List;
 @RestController
 @RequestMapping("game/player")
 public class PlayerController extends JeecgController<GamePlayer, IGamePlayerService> {
+
+    @Autowired
+    private IPlayerStatService playerStatService;
 
     /**
      * 分页列表查询
@@ -65,17 +70,15 @@ public class PlayerController extends JeecgController<GamePlayer, IGamePlayerSer
         }
 
         Page<PlayerBehavior> page = new Page<>(pageNo, pageSize);
-        List<PlayerBehavior> list = service.queryPlayerBehavior(entity.getRangeDateBegin(), entity.getRangeDateEnd(),
+        List<PlayerBehavior> list = playerStatService.queryPlayerBehavior(entity.getRangeDateBegin(), entity.getRangeDateEnd(),
                 entity.getNickname(), entity.getPlayerId(), entity.getDaysType() == null ? 0 : entity.getDaysType(), entity.getServerId());
         page.setRecords(list).setTotal(list.size());
         return Result.ok(page);
     }
 
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(PlayerBehaviorVO playerBehaviorVO,
-                                  HttpServletRequest request) {
-
-        //服务器校验
+    public ModelAndView exportXls(PlayerBehaviorVO playerBehaviorVO, HttpServletRequest request) {
+        // 服务器校验
         if (playerBehaviorVO.getServerId() == null || playerBehaviorVO.getServerId() <= 0) {
             return new ModelAndView();
         }
@@ -95,7 +98,7 @@ public class PlayerController extends JeecgController<GamePlayer, IGamePlayerSer
         }
 
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        List<PlayerBehavior> list = service.queryPlayerBehavior(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd(),
+        List<PlayerBehavior> list = playerStatService.queryPlayerBehavior(playerBehaviorVO.getRangeDateBegin(), playerBehaviorVO.getRangeDateEnd(),
                 playerBehaviorVO.getNickname(), playerBehaviorVO.getPlayerId(), playerBehaviorVO.getDaysType() == null ? 0 : playerBehaviorVO.getDaysType(), playerBehaviorVO.getServerId());
         return ExcelUtils.exportXls(sysUser.getRealname(), list, request.getParameter("selections"), PlayerBehavior.class, "玩家行为分析");
     }

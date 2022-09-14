@@ -8,7 +8,6 @@ import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,9 +22,6 @@ import java.util.List;
 @Service
 public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCountMapper, GameDataReportCount> implements IGameDataReportCountService {
 
-    @Resource
-    private GameDataReportCountMapper gameDataReportCountMapper;
-
     @Override
     public List<GameDataReportCount> queryDataReportByDateRange(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel) {
         List<GameDataReportCount> list = null;
@@ -33,14 +29,14 @@ public class GameDataReportCountServiceImpl extends ServiceImpl<GameDataReportCo
         if (days == 0) {
             Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
-            list = getCompleteList(gameDataReportCountMapper.queryDataReportByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel));
+            list = getCompleteList(getBaseMapper().queryDataReportByDateRange(rangeDateBeginTime, rangeDateEndTime, serverId, channel));
             return list;
         }
         // 如果有选天数,就使用就近天数查询
         // 获取过去第几天的日期
         Date nowDate = new Date();
         Date pastDate = DateUtils.addDays(nowDate, days * (-1));
-        list = getCompleteList(gameDataReportCountMapper.queryDataReportByDateRange(pastDate, nowDate, serverId, channel));
+        list = getCompleteList(getBaseMapper().queryDataReportByDateRange(pastDate, nowDate, serverId, channel));
         return list;
     }
 

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,82 +35,14 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
      * 查询档位跨度
      */
     private static final String[] GRADE = {"6-6", "7-29", "30-67", "68-97", "98-197", "198-327", "328-647", "648-9999"};
-    @Resource
-    RemainStatisticsMapper remainStatisticsMapper;
-
-    @Override
-    public List<GameRemainStatistisc> queryRemainStatistiscOfNewUserlListA(String rangeDateBegin, String rangeDateEnd, int serverId, String channelName) {
-
-        List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
-        //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
-        //根据相差天数来决定返回的总行数
-        for (int i = dateRangeBetween; i >= 0; i--) {
-            //注册日期
-            Date queryDateBegin = DateUtils.addDays(DateUtils.parseDate(rangeDateBegin + " 00:00:00"), i);
-            Date queryDateEnd = DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), i);
-            String registerBeginTime = DateUtils.formatDate(queryDateBegin, DatePattern.NORM_DATETIME_PATTERN);
-            String registerEndTime = DateUtils.formatDate(queryDateEnd, DatePattern.NORM_DATETIME_PATTERN);
-            //根据查询日期查询 这个日期注册的的用户 在某段时间内登陆过游戏的 人数
-            //第DAY[j]+1天数据统计
-            GameRemainStatistisc gameRemainStatistisc = new GameRemainStatistisc();
-            for (int j = 0; j < DAY.length; j++) {
-                //登录日期
-                String loginBeginTime = DateUtils.formatDate(DateUtils.addDays(queryDateBegin, DAY[j]), DatePattern.NORM_DATETIME_PATTERN);
-                String loginEndTime = DateUtils.formatDate(DateUtils.addDays(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin + " 23:59:59"), i), DAY[j]), DatePattern.NORM_DATETIME_PATTERN);
-                String ramainSum = remainStatisticsMapper.selectnNwUserRemainSum(registerBeginTime, registerEndTime, channelName, serverId, loginBeginTime, loginEndTime);
-                if (0 == DAY[j]) {
-                    gameRemainStatistisc.setRegisterNum(Long.parseLong(ramainSum));
-                }
-                if (1 == DAY[j]) {
-                    gameRemainStatistisc.setC2(Long.parseLong(ramainSum));
-                }
-                if (2 == DAY[j]) {
-                    gameRemainStatistisc.setC3(Long.parseLong(ramainSum));
-                }
-                if (3 == DAY[j]) {
-                    gameRemainStatistisc.setC4(Long.parseLong(ramainSum));
-                }
-                if (4 == DAY[j]) {
-                    gameRemainStatistisc.setC5(Long.parseLong(ramainSum));
-                }
-                if (5 == DAY[j]) {
-                    gameRemainStatistisc.setC6(Long.parseLong(ramainSum));
-                }
-                if (6 == DAY[j]) {
-                    gameRemainStatistisc.setC7(Long.parseLong(ramainSum));
-                }
-                if (14 == DAY[j]) {
-                    gameRemainStatistisc.setC15(Long.parseLong(ramainSum));
-                }
-                if (29 == DAY[j]) {
-                    gameRemainStatistisc.setC30(Long.parseLong(ramainSum));
-                }
-                if (59 == DAY[j]) {
-                    gameRemainStatistisc.setC60(Long.parseLong(ramainSum));
-                }
-                if (89 == DAY[j]) {
-                    gameRemainStatistisc.setC90(Long.parseLong(ramainSum));
-                }
-                if (119 == DAY[j]) {
-                    gameRemainStatistisc.setC120(Long.parseLong(ramainSum));
-                }
-            }
-            gameRemainStatistisc.setCountDate(DateUtils.formatDate(queryDateBegin, DatePattern.NORM_DATE_PATTERN));
-            gameRemainStatistisc.setChannel(channelName);
-            gameRemainStatistisc.setServerId(serverId);
-            gameRemainStatistiscList.add(gameRemainStatistisc);
-        }
-        return gameRemainStatistiscList;
-    }
 
     @Override
     public List<GameRemainStatistisc> queryRemainStatistiscOfNewUserlListB(String rangeDateBegin, String rangeDateEnd, int serverId, String channelName) {
         List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
         //查询时间段内所有注册信息
-        List<Map> allRegisterUserMap = remainStatisticsMapper.selectAllRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allRegisterUserMap = getBaseMapper().selectAllRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATE_PATTERN));
         //查询120天后所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集注册信息
         Map<String, List<Map>> prodMap1 = allRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
         //收集登陆信息
@@ -277,9 +208,9 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<JSONObject> gameRemainStatistiscJsonObjectList = new ArrayList<>();
 
         //查询时间段内所有注册信息
-        List<Map> allRegisterUserMap = remainStatisticsMapper.selectAllRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allRegisterUserMap = getBaseMapper().selectAllRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATE_PATTERN));
         //查询120天后所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集注册信息
         Map<String, List<Map>> prodMap1 = allRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
         //收集登陆信息
@@ -364,9 +295,9 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<GameRemainStatistisc> queryRemainStatistiscOfDownPaymentList(String rangeDateBegin, String rangeDateEnd, int serverId, String channelName) {
         List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
         //查询到开服时间所有支付信息
-        List<Map> allPayUserMap = remainStatisticsMapper.selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
+        List<Map> allPayUserMap = getBaseMapper().selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //按create_time收集支付信息
         Map<String, List<Map>> prodMap1 = allPayUserMap.stream().collect(Collectors.groupingBy(item -> item.get("create_time").toString().substring(0, 10)));
         //按play_id收集支付信息
@@ -552,9 +483,9 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         List<JSONObject> gameRemainStatistiscJsonObjectList = new ArrayList<>();
 
         //查询到开服时间所有支付信息
-        List<Map> allPayUserMap = remainStatisticsMapper.selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
+        List<Map> allPayUserMap = getBaseMapper().selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //按create_time收集支付信息
         Map<String, List<Map>> prodMap1 = allPayUserMap.stream().collect(Collectors.groupingBy(item -> item.get("create_time").toString().substring(0, 10)));
         //按play_id收集支付信息
@@ -661,14 +592,14 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<GameRemainStatistisc> queryRemainStatistiscOfFreeList(String rangeDateBegin, String rangeDateEnd, int serverId, String channelName) {
         List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
         //查询到开服时间所有支付信息
-        List<Map> allPayUserMap = remainStatisticsMapper.selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
+        List<Map> allPayUserMap = getBaseMapper().selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
         //按play_id收集支付信息
         Map<String, List<Map>> payMapByPlayId = allPayUserMap.stream().collect(Collectors.groupingBy(a -> a.get("player_id").toString()));
 
         //查询时间段内所有注册信息
-        List<Map> allRegisterUserMap = remainStatisticsMapper.selectAllRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd), 0), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allRegisterUserMap = getBaseMapper().selectAllRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd), 0), DatePattern.NORM_DATE_PATTERN));
         //查询120天后所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集注册信息
         Map<String, List<Map>> prodMap1 = allRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
         //收集登陆信息
@@ -846,7 +777,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         Map<String, List<Map>> freeMap_createDate = freeList.stream().collect(Collectors.groupingBy(map -> map.get("createTime").toString().substring(0, 10)));
 
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集登陆信息
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
 
@@ -1052,7 +983,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         Map<String, List<Map>> freeMap_createDate = freeList.stream().collect(Collectors.groupingBy(map -> map.get("createTime").toString().substring(0, 10)));
 
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集登陆信息
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
 
@@ -1133,9 +1064,9 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
     public List<GameRemainStatistisc> queryRemainStatistiscOfGradeList(String rangeDateBegin, String rangeDateEnd, int serverId, String channelName) {
         List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
         //查询到开服时间所有支付信息
-        List<Map> allPayUserMap = remainStatisticsMapper.selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
+        List<Map> allPayUserMap = getBaseMapper().selectAllOrderHasPayList(channelName, serverId, "2000-01-01 00:00:00", DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), 0), DatePattern.NORM_DATETIME_PATTERN));
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //按create_time收集支付信息
         Map<String, List<Map>> prodMap1 = allPayUserMap.stream().collect(Collectors.groupingBy(item -> item.get("create_time").toString().substring(0, 10)));
         //按play_id收集支付信息
@@ -1305,11 +1236,11 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         }
 
         //查询首付日期支付信息
-        List<Map> allPayUserMap = remainStatisticsMapper.selectAllOrderHasPayList(channelName, serverId, DateUtils.formatDate(DateUtils.parseDate(rangeDateBegin + " 00:00:00"), DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), DatePattern.NORM_DATETIME_PATTERN));
+        List<Map> allPayUserMap = getBaseMapper().selectAllOrderHasPayList(channelName, serverId, DateUtils.formatDate(DateUtils.parseDate(rangeDateBegin + " 00:00:00"), DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), DatePattern.NORM_DATETIME_PATTERN));
         //按play_id收集支付信息
         Map<String, List<Map>> payMapByPlayId = allPayUserMap.stream().collect(Collectors.groupingBy(a -> a.get("player_id").toString()));
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集登陆信息
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
         //首付留存的用户转成List<Map>
@@ -1524,11 +1455,11 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         }
 
         //查询首付日期支付信息
-        List<Map> allPayUserMap = remainStatisticsMapper.selectAllOrderHasPayList(channelName, serverId, DateUtils.formatDate(DateUtils.parseDate(rangeDateBegin + " 00:00:00"), DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), DatePattern.NORM_DATETIME_PATTERN));
+        List<Map> allPayUserMap = getBaseMapper().selectAllOrderHasPayList(channelName, serverId, DateUtils.formatDate(DateUtils.parseDate(rangeDateBegin + " 00:00:00"), DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(DateUtils.parseDate(rangeDateEnd + " 23:59:59"), DatePattern.NORM_DATETIME_PATTERN));
         //按play_id收集支付信息
         Map<String, List<Map>> payMapByPlayId = allPayUserMap.stream().collect(Collectors.groupingBy(a -> a.get("player_id").toString()));
         //查询120天后到现在的所有登陆信息（120是由页面显示展示决定的）
-        List<Map> allLoginAndRegisterUserMap = remainStatisticsMapper.selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
+        List<Map> allLoginAndRegisterUserMap = getBaseMapper().selectAllLoginAndRegisterUser(channelName, serverId, rangeDateBegin, DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), 120), DatePattern.NORM_DATE_PATTERN));
         //收集登陆信息
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
         //首付留存的用户转成List<Map>

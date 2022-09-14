@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
@@ -50,9 +49,6 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
 
     @Autowired
     private ILogAccountService logAccountService;
-
-    @Resource
-    private GameOnlineNumMapper gameOnlineNumMapper;
 
     @Override
     public void doGameOnlineNumSave() {
@@ -101,13 +97,13 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
         if (days == 0) {
             Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin);
             Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd);
-            return gameOnlineNumMapper.queryGameOnlineNumByRangDate(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
+            return getBaseMapper().queryGameOnlineNumByRangDate(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
         }
         //如果有选天数,就使用就近天数查询
         //获取过去第几天的日期
         Date nowDate = new Date();
         Date pastDate = DateUtils.addDays(nowDate, days * (-1));
-        return gameOnlineNumMapper.queryGameOnlineNumByRangDate(pastDate, nowDate, serverId, channel);
+        return getBaseMapper().queryGameOnlineNumByRangDate(pastDate, nowDate, serverId, channel);
     }
 
     @Override
@@ -129,7 +125,7 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
      * 获取数据处理
      */
     private List<GameOnlineNum> getDataTreating(Date rangeDateBeginTime, Date rangeDateEndTime, Integer serverId, String channel) {
-        List<GameOnlineNum> gameOnlineNumList = gameOnlineNumMapper.queryGameOnlineCollectByRangDate(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
+        List<GameOnlineNum> gameOnlineNumList = getBaseMapper().queryGameOnlineCollectByRangDate(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
         for (GameOnlineNum gameOnlineNum : gameOnlineNumList) {
             Date getTime = gameOnlineNum.getGetTime();
             gameOnlineNum.setDau(logAccountService.queryDau(getTime));

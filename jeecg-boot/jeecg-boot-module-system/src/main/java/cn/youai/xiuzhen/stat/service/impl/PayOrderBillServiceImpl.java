@@ -11,7 +11,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,10 +30,6 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
      */
     private final static String[] PAYRANKS = {"0-6", "7-29", "30-67", "68-97", "98-197", "198-327", "328-647", "648-9999"};
 
-    @Resource
-    private PayOrderBillMapper payOrderBillMapper;
-
-
     @Override
     public BigDecimal queryBillSumByDateRange(String payTimeBegin, String payTimeEnd, Integer serverId, String channel) {
         // 如果选择开始时间和结束时间是同一天
@@ -48,7 +43,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
             payTimeBeginDate = dates[0];
             payTimeEndDate = dates[1];
         }
-        return payOrderBillMapper.queryBillSumByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
+        return getBaseMapper().queryBillSumByDateRange(payTimeBeginDate, payTimeEndDate, serverId, channel);
     }
 
     @Override
@@ -69,8 +64,8 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
                 rangeDateEndTime = dates[1];
             }
             // 查询该档位下付费人数和
-            Integer payNumSum = payOrderBillMapper.queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
-            payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
+            Integer payNumSum = getBaseMapper().queryPayNumSum(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
+            payOrderBill = getBaseMapper().queryPayGradeByDateRange(rangeDateBeginTime, rangeDateEndTime, payRankBegin, payRankEnd, serverId, channel, payNumSum);
             payOrderBill.setPayRank(payRank);
             return getDataTreating(payOrderBill);
 
@@ -79,8 +74,8 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         // 获取过去第几天的日期
         Date nowDate = new Date();
         Date pastDate = DateUtils.addDays(nowDate, days * (-1));
-        Integer payNumSum = payOrderBillMapper.queryPayNumSum(pastDate, nowDate, serverId, channel);
-        payOrderBill = payOrderBillMapper.queryPayGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel, payNumSum);
+        Integer payNumSum = getBaseMapper().queryPayNumSum(pastDate, nowDate, serverId, channel);
+        payOrderBill = getBaseMapper().queryPayGradeByDateRange(pastDate, nowDate, payRankBegin, payRankEnd, serverId, channel, payNumSum);
         payOrderBill.setPayRank(payRank);
         return getDataTreating(payOrderBill);
     }
@@ -99,7 +94,7 @@ public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, Pay
         Date rangeDateBeginTime = DateUtils.parseDate(rangeDateBegin + " 00:00:00");
         Date rangeDateEndTime = DateUtils.parseDate(rangeDateEnd + " 23:59:59");
         //查询日期范围内所有支付订单
-        List<Map> allPayInfoList0 = payOrderBillMapper.selectAllPayInfoByTimeRange(DateUtils.formatDate(rangeDateBeginTime, DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(rangeDateEndTime, DatePattern.NORM_DATETIME_PATTERN), serverId, channel);
+        List<Map> allPayInfoList0 = getBaseMapper().selectAllPayInfoByTimeRange(DateUtils.formatDate(rangeDateBeginTime, DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(rangeDateEndTime, DatePattern.NORM_DATETIME_PATTERN), serverId, channel);
         //支付订单player_id分组
         Map<String, List<Map>> allPayInfoList0Map_playerId = allPayInfoList0.stream().collect(Collectors.groupingBy(map -> map.get("player_id").toString()));
         //每个用户当天支付总额

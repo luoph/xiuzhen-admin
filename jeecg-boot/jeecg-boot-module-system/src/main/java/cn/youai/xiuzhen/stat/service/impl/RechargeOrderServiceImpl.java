@@ -38,9 +38,6 @@ import java.util.stream.Collectors;
 @DS("shardingSphere")
 public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, RechargeOrder> implements IRechargeOrderService {
 
-    @Resource
-    private RechargeOrderMapper rechargeOrderMapper;
-
     @Autowired
     private IGameRechargeGoodsService rechargeGoodsService;
 
@@ -85,7 +82,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             // 通过serverId切换数据源
             DataSourceHelper.useServerDatabase(serverId);
             // 查询商品id和商品类型 (普通类型的礼包)
-            list = rechargeOrderMapper.queryGiftList(rangeDateBeginTime, rangeDateEndTime, goodsType);
+            list = getBaseMapper().queryGiftList(rangeDateBeginTime, rangeDateEndTime, goodsType);
 
         } catch (Exception e) {
             log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
@@ -98,7 +95,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             // 在默认数据源下查询 dau 和 礼包信息
             DataSourceHelper.useDefaultDatabase();
             // 通过登录日志统计当前时间段的dau
-            Long dau = rechargeOrderMapper.queryDAU(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
+            Long dau = getBaseMapper().queryDAU(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
             // 通过商品id和dau 获取封装数据的统计对象
             PayOrderBill payOrderBill = payOrderBillMapper.queryPayOrderList(rangeDateBeginTime, rangeDateEndTime, serverId, channel, dau, goodsId);
 
@@ -146,15 +143,15 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             //特惠礼包
             if (goodsType.equals(FairyJadeBuyType.DAILY_GIFT.getType().toString())) {
                 //查询时间范围内消耗明细
-                fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, FairyJadeBuyType.DAILY_GIFT.getType());
+                fairyJadeBuyInfoList = getBaseMapper().queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, FairyJadeBuyType.DAILY_GIFT.getType());
                 //冲榜礼包（开服礼包）
             } else if (goodsType.equals(FairyJadeBuyType.OPEN_SERVICE_GIFT.getType().toString())) {
                 //查询时间范围内消耗明细
-                fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, FairyJadeBuyType.OPEN_SERVICE_GIFT.getType());
+                fairyJadeBuyInfoList = getBaseMapper().queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, FairyJadeBuyType.OPEN_SERVICE_GIFT.getType());
                 //0元购
             } else if (goodsType.equals(FairyJadeBuyType.ZERO_BUY.getType().toString())) {
                 //查询时间范围内消耗明细
-                fairyJadeBuyInfoList = rechargeOrderMapper.queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, FairyJadeBuyType.ZERO_BUY.getType());
+                fairyJadeBuyInfoList = getBaseMapper().queryFairyJadeBuyInfo(rangeDateBeginTime, rangeDateEndTime, FairyJadeBuyType.ZERO_BUY.getType());
             } else {
                 log.error("不存在的商品类型:" + goodsType);
             }
@@ -212,7 +209,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
         //遍历获取日期内的消耗玉髓明细数据
         for (String s : fairyJadeBuyInfoMapTimeSort.keySet()) {
             // 通过登录日志统计当前时间段的dau
-            Long dau = rechargeOrderMapper.queryDAU(DateUtils.dateOnly(DateUtils.parseDate(s)), DateUtils.dateOnly(DateUtils.parseDate(s)), serverId, channel);
+            Long dau = getBaseMapper().queryDAU(DateUtils.dateOnly(DateUtils.parseDate(s)), DateUtils.dateOnly(DateUtils.parseDate(s)), serverId, channel);
             List<Map> oneDayFairyJadeBuyInfoList = fairyJadeBuyInfoMapTimeSort.get(s);
             //以档位分组
             Map<String, List<Map>> oneDayFairyJadeBuyInfoListItemNum = oneDayFairyJadeBuyInfoList.stream().collect(Collectors.groupingBy(map -> map.get("itemNum").toString()));

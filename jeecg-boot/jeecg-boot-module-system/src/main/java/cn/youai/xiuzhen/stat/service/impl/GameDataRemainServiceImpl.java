@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -29,9 +28,6 @@ import java.util.Date;
 @DS("shardingSphere")
 public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper, GameStatRemain> implements IGameDataRemainService {
 
-    @Resource
-    private GameDataRemainMapper gameDataRemainMapper;
-
     @Override
     public IPage<GameStatRemain> selectList(Page<GameStatRemain> page, int serverId, String rangeDateBegin, String rangeDateEnd) {
         LambdaQueryWrapper<GameStatRemain> queryWrapper = Wrappers.lambdaQuery();
@@ -43,6 +39,6 @@ public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper,
 
     @Override
     public GameStatRemain getCountRemain(int serverId, String date, Date statDate) {
-        return gameDataRemainMapper.gameRemainCount(serverId, date, statDate);
+        return getBaseMapper().gameRemainCount(serverId, date, statDate);
     }
 }
