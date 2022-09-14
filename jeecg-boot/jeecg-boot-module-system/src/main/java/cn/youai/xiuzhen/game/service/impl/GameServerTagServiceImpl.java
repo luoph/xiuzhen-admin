@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameServerTag;
 import cn.youai.xiuzhen.game.mapper.GameServerTagMapper;
 import cn.youai.xiuzhen.game.service.IGameServerTagService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -17,6 +18,7 @@ import java.util.List;
  * @date 2022-03-25
  */
 @Service
+@DS("master")
 public class GameServerTagServiceImpl extends ServiceImpl<GameServerTagMapper, GameServerTag> implements IGameServerTagService {
 
     @Override

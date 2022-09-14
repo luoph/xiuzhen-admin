@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypePartyTask;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypePartyTaskMapper;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypePartyTaskService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2021-03-30
  */
 @Service
+@DS("master")
 public class GameCampaignTypePartyTaskServiceImpl extends ServiceImpl<GameCampaignTypePartyTaskMapper, GameCampaignTypePartyTask> implements IGameCampaignTypePartyTaskService {
 
 }

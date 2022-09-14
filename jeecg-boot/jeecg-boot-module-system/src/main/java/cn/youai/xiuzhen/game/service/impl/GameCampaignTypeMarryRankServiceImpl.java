@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeMarryRank;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypeMarryRankMapper;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeMarryRankService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2021-06-20
  */
 @Service
+@DS("master")
 public class GameCampaignTypeMarryRankServiceImpl extends ServiceImpl<GameCampaignTypeMarryRankMapper, GameCampaignTypeMarryRank> implements IGameCampaignTypeMarryRankService {
 
 }

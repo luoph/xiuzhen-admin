@@ -8,6 +8,7 @@ import cn.youai.xiuzhen.game.mapper.OpenServiceCampaignConsumeDetailMapper;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignConsumeDetailItemService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignConsumeDetailMessageService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignConsumeDetailService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,6 +24,7 @@ import java.util.List;
  * @date 2020-12-28
  */
 @Service
+@DS("master")
 public class OpenServiceCampaignConsumeDetailServiceImpl extends ServiceImpl<OpenServiceCampaignConsumeDetailMapper, OpenServiceCampaignConsumeDetail> implements IOpenServiceCampaignConsumeDetailService {
 
     @Autowired

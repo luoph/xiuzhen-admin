@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameInfo;
 import cn.youai.xiuzhen.game.mapper.GameInfoMapper;
 import cn.youai.xiuzhen.game.service.IGameInfoService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2019-12-11
  */
 @Service
+@DS("master")
 public class GameInfoServiceImpl extends ServiceImpl<GameInfoMapper, GameInfo> implements IGameInfoService {
 
 }

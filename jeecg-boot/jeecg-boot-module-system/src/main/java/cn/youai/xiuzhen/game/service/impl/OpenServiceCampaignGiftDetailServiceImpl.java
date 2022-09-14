@@ -6,6 +6,7 @@ import cn.youai.xiuzhen.game.entity.OpenServiceCampaignGiftDetailItem;
 import cn.youai.xiuzhen.game.mapper.GameOpenServiceCampaignGiftDetailMapper;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignGiftDetailItemService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignGiftDetailService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
  * @date 2020-12-21
  */
 @Service
+@DS("master")
 public class OpenServiceCampaignGiftDetailServiceImpl extends ServiceImpl<GameOpenServiceCampaignGiftDetailMapper, OpenServiceCampaignGiftDetail> implements IOpenServiceCampaignGiftDetailService {
 
     @Autowired

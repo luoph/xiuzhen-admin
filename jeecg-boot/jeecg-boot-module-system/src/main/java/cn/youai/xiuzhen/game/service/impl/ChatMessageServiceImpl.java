@@ -11,6 +11,7 @@ import cn.youai.xiuzhen.game.mapper.FriendChatChannelMapper;
 import cn.youai.xiuzhen.game.mapper.FriendChatMessageMapper;
 import cn.youai.xiuzhen.game.service.IChatMessageService;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,9 @@ import java.util.List;
  * @version 1.0.0
  * @date 2020/10/20 21:24
  */
-@Service
 @Slf4j
+@Service
+@DS("master")
 public class ChatMessageServiceImpl implements IChatMessageService {
 
     @Resource

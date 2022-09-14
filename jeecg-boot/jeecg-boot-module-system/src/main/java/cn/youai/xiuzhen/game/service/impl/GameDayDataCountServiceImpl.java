@@ -15,6 +15,7 @@ import cn.youai.xiuzhen.game.service.ILogAccountService;
 import cn.youai.xiuzhen.game.service.IPayOrderService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import cn.youai.xiuzhen.utils.ParamUtils;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,7 @@ import java.util.List;
  * @since 2020-08-22
  */
 @Service
+@DS("shardingSphere")
 public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMapper, GameStatDaily> implements IGameDayDataCountService {
 
     @Autowired

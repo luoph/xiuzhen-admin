@@ -6,6 +6,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeSelectDiscountItem;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypeSelectDiscountItemMapper;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeSelectDiscountItemService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
  * @since 2021-09-08
  */
 @Service
+@DS("master")
 public class GameCampaignTypeSelectDiscountItemServiceImpl extends ServiceImpl<GameCampaignTypeSelectDiscountItemMapper, GameCampaignTypeSelectDiscountItem> implements IGameCampaignTypeSelectDiscountItemService {
 
 }

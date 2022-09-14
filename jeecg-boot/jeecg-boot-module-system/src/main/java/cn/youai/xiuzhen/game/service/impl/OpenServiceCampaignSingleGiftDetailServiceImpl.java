@@ -8,6 +8,7 @@ import cn.youai.xiuzhen.game.mapper.OpenServiceCampaignSingleGiftDetailMapper;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignSingleGiftDetailService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignSingleGiftItemService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignSingleGiftNoticeService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
  * @date 2020-12-23
  */
 @Service
+@DS("master")
 public class OpenServiceCampaignSingleGiftDetailServiceImpl extends ServiceImpl<OpenServiceCampaignSingleGiftDetailMapper, OpenServiceCampaignSingleGiftDetail> implements IOpenServiceCampaignSingleGiftDetailService {
 
     @Autowired

@@ -6,6 +6,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameStatRemain;
 import cn.youai.xiuzhen.game.mapper.GameDataRemainMapper;
 import cn.youai.xiuzhen.game.service.IGameDataRemainService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -25,6 +26,7 @@ import java.util.Date;
  * @since 2020-08-26
  */
 @Service
+@DS("shardingSphere")
 public class GameDataRemainServiceImpl extends ServiceImpl<GameDataRemainMapper, GameStatRemain> implements IGameDataRemainService {
 
     @Resource

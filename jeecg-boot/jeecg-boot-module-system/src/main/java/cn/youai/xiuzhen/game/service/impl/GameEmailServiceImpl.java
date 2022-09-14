@@ -17,6 +17,7 @@ import cn.youai.xiuzhen.game.service.IGameEmailService;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.alibaba.fastjson2.JSON;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import net.dreamlu.mica.core.utils.$;
 import org.jeecg.modules.utils.GameConfigUtils;
@@ -35,6 +36,7 @@ import java.util.Set;
  * @date 2020-01-04
  */
 @Service
+@DS("master")
 public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail> implements IGameEmailService {
 
     @Value("${app.send-mail-url}")

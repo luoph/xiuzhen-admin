@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.game.entity.PayOrderGiftVO;
 import cn.youai.xiuzhen.game.mapper.PayOrderGiftVOMapper;
 import cn.youai.xiuzhen.game.service.IPayOrderGiftVOService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,6 +20,7 @@ import java.util.List;
  * @date 2020-09-29
  */
 @Service
+@DS("shardingSphere")
 public class PayOrderGiftVOServiceImpl implements IPayOrderGiftVOService {
 
     @Resource

@@ -12,6 +12,7 @@ import cn.youai.xiuzhen.game.mapper.GamePlayerMapper;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.game.service.ILogAccountService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
  * @since 2021-12-07
  */
 @Service
+@DS("shardingSphere")
 public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePlayer> implements IGamePlayerService {
 
     @Autowired
@@ -42,8 +44,7 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
 
     @Override
     public List<GamePlayer> getPlayerList(List<Long> playerIds) {
-        return list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getPlayerId, playerIds)
-                .orderByAsc(GamePlayer::getPlayerId));
+        return list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getPlayerId, playerIds).orderByAsc(GamePlayer::getPlayerId));
     }
 
     // TODO 优化玩家行为分析

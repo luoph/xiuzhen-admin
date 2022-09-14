@@ -6,6 +6,7 @@ import cn.youai.xiuzhen.game.entity.PayOrderBill;
 import cn.youai.xiuzhen.game.mapper.PayOrderBillMapper;
 import cn.youai.xiuzhen.game.service.IPayOrderBillService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * @date 2020-09-29
  */
 @Service
+@DS("shardingSphere")
 public class PayOrderBillServiceImpl extends ServiceImpl<PayOrderBillMapper, PayOrderBill> implements IPayOrderBillService {
 
     /**

@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.game.entity.GameRegisterInfo;
 import cn.youai.xiuzhen.game.mapper.GameRegisterInfoMapper;
 import cn.youai.xiuzhen.game.service.IGameRegisterInfoService;
 import cn.youai.xiuzhen.game.service.ILogAccountService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
  * @date 2020-01-04
  */
 @Service
+@DS("shardingSphere")
 public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMapper, GameRegisterInfo> implements IGameRegisterInfoService {
 
     @Resource

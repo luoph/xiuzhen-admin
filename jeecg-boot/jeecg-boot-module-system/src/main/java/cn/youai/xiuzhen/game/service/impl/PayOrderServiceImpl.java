@@ -10,6 +10,7 @@ import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.game.service.IPayOrderService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
@@ -26,6 +27,7 @@ import java.util.*;
  * @date 2020-01-05
  */
 @Service
+@DS("shardingSphere")
 public class PayOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder> implements IPayOrderService {
 
     @Resource

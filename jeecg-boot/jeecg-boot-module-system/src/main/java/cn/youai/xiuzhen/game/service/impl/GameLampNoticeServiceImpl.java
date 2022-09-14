@@ -8,6 +8,7 @@ import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.mapper.GameLampNoticeMapper;
 import cn.youai.xiuzhen.game.service.IGameLampNoticeService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ import java.util.List;
  * @date 2020-08-10
  */
 @Service
+@DS("master")
 public class GameLampNoticeServiceImpl extends ServiceImpl<GameLampNoticeMapper, GameLampNotice> implements IGameLampNoticeService {
 
     @Autowired

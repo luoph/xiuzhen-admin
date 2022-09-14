@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
  * @author huli
  * @version 1.0.0
  */
-@Service
 @Slf4j
+@Service
 public class GameChatLogServiceImpl implements IGameChatLogService {
     @Resource
     private GameChatLogMapper gameChatLogMapper;

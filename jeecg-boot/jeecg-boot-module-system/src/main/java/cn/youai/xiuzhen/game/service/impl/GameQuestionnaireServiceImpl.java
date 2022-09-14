@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameQuestionnaire;
 import cn.youai.xiuzhen.game.mapper.GameQuestionnaireMapper;
 import cn.youai.xiuzhen.game.service.IGameQuestionnaireService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2021-01-13
  */
 @Service
+@DS("master")
 public class GameQuestionnaireServiceImpl extends ServiceImpl<GameQuestionnaireMapper, GameQuestionnaire> implements IGameQuestionnaireService {
 
 }

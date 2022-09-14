@@ -7,6 +7,7 @@ import cn.youai.xiuzhen.game.entity.GameUpgradeNotice;
 import cn.youai.xiuzhen.game.mapper.GameUpgradeNoticeMapper;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.game.service.IGameUpgradeNoticeService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,9 @@ import java.util.Set;
  * @description 更新公告
  * @date 2021-03-02
  */
-@Service
 @Slf4j
+@Service
+@DS("master")
 public class GameUpgradeNoticeServiceImpl extends ServiceImpl<GameUpgradeNoticeMapper, GameUpgradeNotice> implements IGameUpgradeNoticeService {
 
     @Value("${app.campaign-update-url:/campaign/reload}")

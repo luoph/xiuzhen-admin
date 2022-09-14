@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignSingleGiftItem;
 import cn.youai.xiuzhen.game.mapper.OpenServiceCampaignSingleGiftItemMapper;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignSingleGiftItemService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @date 2020-12-23
  */
 @Service
+@DS("master")
 public class OpenServiceCampaignSingleGiftItemServiceImpl extends ServiceImpl<OpenServiceCampaignSingleGiftItemMapper, OpenServiceCampaignSingleGiftItem> implements IOpenServiceCampaignSingleGiftItemService {
 
     @Override

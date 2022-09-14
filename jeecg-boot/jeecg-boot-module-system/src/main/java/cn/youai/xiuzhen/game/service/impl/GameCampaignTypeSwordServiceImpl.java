@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeSword;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypeSwordMapper;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeSwordService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2021-02-23
  */
 @Service
+@DS("master")
 public class GameCampaignTypeSwordServiceImpl extends ServiceImpl<GameCampaignTypeSwordMapper, GameCampaignTypeSword> implements IGameCampaignTypeSwordService {
 
 }

@@ -12,6 +12,7 @@ import cn.youai.xiuzhen.game.mapper.GameServerMapper;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.game.service.ILogAccountService;
 import com.alibaba.fastjson2.JSON;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import okhttp3.Call;
@@ -35,6 +36,7 @@ import java.util.stream.Collectors;
  * @date 2019-12-10
  */
 @Service
+@DS("master")
 public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameServer> implements IGameServerService {
 
     @Resource

@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeFall;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypeFallMapper;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeFallService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2021-01-15
  */
 @Service
+@DS("master")
 public class GameCampaignTypeFallServiceImpl extends ServiceImpl<GameCampaignTypeFallMapper, GameCampaignTypeFall> implements IGameCampaignTypeFallService {
 
 }

@@ -10,6 +10,7 @@ import cn.youai.xiuzhen.game.service.IOpenServiceCampaignLotteryDetailPoolServic
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignLotteryDetailRankingService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignLotteryDetailScoreService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignLotteryDetailService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -25,6 +26,7 @@ import java.util.List;
  * @date 2020-12-25
  */
 @Service
+@DS("master")
 public class OpenServiceCampaignLotteryDetailServiceImpl extends ServiceImpl<OpenServiceCampaignLotteryDetailMapper, OpenServiceCampaignLotteryDetail> implements IOpenServiceCampaignLotteryDetailService {
 
     @Autowired

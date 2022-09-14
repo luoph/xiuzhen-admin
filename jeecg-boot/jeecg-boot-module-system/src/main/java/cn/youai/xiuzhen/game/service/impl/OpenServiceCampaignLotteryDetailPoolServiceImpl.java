@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignLotteryDetailPool;
 import cn.youai.xiuzhen.game.mapper.OpenServiceCampaignLotteryDetailPoolMapper;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignLotteryDetailPoolService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * @date 2020-12-25
  */
 @Service
+@DS("master")
 public class OpenServiceCampaignLotteryDetailPoolServiceImpl extends ServiceImpl<OpenServiceCampaignLotteryDetailPoolMapper, OpenServiceCampaignLotteryDetailPool> implements IOpenServiceCampaignLotteryDetailPoolService {
 
     @Override

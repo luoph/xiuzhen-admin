@@ -10,6 +10,7 @@ import cn.youai.xiuzhen.game.model.ChannelConfig;
 import cn.youai.xiuzhen.game.model.UpdateConfig;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IGameServerTagService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.JsonFileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.util.Set;
  * @date 2019-12-11
  */
 @Service
+@DS("master")
 public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameChannel> implements IGameChannelService {
 
     @Value("${app.folder.server}")

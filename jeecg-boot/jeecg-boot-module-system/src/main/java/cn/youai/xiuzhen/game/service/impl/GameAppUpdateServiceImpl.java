@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.game.entity.GameAppUpdate;
 import cn.youai.xiuzhen.game.mapper.GameAppUpdateMapper;
 import cn.youai.xiuzhen.game.model.AppConfig;
 import cn.youai.xiuzhen.game.service.IGameAppUpdateService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.JsonFileUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +20,7 @@ import java.util.*;
  * @date 2021-06-10
  */
 @Service
+@DS("master")
 public class GameAppUpdateServiceImpl extends ServiceImpl<GameAppUpdateMapper, GameAppUpdate> implements IGameAppUpdateService {
 
     @Value("${app.folder.update}")
