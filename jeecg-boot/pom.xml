@@ -99,6 +99,10 @@
                     <artifactId>kryo</artifactId>
                     <groupId>com.esotericsoftware</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>antlr4-runtime</artifactId>
+                    <groupId>org.antlr</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
