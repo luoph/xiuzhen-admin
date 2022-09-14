@@ -10,7 +10,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.modules.game.entity.ShopMallLog;
 import org.jeecg.modules.game.service.IShopMallLogService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,7 +59,7 @@ public class ShopMallLogController {
             return Result.error("请选择服务器！");
         }
         //日期校验
-        DateRange dateRange = ParamValidUtil.getDateRange(rangeDateBegin, rangeDateEnd, days);
+        DateRange dateRange = ParamUtils.getDateRange(rangeDateBegin, rangeDateEnd, days);
         if (null == dateRange) {
             return Result.error("请选择日期！");
         }

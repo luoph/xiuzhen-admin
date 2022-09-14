@@ -15,7 +15,7 @@ import org.jeecg.modules.game.service.IGameChannelServerService;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameOnlineNumService;
 import org.jeecg.modules.game.service.IGameServerService;
-import org.jeecg.modules.player.service.ILogAccountService;
+import org.jeecg.modules.game.service.ILogAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

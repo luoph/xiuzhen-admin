@@ -12,7 +12,7 @@ import org.jeecg.modules.game.entity.GameStatOngoing;
 import org.jeecg.modules.game.mapper.GameCountOngoingMapper;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IGameCountOngoingService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +38,7 @@ public class GameCountOngoingServiceImpl extends ServiceImpl<GameCountOngoingMap
         if (type > 0) {
             queryWrapper.eq("type", type);
         }
-        boolean paramValidCheck = ParamValidUtil.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
+        boolean paramValidCheck = ParamUtils.isParamInValid(channelId, serverId, rangeDateBegin, rangeDateEnd);
         if (!paramValidCheck) {
             GameChannel gameChannel = gameChannelService.getById(channelId);
             queryWrapper.ge("count_date", rangeDateBegin);

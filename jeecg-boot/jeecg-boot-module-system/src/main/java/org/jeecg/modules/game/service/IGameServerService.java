@@ -3,7 +3,7 @@ package org.jeecg.modules.game.service;
 import cn.youai.basics.model.Response;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.modules.game.entity.GameServer;
-import org.jeecg.modules.player.entity.MergeServerVO;
+import org.jeecg.modules.game.entity.MergeServerVO;
 
 import java.util.Collection;
 import java.util.List;

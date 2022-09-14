@@ -12,7 +12,7 @@ import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.game.entity.GamePlayMethodsTakePartInVO;
 import org.jeecg.modules.game.service.IGamePlayMethodsTakePartInService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,7 +59,7 @@ public class GamePlayMethodsTakePartInController {
             return Result.error("请选择玩法类型!");
         }
         // 日期空校验
-        DateRange dateRange = ParamValidUtil.getDateRange(rangeDateBegin, rangeDateEnd, days);
+        DateRange dateRange = ParamUtils.getDateRange(rangeDateBegin, rangeDateEnd, days);
         if (null == dateRange) {
             return Result.error("请选择日期！");
         }
@@ -87,7 +87,7 @@ public class GamePlayMethodsTakePartInController {
             return null;
         }
         // 日期空校验
-        DateRange dateRange = ParamValidUtil.getDateRange(rangeDateBegin, rangeDateEnd, days);
+        DateRange dateRange = ParamUtils.getDateRange(rangeDateBegin, rangeDateEnd, days);
         if (null == dateRange) {
             return null;
         }
@@ -111,7 +111,7 @@ public class GamePlayMethodsTakePartInController {
             throw new Exception("玩法类型不能为空");
         }
         // 日期空校验
-        DateRange dateRange = ParamValidUtil.getDateRange(rangeDateBegin, rangeDateEnd, days);
+        DateRange dateRange = ParamUtils.getDateRange(rangeDateBegin, rangeDateEnd, days);
         if (null == dateRange) {
             throw new Exception("请选择日期！");
         }

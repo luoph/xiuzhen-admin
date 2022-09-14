@@ -11,7 +11,7 @@ import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.jeecg.modules.game.mapper.GameMonetaryDisTributionMapper;
 import org.jeecg.modules.game.service.IGameMonetaryDisTributionService;
-import org.jeecg.modules.player.entity.BackpackLog;
+import org.jeecg.modules.game.entity.BackpackLog;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

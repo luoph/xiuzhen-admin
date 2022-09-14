@@ -4,7 +4,7 @@
 
 
     <!-- 玩家日志查询映射结果 -->
-    <resultMap id="PlayerLogResultMap" type="org.jeecg.modules.player.entity.PlayerBehavior">
+    <resultMap id="PlayerLogResultMap" type="org.jeecg.modules.game.entity.PlayerBehavior">
         <id column="id" property="id"/>
         <result column="server_id" property="serverId"/>
         <result column="player_id" property="playerId"/>

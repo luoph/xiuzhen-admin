@@ -12,7 +12,7 @@ import org.jeecg.modules.game.entity.GameChannelServer;
 import org.jeecg.modules.game.entity.GameStatDaily;
 import org.jeecg.modules.game.entity.GameStatRemain;
 import org.jeecg.modules.game.service.*;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +57,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
+        int dateRangeBetween = ParamUtils.dateRangeBetween(dateBegin, dateEnd);
         List<GameStatDaily> list = new ArrayList<>(dateRangeBetween);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtil.formatDate(DateUtils.addDays(dateBegin, i));
@@ -122,8 +122,8 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
-        Date[] dates = ParamValidUtil.dateBegin(dateBegin, dateEnd);
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
+        Date[] dates = ParamUtils.dateBegin(dateBegin, dateEnd);
+        int dateRangeBetween = ParamUtils.dateRangeBetween(dateBegin, dateEnd);
         List<GameStatRemain> list = new ArrayList<>(dateRangeBetween);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtils.formatDate(DateUtils.addDays(dates[0], i), DatePattern.NORM_DATE_PATTERN);

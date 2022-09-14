@@ -6,7 +6,7 @@ package org.jeecg.modules.game.mapper;
 import cn.youai.entities.GamePlayer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.modules.player.entity.PlayerBehavior;
+import org.jeecg.modules.game.entity.PlayerBehavior;
 
 import java.util.Date;
 import java.util.List;

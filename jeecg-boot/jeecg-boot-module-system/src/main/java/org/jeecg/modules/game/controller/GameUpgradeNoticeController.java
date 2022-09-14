@@ -8,7 +8,7 @@ import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.modules.game.entity.GameUpgradeNotice;
 import org.jeecg.modules.game.service.IGameUpgradeNoticeService;
-import org.jeecg.modules.game.util.StrHtmlUtil;
+import org.jeecg.modules.game.utils.StrHtmlUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,7 +55,7 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
     @AutoLog(value = "更新公告-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameUpgradeNotice entity) {
-        entity.setNoticeMsg(StrHtmlUtil.formatNoticeHtml(entity.getNoticeMsg()));
+        entity.setNoticeMsg(StrHtmlUtils.formatNoticeHtml(entity.getNoticeMsg()));
         // 排序区服id
         List<String> serverIds = StrUtil.splitTrim(entity.getServerIds() != null ? entity.getServerIds() : "", ",");
         Collections.sort(serverIds);
@@ -72,7 +72,7 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
     @AutoLog(value = "更新公告-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameUpgradeNotice entity) {
-        entity.setNoticeMsg(StrHtmlUtil.formatNoticeHtml(entity.getNoticeMsg()));
+        entity.setNoticeMsg(StrHtmlUtils.formatNoticeHtml(entity.getNoticeMsg()));
         // 排序区服id
         List<String> serverIds = StrUtil.splitTrim(entity.getServerIds() != null ? entity.getServerIds() : "", ",");
         Collections.sort(serverIds);

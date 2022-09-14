@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.game.entity.MonetaryDisTributionVO;
 import org.jeecg.modules.game.service.IGameMonetaryDisTributionService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +54,7 @@ public class GameMonetaryDistributionController {
         }
 
         // 日期空校验
-        DateRange dateRange = ParamValidUtil.getDateRange(rangeDateBegin, rangeDateEnd, days);
+        DateRange dateRange = ParamUtils.getDateRange(rangeDateBegin, rangeDateEnd, days);
         if (null == dateRange) {
             return Result.error("请选择日期！");
         }

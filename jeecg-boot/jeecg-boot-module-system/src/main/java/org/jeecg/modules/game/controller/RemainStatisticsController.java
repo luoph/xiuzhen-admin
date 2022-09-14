@@ -14,7 +14,7 @@ import org.jeecg.modules.game.entity.RechargeOrder;
 import org.jeecg.modules.game.service.IGameChannelService;
 import org.jeecg.modules.game.service.IRechargeOrderService;
 import org.jeecg.modules.game.service.IRemainStatisticsService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -177,7 +177,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         }
 
         // 时间相关参数校验和转换
-        Date[] dateParamValid = ParamValidUtil.convertDateParam(rangeDateBegin, rangeDateEnd, days);
+        Date[] dateParamValid = ParamUtils.convertDateParam(rangeDateBegin, rangeDateEnd, days);
         if (null != dateParamValid) {
             rangeDateEnd = DateUtils.formatDate(dateParamValid[1], "YYYY-MM-DD");
             rangeDateBegin = DateUtils.formatDate(dateParamValid[0], "YYYY-MM-DD");
@@ -231,7 +231,7 @@ public class RemainStatisticsController extends JeecgController<RechargeOrder, I
         }
 
         //时间相关参数校验和转换
-        Date[] dateParamValid = ParamValidUtil.convertDateParam(rangeDateBegin, rangeDateEnd, days);
+        Date[] dateParamValid = ParamUtils.convertDateParam(rangeDateBegin, rangeDateEnd, days);
         if (null != dateParamValid) {
             rangeDateEnd = DateUtils.formatDate(dateParamValid[1], "YYYY-MM-DD");
             rangeDateBegin = DateUtils.formatDate(dateParamValid[0], "YYYY-MM-DD");

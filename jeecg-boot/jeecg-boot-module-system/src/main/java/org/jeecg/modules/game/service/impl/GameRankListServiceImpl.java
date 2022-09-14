@@ -9,8 +9,8 @@ import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
 import org.jeecg.modules.game.mapper.GameRankListMapper;
 import org.jeecg.modules.game.service.IGameRankListService;
-import org.jeecg.modules.game.util.ParamValidUtil;
-import org.jeecg.modules.player.entity.GameRegisterInfo;
+import org.jeecg.modules.game.utils.ParamUtils;
+import org.jeecg.modules.game.entity.GameRegisterInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,7 +41,7 @@ public class GameRankListServiceImpl implements IGameRankListService {
     public List<GameRankListVO> selectGameRankList(GameRankListVO gameRankListVO) throws UnsupportedEncodingException {
         Date createTime = DateUtils.endTimeOfDate(gameRankListVO.getDate());
         if (null != gameRankListVO.getHour() && gameRankListVO.getHour() >= 0) {
-            createTime = ParamValidUtil.getHourEnd(createTime, gameRankListVO.getHour() - 1);
+            createTime = ParamUtils.getHourEnd(createTime, gameRankListVO.getHour() - 1);
         }
         // 查询操作日志
         List<LogPlayer> logPlayerValueList;

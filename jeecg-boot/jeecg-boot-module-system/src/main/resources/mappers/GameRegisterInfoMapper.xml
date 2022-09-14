@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.player.mapper.GameRegisterInfoMapper">
+<mapper namespace="org.jeecg.modules.game.mapper.GameRegisterInfoMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.player.entity.GameRegisterInfo">
+    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.GameRegisterInfo">
         <id column="id" property="id"/>
         <result column="account" property="account"/>
         <result column="player_id" property="playerId"/>
@@ -13,7 +13,7 @@
         <result column="model" property="model"/>
 
         <association property="userOnlineRecord"
-                     javaType="org.jeecg.modules.player.entity.UserOnlineRecord">
+                     javaType="org.jeecg.modules.game.entity.UserOnlineRecord">
             <id column="uor_id" property="id"/>
             <result column="uor_duration" property="duration"/>
             <result column="uor_create_time" property="createTime"/>

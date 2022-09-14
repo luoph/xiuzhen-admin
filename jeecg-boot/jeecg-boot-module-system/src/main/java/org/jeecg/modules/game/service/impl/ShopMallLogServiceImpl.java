@@ -12,7 +12,7 @@ import org.jeecg.database.DataSourceHelper;
 import org.jeecg.modules.game.entity.ShopMallLog;
 import org.jeecg.modules.game.mapper.ShopMallLogMapper;
 import org.jeecg.modules.game.service.IShopMallLogService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -118,7 +118,7 @@ public class ShopMallLogServiceImpl extends ServiceImpl<ShopMallLogMapper, ShopM
         }
         //购买信息按日分组
         Map<String, List<ShopMallLog>> shopMallLogListMapCreateTime = list.stream().collect(Collectors.groupingBy(shopmalllog -> DateUtils.formatDate(DateUtils.dateOnly(shopmalllog.getCreateTime()), DatePattern.NORM_DATE_PATTERN)));
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dayStringYmd = DateUtils.formatDate(DateUtils.addDays(DateUtils.parseDate(rangeDateBegin), i), DatePattern.NORM_DATE_PATTERN);
             //获取当前日期的购买信息

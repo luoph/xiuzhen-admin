@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.entity.GameRemainStatistisc;
 import org.jeecg.modules.game.mapper.RemainStatisticsMapper;
 import org.jeecg.modules.game.service.IRemainStatisticsService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -44,7 +44,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
 
         List<GameRemainStatistisc> gameRemainStatistiscList = new ArrayList<>();
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //注册日期
@@ -118,7 +118,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
 
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //注册日期
@@ -286,7 +286,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
 
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //注册日期
@@ -375,7 +375,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
 
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //支付日期
@@ -563,7 +563,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
 
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //支付日期
@@ -675,7 +675,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
         Map<String, List<Map>> prodMap2 = allLoginAndRegisterUserMap.stream().collect(Collectors.groupingBy(a -> a.get("create_date").toString()));
 
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //注册日期
@@ -852,7 +852,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
 
 
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //用户注册日期
@@ -1058,7 +1058,7 @@ public class RemainStatisticsImpl extends ServiceImpl<RemainStatisticsMapper, Ga
 
 
         //计算开始时间和结束时间的相差天数
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
+        int dateRangeBetween = ParamUtils.dateRangeBetween(DateUtils.parseDate(rangeDateBegin), DateUtils.parseDate(rangeDateEnd));
         //根据相差天数来决定返回的总行数
         for (int i = dateRangeBetween; i >= 0; i--) {
             //用户注册日期

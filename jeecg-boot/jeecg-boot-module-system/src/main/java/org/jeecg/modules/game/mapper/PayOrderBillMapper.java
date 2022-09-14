@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.jeecg.modules.game.entity.PayOrderBill;
-import org.jeecg.modules.player.entity.GameOrder;
+import org.jeecg.modules.game.entity.GameOrder;
 
 import java.math.BigDecimal;
 import java.util.Date;

@@ -13,9 +13,9 @@ import org.jeecg.modules.game.entity.GameStatDaily;
 import org.jeecg.modules.game.mapper.GameDayDataCountMapper;
 import org.jeecg.modules.game.service.IGameDayDataCountService;
 import org.jeecg.modules.game.service.IGameServerService;
-import org.jeecg.modules.game.util.ParamValidUtil;
-import org.jeecg.modules.player.service.ILogAccountService;
-import org.jeecg.modules.player.service.IPayOrderService;
+import org.jeecg.modules.game.utils.ParamUtils;
+import org.jeecg.modules.game.service.ILogAccountService;
+import org.jeecg.modules.game.service.IPayOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,7 +96,7 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
         Date dateEnd = DateUtils.parseDate(rangeDateEnd);
         // 数组第一个元素为开始统计的第一个日期
-        int dateRangeBetween = ParamValidUtil.dateRangeBetween(dateBegin, dateEnd);
+        int dateRangeBetween = ParamUtils.dateRangeBetween(dateBegin, dateEnd);
         List<GameStatDaily> list = new ArrayList<>(dateRangeBetween);
         for (int i = 0; i <= dateRangeBetween; i++) {
             String dateOnly = DateUtil.formatDate(DateUtils.addDays(dateBegin, i));

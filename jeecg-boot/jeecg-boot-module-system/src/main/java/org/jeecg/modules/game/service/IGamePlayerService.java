@@ -5,7 +5,7 @@ package org.jeecg.modules.game.service;
 
 import cn.youai.entities.GamePlayer;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.modules.player.entity.PlayerBehavior;
+import org.jeecg.modules.game.entity.PlayerBehavior;
 
 import java.util.Date;
 import java.util.List;

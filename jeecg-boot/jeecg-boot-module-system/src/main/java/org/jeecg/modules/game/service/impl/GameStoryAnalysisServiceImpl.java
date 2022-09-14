@@ -16,7 +16,7 @@ import org.jeecg.modules.game.entity.GameStoryAnalysis;
 import org.jeecg.modules.game.entity.GameStoryAnalysisVO;
 import org.jeecg.modules.game.mapper.GameStoryAnalysisMapper;
 import org.jeecg.modules.game.service.IGameStoryAnalysisService;
-import org.jeecg.modules.player.service.ILogAccountService;
+import org.jeecg.modules.game.service.ILogAccountService;
 import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

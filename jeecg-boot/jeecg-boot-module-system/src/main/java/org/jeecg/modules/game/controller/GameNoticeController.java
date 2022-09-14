@@ -10,7 +10,7 @@ import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.modules.game.entity.GameNotice;
 import org.jeecg.modules.game.model.NoticeConfig;
 import org.jeecg.modules.game.service.IGameNoticeService;
-import org.jeecg.modules.game.util.StrHtmlUtil;
+import org.jeecg.modules.game.utils.StrHtmlUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +64,7 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @ApiOperation(value = "游戏公告-添加", notes = "游戏公告-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameNotice entity) {
-        entity.setContent(StrHtmlUtil.formatNoticeHtml(entity.getContent()));
+        entity.setContent(StrHtmlUtils.formatNoticeHtml(entity.getContent()));
         return super.add(entity);
     }
 
@@ -78,7 +78,7 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     @ApiOperation(value = "游戏公告-编辑", notes = "游戏公告-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameNotice entity) {
-        entity.setContent(StrHtmlUtil.formatNoticeHtml(entity.getContent()));
+        entity.setContent(StrHtmlUtils.formatNoticeHtml(entity.getContent()));
         return super.edit(entity);
     }
 

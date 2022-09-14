@@ -13,9 +13,9 @@ import okhttp3.Callback;
 import org.jeecg.modules.game.entity.GameServer;
 import org.jeecg.modules.game.mapper.GameServerMapper;
 import org.jeecg.modules.game.service.IGameServerService;
-import org.jeecg.modules.player.entity.MergeServerVO;
-import org.jeecg.modules.player.mapper.GameOrderMapper;
-import org.jeecg.modules.player.service.ILogAccountService;
+import org.jeecg.modules.game.entity.MergeServerVO;
+import org.jeecg.modules.game.mapper.GameOrderMapper;
+import org.jeecg.modules.game.service.ILogAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

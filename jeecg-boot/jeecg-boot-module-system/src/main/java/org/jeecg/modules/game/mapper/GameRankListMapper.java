@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.jeecg.modules.game.entity.LogAccount;
 import org.jeecg.modules.game.entity.LogPlayer;
-import org.jeecg.modules.player.entity.GameRegisterInfo;
+import org.jeecg.modules.game.entity.GameRegisterInfo;
 
 import java.util.Date;
 import java.util.List;

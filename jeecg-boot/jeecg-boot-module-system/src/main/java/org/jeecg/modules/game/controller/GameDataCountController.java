@@ -14,7 +14,7 @@ import org.jeecg.modules.game.entity.GameStatDaily;
 import org.jeecg.modules.game.entity.GameStatOngoing;
 import org.jeecg.modules.game.entity.GameStatRemain;
 import org.jeecg.modules.game.service.IGameDataCountService;
-import org.jeecg.modules.game.util.ParamValidUtil;
+import org.jeecg.modules.game.utils.ParamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +70,7 @@ public class GameDataCountController {
      * @param type 1-daily 2-remain 3-ltv
      */
     private Result<?> queryDailyData(int serverId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
-        ResponseCode responseCode = ParamValidUtil.dateRangeValid(rangeDateBegin, rangeDateEnd);
+        ResponseCode responseCode = ParamUtils.dateRangeValid(rangeDateBegin, rangeDateEnd);
         if (!responseCode.isSuccess()) {
             return Result.error(responseCode.getDesc());
         }

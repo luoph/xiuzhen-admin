@@ -13,8 +13,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.modules.game.mapper.GamePlayerMapper;
 import org.jeecg.modules.game.service.IGamePlayerService;
-import org.jeecg.modules.player.entity.PlayerBehavior;
-import org.jeecg.modules.player.service.ILogAccountService;
+import org.jeecg.modules.game.entity.PlayerBehavior;
+import org.jeecg.modules.game.service.ILogAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
