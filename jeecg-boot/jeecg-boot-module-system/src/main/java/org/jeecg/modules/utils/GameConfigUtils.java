@@ -7,7 +7,7 @@ import cn.youai.server.conf.ConfItem;
 import cn.youai.xiuzhen.conf.ConfMainStory;
 import cn.youai.xiuzhen.conf.ConfMedicine;
 import cn.youai.xiuzhen.conf.ConfRefineEquip;
-import cn.youai.xiuzhen.config.GameConfig;
+import cn.youai.xiuzhen.core.config.GameConfig;
 import com.googlecode.cqengine.query.Query;
 import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.logical.And;

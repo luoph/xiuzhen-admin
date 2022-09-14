@@ -4,7 +4,7 @@
 package cn.youai.xiuzhen.game.service;
 
 import cn.youai.entities.GamePlayer;
-import cn.youai.xiuzhen.game.entity.PlayerBehavior;
+import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Date;

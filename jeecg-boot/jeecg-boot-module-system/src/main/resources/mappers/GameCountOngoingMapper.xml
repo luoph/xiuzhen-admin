@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.youai.xiuzhen.game.mapper.GameCountOngoingMapper">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.GameCountOngoingMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.youai.xiuzhen.game.entity.GameStatOngoing">
+    <resultMap id="BaseResultMap" type="cn.youai.xiuzhen.stat.entity.GameStatOngoing">
         <id column="id" property="id"/>
         <result column="count_date" property="countDate"/>
         <result column="type" property="type"/>

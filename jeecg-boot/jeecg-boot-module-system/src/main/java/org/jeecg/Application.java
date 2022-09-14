@@ -1,7 +1,7 @@
 package org.jeecg;
 
 import cn.youai.server.component.ConfigManager;
-import cn.youai.xiuzhen.config.GameConfig;
+import cn.youai.xiuzhen.core.config.GameConfig;
 import com.alicp.jetcache.autoconfigure.JetCacheAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.util.oConvertUtils;

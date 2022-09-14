@@ -10,7 +10,7 @@ import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.game.mapper.GameServerMapper;
 import cn.youai.xiuzhen.game.service.IGameServerService;
-import cn.youai.xiuzhen.game.service.ILogAccountService;
+import cn.youai.xiuzhen.stat.service.ILogAccountService;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;

@@ -1,6 +1,6 @@
 package org.jeecg.modules.base;
 
-import cn.youai.xiuzhen.database.DataSourceHelper;
+import cn.youai.xiuzhen.core.database.DataSourceHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

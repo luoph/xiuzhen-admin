@@ -1,6 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.youai.xiuzhen.constant.PlayerLogType;
+import cn.youai.xiuzhen.stat.constant.PlayerLogType;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Data;

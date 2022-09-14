@@ -4,7 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.CoreStatisticType;
-import cn.youai.xiuzhen.game.service.IGameDataCountService;
+import cn.youai.xiuzhen.stat.service.IGameDataCountService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
