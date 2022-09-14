@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.game.mapper.GameStatRemainDetailMapper">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.GameStatRemainDetailMapper">
 
 
-    <select id="getStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+    <select id="getStatRemainDetail" resultType="cn.youai.xiuzhen.game.entity.GameStatRemainDetail">
         <![CDATA[
         SELECT #{registerDate} AS `count_date`,
                #{serverId} AS `server_id`,
@@ -15,7 +15,7 @@
         ]]>
     </select>
 
-    <select id="getPayStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+    <select id="getPayStatRemainDetail" resultType="cn.youai.xiuzhen.game.entity.GameStatRemainDetail">
         <![CDATA[
         SELECT #{registerDate} AS `count_date`,
                #{serverId} AS `server_id`,
@@ -28,7 +28,7 @@
         ]]>
     </select>
 
-    <select id="getFreeStatRemainDetail" resultType="org.jeecg.modules.game.entity.GameStatRemainDetail">
+    <select id="getFreeStatRemainDetail" resultType="cn.youai.xiuzhen.game.entity.GameStatRemainDetail">
         <![CDATA[
         SELECT #{registerDate} AS `count_date`,
                #{serverId} AS `server_id`,
@@ -45,7 +45,7 @@
     </select>
 
 
-    <select id="selectRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+    <select id="selectRemain" resultType="cn.youai.xiuzhen.game.entity.ServerRemain">
         <![CDATA[
         SELECT
             #{serverId} AS serverId,
@@ -61,7 +61,7 @@
         ]]>
     </select>
 
-    <select id="selectPayRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+    <select id="selectPayRemain" resultType="cn.youai.xiuzhen.game.entity.ServerRemain">
         <![CDATA[
         SELECT
             #{serverId} AS serverId,
@@ -80,7 +80,7 @@
         ]]>
     </select>
 
-    <select id="selectFreeRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+    <select id="selectFreeRemain" resultType="cn.youai.xiuzhen.game.entity.ServerRemain">
         <![CDATA[
         SELECT
             #{serverId} AS serverId,

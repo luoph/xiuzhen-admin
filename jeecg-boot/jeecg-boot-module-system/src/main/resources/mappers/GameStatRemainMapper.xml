@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.game.mapper.GameStatRemainMapper">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.GameStatRemainMapper">
 
-    <select id="getGameStatRemain" resultType="org.jeecg.modules.game.entity.GameStatRemain">
+    <select id="getGameStatRemain" resultType="cn.youai.xiuzhen.game.entity.GameStatRemain">
         <![CDATA[
         SELECT #{registerDate}                                                   AS `count_date`,
                #{serverId}                                                       AS `server_id`,
@@ -65,7 +65,7 @@
         ]]>
     </select>
 
-    <select id="selectRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+    <select id="selectRemain" resultType="cn.youai.xiuzhen.game.entity.ServerRemain">
         <![CDATA[
         SELECT #{serverId}                              AS serverId,
                #{days}                                  AS days,
@@ -82,7 +82,7 @@
         ]]>
     </select>
 
-    <select id="selectPayRemain" resultType="org.jeecg.modules.game.entity.ServerRemain">
+    <select id="selectPayRemain" resultType="cn.youai.xiuzhen.game.entity.ServerRemain">
         <![CDATA[
         SELECT #{serverId}                              AS serverId,
                #{days}                                  AS days,

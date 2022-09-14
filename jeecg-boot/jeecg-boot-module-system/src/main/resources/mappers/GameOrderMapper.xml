@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.game.mapper.GameOrderMapper">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.GameOrderMapper">
 
     <select id="getSumPayAmount" resultType="double">
         SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
@@ -17,7 +17,7 @@
           AND DATE (a.`pay_time`) = DATE (#{payDate});
     </select>
 
-    <select id="getStatPlayerNumAmountByDates" resultType="org.jeecg.modules.game.entity.GameOrder">
+    <select id="getStatPlayerNumAmountByDates" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
         <foreach collection="dateList" item="date" index="index">
             <if test="index != 0">
                 UNION ALL
@@ -35,7 +35,7 @@
 
     </select>
 
-    <select id="getGameOrderRangeDate" resultType="org.jeecg.modules.game.entity.MergeServerVO">
+    <select id="getGameOrderRangeDate" resultType="cn.youai.xiuzhen.game.entity.MergeServerVO">
         select server_id as serverId, sum(pay_amount) as payAmount from game_order
         where order_status = 4
         <if test="null != startTime">and create_time &gt;= #{startTime}</if>

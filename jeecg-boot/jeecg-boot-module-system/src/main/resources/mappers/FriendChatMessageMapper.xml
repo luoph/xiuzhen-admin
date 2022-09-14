@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.game.mapper.FriendChatMessageMapper">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.FriendChatMessageMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.FriendChatMessage">
+    <resultMap id="BaseResultMap" type="cn.youai.xiuzhen.game.entity.FriendChatMessage">
         <id column="id" property="id"/>
         <result column="channel_id" property="channelId"/>
         <result column="player_id" property="playerId"/>
         <result column="message" property="message"/>
         <result column="message_channel" property="messageChannel"/>
         <result column="create_time" property="createTime"/>
-        <association property="friendChatChannel" javaType="org.jeecg.modules.game.entity.FriendChatChannel">
+        <association property="friendChatChannel" javaType="cn.youai.xiuzhen.game.entity.FriendChatChannel">
             <id column="fcc_id" property="id"/>
             <result column="sender_player_id" property="playerId"/>
         </association>

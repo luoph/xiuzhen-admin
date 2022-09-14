@@ -1,11 +1,11 @@
 package org.jeecg.modules.quartz.job;
 
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.entity.GameLampNotice;
+import cn.youai.xiuzhen.game.service.IGameLampNoticeService;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.jeecg.modules.game.entity.GameLampNotice;
-import org.jeecg.modules.game.service.IGameLampNoticeService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

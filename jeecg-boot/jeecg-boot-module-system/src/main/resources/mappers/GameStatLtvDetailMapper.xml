@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.game.mapper.GameStatLtvDetailMapper">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.GameStatLtvDetailMapper">
 
-    <select id="getGameStatLtvDetail" resultType="org.jeecg.modules.game.entity.GameStatLtvDetail">
+    <select id="getGameStatLtvDetail" resultType="cn.youai.xiuzhen.game.entity.GameStatLtvDetail">
         <![CDATA[
         SELECT #{registerDate} AS `count_date`,
                #{serverId} AS `server_id`,
@@ -13,7 +13,7 @@
         ]]>
     </select>
 
-    <select id="getLtvAmount" resultType="org.jeecg.modules.game.entity.ServerLtvAmount">
+    <select id="getLtvAmount" resultType="cn.youai.xiuzhen.game.entity.ServerLtvAmount">
         <![CDATA[
         SELECT
             #{serverId} AS serverId,

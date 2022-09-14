@@ -1,0 +1,166 @@
+/*
+ * create by mybatis-plus-generator  https://github.com/xiweile
+ */
+package cn.youai.xiuzhen.game.service.impl;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.map.MapUtil;
+import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.entity.LogAccount;
+import cn.youai.xiuzhen.game.entity.MergeServerVO;
+import cn.youai.xiuzhen.game.entity.PlayerBehavior;
+import cn.youai.xiuzhen.game.mapper.LogAccountMapper;
+import cn.youai.xiuzhen.game.service.ILogAccountService;
+import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.constant.CommonConstant;
+import org.jeecg.common.constant.TimeConstant;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.*;
+
+/**
+ * <p>
+ * 玩家登录、创角统计 服务实现类
+ * </p>
+ *
+ * @author buliangliang
+ * @since 2020-08-21
+ */
+@Service
+@DS("shardingSphere")
+public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAccount> implements ILogAccountService {
+
+    @Resource
+    private LogAccountMapper logAccountMapper;
+
+
+    @Override
+    public BigDecimal queryDau(Date getTime) {
+        return logAccountMapper.queryDau(getTime);
+    }
+
+    @Override
+    public String queryPlayerIp(Long playerId, Date createDate) {
+        return logAccountMapper.queryPlayerIp(playerId, createDate);
+    }
+
+    @Override
+    public List<PlayerBehavior> selectBehaviorCount(Integer serverId, String nickname, Long playerId, Date start, Date end) {
+        return logAccountMapper.selectBehaviorCount(serverId, nickname, playerId, start, end);
+    }
+
+    @Override
+    public int loginRegisterPlayer(int serverId, String date, int type) {
+        return logAccountMapper.gerLoginRegisterPlayerNum(serverId, date, type);
+    }
+
+    @Override
+    public double registerPayAmount(int serverId, String date) {
+        return logAccountMapper.getRegisterPayAmount(serverId, date);
+    }
+
+    @Override
+    public int registerPayPlayer(int serverId, String date) {
+        return logAccountMapper.getRegisterPayPlayer(serverId, date);
+    }
+
+    @Override
+    public int doublePayRegisterPlayer(int serverId, String date) {
+        return logAccountMapper.getDoublePayRegisterPlayer(serverId, date);
+    }
+
+    @Override
+    public List<Long> getPlayerIdsByLoginDate(int serverId, Date date) {
+        return logAccountMapper.getPlayerIdsByLoginDate(serverId, DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN));
+    }
+
+    @Override
+    public List<Long> getPlayerIdsByNoLoginRangeDate(int serverId, Date srcDate, int beforeDate) {
+        String startDate = DateUtil.formatDate(DateUtils.addDays(srcDate, -beforeDate));
+        String endDate = DateUtil.formatDate(srcDate);
+        return logAccountMapper.getPlayerIdsByNoLoginRangeDate(serverId, startDate, endDate);
+    }
+
+    @Override
+    public Map<String, List<Long>> getPlayerIdsByLoginDates(int serverId, List<JSONObject> dateList) {
+        if (CollectionUtil.isEmpty(dateList)) {
+            return null;
+        }
+        List<LogAccount> playerIdsByLoginDates = logAccountMapper.getPlayerIdsByLoginDates(serverId, dateList);
+        if (CollUtil.isNotEmpty(playerIdsByLoginDates)) {
+            Map<String, List<Long>> result = new HashMap<>(playerIdsByLoginDates.size());
+            playerIdsByLoginDates.forEach(e -> {
+                String formatDate = DateUtils.formatDate(e.getCreateDate(), DatePattern.NORM_DATE_PATTERN);
+                List<Long> longs = result.get(formatDate);
+                if (longs == null) {
+                    longs = new ArrayList<>();
+                }
+                longs.add(e.getPlayerId());
+                result.put(formatDate, longs);
+            });
+            return result;
+        }
+        return null;
+    }
+
+    @Override
+    public Map<String, Integer> getPlayerNumByLoginDates(int serverId, List<Date> dateList, int type) {
+        if (CollectionUtil.isEmpty(dateList)) {
+            return null;
+        }
+
+        List<JSONObject> dateJsonList = new ArrayList<>(dateList.size());
+        dateList.forEach(e -> {
+            Date[] startAndEnd;
+            Date now = DateUtils.now();
+            if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
+                startAndEnd = new Date[]{DateUtil.beginOfMonth(now), DateUtil.endOfMonth(now)};
+            } else if (type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
+                startAndEnd = new Date[]{DateUtil.beginOfYear(now), DateUtil.endOfYear(now)};
+            } else {
+                startAndEnd = new Date[]{DateUtil.beginOfDay(now), DateUtil.endOfDay(now)};
+            }
+            JSONObject jsonParam = new JSONObject();
+            jsonParam.put("startTime", startAndEnd[0]);
+            jsonParam.put("endTime", startAndEnd[1]);
+            dateJsonList.add(jsonParam);
+        });
+
+        Map<String, List<Long>> playerIdsByLoginDates = getPlayerIdsByLoginDates(serverId, dateJsonList);
+        if (MapUtil.isNotEmpty(playerIdsByLoginDates)) {
+            Map<String, Integer> map = new HashMap<>(dateList.size());
+            playerIdsByLoginDates.forEach((key, value) -> {
+                if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH || type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
+                    String dateKey;
+                    if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
+                        dateKey = DateUtils.formatDate(DateUtils.parseDate(key), TimeConstant.CHINESE_YEAR_MONTH_PATTERN);
+                    } else {
+                        dateKey = DateUtils.formatDate(DateUtils.parseDate(key), TimeConstant.CHINESE_YEAR_PATTERN);
+                    }
+                    Integer num = map.get(dateKey);
+                    if (num == null) {
+                        num = 0;
+                    }
+                    num += value == null ? 0 : value.size();
+                    map.put(dateKey, num);
+                } else {
+                    map.put(key, value == null ? 0 : value.size());
+                }
+            });
+            return map;
+        }
+        return null;
+    }
+
+    @Override
+    public List<MergeServerVO> getServerLoginNum(Date startTime, Date endTime) {
+        return logAccountMapper.getServerLoginNum(DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime));
+    }
+}

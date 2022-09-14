@@ -1,7 +1,7 @@
 package cn.youai.xiuzhen.constant;
 
+import cn.youai.xiuzhen.game.entity.GameStatRemainDetail;
 import lombok.Getter;
-import org.jeecg.modules.game.entity.GameStatRemainDetail;
 
 import java.util.function.ObjIntConsumer;
 

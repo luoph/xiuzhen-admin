@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.game.mapper.GameChannelServerMapper">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.GameChannelServerMapper">
 
-    <select id="selectServerListByChannelId" resultType="org.jeecg.modules.game.entity.GameServerVO">
+    <select id="selectServerListByChannelId" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
         SELECT a.*
         FROM `game_server` a
                  INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`

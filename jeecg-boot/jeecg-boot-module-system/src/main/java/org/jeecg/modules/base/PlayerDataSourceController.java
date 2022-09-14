@@ -1,10 +1,10 @@
 package org.jeecg.modules.base;
 
 import cn.youai.entities.GamePlayer;
+import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
-import org.jeecg.modules.game.service.IGamePlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;

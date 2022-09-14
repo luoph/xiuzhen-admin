@@ -1,0 +1,69 @@
+package cn.youai.xiuzhen.game.service.impl;
+
+import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.database.DataSourceHelper;
+import cn.youai.xiuzhen.game.entity.DailyGiftPackageBuyVO;
+import cn.youai.xiuzhen.game.mapper.DailyGiftPackageBuyVOMapper;
+import cn.youai.xiuzhen.game.service.IDailyGiftPackageBuyVOService;
+import cn.youai.xiuzhen.utils.BigDecimalUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * @author jeecg-boot
+ * @version V1.0
+ * @description daily_gift_package_buy
+ * @date 2020-09-30
+ */
+@Slf4j
+@Service
+public class DailyGiftPackageBuyVOServiceImpl implements IDailyGiftPackageBuyVOService {
+
+    @Resource
+    private DailyGiftPackageBuyVOMapper dailyGiftPackageBuyVOMapper;
+
+    @Override
+    public List<DailyGiftPackageBuyVO> queryGiftPackageByDateRange(Integer serverId, String createTimeBegin, String createTimeEnd) {
+        // 如果选择开始时间和结束时间是同一天
+        Date createTimeBeginDate = null;
+        Date createTimeEndDate = null;
+        createTimeBeginDate = DateUtils.parseDate(createTimeBegin);
+        createTimeEndDate = DateUtils.parseDate(createTimeEnd);
+        if (createTimeBegin.equals(createTimeEnd)) {
+            Date[] dates = DateUtils.dateStartAndEnd(createTimeBeginDate);
+            createTimeBeginDate = dates[0];
+            createTimeEndDate = dates[1];
+        }
+        List<DailyGiftPackageBuyVO> dailyGiftPackageBuyVOList = null;
+        try {
+            // 通过serverId切换数据源
+            DataSourceHelper.useServerDatabase(serverId);
+            dailyGiftPackageBuyVOList = dailyGiftPackageBuyVOMapper.queryGiftPackageByDateRange(createTimeBeginDate, createTimeEndDate);
+            for (DailyGiftPackageBuyVO dailyGiftPackageBuyVO : dailyGiftPackageBuyVOList) {
+                // 数据处理
+                BigDecimal giftCountRatio = dailyGiftPackageBuyVO.getGiftCountRatio();
+                if (giftCountRatio == null) {
+                    giftCountRatio = BigDecimal.ZERO;
+                }
+                dailyGiftPackageBuyVO.setGiftCountRatio(BigDecimalUtils.dividePercent(giftCountRatio.doubleValue()));
+
+                BigDecimal rechargeAmountRatio = dailyGiftPackageBuyVO.getRechargeAmountRatio();
+                if (rechargeAmountRatio == null) {
+                    rechargeAmountRatio = BigDecimal.ZERO;
+                }
+                dailyGiftPackageBuyVO.setRechargeAmountRatio(BigDecimalUtils.dividePercent(rechargeAmountRatio.doubleValue()));
+            }
+        } catch (Exception e) {
+            log.error("通过服务器id:" + serverId + ",切换数据源异常", e);
+        } finally {
+            DataSourceHelper.useDefaultDatabase();
+        }
+        return dailyGiftPackageBuyVOList;
+
+    }
+}

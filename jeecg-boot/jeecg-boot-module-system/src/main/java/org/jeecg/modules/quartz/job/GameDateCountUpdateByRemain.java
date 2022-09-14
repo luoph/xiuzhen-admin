@@ -1,8 +1,8 @@
 package org.jeecg.modules.quartz.job;
 
 import cn.youai.server.utils.DateUtils;
-import org.jeecg.modules.game.constant.CoreStatisticType;
-import org.jeecg.modules.game.service.IGameDataCountService;
+import cn.youai.xiuzhen.game.constant.CoreStatisticType;
+import cn.youai.xiuzhen.game.service.IGameDataCountService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

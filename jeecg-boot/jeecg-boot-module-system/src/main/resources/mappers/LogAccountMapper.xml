@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.jeecg.modules.game.mapper.LogAccountMapper">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.LogAccountMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="org.jeecg.modules.game.entity.LogAccount">
+    <resultMap id="BaseResultMap" type="cn.youai.xiuzhen.game.entity.LogAccount">
         <id column="id" property="id"/>
         <result column="account" property="account"/>
         <result column="player_id" property="playerId"/>
@@ -38,7 +38,7 @@
     </select>
 
     <select id="selectBehaviorCount"
-            resultType="org.jeecg.modules.game.entity.PlayerBehavior">
+            resultType="cn.youai.xiuzhen.game.entity.PlayerBehavior">
         SELECT
         a.`server_id` server_id,
         a.`player_id` player_id,
@@ -122,7 +122,7 @@
         group by a.`player_id`;
     </select>
 
-    <select id="getPlayerIdsByLoginDates" resultType="org.jeecg.modules.game.entity.LogAccount">
+    <select id="getPlayerIdsByLoginDates" resultType="cn.youai.xiuzhen.game.entity.LogAccount">
         <foreach collection="dateList" item="date" index="index">
             <if test="index != 0">
                 UNION ALL
@@ -160,7 +160,7 @@
         ]]>
     </select>
 
-    <select id="getServerLoginNum" resultType="org.jeecg.modules.game.entity.MergeServerVO">
+    <select id="getServerLoginNum" resultType="cn.youai.xiuzhen.game.entity.MergeServerVO">
         SELECT `server_id` as serverId, COUNT(DISTINCT `player_id`) AS `num` FROM `log_account`
         WHERE `type` = 2
         <if test="null != startTime"><![CDATA[AND `create_date` >= #{startTime}]]></if>

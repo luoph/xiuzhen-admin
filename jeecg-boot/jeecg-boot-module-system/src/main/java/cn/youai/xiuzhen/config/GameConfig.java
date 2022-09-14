@@ -1,11 +1,11 @@
 package cn.youai.xiuzhen.config;
 
+import cn.youai.basics.utils.ReflectUtils;
 import cn.youai.server.conf.ConfItem;
 import cn.youai.server.model.ConfigTable;
-import cn.youai.basics.utils.ReflectUtils;
-import cn.youai.xiuzhen.entity.pojo.ConfMainStory;
-import cn.youai.xiuzhen.entity.pojo.ConfMedicine;
-import cn.youai.xiuzhen.entity.pojo.ConfRefineEquip;
+import cn.youai.xiuzhen.conf.ConfMainStory;
+import cn.youai.xiuzhen.conf.ConfMedicine;
+import cn.youai.xiuzhen.conf.ConfRefineEquip;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;

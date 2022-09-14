@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.config;
 
 import cn.youai.server.web.datasource.DynamicMultipleDataSource;
+import cn.youai.xiuzhen.database.DataSourceHelper;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
@@ -11,7 +12,6 @@ import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSour
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import lombok.extern.slf4j.Slf4j;
 import net.dreamlu.mica.core.utils.$;
-import org.jeecg.database.DataSourceHelper;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;

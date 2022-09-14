@@ -1,7 +1,7 @@
 package cn.youai.xiuzhen.constant;
 
+import cn.youai.xiuzhen.game.entity.GameStatLtvDetail;
 import lombok.Getter;
-import org.jeecg.modules.game.entity.GameStatLtvDetail;
 
 import java.math.BigDecimal;
 import java.util.function.BiConsumer;
