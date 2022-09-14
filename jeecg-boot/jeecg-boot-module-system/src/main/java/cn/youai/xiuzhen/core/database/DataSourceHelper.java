@@ -48,7 +48,7 @@ public class DataSourceHelper implements InitializingBean {
         return REFERENCE.get();
     }
 
-    private GameServer selectGameServerById(Integer serverId) {
+    private GameServer selectGameServerById(int serverId) {
         GameServer gameServer = gameServerMapper.selectById(serverId);
         if (gameServer != null && gameServer.getOutdated() == 1 && gameServer.getPid() != null) {
             return gameServerMapper.selectById(gameServer.getPid());
@@ -56,7 +56,7 @@ public class DataSourceHelper implements InitializingBean {
         return gameServer;
     }
 
-    private void loadDataSourceByServerId(Integer serverId) {
+    private void loadDataSourceByServerId(int serverId) {
         DataSource dataSource = DataSourceConfig.getDataSource(DataSourceConfig.SERVER_DATA_SOURCE_KEY + serverId);
         if (dataSource == null) {
             GameServer gameServer = selectGameServerById(serverId);
@@ -74,7 +74,7 @@ public class DataSourceHelper implements InitializingBean {
      *
      * @param serverId 游戏服id
      */
-    public static void useServerDatabase(Integer serverId) {
+    public static void useServerDatabase(int serverId) {
         getInstance().loadDataSourceByServerId(serverId);
         switchDataSource(DataSourceConfig.SERVER_DATA_SOURCE_KEY + serverId);
     }
