@@ -47,6 +47,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/game/gameServer")
 public class GameServerController extends JeecgController<GameServer, IGameServerService> {
 
+    @Value("${app.server.online-stat:true}")
+    private boolean onlineStat;
+
     private static final Type RESPONSE_ONLINE_NUM = new TypeReference<DataResponse<Integer>>() {
     }.getType();
 
@@ -73,12 +76,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     /**
      * 分页列表查询
-     *
-     * @param entity
-     * @param pageNo
-     * @param pageSize
-     * @param req
-     * @return
      */
     @AutoLog(value = "游戏服配置-列表查询")
     @ApiOperation(value = "游戏服配置-列表查询", notes = "游戏服配置-列表查询")
@@ -100,7 +97,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
             }
 
             // 已废弃服务器不统计在线人数
-            if (record.getOutdated() == 1) {
+            if (!onlineStat || record.getOutdated() == 1) {
                 record.setOnlineNum(0);
             } else if (record.getOnlineStat() == 1) {
                 DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(record.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
@@ -149,9 +146,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     /**
      * 编辑
-     *
-     * @param entity
-     * @return
      */
     @AutoLog(value = "游戏服配置-编辑")
     @ApiOperation(value = "游戏服配置-编辑", notes = "游戏服配置-编辑")
@@ -163,9 +157,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     /**
      * 通过id删除
-     *
-     * @param id
-     * @return
      */
     @AutoLog(value = "游戏服配置-通过id删除")
     @ApiOperation(value = "游戏服配置-通过id删除", notes = "游戏服配置-通过id删除")
@@ -271,9 +262,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     /**
      * 导出excel
-     *
-     * @param request
-     * @param gameServer
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameServer gameServer) {
@@ -282,10 +270,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     /**
      * 通过excel导入数据
-     *
-     * @param request
-     * @param response
-     * @return
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
