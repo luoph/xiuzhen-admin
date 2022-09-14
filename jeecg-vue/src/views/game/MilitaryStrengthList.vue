@@ -30,7 +30,7 @@
     <!-- 查询区域-END -->
     <!-- 操作按钮区域 -->
 
-    <a-button type="primary" icon="download" @click="downlodaExcel('战力')">导出</a-button>
+    <a-button type="primary" icon="download" @click="downloadExcel('战力')">导出</a-button>
     <!-- table区域-begin -->
     <div>
       <a-table
@@ -87,6 +87,7 @@ export default {
   data() {
     return {
       description: '战力日志',
+      timeout: 60000,
       // 表头
       columns: [
         {
@@ -133,9 +134,6 @@ export default {
           title: '时间',
           align: 'center',
           dataIndex: 'time'
-          // customRender: function (text) {
-          // return !text ? "" : text.length > 10 ? text.substr(0, 10) : text;
-          // }
         }
       ],
       url: {
@@ -180,10 +178,11 @@ export default {
         pageNo: this.ipagination.current,
         userName: this.queryParam.userName
       };
-      getAction(this.url.list, param).then(res => {
+      this.loading = true;
+      getAction(this.url.list, param, this.timeout).then(res => {
         if (res.success) {
           this.dataSource = res.result.records;
-          console.log(res.result.records);
+          // console.log(res.result.records);
           this.ipagination.current = res.result.current;
           this.ipagination.size = res.result.size.toString();
           this.ipagination.total = res.result.total;
@@ -191,10 +190,12 @@ export default {
         } else {
           this.$message.error(res.message);
         }
-      });
+      }).finally(() => {
+        this.loading = false
+      })
     },
-    downlodaExcel(filename) {
-      var xhr = new XMLHttpRequest();
+    downloadExcel(filename) {
+      const xhr = new XMLHttpRequest();
       xhr.open('post', window._CONFIG['domainURL'] + this.url.downloadExcel, true);
       xhr.responseType = 'blob';
       xhr.setRequestHeader('Content-Type', 'application/json');
