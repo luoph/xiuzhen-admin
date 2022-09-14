@@ -118,7 +118,7 @@ export default {
         }
       ],
       url: {
-        list: 'player/playerRegisterInfo/loginList'
+        list: 'player/registerInfo/loginList'
       },
       dictOptions: {}
     };

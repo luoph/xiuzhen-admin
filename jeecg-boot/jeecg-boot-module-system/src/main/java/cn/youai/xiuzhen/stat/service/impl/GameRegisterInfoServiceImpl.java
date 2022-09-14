@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2020-01-04
  */
 @Service
-@DS("shardingSphere")
+@DS("master")
 public class GameRegisterInfoServiceImpl extends ServiceImpl<GameRegisterInfoMapper, GameRegisterInfo> implements IGameRegisterInfoService {
 
     @Autowired

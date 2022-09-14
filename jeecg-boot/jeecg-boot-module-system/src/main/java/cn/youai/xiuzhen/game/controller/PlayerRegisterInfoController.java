@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("player/playerRegisterInfo")
+@RequestMapping("player/registerInfo")
 public class PlayerRegisterInfoController extends JeecgController<GameRegisterInfo, IGameRegisterInfoService> {
 
     /**
@@ -36,7 +36,10 @@ public class PlayerRegisterInfoController extends JeecgController<GameRegisterIn
      */
     @AutoLog(value = "玩家注册信息-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameRegisterInfo entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryPageList(GameRegisterInfo entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -125,7 +128,12 @@ public class PlayerRegisterInfoController extends JeecgController<GameRegisterIn
 
     @AutoLog(value = "登录流水-列表查询")
     @GetMapping(value = "/loginList")
-    public Result<?> loginList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin, @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd, @RequestParam(name = "playerId", defaultValue = "0") Long playerId, @RequestParam(name = "serverId", defaultValue = "0") Integer serverId, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+    public Result<?> loginList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+                               @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+                               @RequestParam(name = "playerId", defaultValue = "0") Long playerId,
+                               @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
+                               @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                               @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
         Page<GameRegisterInfo> page = new Page<>(pageNo, pageSize);
         if (StringUtils.isEmpty(rangeDateBegin) && StringUtils.isEmpty(rangeDateEnd) && serverId == 0 && playerId == 0) {
             return Result.ok(page);

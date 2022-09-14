@@ -110,8 +110,8 @@ export default {
         platform: {}
       },
       url: {
-        add: "player/playerRegisterInfo/add",
-        edit: "player/playerRegisterInfo/edit"
+        add: "player/registerInfo/add",
+        edit: "player/registerInfo/edit"
       }
     };
   },

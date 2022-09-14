@@ -249,8 +249,8 @@ export default {
         }
       ],
       url: {
-        list: 'player/playerRegisterInfo/list',
-        exportXlsUrl: 'player/playerRegisterInfo/exportXls'
+        list: 'player/registerInfo/list',
+        exportXlsUrl: 'player/registerInfo/exportXls'
       },
       dictOptions: {}
     };

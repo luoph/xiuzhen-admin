@@ -15,12 +15,6 @@ public interface IGameRegisterInfoService extends IService<GameRegisterInfo> {
 
     /**
      * 登录流水
-     *
-     * @param rangeDateBegin
-     * @param rangeDateEnd
-     * @param playerId
-     * @param serverId
-     * @return
      */
     List<GameRegisterInfo> queryLoginList(String rangeDateBegin, String rangeDateEnd, Long playerId, Integer serverId);
 }
