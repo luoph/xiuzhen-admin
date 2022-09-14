@@ -120,9 +120,20 @@ export default {
           key: 'rowIndex',
           width: 60,
           align: 'center',
+          /* 排序参数 */
+          isorter: {
+            column: 'createTime',
+            order: 'desc',
+          },
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
+        },
+        {
+          title: '邮件id',
+          align: 'left',
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '标题',
@@ -207,7 +218,7 @@ export default {
       ],
 
       url: {
-        list: 'game/gameEmail/list?column=Id&order=desc',
+        list: 'game/gameEmail/list',
         isCheck: 'game/gameEmail/check'
       },
       dictOptions: {}
