@@ -1,10 +1,11 @@
 package cn.youai.xiuzhen.stat.service;
 
+import cn.youai.basics.model.DateRange;
+import cn.youai.xiuzhen.stat.entity.CombatPowerLog;
 import cn.youai.xiuzhen.stat.entity.LogPlayer;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -14,8 +15,6 @@ import java.util.Map;
  */
 public interface ILogPlayerService extends IService<LogPlayer> {
 
-    List<Map> selectMilitaryStrengVoAll(int serverId, String createDateBegin, String createDateEnd);
-
-    List<Map> selectMilitaryStrengVoAllByPlayerId(int serverId, String playerId, String createDateBegin, String createDateEnd);
+    IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, CombatPowerLog searchObj, DateRange range);
 
 }

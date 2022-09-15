@@ -2,31 +2,27 @@ package cn.youai.xiuzhen.stat.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * @author huli
- * @Description: MilitaryStrengthVO
- * @date 2021/1/4 11:26
+ *
  */
 
 @Data
-@TableName("表名（如果不设置，那么会以类名以驼峰形式对于表）")
 @Accessors(chain = true)
-public class MilitaryStrengthVO implements Serializable {
+public class CombatPowerLog implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -35,7 +31,7 @@ public class MilitaryStrengthVO implements Serializable {
     @ColumnWidth(15)
     @ExcelProperty("玩家id")
     @Excel(name = "玩家id", width = 15)
-    private String userId;
+    private Long playerId;
 
     /**
      * 玩家名
@@ -43,7 +39,32 @@ public class MilitaryStrengthVO implements Serializable {
     @ColumnWidth(15)
     @ExcelProperty("玩家名")
     @Excel(name = "玩家名", width = 15)
-    private String userName;
+    private String nickname;
+
+    /**
+     * 玩家id
+     */
+    @ColumnWidth(15)
+    @ExcelProperty("游戏服id")
+    @Excel(name = "游戏服id", width = 15)
+    private Integer serverId;
+
+    /**
+     * 模块id
+     */
+    @ColumnWidth(15)
+    @ExcelProperty("模块id")
+    @Excel(name = "模块id", width = 15)
+    private Integer attrType;
+
+
+    /**
+     * 属性模块
+     */
+    @ColumnWidth(15)
+    @ExcelProperty("属性模块")
+    @Excel(name = "属性模块", width = 15)
+    private String attrName;
 
     /**
      * 战力变更
@@ -51,16 +72,15 @@ public class MilitaryStrengthVO implements Serializable {
     @ColumnWidth(15)
     @ExcelProperty("战力变更")
     @Excel(name = "战力变更", width = 15)
-    private String militaryStrengthChange;
+    private Long delta;
 
     /**
      * 原战力
      */
-
     @ColumnWidth(15)
     @ExcelProperty("原战力")
     @Excel(name = "原战力", width = 15)
-    private String originalMilitary;
+    private Long before;
 
     /**
      * 新战力
@@ -68,23 +88,14 @@ public class MilitaryStrengthVO implements Serializable {
     @ColumnWidth(15)
     @ExcelProperty("新战力")
     @Excel(name = "新战力", width = 15)
-    private String newMilitary;
-
-    /**
-     * 操作
-     */
-    @ColumnWidth(15)
-    @ExcelProperty("操作")
-    @Excel(name = "操作", width = 15)
-    private String operation;
+    private Long after;
 
     /**
      * 时间
      */
-    @ColumnWidth(15)
+    @ColumnWidth(20)
     @ExcelProperty("时间")
-    @Excel(name = "时间", width = 15)
-    private String time;
-
-
+    @Excel(name = "时间", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    private Date createTime;
 }

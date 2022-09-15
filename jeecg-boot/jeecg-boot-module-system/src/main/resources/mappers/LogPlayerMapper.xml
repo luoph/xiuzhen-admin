@@ -2,4 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.LogPlayerMapper">
 
+    <select id="selectCombatPowerLogList" resultType="cn.youai.xiuzhen.stat.entity.CombatPowerLog">
+        SELECT l.`id`, l.`player_id`, p.`nickname`, p.`server_id`,
+        l.`value` as `attr_type`,
+        l.`param_1` as `before`,
+        l.`param_2` as `delta`,
+        l.`param_3` as `after`,
+        l.`create_time`
+        FROM `log_player` l
+        LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        <where>
+            l.`type` = 9
+            <if test="searchObj != null">
+                <if test="searchObj.playerId > 0">
+                    AND p.`player_id` = #{searchObj.playerId}
+                </if>
+                <if test="searchObj.serverId > 0">
+                    AND p.`server_id` = #{searchObj.serverId}
+                </if>
+                <if test="searchObj.nickname != null and searchObj.nickname != ''">
+                    AND p.`nickname` LIKE CONCAT('%', #{searchObj.nickname}, '%')
+                </if>
+            </if>
+            <if test="range != null">
+                <if test="null != range.start"><![CDATA[AND l.`create_date` >= #{range.start}]]></if>
+                <if test="null != range.end"><![CDATA[AND l.`create_date` <= #{range.end}]]></if>
+            </if>
+        </where>
+        ORDER BY l.`create_time` DESC
+    </select>
+
+
 </mapper>

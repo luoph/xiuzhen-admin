@@ -3,6 +3,7 @@ package org.jeecg.common.system.util;
 import cn.hutool.core.io.FileUtil;
 import cn.youai.basics.utils.StringUtils;
 import com.alibaba.excel.EasyExcel;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -11,7 +12,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
@@ -28,7 +31,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,16 +57,13 @@ public class ExcelUtils {
         }
     }
 
+    public static <T> ModelAndView exportXls(IPage<T> pageList, String selections, Class<T> clazz, String title) {
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        return ExcelUtils.exportXls(sysUser.getRealname(), pageList.getRecords(), selections, clazz, title);
+    }
+
     /**
      * 导出excel
-     *
-     * @param userName
-     * @param pageList
-     * @param selections
-     * @param clazz
-     * @param title
-     * @param <T>
-     * @return
      */
     public static <T> ModelAndView exportXls(String userName, List<T> pageList, String selections, Class<T> clazz, String title) {
         List<T> exportList = null;

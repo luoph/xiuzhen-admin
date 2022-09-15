@@ -21,6 +21,8 @@ import java.util.List;
  */
 public interface GamePlayerMapper extends BaseMapper<GamePlayer> {
 
+    List<GamePlayer> selectPlayerByName(@Param("nickname") String nickname);
+
     List<PlayerBehavior> queryPlayerBehavior(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
                                              @Param("rangeDateEndTime") Date rangeDateEndTime,
                                              @Param("playerId") Long playerId,

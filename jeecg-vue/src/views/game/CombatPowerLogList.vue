@@ -8,20 +8,26 @@
             <!--@ = v-on:数据绑定 不是事件-->
             <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="10" :sm="8">
-            <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+          <a-col :md="4" :sm="4">
+            <a-form-item label="玩家id">
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家名">
-              <a-input placeholder="请输入玩家名" v-model="queryParam.userName"></a-input>
+            <a-form-item label="玩家昵称">
+              <a-input placeholder="请输入玩家昵称模糊查询" v-model="queryParam.nickname"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="创建时间">
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-              <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchQuery">刷新数据</a-button>
+              <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -29,8 +35,9 @@
     </div>
     <!-- 查询区域-END -->
     <!-- 操作按钮区域 -->
-
-    <a-button type="primary" icon="download" @click="downloadExcel('战力')">导出</a-button>
+    <div class="table-operator">
+      <a-button type="primary" icon="download" @click="handleExportXls('战力日志')">导出</a-button>
+    </div>
     <!-- table区域-begin -->
     <div>
       <a-table
@@ -68,19 +75,16 @@
 
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import GameForbiddenModal from './modules/GameForbiddenModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {getAction} from '@/api/manage';
-import Vue from 'vue';
-import {ACCESS_TOKEN} from '@/store/mutation-types';
+import {filterObj} from "@/utils/util";
 
 export default {
-  name: 'MilitaryStrengthList',
+  name: 'CombatPowerLogList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameForbiddenModal,
     GameChannelServer,
     getAction
   },
@@ -103,120 +107,73 @@ export default {
         {
           title: '玩家id',
           align: 'center',
-          dataIndex: 'userId'
+          dataIndex: 'playerId'
         },
         {
           title: '玩家名',
           align: 'center',
-          dataIndex: 'userName'
+          dataIndex: 'nickname'
         },
         {
           title: '战力变更',
           align: 'center',
-          dataIndex: 'militaryStrengthChange'
+          dataIndex: 'delta'
         },
         {
           title: '原战力',
           align: 'center',
-          dataIndex: 'originalMilitary'
+          dataIndex: 'before'
         },
         {
           title: '新战力',
           align: 'center',
-          dataIndex: 'newMilitary'
+          dataIndex: 'after'
         },
         {
-          title: '操作',
+          title: '模块id',
           align: 'center',
-          dataIndex: 'operation'
+          dataIndex: 'attrType'
+        },
+        {
+          title: '属性模块',
+          align: 'center',
+          dataIndex: 'attrName'
         },
         {
           title: '时间',
           align: 'center',
-          dataIndex: 'time'
+          dataIndex: 'createTime'
         }
       ],
       url: {
-        list: 'game/militaryStrength/list',
-        exportXlsUrl: 'game/militaryStrength/download',
-        downloadExcel: '/game/militaryStrength/download'
+        list: 'game/combatPowerLog/list',
+        exportXlsUrl: 'game/combatPowerLog/exportXls',
       },
       dictOptions: {}
     };
   },
-  computed: {
-    importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
-    }
-  },
+  computed: {},
   methods: {
-    initDictConfig() {
-    },
-    typeChange: function (type) {
-      this.queryParam.type = type;
-    },
-    isForeverChange: function (isForever) {
-      this.queryParam.isForever = isForever;
-    },
     onSelectChannel: function (channelId) {
       this.queryParam.channelId = channelId;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function (value, dateStr) {
-      this.queryParam.rangeDateBegin = dateStr[0];
-      this.queryParam.rangeDateEnd = dateStr[1];
+    onCreateDateChange: function (value, dateString) {
+      console.log(dateString[0], dateString[1]);
+      this.queryParam.createTime_begin = dateString[0];
+      this.queryParam.createTime_end = dateString[1];
     },
-    searchQuery() {
-      let param = {
-        days: this.queryParam.days,
-        channelId: this.queryParam.channelId,
-        serverId: this.queryParam.serverId,
-        rangeDateBegin: this.queryParam.rangeDateBegin,
-        rangeDateEnd: this.queryParam.rangeDateEnd,
-        pageNo: this.ipagination.current,
-        userName: this.queryParam.userName
-      };
-      this.loading = true;
-      getAction(this.url.list, param, this.timeout).then(res => {
-        if (res.success) {
-          this.dataSource = res.result.records;
-          // console.log(res.result.records);
-          this.ipagination.current = res.result.current;
-          this.ipagination.size = res.result.size.toString();
-          this.ipagination.total = res.result.total;
-          this.ipagination.pages = res.result.pages;
-        } else {
-          this.$message.error(res.message);
-        }
-      }).finally(() => {
-        this.loading = false
-      })
-    },
-    downloadExcel(filename) {
-      const xhr = new XMLHttpRequest();
-      xhr.open('post', window._CONFIG['domainURL'] + this.url.downloadExcel, true);
-      xhr.responseType = 'blob';
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      const token = Vue.ls.get(ACCESS_TOKEN);
-      console.log(token);
-      xhr.setRequestHeader('X-Access-Token', token);
-      xhr.onload = function () {
-        var blob = this.response;
-        var reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onload = function (e) {
-          var a = document.createElement('a');
-          a.download = filename + '.xlsx';
-          a.href = e.target.result;
-          a.click();
-        };
-      };
-      var a = this.queryParam;
-      var param = JSON.stringify(a);
-      console.log(param);
-      xhr.send(param);
+    getQueryParams() {
+      console.log(this.queryParam.createTimeRange);
+      const param = Object.assign({}, this.queryParam, this.isorter);
+      param.pageNo = this.ipagination.current;
+      param.pageSize = this.ipagination.pageSize;
+
+      // 范围参数不传递后台
+      delete param.createTimeRange;
+      return filterObj(param);
     }
   }
 };

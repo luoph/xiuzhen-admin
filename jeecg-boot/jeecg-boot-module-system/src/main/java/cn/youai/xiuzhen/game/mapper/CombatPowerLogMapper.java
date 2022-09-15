@@ -8,11 +8,12 @@ import java.util.Map;
 
 /**
  * @author huli
- * @Description: MilitaryStrengthMapper
+ * @Description: CombatPowerLogMapper
  * @date 2021/1/4 11:49
  */
 
-public interface MilitaryStrengthMapper {
+public interface CombatPowerLogMapper {
+
     /**
      * 查询时间范围内 所有 渡劫 战力变更信息
      */

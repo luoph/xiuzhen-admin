@@ -3,15 +3,22 @@
  */
 package cn.youai.xiuzhen.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.entities.GamePlayer;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.stat.mapper.GamePlayerMapper;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -24,6 +31,27 @@ import java.util.List;
 @Service
 @DS("master")
 public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePlayer> implements IGamePlayerService {
+
+    @Override
+    public Map<Long, String> getPlayerNicknameMap(Collection<Long> playerIds) {
+        if (CollUtil.isEmpty(playerIds)) {
+            return new HashMap<>();
+        }
+        LambdaQueryWrapper<GamePlayer> query = Wrappers.lambdaQuery();
+        query.select(GamePlayer::getPlayerId, GamePlayer::getNickname);
+        query.in(GamePlayer::getPlayerId, playerIds);
+        query.groupBy(GamePlayer::getPlayerId);
+
+        List<GamePlayer> list = list(query);
+        return CollectionUtil.isNotEmpty(list) ?
+                list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname, (k, v) -> v))
+                : new HashMap<>(list.size());
+    }
+
+    @Override
+    public List<GamePlayer> selectPlayerByName(String nickname) {
+        return getBaseMapper().selectPlayerByName(nickname);
+    }
 
     @Override
     public GamePlayer getPlayer(long playerId) {
