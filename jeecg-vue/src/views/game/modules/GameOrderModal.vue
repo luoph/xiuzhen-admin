@@ -119,7 +119,7 @@ import pick from "lodash.pick";
 import JDate from "@/components/jeecg/JDate";
 
 export default {
-  name: "PayOrderModal",
+  name: "GameOrderModal",
   components: {
     JDate
   },

@@ -134,7 +134,7 @@
       </a-table>
     </div>
 
-    <payOrder-modal ref="modalForm" @ok="modalFormOk"></payOrder-modal>
+    <GameOrderModal ref="modalForm" @ok="modalFormOk"/>
   </a-card>
 </template>
 
@@ -142,7 +142,7 @@
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
-import PayOrderModal from './modules/PayOrderModal';
+import GameOrderModal from './modules/GameOrderModal';
 import Vue from 'vue';
 import {ACCESS_TOKEN} from '@/store/mutation-types';
 
@@ -151,7 +151,7 @@ export default {
   mixins: [JeecgListMixin],
   components: {
     JInput,
-    PayOrderModal
+    GameOrderModal
   },
   data() {
     return {
