@@ -112,14 +112,14 @@ public class DataSourceConfig {
     public static DataSource createDataSource(String url, String username, String password) {
         DataSourceProperties sourceProperties = DataSourceHelper.getInstance().getProperties();
         Map<String, String> properties = new HashMap<>(4);
-        properties.put(DruidDataSourceFactory.PROP_URL, url);
-        properties.put(DruidDataSourceFactory.PROP_USERNAME, username);
-        properties.put(DruidDataSourceFactory.PROP_PASSWORD, password);
-        properties.put(DruidDataSourceFactory.PROP_DRIVERCLASSNAME, DRIVER_NAME);
         try {
             DruidDataSource dataSource = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
             // 拷贝属性
             $.copy(sourceProperties, dataSource);
+            dataSource.setUrl(url);
+            dataSource.setUsername(username);
+            dataSource.setPassword(password);
+            dataSource.setDriverClassName(DRIVER_NAME);
             // 这行代码很重要，如果不加不会立即建立数据库连接，也就无法检测连接是否正确
             dataSource.getConnection();
             return dataSource;
