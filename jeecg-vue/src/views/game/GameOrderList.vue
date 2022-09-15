@@ -80,17 +80,7 @@
     <!-- 查询区域-END -->
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <!-- <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button> -->
-      <a-button type="primary" icon="download" @click="downloadExcel('充值订单')">导出</a-button>
-      <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload> -->
-      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown> -->
+      <a-button type="primary" icon="download" @click="handleExportXls('充值订单')">导出</a-button>
     </div>
 
     <!-- table区域-begin -->
@@ -143,8 +133,6 @@ import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameOrderModal from './modules/GameOrderModal';
-import Vue from 'vue';
-import {ACCESS_TOKEN} from '@/store/mutation-types';
 
 export default {
   name: 'PayOrderList',
@@ -295,7 +283,6 @@ export default {
       url: {
         list: 'game/order/list',
         exportXlsUrl: 'game/order/exportXls',
-        downloadExcel: 'game/order/download'
       },
       dictOptions: {}
     };
@@ -306,11 +293,9 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
-      var param = Object.assign({}, this.queryParam, this.isorter);
+      const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       // 范围参数不传递后台
@@ -321,33 +306,6 @@ export default {
       console.log(dateString[0], dateString[1]);
       this.queryParam.createTime_begin = dateString[0];
       this.queryParam.createTime_end = dateString[1];
-    },
-    onDateOk(value) {
-      console.log(value);
-    },
-    downloadExcel(filename) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('post', window._CONFIG['domainURL'] + this.url.downloadExcel, true);
-      xhr.responseType = 'blob';
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      const token = Vue.ls.get(ACCESS_TOKEN);
-      console.log(token);
-      xhr.setRequestHeader('X-Access-Token', token);
-      xhr.onload = function () {
-        var blob = this.response;
-        var reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onload = function (e) {
-          var a = document.createElement('a');
-          a.download = filename + '.xlsx';
-          a.href = e.target.result;
-          a.click();
-        };
-      };
-      var a = this.queryParam;
-      var param = JSON.stringify(a);
-      console.log(param);
-      xhr.send(param);
     }
   }
 };

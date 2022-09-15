@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,7 @@ public class CombatPowerLogController {
         return Result.ok(pageList);
     }
 
+    @AutoLog(value = "战力日志-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest req, CombatPowerLog entity) {
         Page<CombatPowerLog> page = new Page<>(1, Integer.MAX_VALUE);

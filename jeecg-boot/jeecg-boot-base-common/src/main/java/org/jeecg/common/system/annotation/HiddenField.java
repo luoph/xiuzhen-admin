@@ -1,7 +1,5 @@
 package org.jeecg.common.system.annotation;
 
-import org.jeecg.common.constant.enums.ModuleType;
-
 import java.lang.annotation.*;
 
 

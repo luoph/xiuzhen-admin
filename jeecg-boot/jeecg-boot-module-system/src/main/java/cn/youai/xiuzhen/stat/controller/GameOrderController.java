@@ -4,25 +4,19 @@ import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import cn.youai.xiuzhen.utils.QueryUtils;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.util.ExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.URLEncoder;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -84,37 +78,13 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
         return Result.ok("不支持！");
     }
 
-    /**
-     * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
-     */
+    @AutoLog(value = "充值订单-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameOrder entity) {
-        return super.exportXls(request, entity, GameOrder.class, "充值订单");
-    }
-
-    @RequestMapping("download")
-    public void download(HttpServletResponse response, @RequestBody JSONObject jsonObject) throws IOException {
-        GameOrder gameOrder = JSON.parseObject(jsonObject.toJSONString(), GameOrder.class);
-
-        Map<String, String[]> data = new HashMap<>(16);
-        Iterator it = jsonObject.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, Object> entry = (Map.Entry<String, Object>) it.next();
-            String[] a = new String[1];
-            a[0] = String.valueOf(entry.getValue());
-            data.put(entry.getKey(), a);
-        }
-        QueryWrapper<GameOrder> queryWrapper = QueryGenerator.initQueryWrapper(gameOrder, data);
-        List<GameOrder> gameOrderList = service.list(queryWrapper);
-
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        String fileName = URLEncoder.encode("excel导出文件名", "UTF-8");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xlsx");
-
-        EasyExcel.write(response.getOutputStream(), GameOrder.class).sheet("模板").doWrite(gameOrderList);
+        IPage<GameOrder> pageList = pageList(entity, 1, Integer.MAX_VALUE, request);
+        HashSet<Long> resultPlayerIds = QueryUtils.extractPlayerIds(pageList.getRecords(), GameOrder::getPlayerId);
+        Map<Long, String> nicknameMap = playerService.getPlayerNicknameMap(resultPlayerIds);
+        pageList.getRecords().forEach(e -> e.setNickname(nicknameMap.get(e.getPlayerId())));
+        return ExcelUtils.exportXls(pageList, request.getParameter("selections"), GameOrder.class, "充值订单");
     }
 }
