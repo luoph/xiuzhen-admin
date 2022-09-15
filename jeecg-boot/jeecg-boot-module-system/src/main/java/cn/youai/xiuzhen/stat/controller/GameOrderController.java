@@ -1,17 +1,14 @@
 package cn.youai.xiuzhen.stat.controller;
 
-import cn.hutool.core.collection.CollectionUtil;
-import cn.youai.entities.GamePlayer;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.utils.QueryUtils;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -26,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -54,22 +50,9 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         IPage<GameOrder> pageList = pageList(entity, pageNo, pageSize, req);
-        if (pageList.getRecords() != null && pageList.getRecords().size() > 0) {
-            HashSet<Long> playerIds = new HashSet<>(pageList.getRecords().size());
-            pageList.getRecords().forEach(e -> playerIds.add(e.getPlayerId()));
-
-            LambdaQueryWrapper<GamePlayer> query = Wrappers.lambdaQuery();
-            query.select(GamePlayer::getPlayerId, GamePlayer::getNickname);
-            query.in(GamePlayer::getPlayerId, playerIds);
-            query.groupBy(GamePlayer::getPlayerId);
-            List<GamePlayer> list = playerService.list(query);
-
-            Map<Long, String> nameMap = CollectionUtil.isNotEmpty(list) ?
-                    list.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, GamePlayer::getNickname,
-                            (item1, item2) -> item2)) : new HashMap<>(list.size());
-
-            pageList.getRecords().forEach(e -> e.setNickname(nameMap.get(e.getPlayerId())));
-        }
+        HashSet<Long> resultPlayerIds = QueryUtils.extractPlayerIds(pageList.getRecords(), GameOrder::getPlayerId);
+        Map<Long, String> nicknameMap = playerService.getPlayerNicknameMap(resultPlayerIds);
+        pageList.getRecords().forEach(e -> e.setNickname(nicknameMap.get(e.getPlayerId())));
         return Result.ok(pageList);
     }
 
