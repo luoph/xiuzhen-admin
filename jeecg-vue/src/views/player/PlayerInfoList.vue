@@ -331,8 +331,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);

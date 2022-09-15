@@ -260,8 +260,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     updateConfig() {
       let that = this;
       this.$confirm({

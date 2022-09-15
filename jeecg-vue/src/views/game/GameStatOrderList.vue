@@ -155,8 +155,6 @@ export default {
   computed: {},
   methods: {
     moment,
-    initDictConfig() {
-    },
     onSelectServer(serverId) {
       this.queryParam.serverId = serverId;
     },

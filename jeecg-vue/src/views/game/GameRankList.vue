@@ -173,8 +173,6 @@ export default {
         this.rankListTypeShowList = res;
       });
     },
-    initDictConfig() {
-    },
     typeChange: function (type) {
       this.queryParam.type = type;
     },

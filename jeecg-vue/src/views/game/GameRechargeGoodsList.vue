@@ -344,8 +344,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     updateGoods() {
       // 查询条件
       this.loading = true;

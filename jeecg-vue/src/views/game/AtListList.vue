@@ -138,8 +138,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     onSelectChannel: function (channelId) {
       this.queryParam.channelId = channelId;
     },

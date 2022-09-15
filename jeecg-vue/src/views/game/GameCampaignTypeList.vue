@@ -348,8 +348,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     onStartTimeChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.startTime_begin = dateString[0];

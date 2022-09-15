@@ -142,8 +142,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     onSelectServer(serverId) {
       this.queryParam.serverId = serverId;
     },

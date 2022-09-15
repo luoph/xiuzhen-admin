@@ -232,8 +232,6 @@ export default {
   mounted() {
   },
   methods: {
-    initDictConfig() {
-    },
 
     onDateChange: function (value, dateStr) {
       this.queryParam.startTime_begin = dateStr[0];

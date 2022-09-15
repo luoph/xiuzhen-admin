@@ -154,8 +154,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     loadData(arg) {
       if (!this.model.id) {
         return;

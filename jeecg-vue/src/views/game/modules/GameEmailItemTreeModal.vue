@@ -135,8 +135,6 @@ export default {
     });
   },
   methods: {
-    initDictConfig() {
-    },
 
     close() {
       this.$emit('close');

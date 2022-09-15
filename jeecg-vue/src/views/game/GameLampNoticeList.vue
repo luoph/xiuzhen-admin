@@ -186,8 +186,6 @@ export default {
   },
   computed: {},
   methods: {
-    initDictConfig() {
-    },
     change(value) {
       console.log('value' + value);
       this.queryParam.gameServerList = '*' + value.join(',') + '*';

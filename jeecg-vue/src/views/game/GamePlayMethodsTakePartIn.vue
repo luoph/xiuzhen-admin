@@ -177,8 +177,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     typeChange: function (type) {
       this.queryParam.type = type;
     },

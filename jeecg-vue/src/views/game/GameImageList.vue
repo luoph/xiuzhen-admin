@@ -225,8 +225,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     getImgView(text) {
       if (text && text.indexOf(',') > 0) {
         text = text.substring(0, text.indexOf(','));

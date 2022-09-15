@@ -207,8 +207,6 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    },
     reset() {
       this.queryParam = {};
     },
