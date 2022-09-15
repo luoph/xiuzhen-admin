@@ -7,42 +7,32 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.aspect.annotation.AutoLog;
-import org.jeecg.common.desensitization.annotation.SensitiveField;
-import org.jeecg.common.desensitization.enums.SensitiveEnum;
-import org.jeecg.common.desensitization.util.SensitiveInfoUtil;
 import org.jeecg.common.system.annotation.HiddenField;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.oConvertUtils;
-import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
-import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.entity.enmus.ExcelType;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @Description: Controller基类
@@ -68,12 +58,24 @@ public class JeecgController<T, S extends IService<T>> {
     public IPage<T> pageList(T entity, Integer pageNo, Integer pageSize, HttpServletRequest request) {
         QueryWrapper<T> queryWrapper = prepareQuery(entity, request);
         Page<T> page = new Page<>(pageNo, pageSize);
-        return pageList(page, queryWrapper);
+        IPage<T> pageList = pageList(page, queryWrapper);
+        onload(pageList.getRecords());
+        return pageList;
     }
 
     protected IPage<T> pageList(Page<T> page, QueryWrapper<T> queryWrapper) {
         Page<T> pageList = service.page(page, queryWrapper);
         return hideField(pageList);
+    }
+
+    protected void onload(List<T> pageList) {
+        if (pageList == null) {
+            return;
+        }
+        pageList.forEach(this::onload);
+    }
+
+    protected void onload(T entity) {
     }
 
     private IPage<T> hideField(Page<T> pageList) {
@@ -110,8 +112,6 @@ public class JeecgController<T, S extends IService<T>> {
 
     /**
      * 获取对象ID
-     *
-     * @return
      */
     private String getId(T entity) {
         try {
@@ -195,6 +195,7 @@ public class JeecgController<T, S extends IService<T>> {
         if (CollUtil.isNotEmpty(pageList)) {
             pageList.forEach(this::hideField);
         }
+        onload(pageList);
         return ExcelUtils.exportXls(sysUser.getRealname(), pageList, request.getParameter("selections"), clazz, title);
     }
 
