@@ -15,6 +15,11 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
+            <a-form-item label="途径id">
+              <a-input placeholder="请输入途径id" v-model="queryParam.way"></a-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
             <a-form-item label="产销类型">
               <a-select placeholder="产销类型" v-model="queryParam.type" @change="resetWay">
                 <a-select-option value="">全部</a-select-option>
@@ -85,7 +90,7 @@ export default {
   },
   data() {
     return {
-      description: 'player_item_log管理页面',
+      description: '道具日志',
       // 表头
       columns: [
         {
@@ -111,7 +116,10 @@ export default {
         {
           title: '道具名',
           align: 'center',
-          dataIndex: 'itemName'
+          dataIndex: 'itemName',
+          customRender: function (text) {
+            return text || "未知";
+          }
         },
         {
           title: '数量',
@@ -126,7 +134,10 @@ export default {
         {
           title: '途径名',
           align: 'center',
-          dataIndex: 'wayName'
+          dataIndex: 'wayName',
+          customRender: function (text) {
+            return text || "未知";
+          }
         },
         {
           title: '更新前数量',
@@ -153,8 +164,8 @@ export default {
         }
       ],
       url: {
-        list: 'player/playerItemLog/list',
-        exportXlsUrl: 'player/playerItemLog/download'
+        list: 'player/itemLog/list',
+        exportXlsUrl: 'player/itemLog/exportXls',
       },
       dictOptions: {}
     };
@@ -167,15 +178,12 @@ export default {
   methods: {
     getQueryParams() {
       console.log(this.queryParam.createTimeRange);
-      var param = Object.assign({}, this.queryParam, this.isorter);
+      const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       // 范围参数不传递后台
       delete param.createTimeRange;
       return filterObj(param);
-    },
-    selectServerId(serverId) {
-      this.queryParam.serverId = serverId;
     },
     onDateChange(dates, dateStrings) {
       console.log(dateStrings[0], dateStrings[1]);

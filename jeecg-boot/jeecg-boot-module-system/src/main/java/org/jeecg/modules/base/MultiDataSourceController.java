@@ -63,7 +63,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
         Page<T> page = new Page<>(pageNo, pageSize);
         try {
             useServerDatabase(serverId);
-            return Result.ok(pageList(page, queryWrapper));
+            IPage<T> pageList = pageList(page, queryWrapper);
+            onload(pageList.getRecords());
+            return Result.ok(pageList);
         } finally {
             useDefaultDatabase();
         }
@@ -154,8 +156,6 @@ public class MultiDataSourceController<T, S extends IService<T>> {
 
     /**
      * 导出excel
-     *
-     * @param request
      */
     protected ModelAndView exportXls(Integer serverId, HttpServletRequest request, T object, Class<T> clazz, String title) {
         // Step.1 组装查询条件
@@ -166,6 +166,7 @@ public class MultiDataSourceController<T, S extends IService<T>> {
             useServerDatabase(serverId);
             // Step.2 获取导出数据
             List<T> pageList = service.list(queryWrapper);
+            onload(pageList);
             return ExcelUtils.exportXls(sysUser.getRealname(), pageList, request.getParameter("selections"), clazz, title);
         } finally {
             useDefaultDatabase();
@@ -174,12 +175,6 @@ public class MultiDataSourceController<T, S extends IService<T>> {
 
     /**
      * 通过excel导入数据
-     *
-     * @param serverId
-     * @param request
-     * @param response
-     * @param clazz
-     * @return
      */
     protected Result<?> importExcel(Integer serverId, HttpServletRequest request, HttpServletResponse response, Class<T> clazz) {
         try {
@@ -188,5 +183,15 @@ public class MultiDataSourceController<T, S extends IService<T>> {
         } finally {
             useDefaultDatabase();
         }
+    }
+
+    protected void onload(List<T> pageList) {
+        if (pageList == null) {
+            return;
+        }
+        pageList.forEach(this::onload);
+    }
+
+    protected void onload(T entity) {
     }
 }
