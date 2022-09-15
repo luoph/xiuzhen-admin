@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @RestController
-@RequestMapping("player/gameOrder")
+@RequestMapping("game/order")
 public class GameOrderController extends JeecgController<GameOrder, IGameOrderStatService> {
 
     @Autowired
@@ -45,10 +45,6 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
     /**
      * 分页列表查询
      *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
      * @return {@linkplain Result}
      */
     @AutoLog(value = "充值订单-列表查询")
@@ -79,9 +75,6 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
 
     /**
      * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
      */
     @AutoLog(value = "充值订单-通过id查询")
     @GetMapping(value = "/queryById")
@@ -91,9 +84,6 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
 
     /**
      * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
      */
     @AutoLog(value = "充值订单-添加")
     @PostMapping(value = "/add")

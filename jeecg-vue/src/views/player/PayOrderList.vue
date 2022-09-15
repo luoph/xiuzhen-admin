@@ -81,7 +81,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <!-- <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button> -->
-      <a-button type="primary" icon="download" @click="downlodaExcel('充值订单')">导出</a-button>
+      <a-button type="primary" icon="download" @click="downloadExcel('充值订单')">导出</a-button>
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload> -->
@@ -178,7 +178,7 @@ export default {
           title: '玩家名',
           align: 'center',
           width: 80,
-          dataIndex: 'playerName'
+          dataIndex: 'nickname'
         },
         {
           title: '渠道',
@@ -207,6 +207,7 @@ export default {
         {
           title: '平台订单号',
           align: 'center',
+          width: 240,
           dataIndex: 'queryId'
         },
         {
@@ -292,9 +293,9 @@ export default {
         }
       ],
       url: {
-        list: 'player/gameOrder/list',
-        exportXlsUrl: 'player/gameOrder/exportXls',
-        downloadExcel: '/player/gameOrder/download'
+        list: 'game/order/list',
+        exportXlsUrl: 'game/order/exportXls',
+        downloadExcel: 'game/order/download'
       },
       dictOptions: {}
     };
@@ -324,7 +325,7 @@ export default {
     onDateOk(value) {
       console.log(value);
     },
-    downlodaExcel(filename) {
+    downloadExcel(filename) {
       var xhr = new XMLHttpRequest();
       xhr.open('post', window._CONFIG['domainURL'] + this.url.downloadExcel, true);
       xhr.responseType = 'blob';
