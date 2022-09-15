@@ -3,7 +3,7 @@
  */
 window._CONFIG = {
   // 默认超时时间
-  REQUEST_TIMEOUT: 9000,
+  REQUEST_TIMEOUT: 30000,
   // 接口父路径
   VUE_APP_API_BASE_URL: '',
   // 单点登录地址
