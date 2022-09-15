@@ -1,4 +1,4 @@
-package org.jeecg.modules.base;
+package cn.youai.xiuzhen.core.controller;
 
 import cn.youai.xiuzhen.core.database.DataSourceHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

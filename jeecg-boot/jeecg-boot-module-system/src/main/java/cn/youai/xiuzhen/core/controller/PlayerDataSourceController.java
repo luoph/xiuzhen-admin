@@ -1,4 +1,4 @@
-package org.jeecg.modules.base;
+package cn.youai.xiuzhen.core.controller;
 
 import cn.youai.entities.GamePlayer;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
