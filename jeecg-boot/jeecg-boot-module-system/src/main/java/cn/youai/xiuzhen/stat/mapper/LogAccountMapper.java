@@ -37,22 +37,42 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
      * 当天登录/注册玩家数
      */
-    int gerLoginRegisterPlayerNum(@Param("serverId") int serverId, @Param("createTime") String createTime, @Param("type") int type);
+    int serverLoginRegisterPlayerNum(@Param("serverId") int serverId, @Param("date") Date createTime, @Param("type") int type);
+
+    /**
+     * 当天登录/注册玩家数
+     */
+    int channelLoginRegisterPlayerNum(@Param("channel") String channel, @Param("date") Date createTime, @Param("type") int type);
 
     /**
      * 新增注册付费总额
      */
-    BigDecimal getRegisterPayAmount(@Param("serverId") int serverId, @Param("date") String date);
+    BigDecimal serverRegisterPayAmount(@Param("serverId") int serverId, @Param("date") Date date);
+
+    /**
+     * 新增注册付费总额
+     */
+    BigDecimal channelRegisterPayAmount(@Param("channel") String channel, @Param("date") Date date);
 
     /**
      * 新增注册付费玩家
      */
-    int getRegisterPayPlayer(@Param("serverId") int serverId, @Param("date") String date);
+    int serverRegisterPayPlayerNum(@Param("serverId") int serverId, @Param("date") Date date);
+
+    /**
+     * 新增注册付费玩家
+     */
+    int channelRegisterPayPlayerNum(@Param("channel") String channel, @Param("date") Date date);
 
     /**
      * 注册二次付费玩家
      */
-    int getDoublePayRegisterPlayer(@Param("serverId") int serverId, @Param("date") String date);
+    int serverDoublePayRegisterPlayer(@Param("serverId") int serverId, @Param("date") Date date);
+
+    /**
+     * 注册二次付费玩家
+     */
+    int channelDoublePayRegisterPlayer(@Param("channel") String channel, @Param("date") Date date);
 
     /**
      * 当前登陆玩家ids

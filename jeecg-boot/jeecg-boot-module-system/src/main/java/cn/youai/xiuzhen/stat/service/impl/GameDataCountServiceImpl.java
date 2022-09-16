@@ -1,7 +1,6 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.CoreStatisticType;
 import cn.youai.xiuzhen.game.constant.RoleType;
@@ -42,7 +41,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
     private IGameDataRemainService gameDataRemainService;
 
     @Autowired
-    private IGameDayDataCountService dayDataCountService;
+    private IGameStatDailyService dayDataCountService;
 
     @Autowired
     private IGameStatRemainService statRemainService;
@@ -59,8 +58,7 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         int dateRangeBetween = ParamUtils.dateRangeBetween(dateBegin, dateEnd);
         List<GameStatDaily> list = new ArrayList<>(dateRangeBetween);
         for (int i = 0; i <= dateRangeBetween; i++) {
-            String dateOnly = DateUtil.formatDate(DateUtils.addDays(dateBegin, i));
-            GameStatDaily gameDataCount = dayDataCountService.gameDataCount(serverId, dateOnly);
+            GameStatDaily gameDataCount = dayDataCountService.getGameStatDaily(serverId, DateUtils.addDays(dateBegin, i));
             list.add(gameDataCount);
         }
         return list;

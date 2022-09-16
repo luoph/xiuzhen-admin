@@ -33,22 +33,42 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 登录注册角色数
      */
-    int loginRegisterPlayer(int serverId, String date, int type);
+    int serverLoginRegisterPlayerNum(int serverId, Date date, int type);
+
+    /**
+     * 登录注册角色数
+     */
+    int channelLoginRegisterPlayerNum(String channel, Date date, int type);
 
     /**
      * 新注册付费总额
      */
-    BigDecimal registerPayAmount(int serverId, String date);
+    BigDecimal serverRegisterPayAmount(int serverId, Date date);
+
+    /**
+     * 新注册付费总额
+     */
+    BigDecimal channelRegisterPayAmount(String channel, Date date);
 
     /**
      * 新注册付费玩家
      */
-    int registerPayPlayer(int serverId, String date);
+    int serverRegisterPayPlayerNum(int serverId, Date date);
+
+    /**
+     * 新注册付费玩家
+     */
+    int channelRegisterPayPlayerNum(String channel, Date date);
 
     /**
      * 二次付费玩家
      */
-    int doublePayRegisterPlayer(int serverId, String date);
+    int serverDoublePayRegisterPlayer(int serverId, Date date);
+
+    /**
+     * 二次付费玩家
+     */
+    int channelDoublePayRegisterPlayer(String channel, Date date);
 
     /**
      * 当前登陆玩家ids

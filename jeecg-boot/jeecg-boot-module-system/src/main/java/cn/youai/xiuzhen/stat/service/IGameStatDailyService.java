@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -17,9 +18,11 @@ import java.util.Date;
  * @author buliangliang
  * @since 2020-08-22
  */
-public interface IGameDayDataCountService extends IService<GameStatDaily> {
+public interface IGameStatDailyService extends IService<GameStatDaily> {
+
+    int updateOrInsert(List<GameStatDaily> list);
 
     void calcDailyStat(Collection<Integer> serverIds, Date date);
 
-    GameStatDaily gameDataCount(int serverId, String date);
+    GameStatDaily getGameStatDaily(int serverId, Date date);
 }

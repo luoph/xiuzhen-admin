@@ -3,19 +3,22 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
-        <a-row :gutter="45">
+        <a-row :gutter="24">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
             <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="10" :sm="8">
-            <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="统计日期">
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onCountDateChange"/>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
+              <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -45,6 +48,7 @@ import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {getAction} from '@/api/manage';
+import {filterObj} from "@/utils/util";
 
 export default {
   description: '日常数据',
@@ -57,6 +61,11 @@ export default {
   },
   data() {
     return {
+      /* 排序参数 */
+      isorter: {
+        column: 'countDate',
+        order: 'desc',
+      },
       columns: [
         {
           title: '#',
@@ -77,6 +86,18 @@ export default {
           }
         },
         {
+          title: '渠道',
+          dataIndex: 'channel',
+          width: '6%',
+          align: 'center',
+        },
+        {
+          title: '区服',
+          dataIndex: 'serverId',
+          width: '6%',
+          align: 'center',
+        },
+        {
           title: '每天数据',
           children: [
             {
@@ -93,7 +114,7 @@ export default {
             },
             {
               title: '当天付费角色数',
-              dataIndex: 'payNum',
+              dataIndex: 'payPlayerNum',
               align: 'center',
               width: '5%'
             },
@@ -125,25 +146,25 @@ export default {
           children: [
             {
               title: '新增角色',
-              dataIndex: 'addNum',
+              dataIndex: 'newPlayerNum',
               align: 'center',
               width: '5%'
             },
             {
               title: '新增付费',
-              dataIndex: 'addPayAmount',
+              dataIndex: 'newPlayerPayAmount',
               align: 'center',
               width: '5%'
             },
             {
               title: '新增付费角色数',
-              dataIndex: 'addPayNum',
+              dataIndex: 'newPlayerPayNum',
               align: 'center',
               width: '5%'
             },
             {
               title: '新增付费率',
-              dataIndex: 'addPayRate',
+              dataIndex: 'newPlayerPayRate',
               align: 'center',
               width: '5%',
               customRender: function (text) {
@@ -152,13 +173,13 @@ export default {
             },
             {
               title: '新增ARPU',
-              dataIndex: 'addArpu',
+              dataIndex: 'newPlayerArpu',
               align: 'center',
               width: '5%'
             },
             {
               title: '新增ARPPU',
-              dataIndex: 'addArppu',
+              dataIndex: 'newPlayerArppu',
               align: 'center',
               width: '5%'
             },
@@ -181,7 +202,8 @@ export default {
         }
       ],
       url: {
-        list: 'game/stat/daily'
+        list: 'game/stat/daily',
+        update: 'game/stat/update',
       },
       dictOptions: {}
     };
@@ -194,30 +216,34 @@ export default {
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function (value, dateStr) {
-      this.queryParam.rangeDateBegin = dateStr[0];
-      this.queryParam.rangeDateEnd = dateStr[1];
+    onCountDateChange: function (value, dateString) {
+      console.log(dateString[0], dateString[1]);
+      this.queryParam.countDate_begin = dateString[0];
+      this.queryParam.countDate_end = dateString[1];
     },
-    searchQuery() {
-      let param = {
-        channelId: this.queryParam.channelId,
-        serverId: this.queryParam.serverId,
-        rangeDateBegin: this.queryParam.rangeDateBegin,
-        rangeDateEnd: this.queryParam.rangeDateEnd,
-        pageNo: this.ipagination.current,
-        pageSize: this.ipagination.pageSize
-      };
-      getAction(this.url.list, param).then(res => {
+    getQueryParams() {
+      const param = Object.assign({}, this.queryParam, this.isorter);
+      param.pageNo = this.ipagination.current;
+      param.pageSize = this.ipagination.pageSize;
+
+      // 范围参数不传递后台
+      delete param.countDateRange;
+      return filterObj(param);
+    },
+    onClickUpdate() {
+      // 查询条件
+      const params = this.getQueryParams();
+      this.loading = true;
+      getAction(this.url.update, params, this.timeout).then((res) => {
         if (res.success) {
-          this.dataSource = res.result.records;
-          this.ipagination.current = res.result.current;
-          this.ipagination.size = res.result.size.toString();
-          this.ipagination.total = res.result.total;
-          this.ipagination.pages = res.result.pages;
+          this.$message.success(res.message)
         } else {
-          this.$message.error(res.message);
+          this.$message.warning(res.message)
         }
-      });
+      }).finally(() => {
+        this.loading = false
+        this.searchQuery();
+      })
     }
   }
 };

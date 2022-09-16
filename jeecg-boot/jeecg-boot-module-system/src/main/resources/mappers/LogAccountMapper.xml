@@ -44,50 +44,83 @@
         </where>
     </select>
 
-    <select id="gerLoginRegisterPlayerNum" resultType="int">
+    <select id="serverLoginRegisterPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT a.`player_id`) AS counNum
         FROM `log_account` a
         WHERE a.`server_id` = #{serverId}
           AND a.`type` = #{type}
-          AND a.`create_date` = DATE (#{createTime});
+          AND a.`create_date` = DATE (#{date});
     </select>
 
-    <select id="getRegisterPayAmount" resultType="java.math.BigDecimal">
+    <select id="channelLoginRegisterPlayerNum" resultType="int">
+        SELECT COUNT(DISTINCT a.`player_id`) AS counNum
+        FROM `log_account` a
+        LEFT JOIN `game_register_info` b ON a.`player_id` = b.`player_id`
+        WHERE b.`channel` = #{channel}
+          AND a.`type` = #{type}
+          AND a.`create_date` = DATE (#{date});
+    </select>
+
+    <select id="serverRegisterPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(sum(a.`pay_amount`), 0) AS payAmount
         FROM `game_order` a
-                 JOIN `log_account` b
-                      ON b.`player_id` = a.`player_id`
-                          AND b.`server_id` = a.`server_id`
+                 JOIN `game_register_info` b
+                      ON a.`player_id` = b.`player_id`
+                          AND a.`server_id` = b.`server_id`
         WHERE b.`server_id` = #{serverId}
-          AND b.`type` = 1
           AND b.`create_date` = DATE (#{date})
           AND a.`server_id`= #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
 
-    <select id="getRegisterPayPlayer" resultType="int">
+    <select id="channelRegisterPayAmount" resultType="java.math.BigDecimal">
+        SELECT IFNULL(sum(a.`pay_amount`), 0) AS payAmount
+        FROM `game_order` a
+                 LEFT JOIN `game_register_info` b ON a.`player_id` = b.`player_id`
+        WHERE b.`channel` = #{channel}
+          AND b.`create_date` = DATE (#{date})
+          AND DATE (a.`pay_time`) = DATE (#{date});
+    </select>
+
+    <select id="serverRegisterPayPlayerNum" resultType="int">
         SELECT count(DISTINCT a.`player_id`) AS payAmount
         FROM `game_order` a
-                 JOIN `log_account` b
-                      ON b.`player_id` = a.`player_id`
-                          AND b.`server_id` = a.`server_id`
+                 JOIN `game_register_info` b
+                      ON a.`player_id` = b.`player_id`
         WHERE b.`server_id` = #{serverId}
-          AND b.`type` = 1
           AND b.`create_date` = DATE (#{date})
-          AND a.`server_id`= #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
 
-    <select id="getDoublePayRegisterPlayer" resultType="int">
+    <select id="channelRegisterPayPlayerNum" resultType="int">
+        SELECT count(DISTINCT a.`player_id`) AS payAmount
+        FROM `game_order` a
+                 JOIN `game_register_info` b
+                      ON a.`player_id` = b.`player_id`
+        WHERE b.`channel` = #{channel}
+          AND b.`create_date` = DATE (#{date})
+          AND DATE (a.`pay_time`) = DATE (#{date});
+    </select>
+
+    <select id="serverDoublePayRegisterPlayer" resultType="int">
         SELECT count(1)
         FROM (SELECT count(a.`player_id`) AS addPayPlayer
               FROM `game_order` a
-                       LEFT JOIN `log_account` b
+                       LEFT JOIN `game_register_info` b
                                  ON a.`player_id` = b.`player_id`
-                                     AND b.`server_id` = a.`server_id`
               WHERE b.`server_id` = #{serverId}
-                AND b.`type` = 1
-                AND a.`server_id` = #{serverId}
+                AND b.`create_date` = DATE (#{date}) AND DATE (a.`pay_time`) = DATE (#{date})
+        GROUP BY a.`player_id`) c
+        WHERE c.`addPayPlayer` >= 2;
+    </select>
+
+    <select id="channelDoublePayRegisterPlayer" resultType="int">
+        SELECT count(1)
+        FROM (SELECT count(a.`player_id`) AS addPayPlayer
+              FROM `game_order` a
+                       LEFT JOIN `game_register_info` b
+                                 ON a.`player_id` = b.`player_id`
+              WHERE b.`channel` = #{channel}
                 AND b.`create_date` = DATE (#{date}) AND DATE (a.`pay_time`) = DATE (#{date})
         GROUP BY a.`player_id`) c
         WHERE c.`addPayPlayer` >= 2;

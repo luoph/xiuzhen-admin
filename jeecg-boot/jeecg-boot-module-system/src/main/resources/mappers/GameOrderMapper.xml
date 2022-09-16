@@ -3,17 +3,32 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameOrderMapper">
 
-    <select id="getSumPayAmount" resultType="double">
+    <select id="serverPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
         FROM `game_order` a
         WHERE a.`server_id` = #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{payDate});
     </select>
 
-    <select id="getCountPayPlayer" resultType="int">
-        SELECT COUNT(DISTINCT a.`player_id`) AS payPlayer
+    <select id="chanelPayAmount" resultType="java.math.BigDecimal">
+        SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
+        FROM `game_order` a
+        LEFT JOIN `game_player` b ON a.`player_id` = b.`player_id`
+        WHERE b.`channel` = #{channel}
+          AND DATE (a.`pay_time`) = DATE (#{payDate});
+    </select>
+
+    <select id="serverPayPlayerNum" resultType="int">
+        SELECT COUNT(DISTINCT a.`player_id`) AS num
         FROM `game_order` a
         WHERE a.`server_id` = #{serverId}
+          AND DATE (a.`pay_time`) = DATE (#{payDate});
+    </select>
+
+    <select id="channelPayPlayerNum" resultType="int">
+        SELECT COUNT(DISTINCT a.`player_id`) AS num
+        LEFT JOIN `game_player` b ON a.`player_id` = b.`player_id`
+        WHERE b.`channel` = #{channel}
           AND DATE (a.`pay_time`) = DATE (#{payDate});
     </select>
 

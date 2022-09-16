@@ -52,23 +52,43 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public int loginRegisterPlayer(int serverId, String date, int type) {
-        return getBaseMapper().gerLoginRegisterPlayerNum(serverId, date, type);
+    public int serverLoginRegisterPlayerNum(int serverId, Date date, int type) {
+        return getBaseMapper().serverLoginRegisterPlayerNum(serverId, date, type);
     }
 
     @Override
-    public BigDecimal registerPayAmount(int serverId, String date) {
-        return getBaseMapper().getRegisterPayAmount(serverId, date);
+    public int channelLoginRegisterPlayerNum(String channel, Date date, int type) {
+        return getBaseMapper().channelLoginRegisterPlayerNum(channel, date, type);
     }
 
     @Override
-    public int registerPayPlayer(int serverId, String date) {
-        return getBaseMapper().getRegisterPayPlayer(serverId, date);
+    public BigDecimal serverRegisterPayAmount(int serverId, Date date) {
+        return getBaseMapper().serverRegisterPayAmount(serverId, date);
     }
 
     @Override
-    public int doublePayRegisterPlayer(int serverId, String date) {
-        return getBaseMapper().getDoublePayRegisterPlayer(serverId, date);
+    public BigDecimal channelRegisterPayAmount(String channel, Date date) {
+        return getBaseMapper().channelRegisterPayAmount(channel, date);
+    }
+
+    @Override
+    public int serverRegisterPayPlayerNum(int serverId, Date date) {
+        return getBaseMapper().serverRegisterPayPlayerNum(serverId, date);
+    }
+
+    @Override
+    public int channelRegisterPayPlayerNum(String channel, Date date) {
+        return getBaseMapper().channelRegisterPayPlayerNum(channel, date);
+    }
+
+    @Override
+    public int serverDoublePayRegisterPlayer(int serverId, Date date) {
+        return getBaseMapper().serverDoublePayRegisterPlayer(serverId, date);
+    }
+
+    @Override
+    public int channelDoublePayRegisterPlayer(String channel, Date date) {
+        return getBaseMapper().channelDoublePayRegisterPlayer(channel, date);
     }
 
     @Override

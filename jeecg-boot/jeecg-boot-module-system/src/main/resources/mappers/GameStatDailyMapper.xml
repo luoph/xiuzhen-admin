@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.GameStatDailyMapper">
+
+    <insert id="updateOrInsert" parameterType="list">
+        replace into `game_stat_daily`
+        (channel,
+        server_id,
+        login_num,
+        pay_amount,
+        pay_player_num,
+        pay_rate,
+        arpu,
+        arppu,
+        new_player_num,
+        new_player_pay_num,
+        new_player_pay_amount,
+        new_player_pay_rate,
+        new_player_arpu,
+        new_player_arppu,
+        double_pay,
+        double_pay_rate,
+        count_date,
+        create_time)
+        VALUES
+        <foreach collection="list" item="it" separator=",">
+            (#{it.channel},
+            #{it.serverId},
+            #{it.loginNum},
+            #{it.payAmount},
+            #{it.payPlayerNum},
+            #{it.payRate},
+            #{it.arpu},
+            #{it.arppu},
+            #{it.newPlayerNum},
+            #{it.newPlayerPayNum},
+            #{it.newPlayerPayAmount},
+            #{it.newPlayerPayRate},
+            #{it.newPlayerArpu},
+            #{it.newPlayerArppu},
+            #{it.doublePay},
+            #{it.doublePayRate},
+            #{it.countDate},
+            now())
+        </foreach>
+    </insert>
+
+</mapper>

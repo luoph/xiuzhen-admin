@@ -4,6 +4,7 @@ import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,21 +17,20 @@ import java.util.List;
 public interface IGameOrderStatService extends IService<GameOrder> {
     /**
      * 付费金额总和
-     *
-     * @param serverId 服务器id
-     * @param date     日期
-     * @return 付费总金额
      */
-    double sumPayAmount(int serverId, String date);
+    BigDecimal serverPayAmount(int serverId, Date date);
+
+    BigDecimal channelPayAmount(String channel, Date date);
 
     /**
      * 付费角色数
-     *
-     * @param serverId
-     * @param date
-     * @return
      */
-    int countPayPlayer(int serverId, String date);
+    int serverPayPlayerNum(int serverId, Date date);
+
+    /**
+     * 付费角色数
+     */
+    int channelPayPlayerNum(String channel, Date date);
 
     /**
      * 统计日期内，付费玩家数，付费金额

@@ -16,6 +16,7 @@ import java.util.List;
  * @author buliangliang
  * @since 2020-08-22
  */
-public interface GameDayDataCountMapper extends BaseMapper<GameStatDaily> {
+public interface GameStatDailyMapper extends BaseMapper<GameStatDaily> {
     int updateOrInsert(List<GameStatDaily> list);
+
 }

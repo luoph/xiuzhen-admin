@@ -5,13 +5,14 @@ package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.youai.enums.AccountLogType;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
-import cn.youai.xiuzhen.stat.mapper.GameDayDataCountMapper;
-import cn.youai.xiuzhen.stat.service.IGameDayDataCountService;
+import cn.youai.xiuzhen.stat.mapper.GameStatDailyMapper;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.stat.service.IGameStatDailyService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import cn.youai.xiuzhen.utils.ParamUtils;
@@ -36,7 +37,7 @@ import java.util.List;
  */
 @Service
 @DS("shardingSphere")
-public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMapper, GameStatDaily> implements IGameDayDataCountService {
+public class GameStatDailyServiceImpl extends ServiceImpl<GameStatDailyMapper, GameStatDaily> implements IGameStatDailyService {
 
     @Autowired
     private IGameOrderStatService payOrderService;
@@ -46,6 +47,11 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
 
     @Autowired
     private IGameServerService gameServerService;
+
+    @Override
+    public int updateOrInsert(List<GameStatDaily> list) {
+        return getBaseMapper().updateOrInsert(list);
+    }
 
     @Override
     public void calcDailyStat(Collection<Integer> serverIds, Date date) {
@@ -65,32 +71,42 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
     }
 
     @Override
-    public GameStatDaily gameDataCount(int serverId, String date) {
+    public GameStatDaily getGameStatDaily(int serverId, Date date) {
         // 当天付费总金额
-        double sumPayAmount = payOrderService.sumPayAmount(serverId, date);
+        BigDecimal payAmount = payOrderService.serverPayAmount(serverId, date);
         // 支付玩家数
-        int countPay = payOrderService.countPayPlayer(serverId, date);
+        int payPlayerNum = payOrderService.serverPayPlayerNum(serverId, date);
         // 当天登录角色数
-        int loginNum = logAccountService.loginRegisterPlayer(serverId, date, 2);
+        int loginNum = logAccountService.serverLoginRegisterPlayerNum(serverId, date, AccountLogType.LOGIN.getType());
         // 当天注册角色数
-        int registerPlayer = logAccountService.loginRegisterPlayer(serverId, date, 1);
+        int registerPlayer = logAccountService.serverLoginRegisterPlayerNum(serverId, date, AccountLogType.REGISTER.getType());
         // 注册付费总金额
-        BigDecimal registerPayAmount = logAccountService.registerPayAmount(serverId, date);
+        BigDecimal registerPayAmount = logAccountService.serverRegisterPayAmount(serverId, date);
         // 注册付费玩家
-        int registerPayPlayer = logAccountService.registerPayPlayer(serverId, date);
+        int registerPayPlayer = logAccountService.serverRegisterPayPlayerNum(serverId, date);
         // 注册二次付费玩家
-        int doublePayPlayer = logAccountService.doublePayRegisterPlayer(serverId, date);
+        int doublePayPlayer = logAccountService.serverDoublePayRegisterPlayer(serverId, date);
 
-        return new GameStatDaily().setPayAmount(BigDecimalUtils.valueOf(sumPayAmount))
-                .setLoginNum(loginNum).setPayPlayerNum(countPay).setArpu(BigDecimalUtils.divideZero(sumPayAmount, loginNum, false))
-                .setArppu(BigDecimalUtils.divideZero(sumPayAmount, countPay, false))
-                .setPayRate(BigDecimalUtils.divideZero(countPay, loginNum, true))
-                .setNewPlayerNum(registerPlayer).setNewPlayerPayNum(registerPayPlayer)
+        // 唯一主键：`GAME_DAY_COUNT` (`channel`,`server_id`,`count_date`)
+        return new GameStatDaily()
+                .setChannel("default")
+                .setServerId(serverId)
+                .setCountDate(date)
+                .setPayAmount(payAmount)
+                .setLoginNum(loginNum)
+                .setPayPlayerNum(payPlayerNum)
+                .setArpu(BigDecimalUtils.divideZero(payAmount, BigDecimal.valueOf(loginNum), false))
+                .setArppu(BigDecimalUtils.divideZero(payAmount, BigDecimal.valueOf(payPlayerNum), false))
+                .setPayRate(BigDecimalUtils.divideZero(payPlayerNum, loginNum, true))
+                .setNewPlayerNum(registerPlayer)
+                .setNewPlayerPayNum(registerPayPlayer)
                 .setNewPlayerPayAmount(registerPayAmount)
                 .setNewPlayerPayRate(BigDecimalUtils.divideZero(registerPayPlayer, registerPlayer, true))
-                .setDoublePay(doublePayPlayer).setDoublePayRate(BigDecimalUtils.divideZero(doublePayPlayer, registerPayPlayer, true))
+                .setDoublePay(doublePayPlayer)
+                .setDoublePayRate(BigDecimalUtils.divideZero(doublePayPlayer, registerPayPlayer, true))
                 .setNewPlayerArpu(BigDecimalUtils.divideZero(registerPayAmount, BigDecimal.valueOf(registerPlayer), false))
-                .setServerId(serverId).setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
+                .setNewPlayerArppu(BigDecimalUtils.divideZero(registerPayAmount, BigDecimal.valueOf(registerPayPlayer), false))
+                .setCreateTime(DateUtils.now());
     }
 
 
@@ -101,8 +117,7 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
         int dateRangeBetween = ParamUtils.dateRangeBetween(dateBegin, dateEnd);
         List<GameStatDaily> list = new ArrayList<>(dateRangeBetween);
         for (int i = 0; i <= dateRangeBetween; i++) {
-            String dateOnly = DateUtil.formatDate(DateUtils.addDays(dateBegin, i));
-            GameStatDaily gameDataCount = gameDataCount(serverId, dateOnly);
+            GameStatDaily gameDataCount = getGameStatDaily(serverId, DateUtils.addDays(dateBegin, i));
             list.add(gameDataCount);
         }
         return list;

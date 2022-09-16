@@ -6,6 +6,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -19,9 +20,13 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
     /**
      * 计算当天支付金额
      */
-    double getSumPayAmount(@Param("serverId") int serverId, @Param("payDate") String payDate);
+    BigDecimal serverPayAmount(@Param("serverId") int serverId, @Param("payDate") Date payDate);
 
-    int getCountPayPlayer(@Param("serverId") int serverId, @Param("payDate") String payDate);
+    BigDecimal chanelPayAmount(@Param("channel") String channel, @Param("payDate") Date payDate);
+
+    int serverPayPlayerNum(@Param("serverId") int serverId, @Param("payDate") Date payDate);
+
+    int channelPayPlayerNum(@Param("channel") String channel, @Param("payDate") Date payDate);
 
     /**
      * 统计日期内，付费玩家数，付费金额
@@ -33,4 +38,5 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
     List<GameOrder> getStatPlayerNumAmountByDates(@Param("serverId") int serverId, @Param("dateList") List<JSONObject> dates);
 
     List<MergeServerVO> getGameOrderRangeDate(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
 }

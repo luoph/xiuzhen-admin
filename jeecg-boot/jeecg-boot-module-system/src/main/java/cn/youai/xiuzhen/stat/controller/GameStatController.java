@@ -1,27 +1,25 @@
 package cn.youai.xiuzhen.stat.controller;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.youai.basics.model.ResponseCode;
+import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.CoreStatisticType;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
 import cn.youai.xiuzhen.stat.entity.GameStatOngoing;
-import cn.youai.xiuzhen.stat.entity.GameStatRemain;
-import cn.youai.xiuzhen.stat.service.IGameDataCountService;
-import cn.youai.xiuzhen.utils.ParamUtils;
+import cn.youai.xiuzhen.stat.service.IGameStatDailyService;
+import cn.youai.xiuzhen.utils.QueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,60 +35,72 @@ import java.util.List;
 @RestController
 @Api(tags = "游戏统计")
 @RequestMapping("game/stat")
-public class GameStatController {
-
-    @Autowired
-    private IGameDataCountService dataCountService;
+public class GameStatController extends JeecgController<GameStatDaily, IGameStatDailyService> {
 
     @GetMapping(value = "/daily")
-    public Result<?> queryGameDataCountList(@RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
-                                            @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                            @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-                                            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-                                            HttpServletRequest req) {
+    public Result<?> list(GameStatDaily entity,
+                          @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                          @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                          HttpServletRequest req) {
         Page<GameStatDaily> page = new Page<>(pageNo, pageSize);
-        if (serverId <= 0) {
+        // 服务器空校验
+        if ((entity.getServerId() == null || entity.getServerId() < 0)) {
             return Result.ok(page);
         }
-
-        Date now = DateUtils.now();
-        // 默认查询最近两天的数据
-        if (StrUtil.isEmpty(rangeDateBegin)) {
-            rangeDateBegin = DateUtil.formatDate(DateUtils.addDays(now, -1));
-        }
-        if (StrUtil.isEmpty(rangeDateEnd)) {
-            rangeDateEnd = DateUtil.formatDate(DateUtils.addDays(now, 1));
-        }
-
-        return queryDailyData(serverId, rangeDateBegin, rangeDateEnd, page, 1);
+        IPage<GameStatDaily> pageList = pageList(entity, pageNo, pageSize, req);
+        return Result.ok(pageList);
     }
 
-    /**
-     * @param type 1-daily 2-remain 3-ltv
-     */
-    private Result<?> queryDailyData(int serverId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
-        ResponseCode responseCode = ParamUtils.dateRangeValid(rangeDateBegin, rangeDateEnd);
-        if (!responseCode.isSuccess()) {
-            return Result.error(responseCode.getDesc());
+    @GetMapping(value = "/update")
+    public Result<?> update(GameStatDaily entity, HttpServletRequest req) {
+        // 服务器空校验
+        if ((entity.getServerId() == null || entity.getServerId() < 0)) {
+            return Result.ok("请选择服务器id");
         }
-        if (type == CoreStatisticType.DAILY.getValue()) {
-            List<GameStatDaily> gameDayDataCounts = dataCountService.queryDateRangeDataCount(serverId, rangeDateBegin, rangeDateEnd, false);
-            page.setRecords(gameDayDataCounts).setTotal(gameDayDataCounts.size());
-        } else if (type == CoreStatisticType.REMAIN.getValue()) {
-            List<GameStatRemain> gameDataRemains = dataCountService.queryDataRemainCount(serverId, rangeDateBegin, rangeDateEnd, false);
-            page.setRecords(gameDataRemains).setTotal(gameDataRemains.size());
+        // 刷新统计数据
+        Date endDate = DateUtils.todayDate();
+        Date startDate = DateUtils.addDays(endDate, -2);
+        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
+        Date current = dateRange.getStart();
+
+        List<GameStatDaily> list = new ArrayList<>();
+        while (!current.after(dateRange.getEnd())) {
+            list.add(service.getGameStatDaily(entity.getServerId(), current));
+            current = DateUtils.addDays(current, 1);
         }
-        return Result.ok(page);
+
+        if (CollUtil.isNotEmpty(list)) {
+            service.updateOrInsert(list);
+        }
+        return Result.ok("更新成功");
     }
+
+//    /**
+//     * @param type 1-daily 2-remain 3-ltv
+//     */
+//    private Result<?> queryDailyData(int serverId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
+//        ResponseCode responseCode = ParamUtils.dateRangeValid(rangeDateBegin, rangeDateEnd);
+//        if (!responseCode.isSuccess()) {
+//            return Result.error(responseCode.getDesc());
+//        }
+//        if (type == CoreStatisticType.DAILY.getValue()) {
+//            List<GameStatDaily> gameDayDataCounts = service.queryDateRangeDataCount(serverId, rangeDateBegin, rangeDateEnd, false);
+//            page.setRecords(gameDayDataCounts).setTotal(gameDayDataCounts.size());
+//        } else if (type == CoreStatisticType.REMAIN.getValue()) {
+//            List<GameStatRemain> gameDataRemains = service.queryDataRemainCount(serverId, rangeDateBegin, rangeDateEnd, false);
+//            page.setRecords(gameDataRemains).setTotal(gameDataRemains.size());
+//        }
+//        return Result.ok(page);
+//    }
 
     @GetMapping(value = "/ongoing")
-    public Result<?> queryGameCountOngoing(@RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
-                                           @RequestParam(value = "type", defaultValue = "0") Integer type,
-                                           @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                           @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                           @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
-                                           @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryGameCountOngoing(
+            @RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
+            @RequestParam(value = "type", defaultValue = "0") Integer type,
+            @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
+            @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
+            @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
 
         Page<GameStatOngoing> page = new Page<>(pageNo, pageSize);
         if (serverId <= 0) {
