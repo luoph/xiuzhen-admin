@@ -34,14 +34,15 @@ public class CombatPowerLogController {
     private ILogPlayerService logPlayerService;
 
     @RequestMapping("/list")
-    public Result<?> list(CombatPowerLog entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
-        // 服务器空校验
+    public Result<?> list(CombatPowerLog entity,
+                          @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                          @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                          HttpServletRequest req) {
+        Page<CombatPowerLog> page = new Page<>(pageNo, pageSize);
         if ((entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.error("请选择服务器！");
+            return Result.ok(page);
         }
 
-        // 默认查询当天
-        Page<CombatPowerLog> page = new Page<>(pageNo, pageSize);
         IPage<CombatPowerLog> pageList = pageList(page, entity, req);
         return Result.ok(pageList);
     }
