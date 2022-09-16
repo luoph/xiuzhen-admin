@@ -31,6 +31,9 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @Value("${app.url.game-center}")
     private String gameCenterUrl;
 
+    @Value("${app.url.chat-server}")
+    private String chatServerUrl;
+
     /**
      * 分页列表查询
      *
@@ -43,10 +46,7 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @AutoLog(value = "游戏渠道-列表查询")
     @ApiOperation(value = "游戏渠道-列表查询", notes = "游戏渠道-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameChannel entity,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                                   HttpServletRequest req) {
+    public Result<?> queryPageList(GameChannel entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -139,13 +139,13 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     }
 
 
-    @AutoLog(value = "游戏渠道-刷新所有渠道区服json")
-    @ApiOperation(value = "游戏渠道-刷新所有渠道区服json", notes = "游戏渠道-刷新所有渠道区服json")
+    @AutoLog(value = "游戏渠道-刷新所有渠道区服配置")
+    @ApiOperation(value = "游戏渠道-刷新所有渠道区服配置", notes = "游戏渠道-刷新所有渠道区服配置")
     @GetMapping(value = "/updateAllServer")
     public Result<?> updateAllServer(HttpServletRequest req) {
         try {
+            reloadServerCache();
             service.updateAllChannelConfig();
-            OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         } catch (Exception e) {
             log.error("updateAllServer error", e);
             return Result.error(e.getMessage());
@@ -153,14 +153,13 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
         return Result.ok("刷新成功");
     }
 
-    @AutoLog(value = "游戏渠道-刷新指定渠道区服json")
-    @ApiOperation(value = "游戏渠道-刷新指定渠道区服json", notes = "游戏渠道-刷新指定渠道区服json")
+    @AutoLog(value = "游戏渠道-刷新指定渠道区服配置")
+    @ApiOperation(value = "游戏渠道-刷新指定渠道区服配置", notes = "游戏渠道-刷新指定渠道区服配置")
     @GetMapping(value = "/updateChannelServer")
     public Result<?> updateChannelServer(@RequestParam(name = "id") String id) {
-        OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
-        OkHttpHelper.get(gameCenterUrl + "/gm/reloadChannel");
+        reloadServerCache();
         service.updateChannelConfig(Integer.valueOf(id));
-        return Result.ok("区服配置刷新成功");
+        return Result.ok("刷新成功");
     }
 
     @GetMapping(value = "/updateIpWhitelist")
@@ -172,6 +171,24 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
             return Result.error(e.getMessage());
         }
         return Result.ok("刷新成功");
+    }
+
+    @GetMapping(value = "/updateServerCache")
+    public Result<?> updateServerCache(HttpServletRequest req) {
+        reloadServerCache();
+        return Result.ok("刷新成功");
+    }
+
+    @GetMapping(value = "/updateChatServerCache")
+    public Result<?> updateChatServerCache(HttpServletRequest req) {
+        OkHttpHelper.get(chatServerUrl + "/gm/cleanCache?className=CrossChatMessageCache");
+        return Result.ok("刷新成功");
+    }
+
+    private void reloadServerCache() {
+        OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
+        OkHttpHelper.get(gameCenterUrl + "/gm/reloadChannel");
+        OkHttpHelper.get(chatServerUrl + "/gm/reloadServerGroup");
     }
 
 }

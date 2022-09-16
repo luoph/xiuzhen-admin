@@ -107,6 +107,10 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
           </a-button>
         </template>
+        <span slot="statusSlot" slot-scope="text, record">
+          <a-tag v-if="0" color="red">无效</a-tag>
+          <a-tag v-else color="green">有效</a-tag>
+        </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
@@ -208,7 +212,8 @@ export default {
           title: '状态',
           align: 'center',
           width: 80,
-          dataIndex: 'status_dictText'
+          dataIndex: 'status',
+          scopedSlots: {customRender: 'statusSlot'}
         },
         {
           title: '滚动公告间隔(秒)',
