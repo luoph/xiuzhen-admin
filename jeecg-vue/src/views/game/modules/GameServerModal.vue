@@ -138,7 +138,7 @@
           <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
-          <a-date-picker showTime format="YYYY-MM-DD" v-decorator="['openTime', {}]"/>
+          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['openTime', {}]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上线时间">
           <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['onlineTime', {}]"/>
@@ -289,7 +289,7 @@ export default {
           }
           let formData = Object.assign(this.model, values);
           // 时间格式化
-          formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD") : null;
+          formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD HH:mm:ss") : null;
           formData.mergeTime = formData.mergeTime ? formData.mergeTime.format("YYYY-MM-DD HH:mm:ss") : null;
           formData.singleSettleTime = formData.singleSettleTime ? formData.singleSettleTime.format("YYYY-MM-DD HH:mm:ss") : null;
           formData.onlineTime = formData.onlineTime ? formData.onlineTime.format("YYYY-MM-DD HH:mm:ss") : null;
@@ -338,7 +338,6 @@ export default {
           "type",
           "outdated",
           "reservePlayerId",
-          "singleSettleTime",
           "pid",
           "taStatistics",
           "gmStatus",

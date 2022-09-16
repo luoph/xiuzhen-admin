@@ -57,11 +57,6 @@
                 <j-input placeholder="请输入地址" v-model="queryParam.host"></j-input>
               </a-form-item>
             </a-col>
-            <a-col :md="4" :sm="8">
-              <a-form-item label="数据库Host">
-                <j-input placeholder="请输入数据库Host" v-model="queryParam.dbHost"></j-input>
-              </a-form-item>
-            </a-col>
           </template>
           <a-col :md="4" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
@@ -138,14 +133,14 @@
           <a-tag color="orange">{{ text }}</a-tag>
         </span>
         <span slot="maintainSlot" slot-scope="text, record">
-          <a-tag v-if="record.isMaintain == 1" color="red">维护中</a-tag>
+          <a-tag v-if="record.isMaintain === 1" color="red">维护中</a-tag>
           <a-tag v-else color="green">运行中</a-tag>
         </span>
         <span slot="statSlot" slot-scope="text, record">
-          <a-tag v-if="record.status == 0" color="blue">正常</a-tag>
-          <a-tag v-else-if="record.status == 1" color="green">流畅</a-tag>
-          <a-tag v-else-if="record.status == 2" color="red">火爆</a-tag>
-          <a-tag v-else-if="record.status == 3" color="gray">维护</a-tag>
+          <a-tag v-if="record.status === 0" color="blue">正常</a-tag>
+          <a-tag v-else-if="record.status === 1" color="green">流畅</a-tag>
+          <a-tag v-else-if="record.status === 2" color="red">火爆</a-tag>
+          <a-tag v-else-if="record.status === 3" color="gray">维护</a-tag>
         </span>
       </a-table>
     </div>
@@ -352,9 +347,6 @@ export default {
         getOnlineNum: 'game/gameServer/getOnlineNum',
         startMaintain: 'game/gameServer/startMaintain',
         stopMaintain: 'game/gameServer/stopMaintain',
-        // exportXlsUrl: "game/gameServer/exportXls",
-        // importExcelUrl: "game/gameServer/importExcel",
-        // 游戏列表
         gameInfoListUrl: 'game/gameInfo/list'
       }
     };
