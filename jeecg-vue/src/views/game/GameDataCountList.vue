@@ -181,7 +181,7 @@ export default {
         }
       ],
       url: {
-        list: 'game/statistics/dayCount'
+        list: 'game/stat/daily'
       },
       dictOptions: {}
     };

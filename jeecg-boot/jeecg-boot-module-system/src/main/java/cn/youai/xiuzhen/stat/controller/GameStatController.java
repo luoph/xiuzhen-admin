@@ -36,13 +36,13 @@ import java.util.List;
 @Slf4j
 @RestController
 @Api(tags = "游戏统计")
-@RequestMapping("game/statistics")
-public class GameDataCountController {
+@RequestMapping("game/stat")
+public class GameStatController {
 
     @Autowired
     private IGameDataCountService dataCountService;
 
-    @GetMapping(value = "/dayCount")
+    @GetMapping(value = "/daily")
     public Result<?> queryGameDataCountList(@RequestParam(value = "serverId", defaultValue = "0") Integer serverId,
                                             @RequestParam(value = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
                                             @RequestParam(value = "rangeDateEnd", defaultValue = "") String rangeDateEnd,

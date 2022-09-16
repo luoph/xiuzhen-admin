@@ -3,25 +3,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.LogAccountMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.youai.xiuzhen.stat.entity.LogAccount">
-        <id column="id" property="id"/>
-        <result column="account" property="account"/>
-        <result column="player_id" property="playerId"/>
-        <result column="server_id" property="serverId"/>
-        <result column="channel" property="channel"/>
-        <result column="type" property="type"/>
-        <result column="ip" property="ip"/>
-        <result column="create_time" property="createTime"/>
-        <result column="create_date" property="createDate"/>
-    </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id
-        , account, player_id, server_id, channel, `type`, ip, create_time, create_date
-    </sql>
-
     <select id="queryDau" resultType="decimal">
         SELECT COUNT(DISTINCT (`player_id`)) dau
         FROM `log_account`
@@ -68,10 +49,10 @@
         FROM `log_account` a
         WHERE a.`server_id` = #{serverId}
           AND a.`type` = #{type}
-          AND DATE (a.`create_time`) = DATE (#{createTime});
+          AND a.`create_date` = DATE (#{createTime});
     </select>
 
-    <select id="getRegisterPayAmount" resultType="double">
+    <select id="getRegisterPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(sum(a.`pay_amount`), 0) AS payAmount
         FROM `game_order` a
                  JOIN `log_account` b
@@ -79,7 +60,7 @@
                           AND b.`server_id` = a.`server_id`
         WHERE b.`server_id` = #{serverId}
           AND b.`type` = 1
-          AND DATE (b.`create_time`) = DATE (#{date})
+          AND b.`create_date` = DATE (#{date})
           AND a.`server_id`= #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
@@ -92,7 +73,7 @@
                           AND b.`server_id` = a.`server_id`
         WHERE b.`server_id` = #{serverId}
           AND b.`type` = 1
-          AND DATE (b.`create_time`) = DATE (#{date})
+          AND b.`create_date` = DATE (#{date})
           AND a.`server_id`= #{serverId}
           AND DATE (a.`pay_time`) = DATE (#{date});
     </select>
@@ -106,9 +87,8 @@
                                      AND b.`server_id` = a.`server_id`
               WHERE b.`server_id` = #{serverId}
                 AND b.`type` = 1
-                AND DATE (b.`create_time`) =  DATE(#{date})
-            AND a.`server_id`= #{serverId}
-            AND DATE (a.`pay_time`) = DATE (#{date})
+                AND a.`server_id` = #{serverId}
+                AND b.`create_date` = DATE (#{date}) AND DATE (a.`pay_time`) = DATE (#{date})
         GROUP BY a.`player_id`) c
         WHERE c.`addPayPlayer` >= 2;
     </select>
@@ -149,13 +129,13 @@
                             FROM `log_account`
                             WHERE `type` = 2
                               AND `server_id` = #{serverId}
-                              AND `create_date` > #{startDate}
+                              AND `create_date` >= #{startDate}
                               AND `create_date` <= #{endDate}
-                            GROUP BY `player_id`) tmp
-                           ON tmp.`player_id` = a.`player_id`
+                            GROUP BY `player_id`) t
+                           ON t.`player_id` = a.`player_id`
         WHERE a.`type` = 2
           AND a.`server_id` = #{serverId}
-          AND `tmp`.`player_id` IS NULL
+          AND t.`player_id` IS NULL
         GROUP BY a.`player_id`;
         ]]>
     </select>

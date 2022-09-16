@@ -57,7 +57,7 @@ public class GameStatDaily implements Serializable {
     /**
      * 每天支付玩家数
      */
-    private Integer payNum;
+    private Integer payPlayerNum;
 
     /**
      * 每天支付率
@@ -77,32 +77,32 @@ public class GameStatDaily implements Serializable {
     /**
      * 新增注册玩家数
      */
-    private Integer addNum;
+    private Integer newPlayerNum;
 
     /**
      * 新增注册玩家支付总额
      */
-    private BigDecimal addPayAmount;
+    private BigDecimal newPlayerPayAmount;
 
     /**
      * 新增注册玩家支付数
      */
-    private Integer addPayNum;
+    private Integer newPlayerPayNum;
 
     /**
      * 新增注册玩家支付率
      */
-    private BigDecimal addPayRate;
+    private BigDecimal newPlayerPayRate;
 
     /**
      * 新增注册arpu
      */
-    private BigDecimal addArpu;
+    private BigDecimal newPlayerArpu;
 
     /**
      * 新增注册arppu
      */
-    private BigDecimal addArppu;
+    private BigDecimal newPlayerArppu;
 
     /**
      * 新增注册二次付费玩家数

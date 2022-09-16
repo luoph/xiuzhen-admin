@@ -38,7 +38,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 新注册付费总额
      */
-    double registerPayAmount(int serverId, String date);
+    BigDecimal registerPayAmount(int serverId, String date);
 
     /**
      * 新注册付费玩家

@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -74,22 +75,21 @@ public class GameDayDataCountServiceImpl extends ServiceImpl<GameDayDataCountMap
         // 当天注册角色数
         int registerPlayer = logAccountService.loginRegisterPlayer(serverId, date, 1);
         // 注册付费总金额
-        double registerPayAmount = logAccountService.registerPayAmount(serverId, date);
+        BigDecimal registerPayAmount = logAccountService.registerPayAmount(serverId, date);
         // 注册付费玩家
         int registerPayPlayer = logAccountService.registerPayPlayer(serverId, date);
         // 注册二次付费玩家
         int doublePayPlayer = logAccountService.doublePayRegisterPlayer(serverId, date);
 
         return new GameStatDaily().setPayAmount(BigDecimalUtils.valueOf(sumPayAmount))
-                .setLoginNum(loginNum).setPayNum(countPay).setArpu(BigDecimalUtils.divideZero(sumPayAmount, loginNum, false))
+                .setLoginNum(loginNum).setPayPlayerNum(countPay).setArpu(BigDecimalUtils.divideZero(sumPayAmount, loginNum, false))
                 .setArppu(BigDecimalUtils.divideZero(sumPayAmount, countPay, false))
                 .setPayRate(BigDecimalUtils.divideZero(countPay, loginNum, true))
-                .setAddNum(registerPlayer).setAddPayNum(registerPayPlayer)
-                .setAddPayAmount(BigDecimalUtils.valueOf(registerPayAmount))
-                .setAddPayRate(BigDecimalUtils.divideZero(registerPayPlayer, registerPlayer, true))
+                .setNewPlayerNum(registerPlayer).setNewPlayerPayNum(registerPayPlayer)
+                .setNewPlayerPayAmount(registerPayAmount)
+                .setNewPlayerPayRate(BigDecimalUtils.divideZero(registerPayPlayer, registerPlayer, true))
                 .setDoublePay(doublePayPlayer).setDoublePayRate(BigDecimalUtils.divideZero(doublePayPlayer, registerPayPlayer, true))
-                .setAddArpu(BigDecimalUtils.divideZero(registerPayAmount, registerPlayer, false))
-                .setAddArppu(BigDecimalUtils.divideZero(registerPayAmount, registerPayPlayer, false))
+                .setNewPlayerArpu(BigDecimalUtils.divideZero(registerPayAmount, BigDecimal.valueOf(registerPlayer), false))
                 .setServerId(serverId).setCountDate(DateUtils.parseDate(date)).setCreateTime(DateUtils.now());
     }
 

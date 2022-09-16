@@ -42,7 +42,7 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
      * 新增注册付费总额
      */
-    double getRegisterPayAmount(@Param("serverId") int serverId, @Param("date") String date);
+    BigDecimal getRegisterPayAmount(@Param("serverId") int serverId, @Param("date") String date);
 
     /**
      * 新增注册付费玩家

@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 /**
@@ -127,7 +128,18 @@ public final class BigDecimalUtils {
             }
             return result;
         }
-        return BigDecimal.valueOf(0.00);
+        return BigDecimal.ZERO;
+    }
+
+    public static BigDecimal divideZero(BigDecimal v1, BigDecimal v2, boolean isPercent) {
+        if (v2.compareTo(BigDecimal.ZERO) != 0) {
+            BigDecimal result = v1.divide(v2, 2, RoundingMode.HALF_UP);
+            if (isPercent) {
+                return result.multiply(BigDecimal.valueOf(100));
+            }
+            return result;
+        }
+        return BigDecimal.ZERO;
     }
 
     /**

@@ -57,7 +57,7 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public double registerPayAmount(int serverId, String date) {
+    public BigDecimal registerPayAmount(int serverId, String date) {
         return getBaseMapper().getRegisterPayAmount(serverId, date);
     }
 

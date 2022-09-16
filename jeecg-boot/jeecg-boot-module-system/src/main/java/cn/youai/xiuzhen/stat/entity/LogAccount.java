@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.stat.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -59,12 +60,14 @@ public class LogAccount implements Serializable {
      * 1-创角、2-登录、3-退出
      */
     @Excel(name = "操作类型", width = 15)
+    @TableField(value = "`type`")
     private Integer type;
 
     /**
      * 数值记录
      */
     @Excel(name = "数值记录", width = 15)
+    @TableField(value = "`value`")
     private Long value;
 
     /**
