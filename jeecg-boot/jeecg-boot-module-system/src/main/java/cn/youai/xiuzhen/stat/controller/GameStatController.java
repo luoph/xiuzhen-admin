@@ -38,62 +38,6 @@ import java.util.List;
 @RequestMapping("game/stat")
 public class GameStatController extends JeecgController<GameStatDaily, IGameStatDailyService> {
 
-    @GetMapping(value = "/daily")
-    public Result<?> list(GameStatDaily entity,
-                          @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                          @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                          HttpServletRequest req) {
-        Page<GameStatDaily> page = new Page<>(pageNo, pageSize);
-        // 服务器空校验
-        if (StringUtils.isEmpty(entity.getChannel())
-                && (entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.ok(page);
-        }
-
-        // 如果指定 游戏服id，则清除渠道信息
-        if (entity.getServerId() != null && entity.getServerId() > 0) {
-            entity.setChannel(null);
-        }
-
-        IPage<GameStatDaily> pageList = pageList(entity, pageNo, pageSize, req);
-        return Result.ok(pageList);
-    }
-
-    @GetMapping(value = "/update")
-    public Result<?> update(GameStatDaily entity, HttpServletRequest req) {
-        // 服务器空校验
-        if (StringUtils.isEmpty(entity.getChannel())
-                && (entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.ok("请选择渠道或者区服id");
-        }
-
-        // 如果指定 游戏服id，则清除渠道信息
-        if (entity.getServerId() != null && entity.getServerId() > 0) {
-            entity.setChannel(null);
-        }
-
-        // 刷新统计数据
-        Date endDate = DateUtils.todayDate();
-        Date startDate = DateUtils.addDays(endDate, -2);
-        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
-        Date current = dateRange.getStart();
-
-        List<GameStatDaily> list = new ArrayList<>();
-        while (!current.after(dateRange.getEnd())) {
-            if (entity.getServerId() != null && entity.getServerId() > 0) {
-                list.add(service.getGameStatDaily(entity.getServerId(), current));
-            } else {
-                list.add(service.getGameStatDaily(entity.getChannel(), current));
-            }
-            current = DateUtils.addDays(current, 1);
-        }
-
-        if (CollUtil.isNotEmpty(list)) {
-            service.updateOrInsert(list);
-        }
-        return Result.ok("更新成功");
-    }
-
 //    /**
 //     * @param type 1-daily 2-S 3-ltv
 //     */

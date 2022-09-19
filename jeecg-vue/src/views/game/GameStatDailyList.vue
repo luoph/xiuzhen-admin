@@ -205,8 +205,8 @@ export default {
         }
       ],
       url: {
-        list: 'game/stat/daily',
-        update: 'game/stat/update',
+        list: 'game/stat/daily/list',
+        update: 'game/stat/daily/update',
       },
       dictOptions: {}
     };
