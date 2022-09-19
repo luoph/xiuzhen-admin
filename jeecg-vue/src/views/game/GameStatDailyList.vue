@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="统计日期">
@@ -232,6 +232,11 @@ export default {
       // 范围参数不传递后台
       delete param.countDateRange;
       return filterObj(param);
+    },
+    searchReset() {
+      this.queryParam = {}
+      this.$refs.channelServerSelector.reset();
+      this.loadData(1);
     },
     onClickUpdate() {
       // 查询条件

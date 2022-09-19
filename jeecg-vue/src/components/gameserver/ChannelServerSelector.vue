@@ -90,7 +90,11 @@ export default {
       }
       // 触发父容器的 selectServer 方法
       this.$emit("onSelectServer", result);
-    }
+    },
+    reset() {
+      this.channel = null;
+      this.serverId = null;
+    },
   },
   watch: {
     channel: function () {
