@@ -83,10 +83,10 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
             int days = DateUtils.daysBetweenNatural(current, todayDate);
             if (entity.getServerId() != null && entity.getServerId() > 0) {
                 if (entity.getRoleType() != null) {
-                    service.calcRemainStat(RoleType.valueOf(entity.getRoleType()), entity.getServerId(), current, days, true);
+                    service.calcServerRemain(entity.getServerId(), RoleType.valueOf(entity.getRoleType()), current, days, true);
                 } else {
-                    service.calcRemainStat(RoleType.ALL, entity.getServerId(), current, days, true);
-                    service.calcRemainStat(RoleType.PAID, entity.getServerId(), current, days, true);
+                    service.calcServerRemain(entity.getServerId(), RoleType.ALL, current, days, true);
+                    service.calcServerRemain(entity.getServerId(), RoleType.PAID, current, days, true);
                 }
             } else {
                 // TODO 支持按照渠道纬度统计

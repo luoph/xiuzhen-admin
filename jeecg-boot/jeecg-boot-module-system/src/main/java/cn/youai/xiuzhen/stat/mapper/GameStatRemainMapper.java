@@ -23,35 +23,35 @@ public interface GameStatRemainMapper extends BaseMapper<GameStatRemain> {
     /**
      * 留存统计
      */
-    GameStatRemain queryGameStatRemain(@Param("serverId") int serverId,
-                                       @Param("roleType") int roleType,
-                                       @Param("registerDate") Date registerDate);
+    GameStatRemain queryServerRemain(@Param("serverId") int serverId,
+                                     @Param("roleType") int roleType,
+                                     @Param("registerDate") Date registerDate);
 
     /**
      * 统计ltv
      */
-    GameStatRemain getGameStatRemain(@Param("roleType") int roleType,
-                                     @Param("serverId") int serverId,
-                                     @Param("registerDate") Date registerDate);
+    GameStatRemain getServerRemain(@Param("roleType") int roleType,
+                                   @Param("serverId") int serverId,
+                                   @Param("registerDate") Date registerDate);
 
     /**
      * 付费次留
      */
-    int getPayRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate);
+    int getServerPayRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate);
 
     /**
      * 免费次留
      */
-    int getFreeRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate);
+    int getServerFreeRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate);
 
     /**
      * 查询留存
      */
-    ServerRemain selectRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate, @Param("days") int days);
+    ServerRemain selectServerPlayerRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate, @Param("days") int days);
 
     /**
      * 付费留存
      */
-    ServerRemain selectPayRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate, @Param("days") int days);
+    ServerRemain selectServerPayPlayerRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate, @Param("days") int days);
 
 }

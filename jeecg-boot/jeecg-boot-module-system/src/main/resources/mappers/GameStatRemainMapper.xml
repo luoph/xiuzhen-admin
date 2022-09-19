@@ -3,7 +3,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.GameStatRemainMapper">
 
-    <select id="queryGameStatRemain" resultType="cn.youai.xiuzhen.stat.entity.GameStatRemain">
+    <select id="queryServerRemain" resultType="cn.youai.xiuzhen.stat.entity.GameStatRemain">
     <![CDATA[
         SELECT @register_date := DATE(#{registerDate}) AS count_date,
             @serverId := #{serverId} AS server_id,
@@ -47,7 +47,7 @@
         ]]>
    </select>
 
-    <select id="getGameStatRemain" resultType="cn.youai.xiuzhen.stat.entity.GameStatRemain">
+    <select id="getServerRemain" resultType="cn.youai.xiuzhen.stat.entity.GameStatRemain">
         <![CDATA[
         SELECT #{registerDate}                                                          AS `count_date`,
                #{serverId}                                                              AS `server_id`,
@@ -69,7 +69,7 @@
     </select>
 
     <!-- 付费角色次留-->
-    <select id="getPayRemain" resultType="java.lang.Integer">
+    <select id="getServerPayRemain" resultType="java.lang.Integer">
         <![CDATA[
         SELECT COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM `log_account` l
@@ -89,7 +89,7 @@
     </select>
 
     <!-- 免费角色次留-->
-    <select id="getFreeRemain" resultType="java.lang.Integer">
+    <select id="getServerFreeRemain" resultType="java.lang.Integer">
         <![CDATA[
         SELECT COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM `log_account` l
@@ -107,7 +107,7 @@
         ]]>
     </select>
 
-    <select id="selectRemain" resultType="cn.youai.xiuzhen.stat.entity.ServerRemain">
+    <select id="selectServerPlayerRemain" resultType="cn.youai.xiuzhen.stat.entity.ServerRemain">
         <![CDATA[
         SELECT #{serverId} AS server_id,
             #{days} AS days,
@@ -124,7 +124,7 @@
         ]]>
     </select>
 
-    <select id="selectPayRemain" resultType="cn.youai.xiuzhen.stat.entity.ServerRemain">
+    <select id="selectServerPayPlayerRemain" resultType="cn.youai.xiuzhen.stat.entity.ServerRemain">
         <![CDATA[
         SELECT #{serverId} AS server_id,
                #{days} AS days,

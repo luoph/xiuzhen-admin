@@ -19,7 +19,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -34,21 +33,16 @@ import java.util.Date;
 @DS("shardingSphere")
 public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper, GameStatRemain> implements IGameStatRemainService {
 
-    /**
-     * 留存间隔查询
-     */
-    private static final int[] REMAIN = new int[]{2, 3, 4, 5, 6, 7, 15, 30, 60, 90, 120, 180, 360};
-
     @Autowired
     private IGameServerService gameServerService;
 
     @Override
-    public GameStatRemain queryGameStatRemain(int serverId, int roleType, Date registerDate) {
-        return getBaseMapper().queryGameStatRemain(serverId, roleType, registerDate);
+    public GameStatRemain queryServerRemain(int serverId, int roleType, Date registerDate) {
+        return getBaseMapper().queryServerRemain(serverId, roleType, registerDate);
     }
 
     @Override
-    public GameStatRemain selectGameStatRemain(int serverId, RoleType roleType, Date registerDate) {
+    public GameStatRemain selectServerRemain(int serverId, RoleType roleType, Date registerDate) {
         LambdaQueryWrapper<GameStatRemain> query = Wrappers.<GameStatRemain>lambdaQuery()
                 .eq(GameStatRemain::getServerId, serverId)
                 .eq(GameStatRemain::getChannel, "default")
@@ -58,22 +52,15 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
     }
 
     @Override
-    public void calcRemainStat(RoleType roleType, Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
-        for (Integer serverId : serverIds) {
-            calcRemainStat(roleType, serverId, registerDate, days, updateAll);
-        }
-    }
-
-    @Override
-    public void calcRemainStat(RoleType roleType, int serverId, Date registerDate, int days, boolean updateAll) {
+    public void calcServerRemain(int serverId, RoleType roleType, Date registerDate, int days, boolean updateAll) {
         GameServer gameServer = gameServerService.getById(serverId);
         if (gameServer == null || gameServer.getOpenTime().after(registerDate)) {
             return;
         }
 
         // 重新查询注册数量
-        GameStatRemain updatedRemain = queryGameStatRemain(serverId, roleType.getValue(), registerDate);
-        GameStatRemain gameStatRemain = selectGameStatRemain(serverId, roleType, registerDate);
+        GameStatRemain updatedRemain = queryServerRemain(serverId, roleType.getValue(), registerDate);
+        GameStatRemain gameStatRemain = selectServerRemain(serverId, roleType, registerDate);
 
         // 免费玩家数 = 注册数 - 付费数
         updatedRemain.setFreeNum(updatedRemain.getRegisterNum() - updatedRemain.getPayNum());
@@ -122,9 +109,9 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
             serverRemain = new ServerRemain().setRemain(0).setServerId(serverId).setDays(days).setRegisterDate(registerDate);
         } else {
             if (roleType == RoleType.ALL) {
-                serverRemain = getBaseMapper().selectRemain(serverId, registerDate, days);
+                serverRemain = getBaseMapper().selectServerPlayerRemain(serverId, registerDate, days);
             } else if (roleType == RoleType.PAID) {
-                serverRemain = getBaseMapper().selectPayRemain(serverId, registerDate, days);
+                serverRemain = getBaseMapper().selectServerPayPlayerRemain(serverId, registerDate, days);
             }
             // TODO 支持免费玩家留存统计
         }
