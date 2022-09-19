@@ -22,6 +22,15 @@ public interface IGameChannelServerService extends IService<GameChannelServer> {
     List<GameServerVO> selectServerListByChannelId(int channelId);
 
     /**
+     * 通过渠道id查询对应的服务器
+     *
+     * @param channel 渠道
+     * @return 区服列表
+     */
+    List<GameServerVO> selectServerList(String channel);
+
+
+    /**
      * 渠道和服务器绑定关系验证
      *
      * @param channelId 渠道id

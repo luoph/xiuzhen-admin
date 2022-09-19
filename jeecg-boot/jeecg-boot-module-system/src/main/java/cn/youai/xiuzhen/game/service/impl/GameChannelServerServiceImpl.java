@@ -28,6 +28,11 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
     }
 
     @Override
+    public List<GameServerVO> selectServerList(String channel) {
+        return getBaseMapper().selectServerList(channel);
+    }
+
+    @Override
     public boolean isValidChannelWithServer(int channelId, int serverId) {
         LambdaQueryWrapper<GameChannelServer> queryWrapper = Wrappers.<GameChannelServer>lambdaQuery()
                 .eq(GameChannelServer::getChannelId, channelId)

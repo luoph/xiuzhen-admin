@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,9 +45,16 @@ public class GameStatController extends JeecgController<GameStatDaily, IGameStat
                           HttpServletRequest req) {
         Page<GameStatDaily> page = new Page<>(pageNo, pageSize);
         // 服务器空校验
-        if ((entity.getServerId() == null || entity.getServerId() < 0)) {
+        if (StringUtils.isEmpty(entity.getChannel())
+                && (entity.getServerId() == null || entity.getServerId() < 0)) {
             return Result.ok(page);
         }
+
+        // 如果指定 游戏服id，则清除渠道信息
+        if (entity.getServerId() != null && entity.getServerId() > 0) {
+            entity.setChannel(null);
+        }
+
         IPage<GameStatDaily> pageList = pageList(entity, pageNo, pageSize, req);
         return Result.ok(pageList);
     }
@@ -54,9 +62,16 @@ public class GameStatController extends JeecgController<GameStatDaily, IGameStat
     @GetMapping(value = "/update")
     public Result<?> update(GameStatDaily entity, HttpServletRequest req) {
         // 服务器空校验
-        if ((entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.ok("请选择服务器id");
+        if (StringUtils.isEmpty(entity.getChannel())
+                && (entity.getServerId() == null || entity.getServerId() < 0)) {
+            return Result.ok("请选择渠道或者区服id");
         }
+
+        // 如果指定 游戏服id，则清除渠道信息
+        if (entity.getServerId() != null && entity.getServerId() > 0) {
+            entity.setChannel(null);
+        }
+
         // 刷新统计数据
         Date endDate = DateUtils.todayDate();
         Date startDate = DateUtils.addDays(endDate, -2);
@@ -65,7 +80,11 @@ public class GameStatController extends JeecgController<GameStatDaily, IGameStat
 
         List<GameStatDaily> list = new ArrayList<>();
         while (!current.after(dateRange.getEnd())) {
-            list.add(service.getGameStatDaily(entity.getServerId(), current));
+            if (entity.getServerId() != null && entity.getServerId() > 0) {
+                list.add(service.getGameStatDaily(entity.getServerId(), current));
+            } else {
+                list.add(service.getGameStatDaily(entity.getChannel(), current));
+            }
             current = DateUtils.addDays(current, 1);
         }
 
@@ -76,7 +95,7 @@ public class GameStatController extends JeecgController<GameStatDaily, IGameStat
     }
 
 //    /**
-//     * @param type 1-daily 2-remain 3-ltv
+//     * @param type 1-daily 2-S 3-ltv
 //     */
 //    private Result<?> queryDailyData(int serverId, String rangeDateBegin, String rangeDateEnd, IPage page, int type) {
 //        ResponseCode responseCode = ParamUtils.dateRangeValid(rangeDateBegin, rangeDateEnd);

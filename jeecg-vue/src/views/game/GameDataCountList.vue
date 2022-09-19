@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="统计日期">
@@ -46,7 +46,7 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
+import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
 import {getAction} from '@/api/manage';
 import {filterObj} from "@/utils/util";
 
@@ -56,7 +56,7 @@ export default {
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
+    ChannelServerSelector,
     getAction
   },
   data() {
@@ -96,6 +96,9 @@ export default {
           dataIndex: 'serverId',
           width: '6%',
           align: 'center',
+          customRender: function (text) {
+            return text === 0 ? '全部' : text;
+          }
         },
         {
           title: '每天数据',
@@ -210,8 +213,8 @@ export default {
   },
   computed: {},
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (channel) {
+      this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;

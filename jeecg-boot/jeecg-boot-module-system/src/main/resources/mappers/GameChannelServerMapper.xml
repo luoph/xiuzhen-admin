@@ -13,4 +13,15 @@
         ORDER BY b.`position` DESC
     </select>
 
+    <select id="selectServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
+        SELECT a.*
+        FROM `game_server` a
+                 INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+                 INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
+        WHERE c.`simple_name` = #{channel}
+          AND b.`del_flag` = 0
+          AND b.`no_need_count` = 0
+        ORDER BY b.`position` DESC
+    </select>
+
 </mapper>

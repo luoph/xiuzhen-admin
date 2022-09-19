@@ -27,6 +27,7 @@
 
     <select id="channelPayPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT a.`player_id`) AS num
+        FROM `game_order` a
         LEFT JOIN `game_player` b ON a.`player_id` = b.`player_id`
         WHERE b.`channel` = #{channel}
           AND DATE (a.`pay_time`) = DATE (#{payDate});

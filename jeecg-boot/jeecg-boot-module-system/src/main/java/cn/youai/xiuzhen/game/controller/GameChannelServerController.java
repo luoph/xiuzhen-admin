@@ -169,13 +169,16 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
 
     /**
      * 通过渠道id 查询关联的服务器
-     *
-     * @param channelId 渠道id
-     * @return
      */
     @RequestMapping(value = "channelWithServer")
     public Result<?> channelWithServer(@RequestParam(name = "channelId") Integer channelId) {
         List<GameServerVO> gameServers = service.selectServerListByChannelId(channelId);
+        return Result.ok(gameServers);
+    }
+
+    @RequestMapping(value = "serverList")
+    public Result<?> serverList(@RequestParam(name = "channel") String channel) {
+        List<GameServerVO> gameServers = service.selectServerList(channel);
         return Result.ok(gameServers);
     }
 }

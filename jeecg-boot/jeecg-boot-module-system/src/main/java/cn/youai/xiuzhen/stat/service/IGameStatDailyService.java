@@ -25,4 +25,6 @@ public interface IGameStatDailyService extends IService<GameStatDaily> {
     void calcDailyStat(Collection<Integer> serverIds, Date date);
 
     GameStatDaily getGameStatDaily(int serverId, Date date);
+
+    GameStatDaily getGameStatDaily(String channel, Date date);
 }

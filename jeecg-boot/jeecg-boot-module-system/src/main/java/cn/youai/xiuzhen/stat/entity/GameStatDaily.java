@@ -3,10 +3,11 @@
  */
 package cn.youai.xiuzhen.stat.entity;
 
+import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -22,7 +23,6 @@ import java.util.Date;
  * @since 2020-08-22
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class GameStatDaily implements Serializable {
 
@@ -124,5 +124,63 @@ public class GameStatDaily implements Serializable {
      */
     private Date createTime;
 
+
+    public static GameStatDaily of(String channel, Date date,
+                                   BigDecimal payAmount,
+                                   int payPlayerNum,
+                                   int loginNum,
+                                   int registerPlayer,
+                                   BigDecimal registerPayAmount,
+                                   int registerPayPlayer,
+                                   int doublePayPlayer) {
+        return new GameStatDaily()
+                .setChannel(channel)
+                .setServerId(0)
+                .setCountDate(date)
+                .setPayAmount(payAmount)
+                .setLoginNum(loginNum)
+                .setPayPlayerNum(payPlayerNum)
+                .setNewPlayerNum(registerPlayer)
+                .setNewPlayerPayNum(registerPayPlayer)
+                .setNewPlayerPayAmount(registerPayAmount)
+                .setDoublePay(doublePayPlayer)
+                .setCreateTime(DateUtils.now())
+                .calc();
+    }
+
+    public static GameStatDaily of(int serverId, Date date,
+                                   BigDecimal payAmount,
+                                   int payPlayerNum,
+                                   int loginNum,
+                                   int registerPlayer,
+                                   BigDecimal registerPayAmount,
+                                   int registerPayPlayer,
+                                   int doublePayPlayer) {
+        return new GameStatDaily()
+                .setChannel("default")
+                .setServerId(serverId)
+                .setServerId(0)
+                .setCountDate(date)
+                .setPayAmount(payAmount)
+                .setLoginNum(loginNum)
+                .setPayPlayerNum(payPlayerNum)
+                .setNewPlayerNum(registerPlayer)
+                .setNewPlayerPayNum(registerPayPlayer)
+                .setNewPlayerPayAmount(registerPayAmount)
+                .setDoublePay(doublePayPlayer)
+                .setCreateTime(DateUtils.now())
+                .calc();
+    }
+
+    public GameStatDaily calc() {
+        setArpu(BigDecimalUtils.divideZero(payAmount, BigDecimal.valueOf(loginNum), false))
+                .setArppu(BigDecimalUtils.divideZero(payAmount, BigDecimal.valueOf(payPlayerNum), false))
+                .setPayRate(BigDecimalUtils.divideZero(payPlayerNum, loginNum, true))
+                .setNewPlayerPayRate(BigDecimalUtils.divideZero(newPlayerPayNum, newPlayerNum, true))
+                .setDoublePayRate(BigDecimalUtils.divideZero(doublePay, newPlayerPayNum, true))
+                .setNewPlayerArpu(BigDecimalUtils.divideZero(newPlayerPayAmount, BigDecimal.valueOf(newPlayerPayNum), false))
+                .setNewPlayerArppu(BigDecimalUtils.divideZero(newPlayerPayAmount, BigDecimal.valueOf(newPlayerPayNum), false));
+        return this;
+    }
 
 }

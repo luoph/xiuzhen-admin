@@ -86,29 +86,28 @@ public class GameStatDailyServiceImpl extends ServiceImpl<GameStatDailyMapper, G
         int registerPayPlayer = logAccountService.serverRegisterPayPlayerNum(serverId, date);
         // 注册二次付费玩家
         int doublePayPlayer = logAccountService.serverDoublePayRegisterPlayer(serverId, date);
-
         // 唯一主键：`GAME_DAY_COUNT` (`channel`,`server_id`,`count_date`)
-        return new GameStatDaily()
-                .setChannel("default")
-                .setServerId(serverId)
-                .setCountDate(date)
-                .setPayAmount(payAmount)
-                .setLoginNum(loginNum)
-                .setPayPlayerNum(payPlayerNum)
-                .setArpu(BigDecimalUtils.divideZero(payAmount, BigDecimal.valueOf(loginNum), false))
-                .setArppu(BigDecimalUtils.divideZero(payAmount, BigDecimal.valueOf(payPlayerNum), false))
-                .setPayRate(BigDecimalUtils.divideZero(payPlayerNum, loginNum, true))
-                .setNewPlayerNum(registerPlayer)
-                .setNewPlayerPayNum(registerPayPlayer)
-                .setNewPlayerPayAmount(registerPayAmount)
-                .setNewPlayerPayRate(BigDecimalUtils.divideZero(registerPayPlayer, registerPlayer, true))
-                .setDoublePay(doublePayPlayer)
-                .setDoublePayRate(BigDecimalUtils.divideZero(doublePayPlayer, registerPayPlayer, true))
-                .setNewPlayerArpu(BigDecimalUtils.divideZero(registerPayAmount, BigDecimal.valueOf(registerPlayer), false))
-                .setNewPlayerArppu(BigDecimalUtils.divideZero(registerPayAmount, BigDecimal.valueOf(registerPayPlayer), false))
-                .setCreateTime(DateUtils.now());
+        return GameStatDaily.of(serverId, date, payAmount, payPlayerNum, loginNum, registerPlayer, registerPayAmount, registerPayPlayer, doublePayPlayer);
     }
 
+    @Override
+    public GameStatDaily getGameStatDaily(String channel, Date date) {
+        // 当天付费总金额
+        BigDecimal payAmount = payOrderService.channelPayAmount(channel, date);
+        // 支付玩家数
+        int payPlayerNum = payOrderService.channelPayPlayerNum(channel, date);
+        // 当天登录角色数
+        int loginNum = logAccountService.channelLoginRegisterPlayerNum(channel, date, AccountLogType.LOGIN.getType());
+        // 当天注册角色数
+        int registerPlayer = logAccountService.channelLoginRegisterPlayerNum(channel, date, AccountLogType.REGISTER.getType());
+        // 注册付费总金额
+        BigDecimal registerPayAmount = logAccountService.channelRegisterPayAmount(channel, date);
+        // 注册付费玩家
+        int registerPayPlayer = logAccountService.channelRegisterPayPlayerNum(channel, date);
+        // 注册二次付费玩家
+        int doublePayPlayer = logAccountService.channelDoublePayRegisterPlayer(channel, date);
+        return GameStatDaily.of(channel, date, payAmount, payPlayerNum, loginNum, registerPlayer, registerPayAmount, registerPayPlayer, doublePayPlayer);
+    }
 
     private List<GameStatDaily> queryDateRangeDataCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount) {
         Date dateBegin = DateUtils.parseDate(rangeDateBegin);
