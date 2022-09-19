@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
+import cn.youai.xiuzhen.stat.entity.GameStatRemain;
 import cn.youai.xiuzhen.stat.service.IGameStatDailyService;
 import cn.youai.xiuzhen.utils.QueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -87,5 +89,16 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
             service.updateOrInsert(list);
         }
         return Result.ok("更新成功");
+    }
+
+    /**
+     * 导出excel
+     *
+     * @param request 请求
+     * @param entity  实体
+     */
+    @RequestMapping(value = "/exportXls")
+    public ModelAndView exportXls(HttpServletRequest request, GameStatDaily entity) {
+        return super.exportXls(request, entity, GameStatDaily.class, "日常统计");
     }
 }

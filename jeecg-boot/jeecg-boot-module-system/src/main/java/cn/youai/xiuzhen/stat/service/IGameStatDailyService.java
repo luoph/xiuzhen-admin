@@ -6,7 +6,6 @@ package cn.youai.xiuzhen.stat.service;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -21,8 +20,6 @@ import java.util.List;
 public interface IGameStatDailyService extends IService<GameStatDaily> {
 
     int updateOrInsert(List<GameStatDaily> list);
-
-    void calcDailyStat(Collection<Integer> serverIds, Date date);
 
     GameStatDaily getGameStatDaily(int serverId, Date date);
 

@@ -54,23 +54,6 @@ public class GameStatDailyServiceImpl extends ServiceImpl<GameStatDailyMapper, G
     }
 
     @Override
-    public void calcDailyStat(Collection<Integer> serverIds, Date date) {
-        String formatDate = DateUtil.formatDate(date);
-        for (Integer serverId : serverIds) {
-            GameServer gameServer = gameServerService.getById(serverId);
-            if (gameServer.getOpenTime().getTime() <= date.getTime()) {
-                continue;
-            }
-
-            String f = DateUtil.formatDate(gameServer.getOpenTime());
-            List<GameStatDaily> gameDayDataCounts = queryDateRangeDataCount(gameServer.getId(), f, formatDate, false);
-            if (CollUtil.isNotEmpty(gameDayDataCounts)) {
-                getBaseMapper().updateOrInsert(gameDayDataCounts);
-            }
-        }
-    }
-
-    @Override
     public GameStatDaily getGameStatDaily(int serverId, Date date) {
         // 当天付费总金额
         BigDecimal payAmount = payOrderService.serverPayAmount(serverId, date);
@@ -107,19 +90,6 @@ public class GameStatDailyServiceImpl extends ServiceImpl<GameStatDailyMapper, G
         // 注册二次付费玩家
         int doublePayPlayer = logAccountService.channelDoublePayRegisterPlayer(channel, date);
         return GameStatDaily.of(channel, date, payAmount, payPlayerNum, loginNum, registerPlayer, registerPayAmount, registerPayPlayer, doublePayPlayer);
-    }
-
-    private List<GameStatDaily> queryDateRangeDataCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount) {
-        Date dateBegin = DateUtils.parseDate(rangeDateBegin);
-        Date dateEnd = DateUtils.parseDate(rangeDateEnd);
-        // 数组第一个元素为开始统计的第一个日期
-        int dateRangeBetween = ParamUtils.dateRangeBetween(dateBegin, dateEnd);
-        List<GameStatDaily> list = new ArrayList<>(dateRangeBetween);
-        for (int i = 0; i <= dateRangeBetween; i++) {
-            GameStatDaily gameDataCount = getGameStatDaily(serverId, DateUtils.addDays(dateBegin, i));
-            list.add(gameDataCount);
-        }
-        return list;
     }
 
 }
