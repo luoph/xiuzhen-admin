@@ -96,16 +96,25 @@ export default {
           }
         },
         {
-          title: '区服id',
-          align: '用户类型',
+          title: '区服',
+          dataIndex: 'serverId',
+          width: '80',
+          align: 'center',
+          customRender: function (text) {
+            return text === 0 ? '全部' : text;
+          }
+        },
+        {
+          title: '用户类型',
+          align: 'center',
           width: '80',
           dataIndex: 'roleType',
           customRender: value => {
             let text = '--';
             if (value === 0) {
-              text = '所有用户';
+              text = '所有';
             } else if (value === 1) {
-              text = '付费用户';
+              text = '付费';
             }
             return text;
           }
