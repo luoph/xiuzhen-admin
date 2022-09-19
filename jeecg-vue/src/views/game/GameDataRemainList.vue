@@ -6,7 +6,8 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="用户类型">
@@ -25,6 +26,7 @@
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
@@ -54,21 +56,26 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {filterObj} from '@/utils/util';
 import {getAction} from '@/api/manage';
+import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
-  description: '留存率',
+  description: '留存统计',
   name: 'GameDataRemainList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
+    ChannelServerSelector,
     getAction
   },
   data() {
     return {
+      /* 排序参数 */
+      isorter: {
+        column: 'countDate',
+        order: 'desc',
+      },
       columns: [
         {
           title: '#',
@@ -152,126 +159,123 @@ export default {
           title: '次留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd2Remain',
+          dataIndex: 'd2',
           customRender: (text, record) => {
-            return this.countRate(record.d2Remain, record);
+            return this.countRate(record.d2, record);
           }
         },
         {
           title: '3留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd3Remain',
+          dataIndex: 'd3',
           customRender: (text, record) => {
-            return this.countRate(record.d3Remain, record);
+            return this.countRate(record.d3, record);
           }
         },
         {
           title: '4留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd4Remain',
+          dataIndex: 'd4',
           customRender: (text, record) => {
-            return this.countRate(record.d4Remain, record);
+            return this.countRate(record.d4, record);
           }
         },
         {
           title: '5留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd5Remain',
+          dataIndex: 'd5',
           customRender: (text, record) => {
-            return this.countRate(record.d5Remain, record);
+            return this.countRate(record.d5, record);
           }
         },
         {
           title: '6留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd6Remain',
+          dataIndex: 'd6',
           customRender: (text, record) => {
-            return this.countRate(record.d6Remain, record);
+            return this.countRate(record.d6, record);
           }
         },
         {
           title: '7留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd7Remain',
+          dataIndex: 'd7',
           customRender: (text, record) => {
-            return this.countRate(record.d7Remain, record);
+            return this.countRate(record.d7, record);
           }
         },
         {
           title: '15留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd15Remain',
+          dataIndex: 'd15',
           customRender: (text, record) => {
-            return this.countRate(record.d15Remain, record);
+            return this.countRate(record.d15, record);
           }
         },
         {
           title: '30留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd30Remain',
+          dataIndex: 'd30',
           customRender: (text, record) => {
-            return this.countRate(record.d30Remain, record);
+            return this.countRate(record.d30, record);
           }
         },
         {
           title: '60留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd60Remain',
+          dataIndex: 'd60',
           customRender: (text, record) => {
-            return this.countRate(record.d60Remain, record);
+            return this.countRate(record.d60, record);
           }
         },
         {
           title: '90留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd90Remain',
+          dataIndex: 'd90',
           customRender: (text, record) => {
-            return this.countRate(record.d90Remain, record);
+            return this.countRate(record.d90, record);
           }
         },
         {
           title: '120留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd120Remain',
+          dataIndex: 'd120',
           customRender: (text, record) => {
-            return this.countRate(record.d120Remain, record);
+            return this.countRate(record.d120, record);
           }
         },
         {
           title: '180留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd180Remain',
+          dataIndex: 'd180',
           customRender: (text, record) => {
-            return this.countRate(record.d180Remain, record);
+            return this.countRate(record.d180, record);
           }
         },
         {
           title: '360留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd360Remain',
+          dataIndex: 'd360',
           customRender: (text, record) => {
-            return this.countRate(record.d360Remain, record);
+            return this.countRate(record.d360, record);
           }
         }
       ],
-      isorter: {
-        column: 'countDate',
-        order: 'desc'
-      },
       url: {
-        list: 'gameStat/remain/list'
+        list: 'game/stat/remain/list',
+        update: 'game/stat/remain/update'
       },
       dictOptions: {}
     };
@@ -286,17 +290,37 @@ export default {
     },
     getQueryParams() {
       console.log(this.queryParam.countDateRange);
-      var param = Object.assign({}, this.queryParam, this.isorter);
+      const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       // 范围参数不传递后台
       delete param.countDateRange;
       return filterObj(param);
     },
+    searchReset() {
+      this.queryParam = {}
+      this.$refs.channelServerSelector.reset();
+      this.loadData(1);
+    },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.countDate_begin = dateString[0];
       this.queryParam.countDate_end = dateString[1];
+    },
+    onClickUpdate() {
+      // 查询条件
+      const params = this.getQueryParams();
+      this.loading = true;
+      getAction(this.url.update, params, this.timeout).then((res) => {
+        if (res.success) {
+          this.$message.success(res.message)
+        } else {
+          this.$message.warning(res.message)
+        }
+      }).finally(() => {
+        this.loading = false
+        this.searchQuery();
+      })
     },
     toRate: function (n, r) {
       if (n === null || n === undefined) {
@@ -307,7 +331,7 @@ export default {
     },
     countRate: function (n, record) {
       let baseNum = record.registerNum;
-      if (record.roleType == 1) {
+      if (record.roleType === 1) {
         baseNum = record.payNum;
       }
       return this.toRate(n, baseNum);

@@ -36,13 +36,19 @@ public class GameStatRemain implements Serializable {
     private String channel;
 
     /**
-     * 角色类型
-     */
-    private Integer roleType;
-    /**
      * 服务器id
      */
     private Integer serverId;
+
+    /**
+     * 统计日期
+     */
+    private Date countDate;
+
+    /**
+     * 角色类型
+     */
+    private Integer roleType;
 
     /**
      * 新增角色数
@@ -72,72 +78,67 @@ public class GameStatRemain implements Serializable {
     /**
      * 2日留存率
      */
-    private Integer d2Remain;
+    private Integer d2;
 
     /**
      * 3日留存率
      */
-    private Integer d3Remain;
+    private Integer d3;
 
     /**
      * 4日留存率
      */
-    private Integer d4Remain;
+    private Integer d4;
 
     /**
      * 5日留存率
      */
-    private Integer d5Remain;
+    private Integer d5;
 
     /**
      * 6日留存率
      */
-    private Integer d6Remain;
+    private Integer d6;
 
     /**
      * 7日留存率
      */
-    private Integer d7Remain;
+    private Integer d7;
 
     /**
      * 15日留存率
      */
-    private Integer d15Remain;
+    private Integer d15;
 
     /**
      * 30日留存率
      */
-    private Integer d30Remain;
+    private Integer d30;
 
     /**
      * 60日留存率
      */
-    private Integer d60Remain;
+    private Integer d60;
 
     /**
      * 90日留存率
      */
-    private Integer d90Remain;
+    private Integer d90;
 
     /**
      * 120日留存率
      */
-    private Integer d120Remain;
+    private Integer d120;
 
     /**
      * 180日留存率
      */
-    private Integer d180Remain;
+    private Integer d180;
 
     /**
      * 360日留存率
      */
-    private Integer d360Remain;
-
-    /**
-     * 统计日期
-     */
-    private Date countDate;
+    private Integer d360;
 
     /**
      * 创建时间

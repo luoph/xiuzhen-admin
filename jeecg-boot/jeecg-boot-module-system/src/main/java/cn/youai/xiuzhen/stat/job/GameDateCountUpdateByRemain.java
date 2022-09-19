@@ -18,11 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class GameDateCountUpdateByRemain implements Job {
 
-    @Autowired
-    private IGameDataCountService gameDataCountService;
-
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        gameDataCountService.doJobDataCountUpdateByType(CoreStatisticType.REMAIN, DateUtils.todayDate());
+//        gameDataCountService.doJobDataCountUpdateByType(CoreStatisticType.REMAIN, DateUtils.todayDate());
     }
 }

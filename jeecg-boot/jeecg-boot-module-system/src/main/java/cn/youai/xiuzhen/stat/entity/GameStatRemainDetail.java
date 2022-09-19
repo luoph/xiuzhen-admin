@@ -31,7 +31,7 @@ public class GameStatRemainDetail implements Serializable {
     /**
      * 渠道
      */
-    private Integer channel;
+    private String channel;
 
     /**
      * 统计日期

@@ -1,11 +1,8 @@
 package cn.youai.xiuzhen.stat.service;
 
 import cn.youai.xiuzhen.game.constant.CoreStatisticType;
-import cn.youai.xiuzhen.stat.entity.GameStatDaily;
-import cn.youai.xiuzhen.stat.entity.GameStatRemain;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @ClassName IGameDataCountService
@@ -16,22 +13,6 @@ import java.util.List;
  * @Date 2020-08-21 11:05
  */
 public interface IGameDataCountService {
-
-    /**
-     * 统计数据列表
-     *
-     * @param serverId       服务器id
-     * @param rangeDateBegin 开始日期
-     * @param rangeDateEnd   结束日期
-     */
-    List<GameStatDaily> queryDateRangeDataCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
-
-    List<GameStatRemain> queryDataRemainCount(int serverId, String rangeDateBegin, String rangeDateEnd, boolean isOpenDateCount);
-
-    /**
-     * 留存统计
-     */
-    List<GameStatRemain> queryDataRemainCount(int serverId, String rangeDateBegin, String rangeDateEnd, Date statDate, boolean isOpenDateCount);
 
     /**
      * 定时统计任务

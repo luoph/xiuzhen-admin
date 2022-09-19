@@ -8,6 +8,8 @@ import cn.youai.xiuzhen.stat.entity.ServerRemain;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
+
 /**
  * <p>
  * 留存统计 Mapper 接口
@@ -23,40 +25,40 @@ public interface GameStatRemainDetailMapper extends BaseMapper<GameStatRemainDet
      */
     GameStatRemainDetail getStatRemainDetail(@Param("roleType") int roleType,
                                              @Param("serverId") int serverId,
-                                             @Param("registerDate") String registerDate);
+                                             @Param("registerDate") Date registerDate);
 
     /**
      * 付费留存
      */
     GameStatRemainDetail getPayStatRemainDetail(@Param("roleType") int roleType,
                                                 @Param("serverId") int serverId,
-                                                @Param("registerDate") String registerDate);
+                                                @Param("registerDate") Date registerDate);
 
     /**
      * 免费留存
      */
     GameStatRemainDetail getFreeStatRemainDetail(@Param("roleType") int roleType,
                                                  @Param("serverId") int serverId,
-                                                 @Param("registerDate") String registerDate);
+                                                 @Param("registerDate") Date registerDate);
 
     /**
      * 查询留存
      */
     ServerRemain selectRemain(@Param("serverId") int serverId,
-                              @Param("registerDate") String registerDate,
+                              @Param("registerDate") Date registerDate,
                               @Param("days") int days);
 
     /**
      * 付费留存
      */
     ServerRemain selectPayRemain(@Param("serverId") int serverId,
-                                 @Param("registerDate") String registerDate,
+                                 @Param("registerDate") Date registerDate,
                                  @Param("days") int days);
 
     /**
      * 免费留存
      */
     ServerRemain selectFreeRemain(@Param("serverId") int serverId,
-                                  @Param("registerDate") String registerDate,
+                                  @Param("registerDate") Date registerDate,
                                   @Param("days") int days);
 }

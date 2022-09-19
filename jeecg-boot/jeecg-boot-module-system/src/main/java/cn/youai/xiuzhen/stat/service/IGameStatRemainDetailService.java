@@ -22,4 +22,7 @@ public interface IGameStatRemainDetailService extends IService<GameStatRemainDet
 
     void calcRemainDetailStat(RoleType roleType, Collection<Integer> serverIds,
                               Date registerDate, int days, boolean updateAll);
+
+    void calcRemainDetailStat(RoleType roleType, int serverId,
+                              Date registerDate, int days, boolean updateAll);
 }

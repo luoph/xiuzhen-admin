@@ -20,7 +20,15 @@ import java.util.Date;
  */
 public interface IGameStatRemainService extends IService<GameStatRemain> {
 
-    void calcRemainStat(RoleType roleType, Collection<Integer> serverIds,
-                        Date registerDate, int days, boolean updateAll);
+    /**
+     * 留存统计
+     */
+    GameStatRemain queryGameStatRemain(int serverId, int roleType, Date registerDate);
+
+    GameStatRemain selectGameStatRemain(int serverId, RoleType roleType, Date registerDate);
+
+    void calcRemainStat(RoleType roleType, Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll);
+
+    void calcRemainStat(RoleType roleType, int serverId, Date registerDate, int days, boolean updateAll);
 
 }

@@ -47,53 +47,59 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
      */
     @Override
     public void calcRemainDetailStat(RoleType roleType, Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll) {
-        String date = DateUtil.formatDate(registerDate);
         for (Integer serverId : serverIds) {
-            GameServer gameServer = gameServerService.getById(serverId);
-            if (gameServer == null || gameServer.getOpenTime().after(registerDate)) {
-                continue;
-            }
-
-            LambdaQueryWrapper<GameStatRemainDetail> query = Wrappers.<GameStatRemainDetail>lambdaQuery()
-                    .eq(GameStatRemainDetail::getServerId, serverId)
-                    .eq(GameStatRemainDetail::getRoleType, roleType.getValue())
-                    .eq(GameStatRemainDetail::getCountDate, registerDate);
-
-            // 重新查询注册数量
-            GameStatRemainDetail updatedEntity = null;
-            if (roleType == RoleType.ALL) {
-                updatedEntity = getBaseMapper().getStatRemainDetail(roleType.getValue(), serverId, date);
-            } else if (roleType == RoleType.PAID) {
-                updatedEntity = getBaseMapper().getPayStatRemainDetail(roleType.getValue(), serverId, date);
-            } else if (roleType == RoleType.FREE) {
-                updatedEntity = getBaseMapper().getFreeStatRemainDetail(roleType.getValue(), serverId, date);
-            }
-
-            GameStatRemainDetail entity = getOne(QueryUtils.safeSelectOneQuery(query));
-            if (entity == null) {
-                entity = updatedEntity;
-            }
-
-            if (updateAll) {
-                // 更新全部字段
-                for (RemainDetailField value : RemainDetailField.values()) {
-                    if (days + 1 < value.getDays()) {
-                        break;
-                    }
-                    updateRemainDetailField(roleType, entity, serverId, date, value.getDays());
-                }
-            }
-            updateRemainDetailField(roleType, entity, serverId, date, days);
-
-            if (entity.getId() != null) {
-                updateById(entity);
-            } else {
-                save(entity);
-            }
+            calcRemainDetailStat(roleType, serverId, registerDate, days, updateAll);
         }
     }
 
-    private void updateRemainDetailField(RoleType roleType, GameStatRemainDetail entity, int serverId, String registerDate, int days) {
+    @Override
+    public void calcRemainDetailStat(RoleType roleType, int serverId, Date registerDate, int days, boolean updateAll) {
+        GameServer gameServer = gameServerService.getById(serverId);
+        if (gameServer == null || gameServer.getOpenTime().after(registerDate)) {
+            return;
+        }
+
+        LambdaQueryWrapper<GameStatRemainDetail> query = Wrappers.<GameStatRemainDetail>lambdaQuery()
+                .eq(GameStatRemainDetail::getServerId, serverId)
+                .eq(GameStatRemainDetail::getChannel, "default")
+                .eq(GameStatRemainDetail::getRoleType, roleType.getValue())
+                .eq(GameStatRemainDetail::getCountDate, registerDate);
+
+        // 重新查询注册数量
+        GameStatRemainDetail updatedEntity = null;
+        if (roleType == RoleType.ALL) {
+            updatedEntity = getBaseMapper().getStatRemainDetail(roleType.getValue(), serverId, registerDate);
+        } else if (roleType == RoleType.PAID) {
+            updatedEntity = getBaseMapper().getPayStatRemainDetail(roleType.getValue(), serverId, registerDate);
+        } else if (roleType == RoleType.FREE) {
+            updatedEntity = getBaseMapper().getFreeStatRemainDetail(roleType.getValue(), serverId, registerDate);
+        }
+
+        updatedEntity.setChannel("default");
+        GameStatRemainDetail entity = getOne(QueryUtils.safeSelectOneQuery(query));
+        if (entity == null) {
+            entity = updatedEntity;
+        }
+
+        if (updateAll) {
+            // 更新全部字段
+            for (RemainDetailField value : RemainDetailField.values()) {
+                if (days + 1 < value.getDays()) {
+                    break;
+                }
+                updateRemainDetailField(roleType, entity, serverId, registerDate, value.getDays());
+            }
+        }
+        updateRemainDetailField(roleType, entity, serverId, registerDate, days);
+
+        if (entity.getId() != null) {
+            updateById(entity);
+        } else {
+            save(entity);
+        }
+    }
+
+    private void updateRemainDetailField(RoleType roleType, GameStatRemainDetail entity, int serverId, Date registerDate, int days) {
         int baseNum = entity.getD1() != null ? entity.getD1() : 0;
         // 注册为0, 直接返回
         if (baseNum <= 0) {
