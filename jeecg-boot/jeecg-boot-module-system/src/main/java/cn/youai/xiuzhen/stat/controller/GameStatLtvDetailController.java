@@ -81,10 +81,10 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
         while (!current.after(dateRange.getEnd())) {
             int days = DateUtils.daysBetweenNatural(current, todayDate);
             if (entity.getServerId() != null && entity.getServerId() > 0) {
-                // 按照游戏服纬度统计
+                // 按照游戏服维度统计
                 service.calcServerLtvDetail(entity.getServerId(), current, days, true);
             } else {
-                // 按照渠道纬度统计
+                // 按照渠道维度统计
                 service.calcChannelLtvDetail(entity.getChannel(), current, days, true);
             }
             current = DateUtils.addDays(current, 1);

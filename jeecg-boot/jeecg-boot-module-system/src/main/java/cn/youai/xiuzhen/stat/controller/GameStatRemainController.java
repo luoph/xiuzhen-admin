@@ -79,10 +79,10 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
 
         while (!current.after(dateRange.getEnd())) {
             if (entity.getServerId() != null && entity.getServerId() > 0) {
-                // 按照游戏服纬度统计
+                // 按照游戏服维度统计
                 service.calcServerRemain(entity.getServerId(), current);
             } else {
-                // 按照渠道纬度统计
+                // 按照渠道维度统计
                 service.calcChannelRemain(entity.getChannel(), current);
             }
             current = DateUtils.addDays(current, 1);
