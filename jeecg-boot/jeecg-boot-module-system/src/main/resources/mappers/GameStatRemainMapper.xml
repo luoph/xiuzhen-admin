@@ -7,7 +7,6 @@
     <![CDATA[
         SELECT @register_date := DATE(#{registerDate}) AS count_date,
             @serverId := #{serverId} AS server_id,
-            #{roleType} AS `role_type`,
             @d_start := CONCAT(@register_date, ' 00:00:00'),
             @d_end := DATE_ADD(@d_start, INTERVAL 1 DAY),
 
@@ -47,7 +46,16 @@
             AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
             AND b.`pay_time` >= @d_start AND b.`pay_time` < @d_end
             AND b.`server_id` = @serverId)
-            ) AS free_remain;
+            ) AS free_remain,
+
+            -- 总留存(注册留存)
+            (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
+            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            WHERE p.`server_id` = @serverId
+            AND l.`create_date` = DATE(@d_end)
+            AND p.`create_time` >= @d_start
+            AND p.`create_time` < @d_end
+            ) AS register_remain;
         ]]>
    </select>
 
@@ -55,24 +63,23 @@
     <![CDATA[
         SELECT @register_date := DATE(#{registerDate}) AS count_date,
             @channel := #{channel} AS channel,
-               #{roleType} AS `role_type`,
             @d_start := CONCAT(@register_date, ' 00:00:00'),
             @d_end := DATE_ADD(@d_start, INTERVAL 1 DAY),
 
-               -- 注册数
+            -- 注册数
             (SELECT COUNT(a.`player_id`) FROM
             `game_player` a WHERE a.`create_time` >= @d_start AND a.`create_time` < @d_end
             AND a.`channel` = @channel
             ) as register_num,
 
-               -- 付费玩家数
+            -- 付费玩家数
             (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
             LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
             WHERE p.`create_time` >= @d_start AND p.`create_time` < @d_end
             AND o.`pay_time` >= @d_start AND o.`pay_time` < @d_end
             ) AS pay_num,
 
-               -- 付费次留
+            -- 付费次留
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
             LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`channel` = @channel
@@ -83,7 +90,7 @@
             AND b.`pay_time` >= @d_start AND b.`pay_time` < @d_end)
             ) AS pay_remain,
 
-               -- 免费留存
+            -- 免费留存
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
             LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`channel` = @channel
@@ -92,50 +99,18 @@
             AND p.`create_time` < @d_end
             AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
             AND b.`pay_time` >= @d_start AND b.`pay_time` < @d_end)
-            ) AS free_remain;
+            ) AS free_remain,
+
+            -- 总留存(注册留存)
+            (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
+            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            WHERE p.`channel` = @channel
+            AND l.`create_date` = DATE(@d_end)
+            AND p.`create_time` >= @d_start
+            AND p.`create_time` < @d_end
+            ) AS register_remain;
         ]]>
    </select>
-
-    <select id="getServerRemain" resultType="cn.youai.xiuzhen.stat.entity.GameStatRemain">
-        <![CDATA[
-        SELECT #{registerDate}                                                          AS `count_date`,
-               #{serverId}                                                              AS `server_id`,
-               #{roleType}                                                              AS `role_type`,
-               (SELECT COUNT(*)
-                FROM `game_player`
-                WHERE `server_id` = #{serverId}
-                  AND `create_time` >= #{registerDate}
-                  AND `create_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)) AS register_num,
-               (SELECT COUNT(DISTINCT(o.`player_id`))
-                FROM `game_order` o
-                         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-                WHERE p.`create_time` >= #{registerDate}
-                  AND p.`create_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
-                  AND o.`pay_time` >= DATE(#{registerDate}) AND o.`pay_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
-                AND p.`server_id` = #{serverId}) AS `pay_num`
-        ]]>
-    </select>
-
-    <select id="getChannelRemain" resultType="cn.youai.xiuzhen.stat.entity.GameStatRemain">
-        <![CDATA[
-        SELECT #{registerDate}                                                         AS `count_date`,
-               #{channel}                                                              AS `channel`,
-               #{roleType}                                                             AS `role_type`,
-               (SELECT COUNT(*)
-                FROM `game_player`
-                WHERE `channel` = #{channel}
-                  AND `create_time` >= #{registerDate}
-                  AND `create_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)) AS register_num,
-               (SELECT COUNT(DISTINCT(o.`player_id`))
-                FROM `game_order` o
-                         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-                WHERE p.`create_time` >= #{registerDate}
-                  AND p.`create_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
-                  AND o.`pay_time` >= DATE(#{registerDate}) AND o.`pay_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
-                  AND p.`channel` = #{channel}) AS `pay_num`
-        ]]>
-    </select>
-
 
     <!-- 付费角色次留-->
     <select id="getServerPayRemain" resultType="java.lang.Integer">

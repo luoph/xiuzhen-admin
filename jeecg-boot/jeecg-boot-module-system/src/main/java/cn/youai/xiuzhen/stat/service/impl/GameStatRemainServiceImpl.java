@@ -4,15 +4,12 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.youai.server.utils.QueryUtils;
-import cn.youai.xiuzhen.game.constant.RoleType;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
-import cn.youai.xiuzhen.stat.constant.RemainField;
 import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.GameStatRemain;
-import cn.youai.xiuzhen.stat.entity.ServerRemain;
 import cn.youai.xiuzhen.stat.mapper.GameStatRemainMapper;
 import cn.youai.xiuzhen.stat.service.IGameStatRemainService;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -43,184 +40,96 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
     private IGameChannelService gameChannelService;
 
     @Override
-    public GameStatRemain queryServerRemain(int serverId, int roleType, Date registerDate) {
-        return getBaseMapper().queryServerRemain(serverId, roleType, registerDate);
+    public GameStatRemain queryServerRemain(int serverId, Date registerDate) {
+        return getBaseMapper().queryServerRemain(serverId, registerDate);
     }
 
     @Override
-    public GameStatRemain queryChannelRemain(String channel, int roleType, Date registerDate) {
-        return getBaseMapper().queryChannelRemain(channel, roleType, registerDate);
+    public GameStatRemain queryChannelRemain(String channel, Date registerDate) {
+        return getBaseMapper().queryChannelRemain(channel, registerDate);
     }
 
     @Override
-    public GameStatRemain selectServerRemain(int serverId, RoleType roleType, Date registerDate) {
+    public GameStatRemain selectServerRemain(int serverId, Date registerDate) {
         LambdaQueryWrapper<GameStatRemain> query = Wrappers.<GameStatRemain>lambdaQuery()
                 .eq(GameStatRemain::getServerId, serverId)
                 .eq(GameStatRemain::getChannel, StatisticType.DEFAULT_CHANNEL)
-                .eq(GameStatRemain::getRoleType, roleType.getValue())
                 .eq(GameStatRemain::getCountDate, registerDate);
         return getOne(QueryUtils.safeSelectOneQuery(query));
     }
 
     @Override
-    public GameStatRemain selectChannelRemain(String channel, RoleType roleType, Date registerDate) {
+    public GameStatRemain selectChannelRemain(String channel, Date registerDate) {
         LambdaQueryWrapper<GameStatRemain> query = Wrappers.<GameStatRemain>lambdaQuery()
                 .eq(GameStatRemain::getServerId, 0)
                 .eq(GameStatRemain::getChannel, channel)
-                .eq(GameStatRemain::getRoleType, roleType.getValue())
                 .eq(GameStatRemain::getCountDate, registerDate);
         return getOne(QueryUtils.safeSelectOneQuery(query));
     }
 
     @Override
-    public void calcServerRemain(int serverId, RoleType roleType, Date registerDate, int days, boolean updateAll) {
+    public void calcServerRemain(int serverId, Date registerDate) {
         GameServer gameServer = gameServerService.getById(serverId);
         if (gameServer == null || gameServer.getOpenTime().after(registerDate)) {
             return;
         }
 
         // 重新查询注册数量
-        GameStatRemain updatedRemain = queryServerRemain(serverId, roleType.getValue(), registerDate);
-        GameStatRemain gameStatRemain = selectServerRemain(serverId, roleType, registerDate);
+        GameStatRemain updateEntity = queryServerRemain(serverId, registerDate);
+        GameStatRemain dbEntity = selectServerRemain(serverId, registerDate);
 
         // 免费玩家数 = 注册数 - 付费数
-        updatedRemain.setFreeNum(updatedRemain.getRegisterNum() - updatedRemain.getPayNum());
-        if (gameStatRemain == null) {
-            gameStatRemain = updatedRemain;
-            updatedRemain.setChannel(StatisticType.DEFAULT_CHANNEL);
+        updateEntity.setFreeNum(updateEntity.getRegisterNum() - updateEntity.getPayNum());
+        if (dbEntity == null) {
+            dbEntity = updateEntity;
+            updateEntity.setChannel(StatisticType.DEFAULT_CHANNEL);
         } else {
             // 付费玩家数量
-            gameStatRemain.setRegisterNum(updatedRemain.getRegisterNum());
-            gameStatRemain.setPayNum(updatedRemain.getPayNum());
-            gameStatRemain.setFreeNum(updatedRemain.getFreeNum());
-            gameStatRemain.setPayRemain(updatedRemain.getPayRemain());
-            gameStatRemain.setFreeRemain(updatedRemain.getFreeRemain());
+            dbEntity.setRegisterNum(updateEntity.getRegisterNum());
+            dbEntity.setPayNum(updateEntity.getPayNum());
+            dbEntity.setFreeNum(updateEntity.getFreeNum());
+            dbEntity.setPayRemain(updateEntity.getPayRemain());
+            dbEntity.setFreeRemain(updateEntity.getFreeRemain());
+            dbEntity.setRegisterRemain(updateEntity.getRegisterRemain());
         }
 
-        if (updateAll) {
-            // 更新全部字段
-            for (RemainField value : RemainField.values()) {
-                if (days < value.getDays()) {
-                    break;
-                }
-                calcRemainAmount(roleType, gameStatRemain, serverId, registerDate, value.getDays());
-            }
-        }
-
-        if (RemainField.valueOf(days) == null) {
-            calcRemainAmount(roleType, gameStatRemain, serverId, registerDate, days);
-        }
-
-        if (gameStatRemain.getId() != null) {
-            updateById(gameStatRemain);
+        if (dbEntity.getId() != null) {
+            updateById(dbEntity);
         } else {
-            save(gameStatRemain);
+            save(dbEntity);
         }
     }
 
     @Override
-    public void calcChannelRemain(String channel, RoleType roleType, Date registerDate, int days, boolean updateAll) {
+    public void calcChannelRemain(String channel, Date registerDate) {
         GameChannel gameChannel = gameChannelService.selectChannel(channel);
         if (gameChannel == null) {
             return;
         }
 
         // 重新查询注册数量
-        GameStatRemain updatedRemain = queryChannelRemain(channel, roleType.getValue(), registerDate);
-        GameStatRemain gameStatRemain = selectChannelRemain(channel, roleType, registerDate);
+        GameStatRemain updatedEntity = queryChannelRemain(channel, registerDate);
+        GameStatRemain dbEntity = selectChannelRemain(channel, registerDate);
 
         // 免费玩家数 = 注册数 - 付费数
-        updatedRemain.setFreeNum(updatedRemain.getRegisterNum() - updatedRemain.getPayNum());
-        if (gameStatRemain == null) {
-            gameStatRemain = updatedRemain;
-            updatedRemain.setServerId(StatisticType.DEFAULT_SERVER_ID);
+        updatedEntity.setFreeNum(updatedEntity.getRegisterNum() - updatedEntity.getPayNum());
+        if (dbEntity == null) {
+            dbEntity = updatedEntity;
+            updatedEntity.setServerId(StatisticType.DEFAULT_SERVER_ID);
         } else {
             // 付费玩家数量
-            gameStatRemain.setRegisterNum(updatedRemain.getRegisterNum());
-            gameStatRemain.setPayNum(updatedRemain.getPayNum());
-            gameStatRemain.setFreeNum(updatedRemain.getFreeNum());
-            gameStatRemain.setPayRemain(updatedRemain.getPayRemain());
-            gameStatRemain.setFreeRemain(updatedRemain.getFreeRemain());
+            dbEntity.setRegisterNum(updatedEntity.getRegisterNum());
+            dbEntity.setPayNum(updatedEntity.getPayNum());
+            dbEntity.setFreeNum(updatedEntity.getFreeNum());
+            dbEntity.setPayRemain(updatedEntity.getPayRemain());
+            dbEntity.setFreeRemain(updatedEntity.getFreeRemain());
+            dbEntity.setRegisterRemain(updatedEntity.getRegisterRemain());
         }
 
-        if (updateAll) {
-            // 更新全部字段
-            for (RemainField value : RemainField.values()) {
-                if (days < value.getDays()) {
-                    break;
-                }
-                calcRemainAmount(roleType, gameStatRemain, channel, registerDate, value.getDays());
-            }
-        }
-
-        if (RemainField.valueOf(days) == null) {
-            calcRemainAmount(roleType, gameStatRemain, channel, registerDate, days);
-        }
-
-        if (gameStatRemain.getId() != null) {
-            updateById(gameStatRemain);
+        if (dbEntity.getId() != null) {
+            updateById(dbEntity);
         } else {
-            save(gameStatRemain);
-        }
-    }
-
-    private void calcRemainAmount(RoleType roleType, GameStatRemain entity, int serverId, Date registerDate, int days) {
-        int registerNum = entity.getRegisterNum() != null ? entity.getRegisterNum() : 0;
-        if (days <= 1) {
-            return;
-        }
-
-        // 注册为0, 直接返回
-        ServerRemain serverRemain = null;
-        if (registerNum <= 0) {
-            serverRemain = new ServerRemain().setRemain(0).setServerId(serverId).setDays(days).setRegisterDate(registerDate);
-        } else {
-            if (roleType == RoleType.ALL) {
-                serverRemain = getBaseMapper().selectServerPlayerRemain(serverId, registerDate, days);
-            } else if (roleType == RoleType.PAID) {
-                serverRemain = getBaseMapper().selectServerPayPlayerRemain(serverId, registerDate, days);
-            } else if (roleType == RoleType.FREE) {
-                serverRemain = getBaseMapper().selectServerFreePlayerRemain(serverId, registerDate, days);
-            }
-        }
-
-        if (serverRemain == null) {
-            return;
-        }
-
-        RemainField remainField = RemainField.match(days);
-        if (remainField != null) {
-            remainField.getFunction().accept(entity, serverRemain.getRemain());
-        }
-    }
-
-    private void calcRemainAmount(RoleType roleType, GameStatRemain entity, String channel, Date registerDate, int days) {
-        int registerNum = entity.getRegisterNum() != null ? entity.getRegisterNum() : 0;
-        if (days <= 1) {
-            return;
-        }
-
-        // 注册为0, 直接返回
-        ServerRemain serverRemain = null;
-        if (registerNum <= 0) {
-            serverRemain = new ServerRemain().setRemain(0).setChannel(channel).setDays(days).setRegisterDate(registerDate);
-        } else {
-            if (roleType == RoleType.ALL) {
-                serverRemain = getBaseMapper().selectChannelPlayerRemain(channel, registerDate, days);
-            } else if (roleType == RoleType.PAID) {
-                serverRemain = getBaseMapper().selectChannelPayPlayerRemain(channel, registerDate, days);
-            } if (roleType == RoleType.FREE) {
-                serverRemain = getBaseMapper().selectChannelFreePlayerRemain(channel, registerDate, days);
-            }
-        }
-
-        if (serverRemain == null) {
-            return;
-        }
-
-        RemainField remainField = RemainField.match(days);
-        if (remainField != null) {
-            remainField.getFunction().accept(entity, serverRemain.getRemain());
+            save(dbEntity);
         }
     }
 }

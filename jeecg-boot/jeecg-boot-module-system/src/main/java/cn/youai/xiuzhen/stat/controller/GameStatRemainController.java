@@ -2,7 +2,6 @@ package cn.youai.xiuzhen.stat.controller;
 
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.RoleType;
 import cn.youai.xiuzhen.stat.entity.GameStatRemain;
 import cn.youai.xiuzhen.stat.service.IGameStatRemainService;
 import cn.youai.xiuzhen.utils.QueryUtils;
@@ -78,27 +77,13 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
         DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
         Date current = dateRange.getStart();
 
-        Date todayDate = DateUtils.todayDate();
         while (!current.after(dateRange.getEnd())) {
-            int days = DateUtils.daysBetweenNatural(current, todayDate);
             if (entity.getServerId() != null && entity.getServerId() > 0) {
                 // 按照游戏服纬度统计
-                if (entity.getRoleType() != null) {
-                    service.calcServerRemain(entity.getServerId(), RoleType.valueOf(entity.getRoleType()), current, days, true);
-                } else {
-                    service.calcServerRemain(entity.getServerId(), RoleType.ALL, current, days, true);
-                    service.calcServerRemain(entity.getServerId(), RoleType.PAID, current, days, true);
-                    service.calcServerRemain(entity.getServerId(), RoleType.FREE, current, days, true);
-                }
+                service.calcServerRemain(entity.getServerId(), current);
             } else {
                 // 按照渠道纬度统计
-                if (entity.getRoleType() != null) {
-                    service.calcChannelRemain(entity.getChannel(), RoleType.valueOf(entity.getRoleType()), current, days, true);
-                } else {
-                    service.calcChannelRemain(entity.getChannel(), RoleType.ALL, current, days, true);
-                    service.calcChannelRemain(entity.getChannel(), RoleType.PAID, current, days, true);
-                    service.calcChannelRemain(entity.getChannel(), RoleType.FREE, current, days, true);
-                }
+                service.calcChannelRemain(entity.getChannel(), current);
             }
             current = DateUtils.addDays(current, 1);
         }

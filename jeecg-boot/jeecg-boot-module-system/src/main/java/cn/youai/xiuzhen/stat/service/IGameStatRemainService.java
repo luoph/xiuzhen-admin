@@ -3,7 +3,6 @@
  */
 package cn.youai.xiuzhen.stat.service;
 
-import cn.youai.xiuzhen.game.constant.RoleType;
 import cn.youai.xiuzhen.stat.entity.GameStatRemain;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -22,16 +21,16 @@ public interface IGameStatRemainService extends IService<GameStatRemain> {
     /**
      * 留存统计
      */
-    GameStatRemain queryServerRemain(int serverId, int roleType, Date registerDate);
+    GameStatRemain queryServerRemain(int serverId, Date registerDate);
 
-    GameStatRemain queryChannelRemain(String channel, int roleType, Date registerDate);
+    GameStatRemain queryChannelRemain(String channel, Date registerDate);
 
-    GameStatRemain selectServerRemain(int serverId, RoleType roleType, Date registerDate);
+    GameStatRemain selectServerRemain(int serverId, Date registerDate);
 
-    GameStatRemain selectChannelRemain(String channel, RoleType roleType, Date registerDate);
+    GameStatRemain selectChannelRemain(String channel, Date registerDate);
 
-    void calcServerRemain(int serverId, RoleType roleType, Date registerDate, int days, boolean updateAll);
+    void calcServerRemain(int serverId, Date registerDate);
 
-    void calcChannelRemain(String channel, RoleType roleType, Date registerDate, int days, boolean updateAll);
+    void calcChannelRemain(String channel, Date registerDate);
 
 }

@@ -24,29 +24,13 @@ public interface GameStatRemainMapper extends BaseMapper<GameStatRemain> {
      * 留存统计
      */
     GameStatRemain queryServerRemain(@Param("serverId") int serverId,
-                                     @Param("roleType") int roleType,
                                      @Param("registerDate") Date registerDate);
 
     /**
      * 留存统计
      */
     GameStatRemain queryChannelRemain(@Param("channel") String channel,
-                                      @Param("roleType") int roleType,
                                       @Param("registerDate") Date registerDate);
-
-    /**
-     * 统计ltv
-     */
-    GameStatRemain getServerRemain(@Param("roleType") int roleType,
-                                   @Param("serverId") int serverId,
-                                   @Param("registerDate") Date registerDate);
-
-    /**
-     * 统计ltv
-     */
-    GameStatRemain getChannelRemain(@Param("channel") String channel,
-                                    @Param("serverId") int serverId,
-                                    @Param("registerDate") Date registerDate);
 
     /**
      * 付费次留

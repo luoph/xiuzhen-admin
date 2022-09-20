@@ -46,11 +46,6 @@ public class GameStatRemain implements Serializable {
     private Date countDate;
 
     /**
-     * 角色类型
-     */
-    private Integer roleType;
-
-    /**
      * 新增角色数
      */
     private Integer registerNum;
@@ -76,69 +71,9 @@ public class GameStatRemain implements Serializable {
     private Integer freeRemain;
 
     /**
-     * 2日留存率
+     * 新增角色数
      */
-    private Integer d2;
-
-    /**
-     * 3日留存率
-     */
-    private Integer d3;
-
-    /**
-     * 4日留存率
-     */
-    private Integer d4;
-
-    /**
-     * 5日留存率
-     */
-    private Integer d5;
-
-    /**
-     * 6日留存率
-     */
-    private Integer d6;
-
-    /**
-     * 7日留存率
-     */
-    private Integer d7;
-
-    /**
-     * 15日留存率
-     */
-    private Integer d15;
-
-    /**
-     * 30日留存率
-     */
-    private Integer d30;
-
-    /**
-     * 60日留存率
-     */
-    private Integer d60;
-
-    /**
-     * 90日留存率
-     */
-    private Integer d90;
-
-    /**
-     * 120日留存率
-     */
-    private Integer d120;
-
-    /**
-     * 180日留存率
-     */
-    private Integer d180;
-
-    /**
-     * 360日留存率
-     */
-    private Integer d360;
+    private Integer registerRemain;
 
     /**
      * 创建时间

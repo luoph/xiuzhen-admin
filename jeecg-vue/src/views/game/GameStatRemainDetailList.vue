@@ -77,7 +77,7 @@ export default {
         column: 'countDate',
         order: 'desc',
       },
-      timeout: 9000,
+      timeout: 90000,
       columns: [
         {
           title: '#',

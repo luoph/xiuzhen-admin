@@ -9,15 +9,6 @@
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="用户类型">
-              <a-select placeholder="请选择用户类型" v-model="queryParam.roleType">
-                <a-select-option value="0">所有用户</a-select-option>
-                <a-select-option value="1">付费用户</a-select-option>
-                <a-select-option value="2">免费用户</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="日期">
               <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
@@ -77,7 +68,7 @@ export default {
         column: 'countDate',
         order: 'desc',
       },
-      timeout: 9000,
+      timeout: 90000,
       columns: [
         {
           title: '#',
@@ -110,23 +101,6 @@ export default {
           align: 'center',
           customRender: function (text) {
             return text === 0 ? '全部' : text;
-          }
-        },
-        {
-          title: '用户类型',
-          align: 'center',
-          width: '80',
-          dataIndex: 'roleType',
-          customRender: value => {
-            let text = '--';
-            if (value === 0) {
-              text = '所有';
-            } else if (value === 1) {
-              text = '付费';
-            } else if (value === 2) {
-              text = '免费';
-            }
-            return text;
           }
         },
         {
@@ -175,122 +149,14 @@ export default {
           }
         },
         {
-          title: '次留率',
+          title: '总次留率',
           align: 'center',
           width: '60',
-          dataIndex: 'd2',
+          dataIndex: 'registerRemain',
           customRender: (text, record) => {
-            return this.countRate(record.d2, record);
+            return this.toRate(record.registerRemain, record.registerNum);
           }
         },
-        {
-          title: '3留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd3',
-          customRender: (text, record) => {
-            return this.countRate(record.d3, record);
-          }
-        },
-        {
-          title: '4留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd4',
-          customRender: (text, record) => {
-            return this.countRate(record.d4, record);
-          }
-        },
-        {
-          title: '5留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd5',
-          customRender: (text, record) => {
-            return this.countRate(record.d5, record);
-          }
-        },
-        {
-          title: '6留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd6',
-          customRender: (text, record) => {
-            return this.countRate(record.d6, record);
-          }
-        },
-        {
-          title: '7留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd7',
-          customRender: (text, record) => {
-            return this.countRate(record.d7, record);
-          }
-        },
-        {
-          title: '15留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd15',
-          customRender: (text, record) => {
-            return this.countRate(record.d15, record);
-          }
-        },
-        {
-          title: '30留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd30',
-          customRender: (text, record) => {
-            return this.countRate(record.d30, record);
-          }
-        },
-        {
-          title: '60留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd60',
-          customRender: (text, record) => {
-            return this.countRate(record.d60, record);
-          }
-        },
-        {
-          title: '90留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd90',
-          customRender: (text, record) => {
-            return this.countRate(record.d90, record);
-          }
-        },
-        {
-          title: '120留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd120',
-          customRender: (text, record) => {
-            return this.countRate(record.d120, record);
-          }
-        },
-        {
-          title: '180留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd180',
-          customRender: (text, record) => {
-            return this.countRate(record.d180, record);
-          }
-        },
-        {
-          title: '360留率',
-          align: 'center',
-          width: '60',
-          dataIndex: 'd360',
-          customRender: (text, record) => {
-            return this.countRate(record.d360, record);
-          }
-        }
       ],
       url: {
         list: 'game/stat/remain/list',
