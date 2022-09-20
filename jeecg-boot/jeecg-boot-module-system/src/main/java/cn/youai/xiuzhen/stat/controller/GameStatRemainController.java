@@ -93,9 +93,6 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatRemain entity) {

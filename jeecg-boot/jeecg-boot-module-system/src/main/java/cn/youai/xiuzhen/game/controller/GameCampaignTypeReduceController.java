@@ -103,9 +103,6 @@ public class GameCampaignTypeReduceController extends JeecgController<GameCampai
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeReduce entity) {

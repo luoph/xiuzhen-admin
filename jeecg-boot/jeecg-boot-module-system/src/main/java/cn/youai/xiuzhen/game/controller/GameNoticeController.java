@@ -123,9 +123,6 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameNotice entity) {

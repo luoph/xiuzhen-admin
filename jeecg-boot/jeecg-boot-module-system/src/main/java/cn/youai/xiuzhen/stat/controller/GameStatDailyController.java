@@ -93,9 +93,6 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatDaily entity) {

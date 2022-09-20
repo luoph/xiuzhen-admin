@@ -63,9 +63,6 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GamePlayer entity) {

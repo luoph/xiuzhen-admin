@@ -117,9 +117,6 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameImage entity) {

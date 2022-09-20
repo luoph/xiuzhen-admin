@@ -100,9 +100,6 @@ public class LogPlayerController extends JeecgController<LogPlayer, ILogPlayerSe
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, LogPlayer entity) {

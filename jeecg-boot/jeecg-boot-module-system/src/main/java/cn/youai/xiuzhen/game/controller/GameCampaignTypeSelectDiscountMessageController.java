@@ -103,9 +103,6 @@ public class GameCampaignTypeSelectDiscountMessageController extends JeecgContro
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSelectDiscountMessage entity) {

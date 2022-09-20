@@ -103,9 +103,6 @@ public class GameCampaignTypeMarryRankController extends JeecgController<GameCam
 
     /**
      * 导出excel
-     *
-     * @param request 请求
-     * @param entity  实体
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeMarryRank entity) {
