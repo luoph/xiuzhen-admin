@@ -35,32 +35,10 @@ public enum RemainField {
     }
 
     public static RemainField match(int days) {
-        if (days == 2) {
-            return D2;
-        } else if (days == 3) {
-            return D3;
-        } else if (days == 4) {
-            return D4;
-        } else if (days == 5) {
-            return D5;
-        } else if (days == 6) {
-            return D6;
-        } else if (days == 7) {
-            return D7;
-        } else if (days <= 15) {
-            return D15;
-        } else if (days <= 30) {
-            return D30;
-        } else if (days <= 60) {
-            return D60;
-        } else if (days <= 90) {
-            return D90;
-        } else if (days <= 120) {
-            return D120;
-        } else if (days <= 180) {
-            return D180;
-        } else if (days <= 360) {
-            return D360;
+        for (RemainField value : RemainField.values()) {
+            if (days <= value.getDays()) {
+                return value;
+            }
         }
         return null;
     }

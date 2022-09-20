@@ -4,11 +4,11 @@
 package cn.youai.xiuzhen.stat.service;
 
 import cn.youai.xiuzhen.stat.entity.GameStatLtvDetail;
+import cn.youai.xiuzhen.stat.entity.ServerLtvAmount;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.googlecode.aviator.spring.SringContextFunctionLoader;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * <p>
@@ -20,6 +20,20 @@ import java.util.Set;
  */
 public interface IGameStatLtvDetailService extends IService<GameStatLtvDetail> {
 
-    void calcLtvDetailStat(Set<Integer> keySet, Collection<Integer> serverIds, Date registerDate, int days, boolean updateAll);
+    GameStatLtvDetail selectServerLtvDetail(int serverId, Date registerDate);
+
+    GameStatLtvDetail selectChannelLtvDetail(String channel, Date registerDate);
+
+    ServerLtvAmount queryServerLtvAmount(int serverId, Date registerDate, int days);
+
+    ServerLtvAmount queryChannelLtvAmount(String channel, Date registerDate, int days);
+
+    GameStatLtvDetail queryServerLtvDetail(int serverId, Date registerDate);
+
+    GameStatLtvDetail queryChannelLtvDetail(String channel, Date registerDate);
+
+    void calcServerLtvDetail(int serverId, Date registerDate, int days, boolean updateAll);
+
+    void calcChannelLtvDetail(String channel, Date registerDate, int days, boolean updateAll);
 
 }

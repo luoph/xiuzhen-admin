@@ -71,4 +71,13 @@ public enum LtvDetailField {
         }
         return null;
     }
+
+    public static LtvDetailField match(int days) {
+        for (LtvDetailField value : LtvDetailField.values()) {
+            if (days <= value.getDays()) {
+                return value;
+            }
+        }
+        return null;
+    }
 }

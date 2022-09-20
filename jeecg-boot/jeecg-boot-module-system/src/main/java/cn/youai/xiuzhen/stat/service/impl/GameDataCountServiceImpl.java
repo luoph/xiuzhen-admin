@@ -58,10 +58,6 @@ public class GameDataCountServiceImpl implements IGameDataCountService {
         }
 
         switch (type) {
-            case LTV:
-                statLtvDetailService.calcLtvDetailStat(serverMap.keySet(), serverMap.keySet(), registerDate, days + 1, true);
-                break;
-
             case REMAIN_DETAIL:
                 statRemainDetailService.calcRemainDetailStat(RoleType.ALL, serverMap.keySet(), registerDate, days, true);
                 statRemainDetailService.calcRemainDetailStat(RoleType.PAID, serverMap.keySet(), registerDate, days, true);

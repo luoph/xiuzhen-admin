@@ -32,17 +32,17 @@ public class GameStatLtvDetail implements Serializable {
     /**
      * 渠道
      */
-    private Integer channel;
-
-    /**
-     * 统计日期
-     */
-    private Date countDate;
+    private String channel;
 
     /**
      * 服务器id
      */
     private Integer serverId;
+
+    /**
+     * 统计日期
+     */
+    private Date countDate;
 
     /**
      * 新增用户数

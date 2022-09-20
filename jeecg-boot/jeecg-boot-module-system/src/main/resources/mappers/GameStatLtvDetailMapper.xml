@@ -2,29 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.GameStatLtvDetailMapper">
 
-    <select id="getGameStatLtvDetail" resultType="cn.youai.xiuzhen.stat.entity.GameStatLtvDetail">
+    <select id="queryServerLtvDetail" resultType="cn.youai.xiuzhen.stat.entity.GameStatLtvDetail">
         <![CDATA[
-        SELECT #{registerDate} AS `count_date`,
-               #{serverId} AS `server_id`,
-               (SELECT COUNT(*) FROM `game_player`
+        SELECT #{registerDate}                                                   AS `count_date`,
+               #{serverId}                                                       AS `server_id`,
+               (SELECT COUNT(*)
+                FROM `game_player`
                 WHERE `server_id` = #{serverId}
                   AND `create_time` >= #{registerDate}
                   AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS num
         ]]>
     </select>
 
-    <select id="getLtvAmount" resultType="cn.youai.xiuzhen.stat.entity.ServerLtvAmount">
+    <select id="queryChannelLtvDetail" resultType="cn.youai.xiuzhen.stat.entity.GameStatLtvDetail">
         <![CDATA[
-        SELECT
-            #{serverId} AS serverId,
-            #{days} AS days,
-            #{registerDate} AS registerDate,
-            IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
+        SELECT #{registerDate}                                                   AS `count_date`,
+               #{channel}                                                        AS `channel`,
+               (SELECT COUNT(*)
+                FROM `game_player`
+                WHERE `channel` = #{channel}
+                  AND `create_time` >= #{registerDate}
+                  AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS num
+        ]]>
+    </select>
+
+    <select id="queryServerLtvAmount" resultType="cn.youai.xiuzhen.stat.entity.ServerLtvAmount">
+        <![CDATA[
+        SELECT #{serverId}                    AS serverId,
+               #{days}                        AS days,
+               #{registerDate}                AS registerDate,
+               IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
                  LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`create_time` >= #{registerDate} AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+        WHERE p.`server_id` = #{serverId}
+          AND p.`create_time` >= #{registerDate}
+          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
           AND o.`create_time` <= DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
-          AND p.`server_id` = #{serverId}
+        ]]>
+    </select>
+
+    <select id="queryChannelLtvAmount" resultType="cn.youai.xiuzhen.stat.entity.ServerLtvAmount">
+        <![CDATA[
+        SELECT #{channel}                     AS channel,
+               #{days}                        AS days,
+               #{registerDate}                AS registerDate,
+               IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
+        FROM `game_order` o
+                 LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`channel` = #{channel}
+          AND p.`create_time` >= #{registerDate}
+          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND o.`create_time` <= DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
         ]]>
     </select>
 

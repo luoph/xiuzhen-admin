@@ -16,6 +16,7 @@ import java.util.Date;
 public class ServerLtvAmount {
 
     private Integer serverId;
+    private String channel;
     private Date registerDate;
     private Integer days;
     private BigDecimal totalAmount;

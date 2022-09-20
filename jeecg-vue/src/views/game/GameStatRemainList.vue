@@ -98,6 +98,12 @@ export default {
           }
         },
         {
+          title: '渠道',
+          dataIndex: 'channel',
+          width: '80',
+          align: 'center',
+        },
+        {
           title: '区服',
           dataIndex: 'serverId',
           width: '80',
