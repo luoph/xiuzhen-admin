@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.utils.StringUtils;
+import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameServerTag;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
@@ -11,6 +12,8 @@ import cn.youai.xiuzhen.game.model.UpdateConfig;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IGameServerTagService;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.JsonFileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +43,17 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     private IGameServerTagService serverTagService;
 
     @Override
-    public List<GameServerVO> selectChannelServerList(Integer channelId) {
+    public GameChannel selectChannel(String channel) {
+        return getOne(QueryUtils.safeSelectOneQuery(Wrappers.<GameChannel>lambdaQuery().eq(GameChannel::getSimpleName, channel)));
+    }
+
+    @Override
+    public List<GameServerVO> selectChannelServerList(int channelId) {
         return getBaseMapper().selectChannelServerList(channelId);
     }
 
     @Override
-    public String queryChannelNameById(Integer channelId) {
+    public String queryChannelNameById(int channelId) {
         return getBaseMapper().queryChannelNameById(channelId);
     }
 
@@ -60,7 +68,7 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     }
 
     @Override
-    public void updateChannelConfig(Integer channelId) {
+    public void updateChannelConfig(int channelId) {
         GameChannel gameChannel = getById(channelId);
         if (gameChannel != null) {
             updateChannelServerJson(gameChannel);

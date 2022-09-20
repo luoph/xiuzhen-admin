@@ -14,13 +14,15 @@ import java.util.List;
  */
 public interface IGameChannelService extends IService<GameChannel> {
 
+    GameChannel selectChannel(String channel);
+
     /**
      * 查询某个渠道的服务器
      *
      * @param channelId 渠道 id
      * @return 服务器信息
      */
-    List<GameServerVO> selectChannelServerList(Integer channelId);
+    List<GameServerVO> selectChannelServerList(int channelId);
 
     /**
      * 通过渠道id查询渠道名称
@@ -28,7 +30,7 @@ public interface IGameChannelService extends IService<GameChannel> {
      * @param channelId 渠道 id
      * @return 渠道名称
      */
-    String queryChannelNameById(Integer channelId);
+    String queryChannelNameById(int channelId);
 
     /**
      * 刷新渠道区服配置
@@ -40,7 +42,7 @@ public interface IGameChannelService extends IService<GameChannel> {
      *
      * @param channelId 渠道id
      */
-    void updateChannelConfig(Integer channelId);
+    void updateChannelConfig(int channelId);
 
     /**
      * 刷新ip白名单

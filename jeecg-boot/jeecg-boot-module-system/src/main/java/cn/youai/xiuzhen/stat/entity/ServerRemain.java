@@ -14,6 +14,7 @@ import java.util.Date;
 @Accessors(chain = true)
 public class ServerRemain {
 
+    private String channel;
     private Integer serverId;
     private Date registerDate;
     private Integer days;

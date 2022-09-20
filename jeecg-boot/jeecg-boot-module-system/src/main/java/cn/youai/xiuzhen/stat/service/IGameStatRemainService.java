@@ -24,8 +24,14 @@ public interface IGameStatRemainService extends IService<GameStatRemain> {
      */
     GameStatRemain queryServerRemain(int serverId, int roleType, Date registerDate);
 
+    GameStatRemain queryChannelRemain(String channel, int roleType, Date registerDate);
+
     GameStatRemain selectServerRemain(int serverId, RoleType roleType, Date registerDate);
 
+    GameStatRemain selectChannelRemain(String channel, RoleType roleType, Date registerDate);
+
     void calcServerRemain(int serverId, RoleType roleType, Date registerDate, int days, boolean updateAll);
+
+    void calcChannelRemain(String channel, RoleType roleType, Date registerDate, int days, boolean updateAll);
 
 }

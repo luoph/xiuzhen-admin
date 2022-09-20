@@ -82,6 +82,7 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
         while (!current.after(dateRange.getEnd())) {
             int days = DateUtils.daysBetweenNatural(current, todayDate);
             if (entity.getServerId() != null && entity.getServerId() > 0) {
+                // 按照游戏服纬度统计
                 if (entity.getRoleType() != null) {
                     service.calcServerRemain(entity.getServerId(), RoleType.valueOf(entity.getRoleType()), current, days, true);
                 } else {
@@ -89,7 +90,13 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
                     service.calcServerRemain(entity.getServerId(), RoleType.PAID, current, days, true);
                 }
             } else {
-                // TODO 支持按照渠道纬度统计
+                // 按照渠道纬度统计
+                if (entity.getRoleType() != null) {
+                    service.calcChannelRemain(entity.getChannel(), RoleType.valueOf(entity.getRoleType()), current, days, true);
+                } else {
+                    service.calcChannelRemain(entity.getChannel(), RoleType.ALL, current, days, true);
+                    service.calcChannelRemain(entity.getChannel(), RoleType.PAID, current, days, true);
+                }
             }
             current = DateUtils.addDays(current, 1);
         }
