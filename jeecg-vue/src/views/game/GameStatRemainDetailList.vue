@@ -6,7 +6,8 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="用户类型">
@@ -26,6 +27,7 @@
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
@@ -55,9 +57,9 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {filterObj} from '@/utils/util';
 import {getAction} from '@/api/manage';
+import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
   description: '留存率',
@@ -65,11 +67,17 @@ export default {
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
+    ChannelServerSelector,
     getAction
   },
   data() {
     return {
+      /* 排序参数 */
+      isorter: {
+        column: 'countDate',
+        order: 'desc',
+      },
+      timeout: 9000,
       columns: [
         {
           title: '#',
@@ -90,10 +98,19 @@ export default {
           }
         },
         {
-          title: '区服id',
-          align: 'center',
+          title: '渠道',
+          dataIndex: 'channel',
           width: '80',
-          dataIndex: 'serverId'
+          align: 'center',
+        },
+        {
+          title: '区服',
+          dataIndex: 'serverId',
+          width: '80',
+          align: 'center',
+          customRender: function (text) {
+            return text === 0 ? '全部' : text;
+          }
         },
         {
           title: '用户类型',
@@ -452,20 +469,17 @@ export default {
           }
         }
       ],
-      isorter: {
-        column: 'countDate',
-        order: 'desc'
-      },
       url: {
-        list: 'gameStat/remainDetail/list'
+        list: 'game/stat/remainDetail/list',
+        update: 'game/stat/remainDetail/update'
       },
       dictOptions: {}
     };
   },
   computed: {},
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (channel) {
+      this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
@@ -478,6 +492,26 @@ export default {
       // 范围参数不传递后台
       delete param.countDateRange;
       return filterObj(param);
+    },
+    searchReset() {
+      this.queryParam = {}
+      this.$refs.channelServerSelector.reset();
+      this.loadData(1);
+    },
+    onClickUpdate() {
+      // 查询条件
+      const params = this.getQueryParams();
+      this.loading = true;
+      getAction(this.url.update, params, this.timeout).then((res) => {
+        if (res.success) {
+          this.$message.success(res.message)
+        } else {
+          this.$message.warning(res.message)
+        }
+      }).finally(() => {
+        this.loading = false
+        this.searchQuery();
+      })
     },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);

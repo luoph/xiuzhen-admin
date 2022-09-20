@@ -9,6 +9,7 @@ import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.constant.LtvDetailField;
+import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.GameStatLtvDetail;
 import cn.youai.xiuzhen.stat.entity.ServerLtvAmount;
 import cn.youai.xiuzhen.stat.mapper.GameStatLtvDetailMapper;
@@ -45,7 +46,7 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
     public GameStatLtvDetail selectServerLtvDetail(int serverId, Date registerDate) {
         LambdaQueryWrapper<GameStatLtvDetail> query = Wrappers.<GameStatLtvDetail>lambdaQuery()
                 .eq(GameStatLtvDetail::getServerId, serverId)
-                .eq(GameStatLtvDetail::getChannel, "default")
+                .eq(GameStatLtvDetail::getChannel, StatisticType.DEFAULT_CHANNEL)
                 .eq(GameStatLtvDetail::getCountDate, registerDate);
         return getOne(QueryUtils.safeSelectOneQuery(query));
     }
@@ -91,7 +92,7 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
         GameStatLtvDetail ltvDetail = selectServerLtvDetail(serverId, registerDate);
         if (ltvDetail == null) {
             ltvDetail = updatedLtv;
-            updatedLtv.setChannel("default");
+            updatedLtv.setChannel(StatisticType.DEFAULT_CHANNEL);
         } else {
             ltvDetail.setNum(updatedLtv.getNum());
         }
@@ -129,7 +130,7 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
         GameStatLtvDetail ltvDetail = selectChannelLtvDetail(channel, registerDate);
         if (ltvDetail == null) {
             ltvDetail = updatedLtv;
-            updatedLtv.setServerId(0);
+            updatedLtv.setServerId(StatisticType.DEFAULT_SERVER_ID);
         } else {
             ltvDetail.setNum(updatedLtv.getNum());
         }

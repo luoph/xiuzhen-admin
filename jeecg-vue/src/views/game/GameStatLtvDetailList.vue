@@ -467,7 +467,7 @@ export default {
     },
     getQueryParams() {
       console.log(this.queryParam.countDateRange);
-      var param = Object.assign({}, this.queryParam, this.isorter);
+      const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       // 范围参数不传递后台

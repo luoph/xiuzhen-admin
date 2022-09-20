@@ -1,7 +1,7 @@
 package cn.youai.xiuzhen.stat.job;
 
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.CoreStatisticType;
+import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.service.IGameDataCountService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
@@ -25,6 +25,6 @@ public class GameDateCountUpdateByLtv implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        gameDataCountService.doJobDataCountUpdateByType(CoreStatisticType.LTV, DateUtils.todayDate());
+        gameDataCountService.doJobDataCountUpdateByType(StatisticType.LTV, DateUtils.todayDate());
     }
 }

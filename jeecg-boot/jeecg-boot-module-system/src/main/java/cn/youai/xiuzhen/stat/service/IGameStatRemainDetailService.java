@@ -7,7 +7,6 @@ import cn.youai.xiuzhen.game.constant.RoleType;
 import cn.youai.xiuzhen.stat.entity.GameStatRemainDetail;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -20,9 +19,12 @@ import java.util.Date;
  */
 public interface IGameStatRemainDetailService extends IService<GameStatRemainDetail> {
 
-    void calcRemainDetailStat(RoleType roleType, Collection<Integer> serverIds,
-                              Date registerDate, int days, boolean updateAll);
+    GameStatRemainDetail selectServerRemain(int serverId, RoleType roleType, Date registerDate);
 
-    void calcRemainDetailStat(RoleType roleType, int serverId,
-                              Date registerDate, int days, boolean updateAll);
+    GameStatRemainDetail selectChannelRemain(String channel, RoleType roleType, Date registerDate);
+
+    void calcServerRemain(int serverId, RoleType roleType, Date registerDate, int days, boolean updateAll);
+
+    void calcChannelRemain(String channel, RoleType roleType, Date registerDate, int days, boolean updateAll);
+
 }

@@ -3,7 +3,7 @@ package org.jeecg.modules.quartz.controller;
 import cn.hutool.core.date.DateUtil;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.CoreStatisticType;
+import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.service.IGameDataCountService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -313,7 +313,7 @@ public class QuartzJobController {
             return Result.error("结束时间必须大于等于开始时间");
         }
 
-        CoreStatisticType statisticType = CoreStatisticType.valueOf(jobType);
+        StatisticType statisticType = StatisticType.valueOf(jobType);
         if (statisticType == null) {
             return Result.error("找不到对应的任务类型");
         }

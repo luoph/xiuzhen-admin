@@ -1,6 +1,6 @@
 package cn.youai.xiuzhen.stat.service;
 
-import cn.youai.xiuzhen.game.constant.CoreStatisticType;
+import cn.youai.xiuzhen.stat.constant.StatisticType;
 
 import java.util.Date;
 
@@ -27,7 +27,7 @@ public interface IGameDataCountService {
      * @param registerDate 统计日期
      * @param type         2-留存 3-ltv
      */
-    void doJobDataCount(Date registerDate, CoreStatisticType type);
+    void doJobDataCount(Date registerDate, StatisticType type);
 
     /**
      * 获取k-v ltv数据列表
@@ -36,6 +36,6 @@ public interface IGameDataCountService {
      * /**
      * 按类型-统计数据更新
      */
-    void doJobDataCountUpdateByType(CoreStatisticType type, Date currentDate);
+    void doJobDataCountUpdateByType(StatisticType type, Date currentDate);
 
 }

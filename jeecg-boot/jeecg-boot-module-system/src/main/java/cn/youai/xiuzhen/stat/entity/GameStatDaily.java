@@ -4,6 +4,7 @@
 package cn.youai.xiuzhen.stat.entity;
 
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -135,7 +136,7 @@ public class GameStatDaily implements Serializable {
                                    int doublePayPlayer) {
         return new GameStatDaily()
                 .setChannel(channel)
-                .setServerId(0)
+                .setServerId(StatisticType.DEFAULT_SERVER_ID)
                 .setCountDate(date)
                 .setPayAmount(payAmount)
                 .setLoginNum(loginNum)
@@ -157,9 +158,9 @@ public class GameStatDaily implements Serializable {
                                    int registerPayPlayer,
                                    int doublePayPlayer) {
         return new GameStatDaily()
-                .setChannel("default")
+                .setChannel(StatisticType.DEFAULT_CHANNEL)
                 .setServerId(serverId)
-                .setServerId(0)
+                .setServerId(StatisticType.DEFAULT_SERVER_ID)
                 .setCountDate(date)
                 .setPayAmount(payAmount)
                 .setLoginNum(loginNum)

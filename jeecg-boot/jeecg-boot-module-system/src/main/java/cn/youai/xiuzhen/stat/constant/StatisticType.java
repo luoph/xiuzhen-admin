@@ -1,4 +1,4 @@
-package cn.youai.xiuzhen.game.constant;
+package cn.youai.xiuzhen.stat.constant;
 
 import lombok.Getter;
 
@@ -6,7 +6,7 @@ import lombok.Getter;
  * 统计类型
  */
 @Getter
-public enum CoreStatisticType {
+public enum StatisticType {
     /**
      * 统计类型
      */
@@ -19,13 +19,16 @@ public enum CoreStatisticType {
     private final String name;
     private final int value;
 
-    CoreStatisticType(String name, int value) {
+    public static final String DEFAULT_CHANNEL = "default";
+    public static final int DEFAULT_SERVER_ID = 0;
+
+    StatisticType(String name, int value) {
         this.name = name;
         this.value = value;
     }
 
-    public static CoreStatisticType valueOf(int type) {
-        for (CoreStatisticType e : CoreStatisticType.values()) {
+    public static StatisticType valueOf(int type) {
+        for (StatisticType e : StatisticType.values()) {
             if (e.getValue() == type) {
                 return e;
             }

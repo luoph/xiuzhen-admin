@@ -6,7 +6,8 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="5" :sm="5">
             <a-form-item label="统计类型">
@@ -16,14 +17,17 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="10" :sm="8">
-            <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+          <a-col :md="8" :sm="8">
+            <a-form-item label="日期">
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
+              <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -51,20 +55,26 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {getAction} from '@/api/manage';
+import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
+import {filterObj} from "@/utils/util";
 
 export default {
-  description: '留存率',
+  description: '30日数据',
   name: 'GameDataRemainList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
+    ChannelServerSelector,
     getAction
   },
   data() {
     return {
+      isorter: {
+        column: 'countDate',
+        order: 'desc'
+      },
+      timeout: 9000,
       columns: [
         {
           title: '#',
@@ -378,37 +388,45 @@ export default {
   },
   computed: {},
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (channel) {
+      this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function (value, dateStr) {
-      this.queryParam.rangeDateBegin = dateStr[0];
-      this.queryParam.rangeDateEnd = dateStr[1];
+    getQueryParams() {
+      console.log(this.queryParam.countDateRange);
+      const param = Object.assign({}, this.queryParam, this.isorter);
+      param.pageNo = this.ipagination.current;
+      param.pageSize = this.ipagination.pageSize;
+      // 范围参数不传递后台
+      delete param.countDateRange;
+      return filterObj(param);
     },
-    searchQuery() {
-      let param = {
-        channelId: this.queryParam.channelId,
-        serverId: this.queryParam.serverId,
-        rangeDateBegin: this.queryParam.rangeDateBegin,
-        rangeDateEnd: this.queryParam.rangeDateEnd,
-        pageNo: this.ipagination.current,
-        pageSize: this.ipagination.pageSize,
-        type: this.queryParam.type
-      };
-      getAction(this.url.list, param).then(res => {
+    searchReset() {
+      this.queryParam = {}
+      this.$refs.channelServerSelector.reset();
+      this.loadData(1);
+    },
+    onDateChange: function (value, dateString) {
+      console.log(dateString[0], dateString[1]);
+      this.queryParam.countDate_begin = dateString[0];
+      this.queryParam.countDate_end = dateString[1];
+    },
+    onClickUpdate() {
+      // 查询条件
+      const params = this.getQueryParams();
+      this.loading = true;
+      getAction(this.url.update, params, this.timeout).then((res) => {
         if (res.success) {
-          this.dataSource = res.result.records;
-          this.ipagination.current = res.result.current;
-          this.ipagination.size = res.result.size.toString();
-          this.ipagination.total = res.result.total;
-          this.ipagination.pages = res.result.pages;
+          this.$message.success(res.message)
         } else {
-          this.$message.error(res.message);
+          this.$message.warning(res.message)
         }
-      });
+      }).finally(() => {
+        this.loading = false
+        this.searchQuery();
+      })
     },
     countRate: function (n, r, t) {
       if (n === null || n === undefined) {

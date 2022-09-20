@@ -23,42 +23,69 @@ public interface GameStatRemainDetailMapper extends BaseMapper<GameStatRemainDet
     /**
      * 留存
      */
-    GameStatRemainDetail getStatRemainDetail(@Param("roleType") int roleType,
-                                             @Param("serverId") int serverId,
-                                             @Param("registerDate") Date registerDate);
+    GameStatRemainDetail queryServerRemain(@Param("serverId") int serverId,
+                                           @Param("roleType") int roleType,
+                                           @Param("registerDate") Date registerDate);
+
+    /**
+     * 留存
+     */
+    GameStatRemainDetail queryChannelRemain(@Param("channel") String channel,
+                                            @Param("roleType") int roleType,
+                                            @Param("registerDate") Date registerDate);
 
     /**
      * 付费留存
      */
-    GameStatRemainDetail getPayStatRemainDetail(@Param("roleType") int roleType,
-                                                @Param("serverId") int serverId,
-                                                @Param("registerDate") Date registerDate);
+    GameStatRemainDetail queryServerPayRemain(@Param("serverId") int serverId,
+                                              @Param("roleType") int roleType,
+                                              @Param("registerDate") Date registerDate);
+
+    GameStatRemainDetail queryChannelPayRemain(@Param("channel") String channel,
+                                               @Param("roleType") int roleType,
+                                               @Param("registerDate") Date registerDate);
 
     /**
      * 免费留存
      */
-    GameStatRemainDetail getFreeStatRemainDetail(@Param("roleType") int roleType,
-                                                 @Param("serverId") int serverId,
-                                                 @Param("registerDate") Date registerDate);
+    GameStatRemainDetail queryServerFreeRemain(@Param("serverId") int serverId,
+                                               @Param("roleType") int roleType,
+                                               @Param("registerDate") Date registerDate);
+
+    GameStatRemainDetail queryChannelFreeRemain(@Param("channel") String channel,
+                                                @Param("roleType") int roleType,
+                                                @Param("registerDate") Date registerDate);
 
     /**
      * 查询留存
      */
-    ServerRemain selectRemain(@Param("serverId") int serverId,
-                              @Param("registerDate") Date registerDate,
-                              @Param("days") int days);
+    ServerRemain selectServerRemain(@Param("serverId") int serverId,
+                                    @Param("registerDate") Date registerDate,
+                                    @Param("days") int days);
+
+    ServerRemain selectChannelRemain(@Param("channel") String channel,
+                                     @Param("registerDate") Date registerDate,
+                                     @Param("days") int days);
 
     /**
      * 付费留存
      */
-    ServerRemain selectPayRemain(@Param("serverId") int serverId,
-                                 @Param("registerDate") Date registerDate,
-                                 @Param("days") int days);
+    ServerRemain selectServerPayRemain(@Param("serverId") int serverId,
+                                       @Param("registerDate") Date registerDate,
+                                       @Param("days") int days);
+
+    ServerRemain selectChannelPayRemain(@Param("channel") String channel,
+                                        @Param("registerDate") Date registerDate,
+                                        @Param("days") int days);
 
     /**
      * 免费留存
      */
-    ServerRemain selectFreeRemain(@Param("serverId") int serverId,
-                                  @Param("registerDate") Date registerDate,
-                                  @Param("days") int days);
+    ServerRemain selectServerFreeRemain(@Param("serverId") int serverId,
+                                        @Param("registerDate") Date registerDate,
+                                        @Param("days") int days);
+
+    ServerRemain selectChannelFreeRemain(@Param("channel") String channel,
+                                         @Param("registerDate") Date registerDate,
+                                         @Param("days") int days);
 }

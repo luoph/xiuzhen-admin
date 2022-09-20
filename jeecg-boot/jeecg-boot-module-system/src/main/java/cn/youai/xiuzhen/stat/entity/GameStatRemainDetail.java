@@ -34,14 +34,14 @@ public class GameStatRemainDetail implements Serializable {
     private String channel;
 
     /**
-     * 统计日期
-     */
-    private Date countDate;
-
-    /**
      * 服务器id
      */
     private Integer serverId;
+
+    /**
+     * 统计日期
+     */
+    private Date countDate;
 
     /**
      * 角色类型，0-全部，1-付费，2-免费

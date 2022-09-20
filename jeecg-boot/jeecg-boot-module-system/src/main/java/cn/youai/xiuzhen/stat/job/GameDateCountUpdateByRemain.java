@@ -1,12 +1,8 @@
 package cn.youai.xiuzhen.stat.job;
 
-import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.CoreStatisticType;
-import cn.youai.xiuzhen.stat.service.IGameDataCountService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * QuartzJobList 配置的定时任务

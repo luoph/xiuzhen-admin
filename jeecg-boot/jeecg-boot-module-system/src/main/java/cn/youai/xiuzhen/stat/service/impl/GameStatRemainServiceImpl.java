@@ -10,6 +10,7 @@ import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.constant.RemainField;
+import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.GameStatRemain;
 import cn.youai.xiuzhen.stat.entity.ServerRemain;
 import cn.youai.xiuzhen.stat.mapper.GameStatRemainMapper;
@@ -55,7 +56,7 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
     public GameStatRemain selectServerRemain(int serverId, RoleType roleType, Date registerDate) {
         LambdaQueryWrapper<GameStatRemain> query = Wrappers.<GameStatRemain>lambdaQuery()
                 .eq(GameStatRemain::getServerId, serverId)
-                .eq(GameStatRemain::getChannel, "default")
+                .eq(GameStatRemain::getChannel, StatisticType.DEFAULT_CHANNEL)
                 .eq(GameStatRemain::getRoleType, roleType.getValue())
                 .eq(GameStatRemain::getCountDate, registerDate);
         return getOne(QueryUtils.safeSelectOneQuery(query));
@@ -86,7 +87,7 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
         updatedRemain.setFreeNum(updatedRemain.getRegisterNum() - updatedRemain.getPayNum());
         if (gameStatRemain == null) {
             gameStatRemain = updatedRemain;
-            updatedRemain.setChannel("default");
+            updatedRemain.setChannel(StatisticType.DEFAULT_CHANNEL);
         } else {
             // 付费玩家数量
             gameStatRemain.setRegisterNum(updatedRemain.getRegisterNum());
@@ -132,7 +133,7 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
         updatedRemain.setFreeNum(updatedRemain.getRegisterNum() - updatedRemain.getPayNum());
         if (gameStatRemain == null) {
             gameStatRemain = updatedRemain;
-            updatedRemain.setServerId(0);
+            updatedRemain.setServerId(StatisticType.DEFAULT_SERVER_ID);
         } else {
             // 付费玩家数量
             gameStatRemain.setRegisterNum(updatedRemain.getRegisterNum());
