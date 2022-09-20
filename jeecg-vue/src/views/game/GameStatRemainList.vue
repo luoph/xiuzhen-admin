@@ -14,6 +14,7 @@
               <a-select placeholder="请选择用户类型" v-model="queryParam.roleType">
                 <a-select-option value="0">所有用户</a-select-option>
                 <a-select-option value="1">付费用户</a-select-option>
+                <a-select-option value="2">免费用户</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -76,6 +77,7 @@ export default {
         column: 'countDate',
         order: 'desc',
       },
+      timeout: 9000,
       columns: [
         {
           title: '#',
@@ -115,6 +117,8 @@ export default {
               text = '所有';
             } else if (value === 1) {
               text = '付费';
+            } else if (value === 2) {
+              text = '免费';
             }
             return text;
           }
@@ -291,8 +295,8 @@ export default {
   },
   computed: {},
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (channel) {
+      this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;

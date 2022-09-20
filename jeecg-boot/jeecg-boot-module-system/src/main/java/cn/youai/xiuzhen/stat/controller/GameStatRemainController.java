@@ -88,6 +88,7 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
                 } else {
                     service.calcServerRemain(entity.getServerId(), RoleType.ALL, current, days, true);
                     service.calcServerRemain(entity.getServerId(), RoleType.PAID, current, days, true);
+                    service.calcServerRemain(entity.getServerId(), RoleType.FREE, current, days, true);
                 }
             } else {
                 // 按照渠道纬度统计
@@ -96,6 +97,7 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
                 } else {
                     service.calcChannelRemain(entity.getChannel(), RoleType.ALL, current, days, true);
                     service.calcChannelRemain(entity.getChannel(), RoleType.PAID, current, days, true);
+                    service.calcChannelRemain(entity.getChannel(), RoleType.FREE, current, days, true);
                 }
             }
             current = DateUtils.addDays(current, 1);

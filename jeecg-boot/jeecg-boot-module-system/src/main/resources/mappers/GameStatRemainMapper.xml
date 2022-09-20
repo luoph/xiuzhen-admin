@@ -144,7 +144,7 @@
         FROM `log_account` l
                  INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2
-          AND l.`server_id` = #{serverId}
+          AND p.`server_id` = #{serverId}
           AND l.`create_date` = DATE(DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY))
           AND p.`create_time` >= DATE(#{registerDate})
           AND p.`create_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
@@ -183,7 +183,7 @@
         FROM `log_account` l
                  INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2
-          AND l.`server_id` = #{serverId}
+          AND p.`server_id` = #{serverId}
           AND l.`create_date` = DATE(DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY))
           AND p.`create_time` >= DATE(#{registerDate})
           AND p.`create_time`< DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
@@ -222,9 +222,8 @@
             DATE(#{registerDate}) AS registerDate,
             IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))), 0) AS remain
         FROM `log_account` l
-            INNER JOIN `game_player` p
-        ON l.`player_id` = p.`player_id`
-        WHERE l.`server_id` = #{serverId}
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        WHERE p.`server_id` = #{serverId}
           AND l.`type` = 2
           AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
           AND p.`create_time` >= #{registerDate}
@@ -239,13 +238,55 @@
             DATE(#{registerDate}) AS registerDate,
             IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))), 0) AS remain
         FROM `log_account` l
-            INNER JOIN `game_player` p
-        ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE p.`channel` = #{channel}
           AND l.`type` = 2
           AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
           AND p.`create_time` >= #{registerDate}
           AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+        ]]>
+    </select>
+
+    <!--  免费用户留存  -->
+    <select id="selectServerFreePlayerRemain" resultType="cn.youai.xiuzhen.stat.entity.ServerRemain">
+        <![CDATA[
+        SELECT #{serverId} AS server_id,
+               #{days} AS days,
+            DATE(#{registerDate}) AS registerDate,
+            IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))), 0) AS remain
+        FROM `log_account` l INNER JOIN `game_player` p
+        ON l.`player_id` = p.`player_id`
+        WHERE p.`server_id` = #{serverId}
+          AND l.`type` = 2
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
+          AND p.`create_time` >= #{registerDate}
+          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND NOT EXISTS (
+            SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
+              AND b.`pay_time` >= #{registerDate} AND b.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+              AND b.`server_id` = @serverId
+          )
+        ]]>
+    </select>
+
+    <select id="selectChannelFreePlayerRemain" resultType="cn.youai.xiuzhen.stat.entity.ServerRemain">
+        <![CDATA[
+        SELECT #{channel} AS channel,
+               #{days} AS days,
+            DATE(#{registerDate}) AS registerDate,
+            IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))), 0) AS remain
+        FROM `log_account` l
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        WHERE p.`channel` = #{channel}
+          AND l.`type` = 2
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
+          AND p.`create_time` >= #{registerDate}
+          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND NOT EXISTS (
+            SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
+          AND b.`pay_time` >= #{registerDate} AND b.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+          AND b.`server_id` = @serverId
+            )
         ]]>
     </select>
 

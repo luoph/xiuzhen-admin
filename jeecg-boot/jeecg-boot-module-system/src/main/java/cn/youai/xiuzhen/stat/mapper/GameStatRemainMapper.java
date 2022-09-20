@@ -70,6 +70,13 @@ public interface GameStatRemainMapper extends BaseMapper<GameStatRemain> {
     ServerRemain selectChannelPlayerRemain(@Param("channel") String channel, @Param("registerDate") Date registerDate, @Param("days") int days);
 
     /**
+     * 免费留存
+     */
+    ServerRemain selectServerFreePlayerRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate, @Param("days") int days);
+
+    ServerRemain selectChannelFreePlayerRemain(@Param("channel") String channel, @Param("registerDate") Date registerDate, @Param("days") int days);
+
+    /**
      * 付费留存
      */
     ServerRemain selectServerPayPlayerRemain(@Param("serverId") int serverId, @Param("registerDate") Date registerDate, @Param("days") int days);

@@ -178,8 +178,9 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
                 serverRemain = getBaseMapper().selectServerPlayerRemain(serverId, registerDate, days);
             } else if (roleType == RoleType.PAID) {
                 serverRemain = getBaseMapper().selectServerPayPlayerRemain(serverId, registerDate, days);
+            } else if (roleType == RoleType.FREE) {
+                serverRemain = getBaseMapper().selectServerFreePlayerRemain(serverId, registerDate, days);
             }
-            // TODO 支持免费玩家留存统计
         }
 
         if (serverRemain == null) {
@@ -207,8 +208,9 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
                 serverRemain = getBaseMapper().selectChannelPlayerRemain(channel, registerDate, days);
             } else if (roleType == RoleType.PAID) {
                 serverRemain = getBaseMapper().selectChannelPayPlayerRemain(channel, registerDate, days);
+            } if (roleType == RoleType.FREE) {
+                serverRemain = getBaseMapper().selectChannelFreePlayerRemain(channel, registerDate, days);
             }
-            // TODO 支持免费玩家留存统计
         }
 
         if (serverRemain == null) {
