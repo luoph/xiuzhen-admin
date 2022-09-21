@@ -244,5 +244,9 @@ public class GameStatLtvDetail implements Serializable {
      */
     private Date createTime;
 
+    public GameStatLtvDetail apply(GameStatLtvDetail other) {
+        setNum(other.getNum());
+        return this;
+    }
 
 }

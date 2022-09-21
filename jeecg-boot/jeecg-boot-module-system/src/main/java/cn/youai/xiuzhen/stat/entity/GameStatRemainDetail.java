@@ -243,5 +243,9 @@ public class GameStatRemainDetail implements Serializable {
      */
     private Date createTime;
 
+    public GameStatRemainDetail apply(GameStatRemainDetail other) {
+        setD1(other.getD1());
+        return this;
+    }
 
 }

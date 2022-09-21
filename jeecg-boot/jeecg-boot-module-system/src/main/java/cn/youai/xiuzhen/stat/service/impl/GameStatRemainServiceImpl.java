@@ -84,13 +84,7 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
             dbEntity = updateEntity;
             updateEntity.setChannel(StatisticType.DEFAULT_CHANNEL);
         } else {
-            // 付费玩家数量
-            dbEntity.setRegisterNum(updateEntity.getRegisterNum());
-            dbEntity.setPayNum(updateEntity.getPayNum());
-            dbEntity.setFreeNum(updateEntity.getFreeNum());
-            dbEntity.setPayRemain(updateEntity.getPayRemain());
-            dbEntity.setFreeRemain(updateEntity.getFreeRemain());
-            dbEntity.setRegisterRemain(updateEntity.getRegisterRemain());
+            dbEntity.apply(updateEntity);
         }
 
         if (dbEntity.getId() != null) {
@@ -108,22 +102,16 @@ public class GameStatRemainServiceImpl extends ServiceImpl<GameStatRemainMapper,
         }
 
         // 重新查询注册数量
-        GameStatRemain updatedEntity = queryChannelRemain(channel, registerDate);
+        GameStatRemain updateEntity = queryChannelRemain(channel, registerDate);
         GameStatRemain dbEntity = selectChannelRemain(channel, registerDate);
 
         // 免费玩家数 = 注册数 - 付费数
-        updatedEntity.setFreeNum(updatedEntity.getRegisterNum() - updatedEntity.getPayNum());
+        updateEntity.setFreeNum(updateEntity.getRegisterNum() - updateEntity.getPayNum());
         if (dbEntity == null) {
-            dbEntity = updatedEntity;
-            updatedEntity.setServerId(StatisticType.DEFAULT_SERVER_ID);
+            dbEntity = updateEntity;
+            updateEntity.setServerId(StatisticType.DEFAULT_SERVER_ID);
         } else {
-            // 付费玩家数量
-            dbEntity.setRegisterNum(updatedEntity.getRegisterNum());
-            dbEntity.setPayNum(updatedEntity.getPayNum());
-            dbEntity.setFreeNum(updatedEntity.getFreeNum());
-            dbEntity.setPayRemain(updatedEntity.getPayRemain());
-            dbEntity.setFreeRemain(updatedEntity.getFreeRemain());
-            dbEntity.setRegisterRemain(updatedEntity.getRegisterRemain());
+            dbEntity.apply(updateEntity);
         }
 
         if (dbEntity.getId() != null) {

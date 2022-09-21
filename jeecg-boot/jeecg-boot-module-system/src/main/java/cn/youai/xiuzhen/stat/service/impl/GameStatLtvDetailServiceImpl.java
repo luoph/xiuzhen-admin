@@ -88,13 +88,13 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
         }
 
         // 重新查询注册数量
-        GameStatLtvDetail updatedLtv = queryServerLtvDetail(serverId, registerDate);
-        GameStatLtvDetail ltvDetail = selectServerLtvDetail(serverId, registerDate);
-        if (ltvDetail == null) {
-            ltvDetail = updatedLtv;
-            updatedLtv.setChannel(StatisticType.DEFAULT_CHANNEL);
+        GameStatLtvDetail updateEntity = queryServerLtvDetail(serverId, registerDate);
+        GameStatLtvDetail dbEntity = selectServerLtvDetail(serverId, registerDate);
+        if (dbEntity == null) {
+            dbEntity = updateEntity;
+            updateEntity.setChannel(StatisticType.DEFAULT_CHANNEL);
         } else {
-            ltvDetail.setNum(updatedLtv.getNum());
+            dbEntity.apply(updateEntity);
         }
 
         if (updateAll) {
@@ -103,18 +103,18 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
                 if (days < value.getDays()) {
                     break;
                 }
-                updateLtvDetailField(ltvDetail, serverId, registerDate, value.getDays());
+                updateLtvDetailField(dbEntity, serverId, registerDate, value.getDays());
             }
         }
 
         if (LtvDetailField.valueOf(days) == null) {
-            updateLtvDetailField(ltvDetail, serverId, registerDate, days);
+            updateLtvDetailField(dbEntity, serverId, registerDate, days);
         }
 
-        if (ltvDetail.getId() != null) {
-            updateById(ltvDetail);
+        if (dbEntity.getId() != null) {
+            updateById(dbEntity);
         } else {
-            save(ltvDetail);
+            save(dbEntity);
         }
     }
 
@@ -126,13 +126,13 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
         }
 
         // 重新查询注册数量
-        GameStatLtvDetail updatedLtv = queryChannelLtvDetail(channel, registerDate);
-        GameStatLtvDetail ltvDetail = selectChannelLtvDetail(channel, registerDate);
-        if (ltvDetail == null) {
-            ltvDetail = updatedLtv;
-            updatedLtv.setServerId(StatisticType.DEFAULT_SERVER_ID);
+        GameStatLtvDetail updateEntity = queryChannelLtvDetail(channel, registerDate);
+        GameStatLtvDetail dbEntity = selectChannelLtvDetail(channel, registerDate);
+        if (dbEntity == null) {
+            dbEntity = updateEntity;
+            updateEntity.setServerId(StatisticType.DEFAULT_SERVER_ID);
         } else {
-            ltvDetail.setNum(updatedLtv.getNum());
+            dbEntity.apply(updateEntity);
         }
 
         if (updateAll) {
@@ -141,18 +141,18 @@ public class GameStatLtvDetailServiceImpl extends ServiceImpl<GameStatLtvDetailM
                 if (days < value.getDays()) {
                     break;
                 }
-                updateLtvDetailField(ltvDetail, channel, registerDate, value.getDays());
+                updateLtvDetailField(dbEntity, channel, registerDate, value.getDays());
             }
         }
 
         if (LtvDetailField.valueOf(days) == null) {
-            updateLtvDetailField(ltvDetail, channel, registerDate, days);
+            updateLtvDetailField(dbEntity, channel, registerDate, days);
         }
 
-        if (ltvDetail.getId() != null) {
-            updateById(ltvDetail);
+        if (dbEntity.getId() != null) {
+            updateById(dbEntity);
         } else {
-            save(ltvDetail);
+            save(dbEntity);
         }
     }
 

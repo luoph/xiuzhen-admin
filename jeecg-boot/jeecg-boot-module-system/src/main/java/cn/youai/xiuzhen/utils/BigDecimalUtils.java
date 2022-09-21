@@ -97,6 +97,15 @@ public final class BigDecimalUtils {
         return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP);
     }
 
+    public static BigDecimal divide(int v1, int v2, int scale) {
+        if (scale < 0) {
+            throw new IllegalArgumentException("The scale must be a positive integer or zero");
+        }
+        BigDecimal b1 = BigDecimal.valueOf(v1);
+        BigDecimal b2 = BigDecimal.valueOf(v2);
+        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP);
+    }
+
     /**
      * 提供精确的小数位四舍五入处理。
      *
@@ -121,6 +130,17 @@ public final class BigDecimalUtils {
      * @return !0 被除数计算结果
      */
     public static BigDecimal divideZero(double v1, double v2, boolean isPercent) {
+        if (v2 != 0) {
+            BigDecimal result = divide(v1, v2, 2);
+            if (isPercent) {
+                return result.multiply(BigDecimal.valueOf(100));
+            }
+            return result;
+        }
+        return BigDecimal.ZERO;
+    }
+
+    public static BigDecimal divideZero(int v1, int v2, boolean isPercent) {
         if (v2 != 0) {
             BigDecimal result = divide(v1, v2, 2);
             if (isPercent) {

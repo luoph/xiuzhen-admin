@@ -72,22 +72,22 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
         }
 
         // 重新查询注册数量
-        GameStatRemainDetail updatedEntity = null;
+        GameStatRemainDetail updateEntity = null;
         if (roleType == RoleType.ALL) {
-            updatedEntity = getBaseMapper().queryServerRemain(serverId, roleType.getValue(), registerDate);
+            updateEntity = getBaseMapper().queryServerRemain(serverId, roleType.getValue(), registerDate);
         } else if (roleType == RoleType.PAID) {
-            updatedEntity = getBaseMapper().queryServerPayRemain(serverId, roleType.getValue(), registerDate);
+            updateEntity = getBaseMapper().queryServerPayRemain(serverId, roleType.getValue(), registerDate);
         } else if (roleType == RoleType.FREE) {
-            updatedEntity = getBaseMapper().queryServerFreeRemain(serverId, roleType.getValue(), registerDate);
+            updateEntity = getBaseMapper().queryServerFreeRemain(serverId, roleType.getValue(), registerDate);
         }
-        assert updatedEntity != null;
+        assert updateEntity != null;
 
-        GameStatRemainDetail entity = selectServerRemain(serverId, roleType, registerDate);
-        if (entity == null) {
-            entity = updatedEntity;
-            updatedEntity.setChannel(StatisticType.DEFAULT_CHANNEL);
+        GameStatRemainDetail dbEntity = selectServerRemain(serverId, roleType, registerDate);
+        if (dbEntity == null) {
+            dbEntity = updateEntity;
+            updateEntity.setChannel(StatisticType.DEFAULT_CHANNEL);
         } else {
-            entity.setD1(updatedEntity.getD1());
+            dbEntity.apply(updateEntity);
         }
 
         if (updateAll) {
@@ -96,15 +96,15 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
                 if (days < value.getDays()) {
                     break;
                 }
-                updateRemainDetailField(entity, serverId, roleType, registerDate, value.getDays());
+                updateRemainDetailField(dbEntity, serverId, roleType, registerDate, value.getDays());
             }
         }
-        updateRemainDetailField(entity, serverId, roleType, registerDate, days);
+        updateRemainDetailField(dbEntity, serverId, roleType, registerDate, days);
 
-        if (entity.getId() != null) {
-            updateById(entity);
+        if (dbEntity.getId() != null) {
+            updateById(dbEntity);
         } else {
-            save(entity);
+            save(dbEntity);
         }
     }
 
@@ -116,22 +116,22 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
         }
 
         // 重新查询注册数量
-        GameStatRemainDetail updatedEntity = null;
+        GameStatRemainDetail updateEntity = null;
         if (roleType == RoleType.ALL) {
-            updatedEntity = getBaseMapper().queryChannelRemain(channel, roleType.getValue(), registerDate);
+            updateEntity = getBaseMapper().queryChannelRemain(channel, roleType.getValue(), registerDate);
         } else if (roleType == RoleType.PAID) {
-            updatedEntity = getBaseMapper().queryChannelPayRemain(channel, roleType.getValue(), registerDate);
+            updateEntity = getBaseMapper().queryChannelPayRemain(channel, roleType.getValue(), registerDate);
         } else if (roleType == RoleType.FREE) {
-            updatedEntity = getBaseMapper().queryChannelFreeRemain(channel, roleType.getValue(), registerDate);
+            updateEntity = getBaseMapper().queryChannelFreeRemain(channel, roleType.getValue(), registerDate);
         }
-        assert updatedEntity != null;
+        assert updateEntity != null;
 
-        GameStatRemainDetail entity = selectChannelRemain(channel, roleType, registerDate);
-        if (entity == null) {
-            entity = updatedEntity;
-            updatedEntity.setServerId(StatisticType.DEFAULT_SERVER_ID);
+        GameStatRemainDetail dbEntity = selectChannelRemain(channel, roleType, registerDate);
+        if (dbEntity == null) {
+            dbEntity = updateEntity;
+            updateEntity.setServerId(StatisticType.DEFAULT_SERVER_ID);
         } else {
-            entity.setD1(updatedEntity.getD1());
+            dbEntity.apply(updateEntity);
         }
 
         if (updateAll) {
@@ -140,15 +140,15 @@ public class GameStatRemainDetailServiceImpl extends ServiceImpl<GameStatRemainD
                 if (days < value.getDays()) {
                     break;
                 }
-                updateRemainDetailField(entity, channel, roleType, registerDate, value.getDays());
+                updateRemainDetailField(dbEntity, channel, roleType, registerDate, value.getDays());
             }
         }
-        updateRemainDetailField(entity, channel, roleType, registerDate, days);
+        updateRemainDetailField(dbEntity, channel, roleType, registerDate, days);
 
-        if (entity.getId() != null) {
-            updateById(entity);
+        if (dbEntity.getId() != null) {
+            updateById(dbEntity);
         } else {
-            save(entity);
+            save(dbEntity);
         }
     }
 

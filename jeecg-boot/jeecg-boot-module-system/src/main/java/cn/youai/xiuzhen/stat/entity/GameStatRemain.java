@@ -80,4 +80,15 @@ public class GameStatRemain implements Serializable {
      */
     private Date createTime;
 
+    public GameStatRemain apply(GameStatRemain other) {
+        // 付费玩家数量
+        setRegisterNum(other.getRegisterNum());
+        setPayNum(other.getPayNum());
+        setFreeNum(other.getFreeNum());
+        setPayRemain(other.getPayRemain());
+        setFreeRemain(other.getFreeRemain());
+        setRegisterRemain(other.getRegisterRemain());
+        return this;
+    }
+
 }
