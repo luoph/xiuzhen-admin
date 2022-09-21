@@ -201,5 +201,18 @@ public final class BigDecimalUtils {
         return new BigDecimal(format);
     }
 
+    public static BigDecimal from(Integer value) {
+        if (value == null) {
+            return null;
+        }
+        return BigDecimal.valueOf(value);
+    }
+
+    public static BigDecimal from(Long value) {
+        if (value == null) {
+            return null;
+        }
+        return BigDecimal.valueOf(value);
+    }
 
 }

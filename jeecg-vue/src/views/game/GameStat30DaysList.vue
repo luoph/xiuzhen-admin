@@ -26,7 +26,6 @@
           <a-col :md="4" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
@@ -60,8 +59,8 @@ import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 import {filterObj} from "@/utils/util";
 
 export default {
+  name: 'GameStat30DaysList',
   description: '30日数据',
-  name: 'GameDataRemainList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
@@ -95,6 +94,21 @@ export default {
           }
         },
         {
+          title: '渠道',
+          dataIndex: 'channel',
+          width: '80',
+          align: 'center',
+        },
+        {
+          title: '区服',
+          dataIndex: 'serverId',
+          width: '80',
+          align: 'center',
+          customRender: function (text) {
+            return text === 0 ? '全部' : text;
+          }
+        },
+        {
           title: '新增角色',
           dataIndex: 'registerNum',
           align: 'center',
@@ -110,278 +124,278 @@ export default {
           }
         },
         {
-          title: '1日留存/LTV',
-          dataIndex: 'c1',
+          title: '1日',
+          dataIndex: 'd1',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c1, record.registerNum, record.type);
+            return this.countRate(record.d1, record.registerNum, record.type);
           }
         },
         {
-          title: '2日留存/LTV',
-          dataIndex: 'c2',
+          title: '2日',
+          dataIndex: 'd2',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c2, record.registerNum, record.type);
+            return this.countRate(record.d2, record.registerNum, record.type);
           }
         },
         {
-          title: '3日留存/LTV',
-          dataIndex: 'c3',
+          title: '3日',
+          dataIndex: 'd3',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c3, record.registerNum, record.type);
+            return this.countRate(record.d3, record.registerNum, record.type);
           }
         },
         {
-          title: '4日留存/LTV',
-          dataIndex: 'c4',
+          title: '4日',
+          dataIndex: 'd4',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c4, record.registerNum, record.type);
+            return this.countRate(record.d4, record.registerNum, record.type);
           }
         },
         {
-          title: '5日留存/LTV',
-          dataIndex: 'c5',
+          title: '5日',
+          dataIndex: 'd5',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c5, record.registerNum, record.type);
+            return this.countRate(record.d5, record.registerNum, record.type);
           }
         },
         {
-          title: '6日留存/LTV',
-          dataIndex: 'c6',
+          title: '6日',
+          dataIndex: 'd6',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c6, record.registerNum, record.type);
+            return this.countRate(record.d6, record.registerNum, record.type);
           }
         },
         {
-          title: '7日留存/LTV',
-          dataIndex: 'c7',
+          title: '7日',
+          dataIndex: 'd7',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c7, record.registerNum, record.type);
+            return this.countRate(record.d7, record.registerNum, record.type);
           }
         },
         {
-          title: '8日留存/LTV',
-          dataIndex: 'c8',
+          title: '8日',
+          dataIndex: 'd8',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c8, record.registerNum, record.type);
+            return this.countRate(record.d8, record.registerNum, record.type);
           }
         },
         {
-          title: '9日留存/LTV',
-          dataIndex: 'c9',
+          title: '9日',
+          dataIndex: 'd9',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c9, record.registerNum, record.type);
+            return this.countRate(record.d9, record.registerNum, record.type);
           }
         },
         {
-          title: '10日留存/LTV',
-          dataIndex: 'c10',
+          title: '10日',
+          dataIndex: 'd10',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c10, record.registerNum, record.type);
+            return this.countRate(record.d10, record.registerNum, record.type);
           }
         },
         {
-          title: '11日留存/LTV',
-          dataIndex: 'c11',
+          title: '11日',
+          dataIndex: 'd11',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c11, record.registerNum, record.type);
+            return this.countRate(record.d11, record.registerNum, record.type);
           }
         },
         {
-          title: '12日留存/LTV',
-          dataIndex: 'c12',
+          title: '12日',
+          dataIndex: 'd12',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c12, record.registerNum, record.type);
+            return this.countRate(record.d12, record.registerNum, record.type);
           }
         },
         {
-          title: '13日留存/LTV',
-          dataIndex: 'c13',
+          title: '13日',
+          dataIndex: 'd13',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c13, record.registerNum, record.type);
+            return this.countRate(record.d13, record.registerNum, record.type);
           }
         },
         {
-          title: '14日留存/LTV',
-          dataIndex: 'c14',
+          title: '14日',
+          dataIndex: 'd14',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c14, record.registerNum, record.type);
+            return this.countRate(record.d14, record.registerNum, record.type);
           }
         },
         {
-          title: '15日留存/LTV',
-          dataIndex: 'c15',
+          title: '15日',
+          dataIndex: 'd15',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c15, record.registerNum, record.type);
+            return this.countRate(record.d15, record.registerNum, record.type);
           }
         },
         {
-          title: '16日留存/LTV',
-          dataIndex: 'c16',
+          title: '16日',
+          dataIndex: 'd16',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c16, record.registerNum, record.type);
+            return this.countRate(record.d16, record.registerNum, record.type);
           }
         },
         {
-          title: '17日留存/LTV',
-          dataIndex: 'c17',
+          title: '17日',
+          dataIndex: 'd17',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c17, record.registerNum, record.type);
+            return this.countRate(record.d17, record.registerNum, record.type);
           }
         },
         {
-          title: '18日留存/LTV',
-          dataIndex: 'c18',
+          title: '18日',
+          dataIndex: 'd18',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c18, record.registerNum, record.type);
+            return this.countRate(record.d18, record.registerNum, record.type);
           }
         },
         {
-          title: '19日留存/LTV',
-          dataIndex: 'c19',
+          title: '19日',
+          dataIndex: 'd19',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c19, record.registerNum, record.type);
+            return this.countRate(record.d19, record.registerNum, record.type);
           }
         },
         {
-          title: '20日留存/LTV',
-          dataIndex: 'c20',
+          title: '20日',
+          dataIndex: 'd20',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c20, record.registerNum, record.type);
+            return this.countRate(record.d20, record.registerNum, record.type);
           }
         },
         {
-          title: '21日留存/LTV',
-          dataIndex: 'c21',
+          title: '21日',
+          dataIndex: 'd21',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c21, record.registerNum, record.type);
+            return this.countRate(record.d21, record.registerNum, record.type);
           }
         },
         {
-          title: '22日留存/LTV',
-          dataIndex: 'c22',
+          title: '22日',
+          dataIndex: 'd22',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c22, record.registerNum, record.type);
+            return this.countRate(record.d22, record.registerNum, record.type);
           }
         },
         {
-          title: '23日留存/LTV',
-          dataIndex: 'c23',
+          title: '23日',
+          dataIndex: 'd23',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c23, record.registerNum, record.type);
+            return this.countRate(record.d23, record.registerNum, record.type);
           }
         },
         {
-          title: '24日留存/LTV',
-          dataIndex: 'c24',
+          title: '24日',
+          dataIndex: 'd24',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c24, record.registerNum, record.type);
+            return this.countRate(record.d24, record.registerNum, record.type);
           }
         },
         {
-          title: '25日留存/LTV',
-          dataIndex: 'c25',
+          title: '25日',
+          dataIndex: 'd25',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c25, record.registerNum, record.type);
+            return this.countRate(record.d25, record.registerNum, record.type);
           }
         },
         {
-          title: '26日留存/LTV',
-          dataIndex: 'c26',
+          title: '26日',
+          dataIndex: 'd26',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c26, record.registerNum, record.type);
+            return this.countRate(record.d26, record.registerNum, record.type);
           }
         },
         {
-          title: '27日留存/LTV',
-          dataIndex: 'c27',
+          title: '27日',
+          dataIndex: 'd27',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c27, record.registerNum, record.type);
+            return this.countRate(record.d27, record.registerNum, record.type);
           }
         },
         {
-          title: '28日留存/LTV',
-          dataIndex: 'c28',
+          title: '28日',
+          dataIndex: 'd28',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c28, record.registerNum, record.type);
+            return this.countRate(record.d28, record.registerNum, record.type);
           }
         },
         {
-          title: '29日留存/LTV',
-          dataIndex: 'c29',
+          title: '29日',
+          dataIndex: 'd29',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c29, record.registerNum, record.type);
+            return this.countRate(record.d29, record.registerNum, record.type);
           }
         },
         {
-          title: '30日留存/LTV',
-          dataIndex: 'c30',
+          title: '30日',
+          dataIndex: 'd30',
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c30, record.registerNum, record.type);
+            return this.countRate(record.d30, record.registerNum, record.type);
           }
         }
       ],
       url: {
-        list: 'game/stat/ongoing'
+        list: 'game/stat/30days/list'
       },
       dictOptions: {}
     };
@@ -412,21 +426,6 @@ export default {
       console.log(dateString[0], dateString[1]);
       this.queryParam.countDate_begin = dateString[0];
       this.queryParam.countDate_end = dateString[1];
-    },
-    onClickUpdate() {
-      // 查询条件
-      const params = this.getQueryParams();
-      this.loading = true;
-      getAction(this.url.update, params, this.timeout).then((res) => {
-        if (res.success) {
-          this.$message.success(res.message)
-        } else {
-          this.$message.warning(res.message)
-        }
-      }).finally(() => {
-        this.loading = false
-        this.searchQuery();
-      })
     },
     countRate: function (n, r, t) {
       if (n === null || n === undefined) {
