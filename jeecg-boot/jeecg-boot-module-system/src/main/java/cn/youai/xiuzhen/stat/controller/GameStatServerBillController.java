@@ -1,9 +1,7 @@
 package cn.youai.xiuzhen.stat.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.basics.model.DateRange;
-import cn.youai.server.constant.AttrType;
 import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.ServerBill;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
@@ -23,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,7 +44,6 @@ public class GameStatServerBillController {
                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                           HttpServletRequest req) {
-        Page<ServerBill> page = new Page<>(pageNo, pageSize);
         // 服务器空校验
         if (StringUtils.isEmpty(entity.getChannel())
                 && (entity.getServerId() == null || entity.getServerId() < 0)) {
@@ -59,6 +55,7 @@ public class GameStatServerBillController {
             entity.setChannel(null);
         }
 
+        Page<ServerBill> page = new Page<>(pageNo, pageSize);
         IPage<ServerBill> pageList = pageList(page, entity, req);
         return Result.ok(pageList);
     }
