@@ -3,6 +3,24 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameOrderMapper">
 
+    <select id="serverRangeAmount" resultType="java.math.BigDecimal">
+        SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`server_id` = #{serverId}
+        <if test="start != null"><![CDATA[ AND DATE(o.`pay_time`) >= DATE(#{start}) ]]></if>
+        <if test="end != null "><![CDATA[ AND DATE(o.`pay_time`) <= DATE(#{end}) ]]></if>
+    </select>
+
+    <select id="channelRangeAmount" resultType="java.math.BigDecimal">
+        SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`channel` = #{channel}
+        <if test="start != null"><![CDATA[ AND DATE(o.`pay_time`) >= DATE(#{start}) ]]></if>
+        <if test="end != null "><![CDATA[ AND DATE(o.`pay_time`) <= DATE(#{end}) ]]></if>
+    </select>
+
     <select id="serverPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
         FROM `game_order` a

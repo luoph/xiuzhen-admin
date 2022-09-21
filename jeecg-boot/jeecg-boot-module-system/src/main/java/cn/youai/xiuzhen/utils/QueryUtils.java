@@ -29,6 +29,10 @@ public final class QueryUtils {
         return new DateRange(start, end);
     }
 
+    public static DateRange parseRange(Map<String, String[]> parameterMap, String column) {
+        return parseRange(parameterMap, column, null, null);
+    }
+
     public static <T> HashSet<Long> extractPlayerIds(List<T> list, ToLongFunction<T> function) {
         HashSet<Long> playerIds = new HashSet<>(list.size());
         list.forEach(e -> playerIds.add(function.applyAsLong(e)));

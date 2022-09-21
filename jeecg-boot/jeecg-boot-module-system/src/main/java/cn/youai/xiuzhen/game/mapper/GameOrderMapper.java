@@ -17,6 +17,10 @@ import java.util.List;
  * @date 2020-01-05
  */
 public interface GameOrderMapper extends BaseMapper<GameOrder> {
+    BigDecimal serverRangeAmount(@Param("serverId") int serverId, @Param("start") Date start, @Param("end") Date end);
+
+    BigDecimal channelRangeAmount(@Param("channel") String channel, @Param("start") Date start, @Param("end") Date end);
+
     /**
      * 计算当天支付金额
      */

@@ -72,7 +72,7 @@ public class GameStat30DaysController {
 
     @SuppressWarnings("DuplicatedCode")
     private IPage<GameStat30Days> pageList(int pageNo, int pageSize, GameStat30Days entity, HttpServletRequest req) {
-        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate", null, null);
+        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate");
         int type = entity.getType() != null ? entity.getType() : 1;
         if (type == 1) {
             LambdaQueryWrapper<GameStatRemainDetail> query = Wrappers.<GameStatRemainDetail>lambdaQuery()

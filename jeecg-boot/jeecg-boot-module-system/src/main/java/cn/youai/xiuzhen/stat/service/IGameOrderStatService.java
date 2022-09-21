@@ -15,6 +15,14 @@ import java.util.List;
  * @date 2020-01-05
  */
 public interface IGameOrderStatService extends IService<GameOrder> {
+
+    /**
+     * 付费金额总和
+     */
+    BigDecimal serverRangeAmount(int serverId, Date start, Date end);
+
+    BigDecimal channelRangeAmount(String channel, Date start, Date end);
+
     /**
      * 付费金额总和
      */

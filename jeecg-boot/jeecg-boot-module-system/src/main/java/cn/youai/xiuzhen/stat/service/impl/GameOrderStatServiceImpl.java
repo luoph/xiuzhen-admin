@@ -30,6 +30,16 @@ import java.util.*;
 public class GameOrderStatServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder> implements IGameOrderStatService {
 
     @Override
+    public BigDecimal serverRangeAmount(int serverId, Date start, Date end) {
+        return getBaseMapper().serverRangeAmount(serverId, start, end);
+    }
+
+    @Override
+    public BigDecimal channelRangeAmount(String channel, Date start, Date end) {
+        return getBaseMapper().channelRangeAmount(channel, start, end);
+    }
+
+    @Override
     public BigDecimal serverPayAmount(int serverId, Date date) {
         return getBaseMapper().serverPayAmount(serverId, date);
     }

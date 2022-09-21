@@ -6,16 +6,19 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="10" :sm="8">
             <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -37,29 +40,28 @@
       >
       </a-table>
     </div>
-
-    <payOrderBill-modal ref="modalForm" @ok="modalFormOk"></payOrderBill-modal>
   </a-card>
 </template>
 
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {getAction} from '@/api/manage';
+import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
+import {filterObj} from "@/utils/util";
 
 export default {
-  name: 'PayOrderBillList',
+  name: 'GameStatServerBill',
+  description: '服务器流水',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
+    ChannelServerSelector,
     getAction
   },
   data() {
     return {
-      description: '服务器流水',
-      // 表头
+      timeout: 90000,
       columns: [
         {
           title: '#',
@@ -72,23 +74,44 @@ export default {
           }
         },
         {
+          title: '渠道',
+          dataIndex: 'channel',
+          width: '80',
+          align: 'center',
+        },
+        {
+          title: '区服',
+          dataIndex: 'serverId',
+          width: '80',
+          align: 'center',
+          customRender: function (text) {
+            return text === 0 ? '全部' : text;
+          }
+        },
+        {
           title: '开始时间',
           align: 'center',
-          dataIndex: 'beginTime'
+          dataIndex: 'startDate',
+          customRender: function (text) {
+            return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+          }
         },
         {
           title: '结束时间',
           align: 'center',
-          dataIndex: 'endTime'
+          dataIndex: 'endDate',
+          customRender: function (text) {
+            return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+          }
         },
         {
           title: '流水总额',
           align: 'center',
-          dataIndex: 'billSum'
+          dataIndex: 'totalAmount'
         }
       ],
       url: {
-        list: 'game/payOrderBill/list'
+        list: 'game/stat/serverBill/list'
       },
       dictOptions: {}
     };
@@ -99,36 +122,30 @@ export default {
     }
   },
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (channel) {
+      this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function (value, dateStr) {
-      this.queryParam.payTimeBegin = dateStr[0];
-      this.queryParam.payTimeEnd = dateStr[1];
+    getQueryParams() {
+      console.log(this.queryParam.countDateRange);
+      const param = Object.assign({}, this.queryParam, this.isorter);
+      param.pageNo = this.ipagination.current;
+      param.pageSize = this.ipagination.pageSize;
+      // 范围参数不传递后台
+      delete param.countDateRange;
+      return filterObj(param);
     },
-    searchQuery() {
-      let param = {
-        channelId: this.queryParam.channelId,
-        serverId: this.queryParam.serverId,
-        payTimeBegin: this.queryParam.payTimeBegin,
-        payTimeEnd: this.queryParam.payTimeEnd,
-        pageNo: this.ipagination.current,
-        pageSize: this.ipagination.pageSize
-      };
-      getAction(this.url.list, param).then(res => {
-        if (res.success) {
-          this.dataSource = res.result.records;
-          this.ipagination.current = res.result.current;
-          this.ipagination.size = res.result.size.toString();
-          this.ipagination.total = res.result.total;
-          this.ipagination.pages = res.result.pages;
-        } else {
-          this.$message.error(res.message);
-        }
-      });
+    searchReset() {
+      this.queryParam = {}
+      this.$refs.channelServerSelector.reset();
+      this.loadData(1);
+    },
+    onDateChange: function (value, dateString) {
+      console.log(dateString[0], dateString[1]);
+      this.queryParam.countDate_begin = dateString[0];
+      this.queryParam.countDate_end = dateString[1];
     }
   }
 };
