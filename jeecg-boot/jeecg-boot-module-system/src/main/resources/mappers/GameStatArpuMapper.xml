@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.GameStatArpuMapper">
+
+    <select id="queryServerArpu" resultType="cn.youai.xiuzhen.stat.entity.GameStatArpu">
+        <![CDATA[
+        SELECT #{countDate} AS `count_date`,
+               #{serverId} AS `server_id`,
+
+               -- 登录玩家数
+               IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))
+                       FROM `log_account` l
+                       LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                            AND l.`create_date` = DATE(#{countDate}) AND l.`type` = 2), 0) AS login_num,
+
+               -- 累计玩家数
+               IFNULL((SELECT COUNT(DISTINCT(p.`player_id`))
+                       FROM `game_player` p
+                       WHERE p.`server_id` = #{serverId}
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS player_num,
+
+               -- 新增玩家数
+               IFNULL((SELECT COUNT(DISTINCT(p.`player_id`))
+                       FROM `game_player` p
+                       WHERE p.`server_id` = #{serverId}
+                         AND p.`create_time` >= DATE(#{countDate})
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS new_player_num,
+
+               -- 新增玩家支付数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                         AND p.`create_time` >= DATE(#{countDate})
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS new_pay_num,
+
+               -- 新增玩家支付金额
+               IFNULL((SELECT SUM(o.`pay_amount`)
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)
+                         AND p.`create_time` >= DATE(#{countDate})
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS new_pay_amount,
+
+               -- 当日支付玩家数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS pay_num,
+
+               -- 累计支付用户数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                        AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS total_pay_num,
+
+               -- 活跃玩家付费数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       LEFT JOIN `log_account` l ON o.`player_id` = l.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                         AND l.`create_date` = DATE(#{countDate}) AND l.`type` = 2
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS login_pay_num,
+
+               -- 当日充值金额
+               IFNULL((SELECT SUM(o.`pay_amount`)
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS pay_amount,
+
+               -- 累计充值金额
+               IFNULL((SELECT SUM(o.`pay_amount`)
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`server_id` = #{serverId}
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS total_amount,
+
+                -- 二次付费玩家数
+               IFNULL((SELECT COUNT(*) FROM (
+                        SELECT COUNT(o.`player_id`) AS payNum
+                        FROM `game_order` o
+                        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                        WHERE p.`server_id` = #{serverId}
+                          AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)
+                        GROUP BY o.`player_id`) c WHERE c.`payNum` >= 2), 0) AS double_pay_num;
+        ]]>
+    </select>
+
+
+    <select id="queryChannelArpu" resultType="cn.youai.xiuzhen.stat.entity.GameStatArpu">
+        <![CDATA[
+        SELECT #{countDate} AS `count_date`,
+               #{channel} AS `channel`,
+
+               -- 登录玩家数
+               IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))
+                       FROM `log_account` l
+                       LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                       WHERE p.`channel` = #{channel}
+                            AND l.`create_date` = DATE(#{countDate}) AND l.`type` = 2), 0) AS login_num,
+
+               -- 累计玩家数
+               IFNULL((SELECT COUNT(DISTINCT(p.`player_id`))
+                       FROM `game_player` p
+                       WHERE p.`channel` = #{channel}
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS player_num,
+
+               -- 新增玩家数
+               IFNULL((SELECT COUNT(DISTINCT(p.`player_id`))
+                       FROM `game_player` p
+                       WHERE p.`channel` = #{channel}
+                         AND p.`create_time` >= DATE(#{countDate})
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS new_player_num,
+
+               -- 新增玩家支付数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`channel` = #{channel}
+                         AND p.`create_time` >= DATE(#{countDate})
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS new_pay_num,
+
+               -- 新增玩家支付金额
+               IFNULL((SELECT SUM(o.`pay_amount`)
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`channel` = #{channel}
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)
+                         AND p.`create_time` >= DATE(#{countDate})
+                         AND p.`create_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS new_pay_amount,
+
+               -- 当日支付玩家数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`channel` = #{channel}
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS pay_num,
+
+               -- 累计支付用户数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`channel` = #{channel}
+                        AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS total_pay_num,
+
+               -- 活跃玩家付费数
+               IFNULL((SELECT COUNT(DISTINCT(o.`player_id`))
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       LEFT JOIN `log_account` l ON o.`player_id` = l.`player_id`
+                       WHERE p.`channel` = #{channel}
+                         AND l.`create_date` = DATE(#{countDate}) AND l.`type` = 2
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS login_pay_num,
+
+               -- 当日充值金额
+               IFNULL((SELECT SUM(o.`pay_amount`)
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`channel` = #{channel}
+                         AND o.`pay_time` >= DATE(#{countDate})
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS pay_amount,
+
+               -- 累计充值金额
+               IFNULL((SELECT SUM(o.`pay_amount`)
+                       FROM `game_order` o
+                       LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                       WHERE p.`channel` = #{channel}
+                         AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)), 0) AS total_amount,
+
+                -- 二次付费玩家数
+               IFNULL((SELECT COUNT(*) FROM (
+                        SELECT COUNT(o.`player_id`) AS payNum
+                        FROM `game_order` o
+                        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                        WHERE p.`channel` = #{channel}
+                          AND o.`pay_time` < DATE_ADD(DATE(#{countDate}), INTERVAL 1 DAY)
+                        GROUP BY o.`player_id`) c WHERE c.`payNum` >= 2), 0) AS double_pay_num;
+        ]]>
+    </select>
+
+
+</mapper>

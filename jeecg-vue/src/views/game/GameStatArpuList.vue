@@ -6,28 +6,20 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="10" :sm="8">
-            <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+          <a-col :md="8" :sm="8">
+            <a-form-item label="日期">
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
-          <a-col :md="5" :sm="5">
-            <a-form-item label="选择就近天数">
-              <a-select placeholder="天数" v-model="queryParam.days">
-                <a-select-option :value="0">不选择天数</a-select-option>
-                <a-select-option :value="7">近7天</a-select-option>
-                <a-select-option :value="15">近15天</a-select-option>
-                <a-select-option :value="30">近一个月</a-select-option>
-                <a-select-option :value="60">近两个月</a-select-option>
-              </a-select>
-            </a-form-item>
-          </a-col>
-
           <a-col :md="4" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
+              <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
         </a-row>
@@ -60,21 +52,26 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {getAction} from '@/api/manage';
+import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
+import {filterObj} from "@/utils/util";
 
 export default {
   name: 'GameDataReportCountList',
+  description: 'ARPU统计',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
+    ChannelServerSelector,
     getAction
   },
   data() {
     return {
-      description: '数据报表管理页面',
-      // 表头
+      isorter: {
+        column: 'countDate',
+        order: 'desc'
+      },
+      timeout: 90000,
       columns: [
         {
           title: '#',
@@ -88,8 +85,27 @@ export default {
         },
         {
           title: '日期',
+          dataIndex: 'countDate',
+          width: '120',
           align: 'center',
-          dataIndex: 'dateStr'
+          customRender: function (text) {
+            return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+          }
+        },
+        {
+          title: '渠道',
+          dataIndex: 'channel',
+          width: '80',
+          align: 'center',
+        },
+        {
+          title: '区服',
+          dataIndex: 'serverId',
+          width: '80',
+          align: 'center',
+          customRender: function (text) {
+            return text === 0 ? '全部' : text;
+          }
         },
         {
           title: '活跃玩家',
@@ -97,7 +113,7 @@ export default {
           dataIndex: 'loginNum'
         },
         {
-          title: '活跃付费数',
+          title: '付费数',
           align: 'center',
           dataIndex: 'payNum'
         },
@@ -105,8 +121,8 @@ export default {
           title: '活跃付费率',
           align: 'center',
           dataIndex: 'payRate',
-          customRender: function (text) {
-            return text + '%';
+          customRender: (text, record) => {
+            return this.countRate(record.loginPayNum, record.loginNum);
           }
         },
         {
@@ -127,40 +143,40 @@ export default {
         {
           title: '新增玩家',
           align: 'center',
-          dataIndex: 'addNum'
+          dataIndex: 'newPlayerNum'
         },
         {
           title: '新增付费数',
           align: 'center',
-          dataIndex: 'addPayNum'
+          dataIndex: 'newPayNum'
         },
         {
           title: '新增付费率',
           align: 'center',
-          dataIndex: 'addPayRate',
-          customRender: function (text) {
-            return text + '%';
+          dataIndex: 'newPayRate',
+          customRender: (text, record) => {
+            return this.countRate(record.newPayNum, record.newPlayerNum);
           }
         },
         {
           title: '新增充值金额',
           align: 'center',
-          dataIndex: 'addPayAmount'
+          dataIndex: 'newPayAmount'
         },
         {
           title: '新增ARPU',
           align: 'center',
-          dataIndex: 'addArpu'
+          dataIndex: 'newArpu'
         },
         {
           title: '新增ARPPU',
           align: 'center',
-          dataIndex: 'addArppu'
+          dataIndex: 'newArppu'
         },
         {
-          title: '老玩家',
+          title: '老玩家数',
           align: 'center',
-          dataIndex: 'oldNum'
+          dataIndex: 'oldPlayerNum'
         },
         {
           title: '老玩家付费数',
@@ -171,8 +187,8 @@ export default {
           title: '老玩家付费率',
           align: 'center',
           dataIndex: 'oldPayRate',
-          customRender: function (text) {
-            return text + '%';
+          customRender: (text, record) => {
+            return this.countRate(record.oldPayNum, record.oldPlayerNum);
           }
         },
         {
@@ -192,11 +208,8 @@ export default {
         }
       ],
       url: {
-        list: 'game/gameDataReportCount/list',
-        delete: 'game/gameDataReportCount/delete',
-        deleteBatch: 'game/gameDataReportCount/deleteBatch',
-        exportXlsUrl: 'game/gameDataReportCount/exportXls',
-        importExcelUrl: 'game/gameDataReportCount/importExcel'
+        list: 'game/stat/arpu/list',
+        update: 'game/stat/arpu/update'
       },
       dictOptions: {}
     };
@@ -207,37 +220,53 @@ export default {
     }
   },
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (channel) {
+      this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onDateChange: function (value, dateStr) {
-      this.queryParam.rangeDateBegin = dateStr[0];
-      this.queryParam.rangeDateEnd = dateStr[1];
+    getQueryParams() {
+      console.log(this.queryParam.countDateRange);
+      const param = Object.assign({}, this.queryParam, this.isorter);
+      param.pageNo = this.ipagination.current;
+      param.pageSize = this.ipagination.pageSize;
+      // 范围参数不传递后台
+      delete param.countDateRange;
+      return filterObj(param);
     },
-    searchQuery() {
-      let param = {
-        days: this.queryParam.days,
-        channelId: this.queryParam.channelId,
-        serverId: this.queryParam.serverId,
-        rangeDateBegin: this.queryParam.rangeDateBegin,
-        rangeDateEnd: this.queryParam.rangeDateEnd,
-        pageNo: this.ipagination.current,
-        pageSize: this.ipagination.pageSize
-      };
-      getAction(this.url.list, param).then(res => {
+    searchReset() {
+      this.queryParam = {}
+      this.$refs.channelServerSelector.reset();
+      this.loadData(1);
+    },
+    onDateChange: function (value, dateString) {
+      console.log(dateString[0], dateString[1]);
+      this.queryParam.countDate_begin = dateString[0];
+      this.queryParam.countDate_end = dateString[1];
+    },
+    onClickUpdate() {
+      // 查询条件
+      const params = this.getQueryParams();
+      this.loading = true;
+      getAction(this.url.update, params, this.timeout).then((res) => {
         if (res.success) {
-          this.dataSource = res.result.records;
-          this.ipagination.current = res.result.current;
-          this.ipagination.size = res.result.size.toString();
-          this.ipagination.total = res.result.total;
-          this.ipagination.pages = res.result.pages;
+          this.$message.success(res.message)
         } else {
-          this.$message.error(res.message);
+          this.$message.warning(res.message)
         }
-      });
+      }).finally(() => {
+        this.loading = false
+        this.searchQuery();
+      })
+    },
+    countRate: function (n, r) {
+      if (n === null || n === undefined) {
+        return '--';
+      }
+
+      let rate = r > 0 ? parseFloat(n / r) : 0;
+      return Number(parseFloat(rate * 100).toFixed(2)) + '%';
     }
   }
 };
