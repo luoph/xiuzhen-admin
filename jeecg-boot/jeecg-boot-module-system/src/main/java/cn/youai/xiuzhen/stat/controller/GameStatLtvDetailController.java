@@ -4,7 +4,7 @@ import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.stat.entity.GameStatLtvDetail;
 import cn.youai.xiuzhen.stat.service.IGameStatLtvDetailService;
-import cn.youai.xiuzhen.utils.QueryUtils;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiOperation;
@@ -63,7 +63,7 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
         // 服务器空校验
         if (StringUtils.isEmpty(entity.getChannel())
                 && (entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.ok("请选择渠道或者区服id");
+            return Result.error("请选择渠道或者区服id");
         }
 
         // 如果指定 游戏服id，则清除渠道信息
@@ -74,7 +74,7 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
         // 刷新统计数据
         Date endDate = DateUtils.todayDate();
         Date startDate = DateUtils.addDays(endDate, -2);
-        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
         Date current = dateRange.getStart();
 
         Date todayDate = DateUtils.todayDate();

@@ -1,15 +1,20 @@
 package cn.youai.xiuzhen.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
+import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.mapper.GameChannelServerMapper;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,12 +38,11 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
     }
 
     @Override
-    public boolean isValidChannelWithServer(int channelId, int serverId) {
-        LambdaQueryWrapper<GameChannelServer> queryWrapper = Wrappers.<GameChannelServer>lambdaQuery()
-                .eq(GameChannelServer::getChannelId, channelId)
-                .eq(GameChannelServer::getServerId, serverId);
-        GameChannelServer channelServer = getOne(queryWrapper);
-        // 绑定关系正常
-        return channelServer != null && channelServer.getDelFlag() == 0 && channelServer.getNoNeedCount() == 0;
+    public List<GameServerVO> filterServerList(String channel, List<Integer> serverIds) {
+        if (CollUtil.isEmpty(serverIds)) {
+            return new ArrayList<>();
+        }
+        return getBaseMapper().filterServerList(channel, serverIds);
     }
+
 }

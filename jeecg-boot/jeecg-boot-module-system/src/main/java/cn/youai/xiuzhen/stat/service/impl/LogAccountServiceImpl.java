@@ -17,6 +17,7 @@ import cn.youai.xiuzhen.stat.service.ILogAccountService;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,16 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     @Override
     public BigDecimal queryDau(Date getTime) {
         return getBaseMapper().queryDau(getTime);
+    }
+
+    @Override
+    public List<Integer> selectRunningServerIds(Date countDate) {
+        return getBaseMapper().selectRunningServerIds(countDate);
+    }
+
+    @Override
+    public List<Integer> selectRunningServerIdsByRange(Date startDate, Date endDate) {
+        return getBaseMapper().selectRunningServerIdsByRange(startDate, endDate);
     }
 
     @Override

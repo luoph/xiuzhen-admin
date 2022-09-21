@@ -1,14 +1,13 @@
 package cn.youai.xiuzhen.stat.controller;
 
 import cn.youai.basics.model.DateRange;
-import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.RoleType;
 import cn.youai.xiuzhen.stat.entity.GameStat30Days;
 import cn.youai.xiuzhen.stat.entity.GameStatLtvDetail;
 import cn.youai.xiuzhen.stat.entity.GameStatRemainDetail;
 import cn.youai.xiuzhen.stat.service.IGameStatLtvDetailService;
 import cn.youai.xiuzhen.stat.service.IGameStatRemainDetailService;
-import cn.youai.xiuzhen.utils.QueryUtils;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.baomidou.mybatisplus.core.toolkit.Wrappers.lambdaQuery;
@@ -72,7 +70,7 @@ public class GameStat30DaysController {
 
     @SuppressWarnings("DuplicatedCode")
     private IPage<GameStat30Days> pageList(int pageNo, int pageSize, GameStat30Days entity, HttpServletRequest req) {
-        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate");
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
         int type = entity.getType() != null ? entity.getType() : 1;
         if (type == 1) {
             LambdaQueryWrapper<GameStatRemainDetail> query = Wrappers.<GameStatRemainDetail>lambdaQuery()

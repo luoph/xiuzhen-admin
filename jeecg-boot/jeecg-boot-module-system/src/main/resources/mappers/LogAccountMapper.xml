@@ -10,6 +10,21 @@
           AND `type` = 2
     </select>
 
+    <select id="selectRunningServerIds" resultType="java.lang.Integer">
+        SELECT DISTINCT(l.`server_id`)
+        FROM `log_account` l
+        WHERE l.`create_date` = DATE(#{countDate})
+    </select>
+
+    <select id="selectRunningServerIdsByRange" resultType="java.lang.Integer">
+        <![CDATA[
+        SELECT DISTINCT(l.`server_id`)
+        FROM `log_account` l
+        WHERE l.`create_date` >= DATE(#{startDate})
+          AND l.`create_date` <= DATE(#{endDate})
+        ]]>
+    </select>
+
     <select id="queryPlayerIp" resultType="string">
         SELECT `ip`
         FROM `log_account`

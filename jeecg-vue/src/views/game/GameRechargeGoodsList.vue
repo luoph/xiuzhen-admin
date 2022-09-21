@@ -4,36 +4,65 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <a-form-item label="商品ID">
               <a-input placeholder="请输入商品ID" v-model="queryParam.goodsId"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <a-form-item label="SKU">
               <j-input placeholder="请输入sku模糊查询" v-model="queryParam.sku"></j-input>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <a-form-item label="商品名称">
               <j-input placeholder="商品名称模糊查询" v-model="queryParam.name"></j-input>
             </a-form-item>
           </a-col>
-          <template v-if="toggleSearchStatus">
-            <a-col :md="4" :sm="8">
-              <a-form-item label="单价">
-                <a-input placeholder="请输入单价" v-model="queryParam.price"></a-input>
-              </a-form-item>
-            </a-col>
-          </template>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="商品组别">
+              <a-select placeholder="请选择商品组别" v-model="queryParam.goodsGroup" initialValue="1">
+                <a-select-option :value="1">直充</a-select-option>
+                <a-select-option :value="2">礼包</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="商品类型">
+              <a-select placeholder="请选择商品类型" v-model="queryParam.goodsType" initialValue="1">
+                <a-select-option :value="0">普通类型/购买仙玉</a-select-option>
+                <a-select-option :value="1">仙职</a-select-option>
+                <a-select-option :value="2">月卡</a-select-option>
+                <a-select-option :value="3">每日礼包</a-select-option>
+                <a-select-option :value="4">首充</a-select-option>
+                <a-select-option :value="5">周卡</a-select-option>
+                <a-select-option :value="6">六道剑阵</a-select-option>
+                <a-select-option :value="7">招财进宝/仙力护符</a-select-option>
+                <a-select-option :value="8">高级天道令</a-select-option>
+                <a-select-option :value="9">节日派对</a-select-option>
+                <a-select-option :value="10">直购礼包</a-select-option>
+                <a-select-option :value="11">精准礼包</a-select-option>
+                <a-select-option :value="12">结义礼包</a-select-option>
+                <a-select-option :value="13">自选礼包</a-select-option>
+                <a-select-option :value="14">灵兽抽奖-礼包</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+<!--          <template v-if="toggleSearchStatus">-->
+<!--            <a-col :md="4" :sm="8">-->
+<!--              <a-form-item label="单价">-->
+<!--                <a-input placeholder="请输入单价" v-model="queryParam.price"></a-input>-->
+<!--              </a-form-item>-->
+<!--            </a-col>-->
+<!--          </template>-->
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-              <a style="margin-left: 8px" @click="handleToggleSearch">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
+<!--              <a style="margin-left: 8px" @click="handleToggleSearch">-->
+<!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
+<!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
+<!--              </a>-->
             </span>
           </a-col>
         </a-row>
@@ -43,7 +72,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('game_recharge_goods')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('充值商品')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
                 @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
@@ -174,7 +203,23 @@ export default {
           dataIndex: 'name'
         },
         {
-          title: '商品分类',
+          title: '商品组别',
+          align: 'center',
+          width: 80,
+          dataIndex: 'goodsGroup',
+          customRender: value => {
+            let text = '--';
+            if (value === 0) {
+            } else if (value === 1) {
+              text = '直充';
+            } else if (value === 2) {
+              text = '礼包';
+            }
+            return text;
+          }
+        },
+        {
+          title: '商品类型',
           align: 'center',
           width: 120,
           dataIndex: 'goodsType',
@@ -201,13 +246,15 @@ export default {
             } else if (value === 9) {
               text = '9-节日派对';
             } else if (value === 10) {
-              text = '10-节日直购礼包';
+              text = '10-直购礼包';
             } else if (value === 11) {
               text = '11-精准礼包';
             } else if (value === 12) {
               text = '12-结义礼包';
             } else if (value === 13) {
               text = '13-自选特惠';
+            } else if (value === 14) {
+              text = '14-灵兽抽奖礼包';
             }
             return text;
           }

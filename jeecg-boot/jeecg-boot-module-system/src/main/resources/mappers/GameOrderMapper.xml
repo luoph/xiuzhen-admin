@@ -51,22 +51,41 @@
           AND DATE (a.`pay_time`) = DATE (#{payDate});
     </select>
 
-    <select id="getStatPlayerNumAmountByDates" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
-        <foreach collection="dateList" item="date" index="index">
-            <if test="index != 0">
-                UNION ALL
-            </if>
-            SELECT #{index} as `id`, a.`player_id`, SUM(a.`pay_amount`) AS `pay_amount`
-            FROM `game_order` a
-            where a.`order_status` &gt; 0
-            AND a.`create_time` &gt; #{date.startTime}
-            AND a.`create_time` &lt; #{date.endTime}
-            <if test="serverId > 0">
-                AND a.`server_id` = #{serverId}
-            </if>
-            GROUP BY a.`player_id`
-        </foreach>
+    <!-- 充值统计 -->
+    <select id="queryOrderStatByRange" resultType="cn.youai.xiuzhen.stat.entity.GameStatOrder">
+        <![CDATA[
+        SELECT #{serverNum} AS `server_num`,
+        #{startDate} AS `start_date`,
+        #{endDate} AS `end_date`,
 
+        -- 活跃用户数
+        (SELECT IFNULL(COUNT(DISTINCT(l.`player_id`)), 0)
+        FROM `log_account` l
+        LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        WHERE l.`create_date` >= DATE(#{startDate})
+        AND l.`create_date` <= DATE(#{endDate})
+        AND l.`type` = 2
+        AND p.`server_id` IN (#{serverIds})
+        ) AS `active_num`,
+
+        -- 付费用户数
+        (SELECT IFNULL(COUNT(DISTINCT(o.`player_id`)), 0)
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE o.`pay_time` >= DATE(#{startDate})
+        AND o.`pay_time` < DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        AND p.`server_id` IN (#{serverIds})
+        ) AS `pay_num`,
+
+        -- 付费金额
+        (SELECT IFNULL(SUM(o.`pay_amount`), 0)
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE o.`pay_time` >= DATE(#{startDate})
+        AND o.`pay_time` < DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        AND p.`server_id` IN (#{serverIds})
+        ) AS `pay_amount`;
+        ]]>
     </select>
 
     <select id="getGameOrderRangeDate" resultType="cn.youai.xiuzhen.game.entity.MergeServerVO">
@@ -76,4 +95,61 @@
         <if test="null != endTime">and create_time &lt;= #{endTime}</if>
         group by server_id
     </select>
+
+    <select id="queryServerStatRechargeGoodsSum" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeSum">
+        SELECT IFNULL(SUM(o.`pay_amount`), 0) AS `total_amount`,
+        IFNULL(COUNT(o.`id`), 0) AS `total_num`,
+        IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `total_player_num`
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
+        WHERE p.`server_id` = #{serverId}
+        AND o.`pay_time` &gt;= DATE(#{startDate})
+        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
+    </select>
+
+    <select id="queryChannelStatRechargeGoodsSum" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeSum">
+        SELECT IFNULL(SUM(o.`pay_amount`), 0) AS `total_amount`,
+               IFNULL(COUNT(o.`id`), 0) AS `total_num`,
+               IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `total_player_num`
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
+        WHERE p.`channel` = #{channel}
+        AND o.`pay_time` &gt;= DATE(#{startDate})
+        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
+    </select>
+
+    <select id="queryServerStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">
+        SELECT o.`product_id` AS `product_id`,
+               IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
+               IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
+               IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `player_num`
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
+        WHERE p.`server_id` = #{serverId}
+        AND o.`pay_time` &gt;= DATE(#{startDate})
+        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
+        GROUP BY o.`product_id`
+    </select>
+
+    <select id="queryChannelStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">
+        SELECT o.`product_id` AS `product_id`,
+               IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
+               IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
+               IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `player_num`
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
+        WHERE p.`channel` = #{channel}
+        AND o.`pay_time` &gt;= DATE(#{startDate})
+        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
+        GROUP BY o.`product_id`
+    </select>
+
 </mapper>

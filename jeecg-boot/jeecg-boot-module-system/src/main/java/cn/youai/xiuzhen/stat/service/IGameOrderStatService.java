@@ -2,6 +2,8 @@ package cn.youai.xiuzhen.stat.service;
 
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.math.BigDecimal;
@@ -40,13 +42,14 @@ public interface IGameOrderStatService extends IService<GameOrder> {
      */
     int channelPayPlayerNum(String channel, Date date);
 
-    /**
-     * 统计日期内，付费玩家数，付费金额
-     *
-     * @param serverId 服务器id
-     * @param dateList 统计日期列表（有序）
-     * @param type     统计类型 1-按天 2-按月 3-按年
-     * @return Map<String, GameStatOrder> 日期-
-     */
-    List<GameStatOrder> statOrderByDates(int serverId, List<Date> dateList, int type);
+    GameStatOrder queryOrderStatByRange(List<Integer> serverIds, Date startDate, Date endDate);
+
+    GameStatRechargeSum queryServerStatRechargeGoodsSum(int serverId, int goodsGroup, Date start, Date end);
+
+    GameStatRechargeSum queryChannelStatRechargeGoodsSum(String channel, int goodsGroup, Date start, Date end);
+
+    List<GameStatRechargeGoods> queryServerStatRechargeGoods(int serverId, int goodsGroup, Date start, Date end);
+
+    List<GameStatRechargeGoods> queryChannelStatRechargeGoods(String channel, int goodsGroup, Date start, Date end);
+
 }

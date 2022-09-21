@@ -5,7 +5,7 @@ import cn.youai.basics.model.DateRange;
 import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.ServerBill;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
-import cn.youai.xiuzhen.utils.QueryUtils;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +45,10 @@ public class GameStatServerBillController {
                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                           HttpServletRequest req) {
         // 服务器空校验
+        Page<ServerBill> page = new Page<>(pageNo, pageSize);
         if (StringUtils.isEmpty(entity.getChannel())
                 && (entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.ok("请选择渠道或者区服id");
+            return Result.ok(page);
         }
 
         // 如果指定 游戏服id，则清除渠道信息
@@ -55,7 +56,6 @@ public class GameStatServerBillController {
             entity.setChannel(null);
         }
 
-        Page<ServerBill> page = new Page<>(pageNo, pageSize);
         IPage<ServerBill> pageList = pageList(page, entity, req);
         return Result.ok(pageList);
     }
@@ -70,7 +70,7 @@ public class GameStatServerBillController {
 
     private IPage<ServerBill> pageList(Page<ServerBill> page, ServerBill entity, HttpServletRequest req) {
         // 默认查询当天
-        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "countDate");
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
 
         BigDecimal amount = BigDecimal.ZERO;
         ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
@@ -86,8 +86,6 @@ public class GameStatServerBillController {
         serverBill.setTotalAmount(amount);
 
         List<ServerBill> records = CollUtil.newArrayList(serverBill);
-        IPage<ServerBill> pageList = new Page<>();
-        pageList.setPages(1).setTotal(1).setCurrent(1).setSize(1).setCurrent(1).setRecords(records);
-        return pageList;
+        return PageQueryUtils.makePage(records);
     }
 }

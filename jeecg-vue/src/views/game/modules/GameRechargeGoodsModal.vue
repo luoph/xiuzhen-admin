@@ -47,8 +47,14 @@
         <a-form-item label="首次额外赠送" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['addition']" rows="4" placeholder="首次额外赠送"/>
         </a-form-item>
-        <a-form-item label="商品分类" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="选择商品分类" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0">
+        <a-form-item label="商品组别" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select placeholder="选择商品组别" v-decorator="['goodsGroup', validatorRules.goodsGroup]" initialValue="1">
+            <a-select-option :value="1">直充</a-select-option>
+            <a-select-option :value="2">礼包</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="商品类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select placeholder="选择商品类型" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0">
             <a-select-option :value="0">0-普通类型</a-select-option>
             <a-select-option :value="1">1-仙职</a-select-option>
             <a-select-option :value="2">2-月卡</a-select-option>
@@ -130,13 +136,14 @@ export default {
         discount: {rules: [{required: false, message: '请输入折扣价格!'}]},
         name: {rules: [{required: true, message: '请输入商品名称!'}]},
         items: {rules: [{required: false, message: '请输入奖励列表!'}]},
-        goodsType: {rules: [{required: true, message: '请输入充值分类!'}]},
+        goodsType: {rules: [{required: true, message: '请选择商品类型!'}]},
+        goodsGroup: {rules: [{required: true, message: '请选择商品组别!'}]},
         amountStat: {rules: [{required: true, message: '请输入是否计入累充！'}]},
         exchange: {rules: [{required: true, message: '请输入游戏币与人民币(元)的兑换比例!'}]},
         recommend: {rules: [{required: false, message: '请输入特殊标记前端用!'}]},
         goodsId: {rules: [{required: true, message: '请输入商品Id'}]},
-        sku: {rules: [{required: true, message: '请输入sku'}]},
-        webSku: {rules: [{required: false, message: '请输入网页支付Sku'}]},
+        sku: {rules: [{required: true, message: '请输入SKU'}]},
+        webSku: {rules: [{required: false, message: '请输入网页支付SKU'}]},
         localPrice: {rules: [{required: false, message: '请输入当地支付价格（内购）'}]},
         webLocalPrice: {rules: [{required: false, message: '请输入当地支付价格（网页）'}]},
         displayPrice: {rules: [{required: false, message: '请输入当地支付价格（内购）'}]},
@@ -170,6 +177,7 @@ export default {
             'name',
             'items',
             'goodsType',
+            'goodsGroup',
             'amountStat',
             'addition',
             'exchange',
@@ -235,6 +243,7 @@ export default {
           'name',
           'items',
           'goodsType',
+          'goodsGroup',
           'amountStat',
           'addition',
           'exchange',

@@ -49,16 +49,13 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 
     /**
      * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
      */
-    @AutoLog(value = "game_recharge_goods-列表查询")
+    @AutoLog(value = "充值商品-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameRechargeGoods entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryPageList(GameRechargeGoods entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -68,7 +65,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
      * @param entity 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "game_recharge_goods-添加")
+    @AutoLog(value = "充值商品-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameRechargeGoods entity) {
         return super.add(entity);
@@ -80,7 +77,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
      * @param entity 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "game_recharge_goods-编辑")
+    @AutoLog(value = "充值商品-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameRechargeGoods entity) {
         return super.edit(entity);
@@ -92,7 +89,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "game_recharge_goods-通过id删除")
+    @AutoLog(value = "充值商品-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
@@ -104,7 +101,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
      * @param ids id列表，使用','分割的字符串
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "game_recharge_goods-批量删除")
+    @AutoLog(value = "充值商品-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
@@ -116,7 +113,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
      * @param id 实体id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "game_recharge_goods-通过id查询")
+    @AutoLog(value = "充值商品-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
@@ -127,7 +124,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
      */
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameRechargeGoods entity) {
-        return super.exportXls(request, entity, GameRechargeGoods.class, "game_recharge_goods");
+        return super.exportXls(request, entity, GameRechargeGoods.class, "充值商品");
     }
 
     /**
@@ -174,9 +171,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
 
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
-
         String fileName = tempFolder + File.separator + GameRechargeGoods.class.getSimpleName() + ".xls";
-
         List<GameRechargeGoods> goodsList = ExcelUtils.importFromExcelText(vo.getText(), fileName, GameRechargeGoods.class);
         if (CollUtil.isNotEmpty(goodsList)) {
             for (GameRechargeGoods goods : goodsList) {

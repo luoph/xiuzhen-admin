@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.mapper;
 
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
+import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,5 +31,9 @@ public interface GameChannelServerMapper extends BaseMapper<GameChannelServer> {
      * @return 游戏服列表
      */
     List<GameServerVO> selectServerList(@Param("channel") String channel);
+
+    List<GameServerVO> filterServerList(@Param("channel") String channel, @Param("serverIds") List<Integer> serverIds);
+
+    List<GameServer> selectServerListByChannel(@Param("channel") String channel, @Param("serverId") Integer serverId);
 
 }

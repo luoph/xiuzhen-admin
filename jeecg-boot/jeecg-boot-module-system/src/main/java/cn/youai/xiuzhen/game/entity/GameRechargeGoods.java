@@ -53,11 +53,18 @@ public class GameRechargeGoods extends BaseEntity {
     private java.lang.String items;
 
     /**
-     * 商品分类
+     * 商品类型
      */
-    @Excel(name = "商品分类", width = 15)
-    @ExcelProperty(value = "商品分类")
+    @Excel(name = "商品类型", width = 15)
+    @ExcelProperty(value = "商品类型")
     private java.lang.Integer goodsType;
+
+    /**
+     * 商品组别
+     */
+    @Excel(name = "商品组别", width = 15)
+    @ExcelProperty(value = "商品组别")
+    private java.lang.Integer goodsGroup;
 
     /**
      * SKU

@@ -2,17 +2,20 @@ package cn.youai.xiuzhen.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.youai.basics.model.DateRange;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jeecg.common.system.query.QueryGenerator;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
-public final class QueryUtils {
+public final class PageQueryUtils {
 
-    private QueryUtils() {
+    private PageQueryUtils() {
     }
 
     public static DateRange parseRange(Map<String, String[]> parameterMap, String column, Date defaultStart, Date defaultEnd) {
@@ -33,10 +36,22 @@ public final class QueryUtils {
         return parseRange(parameterMap, column, null, null);
     }
 
-    public static <T> HashSet<Long> extractPlayerIds(List<T> list, ToLongFunction<T> function) {
-        HashSet<Long> playerIds = new HashSet<>(list.size());
-        list.forEach(e -> playerIds.add(function.applyAsLong(e)));
-        return playerIds;
+    public static <T> HashSet<Long> extractIds(List<T> list, ToLongFunction<T> function) {
+        HashSet<Long> result = new HashSet<>(list.size());
+        list.forEach(e -> result.add(function.applyAsLong(e)));
+        return result;
+    }
+
+    public static <T> HashSet<Integer> extractIds(List<T> list, ToIntFunction<T> function) {
+        HashSet<Integer> result = new HashSet<>(list.size());
+        list.forEach(e -> result.add(function.applyAsInt(e)));
+        return result;
+    }
+
+    public static <T> IPage<T> makePage(List<T> records) {
+        IPage<T> pageList = new Page<>();
+        pageList.setPages(1).setCurrent(1).setTotal(records.size()).setRecords(records);
+        return pageList;
     }
 
 }

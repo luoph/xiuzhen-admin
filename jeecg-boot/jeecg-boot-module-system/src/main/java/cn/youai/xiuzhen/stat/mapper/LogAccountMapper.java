@@ -26,6 +26,10 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
 
     BigDecimal queryDau(@Param("getTime") Date getTime);
 
+    List<Integer> selectRunningServerIds(@Param("countDate") Date countDate);
+
+    List<Integer> selectRunningServerIdsByRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
     String queryPlayerIp(@Param("playerId") Long playerId, @Param("createDate") Date createDate);
 
     List<PlayerBehavior> selectBehaviorCount(@Param("serverId") Integer serverId,

@@ -5,7 +5,7 @@ import cn.youai.server.constant.AttrType;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.stat.entity.CombatPowerLog;
 import cn.youai.xiuzhen.stat.service.ILogPlayerService;
-import cn.youai.xiuzhen.utils.QueryUtils;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +57,7 @@ public class CombatPowerLogController {
 
     private IPage<CombatPowerLog> pageList(Page<CombatPowerLog> page, CombatPowerLog entity, HttpServletRequest req) {
         // 默认查询当天
-        DateRange dateRange = QueryUtils.parseRange(req.getParameterMap(), "createTime", DateUtils.todayDate(), DateUtils.todayDate());
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createTime", DateUtils.todayDate(), DateUtils.todayDate());
         IPage<CombatPowerLog> pageList = logPlayerService.selectCombatPowerLogList(page, entity, dateRange);
         pageList.getRecords().forEach(t -> {
             AttrType attrType = AttrType.valueOf(t.getAttrType());

@@ -3,30 +3,28 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
-        <a-row :gutter="24">
-          <a-col :md="12" :sm="16">
+        <a-row :gutter="45">
+          <a-col :md="10" :sm="8">
+            <!--@ = v-on:数据绑定 不是事件-->
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
-            <!-- <game-server-selector @onSelectServer="change" /> -->
           </a-col>
-          <a-col :md="12" :sm="16">
-            <a-form-item label="日期">
+          <a-col :md="4" :sm="8">
+            <a-form-item label="商品分类">
+              <a-select placeholder="请选择商品分类" v-model="queryParam.rechargeGroup" initialValue="0">
+                <a-select-option :value="0">全部</a-select-option>
+                <a-select-option :value="1">直充</a-select-option>
+                <a-select-option :value="2">礼包</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="8" :sm="8">
+            <a-form-item label="统计日期">
               <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
                               :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
-          <a-col :md="12" :sm="16">
-            <a-form-item label="日期范围">
-              <a-radio-group v-model="queryParam.dayType" :default-value="7" @change="onTypeChange">
-                <a-radio :value="0">自定义</a-radio>
-                <a-radio :value="7">近7天</a-radio>
-                <a-radio :value="15">近15天</a-radio>
-                <a-radio :value="30">近1月</a-radio>
-                <a-radio :value="60">近2月</a-radio>
-              </a-radio-group>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
@@ -36,23 +34,17 @@
       </a-form>
     </div>
     <!-- 查询区域-END -->
-    <!-- 操作按钮区域 -->
-    <div class="table-operator">
-      <a-button type="primary" icon="download" @click="handleExportXls('game_stat_order')">导出</a-button>
-    </div>
-
-    <!-- table区域-begin -->
     <div>
       <a-table
         ref="table"
         size="middle"
         bordered
-        :rowKey="record => (record.id != null ? record.id : '0')"
-        :loading="loading"
+        rowKey="id"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
-        :scroll="{ x: 'max-content' }"
+        :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"/>
     </div>
   </a-card>
@@ -60,20 +52,19 @@
 
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import GameServerSelector from '@comp/gameserver/GameServerSelector';
 import JDate from '@/components/jeecg/JDate.vue';
-import {filterObj} from "@/utils/util";
-import moment from 'moment';
+import {getAction} from '@/api/manage';
 import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
+import {filterObj} from "@/utils/util";
 
 export default {
-  name: 'GameStatOrderList',
-  description: '充值统计',
+  name: 'GameStatRechargeGoodsList',
+  description: '直充道具统计',
   mixins: [JeecgListMixin],
   components: {
     JDate,
     ChannelServerSelector,
-    GameServerSelector
+    getAction
   },
   data() {
     return {
@@ -94,63 +85,66 @@ export default {
           }
         },
         {
-          title: '日期',
-          dataIndex: 'statTime',
-          width: '120',
+          title: '充值道具id',
           align: 'center',
+          dataIndex: 'productId'
         },
         {
-          title: '区服数',
+          title: '充值道具名称',
           align: 'center',
-          dataIndex: 'serverNum'
+          dataIndex: 'productName'
         },
         {
-          title: '活跃角色数',
-          align: 'center',
-          dataIndex: 'activeNum'
-        },
-        {
-          title: '付费角色数',
+          title: '消费次数',
           align: 'center',
           dataIndex: 'payNum'
         },
         {
-          title: '付费金额',
+          title: '消费次数比例',
+          align: 'center',
+          dataIndex: 'payNumRate',
+          customRender: (text, record) => {
+            return this.countRate(record.payNum, record.totalNum);
+          }
+        },
+        {
+          title: '消费玩家数',
+          align: 'center',
+          dataIndex: 'playerNum'
+        },
+        {
+          title: '消费玩家比例',
+          align: 'center',
+          dataIndex: 'playerNumRate',
+          customRender: (text, record) => {
+            return this.countRate(record.playerNum, record.totalPlayerNum);
+          }
+        },
+        {
+          title: '消费金额',
           align: 'center',
           dataIndex: 'payAmount'
         },
         {
-          title: '付费率',
+          title: '消费金额比例',
           align: 'center',
-          dataIndex: 'payRate',
+          dataIndex: 'amountRate',
           customRender: (text, record) => {
-            return this.countRate(record.payNum, record.activeNum);
+            return this.countRate(record.payAmount, record.totalAmount);
           }
-        },
-        {
-          title: 'ARPU',
-          align: 'center',
-          dataIndex: 'arpu'
-        },
-        {
-          title: 'ARPPU',
-          align: 'center',
-          dataIndex: 'arppu'
-        },
-        {
-          title: '服均充值',
-          align: 'center',
-          dataIndex: 'averageAmount'
         }
       ],
       url: {
-        list: 'game/stat/order/list',
-        exportXlsUrl: 'game/stat/order/exportXls'
+        list: 'game/stat/rechargeGoods/list'
       },
-      dictOptions: {},
+      dictOptions: {}
     };
   },
-  computed: {},
+  computed: {
+    importExcelUrl: function () {
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+    }
+  },
   methods: {
     onSelectChannel: function (channel) {
       this.queryParam.channel = channel;
@@ -178,10 +172,6 @@ export default {
       this.queryParam.countDate_end = dateString[1];
       this.queryParam.dayType = 0;
     },
-    onTypeChange(e) {
-      console.log('radio checked', e.target.value);
-      this.queryParam.countDateRange = [null, null];
-    },
     countRate: function (n, r) {
       if (n === null || n === undefined) {
         return '--';
@@ -193,7 +183,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 @import '~@assets/less/common.less';
 </style>

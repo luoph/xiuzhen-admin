@@ -9,7 +9,6 @@
                  INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         WHERE b.`channel_id` = #{channelId}
           AND b.`del_flag` = 0
-          AND b.`no_need_count` = 0
         ORDER BY b.`position` DESC
     </select>
 
@@ -20,7 +19,37 @@
                  INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
         WHERE c.`simple_name` = #{channel}
           AND b.`del_flag` = 0
-          AND b.`no_need_count` = 0
+        ORDER BY b.`position` DESC
+    </select>
+
+    <select id="filterServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
+        SELECT a.*
+        FROM `game_server` a
+        INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
+        WHERE b.`del_flag` = 0
+        <if test="null != channel and '' != channel">
+            AND c.`simple_name` = #{channel}
+        </if>
+        AND a.`id` IN
+        <foreach item="id" collection="serverIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY b.`position` DESC
+    </select>
+
+    <select id="selectServerListByChannel" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        SELECT a.*
+        FROM `game_server` a
+        INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
+        WHERE 1=1
+        <if test="channel != null and channel != '' ">
+            AND c.`simple_name` = #{channel}
+        </if>
+        <if test="serverId != null and serverId > 0">
+            AND a.`id` = #{serverId}
+        </if>
         ORDER BY b.`position` DESC
     </select>
 

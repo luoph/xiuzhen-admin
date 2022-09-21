@@ -1,23 +1,19 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DatePattern;
-import cn.hutool.core.date.DateUtil;
-import cn.youai.server.utils.DateUtils;
+import cn.hutool.core.util.StrUtil;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
-import cn.youai.xiuzhen.utils.BigDecimalUtils;
-import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.constant.TimeConstant;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -60,76 +56,27 @@ public class GameOrderStatServiceImpl extends ServiceImpl<GameOrderMapper, GameO
     }
 
     @Override
-    public List<GameStatOrder> statOrderByDates(int serverId, List<Date> dateList, int type) {
-        if (CollUtil.isEmpty(dateList)) {
-            return null;
-        }
+    public GameStatOrder queryOrderStatByRange(List<Integer> serverIds, Date startDate, Date endDate) {
+        return getBaseMapper().queryOrderStatByRange(StrUtil.join(",", serverIds), serverIds.size(), startDate, endDate);
+    }
 
-        List<JSONObject> dateJsonList = new ArrayList<>(dateList.size());
-        Date now = DateUtils.now();
-        dateList.forEach(e -> {
-            Date[] startAndEnd = null;
-            if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
-                startAndEnd = new Date[]{DateUtil.beginOfMonth(now), DateUtil.endOfMonth(now)};
-            } else if (type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
-                startAndEnd = new Date[]{DateUtil.beginOfYear(now), DateUtil.endOfYear(now)};
-            } else {
-                startAndEnd = new Date[]{DateUtil.beginOfDay(now), DateUtil.endOfDay(now)};
-            }
-            JSONObject jsonParam = new JSONObject();
-            jsonParam.put("startTime", startAndEnd[0]);
-            jsonParam.put("endTime", startAndEnd[1]);
-            dateJsonList.add(jsonParam);
-        });
+    @Override
+    public GameStatRechargeSum queryServerStatRechargeGoodsSum(int serverId, int goodsGroup, Date start, Date end) {
+        return getBaseMapper().queryServerStatRechargeGoodsSum(serverId, goodsGroup, start, end);
+    }
 
-        List<GameOrder> statPlayerNumAmountByDates = getBaseMapper().getStatPlayerNumAmountByDates(serverId, dateJsonList);
-        if (CollUtil.isNotEmpty(statPlayerNumAmountByDates)) {
-            Map<String, GameStatOrder> result = new HashMap<>(dateList.size());
-            statPlayerNumAmountByDates.forEach(item -> {
-                Date date = dateList.get(item.getId().intValue());
-                String formatDate;
-                if (type == CommonConstant.PAY_ORDER_STAT_TYPE_MONTH) {
-                    formatDate = DateUtils.formatDate(date, TimeConstant.CHINESE_YEAR_MONTH_PATTERN);
-                } else if (type == CommonConstant.PAY_ORDER_STAT_TYPE_YEAR) {
-                    formatDate = DateUtils.formatDate(date, TimeConstant.CHINESE_YEAR_PATTERN);
-                } else {
-                    formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
-                }
+    @Override
+    public GameStatRechargeSum queryChannelStatRechargeGoodsSum(String channel, int goodsGroup, Date start, Date end) {
+        return getBaseMapper().queryChannelStatRechargeGoodsSum(channel, goodsGroup, start, end);
+    }
 
-                GameStatOrder gameStatOrder = result.get(formatDate);
-                if (gameStatOrder == null) {
-                    gameStatOrder = new GameStatOrder();
-                    // 日期
-                    gameStatOrder.setDate(formatDate);
-                    // 服务器id
-                    gameStatOrder.setServerId(serverId);
-                    // 区服数
-                    gameStatOrder.setServerNum(1);
-                    // 付费角色数
-                    gameStatOrder.setPayNum(1);
-                    // 付费金额
-                    gameStatOrder.setAmount(item.getPayAmount() != null ? item.getPayAmount() : new BigDecimal(0));
-                } else {
-                    // 付费角色数
-                    gameStatOrder.setPayNum(gameStatOrder.getPayNum() + 1);
-                    // 付费金额
-                    gameStatOrder.setAmount(BigDecimalUtils.add(gameStatOrder.getAmount(), item.getPayAmount()));
-                }
-                result.put(formatDate, gameStatOrder);
-            });
+    @Override
+    public List<GameStatRechargeGoods> queryServerStatRechargeGoods(int serverId, int goodsGroup, Date start, Date end) {
+        return getBaseMapper().queryServerStatRechargeGoods(serverId, goodsGroup, start, end);
+    }
 
-            // 列表需要打印空的日期
-            if (type == CommonConstant.PAY_ORDER_STAT_TYPE_DATE) {
-                dateList.forEach(date -> {
-                    String formatDate = DateUtils.formatDate(date, DatePattern.NORM_DATE_PATTERN);
-                    GameStatOrder gameStatOrder = result.get(formatDate);
-                    if (gameStatOrder == null) {
-                        result.put(formatDate, new GameStatOrder(formatDate, serverId, 1, 0, new BigDecimal(0)));
-                    }
-                });
-            }
-            return new ArrayList<>(result.values());
-        }
-        return null;
+    @Override
+    public List<GameStatRechargeGoods> queryChannelStatRechargeGoods(String channel, int goodsGroup, Date start, Date end) {
+        return getBaseMapper().queryChannelStatRechargeGoods(channel, goodsGroup, start, end);
     }
 }

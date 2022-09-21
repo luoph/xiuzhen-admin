@@ -1,9 +1,11 @@
 package cn.youai.xiuzhen.game.service;
 
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
+import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,12 +31,6 @@ public interface IGameChannelServerService extends IService<GameChannelServer> {
      */
     List<GameServerVO> selectServerList(String channel);
 
+    List<GameServerVO> filterServerList(String channel, List<Integer> serverIds);
 
-    /**
-     * 渠道和服务器绑定关系验证
-     *
-     * @param channelId 渠道id
-     * @param serverId  服务器id
-     */
-    boolean isValidChannelWithServer(int channelId, int serverId);
 }

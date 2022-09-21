@@ -3,7 +3,7 @@ package cn.youai.xiuzhen.stat.controller;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
-import cn.youai.xiuzhen.utils.QueryUtils;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -47,7 +47,7 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
 
     @Override
     protected void onload(List<GameOrder> pageList) {
-        HashSet<Long> resultPlayerIds = QueryUtils.extractPlayerIds(pageList, GameOrder::getPlayerId);
+        HashSet<Long> resultPlayerIds = PageQueryUtils.extractIds(pageList, GameOrder::getPlayerId);
         Map<Long, String> nicknameMap = playerService.getPlayerNicknameMap(resultPlayerIds);
         pageList.forEach(e -> e.setNickname(nicknameMap.get(e.getPlayerId())));
     }
