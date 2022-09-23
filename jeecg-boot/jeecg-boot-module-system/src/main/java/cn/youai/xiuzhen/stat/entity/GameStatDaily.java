@@ -160,7 +160,6 @@ public class GameStatDaily implements Serializable {
         return new GameStatDaily()
                 .setChannel(StatisticType.DEFAULT_CHANNEL)
                 .setServerId(serverId)
-                .setServerId(StatisticType.DEFAULT_SERVER_ID)
                 .setCountDate(date)
                 .setPayAmount(payAmount)
                 .setLoginNum(loginNum)
