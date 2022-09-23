@@ -2,6 +2,11 @@ package cn.youai.xiuzhen.stat.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
+import cn.youai.basics.utils.StringUtils;
+import cn.youai.xiuzhen.game.entity.GameChannel;
+import cn.youai.xiuzhen.game.entity.GameServerVO;
+import cn.youai.xiuzhen.game.service.IGameChannelServerService;
+import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.ServerBill;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
@@ -9,7 +14,6 @@ import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.util.ExcelUtils;
@@ -21,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +43,12 @@ public class GameStatServerBillController {
     @Autowired
     private IGameOrderStatService gameOrderStatService;
 
+    @Autowired
+    private IGameChannelServerService channelServerService;
+
+    @Autowired
+    private IGameChannelService channelService;
+
     @RequestMapping("/list")
     @AutoLog(value = "服务器流水-列表查询")
     public Result<?> list(ServerBill entity,
@@ -46,16 +57,6 @@ public class GameStatServerBillController {
                           HttpServletRequest req) {
         // 服务器空校验
         Page<ServerBill> page = new Page<>(pageNo, pageSize);
-        if (StringUtils.isEmpty(entity.getChannel())
-                && (entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.ok(page);
-        }
-
-        // 如果指定 游戏服id，则清除渠道信息
-        if (entity.getServerId() != null && entity.getServerId() > 0) {
-            entity.setChannel(null);
-        }
-
         IPage<ServerBill> pageList = pageList(page, entity, req);
         return Result.ok(pageList);
     }
@@ -73,19 +74,51 @@ public class GameStatServerBillController {
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
 
         BigDecimal amount = BigDecimal.ZERO;
-        ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
+        List<ServerBill> records = new ArrayList<>();
+        // 查询单个游戏服
         if (entity.getServerId() != null && entity.getServerId() > 0) {
             // 按照游戏服维度统计
-            serverBill.setChannel(StatisticType.DEFAULT_CHANNEL).setServerId(entity.getServerId());
-            amount = gameOrderStatService.serverRangeAmount(entity.getServerId(), dateRange.getStart(), dateRange.getEnd());
+            records.add(getServerBill(entity.getServerId(), dateRange));
         } else {
-            // 按照渠道维度统计
-            serverBill.setChannel(entity.getChannel()).setServerId(StatisticType.DEFAULT_SERVER_ID);
-            amount = gameOrderStatService.channelRangeAmount(entity.getChannel(), dateRange.getStart(), dateRange.getEnd());
-        }
-        serverBill.setTotalAmount(amount);
+            if (StringUtils.isNotBlank(entity.getChannel())) {
+                List<GameServerVO> serverList = channelServerService.selectServerList(entity.getChannel());
+                for (GameServerVO server : serverList) {
+                    ServerBill serverBill = getServerBill(server.getId(), dateRange);
+                    if (StringUtils.isNotEmpty(entity.getChannel())) {
+                        serverBill.setChannel(entity.getChannel());
+                    }
+                    records.add(serverBill);
+                }
 
-        List<ServerBill> records = CollUtil.newArrayList(serverBill);
+                // 按照渠道维度统计
+                records.add(getServerBill(entity.getChannel(), dateRange));
+            } else {
+                List<GameChannel> channelList = channelService.list();
+                for (GameChannel channel : channelList) {
+                    records.add(getServerBill(channel.getSimpleName(), dateRange));
+                }
+
+                // 汇总
+                records.add(getServerBill("", dateRange).setChannel("所有渠道"));
+            }
+        }
+
         return PageQueryUtils.makePage(records);
+    }
+
+    private ServerBill getServerBill(int serverId, DateRange dateRange) {
+        ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
+        serverBill.setChannel(StatisticType.DEFAULT_CHANNEL).setServerId(serverId);
+        BigDecimal amount = gameOrderStatService.serverRangeAmount(serverId, dateRange.getStart(), dateRange.getEnd());
+        serverBill.setTotalAmount(amount);
+        return serverBill;
+    }
+
+    private ServerBill getServerBill(String channel, DateRange dateRange) {
+        ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
+        serverBill.setChannel(channel).setServerId(StatisticType.DEFAULT_SERVER_ID);
+        BigDecimal amount = gameOrderStatService.channelRangeAmount(channel, dateRange.getStart(), dateRange.getEnd());
+        serverBill.setTotalAmount(amount);
+        return serverBill;
     }
 }

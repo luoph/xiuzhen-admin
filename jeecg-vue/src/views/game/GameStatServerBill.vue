@@ -93,7 +93,7 @@ export default {
           align: 'center',
           dataIndex: 'startDate',
           customRender: function (text) {
-            return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+            return !text ? '--' : text.length > 10 ? text.substr(0, 10) : text;
           }
         },
         {
@@ -101,7 +101,7 @@ export default {
           align: 'center',
           dataIndex: 'endDate',
           customRender: function (text) {
-            return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+            return !text ? '--' : text.length > 10 ? text.substr(0, 10) : text;
           }
         },
         {
