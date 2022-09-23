@@ -63,7 +63,6 @@ import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameServerSelector from '@comp/gameserver/GameServerSelector';
 import JDate from '@/components/jeecg/JDate.vue';
 import {filterObj} from "@/utils/util";
-import moment from 'moment';
 import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
