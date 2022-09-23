@@ -8,8 +8,8 @@
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`server_id` = #{serverId}
-        <if test="start != null"><![CDATA[ AND DATE(o.`pay_time`) >= DATE(#{start}) ]]></if>
-        <if test="end != null "><![CDATA[ AND DATE(o.`pay_time`) <= DATE(#{end}) ]]></if>
+        <if test="start != null"><![CDATA[ AND o.`create_date` >= DATE(#{start}) ]]></if>
+        <if test="end != null "><![CDATA[ AND o.`create_date` <= DATE(#{end}) ]]></if>
     </select>
 
     <select id="channelRangeAmount" resultType="java.math.BigDecimal">
@@ -17,38 +17,38 @@
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`channel` = #{channel}
-        <if test="start != null"><![CDATA[ AND DATE(o.`pay_time`) >= DATE(#{start}) ]]></if>
-        <if test="end != null "><![CDATA[ AND DATE(o.`pay_time`) <= DATE(#{end}) ]]></if>
+        <if test="start != null"><![CDATA[ AND o.`create_date` >= DATE(#{start}) ]]></if>
+        <if test="end != null "><![CDATA[ AND o.`create_date` <= DATE(#{end}) ]]></if>
     </select>
 
     <select id="serverPayAmount" resultType="java.math.BigDecimal">
-        SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
-        FROM `game_order` a
-        WHERE a.`server_id` = #{serverId}
-          AND DATE (a.`pay_time`) = DATE (#{payDate});
+        SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
+        FROM `game_order` o
+        WHERE o.`server_id` = #{serverId}
+          AND o.`create_date` = DATE(#{payDate});
     </select>
 
     <select id="chanelPayAmount" resultType="java.math.BigDecimal">
-        SELECT IFNULL(SUM(a.`pay_amount`), 0) AS payAmount
-        FROM `game_order` a
-        LEFT JOIN `game_player` b ON a.`player_id` = b.`player_id`
+        SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
+        FROM `game_order` o
+        LEFT JOIN `game_player` b ON o.`player_id` = b.`player_id`
         WHERE b.`channel` = #{channel}
-          AND DATE (a.`pay_time`) = DATE (#{payDate});
+          AND o.`create_date` = DATE(#{payDate});
     </select>
 
     <select id="serverPayPlayerNum" resultType="int">
-        SELECT COUNT(DISTINCT a.`player_id`) AS num
-        FROM `game_order` a
-        WHERE a.`server_id` = #{serverId}
-          AND DATE (a.`pay_time`) = DATE (#{payDate});
+        SELECT COUNT(DISTINCT o.`player_id`) AS num
+        FROM `game_order` o
+        WHERE o.`server_id` = #{serverId}
+          AND o.`create_date` = DATE(#{payDate});
     </select>
 
     <select id="channelPayPlayerNum" resultType="int">
-        SELECT COUNT(DISTINCT a.`player_id`) AS num
-        FROM `game_order` a
-        LEFT JOIN `game_player` b ON a.`player_id` = b.`player_id`
-        WHERE b.`channel` = #{channel}
-          AND DATE (a.`pay_time`) = DATE (#{payDate});
+        SELECT COUNT(DISTINCT o.`player_id`) AS num
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`channel` = #{channel}
+          AND o.`create_date` = DATE(#{payDate});
     </select>
 
     <!-- 充值统计 -->
@@ -72,8 +72,8 @@
         (SELECT IFNULL(COUNT(DISTINCT(o.`player_id`)), 0)
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE o.`pay_time` >= DATE(#{startDate})
-        AND o.`pay_time` < DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        WHERE o.`create_date` >= DATE(#{startDate})
+        AND o.`create_date` <= DATE(#{endDate})
         AND p.`server_id` IN (#{serverIds})
         ) AS `pay_num`,
 
@@ -81,8 +81,8 @@
         (SELECT IFNULL(SUM(o.`pay_amount`), 0)
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE o.`pay_time` >= DATE(#{startDate})
-        AND o.`pay_time` < DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        WHERE o.`create_date` >= DATE(#{startDate})
+        AND o.`create_date` < DATE(#{endDate})
         AND p.`server_id` IN (#{serverIds})
         ) AS `pay_amount`;
         ]]>
@@ -97,6 +97,7 @@
     </select>
 
     <select id="queryServerStatRechargeGoodsSum" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeSum">
+        <![CDATA[
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS `total_amount`,
         IFNULL(COUNT(o.`id`), 0) AS `total_num`,
         IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `total_player_num`
@@ -104,12 +105,14 @@
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
         WHERE p.`server_id` = #{serverId}
-        AND o.`pay_time` &gt;= DATE(#{startDate})
-        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        AND o.`create_date` >= DATE(#{startDate})
+        AND o.`create_date` <= DATE(#{endDate})
+        ]]>
         <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
     </select>
 
     <select id="queryChannelStatRechargeGoodsSum" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeSum">
+        <![CDATA[
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS `total_amount`,
                IFNULL(COUNT(o.`id`), 0) AS `total_num`,
                IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `total_player_num`
@@ -117,12 +120,14 @@
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
         WHERE p.`channel` = #{channel}
-        AND o.`pay_time` &gt;= DATE(#{startDate})
-        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        AND o.`create_date` >= DATE(#{startDate})
+        AND o.`create_date` <= DATE(#{endDate})
+        ]]>
         <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
     </select>
 
     <select id="queryServerStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">
+        <![CDATA[
         SELECT o.`product_id` AS `product_id`,
                IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
                IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
@@ -131,13 +136,15 @@
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
         WHERE p.`server_id` = #{serverId}
-        AND o.`pay_time` &gt;= DATE(#{startDate})
-        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        AND o.`create_date` >= DATE(#{startDate})
+        AND o.`create_date` <= DATE(#{endDate})
+        ]]>
         <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
         GROUP BY o.`product_id`
     </select>
 
     <select id="queryChannelStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">
+        <![CDATA[
         SELECT o.`product_id` AS `product_id`,
                IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
                IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
@@ -146,8 +153,9 @@
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
         WHERE p.`channel` = #{channel}
-        AND o.`pay_time` &gt;= DATE(#{startDate})
-        AND o.`pay_time` &lt; DATE_ADD(DATE(#{endDate}), INTERVAL 1 DAY)
+        AND o.`create_date` >= DATE(#{startDate})
+        AND o.`create_date` <= DATE(#{endDate})
+        ]]>
         <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
         GROUP BY o.`product_id`
     </select>

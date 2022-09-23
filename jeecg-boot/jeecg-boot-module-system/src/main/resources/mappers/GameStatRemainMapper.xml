@@ -7,54 +7,51 @@
     <![CDATA[
         SELECT @register_date := DATE(#{registerDate}) AS count_date,
             @serverId := #{serverId} AS server_id,
-            @d_start := CONCAT(@register_date, ' 00:00:00'),
-            @d_end := DATE_ADD(@d_start, INTERVAL 1 DAY),
 
             -- 注册数
-            (SELECT COUNT(a.`player_id`) FROM
-            `game_player` a WHERE a.`create_time` >= @d_start AND a.`create_time` < @d_end
-            AND a.`server_id` = @serverId
-            ) as register_num,
+            (SELECT COUNT(p.`player_id`) FROM `game_player` p
+            WHERE p.`create_date` = @register_date
+                AND p.`server_id` = @serverId
+            ) AS register_num,
 
             -- 付费玩家数
             (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
-            LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-            WHERE p.`create_time` >= @d_start AND p.`create_time` < @d_end
-            AND o.`pay_time` >= @d_start AND o.`pay_time` < @d_end
-            AND o.`server_id` = @serverId
+                LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+            WHERE p.`create_date` = @register_date
+                AND o.`create_date` = @register_date
+                AND o.`server_id` = @serverId
             ) AS pay_num,
 
             -- 付费次留
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
-            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`server_id` = @serverId
-            AND l.`create_date` = DATE(@d_end)
-            AND p.`create_time` >= @d_start
-            AND p.`create_time` < @d_end
-            AND EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-            AND b.`pay_time` >= @d_start AND b.`pay_time` < @d_end
-            AND b.`server_id` = @serverId)
+            AND l.`create_date` = DATE(DATE_ADD(@register_date, INTERVAL 1 DAY))
+            AND p.`create_date` = @register_date
+            AND EXISTS (SELECT * FROM `game_order` o
+                WHERE l.`player_id` = o.`player_id`
+                AND o.`create_date` = @register_date
+                AND o.`server_id` = @serverId)
             ) AS pay_remain,
 
             -- 免费留存
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
-            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`server_id` = @serverId
-            AND l.`create_date` = DATE(@d_end)
-            AND p.`create_time` >= @d_start
-            AND p.`create_time` < @d_end
-            AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-            AND b.`pay_time` >= @d_start AND b.`pay_time` < @d_end
-            AND b.`server_id` = @serverId)
+            AND l.`create_date` = DATE(DATE_ADD(@register_date, INTERVAL 1 DAY))
+            AND p.`create_date` = @register_date
+            AND NOT EXISTS (SELECT * FROM `game_order` o
+                WHERE l.`player_id` = o.`player_id`
+                AND o.`create_date` = @register_date
+                AND o.`server_id` = @serverId)
             ) AS free_remain,
 
             -- 总留存(注册留存)
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
-            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`server_id` = @serverId
-            AND l.`create_date` = DATE(@d_end)
-            AND p.`create_time` >= @d_start
-            AND p.`create_time` < @d_end
+            AND l.`create_date` = DATE(DATE_ADD(@register_date, INTERVAL 1 DAY))
+            AND p.`create_date` = @register_date
             ) AS register_remain;
         ]]>
    </select>
@@ -63,51 +60,50 @@
     <![CDATA[
         SELECT @register_date := DATE(#{registerDate}) AS count_date,
             @channel := #{channel} AS channel,
-            @d_start := CONCAT(@register_date, ' 00:00:00'),
-            @d_end := DATE_ADD(@d_start, INTERVAL 1 DAY),
 
             -- 注册数
-            (SELECT COUNT(a.`player_id`) FROM
-            `game_player` a WHERE a.`create_time` >= @d_start AND a.`create_time` < @d_end
-            AND a.`channel` = @channel
-            ) as register_num,
+            (SELECT COUNT(p.`player_id`) FROM `game_player` p
+            WHERE p.`create_date` = @register_date
+                AND p.`channel` = @channel
+            ) AS register_num,
 
             -- 付费玩家数
             (SELECT COUNT(DISTINCT(o.`player_id`)) FROM `game_order` o
-            LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-            WHERE p.`create_time` >= @d_start AND p.`create_time` < @d_end
-            AND o.`pay_time` >= @d_start AND o.`pay_time` < @d_end
+                LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+            WHERE p.`create_date` = @register_date
+                AND o.`create_date` = @register_date
             ) AS pay_num,
 
             -- 付费次留
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
-            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`channel` = @channel
-            AND l.`create_date` = DATE(@d_end)
-            AND p.`create_time` >= @d_start
-            AND p.`create_time` < @d_end
-            AND EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-            AND b.`pay_time` >= @d_start AND b.`pay_time` < @d_end)
+            AND l.`create_date` = DATE(DATE_ADD(@register_date, INTERVAL 1 DAY))
+            AND p.`create_date` = @register_date
+            AND EXISTS (
+                SELECT * FROM `game_order` o
+                WHERE l.`player_id` = o.`player_id`
+                    AND o.`create_date` = @register_date)
             ) AS pay_remain,
 
             -- 免费留存
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
-            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`channel` = @channel
-            AND l.`create_date` = DATE(@d_end)
-            AND p.`create_time` >= @d_start
-            AND p.`create_time` < @d_end
-            AND NOT EXISTS (SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-            AND b.`pay_time` >= @d_start AND b.`pay_time` < @d_end)
-            ) AS free_remain,
+                AND l.`create_date` = DATE(DATE_ADD(@register_date, INTERVAL 1 DAY))
+                AND p.`create_date` = @register_date
+                AND NOT EXISTS (
+                    SELECT * FROM `game_order` o
+                    WHERE l.`player_id` = o.`player_id`
+                        AND o.`create_date` = @register_date)
+                ) AS free_remain,
 
             -- 总留存(注册留存)
             (SELECT COUNT(DISTINCT(l.`player_id`)) FROM `log_account` l
-            LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
             WHERE p.`channel` = @channel
-            AND l.`create_date` = DATE(@d_end)
-            AND p.`create_time` >= @d_start
-            AND p.`create_time` < @d_end
+                AND l.`create_date` = DATE(DATE_ADD(@register_date, INTERVAL 1 DAY))
+                AND p.`create_date` = @register_date
             ) AS register_remain;
         ]]>
    </select>
@@ -117,17 +113,15 @@
         <![CDATA[
         SELECT COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM `log_account` l
-                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2
           AND p.`server_id` = #{serverId}
-          AND l.`create_date` = DATE(DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY))
-          AND p.`create_time` >= DATE(#{registerDate})
-          AND p.`create_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
           AND EXISTS (
             SELECT * FROM `game_order` o
             WHERE l.`player_id` = o.`player_id`
-              AND o.`pay_time` >= DATE(#{registerDate})
-              AND o.`pay_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+              AND o.`create_date` = DATE(#{registerDate})
           )
         ]]>
     </select>
@@ -136,17 +130,15 @@
         <![CDATA[
         SELECT COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM `log_account` l
-                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2
           AND p.`channel` = #{channel}
-          AND l.`create_date` = DATE(DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY))
-          AND p.`create_time` >= DATE(#{registerDate})
-          AND p.`create_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
           AND EXISTS (
             SELECT * FROM `game_order` o
             WHERE l.`player_id` = o.`player_id`
-              AND o.`pay_time` >= DATE(#{registerDate})
-              AND o.`pay_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+              AND o.`create_date` = DATE(#{registerDate})
           )
         ]]>
     </select>
@@ -156,17 +148,15 @@
         <![CDATA[
         SELECT COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM `log_account` l
-                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2
           AND p.`server_id` = #{serverId}
-          AND l.`create_date` = DATE(DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY))
-          AND p.`create_time` >= DATE(#{registerDate})
-          AND p.`create_time`< DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
           AND NOT EXISTS (
             SELECT * FROM `game_order` o
             WHERE l.`player_id` = o.`player_id`
-              AND o.`pay_time` >= DATE(#{registerDate})
-              AND o.`pay_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+              AND o.`create_date` = DATE(#{registerDate})
           )
         ]]>
     </select>
@@ -175,17 +165,15 @@
         <![CDATA[
         SELECT COUNT(DISTINCT(l.`player_id`)) AS remain
         FROM `log_account` l
-                 INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = 2
           AND p.`channel` = #{channel}
-          AND l.`create_date` = DATE(DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY))
-          AND p.`create_time` >= DATE(#{registerDate})
-          AND p.`create_time`< DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
           AND NOT EXISTS (
             SELECT * FROM `game_order` o
             WHERE l.`player_id` = o.`player_id`
-              AND o.`pay_time` >= DATE(#{registerDate})
-              AND o.`pay_time` < DATE_ADD(DATE(#{registerDate}), INTERVAL 1 DAY)
+              AND o.`create_date` = DATE(#{registerDate})
           )
         ]]>
     </select>
@@ -200,9 +188,8 @@
             INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE p.`server_id` = #{serverId}
           AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
         ]]>
     </select>
 
@@ -216,9 +203,8 @@
             INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE p.`channel` = #{channel}
           AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
         ]]>
     </select>
 
@@ -233,13 +219,12 @@
         ON l.`player_id` = p.`player_id`
         WHERE p.`server_id` = #{serverId}
           AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
           AND NOT EXISTS (
-            SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-              AND b.`pay_time` >= #{registerDate} AND b.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
-              AND b.`server_id` = @serverId
+            SELECT * FROM `game_order` o WHERE l.`player_id` = o.`player_id`
+              AND o.`create_date` = DATE(#{registerDate})
+              AND o.`server_id` = @serverId
           )
         ]]>
     </select>
@@ -254,14 +239,13 @@
             INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE p.`channel` = #{channel}
           AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
           AND NOT EXISTS (
-            SELECT * FROM `game_order` b WHERE l.`player_id` = b.`player_id`
-          AND b.`pay_time` >= #{registerDate} AND b.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
-          AND b.`server_id` = @serverId
-            )
+            SELECT * FROM `game_order` o WHERE l.`player_id` = o.`player_id`
+              AND o.`create_date` = DATE(#{registerDate})
+              AND o.`server_id` = @serverId
+          )
         ]]>
     </select>
 
@@ -272,16 +256,13 @@
             DATE(#{registerDate}) AS registerDate,
             IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))), 0) AS remain
         FROM `log_account` l
-            INNER JOIN `game_player` p
-        ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
             INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
         WHERE l.`server_id` = #{serverId}
           AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-          AND o.`pay_time` >= #{registerDate}
-          AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
+          AND o.`create_date` = DATE(#{registerDate})
         ]]>
     </select>
 
@@ -292,16 +273,13 @@
             DATE(#{registerDate}) AS registerDate,
             IFNULL((SELECT COUNT(DISTINCT(l.`player_id`))), 0) AS remain
         FROM `log_account` l
-            INNER JOIN `game_player` p
-        ON l.`player_id` = p.`player_id`
+            INNER JOIN `game_player` p ON l.`player_id` = p.`player_id`
             INNER JOIN `game_order` o ON l.`player_id` = o.`player_id`
         WHERE p.`channel` = #{channel}
           AND l.`type` = 2
-          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} DAY))
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-          AND o.`pay_time` >= #{registerDate}
-          AND o.`pay_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
+          AND l.`create_date` = DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
+          AND p.`create_date` = DATE(#{registerDate})
+          AND o.`create_date` = DATE(#{registerDate})
         ]]>
     </select>
 

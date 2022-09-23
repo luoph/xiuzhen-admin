@@ -14,16 +14,16 @@
     <select id="queryGiftList" resultMap="BaseResultMap">
         SELECT DISTINCT(`goods_id`), `goods_type`
         FROM `recharge_order`
-        WHERE `create_date` >= DATE (#{rangeDateBeginTime})
-          AND `create_date` &lt;= DATE (#{rangeDateEndTime})
+        WHERE `create_date` >= DATE(#{rangeDateBeginTime})
+          AND `create_date` &lt;= DATE(#{rangeDateEndTime})
           AND `goods_type`= #{goodsType}
     </select>
 
     <select id="queryDAU" resultType="Long">
         SELECT COUNT(DISTINCT (`player_id`)) dau
         FROM `log_account`
-        WHERE `create_date` >= DATE (#{rangeDateBeginTime})
-          AND `create_date` &lt;= DATE (#{rangeDateEndTime})
+        WHERE `create_date` >= DATE(#{rangeDateBeginTime})
+          AND `create_date` &lt;= DATE(#{rangeDateEndTime})
           AND `server_id` = #{serverId}
           AND `channel` = #{channel}
     </select>

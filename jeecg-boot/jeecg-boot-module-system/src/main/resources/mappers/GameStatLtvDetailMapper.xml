@@ -4,55 +4,51 @@
 
     <select id="queryServerLtvDetail" resultType="cn.youai.xiuzhen.stat.entity.GameStatLtvDetail">
         <![CDATA[
-        SELECT #{registerDate}                                                   AS `count_date`,
-               #{serverId}                                                       AS `server_id`,
+        SELECT #{registerDate} AS `count_date`,
+               #{serverId}     AS `server_id`,
                (SELECT COUNT(*)
                 FROM `game_player`
                 WHERE `server_id` = #{serverId}
-                  AND `create_time` >= #{registerDate}
-                  AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS num
+                  AND `create_date` = DATE(#{registerDate})) AS num
         ]]>
     </select>
 
     <select id="queryChannelLtvDetail" resultType="cn.youai.xiuzhen.stat.entity.GameStatLtvDetail">
         <![CDATA[
-        SELECT #{registerDate}                                                   AS `count_date`,
-               #{channel}                                                        AS `channel`,
+        SELECT #{registerDate} AS `count_date`,
+               #{channel}      AS `channel`,
                (SELECT COUNT(*)
                 FROM `game_player`
                 WHERE `channel` = #{channel}
-                  AND `create_time` >= #{registerDate}
-                  AND `create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)) AS num
+                  AND `create_date` = DATE(#{registerDate})) AS num
         ]]>
     </select>
 
     <select id="queryServerLtvAmount" resultType="cn.youai.xiuzhen.stat.entity.ServerLtvAmount">
         <![CDATA[
-        SELECT #{serverId}                    AS serverId,
-               #{days}                        AS days,
-               #{registerDate}                AS registerDate,
-               IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
+        SELECT #{serverId} AS serverId,
+               #{days}     AS days,
+            DATE (#{registerDate}) AS registerDate,
+            IFNULL(SUM (o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
-                 LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+            LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`server_id` = #{serverId}
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-          AND o.`create_time` <= DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+          AND p.`create_date` = DATE (#{registerDate})
+          AND o.`create_date` <= DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
         ]]>
     </select>
 
     <select id="queryChannelLtvAmount" resultType="cn.youai.xiuzhen.stat.entity.ServerLtvAmount">
         <![CDATA[
-        SELECT #{channel}                     AS channel,
-               #{days}                        AS days,
-               #{registerDate}                AS registerDate,
-               IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
+        SELECT #{channel} AS channel,
+               #{days}    AS days,
+            DATE (#{registerDate}) AS registerDate,
+            IFNULL(SUM (o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
-                 LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+            LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`channel` = #{channel}
-          AND p.`create_time` >= #{registerDate}
-          AND p.`create_time` < DATE_ADD(#{registerDate}, INTERVAL 1 DAY)
-          AND o.`create_time` <= DATE_ADD(#{registerDate}, INTERVAL #{days} DAY)
+          AND p.`create_date` = DATE (#{registerDate})
+          AND o.`create_date` <= DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
         ]]>
     </select>
 
