@@ -10,7 +10,7 @@
           </a-col>
           <a-col :md="4" :sm="4">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="10" :sm="8">
@@ -44,9 +44,7 @@
         :pagination="ipagination"
         :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-        @change="handleTableChange"
-      >
-      </a-table>
+        @change="handleTableChange"/>
     </div>
   </a-card>
 </template>

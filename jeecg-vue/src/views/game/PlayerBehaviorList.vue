@@ -59,9 +59,7 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: true }"
-        @change="handleTableChange"
-      >
-      </a-table>
+        @change="handleTableChange"/>
     </div>
   </a-card>
 </template>
