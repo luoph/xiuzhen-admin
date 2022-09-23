@@ -4,15 +4,26 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="45">
-          <a-col :md="10" :sm="8">
+          <a-col :md="10" :sm="16">
             <!--@ = v-on:数据绑定 不是事件-->
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="8" :sm="8">
+          <a-col :md="8" :sm="16">
             <a-form-item label="统计日期">
               <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
                               :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="12" :sm="16">
+            <a-form-item label="日期范围">
+              <a-radio-group v-model="queryParam.dayType" :default-value="7" @change="onTypeChange">
+                <a-radio :value="0">自定义</a-radio>
+                <a-radio :value="7">近7天</a-radio>
+                <a-radio :value="15">近15天</a-radio>
+                <a-radio :value="30">近1月</a-radio>
+                <a-radio :value="60">近2月</a-radio>
+              </a-radio-group>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -97,6 +108,31 @@ export default {
           title: '充值总金额',
           align: 'center',
           dataIndex: 'payAmount'
+        },
+        {
+          title: '注册时间',
+          align: 'center',
+          dataIndex: 'createTime'
+        },
+        {
+          title: '最后登录时间',
+          align: 'center',
+          dataIndex: 'lastLoginTime'
+        },
+        {
+          title: '最后充值时间',
+          align: 'center',
+          dataIndex: 'lastPayTime'
+        },
+        {
+          title: '登录预警天数',
+          align: 'center',
+          dataIndex: 'lastLoginDays'
+        },
+        {
+          title: '充值预警天数',
+          align: 'center',
+          dataIndex: 'lastPayDays'
         }
       ],
       url: {
@@ -131,10 +167,15 @@ export default {
       this.$refs.channelServerSelector.reset();
       this.loadData(1);
     },
+    onTypeChange(e) {
+      console.log('radio checked', e.target.value);
+      this.queryParam.countDateRange = [null, null];
+    },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
       this.queryParam.countDate_begin = dateString[0];
       this.queryParam.countDate_end = dateString[1];
+      this.queryParam.dayType = 0;
     }
   }
 };

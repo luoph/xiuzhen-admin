@@ -1,6 +1,8 @@
 package cn.youai.xiuzhen.stat.controller;
 
 import cn.youai.basics.model.DateRange;
+import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.constant.StatDayType;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
@@ -18,8 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -64,12 +65,16 @@ public class GameStatRechargeRankController {
     }
 
     private IPage<GameStatRechargeRank> pageList(Page<GameStatRechargeRank> page, GameStatRechargeRank entity, HttpServletRequest req) {
-        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
+        int dayType = entity.getDayType() != null ? entity.getDayType() : StatDayType.D7.getValue();
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", dayType);
         int serverId = entity.getServerId() != null ? entity.getServerId() : 0;
+        Date now = DateUtils.now();
         List<GameStatRechargeRank> records = orderStatService.queryRechargeRankList(entity.getChannel(), serverId, dateRange.getStart(), dateRange.getEnd());
         int rank = 1;
         for (GameStatRechargeRank t : records) {
-            t.setRank(rank++);
+            t.setRank(rank++)
+            .setLastLoginDays(DateUtils.daysBetween(t.getLastLoginTime(), now))
+            .setLastPayDays(DateUtils.daysBetween(t.getLastPayTime(), now));
         }
         return PageQueryUtils.makePage(records);
     }

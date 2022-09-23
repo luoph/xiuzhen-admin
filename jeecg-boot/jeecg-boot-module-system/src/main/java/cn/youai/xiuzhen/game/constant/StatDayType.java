@@ -10,7 +10,7 @@ public enum StatDayType {
     /**
      * 统计类型
      */
-    DEFAULT("自定义", 0),
+    CUSTOM("自定义", 0),
     D7("7天", 7),
     D15("15天", 15),
     M1("30天", 30),
@@ -31,6 +31,6 @@ public enum StatDayType {
                 return e;
             }
         }
-        return DEFAULT;
+        return CUSTOM;
     }
 }

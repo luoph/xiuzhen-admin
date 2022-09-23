@@ -88,23 +88,11 @@ public class GameStatOrderController {
     }
 
     private IPage<GameStatOrder> pageList(Page<GameStatOrder> page, GameStatOrder entity, HttpServletRequest req) {
-        // 刷新统计数据
-        Date todayDate = DateUtils.todayDate();
-        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
-        if (entity.getDayType() == null && dateRange.getStart() == null) {
-            entity.setDayType(StatDayType.D7.getValue());
+        int dayType = entity.getDayType() != null ? entity.getDayType() : StatDayType.D7.getValue();
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", dayType);
+        if (dateRange.getStart() == null || dateRange.getEnd() == null) {
+            return page;
         }
-
-        StatDayType dayType = StatDayType.DEFAULT;
-        if (entity.getDayType() != null) {
-            dayType = StatDayType.valueOf(entity.getDayType());
-        }
-
-        int days = dayType.getValue();
-        if (days > 0) {
-            dateRange = new DateRange(DateUtils.addDays(todayDate, -(days - 1)), todayDate);
-        }
-
         // 按照年、月分组
         Map<String, List<Date>> monthsMap = new HashMap<>();
         Map<String, List<Date>> yearMap = new HashMap<>();

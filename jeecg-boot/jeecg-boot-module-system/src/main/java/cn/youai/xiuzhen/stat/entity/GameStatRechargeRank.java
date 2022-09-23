@@ -27,6 +27,11 @@ public class GameStatRechargeRank implements Serializable {
     private Date countDate;
 
     /**
+     * 快速统计日期范围
+     */
+    private Integer dayType;
+
+    /**
      * 支付玩家id
      */
     @Excel(name = "玩家ID", width = 15)
@@ -41,10 +46,25 @@ public class GameStatRechargeRank implements Serializable {
     @Excel(name = "排名", width = 15)
     private Integer rank;
 
+    @Excel(name = "注册时间", width = 15)
+    private Date createTime;
+
     /**
      * 充值金额
      */
     @Excel(name = "充值金额", width = 15)
     private BigDecimal payAmount;
+
+    @Excel(name = "最后充值时间", width = 15)
+    private Date lastPayTime;
+
+    @Excel(name = "最后登录时间", width = 15)
+    private Date lastLoginTime;
+
+    @Excel(name = "充值预警天数", width = 15)
+    private Integer lastPayDays;
+
+    @Excel(name = "登录预警天数", width = 15)
+    private Integer lastLoginDays;
 
 }
