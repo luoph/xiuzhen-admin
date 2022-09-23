@@ -5,24 +5,24 @@
         <a-form-item label="渠道名称" :label-col="{ span: 10 }" :wrapper-col="{ span: 16 }">
           <a-select placeholder="请选择渠道" v-model="channel" @change="onSelectChannel">
             <a-select-option v-for="it in channelList" :key="it.name" :value="it.simpleName">
-              {{ it.name }}
+              {{ it.name + '（' +  it.simpleName + '）' }}
             </a-select-option>
           </a-select>
         </a-form-item>
       </a-col>
-      <a-col :span="12">
+      <a-col :span="10">
         <a-form-item label="服务器名" :label-col="{ span: 12 }" :wrapper-col="{ span: 16 }">
           <!--     多选模式     -->
           <a-select v-if="multiple" mode="multiple" allowClear show-search placeholder="请选择区服" v-model="serverId"
                     @change="onSelectServer">
             <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
-              {{ server.id > 0 ? server.name + "(" + server.id + ")" : server.name }}
+              {{ server.id > 0 ? server.name + '（' + server.id + '）' : server.name }}
             </a-select-option>
           </a-select>
           <a-select v-else placeholder="请选择区服" v-model="serverId" :initialValue="serverId"
                     @change="onSelectServer">
             <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
-              {{ server.id > 0 ? server.name + "(" + server.id + ")" : server.name }}
+              {{ server.id > 0 ? server.name + '（' + server.id + '）' : server.name }}
             </a-select-option>
           </a-select>
         </a-form-item>
