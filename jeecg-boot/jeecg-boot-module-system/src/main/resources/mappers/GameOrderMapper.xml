@@ -162,4 +162,18 @@
         GROUP BY o.`product_id`
     </select>
 
+    <select id="queryRechargeRankList" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeRank">
+        SELECT o.`player_id`, p.`nickname`, p.`level`, IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        <where>
+            <if test="null != channel and '' != channel">p.`channel` = #{channel}</if>
+            <if test="serverId > 0">AND p.`server_id` = #{serverId}</if>
+            <if test="null != startDate"><![CDATA[AND o.`create_date` >= #{startDate}]]></if>
+            <if test="null != endDate"><![CDATA[AND o.`create_date` >= #{endDate}]]></if>
+        </where>
+        GROUP BY o.`player_id`
+        ORDER BY `pay_amount` DESC, o.`id` ASC
+    </select>
+
 </mapper>

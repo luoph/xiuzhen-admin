@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.stat.service;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -52,4 +53,8 @@ public interface IGameOrderStatService extends IService<GameOrder> {
 
     List<GameStatRechargeGoods> queryChannelStatRechargeGoods(String channel, int goodsGroup, Date start, Date end);
 
+    /**
+     * 查询充值榜单
+     */
+    List<GameStatRechargeRank> queryRechargeRankList(String channel, int serverId, Date start, Date end);
 }

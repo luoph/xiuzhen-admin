@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -78,5 +79,10 @@ public class GameOrderStatServiceImpl extends ServiceImpl<GameOrderMapper, GameO
     @Override
     public List<GameStatRechargeGoods> queryChannelStatRechargeGoods(String channel, int goodsGroup, Date start, Date end) {
         return getBaseMapper().queryChannelStatRechargeGoods(channel, goodsGroup, start, end);
+    }
+
+    @Override
+    public List<GameStatRechargeRank> queryRechargeRankList(String channel, int serverId, Date start, Date end) {
+        return getBaseMapper().queryRechargeRankList(channel, serverId, start, end);
     }
 }

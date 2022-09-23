@@ -4,6 +4,7 @@ import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -69,4 +70,9 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                                               @Param("goodsGroup") int goodsGroup,
                                                               @Param("startDate") Date startDate,
                                                               @Param("endDate") Date endDate);
+
+    List<GameStatRechargeRank> queryRechargeRankList(@Param("channel") String channel,
+                                                     @Param("serverId") int serverId,
+                                                     @Param("startDate") Date startDate,
+                                                     @Param("endDate") Date endDate);
 }
