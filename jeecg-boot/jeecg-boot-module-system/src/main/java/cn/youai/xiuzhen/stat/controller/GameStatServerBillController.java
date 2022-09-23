@@ -66,7 +66,7 @@ public class GameStatServerBillController {
     public ModelAndView exportXls(HttpServletRequest req, ServerBill entity) {
         Page<ServerBill> page = new Page<>(1, Integer.MAX_VALUE);
         IPage<ServerBill> pageList = pageList(page, entity, req);
-        return ExcelUtils.exportXls(pageList, req.getParameter("selections"), ServerBill.class, "战力日志");
+        return ExcelUtils.exportXls(pageList, req.getParameter("selections"), ServerBill.class, "服务器流水");
     }
 
     private IPage<ServerBill> pageList(Page<ServerBill> page, ServerBill entity, HttpServletRequest req) {

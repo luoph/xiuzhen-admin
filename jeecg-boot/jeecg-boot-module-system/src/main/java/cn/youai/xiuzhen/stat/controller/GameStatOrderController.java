@@ -57,7 +57,7 @@ public class GameStatOrderController {
      * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "game_stat_order-列表查询")
+    @AutoLog(value = "充值统计-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameStatOrder entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -79,12 +79,12 @@ public class GameStatOrderController {
     }
 
 
-    @AutoLog(value = "服务器流水-导出")
+    @AutoLog(value = "充值统计-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest req, GameStatOrder entity) {
         Page<GameStatOrder> page = new Page<>(1, Integer.MAX_VALUE);
         IPage<GameStatOrder> pageList = pageList(page, entity, req);
-        return ExcelUtils.exportXls(pageList, req.getParameter("selections"), GameStatOrder.class, "战力日志");
+        return ExcelUtils.exportXls(pageList, req.getParameter("selections"), GameStatOrder.class, "充值统计");
     }
 
     private IPage<GameStatOrder> pageList(Page<GameStatOrder> page, GameStatOrder entity, HttpServletRequest req) {
