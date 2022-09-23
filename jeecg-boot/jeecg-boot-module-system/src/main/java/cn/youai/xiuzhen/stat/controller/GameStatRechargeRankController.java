@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.stat.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.StatDayType;
@@ -73,8 +74,16 @@ public class GameStatRechargeRankController {
         int rank = 1;
         for (GameStatRechargeRank t : records) {
             t.setRank(rank++)
-            .setLastLoginDays(DateUtils.daysBetween(t.getLastLoginTime(), now))
-            .setLastPayDays(DateUtils.daysBetween(t.getLastPayTime(), now));
+                    .setLastLoginDays(DateUtils.daysBetween(t.getLastLoginTime(), now))
+                    .setLastPayDays(DateUtils.daysBetween(t.getLastPayTime(), now));
+        }
+
+        if (entity.getPlayerId() != null) {
+            GameStatRechargeRank target = records.stream().filter(t -> t.getPlayerId().equals(entity.getPlayerId())).findAny().orElse(null);
+            if (target != null) {
+                return PageQueryUtils.makePage(CollUtil.newArrayList(target));
+            }
+            return PageQueryUtils.makePage(CollUtil.newArrayList());
         }
         return PageQueryUtils.makePage(records);
     }

@@ -9,6 +9,11 @@
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
           </a-col>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="玩家id">
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+            </a-form-item>
+          </a-col>
           <a-col :md="8" :sm="16">
             <a-form-item label="统计日期">
               <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
