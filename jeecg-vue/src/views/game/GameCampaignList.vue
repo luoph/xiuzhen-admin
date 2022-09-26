@@ -33,13 +33,13 @@
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
-            <a-col :md="8" :sm="16">
+            <a-col :md="8" :sm="8">
               <a-form-item label="活动开始时间">
                 <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
                                 :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="16">
+            <a-col :md="8" :sm="8">
               <a-form-item label="活动结束时间">
                 <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
                                 :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>

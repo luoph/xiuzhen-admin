@@ -9,7 +9,7 @@
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="12" :sm="16">
+          <a-col :md="12" :sm="8">
             <a-form-item label="日期范围">
               <a-radio-group v-model="dayType" @change="onDayTypeChange">
                 <a-radio :value="0">自定义</a-radio>

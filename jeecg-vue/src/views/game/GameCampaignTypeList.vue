@@ -40,20 +40,20 @@
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
-            <!-- <a-col :md="12" :sm="16">
+            <!-- <a-col :md="12" :sm="8">
                             <a-form-item label="排序">
                                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sort_begin"></a-input>
                                 <span class="query-group-split-cust"></span>
                                 <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sort_end"></a-input>
                             </a-form-item>
                         </a-col> -->
-            <a-col :md="8" :sm="16">
+            <a-col :md="8" :sm="8">
               <a-form-item label="活动开始时间">
                 <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
                                 :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
               </a-form-item>
             </a-col>
-            <a-col :md="8" :sm="16">
+            <a-col :md="8" :sm="8">
               <a-form-item label="活动结束时间">
                 <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
                                 :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>

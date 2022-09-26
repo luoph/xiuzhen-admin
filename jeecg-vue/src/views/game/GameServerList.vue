@@ -10,7 +10,7 @@
               <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="16">
+          <a-col :md="6" :sm="8">
             <a-form-item label="区服id">
               <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin"></a-input>
               <span class="query-group-split-cust"></span>

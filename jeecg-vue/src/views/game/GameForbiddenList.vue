@@ -36,13 +36,13 @@
                 </a-select>
               </a-form-item>
             </a-col>
-            <a-col :md="6" :sm="16">
+            <a-col :md="6" :sm="8">
               <a-form-item label="开始时间">
                 <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
                                 :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
               </a-form-item>
             </a-col>
-            <a-col :md="6" :sm="16">
+            <a-col :md="6" :sm="8">
               <a-form-item label="结束时间">
                 <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
                                 :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>

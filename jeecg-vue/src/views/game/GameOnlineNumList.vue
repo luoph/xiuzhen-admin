@@ -13,7 +13,7 @@
               <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
-          <a-col :md="5" :sm="5">
+          <a-col :md="5" :sm="8">
             <a-form-item label="选择就近天数">
               <a-select placeholder="天数" v-model="queryParam.days">
                 <a-select-option :value="0">不选择天数</a-select-option>
@@ -24,7 +24,7 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="5" :sm="5">
+          <a-col :md="5" :sm="8">
             <a-form-item label="折线图显示类型">
               <a-select placeholder="显示类型" v-model="queryParam.lineType" @change="onChangeLineType">
                 <a-select-option :value="'seconds'">按分</a-select-option>

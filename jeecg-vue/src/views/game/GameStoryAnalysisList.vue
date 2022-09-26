@@ -4,7 +4,7 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="12" :sm="16">
+          <a-col :md="12" :sm="8">
             <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -12,8 +12,7 @@
               <j-date placeholder="请选择分析日期" v-model="queryParam.analysisDate"></j-date>
             </a-form-item>
           </a-col>
-          <a-col :md="10" :sm="10"/>
-          <a-col :md="6" :sm="4">
+          <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
             </span>

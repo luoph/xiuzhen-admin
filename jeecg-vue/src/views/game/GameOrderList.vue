@@ -54,7 +54,7 @@
                 <a-input placeholder="请输入渠道标识" v-model="queryParam.channel"></a-input>
               </a-form-item>
             </a-col>
-            <a-col :md="6" :sm="16">
+            <a-col :md="6" :sm="8">
               <a-form-item label="金额">
                 <a-input placeholder="请输入最小值" class="query-group-cust"
                          v-model="queryParam.payAmount_begin"></a-input>
