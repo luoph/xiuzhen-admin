@@ -1,10 +1,7 @@
 package cn.youai.xiuzhen.stat.controller;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.basics.utils.StringUtils;
-import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.RechargeGoodsGroup;
 import cn.youai.xiuzhen.game.entity.GameRechargeGoods;
 import cn.youai.xiuzhen.game.service.IGameRechargeGoodsService;
@@ -25,7 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -77,45 +77,27 @@ public class GameStatRechargeGoodsController {
 
     private IPage<GameStatRechargeGoods> pageList(Page<GameStatRechargeGoods> page, GameStatRechargeGoods entity, HttpServletRequest req) {
         // 默认查询当天
-        Date todayDate = DateUtils.todayDate();
-        Date startDate = DateUtils.addDays(todayDate, -7);
-        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, todayDate);
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
+        int serverId = entity.getServerId() != null ? entity.getServerId() : 0;
+        if (serverId > 0) {
+            entity.setChannel(null);
+        }
 
         if (entity.getRechargeGroup() == null) {
             entity.setRechargeGroup(RechargeGoodsGroup.ALL.getType());
         }
 
         RechargeGoodsGroup rechargeGroup = RechargeGoodsGroup.valueOf(entity.getRechargeGroup());
-        List<GameStatRechargeGoods> records;
-        GameStatRechargeSum rechargeSum;
-        if (entity.getServerId() != null && entity.getServerId() > 0) {
-            rechargeSum = orderStatService.queryServerStatRechargeGoodsSum(entity.getServerId(),
-                    rechargeGroup.getType(), dateRange.getStart(), dateRange.getEnd());
-            records = orderStatService.queryServerStatRechargeGoods(entity.getServerId(),
-                    rechargeGroup.getType(), dateRange.getStart(), dateRange.getEnd());
-        } else {
-            rechargeSum = orderStatService.queryChannelStatRechargeGoodsSum(entity.getChannel(),
-                    rechargeGroup.getType(), dateRange.getStart(), dateRange.getEnd());
-            records = orderStatService.queryChannelStatRechargeGoods(entity.getChannel(),
-                    rechargeGroup.getType(), dateRange.getStart(), dateRange.getEnd());
-        }
+        GameStatRechargeSum rechargeSum = orderStatService.queryStatRechargeGoodsSum(entity.getChannel(),
+                entity.getServerId(), rechargeGroup.getType(), dateRange.getStart(), dateRange.getEnd());
+        List<GameStatRechargeGoods> records = orderStatService.queryStatRechargeGoods(entity.getChannel(),
+                entity.getServerId(), rechargeGroup.getType(), dateRange.getStart(), dateRange.getEnd());
 
-        Map<Integer, String> goodsNameMap = getGoodsNameMap(records);
-        records.forEach(t -> t.setProductName(goodsNameMap.getOrDefault(t.getProductId(), "未知"))
-                .setTotalAmount(rechargeSum.getTotalAmount())
+        records.forEach(t -> t.setTotalAmount(rechargeSum.getTotalAmount())
                 .setTotalPlayerNum(rechargeSum.getTotalPlayerNum())
                 .setTotalNum(rechargeSum.getTotalNum()));
         records.sort(Comparator.comparing(GameStatRechargeGoods::getPayNum, Comparator.reverseOrder()));
         return PageQueryUtils.makePage(records);
-    }
-
-    private Map<Integer, String> getGoodsNameMap(List<GameStatRechargeGoods> records) {
-        HashSet<Integer> goodsIds = PageQueryUtils.extractIds(records, GameStatRechargeGoods::getProductId);
-        List<GameRechargeGoods> rechargeGoods = rechargeGoodsService.selectByGoodsId(goodsIds);
-        return rechargeGoods.stream().collect(Collectors.toMap(
-                GameRechargeGoods::getGoodsId,
-                GameRechargeGoods::getName, (key, value) -> value
-        ));
     }
 
 }

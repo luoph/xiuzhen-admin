@@ -3,10 +3,7 @@ package cn.youai.xiuzhen.stat.service.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
-import cn.youai.xiuzhen.stat.entity.GameStatOrder;
-import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
-import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
-import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
+import cn.youai.xiuzhen.stat.entity.*;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -61,24 +58,23 @@ public class GameOrderStatServiceImpl extends ServiceImpl<GameOrderMapper, GameO
         return getBaseMapper().queryOrderStatByRange(StrUtil.join(",", serverIds), serverIds.size(), startDate, endDate);
     }
 
-    @Override
-    public GameStatRechargeSum queryServerStatRechargeGoodsSum(int serverId, int goodsGroup, Date start, Date end) {
-        return getBaseMapper().queryServerStatRechargeGoodsSum(serverId, goodsGroup, start, end);
+    public GameStatRechargeSum queryStatRechargeGoodsSum(String channel, int serverId, int goodsGroup, Date start, Date end) {
+        return getBaseMapper().queryStatRechargeGoodsSum(channel, serverId, goodsGroup, start, end);
     }
 
     @Override
-    public GameStatRechargeSum queryChannelStatRechargeGoodsSum(String channel, int goodsGroup, Date start, Date end) {
-        return getBaseMapper().queryChannelStatRechargeGoodsSum(channel, goodsGroup, start, end);
+    public List<GameStatRechargeGoods> queryStatRechargeGoods(String channel, int serverId, int goodsGroup, Date start, Date end) {
+        return getBaseMapper().queryStatRechargeGoods(channel, serverId, goodsGroup, start, end);
     }
 
     @Override
-    public List<GameStatRechargeGoods> queryServerStatRechargeGoods(int serverId, int goodsGroup, Date start, Date end) {
-        return getBaseMapper().queryServerStatRechargeGoods(serverId, goodsGroup, start, end);
+    public GameStatRechargeSum queryStatRechargeGradeSum(String channel, int serverId, Date start, Date end) {
+        return getBaseMapper().queryStatRechargeGradeSum(channel, serverId, start, end);
     }
 
     @Override
-    public List<GameStatRechargeGoods> queryChannelStatRechargeGoods(String channel, int goodsGroup, Date start, Date end) {
-        return getBaseMapper().queryChannelStatRechargeGoods(channel, goodsGroup, start, end);
+    public List<GameStatPlayerRechargeAmount> queryPlayerRechargeAmount(String channel, int serverId, Date start, Date end) {
+        return getBaseMapper().queryPlayerRechargeAmount(channel, serverId, start, end);
     }
 
     @Override

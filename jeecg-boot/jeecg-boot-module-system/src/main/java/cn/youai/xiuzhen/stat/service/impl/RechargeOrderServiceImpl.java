@@ -6,9 +6,8 @@ import cn.youai.xiuzhen.game.constant.FairyJadeBuyType;
 import cn.youai.xiuzhen.game.entity.GameRechargeGoods;
 import cn.youai.xiuzhen.game.service.IGameRechargeGoodsService;
 import cn.youai.xiuzhen.stat.entity.GameChalcedonyOrder;
-import cn.youai.xiuzhen.stat.entity.PayOrderBill;
+import cn.youai.xiuzhen.stat.entity.GameStatRechargeGrade;
 import cn.youai.xiuzhen.stat.entity.RechargeOrder;
-import cn.youai.xiuzhen.stat.mapper.PayOrderBillMapper;
 import cn.youai.xiuzhen.stat.mapper.RechargeOrderMapper;
 import cn.youai.xiuzhen.stat.service.IRechargeOrderService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
@@ -40,9 +39,6 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
 
     @Autowired
     private IGameRechargeGoodsService rechargeGoodsService;
-
-    @Resource
-    private PayOrderBillMapper payOrderBillMapper;
 
     @Override
     public List<RechargeOrder> queryGiftList(String rangeDateBegin, String rangeDateEnd, int days, Integer serverId, String channel, int goodsType) {
@@ -97,7 +93,7 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             // 通过登录日志统计当前时间段的dau
             Long dau = getBaseMapper().queryDAU(rangeDateBeginTime, rangeDateEndTime, serverId, channel);
             // 通过商品id和dau 获取封装数据的统计对象
-            PayOrderBill payOrderBill = payOrderBillMapper.queryPayOrderList(rangeDateBeginTime, rangeDateEndTime, serverId, channel, dau, goodsId);
+//            GameStatRechargeGrade gameStatRechargeGrade = payOrderBillMapper.queryPayOrderList(rangeDateBeginTime, rangeDateEndTime, serverId, channel, dau, goodsId);
 
             // 获取充值商品
             LambdaQueryWrapper<GameRechargeGoods> queryWrapper = Wrappers.<GameRechargeGoods>lambdaQuery()
@@ -109,14 +105,14 @@ public class RechargeOrderServiceImpl extends ServiceImpl<RechargeOrderMapper, R
             rechargeOrder.setGoodsName(rechargeGoods != null ? rechargeGoods.getName() : "该商品不存在");
             rechargeOrder.setGoodsId(goodsId);
             rechargeOrder.setDau(dau);
-            rechargeOrder.setPayNum(payOrderBill.getPayNumSum());
-            rechargeOrder.setPayNumRate(BigDecimalUtils.dividePercent(payOrderBill.getPayNumSumRate().doubleValue()));
-            rechargeOrder.setGoodsPrice(payOrderBill.getOrderAmount());
-            rechargeOrder.setPayAccountSum(payOrderBill.getPayAmountSum());
-            rechargeOrder.setRangeTimeDate(rangeDateBeginTime + "~" + rangeDateEndTime);
-            rechargeOrder.setConsumeRank(payOrderBill.getConsumeRank());
-            rechargeOrder.setPayCount(payOrderBill.getPayCount());
-            rechargeOrder.setChalcedony(payOrderBill.getChalcedony());
+//            rechargeOrder.setPayNum(gameStatRechargeGrade.getPayNumSum());
+//            rechargeOrder.setPayNumRate(BigDecimalUtils.dividePercent(gameStatRechargeGrade.getPayNumSumRate().doubleValue()));
+//            rechargeOrder.setGoodsPrice(gameStatRechargeGrade.getOrderAmount());
+//            rechargeOrder.setPayAccountSum(gameStatRechargeGrade.getPayAmountSum());
+//            rechargeOrder.setRangeTimeDate(rangeDateBeginTime + "~" + rangeDateEndTime);
+//            rechargeOrder.setConsumeRank(gameStatRechargeGrade.getConsumeRank());
+//            rechargeOrder.setPayCount(gameStatRechargeGrade.getPayCount());
+//            rechargeOrder.setChalcedony(gameStatRechargeGrade.getChalcedony());
 
             // 封装为list集合
             rechargeOrderList.add(rechargeOrder);

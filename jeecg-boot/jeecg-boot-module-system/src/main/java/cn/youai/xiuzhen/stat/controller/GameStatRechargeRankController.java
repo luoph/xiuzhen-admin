@@ -45,7 +45,7 @@ public class GameStatRechargeRankController {
      * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "玩家充值排行-列表查询")
+    @AutoLog(value = "付费排行-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameStatRechargeRank entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -56,12 +56,12 @@ public class GameStatRechargeRankController {
         return Result.ok(pageList);
     }
 
-    @AutoLog(value = "玩家充值排行-导出")
+    @AutoLog(value = "付费排行-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest req, GameStatRechargeRank entity) {
         Page<GameStatRechargeRank> page = new Page<>(1, Integer.MAX_VALUE);
         IPage<GameStatRechargeRank> pageList = pageList(page, entity, req);
-        return ExcelUtils.exportXls(pageList, req.getParameter("selections"), GameStatRechargeRank.class, "玩家充值排行");
+        return ExcelUtils.exportXls(pageList, req.getParameter("selections"), GameStatRechargeRank.class, "付费排行");
     }
 
     private IPage<GameStatRechargeRank> pageList(Page<GameStatRechargeRank> page, GameStatRechargeRank entity, HttpServletRequest req) {

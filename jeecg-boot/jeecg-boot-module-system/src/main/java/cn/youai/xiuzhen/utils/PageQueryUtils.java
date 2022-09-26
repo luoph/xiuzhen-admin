@@ -6,10 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jeecg.common.system.query.QueryGenerator;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.ToIntFunction;
 import java.util.function.ToLongFunction;
 
@@ -50,6 +47,16 @@ public final class PageQueryUtils {
 
     public static <T> IPage<T> makePage(List<T> records) {
         IPage<T> pageList = new Page<>();
+        pageList.setPages(1).setCurrent(1).setTotal(records.size()).setRecords(records);
+        return pageList;
+    }
+
+    public static <T> IPage<T> makePage(T record) {
+        IPage<T> pageList = new Page<>();
+        List<T> records = new ArrayList<>();
+        if (record != null) {
+            records.add(record);
+        }
         pageList.setPages(1).setCurrent(1).setTotal(records.size()).setRecords(records);
         return pageList;
     }

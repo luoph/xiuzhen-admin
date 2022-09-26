@@ -2,10 +2,7 @@ package cn.youai.xiuzhen.game.mapper;
 
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.entity.MergeServerVO;
-import cn.youai.xiuzhen.stat.entity.GameStatOrder;
-import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
-import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
-import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
+import cn.youai.xiuzhen.stat.entity.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -51,25 +48,34 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                         @Param("startDate") Date startDate,
                                         @Param("endDate") Date endDate);
 
-    GameStatRechargeSum queryServerStatRechargeGoodsSum(@Param("serverId") int serverId,
-                                                        @Param("goodsGroup") int goodsGroup,
-                                                        @Param("startDate") Date startDate,
-                                                        @Param("endDate") Date endDate);
 
-    GameStatRechargeSum queryChannelStatRechargeGoodsSum(@Param("channel") String channel,
-                                                         @Param("goodsGroup") int goodsGroup,
-                                                         @Param("startDate") Date startDate,
-                                                         @Param("endDate") Date endDate);
+    GameStatRechargeSum queryStatRechargeGoodsSum(@Param("channel") String channel,
+                                                  @Param("serverId") int serverId,
+                                                  @Param("goodsGroup") int goodsGroup,
+                                                  @Param("startDate") Date startDate,
+                                                  @Param("endDate") Date endDate);
 
     List<GameStatRechargeGoods> queryServerStatRechargeGoods(@Param("serverId") int serverId,
                                                              @Param("goodsGroup") int goodsGroup,
                                                              @Param("startDate") Date startDate,
                                                              @Param("endDate") Date endDate);
 
-    List<GameStatRechargeGoods> queryChannelStatRechargeGoods(@Param("channel") String channel,
-                                                              @Param("goodsGroup") int goodsGroup,
-                                                              @Param("startDate") Date startDate,
-                                                              @Param("endDate") Date endDate);
+    List<GameStatRechargeGoods> queryStatRechargeGoods(@Param("channel") String channel,
+                                                       @Param("serverId") int serverId,
+                                                       @Param("goodsGroup") int goodsGroup,
+                                                       @Param("startDate") Date startDate,
+                                                       @Param("endDate") Date endDate);
+
+
+    GameStatRechargeSum queryStatRechargeGradeSum(@Param("channel") String channel,
+                                                  @Param("serverId") int serverId,
+                                                  @Param("startDate") Date startDate,
+                                                  @Param("endDate") Date endDate);
+
+    List<GameStatPlayerRechargeAmount> queryPlayerRechargeAmount(@Param("channel") String channel,
+                                                                 @Param("serverId") int serverId,
+                                                                 @Param("startDate") Date startDate,
+                                                                 @Param("endDate") Date endDate);
 
     List<GameStatRechargeRank> queryRechargeRankList(@Param("channel") String channel,
                                                      @Param("serverId") int serverId,
