@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.stat.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.StatDayType;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
 import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
@@ -66,8 +65,7 @@ public class GameStatRechargeRankController {
     }
 
     private IPage<GameStatRechargeRank> pageList(Page<GameStatRechargeRank> page, GameStatRechargeRank entity, HttpServletRequest req) {
-        int dayType = entity.getDayType() != null ? entity.getDayType() : StatDayType.D7.getValue();
-        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", dayType);
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
         int serverId = entity.getServerId() != null ? entity.getServerId() : 0;
         Date now = DateUtils.now();
         List<GameStatRechargeRank> records = orderStatService.queryRechargeRankList(entity.getChannel(), serverId, dateRange.getStart(), dateRange.getEnd());

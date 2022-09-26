@@ -19,9 +19,20 @@
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
-            <a-form-item label="日期">
+            <a-form-item label="统计日期">
               <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
                               :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="12" :sm="16">
+            <a-form-item label="日期范围">
+              <a-radio-group v-model="dayType" @change="onDayTypeChange">
+                <a-radio :value="0">自定义</a-radio>
+                <a-radio :value="7">近7天</a-radio>
+                <a-radio :value="15">近15天</a-radio>
+                <a-radio :value="30">近1月</a-radio>
+                <a-radio :value="60">近2月</a-radio>
+              </a-radio-group>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -48,8 +59,7 @@
         :pagination="ipagination"
         :scroll="{ x: 'max-content' }"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-        @change="handleTableChange"
-      ></a-table>
+        @change="handleTableChange"/>
     </div>
   </a-card>
 </template>
@@ -59,6 +69,7 @@ import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import {filterObj} from '@/utils/util';
 import {getAction} from '@/api/manage';
+import moment from 'moment';
 import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
@@ -78,6 +89,7 @@ export default {
         order: 'desc',
       },
       timeout: 90000,
+      dayType: 7,
       columns: [
         {
           title: '#',
@@ -485,8 +497,10 @@ export default {
       this.queryParam.serverId = serverId;
     },
     getQueryParams() {
-      console.log(this.queryParam.countDateRange);
-      var param = Object.assign({}, this.queryParam, this.isorter);
+      if (this.dayType > 0) {
+        this.selectDayType(this.dayType);
+      }
+      const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       // 范围参数不传递后台
@@ -513,10 +527,24 @@ export default {
         this.searchQuery();
       })
     },
-    onDateChange: function (value, dateString) {
-      console.log(dateString[0], dateString[1]);
+    onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];
       this.queryParam.countDate_end = dateString[1];
+      this.dayType = 0;
+    },
+    onDayTypeChange(e) {
+      if (e.target.value > 0) {
+        this.selectDayType(e.target.value);
+      }
+    },
+    selectDayType(dayType) {
+      if (dayType > 0) {
+        const start = moment().subtract(dayType, 'days').format('YYYY-MM-DD');
+        const end = moment().format('YYYY-MM-DD');
+        this.queryParam.countDateRange = [start, end];
+        this.queryParam.countDate_begin = start;
+        this.queryParam.countDate_end = end;
+      }
     },
     toRate: function (n, r) {
       if (n === null || n === undefined) {

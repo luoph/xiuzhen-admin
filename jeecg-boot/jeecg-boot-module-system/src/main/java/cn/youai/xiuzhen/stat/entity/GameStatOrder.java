@@ -55,11 +55,6 @@ public class GameStatOrder implements Serializable {
     private Date endDate;
 
     /**
-     * 快速统计日期范围
-     */
-    private Integer dayType;
-
-    /**
      * 渠道id
      */
     private String channel;

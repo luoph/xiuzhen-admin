@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.stat.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.StatDayType;
 import cn.youai.xiuzhen.game.constant.StatDuration;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
@@ -88,8 +87,7 @@ public class GameStatOrderController {
     }
 
     private IPage<GameStatOrder> pageList(Page<GameStatOrder> page, GameStatOrder entity, HttpServletRequest req) {
-        int dayType = entity.getDayType() != null ? entity.getDayType() : StatDayType.D7.getValue();
-        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", dayType);
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
         if (dateRange.getStart() == null || dateRange.getEnd() == null) {
             return page;
         }

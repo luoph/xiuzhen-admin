@@ -7,7 +7,6 @@
           <a-col :md="12" :sm="16">
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
-            <!-- <game-server-selector @onSelectServer="change" /> -->
           </a-col>
           <a-col :md="8" :sm="16">
             <a-form-item label="统计日期">
@@ -17,7 +16,7 @@
           </a-col>
           <a-col :md="12" :sm="16">
             <a-form-item label="日期范围">
-              <a-radio-group v-model="queryParam.dayType" :default-value="7" @change="onTypeChange">
+              <a-radio-group v-model="dayType" @change="onDayTypeChange">
                 <a-radio :value="0">自定义</a-radio>
                 <a-radio :value="7">近7天</a-radio>
                 <a-radio :value="15">近15天</a-radio>
@@ -60,9 +59,9 @@
 
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import GameServerSelector from '@comp/gameserver/GameServerSelector';
 import JDate from '@/components/jeecg/JDate.vue';
 import {filterObj} from "@/utils/util";
+import moment from 'moment';
 import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
@@ -71,8 +70,7 @@ export default {
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    ChannelServerSelector,
-    GameServerSelector
+    ChannelServerSelector
   },
   data() {
     return {
@@ -80,6 +78,7 @@ export default {
         column: 'countDate',
         order: 'desc'
       },
+      dayType: 7,
       timeout: 90000,
       columns: [
         {
@@ -158,7 +157,9 @@ export default {
       this.queryParam.serverId = serverId;
     },
     getQueryParams() {
-      console.log(this.queryParam.countDateRange);
+      if (this.dayType > 0) {
+        this.selectDayType(this.dayType);
+      }
       const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
@@ -172,14 +173,23 @@ export default {
       this.loadData(1);
     },
     onDateChange(date, dateString) {
-      console.log(dateString[0], dateString[1]);
       this.queryParam.countDate_begin = dateString[0];
       this.queryParam.countDate_end = dateString[1];
-      this.queryParam.dayType = 0;
+      this.dayType = 0;
     },
-    onTypeChange(e) {
-      console.log('radio checked', e.target.value);
-      this.queryParam.countDateRange = [null, null];
+    onDayTypeChange(e) {
+      if (e.target.value > 0) {
+        this.selectDayType(e.target.value);
+      }
+    },
+    selectDayType(dayType) {
+      if (dayType > 0) {
+        const start = moment().subtract(dayType, 'days').format('YYYY-MM-DD');
+        const end = moment().format('YYYY-MM-DD');
+        this.queryParam.countDateRange = [start, end];
+        this.queryParam.countDate_begin = start;
+        this.queryParam.countDate_end = end;
+      }
     },
     countRate: function (n, r) {
       if (n === null || n === undefined) {

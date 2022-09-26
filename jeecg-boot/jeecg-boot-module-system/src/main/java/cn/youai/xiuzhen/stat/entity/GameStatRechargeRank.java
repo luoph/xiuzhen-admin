@@ -27,11 +27,6 @@ public class GameStatRechargeRank implements Serializable {
     private Date countDate;
 
     /**
-     * 快速统计日期范围
-     */
-    private Integer dayType;
-
-    /**
      * 支付玩家id
      */
     @Excel(name = "玩家ID", width = 15)

@@ -2,8 +2,6 @@ package cn.youai.xiuzhen.utils;
 
 import cn.hutool.core.date.DateUtil;
 import cn.youai.basics.model.DateRange;
-import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.constant.StatDayType;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jeecg.common.system.query.QueryGenerator;
@@ -32,19 +30,6 @@ public final class PageQueryUtils {
             end = DateUtil.parse(createTimeEnd[0]);
         }
         return new DateRange(start, end);
-    }
-
-    public static DateRange parseRange(Map<String, String[]> parameterMap, String column, int dayType) {
-        DateRange dateRange = parseRange(parameterMap, column);
-        StatDayType finalDayType = StatDayType.valueOf(dayType);
-        if (finalDayType == StatDayType.CUSTOM) {
-            return dateRange;
-        }
-
-        int days = finalDayType.getValue();
-        dateRange.setEnd(DateUtils.todayDate());
-        dateRange.setStart(DateUtils.addDays(dateRange.getEnd(), -days));
-        return dateRange;
     }
 
     public static DateRange parseRange(Map<String, String[]> parameterMap, String column) {
