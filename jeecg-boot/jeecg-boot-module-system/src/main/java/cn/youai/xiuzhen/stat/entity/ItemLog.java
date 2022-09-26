@@ -1,6 +1,5 @@
 package cn.youai.xiuzhen.stat.entity;
 
-import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -43,14 +42,12 @@ public class ItemLog implements Serializable {
     /**
      * 玩家id
      */
-    @ColumnWidth(15)
     @Excel(name = "玩家id", width = 15)
     private Long playerId;
 
     /**
      * 道具名称
      */
-    @ColumnWidth(15)
     @TableField(exist = false)
     @Excel(name = "道具名称", width = 15)
     private String itemName;
@@ -58,28 +55,24 @@ public class ItemLog implements Serializable {
     /**
      * 道具id
      */
-    @ColumnWidth(15)
     @Excel(name = "道具id", width = 15)
     private Integer itemId;
 
     /**
      * 数量
      */
-    @ColumnWidth(15)
     @Excel(name = "数量", width = 15)
     private Long num;
 
     /**
      * 途径
      */
-    @ColumnWidth(15)
     @Excel(name = "途径", width = 15)
     private Integer way;
 
     /**
      * 途径名称
      */
-    @ColumnWidth(15)
     @TableField(exist = false)
     @Excel(name = "途径名称", width = 15)
     private String wayName;
@@ -93,21 +86,18 @@ public class ItemLog implements Serializable {
     /**
      * 同步时间
      */
-    @ColumnWidth(15)
     @Excel(name = "更新前数量", width = 15)
     private Long beforeNum;
 
     /**
      * 同步时间
      */
-    @ColumnWidth(15)
     @Excel(name = "更新后数量", width = 15)
     private Long afterNum;
 
     /**
      * 创建时间
      */
-    @ColumnWidth(15)
     @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
