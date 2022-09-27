@@ -1,23 +1,27 @@
 package cn.youai.xiuzhen.stat.controller;
 
-import cn.hutool.core.date.DatePattern;
 import cn.youai.basics.model.DateRange;
+import cn.youai.server.conf.ConfItem;
 import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.stat.entity.ShopMallLog;
-import cn.youai.xiuzhen.stat.service.IShopMallLogService;
-import cn.youai.xiuzhen.utils.ParamUtils;
+import cn.youai.xiuzhen.core.controller.SimplePageController;
+import cn.youai.xiuzhen.stat.entity.ShopMallProduct;
+import cn.youai.xiuzhen.stat.service.IShopMallRecordService;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.constant.TimeConstant;
+import org.jeecg.modules.utils.GameConfigUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
-import java.math.BigDecimal;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,87 +32,83 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @RestController
-@RequestMapping("game/shopMallLog")
-public class ShopMallLogController {
+@RequestMapping("game/stat/shopMallLog")
+public class ShopMallLogController extends SimplePageController<ShopMallProduct> {
 
-    @Resource
-    private IShopMallLogService shopMallLogService;
+    @Autowired
+    private IShopMallRecordService shopMallLogService;
 
-    /**
-     * 分页列表查询
-     *
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "商店销售-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> currencyPayIncomeList(@RequestParam(name = "rangeDateBegin", defaultValue = "") String rangeDateBegin,
-                                           @RequestParam(name = "rangeDateEnd", defaultValue = "") String rangeDateEnd,
-                                           @RequestParam(name = "days", defaultValue = "0") int days,
-                                           @RequestParam(name = "type", defaultValue = "0") int type,
-                                           @RequestParam(name = "serverId", defaultValue = "0") Integer serverId,
-                                           @RequestParam(name = "channelId", defaultValue = "0") Integer channelId,
-                                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
-    ) {
-        Page<OneDayDate> page = new Page<>(pageNo, pageSize);
-
-        //服务器空校验
-        if (0 == serverId || 0 == channelId) {
-            return Result.error("请选择服务器！");
-        }
-        //日期校验
-        DateRange dateRange = ParamUtils.getDateRange(rangeDateBegin, rangeDateEnd, days);
-        if (null == dateRange) {
-            return Result.error("请选择日期！");
-        }
-
-        if (0 == type) {
-            return Result.error("请选择商店类型！");
-        }
-
-        List<ShopMallLog> shopMallLogs = shopMallLogService.queryShopMallListNew(DateUtils.formatDate(dateRange.getStart(), DatePattern.NORM_DATETIME_PATTERN), DateUtils.formatDate(dateRange.getEnd(), DatePattern.NORM_DATETIME_PATTERN), days, serverId, type);
-
-        //重新整理数据给前端
-        Map<String, List<ShopMallLog>> shopMallLogListMapTime = shopMallLogs.stream().collect(Collectors.groupingBy(ShopMallLog::getCreateTimeString));
-        Map<String, List<ShopMallLog>> shopMallLogListMapTimeDesc = shopMallLogListMapTime.entrySet()
-                .stream()
-                .sorted(Collections
-                        .reverseOrder(Map.Entry.comparingByKey()))
-                .collect(Collectors
-                        .toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-
-        List<OneDayDate> shopMallLogsOneDayDate = new ArrayList<>();
-        for (String s : shopMallLogListMapTimeDesc.keySet()) {
-            List<ShopMallLog> shopMallLogListOneDay = shopMallLogListMapTimeDesc.get(s);
-            //总货币数
-            int sum = shopMallLogListOneDay.stream().mapToInt(shopMallLog1 -> shopMallLog1.getItemNum().intValue()).sum();
-            for (ShopMallLog shopMallLog : shopMallLogListOneDay) {
-                if (0 == shopMallLog.getItemNum().intValue() || 0 == sum) {
-                    shopMallLog.setItemNumRate(new BigDecimal(0));
-                    continue;
-                }
-                shopMallLog.setItemNumRate(shopMallLog.getItemNum().divide(new BigDecimal(sum), 2, BigDecimal.ROUND_HALF_UP));
-            }
-            OneDayDate oneDayDate = new OneDayDate();
-            oneDayDate.setTime(s);
-            oneDayDate.setShopMallLogList(shopMallLogListMapTimeDesc.get(s));
-            shopMallLogsOneDayDate.add(oneDayDate);
-        }
-
-        page.setRecords(shopMallLogsOneDayDate).setTotal(shopMallLogsOneDayDate.size());
-        return Result.ok(page);
+    public Result<?> queryPageList(ShopMallProduct entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
+        return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 返回给前端的某一天的数据对象
-     */
-    @Data
-    private static class OneDayDate {
-        String time;
-        List<ShopMallLog> shopMallLogList;
+    @Override
+    protected IPage<ShopMallProduct> pageList(Page<ShopMallProduct> page, ShopMallProduct entity, HttpServletRequest req) {
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
+        int serverId = entity.getServerId() != null ? entity.getServerId() : 0;
+        if (serverId > 0) {
+            entity.setChannel(null);
+        }
+        int tabId = entity.getTabId() != null ? entity.getTabId() : 0;
+
+        List<ShopMallProduct> dateList = shopMallLogService.queryShopMallProductGroupByDate(entity.getChannel(),
+                serverId, tabId, dateRange.getStart(), dateRange.getEnd());
+        dateList = dateList.stream().filter(t -> t.getCountDate() != null).collect(Collectors.toList());
+
+        // 按商店类型+日期汇总
+        Map<String, List<ShopMallProduct>> dateMap = dateList.stream().collect(Collectors.groupingBy(
+                ShopMallProduct::groupByTypeAndDate, HashMap::new, Collectors.toCollection(ArrayList::new)));
+        dateMap.forEach((k, v) -> {
+            long totalNum = v.size() > 0 ? v.stream().mapToLong(ShopMallProduct::getCostNum).sum() : 0;
+            long totalBuyNum = v.size() > 0 ? v.stream().mapToLong(ShopMallProduct::getBuyNum).sum() : 0;
+            v.forEach(t -> t.setTotalNum(totalNum).setTotalBuyNum(totalBuyNum)
+                    .setStatTime(DateUtils.formatDate(t.getCountDate(), TimeConstant.DEFAULT_DATE_FORMAT)));
+        });
+
+        List<ShopMallProduct> itemIdList = shopMallLogService.queryShopMallProductGroupByItemId(entity.getChannel(),
+                serverId, tabId, dateRange.getStart(), dateRange.getEnd());
+        itemIdList = itemIdList.stream().filter(t -> t.getCountDate() != null).collect(Collectors.toList());
+        long totalNum = itemIdList.stream().mapToLong(ShopMallProduct::getCostNum).sum();
+        long totalBuyNum = itemIdList.stream().mapToLong(ShopMallProduct::getBuyNum).sum();
+        itemIdList.forEach(t -> t.setTotalNum(totalNum).setTotalBuyNum(totalBuyNum).setStatTime("汇总"));
+        // 按照消耗货币数量排序
+        itemIdList.sort(Comparator.comparing(ShopMallProduct::getTabId)
+                .thenComparing(ShopMallProduct::getCostNum, Comparator.reverseOrder()));
+
+        List<ShopMallProduct> records = new ArrayList<>();
+        dateMap.values().forEach(records::addAll);
+
+        // 按照消耗货币数量排序
+        records.sort(Comparator.comparing(ShopMallProduct::getCountDate, Comparator.reverseOrder())
+                .thenComparing(ShopMallProduct::getTabId)
+                .thenComparing(ShopMallProduct::getCostNum, Comparator.reverseOrder()));
+
+        records.addAll(itemIdList);
+
+        return PageQueryUtils.makePage(records);
     }
 
+    @AutoLog(value = "商店销售-导出")
+    @RequestMapping(value = "/exportXls")
+    public ModelAndView exportXls(HttpServletRequest req, ShopMallProduct entity) {
+        return super.exportXls(req, entity, ShopMallProduct.class, "商店销售");
+    }
 
+    @Override
+    protected void onload(ShopMallProduct entity) {
+        ConfItem product = GameConfigUtils.getItemById(entity.getItemId());
+        if (product != null) {
+            entity.setItemName(product.getName());
+        }
+
+        ConfItem currency = GameConfigUtils.getItemById(entity.getCostItem());
+        if (currency != null) {
+            entity.setCostName(currency.getName());
+        }
+    }
 }

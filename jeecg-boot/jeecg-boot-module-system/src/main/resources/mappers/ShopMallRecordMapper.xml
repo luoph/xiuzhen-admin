@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.ShopMallRecordMapper">
+
+    <select id="queryShopMallProductGroupByDate" resultType="cn.youai.xiuzhen.stat.entity.ShopMallProduct">
+        SELECT
+        l.`tab_id`,
+        l.`item_id`,
+        l.`create_date` AS `count_date`,
+        SUM(l.`item_num` ) AS `item_num`,
+        COUNT(l.`id` ) AS `buy_num`,
+        COUNT(DISTINCT(l.`player_id`)) AS `player_num`,
+        l.`cost_item` AS `cost_item`,
+        SUM(l.`cost_num`) AS `cost_num`
+        FROM `log_shop` l
+        LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        <where>
+            <if test="channel != null and channel != '' ">p.`channel` = #{channel}</if>
+            <if test="serverId > 0">AND l.`server_id` = #{serverId}</if>
+            <if test="tabId > 0">AND l.`tab_id` = #{tabId}</if>
+            <!--  NOTICE 参数不能使用 MySql 的函数，否则分片规则不生效，会遍历所有的分片表 -->
+            <if test="startDate != null"><![CDATA[ AND l.`create_date` >= #{startDate} ]]></if>
+            <if test="endDate != null "><![CDATA[ AND l.`create_date` <= #{endDate} ]]></if>
+        </where>
+        GROUP BY l.`tab_id`, l.`item_id`, l.`create_date`
+    </select>
+
+    <select id="queryShopMallProductGroupByItemId" resultType="cn.youai.xiuzhen.stat.entity.ShopMallProduct">
+        SELECT
+        l.`tab_id`,
+        l.`item_id`,
+        l.`create_date` AS `count_date`,
+        SUM(l.`item_num` ) AS `item_num`,
+        COUNT(l.`id` ) AS `buy_num`,
+        COUNT(DISTINCT(l.`player_id`)) AS `player_num`,
+        l.`cost_item` AS `cost_item`,
+        SUM(l.`cost_num`) AS `cost_num`
+        FROM `log_shop` l
+        LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+        <where>
+            <if test="channel != null and channel != '' ">p.`channel` = #{channel}</if>
+            <if test="serverId > 0">AND l.`server_id` = #{serverId}</if>
+            <if test="tabId > 0">AND l.`tab_id` = #{tabId}</if>
+            <if test="startDate != null"><![CDATA[ AND l.`create_date` >= #{startDate} ]]></if>
+            <if test="endDate != null "><![CDATA[ AND l.`create_date` <= #{endDate} ]]></if>
+        </where>
+        GROUP BY l.`tab_id`, l.`item_id`
+    </select>
+
+</mapper>

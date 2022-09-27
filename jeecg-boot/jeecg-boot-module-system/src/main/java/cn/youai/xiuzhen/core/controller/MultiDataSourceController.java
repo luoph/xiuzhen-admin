@@ -31,6 +31,10 @@ public class MultiDataSourceController<T, S extends IService<T>> {
     @Autowired
     protected S service;
 
+    protected boolean isReadOnly() {
+        return true;
+    }
+
     private void useServerDatabase(Integer serverId) {
         if (serverId != null && serverId > 0) {
             DataSourceHelper.useServerDatabase(serverId);
@@ -78,6 +82,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
      * @return {@linkplain Result}
      */
     public Result<?> add(T entity, Integer serverId) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         try {
             useServerDatabase(serverId);
             service.save(entity);
@@ -94,6 +101,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
      * @return {@linkplain Result}
      */
     public Result<?> edit(T entity, Integer serverId) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         try {
             useServerDatabase(serverId);
             service.updateById(entity);
@@ -110,6 +120,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
      * @return {@linkplain Result}
      */
     public Result<?> delete(String id, Integer serverId) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         try {
             useServerDatabase(serverId);
             service.removeById(id);
@@ -126,6 +139,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
      * @return {@linkplain Result}
      */
     public Result<?> deleteBatch(String ids, Integer serverId) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         try {
             useServerDatabase(serverId);
             service.removeByIds(Arrays.asList(ids.split(",")));
@@ -177,6 +193,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
      * 通过excel导入数据
      */
     protected Result<?> importExcel(Integer serverId, HttpServletRequest request, HttpServletResponse response, Class<T> clazz) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         try {
             useServerDatabase(serverId);
             return ExcelUtils.importExcel(service, request, clazz);
