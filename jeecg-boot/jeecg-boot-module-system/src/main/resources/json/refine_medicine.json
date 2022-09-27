@@ -5,7 +5,7 @@
         "star": 1,
         "qua": 1,
         "recipe_id": 1120101,
-        "att": 300,
+        "att": 100,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -19,7 +19,7 @@
         "star": 1,
         "qua": 2,
         "recipe_id": 1120101,
-        "att": 1200,
+        "att": 500,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -33,7 +33,7 @@
         "star": 1,
         "qua": 3,
         "recipe_id": 1120101,
-        "att": 2100,
+        "att": 1000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -47,7 +47,7 @@
         "star": 1,
         "qua": 4,
         "recipe_id": 1120101,
-        "att": 3000,
+        "att": 2500,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -62,7 +62,7 @@
         "qua": 1,
         "recipe_id": 1120102,
         "att": 0,
-        "def": 300,
+        "def": 100,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -76,7 +76,7 @@
         "qua": 2,
         "recipe_id": 1120102,
         "att": 0,
-        "def": 1200,
+        "def": 500,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -90,7 +90,7 @@
         "qua": 3,
         "recipe_id": 1120102,
         "att": 0,
-        "def": 2100,
+        "def": 1000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -104,7 +104,7 @@
         "qua": 4,
         "recipe_id": 1120102,
         "att": 0,
-        "def": 3000,
+        "def": 2500,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -119,7 +119,7 @@
         "recipe_id": 1120103,
         "att": 0,
         "def": 0,
-        "hp": 3000,
+        "hp": 1000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -133,7 +133,7 @@
         "recipe_id": 1120103,
         "att": 0,
         "def": 0,
-        "hp": 12000,
+        "hp": 5000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -147,7 +147,7 @@
         "recipe_id": 1120103,
         "att": 0,
         "def": 0,
-        "hp": 21000,
+        "hp": 10000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -161,7 +161,7 @@
         "recipe_id": 1120103,
         "att": 0,
         "def": 0,
-        "hp": 30000,
+        "hp": 25000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -176,7 +176,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 300,
+        "arp": 100,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":10}]"
@@ -190,7 +190,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 1200,
+        "arp": 500,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":20}]"
@@ -204,7 +204,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 2100,
+        "arp": 1000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":30}]"
@@ -218,7 +218,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 3000,
+        "arp": 2500,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":50}]"
@@ -233,7 +233,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 300,
+        "crit": 100,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":10}]"
     },
@@ -247,7 +247,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 1200,
+        "crit": 500,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":20}]"
     },
@@ -261,7 +261,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 2100,
+        "crit": 1000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":30}]"
     },
@@ -275,7 +275,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 3000,
+        "crit": 2500,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":50}]"
     },
@@ -290,7 +290,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 300,
+        "crit_def": 100,
         "decompose": "[{\"itemId\":1053,\"num\":10}]"
     },
     {
@@ -304,7 +304,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 1200,
+        "crit_def": 500,
         "decompose": "[{\"itemId\":1053,\"num\":20}]"
     },
     {
@@ -318,7 +318,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 2100,
+        "crit_def": 1000,
         "decompose": "[{\"itemId\":1053,\"num\":30}]"
     },
     {
@@ -332,7 +332,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 3000,
+        "crit_def": 2500,
         "decompose": "[{\"itemId\":1053,\"num\":50}]"
     },
     {
@@ -341,7 +341,7 @@
         "star": 2,
         "qua": 1,
         "recipe_id": 1120201,
-        "att": 1000,
+        "att": 200,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -355,7 +355,7 @@
         "star": 2,
         "qua": 2,
         "recipe_id": 1120201,
-        "att": 4000,
+        "att": 1000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -369,7 +369,7 @@
         "star": 2,
         "qua": 3,
         "recipe_id": 1120201,
-        "att": 7000,
+        "att": 2000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -383,7 +383,7 @@
         "star": 2,
         "qua": 4,
         "recipe_id": 1120201,
-        "att": 10000,
+        "att": 5000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -398,7 +398,7 @@
         "qua": 1,
         "recipe_id": 1120202,
         "att": 0,
-        "def": 1000,
+        "def": 200,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -412,7 +412,7 @@
         "qua": 2,
         "recipe_id": 1120202,
         "att": 0,
-        "def": 4000,
+        "def": 1000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -426,7 +426,7 @@
         "qua": 3,
         "recipe_id": 1120202,
         "att": 0,
-        "def": 7000,
+        "def": 2000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -440,7 +440,7 @@
         "qua": 4,
         "recipe_id": 1120202,
         "att": 0,
-        "def": 10000,
+        "def": 5000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -455,7 +455,7 @@
         "recipe_id": 1120203,
         "att": 0,
         "def": 0,
-        "hp": 10000,
+        "hp": 2000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -469,7 +469,7 @@
         "recipe_id": 1120203,
         "att": 0,
         "def": 0,
-        "hp": 40000,
+        "hp": 10000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -483,7 +483,7 @@
         "recipe_id": 1120203,
         "att": 0,
         "def": 0,
-        "hp": 70000,
+        "hp": 20000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -497,7 +497,7 @@
         "recipe_id": 1120203,
         "att": 0,
         "def": 0,
-        "hp": 100000,
+        "hp": 50000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -512,7 +512,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 1000,
+        "arp": 200,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":20}]"
@@ -526,7 +526,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 4000,
+        "arp": 1000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":40}]"
@@ -540,7 +540,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 7000,
+        "arp": 2000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":70}]"
@@ -554,7 +554,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 10000,
+        "arp": 5000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":100}]"
@@ -569,7 +569,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 1000,
+        "crit": 200,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":20}]"
     },
@@ -583,7 +583,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 4000,
+        "crit": 1000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":40}]"
     },
@@ -597,7 +597,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 7000,
+        "crit": 2000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":70}]"
     },
@@ -611,7 +611,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 10000,
+        "crit": 5000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":100}]"
     },
@@ -626,7 +626,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 1000,
+        "crit_def": 200,
         "decompose": "[{\"itemId\":1053,\"num\":20}]"
     },
     {
@@ -640,7 +640,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 4000,
+        "crit_def": 1000,
         "decompose": "[{\"itemId\":1053,\"num\":40}]"
     },
     {
@@ -654,7 +654,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 7000,
+        "crit_def": 2000,
         "decompose": "[{\"itemId\":1053,\"num\":70}]"
     },
     {
@@ -668,7 +668,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 10000,
+        "crit_def": 5000,
         "decompose": "[{\"itemId\":1053,\"num\":100}]"
     },
     {
@@ -677,7 +677,7 @@
         "star": 3,
         "qua": 1,
         "recipe_id": 1120301,
-        "att": 3100,
+        "att": 400,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -691,7 +691,7 @@
         "star": 3,
         "qua": 2,
         "recipe_id": 1120301,
-        "att": 7750,
+        "att": 2000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -705,7 +705,7 @@
         "star": 3,
         "qua": 3,
         "recipe_id": 1120301,
-        "att": 15500,
+        "att": 4000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -719,7 +719,7 @@
         "star": 3,
         "qua": 4,
         "recipe_id": 1120301,
-        "att": 31000,
+        "att": 10000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -734,7 +734,7 @@
         "qua": 1,
         "recipe_id": 1120302,
         "att": 0,
-        "def": 3100,
+        "def": 400,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -748,7 +748,7 @@
         "qua": 2,
         "recipe_id": 1120302,
         "att": 0,
-        "def": 7750,
+        "def": 2000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -762,7 +762,7 @@
         "qua": 3,
         "recipe_id": 1120302,
         "att": 0,
-        "def": 15500,
+        "def": 4000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -776,7 +776,7 @@
         "qua": 4,
         "recipe_id": 1120302,
         "att": 0,
-        "def": 31000,
+        "def": 10000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -791,7 +791,7 @@
         "recipe_id": 1120303,
         "att": 0,
         "def": 0,
-        "hp": 31000,
+        "hp": 4000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -805,7 +805,7 @@
         "recipe_id": 1120303,
         "att": 0,
         "def": 0,
-        "hp": 77500,
+        "hp": 20000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -819,7 +819,7 @@
         "recipe_id": 1120303,
         "att": 0,
         "def": 0,
-        "hp": 155000,
+        "hp": 40000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -833,7 +833,7 @@
         "recipe_id": 1120303,
         "att": 0,
         "def": 0,
-        "hp": 310000,
+        "hp": 100000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -848,7 +848,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 3100,
+        "arp": 400,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":40}]"
@@ -862,7 +862,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 7750,
+        "arp": 2000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":80}]"
@@ -876,7 +876,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 15500,
+        "arp": 4000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":130}]"
@@ -890,7 +890,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 31000,
+        "arp": 10000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
@@ -905,7 +905,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 3100,
+        "crit": 400,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":40}]"
     },
@@ -919,7 +919,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 7750,
+        "crit": 2000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":80}]"
     },
@@ -933,7 +933,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 15500,
+        "crit": 4000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":130}]"
     },
@@ -947,7 +947,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 31000,
+        "crit": 10000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
     },
@@ -962,7 +962,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 3100,
+        "crit_def": 400,
         "decompose": "[{\"itemId\":1053,\"num\":40}]"
     },
     {
@@ -976,7 +976,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 7750,
+        "crit_def": 2000,
         "decompose": "[{\"itemId\":1053,\"num\":80}]"
     },
     {
@@ -990,7 +990,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 15500,
+        "crit_def": 4000,
         "decompose": "[{\"itemId\":1053,\"num\":130}]"
     },
     {
@@ -1004,7 +1004,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 31000,
+        "crit_def": 10000,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
     },
     {
@@ -1013,7 +1013,7 @@
         "star": 4,
         "qua": 1,
         "recipe_id": 1120401,
-        "att": 6500,
+        "att": 600,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1027,7 +1027,7 @@
         "star": 4,
         "qua": 2,
         "recipe_id": 1120401,
-        "att": 16250,
+        "att": 3000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1041,7 +1041,7 @@
         "star": 4,
         "qua": 3,
         "recipe_id": 1120401,
-        "att": 32500,
+        "att": 6000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1055,7 +1055,7 @@
         "star": 4,
         "qua": 4,
         "recipe_id": 1120401,
-        "att": 65000,
+        "att": 15000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1070,7 +1070,7 @@
         "qua": 1,
         "recipe_id": 1120402,
         "att": 0,
-        "def": 6500,
+        "def": 600,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1084,7 +1084,7 @@
         "qua": 2,
         "recipe_id": 1120402,
         "att": 0,
-        "def": 16250,
+        "def": 3000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1098,7 +1098,7 @@
         "qua": 3,
         "recipe_id": 1120402,
         "att": 0,
-        "def": 32500,
+        "def": 6000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1112,7 +1112,7 @@
         "qua": 4,
         "recipe_id": 1120402,
         "att": 0,
-        "def": 65000,
+        "def": 15000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1127,7 +1127,7 @@
         "recipe_id": 1120403,
         "att": 0,
         "def": 0,
-        "hp": 65000,
+        "hp": 6000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1141,7 +1141,7 @@
         "recipe_id": 1120403,
         "att": 0,
         "def": 0,
-        "hp": 162500,
+        "hp": 30000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1155,7 +1155,7 @@
         "recipe_id": 1120403,
         "att": 0,
         "def": 0,
-        "hp": 325000,
+        "hp": 60000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1169,7 +1169,7 @@
         "recipe_id": 1120403,
         "att": 0,
         "def": 0,
-        "hp": 650000,
+        "hp": 150000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1184,7 +1184,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 6500,
+        "arp": 600,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":60}]"
@@ -1198,7 +1198,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 16250,
+        "arp": 3000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":120}]"
@@ -1212,7 +1212,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 32500,
+        "arp": 6000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
@@ -1226,7 +1226,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 65000,
+        "arp": 15000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":300}]"
@@ -1241,7 +1241,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 6500,
+        "crit": 600,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":60}]"
     },
@@ -1255,7 +1255,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 16250,
+        "crit": 3000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":120}]"
     },
@@ -1269,7 +1269,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 32500,
+        "crit": 6000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
     },
@@ -1283,7 +1283,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 65000,
+        "crit": 15000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":300}]"
     },
@@ -1298,7 +1298,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 6500,
+        "crit_def": 600,
         "decompose": "[{\"itemId\":1053,\"num\":60}]"
     },
     {
@@ -1312,7 +1312,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 16250,
+        "crit_def": 3000,
         "decompose": "[{\"itemId\":1053,\"num\":120}]"
     },
     {
@@ -1326,7 +1326,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 32500,
+        "crit_def": 6000,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
     },
     {
@@ -1340,7 +1340,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 65000,
+        "crit_def": 15000,
         "decompose": "[{\"itemId\":1053,\"num\":300}]"
     },
     {
@@ -1349,7 +1349,7 @@
         "star": 5,
         "qua": 1,
         "recipe_id": 1120501,
-        "att": 13700,
+        "att": 800,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1363,7 +1363,7 @@
         "star": 5,
         "qua": 2,
         "recipe_id": 1120501,
-        "att": 34250,
+        "att": 4000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1377,7 +1377,7 @@
         "star": 5,
         "qua": 3,
         "recipe_id": 1120501,
-        "att": 68500,
+        "att": 8000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1391,7 +1391,7 @@
         "star": 5,
         "qua": 4,
         "recipe_id": 1120501,
-        "att": 137000,
+        "att": 20000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1406,7 +1406,7 @@
         "qua": 1,
         "recipe_id": 1120502,
         "att": 0,
-        "def": 13700,
+        "def": 800,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1420,7 +1420,7 @@
         "qua": 2,
         "recipe_id": 1120502,
         "att": 0,
-        "def": 34250,
+        "def": 4000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1434,7 +1434,7 @@
         "qua": 3,
         "recipe_id": 1120502,
         "att": 0,
-        "def": 68500,
+        "def": 8000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1448,7 +1448,7 @@
         "qua": 4,
         "recipe_id": 1120502,
         "att": 0,
-        "def": 137000,
+        "def": 20000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1463,7 +1463,7 @@
         "recipe_id": 1120503,
         "att": 0,
         "def": 0,
-        "hp": 137000,
+        "hp": 8000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1477,7 +1477,7 @@
         "recipe_id": 1120503,
         "att": 0,
         "def": 0,
-        "hp": 342500,
+        "hp": 40000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1491,7 +1491,7 @@
         "recipe_id": 1120503,
         "att": 0,
         "def": 0,
-        "hp": 685000,
+        "hp": 80000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1505,7 +1505,7 @@
         "recipe_id": 1120503,
         "att": 0,
         "def": 0,
-        "hp": 1370000,
+        "hp": 200000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1520,7 +1520,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 13700,
+        "arp": 800,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":100}]"
@@ -1534,7 +1534,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 34250,
+        "arp": 4000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
@@ -1548,7 +1548,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 68500,
+        "arp": 8000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":330}]"
@@ -1562,7 +1562,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 137000,
+        "arp": 20000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":500}]"
@@ -1577,7 +1577,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 13700,
+        "crit": 800,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":100}]"
     },
@@ -1591,7 +1591,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 34250,
+        "crit": 4000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
     },
@@ -1605,7 +1605,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 68500,
+        "crit": 8000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":330}]"
     },
@@ -1619,7 +1619,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 137000,
+        "crit": 20000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":500}]"
     },
@@ -1634,7 +1634,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 13700,
+        "crit_def": 800,
         "decompose": "[{\"itemId\":1053,\"num\":100}]"
     },
     {
@@ -1648,7 +1648,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 34250,
+        "crit_def": 4000,
         "decompose": "[{\"itemId\":1053,\"num\":200}]"
     },
     {
@@ -1662,7 +1662,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 68500,
+        "crit_def": 8000,
         "decompose": "[{\"itemId\":1053,\"num\":330}]"
     },
     {
@@ -1676,7 +1676,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 137000,
+        "crit_def": 20000,
         "decompose": "[{\"itemId\":1053,\"num\":500}]"
     },
     {
@@ -1685,7 +1685,7 @@
         "star": 6,
         "qua": 1,
         "recipe_id": 1120601,
-        "att": 28800,
+        "att": 1200,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1699,7 +1699,7 @@
         "star": 6,
         "qua": 2,
         "recipe_id": 1120601,
-        "att": 72000,
+        "att": 6000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1713,7 +1713,7 @@
         "star": 6,
         "qua": 3,
         "recipe_id": 1120601,
-        "att": 144000,
+        "att": 12000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1727,7 +1727,7 @@
         "star": 6,
         "qua": 4,
         "recipe_id": 1120601,
-        "att": 288000,
+        "att": 30000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -1742,7 +1742,7 @@
         "qua": 1,
         "recipe_id": 1120602,
         "att": 0,
-        "def": 28800,
+        "def": 1200,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1756,7 +1756,7 @@
         "qua": 2,
         "recipe_id": 1120602,
         "att": 0,
-        "def": 72000,
+        "def": 6000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1770,7 +1770,7 @@
         "qua": 3,
         "recipe_id": 1120602,
         "att": 0,
-        "def": 144000,
+        "def": 12000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1784,7 +1784,7 @@
         "qua": 4,
         "recipe_id": 1120602,
         "att": 0,
-        "def": 288000,
+        "def": 30000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -1799,7 +1799,7 @@
         "recipe_id": 1120603,
         "att": 0,
         "def": 0,
-        "hp": 288000,
+        "hp": 12000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1813,7 +1813,7 @@
         "recipe_id": 1120603,
         "att": 0,
         "def": 0,
-        "hp": 720000,
+        "hp": 60000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1827,7 +1827,7 @@
         "recipe_id": 1120603,
         "att": 0,
         "def": 0,
-        "hp": 1440000,
+        "hp": 120000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1841,7 +1841,7 @@
         "recipe_id": 1120603,
         "att": 0,
         "def": 0,
-        "hp": 2880000,
+        "hp": 300000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -1856,7 +1856,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 28800,
+        "arp": 1200,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":160}]"
@@ -1870,7 +1870,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 72000,
+        "arp": 6000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":320}]"
@@ -1884,7 +1884,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 144000,
+        "arp": 12000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":530}]"
@@ -1898,7 +1898,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 288000,
+        "arp": 30000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":800}]"
@@ -1913,7 +1913,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 28800,
+        "crit": 1200,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":160}]"
     },
@@ -1927,7 +1927,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 72000,
+        "crit": 6000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":320}]"
     },
@@ -1941,7 +1941,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 144000,
+        "crit": 12000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":530}]"
     },
@@ -1955,7 +1955,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 288000,
+        "crit": 30000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":800}]"
     },
@@ -1970,7 +1970,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 28800,
+        "crit_def": 1200,
         "decompose": "[{\"itemId\":1053,\"num\":160}]"
     },
     {
@@ -1984,7 +1984,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 72000,
+        "crit_def": 6000,
         "decompose": "[{\"itemId\":1053,\"num\":320}]"
     },
     {
@@ -1998,7 +1998,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 144000,
+        "crit_def": 12000,
         "decompose": "[{\"itemId\":1053,\"num\":530}]"
     },
     {
@@ -2012,7 +2012,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 288000,
+        "crit_def": 30000,
         "decompose": "[{\"itemId\":1053,\"num\":800}]"
     },
     {
@@ -2021,7 +2021,7 @@
         "star": 7,
         "qua": 1,
         "recipe_id": 1120701,
-        "att": 43200,
+        "att": 1600,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2035,7 +2035,7 @@
         "star": 7,
         "qua": 2,
         "recipe_id": 1120701,
-        "att": 108000,
+        "att": 8000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2049,7 +2049,7 @@
         "star": 7,
         "qua": 3,
         "recipe_id": 1120701,
-        "att": 216000,
+        "att": 16000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2063,7 +2063,7 @@
         "star": 7,
         "qua": 4,
         "recipe_id": 1120701,
-        "att": 432000,
+        "att": 40000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2078,7 +2078,7 @@
         "qua": 1,
         "recipe_id": 1120702,
         "att": 0,
-        "def": 43200,
+        "def": 1600,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2092,7 +2092,7 @@
         "qua": 2,
         "recipe_id": 1120702,
         "att": 0,
-        "def": 108000,
+        "def": 8000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2106,7 +2106,7 @@
         "qua": 3,
         "recipe_id": 1120702,
         "att": 0,
-        "def": 216000,
+        "def": 16000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2120,7 +2120,7 @@
         "qua": 4,
         "recipe_id": 1120702,
         "att": 0,
-        "def": 432000,
+        "def": 40000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2135,7 +2135,7 @@
         "recipe_id": 1120703,
         "att": 0,
         "def": 0,
-        "hp": 432000,
+        "hp": 16000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2149,7 +2149,7 @@
         "recipe_id": 1120703,
         "att": 0,
         "def": 0,
-        "hp": 1080000,
+        "hp": 80000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2163,7 +2163,7 @@
         "recipe_id": 1120703,
         "att": 0,
         "def": 0,
-        "hp": 2160000,
+        "hp": 160000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2177,7 +2177,7 @@
         "recipe_id": 1120703,
         "att": 0,
         "def": 0,
-        "hp": 4320000,
+        "hp": 400000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2192,7 +2192,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 43200,
+        "arp": 1600,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":240}]"
@@ -2206,7 +2206,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 108000,
+        "arp": 8000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":480}]"
@@ -2220,7 +2220,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 216000,
+        "arp": 16000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":800}]"
@@ -2234,7 +2234,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 432000,
+        "arp": 40000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1200}]"
@@ -2249,7 +2249,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 43200,
+        "crit": 1600,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":240}]"
     },
@@ -2263,7 +2263,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 108000,
+        "crit": 8000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":480}]"
     },
@@ -2277,7 +2277,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 216000,
+        "crit": 16000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":800}]"
     },
@@ -2291,7 +2291,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 432000,
+        "crit": 40000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1200}]"
     },
@@ -2306,7 +2306,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 43200,
+        "crit_def": 1600,
         "decompose": "[{\"itemId\":1053,\"num\":240}]"
     },
     {
@@ -2320,7 +2320,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 108000,
+        "crit_def": 8000,
         "decompose": "[{\"itemId\":1053,\"num\":480}]"
     },
     {
@@ -2334,7 +2334,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 216000,
+        "crit_def": 16000,
         "decompose": "[{\"itemId\":1053,\"num\":800}]"
     },
     {
@@ -2348,7 +2348,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 432000,
+        "crit_def": 40000,
         "decompose": "[{\"itemId\":1053,\"num\":1200}]"
     },
     {
@@ -2357,7 +2357,7 @@
         "star": 8,
         "qua": 1,
         "recipe_id": 1120801,
-        "att": 64800,
+        "att": 2400,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2371,7 +2371,7 @@
         "star": 8,
         "qua": 2,
         "recipe_id": 1120801,
-        "att": 162000,
+        "att": 12000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2385,7 +2385,7 @@
         "star": 8,
         "qua": 3,
         "recipe_id": 1120801,
-        "att": 324000,
+        "att": 24000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2399,7 +2399,7 @@
         "star": 8,
         "qua": 4,
         "recipe_id": 1120801,
-        "att": 648000,
+        "att": 60000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2414,7 +2414,7 @@
         "qua": 1,
         "recipe_id": 1120802,
         "att": 0,
-        "def": 64800,
+        "def": 2400,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2428,7 +2428,7 @@
         "qua": 2,
         "recipe_id": 1120802,
         "att": 0,
-        "def": 162000,
+        "def": 12000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2442,7 +2442,7 @@
         "qua": 3,
         "recipe_id": 1120802,
         "att": 0,
-        "def": 324000,
+        "def": 24000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2456,7 +2456,7 @@
         "qua": 4,
         "recipe_id": 1120802,
         "att": 0,
-        "def": 648000,
+        "def": 60000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2471,7 +2471,7 @@
         "recipe_id": 1120803,
         "att": 0,
         "def": 0,
-        "hp": 648000,
+        "hp": 24000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2485,7 +2485,7 @@
         "recipe_id": 1120803,
         "att": 0,
         "def": 0,
-        "hp": 1620000,
+        "hp": 120000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2499,7 +2499,7 @@
         "recipe_id": 1120803,
         "att": 0,
         "def": 0,
-        "hp": 3240000,
+        "hp": 240000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2513,7 +2513,7 @@
         "recipe_id": 1120803,
         "att": 0,
         "def": 0,
-        "hp": 6480000,
+        "hp": 600000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2528,7 +2528,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 64800,
+        "arp": 2400,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":360}]"
@@ -2542,7 +2542,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 162000,
+        "arp": 12000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":720}]"
@@ -2556,7 +2556,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 324000,
+        "arp": 24000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1200}]"
@@ -2570,7 +2570,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 648000,
+        "arp": 60000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1800}]"
@@ -2585,7 +2585,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 64800,
+        "crit": 2400,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":360}]"
     },
@@ -2599,7 +2599,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 162000,
+        "crit": 12000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":720}]"
     },
@@ -2613,7 +2613,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 324000,
+        "crit": 24000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1200}]"
     },
@@ -2627,7 +2627,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 648000,
+        "crit": 60000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1800}]"
     },
@@ -2642,7 +2642,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 64800,
+        "crit_def": 2400,
         "decompose": "[{\"itemId\":1053,\"num\":360}]"
     },
     {
@@ -2656,7 +2656,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 162000,
+        "crit_def": 12000,
         "decompose": "[{\"itemId\":1053,\"num\":720}]"
     },
     {
@@ -2670,7 +2670,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 324000,
+        "crit_def": 24000,
         "decompose": "[{\"itemId\":1053,\"num\":1200}]"
     },
     {
@@ -2684,7 +2684,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 648000,
+        "crit_def": 60000,
         "decompose": "[{\"itemId\":1053,\"num\":1800}]"
     },
     {
@@ -2693,7 +2693,7 @@
         "star": 9,
         "qua": 1,
         "recipe_id": 1120901,
-        "att": 90700,
+        "att": 3200,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2707,7 +2707,7 @@
         "star": 9,
         "qua": 2,
         "recipe_id": 1120901,
-        "att": 226750,
+        "att": 16000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2721,7 +2721,7 @@
         "star": 9,
         "qua": 3,
         "recipe_id": 1120901,
-        "att": 453500,
+        "att": 32000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2735,7 +2735,7 @@
         "star": 9,
         "qua": 4,
         "recipe_id": 1120901,
-        "att": 907000,
+        "att": 80000,
         "def": 0,
         "hp": 0,
         "arp": 0,
@@ -2750,7 +2750,7 @@
         "qua": 1,
         "recipe_id": 1120902,
         "att": 0,
-        "def": 90700,
+        "def": 3200,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2764,7 +2764,7 @@
         "qua": 2,
         "recipe_id": 1120902,
         "att": 0,
-        "def": 226750,
+        "def": 16000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2778,7 +2778,7 @@
         "qua": 3,
         "recipe_id": 1120902,
         "att": 0,
-        "def": 453500,
+        "def": 32000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2792,7 +2792,7 @@
         "qua": 4,
         "recipe_id": 1120902,
         "att": 0,
-        "def": 907000,
+        "def": 80000,
         "hp": 0,
         "arp": 0,
         "crit": 0,
@@ -2807,7 +2807,7 @@
         "recipe_id": 1120903,
         "att": 0,
         "def": 0,
-        "hp": 907000,
+        "hp": 32000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2821,7 +2821,7 @@
         "recipe_id": 1120903,
         "att": 0,
         "def": 0,
-        "hp": 2267500,
+        "hp": 160000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2835,7 +2835,7 @@
         "recipe_id": 1120903,
         "att": 0,
         "def": 0,
-        "hp": 4535000,
+        "hp": 320000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2849,7 +2849,7 @@
         "recipe_id": 1120903,
         "att": 0,
         "def": 0,
-        "hp": 9070000,
+        "hp": 800000,
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
@@ -2864,7 +2864,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 90700,
+        "arp": 3200,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":500}]"
@@ -2878,7 +2878,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 226750,
+        "arp": 16000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1000}]"
@@ -2892,7 +2892,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 453500,
+        "arp": 32000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1670}]"
@@ -2906,7 +2906,7 @@
         "att": 0,
         "def": 0,
         "hp": 0,
-        "arp": 907000,
+        "arp": 80000,
         "crit": 0,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":2500}]"
@@ -2921,7 +2921,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 90700,
+        "crit": 3200,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":500}]"
     },
@@ -2935,7 +2935,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 226750,
+        "crit": 16000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1000}]"
     },
@@ -2949,7 +2949,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 453500,
+        "crit": 32000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":1670}]"
     },
@@ -2963,7 +2963,7 @@
         "def": 0,
         "hp": 0,
         "arp": 0,
-        "crit": 907000,
+        "crit": 80000,
         "crit_def": 0,
         "decompose": "[{\"itemId\":1053,\"num\":2500}]"
     },
@@ -2978,7 +2978,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 90700,
+        "crit_def": 3200,
         "decompose": "[{\"itemId\":1053,\"num\":500}]"
     },
     {
@@ -2992,7 +2992,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 226750,
+        "crit_def": 16000,
         "decompose": "[{\"itemId\":1053,\"num\":1000}]"
     },
     {
@@ -3006,7 +3006,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 453500,
+        "crit_def": 32000,
         "decompose": "[{\"itemId\":1053,\"num\":1670}]"
     },
     {
@@ -3020,7 +3020,7 @@
         "hp": 0,
         "arp": 0,
         "crit": 0,
-        "crit_def": 907000,
+        "crit_def": 80000,
         "decompose": "[{\"itemId\":1053,\"num\":2500}]"
     },
     {
@@ -3231,7 +3231,7 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":150}]"
+        "decompose": "[{\"itemId\":1053,\"num\":148}]"
     },
     {
         "id": 232,
@@ -3245,7 +3245,7 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":180}]"
+        "decompose": "[{\"itemId\":1053,\"num\":168}]"
     },
     {
         "id": 233,
@@ -3259,7 +3259,7 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":188}]"
     },
     {
         "id": 234,
@@ -3273,7 +3273,7 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":208}]"
     },
     {
         "id": 235,
@@ -3287,7 +3287,7 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":228}]"
     },
     {
         "id": 236,
@@ -3301,7 +3301,7 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":248}]"
     },
     {
         "id": 237,
@@ -3315,7 +3315,7 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":268}]"
     },
     {
         "id": 238,
@@ -3329,10 +3329,164 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":288}]"
     },
     {
         "id": 239,
+        "item": 10026,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":308}]"
+    },
+    {
+        "id": 240,
+        "item": 10027,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":328}]"
+    },
+    {
+        "id": 241,
+        "item": 10028,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":348}]"
+    },
+    {
+        "id": 242,
+        "item": 10029,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":368}]"
+    },
+    {
+        "id": 243,
+        "item": 10030,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":388}]"
+    },
+    {
+        "id": 244,
+        "item": 10031,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":408}]"
+    },
+    {
+        "id": 245,
+        "item": 10032,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":428}]"
+    },
+    {
+        "id": 246,
+        "item": 10033,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":448}]"
+    },
+    {
+        "id": 247,
+        "item": 10034,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":468}]"
+    },
+    {
+        "id": 248,
+        "item": 10035,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":488}]"
+    },
+    {
+        "id": 249,
+        "item": 10036,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":508}]"
+    },
+    {
+        "id": 250,
         "item": 32361,
         "star": 0,
         "qua": 0,
@@ -3346,7 +3500,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":1}]"
     },
     {
-        "id": 240,
+        "id": 251,
         "item": 32362,
         "star": 0,
         "qua": 0,
@@ -3360,7 +3514,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":2}]"
     },
     {
-        "id": 241,
+        "id": 252,
         "item": 32363,
         "star": 0,
         "qua": 0,
@@ -3374,7 +3528,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":4}]"
     },
     {
-        "id": 242,
+        "id": 253,
         "item": 32364,
         "star": 0,
         "qua": 0,
@@ -3388,7 +3542,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":8}]"
     },
     {
-        "id": 243,
+        "id": 254,
         "item": 32365,
         "star": 0,
         "qua": 0,
@@ -3402,7 +3556,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":12}]"
     },
     {
-        "id": 244,
+        "id": 255,
         "item": 32366,
         "star": 0,
         "qua": 0,
@@ -3416,7 +3570,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":18}]"
     },
     {
-        "id": 245,
+        "id": 256,
         "item": 32367,
         "star": 0,
         "qua": 0,
@@ -3430,7 +3584,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":26}]"
     },
     {
-        "id": 246,
+        "id": 257,
         "item": 32368,
         "star": 0,
         "qua": 0,
@@ -3444,7 +3598,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":36}]"
     },
     {
-        "id": 247,
+        "id": 258,
         "item": 32369,
         "star": 0,
         "qua": 0,
@@ -3458,7 +3612,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":48}]"
     },
     {
-        "id": 248,
+        "id": 259,
         "item": 32370,
         "star": 0,
         "qua": 0,
@@ -3472,7 +3626,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":60}]"
     },
     {
-        "id": 249,
+        "id": 260,
         "item": 32371,
         "star": 0,
         "qua": 0,
@@ -3486,7 +3640,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":74}]"
     },
     {
-        "id": 250,
+        "id": 261,
         "item": 32372,
         "star": 0,
         "qua": 0,
@@ -3500,7 +3654,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":90}]"
     },
     {
-        "id": 251,
+        "id": 262,
         "item": 32373,
         "star": 0,
         "qua": 0,
@@ -3514,7 +3668,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":108}]"
     },
     {
-        "id": 252,
+        "id": 263,
         "item": 32374,
         "star": 0,
         "qua": 0,
@@ -3528,7 +3682,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":128}]"
     },
     {
-        "id": 253,
+        "id": 264,
         "item": 32375,
         "star": 0,
         "qua": 0,
@@ -3542,7 +3696,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":150}]"
     },
     {
-        "id": 254,
+        "id": 265,
         "item": 32376,
         "star": 0,
         "qua": 0,
@@ -3556,7 +3710,7 @@
         "decompose": "[{\"itemId\":1053,\"num\":180}]"
     },
     {
-        "id": 255,
+        "id": 266,
         "item": 32377,
         "star": 0,
         "qua": 0,
@@ -3567,10 +3721,10 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":210}]"
     },
     {
-        "id": 256,
+        "id": 267,
         "item": 32378,
         "star": 0,
         "qua": 0,
@@ -3581,10 +3735,10 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":240}]"
     },
     {
-        "id": 257,
+        "id": 268,
         "item": 32379,
         "star": 0,
         "qua": 0,
@@ -3595,10 +3749,10 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":270}]"
     },
     {
-        "id": 258,
+        "id": 269,
         "item": 32380,
         "star": 0,
         "qua": 0,
@@ -3609,10 +3763,10 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":300}]"
     },
     {
-        "id": 259,
+        "id": 270,
         "item": 32381,
         "star": 0,
         "qua": 0,
@@ -3623,10 +3777,10 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":330}]"
     },
     {
-        "id": 260,
+        "id": 271,
         "item": 32382,
         "star": 0,
         "qua": 0,
@@ -3637,6 +3791,160 @@
         "arp": 0,
         "crit": 0,
         "crit_def": 0,
-        "decompose": "[{\"itemId\":1053,\"num\":200}]"
+        "decompose": "[{\"itemId\":1053,\"num\":360}]"
+    },
+    {
+        "id": 272,
+        "item": 32383,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":390}]"
+    },
+    {
+        "id": 273,
+        "item": 32384,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":420}]"
+    },
+    {
+        "id": 274,
+        "item": 32385,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":450}]"
+    },
+    {
+        "id": 275,
+        "item": 32386,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":480}]"
+    },
+    {
+        "id": 276,
+        "item": 32387,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":510}]"
+    },
+    {
+        "id": 277,
+        "item": 32388,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":540}]"
+    },
+    {
+        "id": 278,
+        "item": 32389,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":570}]"
+    },
+    {
+        "id": 279,
+        "item": 32390,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":600}]"
+    },
+    {
+        "id": 280,
+        "item": 32391,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":630}]"
+    },
+    {
+        "id": 281,
+        "item": 32392,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":660}]"
+    },
+    {
+        "id": 282,
+        "item": 32393,
+        "star": 0,
+        "qua": 0,
+        "recipe_id": 0,
+        "att": 0,
+        "def": 0,
+        "hp": 0,
+        "arp": 0,
+        "crit": 0,
+        "crit_def": 0,
+        "decompose": "[{\"itemId\":1053,\"num\":690}]"
     }
 ]
