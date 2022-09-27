@@ -46,11 +46,11 @@
         ref="table"
         size="middle"
         bordered
-        :rowKey="record => (record.id != null ? record.id : '0')"
-        :loading="loading"
+        rowKey="id"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
+        :loading="loading"
         :scroll="{ x: 'max-content' }"
         @change="handleTableChange"/>
     </div>

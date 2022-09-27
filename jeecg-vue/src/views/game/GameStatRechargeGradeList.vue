@@ -62,7 +62,7 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        :scroll="{ x: 'max-content' }"
         @change="handleTableChange"/>
     </div>
   </a-card>

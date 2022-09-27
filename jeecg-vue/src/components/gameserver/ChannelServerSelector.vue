@@ -62,6 +62,10 @@ export default {
     multiple: {
       type: Boolean,
       default: false
+    },
+    serverAll: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
@@ -74,7 +78,9 @@ export default {
       getAction(this.url.serverListUrl, {channel: this.channel}).then(res => {
         // 手动插入一条全部的记录
         this.serverList = res.result;
-        this.serverList.splice(0, 0, {id: 0, name: "全部"});
+        if (this.serverAll) {
+          this.serverList.splice(0, 0, {id: 0, name: "全部"});
+        }
       });
     },
     // select的事件绑定

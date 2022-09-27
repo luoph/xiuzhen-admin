@@ -43,12 +43,11 @@
         size="middle"
         bordered
         rowKey="id"
-        :loading="loading"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
+        :loading="loading"
         :scroll="{ x: 'max-content' }"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         @change="handleTableChange"/>
     </div>
   </a-card>

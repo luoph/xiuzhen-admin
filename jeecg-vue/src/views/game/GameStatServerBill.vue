@@ -46,7 +46,7 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        :scroll="{ x: 'max-content' }"
         @change="handleTableChange"/>
     </div>
   </a-card>
@@ -58,7 +58,7 @@ import JDate from '@/components/jeecg/JDate.vue';
 import {getAction} from '@/api/manage';
 import {filterObj} from "@/utils/util";
 import moment from 'moment';
-  ;import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
+import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
   name: 'GameStatServerBill',

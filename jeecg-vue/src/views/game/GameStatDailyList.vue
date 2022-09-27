@@ -43,14 +43,13 @@
         ref="table"
         size="middle"
         bordered
-        :rowKey="record => (record.id != null ? record.id : '0')"
-        :loading="loading"
+        rowKey="id"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
-        :scroll="{ x: 1500, y: 800 }"
-        @change="handleTableChange"
-      ></a-table>
+        :loading="loading"
+        :scroll="{ x: 'max-content' }"
+        @change="handleTableChange"/>
     </div>
   </a-card>
 </template>
