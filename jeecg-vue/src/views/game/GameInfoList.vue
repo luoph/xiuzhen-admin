@@ -177,12 +177,12 @@ export default {
           dataIndex: 'payUrl'
         },
         {
-          title: '请输入账号注册地址',
+          title: '账号注册地址',
           align: 'center',
           dataIndex: 'accountRegisterUrl'
         },
         {
-          title: '请输入账号登录地址',
+          title: '账号登录地址',
           align: 'center',
           dataIndex: 'accountLoginUrl'
         },
@@ -223,8 +223,6 @@ export default {
         delete: 'game/gameInfo/delete',
         deleteBatch: 'game/gameInfo/deleteBatch',
         updateGameConfigUrl: 'game/gameInfo/updateGameConfig'
-        // exportXlsUrl: "game/gameInfo/exportXls",
-        // importExcelUrl: "game/gameInfo/importExcel"
       }
     };
   },
@@ -236,19 +234,18 @@ export default {
   methods: {
     updateGameConfig() {
       // 开始刷新游戏配置
-      console.log('开始刷新游戏配置');
       getAction(this.url.updateGameConfigUrl).then((res) => {
         if (res.success) {
-          this.$message.success('游戏配置刷新成功');
+          this.$message.success(res.message);
         } else {
-          this.$message.error('游戏配置刷新失败');
+          this.$message.error(res.message);
         }
-        console.log('刷新游戏配置完成', res);
       });
     }
   }
 };
 </script>
+
 <style scoped>
 @import '~@assets/less/common.less';
 </style>
