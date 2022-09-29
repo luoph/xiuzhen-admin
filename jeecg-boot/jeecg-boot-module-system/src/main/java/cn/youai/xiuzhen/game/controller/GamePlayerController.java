@@ -45,12 +45,6 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏下发邮件-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
@@ -61,9 +55,7 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
         return Result.ok(entity);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO 
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GamePlayer entity) {
         return super.exportXls(request, entity, GamePlayer.class, "玩家信息");

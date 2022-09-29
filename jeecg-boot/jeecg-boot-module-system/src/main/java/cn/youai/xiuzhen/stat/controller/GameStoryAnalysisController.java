@@ -31,15 +31,6 @@ import java.util.List;
 @RequestMapping("game/gameStoryAnalysis")
 public class GameStoryAnalysisController extends JeecgController<GameStoryAnalysis, IGameStoryAnalysisService> {
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "剧情分析-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameStoryAnalysisVO entity,
@@ -127,10 +118,7 @@ public class GameStoryAnalysisController extends JeecgController<GameStoryAnalys
 //		}
 //		return Result.ok(entity);
 //	}
-
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStoryAnalysisVO entity) {
         List<GameStoryAnalysisVO> pageList = null;
@@ -141,17 +129,4 @@ public class GameStoryAnalysisController extends JeecgController<GameStoryAnalys
         LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         return ExcelUtils.exportXls(sysUser.getRealname(), pageList, request.getParameter("selections"), GameStoryAnalysisVO.class, "剧情分析");
     }
-
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
-//    @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-//    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-//        return super.importExcel(request, response, GameStoryAnalysis.class);
-//    }
-
 }

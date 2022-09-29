@@ -93,9 +93,7 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
         return Result.ok("更新成功");
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO 
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatLtvDetail entity) {
         return super.exportXls(request, entity, GameStatLtvDetail.class, "LTV详细统计");

@@ -39,15 +39,6 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
     @Value("${app.folder.temp}")
     private String tempFolder;
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(OpenServiceCampaignRankDetailScore entity,
@@ -57,81 +48,43 @@ public class OpenServiceCampaignRankDetailScoreController extends JeecgControlle
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignRankDetailScore entity) {
         return super.add(entity);
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignRankDetailScore entity) {
         return super.edit(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "开服活动-开服排行-活动明细-消耗道具分数-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO 
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankDetailScore entity) {
         return super.exportXls(request, entity, OpenServiceCampaignRankDetailScore.class, "开服活动-开服排行-活动明细-消耗道具分数");
     }
 
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
+    @AutoLog(value = "XXX-导入") // TODO
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaignRankDetailScore.class);

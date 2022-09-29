@@ -32,15 +32,6 @@ public class PlayerBanInfoController extends JeecgController<GamePlayerBanInfo, 
     private static final Type RESPONSE_ONLINE_NUM = new TypeReference<DataResponse<Integer>>() {
     }.getType();
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "封禁管理-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GamePlayerBanInfo entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
@@ -57,12 +48,6 @@ public class PlayerBanInfoController extends JeecgController<GamePlayerBanInfo, 
         return Result.ok(pageList);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "封禁管理-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GamePlayerBanInfo entity) {
@@ -76,12 +61,6 @@ public class PlayerBanInfoController extends JeecgController<GamePlayerBanInfo, 
         return super.add(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "封禁管理-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {

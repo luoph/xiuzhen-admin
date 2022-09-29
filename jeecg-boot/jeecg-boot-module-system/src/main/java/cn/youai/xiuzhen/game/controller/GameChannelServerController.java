@@ -41,15 +41,6 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     @Autowired
     private IGameServerService gameServerService;
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏渠道服配置-列表查询")
     @ApiOperation(value = "游戏渠道服配置-列表查询", notes = "游戏渠道服配置-列表查询")
     @GetMapping(value = "/list")
@@ -79,12 +70,6 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return Result.ok(pageList);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏渠道服配置-添加")
     @ApiOperation(value = "游戏渠道服配置-添加", notes = "游戏渠道服配置-添加")
     @PostMapping(value = "/add")
@@ -92,12 +77,6 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return super.add(entity);
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏渠道服配置-编辑")
     @ApiOperation(value = "游戏渠道服配置-编辑", notes = "游戏渠道服配置-编辑")
     @PutMapping(value = "/edit")
@@ -105,12 +84,6 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return super.edit(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏渠道服配置-通过id删除")
     @ApiOperation(value = "游戏渠道服配置-通过id删除", notes = "游戏渠道服配置-通过id删除")
     @DeleteMapping(value = "/delete")
@@ -118,12 +91,6 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return super.delete(id);
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏渠道服配置-批量删除")
     @ApiOperation(value = "游戏渠道服配置-批量删除", notes = "游戏渠道服配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
@@ -131,12 +98,6 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return super.deleteBatch(ids);
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏渠道服配置-通过id查询")
     @ApiOperation(value = "游戏渠道服配置-通过id查询", notes = "游戏渠道服配置-通过id查询")
     @GetMapping(value = "/queryById")
@@ -144,21 +105,13 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return super.queryById(id);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO 
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameChannelServer entity) {
         return super.exportXls(request, entity, GameChannelServer.class, "游戏渠道服配置");
     }
 
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
+    @AutoLog(value = "XXX-导入") // TODO
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameChannelServer.class);

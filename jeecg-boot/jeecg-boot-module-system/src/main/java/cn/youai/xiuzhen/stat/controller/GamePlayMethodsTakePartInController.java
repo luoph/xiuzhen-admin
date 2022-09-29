@@ -11,6 +11,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -70,9 +71,7 @@ public class GamePlayMethodsTakePartInController {
         return Result.ok(pageVo);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request,
                                   String rangeDateBegin,

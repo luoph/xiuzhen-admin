@@ -73,7 +73,7 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleCopy(record)">复制</a>
           <a-divider type="vertical"/>
-          <a v-if="record.state === 0" @click="handleCheck(record)">审核</a>
+          <a v-if="record.state === 0" @click="handleReview(record)">审核</a>
           <a v-else>已发送</a>
           <a-divider v-if="record.state === 0" type="vertical"/>
           <a v-if="record.state === 0" @click="handleEdit(record)">编辑</a>
@@ -219,42 +219,33 @@ export default {
 
       url: {
         list: 'game/gameEmail/list',
-        isCheck: 'game/gameEmail/check'
+        review: 'game/gameEmail/review'
       },
       dictOptions: {}
     };
   },
-  computed: {
-    importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
-    }
-  },
+  computed: {},
   mounted() {
   },
   methods: {
-
     onDateChange: function (value, dateStr) {
       this.queryParam.startTime_begin = dateStr[0];
       this.queryParam.startTime_end = dateStr[1];
     },
-
     handleCopy: function (record) {
       this.$refs.modalForm.add(record);
     },
-
-    handleCheck: function (record) {
+    handleReview: function (record) {
       const that = this;
-      getAction(that.url.isCheck, {id: record.id})
-        .then((res) => {
-          if (res.success) {
-            that.$message.success('审核成功！');
-          } else {
-            that.$message.error('审核发送失败！');
-          }
-        })
-        .finally(() => {
-          that.loadData();
-        });
+      getAction(that.url.review, {id: record.id}).then((res) => {
+        if (res.success) {
+          that.$message.success(res.message);
+        } else {
+          that.$message.error(res.message);
+        }
+      }).finally(() => {
+        that.loadData();
+      });
     }
   }
 };

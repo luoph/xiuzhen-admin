@@ -37,15 +37,6 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
     @Value(value = "${app.folder.image}")
     private String uploadPath;
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏图片-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameImage entity,
@@ -55,86 +46,43 @@ public class GameImageController extends JeecgController<GameImage, IGameImageSe
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏图片-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameImage entity) {
         return super.add(entity);
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏图片-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameImage entity) {
         return super.edit(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏图片-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏图片-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏图片-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "游戏图片-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameImage entity) {
         return super.exportXls(request, entity, GameImage.class, "游戏图片");
     }
 
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
-    @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameImage.class);
-    }
-
+    @AutoLog(value = "游戏图片-上传图片")
     @PostMapping(value = "/upload")
     public Result<?> upload(HttpServletRequest request, HttpServletResponse response) {
         Result<GameImage> result = new Result<>();

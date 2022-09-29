@@ -51,6 +51,13 @@ public class JeecgController<T, S extends IService<T>> {
     @Value("${jeecg.path.upload}")
     private String upLoadPath;
 
+    /**
+     * 是否只读
+     */
+    protected boolean isReadOnly() {
+        return false;
+    }
+
     protected QueryWrapper<T> prepareQuery(T entity, HttpServletRequest request) {
         return QueryGenerator.initQueryWrapper(entity, request.getParameterMap());
     }
@@ -138,53 +145,38 @@ public class JeecgController<T, S extends IService<T>> {
         return Result.ok(entity);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     public Result<?> add(@RequestBody T entity) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         service.save(entity);
         return Result.ok("添加成功！");
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     public Result<?> edit(@RequestBody T entity) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         service.updateById(entity);
         return Result.ok("编辑成功!");
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     public Result<?> delete(@RequestParam(name = "id") String id) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         service.removeById(id);
         return Result.ok("删除成功!");
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         service.removeByIds(StringUtils.split2Set(ids));
         return Result.ok("批量删除成功！");
     }
 
-    /**
-     * 导出excel
-     */
     protected ModelAndView exportXls(HttpServletRequest request, T entity, Class<T> clazz, String title) {
         // Step.1 组装查询条件
         QueryWrapper<T> queryWrapper = prepareQuery(entity, request);
@@ -263,10 +255,10 @@ public class JeecgController<T, S extends IService<T>> {
         return mv;
     }
 
-    /**
-     * 通过excel导入数据
-     */
     protected Result<?> importExcel(HttpServletRequest request, HttpServletResponse response, Class<T> clazz) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
         return ExcelUtils.importExcel(service, request, clazz);
     }
 }

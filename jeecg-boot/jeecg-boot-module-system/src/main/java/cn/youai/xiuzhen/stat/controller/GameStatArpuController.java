@@ -88,9 +88,7 @@ public class GameStatArpuController extends JeecgController<GameStatArpu, IGameS
         return Result.ok("更新成功");
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO 
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatArpu entity) {
         return super.exportXls(request, entity, GameStatArpu.class, "ARPU统计");

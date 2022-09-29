@@ -30,15 +30,6 @@ import java.util.List;
 @RequestMapping("game/gameEmail")
 public class GameEmailController extends JeecgController<GameEmail, IGameEmailService> {
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏邮件-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameEmail entity,
@@ -48,19 +39,13 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏邮件-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameEmail entity) {
         log.info("gameEmail:{}", JSON.toJSONString(entity));
         List<Long> receiverIds = StringUtils.split2Long(entity.getReceiverIds());
         if (CollUtil.isEmpty(receiverIds)) {
-            return Result.error("所选投放对象不允许为空！");
+            return Result.error("接收对象不允许为空！");
         }
         Response response = service.saveEmail(entity);
         if (!response.isSuccess()) {
@@ -69,72 +54,37 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         return Result.ok("添加成功！");
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏邮件-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameEmail entity) {
         return super.edit(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏邮件-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏邮件-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "游戏邮件-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    /**
-     * 导出excel
-     *
-     * @param request   请求
-     * @param gameEmail 实体
-     */
+    @AutoLog(value = "游戏邮件-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameEmail gameEmail) {
         return super.exportXls(request, gameEmail, GameEmail.class, "游戏邮件");
     }
 
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
+    @AutoLog(value = "游戏邮件-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameEmail.class);
@@ -155,8 +105,9 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         return Result.ok(items);
     }
 
-    @RequestMapping(value = "/check", method = RequestMethod.GET)
-    public Result<?> isCheck(@RequestParam("id") long id) {
+    @AutoLog(value = "游戏邮件-审核")
+    @RequestMapping(value = "/review", method = RequestMethod.GET)
+    public Result<?> review(@RequestParam("id") long id) {
         GameEmail entity = service.getById(id);
         if (entity == null) {
             return Result.error("邮件不存在！");
@@ -164,12 +115,13 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         if (entity.getState() == 1) {
             return Result.error("已审核发送！");
         }
-        entity.setState(1);
-        service.updateById(new GameEmail().setId(entity.getId()).setState(1));
+
         Response response = service.sendEmail(entity);
-        if (!response.isSuccess()) {
-            return Result.error(response.getDesc());
+        if (response.isSuccess()) {
+            entity.setState(1);
+            service.updateById(entity);
+            return Result.ok("发送成功！");
         }
-        return Result.ok("审核发送成功！");
+        return Result.error(response.getDesc());
     }
 }

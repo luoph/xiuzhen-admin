@@ -43,16 +43,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
     @Value("${app.forbidden-update-url:/forbidden/update}")
     private String forbiddenUpdateUrl;
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "game_forbidden-列表查询")
+    @AutoLog(value = "账号封禁-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameForbidden entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -61,13 +52,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "game_forbidden-添加")
+    @AutoLog(value = "账号封禁-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameForbidden entity) {
         if (entity.getServerId() == null || entity.getType() == null
@@ -88,13 +73,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
         return Result.ok("添加成功！");
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "game_forbidden-编辑")
+    @AutoLog(value = "账号封禁-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameForbidden entity) {
         addForbiddenRecord("update", entity);
@@ -102,13 +81,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
         return super.edit(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "game_forbidden-通过id删除")
+    @AutoLog(value = "账号封禁-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         GameForbidden entity = service.getById(id);
@@ -118,13 +91,7 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
         return Result.ok("删除成功!");
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "game_forbidden-批量删除")
+    @AutoLog(value = "账号封禁-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         List<String> idList = Arrays.asList(ids.split(","));
@@ -136,41 +103,25 @@ public class GameForbiddenController extends JeecgController<GameForbidden, IGam
         return Result.ok("批量删除成功！");
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
-    @AutoLog(value = "game_forbidden-通过id查询")
+    @AutoLog(value = "账号封禁-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "账号封禁-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, @RequestParam("obj") GameForbidden entity) {
-        return super.exportXls(request, entity, GameForbidden.class, "game_forbidden");
+        return super.exportXls(request, entity, GameForbidden.class, "账号封禁");
     }
 
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
+    @AutoLog(value = "账号封禁-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameForbidden.class);
     }
 
-    /**
-     * 快捷封禁
-     */
+    @AutoLog(value = "账号封禁-快捷封禁")
     @PutMapping(value = "/onBanned")
     public Result<?> onBanned(HttpServletRequest request, @RequestBody GameForbidden gameForbidden) {
         if (gameForbidden.getServerId() == null || gameForbidden.getType() == null

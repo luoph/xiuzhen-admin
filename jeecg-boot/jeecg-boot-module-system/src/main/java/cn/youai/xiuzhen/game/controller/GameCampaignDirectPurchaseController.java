@@ -37,15 +37,6 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
     @Value("${app.folder.temp}")
     private String tempFolder;
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "直购礼包-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameCampaignDirectPurchase entity,
@@ -55,87 +46,49 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "直购礼包-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaignDirectPurchase entity) {
         return super.add(entity);
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "直购礼包-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaignDirectPurchase entity) {
         return super.edit(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "直购礼包-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "直购礼包-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "直购礼包-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "直购礼包-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignDirectPurchase entity) {
         return super.exportXls(request, entity, GameCampaignDirectPurchase.class, "直购礼包");
     }
 
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
+    @AutoLog(value = "直购礼包-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignDirectPurchase.class);
     }
 
-
+    @AutoLog(value = "直购礼包-导入文本")
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         GameCampaignType campaignType = gameCampaignTypeService.getById(vo.getId());

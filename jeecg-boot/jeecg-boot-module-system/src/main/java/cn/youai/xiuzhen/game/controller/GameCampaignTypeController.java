@@ -50,15 +50,6 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     @Autowired
     private IGameCampaignTypeBuffService campaignTypeBuffService;
 
-    /**
-     * 分页列表查询
-     *
-     * @param entity   数据实体
-     * @param pageNo   页码
-     * @param pageSize 分页大小
-     * @param req      请求
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "活动类型配置-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameCampaignType entity,
@@ -68,12 +59,6 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    /**
-     * 添加
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "活动类型配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaignType entity) {
@@ -84,48 +69,24 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
         return super.add(entity);
     }
 
-    /**
-     * 编辑
-     *
-     * @param entity 数据实体
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "活动类型配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaignType entity) {
         return super.edit(entity);
     }
 
-    /**
-     * 通过id删除
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "活动类型配置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    /**
-     * 批量删除
-     *
-     * @param ids id列表，使用','分割的字符串
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "活动类型配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id 实体id
-     * @return {@linkplain Result}
-     */
     @AutoLog(value = "活动类型配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
@@ -148,14 +109,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
         return super.exportXls(request, gameCampaignType, GameCampaignType.class, "活动类型配置");
     }
 
-    /**
-     * 通过excel导入数据
-     *
-     * @param request  请求
-     * @param response 响应
-     * @return {@linkplain Result}
-     */
-    @SuppressWarnings({"unchecked"})
+    @AutoLog(value = "XXX-导出") // TODO    @SuppressWarnings({"unchecked"})
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(@RequestParam(name = "campaignId") Long campaignId,
                                  HttpServletRequest request, HttpServletResponse response) {

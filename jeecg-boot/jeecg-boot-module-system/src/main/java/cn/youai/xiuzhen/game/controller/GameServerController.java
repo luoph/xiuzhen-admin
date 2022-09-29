@@ -260,9 +260,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok(gameServer);
     }
 
-    /**
-     * 导出excel
-     */
+    @AutoLog(value = "XXX-导出") // TODO 
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameServer gameServer) {
         return super.exportXls(request, gameServer, GameServer.class, "游戏服配置");
