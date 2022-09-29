@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.stat.service.ILogPlayerService;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +22,10 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2021-01-14
  */
 @Slf4j
+@Readonly
 @RestController
 @RequestMapping("game/logPlayer")
 public class LogPlayerController extends JeecgController<LogPlayer, ILogPlayerService> {
-
-    @Override
-    protected boolean isReadOnly() {
-        return true;
-    }
 
     @AutoLog(value = "玩家Log-列表查询")
     @GetMapping(value = "/list")

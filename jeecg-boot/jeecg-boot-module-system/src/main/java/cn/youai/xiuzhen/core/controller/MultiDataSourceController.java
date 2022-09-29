@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
@@ -31,8 +32,9 @@ public class MultiDataSourceController<T, S extends IService<T>> {
     @Autowired
     protected S service;
 
-    protected boolean isReadOnly() {
-        return true;
+    private boolean isReadOnly() {
+        Readonly annotation = getClass().getAnnotation(Readonly.class);
+        return annotation != null;
     }
 
     private void useServerDatabase(Integer serverId) {

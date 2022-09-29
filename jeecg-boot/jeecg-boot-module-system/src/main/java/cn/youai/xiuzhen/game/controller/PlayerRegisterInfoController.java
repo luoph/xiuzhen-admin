@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +25,10 @@ import java.util.List;
  * @date 2020-01-04
  */
 @Slf4j
+@Readonly
 @RestController
 @RequestMapping("player/registerInfo")
 public class PlayerRegisterInfoController extends JeecgController<GameRegisterInfo, IGameRegisterInfoService> {
-
-    @Override
-    protected boolean isReadOnly() {
-        return true;
-    }
 
     @AutoLog(value = "玩家注册信息-列表查询")
     @GetMapping(value = "/list")

@@ -7,6 +7,7 @@ import cn.youai.xiuzhen.utils.PageQueryUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ import java.util.Map;
  * @date 2020-01-05
  */
 @Slf4j
+@Readonly
 @RestController
 @RequestMapping("game/order")
 public class GameOrderController extends JeecgController<GameOrder, IGameOrderStatService> {

@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.game.service.IGameForbiddenRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +22,10 @@ import javax.servlet.http.HttpServletRequest;
  * @date 2021-01-23
  */
 @Slf4j
+@Readonly
 @RestController
 @RequestMapping("game/gameForbiddenRecord")
 public class GameForbiddenRecordController extends JeecgController<GameForbiddenRecord, IGameForbiddenRecordService> {
-
-    @Override
-    protected boolean isReadOnly() {
-        return true;
-    }
 
     @AutoLog(value = "封禁记录-列表查询")
     @GetMapping(value = "/list")

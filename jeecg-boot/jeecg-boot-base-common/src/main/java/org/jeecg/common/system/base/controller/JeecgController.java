@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.annotation.HiddenField;
+import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
@@ -54,8 +55,9 @@ public class JeecgController<T, S extends IService<T>> {
     /**
      * 是否只读
      */
-    protected boolean isReadOnly() {
-        return false;
+    private boolean isReadOnly() {
+        Readonly annotation = getClass().getAnnotation(Readonly.class);
+        return annotation != null;
     }
 
     protected QueryWrapper<T> prepareQuery(T entity, HttpServletRequest request) {
