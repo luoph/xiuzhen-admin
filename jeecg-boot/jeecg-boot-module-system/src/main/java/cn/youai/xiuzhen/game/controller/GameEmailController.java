@@ -62,7 +62,10 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         if (CollUtil.isEmpty(receiverIds)) {
             return Result.error("所选投放对象不允许为空！");
         }
-        service.saveEmail(entity);
+        Response response = service.saveEmail(entity);
+        if (!response.isSuccess()) {
+            return Result.error(response.getDesc());
+        }
         return Result.ok("添加成功！");
     }
 

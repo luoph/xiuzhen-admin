@@ -34,7 +34,7 @@
           <a-radio-group @change="selectReceiver($event.target.value)"
                          v-decorator="['receiverType', { initialValue: 1 }]" dict style="width: 100%">
             <a-radio-button :value="1">玩家</a-radio-button>
-            <a-radio-button :value="2">服务器</a-radio-button>
+            <a-radio-button :value="2">区服</a-radio-button>
           </a-radio-group>
         </a-form-item>
         <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -79,12 +79,11 @@ export default {
   name: 'GameEmailModal',
   components: {
     JDate,
-    JSearchSelectTag,
     Button,
-    GameEmailItemTreeModal,
+    JSearchSelectTag,
     ServerSelect,
     GameServerSelector,
-    moment
+    GameEmailItemTreeModal,
   },
   data() {
     return {
@@ -217,7 +216,18 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, 'id', 'title', 'describe', 'type', 'content', 'state', 'receiverType', 'receiverIds', 'sendTime', 'startTime', 'endTime'));
+      this.form.setFieldsValue(pick(row,
+        'id',
+        'title',
+        'describe',
+        'type',
+        'content',
+        'state',
+        'receiverType',
+        'receiverIds',
+        'sendTime',
+        'startTime',
+        'endTime'));
     },
     selectReceiver(e) {
       // 1-玩家 2-服务器
@@ -236,7 +246,12 @@ export default {
       this.contentData = e === 1;
       if (this.contentData) {
         this.contentData = true;
-        this.validatorRules.content = {rules: [{required: true, message: '请添加附件!'}]};
+        this.validatorRules.content = {
+          rules: [{
+            required: true,
+            message: '请添加附件!'
+          }]
+        };
         this.validatorRules.content = '';
       }
     },
