@@ -2,7 +2,6 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.youai.xiuzhen.game.entity.GameAppUpdate;
 import cn.youai.xiuzhen.game.service.IGameAppUpdateService;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -73,7 +72,6 @@ public class GameAppUpdateController extends JeecgController<GameAppUpdate, IGam
     }
 
     @AutoLog(value = "客户端版本-刷新版本配置")
-    @ApiOperation(value = "客户端版本-刷新版本配置", notes = "客户端版本-刷新版本配置")
     @GetMapping(value = "/updateConfig")
     public Result<?> updateConfig(HttpServletRequest req) {
         try {

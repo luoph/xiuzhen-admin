@@ -8,7 +8,6 @@ import cn.youai.xiuzhen.stat.service.IGameStatRemainDetailService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
@@ -36,7 +35,6 @@ public class GameStatRemainDetailController extends JeecgController<GameStatRema
 
     @Override
     @AutoLog(value = "留存明细-列表查询")
-    @ApiOperation(value = "留存明细", notes = "查询列表")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameStatRemainDetail entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -59,7 +57,7 @@ public class GameStatRemainDetailController extends JeecgController<GameStatRema
         return Result.ok(pageList);
     }
 
-    @ApiOperation(value = "留存明细", notes = "刷新")
+    @AutoLog(value = "留存明细-刷新")
     @GetMapping(value = "/update")
     public Result<?> update(GameStatRemainDetail entity, HttpServletRequest req) {
         // 服务器空校验

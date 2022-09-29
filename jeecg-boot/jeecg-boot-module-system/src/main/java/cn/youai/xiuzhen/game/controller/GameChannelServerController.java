@@ -8,7 +8,6 @@ import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -42,7 +41,6 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     private IGameServerService gameServerService;
 
     @AutoLog(value = "游戏渠道服配置-列表查询")
-    @ApiOperation(value = "游戏渠道服配置-列表查询", notes = "游戏渠道服配置-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameChannelServer entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -71,35 +69,30 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     }
 
     @AutoLog(value = "游戏渠道服配置-添加")
-    @ApiOperation(value = "游戏渠道服配置-添加", notes = "游戏渠道服配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameChannelServer entity) {
         return super.add(entity);
     }
 
     @AutoLog(value = "游戏渠道服配置-编辑")
-    @ApiOperation(value = "游戏渠道服配置-编辑", notes = "游戏渠道服配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameChannelServer entity) {
         return super.edit(entity);
     }
 
     @AutoLog(value = "游戏渠道服配置-通过id删除")
-    @ApiOperation(value = "游戏渠道服配置-通过id删除", notes = "游戏渠道服配置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
     @AutoLog(value = "游戏渠道服配置-批量删除")
-    @ApiOperation(value = "游戏渠道服配置-批量删除", notes = "游戏渠道服配置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
     @AutoLog(value = "游戏渠道服配置-通过id查询")
-    @ApiOperation(value = "游戏渠道服配置-通过id查询", notes = "游戏渠道服配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);

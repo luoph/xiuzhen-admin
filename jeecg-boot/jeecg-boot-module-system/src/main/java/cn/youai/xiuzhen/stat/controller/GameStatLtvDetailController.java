@@ -7,7 +7,6 @@ import cn.youai.xiuzhen.stat.service.IGameStatLtvDetailService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
@@ -35,7 +34,6 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
 
     @Override
     @AutoLog(value = "LTV详细查询")
-    @ApiOperation(value = "留存查询", notes = "留存查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameStatLtvDetail entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,

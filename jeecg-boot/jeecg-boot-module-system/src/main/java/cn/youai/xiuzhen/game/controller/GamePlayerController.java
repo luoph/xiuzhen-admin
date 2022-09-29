@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.game.controller;
 import cn.youai.entities.GamePlayer;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -36,7 +35,6 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
 
     @Override
     @AutoLog(value = "玩家信息查询")
-    @ApiOperation(value = "玩家信息查询", notes = "玩家信息查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GamePlayer entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,

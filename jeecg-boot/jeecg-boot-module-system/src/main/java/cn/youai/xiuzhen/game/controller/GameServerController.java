@@ -16,7 +16,6 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
@@ -78,7 +77,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
      * 分页列表查询
      */
     @AutoLog(value = "游戏服配置-列表查询")
-    @ApiOperation(value = "游戏服配置-列表查询", notes = "游戏服配置-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameServer entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -110,7 +108,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     }
 
     @AutoLog(value = "游戏服配置-列表查询")
-    @ApiOperation(value = "游戏服配置-列表查询", notes = "游戏服配置-列表查询")
     @GetMapping(value = "/all")
     public Result<?> all() {
         Wrapper<GameServer> query = Wrappers.<GameServer>lambdaQuery()
@@ -122,7 +119,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     }
 
     @AutoLog(value = "游戏服配置-待合服列表查询")
-    @ApiOperation(value = "游戏服配置-待合服列表查询", notes = "游戏服配置-待合服列表查询")
     @GetMapping(value = "/mergeServerList")
     public Result<?> mergeServerList(@RequestParam(name = "days", defaultValue = "5") Integer days,
                                      @RequestParam(name = "minAvgPlayers", defaultValue = "50") Integer minAvgPlayers,
@@ -137,7 +133,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
      * @return
      */
     @AutoLog(value = "游戏服配置-添加")
-    @ApiOperation(value = "游戏服配置-添加", notes = "游戏服配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameServer entity) {
         service.save(entity);
@@ -148,7 +143,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
      * 编辑
      */
     @AutoLog(value = "游戏服配置-编辑")
-    @ApiOperation(value = "游戏服配置-编辑", notes = "游戏服配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameServer entity) {
         service.updateById(entity);
@@ -159,7 +153,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
      * 通过id删除
      */
     @AutoLog(value = "游戏服配置-通过id删除")
-    @ApiOperation(value = "游戏服配置-通过id删除", notes = "游戏服配置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         service.removeById(id);
@@ -173,7 +166,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 //     * @return
 //     */
 //    @AutoLog(value = "游戏服配置-批量删除")
-//    @ApiOperation(value = "游戏服配置-批量删除", notes = "游戏服配置-批量删除")
 //    @DeleteMapping(value = "/deleteBatch")
 //    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
 //        this.gameServerService.removeByIds(Arrays.asList(ids.split(",")));
@@ -181,7 +173,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 //    }
 
     @AutoLog(value = "游戏服配置-刷新活动配置")
-    @ApiOperation(value = "游戏服配置-刷新活动配置", notes = "游戏服配置-刷新活动配置")
     @GetMapping(value = "/updateActivity")
     public Result<?> updateActivity(@RequestParam(name = "ids") String ids) {
         Map<Integer, Response> responseMap = service.gameServerGet(ids, updateActivityUrl);
@@ -190,7 +181,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     }
 
     @AutoLog(value = "游戏服配置-刷新游戏配置")
-    @ApiOperation(value = "游戏服配置-刷新游戏配置", notes = "游戏服配置-刷新游戏配置")
     @GetMapping(value = "/updateSetting")
     public Result<?> updateSetting(@RequestParam(name = "ids") String ids) {
         Map<Integer, Response> responseMap = service.gameServerGet(ids, updateSettingUrl);
@@ -199,7 +189,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     }
 
     @AutoLog(value = "游戏服配置-查询在线人数")
-    @ApiOperation(value = "游戏服配置-查询在线人数", notes = "游戏服配置-查询在线人数")
     @GetMapping(value = "/getOnlineNum")
     public Result<?> getOnlineNum(@RequestParam(name = "id") String id) {
         GameServer gameServer = service.getById(id);
@@ -215,7 +204,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     }
 
     @AutoLog(value = "游戏服配置-开启维护状态")
-    @ApiOperation(value = "游戏服配置-开启维护状态", notes = "游戏服配置-开启维护状态")
     @GetMapping(value = "/startMaintain")
     @RequiresPermissions("game:server:admin")
     public Result<?> startMaintain(@RequestParam(name = "ids") String ids) {
@@ -231,7 +219,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     }
 
     @AutoLog(value = "游戏服配置-关闭维护状态")
-    @ApiOperation(value = "游戏服配置-关闭维护状态", notes = "游戏服配置-关闭维护状态")
     @RequiresPermissions("game:server:admin")
     @GetMapping(value = "/stopMaintain")
     public Result<?> stopMaintain(@RequestParam(name = "ids") String ids) {
@@ -253,7 +240,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
      * @return
      */
     @AutoLog(value = "游戏服配置-通过id查询")
-    @ApiOperation(value = "游戏服配置-通过id查询", notes = "游戏服配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         GameServer gameServer = service.getById(id);

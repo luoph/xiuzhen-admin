@@ -5,7 +5,6 @@ import cn.youai.xiuzhen.game.model.NoticeConfig;
 import cn.youai.xiuzhen.game.service.IGameNoticeService;
 import cn.youai.xiuzhen.utils.StrHtmlUtils;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
@@ -36,7 +35,6 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     private String noticeFolder;
 
     @AutoLog(value = "游戏公告-列表查询")
-    @ApiOperation(value = "游戏公告-列表查询", notes = "游戏公告-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameNotice entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -46,7 +44,6 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     }
 
     @AutoLog(value = "游戏公告-添加")
-    @ApiOperation(value = "游戏公告-添加", notes = "游戏公告-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameNotice entity) {
         entity.setContent(StrHtmlUtils.formatNoticeHtml(entity.getContent()));
@@ -54,7 +51,6 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     }
 
     @AutoLog(value = "游戏公告-编辑")
-    @ApiOperation(value = "游戏公告-编辑", notes = "游戏公告-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameNotice entity) {
         entity.setContent(StrHtmlUtils.formatNoticeHtml(entity.getContent()));
@@ -62,21 +58,18 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     }
 
     @AutoLog(value = "游戏公告-通过id删除")
-    @ApiOperation(value = "游戏公告-通过id删除", notes = "游戏公告-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
     @AutoLog(value = "游戏公告-批量删除")
-    @ApiOperation(value = "游戏公告-批量删除", notes = "游戏公告-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
     @AutoLog(value = "游戏公告-通过id查询")
-    @ApiOperation(value = "游戏公告-通过id查询", notes = "游戏公告-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
@@ -110,7 +103,6 @@ public class GameNoticeController extends JeecgController<GameNotice, IGameNotic
     }
 
     @AutoLog(value = "游戏公告-通过id刷新公告")
-    @ApiOperation(value = "游戏公告-通过id刷新公告", notes = "游戏公告-通过id刷新公告")
     @GetMapping(value = "/refreshById")
     public Result<?> refreshById(@RequestParam(name = "id") String id) {
         GameNotice gameNotice = service.getById(id);
