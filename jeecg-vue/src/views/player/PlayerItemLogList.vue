@@ -28,20 +28,20 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="8" :sm="16">
+          <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
               <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
                               :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="16">
+          <a-col :md="6" :sm="8">
             <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
               <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径"
-                                       @onSelectOptionSome="selectWay"></a-select-read-json-some>
+                                       @onSelectOptionSome="selectWay"/>
             </a-form-item>
             <a-form-item v-else-if="queryParam.type === '2'" key="2" label="消耗途径">
               <a-select-read-json-some json-file="item_expend" placeholder="请选择途径"
-                                       @onSelectOptionSome="selectWay"></a-select-read-json-some>
+                                       @onSelectOptionSome="selectWay"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -60,37 +60,39 @@
     </div>
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
-      </a-table>
+      <a-table
+        ref="table"
+        size="middle"
+        bordered
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="ipagination"
+        :loading="loading"
+        :scroll="{ x: 'max-content' }"
+        @change="handleTableChange"/>
     </div>
-
-    <playerItemLog-modal ref="modalForm" @ok="modalFormOk"></playerItemLog-modal>
   </a-card>
 </template>
 
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import PlayerItemLogModal from './modules/PlayerItemLogModal';
-import ServerSelect from '@/components/gameserver/ServerSelect';
-import ASelectReadJsonSome from '@comp/gameserver/ASelectReadJsonSome';
 import JDate from '@/components/jeecg/JDate.vue';
 import {filterObj} from '@/utils/util';
 import moment from 'moment';
+import ASelectReadJsonSome from '@comp/gameserver/ASelectReadJsonSome';
 
 export default {
   name: 'PlayerItemLogList',
   mixins: [JeecgListMixin],
+  description: '道具日志',
   components: {
     JDate,
-    PlayerItemLogModal,
-    ServerSelect,
     ASelectReadJsonSome,
     moment
   },
   data() {
     return {
-      description: '道具日志',
       // 表头
       columns: [
         {
