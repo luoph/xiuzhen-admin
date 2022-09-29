@@ -12,6 +12,7 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.util.ExcelUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +33,7 @@ import java.util.List;
 @RequestMapping("game/gameCampaignDirectPurchase")
 public class GameCampaignDirectPurchaseController extends JeecgController<GameCampaignDirectPurchase, IGameCampaignDirectPurchaseService> {
 
+    @Autowired
     private IGameCampaignTypeService gameCampaignTypeService;
 
     @Value("${app.folder.temp}")
