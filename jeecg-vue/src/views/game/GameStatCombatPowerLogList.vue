@@ -72,7 +72,7 @@ import moment from "moment/moment";
 
 
 export default {
-  name: 'CombatPowerLogList',
+  name: 'GameStatCombatPowerLogList',
   description: '战力日志',
   mixins: [JeecgListMixin],
   components: {

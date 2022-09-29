@@ -64,7 +64,7 @@ import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector
 
 export default {
   description: '日常数据',
-  name: 'GameDataCountList',
+  name: 'GameStatDailyList',
   mixins: [JeecgListMixin],
   components: {
     JDate,

@@ -67,7 +67,7 @@ import moment from 'moment';
 import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
-  name: 'GameDataReportCountList',
+  name: 'GameStatArpuList',
   description: 'ARPU统计',
   mixins: [JeecgListMixin],
   components: {

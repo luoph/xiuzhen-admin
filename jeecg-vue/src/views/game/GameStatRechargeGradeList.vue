@@ -77,7 +77,7 @@ import moment from 'moment';
 import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 
 export default {
-  name: 'PayUserRankList',
+  name: 'GameStatRechargeGradeList',
   description: '付费结构统计',
   mixins: [JeecgListMixin],
   components: {

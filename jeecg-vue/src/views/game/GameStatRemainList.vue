@@ -63,7 +63,7 @@ import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
 import moment from 'moment';
 export default {
   description: '留存统计',
-  name: 'GameDataRemainList',
+  name: 'GameStatRemainList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
