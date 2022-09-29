@@ -33,7 +33,7 @@ import java.util.Date;
 public class GameStatLtvDetailController extends JeecgController<GameStatLtvDetail, IGameStatLtvDetailService> {
 
     @Override
-    @AutoLog(value = "LTV详细查询")
+    @AutoLog(value = "LTV详细-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameStatLtvDetail entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -56,6 +56,7 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
     }
 
 
+    @AutoLog(value = "LTV详细-更新")
     @GetMapping(value = "/update")
     public Result<?> update(GameStatLtvDetail entity, HttpServletRequest req) {
         // 服务器空校验
@@ -91,7 +92,7 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
         return Result.ok("更新成功");
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "LTV详细-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatLtvDetail entity) {
         return super.exportXls(request, entity, GameStatLtvDetail.class, "LTV详细统计");

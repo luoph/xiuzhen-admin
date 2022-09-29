@@ -8,7 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,11 @@ import java.util.List;
 @RequestMapping("player/registerInfo")
 public class PlayerRegisterInfoController extends JeecgController<GameRegisterInfo, IGameRegisterInfoService> {
 
+    @Override
+    protected boolean isReadOnly() {
+        return true;
+    }
+
     @AutoLog(value = "玩家注册信息-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameRegisterInfo entity,
@@ -34,53 +42,17 @@ public class PlayerRegisterInfoController extends JeecgController<GameRegisterIn
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    @AutoLog(value = "玩家注册信息-添加")
-    @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameRegisterInfo entity) {
-        return Result.ok("不支持！");
-    }
-
-    @AutoLog(value = "玩家注册信息-编辑")
-    @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameRegisterInfo entity) {
-        return Result.ok("不支持！");
-    }
-
-    @AutoLog(value = "玩家注册信息-通过id删除")
-    @DeleteMapping(value = "/delete")
-    public Result<?> delete(@RequestParam(name = "id") String id) {
-        return Result.ok("不支持！");
-    }
-
-    @AutoLog(value = "玩家注册信息-批量删除")
-    @DeleteMapping(value = "/deleteBatch")
-    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        return Result.ok("不支持！");
-    }
-
     @AutoLog(value = "玩家注册信息-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "玩家注册信息-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameRegisterInfo entity) {
         return super.exportXls(request, entity, GameRegisterInfo.class, "玩家注册信息");
     }
-
-    //    /**
-//     * 通过excel导入数据
-//     *
-//     * @param request  请求
-//     * @param response 响应
-//     * @return {@linkplain Result}
-//     */
-//    @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-//    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-//        return super.importExcel(request, response, PlayerRegisterInfo.class);
-//    }
 
     @AutoLog(value = "登录流水-列表查询")
     @GetMapping(value = "/loginList")
@@ -98,6 +70,4 @@ public class PlayerRegisterInfoController extends JeecgController<GameRegisterIn
         page.setRecords(list).setTotal(list.size());
         return Result.ok(page);
     }
-
-
 }

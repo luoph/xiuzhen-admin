@@ -62,13 +62,13 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO
+    @AutoLog(value = "节日烟花-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFirework entity) {
         return super.exportXls(request, entity, GameCampaignTypeFirework.class, "节日烟花");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "节日烟花-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypeFirework.class);

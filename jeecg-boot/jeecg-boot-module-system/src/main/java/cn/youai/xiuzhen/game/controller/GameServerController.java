@@ -246,15 +246,13 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok(gameServer);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "游戏服配置-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameServer gameServer) {
         return super.exportXls(request, gameServer, GameServer.class, "游戏服配置");
     }
 
-    /**
-     * 通过excel导入数据
-     */
+    @AutoLog(value = "游戏服配置-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameServer.class);

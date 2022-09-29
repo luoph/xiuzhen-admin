@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 开服活动消耗传闻
+ * @description 开服活动-消耗传闻
  * @date 2020-12-28
  */
 @Slf4j
@@ -39,7 +39,7 @@ public class OpenServiceCampaignConsumeDetailMessageController extends JeecgCont
     @Value("${app.folder.temp}")
     private String tempFolder;
 
-    @AutoLog(value = "开服活动消耗传闻-列表查询")
+    @AutoLog(value = "开服活动-消耗传闻-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(OpenServiceCampaignConsumeDetailMessage entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -48,48 +48,49 @@ public class OpenServiceCampaignConsumeDetailMessageController extends JeecgCont
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    @AutoLog(value = "开服活动消耗传闻-添加")
+    @AutoLog(value = "开服活动-消耗传闻-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignConsumeDetailMessage entity) {
         return super.add(entity);
     }
 
-    @AutoLog(value = "开服活动消耗传闻-编辑")
+    @AutoLog(value = "开服活动-消耗传闻-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignConsumeDetailMessage entity) {
         return super.edit(entity);
     }
 
-    @AutoLog(value = "开服活动消耗传闻-通过id删除")
+    @AutoLog(value = "开服活动-消耗传闻-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    @AutoLog(value = "开服活动消耗传闻-批量删除")
+    @AutoLog(value = "开服活动-消耗传闻-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    @AutoLog(value = "开服活动消耗传闻-通过id查询")
+    @AutoLog(value = "开服活动-消耗传闻-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "开服活动-消耗传闻-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignConsumeDetailMessage entity) {
-        return super.exportXls(request, entity, OpenServiceCampaignConsumeDetailMessage.class, "开服活动消耗传闻");
+        return super.exportXls(request, entity, OpenServiceCampaignConsumeDetailMessage.class, "开服活动-消耗传闻");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "开服活动-消耗传闻-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaignConsumeDetailMessage.class);
     }
 
+    @AutoLog(value = "开服活动-消耗传闻-导入文本")
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         OpenServiceCampaignConsumeDetail parent = openServiceCampaignConsumeDetailService.getById(vo.getId());

@@ -98,13 +98,13 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "游戏渠道服配置-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameChannelServer entity) {
         return super.exportXls(request, entity, GameChannelServer.class, "游戏渠道服配置");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "游戏渠道服配置-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameChannelServer.class);

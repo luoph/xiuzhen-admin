@@ -33,7 +33,7 @@ import java.util.Date;
 public class GameStatRemainController extends JeecgController<GameStatRemain, IGameStatRemainService> {
 
     @Override
-    @AutoLog(value = "留存查询")
+    @AutoLog(value = "留存统计-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameStatRemain entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -56,6 +56,7 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
         return Result.ok(pageList);
     }
 
+    @AutoLog(value = "留存统计-更新")
     @GetMapping(value = "/update")
     public Result<?> update(GameStatRemain entity, HttpServletRequest req) {
         // 服务器空校验
@@ -89,7 +90,7 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
         return Result.ok("更新成功");
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "留存统计-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatRemain entity) {
         return super.exportXls(request, entity, GameStatRemain.class, "留存统计");

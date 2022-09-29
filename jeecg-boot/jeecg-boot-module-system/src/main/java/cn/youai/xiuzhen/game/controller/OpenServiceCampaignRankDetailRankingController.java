@@ -78,18 +78,19 @@ public class OpenServiceCampaignRankDetailRankingController extends JeecgControl
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "开服活动-开服排行-活动明细-排行上榜、奖励-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankDetailRanking entity) {
         return super.exportXls(request, entity, OpenServiceCampaignRankDetailRanking.class, "开服活动-开服排行-活动明细-排行上榜、奖励");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "开服活动-开服排行-活动明细-排行上榜、奖励-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaignRankDetailRanking.class);
     }
 
+    @AutoLog(value = "开服活动-开服排行-活动明细-排行上榜、奖励-导入文本")
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         OpenServiceCampaignRankDetail parent = openServiceCampaignRankDetailService.getById(vo.getId());

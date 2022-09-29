@@ -105,7 +105,7 @@ public class GameStatRemainDetailController extends JeecgController<GameStatRema
         return Result.ok("更新成功");
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "留存明细-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatRemainDetail entity) {
         return super.exportXls(request, entity, GameStatRemainDetail.class, "留存明细统计");

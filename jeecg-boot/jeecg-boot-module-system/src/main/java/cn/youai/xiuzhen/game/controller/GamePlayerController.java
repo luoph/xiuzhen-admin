@@ -27,6 +27,11 @@ import javax.servlet.http.HttpServletRequest;
 public class GamePlayerController extends JeecgController<GamePlayer, IGamePlayerService> {
 
     @Override
+    protected boolean isReadOnly() {
+        return true;
+    }
+
+    @Override
     protected QueryWrapper<GamePlayer> prepareQuery(GamePlayer entity, HttpServletRequest request) {
         QueryWrapper<GamePlayer> queryWrapper = super.prepareQuery(entity, request);
         queryWrapper.orderByDesc("create_time");
@@ -34,7 +39,7 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
     }
 
     @Override
-    @AutoLog(value = "玩家信息查询")
+    @AutoLog(value = "玩家信息-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GamePlayer entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -43,7 +48,7 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    @AutoLog(value = "游戏下发邮件-通过id查询")
+    @AutoLog(value = "玩家信息-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         GamePlayer entity = service.getPlayer(Long.parseLong(id));
@@ -53,7 +58,7 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
         return Result.ok(entity);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "玩家信息-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GamePlayer entity) {
         return super.exportXls(request, entity, GamePlayer.class, "玩家信息");

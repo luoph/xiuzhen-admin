@@ -102,13 +102,13 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "开服活动(1级)-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaign entity) {
         return super.exportXls(request, entity, OpenServiceCampaign.class, "开服活动(1级)");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "开服活动(1级)-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaign.class);

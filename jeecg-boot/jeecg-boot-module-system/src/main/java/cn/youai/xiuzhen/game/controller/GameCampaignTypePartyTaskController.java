@@ -78,18 +78,19 @@ public class GameCampaignTypePartyTaskController extends JeecgController<GameCam
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO
+    @AutoLog(value = "节日派对任务-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypePartyTask entity) {
         return super.exportXls(request, entity, GameCampaignTypePartyTask.class, "节日派对任务");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "节日派对任务-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypePartyTask.class);
     }
 
+    @AutoLog(value = "节日派对任务-导入文本")
 
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {

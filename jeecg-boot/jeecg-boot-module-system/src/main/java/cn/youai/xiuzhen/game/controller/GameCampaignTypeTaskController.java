@@ -69,13 +69,13 @@ public class GameCampaignTypeTaskController extends JeecgController<GameCampaign
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "任务活动-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeTask entity) {
         return super.exportXls(request, entity, GameCampaignTypeTask.class, "任务活动");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "任务活动-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypeTask.class);

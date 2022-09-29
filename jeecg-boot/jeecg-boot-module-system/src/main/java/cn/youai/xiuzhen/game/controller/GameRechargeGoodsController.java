@@ -89,13 +89,13 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "充值商品-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameRechargeGoods entity) {
         return super.exportXls(request, entity, GameRechargeGoods.class, "充值商品");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "充值商品-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameRechargeGoods.class);
@@ -121,7 +121,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
         return result;
     }
 
-
+    @AutoLog(value = "充值商品-刷新游戏服充值商品")
     @GetMapping(value = "/updateGoods")
     public Result<?> updateGoodsOptions() {
         List<GameServer> gameServers = gameServerService.list();
@@ -131,6 +131,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
         return Result.ok("刷新成功!");
     }
 
+    @AutoLog(value = "充值商品-导入文本")
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         String fileName = tempFolder + File.separator + GameRechargeGoods.class.getSimpleName() + ".xls";

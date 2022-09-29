@@ -62,18 +62,13 @@ public class GameCampaignTypeBuffController extends JeecgController<GameCampaign
         return super.queryById(id);
     }
 
-    /**
-     * 导出excel
-     *
-     * @param request              请求
-     * @param gameCampaignTypeBuff 实体
-     */
+    @AutoLog(value = "Buff活动-导入")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeBuff gameCampaignTypeBuff) {
         return super.exportXls(request, gameCampaignTypeBuff, GameCampaignTypeBuff.class, "Buff活动");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "Buff活动-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypeBuff.class);

@@ -80,19 +80,19 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "更新公告-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameUpgradeNotice entity) {
         return super.exportXls(request, entity, GameUpgradeNotice.class, "更新公告");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "更新公告-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameUpgradeNotice.class);
     }
 
-
+    @AutoLog(value = "更新公告-开关")
     @GetMapping(value = "/openOrClose")
     public Result<?> openOrClose(@RequestParam(name = "id") int id) {
         GameUpgradeNotice gameUpgradeNotice = service.getById(id);
@@ -111,6 +111,7 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
     }
 
 
+    @AutoLog(value = "更新公告-同步到游戏服")
     @GetMapping(value = "/serverSync")
     public Result<?> serverSync(@RequestParam(name = "id") int id) {
         GameUpgradeNotice gameUpgradeNotice = service.getById(id);

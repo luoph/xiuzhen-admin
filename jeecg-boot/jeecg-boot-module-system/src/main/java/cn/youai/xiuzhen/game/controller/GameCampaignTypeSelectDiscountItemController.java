@@ -62,13 +62,13 @@ public class GameCampaignTypeSelectDiscountItemController extends JeecgControlle
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "节日活动-自选特惠-物品部分-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSelectDiscountItem entity) {
         return super.exportXls(request, entity, GameCampaignTypeSelectDiscountItem.class, "节日活动-自选特惠-物品部分");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "节日活动-自选特惠-物品部分-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypeSelectDiscountItem.class);

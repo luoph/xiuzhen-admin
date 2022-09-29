@@ -62,13 +62,13 @@ public class GameCampaignTypeThrowingEggsController extends JeecgController<Game
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "节日砸蛋-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeThrowingEggs entity) {
         return super.exportXls(request, entity, GameCampaignTypeThrowingEggs.class, "节日砸蛋");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "节日砸蛋-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypeThrowingEggs.class);

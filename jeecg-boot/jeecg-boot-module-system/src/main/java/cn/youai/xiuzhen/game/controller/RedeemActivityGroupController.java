@@ -62,13 +62,13 @@ public class RedeemActivityGroupController extends JeecgController<GameRedeemAct
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "激活码活动分组-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameRedeemActivityGroup entity) {
         return super.exportXls(request, entity, GameRedeemActivityGroup.class, "激活码活动分组");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "激活码活动分组-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameRedeemActivityGroup.class);

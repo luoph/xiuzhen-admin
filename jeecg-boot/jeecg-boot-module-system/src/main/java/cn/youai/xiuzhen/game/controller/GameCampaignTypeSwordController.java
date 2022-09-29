@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description game_campaign_type_sword
+ * @description 节日活动-限时剑仙
  * @date 2021-02-23
  */
 @Slf4j
@@ -39,7 +39,7 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     @Value("${app.folder.temp}")
     private String tempFolder;
 
-    @AutoLog(value = "game_campaign_type_sword-列表查询")
+    @AutoLog(value = "节日活动-限时剑仙-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameCampaignTypeSword entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -48,48 +48,49 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    @AutoLog(value = "game_campaign_type_sword-添加")
+    @AutoLog(value = "节日活动-限时剑仙-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaignTypeSword entity) {
         return super.add(entity);
     }
 
-    @AutoLog(value = "game_campaign_type_sword-编辑")
+    @AutoLog(value = "节日活动-限时剑仙-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaignTypeSword entity) {
         return super.edit(entity);
     }
 
-    @AutoLog(value = "game_campaign_type_sword-通过id删除")
+    @AutoLog(value = "节日活动-限时剑仙-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    @AutoLog(value = "game_campaign_type_sword-批量删除")
+    @AutoLog(value = "节日活动-限时剑仙-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    @AutoLog(value = "game_campaign_type_sword-通过id查询")
+    @AutoLog(value = "节日活动-限时剑仙-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "节日活动-限时剑仙-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSword entity) {
-        return super.exportXls(request, entity, GameCampaignTypeSword.class, "game_campaign_type_sword");
+        return super.exportXls(request, entity, GameCampaignTypeSword.class, "节日活动-限时剑仙");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "节日活动-限时剑仙-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypeSword.class);
     }
 
+    @AutoLog(value = "节日活动-限时剑仙-导入文本")
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         GameCampaignType campaignType = gameCampaignTypeService.getById(vo.getId());

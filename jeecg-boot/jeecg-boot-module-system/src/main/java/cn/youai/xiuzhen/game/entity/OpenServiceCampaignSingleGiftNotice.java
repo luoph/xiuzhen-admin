@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 开服活动-单比好礼-传闻消息
+ * @description 开服活动-单笔好礼-传闻消息
  * @date 2020-12-23
  */
 @Data

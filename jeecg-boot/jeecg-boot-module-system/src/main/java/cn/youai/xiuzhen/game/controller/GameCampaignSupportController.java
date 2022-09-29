@@ -62,13 +62,13 @@ public class GameCampaignSupportController extends JeecgController<GameCampaignS
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO
+    @AutoLog(value = "活动区服配置-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignSupport entity) {
         return super.exportXls(request, entity, GameCampaignSupport.class, "活动区服配置");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "活动区服配置-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignSupport.class);

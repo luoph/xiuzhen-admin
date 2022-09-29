@@ -56,6 +56,7 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
         return Result.ok(pageList);
     }
 
+    @AutoLog(value = "游戏日常统计-更新")
     @GetMapping(value = "/update")
     public Result<?> update(GameStatDaily entity, HttpServletRequest req) {
         // 服务器空校验
@@ -91,7 +92,7 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
         return Result.ok("更新成功");
     }
 
-    @AutoLog(value = "XXX-导出") // TODO
+    @AutoLog(value = "游戏日常统计-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatDaily entity) {
         return super.exportXls(request, entity, GameStatDaily.class, "日常统计");

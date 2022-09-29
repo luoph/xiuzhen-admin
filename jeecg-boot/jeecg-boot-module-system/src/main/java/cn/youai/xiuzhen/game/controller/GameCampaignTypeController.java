@@ -104,12 +104,13 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
      * @param request          请求
      * @param gameCampaignType 实体
      */
+    @AutoLog(value = "活动类型配置-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignType gameCampaignType) {
         return super.exportXls(request, gameCampaignType, GameCampaignType.class, "活动类型配置");
     }
 
-    @AutoLog(value = "XXX-导出") // TODO    @SuppressWarnings({"unchecked"})
+    @AutoLog(value = "活动类型配置-导出")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(@RequestParam(name = "campaignId") Long campaignId,
                                  HttpServletRequest request, HttpServletResponse response) {

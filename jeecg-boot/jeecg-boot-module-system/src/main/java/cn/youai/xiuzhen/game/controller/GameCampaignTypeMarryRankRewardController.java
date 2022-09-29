@@ -62,13 +62,13 @@ public class GameCampaignTypeMarryRankRewardController extends JeecgController<G
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO
+    @AutoLog(value = "节日活动-结义排行榜奖励-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeMarryRankReward entity) {
         return super.exportXls(request, entity, GameCampaignTypeMarryRankReward.class, "节日活动-结义排行榜奖励");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "节日活动-结义排行榜奖励-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypeMarryRankReward.class);

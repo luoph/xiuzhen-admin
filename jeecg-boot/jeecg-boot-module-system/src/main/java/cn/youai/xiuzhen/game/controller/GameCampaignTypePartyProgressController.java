@@ -78,18 +78,19 @@ public class GameCampaignTypePartyProgressController extends JeecgController<Gam
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO
+    @AutoLog(value = "节日派对进度任务-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypePartyProgress entity) {
         return super.exportXls(request, entity, GameCampaignTypePartyProgress.class, "节日派对进度任务");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "节日派对进度任务-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaignTypePartyProgress.class);
     }
 
+    @AutoLog(value = "节日派对进度任务-导入文本")
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         GameCampaignType campaignType = gameCampaignTypeService.getById(vo.getId());

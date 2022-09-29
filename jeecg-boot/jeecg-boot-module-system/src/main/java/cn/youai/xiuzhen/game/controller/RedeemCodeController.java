@@ -89,13 +89,13 @@ public class RedeemCodeController extends JeecgController<GameRedeemCode, IGameR
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "激活码-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameRedeemCode entity) {
         return super.exportXls(request, entity, GameRedeemCode.class, "激活码");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "激活码-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameRedeemCode.class);

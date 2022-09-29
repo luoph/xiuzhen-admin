@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 开服活动-单比好礼-任务明细
+ * @description 开服活动-单笔好礼-任务明细
  * @date 2020-12-23
  */
 @Service

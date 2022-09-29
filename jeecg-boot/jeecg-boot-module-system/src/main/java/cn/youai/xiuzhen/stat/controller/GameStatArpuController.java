@@ -55,6 +55,7 @@ public class GameStatArpuController extends JeecgController<GameStatArpu, IGameS
     }
 
 
+    @AutoLog(value = "ARPU统计-更新")
     @GetMapping(value = "/update")
     public Result<?> update(GameStatArpu entity, HttpServletRequest req) {
         // 服务器空校验
@@ -88,7 +89,7 @@ public class GameStatArpuController extends JeecgController<GameStatArpu, IGameS
         return Result.ok("更新成功");
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "ARPU统计-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameStatArpu entity) {
         return super.exportXls(request, entity, GameStatArpu.class, "ARPU统计");

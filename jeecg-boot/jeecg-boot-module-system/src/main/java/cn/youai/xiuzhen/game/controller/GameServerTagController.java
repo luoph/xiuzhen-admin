@@ -62,13 +62,13 @@ public class GameServerTagController extends JeecgController<GameServerTag, IGam
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "游戏服标签-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameServerTag entity) {
         return super.exportXls(request, entity, GameServerTag.class, "游戏服标签");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "游戏服标签-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameServerTag.class);

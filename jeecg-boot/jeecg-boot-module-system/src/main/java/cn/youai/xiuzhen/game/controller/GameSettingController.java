@@ -62,13 +62,13 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "游戏设置-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameSetting entity) {
         return super.exportXls(request, entity, GameSetting.class, "游戏设置");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "游戏设置-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameSetting.class);

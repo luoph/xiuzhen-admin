@@ -62,13 +62,13 @@ public class OpenServiceCampaignRankTypeController extends JeecgController<OpenS
         return super.queryById(id);
     }
 
-    @AutoLog(value = "XXX-导出") // TODO 
+    @AutoLog(value = "开服活动-开服排行-类型库-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, OpenServiceCampaignRankType entity) {
         return super.exportXls(request, entity, OpenServiceCampaignRankType.class, "开服活动-开服排行-类型库");
     }
 
-    @AutoLog(value = "XXX-导入") // TODO
+    @AutoLog(value = "开服活动-开服排行-类型库-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, OpenServiceCampaignRankType.class);
