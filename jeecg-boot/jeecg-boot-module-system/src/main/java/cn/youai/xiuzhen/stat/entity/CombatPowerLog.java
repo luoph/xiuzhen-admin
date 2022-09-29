@@ -18,10 +18,13 @@ import java.util.Date;
 public class CombatPowerLog implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private String channel;
+
     /**
-     * id
+     * 玩家id
      */
-    private Long id;
+    @Excel(name = "游戏服id", width = 15)
+    private Integer serverId;
 
     /**
      * 玩家id
@@ -36,17 +39,10 @@ public class CombatPowerLog implements Serializable {
     private String nickname;
 
     /**
-     * 玩家id
-     */
-    @Excel(name = "游戏服id", width = 15)
-    private Integer serverId;
-
-    /**
      * 模块id
      */
     @Excel(name = "模块id", width = 15)
     private Integer attrType;
-
 
     /**
      * 属性模块

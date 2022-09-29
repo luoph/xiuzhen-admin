@@ -119,8 +119,8 @@ export default {
   mixins: [JeecgListMixin],
   components: {
     JDate,
+    getAction,
     ChannelServerSelector,
-    getAction
   },
   data() {
     return {

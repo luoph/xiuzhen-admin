@@ -1,6 +1,5 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
-import cn.youai.basics.model.DateRange;
 import cn.youai.xiuzhen.stat.entity.CombatPowerLog;
 import cn.youai.xiuzhen.stat.entity.LogPlayer;
 import cn.youai.xiuzhen.stat.mapper.LogPlayerMapper;
@@ -10,6 +9,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * @author jeecg-boot
@@ -22,8 +23,8 @@ import org.springframework.stereotype.Service;
 public class LogPlayerServiceImpl extends ServiceImpl<LogPlayerMapper, LogPlayer> implements ILogPlayerService {
 
     @Override
-    public IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, CombatPowerLog searchObj, DateRange range) {
-        return getBaseMapper().selectCombatPowerLogList(page, searchObj, range);
+    public IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, String channel, int serverId, long playerId, Date start, Date end) {
+        return getBaseMapper().selectCombatPowerLogList(page, channel, serverId, playerId, start, end);
     }
 
 }

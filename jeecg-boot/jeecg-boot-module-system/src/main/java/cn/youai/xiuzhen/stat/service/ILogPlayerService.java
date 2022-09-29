@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Date;
+
 /**
  * @author jeecg-boot
  * @version V1.0
@@ -15,6 +17,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ILogPlayerService extends IService<LogPlayer> {
 
-    IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, CombatPowerLog searchObj, DateRange range);
+    IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, String channel, int serverId, long playerId, Date start, Date end);
 
 }

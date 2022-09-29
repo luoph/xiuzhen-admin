@@ -4,30 +4,24 @@
 
     <select id="selectCombatPowerLogList" resultType="cn.youai.xiuzhen.stat.entity.CombatPowerLog">
         SELECT l.`id`, l.`player_id`, p.`nickname`, p.`server_id`,
-        l.`value` as `attr_type`,
-        l.`param_1` as `before`,
-        l.`param_2` as `delta`,
-        l.`param_3` as `after`,
+        l.`value` AS `attr_type`,
+        l.`param_1` AS `before`,
+        l.`param_2` AS `delta`,
+        l.`param_3` AS `after`,
         l.`create_time`
         FROM `log_player` l
         LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
         <where>
             l.`type` = 9
-            <if test="searchObj != null">
-                <if test="searchObj.playerId > 0">
-                    AND p.`player_id` = #{searchObj.playerId}
-                </if>
-                <if test="searchObj.serverId > 0">
-                    AND p.`server_id` = #{searchObj.serverId}
-                </if>
-                <if test="searchObj.nickname != null and searchObj.nickname != ''">
-                    AND p.`nickname` LIKE CONCAT('%', #{searchObj.nickname}, '%')
-                </if>
-            </if>
-            <if test="range != null">
-                <if test="null != range.start"><![CDATA[AND l.`create_date` >= #{range.start}]]></if>
-                <if test="null != range.end"><![CDATA[AND l.`create_date` <= #{range.end}]]></if>
-            </if>
+            <choose>
+                <when test="playerId > 0">AND p.`player_id` = #{playerId}</when>
+                <otherwise>
+                    <if test="channel != null and channel != ''">AND p.`channel` = #{channel}</if>
+                    <if test="serverId > 0">AND p.`server_id` = #{serverId}</if>
+                </otherwise>
+            </choose>
+            <if test="null != start"><![CDATA[AND l.`create_date` >= #{start}]]></if>
+            <if test="null != end"><![CDATA[AND l.`create_date` <= #{end}]]></if>
         </where>
         ORDER BY l.`create_time` DESC
     </select>

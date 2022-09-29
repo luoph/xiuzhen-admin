@@ -1,12 +1,13 @@
 package cn.youai.xiuzhen.stat.mapper;
 
-import cn.youai.basics.model.DateRange;
 import cn.youai.xiuzhen.stat.entity.CombatPowerLog;
 import cn.youai.xiuzhen.stat.entity.LogPlayer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.Date;
 
 /**
  * @author jeecg-boot
@@ -17,6 +18,9 @@ import org.apache.ibatis.annotations.Param;
 public interface LogPlayerMapper extends BaseMapper<LogPlayer> {
 
     IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page,
-                                                   @Param("searchObj") CombatPowerLog searchObj,
-                                                   @Param("range") DateRange range);
+                                                   @Param("channel") String channel,
+                                                   @Param("serverId") int serverId,
+                                                   @Param("playerId") long playerId,
+                                                   @Param("start") Date start,
+                                                   @Param("end") Date end);
 }

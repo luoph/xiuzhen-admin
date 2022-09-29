@@ -6,22 +6,29 @@
         <a-row :gutter="24">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="4" :sm="4">
+          <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
               <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="玩家昵称">
-              <a-input placeholder="请输入玩家昵称模糊查询" v-model="queryParam.nickname"/>
+            <a-form-item label="统计时间">
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+          <a-col :md="12" :sm="8">
+            <a-form-item label="日期范围">
+              <a-radio-group v-model="dayType" @change="onDayTypeChange">
+                <a-radio :value="0">自定义</a-radio>
+                <a-radio :value="7">近7天</a-radio>
+                <a-radio :value="15">近15天</a-radio>
+                <a-radio :value="30">近1月</a-radio>
+                <a-radio :value="60">近2月</a-radio>
+              </a-radio-group>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -49,26 +56,7 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        @change="handleTableChange"
-      >
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
-        </template>
-        <template slot="imgSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
-        </template>
-        <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
-        </template>
-
-        <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">查看详情</a>
-        </span>
-      </a-table>
+        @change="handleTableChange"/>
     </div>
   </a-card>
 </template>
@@ -76,21 +64,25 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import {getAction} from '@/api/manage';
 import {filterObj} from "@/utils/util";
 
+import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
+import moment from "moment/moment";
+
+
 export default {
   name: 'CombatPowerLogList',
+  description: '战力日志',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
-    getAction
+    getAction,
+    ChannelServerSelector,
   },
   data() {
     return {
-      description: '战力日志',
+      dayType: 7,
       timeout: 60000,
       // 表头
       columns: [
@@ -146,35 +138,56 @@ export default {
         }
       ],
       url: {
-        list: 'game/combatPowerLog/list',
-        exportXlsUrl: 'game/combatPowerLog/exportXls',
+        list: 'game/stat/combatPowerLog/list',
+        exportXlsUrl: 'game/stat/combatPowerLog/exportXls',
       },
       dictOptions: {}
     };
   },
   computed: {},
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (channel) {
+      this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
     },
-    onCreateDateChange: function (value, dateString) {
-      console.log(dateString[0], dateString[1]);
-      this.queryParam.createTime_begin = dateString[0];
-      this.queryParam.createTime_end = dateString[1];
-    },
     getQueryParams() {
-      console.log(this.queryParam.createTimeRange);
+      if (this.dayType > 0) {
+        this.selectDayType(this.dayType);
+      }
       const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
 
       // 范围参数不传递后台
-      delete param.createTimeRange;
+      delete param.countDateRange;
       return filterObj(param);
-    }
+    },
+    searchReset() {
+      this.queryParam = {}
+      this.$refs.channelServerSelector.reset();
+      this.loadData(1);
+    },
+    onDateChange(date, dateString) {
+      this.queryParam.countDate_begin = dateString[0];
+      this.queryParam.countDate_end = dateString[1];
+      this.dayType = 0;
+    },
+    onDayTypeChange(e) {
+      if (e.target.value > 0) {
+        this.selectDayType(e.target.value);
+      }
+    },
+    selectDayType(dayType) {
+      if (dayType > 0) {
+        const start = moment().subtract(dayType, 'days').format('YYYY-MM-DD');
+        const end = moment().format('YYYY-MM-DD');
+        this.queryParam.countDateRange = [start, end];
+        this.queryParam.countDate_begin = start;
+        this.queryParam.countDate_end = end;
+      }
+    },
   }
 };
 </script>
