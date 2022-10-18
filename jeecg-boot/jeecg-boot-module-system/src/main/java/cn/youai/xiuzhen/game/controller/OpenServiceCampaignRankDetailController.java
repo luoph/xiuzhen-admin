@@ -50,7 +50,7 @@ public class OpenServiceCampaignRankDetailController extends JeecgController<Ope
                                    HttpServletRequest req) {
         QueryWrapper<OpenServiceCampaignRankDetail> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
         Page<OpenServiceCampaignRankDetail> page = new Page<>(pageNo, pageSize);
-        queryWrapper.orderByAsc("sort");
+        queryWrapper.orderByAsc("sort", "id");
         IPage<OpenServiceCampaignRankDetail> pageList = pageList(page, queryWrapper);
         return Result.ok(pageList);
     }
