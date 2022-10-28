@@ -72,6 +72,7 @@
             <a-select-option :value="14">14-灵兽抽奖礼包</a-select-option>
             <a-select-option :value="15">15-开服目标活动-签到令牌</a-select-option>
             <a-select-option :value="16">16-开服目标活动-任务礼包</a-select-option>
+            <a-select-option :value="17">17-系统直购礼包</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
