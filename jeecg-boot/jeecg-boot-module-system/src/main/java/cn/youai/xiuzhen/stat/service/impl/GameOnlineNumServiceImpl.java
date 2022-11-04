@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.youai.basics.model.DataResponse;
+import cn.youai.enums.OutdatedType;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameChannel;
@@ -66,7 +67,7 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
                 Integer serverId = gameServer.getId();
                 String channel = gameChannel.getSimpleName();
 
-                if (gameServer.getOnlineStat() == 1 && gameServer.getOutdated() == 0) {
+                if (gameServer.getOnlineStat() == 1 && gameServer.getOutdated() == OutdatedType.NORMAL.getValue()) {
                     // http调用查询在线人数
                     DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
                     GameOnlineNum gameOnlineNum = new GameOnlineNum();

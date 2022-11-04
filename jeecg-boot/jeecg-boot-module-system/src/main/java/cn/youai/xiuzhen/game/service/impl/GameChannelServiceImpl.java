@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.utils.StringUtils;
+import cn.youai.enums.OutdatedType;
 import cn.youai.server.utils.QueryUtils;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameServerTag;
@@ -12,7 +13,6 @@ import cn.youai.xiuzhen.game.model.UpdateConfig;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IGameServerTagService;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.JsonFileUtils;
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -92,6 +93,8 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
 
     private void updateChannelServerJson(GameChannel channel) {
         List<GameServerVO> servers = selectChannelServerList(channel.getId());
+        servers = servers.stream().filter(t -> t.getOutdated() != OutdatedType.OFFLINE.getValue())
+                .collect(Collectors.toList());
         UpdateConfig updateConfig = new UpdateConfig()
                 .setVersionCode(channel.getVersionCode())
                 .setVersionName(channel.getVersionName())

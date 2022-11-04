@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DataResponse;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
+import cn.youai.enums.OutdatedType;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerTag;
@@ -95,7 +96,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
             }
 
             // 已废弃服务器不统计在线人数
-            if (!onlineStat || record.getOutdated() == 1) {
+            if (!onlineStat || record.getOutdated() != OutdatedType.NORMAL.getValue()) {
                 record.setOnlineNum(0);
             } else if (record.getOnlineStat() == 1) {
                 DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(record.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
@@ -126,12 +127,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok(service.getMergeServerList(days, minAvgPlayers, minAvgPayAmount));
     }
 
-    /**
-     * 添加
-     *
-     * @param entity
-     * @return
-     */
     @AutoLog(value = "游戏服配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameServer entity) {
@@ -139,9 +134,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok("添加成功！");
     }
 
-    /**
-     * 编辑
-     */
     @AutoLog(value = "游戏服配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameServer entity) {
@@ -158,19 +150,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         service.removeById(id);
         return Result.ok("删除成功!");
     }
-
-//    /**
-//     * 批量删除
-//     *
-//     * @param ids
-//     * @return
-//     */
-//    @AutoLog(value = "游戏服配置-批量删除")
-//    @DeleteMapping(value = "/deleteBatch")
-//    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-//        this.gameServerService.removeByIds(Arrays.asList(ids.split(",")));
-//        return Result.ok("批量删除成功！");
-//    }
 
     @AutoLog(value = "游戏服配置-刷新活动配置")
     @GetMapping(value = "/updateActivity")
@@ -193,7 +172,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     public Result<?> getOnlineNum(@RequestParam(name = "id") String id) {
         GameServer gameServer = service.getById(id);
         if (gameServer != null) {
-            if (gameServer.getOutdated() == 1) {
+            if (gameServer.getOutdated() != OutdatedType.NORMAL.getValue()) {
                 return Result.ok(String.valueOf(0));
             }
 
@@ -233,12 +212,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok("关闭维护状态成功！");
     }
 
-    /**
-     * 通过id查询
-     *
-     * @param id
-     * @return
-     */
     @AutoLog(value = "游戏服配置-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
