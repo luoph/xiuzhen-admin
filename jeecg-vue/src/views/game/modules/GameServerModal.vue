@@ -104,8 +104,9 @@
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合并状态">
           <a-select placeholder="合并状态" v-decorator="['outdated', validatorRules.outdated]" initialValue="0">
-            <a-select-option :value="0">未合并</a-select-option>
+            <a-select-option :value="0">上线中</a-select-option>
             <a-select-option :value="1">已合并</a-select-option>
+            <a-select-option :value="2">已下线</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服后母服id">

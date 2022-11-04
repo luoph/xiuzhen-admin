@@ -18,6 +18,15 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
+            <a-form-item label="合服状态">
+              <a-select placeholder="请选择合服状态" v-model="queryParam.outdated">
+                <a-select-option :value="0">上线中</a-select-option>
+                <a-select-option :value="1">已合服</a-select-option>
+                <a-select-option :value="2">已下线</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
             <a-form-item label="名字">
               <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
               <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id"/>
@@ -136,11 +145,20 @@
           <a-tag v-if="record.isMaintain === 1" color="red">维护中</a-tag>
           <a-tag v-else color="green">运行中</a-tag>
         </span>
-        <span slot="statSlot" slot-scope="text, record">
+        <span slot="gmSlot" slot-scope="text, record">
+          <a-tag v-if="record.gmStatus === 0" color="red">OFF</a-tag>
+          <a-tag v-else-if="record.gmStatus === 1" color="green">ON</a-tag>
+        </span>
+        <span slot="statusSlot" slot-scope="text, record">
           <a-tag v-if="record.status === 0" color="blue">正常</a-tag>
           <a-tag v-else-if="record.status === 1" color="green">流畅</a-tag>
           <a-tag v-else-if="record.status === 2" color="red">火爆</a-tag>
           <a-tag v-else-if="record.status === 3" color="gray">维护</a-tag>
+        </span>
+        <span slot="outdatedSlot" slot-scope="text, record">
+          <a-tag v-if="record.outdated === 0" color="green">上线中</a-tag>
+          <a-tag v-else-if="record.outdated === 1" color="red">已合并</a-tag>
+          <a-tag v-else-if="record.outdated === 2" color="red">已下线</a-tag>
         </span>
       </a-table>
     </div>
@@ -240,7 +258,7 @@ export default {
           dataIndex: 'host'
         },
         {
-          title: 'Websocket地址',
+          title: '长连接地址',
           align: 'left',
           width: 120,
           dataIndex: 'loginUrl'
@@ -268,36 +286,21 @@ export default {
           align: 'left',
           width: 60,
           dataIndex: 'gmStatus',
-          customRender: value => {
-            let text = '--';
-            if (value === 1) {
-              text = '开启';
-            } else if (value === 0) {
-              text = '关闭';
-            }
-            return text;
-          }
+          scopedSlots: {customRender: 'gmSlot'}
         },
         {
-          title: '数数开关',
+          title: '合服状态',
           align: 'left',
           width: 60,
-          dataIndex: 'taStatistics',
-          customRender: value => {
-            let text = '--';
-            if (value === 1) {
-              text = '开启';
-            } else if (value === 0) {
-              text = '关闭';
-            }
-            return text;
-          }
+          dataIndex: 'outdated',
+          scopedSlots: {customRender: 'outdatedSlot'}
         },
         {
           title: '状态',
           align: 'center',
           width: 80,
-          scopedSlots: {customRender: 'statSlot'}
+          dataIndex: 'status',
+          scopedSlots: {customRender: 'statusSlot'}
         },
         {
           title: '维护状态',
