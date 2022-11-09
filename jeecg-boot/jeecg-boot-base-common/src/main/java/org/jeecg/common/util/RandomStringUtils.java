@@ -13,7 +13,7 @@ import java.util.HashSet;
 public class RandomStringUtils {
 
     private static final int CHECK_CODE_LENGTH = 4;
-    private static final int CD_KEY_LENGTH = 6;
+    private static final int CD_KEY_LENGTH = 8;
 
     private static final String BASE_CHECK_CODES = "1234567890";
 
