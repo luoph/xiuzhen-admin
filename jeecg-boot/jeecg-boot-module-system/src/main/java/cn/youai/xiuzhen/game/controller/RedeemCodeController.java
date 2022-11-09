@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,23 +31,30 @@ public class RedeemCodeController extends JeecgController<GameRedeemCode, IGameR
 
     @AutoLog(value = "激活码-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameRedeemCode entity,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                                   HttpServletRequest req) {
+    public Result<?> queryPageList(GameRedeemCode entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
     @AutoLog(value = "激活码-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameRedeemCode entity) {
+        HashSet<String> existsCodes = new HashSet<>(service.selectExistsRedeemCode());
         if (entity.getBatchNum() != null && entity.getBatchNum() > 0) {
             // 1.批量自动生成激活码
             List<GameRedeemCode> gameRedeemCodes = new ArrayList<>(entity.getBatchNum());
             for (int i = 0; i < entity.getBatchNum(); i++) {
                 // 自动生产激活码
+                int index = 0;
                 String code = RandomStringUtils.genCdKeyCode();
-                gameRedeemCodes.add(new GameRedeemCode(entity.getActivityId(), code, entity.getTotalNum(), 0, entity.getStatus()));
+                // 如果重复，继续随机生成，并限定循环不超过10次
+                while (existsCodes.contains(code) && index++ < 10) {
+                    code = RandomStringUtils.genCdKeyCode();
+                }
+
+                if (!existsCodes.contains(code)) {
+                    existsCodes.add(code);
+                    gameRedeemCodes.add(new GameRedeemCode(entity.getActivityId(), code, entity.getTotalNum(), 0, entity.getStatus()));
+                }
             }
             service.saveBatch(gameRedeemCodes, gameRedeemCodes.size());
         } else if (entity.getCode() != null && entity.getCode().contains(",")) {
@@ -55,12 +63,16 @@ public class RedeemCodeController extends JeecgController<GameRedeemCode, IGameR
             List<GameRedeemCode> gameRedeemCodes = new ArrayList<>(codes.size());
             for (String code : codes) {
                 // 自动生产激活码
-                gameRedeemCodes.add(new GameRedeemCode(entity.getActivityId(), code, entity.getTotalNum(), 0, entity.getStatus()));
+                if (!existsCodes.contains(code)) {
+                    gameRedeemCodes.add(new GameRedeemCode(entity.getActivityId(), code, entity.getTotalNum(), 0, entity.getStatus()));
+                }
             }
             service.saveBatch(gameRedeemCodes, gameRedeemCodes.size());
         } else {
             // 3.单个添加
-            service.save(entity);
+            if (!existsCodes.contains(entity.getCode())) {
+                service.save(entity);
+            }
         }
         return Result.ok("添加成功！");
     }
