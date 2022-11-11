@@ -3,7 +3,7 @@
     <a-row :gutter="24">
     </a-row>
 
-    <a-card :loading="loading" :bordered="false" :body-style="{ padding: '0' }">
+    <a-card :bordered="false" :body-style="{ padding: '0' }">
     </a-card>
 
   </div>

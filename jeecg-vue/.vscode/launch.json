@@ -10,7 +10,6 @@
             "name": "Chrome",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/src",
-            "breakOnLoad": true,
             "sourceMaps": true,
             "userDataDir": "${workspaceRoot}/out/chrome",
             // "runtimeExecutable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -22,13 +21,12 @@
             }
         },
         {
-            "type": "edge",
+            "type": "msedge",
             "name": "Edge",
             "request": "launch",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceFolder}/src",
             "userDataDir": "${workspaceRoot}/out/edge",
-            "breakOnLoad": true,
             "sourceMaps": true,
             "sourceMapPathOverrides": {
                 "webpack:///./src/*": "${webRoot}/*"
@@ -57,10 +55,18 @@
             "port": 6000,
             "profile": "default",
             // "firefoxExecutable": "/Applications/Firefox Developer Edition.app/Contents/MacOS/firefox",
-            "firefoxArgs": ["-start-debugger-server", "-no-remote", "-devtools"],
+            "firefoxArgs": [
+                "-start-debugger-server",
+                "-no-remote",
+                "-devtools"
+            ],
             "reloadOnChange": {
-                "watch": ["${workspaceFolder}/**/*.js"],
-                "ignore": ["${workspaceFolder}/node_modules/**"]
+                "watch": [
+                    "${workspaceFolder}/**/*.js"
+                ],
+                "ignore": [
+                    "${workspaceFolder}/node_modules/**"
+                ]
             }
         }
     ]
