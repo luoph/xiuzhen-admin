@@ -2,7 +2,4 @@
   <configuration default="false" name="yarn install" type="NodeJSConfigurationType" application-parameters=" install" path-to-node="$USER_HOME$/.nvm/versions/node/v12.22.12/bin/node" path-to-js-file="/usr/local/lib/node_modules/yarn/bin/yarn.js" working-dir="$PROJECT_DIR$">
     <method v="2" />
   </configuration>
-  <configuration default="false" name="yarn install" type="NodeJSConfigurationType" application-parameters=" install" path-to-node="$USER_HOME$/.nvm/versions/node/v12.22.12/bin/node" path-to-js-file="/usr/local/lib/node_modules/yarn/bin/yarn.js" working-dir="$PROJECT_DIR$">
-    <method v="2" />
-  </configuration>
 </component>
