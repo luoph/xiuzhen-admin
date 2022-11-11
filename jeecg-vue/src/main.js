@@ -8,9 +8,6 @@ import router from './router'
 import store from './store/'
 import { VueAxios } from "@/utils/request"
 
-require('@jeecg/antd-online-mini')
-require('@jeecg/antd-online-mini/dist/OnlineForm.css')
-
 import Antd, { version } from 'ant-design-vue'
 console.log('ant-design-vue version:', version)
 
@@ -23,6 +20,8 @@ import Print from 'vue-print-nb-jeecg'
 /*import '@babel/polyfill'*/
 import preview from 'vue-photo-preview'
 import 'vue-photo-preview/dist/skin.css'
+import "@jeecg/antd-online";
+import "@jeecg/antd-online/dist/OnlineForm.css";
 import SSO from '@/cas/sso.js'
 import {
   ACCESS_TOKEN,
