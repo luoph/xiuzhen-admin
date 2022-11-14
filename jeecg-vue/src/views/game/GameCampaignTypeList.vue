@@ -36,6 +36,7 @@
                 <a-select-option :value="17">17-赠酒排行榜</a-select-option>
                 <a-select-option :value="18">18-魅力值排行榜</a-select-option>
                 <a-select-option :value="20">20-自选特惠</a-select-option>
+                <a-select-option :value="21">21-累充排行</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -256,6 +257,8 @@ export default {
               re = '18-魅力值排行榜';
             } else if (value === 20) {
               re = '20-自选特惠';
+            } else if (value === 21) {
+              re = '21-累充排行';
             }
             return re;
           }

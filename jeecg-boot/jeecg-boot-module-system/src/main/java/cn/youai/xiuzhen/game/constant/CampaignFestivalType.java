@@ -35,6 +35,7 @@ public enum CampaignFestivalType {
     MARRY_RANK_CHARM("结义排行榜-魅力值排行榜", 18, GameCampaignTypeMarryRank.class, GameCampaignTypeMarryRank.class),
     //    MARRY_RANK_GIFT("结义排行榜-结义礼包", 19, null, null),
     SELECT_DISCOUNT_ITEM("自选特惠", 20, GameCampaignTypeSelectDiscountItem.class, GameCampaignTypeSelectDiscountItemVO.class),
+    RECHARGE_RANK("累充排行", 21, GameCampaignTypeMarryRank.class, GameCampaignTypeMarryRank.class),
     // end
     ;
 

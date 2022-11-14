@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,7 @@ public class GameCampaignTypeMarryRank extends GameCampaignTypeBase {
         this.rankRewardEmail = entity.getRankRewardEmail();
         this.callOnMessage = entity.getCallOnMessage();
         this.helpMsg = entity.getHelpMsg();
+        this.type = entity.getType();
     }
 
     /**
@@ -67,5 +69,8 @@ public class GameCampaignTypeMarryRank extends GameCampaignTypeBase {
      */
     @Excel(name = "帮助信息", width = 15)
     private java.lang.String helpMsg;
+
+    @TableField(exist = false)
+    private Integer type;
 
 }

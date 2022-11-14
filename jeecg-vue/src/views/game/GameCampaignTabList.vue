@@ -144,6 +144,8 @@ export default {
               text = '18-魅力值排行榜';
             } else if (value === 20) {
               text = '20-自选特惠';
+            } else if (value === 21) {
+              text = '21-累充排行';
             }
             return text;
           }

@@ -123,7 +123,7 @@ export default {
           dataIndex: 'bigRewardFight'
         },
         {
-          title: '排行玩家数量(上榜人数限制)',
+          title: '上榜人数',
           align: 'center',
           dataIndex: 'rankNum'
         },

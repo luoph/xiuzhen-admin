@@ -19,7 +19,7 @@
           <a-input-number v-decorator="['bigRewardFight', validatorRules.bigRewardFight]" placeholder="请输入大奖战力"
                           style="width: 100%"/>
         </a-form-item>
-        <a-form-item label="排行玩家数量(上榜人数限制)" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="上榜人数" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['rankNum', validatorRules.rankNum]"
                           placeholder="请输入排行玩家数量(上榜人数限制)" style="width: 100%"/>
         </a-form-item>
@@ -27,7 +27,7 @@
           <a-input-number v-decorator="['rankRewardEmail', validatorRules.rankRewardEmail]"
                           placeholder="请输入排名奖励邮件id" style="width: 100%"/>
         </a-form-item>
-        <a-form-item label="号召赠酒传闻id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item v-if="model.type === 17 || model.type === 18" label="号召赠酒传闻id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['callOnMessage', validatorRules.callOnMessage]"
                           placeholder="请输入号召赠酒传闻id" style="width: 100%"/>
         </a-form-item>
@@ -76,10 +76,10 @@ export default {
         typeId: {rules: [{required: true, message: "请输入页签id!"}]},
         bigReward: {},
         bigRewardFight: {},
-        rankNum: {rules: [{required: true, message: "请输入排行玩家数量!"}]},
+        rankNum: {rules: [{required: true, message: "请输入上榜人数!"}]},
         rankRewardEmail: {rules: [{required: true, message: "请输入排名奖励邮件id!"}]},
         callOnMessage: {rules: [{required: false, message: "请输入号召赠酒传闻id!"}]},
-        helpMsg: {},
+        helpMsg: {}
       },
       url: {
         add: "game/gameCampaignTypeMarryRank/add",

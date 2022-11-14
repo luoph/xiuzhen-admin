@@ -227,7 +227,8 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                 break;
 
                 case MARRY_RANK_WINE:
-                case MARRY_RANK_CHARM: {
+                case MARRY_RANK_CHARM:
+                case RECHARGE_RANK: {
                     Wrapper<GameCampaignTypeMarryRank> detailQuery = Wrappers.<GameCampaignTypeMarryRank>lambdaQuery()
                             .eq(GameCampaignTypeMarryRank::getCampaignId, campaignId)
                             .eq(GameCampaignTypeMarryRank::getTypeId, model.getId());
@@ -744,7 +745,8 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                 break;
 
                 case MARRY_RANK_WINE:
-                case MARRY_RANK_CHARM: {
+                case MARRY_RANK_CHARM:
+                case RECHARGE_RANK: {
                     List<GameCampaignTypeMarryRank> copyDetails = new ArrayList<>(model.getDetails().size());
                     List<GameCampaignTypeMarryRank> details = (List<GameCampaignTypeMarryRank>) model.getDetails();
                     for (GameCampaignTypeMarryRank detail : details) {
