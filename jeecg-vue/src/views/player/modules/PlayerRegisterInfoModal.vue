@@ -4,16 +4,13 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="帐号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['account', validatorRules.account]"
-                   placeholder="请输入帐号"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['account', validatorRules.account]" placeholder="请输入帐号"></a-input>
         </a-form-item>
         <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]"
-                          placeholder="请输入玩家id" style="width: 100%"/>
+          <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="区服Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]"
-                          placeholder="请输入区服Id" style="width: 100%"/>
+          <a-input-number :disabled="isEdit" v-decorator="['serverId', validatorRules.serverId]" placeholder="请输入区服Id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="角色名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入角色名称"></a-input>
@@ -22,8 +19,7 @@
           <a-input :disabled="isEdit" v-decorator="['ip', validatorRules.ip]" placeholder="请输入IP"></a-input>
         </a-form-item>
         <a-form-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]"
-                   placeholder="请输入渠道"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]" placeholder="请输入渠道"></a-input>
         </a-form-item>
         <a-form-item label="imei" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['imei', validatorRules.imei]" placeholder="请输入imei"></a-input>
@@ -67,34 +63,34 @@
 </template>
 
 <script>
-import {httpAction} from "@/api/manage";
-import pick from "lodash.pick";
+import { httpAction } from '@/api/manage';
+import pick from 'lodash.pick';
 
 export default {
-  name: "PlayerRegisterInfoModal",
+  name: 'PlayerRegisterInfoModal',
   components: {},
   data() {
     return {
       form: this.$form.createForm(this),
-      title: "操作",
+      title: '操作',
       width: 800,
       visible: false,
       isEdit: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
         account: {},
-        id: {rules: [{required: true, message: "请输入玩家id!"}]},
-        serverId: {rules: [{required: true, message: "请输入区服Id!"}]},
-        name: {rules: [{required: true, message: "请输入角色名称!"}]},
+        id: { rules: [{ required: true, message: '请输入玩家id!' }] },
+        serverId: { rules: [{ required: true, message: '请输入区服Id!' }] },
+        name: { rules: [{ required: true, message: '请输入角色名称!' }] },
         ip: {},
         channel: {},
         imei: {},
@@ -110,13 +106,12 @@ export default {
         platform: {}
       },
       url: {
-        add: "player/registerInfo/add",
-        edit: "player/registerInfo/edit"
+        add: 'player/registerInfo/add',
+        edit: 'player/registerInfo/edit'
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -130,31 +125,31 @@ export default {
         this.form.setFieldsValue(
           pick(
             this.model,
-            "account",
-            "playerId",
-            "serverId",
-            "birthId",
-            "name",
-            "ip",
-            "channel",
-            "imei",
-            "mac",
-            "idfa",
-            "vendor",
-            "model",
-            "system",
-            "systemVersion",
-            "network",
-            "versionName",
-            "versionCode",
-            "platform",
-            "createDate"
+            'account',
+            'playerId',
+            'serverId',
+            'birthId',
+            'name',
+            'ip',
+            'channel',
+            'imei',
+            'mac',
+            'idfa',
+            'vendor',
+            'model',
+            'system',
+            'systemVersion',
+            'network',
+            'versionName',
+            'versionCode',
+            'platform',
+            'createDate'
           )
         );
       });
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
       this.visible = false;
     },
     handleOk() {
@@ -163,22 +158,22 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           that.confirmLoading = true;
-          let httpUrl = "";
-          let method = "";
+          let httpUrl = '';
+          let method = '';
           if (!this.model.id) {
             httpUrl += this.url.add;
-            method = "post";
+            method = 'post';
           } else {
             httpUrl += this.url.edit;
-            method = "put";
+            method = 'put';
           }
           let formData = Object.assign(this.model, values);
-          console.log("表单提交数据", formData);
+          console.log('表单提交数据', formData);
           httpAction(httpUrl, formData, method)
-            .then(res => {
+            .then((res) => {
               if (res.success) {
                 that.$message.success(res.message);
-                that.$emit("ok");
+                that.$emit('ok');
               } else {
                 that.$message.warning(res.message);
               }
@@ -197,25 +192,25 @@ export default {
       this.form.setFieldsValue(
         pick(
           row,
-          "account",
-          "playerId",
-          "serverId",
-          "birthId",
-          "name",
-          "ip",
-          "channel",
-          "imei",
-          "mac",
-          "idfa",
-          "vendor",
-          "model",
-          "system",
-          "systemVersion",
-          "network",
-          "versionName",
-          "versionCode",
-          "platform",
-          "createDate"
+          'account',
+          'playerId',
+          'serverId',
+          'birthId',
+          'name',
+          'ip',
+          'channel',
+          'imei',
+          'mac',
+          'idfa',
+          'vendor',
+          'model',
+          'system',
+          'systemVersion',
+          'network',
+          'versionName',
+          'versionCode',
+          'platform',
+          'createDate'
         )
       );
     }

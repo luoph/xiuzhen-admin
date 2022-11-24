@@ -11,8 +11,7 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.yaAppId" placeholder="唯一标识"
-                                 dictCode="game_info,ya_simple_name,ya_app_id"/>
+              <j-dict-select-tag v-model="queryParam.yaAppId" placeholder="唯一标识" dictCode="game_info,ya_simple_name,ya_app_id" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -28,7 +27,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -49,26 +48,26 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作
-          <a-icon type="down"/>
+        <a-button style="margin-left: 8px">
+          批量操作
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -89,8 +88,8 @@
 
 <script>
 import GameInfoModal from './modules/GameInfoModal';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
 import JInput from '@/components/jeecg/JInput';
 
 export default {
@@ -215,7 +214,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {

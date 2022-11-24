@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
 
           <a-col :md="10" :sm="8">
             <a-form-item label="时间">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="5" :sm="5">
@@ -61,13 +61,11 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
@@ -81,14 +79,14 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameForbiddenModal from './modules/GameForbiddenModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
 import PlayMethodsType from '@/components/game/PlayMethodsType';
-import {getAction} from '@/api/manage';
+import { getAction } from '@/api/manage';
 import Vue from 'vue';
-import {ACCESS_TOKEN} from '@/store/mutation-types';
+import { ACCESS_TOKEN } from '@/store/mutation-types';
 
 export default {
   name: 'GamePlayMethodsTakePartIn',
@@ -228,7 +226,7 @@ export default {
         fullTime: this.queryParam.playMethodsType.fullTime
       };
       this.loading = true;
-      getAction(this.url.list, param).then(res => {
+      getAction(this.url.list, param).then((res) => {
         if (res.success) {
           this.dataSource = res.result.records;
           this.ipagination.current = res.result.current;

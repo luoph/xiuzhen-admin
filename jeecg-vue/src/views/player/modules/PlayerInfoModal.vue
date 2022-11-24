@@ -4,7 +4,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['id', validatorRules.id]" placeholder="请输入玩家id" style="width: 100%"/>
+          <a-input-number v-decorator="['id', validatorRules.id]" placeholder="请输入玩家id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="角色昵称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['nickname', validatorRules.nickname]" placeholder="请输入角色昵称"></a-input>
@@ -13,19 +13,16 @@
           <a-input v-decorator="['avatar', validatorRules.avatar]" placeholder="请输入角色头像"></a-input>
         </a-form-item>
         <a-form-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['sex', validatorRules.sex]" placeholder="请输入性别" style="width: 100%"/>
+          <a-input-number v-decorator="['sex', validatorRules.sex]" placeholder="请输入性别" style="width: 100%" />
         </a-form-item>
         <a-form-item label="音乐开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['openMusic', validatorRules.openMusic]" placeholder="请输入音乐开关"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['openMusic', validatorRules.openMusic]" placeholder="请输入音乐开关" style="width: 100%" />
         </a-form-item>
         <a-form-item label="音效开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['openSound', validatorRules.openSound]" placeholder="请输入音效开关"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['openSound', validatorRules.openSound]" placeholder="请输入音效开关" style="width: 100%" />
         </a-form-item>
         <a-form-item label="是否初始化" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['initialized', validatorRules.initialized]" placeholder="请输入是否初始化"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['initialized', validatorRules.initialized]" placeholder="请输入是否初始化" style="width: 100%" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -36,26 +33,26 @@
 </template>
 
 <script>
-import {httpAction} from "@/api/manage";
-import pick from "lodash.pick";
+import { httpAction } from '@/api/manage';
+import pick from 'lodash.pick';
 
 export default {
-  name: "PlayerInfoModal",
+  name: 'PlayerInfoModal',
   components: {},
   data() {
     return {
       form: this.$form.createForm(this),
-      title: "操作",
+      title: '操作',
       width: 800,
       visible: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5}
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16}
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       confirmLoading: false,
       validatorRules: {
@@ -67,13 +64,12 @@ export default {
         openSound: {}
       },
       url: {
-        add: "player/playerInfo/add",
-        edit: "player/playerInfo/edit"
+        add: 'player/playerInfo/add',
+        edit: 'player/playerInfo/edit'
       }
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     add() {
       this.edit({});
@@ -83,11 +79,11 @@ export default {
       this.model = Object.assign({}, record);
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "id", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
+        this.form.setFieldsValue(pick(this.model, 'id', 'nickname', 'avatar', 'sex', 'openMusic', 'openSound', 'birthId', 'initialized'));
       });
     },
     close() {
-      this.$emit("close");
+      this.$emit('close');
       this.visible = false;
     },
     handleOk() {
@@ -96,22 +92,22 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           that.confirmLoading = true;
-          let httpUrl = "";
-          let method = "";
+          let httpUrl = '';
+          let method = '';
           if (!this.model.id) {
             httpUrl += this.url.add;
-            method = "post";
+            method = 'post';
           } else {
             httpUrl += this.url.edit;
-            method = "put";
+            method = 'put';
           }
           let formData = Object.assign(this.model, values);
-          console.log("表单提交数据", formData);
+          console.log('表单提交数据', formData);
           httpAction(httpUrl, formData, method)
-            .then(res => {
+            .then((res) => {
               if (res.success) {
                 that.$message.success(res.message);
-                that.$emit("ok");
+                that.$emit('ok');
               } else {
                 that.$message.warning(res.message);
               }
@@ -127,7 +123,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "id", "nickname", "avatar", "sex", "openMusic", "openSound", "birthId", "initialized"));
+      this.form.setFieldsValue(pick(row, 'id', 'nickname', 'avatar', 'sex', 'openMusic', 'openSound', 'birthId', 'initialized'));
     }
   }
 };

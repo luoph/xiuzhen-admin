@@ -11,7 +11,7 @@
                 </a-col> -->
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
 
           <a-col :md="6" :sm="8">
@@ -38,14 +38,12 @@
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="开始时间">
-                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
+                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="结束时间">
-                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>
+                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
               </a-form-item>
             </a-col>
           </template>
@@ -55,7 +53,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -81,9 +79,8 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a
-      >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -104,13 +101,11 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
@@ -120,9 +115,9 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -140,12 +135,12 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameForbiddenModal from './modules/GameForbiddenModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import {getAction} from '@/api/manage';
-import {filterObj} from '@/utils/util';
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'GameForbiddenList',
@@ -180,7 +175,7 @@ export default {
           title: '封禁功能',
           align: 'center',
           dataIndex: 'type',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value === 1) {
               text = '登录';
@@ -194,7 +189,7 @@ export default {
           title: '封禁依据',
           align: 'center',
           dataIndex: 'banKey',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value == 'ip') {
               text = 'IP';
@@ -215,7 +210,7 @@ export default {
           title: '封禁期限',
           align: 'center',
           dataIndex: 'isForever',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value === 0) {
               text = '临时';
@@ -230,7 +225,7 @@ export default {
           align: 'center',
           dataIndex: 'reason',
           width: 320,
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '开始时间',
@@ -261,7 +256,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {

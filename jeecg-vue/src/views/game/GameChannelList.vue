@@ -11,15 +11,13 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.simpleName" placeholder="请选择唯一标识"
-                                 dictCode="game_channel,simple_name,simple_name"/>
+              <j-dict-select-tag v-model="queryParam.simpleName" placeholder="请选择唯一标识" dictCode="game_channel,simple_name,simple_name" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="公告id">
-                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId"
-                                style="width: 100%"></a-input-number>
+                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId" style="width: 100%"></a-input-number>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
@@ -34,7 +32,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -57,12 +55,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作
-          <a-icon type="down"/>
+        <a-button style="margin-left: 8px">
+          批量操作
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -76,23 +75,22 @@
             </div>
             :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="editChannelServer(record)">区服列表</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="updateChannelServer(record)">刷新区服</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="editChannelNotice(record)">编辑公告</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="viewChannelNotice(record)">预览公告</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="refreshChannelNotice(record)">刷新公告</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -120,14 +118,14 @@
 </template>
 
 <script>
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameChannelModal from './modules/GameChannelModal';
 import GameNoticeModal from './modules/GameNoticeModal';
 import GameHtmlPreviewModal from './modules/GameHtmlPreviewModal';
 import GameChannelServerList from './GameChannelServerList';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
 
 function filterGameIdText(options, text) {
   if (options instanceof Array) {
@@ -143,7 +141,7 @@ function filterGameIdText(options, text) {
 export default {
   name: 'GameChannelList',
   mixins: [JeecgListMixin],
-  components: {JInput, GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList},
+  components: { JInput, GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList },
   data() {
     return {
       description: '游戏渠道管理页面',
@@ -183,7 +181,7 @@ export default {
           align: 'center',
           width: 120,
           dataIndex: 'gameId',
-          customRender: text => {
+          customRender: (text) => {
             return filterGameIdText(this.gameList, text);
           }
         },
@@ -236,7 +234,7 @@ export default {
           align: 'left',
           width: 280,
           dataIndex: 'ipWhitelist',
-          scopedSlots: {customRender: 'ipTags'}
+          scopedSlots: { customRender: 'ipTags' }
         },
         {
           title: '版本更新时间',
@@ -255,7 +253,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 200,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -296,7 +294,7 @@ export default {
     },
     queryGameInfoList() {
       let that = this;
-      getAction(that.url.gameInfoListUrl).then(res => {
+      getAction(that.url.gameInfoListUrl).then((res) => {
         if (res.success) {
           if (res.result instanceof Array) {
             this.gameList = res.result;
@@ -315,7 +313,7 @@ export default {
     // 编辑渠道公告
     editChannelNotice(record) {
       let that = this;
-      getAction(that.url.noticeUrl, {id: record.noticeId}).then(res => {
+      getAction(that.url.noticeUrl, { id: record.noticeId }).then((res) => {
         if (res.success && res.result) {
           that.$refs.noticeModal.edit(res.result);
         } else {
@@ -326,7 +324,7 @@ export default {
     // 预览渠道公告
     viewChannelNotice(record) {
       let that = this;
-      getAction(that.url.noticeUrl, {id: record.noticeId}).then(res => {
+      getAction(that.url.noticeUrl, { id: record.noticeId }).then((res) => {
         if (res.success && res.result) {
           that.$refs.htmlModal.title = '公告预览';
           that.$refs.htmlModal.edit(res.result.content);
@@ -341,7 +339,7 @@ export default {
         title: title,
         content: content,
         onOk: function () {
-          getAction(url, parameter).then(res => {
+          getAction(url, parameter).then((res) => {
             if (res.success) {
               that.$message.success(res.message);
             } else {
@@ -353,11 +351,11 @@ export default {
     },
     refreshChannelNotice(record) {
       // 刷新渠道公告
-      this.requestUrlConfirm(this.url.noticeRefreshUrl, {id: record.noticeId}, '是否刷新渠道公告？', '点击刷新渠道公告');
+      this.requestUrlConfirm(this.url.noticeRefreshUrl, { id: record.noticeId }, '是否刷新渠道公告？', '点击刷新渠道公告');
     },
     updateChannelServer(record) {
       // 刷新服务器列表
-      this.requestUrlConfirm(this.url.updateChannelServerUrl, {id: record.id}, '是否刷新区服列表？', '点击确定刷新区服列表');
+      this.requestUrlConfirm(this.url.updateChannelServerUrl, { id: record.id }, '是否刷新区服列表？', '点击确定刷新区服列表');
     },
     updateAllServer() {
       // 刷新服务器列表

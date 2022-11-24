@@ -5,13 +5,11 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="12" :sm="8">
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
-                                     @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -52,17 +50,18 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange"/>
+        @change="handleTableChange"
+      />
     </div>
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {filterObj} from "@/utils/util";
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
-import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
+import ChannelServerSelector from '@comp/gameserver/ChannelServerSelector';
 
 export default {
   name: 'GameStatOrderList',
@@ -95,7 +94,7 @@ export default {
           title: '日期',
           dataIndex: 'statTime',
           width: '120',
-          align: 'center',
+          align: 'center'
         },
         {
           title: '区服数',
@@ -145,7 +144,7 @@ export default {
         list: 'game/stat/order/list',
         exportXlsUrl: 'game/stat/order/exportXls'
       },
-      dictOptions: {},
+      dictOptions: {}
     };
   },
   computed: {},
@@ -168,7 +167,7 @@ export default {
       return filterObj(param);
     },
     searchReset() {
-      this.queryParam = {}
+      this.queryParam = {};
       this.$refs.channelServerSelector.reset();
       this.loadData(1);
     },

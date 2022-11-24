@@ -48,21 +48,21 @@
               </a-select>
             </a-form-item>
           </a-col>
-<!--          <template v-if="toggleSearchStatus">-->
-<!--            <a-col :md="4" :sm="8">-->
-<!--              <a-form-item label="单价">-->
-<!--                <a-input placeholder="请输入单价" v-model="queryParam.price"></a-input>-->
-<!--              </a-form-item>-->
-<!--            </a-col>-->
-<!--          </template>-->
+          <!--          <template v-if="toggleSearchStatus">-->
+          <!--            <a-col :md="4" :sm="8">-->
+          <!--              <a-form-item label="单价">-->
+          <!--                <a-input placeholder="请输入单价" v-model="queryParam.price"></a-input>-->
+          <!--              </a-form-item>-->
+          <!--            </a-col>-->
+          <!--          </template>-->
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-<!--              <a style="margin-left: 8px" @click="handleToggleSearch">-->
-<!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
-<!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
-<!--              </a>-->
+              <!--              <a style="margin-left: 8px" @click="handleToggleSearch">-->
+              <!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
+              <!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
+              <!--              </a>-->
             </span>
           </a-col>
         </a-row>
@@ -73,8 +73,7 @@
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('充值商品')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
-                @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-button @click="updateGoods" type="primary" icon="sync">刷新商品配置</a-button>
@@ -82,13 +81,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
 
@@ -98,9 +97,8 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a
-      >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -122,13 +120,11 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
@@ -138,9 +134,9 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -158,11 +154,11 @@
 </template>
 
 <script>
-import {postAction} from '@api/manage';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { postAction } from '@api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameRechargeGoodsModal from './modules/GameRechargeGoodsModal';
 import JInput from '@/components/jeecg/JInput';
-import {getAction} from '../../api/manage';
+import { getAction } from '../../api/manage';
 
 export default {
   name: 'GameRechargeGoodsList',
@@ -207,7 +203,7 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'goodsGroup',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value === 0) {
             } else if (value === 1) {
@@ -223,7 +219,7 @@ export default {
           align: 'center',
           width: 120,
           dataIndex: 'goodsType',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value === 0) {
               text = '0-普通类型';
@@ -294,7 +290,7 @@ export default {
           align: 'center',
           width: 120,
           dataIndex: 'recommend',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value === 0) {
               text = '无(0)';
@@ -311,14 +307,14 @@ export default {
           align: 'center',
           width: 220,
           dataIndex: 'items',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '是否计入累充',
           align: 'center',
           width: 80,
           dataIndex: 'amountStat',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value === 0) {
               text = '否';
@@ -370,7 +366,7 @@ export default {
           align: 'center',
           fixed: 'right',
           width: 120,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -394,7 +390,7 @@ export default {
     updateGoods() {
       // 查询条件
       this.loading = true;
-      getAction(this.url.updateGoods).then(res => {
+      getAction(this.url.updateGoods).then((res) => {
         if (res.code === 510) {
           this.$message.warning(res.message);
         }
@@ -407,7 +403,7 @@ export default {
         text: this.importText
       };
       console.log(params);
-      postAction(this.url.importTextUrl, params).then(res => {
+      postAction(this.url.importTextUrl, params).then((res) => {
         if (res.success) {
           this.$message.success(res.message);
           this.loadData();

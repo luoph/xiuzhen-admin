@@ -6,13 +6,11 @@
         <a-row :gutter="24">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
-                                     @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -49,16 +47,17 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange"/>
+        @change="handleTableChange"
+      />
     </div>
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {getAction} from '@/api/manage';
-import {filterObj} from '@/utils/util';
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
 import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
 
@@ -76,7 +75,7 @@ export default {
       /* 排序参数 */
       isorter: {
         column: 'countDate',
-        order: 'desc',
+        order: 'desc'
       },
       dayType: 7,
       columns: [
@@ -102,7 +101,7 @@ export default {
           title: '渠道',
           dataIndex: 'channel',
           width: '6%',
-          align: 'center',
+          align: 'center'
         },
         {
           title: '区服',
@@ -219,7 +218,7 @@ export default {
       ],
       url: {
         list: 'game/stat/daily/list',
-        update: 'game/stat/daily/update',
+        update: 'game/stat/daily/update'
       },
       dictOptions: {}
     };
@@ -245,7 +244,7 @@ export default {
       return filterObj(param);
     },
     searchReset() {
-      this.queryParam = {}
+      this.queryParam = {};
       this.$refs.channelServerSelector.reset();
       this.loadData(1);
     },
@@ -272,16 +271,18 @@ export default {
       // 查询条件
       const params = this.getQueryParams();
       this.loading = true;
-      getAction(this.url.update, params, this.timeout).then((res) => {
-        if (res.success) {
-          this.$message.success(res.message)
-        } else {
-          this.$message.warning(res.message)
-        }
-      }).finally(() => {
-        this.loading = false
-        this.searchQuery();
-      })
+      getAction(this.url.update, params, this.timeout)
+        .then((res) => {
+          if (res.success) {
+            this.$message.success(res.message);
+          } else {
+            this.$message.warning(res.message);
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+          this.searchQuery();
+        });
     }
   }
 };
