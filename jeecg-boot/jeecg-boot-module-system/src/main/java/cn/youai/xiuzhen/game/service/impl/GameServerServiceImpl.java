@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
+import cn.youai.enums.OutdatedType;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameServer;
@@ -18,6 +19,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,6 +41,9 @@ import java.util.stream.Collectors;
 @DS("master")
 public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameServer> implements IGameServerService {
 
+    @Value("${app.clean-cache-url}")
+    private String cleanCacheUrl;
+
     @Resource
     private GameOrderMapper gameOrderMapper;
 
@@ -46,12 +51,16 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     private ILogAccountService logAccountService;
 
     @Override
+    public Map<Integer, Response> cleanCache(Collection<Integer> serverIds, String cacheName) {
+        return gameServerGet(serverIds, cleanCacheUrl + cacheName);
+    }
+
+    @Override
     public Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path) {
         Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
-            if (gameServer == null || StrUtil.contains(gameServer.getGmUrl(), "localhost")
-                    || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1")) {
+            if (skipRequest(gameServer)) {
                 continue;
             }
 
@@ -76,26 +85,10 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         CountDownLatch latch = new CountDownLatch(serverIds.size());
         for (String serverId : serverIds) {
             GameServer gameServer = getById(serverId);
-            if (gameServer == null) {
+            if (skipRequest(gameServer)) {
                 latch.countDown();
                 continue;
             }
-            if (StrUtil.contains(gameServer.getGmUrl(), "localhost")
-                    || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1")) {
-                latch.countDown();
-                continue;
-            }
-
-            // 协程
-//            new Fiber<>(() -> {
-//                try {
-//                    Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path, params), Response.class);
-//                    responseMap.put(serverId, response);
-//                } catch (Exception e) {
-//                    log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
-//                }
-//                latch.countDown();
-//            }).start();
 
             // 异步
             OkHttpHelper.getAsync(gameServer.getGmUrl() + path, params, new Callback() {
@@ -128,8 +121,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
-            if (StrUtil.contains(gameServer.getGmUrl(), "localhost")
-                    || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1")) {
+            if (skipRequest(gameServer)) {
                 continue;
             }
 
@@ -174,5 +166,16 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             }
         });
         return new ArrayList<>(map.values());
+    }
+
+    private boolean skipRequest(GameServer gameServer) {
+        // 已合服接口
+        if (gameServer == null || gameServer.getOutdated() != OutdatedType.NORMAL.getValue()) {
+            return true;
+        }
+
+        // 本地接口
+        return StrUtil.contains(gameServer.getGmUrl(), "localhost")
+                || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1");
     }
 }

@@ -50,7 +50,7 @@ public class DataSourceHelper implements InitializingBean {
 
     private GameServer selectGameServerById(int serverId) {
         GameServer gameServer = gameServerMapper.selectById(serverId);
-        if (gameServer != null && gameServer.getOutdated() == 1 && gameServer.getPid() != null) {
+        if (gameServer != null && gameServer.getPid() != null) {
             return gameServerMapper.selectById(gameServer.getPid());
         }
         return gameServer;

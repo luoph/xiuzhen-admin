@@ -81,10 +81,10 @@ public class GameOnlineNumServiceImpl extends ServiceImpl<GameOnlineNumMapper, G
                     gameOnlineNum.setChannel(channel);
                     gameOnlineNum.setServerId(serverId);
                     gameOnlineNum.setOnlineNum(data);
-                    gameOnlineNum.setGetTime(new Date());
-                    gameOnlineNum.setUpdateTime(new Date());
-                    gameOnlineNum.setCreateTime(new Date());
-
+                    Date now = DateUtils.now();
+                    gameOnlineNum.setGetTime(now);
+                    gameOnlineNum.setUpdateTime(now);
+                    gameOnlineNum.setCreateTime(now);
                     save(gameOnlineNum);
                 }
             }
