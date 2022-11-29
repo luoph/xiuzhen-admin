@@ -2347,5 +2347,14 @@
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
+    },
+    {
+        "id": 262,
+        "type": 269,
+        "reward_type": 3,
+        "title": "跨服充值排行",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
     }
 ]

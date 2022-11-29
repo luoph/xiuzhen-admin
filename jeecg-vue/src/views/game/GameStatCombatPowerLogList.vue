@@ -6,18 +6,16 @@
         <a-row :gutter="24">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
-                                     @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="统计时间">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -56,20 +54,20 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        @change="handleTableChange"/>
+        @change="handleTableChange"
+      />
     </div>
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {getAction} from '@/api/manage';
-import {filterObj} from "@/utils/util";
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 
 import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
-import moment from "moment/moment";
-
+import moment from 'moment/moment';
 
 export default {
   name: 'GameStatCombatPowerLogList',
@@ -78,7 +76,7 @@ export default {
   components: {
     JDate,
     getAction,
-    ChannelServerSelector,
+    ChannelServerSelector
   },
   data() {
     return {
@@ -139,7 +137,7 @@ export default {
       ],
       url: {
         list: 'game/stat/combatPowerLog/list',
-        exportXlsUrl: 'game/stat/combatPowerLog/exportXls',
+        exportXlsUrl: 'game/stat/combatPowerLog/exportXls'
       },
       dictOptions: {}
     };
@@ -165,7 +163,7 @@ export default {
       return filterObj(param);
     },
     searchReset() {
-      this.queryParam = {}
+      this.queryParam = {};
       this.$refs.channelServerSelector.reset();
       this.loadData(1);
     },
@@ -187,7 +185,7 @@ export default {
         this.queryParam.countDate_begin = start;
         this.queryParam.countDate_end = end;
       }
-    },
+    }
   }
 };
 </script>

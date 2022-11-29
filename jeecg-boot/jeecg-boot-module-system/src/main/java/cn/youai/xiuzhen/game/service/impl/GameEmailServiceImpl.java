@@ -109,6 +109,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             });
 
             gameServerService.gameServerGet(serverIds, syncMailUrl);
+            gameServerService.cleanCache(serverIds, "PlayerMailCache");
         } else if (receiverType == MailReceiver.SERVER.getType()) {
             List<Integer> serverIds = StringUtils.split2Int(entity.getReceiverIds());
             // 此处需要处理已合服的情况
@@ -133,6 +134,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
                     gameServerService.gameServerPost(CollUtil.newArrayList(serverId), sendMailUrl, mail);
                 }
                 gameServerService.gameServerGet(affectedServerIds, syncMailUrl);
+                gameServerService.cleanCache(affectedServerIds, "PlayerMailCache");
             }
         }
 

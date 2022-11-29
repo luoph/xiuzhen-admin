@@ -6,11 +6,11 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="10" :sm="8">
             <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="5" :sm="5">
@@ -58,7 +58,7 @@
             ref="table"
             size="middle"
             bordered
-            :rowKey="record => (record.id != null ? record.id : '0')"
+            :rowKey="(record) => (record.id != null ? record.id : '0')"
             :loading="loading"
             :columns="colu.columns"
             :dataSource="colu.columnsData"
@@ -66,8 +66,7 @@
             :scroll="{ x: 'max-content' }"
           >
             <div slot="title" class="word-v-middle">{{ colu.time }}</div>
-          </a-table
-          >
+          </a-table>
         </div>
       </a-col>
     </a-row>
@@ -75,10 +74,10 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import {getAction} from '@/api/manage';
+import { getAction } from '@/api/manage';
 
 export default {
   description: '货币分布',
@@ -151,7 +150,7 @@ export default {
         productAndMarketType: this.queryParam.productAndMarketType,
         quantityType: this.queryParam.quantityType
       };
-      getAction(this.url.list, param).then(res => {
+      getAction(this.url.list, param).then((res) => {
         this.columnsList = [];
         if (res.success) {
           console.log(res.result.records);
@@ -226,8 +225,7 @@ export default {
       return Number(parseFloat(n * 100).toFixed(2)) + '%';
     }
   },
-  mounted: function () {
-  }
+  mounted: function () {}
 };
 </script>
 

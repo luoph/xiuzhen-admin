@@ -20,7 +20,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -38,12 +38,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作
-          <a-icon type="down"/>
+        <a-button style="margin-left: 8px">
+          批量操作
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -66,31 +67,30 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange"/>
-      <template slot="htmlSlot" slot-scope="text">
-        <div v-html="text"></div>
-      </template>
-      <template slot="imgSlot" slot-scope="text">
-        <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-        <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-             style="max-width: 80px; font-size: 12px; font-style: italic"/>
-      </template>
-      <template slot="fileSlot" slot-scope="text">
-        <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-        <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-        </a-button>
-      </template>
-      <template slot="largeText" slot-scope="text">
-        <div class="large-text-container">
-          <span class="large-text">{{ text }}</span>
-        </div>
-      </template>
+        @change="handleTableChange"
+      >
+        <template slot="htmlSlot" slot-scope="text">
+          <div v-html="text"></div>
+        </template>
+        <template slot="imgSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+        </template>
+        <template slot="fileSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+        </template>
+        <template slot="largeText" slot-scope="text">
+          <div class="large-text-container">
+            <span class="large-text">{{ text }}</span>
+          </div>
+        </template>
 
-      <span slot="action" slot-scope="text, record">
+        <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -109,7 +109,7 @@
 
 <script>
 import JInput from '@/components/jeecg/JInput';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameSettingModal from './modules/GameSettingModal';
 
 export default {
@@ -145,7 +145,7 @@ export default {
           align: 'left',
           width: 400,
           dataIndex: 'dictValue',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '描述',
@@ -158,7 +158,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 140,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -177,8 +177,7 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {
-    }
+    initDictConfig() {}
   }
 };
 </script>

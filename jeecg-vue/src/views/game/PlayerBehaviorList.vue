@@ -44,7 +44,7 @@
       </a-form>
     </div>
     <div class="table-operator">
-      <a-button type="primary" icon="download" @click="handleExportXls('玩家行为分析')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('玩家行为分析', 600000)">导出</a-button>
     </div>
     <!-- 查询区域-END -->
     <!-- table区域-begin -->
@@ -53,13 +53,14 @@
         ref="table"
         size="middle"
         bordered
-        :rowKey="(t, r, index) => (parseInt(index) + 1)"
+        :rowKey="(t, r, index) => parseInt(index) + 1"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: true }"
-        @change="handleTableChange"/>
+        @change="handleTableChange"
+      />
     </div>
   </a-card>
 </template>
@@ -81,7 +82,7 @@ export default {
   data() {
     return {
       description: '玩家行为分析',
-      timeout: 30000,
+      timeout: 240000,
       disableMixinCreated: true, // 禁止初始化加载数据
       // 表头
       columns: [

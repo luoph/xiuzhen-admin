@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -30,22 +30,19 @@
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
-              <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径"
-                                       @onSelectOptionSome="selectWay"/>
+              <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径" @onSelectOptionSome="selectWay" />
             </a-form-item>
             <a-form-item v-else-if="queryParam.type === '2'" key="2" label="消耗途径">
-              <a-select-read-json-some json-file="item_expend" placeholder="请选择途径"
-                                       @onSelectOptionSome="selectWay"/>
+              <a-select-read-json-some json-file="item_expend" placeholder="请选择途径" @onSelectOptionSome="selectWay" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+            <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
@@ -70,15 +67,16 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange"/>
+        @change="handleTableChange"
+      />
     </div>
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
 import ASelectReadJsonSome from '@comp/gameserver/ASelectReadJsonSome';
 
@@ -120,7 +118,7 @@ export default {
           align: 'center',
           dataIndex: 'itemName',
           customRender: function (text) {
-            return text || "未知";
+            return text || '未知';
           }
         },
         {
@@ -138,7 +136,7 @@ export default {
           align: 'center',
           dataIndex: 'wayName',
           customRender: function (text) {
-            return text || "未知";
+            return text || '未知';
           }
         },
         {
@@ -167,7 +165,7 @@ export default {
       ],
       url: {
         list: 'player/itemLog/list',
-        exportXlsUrl: 'player/itemLog/exportXls',
+        exportXlsUrl: 'player/itemLog/exportXls'
       },
       dictOptions: {}
     };

@@ -28,11 +28,10 @@
             本组商品是否免费领取
           </a-checkbox>
         </a-form-item>
-        <a-form-item :label="form.getFieldValue('free') ? '免费领取次数': '限购次数'"
-                     :extra="form.getFieldValue('free') ? '':'0不限购'" :labelCol="labelCol" :wrapperCol="wrapperCol"
-        ">
-        <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" :min="form.getFieldValue('free') ? 1: 0 "
-                        style="width: 100%"/>
+        <a-form-item :label="form.getFieldValue('free') ? '免费领取次数' : '限购次数'"
+                     :extra="form.getFieldValue('free') ? '' : '0不限购'" 
+                     :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['limitNum', validatorRules.limitNum]" :min="form.getFieldValue('free') ? 1 : 0" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="可选物品" :labelCol="labelCol" :wrapperCol="wrapperCol"
                      extra='格式(1、2为第N个自选组)：{"1":[{ "itemId":1,"num":2},{"itemId":5,"num":6}],"2":[{"itemId":8,"num":9}]}'>

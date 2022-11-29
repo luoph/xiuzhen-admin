@@ -6,8 +6,7 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
-                                     @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="5" :sm="5">
             <a-form-item label="统计类型">
@@ -19,8 +18,7 @@
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -56,18 +54,19 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange"/>
+        @change="handleTableChange"
+      />
     </div>
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {getAction} from '@/api/manage';
-import {filterObj} from "@/utils/util";
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
-import ChannelServerSelector from "@comp/gameserver/ChannelServerSelector";
+import ChannelServerSelector from '@comp/gameserver/ChannelServerSelector';
 
 export default {
   name: 'GameStat30DaysList',
@@ -109,7 +108,7 @@ export default {
           title: '渠道',
           dataIndex: 'channel',
           width: '80',
-          align: 'center',
+          align: 'center'
         },
         {
           title: '区服',
@@ -432,7 +431,7 @@ export default {
       return filterObj(param);
     },
     searchReset() {
-      this.queryParam = {}
+      this.queryParam = {};
       this.$refs.channelServerSelector.reset();
       this.loadData(1);
     },

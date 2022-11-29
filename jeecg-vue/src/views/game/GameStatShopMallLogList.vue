@@ -6,8 +6,7 @@
         <a-row :gutter="45">
           <a-col :md="10" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
-                                     @onSelectServer="onSelectServer"/>
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="商店类型">
@@ -58,8 +57,7 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="统计时间">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -99,19 +97,19 @@
         :pagination="ipagination"
         :loading="loading"
         :scroll="{ x: 'max-content' }"
-        @change="handleTableChange"/>
+        @change="handleTableChange"
+      />
     </div>
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {getAction} from '@/api/manage';
-import {filterObj} from "@/utils/util";
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
 import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
-
 
 export default {
   name: 'GameStatShopMallLogList',
@@ -120,7 +118,7 @@ export default {
   components: {
     JDate,
     getAction,
-    ChannelServerSelector,
+    ChannelServerSelector
   },
   data() {
     return {
@@ -153,124 +151,124 @@ export default {
           dataIndex: 'tabId',
           customRender: (text) => {
             if (text === 101001) {
-              return "道具（101001）";
+              return '道具（101001）';
             }
             if (text === 101002) {
-              return "法宝（101002）";
+              return '法宝（101002）';
             }
             if (text === 101004) {
-              return "丹药（101004）";
+              return '丹药（101004）';
             }
             if (text === 101003) {
-              return "荣誉（101003）";
+              return '荣誉（101003）';
             }
             if (text === 102301) {
-              return "仙兽（102301）";
+              return '仙兽（102301）';
             }
             if (text === 102302) {
-              return "仙兽装备（102302）";
+              return '仙兽装备（102302）';
             }
             if (text === 102303) {
-              return "仙兽材料（102303）";
+              return '仙兽材料（102303）';
             }
             if (text === 105001) {
-              return "元婴（105001）";
+              return '元婴（105001）';
             }
             if (text === 105002) {
-              return "化神（105002）";
+              return '化神（105002）';
             }
             if (text === 105003) {
-              return "出窍（105003）";
+              return '出窍（105003）';
             }
             if (text === 105004) {
-              return "分神（105004）";
+              return '分神（105004）';
             }
             if (text === 105005) {
-              return "炼虚（105005）";
+              return '炼虚（105005）';
             }
             if (text === 105006) {
-              return "合体（105006）";
+              return '合体（105006）';
             }
             if (text === 105007) {
-              return "问鼎（105007）";
+              return '问鼎（105007）';
             }
             if (text === 105008) {
-              return "大乘（105008）";
+              return '大乘（105008）';
             }
             if (text === 105009) {
-              return "涅槃（105009）";
+              return '涅槃（105009）';
             }
             if (text === 105010) {
-              return "生死（105010）";
+              return '生死（105010）';
             }
             if (text === 105011) {
-              return "轮回（105011）";
+              return '轮回（105011）';
             }
             if (text === 105012) {
-              return "天罡（105012）";
+              return '天罡（105012）';
             }
             if (text === 105013) {
-              return "法相（105013）";
+              return '法相（105013）';
             }
             if (text === 105014) {
-              return "散仙（105014）";
+              return '散仙（105014）';
             }
             if (text === 105015) {
-              return "真仙（105015）";
+              return '真仙（105015）';
             }
             if (text === 105016) {
-              return "玄仙（105016）";
+              return '玄仙（105016）';
             }
             if (text === 105017) {
-              return "天仙（105017）";
+              return '天仙（105017）';
             }
             if (text === 105018) {
-              return "金仙（105018）";
+              return '金仙（105018）';
             }
             if (text === 105019) {
-              return "仙王（105019）";
+              return '仙王（105019）';
             }
             if (text === 105020) {
-              return "仙君（105020）";
+              return '仙君（105020）';
             }
             if (text === 105021) {
-              return "仙尊（105021）";
+              return '仙尊（105021）';
             }
             if (text === 105022) {
-              return "仙帝（105022）";
+              return '仙帝（105022）';
             }
             if (text === 105023) {
-              return "亚圣（105023）";
+              return '亚圣（105023）';
             }
             if (text === 105024) {
-              return "圣人（105024）";
+              return '圣人（105024）';
             }
             if (text === 105025) {
-              return "天尊（105025）";
+              return '天尊（105025）';
             }
             if (text === 105026) {
-              return "天君（105026）";
+              return '天君（105026）';
             }
             if (text === 105027) {
-              return "天帝（105027）";
+              return '天帝（105027）';
             }
             if (text === 105028) {
-              return "神王（105028）";
+              return '神王（105028）';
             }
             if (text === 105029) {
-              return "神君（105029）";
+              return '神君（105029）';
             }
             if (text === 105030) {
-              return "神尊（105030）";
+              return '神尊（105030）';
             }
             if (text === 105031) {
-              return "神帝（105031）";
+              return '神帝（105031）';
             }
             if (text === 105032) {
-              return "神皇（105032）";
+              return '神皇（105032）';
             }
             if (text === 105033) {
-              return "至圣（105033）";
+              return '至圣（105033）';
             }
             return text;
           }
@@ -335,7 +333,7 @@ export default {
       ],
       url: {
         list: 'game/stat/shopMallLog/list',
-        exportXlsUrl: 'game/stat/shopMallLog/exportXls',
+        exportXlsUrl: 'game/stat/shopMallLog/exportXls'
       },
       dictOptions: {}
     };
@@ -365,7 +363,7 @@ export default {
       return filterObj(param);
     },
     searchReset() {
-      this.queryParam = {}
+      this.queryParam = {};
       this.$refs.channelServerSelector.reset();
       this.loadData(1);
     },

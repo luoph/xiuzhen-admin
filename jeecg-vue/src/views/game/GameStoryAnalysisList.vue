@@ -5,7 +5,7 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="12" :sm="8">
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
+            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>
           <a-col :md="12" :sm="8">
             <a-form-item label="分析日期">
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
 
@@ -90,7 +90,7 @@ export default {
           title: '活跃占比',
           align: 'center',
           dataIndex: 'liveRate',
-          customRender: text => {
+          customRender: (text) => {
             return !text ? '' : text + '%';
           }
         },
@@ -103,7 +103,7 @@ export default {
           title: '流失占比',
           align: 'center',
           dataIndex: 'leaveRate',
-          customRender: text => {
+          customRender: (text) => {
             return !text ? '' : text + '%';
           }
         },
@@ -121,7 +121,7 @@ export default {
           title: '关卡滞留率',
           align: 'center',
           dataIndex: 'checkpointStayRate',
-          customRender: text => {
+          customRender: (text) => {
             return !text ? '' : text + '%';
           }
         }
@@ -132,7 +132,7 @@ export default {
         importExcelUrl: 'game/gameStoryAnalysis/importExcel'
       },
       dictOptions: {},
-      tableScroll: {x: 11 * 147 + 50}
+      tableScroll: { x: 11 * 147 + 50 }
     };
   },
   computed: {

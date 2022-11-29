@@ -7,7 +7,7 @@
           <a-col :md="4" :sm="8">
             <a-form-item label="游戏编号">
               <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
-              <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id"/>
+              <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -29,36 +29,33 @@
           <a-col :md="4" :sm="8">
             <a-form-item label="名字">
               <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
-              <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id"/>
+              <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="标签">
-              <j-dict-select-tag v-model="queryParam.tagId" placeholder="请选择标签"
-                                 dictCode="game_server_tag,name,id"/>
+              <j-dict-select-tag v-model="queryParam.tagId" placeholder="请选择标签" dictCode="game_server_tag,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="状态">
-              <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status"/>
+              <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="类型">
-              <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type"/>
+              <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="开服时间">
-              <a-range-picker v-model="queryParam.openTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onOpenDateChange"/>
+              <a-range-picker v-model="queryParam.openTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onOpenDateChange" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange" />
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
@@ -73,7 +70,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -84,17 +81,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync">
-        刷新活动配置
-      </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">刷新游戏配置
-      </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger"
-                icon="alert">开启维护!!!
-      </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="stopMaintain" v-has="'game:server:admin'" type="danger"
-                icon="alert">结束维护!!!
-      </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync"> 刷新活动配置 </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">刷新游戏配置 </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger" icon="alert">开启维护!!! </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="stopMaintain" v-has="'game:server:admin'" type="danger" icon="alert">结束维护!!! </a-button>
 
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏服配置')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -126,9 +116,9 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link"> 更多 <a-icon type="down"/> </a>
+            <a class="ant-dropdown-link"> 更多 <a-icon type="down" /> </a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -171,9 +161,9 @@
 
 <script>
 import GameServerModal from './modules/GameServerModal';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {filterObj} from '@/utils/util';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { filterObj } from '@/utils/util';
+import { getAction } from '@/api/manage';
 import JInput from '@/components/jeecg/JInput';
 
 function filterGameIdText(options, text) {
@@ -234,7 +224,7 @@ export default {
           align: 'center',
           width: 100,
           dataIndex: 'tag',
-          scopedSlots: {customRender: 'tagSlot'}
+          scopedSlots: { customRender: 'tagSlot' }
         },
         {
           title: '备注',
@@ -247,7 +237,7 @@ export default {
           align: 'center',
           width: 100,
           dataIndex: 'gameId',
-          customRender: text => {
+          customRender: (text) => {
             return filterGameIdText(this.gameList, text);
           }
         },
@@ -274,7 +264,7 @@ export default {
           align: 'center',
           width: 60,
           dataIndex: 'onlineNum',
-          customRender: text => {
+          customRender: (text) => {
             if (text === null || text === '' || text === undefined) {
               return 'N/A';
             }
@@ -286,28 +276,28 @@ export default {
           align: 'left',
           width: 60,
           dataIndex: 'gmStatus',
-          scopedSlots: {customRender: 'gmSlot'}
+          scopedSlots: { customRender: 'gmSlot' }
         },
         {
           title: '合服状态',
           align: 'left',
           width: 60,
           dataIndex: 'outdated',
-          scopedSlots: {customRender: 'outdatedSlot'}
+          scopedSlots: { customRender: 'outdatedSlot' }
         },
         {
           title: '状态',
           align: 'center',
           width: 80,
           dataIndex: 'status',
-          scopedSlots: {customRender: 'statusSlot'}
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '维护状态',
           align: 'center',
           width: 80,
           dataIndex: 'isMaintain',
-          scopedSlots: {customRender: 'maintainSlot'}
+          scopedSlots: { customRender: 'maintainSlot' }
         },
         {
           title: '推荐标识',
@@ -338,7 +328,7 @@ export default {
           align: 'center',
           fixed: 'right',
           dataIndex: 'action',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -365,7 +355,7 @@ export default {
   methods: {
     queryGameInfoList() {
       let that = this;
-      getAction(that.url.gameInfoListUrl).then(res => {
+      getAction(that.url.gameInfoListUrl).then((res) => {
         if (res.success) {
           if (res.result instanceof Array) {
             this.gameList = res.result;

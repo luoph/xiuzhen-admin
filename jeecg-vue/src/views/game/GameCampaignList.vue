@@ -35,14 +35,12 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="8" :sm="8">
               <a-form-item label="活动开始时间">
-                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
+                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="8">
               <a-form-item label="活动结束时间">
-                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>
+                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
               </a-form-item>
             </a-col>
           </template>
@@ -52,7 +50,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -70,12 +68,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作
-          <a-icon type="down"/>
+        <a-button style="margin-left: 8px">
+          批量操作
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -83,9 +82,8 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a
-      >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -106,12 +104,11 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" alt="图片不存在" class="image"/>
+          <img v-else :src="getImgView(text)" alt="图片不存在" class="image" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="serverIdSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -128,10 +125,10 @@
           </div>
         </span>
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">活动信息</a><br/>
-          <a @click="handleServerList(record)">活动状态</a><br/>
-          <a @click="handleDuplicate(record)">复制</a><br/>
-          <a @click="handleSyncCampaign(record)">同步到区服</a><br/>
+          <a @click="handleEdit(record)">活动信息</a><br />
+          <a @click="handleServerList(record)">活动状态</a><br />
+          <a @click="handleDuplicate(record)">复制</a><br />
+          <a @click="handleSyncCampaign(record)">同步到区服</a><br />
           <a @click="removeCompletedServer(record)">移除已结束区服</a>
           <!-- <a-dropdown>
                         <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -154,9 +151,9 @@
 
 <script>
 import JInput from '@/components/jeecg/JInput';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
-import {filterObj} from '@/utils/util';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 import GameCampaignModal from './modules/GameCampaignModal';
 import GameCampaignServerList from './modules/GameCampaignServerList';
 import GameCampaignTabList from './GameCampaignTabList';
@@ -214,21 +211,21 @@ export default {
           align: 'center',
           dataIndex: 'icon',
           width: 80,
-          scopedSlots: {customRender: 'imgSlot'}
+          scopedSlots: { customRender: 'imgSlot' }
         },
         {
           title: '活动宣传图',
           align: 'center',
           dataIndex: 'banner',
           width: 300,
-          scopedSlots: {customRender: 'imgSlot'}
+          scopedSlots: { customRender: 'imgSlot' }
         },
         {
           title: '活动状态',
           align: 'center',
           dataIndex: 'status',
           width: 80,
-          customRender: value => {
+          customRender: (value) => {
             let re = '--';
             if (value === 0) {
               re = '无效';
@@ -248,7 +245,7 @@ export default {
           align: 'center',
           width: 200,
           dataIndex: 'serverIds',
-          scopedSlots: {customRender: 'serverIdSlot'}
+          scopedSlots: { customRender: 'serverIdSlot' }
         },
         // {
         //     title: "自动开启",
@@ -270,7 +267,7 @@ export default {
           align: 'center',
           width: 120,
           dataIndex: 'timeType',
-          customRender: value => {
+          customRender: (value) => {
             let text = '--';
             if (value === 1) {
               text = '1-时间范围';
@@ -285,7 +282,7 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'startDay',
-          scopedSlots: {customRender: 'timeSlot'}
+          scopedSlots: { customRender: 'timeSlot' }
         },
         // {
         //     title: "开始天数",
@@ -322,7 +319,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 130,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -376,8 +373,8 @@ export default {
     handleSyncCampaign: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.sync, {id: record.id})
-        .then(res => {
+      getAction(that.url.sync, { id: record.id })
+        .then((res) => {
           if (res.success) {
             that.$message.success('同步成功');
           } else {
@@ -397,8 +394,8 @@ export default {
     handleDuplicate: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.duplicate, {id: record.id})
-        .then(res => {
+      getAction(that.url.duplicate, { id: record.id })
+        .then((res) => {
           if (res.success) {
             that.$message.success('复制成功');
           } else {
@@ -413,8 +410,8 @@ export default {
     removeCompletedServer: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.removeCompletedServerUrl, {id: record.id})
-        .then(res => {
+      getAction(that.url.removeCompletedServerUrl, { id: record.id })
+        .then((res) => {
           if (res.success) {
             that.$message.success(res.message);
           } else {

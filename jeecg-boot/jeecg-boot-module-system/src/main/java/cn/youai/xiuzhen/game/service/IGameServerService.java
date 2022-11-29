@@ -19,6 +19,15 @@ import java.util.Set;
 public interface IGameServerService extends IService<GameServer> {
 
     /**
+     * 批量请求 清除缓存接口
+     *
+     * @param serverIds 服务器 id
+     * @param cacheName 缓存名字
+     * @return 响应列表
+     */
+    Map<Integer, Response> cleanCache(Collection<Integer> serverIds, String cacheName);
+
+    /**
      * 批量请求 http 接口
      *
      * @param serverIds 服务器 id

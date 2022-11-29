@@ -38,7 +38,7 @@
             </a-col>
             <a-col :md="10" :sm="8">
               <a-form-item label="时间">
-                <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+                <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
               </a-form-item>
             </a-col>
           </template>
@@ -48,7 +48,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -62,8 +62,7 @@
     </div>
 
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
             <span class="large-text">{{ text }}</span>
@@ -72,10 +71,10 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a v-if="record.state === 0" @click="handleReview(record)">审核</a>
           <a v-else>已发送</a>
-          <a-divider v-if="record.state === 0" type="vertical"/>
+          <a-divider v-if="record.state === 0" type="vertical" />
           <a v-if="record.state === 0" @click="handleEdit(record)">编辑</a>
         </span>
       </a-table>
@@ -86,13 +85,13 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameEmailModal from './modules/GameEmailModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import ServerSelect from '@/components/gameserver/ServerSelect';
 import MultipleServerSelect from '@/components/gameserver/MultipleServerSelect';
 import JInput from '@/components/jeecg/JInput';
-import {getAction} from '@api/manage';
+import { getAction } from '@api/manage';
 
 export default {
   name: 'GameEmailList',
@@ -123,7 +122,7 @@ export default {
           /* 排序参数 */
           isorter: {
             column: 'createTime',
-            order: 'desc',
+            order: 'desc'
           },
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
@@ -146,7 +145,7 @@ export default {
           align: 'left',
           width: 240,
           dataIndex: 'describe',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '类型',
@@ -162,7 +161,7 @@ export default {
           align: 'center',
           width: 240,
           dataIndex: 'content',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '状态',
@@ -187,7 +186,7 @@ export default {
           align: 'left',
           width: 220,
           dataIndex: 'receiverIds',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '生效时间',
@@ -213,7 +212,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
 
@@ -225,8 +224,7 @@ export default {
     };
   },
   computed: {},
-  mounted() {
-  },
+  mounted() {},
   methods: {
     onDateChange: function (value, dateStr) {
       this.queryParam.startTime_begin = dateStr[0];
@@ -237,15 +235,17 @@ export default {
     },
     handleReview: function (record) {
       const that = this;
-      getAction(that.url.review, {id: record.id}).then((res) => {
-        if (res.success) {
-          that.$message.success(res.message);
-        } else {
-          that.$message.error(res.message);
-        }
-      }).finally(() => {
-        that.loadData();
-      });
+      getAction(that.url.review, { id: record.id })
+        .then((res) => {
+          if (res.success) {
+            that.$message.success(res.message);
+          } else {
+            that.$message.error(res.message);
+          }
+        })
+        .finally(() => {
+          that.loadData();
+        });
     }
   }
 };
