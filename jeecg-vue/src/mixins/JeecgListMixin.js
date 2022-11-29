@@ -324,7 +324,7 @@ export const JeecgListMixin = {
       let url = `${window._CONFIG['domainURL']}/${this.url.exportXlsUrl}?paramsStr=${paramsStr}`;
       window.location.href = url;
     },
-    handleExportXls(fileName) {
+    handleExportXls(fileName, timeout = 0) {
       if (!fileName || typeof fileName != "string") {
         fileName = "导出文件"
       }
@@ -333,7 +333,7 @@ export const JeecgListMixin = {
         param['selections'] = this.selectedRowKeys.join(",")
       }
       console.log("导出参数", param)
-      downFile(this.url.exportXlsUrl, param).then((data) => {
+      downFile(this.url.exportXlsUrl, param, timeout).then((data) => {
         if (!data) {
           this.$message.warning("文件下载失败")
           return

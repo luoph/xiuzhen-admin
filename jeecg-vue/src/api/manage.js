@@ -131,16 +131,19 @@ export function saveService(parameter) {
 
 /**
  * 下载文件 用于excel导出
- * @param url
- * @param parameter
+ * @param url 请求地址
+ * @param method 请求方法
+ * @param parameter 参数
+ * @param timeout 超时时间
  * @returns {*}
  */
-export function downFile(url, parameter, method = 'get') {
+export function downFile(url, parameter, method = 'get', timeout = 0) {
   if (method === 'get') {
     return axios({
       url: url,
       params: parameter,
       method: method,
+      timeout: getTimeout(timeout),
       responseType: 'blob'
     })
   } else {
@@ -148,6 +151,7 @@ export function downFile(url, parameter, method = 'get') {
       url: url,
       method: method,
       data: parameter,
+      timeout: getTimeout(timeout),
       responseType: 'blob'
     })
   }
