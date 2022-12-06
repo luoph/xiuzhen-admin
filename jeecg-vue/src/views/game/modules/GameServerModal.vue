@@ -135,6 +135,12 @@
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="删档返还开关">
+          <a-select v-decorator="['stopServerRefund', {}]" placeholder="请选择删档返还开关">
+            <a-select-option :value="0">关闭</a-select-option>
+            <a-select-option :value="1">开启</a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
           <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]"/>
         </a-form-item>
@@ -204,7 +210,8 @@ export default {
         gmStatus: {rules: [{required: true, message: "请设置GM开关!"}]},
         taStatistics: {rules: [{required: true, message: "请设置TA开关!"}]},
         onlineStat: {rules: [{required: true, message: "请设置在线统计开关!"}]},
-        payCallbackStatus: {rules: [{required: true, message: "请设置支付回调开关!"}]}
+        payCallbackStatus: {rules: [{required: true, message: "请设置支付回调开关!"}]},
+        stopServerRefund: {rules: [{required: false, message: "请设置删档返还开关!"}]}
       },
       url: {
         add: "game/gameServer/add",
@@ -257,7 +264,8 @@ export default {
             "gmPlayerId",
             "payCallbackStatus",
             "onlineStat",
-            "extra"
+            "extra",
+            "stopServerRefund"
           )
         );
 
@@ -346,7 +354,8 @@ export default {
           "gmPlayerId",
           "payCallbackStatus",
           "onlineStat",
-          "extra"
+          "extra",
+          "stopServerRefund"
         )
       );
     }

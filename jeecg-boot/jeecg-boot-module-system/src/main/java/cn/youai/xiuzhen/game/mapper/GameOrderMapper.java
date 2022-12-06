@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author jeecg-boot
@@ -81,4 +82,6 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                                      @Param("serverId") int serverId,
                                                      @Param("startDate") Date startDate,
                                                      @Param("endDate") Date endDate);
+
+    List<GameOrder> sumAmountGroupByPlayerId(@Param("serverIds") Set<Integer> serverIds);
 }

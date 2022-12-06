@@ -1,7 +1,11 @@
 package org.jeecg;
 
 import cn.youai.server.component.ConfigManager;
+import cn.youai.server.event.IServerEvent;
+import cn.youai.server.springboot.utils.SpringContextUtils;
+import cn.youai.server.task.TaskExecutor;
 import cn.youai.xiuzhen.core.config.GameConfig;
+import cn.youai.xiuzhen.game.cache.CacheServiceManager;
 import com.alicp.jetcache.autoconfigure.JetCacheAutoConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.util.oConvertUtils;
@@ -21,6 +25,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Map;
 
 @Slf4j
 @EnableAsync
@@ -58,5 +63,20 @@ public class Application extends SpringBootServletInitializer {
         GameConfig.init();
         // 加载配置
         ConfigManager.getInstance().load();
+        // 加载缓存
+        CacheServiceManager.loadAll();
+        // init task
+        TaskExecutor.getInstance().start();
+        // init IServerEvent
+        onServerReady();
+    }
+
+    private void onServerReady() {
+        Map<String, IServerEvent> beansList = SpringContextUtils.getContext().getBeansOfType(IServerEvent.class);
+        for (IServerEvent controller : beansList.values()) {
+            long time = System.currentTimeMillis();
+            controller.onServerReady();
+            log.info("[GameServer] notify onServerReady:{}, cost:{}ms", controller.getClass().getSimpleName(), (System.currentTimeMillis() - time));
+        }
     }
 }

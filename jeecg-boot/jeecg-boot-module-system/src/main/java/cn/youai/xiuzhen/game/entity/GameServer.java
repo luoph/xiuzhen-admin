@@ -241,6 +241,13 @@ public class GameServer extends BaseEntity {
     private java.util.Date singleSettleTime;
 
     /**
+     * 停服返还充值状态
+     */
+    @Excel(name = "停服返还充值状态", width = 15)
+    @ApiModelProperty(value = "停服返还充值状态")
+    private java.lang.Integer stopServerRefund;
+
+    /**
      * 扩展字段
      */
     @Excel(name = "扩展字段", width = 15)

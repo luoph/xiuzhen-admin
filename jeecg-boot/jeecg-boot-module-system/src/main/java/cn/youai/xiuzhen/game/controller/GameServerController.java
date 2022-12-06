@@ -6,6 +6,7 @@ import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.enums.OutdatedType;
 import cn.youai.server.springboot.component.OkHttpHelper;
+import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerTag;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
@@ -131,6 +132,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameServer entity) {
         service.save(entity);
+        GameServerCache.getInstance().put(entity.getId(), entity);
         return Result.ok("添加成功！");
     }
 
@@ -138,6 +140,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameServer entity) {
         service.updateById(entity);
+        GameServerCache.getInstance().put(entity.getId(), entity);
         return Result.ok("编辑成功!");
     }
 
@@ -148,6 +151,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         service.removeById(id);
+        GameServerCache.getInstance().remove(Integer.parseInt(id));
         return Result.ok("删除成功!");
     }
 

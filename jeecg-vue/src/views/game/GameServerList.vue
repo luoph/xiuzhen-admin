@@ -150,6 +150,10 @@
           <a-tag v-else-if="record.outdated === 1" color="red">已合并</a-tag>
           <a-tag v-else-if="record.outdated === 2" color="red">已下线</a-tag>
         </span>
+        <span slot="stopServerRefundSlot" slot-scope="text, record">
+          <a-tag v-if="record.stopServerRefund === 0" color="red">OFF</a-tag>
+          <a-tag v-else-if="record.stopServerRefund === 1" color="green">ON</a-tag>
+        </span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -310,6 +314,13 @@ export default {
           align: 'center',
           width: 60,
           dataIndex: 'type_dictText'
+        },
+        {
+          title: '删档返还',
+          align: 'left',
+          width: 60,
+          dataIndex: 'stopServerRefund',
+          scopedSlots: { customRender: 'stopServerRefundSlot' }
         },
         {
           title: '开服时间',

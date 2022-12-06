@@ -185,4 +185,7 @@ public class GameOrder implements Serializable {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private Date createTime;
+
+    @TableField(exist = false)
+    private Double totalAmount;
 }

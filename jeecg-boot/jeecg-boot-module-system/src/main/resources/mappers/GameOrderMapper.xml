@@ -199,4 +199,15 @@
         ORDER BY `pay_amount` DESC, o.`id` ASC
     </select>
 
+    <select id="sumAmountGroupByPlayerId" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+        select player_id as playerId, server_id as serverId, sum(pay_amount) as totalAmount from game_order
+        where `order_status` = 4
+        <if test="serverIds != null and serverIds.size > 0">
+            AND server_id IN
+            <foreach item="serverId" index="index" collection="serverIds" open="(" close=")" separator=",">
+                #{serverId}
+            </foreach>
+        </if>
+        group by player_id
+    </select>
 </mapper>
