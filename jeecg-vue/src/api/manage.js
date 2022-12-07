@@ -132,8 +132,8 @@ export function saveService(parameter) {
 /**
  * 下载文件 用于excel导出
  * @param url 请求地址
- * @param method 请求方法
  * @param parameter 参数
+ * @param method 请求方法
  * @param timeout 超时时间
  * @returns {*}
  */

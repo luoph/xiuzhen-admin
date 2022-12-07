@@ -333,7 +333,7 @@ export const JeecgListMixin = {
         param['selections'] = this.selectedRowKeys.join(",")
       }
       console.log("导出参数", param)
-      downFile(this.url.exportXlsUrl, param, timeout).then((data) => {
+      downFile(this.url.exportXlsUrl, param, 'get', timeout).then((data) => {
         if (!data) {
           this.$message.warning("文件下载失败")
           return
