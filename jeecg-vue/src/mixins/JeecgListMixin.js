@@ -4,6 +4,8 @@
  * data中url定义 list为查询列表  delete为删除单条记录  deleteBatch为批量删除
  */
 import {filterObj} from '@/utils/util';
+import {EXPORT_MIME_TYPE} from '@/utils/util';
+import {EXPORT_FILE_SUFFIX} from '@/utils/util';
 import {deleteAction, downFile, getAction, getFileAccessHttpUrl} from '@/api/manage'
 import Vue from 'vue'
 import {ACCESS_TOKEN, TENANT_ID} from "@/store/mutation-types"
@@ -339,13 +341,13 @@ export const JeecgListMixin = {
           return
         }
         if (typeof window.navigator.msSaveBlob !== 'undefined') {
-          window.navigator.msSaveBlob(new Blob([data], {type: 'application/vnd.ms-excel'}), fileName + '.xlsx')
+          window.navigator.msSaveBlob(new Blob([data], {type: EXPORT_MIME_TYPE}), fileName + EXPORT_FILE_SUFFIX)
         } else {
-          let url = window.URL.createObjectURL(new Blob([data], {type: 'application/vnd.ms-excel'}))
+          let url = window.URL.createObjectURL(new Blob([data], {type: EXPORT_MIME_TYPE}))
           let link = document.createElement('a')
           link.style.display = 'none'
           link.href = url
-          link.setAttribute('download', fileName + '.xlsx')
+          link.setAttribute('download', fileName + EXPORT_FILE_SUFFIX)
           document.body.appendChild(link)
           link.click()
           document.body.removeChild(link); // 下载完成移除元素
