@@ -1,29 +1,21 @@
 package org.jeecg.modules.system.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.poi.ss.formula.functions.T;
-import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.constant.CommonConstant;
+import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.common.util.ImportExcelUtil;
-import org.jeecg.common.util.oConvertUtils;
-import org.jeecg.modules.quartz.service.IQuartzJobService;
 import org.jeecg.modules.system.entity.SysPosition;
 import org.jeecg.modules.system.service.ISysPositionService;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
-import org.jeecgframework.poi.excel.def.NormalExcelConstants;
-import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
-import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,8 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +40,7 @@ import java.util.Map;
 @Api(tags = "职务表")
 @RestController
 @RequestMapping("/sys/position")
-public class SysPositionController {
+public class SysPositionController extends JeecgController<SysPosition, ISysPositionService> {
 
     @Autowired
     private ISysPositionService sysPositionService;
@@ -109,7 +99,7 @@ public class SysPositionController {
      */
     @AutoLog(value = "职务表-编辑")
     @ApiOperation(value = "职务表-编辑", notes = "职务表-编辑")
-    @RequestMapping(value = "/edit", method ={RequestMethod.PUT, RequestMethod.POST})
+    @RequestMapping(value = "/edit", method = {RequestMethod.PUT, RequestMethod.POST})
     public Result<SysPosition> edit(@RequestBody SysPosition sysPosition) {
         Result<SysPosition> result = new Result<SysPosition>();
         SysPosition sysPositionEntity = sysPositionService.getById(sysPosition.getId());
@@ -188,35 +178,10 @@ public class SysPositionController {
 
     /**
      * 导出excel
-     *
-     * @param request
-     * @param response
      */
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, HttpServletResponse response) {
-        // Step.1 组装查询条件
-        QueryWrapper<SysPosition> queryWrapper = null;
-        try {
-            String paramsStr = request.getParameter("paramsStr");
-            if (oConvertUtils.isNotEmpty(paramsStr)) {
-                String deString = URLDecoder.decode(paramsStr, "UTF-8");
-                SysPosition sysPosition = JSON.parseObject(deString, SysPosition.class);
-                queryWrapper = QueryGenerator.initQueryWrapper(sysPosition, request.getParameterMap());
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        //Step.2 AutoPoi 导出Excel
-        ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
-        List<SysPosition> pageList = sysPositionService.list(queryWrapper);
-        LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-        //导出文件名称
-        mv.addObject(NormalExcelConstants.FILE_NAME, "职务表列表");
-        mv.addObject(NormalExcelConstants.CLASS, SysPosition.class);
-        mv.addObject(NormalExcelConstants.PARAMS, new ExportParams("职务表列表数据", "导出人:"+user.getRealname(),"导出信息"));
-        mv.addObject(NormalExcelConstants.DATA_LIST, pageList);
-        return mv;
+    public ModelAndView exportXls(SysPosition sysPosition, HttpServletRequest request) {
+        return super.exportXls(request, sysPosition, SysPosition.class, "职务列表");
     }
 
     /**
@@ -227,7 +192,7 @@ public class SysPositionController {
      * @return
      */
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response)throws IOException {
+    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) throws IOException {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
         // 错误信息
@@ -241,10 +206,10 @@ public class SysPositionController {
             params.setHeadRows(1);
             params.setNeedSave(true);
             try {
-                List<Object>  listSysPositions = ExcelImportUtil.importExcel(file.getInputStream(), SysPosition.class, params);
-                List<String> list = ImportExcelUtil.importDateSave(listSysPositions, ISysPositionService.class, errorMessage,CommonConstant.SQL_INDEX_UNIQ_CODE);
-                errorLines+=list.size();
-                successLines+=(listSysPositions.size()-errorLines);
+                List<Object> listSysPositions = ExcelImportUtil.importExcel(file.getInputStream(), SysPosition.class, params);
+                List<String> list = ImportExcelUtil.importDateSave(listSysPositions, ISysPositionService.class, errorMessage, CommonConstant.SQL_INDEX_UNIQ_CODE);
+                errorLines += list.size();
+                successLines += (listSysPositions.size() - errorLines);
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 return Result.error("文件导入失败:" + e.getMessage());
@@ -256,7 +221,7 @@ public class SysPositionController {
                 }
             }
         }
-        return ImportExcelUtil.imporReturnRes(errorLines,successLines,errorMessage);
+        return ImportExcelUtil.imporReturnRes(errorLines, successLines, errorMessage);
     }
 
     /**
@@ -271,7 +236,7 @@ public class SysPositionController {
     public Result<SysPosition> queryByCode(@RequestParam(name = "code", required = true) String code) {
         Result<SysPosition> result = new Result<SysPosition>();
         QueryWrapper<SysPosition> queryWrapper = new QueryWrapper<SysPosition>();
-        queryWrapper.eq("code",code);
+        queryWrapper.eq("code", code);
         SysPosition sysPosition = sysPositionService.getOne(queryWrapper);
         if (sysPosition == null) {
             result.error500("未找到对应实体");

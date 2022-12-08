@@ -1,49 +1,30 @@
 package org.jeecg.modules.system.controller;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.SecurityUtils;
-import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.system.query.QueryGenerator;
-import org.jeecg.common.system.vo.LoginUser;
-import org.jeecg.common.util.oConvertUtils;
-import org.jeecg.modules.system.entity.SysUserAgent;
-import org.jeecg.modules.system.service.ISysUserAgentService;
-import org.jeecgframework.poi.excel.ExcelImportUtil;
-import org.jeecgframework.poi.excel.def.NormalExcelConstants;
-import org.jeecgframework.poi.excel.entity.ExportParams;
-import org.jeecgframework.poi.excel.entity.ImportParams;
-import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
 import lombok.extern.slf4j.Slf4j;
+import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.system.base.controller.JeecgController;
+import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.modules.system.entity.SysUserAgent;
+import org.jeecg.modules.system.service.ISysUserAgentService;
+import org.jeecgframework.poi.excel.ExcelImportUtil;
+import org.jeecgframework.poi.excel.entity.ImportParams;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
  /**
  * @Title: Controller
@@ -52,10 +33,11 @@ import lombok.extern.slf4j.Slf4j;
  * @Date:  2019-04-17
  * @Version: V1.0
  */
+@Slf4j
 @RestController
 @RequestMapping("/sys/sysUserAgent")
-@Slf4j
-public class SysUserAgentController {
+public class SysUserAgentController extends JeecgController<SysUserAgent, ISysUserAgentService> {
+
 	@Autowired
 	private ISysUserAgentService sysUserAgentService;
 
@@ -201,27 +183,11 @@ public class SysUserAgentController {
 	}
 
   /**
-      * 导出excel
-   *
-   * @param sysUserAgent
-   * @param request
+   * 导出excel
    */
   @RequestMapping(value = "/exportXls")
-  public ModelAndView exportXls(SysUserAgent sysUserAgent,HttpServletRequest request) {
-      // Step.1 组装查询条件
-      QueryWrapper<SysUserAgent> queryWrapper = QueryGenerator.initQueryWrapper(sysUserAgent, request.getParameterMap());
-      //Step.2 AutoPoi 导出Excel
-      ModelAndView mv = new ModelAndView(new JeecgEntityExcelView());
-      List<SysUserAgent> pageList = sysUserAgentService.list(queryWrapper);
-      //导出文件名称
-      mv.addObject(NormalExcelConstants.FILE_NAME, "用户代理人设置列表");
-      mv.addObject(NormalExcelConstants.CLASS, SysUserAgent.class);
-      LoginUser user = (LoginUser) SecurityUtils.getSubject().getPrincipal();
-	  ExportParams exportParams = new ExportParams("用户代理人设置列表数据", "导出人:"+user.getRealname(), "导出信息");
-	  exportParams.setImageBasePath(upLoadPath);
-      mv.addObject(NormalExcelConstants.PARAMS, exportParams);
-      mv.addObject(NormalExcelConstants.DATA_LIST, pageList);
-      return mv;
+  public ModelAndView exportXls(SysUserAgent sysUserAgent, HttpServletRequest request) {
+	  return super.exportXls(request, sysUserAgent, SysUserAgent.class, "用户代理人设置列表");
   }
 
   /**
