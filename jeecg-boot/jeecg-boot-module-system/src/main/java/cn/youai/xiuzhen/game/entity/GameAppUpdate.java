@@ -68,7 +68,7 @@ public class GameAppUpdate extends BaseEntity {
     /**
      * 包渠道
      */
-    @Excel(name = "包渠道", width = 15)
+    @Excel(name = "渠道", width = 15)
     private java.lang.String channel;
 
     /**

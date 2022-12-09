@@ -40,8 +40,14 @@ public class GameRedeemCodeRecord implements Serializable {
     /**
      * 渠道编码
      */
-    @Excel(name = "渠道编码", width = 15)
+    @Excel(name = "渠道", width = 15)
     private java.lang.String channel;
+
+    /**
+     * sdk渠道
+     */
+    @Excel(name = "sdk渠道", width = 15)
+    private java.lang.String sdkChannel;
 
     /**
      * 玩家id

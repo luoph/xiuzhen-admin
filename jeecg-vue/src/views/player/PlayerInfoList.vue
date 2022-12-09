@@ -206,6 +206,11 @@ export default {
           dataIndex: 'channel'
         },
         {
+          title: 'sdk渠道',
+          align: 'center',
+          dataIndex: 'sdkChannel'
+        },
+        {
           title: '等级',
           align: 'center',
           width: 60,

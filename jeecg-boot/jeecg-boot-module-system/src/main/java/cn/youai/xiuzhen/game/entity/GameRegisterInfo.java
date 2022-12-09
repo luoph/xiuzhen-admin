@@ -75,6 +75,12 @@ public class GameRegisterInfo implements Serializable {
     private java.lang.String channel;
 
     /**
+     * 渠道
+     */
+    @Excel(name = "sdk渠道", width = 15)
+    private java.lang.String sdkChannel;
+
+    /**
      * imei
      */
     @Excel(name = "imei", width = 15)

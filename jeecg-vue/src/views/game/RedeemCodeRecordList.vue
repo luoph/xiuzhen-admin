@@ -147,9 +147,14 @@ export default {
           dataIndex: 'code'
         },
         {
-          title: '渠道编码',
+          title: '渠道',
           align: 'center',
           dataIndex: 'channel'
+        },
+        {
+          title: 'sdk渠道',
+          align: 'center',
+          dataIndex: 'sdkChannel'
         },
         {
           title: '玩家id',
