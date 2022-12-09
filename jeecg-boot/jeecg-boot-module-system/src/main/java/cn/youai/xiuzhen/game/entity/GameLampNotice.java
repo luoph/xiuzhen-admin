@@ -51,7 +51,7 @@ public class GameLampNotice implements Serializable {
     private java.lang.String gameServerList;
 
     /**
-     * 播放频率
+     * 播放频率(次数)
      */
     @Excel(name = "播放频率", width = 15)
     private java.lang.Integer frequency;
