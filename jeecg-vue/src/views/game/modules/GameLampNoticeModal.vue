@@ -19,7 +19,7 @@
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="循环播放周期" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :min="1" :max="10" v-decorator="['cyclePeriod', validatorRules.cyclePeriod]"
+          <a-input-number :min="1" v-decorator="['cyclePeriod', validatorRules.cyclePeriod]"
                           placeholder="请输入循环播放周期" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
