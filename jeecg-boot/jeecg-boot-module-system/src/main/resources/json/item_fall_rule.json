@@ -1020,7 +1020,7 @@
         "id": 114,
         "type": 121,
         "reward_type": 3,
-        "title": "仙职奖励",
+        "title": "主角光环奖励",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
@@ -1139,7 +1139,7 @@
         "reward_type": 3,
         "title": "灵石秘境奖励",
         "describe": "奇珍储物背包已满，通过传书发放的道具",
-        "notice_type": 0,
+        "notice_type": 3,
         "merge": 1
     },
     {
@@ -1148,14 +1148,14 @@
         "reward_type": 3,
         "title": "修为秘境奖励",
         "describe": "奇珍储物背包已满，通过传书发放的道具",
-        "notice_type": 0,
+        "notice_type": 3,
         "merge": 1
     },
     {
         "id": 129,
         "type": 136,
         "reward_type": 3,
-        "title": "仙职",
+        "title": "主角光环",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
@@ -1283,7 +1283,7 @@
         "reward_type": 3,
         "title": "仙器秘境扫荡奖励",
         "describe": "灵材储物袋已满，通过传书发放的道具",
-        "notice_type": 0,
+        "notice_type": 3,
         "merge": 1
     },
     {
@@ -1310,7 +1310,7 @@
         "reward_type": 3,
         "title": "法宝秘境扫荡奖励",
         "describe": "法宝储物袋已满，通过传书发放的道具",
-        "notice_type": 0,
+        "notice_type": 3,
         "merge": 1
     },
     {
@@ -2298,7 +2298,7 @@
         "id": 256,
         "type": 263,
         "reward_type": 3,
-        "title": "仙职每日奖励",
+        "title": "主角光环每日奖励",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
@@ -2307,7 +2307,7 @@
         "id": 257,
         "type": 264,
         "reward_type": 3,
-        "title": "仙职圣灵孕育奖励",
+        "title": "主角光环圣灵孕育奖励",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
@@ -2316,7 +2316,7 @@
         "id": 258,
         "type": 265,
         "reward_type": 3,
-        "title": "仙职圣灵孵化奖励",
+        "title": "主角光环圣灵孵化奖励",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
@@ -2325,7 +2325,7 @@
         "id": 259,
         "type": 266,
         "reward_type": 3,
-        "title": "仙职圣灵每日累充奖励",
+        "title": "主角光环圣灵每日累充奖励",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
@@ -2343,7 +2343,7 @@
         "id": 261,
         "type": 268,
         "reward_type": 3,
-        "title": "主角光环礼包",
+        "title": "仙职礼包",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
@@ -2352,7 +2352,79 @@
         "id": 262,
         "type": 269,
         "reward_type": 3,
+        "title": "仙职-每日礼包",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 263,
+        "type": 270,
+        "reward_type": 3,
+        "title": "仙职-坊市",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 264,
+        "type": 271,
+        "reward_type": 3,
+        "title": "仙职-坊市积分",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 265,
+        "type": 272,
+        "reward_type": 3,
         "title": "跨服充值排行",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 266,
+        "type": 273,
+        "reward_type": 3,
+        "title": "天书福赠",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 267,
+        "type": 274,
+        "reward_type": 3,
+        "title": "飞剑福赠",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 268,
+        "type": 275,
+        "reward_type": 3,
+        "title": "鉴宝购买鉴宝镜",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 269,
+        "type": 276,
+        "reward_type": 3,
+        "title": "内测返利",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 270,
+        "type": 277,
+        "reward_type": 3,
+        "title": "邮件活动",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1

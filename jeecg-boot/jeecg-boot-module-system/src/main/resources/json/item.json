@@ -19554,7 +19554,7 @@
         "item_id": 34201,
         "name": "法宝符晶",
         "type": 4,
-        "quality": 6,
+        "quality": 7,
         "overlying": 100000,
         "icon_1": "icon_1618",
         "star": 3,
@@ -19588,7 +19588,7 @@
         "item_id": 34601,
         "name": "灵宝符晶",
         "type": 4,
-        "quality": 6,
+        "quality": 7,
         "overlying": 100000,
         "icon_1": "icon_34601",
         "star": 3,
@@ -22035,7 +22035,7 @@
         "id": 1297,
         "item_id": 35501,
         "name": "人级时装宝箱",
-        "type": 33,
+        "type": 3,
         "quality": 4,
         "overlying": 999,
         "icon_1": "icon_110001",
@@ -22052,7 +22052,7 @@
         "id": 1298,
         "item_id": 35502,
         "name": "灵级时装宝箱",
-        "type": 33,
+        "type": 3,
         "quality": 5,
         "overlying": 999,
         "icon_1": "icon_110001",
@@ -22069,7 +22069,7 @@
         "id": 1299,
         "item_id": 35503,
         "name": "仙级时装宝箱",
-        "type": 33,
+        "type": 3,
         "quality": 6,
         "overlying": 999,
         "icon_1": "icon_110001",
@@ -22086,7 +22086,7 @@
         "id": 1300,
         "item_id": 35504,
         "name": "圣级时装宝箱",
-        "type": 33,
+        "type": 3,
         "quality": 7,
         "overlying": 999,
         "icon_1": "icon_110001",
@@ -26762,7 +26762,7 @@
         "item_id": 91003,
         "name": "天命之子称号",
         "type": 24,
-        "quality": 6,
+        "quality": 7,
         "overlying": 999,
         "icon_1": "icon_91003",
         "star": 1,
@@ -26796,7 +26796,7 @@
         "item_id": 92001,
         "name": "八荒仙君称号",
         "type": 24,
-        "quality": 6,
+        "quality": 7,
         "overlying": 999,
         "icon_1": "icon_91003",
         "star": 1,
@@ -29089,7 +29089,7 @@
     {
         "id": 1712,
         "item_id": 94101,
-        "name": "开天斧柄",
+        "name": "人·开天斧柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29106,7 +29106,7 @@
     {
         "id": 1713,
         "item_id": 94102,
-        "name": "开天斧刃",
+        "name": "人·开天斧刃",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29123,7 +29123,7 @@
     {
         "id": 1714,
         "item_id": 94103,
-        "name": "开天斧背",
+        "name": "人·开天斧背",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29140,7 +29140,7 @@
     {
         "id": 1715,
         "item_id": 94104,
-        "name": "开天斧芯",
+        "name": "人·开天斧芯",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29157,7 +29157,7 @@
     {
         "id": 1716,
         "item_id": 94105,
-        "name": "开天斧灵",
+        "name": "人·开天斧灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29174,7 +29174,7 @@
     {
         "id": 1717,
         "item_id": 94106,
-        "name": "开天斧魂",
+        "name": "人·开天斧魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29191,7 +29191,7 @@
     {
         "id": 1718,
         "item_id": 94107,
-        "name": "轩辕剑柄",
+        "name": "人·轩辕剑柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29208,7 +29208,7 @@
     {
         "id": 1719,
         "item_id": 94108,
-        "name": "轩辕剑刃",
+        "name": "人·轩辕剑刃",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29225,7 +29225,7 @@
     {
         "id": 1720,
         "item_id": 94109,
-        "name": "轩辕剑尖",
+        "name": "人·轩辕剑尖",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29242,7 +29242,7 @@
     {
         "id": 1721,
         "item_id": 94110,
-        "name": "轩辕剑身",
+        "name": "人·轩辕剑身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29259,7 +29259,7 @@
     {
         "id": 1722,
         "item_id": 94111,
-        "name": "轩辕剑灵",
+        "name": "人·轩辕剑灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29276,7 +29276,7 @@
     {
         "id": 1723,
         "item_id": 94112,
-        "name": "轩辕剑魂",
+        "name": "人·轩辕剑魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29293,7 +29293,7 @@
     {
         "id": 1724,
         "item_id": 94113,
-        "name": "落日弓柄",
+        "name": "人·落日弓柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29310,7 +29310,7 @@
     {
         "id": 1725,
         "item_id": 94114,
-        "name": "落日矢羽",
+        "name": "人·落日弓羽",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29327,7 +29327,7 @@
     {
         "id": 1726,
         "item_id": 94115,
-        "name": "落日弓翎",
+        "name": "人·落日弓翎",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29344,7 +29344,7 @@
     {
         "id": 1727,
         "item_id": 94116,
-        "name": "落日弓身",
+        "name": "人·落日弓身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29361,7 +29361,7 @@
     {
         "id": 1728,
         "item_id": 94117,
-        "name": "落日弓灵",
+        "name": "人·落日弓灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29378,7 +29378,7 @@
     {
         "id": 1729,
         "item_id": 94118,
-        "name": "落日弓魂",
+        "name": "人·落日弓魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29395,7 +29395,7 @@
     {
         "id": 1730,
         "item_id": 94119,
-        "name": "太阿印玺",
+        "name": "人·太阿印玺",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29412,7 +29412,7 @@
     {
         "id": 1731,
         "item_id": 94120,
-        "name": "太阿印铃",
+        "name": "人·太阿印铃",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29429,7 +29429,7 @@
     {
         "id": 1732,
         "item_id": 94121,
-        "name": "太阿印壁",
+        "name": "人·太阿印壁",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29446,7 +29446,7 @@
     {
         "id": 1733,
         "item_id": 94122,
-        "name": "太阿印文",
+        "name": "人·太阿印文",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29463,7 +29463,7 @@
     {
         "id": 1734,
         "item_id": 94123,
-        "name": "太阿印灵",
+        "name": "人·太阿印灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29480,7 +29480,7 @@
     {
         "id": 1735,
         "item_id": 94124,
-        "name": "太阿印魂",
+        "name": "人·太阿印魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29497,7 +29497,7 @@
     {
         "id": 1736,
         "item_id": 94125,
-        "name": "弑神弩柄",
+        "name": "人·弑神弩柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29514,7 +29514,7 @@
     {
         "id": 1737,
         "item_id": 94126,
-        "name": "弑神弩缨",
+        "name": "人·弑神弩缨",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29531,7 +29531,7 @@
     {
         "id": 1738,
         "item_id": 94127,
-        "name": "弑神弩尖",
+        "name": "人·弑神弩尖",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29548,7 +29548,7 @@
     {
         "id": 1739,
         "item_id": 94128,
-        "name": "弑神弩杆",
+        "name": "人·弑神弩杆",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29565,7 +29565,7 @@
     {
         "id": 1740,
         "item_id": 94129,
-        "name": "弑神枪灵",
+        "name": "人·弑神弩灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29582,7 +29582,7 @@
     {
         "id": 1741,
         "item_id": 94130,
-        "name": "弑神枪魂",
+        "name": "人·弑神弩魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29599,7 +29599,7 @@
     {
         "id": 1742,
         "item_id": 94131,
-        "name": "兽神扇翎",
+        "name": "人·兽神扇翎",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29616,7 +29616,7 @@
     {
         "id": 1743,
         "item_id": 94132,
-        "name": "兽神扇柄",
+        "name": "人·兽神扇柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29633,7 +29633,7 @@
     {
         "id": 1744,
         "item_id": 94133,
-        "name": "兽神扇身",
+        "name": "人·兽神扇身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29650,7 +29650,7 @@
     {
         "id": 1745,
         "item_id": 94134,
-        "name": "兽神扇摇",
+        "name": "人·兽神扇摇",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29667,7 +29667,7 @@
     {
         "id": 1746,
         "item_id": 94135,
-        "name": "兽神扇灵",
+        "name": "人·兽神扇灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29684,7 +29684,7 @@
     {
         "id": 1747,
         "item_id": 94136,
-        "name": "兽神扇魂",
+        "name": "人·兽神扇魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29701,7 +29701,7 @@
     {
         "id": 1748,
         "item_id": 94137,
-        "name": "万妖杖杆",
+        "name": "人·万妖杖杆",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29718,7 +29718,7 @@
     {
         "id": 1749,
         "item_id": 94138,
-        "name": "万妖杖珠",
+        "name": "人·万妖杖珠",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29735,7 +29735,7 @@
     {
         "id": 1750,
         "item_id": 94139,
-        "name": "万妖杖穗",
+        "name": "人·万妖杖穗",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29752,7 +29752,7 @@
     {
         "id": 1751,
         "item_id": 94140,
-        "name": "万妖杖环",
+        "name": "人·万妖杖环",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29769,7 +29769,7 @@
     {
         "id": 1752,
         "item_id": 94141,
-        "name": "万妖杖灵",
+        "name": "人·万妖杖灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29786,7 +29786,7 @@
     {
         "id": 1753,
         "item_id": 94142,
-        "name": "万妖杖魂",
+        "name": "人·万妖杖魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29803,7 +29803,7 @@
     {
         "id": 1754,
         "item_id": 94143,
-        "name": "太虚甲胄",
+        "name": "人·太虚甲胄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29820,7 +29820,7 @@
     {
         "id": 1755,
         "item_id": 94144,
-        "name": "太虚甲身",
+        "name": "人·太虚甲身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29837,7 +29837,7 @@
     {
         "id": 1756,
         "item_id": 94145,
-        "name": "太虚甲项",
+        "name": "人·太虚甲项",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29854,7 +29854,7 @@
     {
         "id": 1757,
         "item_id": 94146,
-        "name": "太虚甲镜",
+        "name": "人·太虚甲镜",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29871,7 +29871,7 @@
     {
         "id": 1758,
         "item_id": 94147,
-        "name": "太虚甲灵",
+        "name": "人·太虚甲灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29888,7 +29888,7 @@
     {
         "id": 1759,
         "item_id": 94148,
-        "name": "太虚甲魂",
+        "name": "人·太虚甲魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29905,7 +29905,7 @@
     {
         "id": 1760,
         "item_id": 94149,
-        "name": "虎魄刀柄",
+        "name": "人·虎魄刀柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29922,7 +29922,7 @@
     {
         "id": 1761,
         "item_id": 94150,
-        "name": "虎魄刀刃",
+        "name": "人·虎魄刀刃",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29939,7 +29939,7 @@
     {
         "id": 1762,
         "item_id": 94151,
-        "name": "虎魄刀尖",
+        "name": "人·虎魄刀尖",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29956,7 +29956,7 @@
     {
         "id": 1763,
         "item_id": 94152,
-        "name": "虎魄刀身",
+        "name": "人·虎魄刀身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29973,7 +29973,7 @@
     {
         "id": 1764,
         "item_id": 94153,
-        "name": "虎魄刀灵",
+        "name": "人·虎魄刀灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -29990,7 +29990,7 @@
     {
         "id": 1765,
         "item_id": 94154,
-        "name": "虎魄刀魂",
+        "name": "人·虎魄刀魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -32540,7 +32540,7 @@
     {
         "id": 1915,
         "item_id": 95333,
-        "name": "昆仑锏碎",
+        "name": "人·昆仑锏碎",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -32557,7 +32557,7 @@
     {
         "id": 1916,
         "item_id": 95334,
-        "name": "昆仑锏焰",
+        "name": "人·昆仑锏焰",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -32574,7 +32574,7 @@
     {
         "id": 1917,
         "item_id": 95335,
-        "name": "昆仑锏印",
+        "name": "人·昆仑锏印",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -32591,7 +32591,7 @@
     {
         "id": 1918,
         "item_id": 95336,
-        "name": "昆仑本源",
+        "name": "人·昆仑本源",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -32608,7 +32608,7 @@
     {
         "id": 1919,
         "item_id": 95337,
-        "name": "昆仑锏灵",
+        "name": "人·昆仑锏灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -32625,7 +32625,7 @@
     {
         "id": 1920,
         "item_id": 95338,
-        "name": "昆仑锏魂",
+        "name": "人·昆仑锏魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33050,7 +33050,7 @@
     {
         "id": 1945,
         "item_id": 95363,
-        "name": "神石灵眼",
+        "name": "人·神石灵眼",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33067,7 +33067,7 @@
     {
         "id": 1946,
         "item_id": 95364,
-        "name": "神石灵骸",
+        "name": "人·神石灵骸",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33084,7 +33084,7 @@
     {
         "id": 1947,
         "item_id": 95365,
-        "name": "神石灵焰",
+        "name": "人·神石灵焰",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33101,7 +33101,7 @@
     {
         "id": 1948,
         "item_id": 95366,
-        "name": "神石灵印",
+        "name": "人·神石灵印",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33118,7 +33118,7 @@
     {
         "id": 1949,
         "item_id": 95367,
-        "name": "神石魔灵",
+        "name": "人·神石魔灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33135,7 +33135,7 @@
     {
         "id": 1950,
         "item_id": 95368,
-        "name": "神石本源",
+        "name": "人·神石本源",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33560,7 +33560,7 @@
     {
         "id": 1975,
         "item_id": 95393,
-        "name": "炼妖镜穗",
+        "name": "人·炼妖镜穗",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33577,7 +33577,7 @@
     {
         "id": 1976,
         "item_id": 95394,
-        "name": "炼妖镜片",
+        "name": "人·炼妖镜片",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33594,7 +33594,7 @@
     {
         "id": 1977,
         "item_id": 95395,
-        "name": "炼妖镜壁",
+        "name": "人·炼妖镜壁",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33611,7 +33611,7 @@
     {
         "id": 1978,
         "item_id": 95396,
-        "name": "炼妖灵珠",
+        "name": "人·炼妖灵珠",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33628,7 +33628,7 @@
     {
         "id": 1979,
         "item_id": 95397,
-        "name": "炼妖之灵",
+        "name": "人·炼妖之灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -33645,7 +33645,7 @@
     {
         "id": 1980,
         "item_id": 95398,
-        "name": "炼妖之魂",
+        "name": "人·炼妖之魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34070,7 +34070,7 @@
     {
         "id": 2005,
         "item_id": 95423,
-        "name": "浑天之焰",
+        "name": "人·浑天之焰",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34087,7 +34087,7 @@
     {
         "id": 2006,
         "item_id": 95424,
-        "name": "浑天灵索",
+        "name": "人·浑天灵索",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34104,7 +34104,7 @@
     {
         "id": 2007,
         "item_id": 95425,
-        "name": "浑天之眼",
+        "name": "人·浑天之眼",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34121,7 +34121,7 @@
     {
         "id": 2008,
         "item_id": 95426,
-        "name": "浑天碎片",
+        "name": "人·浑天碎片",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34138,7 +34138,7 @@
     {
         "id": 2009,
         "item_id": 95427,
-        "name": "浑天之灵",
+        "name": "人·浑天之灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34155,7 +34155,7 @@
     {
         "id": 2010,
         "item_id": 95428,
-        "name": "浑天之魂",
+        "name": "人·浑天之魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34580,7 +34580,7 @@
     {
         "id": 2035,
         "item_id": 95453,
-        "name": "阴阳之焰",
+        "name": "人·阴阳之焰",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34597,7 +34597,7 @@
     {
         "id": 2036,
         "item_id": 95454,
-        "name": "阴阳灵索",
+        "name": "人·阴阳灵索",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34614,7 +34614,7 @@
     {
         "id": 2037,
         "item_id": 95455,
-        "name": "阴阳之眼",
+        "name": "人·阴阳之眼",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34631,7 +34631,7 @@
     {
         "id": 2038,
         "item_id": 95456,
-        "name": "阴阳碎片",
+        "name": "人·阴阳碎片",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34648,7 +34648,7 @@
     {
         "id": 2039,
         "item_id": 95457,
-        "name": "阴阳之灵",
+        "name": "人·阴阳之灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -34665,7 +34665,7 @@
     {
         "id": 2040,
         "item_id": 95458,
-        "name": "阴阳之魂",
+        "name": "人·阴阳之魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35090,7 +35090,7 @@
     {
         "id": 2065,
         "item_id": 95701,
-        "name": "聚魂珠印",
+        "name": "人·聚魂珠印",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35107,7 +35107,7 @@
     {
         "id": 2066,
         "item_id": 95702,
-        "name": "聚魂珠鞘",
+        "name": "人·聚魂珠鞘",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35124,7 +35124,7 @@
     {
         "id": 2067,
         "item_id": 95703,
-        "name": "聚魂珠眼",
+        "name": "人·聚魂珠眼",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35141,7 +35141,7 @@
     {
         "id": 2068,
         "item_id": 95704,
-        "name": "聚魂珠焰",
+        "name": "人·聚魂珠焰",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35158,7 +35158,7 @@
     {
         "id": 2069,
         "item_id": 95705,
-        "name": "聚魂珠灵",
+        "name": "人·聚魂珠灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35175,7 +35175,7 @@
     {
         "id": 2070,
         "item_id": 95706,
-        "name": "聚魂本源",
+        "name": "人·聚魂本源",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35294,7 +35294,7 @@
     {
         "id": 2077,
         "item_id": 95713,
-        "name": "屠巫剑柄",
+        "name": "人·屠巫剑柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35311,7 +35311,7 @@
     {
         "id": 2078,
         "item_id": 95714,
-        "name": "屠巫剑身",
+        "name": "人·屠巫剑身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35328,7 +35328,7 @@
     {
         "id": 2079,
         "item_id": 95715,
-        "name": "屠巫剑尖",
+        "name": "人·屠巫剑尖",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35345,7 +35345,7 @@
     {
         "id": 2080,
         "item_id": 95716,
-        "name": "屠巫剑锋",
+        "name": "人·屠巫剑锋",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35362,7 +35362,7 @@
     {
         "id": 2081,
         "item_id": 95717,
-        "name": "屠巫剑魂",
+        "name": "人·屠巫剑魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35379,7 +35379,7 @@
     {
         "id": 2082,
         "item_id": 95718,
-        "name": "屠巫剑灵",
+        "name": "人·屠巫剑灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35600,7 +35600,7 @@
     {
         "id": 2095,
         "item_id": 95731,
-        "name": "一元珠印",
+        "name": "人·一元珠印",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35617,7 +35617,7 @@
     {
         "id": 2096,
         "item_id": 95732,
-        "name": "一元珠穗",
+        "name": "人·一元珠穗",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35634,7 +35634,7 @@
     {
         "id": 2097,
         "item_id": 95733,
-        "name": "一元珠卉",
+        "name": "人·一元珠卉",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35651,7 +35651,7 @@
     {
         "id": 2098,
         "item_id": 95734,
-        "name": "一元本源",
+        "name": "人·一元本源",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35668,7 +35668,7 @@
     {
         "id": 2099,
         "item_id": 95735,
-        "name": "一元珠灵",
+        "name": "人·一元珠灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35685,7 +35685,7 @@
     {
         "id": 2100,
         "item_id": 95736,
-        "name": "一元珠魂",
+        "name": "人·一元珠魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35906,7 +35906,7 @@
     {
         "id": 2113,
         "item_id": 95749,
-        "name": "太一鼎纹",
+        "name": "人·太一鼎纹",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35923,7 +35923,7 @@
     {
         "id": 2114,
         "item_id": 95750,
-        "name": "太一鼎珠",
+        "name": "人·太一鼎珠",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35940,7 +35940,7 @@
     {
         "id": 2115,
         "item_id": 95751,
-        "name": "太一鼎壁",
+        "name": "人·太一鼎壁",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35957,7 +35957,7 @@
     {
         "id": 2116,
         "item_id": 95752,
-        "name": "太一鼎罩",
+        "name": "人·太一鼎罩",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35974,7 +35974,7 @@
     {
         "id": 2117,
         "item_id": 95753,
-        "name": "太一鼎灵",
+        "name": "人·太一鼎灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -35991,7 +35991,7 @@
     {
         "id": 2118,
         "item_id": 95754,
-        "name": "太一鼎魂",
+        "name": "人·太一鼎魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36314,7 +36314,7 @@
     {
         "id": 2137,
         "item_id": 95773,
-        "name": "紫绶仙盔",
+        "name": "人·紫绶仙盔",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36331,7 +36331,7 @@
     {
         "id": 2138,
         "item_id": 95774,
-        "name": "紫绶仙甲",
+        "name": "人·紫绶仙甲",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36348,7 +36348,7 @@
     {
         "id": 2139,
         "item_id": 95775,
-        "name": "紫绶仙带",
+        "name": "人·紫绶仙带",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36365,7 +36365,7 @@
     {
         "id": 2140,
         "item_id": 95776,
-        "name": "紫绶仙纱",
+        "name": "人·紫绶仙纱",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36382,7 +36382,7 @@
     {
         "id": 2141,
         "item_id": 95777,
-        "name": "紫绶仙源",
+        "name": "人·紫绶仙源",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36399,7 +36399,7 @@
     {
         "id": 2142,
         "item_id": 95778,
-        "name": "紫绶仙灵",
+        "name": "人·紫绶仙灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36722,7 +36722,7 @@
     {
         "id": 2161,
         "item_id": 95797,
-        "name": "六藏经文",
+        "name": "人·六藏经文",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36739,7 +36739,7 @@
     {
         "id": 2162,
         "item_id": 95798,
-        "name": "六藏经义",
+        "name": "人·六藏经义",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36756,7 +36756,7 @@
     {
         "id": 2163,
         "item_id": 95799,
-        "name": "六藏经纹",
+        "name": "人·六藏经纹",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36773,7 +36773,7 @@
     {
         "id": 2164,
         "item_id": 95800,
-        "name": "六藏经灵",
+        "name": "人·六藏经灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36790,7 +36790,7 @@
     {
         "id": 2165,
         "item_id": 95801,
-        "name": "六藏经魂",
+        "name": "人·六藏经魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -36807,7 +36807,7 @@
     {
         "id": 2166,
         "item_id": 95802,
-        "name": "六藏本源",
+        "name": "人·六藏本源",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37130,7 +37130,7 @@
     {
         "id": 2185,
         "item_id": 95821,
-        "name": "神魔之焰",
+        "name": "人·神魔之焰",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37147,7 +37147,7 @@
     {
         "id": 2186,
         "item_id": 95822,
-        "name": "神魔窍眼",
+        "name": "人·神魔窍眼",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37164,7 +37164,7 @@
     {
         "id": 2187,
         "item_id": 95823,
-        "name": "神魔之冠",
+        "name": "人·神魔之冠",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37181,7 +37181,7 @@
     {
         "id": 2188,
         "item_id": 95824,
-        "name": "神魔之眸",
+        "name": "人·神魔之眸",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37198,7 +37198,7 @@
     {
         "id": 2189,
         "item_id": 95825,
-        "name": "神魔之灵",
+        "name": "人·神魔之灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37215,7 +37215,7 @@
     {
         "id": 2190,
         "item_id": 95826,
-        "name": "神魔本源",
+        "name": "人·神魔本源",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37538,7 +37538,7 @@
     {
         "id": 2209,
         "item_id": 95845,
-        "name": "玄火鉴翎",
+        "name": "人·玄火鉴翎",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37555,7 +37555,7 @@
     {
         "id": 2210,
         "item_id": 95846,
-        "name": "玄火鉴柄",
+        "name": "人·玄火鉴柄",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37572,7 +37572,7 @@
     {
         "id": 2211,
         "item_id": 95847,
-        "name": "玄火鉴身",
+        "name": "人·玄火鉴身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37589,7 +37589,7 @@
     {
         "id": 2212,
         "item_id": 95848,
-        "name": "玄火鉴顶",
+        "name": "人·玄火鉴顶",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37606,7 +37606,7 @@
     {
         "id": 2213,
         "item_id": 95849,
-        "name": "玄火鉴灵",
+        "name": "人·玄火鉴灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37623,7 +37623,7 @@
     {
         "id": 2214,
         "item_id": 95850,
-        "name": "玄火鉴魂",
+        "name": "人·玄火鉴魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37946,7 +37946,7 @@
     {
         "id": 2233,
         "item_id": 95869,
-        "name": "昊天塔顶",
+        "name": "人·昊天塔顶",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37963,7 +37963,7 @@
     {
         "id": 2234,
         "item_id": 95870,
-        "name": "昊天塔身",
+        "name": "人·昊天塔身",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37980,7 +37980,7 @@
     {
         "id": 2235,
         "item_id": 95871,
-        "name": "昊天塔壁",
+        "name": "人·昊天塔壁",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -37997,7 +37997,7 @@
     {
         "id": 2236,
         "item_id": 95872,
-        "name": "昊天塔尖",
+        "name": "人·昊天塔尖",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -38014,7 +38014,7 @@
     {
         "id": 2237,
         "item_id": 95873,
-        "name": "昊天塔魂",
+        "name": "人·昊天塔魂",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -38031,7 +38031,7 @@
     {
         "id": 2238,
         "item_id": 95874,
-        "name": "昊天塔灵",
+        "name": "人·昊天塔灵",
         "type": 4,
         "quality": 4,
         "overlying": 9,
@@ -73187,7 +73187,7 @@
     {
         "id": 4306,
         "item_id": 60010001,
-        "name": "主角光环积分卡50",
+        "name": "仙职经验卡50",
         "type": 97,
         "quality": 7,
         "overlying": 999,
@@ -75844,6 +75844,40 @@
         "quality": 7,
         "overlying": 999,
         "icon_1": "icon_10255",
+        "star": 1,
+        "offer_type": 1001,
+        "offer": 1000,
+        "quick_buy": "",
+        "use_type": 0,
+        "use_level": 1,
+        "backpack": 0,
+        "lead_halo_level": 0
+    },
+    {
+        "id": 4463,
+        "item_id": 50130001,
+        "name": "仙玉福袋",
+        "type": 3,
+        "quality": 7,
+        "overlying": 999,
+        "icon_1": "icon_50130001",
+        "star": 1,
+        "offer_type": 1001,
+        "offer": 1000,
+        "quick_buy": "",
+        "use_type": 0,
+        "use_level": 1,
+        "backpack": 0,
+        "lead_halo_level": 0
+    },
+    {
+        "id": 4464,
+        "item_id": 50130002,
+        "name": "极品灵石福袋",
+        "type": 3,
+        "quality": 6,
+        "overlying": 999,
+        "icon_1": "icon_50130002",
         "star": 1,
         "offer_type": 1001,
         "offer": 1000,
