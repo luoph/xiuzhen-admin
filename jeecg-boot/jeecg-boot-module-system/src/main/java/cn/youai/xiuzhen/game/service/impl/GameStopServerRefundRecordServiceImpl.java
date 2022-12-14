@@ -158,11 +158,11 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
      */
     private long getRefundNum(double totalAmount) {
         double amountLe1000 = Math.min(totalAmount, 1000);
-        long num = (long) (amountLe1000 * 1.2);
+        long num = (long) (amountLe1000 * 12);
 
         double amountGt1000 = totalAmount - 1000;
         if (amountGt1000 > 0) {
-            num += amountGt1000 * 1.5;
+            num += amountGt1000 * 15;
         }
         return num;
     }
