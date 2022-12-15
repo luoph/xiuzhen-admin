@@ -23,6 +23,9 @@
           <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
+        <a-form-item label="sdk渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['sdkChannels', validatorRules.sdkChannels]" placeholder="请输入sdk渠道"></a-input>
+        </a-form-item>
         <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择活动类型" @change="handleTimeTypeChange"
                     v-decorator="['timeType', validatorRules.timeType]" initialValue="1">
@@ -165,6 +168,7 @@ export default {
             'description',
             'showName',
             'serverIds',
+            'sdkChannels',
             'icon',
             'banner',
             'status',
@@ -258,7 +262,7 @@ export default {
     },
     popupCallback(row) {
       this.form.setFieldsValue(
-        pick(row, 'type', 'name', 'description', 'showName', 'icon', 'banner', 'status', 'autoOpen', 'timeType', 'startDay', 'duration', 'startTime', 'endTime', 'priority')
+        pick(row, 'type', 'name', 'description', 'showName', 'sdkChannels', 'icon', 'banner', 'status', 'autoOpen', 'timeType', 'startDay', 'duration', 'startTime', 'endTime', 'priority')
       );
     },
     changeSelect(value) {

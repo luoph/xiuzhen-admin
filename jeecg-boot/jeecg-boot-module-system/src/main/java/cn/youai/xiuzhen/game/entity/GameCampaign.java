@@ -116,6 +116,11 @@ public class GameCampaign extends BaseEntity {
     @Excel(name = "区服Id", width = 15)
     private String serverIds;
 
+    /**
+     * sdk渠道 使用,分割
+     */
+    @Excel(name = "sdk渠道", width = 15)
+    private String sdkChannels;
 
     /**
      * 时间类型: 1.具体时间范围, 2.开服第N天

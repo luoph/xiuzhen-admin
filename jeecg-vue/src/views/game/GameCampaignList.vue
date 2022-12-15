@@ -114,6 +114,10 @@
           <a-tag v-if="!text" color="red">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
+        <span slot="sdkChannelsSlot" slot-scope="text, record">
+          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        </span>
         <span slot="timeSlot" slot-scope="text, record">
           <div v-if="record.timeType == 1">
             <a-tag color="blue">{{ record.startTime }}</a-tag>
@@ -191,7 +195,7 @@ export default {
         {
           title: '活动Id',
           align: 'center',
-          width: 100,
+          width: 60,
           dataIndex: 'id'
         },
         {
@@ -243,9 +247,16 @@ export default {
         {
           title: '区服id',
           align: 'center',
-          width: 200,
+          width: 160,
           dataIndex: 'serverIds',
           scopedSlots: { customRender: 'serverIdSlot' }
+        },
+        {
+          title: 'sdk渠道',
+          align: 'center',
+          width: 80,
+          dataIndex: 'sdkChannels',
+          scopedSlots: { customRender: 'sdkChannelsSlot' }
         },
         // {
         //     title: "自动开启",
@@ -265,7 +276,7 @@ export default {
         {
           title: '时间类型',
           align: 'center',
-          width: 120,
+          width: 100,
           dataIndex: 'timeType',
           customRender: (value) => {
             let text = '--';
@@ -280,7 +291,7 @@ export default {
         {
           title: '活动时间',
           align: 'center',
-          width: 80,
+          width: 60,
           dataIndex: 'startDay',
           scopedSlots: { customRender: 'timeSlot' }
         },
@@ -311,7 +322,7 @@ export default {
         {
           title: '创建时间',
           align: 'center',
-          width: 120,
+          width: 100,
           dataIndex: 'createTime'
         },
         {
