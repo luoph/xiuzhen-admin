@@ -65,7 +65,7 @@ public class DySmsHelper {
         System.setProperty("sun.net.client.defaultReadTimeout", "10000");
 
         //update-begin-author：taoyan date:20200811 for:配置类数据获取
-        StaticConfig staticConfig = SpringWebContextUtils.getBean(StaticConfig.class);
+        StaticConfig staticConfig = SpringContextUtils.getBean(StaticConfig.class);
         setAccessKeyId(staticConfig.getAccessKeyId());
         setAccessKeySecret(staticConfig.getAccessKeySecret());
         //update-end-author：taoyan date:20200811 for:配置类数据获取

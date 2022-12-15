@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.jeecg.common.aspect.annotation.DynamicTable;
 import org.jeecg.common.constant.CommonConstant;
-import org.jeecg.common.util.SpringWebContextUtils;
+import org.jeecg.common.util.SpringContextUtils;
 import org.jeecg.config.mybatis.ThreadLocalDataHelper;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +38,7 @@ public class DynamicTableAspect {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         DynamicTable dynamicTable = method.getAnnotation(DynamicTable.class);
-        HttpServletRequest request = SpringWebContextUtils.getHttpServletRequest();
+        HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         //获取前端传递的版本标记
         String version = request.getHeader(CommonConstant.VERSION);
         //存储版本号到本地线程变量

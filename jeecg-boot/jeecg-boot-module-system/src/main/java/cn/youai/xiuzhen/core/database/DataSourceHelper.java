@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.jeecg.common.util.SpringWebContextUtils;
+import org.jeecg.common.util.SpringContextUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -88,7 +88,7 @@ public class DataSourceHelper implements InitializingBean {
         if (dataSource != null) {
             // 修改MyBatis的数据源
             try {
-                SqlSessionFactory sqlSessionFactory = SpringWebContextUtils.getBean(SqlSessionFactory.class);
+                SqlSessionFactory sqlSessionFactory = SpringContextUtils.getBean(SqlSessionFactory.class);
                 Environment environment = sqlSessionFactory.getConfiguration().getEnvironment();
                 Field dataSourceField = environment.getClass().getDeclaredField("dataSource");
                 dataSourceField.setAccessible(true);

@@ -6,7 +6,7 @@ import org.jeecg.common.api.dto.message.MessageDTO;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.common.util.RedisUtil;
-import org.jeecg.common.util.SpringWebContextUtils;
+import org.jeecg.common.util.SpringContextUtils;
 import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.config.StaticConfig;
 import org.jeecg.modules.message.handle.ISendMsgHandle;
@@ -43,18 +43,17 @@ public class EmailSendMsgHandle implements ISendMsgHandle {
     private RedisUtil redisUtil;
 
 
-
     @Override
     public void sendMsg(String esReceiver, String esTitle, String esContent) {
-        JavaMailSender mailSender = (JavaMailSender) SpringWebContextUtils.getBean("mailSender");
+        JavaMailSender mailSender = (JavaMailSender) SpringContextUtils.getBean("mailSender");
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = null;
-        //update-begin-author：taoyan date:20200811 for:配置类数据获取
-        if(oConvertUtils.isEmpty(emailFrom)){
-            StaticConfig staticConfig = SpringWebContextUtils.getBean(StaticConfig.class);
+        // update-begin-author：taoyan date:20200811 for:配置类数据获取
+        if (oConvertUtils.isEmpty(emailFrom)) {
+            StaticConfig staticConfig = SpringContextUtils.getBean(StaticConfig.class);
             setEmailFrom(staticConfig.getEmailFrom());
         }
-        //update-end-author：taoyan date:20200811 for:配置类数据获取
+        // update-end-author：taoyan date:20200811 for:配置类数据获取
         try {
             helper = new MimeMessageHelper(message, true);
             // 设置发送方邮箱地址
@@ -76,13 +75,13 @@ public class EmailSendMsgHandle implements ISendMsgHandle {
         List<SysUser> list = sysUserMapper.selectList(query);
         String content = messageDTO.getContent();
         String title = messageDTO.getTitle();
-        for(SysUser user: list){
+        for (SysUser user : list) {
             String email = user.getEmail();
-            if(email==null || "".equals(email)){
+            if (email == null || "".equals(email)) {
                 continue;
             }
 
-            if(content.indexOf(CommonConstant.LOGIN_TOKEN)>0){
+            if (content.indexOf(CommonConstant.LOGIN_TOKEN) > 0) {
                 String token = getToken(user);
                 try {
                     content = content.replace(CommonConstant.LOGIN_TOKEN, URLEncoder.encode(token, "UTF-8"));
@@ -90,13 +89,14 @@ public class EmailSendMsgHandle implements ISendMsgHandle {
                     log.error("邮件消息token编码失败", e.getMessage());
                 }
             }
-            log.info("邮件内容："+ content);
+            log.info("邮件内容：" + content);
             sendMsg(email, title, content);
         }
     }
 
     /**
      * 获取token
+     *
      * @param user
      * @return
      */

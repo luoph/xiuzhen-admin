@@ -2,10 +2,10 @@ package cn.youai.xiuzhen.game.cache;
 
 import cn.youai.basics.cache.BaseCache;
 import cn.youai.basics.cache.CacheFactory;
-import cn.youai.server.springboot.utils.SpringContextUtils;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import org.jeecg.common.util.SpringContextUtils;
 
 import java.util.Set;
 import java.util.stream.Collectors;

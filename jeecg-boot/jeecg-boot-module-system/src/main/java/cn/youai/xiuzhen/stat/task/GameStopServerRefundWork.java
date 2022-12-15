@@ -1,10 +1,10 @@
 package cn.youai.xiuzhen.stat.task;
 
-import cn.youai.server.springboot.utils.SpringContextUtils;
 import cn.youai.server.task.AbstractWorker;
 import cn.youai.server.task.ITask;
 import cn.youai.server.task.TaskExecutor;
 import cn.youai.xiuzhen.game.service.IGameStopServerRefundRecordService;
+import org.jeecg.common.util.SpringContextUtils;
 
 /**
  * 删档返还
@@ -23,6 +23,5 @@ public class GameStopServerRefundWork implements ITask {
                 SpringContextUtils.getBean(IGameStopServerRefundRecordService.class).checkSendStopServerRefund();
             }
         });
-
     }
 }

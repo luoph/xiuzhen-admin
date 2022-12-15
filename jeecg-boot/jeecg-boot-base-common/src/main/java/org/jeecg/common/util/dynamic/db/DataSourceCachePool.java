@@ -4,8 +4,9 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.jeecg.common.api.CommonAPI;
 import org.jeecg.common.constant.CacheConstant;
 import org.jeecg.common.system.vo.DynamicDataSourceModel;
-import org.jeecg.common.util.SpringWebContextUtils;
+import org.jeecg.common.util.SpringContextUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class DataSourceCachePool {
 
     private static RedisTemplate<String, Object> getRedisTemplate() {
         if (redisTemplate == null) {
-            redisTemplate = (RedisTemplate<String, Object>) SpringWebContextUtils.getBean("redisTemplate");
+            redisTemplate = (RedisTemplate<String, Object>) SpringContextUtils.getBean("redisTemplate");
         }
         return redisTemplate;
     }
@@ -37,7 +38,7 @@ public class DataSourceCachePool {
         if (getRedisTemplate().hasKey(redisCacheKey)) {
             return (DynamicDataSourceModel) getRedisTemplate().opsForValue().get(redisCacheKey);
         }
-        CommonAPI commonApi = SpringWebContextUtils.getBean(CommonAPI.class);
+        CommonAPI commonApi = SpringContextUtils.getBean(CommonAPI.class);
         DynamicDataSourceModel dbSource = commonApi.getDynamicDbSourceByCode(dbKey);
         if (dbSource != null) {
             getRedisTemplate().opsForValue().set(redisCacheKey, dbSource);
