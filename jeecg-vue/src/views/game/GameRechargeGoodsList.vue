@@ -205,8 +205,7 @@ export default {
           dataIndex: 'goodsGroup',
           customRender: (value) => {
             let text = '--';
-            if (value === 0) {
-            } else if (value === 1) {
+            if (value === 1) {
               text = '直充';
             } else if (value === 2) {
               text = '礼包';
