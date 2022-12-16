@@ -40,13 +40,13 @@
               <a-input placeholder="请输入接收者名称" v-model="queryParam.receiverName" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="消息">
-              <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent"></j-input>
-            </a-form-item>
-          </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
+              <a-form-item label="消息">
+                <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent"></j-input>
+              </a-form-item>
+            </a-col>
+            <a-col :md="3" :sm="8">
               <a-form-item label="消息类型">
                 <a-select placeholder="请选择消息类型" v-model="queryParam.msgType" initialValue="1">
                   <a-select-option :value="1">普通文本</a-select-option>
