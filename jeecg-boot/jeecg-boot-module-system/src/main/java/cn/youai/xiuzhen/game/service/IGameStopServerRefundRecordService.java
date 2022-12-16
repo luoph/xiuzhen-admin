@@ -1,6 +1,6 @@
 /*
-* create by mybatis-plus-generator  https://github.com/xiweile
-*/
+ * create by mybatis-plus-generator  https://github.com/xiweile
+ */
 package cn.youai.xiuzhen.game.service;
 
 import cn.youai.xiuzhen.game.entity.GameStopServerRefundRecord;
@@ -17,4 +17,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface IGameStopServerRefundRecordService extends IService<GameStopServerRefundRecord> {
 
     void checkSendStopServerRefund();
+
 }

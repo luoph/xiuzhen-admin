@@ -25,6 +25,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ import java.util.stream.Collectors;
  * @author buliangliang
  * @since 2022-12-05
  */
+@Slf4j
 @Service
 public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopServerRefundRecordMapper, GameStopServerRefundRecord> implements IGameStopServerRefundRecordService {
 
@@ -61,29 +63,23 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
     @Override
     public void checkSendStopServerRefund() {
         // 需要处理'停服返还充值'的服务器
-//        Set<Integer> gameServerIds = gameServerService.list(Wrappers.<GameServer>lambdaQuery()
-//                        .select(GameServer::getId).eq(GameServer::getStopServerRefund, 1))
-//                .stream().map(GameServer::getId).collect(Collectors.toSet());
         Set<Integer> gameServerIds = GameServerCache.getInstance().getStopServerRefundServerIds();
         if (gameServerIds.isEmpty()) {
             return;
         }
 
         // 充值总金额
-        Map<Long, GameOrder> playerId2GameOrderMap = gameOrderMapper.sumAmountGroupByPlayerId(gameServerIds).stream().filter(e -> null != e.getTotalAmount() && e.getTotalAmount() > 0)
+        Map<Long, GameOrder> playerId2GameOrderMap = gameOrderMapper.sumAmountGroupByPlayerId(gameServerIds).stream()
+                .filter(e -> null != e.getTotalAmount() && e.getTotalAmount() > 0)
                 .collect(Collectors.toMap(GameOrder::getPlayerId, Function.identity(), (key1, key2) -> key2));
         if (playerId2GameOrderMap.isEmpty()) {
             return;
         }
 
         // 已处理'停服返还充值'的玩家 GameStopServerRefundRecord.sourcePlayerId
-//        Set<Long> recordPlayerIds = list(Wrappers.<GameStopServerRefundRecord>lambdaQuery()
-//                .select(GameStopServerRefundRecord::getSourcePlayerId).in(GameStopServerRefundRecord::getSourceServerId, gameServerIds))
-//                .stream().map(GameStopServerRefundRecord::getSourcePlayerId).collect(Collectors.toSet());
         Set<Long> recordPlayerIds = GameStopServerRefundRecordCache.getInstance().getRecordPlayerIds(gameServerIds);
 
         // 需要处理'停服返还充值'的玩家 GamePlayer
-//        List<GamePlayer> gamePlayers = gamePlayerService.list(Wrappers.<GamePlayer>lambdaQuery().select(GamePlayer::getAccount).in(GamePlayer::getServerId, gameServerIds));
         LambdaQueryWrapper<GamePlayer> lambdaQuery = Wrappers.<GamePlayer>lambdaQuery()
                 .select(GamePlayer::getAccount)
                 .in(GamePlayer::getServerId, gameServerIds)
@@ -91,6 +87,7 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
         if (!recordPlayerIds.isEmpty()) {
             lambdaQuery.notIn(GamePlayer::getPlayerId, recordPlayerIds);
         }
+
         Set<String> gamePlayerAccounts = gamePlayerService.list(lambdaQuery).stream().map(GamePlayer::getAccount).collect(Collectors.toSet());
         if (gamePlayerAccounts.isEmpty()) {
             return;
@@ -106,7 +103,8 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
 
         account2GamePlayerMap.forEach((k, v) -> {
             // 需要返还的players
-            List<GamePlayer> sourceGamePlayers = v.stream().filter(e -> gameServerIds.contains(e.getServerId()) && !recordPlayerIds.contains(e.getPlayerId())).collect(Collectors.toList());
+            List<GamePlayer> sourceGamePlayers = v.stream().filter(e -> gameServerIds.contains(e.getServerId())
+                    && !recordPlayerIds.contains(e.getPlayerId())).collect(Collectors.toList());
             if (sourceGamePlayers.isEmpty()) {
                 return;
             }
@@ -125,13 +123,19 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
                 if (null == gameOrder || null == gameOrder.getTotalAmount() || gameOrder.getTotalAmount() <= 0) {
                     return;
                 }
+
                 long refundNum = getRefundNum(gameOrder.getTotalAmount());
                 if (refundNum <= 0) {
                     return;
                 }
-                saveRecords.add(new GameStopServerRefundRecord().setSourceServerId(sourceGamePlayer.getServerId()).setSourcePlayerId(sourceGamePlayer.getPlayerId())
-                        .setTargetServerId(targetGamePlayer.getServerId()).setTargetPlayerId(targetGamePlayer.getPlayerId())
-                        .setSourceAmount(BigDecimal.valueOf(gameOrder.getTotalAmount())).setTargetNum(refundNum).setCreateTime(current));
+
+                saveRecords.add(new GameStopServerRefundRecord()
+                        .setSourceServerId(sourceGamePlayer.getServerId())
+                        .setSourcePlayerId(sourceGamePlayer.getPlayerId())
+                        .setTargetServerId(targetGamePlayer.getServerId())
+                        .setTargetPlayerId(targetGamePlayer.getPlayerId())
+                        .setSourceAmount(BigDecimal.valueOf(gameOrder.getTotalAmount()))
+                        .setTargetNum(refundNum).setCreateTime(current));
 
                 String rewards = JSON.toJSONString(CollUtil.newArrayList(ItemVO.valueOf(1002, refundNum)));
                 Object[] args = new Object[]{gameOrder.getTotalAmount().longValue(), refundNum};
@@ -142,8 +146,8 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
         });
 
         httpEmails.forEach((k, v) -> gameServerService.gameServerPost(CollUtil.newArrayList(k), sendHttpEmailUrl, v));
-
         if (!saveRecords.isEmpty()) {
+            log.info("add records:{}", JSON.toJSONString(saveRecords));
             saveBatch(saveRecords);
             GameStopServerRefundRecordCache.getInstance().put(saveRecords);
         }
