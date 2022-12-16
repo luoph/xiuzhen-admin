@@ -95,8 +95,8 @@ export default {
         endTime: {}
       },
       url: {
-        add: 'game/gameForbidden/add',
-        edit: 'game/gameForbidden/edit'
+        add: 'game/forbidden/add',
+        edit: 'game/forbidden/edit'
       }
     };
   },

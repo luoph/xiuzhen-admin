@@ -1,16 +1,17 @@
 package cn.youai.xiuzhen.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
+import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @author jeecg-boot
@@ -19,9 +20,10 @@ import java.io.Serializable;
  * @date 2020-12-17
  */
 @Data
-@TableName("game_forbidden")
 @Accessors(chain = true)
-public class GameForbidden implements Serializable {
+@TableName("game_forbidden")
+@EqualsAndHashCode(callSuper = true)
+public class GameForbidden extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -86,33 +88,8 @@ public class GameForbidden implements Serializable {
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date endTime;
 
-    /**
-     * 创建时间
-     */
-    @Excel(name = "创建时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date createTime;
-
-    /**
-     * 更新时间
-     */
-    @Excel(name = "更新时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date updateTime;
-
-    /**
-     * 操作人
-     */
-    @Excel(name = "操作人", width = 15)
-    private java.lang.String createBy;
-
-    /**
-     * 操作人
-     */
-    @Excel(name = "操作人", width = 15)
-    private java.lang.String updateBy;
+    @TableField(exist = false)
+    private Integer duration;
 
     public void copy(GameForbidden other) {
         this.setStartTime(other.getStartTime());

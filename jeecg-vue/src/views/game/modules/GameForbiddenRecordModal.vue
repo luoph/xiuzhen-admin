@@ -99,8 +99,8 @@ export default {
         createBy: {}
       },
       url: {
-        add: 'game/gameForbiddenRecord/add',
-        edit: 'game/gameForbiddenRecord/edit'
+        add: 'game/forbiddenRecord/add',
+        edit: 'game/forbiddenRecord/edit'
       }
     };
   },

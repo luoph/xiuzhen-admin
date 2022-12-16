@@ -260,11 +260,11 @@ export default {
         }
       ],
       url: {
-        list: 'game/gameForbidden/list',
-        delete: 'game/gameForbidden/delete',
-        deleteBatch: 'game/gameForbidden/deleteBatch',
-        exportXlsUrl: 'game/gameForbidden/exportXls',
-        importExcelUrl: 'game/gameForbidden/importExcel'
+        list: 'game/forbidden/list',
+        delete: 'game/forbidden/delete',
+        deleteBatch: 'game/forbidden/deleteBatch',
+        exportXlsUrl: 'game/forbidden/exportXls',
+        importExcelUrl: 'game/forbidden/importExcel'
       },
       dictOptions: {}
     };

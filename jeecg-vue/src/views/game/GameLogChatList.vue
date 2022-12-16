@@ -116,10 +116,20 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">详情</a>
+          <a-button type="primary" size="small" @click="forbidTalk(record)"> 禁言 </a-button>
+          <a-divider type="vertical" />
+          <a-button type="primary" size="small" @click="kickOff(record)"> 踢下线 </a-button>
+          <a-divider type="vertical" />
+          <a-button type="primary" size="small" @click="forbidLogin(record)"> 封号 </a-button>
+          <a-divider type="vertical" />
+          <a-button size="small" @click="undoForbidTalk(record)"> 禁言撤回 </a-button>
+          <a-divider type="vertical" />
+          <a-button size="small" @click="undoForbidLogin(record)"> 封号撤回 </a-button>
         </span>
       </a-table>
     </div>
+
+    <GameForbidTalkModal ref="forbiddenTalkForm" @ok="modalFormOk"></GameForbidTalkModal>
   </a-card>
 </template>
 
@@ -129,12 +139,15 @@ import { mixinDevice } from '@/utils/mixin';
 import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
+import { getAction } from '@/api/manage';
+import GameForbidTalkModal from './modules/GameForbidTalkModal';
 
 export default {
   name: 'LogChatList',
   mixins: [JeecgListMixin, mixinDevice],
   components: {
-    JInput
+    JInput,
+    GameForbidTalkModal
   },
   data() {
     return {
@@ -248,18 +261,20 @@ export default {
           align: 'center',
           width: 120,
           dataIndex: 'createTime'
+        },
+        {
+          title: '操作',
+          dataIndex: 'action',
+          align: 'center',
+          width: 300,
+          fixed: 'right',
+          scopedSlots: { customRender: 'action' }
         }
-        // {
-        //   title: '操作',
-        //   dataIndex: 'action',
-        //   align: 'center',
-        //   fixed: 'right',
-        //   width: 147,
-        //   scopedSlots: { customRender: 'action' }
-        // }
       ],
       url: {
         list: '/game/stat/logChat/list',
+        undo: '/game/forbidden/undo',
+        kickOff: '/game/forbidden/kickOff',
         exportXlsUrl: '/game/stat/logChat/exportXls'
       },
       dictOptions: {},
@@ -287,6 +302,52 @@ export default {
       console.log(dateString[0], dateString[1]);
       this.queryParam.createDate_begin = dateString[0];
       this.queryParam.createDate_end = dateString[1];
+    },
+    forbidTalk(record) {
+      // 禁言
+      let that = this;
+      // 1 - 登录, 2 - 聊天
+      let model = { type: 2, banKey: 'playerId', banValue: record.senderId, serverId: record.serverId, duration: 86400 };
+      that.$refs.forbiddenTalkForm.title = '禁言玩家: ' + record.senderId;
+      that.$refs.forbiddenTalkForm.edit(model);
+    },
+    kickOff(record) {
+      let that = this;
+      // 踢下线
+      getAction(that.url.kickOff, { playerId: record.senderId, serverId: record.serverId }).then((res) => {
+        if (res.success) {
+          that.$message.success(res.message);
+        } else {
+          that.$message.error(res.message);
+        }
+      });
+    },
+    forbidLogin(record) {
+      // 封号
+      let that = this;
+      // 1 - 登录, 2 - 聊天
+      let model = { type: 1, banKey: 'playerId', banValue: record.senderId, serverId: record.serverId, duration: 86400 };
+      that.$refs.forbiddenTalkForm.title = '封号玩家: ' + record.senderId;
+      that.$refs.forbiddenTalkForm.edit(model);
+    },
+    undoForbidLogin(record) {
+      // 撤回封号
+      this.undoForbid(1, record.serverId, record.senderId);
+    },
+    undoForbidTalk(record) {
+      // 撤回禁言
+      this.undoForbid(2, record.serverId, record.senderId);
+    },
+    undoForbid(type, serverId, playerId) {
+      // 1 - 登录, 2 - 聊天
+      let that = this;
+      getAction(that.url.undo, { type: type, serverId: serverId, playerId: playerId }).then((res) => {
+        if (res.success) {
+          that.$message.success(res.message);
+        } else {
+          that.$message.error(res.message);
+        }
+      });
     }
   }
 };
