@@ -10,7 +10,6 @@ import cn.youai.enums.OutdatedType;
 import cn.youai.server.constant.ItemRuleId;
 import cn.youai.server.model.ItemVO;
 import cn.youai.server.utils.ConvertUtils;
-import cn.youai.server.utils.DBHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.cache.GameStopServerRefundRecordCache;
@@ -145,7 +144,7 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
         httpEmails.forEach((k, v) -> gameServerService.gameServerPost(CollUtil.newArrayList(k), sendHttpEmailUrl, v));
 
         if (!saveRecords.isEmpty()) {
-            DBHelper.saveBatch(saveRecords, getClass());
+            saveBatch(saveRecords);
             GameStopServerRefundRecordCache.getInstance().put(saveRecords);
         }
     }
