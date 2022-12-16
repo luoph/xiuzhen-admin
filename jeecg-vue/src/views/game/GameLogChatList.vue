@@ -49,8 +49,9 @@
             <a-col :md="4" :sm="8">
               <a-form-item label="消息类型">
                 <a-select placeholder="请选择消息类型" v-model="queryParam.msgType" initialValue="1">
-                  <a-select-option :value="1">文本</a-select-option>
-                  <a-select-option :value="2">分享</a-select-option>
+                  <a-select-option :value="1">普通文本</a-select-option>
+                  <a-select-option :value="2">修真日志</a-select-option>
+                  <a-select-option :value="3">分享</a-select-option>
                 </a-select>
               </a-form-item>
             </a-col>
@@ -209,8 +210,10 @@ export default {
           customRender: (value) => {
             let re = '未知';
             if (value === 1) {
-              re = '文本';
+              re = '普通文本';
             } else if (value === 2) {
+              re = '修真日志';
+            } else if (value === 3) {
               re = '分享';
             }
             return re;
