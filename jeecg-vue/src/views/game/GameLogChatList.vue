@@ -57,7 +57,7 @@
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
               </a-form-item>
             </a-col>
           </template>
@@ -158,6 +158,12 @@ export default {
           dataIndex: 'serverId'
         },
         {
+          title: '账号',
+          align: 'center',
+          width: 80,
+          dataIndex: 'account'
+        },
+        {
           title: '发送者id',
           align: 'center',
           width: 80,
@@ -220,6 +226,18 @@ export default {
           }
         },
         {
+          title: '角色等级',
+          align: 'center',
+          width: 80,
+          dataIndex: 'level'
+        },
+        {
+          title: 'sdk渠道',
+          align: 'center',
+          width: 80,
+          dataIndex: 'sdkChannel'
+        },
+        {
           title: '消息内容',
           align: 'center',
           width: 320,
@@ -248,9 +266,7 @@ export default {
       superFieldList: []
     };
   },
-  created() {
-    this.getSuperFieldList();
-  },
+  created() {},
   computed: {
     importExcelUrl: function () {
       return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
@@ -259,18 +275,18 @@ export default {
   methods: {
     initDictConfig() {},
     getQueryParams() {
-      console.log(this.queryParam.createTimeRange);
+      console.log(this.queryParam.createDateRange);
       const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       // 范围参数不传递后台
-      delete param.createTimeRange;
+      delete param.createDateRange;
       return filterObj(param);
     },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
-      this.queryParam.createTime_begin = dateString[0];
-      this.queryParam.createTime_end = dateString[1];
+      this.queryParam.createDate_begin = dateString[0];
+      this.queryParam.createDate_end = dateString[1];
     }
   }
 };

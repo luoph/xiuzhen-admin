@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.stat.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -85,4 +86,16 @@ public class LogChat implements Serializable {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private java.util.Date createDate;
+
+    @TableField(exist = false)
+    private String account;
+
+    @TableField(exist = false)
+    private Integer level;
+
+    @TableField(exist = false)
+    private String channel;
+
+    @TableField(exist = false)
+    private String sdkChannel;
 }

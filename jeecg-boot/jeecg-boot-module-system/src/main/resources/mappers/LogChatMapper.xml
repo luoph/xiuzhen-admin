@@ -2,4 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.LogChatMapper">
 
+    <select id="selectLogChatList" resultType="cn.youai.xiuzhen.stat.entity.LogChat">
+        SELECT l.*, p.`account`, p.`level`, p.`sdk_channel`, p.`channel`
+        FROM `log_chat` l
+        LEFT JOIN `game_player` p ON l.`sender_id` = p.`player_id`
+        <where>
+            l.`chat_type` > 0 and l.`sender_id` > 0
+            <if test="entity != null">
+                <if test="entity.serverId !=null and entity.serverId > 0">
+                    and l.`server_id` = #{entity.serverId}
+                </if>
+                <if test="entity.chatType !=null and entity.chatType > 0">
+                    and l.`chat_type` = #{entity.chatType}
+                </if>
+                <if test="entity.msgType !=null and entity.msgType > 0">
+                    and l.`msg_type` = #{entity.msgType}
+                </if>
+                <if test="entity.senderId !=null and entity.senderId > 0">
+                    and l.`sender_id` = #{entity.senderId}
+                </if>
+                <if test="entity.senderName !=null and entity.senderName != ''">
+                    and l.`sender_name` like CONCAT('%',#{entity.senderName},'%')
+                </if>
+                <if test="entity.receiverId !=null and entity.receiverId > 0">
+                    and l.`receiver_id` = #{entity.receiverId}
+                </if>
+                <if test="entity.receiverName !=null and entity.receiverName != ''">
+                    and l.`receiver_name` like CONCAT('%',#{entity.receiverName},'%')
+                </if>
+                <if test="entity.msgContent !=null and entity.msgContent != ''">
+                    and l.`msg_content` like CONCAT('%',#{entity.msgContent},'%')
+                </if>
+            </if>
+            <if test="null != start"><![CDATA[AND l.`create_date` >= #{start}]]></if>
+            <if test="null != end"><![CDATA[AND l.`create_date` <= #{end}]]></if>
+        </where>
+        ORDER BY l.`create_time` DESC
+    </select>
+
+
 </mapper>
