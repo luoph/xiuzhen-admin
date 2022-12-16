@@ -312,13 +312,19 @@ export default {
       that.$refs.forbiddenTalkForm.edit(model);
     },
     kickOff(record) {
-      let that = this;
       // 踢下线
-      getAction(that.url.kickOff, { playerId: record.senderId, serverId: record.serverId }).then((res) => {
-        if (res.success) {
-          that.$message.success(res.message);
-        } else {
-          that.$message.error(res.message);
+      let that = this;
+      this.$confirm({
+        title: '是否踢玩家下线?',
+        content: '玩家ID：' + record.senderId + ' 玩家昵称：' + record.senderName,
+        onOk: function () {
+          getAction(that.url.kickOff, { playerId: record.senderId, serverId: record.serverId }).then((res) => {
+            if (res.success) {
+              that.$message.success(res.message);
+            } else {
+              that.$message.error(res.message);
+            }
+          });
         }
       });
     },
