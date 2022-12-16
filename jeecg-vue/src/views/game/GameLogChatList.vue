@@ -12,7 +12,7 @@
           <a-col :md="3" :sm="8">
             <a-form-item label="聊天类型">
               <a-select placeholder="请选择聊天类型" v-model="queryParam.chatType" initialValue="1">
-                <a-select-option :value="0">传闻</a-select-option>
+                <!-- <a-select-option :value="0">传闻</a-select-option> -->
                 <a-select-option :value="1">世界聊天</a-select-option>
                 <a-select-option :value="2">私聊</a-select-option>
                 <a-select-option :value="3">仙盟聊天</a-select-option>
