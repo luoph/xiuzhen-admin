@@ -60,7 +60,7 @@ public class LogChat implements Serializable {
     @Excel(name = "聊天类型", width = 15)
     private java.lang.Integer chatType;
     /**
-     * 消息类型 1-文本 2-分享
+     * 消息类型 1-普通文本 2-修真日志 3-分享
      */
     @Excel(name = "消息类型", width = 15)
     private java.lang.Integer msgType;
