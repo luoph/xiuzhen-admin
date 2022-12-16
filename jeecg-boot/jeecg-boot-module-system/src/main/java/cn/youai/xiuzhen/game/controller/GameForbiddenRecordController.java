@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Readonly
 @RestController
-@RequestMapping("game/gameForbiddenRecord")
+@RequestMapping("game/forbiddenRecord")
 public class GameForbiddenRecordController extends JeecgController<GameForbiddenRecord, IGameForbiddenRecordService> {
 
     @AutoLog(value = "封禁记录-列表查询")
