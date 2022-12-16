@@ -21,6 +21,6 @@ public class GameStopServerRefundJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        gameStopServerRefundRecordService.checkSendStopServerRefund();
+        // gameStopServerRefundRecordService.checkSendStopServerRefund();
     }
 }
