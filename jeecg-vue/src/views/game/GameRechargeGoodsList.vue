@@ -30,7 +30,7 @@
           <a-col :md="4" :sm="8">
             <a-form-item label="商品类型">
               <a-select placeholder="请选择商品类型" v-model="queryParam.goodsType" initialValue="1">
-                <a-select-option :value="0">普通类型/购买仙玉</a-select-option>
+                <a-select-option :value="0">购买仙玉</a-select-option>
                 <a-select-option :value="1">仙职</a-select-option>
                 <a-select-option :value="2">月卡</a-select-option>
                 <a-select-option :value="3">每日礼包</a-select-option>
@@ -45,6 +45,10 @@
                 <a-select-option :value="12">结义礼包</a-select-option>
                 <a-select-option :value="13">自选礼包</a-select-option>
                 <a-select-option :value="14">灵兽抽奖-礼包</a-select-option>
+                <a-select-option :value="15">开服目标活动-签到令</a-select-option>
+                <a-select-option :value="16">开服目标活动-任务礼包</a-select-option>
+                <a-select-option :value="17">系统直购礼包</a-select-option>
+                <a-select-option :value="18">成长基金</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -221,7 +225,7 @@ export default {
           customRender: (value) => {
             let text = '--';
             if (value === 0) {
-              text = '0-普通类型';
+              text = '0-购买仙玉';
             } else if (value === 1) {
               text = '1-仙职';
             } else if (value === 2) {
@@ -250,6 +254,14 @@ export default {
               text = '13-自选特惠';
             } else if (value === 14) {
               text = '14-灵兽抽奖礼包';
+            } else if (value === 15) {
+              text = '15-开服目标活动-签到令';
+            } else if (value === 16) {
+              text = '16-开服目标活动-任务礼包';
+            } else if (value === 17) {
+              text = '17-系统直购礼包';
+            } else if (value === 18) {
+              text = '18-成长基金';
             }
             return text;
           }
@@ -258,13 +270,19 @@ export default {
           title: '内购SKU',
           align: 'center',
           width: 120,
-          dataIndex: 'sku'
+          dataIndex: 'sku',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '网页支付SKU',
           align: 'center',
           width: 120,
-          dataIndex: 'webSku'
+          dataIndex: 'webSku',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '单价',
@@ -333,31 +351,46 @@ export default {
           title: '首次额外赠送',
           align: 'center',
           width: 180,
-          dataIndex: 'addition'
+          dataIndex: 'addition',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '当地价格',
           align: 'center',
           width: 120,
-          dataIndex: 'localPrice'
+          dataIndex: 'localPrice',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '网页支付价格',
           align: 'center',
           width: 120,
-          dataIndex: 'webLocalPrice'
+          dataIndex: 'webLocalPrice',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '显示价格',
           align: 'center',
           width: 120,
-          dataIndex: 'displayPrice'
+          dataIndex: 'displayPrice',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '网页显示价格',
           align: 'center',
           width: 120,
-          dataIndex: 'webDisplayPrice'
+          dataIndex: 'webDisplayPrice',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '操作',
