@@ -34,8 +34,10 @@
                     AND l.`msg_content` LIKE CONCAT('%',#{entity.msgContent},'%')
                 </if>
             </if>
-            <if test="null != start"><![CDATA[AND l.`create_date` >= #{start}]]></if>
-            <if test="null != end"><![CDATA[AND l.`create_date` <= #{end}]]></if>
+            <if test="dateRange != null">
+                <if test="null != dateRange.start"><![CDATA[AND l.`create_date` >= #{dateRange.start}]]></if>
+                <if test="null != dateRange.end"><![CDATA[AND l.`create_date` <= #{dateRange.end}]]></if>
+            </if>
         </where>
         ORDER BY l.`create_time` DESC
     </select>

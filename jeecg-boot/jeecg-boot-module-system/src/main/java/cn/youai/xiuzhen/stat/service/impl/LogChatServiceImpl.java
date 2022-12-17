@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
+import cn.youai.basics.model.DateRange;
 import cn.youai.xiuzhen.stat.entity.LogChat;
 import cn.youai.xiuzhen.stat.mapper.LogChatMapper;
 import cn.youai.xiuzhen.stat.service.ILogChatService;
@@ -8,8 +9,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 /**
  * @Description: 聊天日志
@@ -22,8 +21,8 @@ import java.util.Date;
 public class LogChatServiceImpl extends ServiceImpl<LogChatMapper, LogChat> implements ILogChatService {
 
     @Override
-    public IPage<LogChat> selectList(Page<?> page, LogChat logChat, Date start, Date end) {
-        return getBaseMapper().selectList(page, logChat, start, end);
+    public IPage<LogChat> selectList(Page<?> page, LogChat entity, DateRange createDateRange) {
+        return getBaseMapper().selectList(page, entity, createDateRange);
     }
 
 }

@@ -1,11 +1,10 @@
 package cn.youai.xiuzhen.stat.service;
 
+import cn.youai.basics.model.DateRange;
 import cn.youai.xiuzhen.stat.entity.LogChat;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.Date;
 
 /**
  * @Description: 聊天日志
@@ -15,6 +14,6 @@ import java.util.Date;
  */
 public interface ILogChatService extends IService<LogChat> {
 
-    IPage<LogChat> selectList(Page<?> page, LogChat logChat, Date start, Date end);
+    IPage<LogChat> selectList(Page<?> page, LogChat entity, DateRange createDateRange);
 
 }
