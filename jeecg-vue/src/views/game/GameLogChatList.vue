@@ -253,7 +253,7 @@ export default {
         {
           title: '消息内容',
           align: 'center',
-          width: 320,
+          width: 240,
           dataIndex: 'msgContent'
         },
         {
@@ -267,7 +267,6 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 300,
-          fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],

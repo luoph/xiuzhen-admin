@@ -113,24 +113,24 @@
       </a-table>
     </div>
 
-    <player-register-info-modal ref="modalForm" @ok="modalFormOk"></player-register-info-modal>
+    <GameRegisterInfoModal ref="modalForm" @ok="modalFormOk"></GameRegisterInfoModal>
   </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import PlayerRegisterInfoModal from './modules/PlayerRegisterInfoModal';
+import GameRegisterInfoModal from './modules/GameRegisterInfoModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import JInput from '@/components/jeecg/JInput';
 import { filterObj } from '@/utils/util';
 
 export default {
-  name: 'PlayerRegisterInfoList',
+  name: 'GameRegisterInfoList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
     JInput,
-    PlayerRegisterInfoModal
+    GameRegisterInfoModal
   },
   data() {
     return {
@@ -177,21 +177,11 @@ export default {
           align: 'center',
           dataIndex: 'channel'
         },
-        // {
-        //     title: "imei",
-        //     align: "center",
-        //     dataIndex: "imei"
-        // },
-        // {
-        //     title: "mac",
-        //     align: "center",
-        //     dataIndex: "mac"
-        // },
-        // {
-        //     title: "idfa",
-        //     align: "center",
-        //     dataIndex: "idfa"
-        // },
+        {
+          title: 'sdk渠道',
+          align: 'center',
+          dataIndex: 'sdkChannel'
+        },
         {
           title: '手机品牌',
           align: 'center',

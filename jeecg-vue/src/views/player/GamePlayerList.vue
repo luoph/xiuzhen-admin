@@ -134,22 +134,22 @@
       </a-table>
     </div>
 
-    <playerInfo-modal ref="modalForm" @ok="modalFormOk"></playerInfo-modal>
+    <GamePlayerModal ref="modalForm" @ok="modalFormOk"></GamePlayerModal>
   </a-card>
 </template>
 
 <script>
 import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import { getAction } from '@/api/manage';
-import PlayerInfoModal from './modules/PlayerInfoModal';
+import GamePlayerModal from './modules/GamePlayerModal';
 import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 
 export default {
-  name: 'PlayerInfoList',
+  name: 'GamePlayerList',
   mixins: [JeecgListMixin],
   components: {
-    PlayerInfoModal,
+    GamePlayerModal,
     getAction,
     JInput
   },
