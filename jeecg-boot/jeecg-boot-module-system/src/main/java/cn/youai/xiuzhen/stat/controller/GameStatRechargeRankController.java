@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
-import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -35,7 +35,7 @@ import java.util.List;
 public class GameStatRechargeRankController {
 
     @Autowired
-    private IGameOrderStatService orderStatService;
+    private IGameOrderService orderStatService;
 
     /**
      * 分页列表查询

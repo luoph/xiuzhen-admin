@@ -142,7 +142,7 @@ public class JeecgController<T, S extends IService<T>> {
     public Result<?> queryById(@RequestParam(name = "id") Serializable id) {
         T entity = getById(id);
         if (entity == null) {
-            return Result.error("未找到数据库记录");
+            return Result.error("未找到记录");
         }
         return Result.ok(entity);
     }

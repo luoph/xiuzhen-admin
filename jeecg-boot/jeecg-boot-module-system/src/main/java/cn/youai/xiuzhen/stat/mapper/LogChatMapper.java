@@ -16,6 +16,6 @@ import java.util.Date;
  */
 public interface LogChatMapper extends BaseMapper<LogChat> {
 
-    IPage<LogChat> selectLogChatList(Page<?> page, @Param("entity") LogChat entity, @Param("start") Date start, @Param("end") Date end);
+    IPage<LogChat> selectList(Page<?> page, @Param("entity") LogChat entity, @Param("start") Date start, @Param("end") Date end);
 
 }

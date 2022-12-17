@@ -3,27 +3,19 @@
  */
 package cn.youai.xiuzhen.stat.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.date.DateUtil;
 import cn.youai.enums.AccountLogType;
-import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
 import cn.youai.xiuzhen.stat.mapper.GameStatDailyMapper;
-import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import cn.youai.xiuzhen.stat.service.IGameStatDailyService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
-import cn.youai.xiuzhen.utils.BigDecimalUtils;
-import cn.youai.xiuzhen.utils.ParamUtils;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +32,7 @@ import java.util.List;
 public class GameStatDailyServiceImpl extends ServiceImpl<GameStatDailyMapper, GameStatDaily> implements IGameStatDailyService {
 
     @Autowired
-    private IGameOrderStatService payOrderService;
+    private IGameOrderService payOrderService;
 
     @Autowired
     private ILogAccountService logAccountService;

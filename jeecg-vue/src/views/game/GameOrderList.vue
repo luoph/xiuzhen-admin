@@ -11,22 +11,22 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <!-- <a-col :md="4" :sm="8">
             <a-form-item label="支付订单号">
-              <j-input placeholder="请输入支付订单号" v-model="queryParam.orderId"></j-input>
+              <a-input placeholder="请输入支付订单号" v-model="queryParam.orderId" />
             </a-form-item>
-          </a-col>
+          </a-col> -->
           <a-col :md="4" :sm="8">
             <a-form-item label="平台订单号">
-              <j-input placeholder="请输入平台订单号" v-model="queryParam.queryId"></j-input>
+              <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="商品id">
-              <a-input placeholder="请输入商品id" v-model="queryParam.productId"></a-input>
+              <a-input placeholder="请输入商品id" v-model="queryParam.productId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -44,20 +44,20 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="渠道">
-                <a-input placeholder="请输入渠道标识" v-model="queryParam.channel"></a-input>
+                <a-input placeholder="请输入渠道" v-model="queryParam.channel" />
               </a-form-item>
             </a-col>
-            <a-col :md="6" :sm="8">
+            <a-col :md="4" :sm="8">
               <a-form-item label="金额">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"></a-input>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin" />
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end"></a-input>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end" />
               </a-form-item>
             </a-col>
           </template>
@@ -160,13 +160,37 @@ export default {
           title: '玩家名',
           align: 'center',
           width: 80,
-          dataIndex: 'nickname'
+          dataIndex: 'nickname',
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
+        {
+          title: '账号',
+          align: 'center',
+          width: 80,
+          dataIndex: 'account',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '渠道',
           align: 'center',
           width: 80,
-          dataIndex: 'channel'
+          dataIndex: 'channel',
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
+        {
+          title: 'sdk渠道',
+          align: 'center',
+          width: 80,
+          dataIndex: 'sdkChannel',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '区服Id',
@@ -247,13 +271,19 @@ export default {
           title: '支付时间',
           align: 'center',
           width: 120,
-          dataIndex: 'payTime'
+          dataIndex: 'payTime',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '发货时间',
           align: 'center',
           width: 120,
-          dataIndex: 'sendTime'
+          dataIndex: 'sendTime',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         // {
         //     title: "充值货币",
@@ -288,18 +318,18 @@ export default {
   },
   methods: {
     getQueryParams() {
-      console.log(this.queryParam.createTimeRange);
+      console.log(this.queryParam.createDateRange);
       const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
       // 范围参数不传递后台
-      delete param.createTimeRange;
+      delete param.createDateRange;
       return filterObj(param);
     },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);
-      this.queryParam.createTime_begin = dateString[0];
-      this.queryParam.createTime_end = dateString[1];
+      this.queryParam.createDate_begin = dateString[0];
+      this.queryParam.createDate_end = dateString[1];
     }
   }
 };

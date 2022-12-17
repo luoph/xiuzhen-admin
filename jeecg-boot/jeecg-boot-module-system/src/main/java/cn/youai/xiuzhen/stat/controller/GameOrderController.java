@@ -1,22 +1,26 @@
 package cn.youai.xiuzhen.stat.controller;
 
+import cn.youai.basics.model.DateRange;
+import cn.youai.server.model.RangeValue;
+import cn.youai.xiuzhen.core.controller.SimplePageController;
 import cn.youai.xiuzhen.game.entity.GameOrder;
-import cn.youai.xiuzhen.game.service.IGamePlayerService;
-import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.annotation.Readonly;
-import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
 
 /**
  * @author jeecg-boot
@@ -28,10 +32,10 @@ import java.util.Map;
 @Readonly
 @RestController
 @RequestMapping("game/order")
-public class GameOrderController extends JeecgController<GameOrder, IGameOrderStatService> {
+public class GameOrderController extends SimplePageController<GameOrder> {
 
     @Autowired
-    private IGamePlayerService playerService;
+    private IGameOrderService gameOrderService;
 
     /**
      * 分页列表查询
@@ -48,32 +52,20 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
     }
 
     @Override
-    protected void onload(List<GameOrder> pageList) {
-        HashSet<Long> resultPlayerIds = PageQueryUtils.extractIds(pageList, GameOrder::getPlayerId);
-        Map<Long, String> nicknameMap = playerService.getPlayerNicknameMap(resultPlayerIds);
-        pageList.forEach(e -> e.setNickname(nicknameMap.get(e.getPlayerId())));
+    protected IPage<GameOrder> pageList(Page<GameOrder> page, GameOrder entity, HttpServletRequest req) {
+        DateRange createDateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
+        RangeValue<BigDecimal> payAmountRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "payAmount");
+        return gameOrderService.selectList(page, entity, createDateRange, payAmountRange);
     }
 
     @AutoLog(value = "充值订单-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        return super.queryById(id);
-    }
-
-    @AutoLog(value = "充值订单-添加")
-    @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameOrder entity) {
-        return Result.ok("不支持！");
-    }
-
-    @Override
-    public Result<?> delete(String id) {
-        return Result.ok("不支持！");
-    }
-
-    @Override
-    public Result<?> deleteBatch(String ids) {
-        return Result.ok("不支持！");
+        GameOrder entity = gameOrderService.selectById(id);
+        if (entity == null) {
+            return Result.error("未找到记录");
+        }
+        return Result.ok(entity);
     }
 
     @AutoLog(value = "充值订单-导出")
@@ -81,4 +73,5 @@ public class GameOrderController extends JeecgController<GameOrder, IGameOrderSt
     public ModelAndView exportXls(HttpServletRequest request, GameOrder entity) {
         return super.exportXls(request, entity, GameOrder.class, "充值订单");
     }
+
 }

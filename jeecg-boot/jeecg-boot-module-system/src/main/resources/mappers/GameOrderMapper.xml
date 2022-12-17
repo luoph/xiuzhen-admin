@@ -3,6 +3,53 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameOrderMapper">
 
+    <select id="selectById" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+        SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
+        FROM `game_order` o
+                 LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE o.`id` = #{id}
+    </select>
+
+    <select id="selectList" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+        SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        <where>
+            <if test="entity != null">
+                <if test="entity.channel != null and entity.channel != ''">
+                    AND o.`channel` = #{entity.channel}
+                </if>
+                <if test="entity.serverId != null and entity.serverId > 0">
+                    AND o.`server_id` = #{entity.serverId}
+                </if>
+                <if test="entity.playerId != null and entity.playerId > 0">
+                    AND o.`player_id` = #{entity.playerId}
+                </if>
+                <if test="entity.orderId != null and entity.orderId != ''">
+                    AND o.`order_id` LIKE CONCAT('%', #{entity.orderId}, '%')
+                </if>
+                <if test="entity.queryId != null and entity.queryId != ''">
+                    AND o.`query_id` LIKE CONCAT('%', #{entity.queryId}, '%')
+                </if>
+                <if test="entity.productId != null">
+                    AND o.`product_id` = #{entity.productId}
+                </if>
+                <if test="entity.orderStatus != null">
+                    AND o.`order_status` = #{entity.orderStatus}
+                </if>
+            </if>
+            <if test="amountRange != null">
+                <if test="null != amountRange.min"><![CDATA[AND o.`pay_amount` >= #{amountRange.min}]]></if>
+                <if test="null != amountRange.max"><![CDATA[AND o.`pay_amount` <= #{amountRange.max}]]></if>
+            </if>
+            <if test="dateRange != null">
+                <if test="null != dateRange.start"><![CDATA[AND o.`create_date` >= #{dateRange.start}]]></if>
+                <if test="null != dateRange.end"><![CDATA[AND o.`create_date` <= #{dateRange.end}]]></if>
+            </if>
+        </where>
+        ORDER BY o.`create_time` DESC
+    </select>
+
     <select id="serverRangeAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
@@ -27,66 +74,68 @@
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
         WHERE o.`server_id` = #{serverId}
-          AND o.`create_date` = DATE(#{payDate});
+          AND o.`create_date` = DATE (#{payDate});
     </select>
 
     <select id="chanelPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
-        LEFT JOIN `game_player` b ON o.`player_id` = b.`player_id`
+                 LEFT JOIN `game_player` b ON o.`player_id` = b.`player_id`
         WHERE b.`channel` = #{channel}
-          AND o.`create_date` = DATE(#{payDate});
+          AND o.`create_date` = DATE (#{payDate});
     </select>
 
     <select id="serverPayPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT o.`player_id`) AS num
         FROM `game_order` o
         WHERE o.`server_id` = #{serverId}
-          AND o.`create_date` = DATE(#{payDate});
+          AND o.`create_date` = DATE (#{payDate});
     </select>
 
     <select id="channelPayPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT o.`player_id`) AS num
         FROM `game_order` o
-        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+                 LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`channel` = #{channel}
-          AND o.`create_date` = DATE(#{payDate});
+          AND o.`create_date` = DATE (#{payDate});
     </select>
 
     <!-- 充值统计 -->
     <select id="queryOrderStatByRange" resultType="cn.youai.xiuzhen.stat.entity.GameStatOrder">
         <![CDATA[
         SELECT #{serverNum} AS `server_num`,
-        #{startDate} AS `start_date`,
-        #{endDate} AS `end_date`,
+               #{startDate} AS `start_date`,
+               #{endDate}   AS `end_date`,
 
-        -- 活跃用户数
-        (SELECT IFNULL(COUNT(DISTINCT(l.`player_id`)), 0)
-        FROM `log_account` l
-        LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
-        WHERE l.`create_date` >= DATE(#{startDate})
-        AND l.`create_date` <= DATE(#{endDate})
-        AND l.`type` = 2
-        AND p.`server_id` IN (#{serverIds})
-        ) AS `active_num`,
+               -- 活跃用户数
+               (SELECT IFNULL(COUNT(DISTINCT (l.`player_id`)), 0)
+                FROM `log_account` l
+                         LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
+                WHERE l.`create_date` >= DATE(#{startDate}) AND l.`create_date` <= DATE(#{endDate}) AND l.`type` = 2 AND p.`server_id` IN (#{serverIds}) ) AS `active_num`,
 
-        -- 付费用户数
-        (SELECT IFNULL(COUNT(DISTINCT(o.`player_id`)), 0)
+               -- 付费用户数
+            (
+        SELECT IFNULL(COUNT (DISTINCT (o.`player_id`)), 0)
         FROM `game_order` o
-        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE o.`create_date` >= DATE(#{startDate})
-        AND o.`create_date` <= DATE(#{endDate})
-        AND p.`server_id` IN (#{serverIds})
-        ) AS `pay_num`,
+            LEFT JOIN `game_player` p
+        ON o.`player_id` = p.`player_id`
+        WHERE o.`create_date` >= DATE (#{startDate})
+          AND o.`create_date` <= DATE (#{endDate})
+          AND p.`server_id` IN (#{serverIds})
+            ) AS `pay_num`
+            ,
 
         -- 付费金额
-        (SELECT IFNULL(SUM(o.`pay_amount`), 0)
+            (
+        SELECT IFNULL(SUM (o.`pay_amount`), 0)
         FROM `game_order` o
-        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE o.`create_date` >= DATE(#{startDate})
-        AND o.`create_date` < DATE(#{endDate})
-        AND p.`server_id` IN (#{serverIds})
-        ) AS `pay_amount`;
+            LEFT JOIN `game_player` p
+        ON o.`player_id` = p.`player_id`
+        WHERE o.`create_date` >= DATE (#{startDate})
+          AND o.`create_date`
+            < DATE (#{endDate})
+          AND p.`server_id` IN (#{serverIds})
+            ) AS `pay_amount`;
         ]]>
     </select>
 
@@ -133,10 +182,10 @@
 
     <select id="queryStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">
         SELECT o.`product_id` AS `product_id`,
-               o.`name` AS `product_name`,
-               IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
-               IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
-               IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `player_num`
+        o.`name` AS `product_name`,
+        IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
+        IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
+        IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `player_num`
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
@@ -165,9 +214,9 @@
     </select>
 
     <select id="queryPlayerRechargeAmount" resultType="cn.youai.xiuzhen.stat.entity.GameStatPlayerRechargeAmount">
-        SELECT  o.`player_id`,
-                IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
-                IFNULL(COUNT(o.`id`), 0) AS `pay_num`
+        SELECT o.`player_id`,
+        IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
+        IFNULL(COUNT(o.`id`), 0) AS `pay_num`
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         <where>
@@ -180,13 +229,13 @@
     </select>
 
     <select id="queryRechargeRankList" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeRank">
-        SELECT  o.`player_id`,
-                p.`nickname`,
-                p.`level`,
-                p.`create_time`,
-                p.`login_time` AS `last_login_time`,
-                MAX(o.`create_time`) AS `last_pay_time`,
-                IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`
+        SELECT o.`player_id`,
+        p.`nickname`,
+        p.`level`,
+        p.`create_time`,
+        p.`login_time` AS `last_login_time`,
+        MAX(o.`create_time`) AS `last_pay_time`,
+        IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         <where>

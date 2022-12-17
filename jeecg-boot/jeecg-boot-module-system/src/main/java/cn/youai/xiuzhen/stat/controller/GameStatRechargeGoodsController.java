@@ -3,11 +3,10 @@ package cn.youai.xiuzhen.stat.controller;
 import cn.youai.basics.model.DateRange;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.xiuzhen.game.constant.RechargeGoodsGroup;
-import cn.youai.xiuzhen.game.entity.GameRechargeGoods;
 import cn.youai.xiuzhen.game.service.IGameRechargeGoodsService;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeSum;
-import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -23,10 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -40,7 +36,7 @@ import java.util.stream.Collectors;
 public class GameStatRechargeGoodsController {
 
     @Autowired
-    private IGameOrderStatService orderStatService;
+    private IGameOrderService orderStatService;
 
     @Autowired
     private IGameRechargeGoodsService rechargeGoodsService;

@@ -1,9 +1,13 @@
 package cn.youai.xiuzhen.game.mapper;
 
+import cn.youai.basics.model.DateRange;
+import cn.youai.server.model.RangeValue;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import cn.youai.xiuzhen.stat.entity.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -18,6 +22,14 @@ import java.util.Set;
  * @date 2020-01-05
  */
 public interface GameOrderMapper extends BaseMapper<GameOrder> {
+
+    GameOrder selectById(@Param("id") String id);
+
+    IPage<GameOrder> selectList(Page<?> page,
+                                @Param("entity") GameOrder entity,
+                                @Param("dateRange") DateRange dateRange,
+                                @Param("amountRange") RangeValue<BigDecimal> amountRange);
+
     BigDecimal serverRangeAmount(@Param("serverId") int serverId,
                                  @Param("start") Date start,
                                  @Param("end") Date end);
@@ -84,4 +96,5 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                                      @Param("endDate") Date endDate);
 
     List<GameOrder> sumAmountGroupByPlayerId(@Param("serverIds") Set<Integer> serverIds);
+
 }

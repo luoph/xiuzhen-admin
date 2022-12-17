@@ -22,8 +22,8 @@ import java.util.Date;
 public class LogChatServiceImpl extends ServiceImpl<LogChatMapper, LogChat> implements ILogChatService {
 
     @Override
-    public IPage<LogChat> selectLogChatList(Page<?> page, LogChat logChat, Date start, Date end) {
-        return getBaseMapper().selectLogChatList(page, logChat, start, end);
+    public IPage<LogChat> selectList(Page<?> page, LogChat logChat, Date start, Date end) {
+        return getBaseMapper().selectList(page, logChat, start, end);
     }
 
 }

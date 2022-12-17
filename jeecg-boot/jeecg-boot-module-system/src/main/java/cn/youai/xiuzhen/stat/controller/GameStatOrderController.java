@@ -7,7 +7,7 @@ import cn.youai.xiuzhen.game.constant.StatDuration;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
-import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -43,7 +43,7 @@ public class GameStatOrderController {
     private ILogAccountService logAccountService;
 
     @Autowired
-    private IGameOrderStatService orderStatService;
+    private IGameOrderService orderStatService;
 
     @Autowired
     private IGameChannelServerService channelServerService;

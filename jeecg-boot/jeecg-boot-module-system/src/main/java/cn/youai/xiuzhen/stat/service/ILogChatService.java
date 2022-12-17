@@ -15,6 +15,6 @@ import java.util.Date;
  */
 public interface ILogChatService extends IService<LogChat> {
 
-    IPage<LogChat> selectLogChatList(Page<?> page, LogChat logChat, Date start, Date end);
+    IPage<LogChat> selectList(Page<?> page, LogChat logChat, Date start, Date end);
 
 }

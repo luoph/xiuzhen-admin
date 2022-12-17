@@ -1,6 +1,5 @@
 package cn.youai.xiuzhen.stat.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.xiuzhen.game.entity.GameChannel;
@@ -9,7 +8,7 @@ import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.ServerBill;
-import cn.youai.xiuzhen.stat.service.IGameOrderStatService;
+import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -41,7 +40,7 @@ import java.util.List;
 public class GameStatServerBillController {
 
     @Autowired
-    private IGameOrderStatService gameOrderStatService;
+    private IGameOrderService gameOrderStatService;
 
     @Autowired
     private IGameChannelServerService channelServerService;

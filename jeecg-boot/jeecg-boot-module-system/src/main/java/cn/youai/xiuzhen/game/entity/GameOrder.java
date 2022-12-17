@@ -41,14 +41,6 @@ public class GameOrder implements Serializable {
     private Long playerId;
 
     /**
-     * 玩家名
-     */
-    @ExcelProperty("玩家名")
-    @Excel(name = "玩家名", width = 15)
-    @TableField(exist = false)
-    private String nickname;
-
-    /**
      * 己方订单号
      */
 
@@ -187,5 +179,26 @@ public class GameOrder implements Serializable {
     private Date createTime;
 
     @TableField(exist = false)
+    @ExcelProperty("充值总额")
+    @Excel(name = "充值总额", width = 15)
     private Double totalAmount;
+
+    /**
+     * 玩家名
+     */
+    @ExcelProperty("玩家名")
+    @Excel(name = "玩家名", width = 15)
+    @TableField(exist = false)
+    private String nickname;
+
+    @ExcelProperty("账号")
+    @Excel(name = "账号", width = 15)
+    @TableField(exist = false)
+    private String account;
+
+    @ExcelProperty("sdk渠道")
+    @Excel(name = "sdk渠道", width = 15)
+    @TableField(exist = false)
+    private String sdkChannel;
+
 }

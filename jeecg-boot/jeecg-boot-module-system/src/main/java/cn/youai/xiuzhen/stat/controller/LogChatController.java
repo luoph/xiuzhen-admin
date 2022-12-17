@@ -47,7 +47,7 @@ public class LogChatController extends SimplePageController<LogChat> {
     @Override
     protected IPage<LogChat> pageList(Page<LogChat> page, LogChat entity, HttpServletRequest req) {
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
-        return logChatService.selectLogChatList(page, entity, dateRange.getStart(), dateRange.getEnd());
+        return logChatService.selectList(page, entity, dateRange.getStart(), dateRange.getEnd());
     }
 
     @RequestMapping(value = "/exportXls")
