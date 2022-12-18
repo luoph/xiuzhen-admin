@@ -184,7 +184,7 @@ export default {
           }
         },
         {
-          title: 'sdk渠道',
+          title: 'Sdk渠道',
           align: 'center',
           width: 80,
           dataIndex: 'sdkChannel',

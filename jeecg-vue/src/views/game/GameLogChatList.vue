@@ -21,6 +21,15 @@
             </a-form-item>
           </a-col>
           <a-col :md="3" :sm="8">
+            <a-form-item label="消息类型">
+              <a-select placeholder="请选择消息类型" v-model="queryParam.msgType" initialValue="1">
+                <a-select-option :value="1">普通文本</a-select-option>
+                <a-select-option :value="2">修真日志</a-select-option>
+                <a-select-option :value="3">分享</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="3" :sm="8">
             <a-form-item label="发送者id">
               <a-input placeholder="请输入发送者id" v-model="queryParam.senderId" />
             </a-form-item>
@@ -46,15 +55,7 @@
                 <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent"></j-input>
               </a-form-item>
             </a-col>
-            <a-col :md="3" :sm="8">
-              <a-form-item label="消息类型">
-                <a-select placeholder="请选择消息类型" v-model="queryParam.msgType" initialValue="1">
-                  <a-select-option :value="1">普通文本</a-select-option>
-                  <a-select-option :value="2">修真日志</a-select-option>
-                  <a-select-option :value="3">分享</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
+            <a-col :md="3" :sm="8"> </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="创建时间">
                 <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
@@ -245,7 +246,7 @@ export default {
           dataIndex: 'level'
         },
         {
-          title: 'sdk渠道',
+          title: 'Sdk渠道',
           align: 'center',
           width: 80,
           dataIndex: 'sdkChannel'

@@ -206,9 +206,12 @@ export default {
           dataIndex: 'channel'
         },
         {
-          title: 'sdk渠道',
+          title: 'Sdk渠道',
           align: 'center',
-          dataIndex: 'sdkChannel'
+          dataIndex: 'sdkChannel',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '等级',
@@ -288,7 +291,10 @@ export default {
           title: '等级升级时间',
           align: 'center',
           width: 120,
-          dataIndex: 'levelUpdateTime'
+          dataIndex: 'levelUpdateTime',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '登录时间',
@@ -299,7 +305,10 @@ export default {
         {
           title: '登录IP',
           align: 'center',
-          dataIndex: 'loginIp'
+          dataIndex: 'loginIp',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '创角时间',

@@ -178,7 +178,7 @@ export default {
           dataIndex: 'channel'
         },
         {
-          title: 'sdk渠道',
+          title: 'Sdk渠道',
           align: 'center',
           dataIndex: 'sdkChannel'
         },
