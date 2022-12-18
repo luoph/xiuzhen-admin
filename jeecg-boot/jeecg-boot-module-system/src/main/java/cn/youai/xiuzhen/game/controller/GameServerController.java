@@ -75,6 +75,9 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @Value("${app.online-num-url:/game/onlineNum}")
     private String onlineNumUrl;
 
+    @Value("${app.url.game-center}")
+    private String gameCenterUrl;
+
     /**
      * 分页列表查询
      */
@@ -132,7 +135,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameServer entity) {
         service.save(entity);
-        GameServerCache.getInstance().put(entity.getId(), entity);
+        GameServerCache.getInstance().reload(entity.getId());
         return Result.ok("添加成功！");
     }
 
@@ -140,7 +143,8 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameServer entity) {
         service.updateById(entity);
-        GameServerCache.getInstance().put(entity.getId(), entity);
+        GameServerCache.getInstance().reload(entity.getId());
+        OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         return Result.ok("编辑成功!");
     }
 
@@ -152,6 +156,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     public Result<?> delete(@RequestParam(name = "id") String id) {
         service.removeById(id);
         GameServerCache.getInstance().remove(Integer.parseInt(id));
+        OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         return Result.ok("删除成功!");
     }
 
