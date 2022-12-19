@@ -130,7 +130,10 @@ export default {
           title: '礼包说明',
           align: 'center',
           width: 180,
-          dataIndex: 'summary'
+          dataIndex: 'summary',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '限制类型',
@@ -148,13 +151,19 @@ export default {
           title: '限制渠道id',
           align: 'center',
           width: 120,
-          dataIndex: 'channelIds'
+          dataIndex: 'channelIds',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '限制区服id',
           align: 'center',
           width: 120,
-          dataIndex: 'serverIds'
+          dataIndex: 'serverIds',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '活动状态',
@@ -166,25 +175,35 @@ export default {
         {
           title: '奖励',
           align: 'center',
-          width: 240,
-          dataIndex: 'reward'
+          width: 320,
+          dataIndex: 'reward',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '开始时间',
           align: 'center',
           width: 180,
-          dataIndex: 'startTime'
+          dataIndex: 'startTime',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '结束时间',
           align: 'center',
           width: 180,
-          dataIndex: 'endTime'
+          dataIndex: 'endTime',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],

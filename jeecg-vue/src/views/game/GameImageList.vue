@@ -192,7 +192,10 @@ export default {
           title: '备注',
           align: 'center',
           width: 160,
-          dataIndex: 'remark'
+          dataIndex: 'remark',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '上传时间',
@@ -204,6 +207,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],

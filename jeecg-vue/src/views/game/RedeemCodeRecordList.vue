@@ -152,7 +152,7 @@ export default {
           dataIndex: 'channel'
         },
         {
-          title: 'sdk渠道',
+          title: 'Sdk渠道',
           align: 'center',
           dataIndex: 'sdkChannel'
         },
@@ -167,12 +167,12 @@ export default {
           dataIndex: 'groupId'
         },
         {
-          title: '区服Id',
+          title: '区服id',
           align: 'center',
           dataIndex: 'serverId'
         },
         {
-          title: '兑换ip',
+          title: '兑换IP',
           align: 'center',
           dataIndex: 'remoteIp'
         },
