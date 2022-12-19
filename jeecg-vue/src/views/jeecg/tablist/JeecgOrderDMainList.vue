@@ -264,10 +264,6 @@
     margin: 0 5px
   }
 
-  .ant-btn-danger {
-    background-color: #ffffff
-  }
-
   .ant-modal-cust-warp {
     height: 100%
   }

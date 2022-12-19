@@ -692,9 +692,6 @@ export default {
 .anty-row-operator button {
     margin: 0 5px;
 }
-.ant-btn-danger {
-    background-color: #ffffff;
-}
 
 .anty-img-wrap {
     height: 25px;
