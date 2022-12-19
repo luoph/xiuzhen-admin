@@ -178,7 +178,7 @@ public class GameStatDaily implements Serializable {
                 .setPayRate(BigDecimalUtils.divideZero(payPlayerNum, loginNum, true))
                 .setNewPlayerPayRate(BigDecimalUtils.divideZero(newPlayerPayNum, newPlayerNum, true))
                 .setDoublePayRate(BigDecimalUtils.divideZero(doublePay, newPlayerPayNum, true))
-                .setNewPlayerArpu(BigDecimalUtils.divideZero(newPlayerPayAmount, BigDecimal.valueOf(newPlayerPayNum), false))
+                .setNewPlayerArpu(BigDecimalUtils.divideZero(newPlayerPayAmount, BigDecimal.valueOf(newPlayerNum), false))
                 .setNewPlayerArppu(BigDecimalUtils.divideZero(newPlayerPayAmount, BigDecimal.valueOf(newPlayerPayNum), false));
         return this;
     }
