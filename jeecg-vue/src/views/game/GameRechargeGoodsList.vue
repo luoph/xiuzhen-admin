@@ -30,25 +30,25 @@
           <a-col :md="4" :sm="8">
             <a-form-item label="商品类型">
               <a-select placeholder="请选择商品类型" v-model="queryParam.goodsType" initialValue="1">
-                <a-select-option :value="0">购买仙玉</a-select-option>
-                <a-select-option :value="1">仙职</a-select-option>
-                <a-select-option :value="2">月卡</a-select-option>
-                <a-select-option :value="3">每日礼包</a-select-option>
-                <a-select-option :value="4">首充</a-select-option>
-                <a-select-option :value="5">周卡</a-select-option>
-                <a-select-option :value="6">六道剑阵</a-select-option>
-                <a-select-option :value="7">招财进宝/仙力护符</a-select-option>
-                <a-select-option :value="8">高级天道令</a-select-option>
-                <a-select-option :value="9">节日派对</a-select-option>
-                <a-select-option :value="10">直购礼包</a-select-option>
-                <a-select-option :value="11">精准礼包</a-select-option>
-                <a-select-option :value="12">结义礼包</a-select-option>
-                <a-select-option :value="13">自选礼包</a-select-option>
-                <a-select-option :value="14">灵兽抽奖-礼包</a-select-option>
-                <a-select-option :value="15">开服目标活动-签到令</a-select-option>
-                <a-select-option :value="16">开服目标活动-任务礼包</a-select-option>
-                <a-select-option :value="17">系统直购礼包</a-select-option>
-                <a-select-option :value="18">成长基金</a-select-option>
+                <a-select-option :value="0">0-购买仙玉</a-select-option>
+                <a-select-option :value="1">1-仙职</a-select-option>
+                <a-select-option :value="2">2-月卡</a-select-option>
+                <a-select-option :value="3">3-每日礼包</a-select-option>
+                <a-select-option :value="4">4-首充</a-select-option>
+                <a-select-option :value="5">5-周卡</a-select-option>
+                <a-select-option :value="6">6-六道剑阵</a-select-option>
+                <a-select-option :value="7">7-招财进宝/仙力护符</a-select-option>
+                <a-select-option :value="8">8-高级天道令</a-select-option>
+                <a-select-option :value="9">9-节日派对</a-select-option>
+                <a-select-option :value="10">10-直购礼包</a-select-option>
+                <a-select-option :value="11">11-精准礼包</a-select-option>
+                <a-select-option :value="12">12-结义礼包</a-select-option>
+                <a-select-option :value="13">13-自选礼包</a-select-option>
+                <a-select-option :value="14">14-灵兽抽奖-礼包</a-select-option>
+                <a-select-option :value="15">15-开服目标活动-签到令</a-select-option>
+                <a-select-option :value="16">16-开服目标活动-任务礼包</a-select-option>
+                <a-select-option :value="17">17-系统直购礼包</a-select-option>
+                <a-select-option :value="18">18-成长基金</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
