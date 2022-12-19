@@ -117,15 +117,15 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a-button type="primary" size="small" @click="forbidTalk(record)"> 禁言 </a-button>
+          <a-button type="danger" size="small" @click="forbidTalk(record)"> 禁言 </a-button>
           <a-divider type="vertical" />
-          <a-button type="primary" size="small" @click="kickOff(record)"> 踢下线 </a-button>
+          <a-button type="danger" size="small" @click="forbidLogin(record)"> 封号 </a-button>
           <a-divider type="vertical" />
-          <a-button type="primary" size="small" @click="forbidLogin(record)"> 封号 </a-button>
+          <a-button size="small" @click="kickOff(record)"> 踢下线 </a-button>
           <a-divider type="vertical" />
-          <a-button size="small" @click="undoForbidTalk(record)"> 禁言撤回 </a-button>
+          <a-button type="primary" size="small" @click="undoForbidTalk(record)"> 禁言撤回 </a-button>
           <a-divider type="vertical" />
-          <a-button size="small" @click="undoForbidLogin(record)"> 封号撤回 </a-button>
+          <a-button type="primary" size="small" @click="undoForbidLogin(record)"> 封号撤回 </a-button>
         </span>
       </a-table>
     </div>
@@ -265,9 +265,10 @@ export default {
         },
         {
           title: '操作',
-          dataIndex: 'action',
           align: 'center',
-          width: 300,
+          width: 320,
+          fixed: 'right',
+          dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         }
       ],

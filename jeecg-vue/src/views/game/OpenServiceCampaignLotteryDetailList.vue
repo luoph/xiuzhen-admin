@@ -57,7 +57,7 @@
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-ontainer">
-            <span class="large-text">{{ text }}</span>
+            <span class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
         <span slot="timeSlot" slot-scope="text, record">
@@ -325,9 +325,10 @@ export default {
         },
         {
           title: '操作',
-          dataIndex: 'action',
           align: 'center',
+          width: 180,
           fixed: 'right',
+          dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         }
       ],

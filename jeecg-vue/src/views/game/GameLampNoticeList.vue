@@ -134,17 +134,26 @@ export default {
         {
           title: '投放服务器',
           align: 'left',
-          dataIndex: 'gameServerList'
+          dataIndex: 'gameServerList',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '播放频率',
           align: 'center',
-          dataIndex: 'frequency'
+          dataIndex: 'frequency',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '循环播放周期',
           align: 'center',
-          dataIndex: 'cyclePeriod'
+          dataIndex: 'cyclePeriod',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '开始时间',
@@ -164,10 +173,10 @@ export default {
         },
         {
           title: '操作',
-          dataIndex: 'action',
           align: 'center',
+          width: 180,
           fixed: 'right',
-          width: 140,
+          dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         }
       ],

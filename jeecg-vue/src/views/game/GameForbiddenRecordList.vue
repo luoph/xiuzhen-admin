@@ -117,7 +117,7 @@
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
-            <span class="large-text">{{ text }}</span>
+            <span class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
 

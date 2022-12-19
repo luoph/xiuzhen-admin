@@ -132,7 +132,7 @@
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
-            <span class="large-text">{{ text }}</span>
+            <span class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
 
@@ -394,10 +394,10 @@ export default {
         },
         {
           title: '操作',
-          dataIndex: 'action',
           align: 'center',
+          width: 180,
           fixed: 'right',
-          width: 120,
+          dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         }
       ],

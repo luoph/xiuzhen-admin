@@ -65,7 +65,7 @@
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
-            <span class="large-text">{{ text }}</span>
+            <span class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
 
