@@ -121,7 +121,7 @@ export default {
           align: 'center',
           dataIndex: 'payRate',
           customRender: (text, record) => {
-            return this.countRate(record.payNum, record.activeNum);
+            return this.calcRate(record.payNum, record.activeNum);
           }
         },
         {
@@ -190,7 +190,7 @@ export default {
         this.queryParam.countDate_end = end;
       }
     },
-    countRate: function (n, r) {
+    calcRate: function (n, r) {
       if (n === null || n === undefined) {
         return '--';
       }

@@ -319,7 +319,7 @@ export default {
           align: 'center',
           dataIndex: 'costNumRate',
           customRender: (text, record) => {
-            return this.countRate(record.costNum, record.totalNum);
+            return this.calcRate(record.costNum, record.totalNum);
           }
         },
         {
@@ -327,7 +327,7 @@ export default {
           align: 'center',
           dataIndex: 'buyNumRate',
           customRender: (text, record) => {
-            return this.countRate(record.buyNum, record.totalBuyNum);
+            return this.calcRate(record.buyNum, record.totalBuyNum);
           }
         }
       ],
@@ -386,7 +386,7 @@ export default {
         this.queryParam.countDate_end = end;
       }
     },
-    countRate: function (n, r, t = true) {
+    calcRate: function (n, r, t = true) {
       if (n === null || n === undefined) {
         return '--';
       }

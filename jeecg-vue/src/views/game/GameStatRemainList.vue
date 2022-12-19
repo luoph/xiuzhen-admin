@@ -241,7 +241,7 @@ export default {
       let rate = r > 0 ? parseFloat((n / r) * 100).toFixed(2) : parseFloat(0).toFixed(2);
       return rate + '%';
     },
-    countRate: function (n, record) {
+    calcRate: function (n, record) {
       let baseNum = record.registerNum;
       if (record.roleType === 1) {
         baseNum = record.payNum;

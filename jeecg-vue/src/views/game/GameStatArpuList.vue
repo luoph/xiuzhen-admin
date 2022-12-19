@@ -132,7 +132,7 @@ export default {
           align: 'center',
           dataIndex: 'payRate',
           customRender: (text, record) => {
-            return this.countRate(record.loginPayNum, record.loginNum);
+            return this.calcRate(record.loginPayNum, record.loginNum);
           }
         },
         {
@@ -165,7 +165,7 @@ export default {
           align: 'center',
           dataIndex: 'newPayRate',
           customRender: (text, record) => {
-            return this.countRate(record.newPayNum, record.newPlayerNum);
+            return this.calcRate(record.newPayNum, record.newPlayerNum);
           }
         },
         {
@@ -198,7 +198,7 @@ export default {
           align: 'center',
           dataIndex: 'oldPayRate',
           customRender: (text, record) => {
-            return this.countRate(record.oldPayNum, record.oldPlayerNum);
+            return this.calcRate(record.oldPayNum, record.oldPlayerNum);
           }
         },
         {
@@ -288,13 +288,13 @@ export default {
           this.searchQuery();
         });
     },
-    countRate: function (n, r) {
-      if (n === null || n === undefined) {
+    calcRate: function (num, total, fixed = 2) {
+      if (num === null || num === undefined) {
         return '--';
       }
 
-      let rate = r > 0 ? parseFloat(n / r) : 0;
-      return Number(parseFloat(rate * 100).toFixed(2)) + '%';
+      let rate = total > 0 ? parseFloat(num / total) : 0;
+      return Number(parseFloat(rate * 100).toFixed(fixed)) + '%';
     }
   }
 };

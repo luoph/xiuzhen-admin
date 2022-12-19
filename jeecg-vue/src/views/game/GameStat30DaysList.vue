@@ -140,7 +140,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d1, record.registerNum, record.type);
+            return this.calcRate(record.d1, record.registerNum, record.type);
           }
         },
         {
@@ -149,7 +149,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d2, record.registerNum, record.type);
+            return this.calcRate(record.d2, record.registerNum, record.type);
           }
         },
         {
@@ -158,7 +158,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d3, record.registerNum, record.type);
+            return this.calcRate(record.d3, record.registerNum, record.type);
           }
         },
         {
@@ -167,7 +167,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d4, record.registerNum, record.type);
+            return this.calcRate(record.d4, record.registerNum, record.type);
           }
         },
         {
@@ -176,7 +176,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d5, record.registerNum, record.type);
+            return this.calcRate(record.d5, record.registerNum, record.type);
           }
         },
         {
@@ -185,7 +185,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d6, record.registerNum, record.type);
+            return this.calcRate(record.d6, record.registerNum, record.type);
           }
         },
         {
@@ -194,7 +194,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d7, record.registerNum, record.type);
+            return this.calcRate(record.d7, record.registerNum, record.type);
           }
         },
         {
@@ -203,7 +203,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d8, record.registerNum, record.type);
+            return this.calcRate(record.d8, record.registerNum, record.type);
           }
         },
         {
@@ -212,7 +212,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d9, record.registerNum, record.type);
+            return this.calcRate(record.d9, record.registerNum, record.type);
           }
         },
         {
@@ -221,7 +221,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d10, record.registerNum, record.type);
+            return this.calcRate(record.d10, record.registerNum, record.type);
           }
         },
         {
@@ -230,7 +230,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d11, record.registerNum, record.type);
+            return this.calcRate(record.d11, record.registerNum, record.type);
           }
         },
         {
@@ -239,7 +239,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d12, record.registerNum, record.type);
+            return this.calcRate(record.d12, record.registerNum, record.type);
           }
         },
         {
@@ -248,7 +248,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d13, record.registerNum, record.type);
+            return this.calcRate(record.d13, record.registerNum, record.type);
           }
         },
         {
@@ -257,7 +257,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d14, record.registerNum, record.type);
+            return this.calcRate(record.d14, record.registerNum, record.type);
           }
         },
         {
@@ -266,7 +266,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d15, record.registerNum, record.type);
+            return this.calcRate(record.d15, record.registerNum, record.type);
           }
         },
         {
@@ -275,7 +275,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d16, record.registerNum, record.type);
+            return this.calcRate(record.d16, record.registerNum, record.type);
           }
         },
         {
@@ -284,7 +284,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d17, record.registerNum, record.type);
+            return this.calcRate(record.d17, record.registerNum, record.type);
           }
         },
         {
@@ -293,7 +293,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d18, record.registerNum, record.type);
+            return this.calcRate(record.d18, record.registerNum, record.type);
           }
         },
         {
@@ -302,7 +302,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d19, record.registerNum, record.type);
+            return this.calcRate(record.d19, record.registerNum, record.type);
           }
         },
         {
@@ -311,7 +311,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d20, record.registerNum, record.type);
+            return this.calcRate(record.d20, record.registerNum, record.type);
           }
         },
         {
@@ -320,7 +320,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d21, record.registerNum, record.type);
+            return this.calcRate(record.d21, record.registerNum, record.type);
           }
         },
         {
@@ -329,7 +329,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d22, record.registerNum, record.type);
+            return this.calcRate(record.d22, record.registerNum, record.type);
           }
         },
         {
@@ -338,7 +338,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d23, record.registerNum, record.type);
+            return this.calcRate(record.d23, record.registerNum, record.type);
           }
         },
         {
@@ -347,7 +347,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d24, record.registerNum, record.type);
+            return this.calcRate(record.d24, record.registerNum, record.type);
           }
         },
         {
@@ -356,7 +356,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d25, record.registerNum, record.type);
+            return this.calcRate(record.d25, record.registerNum, record.type);
           }
         },
         {
@@ -365,7 +365,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d26, record.registerNum, record.type);
+            return this.calcRate(record.d26, record.registerNum, record.type);
           }
         },
         {
@@ -374,7 +374,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d27, record.registerNum, record.type);
+            return this.calcRate(record.d27, record.registerNum, record.type);
           }
         },
         {
@@ -383,7 +383,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d28, record.registerNum, record.type);
+            return this.calcRate(record.d28, record.registerNum, record.type);
           }
         },
         {
@@ -392,7 +392,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d29, record.registerNum, record.type);
+            return this.calcRate(record.d29, record.registerNum, record.type);
           }
         },
         {
@@ -401,7 +401,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.d30, record.registerNum, record.type);
+            return this.calcRate(record.d30, record.registerNum, record.type);
           }
         }
       ],
@@ -454,7 +454,7 @@ export default {
         this.queryParam.countDate_end = end;
       }
     },
-    countRate: function (n, r, t) {
+    calcRate: function (n, r, t) {
       if (n === null || n === undefined) {
         return '--';
       }

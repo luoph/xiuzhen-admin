@@ -107,7 +107,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c2, record.registerNum);
+            return this.calcRate(record.c2, record.registerNum);
           }
         },
         {
@@ -116,7 +116,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c3, record.registerNum);
+            return this.calcRate(record.c3, record.registerNum);
           }
         },
         {
@@ -125,7 +125,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c4, record.registerNum);
+            return this.calcRate(record.c4, record.registerNum);
           }
         },
         {
@@ -134,7 +134,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c5, record.registerNum);
+            return this.calcRate(record.c5, record.registerNum);
           }
         },
         {
@@ -143,7 +143,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c6, record.registerNum);
+            return this.calcRate(record.c6, record.registerNum);
           }
         },
         {
@@ -152,7 +152,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c7, record.registerNum);
+            return this.calcRate(record.c7, record.registerNum);
           }
         },
         {
@@ -161,7 +161,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c15, record.registerNum);
+            return this.calcRate(record.c15, record.registerNum);
           }
         },
         {
@@ -170,7 +170,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c30, record.registerNum);
+            return this.calcRate(record.c30, record.registerNum);
           }
         },
         {
@@ -179,7 +179,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c60, record.registerNum);
+            return this.calcRate(record.c60, record.registerNum);
           }
         },
         {
@@ -188,7 +188,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c90, record.registerNum);
+            return this.calcRate(record.c90, record.registerNum);
           }
         },
         {
@@ -197,7 +197,7 @@ export default {
           align: 'center',
           width: '120',
           customRender: (text, record) => {
-            return this.countRate(record.c120, record.registerNum);
+            return this.calcRate(record.c120, record.registerNum);
           }
         }
       ],
@@ -226,7 +226,7 @@ export default {
         align: 'center',
         width: '120',
         customRender: (text, record) => {
-          return this.countRate(record[`${dataIndex}`], record.registerNum);
+          return this.calcRate(record[`${dataIndex}`], record.registerNum);
         }
       };
       arr.push(column);
@@ -308,13 +308,13 @@ export default {
         }
       });
     },
-    countRate: function (n, r) {
-      if (n === null || n === undefined) {
+    calcRate: function (num, total, fixed = 2) {
+      if (num === null || num === undefined) {
         return '--';
       }
 
-      let rate = r > 0 ? parseFloat(n / r) : 0;
-      return Number(parseFloat(rate * 100).toFixed(2)) + '%';
+      let rate = total > 0 ? parseFloat(num / total) : 0;
+      return Number(parseFloat(rate * 100).toFixed(fixed)) + '%';
     }
   }
 };

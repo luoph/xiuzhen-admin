@@ -116,7 +116,7 @@ export default {
           align: 'center',
           dataIndex: 'payNumRate',
           customRender: (text, record) => {
-            return this.countRate(record.payNum, record.totalNum);
+            return this.calcRate(record.payNum, record.totalNum);
           }
         },
         {
@@ -129,7 +129,7 @@ export default {
           align: 'center',
           dataIndex: 'playerNumRate',
           customRender: (text, record) => {
-            return this.countRate(record.playerNum, record.totalPlayerNum);
+            return this.calcRate(record.playerNum, record.totalPlayerNum);
           }
         },
         {
@@ -142,7 +142,7 @@ export default {
           align: 'center',
           dataIndex: 'amountRate',
           customRender: (text, record) => {
-            return this.countRate(record.payAmount, record.totalAmount);
+            return this.calcRate(record.payAmount, record.totalAmount);
           }
         }
       ],
@@ -199,13 +199,13 @@ export default {
         this.queryParam.countDate_end = end;
       }
     },
-    countRate: function (n, r) {
-      if (n === null || n === undefined) {
+    calcRate: function (num, total, fixed = 2) {
+      if (num === null || num === undefined) {
         return '--';
       }
 
-      let rate = r > 0 ? parseFloat(n / r) : 0;
-      return Number(parseFloat(rate * 100).toFixed(2)) + '%';
+      let rate = total > 0 ? parseFloat(num / total) : 0;
+      return Number(parseFloat(rate * 100).toFixed(fixed)) + '%';
     }
   }
 };

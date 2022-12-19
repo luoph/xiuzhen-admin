@@ -198,7 +198,7 @@ export default {
                   align: 'center',
                   width: '120',
                   customRender: (text, record) => {
-                    return this.countRate(record.proportion);
+                    return this.calcRate(record.proportion);
                   }
                 }
               ],
@@ -218,7 +218,7 @@ export default {
         }
       });
     },
-    countRate: function (n) {
+    calcRate: function (n) {
       if (n === null || n === undefined) {
         return '--';
       }

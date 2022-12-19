@@ -123,7 +123,7 @@ export default {
           width: '60',
           dataIndex: 'd1',
           customRender: (text, record) => {
-            return this.countRate(record.d1, record);
+            return this.calcRate(record.d1, record);
           }
         },
         {
@@ -132,7 +132,7 @@ export default {
           width: '60',
           dataIndex: 'd2',
           customRender: (text, record) => {
-            return this.countRate(record.d2, record);
+            return this.calcRate(record.d2, record);
           }
         },
         {
@@ -141,7 +141,7 @@ export default {
           width: '60',
           dataIndex: 'd3',
           customRender: (text, record) => {
-            return this.countRate(record.d3, record);
+            return this.calcRate(record.d3, record);
           }
         },
         {
@@ -150,7 +150,7 @@ export default {
           width: '60',
           dataIndex: 'd4',
           customRender: (text, record) => {
-            return this.countRate(record.d4, record);
+            return this.calcRate(record.d4, record);
           }
         },
         {
@@ -159,7 +159,7 @@ export default {
           width: '60',
           dataIndex: 'd5',
           customRender: (text, record) => {
-            return this.countRate(record.d5, record);
+            return this.calcRate(record.d5, record);
           }
         },
         {
@@ -168,7 +168,7 @@ export default {
           width: '60',
           dataIndex: 'd6',
           customRender: (text, record) => {
-            return this.countRate(record.d6, record);
+            return this.calcRate(record.d6, record);
           }
         },
         {
@@ -177,7 +177,7 @@ export default {
           width: '60',
           dataIndex: 'd7',
           customRender: (text, record) => {
-            return this.countRate(record.d7, record);
+            return this.calcRate(record.d7, record);
           }
         },
         {
@@ -186,7 +186,7 @@ export default {
           width: '60',
           dataIndex: 'd8',
           customRender: (text, record) => {
-            return this.countRate(record.d8, record);
+            return this.calcRate(record.d8, record);
           }
         },
         {
@@ -195,7 +195,7 @@ export default {
           width: '60',
           dataIndex: 'd9',
           customRender: (text, record) => {
-            return this.countRate(record.d9, record);
+            return this.calcRate(record.d9, record);
           }
         },
         {
@@ -204,7 +204,7 @@ export default {
           width: '60',
           dataIndex: 'd10',
           customRender: (text, record) => {
-            return this.countRate(record.d10, record);
+            return this.calcRate(record.d10, record);
           }
         },
         {
@@ -213,7 +213,7 @@ export default {
           width: '60',
           dataIndex: 'd11',
           customRender: (text, record) => {
-            return this.countRate(record.d11, record);
+            return this.calcRate(record.d11, record);
           }
         },
         {
@@ -222,7 +222,7 @@ export default {
           width: '60',
           dataIndex: 'd12',
           customRender: (text, record) => {
-            return this.countRate(record.d12, record);
+            return this.calcRate(record.d12, record);
           }
         },
         {
@@ -231,7 +231,7 @@ export default {
           width: '60',
           dataIndex: 'd13',
           customRender: (text, record) => {
-            return this.countRate(record.d13, record);
+            return this.calcRate(record.d13, record);
           }
         },
         {
@@ -240,7 +240,7 @@ export default {
           width: '60',
           dataIndex: 'd14',
           customRender: (text, record) => {
-            return this.countRate(record.d14, record);
+            return this.calcRate(record.d14, record);
           }
         },
         {
@@ -249,7 +249,7 @@ export default {
           width: '60',
           dataIndex: 'd15',
           customRender: (text, record) => {
-            return this.countRate(record.d15, record);
+            return this.calcRate(record.d15, record);
           }
         },
         {
@@ -258,7 +258,7 @@ export default {
           width: '60',
           dataIndex: 'd16',
           customRender: (text, record) => {
-            return this.countRate(record.d16, record);
+            return this.calcRate(record.d16, record);
           }
         },
         {
@@ -267,7 +267,7 @@ export default {
           width: '60',
           dataIndex: 'd17',
           customRender: (text, record) => {
-            return this.countRate(record.d17, record);
+            return this.calcRate(record.d17, record);
           }
         },
         {
@@ -276,7 +276,7 @@ export default {
           width: '60',
           dataIndex: 'd18',
           customRender: (text, record) => {
-            return this.countRate(record.d18, record);
+            return this.calcRate(record.d18, record);
           }
         },
         {
@@ -285,7 +285,7 @@ export default {
           width: '60',
           dataIndex: 'd19',
           customRender: (text, record) => {
-            return this.countRate(record.d19, record);
+            return this.calcRate(record.d19, record);
           }
         },
         {
@@ -294,7 +294,7 @@ export default {
           width: '60',
           dataIndex: 'd20',
           customRender: (text, record) => {
-            return this.countRate(record.d20, record);
+            return this.calcRate(record.d20, record);
           }
         },
         {
@@ -303,7 +303,7 @@ export default {
           width: '60',
           dataIndex: 'd21',
           customRender: (text, record) => {
-            return this.countRate(record.d21, record);
+            return this.calcRate(record.d21, record);
           }
         },
         {
@@ -312,7 +312,7 @@ export default {
           width: '60',
           dataIndex: 'd22',
           customRender: (text, record) => {
-            return this.countRate(record.d22, record);
+            return this.calcRate(record.d22, record);
           }
         },
         {
@@ -321,7 +321,7 @@ export default {
           width: '60',
           dataIndex: 'd23',
           customRender: (text, record) => {
-            return this.countRate(record.d23, record);
+            return this.calcRate(record.d23, record);
           }
         },
         {
@@ -330,7 +330,7 @@ export default {
           width: '60',
           dataIndex: 'd24',
           customRender: (text, record) => {
-            return this.countRate(record.d24, record);
+            return this.calcRate(record.d24, record);
           }
         },
         {
@@ -339,7 +339,7 @@ export default {
           width: '60',
           dataIndex: 'd25',
           customRender: (text, record) => {
-            return this.countRate(record.d25, record);
+            return this.calcRate(record.d25, record);
           }
         },
         {
@@ -348,7 +348,7 @@ export default {
           width: '60',
           dataIndex: 'd26',
           customRender: (text, record) => {
-            return this.countRate(record.d26, record);
+            return this.calcRate(record.d26, record);
           }
         },
         {
@@ -357,7 +357,7 @@ export default {
           width: '60',
           dataIndex: 'd27',
           customRender: (text, record) => {
-            return this.countRate(record.d27, record);
+            return this.calcRate(record.d27, record);
           }
         },
         {
@@ -366,7 +366,7 @@ export default {
           width: '60',
           dataIndex: 'd28',
           customRender: (text, record) => {
-            return this.countRate(record.d28, record);
+            return this.calcRate(record.d28, record);
           }
         },
         {
@@ -375,7 +375,7 @@ export default {
           width: '60',
           dataIndex: 'd29',
           customRender: (text, record) => {
-            return this.countRate(record.d29, record);
+            return this.calcRate(record.d29, record);
           }
         },
         {
@@ -384,7 +384,7 @@ export default {
           width: '60',
           dataIndex: 'd30',
           customRender: (text, record) => {
-            return this.countRate(record.d30, record);
+            return this.calcRate(record.d30, record);
           }
         },
         {
@@ -393,7 +393,7 @@ export default {
           width: '60',
           dataIndex: 'd45',
           customRender: (text, record) => {
-            return this.countRate(record.d45, record);
+            return this.calcRate(record.d45, record);
           }
         },
         {
@@ -402,7 +402,7 @@ export default {
           width: '60',
           dataIndex: 'd60',
           customRender: (text, record) => {
-            return this.countRate(record.d60, record);
+            return this.calcRate(record.d60, record);
           }
         },
         {
@@ -411,7 +411,7 @@ export default {
           width: '60',
           dataIndex: 'd90',
           customRender: (text, record) => {
-            return this.countRate(record.d90, record);
+            return this.calcRate(record.d90, record);
           }
         },
         {
@@ -420,7 +420,7 @@ export default {
           width: '60',
           dataIndex: 'd120',
           customRender: (text, record) => {
-            return this.countRate(record.d120, record);
+            return this.calcRate(record.d120, record);
           }
         },
         {
@@ -429,7 +429,7 @@ export default {
           width: '60',
           dataIndex: 'd150',
           customRender: (text, record) => {
-            return this.countRate(record.d150, record);
+            return this.calcRate(record.d150, record);
           }
         },
         {
@@ -438,7 +438,7 @@ export default {
           width: '60',
           dataIndex: 'd180',
           customRender: (text, record) => {
-            return this.countRate(record.d180, record);
+            return this.calcRate(record.d180, record);
           }
         },
         {
@@ -447,7 +447,7 @@ export default {
           width: '60',
           dataIndex: 'd270',
           customRender: (text, record) => {
-            return this.countRate(record.d270, record);
+            return this.calcRate(record.d270, record);
           }
         },
         {
@@ -456,7 +456,7 @@ export default {
           width: '60',
           dataIndex: 'd360',
           customRender: (text, record) => {
-            return this.countRate(record.d360, record);
+            return this.calcRate(record.d360, record);
           }
         }
       ],
@@ -533,7 +533,7 @@ export default {
       }
       return parseFloat(n / r).toFixed(2);
     },
-    countRate: function (n, record) {
+    calcRate: function (n, record) {
       return this.toLtv(n, record.num);
     }
   }

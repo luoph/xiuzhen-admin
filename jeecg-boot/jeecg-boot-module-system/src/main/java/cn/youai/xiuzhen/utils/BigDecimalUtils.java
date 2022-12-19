@@ -131,7 +131,7 @@ public final class BigDecimalUtils {
      */
     public static BigDecimal divideZero(double v1, double v2, boolean isPercent) {
         if (v2 != 0) {
-            BigDecimal result = divide(v1, v2, 2);
+            BigDecimal result = divide(v1, v2, isPercent ? 4 : 2);
             if (isPercent) {
                 return result.multiply(BigDecimal.valueOf(100));
             }
@@ -142,7 +142,7 @@ public final class BigDecimalUtils {
 
     public static BigDecimal divideZero(int v1, int v2, boolean isPercent) {
         if (v2 != 0) {
-            BigDecimal result = divide(v1, v2, 2);
+            BigDecimal result = divide(v1, v2, isPercent ? 4 : 2);
             if (isPercent) {
                 return result.multiply(BigDecimal.valueOf(100));
             }
@@ -153,7 +153,7 @@ public final class BigDecimalUtils {
 
     public static BigDecimal divideZero(BigDecimal v1, BigDecimal v2, boolean isPercent) {
         if (v2.compareTo(BigDecimal.ZERO) != 0) {
-            BigDecimal result = v1.divide(v2, 2, RoundingMode.HALF_UP);
+            BigDecimal result = v1.divide(v2, isPercent ? 4 : 2, RoundingMode.HALF_UP);
             if (isPercent) {
                 return result.multiply(BigDecimal.valueOf(100));
             }

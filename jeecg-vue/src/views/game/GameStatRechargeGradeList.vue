@@ -145,7 +145,7 @@ export default {
           align: 'center',
           dataIndex: 'playerNumRate',
           customRender: (text, record) => {
-            return this.countRate(record.playerNum, record.totalPlayerNum);
+            return this.calcRate(record.playerNum, record.totalPlayerNum);
           }
         },
         {
@@ -163,7 +163,7 @@ export default {
           align: 'center',
           dataIndex: 'payAmountRate',
           customRender: (text, record) => {
-            return this.countRate(record.payAmount, record.totalAmount);
+            return this.calcRate(record.payAmount, record.totalAmount);
           }
         },
         {
@@ -171,7 +171,7 @@ export default {
           align: 'center',
           dataIndex: 'arppu',
           customRender: (text, record) => {
-            return this.countRate(record.payAmount, record.playerNum, false);
+            return this.calcRate(record.payAmount, record.playerNum, false);
           }
         }
       ],
@@ -228,7 +228,7 @@ export default {
         this.queryParam.countDate_end = end;
       }
     },
-    countRate: function (n, r, t = true) {
+    calcRate: function (n, r, t = true) {
       if (n === null || n === undefined) {
         return '--';
       }
