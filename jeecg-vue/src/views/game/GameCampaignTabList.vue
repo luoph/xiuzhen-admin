@@ -143,6 +143,8 @@ export default {
               text = '20-自选特惠';
             } else if (value === 21) {
               text = '21-累充排行';
+            } else if (value === 22) {
+              text = '22-邮件活动';
             }
             return text;
           }

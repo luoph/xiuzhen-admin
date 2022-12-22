@@ -30,6 +30,7 @@
             <a-select-option :value="18">18-魅力值排行榜</a-select-option>
             <a-select-option :value="20">20-自选特惠</a-select-option>
             <a-select-option :value="21">21-累充排行</a-select-option>
+            <a-select-option :value="22">22-邮件活动</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -129,6 +130,7 @@
       <game-campaign-type-marry-rank-reward-list v-if="isEdit && (model.type === 17 || model.type === 18 || model.type === 21)" ref="marryRankRewardList"/>
       <game-campaign-type-select-discount-item-list v-if="isEdit && model.type === 20" ref="selectDiscountItemList"/>
       <game-campaign-type-select-discount-message-list v-if="isEdit && model.type === 20" ref="selectDiscountMessageList"/>
+      <game-campaign-type-email-item-list v-if="isEdit && model.type === 22" ref="emailItemList"/>
     </a-spin>
   </a-modal>
 </template>
@@ -160,6 +162,7 @@ import GameCampaignTypeMarryRankList from '../GameCampaignTypeMarryRankList';
 import GameCampaignTypeMarryRankRewardList from '../GameCampaignTypeMarryRankRewardList';
 import GameCampaignTypeSelectDiscountItemList from '../GameCampaignTypeSelectDiscountItemList';
 import GameCampaignTypeSelectDiscountMessageList from '../GameCampaignTypeSelectDiscountMessageList';
+import GameCampaignTypeEmailItemList from '../GameCampaignTypeEmailItemList';
 
 export default {
   name: 'GameCampaignTypeModal',
@@ -186,7 +189,8 @@ export default {
     GameCampaignTypeMarryRankList,
     GameCampaignTypeMarryRankRewardList,
     GameCampaignTypeSelectDiscountItemList,
-    GameCampaignTypeSelectDiscountMessageList
+    GameCampaignTypeSelectDiscountMessageList,
+    GameCampaignTypeEmailItemList
   },
   data() {
     return {
@@ -307,6 +311,9 @@ export default {
           }
           if (this.$refs.selectDiscountMessageList) {
             this.$refs.selectDiscountMessageList.edit(record);
+          }
+          if (this.$refs.emailItemList) {
+            this.$refs.emailItemList.edit(record);
           }
         }
 
