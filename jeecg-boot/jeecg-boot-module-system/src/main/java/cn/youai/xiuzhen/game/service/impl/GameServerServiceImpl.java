@@ -1,9 +1,7 @@
 package cn.youai.xiuzhen.game.service.impl;
 
-import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
-import cn.youai.enums.OutdatedType;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameServer;
@@ -51,13 +49,28 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     private ILogAccountService logAccountService;
 
     @Override
+    public List<GameServer> selectGameServerList() {
+        return getBaseMapper().selectGameServerList();
+    }
+
+    @Override
+    public List<GameServer> selectGameServerByGroupId(long groupId) {
+        return getBaseMapper().selectGameServerByGroupId(groupId);
+    }
+
+    @Override
     public Map<Integer, Response> cleanCache(Collection<Integer> serverIds, String cacheName) {
         return gameServerGet(serverIds, cleanCacheUrl + cacheName);
     }
 
     @Override
     public Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path) {
-        Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
+        return gameServerGet(serverIds, path, Response.class);
+    }
+
+    @Override
+    public <T> Map<Integer, T> gameServerGet(Collection<Integer> serverIds, String path, Class<T> clazz) {
+        Map<Integer, T> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
             if (skipRequest(gameServer)) {
@@ -65,7 +78,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             }
 
             try {
-                Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path), Response.class);
+                T response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path), clazz);
                 responseMap.put(serverId, response);
             } catch (Exception e) {
                 log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
@@ -80,8 +93,18 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
+    public <T> Map<Integer, T> gameServerGet(String serverIds, String path, Class<T> clazz) {
+        return gameServerGet(StringUtils.split2Int(serverIds), path, clazz);
+    }
+
+    @Override
     public Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params) {
-        Map<String, Response> responseMap = new ConcurrentHashMap<>(serverIds.size());
+        return gameServerGet(serverIds, path, params, Response.class);
+    }
+
+    @Override
+    public <T> Map<String, T> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params, Class<T> clazz) {
+        Map<String, T> responseMap = new ConcurrentHashMap<>(serverIds.size());
         CountDownLatch latch = new CountDownLatch(serverIds.size());
         for (String serverId : serverIds) {
             GameServer gameServer = getById(serverId);
@@ -94,14 +117,14 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             OkHttpHelper.getAsync(gameServer.getGmUrl() + path, params, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    log.error("gameServerGet onFailure", e);
+                    log.error("gameServerGet onFailure, url:" + gameServer.getGmUrl() + path, e);
                     latch.countDown();
                 }
 
                 @Override
                 public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response)) {
-                        responseMap.put(serverId, JSON.parseObject(response.body().string(), Response.class));
+                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
+                        responseMap.put(serverId, JSON.parseObject(response.body().string(), clazz));
                     }
                     latch.countDown();
                 }
@@ -118,7 +141,12 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     @Override
     public Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, Object data) {
-        Map<Integer, Response> responseMap = new HashMap<>(serverIds.size());
+        return gameServerPost(serverIds, path, data, Response.class);
+    }
+
+    @Override
+    public <T> Map<Integer, T> gameServerPost(Collection<Integer> serverIds, String path, Object data, Class<T> clazz) {
+        Map<Integer, T> responseMap = new HashMap<>(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
             if (skipRequest(gameServer)) {
@@ -126,7 +154,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             }
 
             try {
-                Response response = JSON.parseObject(OkHttpHelper.post(gameServer.getGmUrl() + path, data), Response.class);
+                T response = JSON.parseObject(OkHttpHelper.post(gameServer.getGmUrl() + path, data), clazz);
                 responseMap.put(serverId, response);
             } catch (Exception e) {
                 log.error("gameServerPost error, serverId:" + serverId, e);
@@ -141,8 +169,15 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public Set<Integer> getServerIds() {
-        return list(Wrappers.<GameServer>lambdaQuery().select(GameServer::getId)).stream().map(GameServer::getId).collect(Collectors.toSet());
+    public Set<Integer> getAvailableServerIds() {
+        return selectGameServerList().stream().filter(t -> !t.skipCheck())
+                .map(GameServer::getId).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<Integer> getAllServerIds() {
+        return list(Wrappers.<GameServer>lambdaQuery().select(GameServer::getId))
+                .stream().map(GameServer::getId).collect(Collectors.toSet());
     }
 
     @Override
@@ -154,7 +189,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         Map<Integer, MergeServerVO> serverPayAmountMap = gameOrderMapper.getGameOrderRangeDate(startTime, endTime)
                 .stream().collect(Collectors.toConcurrentMap(MergeServerVO::getServerId, Function.identity(), (key1, key2) -> key2));
 
-        Set<Integer> serverIds = getServerIds();
+        Set<Integer> serverIds = getAllServerIds();
         Map<Integer, MergeServerVO> map = new HashMap<>(serverIds.size());
         serverIds.forEach(serverId -> {
             MergeServerVO serverLoginNum = serverLoginNumMap.get(serverId);
@@ -169,13 +204,6 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     private boolean skipRequest(GameServer gameServer) {
-        // 已合服接口
-        if (gameServer == null || gameServer.getOutdated() != OutdatedType.NORMAL.getValue()) {
-            return true;
-        }
-
-        // 本地接口
-        return StrUtil.contains(gameServer.getGmUrl(), "localhost")
-                || StrUtil.contains(gameServer.getGmUrl(), "127.0.0.1");
+        return gameServer == null || gameServer.skipCheck();
     }
 }

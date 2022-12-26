@@ -63,6 +63,7 @@
         <minio.version>8.0.3</minio.version>
         <justauth-spring-boot-starter.version>1.3.4</justauth-spring-boot-starter.version>
         <dom4j.version>1.6.1</dom4j.version>
+        <java-websocket.version>1.5.3</java-websocket.version>
         <!-- 积木报表-->
         <jimureport-spring-boot-starter.version>1.5.2</jimureport-spring-boot-starter.version>
         <!-- 框架依赖 -->
@@ -186,6 +187,12 @@
             <groupId>io.sentry</groupId>
             <artifactId>sentry-spring</artifactId>
             <version>${sentry.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.java-websocket</groupId>
+            <artifactId>Java-WebSocket</artifactId>
+            <version>${java-websocket.version}</version>
         </dependency>
 
         <!-- mybatis-plus -->

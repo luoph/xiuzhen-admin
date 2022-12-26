@@ -14,8 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -35,8 +33,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     private IGameServerService gameServerService;
 
     private void sendLampNoticeUpdate() {
-        Set<String> serverIds = gameServerService.getServerIds().stream().map(String::valueOf).collect(Collectors.toSet());
-        gameServerService.gameServerGet(serverIds, sendLampNoticeUpdate, null);
+        gameServerService.gameServerGet(gameServerService.getAvailableServerIds(), sendLampNoticeUpdate, null);
     }
 
     @AutoLog(value = "跑马灯消息-列表查询")

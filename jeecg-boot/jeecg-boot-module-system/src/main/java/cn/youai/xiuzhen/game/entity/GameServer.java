@@ -1,5 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
+import cn.hutool.core.util.StrUtil;
+import cn.youai.enums.OutdatedType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -275,5 +277,12 @@ public class GameServer extends BaseEntity {
     @TableField(exist = false)
     @ApiModelProperty(value = "标签")
     private String tag;
+
+    // 本地接口
+    public boolean skipCheck() {
+        return getOutdated() != OutdatedType.NORMAL.getValue()
+                || StrUtil.contains(getGmUrl(), "localhost")
+                || StrUtil.contains(getGmUrl(), "127.0.0.1");
+    }
 
 }

@@ -19,6 +19,16 @@ import java.util.Set;
 public interface IGameServerService extends IService<GameServer> {
 
     /**
+     * 获取服务器列表
+     *
+     * @return {@linkplain cn.youai.xiuzhen.game.entity.GameServer}列表
+     */
+    List<GameServer> selectGameServerList();
+
+
+    List<GameServer> selectGameServerByGroupId(long groupId);
+
+    /**
      * 批量请求 清除缓存接口
      *
      * @param serverIds 服务器 id
@@ -36,6 +46,8 @@ public interface IGameServerService extends IService<GameServer> {
      */
     Map<Integer, Response> gameServerGet(Collection<Integer> serverIds, String path);
 
+    <T> Map<Integer, T> gameServerGet(Collection<Integer> serverIds, String path, Class<T> clazz);
+
     /**
      * 批量请求 http 接口
      *
@@ -44,6 +56,8 @@ public interface IGameServerService extends IService<GameServer> {
      * @return 响应列表
      */
     Map<Integer, Response> gameServerGet(String serverIds, String path);
+
+    <T> Map<Integer, T> gameServerGet(String serverIds, String path, Class<T> clazz);
 
     /**
      * 批量请求 http 接口
@@ -55,6 +69,8 @@ public interface IGameServerService extends IService<GameServer> {
      */
     Map<String, Response> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params);
 
+    <T> Map<String, T> gameServerGet(Collection<String> serverIds, String path, Map<String, Object> params, Class<T> clazz);
+
     /**
      * 批量请求 http 接口
      *
@@ -65,9 +81,13 @@ public interface IGameServerService extends IService<GameServer> {
      */
     Map<Integer, Response> gameServerPost(Collection<Integer> serverIds, String path, Object data);
 
+    <T> Map<Integer, T> gameServerPost(Collection<Integer> serverIds, String path, Object data, Class<T> clazz);
+
     void updateGameServerMaintain(List<Integer> serverIds, int isMaintain);
 
-    Set<Integer> getServerIds();
+    Set<Integer> getAvailableServerIds();
+
+    Set<Integer> getAllServerIds();
 
     List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount);
 }

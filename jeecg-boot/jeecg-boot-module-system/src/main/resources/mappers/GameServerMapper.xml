@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameServerMapper">
 
+    <sql id="selectServer">
+        SELECT s.*
+        FROM `game_server` s
+                 LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
+                 LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
+    </sql>
+
+    <select id="selectGameServerById" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        <include refid="selectServer"/>
+        WHERE s.`id` = #{id}
+    </select>
+
+    <select id="selectGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        <include refid="selectServer"/>
+    </select>
+
+    <select id="selectGameServerByGroupId" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        <include refid="selectServer"/>
+        WHERE g.`group_id` = #{groupId}
+    </select>
+
     <update id="updateGameServerMaintain">
         UPDATE `game_server` SET `is_maintain` = #{isMaintain}
         WHERE `id` IN
