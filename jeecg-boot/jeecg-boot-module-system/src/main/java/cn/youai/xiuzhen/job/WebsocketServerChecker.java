@@ -32,14 +32,26 @@ public class WebsocketServerChecker {
     private static final Type RESPONSE_SERVER_STATUS = new TypeReference<DataResponse<GameServerStatus>>() {
     }.getType();
 
-    @Value("${app.websocket.test-times:3}")
+    @Value("${app.websocket.test-enable:true}")
+    private boolean enable;
+
+    @Value("${app.websocket.test-times:5}")
     private int testTimes;
+
+    @Value("${app.websocket.warning-times:4}")
+    private int warningTimes;
 
     @Value("${app.server-status-url:/game/status}")
     private String serverStatusUrl;
 
-    @Value("${app.url.lark-forward}")
+    @Value("${app.url.lark-forward:}")
     private String larkForwardUrl;
+
+    @Value("${app.game-server.profile:}")
+    private String profile;
+
+    @Value("${app.game-server.jenkins-job:}")
+    private String jenkinsJobUrl;
 
     @Autowired
     private IGameServerService serverService;
@@ -50,6 +62,10 @@ public class WebsocketServerChecker {
     @Async
     @Scheduled(cron = "0 0/10 * * * ?")
     public void checkServer() {
+        if (!enable) {
+            return;
+        }
+
         log.info("start checkServer");
         List<GameServer> serverList = serverService.selectGameServerList();
         Map<Integer, WebsocketCheckResult> checkResultMap = new HashMap<>();
@@ -61,10 +77,11 @@ public class WebsocketServerChecker {
         }
 
         Set<Integer> failedList = checkResultMap.values().stream()
-                .filter(t -> t.getFailed() == testTimes)
+                .filter(t -> t.getFailed() >= warningTimes)
                 .map(WebsocketCheckResult::getServerId).collect(Collectors.toSet());
 
         List<GameServerStatus> serverStatusList = new ArrayList<>();
+        List<WebsocketCheckResult> resultList = new ArrayList<>();
         if (CollUtil.isNotEmpty(failedList)) {
             Map<Integer, String> responseMap = serverService.gameServerGet(failedList, serverStatusUrl, String.class);
             responseMap.forEach((key, value) -> {
@@ -74,16 +91,21 @@ public class WebsocketServerChecker {
                     serverStatus.setServerId(key);
                     serverStatusList.add(serverStatus);
                 }
+                resultList.add(checkResultMap.get(key));
             });
 
             ServerWarningData warningData = new ServerWarningData()
+                    .setProfile(profile).setJenkinsJobUrl(jenkinsJobUrl)
                     .setServerIds(StrUtil.join(",", failedList))
-                    .setServerStatusList(serverStatusList);
-            String url = larkForwardUrl + "/lark/gameServer";
-            String response = OkHttpHelper.post(url, warningData);
-            log.info("request url:{}, response:{}", url, response);
+                    .setResultList(resultList).setServerStatusList(serverStatusList);
+
+            if (StrUtil.isNotEmpty(larkForwardUrl)) {
+                String url = larkForwardUrl + "/lark/gameServer";
+                String response = OkHttpHelper.post(url, warningData);
+                log.info("request url:{}, response:{}", url, response);
+            }
         }
 
-        log.info("finish checkServer");
+        log.info("finish checkServer, failed:{}", failedList.size());
     }
 }

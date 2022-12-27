@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.service.impl;
 
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.model.WebsocketCheckResult;
 import cn.youai.xiuzhen.game.service.WebsocketService;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class WebsocketServiceImpl implements WebsocketService {
 
-    @Value("${app.websocket.checkUrl-timeout:5}")
+    @Value("${app.websocket.test-timeout:5}")
     private Integer timeout;
 
     @Value("${app.websocket.enable-ssl:false}")
@@ -46,7 +47,7 @@ public class WebsocketServiceImpl implements WebsocketService {
             WebSocketClient client = new WebSocketClient(new URI(url)) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
-                    log.info("onOpen {}", handshakedata);
+                    log.info("onOpen url:{}, data:{}", url, handshakedata);
                 }
 
                 @Override
@@ -56,12 +57,16 @@ public class WebsocketServiceImpl implements WebsocketService {
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
-                    log.info("onClose code:{}, reason:{}, remote:{}", code, reason, remote);
+                    if (StringUtils.isNotBlank(reason)) {
+                        log.info("onClose url:{}, code:{}, reason:{}, remote:{}", url, code, reason, remote);
+                    } else {
+                        log.info("onClose url:{}, code:{}, remote:{}", url, code, remote);
+                    }
                 }
 
                 @Override
                 public void onError(Exception ex) {
-                    log.error("onError error", ex);
+                    log.error("onError error, url:" + url, ex);
                 }
             };
 

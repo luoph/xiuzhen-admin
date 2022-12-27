@@ -14,9 +14,9 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class ServerWarningData {
-
+    private String profile;
     private String serverIds;
-
+    private String jenkinsJobUrl;
+    private List<WebsocketCheckResult> resultList;
     private List<GameServerStatus> serverStatusList;
-
 }
