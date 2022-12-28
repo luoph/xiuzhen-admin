@@ -13,9 +13,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-03-30
  */
 @Data
-@TableName("game_campaign_type_party_task")
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypePartyTask extends GameCampaignTypeBase {
+@TableName("game_campaign_type_party_task")
+public class GameCampaignTypePartyTask extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,9 +31,8 @@ public class GameCampaignTypePartyTask extends GameCampaignTypeBase {
         this.costNum = other.getCostNum();
         this.jumpId = other.getJumpId();
         this.reward = other.getReward();
-        this.minLevel = other.getMinLevel();
-        this.maxLevel = other.getMaxLevel();
-
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**
@@ -91,19 +90,4 @@ public class GameCampaignTypePartyTask extends GameCampaignTypeBase {
     @ExcelProperty("任务奖励")
     @Excel(name = "任务奖励", width = 15)
     private java.lang.String reward;
-
-    /**
-     * 最小世界等级
-     */
-    @ExcelProperty("最小世界等级")
-    @Excel(name = "最小世界等级", width = 15)
-    private Integer minLevel;
-
-    /**
-     * 最大世界等级
-     */
-    @ExcelProperty("最大世界等级")
-    @Excel(name = "最大世界等级", width = 15)
-    private Integer maxLevel;
-
 }

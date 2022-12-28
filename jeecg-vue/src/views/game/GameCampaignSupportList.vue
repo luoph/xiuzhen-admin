@@ -126,30 +126,30 @@ export default {
       description: '活动区服配置管理页面',
       // 表头
       columns: [
+        // {
+        //   title: '#',
+        //   dataIndex: '',
+        //   key: 'rowIndex',
+        //   width: 60,
+        //   align: 'center',
+        //   customRender: function (t, r, index) {
+        //     return parseInt(index) + 1;
+        //   }
+        // },
         {
-          title: '#',
-          dataIndex: '',
-          key: 'rowIndex',
-          width: 60,
+          title: '主活动id',
           align: 'center',
-          customRender: function (t, r, index) {
-            return parseInt(index) + 1;
-          }
+          dataIndex: 'campaignId'
+        },
+        {
+          title: '子活动id',
+          align: 'center',
+          dataIndex: 'typeId'
         },
         {
           title: 'id',
           align: 'center',
           dataIndex: 'id'
-        },
-        {
-          title: '活动id',
-          align: 'center',
-          dataIndex: 'campaignId'
-        },
-        {
-          title: '页签id',
-          align: 'center',
-          dataIndex: 'typeId'
         },
         {
           title: '服务器id',

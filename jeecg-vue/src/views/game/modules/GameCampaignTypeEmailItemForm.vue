@@ -77,6 +77,16 @@
               <a-textarea v-model="model.content" rows="4" placeholder="请输入邮件附件" />
             </a-form-model-item>
           </a-col>
+          <a-col :span="24">
+            <a-form-model-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="minLevel">
+              <a-input-number v-model="model.minLevel" placeholder="请输入最小世界等级" style="width: 100%"/>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-model-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="maxLevel">
+              <a-input-number v-model="model.maxLevel" placeholder="请输入最大世界等级" style="width: 100%"/>
+            </a-form-model-item>
+          </a-col>
         </a-row>
       </a-form-model>
     </j-form-container>
@@ -130,6 +140,12 @@
            ],
            type: [
               { required: true, message: '请选择邮件类型: 1.有附件, 2.冇附件!'},
+           ],
+           minLevel: [
+              { required: true, message: '请输入最小世界等级!'},
+           ],
+           maxLevel: [
+              { required: true, message: '请输入最大世界等级!'},
            ],
         },
         url: {

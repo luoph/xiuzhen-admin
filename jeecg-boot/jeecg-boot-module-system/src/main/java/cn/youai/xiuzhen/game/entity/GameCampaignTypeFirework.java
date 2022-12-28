@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.game.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -13,10 +12,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-01-15
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_campaign_type_firework")
-public class GameCampaignTypeFirework extends GameCampaignTypeBase {
+public class GameCampaignTypeFirework extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,14 +28,14 @@ public class GameCampaignTypeFirework extends GameCampaignTypeBase {
         this.discount = other.getDiscount();
         this.num = other.getNum();
         this.btnName = other.getBtnName();
-        this.minLevel = other.getMinLevel();
-        this.maxLevel = other.getMaxLevel();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**
      * 礼包itemId
      */
-    @Excel(name = "礼包Id", width = 15)
+    @Excel(name = "礼包id", width = 15)
     private java.lang.Integer giftId;
 
     /**
@@ -69,16 +67,4 @@ public class GameCampaignTypeFirework extends GameCampaignTypeBase {
      */
     @Excel(name = "按钮标题", width = 15)
     private java.lang.String btnName;
-
-    /**
-     * 最小世界等级
-     */
-    @Excel(name = "最小世界等级", width = 15)
-    private Integer minLevel;
-
-    /**
-     * 最大世界等级
-     */
-    @Excel(name = "最大世界等级", width = 15)
-    private Integer maxLevel;
 }

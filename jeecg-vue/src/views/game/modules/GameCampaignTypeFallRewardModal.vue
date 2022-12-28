@@ -4,12 +4,12 @@
            @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="主活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
-                          placeholder="请输入活动id" style="width: 100%"/>
+                          placeholder="请输入主活动id" style="width: 100%"/>
         </a-form-item>
-        <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id"
+        <a-form-item label="子活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动id"
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="奖励组id" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -66,8 +66,8 @@ export default {
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: {rules: [{required: true, message: "请输入活动id!"}]},
-        typeId: {rules: [{required: true, message: "请输入页签id!"}]},
+        campaignId: {rules: [{required: true, message: "请输入主活动id!"}]},
+        typeId: {rules: [{required: true, message: "请输入子活动id!"}]},
         rewardId: {rules: [{required: true, message: "请输入掉落id!"}]},
         rewardType: {rules: [{required: true, message: "请输入奖励类型!"}]},
         reward: {rules: [{required: true, message: "请输入奖励列表!"}]},

@@ -12,7 +12,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-邮件活动-明细')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-邮件活动')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
@@ -111,6 +111,7 @@
     data () {
       return {
         description: '节日活动-邮件活动-明细管理页面',
+        model: {},
         // 表头
         columns: [
           {
@@ -124,7 +125,7 @@
             }
           },
           {
-            title:'活动id',
+            title:'主活动id',
             align:"center",
             dataIndex: 'campaignId'
           },
@@ -133,6 +134,11 @@
             align:"center",
             dataIndex: 'typeId'
           },
+          {
+          title: 'id',
+          align: 'center',
+          dataIndex: 'id'
+        },
           {
             title:'活动名称',
             align:"center",
@@ -229,7 +235,7 @@
           delete: "/game/gameCampaignTypeEmailItem/delete",
           deleteBatch: "/game/gameCampaignTypeEmailItem/deleteBatch",
           exportXlsUrl: "/game/gameCampaignTypeEmailItem/exportXls",
-          importExcelUrl: "game/gameCampaignTypeEmailItem/importExcel",
+          importExcelUrl: "game/gameCampaignType/importExcel/details",
           
         },
         dictOptions:{},
@@ -241,7 +247,7 @@
     },
     computed: {
       importExcelUrl: function(){
-        return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+        return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
       },
     },
     methods: {
@@ -315,6 +321,8 @@
         fieldList.push({type:'string',value:'describe',text:'邮件描述'})
         fieldList.push({type:'int',value:'type',text:'邮件类型: 1.有附件, 2.冇附件'})
         fieldList.push({type:'string',value:'content',text:'邮件附件'})
+        fieldList.push({type:'int',value:'minLevel',text:'最小世界等级'})
+        fieldList.push({type:'int',value:'maxLevel',text:'最大世界等级'})
         this.superFieldList = fieldList
       }
     }

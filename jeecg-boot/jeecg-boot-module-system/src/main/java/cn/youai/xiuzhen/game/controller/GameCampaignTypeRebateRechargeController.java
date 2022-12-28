@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeRebateRecharge;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeRebateRechargeService;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +66,7 @@ public class GameCampaignTypeRebateRechargeController extends JeecgController<Ga
     @AutoLog(value = "狂欢返利-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeRebateRecharge entity) {
-        return super.exportXls(request, entity, GameCampaignTypeRebateRecharge.class, "狂欢返利");
+        return super.exportXls(request, entity, GameCampaignTypeRebateRecharge.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "狂欢返利-导入")

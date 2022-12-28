@@ -6,12 +6,26 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('返利狂欢')">导出</a-button> -->
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-返利狂欢')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+        <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table 
+        ref="table" 
+        size="middle" 
+        bordered 
+        rowKey="id" 
+        :columns="columns" 
+        :dataSource="dataSource" 
+        :pagination="ipagination" 
+        :loading="loading" 
+        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        class="j-table-force-nowrap"
+        @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
@@ -78,16 +92,22 @@ export default {
           }
         },
         {
-          title: '活动id',
+          title: '主活动id',
           align: 'center',
           width: 80,
           dataIndex: 'campaignId'
         },
         {
-          title: '页签id',
+          title: '子活动id',
           align: 'center',
           width: 80,
           dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '任务id',
@@ -146,14 +166,14 @@ export default {
         delete: 'game/gameCampaignTypeRebateRecharge/delete',
         deleteBatch: 'game/gameCampaignTypeRebateRecharge/deleteBatch',
         exportXlsUrl: 'game/gameCampaignTypeRebateRecharge/exportXls',
-        importExcelUrl: 'game/gameCampaignTypeRebateRecharge/importExcel'
+        importExcelUrl: 'game/gameCampaignType/importExcel/details'
       },
       dictOptions: {}
     };
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

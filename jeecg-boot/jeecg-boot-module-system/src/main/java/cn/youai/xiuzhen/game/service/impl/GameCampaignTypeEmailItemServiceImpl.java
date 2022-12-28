@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.service.impl;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeEmailItem;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypeEmailItemMapper;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeEmailItemService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @Version: V1.0
  */
 @Service
+@DS("master")
 public class GameCampaignTypeEmailItemServiceImpl extends ServiceImpl<GameCampaignTypeEmailItemMapper, GameCampaignTypeEmailItem> implements IGameCampaignTypeEmailItemService {
 
 }

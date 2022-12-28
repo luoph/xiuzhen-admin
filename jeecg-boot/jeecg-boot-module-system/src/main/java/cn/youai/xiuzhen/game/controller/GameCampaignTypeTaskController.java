@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeTask;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeTaskService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -72,7 +73,7 @@ public class GameCampaignTypeTaskController extends JeecgController<GameCampaign
     @AutoLog(value = "任务活动-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeTask entity) {
-        return super.exportXls(request, entity, GameCampaignTypeTask.class, "任务活动");
+        return super.exportXls(request, entity, GameCampaignTypeTask.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "任务活动-导入")

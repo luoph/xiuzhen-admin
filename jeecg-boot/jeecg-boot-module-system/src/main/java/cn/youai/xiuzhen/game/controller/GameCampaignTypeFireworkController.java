@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeFirework;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeFireworkService;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +66,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
     @AutoLog(value = "节日烟花-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFirework entity) {
-        return super.exportXls(request, entity, GameCampaignTypeFirework.class, "节日烟花");
+        return super.exportXls(request, entity, GameCampaignTypeFirework.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日烟花-导入")

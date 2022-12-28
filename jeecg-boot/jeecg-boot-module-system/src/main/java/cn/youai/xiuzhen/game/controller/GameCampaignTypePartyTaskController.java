@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypePartyTask;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
@@ -81,7 +82,7 @@ public class GameCampaignTypePartyTaskController extends JeecgController<GameCam
     @AutoLog(value = "节日派对任务-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypePartyTask entity) {
-        return super.exportXls(request, entity, GameCampaignTypePartyTask.class, "节日派对任务");
+        return super.exportXls(request, entity, GameCampaignTypePartyTask.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日派对任务-导入")
@@ -91,7 +92,6 @@ public class GameCampaignTypePartyTaskController extends JeecgController<GameCam
     }
 
     @AutoLog(value = "节日派对任务-导入文本")
-
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
         GameCampaignType campaignType = gameCampaignTypeService.getById(vo.getId());

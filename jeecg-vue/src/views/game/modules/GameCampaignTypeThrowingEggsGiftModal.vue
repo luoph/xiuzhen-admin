@@ -44,6 +44,12 @@
           <a-input v-decorator="['reward', validatorRules.reward]"
                    placeholder='奖励内容:[{"itemId":1001,"num":1001}]'></a-input>
         </a-form-item>
+        <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%"/>
+        </a-form-item>
+        <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%"/>
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
@@ -89,7 +95,9 @@ export default {
         discount: {initialValue: 0},
         limitCondition: {},
         reward: {rules: [{required: true, message: "请输入奖励内容!"}]},
-        giftName: {rules: [{required: true, message: "请输入奖励内容!"}]}
+        giftName: {rules: [{required: true, message: "请输入奖励内容!"}]},
+        minLevel: {rules: [{required: true, message: "请输入最小世界等级!"}]},
+        maxLevel: {rules: [{required: true, message: "请输入最大世界等级!"}]}
       },
       url: {
         add: "game/gameCampaignTypeThrowingEggsGift/add",
@@ -109,7 +117,7 @@ export default {
       this.isEdit = this.model.id != null;
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward", "giftName"));
+        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward", "giftName", "minLevel", "maxLevel"));
       });
     },
     close() {
@@ -153,7 +161,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward", "giftName"));
+      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "costItemId", "costNum", "stack", "amount", "discount", "limitCondition", "reward", "giftName", "minLevel", "maxLevel"));
     }
   }
 };

@@ -2,6 +2,9 @@ package cn.youai.xiuzhen.game.service;
 
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.common.api.vo.Result;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author jeecg-boot
@@ -33,4 +36,7 @@ public interface IGameCampaignTypeService extends IService<GameCampaignType> {
      * @param copyCampaignId
      */
     void duplicate(GameCampaignType model, long copyCampaignId);
+
+    Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request);
+    Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request, String name, Class<? extends IService> serviceClass);
 }

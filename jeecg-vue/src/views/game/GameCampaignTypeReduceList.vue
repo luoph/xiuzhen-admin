@@ -10,16 +10,16 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('game_campaign_type_reduce')">导出</a-button>
-      <!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
-      <!--                <a-button type="primary" icon="import">导入</a-button>-->
-      <!--            </a-upload>-->
-      <!--            <a-dropdown v-if="selectedRowKeys.length > 0">-->
-      <!--                <a-menu slot="overlay">-->
-      <!--                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>-->
-      <!--                </a-menu>-->
-      <!--                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>-->
-      <!--            </a-dropdown>-->
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-消耗排行')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+          <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
+          <a-menu slot="overlay">
+              <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+          </a-menu>
+          <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+      </a-dropdown> -->
     </div>
 
     <!-- table区域-begin -->
@@ -39,6 +39,7 @@
         :pagination="ipagination"
         :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        class="j-table-force-nowrap"
         @change="handleTableChange"
       >
         <template slot="htmlSlot" slot-scope="text">
@@ -88,7 +89,7 @@ export default {
   },
   data() {
     return {
-      description: '消费排行管理页面',
+      description: '消耗排行管理页面',
       model: {},
       // 表头
       columns: [
@@ -103,14 +104,20 @@ export default {
           }
         },
         {
-          title: '活动id',
+          title: '主活动id',
           align: 'center',
           dataIndex: 'campaignId'
         },
         {
-          title: '页签id',
+          title: '子活动id',
           align: 'center',
           dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '排名序列',
@@ -133,6 +140,16 @@ export default {
           dataIndex: 'reward'
         },
         {
+          title: '最小世界等级',
+          align: 'center',
+          dataIndex: 'minLevel'
+        },
+        {
+          title: '最大世界等级',
+          align: 'center',
+          dataIndex: 'maxLevel'
+        },
+        {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
@@ -144,14 +161,14 @@ export default {
         delete: 'game/gameCampaignTypeReduce/delete',
         deleteBatch: 'game/gameCampaignTypeReduce/deleteBatch',
         exportXlsUrl: 'game/gameCampaignTypeReduce/exportXls',
-        importExcelUrl: 'game/gameCampaignTypeReduce/importExcel'
+        importExcelUrl: 'game/gameCampaignType/importExcel/details'
       },
       dictOptions: {}
     };
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

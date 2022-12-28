@@ -18,9 +18,9 @@ import java.util.Date;
  * @date 2020-10-15
  */
 @Data
-@TableName("game_campaign_type_buff")
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeBuff extends GameCampaignTypeBase {
+@TableName("game_campaign_type_buff")
+public class GameCampaignTypeBuff extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +34,8 @@ public class GameCampaignTypeBuff extends GameCampaignTypeBase {
         this.endTime = other.getEndTime();
         this.description = other.getDescription();
         this.addition = other.getAddition();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**

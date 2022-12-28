@@ -13,9 +13,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-04-15
  */
 @Data
-@TableName("game_campaign_direct_purchase")
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
+@TableName("game_campaign_direct_purchase")
+public class GameCampaignDirectPurchase extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,15 +31,15 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
         this.goodsId = other.getGoodsId();
         this.color = other.getColor();
         this.discount = other.getDiscount();
-        this.minLevel = other.getMinLevel();
-        this.maxLevel = other.getMaxLevel();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**
      * 已购数量
      */
-    @Excel(name = "商品Id", width = 15)
-    @ExcelProperty("商品Id")
+    @Excel(name = "商品id", width = 15)
+    @ExcelProperty("商品id")
     private java.lang.Long goodsId;
 
     /**
@@ -78,13 +78,6 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
     private java.lang.String reward;
 
     /**
-     * 图标颜色
-     */
-    @Excel(name = "图标颜色", width = 15)
-    @ExcelProperty("图标颜色")
-    private java.lang.Integer color;
-
-    /**
      * 礼包折扣
      */
     @Excel(name = "礼包折扣", width = 15)
@@ -92,17 +85,9 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBase {
     private java.lang.Integer discount;
 
     /**
-     * 最小世界等级
+     * 图标颜色
      */
-    @ExcelProperty("最小世界等级")
-    @Excel(name = "最小世界等级", width = 15)
-    private Integer minLevel;
-
-    /**
-     * 最大世界等级
-     */
-    @ExcelProperty("最大世界等级")
-    @Excel(name = "最大世界等级", width = 15)
-    private Integer maxLevel;
-
+    @Excel(name = "图标颜色", width = 15)
+    @ExcelProperty("图标颜色")
+    private java.lang.Integer color;
 }

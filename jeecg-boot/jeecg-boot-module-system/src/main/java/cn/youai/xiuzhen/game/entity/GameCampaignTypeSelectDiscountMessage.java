@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
  * <p>
@@ -18,7 +19,6 @@ import lombok.experimental.Accessors;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("game_campaign_type_select_discount_message")
 public class GameCampaignTypeSelectDiscountMessage extends GameCampaignTypeBase {
 
@@ -38,26 +38,31 @@ public class GameCampaignTypeSelectDiscountMessage extends GameCampaignTypeBase 
     /**
      * 推送时间 时分秒
      */
+    @Excel(name = "推送时间", width = 15)
     private String pushTime;
 
     /**
      * 传闻内容
      */
+    @Excel(name = "传闻内容", width = 15)
     private String content;
 
     /**
      * 传闻广播次数
      */
+    @Excel(name = "传闻广播次数", width = 15)
     private Integer num;
 
     /**
      * 全服广播邮件标题
      */
+    @Excel(name = "全服广播邮件标题", width = 15)
     private String emailTitle;
 
     /**
      * 全服广播邮件内容
      */
+    @Excel(name = "全服广播邮件内容", width = 15)
     private String emailContent;
 
 }

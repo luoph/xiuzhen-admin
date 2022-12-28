@@ -1,11 +1,14 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeSelectDiscountMessage;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeSelectDiscountMessageService;
+import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("game/gameCampaignTypeSelectDiscountMessage")
 public class GameCampaignTypeSelectDiscountMessageController extends JeecgController<GameCampaignTypeSelectDiscountMessage, IGameCampaignTypeSelectDiscountMessageService> {
+
+    @Autowired
+    private IGameCampaignTypeService gameCampaignTypeService;
 
     @AutoLog(value = "节日活动-自选特惠-传闻部分-列表查询")
     @GetMapping(value = "/list")
@@ -65,13 +71,14 @@ public class GameCampaignTypeSelectDiscountMessageController extends JeecgContro
     @AutoLog(value = "节日活动-自选特惠-传闻部分-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSelectDiscountMessage entity) {
-        return super.exportXls(request, entity, GameCampaignTypeSelectDiscountMessage.class, "节日活动-自选特惠-传闻部分");
+        return super.exportXls(request, entity, GameCampaignTypeSelectDiscountMessage.class, CampaignType.SELECT_DISCOUNT_ITEM.getName() + "-传闻");
     }
 
     @AutoLog(value = "节日活动-自选特惠-传闻部分-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameCampaignTypeSelectDiscountMessage.class);
+    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId) {
+        return gameCampaignTypeService.importExcel(campaignId, typeId, request, CampaignType.SELECT_DISCOUNT_ITEM.getName() + "-传闻", service.getClass());
     }
 
 }

@@ -6,12 +6,28 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('Buff活动')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls(model.type === 5 ? '节日活动-修为加成' 
+      : model.type === 6 ? '节日活动-灵气加成'
+      : '未知活动类型')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+        <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table 
+        ref="table" 
+        size="middle" 
+        bordered 
+        rowKey="id" 
+        :columns="columns" 
+        :dataSource="dataSource" 
+        :pagination="ipagination" 
+        :loading="loading" 
+        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        class="j-table-force-nowrap"
+        @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
@@ -81,14 +97,20 @@ export default {
           }
         },
         {
-          title: '活动id',
+          title: '主活动id',
           align: 'center',
           dataIndex: 'campaignId'
         },
         {
-          title: '页签id',
+          title: '子活动id',
           align: 'center',
           dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
         },
         // {
         //     title: "活动类型",
@@ -126,6 +148,16 @@ export default {
           dataIndex: 'endTime'
         },
         {
+          title: '最小世界等级',
+          align: 'center',
+          dataIndex: 'minLevel'
+        },
+        {
+          title: '最大世界等级',
+          align: 'center',
+          dataIndex: 'maxLevel'
+        },
+        {
           title: '创建时间',
           align: 'center',
           dataIndex: 'createTime'
@@ -142,14 +174,14 @@ export default {
         delete: 'game/gameCampaignTypeBuff/delete',
         deleteBatch: 'game/gameCampaignTypeBuff/deleteBatch',
         exportXlsUrl: 'game/gameCampaignTypeBuff/exportXls',
-        importExcelUrl: 'game/gameCampaignTypeBuff/importExcel'
+        importExcelUrl: 'game/gameCampaignType/importExcel/details'
       },
       dictOptions: {}
     };
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+            return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {
@@ -208,6 +240,7 @@ export default {
       // typeId、活动id
       param.typeId = this.model.id;
       param.campaignId = this.model.campaignId;
+      param.type = this.model.type;
       return filterObj(param);
     },
     getImgView(text) {

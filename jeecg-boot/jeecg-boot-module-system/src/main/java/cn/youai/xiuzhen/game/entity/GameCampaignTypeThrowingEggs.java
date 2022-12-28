@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.game.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -13,10 +12,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-03-10
  */
 @Data
-@TableName("game_campaign_type_throwing_eggs")
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBase {
+@TableName("game_campaign_type_throwing_eggs")
+public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,8 +40,8 @@ public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBase {
         this.showOrdinaryReward = other.getShowOrdinaryReward();
         this.showLuckyReward = other.getShowLuckyReward();
         this.throwingEggsValue = other.getThrowingEggsValue();
-        this.minLevel = other.getMinLevel();
-        this.maxLevel = other.getMaxLevel();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**
@@ -144,16 +142,4 @@ public class GameCampaignTypeThrowingEggs extends GameCampaignTypeBase {
 
     @Excel(name = "砸蛋值", width = 15)
     private java.lang.Integer throwingEggsValue;
-    /**
-     * 最小世界等级
-     */
-    @Excel(name = "最小世界等级", width = 15)
-    private Integer minLevel;
-
-    /**
-     * 最大世界等级
-     */
-    @Excel(name = "最大世界等级", width = 15)
-    private Integer maxLevel;
-
 }

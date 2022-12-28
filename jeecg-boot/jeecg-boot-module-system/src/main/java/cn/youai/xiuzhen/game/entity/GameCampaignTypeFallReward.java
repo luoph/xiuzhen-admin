@@ -13,9 +13,8 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-01-15
  */
 @Data
-@TableName("game_campaign_type_fall_reward")
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
+@TableName("game_campaign_type_fall_reward")
 public class GameCampaignTypeFallReward extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;

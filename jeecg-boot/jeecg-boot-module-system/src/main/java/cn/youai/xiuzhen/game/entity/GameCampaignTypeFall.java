@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.game.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -13,22 +12,22 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-01-15
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_campaign_type_fall")
-public class GameCampaignTypeFall extends GameCampaignTypeBase {
+public class GameCampaignTypeFall extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
 
     public GameCampaignTypeFall() {
-
     }
 
     public GameCampaignTypeFall(GameCampaignTypeFall other) {
         this.module = other.getModule();
         this.rewardType = other.getRewardType();
         this.reward = other.getReward();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**

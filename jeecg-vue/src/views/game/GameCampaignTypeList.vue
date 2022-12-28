@@ -10,8 +10,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="页签名称">
-              <j-input placeholder="请输入页签名称" v-model="queryParam.name"></j-input>
+            <a-form-item label="活动名称">
+              <j-input placeholder="请输入活动名称" v-model="queryParam.name"></j-input>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -25,7 +25,7 @@
                 <a-select-option :value="6">6-灵气加成</a-select-option>
                 <a-select-option :value="7">7-节日掉落</a-select-option>
                 <a-select-option :value="8">8-节日烟花</a-select-option>
-                <a-select-option :value="9">9-消费排行</a-select-option>
+                <a-select-option :value="9">9-消耗排行</a-select-option>
                 <a-select-option :value="10">10-限时仙剑</a-select-option>
                 <a-select-option :value="11">11-砸蛋</a-select-option>
                 <a-select-option :value="12">12-砸蛋榜</a-select-option>
@@ -180,30 +180,30 @@ export default {
       },
       // 表头
       columns: [
+        // {
+        //   title: '#',
+        //   dataIndex: '',
+        //   key: 'rowIndex',
+        //   width: 60,
+        //   align: 'center',
+        //   customRender: function (t, r, index) {
+        //     return parseInt(index) + 1;
+        //   }
+        // },
         {
-          title: '#',
-          dataIndex: '',
-          key: 'rowIndex',
-          width: 60,
-          align: 'center',
-          customRender: function (t, r, index) {
-            return parseInt(index) + 1;
-          }
-        },
-        {
-          title: '活动id',
+          title: '主活动id',
           align: 'center',
           dataIndex: 'campaignId',
           width: 100
         },
         {
-          title: '页签id',
+          title: '子活动id',
           align: 'center',
           dataIndex: 'id',
           width: 100
         },
         {
-          title: '页签标题',
+          title: '活动名称',
           align: 'center',
           dataIndex: 'name',
           width: 180
@@ -232,7 +232,7 @@ export default {
             } else if (value === 8) {
               re = '8-节日烟花';
             } else if (value === 9) {
-              re = '9-消费排行';
+              re = '9-消耗排行';
             } else if (value === 10) {
               re = '10-限时仙剑';
             } else if (value === 11) {

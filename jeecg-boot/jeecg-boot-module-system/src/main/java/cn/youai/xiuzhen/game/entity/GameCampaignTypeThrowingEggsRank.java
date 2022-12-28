@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.game.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -13,10 +12,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-03-10
  */
 @Data
-@TableName("game_campaign_type_throwing_eggs_rank")
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeThrowingEggsRank extends GameCampaignTypeBase {
+@TableName("game_campaign_type_throwing_eggs_rank")
+public class GameCampaignTypeThrowingEggsRank extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +25,8 @@ public class GameCampaignTypeThrowingEggsRank extends GameCampaignTypeBase {
         this.sort = other.getSort();
         this.limitNum = other.getLimitNum();
         this.reward = other.getReward();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**
@@ -46,5 +46,4 @@ public class GameCampaignTypeThrowingEggsRank extends GameCampaignTypeBase {
      */
     @Excel(name = "奖励内容", width = 15)
     private java.lang.String reward;
-
 }
