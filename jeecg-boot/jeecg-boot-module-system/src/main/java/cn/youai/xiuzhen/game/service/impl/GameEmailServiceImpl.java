@@ -87,7 +87,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     @Override
     public Response sendEmail(GameEmail entity) {
         Response response = new Response();
-        if (entity == null) {
+        if (entity == null || entity.getState() == 1) {
             response.setErrorCode(ResponseCode.FAILURE);
             return response;
         }

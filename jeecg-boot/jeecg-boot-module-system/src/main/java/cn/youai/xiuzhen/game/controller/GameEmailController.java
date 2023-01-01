@@ -1,6 +1,8 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.lock.ChainLock;
+import cn.youai.basics.lock.LockUtils;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.conf.ConfItem;
@@ -32,10 +34,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 
     @AutoLog(value = "游戏邮件-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameEmail entity,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
-                                   HttpServletRequest req) {
+    public Result<?> queryPageList(GameEmail entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -94,8 +93,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
      * 获取道具树
      */
     @RequestMapping(value = "/itemTree", method = RequestMethod.GET)
-    public Result<?> itemTree(@RequestParam(name = "itemId", required = false) Integer itemId,
-                              @RequestParam(name = "itemName", required = false) String itemName) {
+    public Result<?> itemTree(@RequestParam(name = "itemId", required = false) Integer itemId, @RequestParam(name = "itemName", required = false) String itemName) {
         if (itemName != null) {
             if ("".equals(itemName)) {
                 itemName = null;
@@ -112,16 +110,24 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         if (entity == null) {
             return Result.error("邮件不存在！");
         }
+
         if (entity.getState() == 1) {
             return Result.error("已审核发送！");
         }
 
-        Response response = service.sendEmail(entity);
-        if (response.isSuccess()) {
-            entity.setState(1);
-            service.updateById(entity);
-            return Result.ok("发送成功！");
+        ChainLock lock = LockUtils.getLock(getClass().getSimpleName(), "review", id);
+        try {
+            lock.lock();
+            Response response = service.sendEmail(entity);
+            if (response.isSuccess()) {
+                entity.setState(1);
+                service.updateById(entity);
+                return Result.ok("发送成功！");
+            }
+        } finally {
+            lock.unlock();
         }
-        return Result.error(response.getDesc());
+        return Result.error("审核失败");
     }
+
 }
