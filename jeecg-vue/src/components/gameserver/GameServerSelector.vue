@@ -8,8 +8,8 @@
       </a-select-option>
     </a-select>
     <span> 区服 </span>
-    <a-select mode="multiple" allowClear show-search v-model="selectValue" style="width: 100%" placeholder="请选择区服"
-              @change="handleServerChange">
+    <a-select mode="multiple" allowClear show-search v-model="selectValue" style="width: 100%" placeholder="请选择区服" @change="handleServerChange">
+      <a-select-option value="all">所有</a-select-option>
       <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
         {{ server.id + "-" + server.name }}
       </a-select-option>
@@ -77,7 +77,11 @@ export default {
       this.channelId = value;
     },
     handleServerChange(value) {
-      console.log(value);
+      if (value.includes("all")) {
+        let that = this;
+        value = that.serverList.map((value, index, array) => value.id);
+        this.selectValue = value;
+      }
       // 触发父容器的 selectServer 方法
       this.$emit("onSelectServer", value);
     },
