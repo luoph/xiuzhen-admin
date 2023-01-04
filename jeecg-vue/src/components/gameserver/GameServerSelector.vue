@@ -56,7 +56,7 @@ export default {
         that.channelList = res.result.records;
       });
       getAction(that.url.serverUrl).then(res => {
-        that.allServerList = res.result.records;
+        that.allServerList = res.result;
         if (that.channelId === "all") {
           that.serverList = that.allServerList;
         }
