@@ -66,7 +66,7 @@ public class GameCampaignTypeFireworkController extends JeecgController<GameCamp
     @AutoLog(value = "节日烟花-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFirework entity) {
-        return super.exportXls(request, entity, GameCampaignTypeFirework.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeFirework.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日烟花-导入")

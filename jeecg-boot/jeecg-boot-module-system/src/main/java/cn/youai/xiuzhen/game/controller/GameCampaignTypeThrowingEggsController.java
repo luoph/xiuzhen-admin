@@ -66,7 +66,7 @@ public class GameCampaignTypeThrowingEggsController extends JeecgController<Game
     @AutoLog(value = "节日砸蛋-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeThrowingEggs entity) {
-        return super.exportXls(request, entity, GameCampaignTypeThrowingEggs.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeThrowingEggs.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日砸蛋-导入")

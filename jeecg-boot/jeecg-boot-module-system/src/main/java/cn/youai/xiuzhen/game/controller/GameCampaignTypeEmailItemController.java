@@ -113,7 +113,7 @@ public class GameCampaignTypeEmailItemController extends JeecgController<GameCam
     //@RequiresPermissions("cn.youai.xiuzhen:game_campaign_type_email_item:exportXls")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeEmailItem gameCampaignTypeEmailItem) {
-        return super.exportXls(request, gameCampaignTypeEmailItem, GameCampaignTypeEmailItem.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, gameCampaignTypeEmailItem, GameCampaignTypeEmailItem.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     /**

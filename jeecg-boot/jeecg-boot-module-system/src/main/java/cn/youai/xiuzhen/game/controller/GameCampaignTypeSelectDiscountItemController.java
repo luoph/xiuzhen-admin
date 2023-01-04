@@ -66,7 +66,7 @@ public class GameCampaignTypeSelectDiscountItemController extends JeecgControlle
     @AutoLog(value = "节日活动-自选特惠-物品部分-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSelectDiscountItem entity) {
-        return super.exportXls(request, entity, GameCampaignTypeSelectDiscountItem.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeSelectDiscountItem.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日活动-自选特惠-物品部分-导入")

@@ -63,7 +63,7 @@ public class GameCampaignTypeThrowingEggsRankController extends JeecgController<
     @AutoLog(value = "砸蛋榜-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeThrowingEggsRank entity) {
-        return super.exportXls(request, entity, GameCampaignTypeThrowingEggsRank.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeThrowingEggsRank.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "砸蛋榜-导入")

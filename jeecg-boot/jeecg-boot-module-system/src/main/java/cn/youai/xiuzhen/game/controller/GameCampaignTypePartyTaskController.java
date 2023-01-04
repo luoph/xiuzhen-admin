@@ -82,7 +82,7 @@ public class GameCampaignTypePartyTaskController extends JeecgController<GameCam
     @AutoLog(value = "节日派对任务-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypePartyTask entity) {
-        return super.exportXls(request, entity, GameCampaignTypePartyTask.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypePartyTask.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日派对任务-导入")

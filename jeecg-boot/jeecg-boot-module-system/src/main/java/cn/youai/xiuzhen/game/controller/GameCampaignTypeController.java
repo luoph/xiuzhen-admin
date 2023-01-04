@@ -4,7 +4,8 @@ import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeBase;
-import cn.youai.xiuzhen.game.service.*;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
+import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -39,17 +40,6 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
 
     @Autowired
     private IGameCampaignService gameCampaignService;
-
-    @Autowired
-    private IGameCampaignTypeLoginService campaignTypeLoginService;
-    @Autowired
-    private IGameCampaignTypeRechargeService campaignTypeRechargeService;
-    @Autowired
-    private IGameCampaignTypeExchangeService campaignTypeExchangeService;
-    @Autowired
-    private IGameCampaignTypeTaskService campaignTypeTaskService;
-    @Autowired
-    private IGameCampaignTypeBuffService campaignTypeBuffService;
 
     @AutoLog(value = "活动类型配置-列表查询")
     @GetMapping(value = "/list")

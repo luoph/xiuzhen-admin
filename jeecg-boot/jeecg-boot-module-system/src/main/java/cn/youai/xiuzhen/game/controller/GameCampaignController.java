@@ -319,16 +319,18 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         if (gameCampaign == null) {
             return Result.error("找不到对应活动配置!");
         }
+
         GameCampaign copy = new GameCampaign(gameCampaign);
-        if (service.save(copy)) {
-            List<GameCampaignType> campaignTypeList = campaignTypeService.list(Wrappers.<GameCampaignType>lambdaQuery()
-                    .eq(GameCampaignType::getCampaignId, gameCampaign.getId()).orderByAsc(GameCampaignType::getSort));
-            for (GameCampaignType gameCampaignType : campaignTypeList) {
-                campaignTypeService.duplicate(gameCampaignType, copy.getId());
-            }
-            return Result.ok("复制成功!");
+        if (!service.save(copy)) {
+            return Result.error("复制失败!");
         }
-        return Result.error("复制失败!");
+
+        List<GameCampaignType> campaignTypeList = campaignTypeService.list(Wrappers.<GameCampaignType>lambdaQuery()
+                .eq(GameCampaignType::getCampaignId, gameCampaign.getId()).orderByAsc(GameCampaignType::getSort));
+        for (GameCampaignType gameCampaignType : campaignTypeList) {
+            campaignTypeService.duplicate(gameCampaignType, copy.getId());
+        }
+        return Result.ok("复制成功!");
     }
 
     @AutoLog(value = "节日活动配置-移除已结束活动")

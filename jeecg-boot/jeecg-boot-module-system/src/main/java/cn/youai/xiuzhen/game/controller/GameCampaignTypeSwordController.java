@@ -82,7 +82,7 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     @AutoLog(value = "节日活动-限时剑仙-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSword entity) {
-        return super.exportXls(request, entity, GameCampaignTypeSword.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeSword.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日活动-限时剑仙-导入")

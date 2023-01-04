@@ -66,7 +66,7 @@ public class GameCampaignTypeFallController extends JeecgController<GameCampaign
     @AutoLog(value = "节日掉落-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFall entity) {
-        return super.exportXls(request, entity, GameCampaignTypeFall.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeFall.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日掉落-导入")

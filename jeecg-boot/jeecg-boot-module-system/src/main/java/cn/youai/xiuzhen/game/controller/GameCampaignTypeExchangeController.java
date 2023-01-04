@@ -67,7 +67,7 @@ public class GameCampaignTypeExchangeController extends JeecgController<GameCamp
     @AutoLog(value = "兑换活动-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeExchange entity) {
-        return super.exportXls(request, entity, GameCampaignTypeExchange.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeExchange.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "兑换活动-导入")

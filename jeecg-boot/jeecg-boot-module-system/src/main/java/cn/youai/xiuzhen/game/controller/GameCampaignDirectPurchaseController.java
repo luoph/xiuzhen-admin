@@ -82,7 +82,7 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
     @AutoLog(value = "直购礼包-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignDirectPurchase entity) {
-        return super.exportXls(request, entity, GameCampaignDirectPurchase.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignDirectPurchase.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "直购礼包-导入")

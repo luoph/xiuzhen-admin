@@ -66,7 +66,7 @@ public class GameCampaignTypeRebateRechargeController extends JeecgController<Ga
     @AutoLog(value = "狂欢返利-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeRebateRecharge entity) {
-        return super.exportXls(request, entity, GameCampaignTypeRebateRecharge.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeRebateRecharge.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "狂欢返利-导入")

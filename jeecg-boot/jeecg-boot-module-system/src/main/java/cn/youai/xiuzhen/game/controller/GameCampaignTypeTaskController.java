@@ -73,7 +73,7 @@ public class GameCampaignTypeTaskController extends JeecgController<GameCampaign
     @AutoLog(value = "任务活动-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeTask entity) {
-        return super.exportXls(request, entity, GameCampaignTypeTask.class, CampaignType.valueOf(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignTypeTask.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
     }
 
     @AutoLog(value = "任务活动-导入")
