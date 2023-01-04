@@ -4,12 +4,12 @@
            @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="主活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
-                          placeholder="请输入活动id" style="width: 100%"/>
+                          placeholder="请输入主活动id" style="width: 100%"/>
         </a-form-item>
-        <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id"
+        <a-form-item label="子活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动id"
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="加成类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -31,6 +31,14 @@
         </a-form-item>
         <a-form-item label="加成" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成"
+                          style="width: 100%"/>
+        </a-form-item>
+        <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级"
+                          style="width: 100%"/>
+        </a-form-item>
+        <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级"
                           style="width: 100%"/>
         </a-form-item>
       </a-form>
@@ -70,13 +78,15 @@ export default {
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: {rules: [{required: true, message: '请输入活动id!'}]},
-        typeId: {rules: [{required: true, message: '请输入页签id!'}]},
+        campaignId: {rules: [{required: true, message: '请输入主活动id!'}]},
+        typeId: {rules: [{required: true, message: '请输入子活动id!'}]},
         type: {rules: [{required: true, message: '请输入活动类型!'}]},
         startTime: {rules: [{required: true, message: '请输入开始时间!'}]},
         endTime: {rules: [{required: true, message: '请输入结束时间!'}]},
         description: {rules: [{required: true, message: '请输入描述!'}]},
-        addition: {rules: [{required: true, message: '请输入加成!'}]}
+        addition: {rules: [{required: true, message: '请输入加成!'}]},
+        minLevel: {rules: [{required: true, message: "请输入最小世界等级!"}]},
+        maxLevel: {rules: [{required: true, message: "请输入最大世界等级!"}]}
       },
       url: {
         add: 'game/gameCampaignTypeBuff/add',
@@ -98,9 +108,9 @@ export default {
       console.log('GameCampaignTypeBuffModal, model:', JSON.stringify(this.model));
 
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, 'campaignId', 'typeId', 'type', 'startTime', 'endTime', 'description', 'addition'));
-        this.form.setFieldsValue({startTime: this.startTime ? moment(this.startTime) : null});
-        this.form.setFieldsValue({endtTime: this.endtTime ? moment(this.endtTime) : null});
+        this.form.setFieldsValue(pick(this.model, 'campaignId', 'typeId', 'type', 'startTime', 'endTime', 'description', 'addition', 'minLevel', 'maxLevel'));
+        this.form.setFieldsValue({startTime: this.model.startTime ? moment(this.model.startTime) : null});
+        this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
       });
     },
     close() {
@@ -148,7 +158,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, 'campaignId', 'typeId', 'type', 'startTime', 'endTime', 'description', 'addition'));
+      this.form.setFieldsValue(pick(row, 'campaignId', 'typeId', 'type', 'startTime', 'endTime', 'description', 'addition', 'minLevel', 'maxLevel'));
     }
   }
 };

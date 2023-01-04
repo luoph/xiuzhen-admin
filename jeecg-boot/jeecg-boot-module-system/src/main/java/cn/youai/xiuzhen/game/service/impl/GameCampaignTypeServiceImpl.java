@@ -1,7 +1,8 @@
 package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.youai.xiuzhen.game.constant.CampaignFestivalType;
+import cn.youai.basics.utils.StringUtils;
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.*;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypeMapper;
 import cn.youai.xiuzhen.game.service.*;
@@ -9,14 +10,24 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.system.util.ExcelUtils;
+import org.jeecg.common.util.SpringContextUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,6 +42,8 @@ import java.util.stream.Collectors;
 @DS("master")
 public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMapper, GameCampaignType> implements IGameCampaignTypeService {
 
+    @Autowired
+    private IGameCampaignService gameCampaignService;
 
     @Autowired
     private IGameCampaignTypeLoginService campaignTypeLoginService;
@@ -89,10 +102,13 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @Autowired
     private IGameCampaignTypeSelectDiscountMessageService gameCampaignTypeSelectDiscountMessageService;
 
+    @Autowired
+    private IGameCampaignTypeEmailItemService gameCampaignTypeEmailItemService;
+
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
         long campaignId = model.getCampaignId();
-        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
+        CampaignType festivalType = CampaignType.valueOf(model.getType());
         if (festivalType != null) {
             switch (festivalType) {
                 case LOGIN: {
@@ -241,7 +257,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                 }
                 break;
 
-                case SELECT_DISCOUNT_ITEM:
+                case SELECT_DISCOUNT_ITEM: {
                     Wrapper<GameCampaignTypeSelectDiscountItem> detailQuery = Wrappers.<GameCampaignTypeSelectDiscountItem>lambdaQuery()
                             .eq(GameCampaignTypeSelectDiscountItem::getCampaignId, campaignId)
                             .eq(GameCampaignTypeSelectDiscountItem::getTypeId, model.getId());
@@ -252,7 +268,15 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                             .eq(GameCampaignTypeSelectDiscountMessage::getTypeId, model.getId());
                     model.setRewardList(gameCampaignTypeSelectDiscountMessageService.list(rewardQuery));
                     break;
+                }
 
+                case EMAIL_CAMPAIGN: {
+                    Wrapper<GameCampaignTypeEmailItem> detailQuery = Wrappers.<GameCampaignTypeEmailItem>lambdaQuery()
+                            .eq(GameCampaignTypeEmailItem::getCampaignId, campaignId)
+                            .eq(GameCampaignTypeEmailItem::getTypeId, model.getId());
+                    model.setDetails(gameCampaignTypeEmailItemService.list(detailQuery));
+                    break;
+                }
                 default:
                     break;
             }
@@ -262,7 +286,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     public void updateTabDetail(GameCampaignType model) {
-        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(model.getType());
+        CampaignType festivalType = CampaignType.valueOf(model.getType());
         fillTabDetail(model, false);
 
         if (festivalType != null) {
@@ -517,7 +541,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     public void duplicate(GameCampaignType model, long copyCampaignId) {
         GameCampaignType copyCampaignType = new GameCampaignType(model);
         copyCampaignType.setCampaignId(copyCampaignId);
-        CampaignFestivalType festivalType = CampaignFestivalType.valueOf(copyCampaignType.getType());
+        CampaignType festivalType = CampaignType.valueOf(copyCampaignType.getType());
         if (save(copyCampaignType) && festivalType != null) {
             fillTabDetail(model, false);
             if (CollUtil.isEmpty(model.getDetails()) && CollUtil.isEmpty(model.getRewardList())) {
@@ -796,10 +820,97 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
                         gameCampaignTypeSelectDiscountMessageService.saveBatch(copyRewards);
                     }
                     break;
-
+                case EMAIL_CAMPAIGN: {
+                    List<GameCampaignTypeEmailItem> copyDetails = new ArrayList<>(model.getDetails().size());
+                    List<GameCampaignTypeEmailItem> details = (List<GameCampaignTypeEmailItem>) model.getDetails();
+                    for (GameCampaignTypeEmailItem rebateRecharge : details) {
+                        GameCampaignTypeEmailItem copy = new GameCampaignTypeEmailItem();
+                        BeanUtils.copyProperties(rebateRecharge, copy);
+                        copy.setCampaignId(copyCampaignId);
+                        copy.setTypeId(copyCampaignType.getId());
+                        copyDetails.add(copy);
+                    }
+                    gameCampaignTypeEmailItemService.saveBatch(copyDetails);
+                    break;
+                }
                 default:
                     break;
             }
         }
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request) {
+        return importExcel(campaignId, typeId, request, null, null);
+    }
+
+    @Override
+    public Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request, String name, Class<? extends IService> serviceClass) {
+        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
+        if (null == gameCampaign) {
+            return Result.error("找不到主活动配置");
+        }
+
+        GameCampaignType gameCampaignType = getById(typeId);
+        if (null == gameCampaignType) {
+            return Result.error("找不到子活动配置");
+        }
+
+        CampaignType campaignType = CampaignType.valueOf(gameCampaignType.getType());
+        if (campaignType == null) {
+            return Result.error("子活动类型未定义");
+        }
+
+        String sheetName = StringUtils.isNotBlank(name) ? name : campaignType.getName();
+
+        IService service = null != serviceClass ? SpringContextUtils.getBean(serviceClass) : campaignType.getBean();
+        if (null == service) {
+            return Result.error("serviceClass错误, service空");
+        }
+
+        Class<? extends GameCampaignTypeBase> entityClass = service.getEntityClass();
+        if (null == entityClass) {
+            return Result.error("serviceClass错误, entityClass空");
+        }
+
+//        Wrapper<?> detailQuery = Wrappers.query().eq("campaign_id", campaignId).eq("type_id", typeId);
+//        List<? extends GameCampaignTypeBase> details = SpringContextUtils.getBean(festivalType.getServiceClass()).list(detailQuery);
+
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile mf = multipartRequest.getFile("file");
+        if (mf == null) {
+            return Result.error("上传错误");
+        }
+
+        try {
+            List<?> dataList = ExcelUtils.readExcel(mf.getInputStream(), sheetName, entityClass);
+            if (dataList.isEmpty()) {
+                return Result.error("导入数据为空");
+            }
+
+            List<GameCampaignTypeBase> saveOrUpdateEntities = new ArrayList<>(dataList.size());
+            for (Object obj : dataList) {
+                GameCampaignTypeBase entity = entityClass.newInstance();
+                BeanUtils.copyProperties(obj, entity);
+                if (Objects.equals(entity.getCampaignId(), campaignId) && Objects.equals(entity.getTypeId(), typeId)) {
+                    entity.setCreateBy(null);
+                    entity.setCreateTime(null);
+                    entity.setUpdateBy(null);
+                    entity.setUpdateTime(null);
+                    saveOrUpdateEntities.add(entity);
+                }
+            }
+
+            if (saveOrUpdateEntities.isEmpty()) {
+                return Result.error("导入数据为空，主活动id/子活动id错误！");
+            }
+            service.saveOrUpdateBatch(saveOrUpdateEntities);
+        } catch (IOException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            return Result.error("文件导入失败！");
+        }
+
+        return Result.ok("导入成功");
     }
 }

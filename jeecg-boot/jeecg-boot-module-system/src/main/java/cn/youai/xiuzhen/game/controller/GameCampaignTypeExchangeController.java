@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeExchange;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeExchangeService;
 import lombok.extern.slf4j.Slf4j;
@@ -66,7 +67,7 @@ public class GameCampaignTypeExchangeController extends JeecgController<GameCamp
     @AutoLog(value = "兑换活动-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeExchange entity) {
-        return super.exportXls(request, entity, GameCampaignTypeExchange.class, "兑换活动");
+        return super.exportXls(request, entity, GameCampaignTypeExchange.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "兑换活动-导入")

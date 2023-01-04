@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypePartyProgress;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
@@ -81,13 +82,14 @@ public class GameCampaignTypePartyProgressController extends JeecgController<Gam
     @AutoLog(value = "节日派对进度任务-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypePartyProgress entity) {
-        return super.exportXls(request, entity, GameCampaignTypePartyProgress.class, "节日派对进度任务");
+        return super.exportXls(request, entity, GameCampaignTypePartyProgress.class, CampaignType.PARTY.getName() + "-进度任务");
     }
 
     @AutoLog(value = "节日派对进度任务-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameCampaignTypePartyProgress.class);
+    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId) {
+        return gameCampaignTypeService.importExcel(campaignId, typeId, request, CampaignType.PARTY.getName() + "-进度任务", service.getClass());
     }
 
     @AutoLog(value = "节日派对进度任务-导入文本")

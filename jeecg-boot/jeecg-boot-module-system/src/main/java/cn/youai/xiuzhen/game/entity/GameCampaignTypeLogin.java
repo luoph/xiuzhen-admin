@@ -13,9 +13,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2020-10-15
  */
 @Data
-@TableName("game_campaign_type_login")
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeLogin extends GameCampaignTypeBase {
+@TableName("game_campaign_type_login")
+public class GameCampaignTypeLogin extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,8 +26,8 @@ public class GameCampaignTypeLogin extends GameCampaignTypeBase {
         this.loginDay = other.getLoginDay();
         this.description = other.getDescription();
         this.reward = other.getReward();
-        this.minLevel = other.getMinLevel();
-        this.maxLevel = other.getMaxLevel();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**
@@ -50,18 +50,4 @@ public class GameCampaignTypeLogin extends GameCampaignTypeBase {
     @ExcelProperty("奖励列表")
     @Excel(name = "奖励列表", width = 15)
     private String reward;
-
-    /**
-     * 最小世界等级
-     */
-    @ExcelProperty("最小世界等级")
-    @Excel(name = "最小世界等级", width = 15)
-    private Integer minLevel;
-
-    /**
-     * 最大世界等级
-     */
-    @ExcelProperty("最大世界等级")
-    @Excel(name = "最大世界等级", width = 15)
-    private Integer maxLevel;
 }

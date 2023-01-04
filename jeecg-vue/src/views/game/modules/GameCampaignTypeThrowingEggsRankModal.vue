@@ -23,6 +23,12 @@
         <a-form-item label="奖励内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['reward']" rows="4" placeholder='请输入奖励内容[{"itemId":1001,"num":100}]'/>
         </a-form-item>
+        <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%"/>
+        </a-form-item>
+        <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%"/>
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
@@ -62,7 +68,9 @@ export default {
         typeId: {rules: [{required: true, message: "请输入子活动id!"}]},
         sort: {rules: [{required: true, message: "请输入排名序列!"}]},
         limitNum: {rules: [{required: true, message: "请输入上榜下限数量!"}]},
-        reward: {rules: [{required: true, message: "请输入奖励内容!"}]}
+        reward: {rules: [{required: true, message: "请输入奖励内容!"}]},
+        minLevel: {rules: [{required: true, message: "请输入最小世界等级!"}]},
+        maxLevel: {rules: [{required: true, message: "请输入最大世界等级!"}]}
       },
       url: {
         add: "game/gameCampaignTypeThrowingEggsRank/add",
@@ -82,7 +90,7 @@ export default {
       this.isEdit = this.model.id != null;
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "sort", "limitNum", "reward"));
+        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "sort", "limitNum", "reward", "minLevel", "maxLevel"));
       });
     },
     close() {
@@ -126,7 +134,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "sort", "limitNum", "reward"));
+      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "sort", "limitNum", "reward", "minLevel", "maxLevel"));
     }
   }
 };

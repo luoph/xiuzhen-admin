@@ -6,16 +6,19 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-结义排行榜奖励')">导出</a-button>
-      <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown> -->
+      <a-button type="primary" icon="download" @click="handleExportXls(model.type === 17 ? '节日活动-赠酒排行榜-排行榜奖励' 
+      : model.type === 18 ? '节日活动-魅力值排行榜-排行榜奖励' 
+      : model.type === 21 ? '节日活动-累充排行-排行榜奖励' 
+      : '未知活动类型')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+          <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
+          <a-menu slot="overlay">
+              <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+          </a-menu>
+          <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+      </a-dropdown> -->
     </div>
 
     <!-- table区域-begin -->
@@ -36,6 +39,7 @@
         :pagination="ipagination"
         :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        class="j-table-force-nowrap"
         @change="handleTableChange"
       >
         <template slot="htmlSlot" slot-scope="text">
@@ -100,14 +104,20 @@ export default {
           }
         },
         {
-          title: '活动id',
+          title: '主活动id',
           align: 'center',
           dataIndex: 'campaignId'
         },
         {
-          title: '页签id',
+          title: '子活动id',
           align: 'center',
           dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '排名最小值',
@@ -156,7 +166,7 @@ export default {
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}&type=${this.model.type}`;
     }
   },
   methods: {
@@ -205,6 +215,7 @@ export default {
       // typeId、活动id
       param.typeId = this.model.id;
       param.campaignId = this.model.campaignId;
+      param.type = this.model.type;
       return filterObj(param);
     },
     getImgView(text) {

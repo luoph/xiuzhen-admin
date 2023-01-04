@@ -13,8 +13,8 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-03-30
  */
 @Data
-@TableName("game_campaign_type_party_progress")
 @EqualsAndHashCode(callSuper = false)
+@TableName("game_campaign_type_party_progress")
 public class GameCampaignTypePartyProgress extends GameCampaignTypeBase {
 
     private static final long serialVersionUID = 1L;
@@ -48,5 +48,4 @@ public class GameCampaignTypePartyProgress extends GameCampaignTypeBase {
     @ExcelProperty("任务奖励")
     @Excel(name = "任务奖励", width = 15)
     private java.lang.String reward;
-
 }

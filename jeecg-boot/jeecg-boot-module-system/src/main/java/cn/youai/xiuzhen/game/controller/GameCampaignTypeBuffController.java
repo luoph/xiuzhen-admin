@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeBuff;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeBuffService;
 import lombok.extern.slf4j.Slf4j;
@@ -64,8 +65,8 @@ public class GameCampaignTypeBuffController extends JeecgController<GameCampaign
 
     @AutoLog(value = "Buff活动-导入")
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeBuff gameCampaignTypeBuff) {
-        return super.exportXls(request, gameCampaignTypeBuff, GameCampaignTypeBuff.class, "Buff活动");
+    public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeBuff entity) {
+        return super.exportXls(request, entity, GameCampaignTypeBuff.class, CampaignType.valueOf(entity.getType()).getName());
     }
 
     @AutoLog(value = "Buff活动-导入")

@@ -10,10 +10,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <!--            <a-button type="primary" icon="download" @click="handleExportXls('砸蛋榜')">导出</a-button>-->
-      <!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">-->
-      <!--                <a-button type="primary" icon="import">导入</a-button>-->
-      <!--            </a-upload>-->
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-砸蛋榜单')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+          <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
@@ -46,6 +46,7 @@
         :pagination="ipagination"
         :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        class="j-table-force-nowrap"
         @change="handleTableChange"
       >
         <template slot="htmlSlot" slot-scope="text">
@@ -110,6 +111,24 @@ export default {
           }
         },
         {
+          title: '主活动id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'campaignId'
+        },
+        {
+          title: '子活动id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
+        },
+        {
           title: '排名序列',
           align: 'center',
           dataIndex: 'sort'
@@ -118,6 +137,16 @@ export default {
           title: '上榜下限数量',
           align: 'center',
           dataIndex: 'limitNum'
+        },
+        {
+          title: '最小世界等级',
+          align: 'center',
+          dataIndex: 'minLevel'
+        },
+        {
+          title: '最大世界等级',
+          align: 'center',
+          dataIndex: 'maxLevel'
         },
         {
           title: '创建时间',
@@ -147,14 +176,14 @@ export default {
         delete: 'game/gameCampaignTypeThrowingEggsRank/delete',
         deleteBatch: 'game/gameCampaignTypeThrowingEggsRank/deleteBatch',
         exportXlsUrl: 'game/gameCampaignTypeThrowingEggsRank/exportXls',
-        importExcelUrl: 'game/gameCampaignTypeThrowingEggsRank/importExcel'
+        importExcelUrl: 'game/gameCampaignType/importExcel/details'
       },
       dictOptions: {}
     };
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

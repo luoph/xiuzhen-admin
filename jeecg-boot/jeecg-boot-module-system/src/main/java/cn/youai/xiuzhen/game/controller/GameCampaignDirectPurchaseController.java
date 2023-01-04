@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignDirectPurchase;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
@@ -81,7 +82,7 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
     @AutoLog(value = "直购礼包-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignDirectPurchase entity) {
-        return super.exportXls(request, entity, GameCampaignDirectPurchase.class, "直购礼包");
+        return super.exportXls(request, entity, GameCampaignDirectPurchase.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "直购礼包-导入")

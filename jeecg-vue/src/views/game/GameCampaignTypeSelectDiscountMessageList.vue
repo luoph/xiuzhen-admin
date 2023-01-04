@@ -10,7 +10,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-自选特惠-传闻部分')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-自选特惠-传闻')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
@@ -45,7 +45,8 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{ fixed: true, selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        class="j-table-force-nowrap"
         @change="handleTableChange"
       >
         <template slot="htmlSlot" slot-scope="text">
@@ -110,6 +111,12 @@ export default {
           dataIndex: 'typeId'
         },
         {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
+        },
+        {
           title: '传闻推送时间',
           align: 'center',
           dataIndex: 'pushTime'
@@ -153,7 +160,7 @@ export default {
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

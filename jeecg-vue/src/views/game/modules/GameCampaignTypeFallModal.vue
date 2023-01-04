@@ -4,12 +4,12 @@
            @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item label="主活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="true" v-decorator="['campaignId', validatorRules.campaignId]"
-                          placeholder="请输入活动id" style="width: 100%"/>
+                          placeholder="请输入主活动id" style="width: 100%"/>
         </a-form-item>
-        <a-form-item label="页签id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入页签id"
+        <a-form-item label="子活动id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number :disabled="true" v-decorator="['typeId', validatorRules.typeId]" placeholder="请输入子活动id"
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="模块" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -38,6 +38,12 @@
         <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['reward', validatorRules.reward]"
                       placeholder='请输入奖励类型对应的奖励值, e.g. 5,  [1, 2],  [{"time":300, "reward":1}]'/>
+        </a-form-item>
+        <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%"/>
+        </a-form-item>
+        <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -77,11 +83,13 @@ export default {
       },
       confirmLoading: false,
       validatorRules: {
-        campaignId: {rules: [{required: true, message: "请输入活动id!"}]},
-        typeId: {rules: [{required: true, message: "请输入页签id!"}]},
+        campaignId: {rules: [{required: true, message: "请输入主活动id!"}]},
+        typeId: {rules: [{required: true, message: "请输入子活动id!"}]},
         module: {rules: [{required: true, message: "请输入模块!"}]},
         rewardType: {rules: [{required: true, message: "请输入奖励类型!"}]},
-        reward: {rules: [{required: true, message: "请输入奖励!"}]}
+        reward: {rules: [{required: true, message: "请输入奖励!"}]},
+        minLevel: {rules: [{required: true, message: "请输入最小世界等级!"}]},
+        maxLevel: {rules: [{required: true, message: "请输入最大世界等级!"}]},
       },
       url: {
         add: "game/gameCampaignTypeFall/add",
@@ -103,7 +111,7 @@ export default {
       console.log("GameCampaignTypeFallModal, model:", JSON.stringify(this.model));
 
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "module", "rewardType", "reward"));
+        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "module", "rewardType", "reward", "minLevel", "maxLevel"));
       });
     },
     close() {
@@ -147,7 +155,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "module", "rewardType", "reward"));
+      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "module", "rewardType", "reward", "minLevel", "maxLevel"));
     }
   }
 };

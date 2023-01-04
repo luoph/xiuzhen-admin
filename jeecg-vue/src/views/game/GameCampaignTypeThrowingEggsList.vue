@@ -10,11 +10,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <!--            <a-button type="primary" icon="download" @click="handleExportXls('节日砸蛋')">导出</a-button>-->
-      <!--            <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader"-->
-      <!--                      :action="importExcelUrl" @change="handleImportExcel">-->
-      <!--                <a-button type="primary" icon="import">导入</a-button>-->
-      <!--            </a-upload>-->
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-砸蛋')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+          <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
@@ -47,6 +46,7 @@
         :pagination="ipagination"
         :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+        class="j-table-force-nowrap"
         @change="handleTableChange"
       >
         <template slot="htmlSlot" slot-scope="text">
@@ -107,19 +107,38 @@ export default {
       model: {},
       // 表头
       columns: [
+        // {
+        //   title: '#',
+        //   dataIndex: '',
+        //   key: 'rowIndex',
+        //   width: 60,
+        //   align: 'center',
+        //   customRender: function (t, r, index) {
+        //     return parseInt(index) + 1;
+        //   }
+        // },
         {
-          title: '#',
-          dataIndex: '',
-          key: 'rowIndex',
-          width: 60,
+          title: '主活动id',
           align: 'center',
-          customRender: function (t, r, index) {
-            return parseInt(index) + 1;
-          }
+          width: 80,
+          dataIndex: 'campaignId'
+        },
+        {
+          title: '子活动id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '砸蛋类型',
           align: 'center',
+          width: 100,
           dataIndex: 'eggType',
           customRender: (value) => {
             let text = '--';
@@ -136,11 +155,13 @@ export default {
         {
           title: '抽奖道具',
           align: 'center',
+          width: 80,
           dataIndex: 'costItemId'
         },
         {
           title: '幸运值上限',
           align: 'center',
+          width: 80,
           dataIndex: 'limitLuckyValue'
         },
         {
@@ -181,6 +202,16 @@ export default {
           scopedSlots: { customRender: 'luckyPool' }
         },
         {
+          title: '最小世界等级',
+          align: 'center',
+          dataIndex: 'minLevel'
+        },
+        {
+          title: '最大世界等级',
+          align: 'center',
+          dataIndex: 'maxLevel'
+        },
+        {
           title: '创建时间',
           align: 'center',
           dataIndex: 'createTime',
@@ -208,14 +239,14 @@ export default {
         delete: 'game/gameCampaignTypeThrowingEggs/delete',
         deleteBatch: 'game/gameCampaignTypeThrowingEggs/deleteBatch',
         exportXlsUrl: 'game/gameCampaignTypeThrowingEggs/exportXls',
-        importExcelUrl: 'game/gameCampaignTypeThrowingEggs/importExcel'
+        importExcelUrl: 'game/gameCampaignType/importExcel/details'
       },
       dictOptions: {}
     };
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

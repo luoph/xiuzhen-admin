@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.game.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -13,10 +12,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-03-10
  */
 @Data
-@TableName("game_campaign_type_throwing_eggs_gift")
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeThrowingEggsGift extends GameCampaignTypeBase {
+@TableName("game_campaign_type_throwing_eggs_gift")
+public class GameCampaignTypeThrowingEggsGift extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,6 +31,8 @@ public class GameCampaignTypeThrowingEggsGift extends GameCampaignTypeBase {
         this.limitCondition = other.getLimitCondition();
         this.reward = other.getReward();
         this.giftName = other.getGiftName();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**

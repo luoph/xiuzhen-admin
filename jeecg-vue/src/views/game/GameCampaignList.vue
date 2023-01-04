@@ -182,20 +182,20 @@ export default {
       },
       // 表头
       columns: [
+        // {
+        //   title: '#',
+        //   dataIndex: '',
+        //   key: 'rowIndex',
+        //   width: 60,
+        //   align: 'center',
+        //   customRender: function (t, r, index) {
+        //     return parseInt(index) + 1;
+        //   }
+        // },
         {
-          title: '#',
-          dataIndex: '',
-          key: 'rowIndex',
-          width: 60,
+          title: '主活动id',
           align: 'center',
-          customRender: function (t, r, index) {
-            return parseInt(index) + 1;
-          }
-        },
-        {
-          title: '活动Id',
-          align: 'center',
-          width: 60,
+          width: 80,
           dataIndex: 'id'
         },
         {
@@ -207,7 +207,7 @@ export default {
         {
           title: '活动标语（描述）',
           align: 'left',
-          width: 120,
+          width: 130,
           dataIndex: 'description'
         },
         {
@@ -247,7 +247,7 @@ export default {
         {
           title: '区服id',
           align: 'center',
-          width: 160,
+          width: 150,
           dataIndex: 'serverIds',
           scopedSlots: { customRender: 'serverIdSlot' }
         },

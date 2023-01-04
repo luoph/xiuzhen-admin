@@ -6,16 +6,16 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('节日掉落')">导出</a-button>
-      <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                <a-button type="primary" icon="import">导入</a-button>
-            </a-upload>
-            <a-dropdown v-if="selectedRowKeys.length > 0">
-                <a-menu slot="overlay">
-                    <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
-                </a-menu>
-                <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
-            </a-dropdown> -->
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-节日掉落')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+          <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
+            <a-menu slot="overlay">
+                <a-menu-item key="1" @click="batchDel"><a-icon type="delete" />删除</a-menu-item>
+            </a-menu>
+            <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down"/></a-button>
+        </a-dropdown> -->
     </div>
 
     <!-- table区域-begin -->
@@ -26,7 +26,17 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table 
+        ref="table" 
+        size="middle" 
+        bordered rowKey="id" 
+        :columns="columns" 
+        :dataSource="dataSource" 
+        :pagination="ipagination" 
+        :loading="loading" 
+        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        class="j-table-force-nowrap"
+        @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
@@ -89,14 +99,20 @@ export default {
           }
         },
         {
-          title: '活动id',
+          title: '主活动id',
           align: 'center',
           dataIndex: 'campaignId'
         },
         {
-          title: '页签id',
+          title: '子活动id',
           align: 'center',
           dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '模块',
@@ -154,6 +170,16 @@ export default {
           dataIndex: 'reward'
         },
         {
+          title: '最小世界等级',
+          align: 'center',
+          dataIndex: 'minLevel'
+        },
+        {
+          title: '最大世界等级',
+          align: 'center',
+          dataIndex: 'maxLevel'
+        },
+        {
           title: '创建时间',
           align: 'center',
           dataIndex: 'createTime'
@@ -170,14 +196,14 @@ export default {
         delete: 'game/gameCampaignTypeFall/delete',
         deleteBatch: 'game/gameCampaignTypeFall/deleteBatch',
         exportXlsUrl: 'game/gameCampaignTypeFall/exportXls',
-        importExcelUrl: 'game/gameCampaignTypeFall/importExcel'
+        importExcelUrl: 'game/gameCampaignType/importExcel/details'
       },
       dictOptions: {}
     };
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

@@ -1,11 +1,14 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeFallReward;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeFallRewardService;
+import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,6 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("game/gameCampaignTypeFallReward")
 public class GameCampaignTypeFallRewardController extends JeecgController<GameCampaignTypeFallReward, IGameCampaignTypeFallRewardService> {
+
+    @Autowired
+    private IGameCampaignTypeService gameCampaignTypeService;
 
     @AutoLog(value = "掉落奖励组-列表查询")
     @GetMapping(value = "/list")
@@ -65,13 +71,14 @@ public class GameCampaignTypeFallRewardController extends JeecgController<GameCa
     @AutoLog(value = "掉落奖励组-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFallReward entity) {
-        return super.exportXls(request, entity, GameCampaignTypeFallReward.class, "掉落奖励组");
+        return super.exportXls(request, entity, GameCampaignTypeFallReward.class, CampaignType.FALL.getName() + "-掉落奖励组");
     }
 
     @AutoLog(value = "掉落奖励组-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
-    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameCampaignTypeFallReward.class);
+    public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId) {
+        return gameCampaignTypeService.importExcel(campaignId, typeId, request, CampaignType.FALL.getName() + "-掉落奖励组", service.getClass());
     }
 
 }

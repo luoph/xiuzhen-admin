@@ -11,11 +11,12 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
-      <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据"></a-textarea>
-      <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
-                 <a-button type="primary" icon="import">导入</a-button>
-             </a-upload>-->
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-节日派对')">导出</a-button>
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+        <a-button type="primary" icon="import">导入</a-button>
+      </a-upload>
+      <!-- <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
+      <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据"></a-textarea> -->
       <!--<a-dropdown v-if="selectedRowKeys.length > 0">
                 <a-menu slot="overlay">
                     <a-menu-item key="1" @click="batchDel">
@@ -37,7 +38,18 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div>-->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table 
+        ref="table" 
+        size="middle" 
+        bordered 
+        rowKey="id" 
+        :columns="columns" 
+        :dataSource="dataSource" 
+        :pagination="ipagination" 
+        :loading="loading" 
+        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        class="j-table-force-nowrap"
+        @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
@@ -86,6 +98,7 @@ export default {
   data() {
     return {
       description: '节日派对任务管理页面',
+      model: {},
       importText: '',
       // 表头
       columns: [
@@ -98,6 +111,24 @@ export default {
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
+        },
+        {
+          title: '主活动id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'campaignId'
+        },
+        {
+          title: '子活动id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'typeId'
+        },
+        {
+          title: 'id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '任务类型',
@@ -140,6 +171,16 @@ export default {
           dataIndex: 'reward'
         },
         {
+          title: '最小世界等级',
+          align: 'center',
+          dataIndex: 'minLevel'
+        },
+        {
+          title: '最大世界等级',
+          align: 'center',
+          dataIndex: 'maxLevel'
+        },
+        {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
@@ -149,9 +190,9 @@ export default {
       url: {
         list: 'game/gameCampaignTypePartyTask/list',
         delete: 'game/gameCampaignTypePartyTask/delete',
-        //deleteBatch: "game/gameCampaignTypePartyTask/deleteBatch",
-        //exportXlsUrl: "game/gameCampaignTypePartyTask/exportXls",
-        //importExcelUrl: "game/gameCampaignTypePartyTask/importExcel",
+        deleteBatch: "game/gameCampaignTypePartyTask/deleteBatch",
+        exportXlsUrl: "game/gameCampaignTypePartyTask/exportXls",
+        importExcelUrl: 'game/gameCampaignType/importExcel/details',
         importTextUrl: 'game/gameCampaignTypePartyTask/importText'
       },
       dictOptions: {}
@@ -159,7 +200,7 @@ export default {
   },
   computed: {
     importExcelUrl: function () {
-      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

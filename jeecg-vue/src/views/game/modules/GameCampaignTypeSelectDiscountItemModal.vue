@@ -41,6 +41,12 @@
                      extra='格式list：[{"itemId":1,"num":2},{"itemId":3,"num":4}]'>
           <a-textarea v-decorator="['freeItems']" rows="4"/>
         </a-form-item>
+        <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%"/>
+        </a-form-item>
+        <a-form-item label="最大世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['maxLevel', validatorRules.maxLevel]" placeholder="请输入最大世界等级" style="width: 100%"/>
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
@@ -85,6 +91,8 @@ export default {
         limitNum: {initialValue: 0, rules: [{required: true, message: "请输入限购次数!"}]},
         goodsId: {rules: [{required: true, message: "请输入商品id!"}]},
         chooseItems: {rules: [{required: true, message: "请输入可选物品!"}]},
+        minLevel: {rules: [{required: true, message: "请输入最小世界等级!"}]},
+        maxLevel: {rules: [{required: true, message: "请输入最大世界等级!"}]}
       },
       url: {
         add: "game/gameCampaignTypeSelectDiscountItem/add",
@@ -103,7 +111,7 @@ export default {
       this.model = Object.assign({}, record);
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "showOrder", "itemDesc", "free", "limitNum", "goodsId", "chooseItems", "freeItems"));
+        this.form.setFieldsValue(pick(this.model, "campaignId", "typeId", "showOrder", "itemDesc", "free", "limitNum", "goodsId", "chooseItems", "freeItems", "minLevel", "maxLevel"));
       });
     },
     close() {
@@ -147,7 +155,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "showOrder", "itemDesc", "free", "limitNum", "goodsId", "chooseItems", "freeItems"));
+      this.form.setFieldsValue(pick(row, "campaignId", "typeId", "showOrder", "itemDesc", "free", "limitNum", "goodsId", "chooseItems", "freeItems", "minLevel", "maxLevel"));
     },
   }
 };

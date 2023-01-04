@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeMarryRank;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeMarryRankService;
@@ -81,7 +82,7 @@ public class GameCampaignTypeMarryRankController extends JeecgController<GameCam
     @AutoLog(value = "节日活动-结义排行榜-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeMarryRank entity) {
-        return super.exportXls(request, entity, GameCampaignTypeMarryRank.class, "节日活动-结义排行榜");
+        return super.exportXls(request, entity, GameCampaignTypeMarryRank.class, CampaignType.valueOf(entity.getType()).getName());
     }
 
     @AutoLog(value = "节日活动-结义排行榜-导入")

@@ -68,39 +68,39 @@ export default {
       model: {},
       // 表头
       columns: [
+        // {
+        //   title: '#',
+        //   dataIndex: '',
+        //   key: 'rowIndex',
+        //   width: 60,
+        //   align: 'center',
+        //   customRender: function (t, r, index) {
+        //     return parseInt(index) + 1;
+        //   }
+        // },
         {
-          title: '#',
-          dataIndex: '',
-          key: 'rowIndex',
-          width: 60,
-          align: 'center',
-          customRender: function (t, r, index) {
-            return parseInt(index) + 1;
-          }
-        },
-        {
-          title: '活动id',
+          title: '主活动id',
           align: 'center',
           width: 80,
           dataIndex: 'campaignId'
         },
         {
-          title: '页签id',
+          title: '子活动id',
           align: 'center',
           width: 80,
           dataIndex: 'id'
         },
         {
-          title: '页签名',
+          title: '子活动名称',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'name'
         },
         {
           title: '活动类型',
           align: 'center',
           dataIndex: 'type',
-          width: 120,
+          width: 100,
           customRender: (value) => {
             let text = '--';
             if (value === 1) {
@@ -120,7 +120,7 @@ export default {
             } else if (value === 8) {
               text = '8-节日烟花';
             } else if (value === 9) {
-              text = '9-消费排行';
+              text = '9-消耗排行';
             } else if (value === 10) {
               text = '10-限时仙剑';
             } else if (value === 11) {
@@ -159,7 +159,7 @@ export default {
         {
           title: '排序',
           align: 'center',
-          width: 80,
+          width: 60,
           dataIndex: 'sort'
         },
         {

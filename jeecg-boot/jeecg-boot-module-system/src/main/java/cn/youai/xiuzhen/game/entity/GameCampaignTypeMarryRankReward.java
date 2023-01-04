@@ -1,9 +1,9 @@
 package cn.youai.xiuzhen.game.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
 /**
@@ -13,7 +13,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-06-20
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_campaign_type_marry_rank_reward")
 public class GameCampaignTypeMarryRankReward extends GameCampaignTypeBase {
@@ -54,4 +53,7 @@ public class GameCampaignTypeMarryRankReward extends GameCampaignTypeBase {
     @Excel(name = "奖励列表", width = 15)
     private java.lang.String reward;
 
+    @Excel(name = "排行榜类型", width = 15)
+    @TableField(exist = false)
+    private Integer type;
 }

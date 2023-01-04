@@ -14,9 +14,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2021-02-23
  */
 @Data
-@TableName("game_campaign_type_sword")
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeSword extends GameCampaignTypeBase {
+@TableName("game_campaign_type_sword")
+public class GameCampaignTypeSword extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,6 +30,8 @@ public class GameCampaignTypeSword extends GameCampaignTypeBase {
         this.reward = other.getReward();
         this.combatPower = other.getCombatPower();
         this.checkpointName = other.getCheckpointName();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
 

@@ -32,7 +32,7 @@ public class GameCampaignTypeSelectDiscountItemVO {
     /**
      * 限购的话次数多少
      */
-    @ExcelProperty("限购的话次数多少")
+    @ExcelProperty("限购次数")
     private Integer limitNum;
 
     /**

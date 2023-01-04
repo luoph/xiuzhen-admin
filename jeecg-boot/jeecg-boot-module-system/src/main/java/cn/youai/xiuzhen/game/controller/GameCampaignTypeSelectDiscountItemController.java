@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeSelectDiscountItem;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeSelectDiscountItemService;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +66,7 @@ public class GameCampaignTypeSelectDiscountItemController extends JeecgControlle
     @AutoLog(value = "节日活动-自选特惠-物品部分-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSelectDiscountItem entity) {
-        return super.exportXls(request, entity, GameCampaignTypeSelectDiscountItem.class, "节日活动-自选特惠-物品部分");
+        return super.exportXls(request, entity, GameCampaignTypeSelectDiscountItem.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日活动-自选特惠-物品部分-导入")

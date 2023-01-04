@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeThrowingEggs;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeThrowingEggsService;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +66,7 @@ public class GameCampaignTypeThrowingEggsController extends JeecgController<Game
     @AutoLog(value = "节日砸蛋-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeThrowingEggs entity) {
-        return super.exportXls(request, entity, GameCampaignTypeThrowingEggs.class, "节日砸蛋");
+        return super.exportXls(request, entity, GameCampaignTypeThrowingEggs.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日砸蛋-导入")

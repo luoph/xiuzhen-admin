@@ -13,9 +13,9 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2020-10-15
  */
 @Data
-@TableName("game_campaign_type_task")
 @EqualsAndHashCode(callSuper = true)
-public class GameCampaignTypeTask extends GameCampaignTypeBase {
+@TableName("game_campaign_type_task")
+public class GameCampaignTypeTask extends GameCampaignTypeBaseDetail {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,8 +30,8 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
         this.args = other.getArgs();
         this.reward = other.getReward();
         this.jumpId = other.getJumpId();
-        this.minLevel = other.getMinLevel();
-        this.maxLevel = other.getMaxLevel();
+        this.setMinLevel(other.getMinLevel());
+        this.setMaxLevel(other.getMaxLevel());
     }
 
     /**
@@ -81,19 +81,4 @@ public class GameCampaignTypeTask extends GameCampaignTypeBase {
     @ExcelProperty("跳转id")
     @Excel(name = "跳转id", width = 15)
     private Integer jumpId;
-
-    /**
-     * 最小世界等级
-     */
-    @ExcelProperty("最小世界等级")
-    @Excel(name = "最小世界等级", width = 15)
-    private Integer minLevel;
-
-    /**
-     * 最大世界等级
-     */
-    @ExcelProperty("最大世界等级")
-    @Excel(name = "最大世界等级", width = 15)
-    private Integer maxLevel;
-
 }

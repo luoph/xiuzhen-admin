@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeSword;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
@@ -81,7 +82,7 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     @AutoLog(value = "节日活动-限时剑仙-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeSword entity) {
-        return super.exportXls(request, entity, GameCampaignTypeSword.class, "节日活动-限时剑仙");
+        return super.exportXls(request, entity, GameCampaignTypeSword.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日活动-限时剑仙-导入")

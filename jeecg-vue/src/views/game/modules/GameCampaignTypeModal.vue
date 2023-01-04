@@ -18,7 +18,7 @@
             <a-select-option :value="6">6-灵气加成</a-select-option>
             <a-select-option :value="7">7-节日掉落</a-select-option>
             <a-select-option :value="8">8-节日烟花</a-select-option>
-            <a-select-option :value="9">9-消费排行</a-select-option>
+            <a-select-option :value="9">9-消耗排行</a-select-option>
             <a-select-option :value="10">10-限时仙剑</a-select-option>
             <a-select-option :value="11">11-节日砸蛋</a-select-option>
             <a-select-option :value="12">12-砸蛋排行</a-select-option>
@@ -33,8 +33,8 @@
             <a-select-option :value="22">22-邮件活动</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="页签名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入页签名"/>
+        <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"/>
         </a-form-item>
         <a-form-item label="活动宣传图" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <img v-if="model.typeImage" :src="getImgView(model.typeImage)" :alt="getImgView(model.typeImage)"

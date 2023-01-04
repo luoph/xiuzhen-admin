@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeEmailItem;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeEmailItemService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -112,7 +113,7 @@ public class GameCampaignTypeEmailItemController extends JeecgController<GameCam
     //@RequiresPermissions("cn.youai.xiuzhen:game_campaign_type_email_item:exportXls")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeEmailItem gameCampaignTypeEmailItem) {
-        return super.exportXls(request, gameCampaignTypeEmailItem, GameCampaignTypeEmailItem.class, "节日活动-邮件活动-明细");
+        return super.exportXls(request, gameCampaignTypeEmailItem, GameCampaignTypeEmailItem.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     /**

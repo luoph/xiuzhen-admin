@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeFall;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeFallService;
 import lombok.extern.slf4j.Slf4j;
@@ -65,7 +66,7 @@ public class GameCampaignTypeFallController extends JeecgController<GameCampaign
     @AutoLog(value = "节日掉落-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignTypeFall entity) {
-        return super.exportXls(request, entity, GameCampaignTypeFall.class, "节日掉落");
+        return super.exportXls(request, entity, GameCampaignTypeFall.class, CampaignType.valueOf(service.getClass()).getName());
     }
 
     @AutoLog(value = "节日掉落-导入")
