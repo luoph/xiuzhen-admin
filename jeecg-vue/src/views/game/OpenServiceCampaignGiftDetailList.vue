@@ -37,6 +37,7 @@
       <a-table
         ref="table"
         size="middle"
+        :scroll="{ x: 'max-content' }"
         bordered
         rowKey="id"
         :columns="columns"
@@ -255,6 +256,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],

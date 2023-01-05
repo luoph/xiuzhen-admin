@@ -104,78 +104,88 @@ public class OpenServiceCampaignTypeServiceImpl extends ServiceImpl<GameOpenServ
     }
 
     @Override
-    public void fillTabDetail(OpenServiceCampaignType model) {
+    public void fillTabDetail(OpenServiceCampaignType model, boolean isLoadDetailExt) {
         long campaignId = model.getCampaignId();
         OpenServiceType openServiceType = OpenServiceType.valueOf(model.getType());
+        if (null == openServiceType) {
+            return;
+        }
 
-        if (openServiceType != null) {
-            switch (openServiceType) {
-                case RANK: {
-                    Wrapper<OpenServiceCampaignRankDetail> query = Wrappers.<OpenServiceCampaignRankDetail>lambdaQuery()
-                            .eq(OpenServiceCampaignRankDetail::getCampaignId, campaignId)
-                            .eq(OpenServiceCampaignRankDetail::getCampaignTypeId, model.getId())
-                            .orderByAsc(OpenServiceCampaignRankDetail::getSort);
-                    List<OpenServiceCampaignRankDetail> list = rankDetailService.list(query);
+        switch (openServiceType) {
+            case RANK: {
+                Wrapper<OpenServiceCampaignRankDetail> query = Wrappers.<OpenServiceCampaignRankDetail>lambdaQuery()
+                        .eq(OpenServiceCampaignRankDetail::getCampaignId, campaignId)
+                        .eq(OpenServiceCampaignRankDetail::getCampaignTypeId, model.getId())
+                        .orderByAsc(OpenServiceCampaignRankDetail::getSort);
+                List<OpenServiceCampaignRankDetail> list = rankDetailService.list(query);
+                if (isLoadDetailExt) {
                     for (OpenServiceCampaignRankDetail detail : list) {
                         rankDetailService.fillDetail(detail);
                     }
-                    model.setDetails(list);
                 }
-                break;
+                model.setDetails(list);
+            }
+            break;
 
-                case GIFT: {
-                    Wrapper<OpenServiceCampaignGiftDetail> query = Wrappers.<OpenServiceCampaignGiftDetail>lambdaQuery()
-                            .eq(OpenServiceCampaignGiftDetail::getCampaignId, campaignId)
-                            .eq(OpenServiceCampaignGiftDetail::getCampaignTypeId, model.getId())
-                            .orderByAsc(OpenServiceCampaignGiftDetail::getSort);
-                    List<OpenServiceCampaignGiftDetail> list = giftDetailService.list(query);
+            case GIFT: {
+                Wrapper<OpenServiceCampaignGiftDetail> query = Wrappers.<OpenServiceCampaignGiftDetail>lambdaQuery()
+                        .eq(OpenServiceCampaignGiftDetail::getCampaignId, campaignId)
+                        .eq(OpenServiceCampaignGiftDetail::getCampaignTypeId, model.getId())
+                        .orderByAsc(OpenServiceCampaignGiftDetail::getSort);
+                List<OpenServiceCampaignGiftDetail> list = giftDetailService.list(query);
+                if (isLoadDetailExt) {
                     for (OpenServiceCampaignGiftDetail detail : list) {
                         giftDetailService.fillDetail(detail);
                     }
-                    model.setDetails(list);
                 }
-                break;
+                model.setDetails(list);
+            }
+            break;
 
-                case RECHARGE: {
-                    Wrapper<OpenServiceCampaignSingleGiftDetail> query = Wrappers.<OpenServiceCampaignSingleGiftDetail>lambdaQuery()
-                            .eq(OpenServiceCampaignSingleGiftDetail::getCampaignId, campaignId)
-                            .eq(OpenServiceCampaignSingleGiftDetail::getCampaignTypeId, model.getId())
-                            .orderByAsc(OpenServiceCampaignSingleGiftDetail::getSort);
-                    List<OpenServiceCampaignSingleGiftDetail> list = singleGiftDetailService.list(query);
+            case RECHARGE: {
+                Wrapper<OpenServiceCampaignSingleGiftDetail> query = Wrappers.<OpenServiceCampaignSingleGiftDetail>lambdaQuery()
+                        .eq(OpenServiceCampaignSingleGiftDetail::getCampaignId, campaignId)
+                        .eq(OpenServiceCampaignSingleGiftDetail::getCampaignTypeId, model.getId())
+                        .orderByAsc(OpenServiceCampaignSingleGiftDetail::getSort);
+                List<OpenServiceCampaignSingleGiftDetail> list = singleGiftDetailService.list(query);
+                if (isLoadDetailExt) {
                     for (OpenServiceCampaignSingleGiftDetail detail : list) {
                         singleGiftDetailService.fillDetail(detail);
                     }
-                    model.setDetails(list);
                 }
-                break;
+                model.setDetails(list);
+            }
+            break;
 
-                case LOTTERY: {
-                    Wrapper<OpenServiceCampaignLotteryDetail> query = Wrappers.<OpenServiceCampaignLotteryDetail>lambdaQuery()
-                            .eq(OpenServiceCampaignLotteryDetail::getCampaignId, campaignId)
-                            .eq(OpenServiceCampaignLotteryDetail::getCampaignTypeId, model.getId());
-                    List<OpenServiceCampaignLotteryDetail> list = lotteryDetailService.list(query);
+            case LOTTERY: {
+                Wrapper<OpenServiceCampaignLotteryDetail> query = Wrappers.<OpenServiceCampaignLotteryDetail>lambdaQuery()
+                        .eq(OpenServiceCampaignLotteryDetail::getCampaignId, campaignId)
+                        .eq(OpenServiceCampaignLotteryDetail::getCampaignTypeId, model.getId());
+                List<OpenServiceCampaignLotteryDetail> list = lotteryDetailService.list(query);
+                if (isLoadDetailExt) {
                     for (OpenServiceCampaignLotteryDetail detail : list) {
                         lotteryDetailService.fillDetail(detail);
                     }
-                    model.setDetails(list);
                 }
-                break;
+                model.setDetails(list);
+            }
+            break;
 
-                case CONSUME: {
-                    Wrapper<OpenServiceCampaignConsumeDetail> query = Wrappers.<OpenServiceCampaignConsumeDetail>lambdaQuery()
-                            .eq(OpenServiceCampaignConsumeDetail::getCampaignId, campaignId)
-                            .eq(OpenServiceCampaignConsumeDetail::getCampaignTypeId, model.getId());
-                    List<OpenServiceCampaignConsumeDetail> list = consumeDetailService.list(query);
+            case CONSUME: {
+                Wrapper<OpenServiceCampaignConsumeDetail> query = Wrappers.<OpenServiceCampaignConsumeDetail>lambdaQuery()
+                        .eq(OpenServiceCampaignConsumeDetail::getCampaignId, campaignId)
+                        .eq(OpenServiceCampaignConsumeDetail::getCampaignTypeId, model.getId());
+                List<OpenServiceCampaignConsumeDetail> list = consumeDetailService.list(query);
+                if (isLoadDetailExt) {
                     for (OpenServiceCampaignConsumeDetail detail : list) {
                         consumeDetailService.fillDetail(detail);
                     }
-                    model.setDetails(list);
                 }
-                break;
-
-                default:
-                    break;
+                model.setDetails(list);
             }
+            break;
+            default:
+                break;
         }
     }
 

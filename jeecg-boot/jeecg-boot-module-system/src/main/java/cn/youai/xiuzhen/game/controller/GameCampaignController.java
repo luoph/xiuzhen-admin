@@ -352,10 +352,19 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             return Result.ok("该活动没有支持的区服");
         }
 
-        Date now = DateUtils.now();
+        if (campaignTypeList.stream().anyMatch(e -> e.getCross() == 1)) {
+            return Result.ok("存在跨服子活动，不支持移除");
+        }
+
+        Date current = DateUtils.now();
+        if (campaignTypeList.stream().anyMatch(e -> e.getTimeType() == 1 && null != e.getStartTime() && null != e.getEndTime() && e.getEndTime().after(current))) {
+            return Result.ok("没有可移除的区服");
+        }
+
         Set<String> reserveServerIds = new HashSet<>(serverIds.size());
         Set<String> removeServerIds = new HashSet<>(serverIds.size());
         Page<GameServer> page = new Page<>(1, Integer.MAX_VALUE);
+
         for (GameCampaignType campaignType : campaignTypeList) {
             IPage<GameCampaignServer> pageList = service.serverList(page, campaignType.getCampaignId(), campaignType.getId(), null);
             for (GameCampaignServer record : pageList.getRecords()) {
@@ -363,7 +372,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
                 if (reserveServerIds.contains(strServerId)) {
                     continue;
                 }
-                setCampaignStatus(record, campaignType, now);
+                setCampaignStatus(record, campaignType, current);
                 if (record.getCampaignStatus() == CampaignStatus.COMPLETED.getValue()) {
                     removeServerIds.add(strServerId);
                 } else {

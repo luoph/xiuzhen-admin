@@ -4,7 +4,12 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.server.springboot.component.OkHttpHelper;
+import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.cache.GameServerCache;
+import cn.youai.xiuzhen.game.constant.OpenServiceType;
+import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaign;
+import cn.youai.xiuzhen.game.entity.OpenServiceCampaignDetail;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignType;
 import cn.youai.xiuzhen.game.service.IGameServerGroupService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
@@ -57,7 +62,10 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
 
     @AutoLog(value = "开服活动(1级)-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(OpenServiceCampaign entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryPageList(OpenServiceCampaign entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -175,7 +183,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         OpenServiceCampaign copy = new OpenServiceCampaign(campaign);
         service.save(copy);
 
-        List<OpenServiceCampaignType> typeList = getCampaignTypeList(campaign);
+        List<OpenServiceCampaignType> typeList = getCampaignTypeList(campaign, true);
         if (CollUtil.isNotEmpty(typeList)) {
             for (OpenServiceCampaignType entity : typeList) {
                 campaignTypeService.duplicate(entity, copy.getId());
@@ -212,7 +220,7 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
                 Map<Long, OpenServiceCampaignType> typeMap = nowList.stream().collect(Collectors.toMap(OpenServiceCampaignType::getId, Function.identity()));
 
                 // 更新子页签
-                List<OpenServiceCampaignType> typeList = getCampaignTypeList(model);
+                List<OpenServiceCampaignType> typeList = getCampaignTypeList(model, true);
                 model.setTypeList(typeList);
 
                 for (OpenServiceCampaignType item : typeList) {
@@ -243,15 +251,98 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
         }
     }
 
-    private List<OpenServiceCampaignType> getCampaignTypeList(OpenServiceCampaign openServiceCampaign) {
+    private List<OpenServiceCampaignType> getCampaignTypeList(OpenServiceCampaign openServiceCampaign, boolean isLoadDetailExt) {
         long campaignId = openServiceCampaign.getId();
         LambdaQueryWrapper<OpenServiceCampaignType> query = Wrappers.<OpenServiceCampaignType>lambdaQuery().eq(OpenServiceCampaignType::getCampaignId, campaignId).orderByAsc(OpenServiceCampaignType::getSort);
 
         List<OpenServiceCampaignType> list = campaignTypeService.list(query);
         for (OpenServiceCampaignType model : list) {
-            campaignTypeService.fillTabDetail(model);
+            campaignTypeService.fillTabDetail(model, isLoadDetailExt);
         }
         return list;
     }
 
+    @AutoLog(value = "开服活动配置-移除已结束活动")
+    @GetMapping(value = "/removeCompletedServer")
+    public Result<?> removeCompletedServer(@RequestParam(name = "id", defaultValue = "0") String id) {
+        long campaignId = Long.parseLong(id);
+        OpenServiceCampaign campaign = service.getById(campaignId);
+        if (null == campaign) {
+            return Result.error("主活动为空");
+        }
+
+        if (campaign.getCross() == 1) {
+            return Result.ok("跨服活动，不支持移除");
+        }
+
+        Set<String> serverIds = new HashSet<>(StrUtil.splitTrim(campaign.getServerIds(), ","));
+        if (serverIds.isEmpty()) {
+            return Result.ok("该活动没有支持的区服");
+        }
+
+        List<OpenServiceCampaignType> campaignTypeList = getCampaignTypeList(campaign, false);
+        if (campaignTypeList.isEmpty()) {
+            return Result.ok("该活动没有支持的区服");
+        }
+
+        Date current = DateUtils.now();
+        Set<String> reserveServerIds = new HashSet<>(serverIds.size());
+        Set<String> removeServerIds = new HashSet<>(serverIds.size());
+
+        for (String serverId : serverIds) {
+            GameServer gameServer = GameServerCache.getInstance().get(Integer.parseInt(serverId));
+            if (null == gameServer) {
+                continue;
+            }
+
+            for (OpenServiceCampaignType campaignType : campaignTypeList) {
+                OpenServiceType openServiceType = OpenServiceType.valueOf(campaignType.getType());
+                if (null == openServiceType || CollUtil.isEmpty(campaignType.getDetails())) {
+                    continue;
+                }
+
+                List<? extends OpenServiceCampaignDetail> details = (List<? extends OpenServiceCampaignDetail>) campaignType.getDetails();
+                if (details.stream().anyMatch(e -> e.getTimeType() == 1 && null != e.getStartTime() && null != e.getEndTime() && e.getEndTime().after(current))) {
+                    return Result.ok("没有可移除的区服");
+                }
+
+                int maxDay = details.stream().filter(e -> e.getTimeType() == 2).mapToInt(e -> Math.max(e.getStartDay() + e.getDuration() - 1, 0)).max().orElse(0);
+                Date maxEndTime = DateUtils.endTimeOfDate(DateUtils.addDays(gameServer.getOpenTime(), maxDay));
+                boolean isCompleted = maxEndTime.before(current);
+                if (isCompleted) {
+                    removeServerIds.add(serverId);
+                } else {
+                    reserveServerIds.add(serverId);
+                    break;
+                }
+            }
+        }
+
+        if (reserveServerIds.containsAll(serverIds)) {
+            return Result.ok("没有可移除的区服");
+        }
+
+        removeServerIds.removeIf(reserveServerIds::contains);
+        if (removeServerIds.isEmpty()) {
+            return Result.ok("没有可移除的区服");
+        }
+
+        if (serverIds.removeIf(removeServerIds::contains)) {
+            service.updateById(new OpenServiceCampaign().setId(campaignId).setServerIds(StrUtil.join(",", serverIds)));
+        }
+        return Result.ok("已移除" + removeServerIds.size() + "个区服");
+    }
+
+    private boolean isCompleted(OpenServiceCampaignDetail detail, Date openTime, Date current) {
+        Date startTime = null;
+        Date endTime = null;
+        if (detail.getTimeType() == 1) {
+            startTime = detail.getStartTime();
+            endTime = detail.getEndTime();
+        } else if (detail.getTimeType() == 2) {
+            startTime = DateUtils.startTimeOfDate(DateUtils.addDays(openTime, detail.getStartDay()));
+            endTime = DateUtils.endTimeOfDate(DateUtils.addDays(openTime, Math.max(detail.getStartDay() + detail.getDuration() - 1, 0)));
+        }
+        return null != startTime && null != endTime && endTime.before(current);
+    }
 }

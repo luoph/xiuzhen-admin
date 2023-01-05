@@ -26,7 +26,7 @@ public interface IOpenServiceCampaignTypeService extends IService<OpenServiceCam
      *
      * @param model {@linkplain OpenServiceCampaignType}
      */
-    void fillTabDetail(OpenServiceCampaignType model);
+    void fillTabDetail(OpenServiceCampaignType model, boolean isLoadDetailExt);
 
     /**
      * 查询活动id的一级类型列表

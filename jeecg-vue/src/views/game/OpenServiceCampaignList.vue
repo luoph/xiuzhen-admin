@@ -119,6 +119,8 @@
           <!-- <a @click="handleTabList(record)">页签配置</a> -->
           <a @click="handleSync(record)">同步到区服</a>
           <a-divider type="vertical" />
+          <a @click="removeCompletedServer(record)">移除已结束区服</a>
+          <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -262,7 +264,8 @@ export default {
         duplicate: 'game/openServiceCampaign/duplicate',
         deleteBatch: 'game/openServiceCampaign/deleteBatch',
         exportXlsUrl: 'game/openServiceCampaign/exportXls',
-        importExcelUrl: 'game/openServiceCampaign/importExcel'
+        importExcelUrl: 'game/openServiceCampaign/importExcel',
+        removeCompletedServerUrl: 'game/openServiceCampaign/removeCompletedServer'
       },
       dictOptions: {}
     };
@@ -337,6 +340,22 @@ export default {
         text = text.substring(0, text.indexOf(','));
       }
       return `${window._CONFIG['domainURL']}/${text}`;
+    },
+    removeCompletedServer: function (record) {
+      const that = this;
+      that.confirmLoading = true;
+      getAction(that.url.removeCompletedServerUrl, { id: record.id })
+        .then((res) => {
+          if (res.success) {
+            that.$message.success(res.message);
+          } else {
+            that.$message.error('移除失败');
+          }
+        })
+        .finally(() => {
+          that.confirmLoading = false;
+          that.loadData();
+        });
     }
   }
 };

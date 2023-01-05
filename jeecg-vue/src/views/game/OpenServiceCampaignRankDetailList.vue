@@ -43,6 +43,7 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
+        :scroll="{ x: 'max-content' }"
         @change="handleTableChange"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
       >
@@ -296,6 +297,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          fixed: 'right',
           scopedSlots: { customRender: 'action' }
         }
       ],
