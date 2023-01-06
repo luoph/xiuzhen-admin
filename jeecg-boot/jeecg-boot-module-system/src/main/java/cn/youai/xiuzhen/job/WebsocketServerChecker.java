@@ -53,6 +53,9 @@ public class WebsocketServerChecker {
     @Value("${app.game-server.jenkins-job:}")
     private String jenkinsJobUrl;
 
+    @Value("${app.websocket.ignore-servers:}")
+    private Set<Integer> ignoreServers;
+
     @Autowired
     private IGameServerService serverService;
 
@@ -79,6 +82,11 @@ public class WebsocketServerChecker {
         Set<Integer> failedList = checkResultMap.values().stream()
                 .filter(t -> t.getFailed() >= warningTimes)
                 .map(WebsocketCheckResult::getServerId).collect(Collectors.toSet());
+
+        // 忽略某些服务器id
+        if (CollUtil.isNotEmpty(ignoreServers)) {
+            ignoreServers.forEach(failedList::remove);
+        }
 
         List<GameServerStatus> serverStatusList = new ArrayList<>();
         List<WebsocketCheckResult> resultList = new ArrayList<>();
