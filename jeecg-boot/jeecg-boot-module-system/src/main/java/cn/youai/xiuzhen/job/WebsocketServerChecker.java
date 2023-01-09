@@ -94,10 +94,12 @@ public class WebsocketServerChecker {
             Map<Integer, String> responseMap = serverService.gameServerGet(failedList, serverStatusUrl, String.class);
             responseMap.forEach((key, value) -> {
                 DataResponse<GameServerStatus> response = JSON.parseObject(value, RESPONSE_SERVER_STATUS);
-                GameServerStatus serverStatus = response.getData();
-                if (serverStatus != null) {
-                    serverStatus.setServerId(key);
-                    serverStatusList.add(serverStatus);
+                if (response != null) {
+                    GameServerStatus serverStatus = response.getData();
+                    if (serverStatus != null) {
+                        serverStatus.setServerId(key);
+                        serverStatusList.add(serverStatus);
+                    }
                 }
                 resultList.add(checkResultMap.get(key));
             });
