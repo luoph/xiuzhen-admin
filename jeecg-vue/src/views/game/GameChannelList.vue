@@ -21,8 +21,8 @@
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
-              <a-form-item label="大渠道描述">
-                <j-input placeholder="请输入大渠道描述" v-model="queryParam.remark"></j-input>
+              <a-form-item label="备注">
+                <j-input placeholder="请输入备注" v-model="queryParam.remark"></j-input>
               </a-form-item>
             </a-col>
           </template>
