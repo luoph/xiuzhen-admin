@@ -54,7 +54,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaignType entity) {
         String eggsIntegralGoods = entity.getEggsIntegralGoods();
-        if (entity.getType() == CampaignType.THROWING_EGGS.getValue() && StringUtils.isBlank(eggsIntegralGoods)) {
+        if (entity.getType() == CampaignType.THROWING_EGGS.getType() && StringUtils.isBlank(eggsIntegralGoods)) {
             return Result.error("积分商品丢失!");
         }
         return super.add(entity);

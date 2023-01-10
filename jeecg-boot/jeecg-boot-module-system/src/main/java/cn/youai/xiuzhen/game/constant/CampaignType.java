@@ -18,43 +18,43 @@ public enum CampaignType {
     /**
      * 节日活动类型
      */
-    LOGIN("登录礼包", 1, IGameCampaignTypeLoginService.class),
-    RECHARGE("累计充值", 2, IGameCampaignTypeRechargeService.class),
-    EXCHANGE("节日兑换", 3, IGameCampaignTypeExchangeService.class),
-    TASK("节日任务", 4, IGameCampaignTypeTaskService.class),
-    BUFF_PRACTICE("修为加成", 5, IGameCampaignTypeBuffService.class),
-    BUFF_ANIMA("灵气加成", 6, IGameCampaignTypeBuffService.class),
-    FALL("节日掉落", 7, IGameCampaignTypeFallService.class, IGameCampaignTypeFallRewardService.class),
-    FIREWORK("节日烟花", 8, IGameCampaignTypeFireworkService.class),
-    REDUCE_RANK("消耗排行", 9, IGameCampaignTypeReduceService.class),
-    LIMIT_TIME_SWORD("限时仙剑", 10, IGameCampaignTypeSwordService.class),
-    THROWING_EGGS("砸蛋", 11, IGameCampaignTypeThrowingEggsService.class),
-    THROWING_EGGS_RANK("砸蛋榜单", 12, IGameCampaignTypeThrowingEggsRankService.class),
-    THROWING_EGGS_GIFT("砸蛋礼包", 13, IGameCampaignTypeThrowingEggsGiftService.class),
-    PARTY("节日派对", 14, IGameCampaignTypePartyTaskService.class, IGameCampaignTypePartyProgressService.class),
-    DIRECT_PURCHASE("直购礼包", 15, IGameCampaignDirectPurchaseService.class),
-    REBATE_RECHARGE("返利狂欢", 16, IGameCampaignTypeRebateRechargeService.class),
-    MARRY_RANK_WINE("赠酒排行榜", 17, IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
-    MARRY_RANK_CHARM("魅力值排行榜", 18, IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
-    //    MARRY_RANK_GIFT("结义排行榜-结义礼包", 19, null, null),
-    SELECT_DISCOUNT_ITEM("自选特惠", 20, IGameCampaignTypeSelectDiscountItemService.class, IGameCampaignTypeSelectDiscountMessageService.class),
-    RECHARGE_RANK("累充排行", 21, IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
-    EMAIL_CAMPAIGN("邮件活动", 22, IGameCampaignTypeEmailItemService.class),
+    LOGIN(1, "登录礼包", IGameCampaignTypeLoginService.class),
+    RECHARGE(2, "累计充值", IGameCampaignTypeRechargeService.class),
+    EXCHANGE(3, "节日兑换", IGameCampaignTypeExchangeService.class),
+    TASK(4, "节日任务", IGameCampaignTypeTaskService.class),
+    BUFF_PRACTICE(5, "修为加成", IGameCampaignTypeBuffService.class),
+    BUFF_ANIMA(6, "灵气加成", IGameCampaignTypeBuffService.class),
+    FALL(7, "节日掉落", IGameCampaignTypeFallService.class, IGameCampaignTypeFallRewardService.class),
+    FIREWORK(8, "节日烟花", IGameCampaignTypeFireworkService.class),
+    REDUCE_RANK(9, "消耗排行", IGameCampaignTypeReduceService.class),
+    LIMIT_TIME_SWORD(10, "限时仙剑", IGameCampaignTypeSwordService.class),
+    THROWING_EGGS(11, "砸蛋", IGameCampaignTypeThrowingEggsService.class),
+    THROWING_EGGS_RANK(12, "砸蛋榜单", IGameCampaignTypeThrowingEggsRankService.class),
+    THROWING_EGGS_GIFT(13, "砸蛋礼包", IGameCampaignTypeThrowingEggsGiftService.class),
+    PARTY(14, "节日派对", IGameCampaignTypePartyTaskService.class, IGameCampaignTypePartyProgressService.class),
+    DIRECT_PURCHASE(15, "直购礼包", IGameCampaignDirectPurchaseService.class),
+    REBATE_RECHARGE(16, "返利狂欢", IGameCampaignTypeRebateRechargeService.class),
+    MARRY_RANK_WINE(17, "赠酒排行榜", IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
+    MARRY_RANK_CHARM(18, "魅力值排行榜", IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
+    //    MARRY_RANK_GIFT(19, "结义排行榜-结义礼包", null, null),
+    SELECT_DISCOUNT_ITEM(20, "自选特惠", IGameCampaignTypeSelectDiscountItemService.class, IGameCampaignTypeSelectDiscountMessageService.class),
+    RECHARGE_RANK(21, "累充排行", IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
+    EMAIL_CAMPAIGN(22, "邮件活动", IGameCampaignTypeEmailItemService.class),
     // end
     ;
 
+    private final int type;
     private final String name;
-    private final int value;
     private final Class<? extends IService> serviceClass;
     private final Class<? extends IService> subServiceClass;
 
-    CampaignType(String name, int value, Class<? extends IService> serviceClass) {
-        this(name, value, serviceClass, null);
+    CampaignType(int type, String name, Class<? extends IService> serviceClass) {
+        this(type, name, serviceClass, null);
     }
 
-    CampaignType(String name, int value, Class<? extends IService> serviceClass, Class<? extends IService> subServiceClass) {
+    CampaignType(int type, String name, Class<? extends IService> serviceClass, Class<? extends IService> subServiceClass) {
+        this.type = type;
         this.name = name;
-        this.value = value;
         this.serviceClass = serviceClass;
         this.subServiceClass = subServiceClass;
     }
@@ -95,7 +95,7 @@ public enum CampaignType {
 
     public static CampaignType valueOf(int type) {
         for (CampaignType e : CampaignType.values()) {
-            if (e.value == type) {
+            if (e.type == type) {
                 return e;
             }
         }
