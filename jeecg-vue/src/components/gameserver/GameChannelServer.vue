@@ -52,8 +52,8 @@ export default {
       // 服务器数据
       serverList: [],
       url: {
-        channelUrl: "game/gameChannel/list",
-        channelServerUrl: "game/gameChannelServer/channelWithServer"
+        channelUrl: "game/channel/list",
+        channelServerUrl: "game/channelServer/channelWithServer"
       }
     };
   },

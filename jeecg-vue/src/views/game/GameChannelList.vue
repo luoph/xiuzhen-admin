@@ -257,16 +257,16 @@ export default {
         }
       ],
       url: {
-        list: 'game/gameChannel/list',
-        delete: 'game/gameChannel/delete',
-        deleteBatch: 'game/gameChannel/deleteBatch',
+        list: 'game/channel/list',
+        delete: 'game/channel/delete',
+        deleteBatch: 'game/channel/deleteBatch',
         // 刷新所有渠道区服
-        updateAllServerUrl: 'game/gameChannel/updateAllServer',
+        updateAllServerUrl: 'game/channel/updateAllServer',
         // 刷新渠道区服
-        updateChannelServerUrl: 'game/gameChannel/updateChannelServer',
-        updateIpWhitelistUrl: 'game/gameChannel/updateIpWhitelist',
-        updateServerCacheUrl: 'game/gameChannel/updateServerCache',
-        updateChatServerCacheUrl: 'game/gameChannel/updateChatServerCache',
+        updateChannelServerUrl: 'game/channel/updateChannelServer',
+        updateIpWhitelistUrl: 'game/channel/updateIpWhitelist',
+        updateServerCacheUrl: 'game/channel/updateServerCache',
+        updateChatServerCacheUrl: 'game/channel/updateChatServerCache',
         // 游戏列表
         gameInfoListUrl: 'game/gameInfo/list',
         // 公告id

@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @Api(tags = "游戏渠道服配置")
-@RequestMapping("/game/gameChannelServer")
+@RequestMapping("/game/channelServer")
 public class GameChannelServerController extends JeecgController<GameChannelServer, IGameChannelServerService> {
 
     @Autowired

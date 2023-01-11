@@ -167,9 +167,9 @@ export default {
       },
       form: this.$form.createForm(this),
       url: {
-        list: 'game/gameChannelServer/list',
-        delete: 'game/gameChannelServer/delete',
-        deleteBatch: 'game/gameChannelServer/deleteBatch'
+        list: 'game/channelServer/list',
+        delete: 'game/channelServer/delete',
+        deleteBatch: 'game/channelServer/deleteBatch'
       }
     };
   },

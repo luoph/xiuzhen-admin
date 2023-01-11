@@ -58,8 +58,8 @@ export default {
         position: {rules: [{required: true, message: '请输入位置权重!'}]}
       },
       url: {
-        add: 'game/gameChannelServer/add',
-        edit: 'game/gameChannelServer/edit',
+        add: 'game/channelServer/add',
+        edit: 'game/channelServer/edit',
         // 游戏服列表
         serverListUrl: 'game/gameServer/all'
       }

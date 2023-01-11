@@ -47,11 +47,6 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
             return Result.ok(page);
         }
 
-        // 如果指定 游戏服id，则清除渠道信息
-        if (entity.getServerId() != null && entity.getServerId() > 0) {
-            entity.setChannel(null);
-        }
-
         IPage<GameStatDaily> pageList = pageList(entity, pageNo, pageSize, req);
         return Result.ok(pageList);
     }
@@ -63,11 +58,6 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
         if (StringUtils.isEmpty(entity.getChannel())
                 && (entity.getServerId() == null || entity.getServerId() < 0)) {
             return Result.error("请选择渠道或者区服id");
-        }
-
-        // 如果指定 游戏服id，则清除渠道信息
-        if (entity.getServerId() != null && entity.getServerId() > 0) {
-            entity.setChannel(null);
         }
 
         // 刷新统计数据

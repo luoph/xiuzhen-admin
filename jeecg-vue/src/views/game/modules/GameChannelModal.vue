@@ -98,8 +98,8 @@ export default {
         extra: {}
       },
       url: {
-        add: 'game/gameChannel/add',
-        edit: 'game/gameChannel/edit'
+        add: 'game/channel/add',
+        edit: 'game/channel/edit'
       }
     };
   },

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @RestController
 @Api(tags = "游戏渠道")
-@RequestMapping("/game/gameChannel")
+@RequestMapping("/game/channel")
 public class GameChannelController extends JeecgController<GameChannel, IGameChannelService> {
 
     @Value("${app.url.game-center}")
