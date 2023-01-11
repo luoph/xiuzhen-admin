@@ -42,6 +42,7 @@ export default {
   // 编译成html后加载初始化页面的数据
   created() {
     this.getChannelList();
+    this.getChannelServerList();
   },
   // 数据加载 return方式 局限于本页面内 防止污染其他页面的数据
   data() {

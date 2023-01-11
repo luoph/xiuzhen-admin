@@ -126,7 +126,9 @@ public class GameStatDaily implements Serializable {
     private Date createTime;
 
 
-    public static GameStatDaily of(String channel, Date date,
+    public static GameStatDaily of(String channel,
+                                   Integer serverId,
+                                   Date date,
                                    BigDecimal payAmount,
                                    int payPlayerNum,
                                    int loginNum,
@@ -135,31 +137,8 @@ public class GameStatDaily implements Serializable {
                                    int registerPayPlayer,
                                    int doublePayPlayer) {
         return new GameStatDaily()
-                .setChannel(channel)
-                .setServerId(StatisticType.DEFAULT_SERVER_ID)
-                .setCountDate(date)
-                .setPayAmount(payAmount)
-                .setLoginNum(loginNum)
-                .setPayPlayerNum(payPlayerNum)
-                .setNewPlayerNum(registerPlayer)
-                .setNewPlayerPayNum(registerPayPlayer)
-                .setNewPlayerPayAmount(registerPayAmount)
-                .setDoublePay(doublePayPlayer)
-                .setCreateTime(DateUtils.now())
-                .calc();
-    }
-
-    public static GameStatDaily of(int serverId, Date date,
-                                   BigDecimal payAmount,
-                                   int payPlayerNum,
-                                   int loginNum,
-                                   int registerPlayer,
-                                   BigDecimal registerPayAmount,
-                                   int registerPayPlayer,
-                                   int doublePayPlayer) {
-        return new GameStatDaily()
-                .setChannel(StatisticType.DEFAULT_CHANNEL)
-                .setServerId(serverId)
+                .setChannel(StatisticType.channel(channel))
+                .setServerId(StatisticType.serverId(serverId))
                 .setCountDate(date)
                 .setPayAmount(payAmount)
                 .setLoginNum(loginNum)

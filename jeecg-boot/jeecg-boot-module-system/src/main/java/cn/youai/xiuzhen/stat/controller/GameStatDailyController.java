@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.stat.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.stat.constant.StatisticType;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
 import cn.youai.xiuzhen.stat.service.IGameStatDailyService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
@@ -47,6 +48,12 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
             return Result.ok(page);
         }
 
+        if (entity.getServerId() == null) {
+            entity.setServerId(StatisticType.DEFAULT_SERVER_ID);
+        } else if (entity.getServerId() > 0 && entity.getChannel() == null) {
+            entity.setChannel(StatisticType.DEFAULT_CHANNEL);
+        }
+
         IPage<GameStatDaily> pageList = pageList(entity, pageNo, pageSize, req);
         return Result.ok(pageList);
     }
@@ -60,6 +67,10 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
             return Result.error("请选择渠道或者区服id");
         }
 
+        if (entity.getServerId() == null) {
+            entity.setServerId(StatisticType.DEFAULT_SERVER_ID);
+        }
+
         // 刷新统计数据
         Date endDate = DateUtils.todayDate();
         Date startDate = DateUtils.addDays(endDate, -2);
@@ -68,11 +79,7 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
 
         List<GameStatDaily> list = new ArrayList<>();
         while (!current.after(dateRange.getEnd())) {
-            if (entity.getServerId() != null && entity.getServerId() > 0) {
-                list.add(service.getGameStatDaily(entity.getServerId(), current));
-            } else {
-                list.add(service.getGameStatDaily(entity.getChannel(), current));
-            }
+            list.add(service.getGameStatDaily(entity.getChannel(), entity.getServerId(), current));
             current = DateUtils.addDays(current, 1);
         }
 

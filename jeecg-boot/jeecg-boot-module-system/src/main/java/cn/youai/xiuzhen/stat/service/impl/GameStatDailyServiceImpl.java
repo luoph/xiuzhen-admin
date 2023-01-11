@@ -4,7 +4,6 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.youai.enums.AccountLogType;
-import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.entity.GameStatDaily;
 import cn.youai.xiuzhen.stat.mapper.GameStatDailyMapper;
 import cn.youai.xiuzhen.stat.service.IGameOrderService;
@@ -37,51 +36,28 @@ public class GameStatDailyServiceImpl extends ServiceImpl<GameStatDailyMapper, G
     @Autowired
     private ILogAccountService logAccountService;
 
-    @Autowired
-    private IGameServerService gameServerService;
-
     @Override
     public int updateOrInsert(List<GameStatDaily> list) {
         return getBaseMapper().updateOrInsert(list);
     }
 
     @Override
-    public GameStatDaily getGameStatDaily(int serverId, Date date) {
+    public GameStatDaily getGameStatDaily(String channel, Integer serverId, Date date) {
         // 当天付费总金额
-        BigDecimal payAmount = payOrderService.serverPayAmount(serverId, date);
+        BigDecimal payAmount = payOrderService.channelPayAmount(channel, serverId, date);
         // 支付玩家数
-        int payPlayerNum = payOrderService.serverPayPlayerNum(serverId, date);
+        int payPlayerNum = payOrderService.channelPayPlayerNum(channel, serverId, date);
         // 当天登录角色数
-        int loginNum = logAccountService.serverLoginRegisterPlayerNum(serverId, date, AccountLogType.LOGIN.getType());
+        int loginNum = logAccountService.channelLoginRegisterPlayerNum(channel, serverId, date, AccountLogType.LOGIN.getType());
         // 当天注册角色数
-        int registerPlayer = logAccountService.serverLoginRegisterPlayerNum(serverId, date, AccountLogType.REGISTER.getType());
+        int registerPlayer = logAccountService.channelLoginRegisterPlayerNum(channel, serverId, date, AccountLogType.REGISTER.getType());
         // 注册付费总金额
-        BigDecimal registerPayAmount = logAccountService.serverRegisterPayAmount(serverId, date);
+        BigDecimal registerPayAmount = logAccountService.channelRegisterPayAmount(channel, serverId, date);
         // 注册付费玩家
-        int registerPayPlayer = logAccountService.serverRegisterPayPlayerNum(serverId, date);
+        int registerPayPlayer = logAccountService.channelRegisterPayPlayerNum(channel, serverId, date);
         // 注册二次付费玩家
-        int doublePayPlayer = logAccountService.serverDoublePayRegisterPlayer(serverId, date);
-        // 唯一主键：`GAME_DAY_COUNT` (`channel`,`server_id`,`count_date`)
-        return GameStatDaily.of(serverId, date, payAmount, payPlayerNum, loginNum, registerPlayer, registerPayAmount, registerPayPlayer, doublePayPlayer);
-    }
-
-    @Override
-    public GameStatDaily getGameStatDaily(String channel, Date date) {
-        // 当天付费总金额
-        BigDecimal payAmount = payOrderService.channelPayAmount(channel, date);
-        // 支付玩家数
-        int payPlayerNum = payOrderService.channelPayPlayerNum(channel, date);
-        // 当天登录角色数
-        int loginNum = logAccountService.channelLoginRegisterPlayerNum(channel, date, AccountLogType.LOGIN.getType());
-        // 当天注册角色数
-        int registerPlayer = logAccountService.channelLoginRegisterPlayerNum(channel, date, AccountLogType.REGISTER.getType());
-        // 注册付费总金额
-        BigDecimal registerPayAmount = logAccountService.channelRegisterPayAmount(channel, date);
-        // 注册付费玩家
-        int registerPayPlayer = logAccountService.channelRegisterPayPlayerNum(channel, date);
-        // 注册二次付费玩家
-        int doublePayPlayer = logAccountService.channelDoublePayRegisterPlayer(channel, date);
-        return GameStatDaily.of(channel, date, payAmount, payPlayerNum, loginNum, registerPlayer, registerPayAmount, registerPayPlayer, doublePayPlayer);
+        int doublePayPlayer = logAccountService.channelDoublePayRegisterPlayer(channel, serverId, date);
+        return GameStatDaily.of(channel, serverId, date, payAmount, payPlayerNum, loginNum, registerPlayer, registerPayAmount, registerPayPlayer, doublePayPlayer);
     }
 
 }

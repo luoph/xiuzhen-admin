@@ -71,9 +71,10 @@
         SELECT COUNT(DISTINCT l.`player_id`) AS counNum
         FROM `log_account` l
         LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
-        WHERE p.`channel` = #{channel}
-          AND l.`type` = #{type}
-          AND l.`create_date` = DATE(#{date});
+        WHERE l.`type` = #{type}
+        AND l.`create_date` = DATE(#{date})
+        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
     <select id="serverRegisterPayAmount" resultType="java.math.BigDecimal">
@@ -89,10 +90,11 @@
     <select id="channelRegisterPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(sum(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
-            LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`channel` = #{channel}
-          AND p.`create_date` = DATE(#{date})
-          AND o.`create_date` = DATE(#{date});
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`create_date` = DATE(#{date})
+        AND o.`create_date` = DATE(#{date})
+        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
     <select id="serverRegisterPayPlayerNum" resultType="int">
@@ -107,10 +109,11 @@
     <select id="channelRegisterPayPlayerNum" resultType="int">
         SELECT count(DISTINCT o.`player_id`) AS payAmount
         FROM `game_order` o
-            JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`channel` = #{channel}
-          AND p.`create_date` = DATE(#{date})
-          AND o.`create_date` = DATE(#{date});
+        JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`create_date` = DATE(#{date})
+        AND o.`create_date` = DATE(#{date})
+        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
     <select id="serverDoublePayRegisterPlayer" resultType="int">
@@ -128,11 +131,12 @@
     <select id="channelDoublePayRegisterPlayer" resultType="int">
         SELECT COUNT(*)
         FROM (SELECT COUNT(o.`player_id`) AS num
-              FROM `game_order` o
-                LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-              WHERE p.`channel` = #{channel}
-                AND p.`create_date` = DATE(#{date})
-                AND o.`create_date` = DATE(#{date})
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`create_date` = DATE(#{date})
+        AND o.`create_date` = DATE(#{date})
+        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
         GROUP BY o.`player_id`) c
         WHERE c.`num` >= 2;
     </select>

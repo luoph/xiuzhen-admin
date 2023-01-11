@@ -45,12 +45,14 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                @Param("payDate") Date payDate);
 
     BigDecimal chanelPayAmount(@Param("channel") String channel,
+                               @Param("serverId") Integer serverId,
                                @Param("payDate") Date payDate);
 
     int serverPayPlayerNum(@Param("serverId") int serverId,
                            @Param("payDate") Date payDate);
 
     int channelPayPlayerNum(@Param("channel") String channel,
+                            @Param("serverId") Integer serverId,
                             @Param("payDate") Date payDate);
 
     List<MergeServerVO> getGameOrderRangeDate(@Param("startTime") Date startTime,

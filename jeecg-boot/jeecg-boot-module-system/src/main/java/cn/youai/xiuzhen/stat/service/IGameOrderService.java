@@ -41,7 +41,7 @@ public interface IGameOrderService extends IService<GameOrder> {
      */
     BigDecimal serverPayAmount(int serverId, Date date);
 
-    BigDecimal channelPayAmount(String channel, Date date);
+    BigDecimal channelPayAmount(String channel, Integer serverId, Date date);
 
     /**
      * 付费角色数
@@ -51,7 +51,7 @@ public interface IGameOrderService extends IService<GameOrder> {
     /**
      * 付费角色数
      */
-    int channelPayPlayerNum(String channel, Date date);
+    int channelPayPlayerNum(String channel, Integer serverId, Date date);
 
     GameStatOrder queryOrderStatByRange(List<Integer> serverIds, Date startDate, Date endDate);
 

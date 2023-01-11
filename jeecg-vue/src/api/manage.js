@@ -61,7 +61,7 @@ export function putAction(url, parameter, timeout = 0) {
 }
 
 //get
-export function getAction(url, parameter, timeout = 0) {
+export function getAction(url, parameter = {}, timeout = 0) {
   let sign = signMd5Utils.getSign(url, parameter);
   //将签名和时间戳，添加在请求接口 Header
   // update-begin--author:taoyan---date:20220421--for: VUEN-410【签名改造】 X-TIMESTAMP牵扯

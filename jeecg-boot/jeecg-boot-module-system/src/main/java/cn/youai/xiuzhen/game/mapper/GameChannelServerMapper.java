@@ -30,7 +30,9 @@ public interface GameChannelServerMapper extends BaseMapper<GameChannelServer> {
      * @param channel 渠道
      * @return 游戏服列表
      */
-    List<GameServerVO> selectServerList(@Param("channel") String channel);
+    List<GameServerVO> selectChannelServerList(@Param("channel") String channel);
+
+    List<GameServerVO> selectServerList();
 
     List<GameServerVO> filterServerList(@Param("channel") String channel, @Param("serverIds") List<Integer> serverIds);
 

@@ -17,7 +17,6 @@ import cn.youai.xiuzhen.stat.service.ILogAccountService;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.ibatis.annotations.Param;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.TimeConstant;
 import org.springframework.stereotype.Service;
@@ -68,8 +67,8 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public int channelLoginRegisterPlayerNum(String channel, Date date, int type) {
-        return getBaseMapper().channelLoginRegisterPlayerNum(channel, date, type);
+    public int channelLoginRegisterPlayerNum(String channel, Integer serverId, Date date, int type) {
+        return getBaseMapper().channelLoginRegisterPlayerNum(channel, serverId, date, type);
     }
 
     @Override
@@ -78,8 +77,8 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public BigDecimal channelRegisterPayAmount(String channel, Date date) {
-        return getBaseMapper().channelRegisterPayAmount(channel, date);
+    public BigDecimal channelRegisterPayAmount(String channel, Integer serverId, Date date) {
+        return getBaseMapper().channelRegisterPayAmount(channel, serverId, date);
     }
 
     @Override
@@ -88,8 +87,8 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public int channelRegisterPayPlayerNum(String channel, Date date) {
-        return getBaseMapper().channelRegisterPayPlayerNum(channel, date);
+    public int channelRegisterPayPlayerNum(String channel, Integer serverId, Date date) {
+        return getBaseMapper().channelRegisterPayPlayerNum(channel, serverId, date);
     }
 
     @Override
@@ -98,8 +97,8 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public int channelDoublePayRegisterPlayer(String channel, Date date) {
-        return getBaseMapper().channelDoublePayRegisterPlayer(channel, date);
+    public int channelDoublePayRegisterPlayer(String channel, Integer serverId, Date date) {
+        return getBaseMapper().channelDoublePayRegisterPlayer(channel, serverId, date);
     }
 
     @Override

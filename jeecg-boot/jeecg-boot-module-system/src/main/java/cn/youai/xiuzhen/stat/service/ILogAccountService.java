@@ -8,7 +8,6 @@ import cn.youai.xiuzhen.stat.entity.LogAccount;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -26,7 +25,9 @@ import java.util.Map;
 public interface ILogAccountService extends IService<LogAccount> {
 
     BigDecimal queryDau(Date getTime);
+
     List<Integer> selectRunningServerIds(Date countDate);
+
     List<Integer> selectRunningServerIdsByRange(Date startDate, Date endDate);
 
     String queryPlayerIp(Long playerId, Date createDate);
@@ -41,7 +42,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 登录注册角色数
      */
-    int channelLoginRegisterPlayerNum(String channel, Date date, int type);
+    int channelLoginRegisterPlayerNum(String channel, Integer serverId, Date date, int type);
 
     /**
      * 新注册付费总额
@@ -51,7 +52,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 新注册付费总额
      */
-    BigDecimal channelRegisterPayAmount(String channel, Date date);
+    BigDecimal channelRegisterPayAmount(String channel, Integer serverId, Date date);
 
     /**
      * 新注册付费玩家
@@ -61,7 +62,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 新注册付费玩家
      */
-    int channelRegisterPayPlayerNum(String channel, Date date);
+    int channelRegisterPayPlayerNum(String channel, Integer serverId, Date date);
 
     /**
      * 二次付费玩家
@@ -71,7 +72,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 二次付费玩家
      */
-    int channelDoublePayRegisterPlayer(String channel, Date date);
+    int channelDoublePayRegisterPlayer(String channel, Integer serverId, Date date);
 
     /**
      * 当前登陆玩家ids

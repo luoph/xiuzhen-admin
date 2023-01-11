@@ -80,9 +80,10 @@
     <select id="chanelPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
-                 LEFT JOIN `game_player` b ON o.`player_id` = b.`player_id`
-        WHERE b.`channel` = #{channel}
-          AND o.`create_date` = DATE (#{payDate});
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE o.`create_date` = DATE (#{payDate})
+        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
     <select id="serverPayPlayerNum" resultType="int">
@@ -95,9 +96,10 @@
     <select id="channelPayPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT o.`player_id`) AS num
         FROM `game_order` o
-                 LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`channel` = #{channel}
-          AND o.`create_date` = DATE (#{payDate});
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE o.`create_date` = DATE (#{payDate})
+        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
     <!-- 充值统计 -->

@@ -8,29 +8,44 @@
         FROM `game_server` a
                  INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         WHERE b.`channel_id` = #{channelId}
-          AND a.`outdated` = 0
           AND b.`del_flag` = 0
         ORDER BY b.`position` DESC
     </select>
 
-    <select id="selectServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
+    <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
+        <![CDATA[
         SELECT a.*
         FROM `game_server` a
         INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
-        WHERE a.`outdated` = 0 AND b.`del_flag` = 0
+        WHERE b.`del_flag` = 0
+        ]]>
         <if test="channel != null and channel != ''">
             AND c.`simple_name` = #{channel}
         </if>
+        GROUP BY a.`id`
         ORDER BY b.`position` DESC
     </select>
 
+    <select id="selectServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
+        <![CDATA[
+        SELECT a.*
+        FROM `game_server` a
+        LEFT JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        WHERE a.`open_time` < NOW() AND b.`channel_id` IS NOT NULL
+        GROUP BY a.`id`
+        ORDER BY a.`id` DESC
+        ]]>
+    </select>
+
     <select id="filterServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
+        <![CDATA[
         SELECT a.*
         FROM `game_server` a
         INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
-        WHERE a.`outdated` = 0 AND b.`del_flag` = 0
+        WHERE b.`del_flag` = 0
+        ]]>
         <if test="null != channel and '' != channel">
             AND c.`simple_name` = #{channel}
         </if>
@@ -42,11 +57,13 @@
     </select>
 
     <select id="selectServerListByChannel" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        <![CDATA[
         SELECT a.*
         FROM `game_server` a
         INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
-        WHERE a.`outdated` = 0 AND b.`del_flag` = 0
+        WHERE b.`del_flag` = 0
+        ]]>
         <if test="channel != null and channel != '' ">
             AND c.`simple_name` = #{channel}
         </if>
