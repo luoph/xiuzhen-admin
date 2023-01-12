@@ -10,9 +10,9 @@
         <a-form-item label="正文" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['noticeText']" rows="4" placeholder="请输入正文"/>
         </a-form-item>
-        <a-form-item label="投放服务器" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <multiple-server-select v-decorator="['gameServerList', validatorRules.gameServerList]"
-                                  @changeSelect="change"></multiple-server-select>
+        <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-if="isEdit" v-decorator="['gameServerList', validatorRules.gameServerList]" placeholder="区服id"></a-input>
+          <game-server-selector v-model="model.gameServerList" @onSelectServer="changeSelect"/>
         </a-form-item>
         <a-form-item label="播放频率" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :min="1" v-decorator="['frequency', validatorRules.frequency]" placeholder="请输入播放频率"
@@ -55,12 +55,14 @@ import {httpAction} from '@/api/manage';
 import pick from 'lodash.pick';
 import JDate from '@/components/jeecg/JDate';
 import MultipleServerSelect from '@/components/gameserver/MultipleServerSelect';
+import GameServerSelector from '@/components/gameserver/GameServerSelector';
 
 export default {
   name: 'GameLampNoticeModal',
   components: {
     JDate,
-    MultipleServerSelect
+    MultipleServerSelect,
+    GameServerSelector
   },
   data() {
     return {
@@ -68,6 +70,7 @@ export default {
       title: '操作',
       width: 800,
       visible: false,
+      isEdit: false,
       model: {},
       labelCol: {
         xs: {span: 24},
@@ -102,6 +105,7 @@ export default {
     edit(record) {
       this.form.resetFields();
       this.model = Object.assign({}, record);
+      this.isEdit = this.model.id != null;
       this.visible = true;
       this.$nextTick(() => {
         this.form.setFieldsValue(pick(this.model, 'noticeTitle', 'noticeText', 'gameServerList', 'frequency', 'cyclePeriod', 'beginTime', 'endTime'));
@@ -150,9 +154,9 @@ export default {
     popupCallback(row) {
       this.form.setFieldsValue(pick(row, 'noticeTitle', 'noticeText', 'gameServerList', 'frequency', 'cyclePeriod', 'beginTime', 'endTime'));
     },
-    change(value) {
+    changeSelect(value) {
       this.form.setFieldsValue({
-        gameServerList: '[' + value.join(',') + ']'
+        gameServerList: value.join(',')
       });
     }
   }

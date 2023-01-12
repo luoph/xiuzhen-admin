@@ -79,6 +79,10 @@
           <a-divider type="vertical" />
           <a @click="handleEdit(record)">编辑</a>
         </span>
+        <span slot="serverIdSlot" slot-scope="text, record">
+          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        </span>
       </a-table>
     </div>
 
@@ -135,9 +139,7 @@ export default {
           title: '投放服务器',
           align: 'left',
           dataIndex: 'gameServerList',
-          customRender: (value) => {
-            return value || '--';
-          }
+          scopedSlots: { customRender: 'serverIdSlot' }
         },
         {
           title: '播放频率',
