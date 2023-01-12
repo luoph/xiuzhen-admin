@@ -116,6 +116,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @GetMapping(value = "/all")
     public Result<?> all() {
         Wrapper<GameServer> query = Wrappers.<GameServer>lambdaQuery()
+                .eq(GameServer::getOutdated, OutdatedType.NORMAL.getValue())
                 .select(GameServer::getId, GameServer::getName, GameServer::getGameId,
                         GameServer::getHost, GameServer::getStatus, GameServer::getOpenTime,
                         GameServer::getOnlineTime)
