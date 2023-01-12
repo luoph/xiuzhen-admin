@@ -19,8 +19,8 @@ public interface LogPlayerMapper extends BaseMapper<LogPlayer> {
 
     IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page,
                                                    @Param("channel") String channel,
-                                                   @Param("serverId") int serverId,
-                                                   @Param("playerId") long playerId,
+                                                   @Param("serverId") Integer serverId,
+                                                   @Param("playerId") Long playerId,
                                                    @Param("start") Date start,
                                                    @Param("end") Date end);
 }
