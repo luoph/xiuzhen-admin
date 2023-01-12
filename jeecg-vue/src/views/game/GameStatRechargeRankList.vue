@@ -104,12 +104,12 @@ export default {
         },
         {
           title: '渠道',
-          align: 'channel',
+          align: 'center',
           dataIndex: 'channel'
         },
         {
           title: 'Sdk渠道',
-          align: 'channel',
+          align: 'center',
           dataIndex: 'sdkChannel'
         },
         {
