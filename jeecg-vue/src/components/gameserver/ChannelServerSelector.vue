@@ -72,7 +72,7 @@ export default {
   methods: {
     getChannelList() {
       getAction(this.url.channelUrl).then(res => {
-        this.channelList = res.result.records;
+        this.channelList = res.result;
       });
     },
     getChannelServerList() {
