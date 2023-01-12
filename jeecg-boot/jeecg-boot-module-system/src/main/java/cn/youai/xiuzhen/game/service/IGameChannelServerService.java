@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.service;
 
+import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -28,6 +29,8 @@ public interface IGameChannelServerService extends IService<GameChannelServer> {
      * @return 区服列表
      */
     List<GameServerVO> selectServerList(String channel);
+
+    List<GameChannel> selectChannelList();
 
     List<GameServerVO> filterServerList(String channel, List<Integer> serverIds);
 

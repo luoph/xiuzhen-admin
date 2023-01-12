@@ -10,6 +10,16 @@
         WHERE o.`id` = #{id}
     </select>
 
+    <select id="selectByIds" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+        SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
+        FROM `game_order` o
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE o.`id` IN
+        <foreach item="id" collection="orderIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
     <select id="selectList" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
         SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
         FROM `game_order` o
@@ -234,9 +244,13 @@
         SELECT o.`player_id`,
         p.`nickname`,
         p.`level`,
+        p.`server_id`,
+        p.`channel`,
+        p.`sdk_channel`,
         p.`create_time`,
         p.`login_time` AS `last_login_time`,
         MAX(o.`create_time`) AS `last_pay_time`,
+        MAX(o.`id`) AS `order_id`,
         IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`

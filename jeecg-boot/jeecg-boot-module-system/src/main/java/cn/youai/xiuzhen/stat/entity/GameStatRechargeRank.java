@@ -20,9 +20,19 @@ public class GameStatRechargeRank implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Excel(name = "渠道", width = 15)
     private String channel;
 
+    @Excel(name = "Sdk渠道", width = 15)
+    private String sdkChannel;
+
+    @Excel(name = "最后充值", width = 15)
+    private BigDecimal lastPay;
+
+    @Excel(name = "区服id", width = 15)
     private Integer serverId;
+
+    private Long orderId;
 
     private Date countDate;
 
@@ -55,6 +65,9 @@ public class GameStatRechargeRank implements Serializable {
 
     @Excel(name = "最后登录时间", width = 15)
     private Date lastLoginTime;
+
+    @Excel(name = "创角天数", width = 15)
+    private Integer playDays;
 
     @Excel(name = "充值预警天数", width = 15)
     private Integer lastPayDays;

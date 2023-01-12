@@ -31,8 +31,9 @@
         <![CDATA[
         SELECT a.*
         FROM `game_server` a
-        LEFT JOIN `game_channel_server` b ON a.`id` = b.`server_id`
-        WHERE a.`open_time` < NOW() AND b.`channel_id` IS NOT NULL
+                 LEFT JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        WHERE a.`open_time` < NOW()
+          AND b.`channel_id` IS NOT NULL
         GROUP BY a.`id`
         ORDER BY a.`id` DESC
         ]]>
@@ -71,6 +72,11 @@
             AND a.`id` = #{serverId}
         </if>
         ORDER BY b.`position` DESC
+    </select>
+
+    <select id="selectChannelList" resultType="cn.youai.xiuzhen.game.entity.GameChannel">
+        SELECT *
+        FROM `game_channel`
     </select>
 
 </mapper>

@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.utils.StringUtils;
+import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.mapper.GameChannelServerMapper;
@@ -34,6 +35,11 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
             return getBaseMapper().selectServerList();
         }
         return getBaseMapper().selectChannelServerList(channel);
+    }
+
+    @Override
+    public List<GameChannel> selectChannelList() {
+        return getBaseMapper().selectChannelList();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.mapper;
 
+import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
@@ -33,6 +34,8 @@ public interface GameChannelServerMapper extends BaseMapper<GameChannelServer> {
     List<GameServerVO> selectChannelServerList(@Param("channel") String channel);
 
     List<GameServerVO> selectServerList();
+
+    List<GameChannel> selectChannelList();
 
     List<GameServerVO> filterServerList(@Param("channel") String channel, @Param("serverIds") List<Integer> serverIds);
 

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,8 @@ import java.util.Set;
 public interface GameOrderMapper extends BaseMapper<GameOrder> {
 
     GameOrder selectById(@Param("id") String id);
+
+    List<GameOrder> selectByIds(@Param("orderIds") Collection<Long> orderIds);
 
     IPage<GameOrder> selectList(Page<?> page,
                                 @Param("entity") GameOrder entity,
@@ -92,10 +95,11 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                                                  @Param("startDate") Date startDate,
                                                                  @Param("endDate") Date endDate);
 
-    List<GameStatRechargeRank> queryRechargeRankList(@Param("channel") String channel,
-                                                     @Param("serverId") int serverId,
-                                                     @Param("startDate") Date startDate,
-                                                     @Param("endDate") Date endDate);
+    IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page,
+                                                      @Param("channel") String channel,
+                                                      @Param("serverId") int serverId,
+                                                      @Param("startDate") Date startDate,
+                                                      @Param("endDate") Date endDate);
 
     List<GameOrder> sumAmountGroupByPlayerId(@Param("serverIds") Set<Integer> serverIds);
 

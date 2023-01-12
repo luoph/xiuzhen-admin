@@ -1,8 +1,8 @@
 package cn.youai.xiuzhen.stat.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.stat.entity.GameStatRechargeRank;
 import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
@@ -22,6 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -68,22 +72,24 @@ public class GameStatRechargeRankController {
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
         int serverId = entity.getServerId() != null ? entity.getServerId() : 0;
         Date now = DateUtils.now();
-        List<GameStatRechargeRank> records = orderStatService.queryRechargeRankList(entity.getChannel(), serverId, dateRange.getStart(), dateRange.getEnd());
-        int rank = 1;
-        for (GameStatRechargeRank t : records) {
+        IPage<GameStatRechargeRank> pageList = orderStatService.queryRechargeRankList(page, entity.getChannel(), serverId, dateRange.getStart(), dateRange.getEnd());
+        Set<Long> orderIdList = pageList.getRecords().stream().map(GameStatRechargeRank::getOrderId).collect(Collectors.toSet());
+        List<GameOrder> lastOrders = orderStatService.selectByIds(orderIdList);
+        Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
+
+        int rank = (int) ((pageList.getCurrent() - 1) * pageList.getSize()) + 1;
+        for (GameStatRechargeRank t : pageList.getRecords()) {
             t.setRank(rank++)
+                    .setPlayDays(DateUtils.daysBetween(t.getCreateTime(), now))
                     .setLastLoginDays(DateUtils.daysBetween(t.getLastLoginTime(), now))
                     .setLastPayDays(DateUtils.daysBetween(t.getLastPayTime(), now));
-        }
 
-        if (entity.getPlayerId() != null) {
-            GameStatRechargeRank target = records.stream().filter(t -> t.getPlayerId().equals(entity.getPlayerId())).findAny().orElse(null);
-            if (target != null) {
-                return PageQueryUtils.makePage(CollUtil.newArrayList(target));
+            GameOrder lastOrder = orderMap.get(t.getOrderId());
+            if (lastOrder != null) {
+                t.setLastPay(lastOrder.getPayAmount());
             }
-            return PageQueryUtils.makePage(CollUtil.newArrayList());
         }
-        return PageQueryUtils.makePage(records);
+        return pageList;
     }
 
 }

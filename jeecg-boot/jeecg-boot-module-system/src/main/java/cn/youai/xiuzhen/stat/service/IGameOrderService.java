@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public interface IGameOrderService extends IService<GameOrder> {
      * 通过id查询记录
      */
     GameOrder selectById(String id);
+
+    List<GameOrder> selectByIds(Collection<Long> ids);
 
     /**
      * 订单列表查询
@@ -66,5 +69,5 @@ public interface IGameOrderService extends IService<GameOrder> {
     /**
      * 查询充值榜单
      */
-    List<GameStatRechargeRank> queryRechargeRankList(String channel, int serverId, Date start, Date end);
+    IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, int serverId, Date start, Date end);
 }

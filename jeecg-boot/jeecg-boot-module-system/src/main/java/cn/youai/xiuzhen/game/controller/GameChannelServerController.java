@@ -124,4 +124,10 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         List<GameServerVO> gameServers = service.selectServerList(channel);
         return Result.ok(gameServers);
     }
+
+    @RequestMapping(value = "channelList")
+    public Result<?> channelList() {
+        return Result.ok(service.selectChannelList());
+    }
+
 }

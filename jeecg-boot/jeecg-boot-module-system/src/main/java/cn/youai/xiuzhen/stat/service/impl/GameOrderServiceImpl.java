@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     @Override
     public GameOrder selectById(String id) {
         return getBaseMapper().selectById(id);
+    }
+
+    @Override
+    public List<GameOrder> selectByIds(Collection<Long> ids) {
+        return getBaseMapper().selectByIds(ids);
     }
 
     @Override
@@ -92,7 +98,7 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public List<GameStatRechargeRank> queryRechargeRankList(String channel, int serverId, Date start, Date end) {
-        return getBaseMapper().queryRechargeRankList(channel, serverId, start, end);
+    public IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, int serverId, Date start, Date end) {
+        return getBaseMapper().queryRechargeRankList(page, channel, serverId, start, end);
     }
 }
