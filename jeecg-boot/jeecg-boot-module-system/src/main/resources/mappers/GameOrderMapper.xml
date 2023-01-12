@@ -184,7 +184,7 @@
 
     <select id="queryStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">
         SELECT o.`product_id` AS `product_id`,
-        o.`name` AS `product_name`,
+        g.`name` AS `product_name`,
         IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
         IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
         IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `player_num`
