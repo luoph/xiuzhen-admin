@@ -40,6 +40,10 @@ public enum CampaignType {
     SELECT_DISCOUNT_ITEM(20, "自选特惠", IGameCampaignTypeSelectDiscountItemService.class, IGameCampaignTypeSelectDiscountMessageService.class),
     RECHARGE_RANK(21, "累充排行", IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
     EMAIL_CAMPAIGN(22, "邮件活动", IGameCampaignTypeEmailItemService.class),
+    // 夺宝奇兵
+    RELIC_LOTTERY(23, "遗迹夺宝", IGameCampaignTypeRelicLotteryService.class, IGameCampaignTypeRelicLotteryMessageService.class),
+    STAGE_TASK(24, "阶段任务", null),
+    LOTTERY_TOKEN(25, "夺宝战令", null),
     // end
     ;
 

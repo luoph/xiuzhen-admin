@@ -38,6 +38,9 @@
                 <a-select-option :value="20">20-自选特惠</a-select-option>
                 <a-select-option :value="21">21-累充排行</a-select-option>
                 <a-select-option :value="22">22-邮件活动</a-select-option>
+                <a-select-option :value="23">23-遗迹夺宝</a-select-option>
+                <a-select-option :value="24">24-阶段任务</a-select-option>
+                <a-select-option :value="25">25-夺宝战令</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -257,6 +260,12 @@ export default {
               re = '21-累充排行';
             } else if (value === 22) {
               re = '22-邮件活动';
+            } else if (value === 23) {
+              re = '23-遗迹夺宝';
+            } else if (value === 24) {
+              re = '24-阶段任务';
+            } else if (value === 25) {
+              re = '25-夺宝战令';
             }
             return re;
           }

@@ -145,6 +145,12 @@ export default {
               text = '21-累充排行';
             } else if (value === 22) {
               text = '22-邮件活动';
+            } else if (value === 23) {
+              text = '23-遗迹夺宝';
+            } else if (value === 24) {
+              text = '24-阶段任务';
+            } else if (value === 25) {
+              text = '25-夺宝战令';
             }
             return text;
           }

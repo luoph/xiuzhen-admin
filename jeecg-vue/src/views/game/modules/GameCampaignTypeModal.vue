@@ -31,6 +31,9 @@
             <a-select-option :value="20">20-自选特惠</a-select-option>
             <a-select-option :value="21">21-累充排行</a-select-option>
             <a-select-option :value="22">22-邮件活动</a-select-option>
+            <a-select-option :value="23">23-遗迹夺宝</a-select-option>
+            <a-select-option :value="24">24-阶段任务</a-select-option>
+            <a-select-option :value="25">25-夺宝战令</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -131,6 +134,8 @@
       <game-campaign-type-select-discount-item-list v-if="isEdit && model.type === 20" ref="selectDiscountItemList"/>
       <game-campaign-type-select-discount-message-list v-if="isEdit && model.type === 20" ref="selectDiscountMessageList"/>
       <game-campaign-type-email-item-list v-if="isEdit && model.type === 22" ref="emailItemList"/>
+      <game-campaign-type-relic-lottery-list v-if="isEdit && model.type === 23" ref="relicLotteryList"/>
+      <game-campaign-type-relic-lottery-message-list v-if="isEdit && model.type === 23" ref="relicLotteryMessageList"/>
     </a-spin>
   </a-modal>
 </template>
@@ -163,6 +168,8 @@ import GameCampaignTypeMarryRankRewardList from '../GameCampaignTypeMarryRankRew
 import GameCampaignTypeSelectDiscountItemList from '../GameCampaignTypeSelectDiscountItemList';
 import GameCampaignTypeSelectDiscountMessageList from '../GameCampaignTypeSelectDiscountMessageList';
 import GameCampaignTypeEmailItemList from '../GameCampaignTypeEmailItemList';
+import GameCampaignTypeRelicLotteryList from '../GameCampaignTypeRelicLotteryList';
+import GameCampaignTypeRelicLotteryMessageList from '../GameCampaignTypeRelicLotteryMessageList';
 
 export default {
   name: 'GameCampaignTypeModal',
@@ -190,7 +197,9 @@ export default {
     GameCampaignTypeMarryRankRewardList,
     GameCampaignTypeSelectDiscountItemList,
     GameCampaignTypeSelectDiscountMessageList,
-    GameCampaignTypeEmailItemList
+    GameCampaignTypeEmailItemList,
+    GameCampaignTypeRelicLotteryList,
+    GameCampaignTypeRelicLotteryMessageList
   },
   data() {
     return {
@@ -314,6 +323,12 @@ export default {
           }
           if (this.$refs.emailItemList) {
             this.$refs.emailItemList.edit(record);
+          }
+          if (this.$refs.relicLotteryList) {
+            this.$refs.relicLotteryList.edit(record);
+          }
+          if (this.$refs.relicLotteryMessageList) {
+            this.$refs.relicLotteryMessageList.edit(record);
           }
         }
 
