@@ -4,8 +4,8 @@
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
           <a-col :span="24">
-            <a-form-model-item label="活动id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="campaignId">
-              <a-input-number v-model="model.campaignId" placeholder="请输入活动id" style="width: 100%" :disabled="true"/>
+            <a-form-model-item label="主活动id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="campaignId">
+              <a-input-number v-model="model.campaignId" placeholder="请输入主活动id" style="width: 100%" :disabled="true"/>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -39,6 +39,14 @@
           <a-col :span="24">
             <a-form-model-item label="累计登录天数" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="loginDay">
               <a-input-number v-model="model.loginDay" placeholder="请输入累计登录天数" style="width: 100%" />
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-model-item label="累充统计是否判断vip" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="rechargeVip">
+              <a-select placeholder="请选择累充统计是否判断vip: 0.否, 1.是" @change="handleRechargeVipChange" v-model="model.rechargeVip" initialValue="0">
+                <a-select-option :value="0">0-否</a-select-option>
+                <a-select-option :value="1">1-是</a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -204,6 +212,9 @@
       },
       handleConditionTypeChange(value) {
         this.model.conditionType = value;
+      },
+      handleRechargeVipChange(value) {
+        this.model.rechargeVip = value;
       },
       handleRechargeTypeChange(value) {
         this.model.rechargeType = value;

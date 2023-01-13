@@ -66,6 +66,14 @@ public class GameCampaignTypeEmailItem extends GameCampaignTypeBaseDetail {
     private Integer loginDay;
 
     /**
+     * 累充统计是否判断vip
+     */
+    @ExcelProperty("累充统计是否判断vip")
+    @Excel(name = "累充统计是否判断vip", width = 15)
+    @ApiModelProperty(value = "累充统计是否判断vip")
+    private Boolean rechargeVip;
+
+    /**
      * 累充统计: 1.注册时间, 2.活动时间
      */
     @ExcelProperty("累充统计")
