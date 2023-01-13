@@ -285,4 +285,16 @@ public class GameServer extends BaseEntity {
                 || StrUtil.contains(getGmUrl(), "127.0.0.1");
     }
 
+    public static boolean skipCallGm(String gmUrl) {
+        return StrUtil.isEmpty(gmUrl)
+                || StrUtil.contains(gmUrl, "127.0.0.1")
+                || StrUtil.contains(gmUrl, "localhost");
+    }
+
+    public static boolean skipCallGm(GameServer gameServer) {
+        if (gameServer == null || gameServer.getOutdated() != OutdatedType.NORMAL.getValue()) {
+            return true;
+        }
+        return skipCallGm(gameServer.getGmUrl());
+    }
 }

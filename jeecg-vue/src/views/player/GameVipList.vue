@@ -269,11 +269,22 @@ export default {
             } else {
               that.$message.error(res.message);
             }
+            that.loadData();
           });
         }
       });
     },
     refreshCache() {
+      // 刷新VIP缓存
+      let that = this;
+      getAction(that.url.refresh).then((res) => {
+        if (res.success) {
+          that.$message.success(res.message);
+        } else {
+          that.$message.error(res.message);
+        }
+        that.loadData();
+      });
     }
   }
 };
