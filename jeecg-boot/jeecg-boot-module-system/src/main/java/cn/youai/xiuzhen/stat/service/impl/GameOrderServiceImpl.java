@@ -27,7 +27,6 @@ import java.util.List;
  * @date 2020-01-05
  */
 @Service
-@DS("shardingSphere")
 public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder> implements IGameOrderService {
 
     @Override

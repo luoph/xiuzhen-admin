@@ -36,6 +36,8 @@ public class GameStatRechargeRank implements Serializable {
 
     private Date countDate;
 
+    private Long vipId;
+
     /**
      * 支付玩家id
      */
