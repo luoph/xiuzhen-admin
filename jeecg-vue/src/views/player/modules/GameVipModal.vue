@@ -4,11 +4,8 @@
            @cancel="handleCancel" cancelText="关闭" okText="保存">
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
-        <a-form-item label="敏感词" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['word', validatorRules.word]" placeholder="请输入敏感词"/>
-        </a-form-item>
-        <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"/>
+        <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['playerIds', validatorRules.playerIds]" placeholder="请输入玩家id（使用,分隔多个玩家id）"/>
         </a-form-item>
       </a-form>
     </a-spin>
@@ -25,7 +22,7 @@ import {httpAction} from "@/api/manage";
 import pick from "lodash.pick";
 
 export default {
-  name: "GameSensitiveWordModal",
+  name: "GameVipModal",
   components: {},
   data() {
     return {
@@ -44,12 +41,12 @@ export default {
       },
       confirmLoading: false,
       validatorRules: {
-        word: {rules: [{required: true, message: "请输入敏感词!"}]},
+        playerIds: {rules: [{required: true, message: "请输入玩家id!"}]},
         remark: {}
       },
       url: {
-        add: "game/sensitiveWord/add",
-        edit: "game/sensitiveWord/edit"
+        add: "game/vip/add",
+        edit: "game/vip/edit"
       }
     };
   },
@@ -64,7 +61,7 @@ export default {
       this.model = Object.assign({}, record);
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, "word", "remark"));
+        this.form.setFieldsValue(pick(this.model, "playerIds"));
       });
     },
     close() {
@@ -108,7 +105,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, "word", "remark"));
+      this.form.setFieldsValue(pick(row, "playerIds"));
     }
   }
 };

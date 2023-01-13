@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.model.RangeValue;
@@ -14,6 +15,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +37,9 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
 
     @Override
     public List<GameOrder> selectByIds(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return new ArrayList<>();
+        }
         return getBaseMapper().selectByIds(ids);
     }
 

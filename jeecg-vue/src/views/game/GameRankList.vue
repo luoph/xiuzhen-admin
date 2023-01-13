@@ -125,7 +125,7 @@ export default {
           dataIndex: 'ranking'
         },
         {
-          title: '玩家ID',
+          title: '玩家id',
           align: 'center',
           dataIndex: 'playerId'
         },

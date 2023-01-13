@@ -5,13 +5,13 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
-            <a-form-item label="敏感词">
-              <j-input placeholder="敏感词" v-model="queryParam.word"/>
+            <a-form-item label="玩家id">
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="备注">
-              <j-input placeholder="备注" v-model="queryParam.remark"/>
+            <a-form-item label="玩家昵称">
+              <a-input placeholder="请输入玩家昵称" v-model="queryParam.nickname"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -26,9 +26,9 @@
     <!-- 查询区域-END -->
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button type="primary" icon="sync" @click="refreshCache">刷新敏感词缓存</a-button>
+      <a-button type="primary" icon="sync" @click="refreshCache">刷新缓存</a-button>
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('敏感词')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('VIP玩家')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
                 @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
@@ -86,23 +86,14 @@
         </span>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+            <a>删除</a>
+          </a-popconfirm>
         </span>
       </a-table>
     </div>
 
-    <GameSensitiveWordModal ref="modalForm" @ok="modalFormOk"></GameSensitiveWordModal>
+    <GameVipModal ref="modalForm" @ok="modalFormOk"></GameVipModal>
   </a-card>
 </template>
 
@@ -111,18 +102,18 @@ import JInput from '@/components/jeecg/JInput';
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import {getAction} from '@/api/manage';
 import {filterObj} from '@/utils/util';
-import GameSensitiveWordModal from './modules/GameSensitiveWordModal';
+import GameVipModal from './modules/GameVipModal';
 
 export default {
-  name: 'GameSensitiveWordList',
+  name: 'GameVipList',
   mixins: [JeecgListMixin],
   components: {
     JInput,
-    GameSensitiveWordModal
+    GameVipModal
   },
   data() {
     return {
-      description: '敏感词管理页面',
+      description: 'VIP管理页面',
       // 表头
       columns: [
         {
@@ -136,19 +127,97 @@ export default {
           }
         },
         {
-          title: 'id',
+          title: '玩家id',
           align: 'center',
-          dataIndex: 'id'
+          dataIndex: 'playerId'
         },
         {
-          title: '敏感词',
+          title: '区服',
           align: 'center',
-          dataIndex: 'word'
+          dataIndex: 'serverId'
         },
         {
-          title: '备注',
+          title: '渠道',
           align: 'center',
-          dataIndex: 'remark'
+          dataIndex: 'channel',
+          customRender: function (text) {
+            return text || '--';
+          }
+        },
+        {
+          title: 'Sdk渠道',
+          align: 'center',
+          dataIndex: 'sdkChannel',
+          customRender: function (text) {
+            return text || '--';
+          }
+        },
+        {
+          title: '玩家昵称',
+          align: 'center',
+          dataIndex: 'nickname'
+        },
+        {
+          title: '玩家等级',
+          align: 'center',
+          dataIndex: 'level'
+        },
+        {
+          title: '充值总金额',
+          align: 'center',
+          dataIndex: 'payAmount'
+        },
+        {
+          title: '最近充值',
+          align: 'center',
+          dataIndex: 'lastPay',
+          customRender: function (text) {
+            return text || '--';
+          }
+        },
+        {
+          title: '创角时间',
+          align: 'center',
+          dataIndex: 'registerTime',
+          customRender: function (text) {
+            return text || '--';
+          }
+        },
+        {
+          title: '最后登录时间',
+          align: 'center',
+          dataIndex: 'lastLoginTime',
+          customRender: function (text) {
+            return text || '--';
+          }
+        },
+        {
+          title: '最后充值时间',
+          align: 'center',
+          dataIndex: 'lastPayTime',
+          customRender: function (text) {
+            return text || '--';
+          }
+        },
+        {
+          title: '创角天数',
+          align: 'center',
+          dataIndex: 'playDays'
+        },
+        {
+          title: '登录预警天数',
+          align: 'center',
+          dataIndex: 'lastLoginDays'
+        },
+        {
+          title: '充值预警天数',
+          align: 'center',
+          dataIndex: 'lastPayDays'
+        },
+        {
+          title: '操作人员',
+          align: 'center',
+          dataIndex: 'createBy'
         },
         {
           title: '创建时间',
@@ -156,24 +225,20 @@ export default {
           dataIndex: 'createTime'
         },
         {
-          title: '创建人',
-          align: 'center',
-          dataIndex: 'createBy'
-        },
-        {
           title: '操作',
+          width: 100,
           dataIndex: 'action',
           align: 'center',
           scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
-        list: 'game/sensitiveWord/list',
-        delete: 'game/sensitiveWord/delete',
-        refresh: 'game/sensitiveWord/refresh',
-        deleteBatch: 'game/sensitiveWord/deleteBatch',
-        exportXlsUrl: 'game/sensitiveWord/exportXls',
-        importExcelUrl: 'game/sensitiveWord/importExcel'
+        list: 'game/vip/list',
+        delete: 'game/vip/delete',
+        refresh: 'game/vip/refresh',
+        deleteBatch: 'game/vip/deleteBatch',
+        exportXlsUrl: 'game/vip/exportXls',
+        importExcelUrl: 'game/vip/importExcel'
       },
       dictOptions: {}
     };
@@ -185,7 +250,6 @@ export default {
   },
   methods: {
     getQueryParams() {
-      console.log(this.queryParam.createTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
@@ -210,8 +274,6 @@ export default {
       });
     },
     refreshCache() {
-      // 刷新服务器列表
-      this.requestUrlConfirm(this.url.refresh, {}, '是否刷新敏感词缓存？', '点击确定刷新敏感词缓存');
     }
   }
 };

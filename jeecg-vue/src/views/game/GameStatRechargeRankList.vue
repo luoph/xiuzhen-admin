@@ -96,7 +96,6 @@ export default {
           align: 'center',
           dataIndex: 'playerId'
         },
-
         {
           title: '区服',
           align: 'center',

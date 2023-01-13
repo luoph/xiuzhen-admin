@@ -317,7 +317,7 @@ export default {
       let that = this;
       this.$confirm({
         title: '是否踢玩家下线?',
-        content: '玩家ID：' + record.senderId + ' 玩家昵称：' + record.senderName,
+        content: '玩家id：' + record.senderId + ' 玩家昵称：' + record.senderName,
         onOk: function () {
           getAction(that.url.kickOff, { playerId: record.senderId, serverId: record.serverId }).then((res) => {
             if (res.success) {

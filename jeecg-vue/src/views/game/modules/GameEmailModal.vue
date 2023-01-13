@@ -37,8 +37,8 @@
             <a-radio-button :value="2">区服</a-radio-button>
           </a-radio-group>
         </a-form-item>
-        <a-form-item v-if="playerType" label="玩家ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['receiverIds', { initialValue: '' }]" placeholder="请以英文“,”分割输入多个玩家ID"
+        <a-form-item v-if="playerType" label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-textarea v-decorator="['receiverIds', { initialValue: '' }]" placeholder="请以英文“,”分割输入多个玩家id"
                       style="width: 100%" :autoSize="{ minRows: 2, maxRows: 6 }"/>
         </a-form-item>
         <a-form-item v-if="serverType" label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -109,7 +109,7 @@ export default {
         content: {rules: [{required: true, message: '请添加附件!'}]},
         state: {rules: [{required: true, message: '请选择状态!'}]},
         receiverType: {rules: [{required: true, message: '请选择目标类型!'}]},
-        receiverIds: {rules: [{required: false, message: '请以英文“,”分割输入多个玩家ID/区服Id！'}]},
+        receiverIds: {rules: [{required: false, message: '请以英文“,”分割输入多个玩家id/区服Id！'}]},
         sendTime: {rules: [{required: true, message: '请输入生效时间!'}]},
         startTime: {rules: [{required: false, message: '请输入开始时间!'}]},
         endTime: {rules: [{required: false, message: '请输入结束时间!'}]}
