@@ -42,7 +42,7 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public IPage<GameOrder> selectList(Page<?> page, GameOrder entity, DateRange dateRange, RangeValue<BigDecimal> amountRange) {
+    public IPage<GameOrder> queryList(Page<?> page, GameOrder entity, DateRange dateRange, RangeValue<BigDecimal> amountRange) {
         return getBaseMapper().queryList(page, entity, dateRange, amountRange);
     }
 

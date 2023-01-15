@@ -30,7 +30,7 @@
 //	@Test
 //	public void testSelect() {
 //		System.out.println(("----- selectAll method test ------"));
-//		List<JeecgDemo> userList = jeecgDemoMapper.selectList(null);
+//		List<JeecgDemo> userList = jeecgDemoMapper.queryList(null);
 //		Assert.assertEquals(5, userList.size());
 //		userList.forEach(System.out::println);
 //	}

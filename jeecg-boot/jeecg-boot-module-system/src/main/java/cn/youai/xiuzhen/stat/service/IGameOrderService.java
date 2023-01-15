@@ -30,7 +30,7 @@ public interface IGameOrderService extends IService<GameOrder> {
     /**
      * 订单列表查询
      */
-    IPage<GameOrder> selectList(Page<?> page, GameOrder entity, DateRange createDateRange, RangeValue<BigDecimal> payAmountRange);
+    IPage<GameOrder> queryList(Page<?> page, GameOrder entity, DateRange createDateRange, RangeValue<BigDecimal> payAmountRange);
 
     /**
      * 付费金额总和
