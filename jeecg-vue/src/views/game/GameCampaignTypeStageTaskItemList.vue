@@ -12,7 +12,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-遗迹夺宝-传闻')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-阶段任务-任务')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
@@ -89,7 +89,7 @@
       </a-table>
     </div>
 
-    <game-campaign-type-relic-lottery-message-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-relic-lottery-message-modal>
+    <game-campaign-type-stage-task-item-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-stage-task-item-modal>
   </a-card>
 </template>
 
@@ -100,17 +100,17 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import { getAction } from '../../api/manage'
   import { filterObj } from '@/utils/util'
-  import GameCampaignTypeRelicLotteryMessageModal from './modules/GameCampaignTypeRelicLotteryMessageModal'
+  import GameCampaignTypeStageTaskItemModal from './modules/GameCampaignTypeStageTaskItemModal'
 
   export default {
-    name: 'GameCampaignTypeRelicLotteryMessageList',
+    name: 'GameCampaignTypeStageTaskItemList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      GameCampaignTypeRelicLotteryMessageModal
+      GameCampaignTypeStageTaskItemModal
     },
     data () {
       return {
-        description: '节日活动-遗迹夺宝-传闻管理页面',
+        description: '节日活动-阶段任务-任务管理页面',
         model: {},
         // 表头
         columns: [
@@ -140,14 +140,44 @@
             dataIndex: 'id'
           },
           {
-            title:'通关层数推送',
+            title:'阶段',
             align:"center",
-            dataIndex: 'layer'
+            dataIndex: 'stage'
           },
           {
-            title:'传闻内容',
+            title:'任务id',
             align:"center",
-            dataIndex: 'content'
+            dataIndex: 'taskId'
+          },
+          {
+            title:'描述',
+            align:"center",
+            dataIndex: 'description'
+          },
+          {
+            title:'模块id',
+            align:"center",
+            dataIndex: 'moduleId'
+          },
+          {
+            title:'任务完成条件',
+            align:"center",
+            dataIndex: 'target'
+          },
+          {
+            title:'任务参数',
+            align:"center",
+            dataIndex: 'args'
+          },
+          {
+            title:'奖励',
+            align:"center",
+            dataIndex: 'reward'
+          },
+          {
+            title:'跳转id',
+            align:"center",
+            dataIndex: 'jumpId'
           },
           {
             title: '操作',
@@ -159,11 +189,11 @@
           }
         ],
         url: {
-          list: "/game/gameCampaignTypeRelicLotteryMessage/list",
-          delete: "/game/gameCampaignTypeRelicLotteryMessage/delete",
-          deleteBatch: "/game/gameCampaignTypeRelicLotteryMessage/deleteBatch",
-          exportXlsUrl: "/game/gameCampaignTypeRelicLotteryMessage/exportXls",
-          importExcelUrl: "game/gameCampaignTypeRelicLotteryMessage/importExcel",
+          list: "/game/gameCampaignTypeStageTaskItem/list",
+          delete: "/game/gameCampaignTypeStageTaskItem/delete",
+          deleteBatch: "/game/gameCampaignTypeStageTaskItem/deleteBatch",
+          exportXlsUrl: "/game/gameCampaignTypeStageTaskItem/exportXls",
+          importExcelUrl: "game/gameCampaignTypeStageTaskItem/importExcel",
           
         },
         dictOptions:{},
@@ -214,7 +244,7 @@
       },
       handleAdd() {
         this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
-        this.$refs.modalForm.title = '新增遗迹夺宝-传闻配置';
+        this.$refs.modalForm.title = '新增阶段任务-任务配置';
       },
       getQueryParams() {
         var param = Object.assign({}, this.queryParam);
@@ -238,8 +268,14 @@
         let fieldList=[];
         fieldList.push({type:'int',value:'campaignId',text:'主活动id'})
         fieldList.push({type:'int',value:'typeId',text:'子活动id'})
-        fieldList.push({type:'int',value:'layer',text:'通关层数推送'})
-        fieldList.push({type:'string',value:'content',text:'传闻内容'})
+        fieldList.push({type:'int',value:'stage',text:'阶段'})
+        fieldList.push({type:'int',value:'taskId',text:'任务id'})
+        fieldList.push({type:'string',value:'description',text:'描述'})
+        fieldList.push({type:'int',value:'moduleId',text:'模块id'})
+        fieldList.push({type:'int',value:'target',text:'任务完成条件'})
+        fieldList.push({type:'int',value:'args',text:'任务参数'})
+        fieldList.push({type:'string',value:'reward',text:'奖励'})
+        fieldList.push({type:'int',value:'jumpId',text:'跳转id'})
         this.superFieldList = fieldList
       }
     }

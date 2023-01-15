@@ -12,7 +12,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-遗迹夺宝-传闻')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-阶段任务')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
@@ -89,7 +89,7 @@
       </a-table>
     </div>
 
-    <game-campaign-type-relic-lottery-message-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-relic-lottery-message-modal>
+    <game-campaign-type-stage-task-modal ref="modalForm" @ok="modalFormOk"></game-campaign-type-stage-task-modal>
   </a-card>
 </template>
 
@@ -100,17 +100,17 @@
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import { getAction } from '../../api/manage'
   import { filterObj } from '@/utils/util'
-  import GameCampaignTypeRelicLotteryMessageModal from './modules/GameCampaignTypeRelicLotteryMessageModal'
+  import GameCampaignTypeStageTaskModal from './modules/GameCampaignTypeStageTaskModal'
 
   export default {
-    name: 'GameCampaignTypeRelicLotteryMessageList',
+    name: 'GameCampaignTypeStageTaskList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      GameCampaignTypeRelicLotteryMessageModal
+      GameCampaignTypeStageTaskModal
     },
     data () {
       return {
-        description: '节日活动-遗迹夺宝-传闻管理页面',
+        description: '节日活动-阶段任务管理页面',
         model: {},
         // 表头
         columns: [
@@ -140,14 +140,29 @@
             dataIndex: 'id'
           },
           {
-            title:'通关层数推送',
+            title:'活动名称',
             align:"center",
-            dataIndex: 'layer'
+            dataIndex: 'name'
           },
           {
-            title:'传闻内容',
+            title:'阶段',
             align:"center",
-            dataIndex: 'content'
+            dataIndex: 'stage'
+          },
+          {
+            title:'阶段奖励',
+            align:"center",
+            dataIndex: 'bigReward'
+          },
+          {
+            title:'最小世界等级',
+            align:"center",
+            dataIndex: 'minLevel'
+          },
+          {
+            title:'最大世界等级',
+            align:"center",
+            dataIndex: 'maxLevel'
           },
           {
             title: '操作',
@@ -159,12 +174,11 @@
           }
         ],
         url: {
-          list: "/game/gameCampaignTypeRelicLotteryMessage/list",
-          delete: "/game/gameCampaignTypeRelicLotteryMessage/delete",
-          deleteBatch: "/game/gameCampaignTypeRelicLotteryMessage/deleteBatch",
-          exportXlsUrl: "/game/gameCampaignTypeRelicLotteryMessage/exportXls",
-          importExcelUrl: "game/gameCampaignTypeRelicLotteryMessage/importExcel",
-          
+          list: "/game/gameCampaignTypeStageTask/list",
+          delete: "/game/gameCampaignTypeStageTask/delete",
+          deleteBatch: "/game/gameCampaignTypeStageTask/deleteBatch",
+          exportXlsUrl: "/game/gameCampaignTypeStageTask/exportXls",
+          importExcelUrl: 'game/gameCampaignType/importExcel/details'
         },
         dictOptions:{},
         superFieldList:[],
@@ -214,7 +228,7 @@
       },
       handleAdd() {
         this.$refs.modalForm.add({ typeId: this.model.id, campaignId: this.model.campaignId });
-        this.$refs.modalForm.title = '新增遗迹夺宝-传闻配置';
+        this.$refs.modalForm.title = '新增阶段任务配置';
       },
       getQueryParams() {
         var param = Object.assign({}, this.queryParam);
@@ -238,8 +252,11 @@
         let fieldList=[];
         fieldList.push({type:'int',value:'campaignId',text:'主活动id'})
         fieldList.push({type:'int',value:'typeId',text:'子活动id'})
-        fieldList.push({type:'int',value:'layer',text:'通关层数推送'})
-        fieldList.push({type:'string',value:'content',text:'传闻内容'})
+        fieldList.push({type:'string',value:'name',text:'活动名称'})
+        fieldList.push({type:'int',value:'stage',text:'阶段'})
+        fieldList.push({type:'string',value:'bigReward',text:'阶段奖励'})
+        fieldList.push({type:'int',value:'minLevel',text:'最小世界等级'})
+        fieldList.push({type:'int',value:'maxLevel',text:'最大世界等级'})
         this.superFieldList = fieldList
       }
     }
