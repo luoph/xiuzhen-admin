@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.GameVipMapper">
+
+    <select id="queryVipList" resultType="cn.youai.xiuzhen.game.entity.GameVip">
+        SELECT v.*,
+        p.`nickname`,
+        p.`level`,
+        p.`server_id`,
+        p.`channel`,
+        p.`sdk_channel`,
+        p.`create_time` AS `register_time`,
+        p.`login_time` AS `last_login_time`,
+        MAX(o.`create_time`) AS `last_pay_time`,
+        IFNULL(MAX(o.`id`), 0) AS `order_id`,
+        IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`
+        FROM `game_vip` v
+        LEFT JOIN `game_order` o ON v.`player_id` = o.`player_id`
+        LEFT JOIN `game_player` p ON v.`player_id` = p.`player_id`
+        <where>
+            <if test="entity != null">
+                <if test="entity.nickname != null and entity.nickname != ''">
+                    AND p.nickname LIKE CONCAT('%',#{entity.nickname},'%')
+                </if>
+                <if test="entity.channel != null and entity.channel != ''">
+                    AND p.channel = #{entity.channel}
+                </if>
+                <if test="entity.serverId != null and entity.serverId > 0">
+                    AND p.`server_id` = #{entity.serverId}
+                </if>
+            </if>
+        </where>
+        GROUP BY v.`player_id`
+        ORDER BY v.`create_time` DESC
+    </select>
+
+</mapper>

@@ -23,7 +23,7 @@ import java.util.Date;
 public class LogPlayerServiceImpl extends ServiceImpl<LogPlayerMapper, LogPlayer> implements ILogPlayerService {
 
     @Override
-    public IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, String channel, int serverId, long playerId, Date start, Date end) {
+    public IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, String channel, Integer serverId, Long playerId, Date start, Date end) {
         return getBaseMapper().selectCombatPowerLogList(page, channel, serverId, playerId, start, end);
     }
 

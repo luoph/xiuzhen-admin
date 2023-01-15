@@ -13,13 +13,9 @@
         LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
         <where>
             l.`type` = 9
-            <choose>
-                <when test="playerId > 0">AND p.`player_id` = #{playerId}</when>
-                <otherwise>
-                    <if test="channel != null and channel != ''">AND p.`channel` = #{channel}</if>
-                    <if test="serverId > 0">AND p.`server_id` = #{serverId}</if>
-                </otherwise>
-            </choose>
+            <if test="null != playerId and playerId > 0"><![CDATA[AND p.`player_id` = #{playerId}]]></if>
+            <if test="null != serverId and serverId > 0"><![CDATA[AND p.`server_id` = #{serverId}]]></if>
+            <if test="null != channel and channel != ''">AND p.`channel` = #{channel}</if>
             <if test="null != start"><![CDATA[AND l.`create_date` >= #{start}]]></if>
             <if test="null != end"><![CDATA[AND l.`create_date` <= #{end}]]></if>
         </where>

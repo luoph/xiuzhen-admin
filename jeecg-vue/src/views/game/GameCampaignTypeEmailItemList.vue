@@ -174,6 +174,20 @@
             dataIndex: 'loginDay'
           },
           {
+            title:'累充统计是否判断vip',
+            align:"center",
+            dataIndex: 'rechargeVip',
+            customRender: (value) => {
+              let text = '--';
+              if (value === 0) {
+                text = '0-否';
+              } else if (value === 1) {
+                text = '1-是';
+              }
+              return text;
+            }
+          },
+          {
             title:'累充统计',
             align:"center",
             dataIndex: 'rechargeType',

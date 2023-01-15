@@ -54,7 +54,36 @@
         :loading="loading"
         :scroll="{ x: 'max-content' }"
         @change="handleTableChange"
-      />
+      >
+        <template slot="htmlSlot" slot-scope="text">
+          <div v-html="text"></div>
+        </template>
+        <template slot="imgSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+        </template>
+        <template slot="fileSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
+        </template>
+        <span slot="tagSlot" slot-scope="text, record">
+          <a-tag color="orange">{{ text }}</a-tag>
+        </span>
+
+        <span slot="action" slot-scope="text, record">
+          <a-dropdown>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a-menu slot="overlay">
+              <a-menu-item :disabled="record.vipId > 0"
+                           @click="addVip(record)">添加VIP</a-menu-item>
+              <a-menu-item :disabled="record.vipId === 0"
+                           @click="deleteVip(record)">删除VIP</a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </span>
+      </a-table>
     </div>
   </a-card>
 </template>
@@ -62,7 +91,7 @@
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {getAction} from '@/api/manage';
+import {deleteAction, getAction, postAction} from '@/api/manage';
 import {filterObj} from '@/utils/util';
 import moment from 'moment';
 import ChannelServerSelector from '@comp/gameserver/ChannelServerSelector';
@@ -96,7 +125,6 @@ export default {
           align: 'center',
           dataIndex: 'playerId'
         },
-
         {
           title: '区服',
           align: 'center',
@@ -104,12 +132,12 @@ export default {
         },
         {
           title: '渠道',
-          align: 'channel',
+          align: 'center',
           dataIndex: 'channel'
         },
         {
           title: 'Sdk渠道',
-          align: 'channel',
+          align: 'center',
           dataIndex: 'sdkChannel'
         },
         {
@@ -166,10 +194,20 @@ export default {
           title: '充值预警天数',
           align: 'center',
           dataIndex: 'lastPayDays'
+        },
+        {
+          title: '操作',
+          width: 100,
+          dataIndex: 'action',
+          align: 'center',
+          fixed: 'right',
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
-        list: 'game/stat/rechargeRank/list'
+        list: 'game/stat/rechargeRank/list',
+        addVip: 'game/vip/addVip',
+        deleteVip: 'game/vip/delete',
       },
       dictOptions: {}
     };
@@ -220,7 +258,45 @@ export default {
         this.queryParam.countDate_begin = start;
         this.queryParam.countDate_end = end;
       }
-    }
+    },
+    deleteVip(record) {
+      this.requestUrlConfirm(this.url.deleteVip,
+        {id: record.vipId},
+        '是否删除VIP？',
+        `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`,
+        'delete');
+    },
+    addVip(record) {
+      this.requestUrlConfirm(this.url.addVip,
+        {playerIds: record.playerId},
+        '是否添加VIP？',
+        `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
+    },
+    requestUrlConfirm(url, parameter, title, content, method = 'get') {
+      let that = this;
+      let requestFunction = getAction;
+      if (method === 'post') {
+        requestFunction = postAction;
+      } else if (method === 'delete') {
+        requestFunction = deleteAction;
+      }
+      this.$confirm({
+        title: title,
+        content: content,
+        onOk: function () {
+          that.loading = true;
+          requestFunction(url, parameter).then((res) => {
+            that.loading = false;
+            if (res.success) {
+              that.$message.success(res.message);
+            } else {
+              that.$message.error(res.message);
+            }
+            that.loadData();
+          });
+        }
+      });
+    },
   }
 };
 </script>

@@ -4,11 +4,13 @@ import cn.youai.basics.model.DateRange;
 import cn.youai.server.constant.AttrType;
 import cn.youai.xiuzhen.core.controller.SimplePageController;
 import cn.youai.xiuzhen.stat.entity.CombatPowerLog;
+import cn.youai.xiuzhen.stat.entity.GameStatArpu;
 import cn.youai.xiuzhen.stat.service.ILogPlayerService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,17 @@ public class GameStatCombatPowerLogController extends SimplePageController<Comba
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
+        // 服务器空校验
+        Page<GameStatArpu> page = new Page<>(pageNo, pageSize);
+        if (entity.getPlayerId() != null && entity.getPlayerId() > 0) {
+            entity.setServerId(null).setChannel(null);
+        }
+
+        if (StringUtils.isEmpty(entity.getChannel())
+                && (entity.getServerId() == null || entity.getServerId() <= 0)
+                && (entity.getPlayerId() == null || entity.getPlayerId() <= 0)) {
+            return Result.ok(page);
+        }
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
@@ -50,15 +63,8 @@ public class GameStatCombatPowerLogController extends SimplePageController<Comba
     @Override
     protected IPage<CombatPowerLog> pageList(Page<CombatPowerLog> page, CombatPowerLog entity, HttpServletRequest req) {
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
-        int serverId = entity.getServerId() != null ? entity.getServerId() : 0;
-        long playerId = entity.getPlayerId() != null ? entity.getPlayerId() : 0;
-
-        if (serverId > 0 || playerId > 0) {
-            entity.setChannel(null);
-        }
-
         IPage<CombatPowerLog> pageList = logPlayerService.selectCombatPowerLogList(page, entity.getChannel(),
-                serverId, playerId, dateRange.getStart(), dateRange.getEnd());
+                entity.getServerId(), entity.getPlayerId(), dateRange.getStart(), dateRange.getEnd());
         pageList.getRecords().forEach(t -> {
             AttrType attrType = AttrType.valueOf(t.getAttrType());
             if (attrType != null) {

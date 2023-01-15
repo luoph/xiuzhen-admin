@@ -14,10 +14,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -59,7 +56,16 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
     }
 
     @Override
-    public List<GamePlayer> getPlayerList(List<Long> playerIds) {
+    public List<GamePlayer> getPlayerList(Collection<Long> playerIds) {
+        if (CollUtil.isEmpty(playerIds)) {
+            return new ArrayList<>();
+        }
         return list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getPlayerId, playerIds).orderByAsc(GamePlayer::getPlayerId));
+    }
+
+    @Override
+    public Map<Integer, List<GamePlayer>> groupPlayerByServerId(Collection<Long> playerIds) {
+        List<GamePlayer> playerList = getPlayerList(playerIds);
+        return playerList.stream().collect(Collectors.groupingBy(GamePlayer::getServerId, HashMap::new, Collectors.toCollection(ArrayList::new)));
     }
 }

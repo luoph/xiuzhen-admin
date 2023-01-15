@@ -25,6 +25,8 @@ public interface IGamePlayerService extends IService<GamePlayer> {
 
     GamePlayer getPlayer(long playerId);
 
-    List<GamePlayer> getPlayerList(List<Long> playerIds);
+    List<GamePlayer> getPlayerList(Collection<Long> playerIds);
+
+    Map<Integer, List<GamePlayer>> groupPlayerByServerId(Collection<Long> playerIds);
 
 }

@@ -1,6 +1,5 @@
 package cn.youai.xiuzhen.stat.service;
 
-import cn.youai.basics.model.DateRange;
 import cn.youai.xiuzhen.stat.entity.CombatPowerLog;
 import cn.youai.xiuzhen.stat.entity.LogPlayer;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,6 +16,6 @@ import java.util.Date;
  */
 public interface ILogPlayerService extends IService<LogPlayer> {
 
-    IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, String channel, int serverId, long playerId, Date start, Date end);
+    IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, String channel, Integer serverId, Long playerId, Date start, Date end);
 
 }
