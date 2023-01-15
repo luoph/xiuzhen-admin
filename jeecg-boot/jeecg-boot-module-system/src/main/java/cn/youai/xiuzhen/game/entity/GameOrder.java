@@ -43,7 +43,6 @@ public class GameOrder implements Serializable {
     /**
      * 己方订单号
      */
-
     @ColumnWidth(15)
     @ExcelProperty("支付订单号")
     @Excel(name = "支付订单号", width = 15)
@@ -201,4 +200,6 @@ public class GameOrder implements Serializable {
     @TableField(exist = false)
     private String sdkChannel;
 
+    @TableField(exist = false)
+    private Long vipId;
 }

@@ -178,7 +178,6 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
             return result != null && result.isSuccess();
         }
         return false;
-
     }
 
     private void notifyVipUpdate(Collection<Long> playerIds, boolean add) {
@@ -188,7 +187,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
             GameServer gameServer = gameServerService.getById(serverId);
             List<GamePlayer> list = groupMap.get(serverId);
             Set<Long> ids = list.stream().map(GamePlayer::getPlayerId).collect(Collectors.toSet());
-            if (!GameServer.skipCallGm(gameServer) || CollUtil.isEmpty(ids)) {
+            if (GameServer.skipCallGm(gameServer) || CollUtil.isEmpty(ids)) {
                 latch.countDown();
                 continue;
             }

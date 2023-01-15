@@ -21,9 +21,11 @@
     </select>
 
     <select id="selectList" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
-        SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
+        SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`,
+        IFNULL(v.`id`, 0) AS `vip_id`
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        LEFT JOIN `game_vip` v ON o.`player_id` = v.`player_id`
         <where>
             <if test="entity != null">
                 <if test="entity.channel != null and entity.channel != ''">

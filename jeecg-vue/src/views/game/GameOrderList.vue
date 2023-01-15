@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入区服id" v-model="queryParam.serverId" />
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <!-- <a-col :md="4" :sm="8">
@@ -21,12 +21,12 @@
           </a-col> -->
           <a-col :md="4" :sm="8">
             <a-form-item label="平台订单号">
-              <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId" />
+              <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="商品id">
-              <a-input placeholder="请输入商品id" v-model="queryParam.productId" />
+              <a-input placeholder="请输入商品id" v-model="queryParam.productId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -44,20 +44,21 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="渠道">
-                <a-input placeholder="请输入渠道" v-model="queryParam.channel" />
+                <a-input placeholder="请输入渠道" v-model="queryParam.channel"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="金额">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin" />
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"/>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end" />
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.payAmount_end"/>
               </a-form-item>
             </a-col>
           </template>
@@ -67,7 +68,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -88,45 +89,48 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="status">
           <div v-html="status"></div>
         </template>
         <template slot="imgSlot" slot-scope="status">
           <span v-if="!status" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(status)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(status)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="status">
           <span v-if="!status" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(status)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="status, record">
           <a @click="handleEdit(record)">详情</a>
-          <!-- <a-divider type="vertical" />
-                    <a-dropdown>
-                        <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-                        <a-menu slot="overlay">
-                            <a-menu-item>
-                                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                                    <a>删除</a>
-                                </a-popconfirm>
-                            </a-menu-item>
-                        </a-menu>
-                    </a-dropdown> -->
+          <a-divider type="vertical"/>
+          <a-dropdown>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a-menu slot="overlay">
+              <a-menu-item :disabled="record.vipId > 0"
+                           @click="addVip(record)">添加VIP</a-menu-item>
+              <a-menu-item :disabled="record.vipId === 0"
+                           @click="deleteVip(record)">删除VIP</a-menu-item>
+            </a-menu>
+          </a-dropdown>
         </span>
       </a-table>
     </div>
 
-    <GameOrderModal ref="modalForm" @ok="modalFormOk" />
+    <GameOrderModal ref="modalForm" @ok="modalFormOk"/>
   </a-card>
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { filterObj } from '@/utils/util';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameOrderModal from './modules/GameOrderModal';
+import {deleteAction, getAction, postAction} from "@api/manage";
 
 export default {
   name: 'PayOrderList',
@@ -222,18 +226,18 @@ export default {
           width: 80,
           dataIndex: 'payAmount'
         },
-        {
-          title: '订单金额',
-          align: 'center',
-          width: 80,
-          dataIndex: 'orderAmount'
-        },
-        {
-          title: '折扣金额',
-          align: 'center',
-          width: 80,
-          dataIndex: 'discountAmount'
-        },
+        // {
+        //   title: '订单金额',
+        //   align: 'center',
+        //   width: 80,
+        //   dataIndex: 'orderAmount'
+        // },
+        // {
+        //   title: '折扣金额',
+        //   align: 'center',
+        //   width: 80,
+        //   dataIndex: 'discountAmount'
+        // },
         {
           title: '订单状态',
           align: 'center',
@@ -256,12 +260,15 @@ export default {
             return re;
           }
         },
-        // {
-        //     title: "ip地址",
-        //     align: "center",
-        //     width: 80,
-        //     dataIndex: "remoteIp"
-        // },
+        {
+          title: "ip地址",
+          align: "center",
+          width: 80,
+          dataIndex: "remoteIp",
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
         // {
         //     title: "透传参数",
         //     align: "center",
@@ -285,27 +292,31 @@ export default {
             return value || '--';
           }
         },
+        // },
         // {
         //     title: "充值货币",
         //     align: "center",
         //     dataIndex: "currency"
         // },
-        {
-          title: '创建时间',
-          align: 'center',
-          width: 120,
-          dataIndex: 'createTime'
-        },
+        // {
+        //   title: '创建时间',
+        //   align: 'center',
+        //   width: 120,
+        //   dataIndex: 'createTime'
+        // },
         {
           title: '操作',
+          width: 120,
           dataIndex: 'action',
           align: 'center',
-          width: 80,
-          scopedSlots: { customRender: 'action' }
+          fixed: 'right',
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
         list: 'game/order/list',
+        addVip: 'game/vip/addVip',
+        deleteVip: 'game/vip/delete',
         exportXlsUrl: 'game/order/exportXls'
       },
       dictOptions: {}
@@ -330,7 +341,45 @@ export default {
       console.log(dateString[0], dateString[1]);
       this.queryParam.createDate_begin = dateString[0];
       this.queryParam.createDate_end = dateString[1];
-    }
+    },
+    deleteVip(record) {
+      this.requestUrlConfirm(this.url.deleteVip,
+        {id: record.vipId},
+        '是否删除VIP？',
+        `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`,
+        'delete');
+    },
+    addVip(record) {
+      this.requestUrlConfirm(this.url.addVip,
+        {playerIds: record.playerId},
+        '是否添加VIP？',
+        `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
+    },
+    requestUrlConfirm(url, parameter, title, content, method = 'get') {
+      let that = this;
+      let requestFunction = getAction;
+      if (method === 'post') {
+        requestFunction = postAction;
+      } else if (method === 'delete') {
+        requestFunction = deleteAction;
+      }
+      this.$confirm({
+        title: title,
+        content: content,
+        onOk: function () {
+          that.loading = true;
+          requestFunction(url, parameter).then((res) => {
+            that.loading = false;
+            if (res.success) {
+              that.$message.success(res.message);
+            } else {
+              that.$message.error(res.message);
+            }
+            that.loadData();
+          });
+        }
+      });
+    },
   }
 };
 </script>
