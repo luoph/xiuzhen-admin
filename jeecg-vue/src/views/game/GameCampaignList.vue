@@ -4,16 +4,17 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <!-- <a-col :md="6" :sm="8">
-                        <a-form-item label="活动类型">
-                            <a-select placeholder="选择活动类型" v-model="queryParam.type" default-value="1">
-                                <a-select-option :value="1">1-节日活动</a-select-option>
-                            </a-select>
-                        </a-form-item>
-                    </a-col> -->
           <a-col :md="6" :sm="8">
             <a-form-item label="活动展示名称">
               <j-input placeholder="活动展示名称" v-model="queryParam.showName"></j-input>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="时间类型">
+              <a-select placeholder="请选择时间类型" v-model="queryParam.timeType" initialValue="1">
+                <a-select-option :value="1">1-时间范围</a-select-option>
+                <a-select-option :value="2">2-开服第N天</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
