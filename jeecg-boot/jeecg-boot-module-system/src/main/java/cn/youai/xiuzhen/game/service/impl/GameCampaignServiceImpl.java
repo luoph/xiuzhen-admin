@@ -56,14 +56,45 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
     public List<GameCampaignType> getGameCampaignTypeList(GameCampaign gameCampaign) {
         long campaignId = gameCampaign.getId();
         LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
-                .eq(GameCampaignType::getCampaignId, campaignId)
-                .orderByAsc(GameCampaignType::getSort);
+                .eq(GameCampaignType::getCampaignId, campaignId).orderByAsc(GameCampaignType::getSort);
         List<GameCampaignType> list = campaignTypeService.list(query);
         for (GameCampaignType model : list) {
             campaignTypeService.fillTabDetail(model, true);
         }
         gameCampaign.setTypeList(list);
         return list;
+    }
+
+    @Override
+    public List<GameCampaign> queryCampaignListByTimeType(TimeType timeType) {
+        return list(Wrappers.<GameCampaign>lambdaQuery().eq(GameCampaign::getTimeType, timeType.getType()));
+    }
+
+    @Override
+    public void addCampaignServerIds(List<Integer> serverIds) {
+        // 只处理 开服N天的活动
+        List<GameCampaign> campaignList = queryCampaignListByTimeType(TimeType.OPEN_DAY);
+        if (CollUtil.isEmpty(campaignList)) {
+            return;
+        }
+
+        for (GameCampaign campaign : campaignList) {
+            List<Integer> serverIdList = StringUtils.split2Int(campaign.getServerIds());
+            // 计算差集
+            Collection<Integer> subtract = CollUtil.subtract(serverIds, serverIdList);
+            if (CollUtil.isEmpty(subtract)) {
+                continue;
+            }
+
+            serverIdList.addAll(subtract);
+            log.info("addCampaignServerIds campaignId:{}, serverIds:{}", campaign.getId(), subtract);
+            Collections.sort(serverIdList);
+            campaign.setServerIds(StrUtil.join(",", serverIdList));
+            updateCampaign(campaign);
+
+            // 同步到游戏服
+            syncCampaign(campaign);
+        }
     }
 
     @Override
@@ -98,11 +129,8 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
             String serverIds = StrUtil.join(",", newServerIds);
             List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign);
             for (GameCampaignType model : typeList) {
-                GameCampaignServer campaignServer = new GameCampaignServer()
-                        .setCampaignId(gameCampaign.getId())
-                        .setServer(serverIds)
-                        .setTypeId(model.getId())
-                        .setStatus(SwitchStatus.ON.getValue());
+                GameCampaignServer campaignServer = new GameCampaignServer().setCampaignId(gameCampaign.getId())
+                        .setServer(serverIds).setTypeId(model.getId()).setStatus(SwitchStatus.ON.getValue());
                 batchSwitch(campaignServer);
             }
         }
@@ -110,21 +138,20 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
 
     @Override
     public void batchSwitch(GameCampaignServer model) {
-        int[] ids = StrUtil.splitToInt(model.getServer(), ",");
+        List<Integer> serverList = StringUtils.split2Int(model.getServer());
         List<GameCampaignSupport> addList = new ArrayList<>();
         List<GameCampaignSupport> updateList = new ArrayList<>();
 
-        List<GameCampaignSupport> list = campaignSupportService.list(Wrappers.<GameCampaignSupport>lambdaQuery()
+        Wrapper<GameCampaignSupport> query = Wrappers.<GameCampaignSupport>lambdaQuery()
                 .eq(GameCampaignSupport::getCampaignId, model.getCampaignId())
-                .eq(GameCampaignSupport::getTypeId, model.getTypeId()));
-        for (int serverId : ids) {
-            GameCampaignSupport campaignSupport = list.stream().filter(e -> e.getServerId() == serverId).findFirst().orElse(null);
+                .eq(GameCampaignSupport::getTypeId, model.getTypeId());
+        List<GameCampaignSupport> list = campaignSupportService.list(query);
+
+        for (Integer serverId : serverList) {
+            GameCampaignSupport campaignSupport = list.stream().filter(e -> Objects.equals(e.getServerId(), serverId)).findFirst().orElse(null);
             if (campaignSupport == null) {
-                campaignSupport = new GameCampaignSupport()
-                        .setStatus(model.getStatus())
-                        .setCampaignId(model.getCampaignId())
-                        .setTypeId(model.getTypeId())
-                        .setServerId(serverId);
+                campaignSupport = new GameCampaignSupport().setStatus(model.getStatus())
+                        .setCampaignId(model.getCampaignId()).setTypeId(model.getTypeId()).setServerId(serverId);
                 addList.add(campaignSupport);
             } else {
                 if (!Objects.equals(campaignSupport.getStatus(), model.getStatus())) {
@@ -162,8 +189,7 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
     public void syncCampaign(GameCampaign campaign) {
         // 通知游戏服
         Wrapper<GameCampaignSupport> queryWrapper = Wrappers.<GameCampaignSupport>lambdaQuery()
-                .eq(GameCampaignSupport::getCampaignId, campaign.getId())
-                .groupBy(GameCampaignSupport::getServerId);
+                .eq(GameCampaignSupport::getCampaignId, campaign.getId()).groupBy(GameCampaignSupport::getServerId);
         List<GameCampaignSupport> supports = campaignSupportService.list(queryWrapper);
         List<Integer> serverIds = supports.stream().map(GameCampaignSupport::getServerId).collect(Collectors.toList());
         Map<Integer, Response> response = gameServerService.gameServerGet(serverIds, campaignUpdateUrl);
@@ -181,7 +207,8 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
             return Result.ok("该活动没有支持的区服");
         }
 
-        Wrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery().eq(GameCampaignType::getCampaignId, gameCampaign.getId());
+        Wrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
+                .eq(GameCampaignType::getCampaignId, gameCampaign.getId());
         List<GameCampaignType> campaignTypeList = campaignTypeService.list(query);
         if (campaignTypeList.isEmpty()) {
             return Result.ok("该活动没有支持的区服");

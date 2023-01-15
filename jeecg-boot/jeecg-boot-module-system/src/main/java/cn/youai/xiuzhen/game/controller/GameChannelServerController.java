@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -40,6 +41,9 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     @Autowired
     private IGameServerService gameServerService;
 
+    @Autowired
+    private IGameCampaignService gameCampaignService;
+
     @AutoLog(value = "游戏渠道服配置-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameChannelServer entity,
@@ -71,7 +75,12 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     @AutoLog(value = "游戏渠道服配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameChannelServer entity) {
-        return super.add(entity);
+        Result<?> result = super.add(entity);
+        if (result.isSuccess()) {
+            // 自动添加开服、节日活动
+            gameCampaignService.addCampaignServerIds(CollUtil.newArrayList(entity.getServerId()));
+        }
+        return result;
     }
 
     @AutoLog(value = "游戏渠道服配置-编辑")

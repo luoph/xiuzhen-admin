@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.service;
 
+import cn.youai.xiuzhen.game.constant.TimeType;
 import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignServer;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
@@ -19,6 +20,14 @@ import java.util.List;
 public interface IGameCampaignService extends IService<GameCampaign> {
 
     List<GameCampaignType> getGameCampaignTypeList(GameCampaign gameCampaign);
+
+    List<GameCampaign> queryCampaignListByTimeType(TimeType timeType);
+
+    /**
+     * 自动添加区服id，活动类型（开服第N天）
+     * @param serverIds 区服id
+     */
+    void addCampaignServerIds(List<Integer> serverIds);
 
     void updateCampaign(GameCampaign gameCampaign);
 
