@@ -33,7 +33,7 @@
             <a-select-option :value="2">2-开服第N天</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item v-show="model.timeType == 1" label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item v-show="model.timeType === 1" label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-form-item>
             <a-date-picker placeholder="开始时间" showTime format="YYYY-MM-DD HH:mm:ss"
                            v-decorator="['startTime', validatorRules.startTime]"/>
@@ -43,11 +43,11 @@
                            v-decorator="['endTime', validatorRules.endTime]"/>
           </a-form-item>
         </a-form-item>
-        <a-form-item v-show="model.timeType == 2" label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item v-show="model.timeType === 2" label="开始天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['startDay', validatorRules.startDay]"
                           placeholder="请输入开始天数(开服第n天, 0表示开服第1天)" style="width: 100%"/>
         </a-form-item>
-        <a-form-item v-show="model.timeType == 2" label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <a-form-item v-show="model.timeType === 2" label="持续天数" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入持续天数"
                           style="width: 100%"/>
         </a-form-item>

@@ -2,9 +2,13 @@ package cn.youai.xiuzhen.game.service;
 
 import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignServer;
+import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.jeecg.common.api.vo.Result;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -13,6 +17,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @date 2020-10-15
  */
 public interface IGameCampaignService extends IService<GameCampaign> {
+
+    List<GameCampaignType> getGameCampaignTypeList(GameCampaign gameCampaign);
+
+    void updateCampaign(GameCampaign gameCampaign);
+
+    void batchSwitch(GameCampaignServer model);
 
     /**
      * 活动子页签对应的服务器列表
@@ -24,4 +34,13 @@ public interface IGameCampaignService extends IService<GameCampaign> {
      * @return List of {@linkplain GameCampaignServer}
      */
     IPage<GameCampaignServer> serverList(Page<?> page, long campaignId, long typeId, String server);
+
+    /**
+     * 同步到区服
+     *
+     * @param campaign 活动
+     */
+    void syncCampaign(GameCampaign campaign);
+
+    Result<?> removeCompletedServer(GameCampaign gameCampaign);
 }
