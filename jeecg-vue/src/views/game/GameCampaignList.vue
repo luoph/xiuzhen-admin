@@ -394,7 +394,7 @@ export default {
     },
     handleSyncCampaign: function (record) {
       const that = this;
-      that.confirmLoading = true;
+      that.loading = true;
       getAction(that.url.sync, {id: record.id})
         .then((res) => {
           if (res.success) {
@@ -404,12 +404,12 @@ export default {
           }
         })
         .finally(() => {
-          that.confirmLoading = false;
+          that.loading = false;
         });
     },
     handleDuplicate: function (record) {
       const that = this;
-      that.confirmLoading = true;
+      that.loading = true;
       getAction(that.url.duplicate, {id: record.id})
         .then((res) => {
           if (res.success) {
@@ -419,13 +419,13 @@ export default {
           }
         })
         .finally(() => {
-          that.confirmLoading = false;
+          that.loading = false;
           that.loadData();
         });
     },
     removeCompletedServer: function (record) {
       const that = this;
-      that.confirmLoading = true;
+      that.loading = true;
       getAction(that.url.removeCompletedServerUrl, {id: record.id})
         .then((res) => {
           if (res.success) {
@@ -435,8 +435,8 @@ export default {
           }
         })
         .finally(() => {
-          that.confirmLoading = false;
-          that.loadData();
+          that.loading = false;
+          that.searchQuery();
         });
     }
   }

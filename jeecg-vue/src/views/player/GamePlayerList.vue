@@ -387,7 +387,9 @@ export default {
             } else {
               that.$message.error(res.message);
             }
-            that.loadData();
+          }).finally(()=>{
+            that.loading = false
+            that.searchQuery();
           });
         }
       });
