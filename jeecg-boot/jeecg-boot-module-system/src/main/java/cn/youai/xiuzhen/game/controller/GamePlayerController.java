@@ -1,13 +1,18 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.youai.entities.GamePlayer;
+import cn.youai.basics.model.DateRange;
+import cn.youai.server.model.RangeValue;
+import cn.youai.xiuzhen.core.controller.SimplePageController;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.annotation.Readonly;
-import org.jeecg.common.system.base.controller.JeecgController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * @author jeecg-boot
@@ -26,14 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 @Readonly
 @RestController
 @RequestMapping("/player/playerInfo")
-public class GamePlayerController extends JeecgController<GamePlayer, IGamePlayerService> {
+public class GamePlayerController extends SimplePageController<GamePlayer> {
 
-    @Override
-    protected QueryWrapper<GamePlayer> prepareQuery(GamePlayer entity, HttpServletRequest request) {
-        QueryWrapper<GamePlayer> queryWrapper = super.prepareQuery(entity, request);
-        queryWrapper.orderByDesc("create_time");
-        return queryWrapper;
-    }
+    @Autowired
+    private IGamePlayerService gamePlayerService;
 
     @Override
     @AutoLog(value = "玩家信息-列表查询")
@@ -45,10 +47,18 @@ public class GamePlayerController extends JeecgController<GamePlayer, IGamePlaye
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
+    @Override
+    protected IPage<GamePlayer> pageList(Page<GamePlayer> page, GamePlayer entity, HttpServletRequest req) {
+        DateRange createDateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
+        RangeValue<BigDecimal> levelRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "level");
+        RangeValue<BigDecimal> combatPowerRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "combatPower");
+        return gamePlayerService.selectList(page, entity, levelRange, combatPowerRange, createDateRange);
+    }
+
     @AutoLog(value = "玩家信息-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GamePlayer entity = service.getPlayer(Long.parseLong(id));
+        GamePlayer entity = gamePlayerService.selectPlayer(Long.parseLong(id));
         if (entity == null) {
             return Result.error("未找到玩家信息");
         }

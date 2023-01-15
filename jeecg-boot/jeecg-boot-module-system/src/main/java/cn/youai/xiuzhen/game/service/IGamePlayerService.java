@@ -3,9 +3,14 @@
  */
 package cn.youai.xiuzhen.game.service;
 
-import cn.youai.entities.GamePlayer;
+import cn.youai.basics.model.DateRange;
+import cn.youai.server.model.RangeValue;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -19,14 +24,16 @@ import java.util.Map;
  * @since 2021-12-07
  */
 public interface IGamePlayerService extends IService<GamePlayer> {
-    Map<Long, String> getPlayerNicknameMap(Collection<Long> playerIds);
 
-    List<GamePlayer> selectPlayerByName(String nickname);
+    GamePlayer selectPlayer(long playerId);
 
-    GamePlayer getPlayer(long playerId);
-
-    List<GamePlayer> getPlayerList(Collection<Long> playerIds);
+    List<GamePlayer> selectPlayerList(Collection<Long> playerIds);
 
     Map<Integer, List<GamePlayer>> groupPlayerByServerId(Collection<Long> playerIds);
 
+    IPage<GamePlayer> selectList(Page<GamePlayer> page,
+                                 GamePlayer entity,
+                                 RangeValue<BigDecimal> levelRange,
+                                 RangeValue<BigDecimal> combatPowerRange,
+                                 DateRange createDateRange);
 }

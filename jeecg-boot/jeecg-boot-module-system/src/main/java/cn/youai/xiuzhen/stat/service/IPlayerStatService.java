@@ -3,7 +3,7 @@
  */
 package cn.youai.xiuzhen.stat.service;
 
-import cn.youai.entities.GamePlayer;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import com.baomidou.mybatisplus.extension.service.IService;
 

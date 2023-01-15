@@ -1,8 +1,8 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.date.DateUtil;
-import cn.youai.entities.GamePlayer;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import cn.youai.xiuzhen.stat.entity.PlayerBehaviorVO;

@@ -4,13 +4,13 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.model.ResponseCode;
 import cn.youai.basics.utils.StringUtils;
-import cn.youai.entities.GamePlayer;
 import cn.youai.entities.Mail;
 import cn.youai.enums.MailReceiver;
 import cn.youai.enums.MailType;
 import cn.youai.server.conf.ConfItem;
 import cn.youai.server.model.ItemVO;
 import cn.youai.xiuzhen.game.entity.GameEmail;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.mapper.GameEmailMapper;
 import cn.youai.xiuzhen.game.service.IGameEmailService;
@@ -99,7 +99,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
         Integer receiverType = entity.getReceiverType();
         if (receiverType == MailReceiver.PLAYER.getType()) {
             List<Long> playerIds = StringUtils.split2Long(entity.getReceiverIds());
-            List<GamePlayer> playerList = gamePlayerService.getPlayerList(playerIds);
+            List<GamePlayer> playerList = gamePlayerService.selectPlayerList(playerIds);
 
             Set<Integer> serverIds = new HashSet<>();
             playerList.forEach(t -> {

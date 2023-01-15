@@ -4,10 +4,10 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
-import cn.youai.entities.GamePlayer;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameOrder;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameVip;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
@@ -97,7 +97,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         List<Long> addPlayerIds = new ArrayList<>();
         for (Long playerId : playerIdSet) {
             if (!vipMap.containsKey(playerId)) {
-                GamePlayer player = gamePlayerService.getPlayer(playerId);
+                GamePlayer player = gamePlayerService.selectPlayer(playerId);
                 if (player != null && player.getStatus() == 1) {
                     addList.add(new GameVip().setPlayerId(playerId));
                     addPlayerIds.add(playerId);
