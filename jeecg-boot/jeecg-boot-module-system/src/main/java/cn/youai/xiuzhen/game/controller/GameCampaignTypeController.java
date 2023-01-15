@@ -170,7 +170,11 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
     @RequestMapping(value = "/importExcel/details", method = RequestMethod.POST)
     public Result<?> importExcelDetails(HttpServletRequest request, HttpServletResponse response,
                                         @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId) {
-        return service.importExcel(campaignId, typeId, request);
+        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
+        if (null == gameCampaign) {
+            return Result.error("找不到主活动配置");
+        }
+        return service.importExcel(gameCampaign, typeId, request);
     }
 
 }

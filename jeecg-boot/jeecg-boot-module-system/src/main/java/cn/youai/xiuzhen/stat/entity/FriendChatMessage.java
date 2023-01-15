@@ -1,6 +1,6 @@
 package cn.youai.xiuzhen.stat.entity;
 
-import cn.youai.entities.GamePlayer;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -63,6 +63,7 @@ public class WebsocketServerChecker {
     private WebsocketService websocketService;
 
     @Async
+    // 秒 分 时 日 月 星期 年份
     @Scheduled(cron = "0 0/10 * * * ?")
     public void checkServer() {
         if (!enable) {

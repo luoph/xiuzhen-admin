@@ -4,10 +4,10 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
-import cn.youai.entities.GamePlayer;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameOrder;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameVip;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
@@ -97,7 +97,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         List<Long> addPlayerIds = new ArrayList<>();
         for (Long playerId : playerIdSet) {
             if (!vipMap.containsKey(playerId)) {
-                GamePlayer player = gamePlayerService.getPlayer(playerId);
+                GamePlayer player = gamePlayerService.queryPlayer(playerId);
                 if (player != null && player.getStatus() == 1) {
                     addList.add(new GameVip().setPlayerId(playerId));
                     addPlayerIds.add(playerId);
@@ -222,7 +222,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         IPage<GameVip> pageList = service.queryVipList(page, entity);
         Set<Long> orderIdList = pageList.getRecords().stream().filter(t -> t.getOrderId() != null && t.getOrderId() > 0)
                 .map(GameVip::getOrderId).collect(Collectors.toSet());
-        List<GameOrder> lastOrders = orderStatService.selectByIds(orderIdList);
+        List<GameOrder> lastOrders = orderStatService.queryByIds(orderIdList);
         Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
 
         for (GameVip t : pageList.getRecords()) {

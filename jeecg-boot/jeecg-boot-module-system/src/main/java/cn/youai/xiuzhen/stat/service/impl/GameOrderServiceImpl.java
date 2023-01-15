@@ -8,7 +8,6 @@ import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.stat.entity.*;
 import cn.youai.xiuzhen.stat.service.IGameOrderService;
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -30,21 +29,21 @@ import java.util.List;
 public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder> implements IGameOrderService {
 
     @Override
-    public GameOrder selectById(String id) {
-        return getBaseMapper().selectById(id);
+    public GameOrder queryById(String id) {
+        return getBaseMapper().queryById(id);
     }
 
     @Override
-    public List<GameOrder> selectByIds(Collection<Long> ids) {
+    public List<GameOrder> queryByIds(Collection<Long> ids) {
         if (CollUtil.isEmpty(ids)) {
             return new ArrayList<>();
         }
-        return getBaseMapper().selectByIds(ids);
+        return getBaseMapper().queryByIds(ids);
     }
 
     @Override
-    public IPage<GameOrder> selectList(Page<?> page, GameOrder entity, DateRange dateRange, RangeValue<BigDecimal> amountRange) {
-        return getBaseMapper().selectList(page, entity, dateRange, amountRange);
+    public IPage<GameOrder> queryList(Page<?> page, GameOrder entity, DateRange dateRange, RangeValue<BigDecimal> amountRange) {
+        return getBaseMapper().queryList(page, entity, dateRange, amountRange);
     }
 
     @Override
@@ -58,18 +57,8 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public BigDecimal serverPayAmount(int serverId, Date date) {
-        return getBaseMapper().serverPayAmount(serverId, date);
-    }
-
-    @Override
     public BigDecimal channelPayAmount(String channel, Integer serverId, Date date) {
         return getBaseMapper().chanelPayAmount(channel, serverId, date);
-    }
-
-    @Override
-    public int serverPayPlayerNum(int serverId, Date date) {
-        return getBaseMapper().serverPayPlayerNum(serverId, date);
     }
 
     @Override

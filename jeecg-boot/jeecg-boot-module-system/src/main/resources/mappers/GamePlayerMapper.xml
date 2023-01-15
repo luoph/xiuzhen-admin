@@ -2,12 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.GamePlayerMapper">
 
-    <select id="selectPlayerByName" resultType="cn.youai.entities.GamePlayer" parameterType="java.lang.String">
-        SELECT *
+    <select id="queryPlayer" resultType="cn.youai.xiuzhen.game.entity.GamePlayer"
+            parameterType="java.lang.Long">
+        SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`
         FROM `game_player` p
-        WHERE p.`nickname` LIKE CONCAT('%', #{nickname}, '%')
+        LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`
+        <where>
+            p.`player_id` = #{playerId}
+        </where>
     </select>
 
+    <select id="queryPlayerList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
+        SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`
+        FROM `game_player` p
+        LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`
+        <where>
+            p.`player_id` IN
+            <foreach item="id" collection="playerIds" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+            ORDER BY p.`id` ASC
+        </where>
+    </select>
+
+    <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
+        SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`
+        FROM `game_player` p
+        LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`
+        <where>
+            <if test="entity != null">
+                <if test="entity.channel != null and entity.channel != ''">
+                    AND p.`channel` = #{entity.channel}
+                </if>
+                <if test="entity.sdkChannel != null and entity.sdkChannel != ''">
+                    AND p.`sdkChannel` = #{entity.sdkChannel}
+                </if>
+                <if test="entity.serverId != null and entity.serverId > 0">
+                    AND p.`server_id` = #{entity.serverId}
+                </if>
+                <if test="entity.playerId != null and entity.playerId > 0">
+                    AND p.`player_id` = #{entity.playerId}
+                </if>
+                <if test="entity.nickname != null and entity.nickname != ''">
+                    AND p.`nickname` LIKE CONCAT('%', #{entity.nickname},'%')
+                </if>
+            </if>
+            <if test="levelRange != null">
+                <if test="null != levelRange.min"><![CDATA[AND p.`level` >= #{levelRange.min}]]></if>
+                <if test="null != levelRange.max"><![CDATA[AND p.`level` <= #{levelRange.max}]]></if>
+            </if>
+            <if test="combatPowerRange != null">
+                <if test="null != combatPowerRange.min"><![CDATA[AND p.`combat_power` >= #{combatPowerRange.min}]]></if>
+                <if test="null != combatPowerRange.max"><![CDATA[AND p.`combat_power` <= #{combatPowerRange.max}]]></if>
+            </if>
+            <if test="createDateRange != null">
+                <if test="null != createDateRange.start">
+                    <![CDATA[AND p.`create_date` >= #{createDateRange.start}]]></if>
+                <if test="null != createDateRange.end"><![CDATA[AND p.`create_date` <= #{createDateRange.end}]]></if>
+            </if>
+        </where>
+    </select>
 
     <!-- 玩家日志查询映射结果 -->
     <resultMap id="PlayerLogResultMap" type="cn.youai.xiuzhen.stat.entity.PlayerBehavior">

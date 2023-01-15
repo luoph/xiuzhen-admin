@@ -7,7 +7,6 @@ import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeBase;
 import cn.youai.xiuzhen.game.mapper.GameCampaignTypeMapper;
-import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
@@ -20,7 +19,6 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.util.SpringContextUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -44,9 +42,6 @@ import java.util.stream.Collectors;
 @Service
 @DS("master")
 public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMapper, GameCampaignType> implements IGameCampaignTypeService {
-
-    @Autowired
-    private IGameCampaignService gameCampaignService;
 
     @Override
     public void fillTabDetail(GameCampaignType model, boolean merge) {
@@ -186,18 +181,13 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request) {
-        return importExcel(campaignId, typeId, request, null, null);
+    public Result<?> importExcel(GameCampaign gameCampaign, Long typeId, HttpServletRequest request) {
+        return importExcel(gameCampaign, typeId, request, null, null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request, String name, Class<? extends IService> serviceClass) {
-        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
-        if (null == gameCampaign) {
-            return Result.error("找不到主活动配置");
-        }
-
+    public Result<?> importExcel(GameCampaign gameCampaign, Long typeId, HttpServletRequest request, String name, Class<? extends IService> serviceClass) {
         GameCampaignType gameCampaignType = getById(typeId);
         if (null == gameCampaignType) {
             return Result.error("找不到子活动配置");
@@ -209,19 +199,11 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
         }
 
         String sheetName = StringUtils.isNotBlank(name) ? name : campaignType.getName();
-
         IService service = null != serviceClass ? SpringContextUtils.getBean(serviceClass) : campaignType.getBean();
-        if (null == service) {
-            return Result.error("serviceClass错误, service空");
-        }
-
         Class<? extends GameCampaignTypeBase> entityClass = service.getEntityClass();
         if (null == entityClass) {
             return Result.error("serviceClass错误, entityClass空");
         }
-
-//        Wrapper<?> detailQuery = Wrappers.query().eq("campaign_id", campaignId).eq("type_id", typeId);
-//        List<? extends GameCampaignTypeBase> details = SpringContextUtils.getBean(festivalType.getServiceClass()).list(detailQuery);
 
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile mf = multipartRequest.getFile("file");
@@ -239,7 +221,7 @@ public class GameCampaignTypeServiceImpl extends ServiceImpl<GameCampaignTypeMap
             for (Object obj : dataList) {
                 GameCampaignTypeBase entity = entityClass.newInstance();
                 BeanUtils.copyProperties(obj, entity);
-                if (Objects.equals(entity.getCampaignId(), campaignId) && Objects.equals(entity.getTypeId(), typeId)) {
+                if (Objects.equals(entity.getCampaignId(), gameCampaign.getId()) && Objects.equals(entity.getTypeId(), typeId)) {
                     entity.setCreateBy(null);
                     entity.setCreateTime(null);
                     entity.setUpdateBy(null);

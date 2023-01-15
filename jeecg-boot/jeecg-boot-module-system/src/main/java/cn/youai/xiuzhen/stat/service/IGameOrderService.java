@@ -23,14 +23,14 @@ public interface IGameOrderService extends IService<GameOrder> {
     /**
      * 通过id查询记录
      */
-    GameOrder selectById(String id);
+    GameOrder queryById(String id);
 
-    List<GameOrder> selectByIds(Collection<Long> ids);
+    List<GameOrder> queryByIds(Collection<Long> ids);
 
     /**
      * 订单列表查询
      */
-    IPage<GameOrder> selectList(Page<?> page, GameOrder entity, DateRange createDateRange, RangeValue<BigDecimal> payAmountRange);
+    IPage<GameOrder> queryList(Page<?> page, GameOrder entity, DateRange createDateRange, RangeValue<BigDecimal> payAmountRange);
 
     /**
      * 付费金额总和
@@ -39,17 +39,7 @@ public interface IGameOrderService extends IService<GameOrder> {
 
     BigDecimal channelRangeAmount(String channel, Date start, Date end);
 
-    /**
-     * 付费金额总和
-     */
-    BigDecimal serverPayAmount(int serverId, Date date);
-
     BigDecimal channelPayAmount(String channel, Integer serverId, Date date);
-
-    /**
-     * 付费角色数
-     */
-    int serverPayPlayerNum(int serverId, Date date);
 
     /**
      * 付费角色数

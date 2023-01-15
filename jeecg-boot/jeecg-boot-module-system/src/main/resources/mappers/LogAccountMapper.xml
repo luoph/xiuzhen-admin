@@ -116,18 +116,6 @@
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
-    <select id="serverDoublePayRegisterPlayer" resultType="int">
-        SELECT COUNT(*)
-        FROM (SELECT COUNT(o.`player_id`) AS num
-              FROM `game_order` o
-                LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-              WHERE p.`server_id` = #{serverId}
-                AND p.`create_date` = DATE(#{date})
-                AND o.`create_date` = DATE(#{date})
-        GROUP BY o.`player_id`) c
-        WHERE c.`num` >= 2;
-    </select>
-
     <select id="channelDoublePayRegisterPlayer" resultType="int">
         SELECT COUNT(*)
         FROM (SELECT COUNT(o.`player_id`) AS num

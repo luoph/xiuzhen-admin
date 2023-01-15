@@ -74,7 +74,7 @@ public class GameStatRechargeRankController {
         Date now = DateUtils.now();
         IPage<GameStatRechargeRank> pageList = orderStatService.queryRechargeRankList(page, entity.getChannel(), serverId, dateRange.getStart(), dateRange.getEnd());
         Set<Long> orderIdList = pageList.getRecords().stream().map(GameStatRechargeRank::getOrderId).collect(Collectors.toSet());
-        List<GameOrder> lastOrders = orderStatService.selectByIds(orderIdList);
+        List<GameOrder> lastOrders = orderStatService.queryByIds(orderIdList);
         Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
 
         int rank = (int) ((pageList.getCurrent() - 1) * pageList.getSize()) + 1;

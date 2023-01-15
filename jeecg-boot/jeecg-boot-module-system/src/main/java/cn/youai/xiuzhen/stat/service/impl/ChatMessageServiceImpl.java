@@ -86,7 +86,7 @@ public class ChatMessageServiceImpl implements IChatMessageService {
                 ChatMessageVO chatMessageVO = new ChatMessageVO();
                 chatMessageVO.setChatChannel("私聊频道");
                 Long receivePlayerId = friendChatChannel.getFriendChatMessage().getPlayerId();
-                String receivePlayerName = playerService.getPlayer(receivePlayerId).getNickname();
+                String receivePlayerName = playerService.queryPlayer(receivePlayerId).getNickname();
                 chatMessageVO.setReceivePlayerName(receivePlayerName);
                 chatMessageVO.setSendPlayerName(friendChatChannel.getPlayer().getNickname());
                 chatMessageVO.setMessage(friendChatChannel.getFriendChatMessage().getMessage());
@@ -99,7 +99,7 @@ public class ChatMessageServiceImpl implements IChatMessageService {
                 ChatMessageVO chatMessageVO = new ChatMessageVO();
                 chatMessageVO.setChatChannel("私聊频道");
                 Long senderPlayerId = friendChatMessage.getFriendChatChannel().getPlayerId();
-                String senderPlayerName = playerService.getPlayer(senderPlayerId).getNickname();
+                String senderPlayerName = playerService.queryPlayer(senderPlayerId).getNickname();
                 chatMessageVO.setReceivePlayerName(friendChatMessage.getPlayer().getNickname());
                 chatMessageVO.setSendPlayerName(senderPlayerName);
                 chatMessageVO.setMessage(friendChatMessage.getMessage());

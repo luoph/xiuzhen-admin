@@ -2,8 +2,8 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.basics.model.Response;
-import cn.youai.entities.GamePlayer;
 import cn.youai.server.springboot.component.OkHttpHelper;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameVirtualOrder;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;

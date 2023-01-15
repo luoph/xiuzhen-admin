@@ -78,11 +78,6 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
      * 注册二次付费玩家
      */
-    int serverDoublePayRegisterPlayer(@Param("serverId") int serverId, @Param("date") Date date);
-
-    /**
-     * 注册二次付费玩家
-     */
     int channelDoublePayRegisterPlayer(@Param("channel") String channel,
                                        @Param("serverId") Integer serverId,
                                        @Param("date") Date date);

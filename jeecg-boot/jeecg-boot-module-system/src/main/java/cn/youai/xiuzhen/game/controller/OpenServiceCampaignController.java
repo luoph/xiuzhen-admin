@@ -7,6 +7,7 @@ import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.constant.OpenServiceType;
+import cn.youai.xiuzhen.game.constant.TimeType;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaign;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignDetail;
@@ -302,11 +303,12 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
                 }
 
                 List<? extends OpenServiceCampaignDetail> details = (List<? extends OpenServiceCampaignDetail>) campaignType.getDetails();
-                if (details.stream().anyMatch(e -> e.getTimeType() == 1 && null != e.getStartTime() && null != e.getEndTime() && e.getEndTime().after(current))) {
+                if (details.stream().anyMatch(e -> e.getTimeType() == TimeType.TIME_RANGE.getType()
+                        && null != e.getStartTime() && null != e.getEndTime() && e.getEndTime().after(current))) {
                     return Result.ok("没有可移除的区服");
                 }
 
-                int maxDay = details.stream().filter(e -> e.getTimeType() == 2).mapToInt(e -> Math.max(e.getStartDay() + e.getDuration() - 1, 0)).max().orElse(0);
+                int maxDay = details.stream().filter(e -> e.getTimeType() == TimeType.OPEN_DAY.getType()).mapToInt(e -> Math.max(e.getStartDay() + e.getDuration() - 1, 0)).max().orElse(0);
                 Date maxEndTime = DateUtils.endTimeOfDate(DateUtils.addDays(gameServer.getOpenTime(), maxDay));
                 boolean isCompleted = maxEndTime.before(current);
                 if (isCompleted) {
@@ -336,10 +338,10 @@ public class OpenServiceCampaignController extends JeecgController<OpenServiceCa
     private boolean isCompleted(OpenServiceCampaignDetail detail, Date openTime, Date current) {
         Date startTime = null;
         Date endTime = null;
-        if (detail.getTimeType() == 1) {
+        if (detail.getTimeType() == TimeType.TIME_RANGE.getType()) {
             startTime = detail.getStartTime();
             endTime = detail.getEndTime();
-        } else if (detail.getTimeType() == 2) {
+        } else if (detail.getTimeType() == TimeType.OPEN_DAY.getType()) {
             startTime = DateUtils.startTimeOfDate(DateUtils.addDays(openTime, detail.getStartDay()));
             endTime = DateUtils.endTimeOfDate(DateUtils.addDays(openTime, Math.max(detail.getStartDay() + detail.getDuration() - 1, 0)));
         }

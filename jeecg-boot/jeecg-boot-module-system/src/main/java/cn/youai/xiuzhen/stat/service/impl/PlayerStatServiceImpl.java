@@ -1,8 +1,8 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.youai.entities.GamePlayer;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.stat.constant.PlayerLogType;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import cn.youai.xiuzhen.stat.mapper.GamePlayerMapper;

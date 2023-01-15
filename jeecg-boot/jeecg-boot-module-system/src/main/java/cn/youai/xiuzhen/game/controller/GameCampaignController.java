@@ -1,16 +1,12 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.youai.basics.model.Response;
-import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.CampaignStatus;
 import cn.youai.xiuzhen.game.constant.SwitchStatus;
+import cn.youai.xiuzhen.game.constant.TimeType;
 import cn.youai.xiuzhen.game.entity.*;
 import cn.youai.xiuzhen.game.service.*;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -19,19 +15,19 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 活动配置
+ * @description 节日活动信息
  * @date 2020-10-15
  */
 @Slf4j
@@ -45,16 +41,7 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @Autowired
     private IGameCampaignSupportService campaignSupportService;
 
-    @Autowired
-    private IGameServerService gameServerService;
-
-    @Autowired
-    private IGameServerGroupService gameServerGroupService;
-
-    @Value("${app.campaign-update-url:/campaign/update}")
-    private String campaignUpdateUrl;
-
-    @AutoLog(value = "活动配置-列表查询")
+    @AutoLog(value = "节日活动信息-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameCampaign entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
@@ -84,10 +71,10 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
             } else if (record.getStatus() == SwitchStatus.ON.getValue()) {
                 Date startTime = null;
                 Date endTime = null;
-                if (campaignType.getTimeType() == 1) {
+                if (campaignType.getTimeType() == TimeType.TIME_RANGE.getType()) {
                     startTime = campaignType.getStartTime();
                     endTime = campaignType.getEndTime();
-                } else if (campaignType.getTimeType() == 2) {
+                } else if (campaignType.getTimeType() == TimeType.OPEN_DAY.getType()) {
                     startTime = DateUtils.startTimeOfDate(cn.youai.server.utils.DateUtils.addDays(record.getOpenTime(), campaignType.getStartDay()));
                     endTime = DateUtils.endTimeOfDate(cn.youai.server.utils.DateUtils.addDays(record.getOpenTime(),
                             Math.max(campaignType.getStartDay() + campaignType.getDuration() - 1, 0)));
@@ -130,11 +117,11 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
 
     @GetMapping(value = "/switchBatch")
     public Result<?> batchSwitch(GameCampaignServer model, HttpServletRequest req) {
-        batchSwitch(model);
+        service.batchSwitch(model);
         return Result.ok("切换成功！");
     }
 
-    @AutoLog(value = "活动配置-添加")
+    @AutoLog(value = "节日活动信息-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaign entity) {
         return super.add(entity);
@@ -143,51 +130,13 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     /**
      * 编辑
      *
-     * @param gameCampaign 数据实体
+     * @param entity 数据实体
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "活动配置-编辑")
+    @AutoLog(value = "节日活动信息-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameCampaign gameCampaign) {
-        GameCampaign dbEntity = service.getById(gameCampaign.getId());
-        Set<String> dbServerIds = StringUtils.split2Set(dbEntity.getServerIds());
-        Set<String> newServerIds = StringUtils.split2Set(gameCampaign.getServerIds());
-
-        // 去重处理
-        gameCampaign.setServerIds(StrUtil.join(",", newServerIds));
-        List<Integer> addList = new ArrayList<>();
-        List<Integer> removeList = new ArrayList<>();
-        for (String serverId : newServerIds) {
-            if (!dbServerIds.contains(serverId)) {
-                addList.add(Integer.valueOf(serverId));
-            }
-        }
-
-        for (String serverId : dbServerIds) {
-            if (!newServerIds.contains(serverId)) {
-                removeList.add(Integer.valueOf(serverId));
-            }
-        }
-
-        service.updateById(gameCampaign);
-
-        // 批量关闭
-        batchSwitchOff(gameCampaign.getId(), removeList);
-
-        // 处理新增区服id
-        if (CollUtil.isNotEmpty(newServerIds)) {
-            String serverIds = StrUtil.join(",", newServerIds);
-            List<GameCampaignType> typeList = getGameCampaignTypeList(gameCampaign);
-            for (GameCampaignType model : typeList) {
-                GameCampaignServer campaignServer = new GameCampaignServer()
-                        .setCampaignId(gameCampaign.getId())
-                        .setServer(serverIds)
-                        .setTypeId(model.getId())
-                        .setStatus(SwitchStatus.ON.getValue());
-                batchSwitch(campaignServer);
-            }
-        }
-
+    public Result<?> edit(@RequestBody GameCampaign entity) {
+        service.updateCampaign(entity);
         return Result.ok("编辑成功!");
     }
 
@@ -197,41 +146,31 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
      * @param id 实体 id
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "活动配置-同步到区服")
+    @AutoLog(value = "节日活动信息-同步到区服")
     @GetMapping(value = "/sync")
     public Result<?> sync(@RequestParam(name = "id") String id) {
         GameCampaign gameCampaign = service.getById(id);
         if (gameCampaign == null) {
-            return Result.error("找不到对应活动配置!");
+            return Result.error("找不到对应节日活动信息!");
         }
 
-        // 通知游戏服
-        List<GameCampaignSupport> supports = campaignSupportService.list(Wrappers.<GameCampaignSupport>lambdaQuery()
-                .eq(GameCampaignSupport::getCampaignId, id)
-                .groupBy(GameCampaignSupport::getServerId));
-        List<Integer> serverIds = supports.stream().map(GameCampaignSupport::getServerId).collect(Collectors.toList());
-        Map<Integer, Response> response = gameServerService.gameServerGet(serverIds, campaignUpdateUrl);
-        log.info("sync id:{} response:{}", id, response);
-
-        // 通知跨服
-        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(serverIds, campaignUpdateUrl, null);
-        log.info("sync id:{} response:{}", id, gameServerGroupResponse);
-        return Result.ok("编辑成功!");
+        service.syncCampaign(gameCampaign);
+        return Result.ok("同步成功!");
     }
 
-    @AutoLog(value = "活动配置-通过id删除")
+    @AutoLog(value = "节日活动信息-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    @AutoLog(value = "活动配置-批量删除")
+    @AutoLog(value = "节日活动信息-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    @AutoLog(value = "活动配置-通过id查询")
+    @AutoLog(value = "节日活动信息-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         GameCampaign gameCampaign = service.getById(id);
@@ -241,83 +180,24 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         return Result.ok(gameCampaign);
     }
 
-    @AutoLog(value = "活动配置-导出")
+    @AutoLog(value = "节日活动信息-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaign gameCampaign) {
-        return super.exportXls(request, gameCampaign, GameCampaign.class, "活动配置");
+        return super.exportXls(request, gameCampaign, GameCampaign.class, "节日活动信息");
     }
 
-    @AutoLog(value = "活动配置-导入")
+    @AutoLog(value = "节日活动信息-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameCampaign.class);
     }
 
-    private void batchSwitchOff(long campaignId, List<Integer> serverList) {
-        if (CollUtil.isNotEmpty(serverList)) {
-            Wrapper<GameCampaignSupport> updateWrapper = Wrappers.<GameCampaignSupport>lambdaUpdate()
-                    .set(GameCampaignSupport::getStatus, SwitchStatus.OFF.getValue())
-                    .eq(GameCampaignSupport::getCampaignId, campaignId)
-                    .in(GameCampaignSupport::getServerId, serverList);
-            campaignSupportService.update(updateWrapper);
-        }
-    }
-
-    private void batchSwitch(GameCampaignServer model) {
-        int[] ids = StrUtil.splitToInt(model.getServer(), ",");
-        List<GameCampaignSupport> addList = new ArrayList<>();
-        List<GameCampaignSupport> updateList = new ArrayList<>();
-
-        List<GameCampaignSupport> list = campaignSupportService.list(Wrappers.<GameCampaignSupport>lambdaQuery()
-                .eq(GameCampaignSupport::getCampaignId, model.getCampaignId())
-                .eq(GameCampaignSupport::getTypeId, model.getTypeId()));
-        for (int serverId : ids) {
-            GameCampaignSupport campaignSupport = list.stream().filter(e -> e.getServerId() == serverId).findFirst().orElse(null);
-            if (campaignSupport == null) {
-                campaignSupport = new GameCampaignSupport()
-                        .setStatus(model.getStatus())
-                        .setCampaignId(model.getCampaignId())
-                        .setTypeId(model.getTypeId())
-                        .setServerId(serverId);
-                addList.add(campaignSupport);
-            } else {
-                if (!Objects.equals(campaignSupport.getStatus(), model.getStatus())) {
-                    campaignSupport.setStatus(model.getStatus());
-                    updateList.add(campaignSupport);
-                }
-            }
-        }
-
-        if (CollUtil.isNotEmpty(addList)) {
-            campaignSupportService.saveBatch(addList);
-        }
-
-        if (CollUtil.isNotEmpty(updateList)) {
-            campaignSupportService.updateBatchById(updateList);
-        }
-    }
-
-    private List<GameCampaignType> getGameCampaignTypeList(GameCampaign gameCampaign) {
-        long campaignId = gameCampaign.getId();
-        LambdaQueryWrapper<GameCampaignType> query = Wrappers.<GameCampaignType>lambdaQuery()
-                .eq(GameCampaignType::getCampaignId, campaignId)
-                .orderByAsc(GameCampaignType::getSort);
-
-        List<GameCampaignType> list = campaignTypeService.list(query);
-        for (GameCampaignType model : list) {
-            campaignTypeService.fillTabDetail(model, true);
-        }
-        gameCampaign.setTypeList(list);
-        return list;
-    }
-
-
-    @AutoLog(value = "节日活动配置-复制")
+    @AutoLog(value = "节日活动信息-复制")
     @GetMapping(value = "/duplicate")
     public Result<?> duplicate(@RequestParam(name = "id") String id) {
         GameCampaign gameCampaign = service.getById(id);
         if (gameCampaign == null) {
-            return Result.error("找不到对应活动配置!");
+            return Result.error("活动不存在!");
         }
 
         GameCampaign copy = new GameCampaign(gameCampaign);
@@ -333,85 +213,14 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
         return Result.ok("复制成功!");
     }
 
-    @AutoLog(value = "节日活动配置-移除已结束活动")
+    @AutoLog(value = "节日活动信息-移除已结束活动")
     @GetMapping(value = "/removeCompletedServer")
     public Result<?> removeCompletedServer(@RequestParam(name = "id", defaultValue = "0") String id) {
-        long campaignId = Long.parseLong(id);
-        GameCampaign gameCampaign = service.getById(campaignId);
+        GameCampaign gameCampaign = service.getById(id);
         if (null == gameCampaign) {
-            return Result.error("主活动为空");
+            return Result.error("活动不存在！");
         }
-
-        Set<String> serverIds = new HashSet<>(StrUtil.splitTrim(gameCampaign.getServerIds(), ","));
-        if (serverIds.isEmpty()) {
-            return Result.ok("该活动没有支持的区服");
-        }
-
-        List<GameCampaignType> campaignTypeList = campaignTypeService.list(Wrappers.<GameCampaignType>lambdaQuery().eq(GameCampaignType::getCampaignId, campaignId));
-        if (campaignTypeList.isEmpty()) {
-            return Result.ok("该活动没有支持的区服");
-        }
-
-        if (campaignTypeList.stream().anyMatch(e -> e.getCross() == 1)) {
-            return Result.ok("存在跨服子活动，不支持移除");
-        }
-
-        Date current = DateUtils.now();
-        if (campaignTypeList.stream().anyMatch(e -> e.getTimeType() == 1 && null != e.getStartTime() && null != e.getEndTime() && e.getEndTime().after(current))) {
-            return Result.ok("没有可移除的区服");
-        }
-
-        Set<String> reserveServerIds = new HashSet<>(serverIds.size());
-        Set<String> removeServerIds = new HashSet<>(serverIds.size());
-        Page<GameServer> page = new Page<>(1, Integer.MAX_VALUE);
-
-        for (GameCampaignType campaignType : campaignTypeList) {
-            IPage<GameCampaignServer> pageList = service.serverList(page, campaignType.getCampaignId(), campaignType.getId(), null);
-            for (GameCampaignServer record : pageList.getRecords()) {
-                String strServerId = String.valueOf(record.getServerId());
-                if (reserveServerIds.contains(strServerId)) {
-                    continue;
-                }
-                setCampaignStatus(record, campaignType, current);
-                if (record.getCampaignStatus() == CampaignStatus.COMPLETED.getValue()) {
-                    removeServerIds.add(strServerId);
-                } else {
-                    reserveServerIds.add(strServerId);
-                }
-            }
-        }
-
-        removeServerIds.removeIf(reserveServerIds::contains);
-        if (removeServerIds.isEmpty()) {
-            return Result.ok("没有可移除的区服");
-        }
-
-        if (serverIds.removeIf(removeServerIds::contains)) {
-            service.updateById(new GameCampaign().setId(campaignId).setServerIds(StrUtil.join(",", serverIds)));
-        }
-        campaignSupportService.remove(Wrappers.<GameCampaignSupport>lambdaQuery().eq(GameCampaignSupport::getCampaignId, campaignId).in(GameCampaignSupport::getServerId, removeServerIds));
-        return Result.ok("已移除" + removeServerIds.size() + "个区服");
+        return service.removeCompletedServer(gameCampaign);
     }
 
-    private void setCampaignStatus(GameCampaignServer record, GameCampaignType campaignType, Date date) {
-        if (record.getStatus() == SwitchStatus.OFF.getValue()) {
-            record.setCampaignStatus(CampaignStatus.CLOSED.getValue());
-        } else if (record.getStatus() == SwitchStatus.ON.getValue()) {
-            Date startTime = null;
-            Date endTime = null;
-            if (campaignType.getTimeType() == 1) {
-                startTime = campaignType.getStartTime();
-                endTime = campaignType.getEndTime();
-            } else if (campaignType.getTimeType() == 2) {
-                startTime = DateUtils.startTimeOfDate(DateUtils.addDays(record.getOpenTime(), campaignType.getStartDay()));
-                endTime = DateUtils.endTimeOfDate(DateUtils.addDays(record.getOpenTime(),
-                        Math.max(campaignType.getStartDay() + campaignType.getDuration() - 1, 0)));
-            }
-            record.setCampaignStatus(date.before(startTime) ? CampaignStatus.NOT_STARTED.getValue()
-                    : date.after(endTime) ? CampaignStatus.COMPLETED.getValue()
-                    : CampaignStatus.IN_PROGRESS.getValue());
-        } else {
-            record.setCampaignStatus(CampaignStatus.NONE.getValue());
-        }
-    }
 }

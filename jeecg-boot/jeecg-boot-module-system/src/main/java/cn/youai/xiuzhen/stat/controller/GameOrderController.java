@@ -55,13 +55,13 @@ public class GameOrderController extends SimplePageController<GameOrder> {
     protected IPage<GameOrder> pageList(Page<GameOrder> page, GameOrder entity, HttpServletRequest req) {
         DateRange createDateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
         RangeValue<BigDecimal> payAmountRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "payAmount");
-        return gameOrderService.selectList(page, entity, createDateRange, payAmountRange);
+        return gameOrderService.queryList(page, entity, createDateRange, payAmountRange);
     }
 
     @AutoLog(value = "充值订单-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameOrder entity = gameOrderService.selectById(id);
+        GameOrder entity = gameOrderService.queryById(id);
         if (entity == null) {
             return Result.error("未找到记录");
         }

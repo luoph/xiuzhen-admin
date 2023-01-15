@@ -8,10 +8,8 @@ import cn.youai.xiuzhen.stat.entity.GameStatDaily;
 import cn.youai.xiuzhen.stat.service.IGameStatDailyService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
@@ -41,19 +39,13 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
                           @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                           @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                           HttpServletRequest req) {
-        Page<GameStatDaily> page = new Page<>(pageNo, pageSize);
-        // 服务器空校验
-        if (StringUtils.isEmpty(entity.getChannel())
-                && (entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.ok(page);
+        if (entity.getChannel() == null) {
+            entity.setChannel(StatisticType.DEFAULT_CHANNEL);
         }
 
         if (entity.getServerId() == null) {
             entity.setServerId(StatisticType.DEFAULT_SERVER_ID);
-        } else if (entity.getServerId() > 0 && entity.getChannel() == null) {
-            entity.setChannel(StatisticType.DEFAULT_CHANNEL);
         }
-
         IPage<GameStatDaily> pageList = pageList(entity, pageNo, pageSize, req);
         return Result.ok(pageList);
     }
@@ -61,16 +53,6 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
     @AutoLog(value = "游戏日常统计-更新")
     @GetMapping(value = "/update")
     public Result<?> update(GameStatDaily entity, HttpServletRequest req) {
-        // 服务器空校验
-        if (StringUtils.isEmpty(entity.getChannel())
-                && (entity.getServerId() == null || entity.getServerId() < 0)) {
-            return Result.error("请选择渠道或者区服id");
-        }
-
-        if (entity.getServerId() == null) {
-            entity.setServerId(StatisticType.DEFAULT_SERVER_ID);
-        }
-
         // 刷新统计数据
         Date endDate = DateUtils.todayDate();
         Date startDate = DateUtils.addDays(endDate, -2);

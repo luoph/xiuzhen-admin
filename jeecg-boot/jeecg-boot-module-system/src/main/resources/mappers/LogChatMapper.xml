@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.LogChatMapper">
 
-    <select id="selectList" resultType="cn.youai.xiuzhen.stat.entity.LogChat">
+    <select id="queryList" resultType="cn.youai.xiuzhen.stat.entity.LogChat">
         SELECT l.*, p.`account`, p.`level`, p.`sdk_channel`, p.`channel`
         FROM `log_chat` l
         LEFT JOIN `game_player` p ON l.`sender_id` = p.`player_id`
