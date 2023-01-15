@@ -3,9 +3,11 @@ package cn.youai.xiuzhen.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.CampaignType;
+import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypePartyProgress;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypePartyProgressService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +35,9 @@ import java.util.List;
 @RestController
 @RequestMapping("game/gameCampaignTypePartyProgress")
 public class GameCampaignTypePartyProgressController extends JeecgController<GameCampaignTypePartyProgress, IGameCampaignTypePartyProgressService> {
+
+    @Autowired
+    private IGameCampaignService gameCampaignService;
 
     @Autowired
     private IGameCampaignTypeService gameCampaignTypeService;
@@ -89,7 +94,11 @@ public class GameCampaignTypePartyProgressController extends JeecgController<Gam
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response,
                                  @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId) {
-        return gameCampaignTypeService.importExcel(campaignId, typeId, request, CampaignType.PARTY.getName() + "-进度任务", service.getClass());
+        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
+        if (null == gameCampaign) {
+            return Result.error("找不到主活动配置");
+        }
+        return gameCampaignTypeService.importExcel(gameCampaign, typeId, request, CampaignType.PARTY.getName() + "-进度任务", service.getClass());
     }
 
     @AutoLog(value = "节日派对进度任务-导入文本")

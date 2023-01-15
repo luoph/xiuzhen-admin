@@ -2,9 +2,10 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.xiuzhen.game.constant.CampaignType;
+import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
-import cn.youai.xiuzhen.game.entity.GameCampaignTypeMarryRank;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeMarryRankReward;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeMarryRankRewardService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -30,6 +31,9 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("game/gameCampaignTypeMarryRankReward")
 public class GameCampaignTypeMarryRankRewardController extends JeecgController<GameCampaignTypeMarryRankReward, IGameCampaignTypeMarryRankRewardService> {
+
+    @Autowired
+    private IGameCampaignService gameCampaignService;
 
     @Autowired
     private IGameCampaignTypeService gameCampaignTypeService;
@@ -90,7 +94,11 @@ public class GameCampaignTypeMarryRankRewardController extends JeecgController<G
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response,
                                  @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId, @RequestParam(name = "type") Integer type) {
-        return gameCampaignTypeService.importExcel(campaignId, typeId, request, CampaignType.valueOf(type).getName() + "-排行榜奖励", service.getClass());
+        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
+        if (null == gameCampaign) {
+            return Result.error("找不到主活动配置");
+        }
+        return gameCampaignTypeService.importExcel(gameCampaign, typeId, request, CampaignType.valueOf(type).getName() + "-排行榜奖励", service.getClass());
     }
 
 }

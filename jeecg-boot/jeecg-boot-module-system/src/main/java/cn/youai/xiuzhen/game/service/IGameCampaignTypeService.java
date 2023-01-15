@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.service;
 
+import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.common.api.vo.Result;
@@ -37,6 +38,6 @@ public interface IGameCampaignTypeService extends IService<GameCampaignType> {
      */
     void duplicate(GameCampaignType model, long copyCampaignId);
 
-    Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request);
-    Result<?> importExcel(Long campaignId, Long typeId, HttpServletRequest request, String name, Class<? extends IService> serviceClass);
+    Result<?> importExcel(GameCampaign gameCampaign, Long typeId, HttpServletRequest request);
+    Result<?> importExcel(GameCampaign gameCampaign, Long typeId, HttpServletRequest request, String name, Class<? extends IService> serviceClass);
 }
