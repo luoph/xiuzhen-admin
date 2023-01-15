@@ -61,7 +61,7 @@ public class GameOrderController extends SimplePageController<GameOrder> {
     @AutoLog(value = "充值订单-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GameOrder entity = gameOrderService.selectById(id);
+        GameOrder entity = gameOrderService.queryById(id);
         if (entity == null) {
             return Result.error("未找到记录");
         }

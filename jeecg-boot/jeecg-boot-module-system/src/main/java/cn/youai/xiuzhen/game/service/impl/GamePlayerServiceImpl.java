@@ -32,26 +32,26 @@ import java.util.stream.Collectors;
 public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePlayer> implements IGamePlayerService {
 
     @Override
-    public GamePlayer selectPlayer(long playerId) {
-        return getBaseMapper().selectPlayer(playerId);
+    public GamePlayer queryPlayer(long playerId) {
+        return getBaseMapper().queryPlayer(playerId);
     }
 
     @Override
-    public List<GamePlayer> selectPlayerList(Collection<Long> playerIds) {
+    public List<GamePlayer> queryPlayerList(Collection<Long> playerIds) {
         if (CollUtil.isEmpty(playerIds)) {
             return new ArrayList<>();
         }
-        return getBaseMapper().selectPlayerList(playerIds);
+        return getBaseMapper().queryPlayerList(playerIds);
     }
 
     @Override
     public Map<Integer, List<GamePlayer>> groupPlayerByServerId(Collection<Long> playerIds) {
-        List<GamePlayer> playerList = selectPlayerList(playerIds);
+        List<GamePlayer> playerList = queryPlayerList(playerIds);
         return playerList.stream().collect(Collectors.groupingBy(GamePlayer::getServerId, HashMap::new, Collectors.toCollection(ArrayList::new)));
     }
 
     @Override
-    public IPage<GamePlayer> selectList(Page<GamePlayer> page, GamePlayer entity, RangeValue<BigDecimal> levelRange, RangeValue<BigDecimal> combatPowerRange, DateRange createDateRange) {
-        return getBaseMapper().selectList(page, entity, levelRange, combatPowerRange, createDateRange);
+    public IPage<GamePlayer> queryList(Page<GamePlayer> page, GamePlayer entity, RangeValue<BigDecimal> levelRange, RangeValue<BigDecimal> combatPowerRange, DateRange createDateRange) {
+        return getBaseMapper().queryList(page, entity, levelRange, combatPowerRange, createDateRange);
     }
 }

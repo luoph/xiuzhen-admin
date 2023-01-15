@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.GamePlayerMapper">
 
-    <select id="selectPlayer" resultType="cn.youai.xiuzhen.game.entity.GamePlayer"
+    <select id="queryPlayer" resultType="cn.youai.xiuzhen.game.entity.GamePlayer"
             parameterType="java.lang.Long">
         SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`
         FROM `game_player` p
@@ -12,7 +12,7 @@
         </where>
     </select>
 
-    <select id="selectPlayerList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
+    <select id="queryPlayerList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
         SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`
         FROM `game_player` p
         LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`
@@ -25,7 +25,7 @@
         </where>
     </select>
 
-    <select id="selectList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
+    <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
         SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`
         FROM `game_player` p
         LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`

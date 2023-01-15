@@ -92,11 +92,6 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public int serverDoublePayRegisterPlayer(int serverId, Date date) {
-        return getBaseMapper().serverDoublePayRegisterPlayer(serverId, date);
-    }
-
-    @Override
     public int channelDoublePayRegisterPlayer(String channel, Integer serverId, Date date) {
         return getBaseMapper().channelDoublePayRegisterPlayer(channel, serverId, date);
     }

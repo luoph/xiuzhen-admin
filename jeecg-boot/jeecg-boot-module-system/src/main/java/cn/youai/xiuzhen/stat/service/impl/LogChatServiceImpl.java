@@ -21,8 +21,8 @@ import org.springframework.stereotype.Service;
 public class LogChatServiceImpl extends ServiceImpl<LogChatMapper, LogChat> implements ILogChatService {
 
     @Override
-    public IPage<LogChat> selectList(Page<?> page, LogChat entity, DateRange createDateRange) {
-        return getBaseMapper().selectList(page, entity, createDateRange);
+    public IPage<LogChat> queryList(Page<?> page, LogChat entity, DateRange createDateRange) {
+        return getBaseMapper().queryList(page, entity, createDateRange);
     }
 
 }

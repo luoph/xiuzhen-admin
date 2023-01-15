@@ -78,10 +78,10 @@
 
 		<if test="userParams != null">
 			<if test="userParams.realname != null and userParams.realname != ''">
-				AND sys_user.realname LIKE concat(concat('%',#{userParams.realname}),'%')
+				AND sys_user.realname LIKE concat('%',#{userParams.realname},'%')
 			</if>
 			<if test="userParams.workNo != null and userParams.workNo != ''">
-				AND sys_user.work_no LIKE concat(concat('%',#{userParams.workNo}),'%')
+				AND sys_user.work_no LIKE concat('%',#{userParams.workNo},'%')
 			</if>
 		</if>
 	</sql>

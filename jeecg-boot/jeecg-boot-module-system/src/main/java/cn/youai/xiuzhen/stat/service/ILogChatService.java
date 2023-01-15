@@ -14,6 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ILogChatService extends IService<LogChat> {
 
-    IPage<LogChat> selectList(Page<?> page, LogChat entity, DateRange createDateRange);
+    IPage<LogChat> queryList(Page<?> page, LogChat entity, DateRange createDateRange);
 
 }

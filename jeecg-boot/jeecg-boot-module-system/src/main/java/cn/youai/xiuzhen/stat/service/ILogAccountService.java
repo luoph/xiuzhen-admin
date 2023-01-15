@@ -67,11 +67,6 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 二次付费玩家
      */
-    int serverDoublePayRegisterPlayer(int serverId, Date date);
-
-    /**
-     * 二次付费玩家
-     */
     int channelDoublePayRegisterPlayer(String channel, Integer serverId, Date date);
 
     /**

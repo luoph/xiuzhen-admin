@@ -24,14 +24,14 @@ import java.util.Set;
  */
 public interface GameOrderMapper extends BaseMapper<GameOrder> {
 
-    GameOrder selectById(@Param("id") String id);
+    GameOrder queryById(@Param("id") String id);
 
-    List<GameOrder> selectByIds(@Param("orderIds") Collection<Long> orderIds);
+    List<GameOrder> queryByIds(@Param("orderIds") Collection<Long> orderIds);
 
-    IPage<GameOrder> selectList(Page<?> page,
-                                @Param("entity") GameOrder entity,
-                                @Param("dateRange") DateRange dateRange,
-                                @Param("amountRange") RangeValue<BigDecimal> amountRange);
+    IPage<GameOrder> queryList(Page<?> page,
+                               @Param("entity") GameOrder entity,
+                               @Param("dateRange") DateRange dateRange,
+                               @Param("amountRange") RangeValue<BigDecimal> amountRange);
 
     BigDecimal serverRangeAmount(@Param("serverId") int serverId,
                                  @Param("start") Date start,
@@ -41,18 +41,9 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                   @Param("start") Date start,
                                   @Param("end") Date end);
 
-    /**
-     * 计算当天支付金额
-     */
-    BigDecimal serverPayAmount(@Param("serverId") int serverId,
-                               @Param("payDate") Date payDate);
-
     BigDecimal chanelPayAmount(@Param("channel") String channel,
                                @Param("serverId") Integer serverId,
                                @Param("payDate") Date payDate);
-
-    int serverPayPlayerNum(@Param("serverId") int serverId,
-                           @Param("payDate") Date payDate);
 
     int channelPayPlayerNum(@Param("channel") String channel,
                             @Param("serverId") Integer serverId,
@@ -73,17 +64,11 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                                   @Param("startDate") Date startDate,
                                                   @Param("endDate") Date endDate);
 
-    List<GameStatRechargeGoods> queryServerStatRechargeGoods(@Param("serverId") int serverId,
-                                                             @Param("goodsGroup") int goodsGroup,
-                                                             @Param("startDate") Date startDate,
-                                                             @Param("endDate") Date endDate);
-
     List<GameStatRechargeGoods> queryStatRechargeGoods(@Param("channel") String channel,
                                                        @Param("serverId") int serverId,
                                                        @Param("goodsGroup") int goodsGroup,
                                                        @Param("startDate") Date startDate,
                                                        @Param("endDate") Date endDate);
-
 
     GameStatRechargeSum queryStatRechargeGradeSum(@Param("channel") String channel,
                                                   @Param("serverId") int serverId,

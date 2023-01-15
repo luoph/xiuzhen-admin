@@ -25,15 +25,15 @@ import java.util.Map;
  */
 public interface IGamePlayerService extends IService<GamePlayer> {
 
-    GamePlayer selectPlayer(long playerId);
+    GamePlayer queryPlayer(long playerId);
 
-    List<GamePlayer> selectPlayerList(Collection<Long> playerIds);
+    List<GamePlayer> queryPlayerList(Collection<Long> playerIds);
 
     Map<Integer, List<GamePlayer>> groupPlayerByServerId(Collection<Long> playerIds);
 
-    IPage<GamePlayer> selectList(Page<GamePlayer> page,
-                                 GamePlayer entity,
-                                 RangeValue<BigDecimal> levelRange,
-                                 RangeValue<BigDecimal> combatPowerRange,
-                                 DateRange createDateRange);
+    IPage<GamePlayer> queryList(Page<GamePlayer> page,
+                                GamePlayer entity,
+                                RangeValue<BigDecimal> levelRange,
+                                RangeValue<BigDecimal> combatPowerRange,
+                                DateRange createDateRange);
 }

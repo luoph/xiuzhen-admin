@@ -3,14 +3,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameOrderMapper">
 
-    <select id="selectById" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+    <select id="queryById" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
         SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
         FROM `game_order` o
                  LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE o.`id` = #{id}
     </select>
 
-    <select id="selectByIds" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+    <select id="queryByIds" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
         SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
@@ -20,7 +20,7 @@
         </foreach>
     </select>
 
-    <select id="selectList" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+    <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
         SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`,
         IFNULL(v.`id`, 0) AS `vip_id`
         FROM `game_order` o
@@ -82,13 +82,6 @@
         </where>
     </select>
 
-    <select id="serverPayAmount" resultType="java.math.BigDecimal">
-        SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
-        FROM `game_order` o
-        WHERE o.`server_id` = #{serverId}
-          AND o.`create_date` = DATE (#{payDate});
-    </select>
-
     <select id="chanelPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
@@ -96,13 +89,6 @@
         WHERE o.`create_date` = DATE (#{payDate})
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
-    </select>
-
-    <select id="serverPayPlayerNum" resultType="int">
-        SELECT COUNT(DISTINCT o.`player_id`) AS num
-        FROM `game_order` o
-        WHERE o.`server_id` = #{serverId}
-          AND o.`create_date` = DATE (#{payDate});
     </select>
 
     <select id="channelPayPlayerNum" resultType="int">
@@ -175,23 +161,6 @@
             <if test="startDate != null"><![CDATA[ AND o.`create_date` >= DATE(#{startDate}) ]]></if>
             <if test="endDate != null "><![CDATA[ AND o.`create_date` <= DATE(#{endDate}) ]]></if>
         </where>
-    </select>
-
-    <select id="queryServerStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">
-        <![CDATA[
-        SELECT o.`product_id` AS `product_id`,
-               IFNULL(SUM(o.`pay_amount`), 0) AS `pay_amount`,
-               IFNULL(COUNT(o.`id`), 0) AS `pay_num`,
-               IFNULL(COUNT(DISTINCT(o.`player_id`)), 0) AS `player_num`
-        FROM `game_order` o
-        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        LEFT JOIN `game_recharge_goods` g ON o.`product_id` = g.`goods_id`
-        WHERE p.`server_id` = #{serverId}
-        AND o.`create_date` >= DATE(#{startDate})
-        AND o.`create_date` <= DATE(#{endDate})
-        ]]>
-        <if test="goodsGroup > 0">AND g.`goods_group` = #{goodsGroup}</if>
-        GROUP BY o.`product_id`
     </select>
 
     <select id="queryStatRechargeGoods" resultType="cn.youai.xiuzhen.stat.entity.GameStatRechargeGoods">

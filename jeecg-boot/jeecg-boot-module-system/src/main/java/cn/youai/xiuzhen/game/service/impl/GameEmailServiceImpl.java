@@ -99,7 +99,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
         Integer receiverType = entity.getReceiverType();
         if (receiverType == MailReceiver.PLAYER.getType()) {
             List<Long> playerIds = StringUtils.split2Long(entity.getReceiverIds());
-            List<GamePlayer> playerList = gamePlayerService.selectPlayerList(playerIds);
+            List<GamePlayer> playerList = gamePlayerService.queryPlayerList(playerIds);
 
             Set<Integer> serverIds = new HashSet<>();
             playerList.forEach(t -> {

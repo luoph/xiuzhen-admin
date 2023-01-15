@@ -97,7 +97,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         List<Long> addPlayerIds = new ArrayList<>();
         for (Long playerId : playerIdSet) {
             if (!vipMap.containsKey(playerId)) {
-                GamePlayer player = gamePlayerService.selectPlayer(playerId);
+                GamePlayer player = gamePlayerService.queryPlayer(playerId);
                 if (player != null && player.getStatus() == 1) {
                     addList.add(new GameVip().setPlayerId(playerId));
                     addPlayerIds.add(playerId);
@@ -222,7 +222,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         IPage<GameVip> pageList = service.queryVipList(page, entity);
         Set<Long> orderIdList = pageList.getRecords().stream().filter(t -> t.getOrderId() != null && t.getOrderId() > 0)
                 .map(GameVip::getOrderId).collect(Collectors.toSet());
-        List<GameOrder> lastOrders = orderStatService.selectByIds(orderIdList);
+        List<GameOrder> lastOrders = orderStatService.queryByIds(orderIdList);
         Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
 
         for (GameVip t : pageList.getRecords()) {

@@ -26,19 +26,19 @@ import java.util.List;
  * @since 2021-12-07
  */
 public interface GamePlayerMapper extends BaseMapper<GamePlayer> {
-    GamePlayer selectPlayer(@Param("playerId") Long playerId);
+    GamePlayer queryPlayer(@Param("playerId") Long playerId);
 
-    List<GamePlayer> selectPlayerList(@Param("playerIds") Collection<Long> playerIds);
+    List<GamePlayer> queryPlayerList(@Param("playerIds") Collection<Long> playerIds);
 
     List<PlayerBehavior> queryPlayerBehavior(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
                                              @Param("rangeDateEndTime") Date rangeDateEndTime,
                                              @Param("playerId") Long playerId,
                                              @Param("logTable") String logTable);
 
-    IPage<GamePlayer> selectList(Page<GamePlayer> page,
-                                 @Param("entity") GamePlayer entity,
-                                 @Param("levelRange") RangeValue<BigDecimal> levelRange,
-                                 @Param("combatPowerRange") RangeValue<BigDecimal> combatPowerRange,
-                                 @Param("createDateRange") DateRange createDateRange);
+    IPage<GamePlayer> queryList(Page<GamePlayer> page,
+                                @Param("entity") GamePlayer entity,
+                                @Param("levelRange") RangeValue<BigDecimal> levelRange,
+                                @Param("combatPowerRange") RangeValue<BigDecimal> combatPowerRange,
+                                @Param("createDateRange") DateRange createDateRange);
 
 }

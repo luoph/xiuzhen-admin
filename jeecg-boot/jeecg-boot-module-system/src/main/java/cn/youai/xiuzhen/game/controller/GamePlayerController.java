@@ -52,13 +52,13 @@ public class GamePlayerController extends SimplePageController<GamePlayer> {
         DateRange createDateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
         RangeValue<BigDecimal> levelRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "level");
         RangeValue<BigDecimal> combatPowerRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "combatPower");
-        return gamePlayerService.selectList(page, entity, levelRange, combatPowerRange, createDateRange);
+        return gamePlayerService.queryList(page, entity, levelRange, combatPowerRange, createDateRange);
     }
 
     @AutoLog(value = "玩家信息-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
-        GamePlayer entity = gamePlayerService.selectPlayer(Long.parseLong(id));
+        GamePlayer entity = gamePlayerService.queryPlayer(Long.parseLong(id));
         if (entity == null) {
             return Result.error("未找到玩家信息");
         }

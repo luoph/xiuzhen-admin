@@ -40,7 +40,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
             return Result.error("请输入玩家id！");
         }
 
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
@@ -54,7 +54,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
      * @return {@linkplain Result}
      */
     public Result<?> add(long playerId, T model) {
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
@@ -69,7 +69,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
      * @return {@linkplain Result}
      */
     public Result<?> edit(long playerId, T model) {
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
@@ -83,7 +83,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
      * @return {@linkplain Result}
      */
     public Result<?> delete(long playerId, String id) {
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
@@ -97,7 +97,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
      * @return {@linkplain Result}
      */
     public Result<?> deleteBatch(long playerId, String ids) {
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
@@ -111,7 +111,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
      * @return {@linkplain Result}
      */
     public Result<?> queryById(long playerId, String id) {
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
@@ -122,7 +122,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
      * 导出excel
      */
     protected ModelAndView exportXls(long playerId, HttpServletRequest request, T object, Class<T> clazz, String title) {
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return null;
         }
@@ -134,7 +134,7 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
      * 通过excel导入数据
      */
     protected Result<?> importExcel(long playerId, HttpServletRequest request, HttpServletResponse response, Class<T> clazz) {
-        GamePlayer player = playerService.selectPlayer(playerId);
+        GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
