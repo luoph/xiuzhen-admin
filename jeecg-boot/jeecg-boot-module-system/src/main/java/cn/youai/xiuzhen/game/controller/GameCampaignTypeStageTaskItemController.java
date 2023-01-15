@@ -1,7 +1,9 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.youai.xiuzhen.game.constant.CampaignType;
+import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeStageTaskItem;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeStageTaskItemService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -32,6 +34,10 @@ import java.util.Arrays;
 @RequestMapping("/game/gameCampaignTypeStageTaskItem")
 @Slf4j
 public class GameCampaignTypeStageTaskItemController extends JeecgController<GameCampaignTypeStageTaskItem, IGameCampaignTypeStageTaskItemService> {
+
+    @Autowired
+    private IGameCampaignService gameCampaignService;
+
     @Autowired
     private IGameCampaignTypeStageTaskItemService gameCampaignTypeStageTaskItemService;
 
@@ -154,7 +160,11 @@ public class GameCampaignTypeStageTaskItemController extends JeecgController<Gam
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response,
                                  @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId) {
-        return gameCampaignTypeService.importExcel(campaignId, typeId, request, CampaignType.STAGE_TASK.getName() + "-任务", service.getClass());
+        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
+        if (null == gameCampaign) {
+            return Result.error("找不到主活动配置");
+        }
+        return gameCampaignTypeService.importExcel(gameCampaign, typeId, request, CampaignType.STAGE_TASK.getName() + "-任务", service.getClass());
     }
 
 }

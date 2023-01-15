@@ -1,7 +1,9 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.youai.xiuzhen.game.constant.CampaignType;
+import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeRelicLotteryMessage;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeRelicLotteryMessageService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -32,6 +34,10 @@ import java.util.Arrays;
 @RequestMapping("/game/gameCampaignTypeRelicLotteryMessage")
 @Slf4j
 public class GameCampaignTypeRelicLotteryMessageController extends JeecgController<GameCampaignTypeRelicLotteryMessage, IGameCampaignTypeRelicLotteryMessageService> {
+
+    @Autowired
+    private IGameCampaignService gameCampaignService;
+
     @Autowired
     private IGameCampaignTypeRelicLotteryMessageService gameCampaignTypeRelicLotteryMessageService;
     @Autowired
@@ -153,7 +159,11 @@ public class GameCampaignTypeRelicLotteryMessageController extends JeecgControll
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response,
                                  @RequestParam(name = "campaignId") Long campaignId, @RequestParam(name = "typeId") Long typeId) {
-        return gameCampaignTypeService.importExcel(campaignId, typeId, request, CampaignType.RELIC_LOTTERY.getName() + "-传闻", service.getClass());
+        GameCampaign gameCampaign = gameCampaignService.getById(campaignId);
+        if (null == gameCampaign) {
+            return Result.error("找不到主活动配置");
+        }
+        return gameCampaignTypeService.importExcel(gameCampaign, typeId, request, CampaignType.RELIC_LOTTERY.getName() + "-传闻", service.getClass());
     }
 
 }
