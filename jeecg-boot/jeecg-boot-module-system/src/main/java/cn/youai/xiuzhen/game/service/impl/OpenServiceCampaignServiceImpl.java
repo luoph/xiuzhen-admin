@@ -60,6 +60,19 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
     private String gameCenterUrl;
 
     @Override
+    public List<OpenServiceCampaign> queryCampaignList(Collection<Long> ids) {
+        if (CollUtil.isEmpty(ids)) {
+            return new ArrayList<>();
+        }
+        return list(Wrappers.<OpenServiceCampaign>lambdaQuery().in(OpenServiceCampaign::getId, ids));
+    }
+
+    @Override
+    public List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType) {
+        return getBaseMapper().queryCampaignDetailsFastly(timeType);
+    }
+
+    @Override
     public void duplicate(OpenServiceCampaign other) {
     }
 
@@ -144,11 +157,49 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
     }
 
     @Override
+    public void addCampaignServerIds(List<Integer> serverIds) {
+        List<OpenServiceCampaignDetail> detailList = queryCampaignDetailsFastly(TimeType.OPEN_DAY.getType());
+        if (CollUtil.isEmpty(detailList)) {
+            return;
+        }
+
+        Set<Long> campaignIds = new HashSet<>();
+        for (OpenServiceCampaignDetail campaignDetail : detailList) {
+            if (campaignIds.contains(campaignDetail.getCampaignId())) {
+                continue;
+            }
+
+            List<Integer> serverIdList = StringUtils.split2Int(campaignDetail.getServerIds());
+            // 计算差集
+            Collection<Integer> subtract = CollUtil.subtract(serverIds, serverIdList);
+            if (CollUtil.isEmpty(subtract)) {
+                continue;
+            }
+            campaignIds.add(campaignDetail.getCampaignId());
+        }
+
+        List<OpenServiceCampaign> campaignList = queryCampaignList(campaignIds);
+        List<OpenServiceCampaign> changeList = new ArrayList<>();
+        for (OpenServiceCampaign campaign : campaignList) {
+            boolean add = campaign.addServerId(serverIds);
+            if (add) {
+                changeList.add(campaign);
+            }
+        }
+
+        if (CollUtil.isNotEmpty(changeList)) {
+            updateBatchById(changeList);
+            changeList.forEach(this::syncCampaign);
+        }
+    }
+
+    @Override
     public void syncCampaign(OpenServiceCampaign campaign) {
-        List<String> lastIds = StrUtil.splitTrim(campaign.getLastServerIds(), ",");
-        List<String> currentIds = StrUtil.splitTrim(campaign.getServerIds(), ",");
-        Set<String> allIds = new HashSet<>(lastIds);
-        allIds.addAll(currentIds);
+        log.info("syncCampaign id:{}", campaign.getId());
+        Set<String> lastIds = StringUtils.split2Set(campaign.getLastServerIds());
+        Set<String> currentIds = StringUtils.split2Set(campaign.getServerIds());
+        Set<String> allServerIds = new HashSet<>(lastIds);
+        allServerIds.addAll(currentIds);
 
         StopWatch stopWatch = new StopWatch("开服活动同步");
         // 1.通知中心服
@@ -156,25 +207,24 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
         OkHttpHelper.get(gameCenterUrl + "/openServiceCampaign/reloadId?id=" + campaign.getId());
         stopWatch.stop();
 
-        Map<String, Object> params = new HashMap<>(allIds.size());
+        Map<String, Object> params = new HashMap<>(allServerIds.size());
         params.put("id", campaign.getId());
         params.put("name", "OpenService");
 
         // 2.通知游戏服
         stopWatch.start("通知各游戏服重新加载");
-        Map<String, Response> response = gameServerService.gameServerGet(allIds, campaignReloadUrl, params);
+        Map<String, Response> response = gameServerService.gameServerGet(allServerIds, campaignReloadUrl, params);
         log.info("sync id:{} response:{}", campaign.getId(), response);
         stopWatch.stop();
 
         // 3.通知跨服
-        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(allIds.stream().map(Integer::parseInt)
+        Map<Long, Response> gameServerGroupResponse = gameServerGroupService.gameServerGroupGetByServerIds(allServerIds.stream().map(Integer::parseInt)
                 .collect(Collectors.toSet()), campaignReloadUrl, params);
         log.info("sync id:{} response:{}", campaign.getId(), gameServerGroupResponse);
 
         // 4.更新已刷新的服务器id
         stopWatch.start("更新已刷新的服务器id");
-        Collections.sort(currentIds);
-        campaign.setLastServerIds(StrUtil.join(",", currentIds));
+        campaign.setLastServerIds(StrUtil.join(",", campaign.getServerIds()));
         updateById(new OpenServiceCampaign().setId(campaign.getId()).setLastServerIds(campaign.getLastServerIds()));
         stopWatch.stop();
 

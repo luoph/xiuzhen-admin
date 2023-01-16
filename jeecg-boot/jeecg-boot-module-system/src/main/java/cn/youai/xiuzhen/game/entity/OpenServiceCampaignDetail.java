@@ -1,7 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
-import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -99,4 +99,22 @@ public class OpenServiceCampaignDetail extends BaseEntity {
      */
     @Excel(name = "持续时间(天)", width = 15)
     private java.lang.Integer duration;
+
+    /**
+     * 是否跨服
+     */
+    @TableField(exist = false)
+    private Integer cross;
+
+    /**
+     * 开服活动项类型(1.开服排行，2.开服礼包，3.单笔充值，4.寻宝，5.道具消耗)
+     */
+    @TableField(exist = false)
+    private Integer type;
+
+    /**
+     * 服务器id，使用,分割
+     */
+    @TableField(exist = false)
+    private String serverIds;
 }

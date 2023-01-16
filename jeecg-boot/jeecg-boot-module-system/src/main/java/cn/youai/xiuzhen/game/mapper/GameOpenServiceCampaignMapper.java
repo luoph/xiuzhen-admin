@@ -1,7 +1,11 @@
 package cn.youai.xiuzhen.game.mapper;
 
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaign;
+import cn.youai.xiuzhen.game.entity.OpenServiceCampaignDetail;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -10,5 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @date 2020-12-21
  */
 public interface GameOpenServiceCampaignMapper extends BaseMapper<OpenServiceCampaign> {
+
+    List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(@Param("timeType") int timeType);
 
 }
