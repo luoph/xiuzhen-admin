@@ -43,7 +43,7 @@ public enum CampaignType {
     // 夺宝奇兵
     RELIC_LOTTERY(23, "遗迹夺宝", IGameCampaignTypeRelicLotteryService.class, IGameCampaignTypeRelicLotteryMessageService.class),
     STAGE_TASK(24, "阶段任务", IGameCampaignTypeStageTaskService.class, IGameCampaignTypeStageTaskItemService.class),
-    LOTTERY_TOKEN(25, "夺宝战令", null),
+    LOTTERY_TOKEN(25, "夺宝战令", IGameCampaignTypeLotteryTokenService.class),
     // end
     ;
 

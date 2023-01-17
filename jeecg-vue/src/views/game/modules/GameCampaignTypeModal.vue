@@ -138,6 +138,7 @@
       <game-campaign-type-relic-lottery-message-list v-if="isEdit && model.type === 23" ref="relicLotteryMessageList"/>
       <game-campaign-type-stage-task-list v-if="isEdit && model.type === 24" ref="stageTaskList"/>
       <game-campaign-type-stage-task-item-list v-if="isEdit && model.type === 24" ref="stageTaskItemList"/>
+      <game-campaign-type-lottery-token-list v-if="isEdit && model.type === 25" ref="lotteryTokenList"/>
     </a-spin>
   </a-modal>
 </template>
@@ -174,6 +175,7 @@ import GameCampaignTypeRelicLotteryList from '../GameCampaignTypeRelicLotteryLis
 import GameCampaignTypeRelicLotteryMessageList from '../GameCampaignTypeRelicLotteryMessageList';
 import GameCampaignTypeStageTaskList from '../GameCampaignTypeStageTaskList';
 import GameCampaignTypeStageTaskItemList from '../GameCampaignTypeStageTaskItemList';
+import GameCampaignTypeLotteryTokenList from '../GameCampaignTypeLotteryTokenList';
 
 export default {
   name: 'GameCampaignTypeModal',
@@ -205,7 +207,8 @@ export default {
     GameCampaignTypeRelicLotteryList,
     GameCampaignTypeRelicLotteryMessageList,
     GameCampaignTypeStageTaskList,
-    GameCampaignTypeStageTaskItemList
+    GameCampaignTypeStageTaskItemList,
+    GameCampaignTypeLotteryTokenList
   },
   data() {
     return {
@@ -341,6 +344,9 @@ export default {
           }
           if (this.$refs.stageTaskItemList) {
             this.$refs.stageTaskItemList.edit(record);
+          }
+          if (this.$refs.lotteryTokenList) {
+            this.$refs.lotteryTokenList.edit(record);
           }
         }
 
