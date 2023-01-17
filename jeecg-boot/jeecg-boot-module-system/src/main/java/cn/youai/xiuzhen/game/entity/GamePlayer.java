@@ -19,8 +19,8 @@ import java.util.Date;
  * @date 2019-12-10
  */
 @Data
-@TableName("game_player")
 @Accessors(chain = true)
+@TableName("game_player")
 @ApiModel(value = "GamePlayer", description = "玩家")
 public class GamePlayer {
 

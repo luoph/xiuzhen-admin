@@ -26,8 +26,6 @@ public interface ILogAccountService extends IService<LogAccount> {
 
     BigDecimal queryDau(Date getTime);
 
-    List<Integer> selectRunningServerIds(Date countDate);
-
     List<Integer> selectRunningServerIdsByRange(Date startDate, Date endDate);
 
     String queryPlayerIp(Long playerId, Date createDate);
@@ -37,17 +35,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 登录注册角色数
      */
-    int serverLoginRegisterPlayerNum(int serverId, Date date, int type);
-
-    /**
-     * 登录注册角色数
-     */
-    int channelLoginRegisterPlayerNum(String channel, Integer serverId, Date date, int type);
-
-    /**
-     * 新注册付费总额
-     */
-    BigDecimal serverRegisterPayAmount(int serverId, Date date);
+    int channelLoginRegisterPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, int type);
 
     /**
      * 新注册付费总额
@@ -57,12 +45,7 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 新注册付费玩家
      */
-    int serverRegisterPayPlayerNum(int serverId, Date date);
-
-    /**
-     * 新注册付费玩家
-     */
-    int channelRegisterPayPlayerNum(String channel, Integer serverId, Date date);
+    int channelRegisterPayPlayerNum(String channel, String sdkChannel, Integer serverId, Date date);
 
     /**
      * 二次付费玩家
@@ -82,16 +65,6 @@ public interface ILogAccountService extends IService<LogAccount> {
      * @return Map<String, List < Long>> 日期-活跃玩家s
      */
     Map<String, List<Long>> getPlayerIdsByLoginDates(int serverId, List<JSONObject> dateList);
-
-    /**
-     * 批量日期，查询每日活跃玩家数量
-     *
-     * @param serverId 服务器id
-     * @param dateList 批量日期
-     * @param type     统计类型 1-按天 2-按月 3-按年
-     * @return Map<String, Integer> 日期-活跃玩家数量
-     */
-    Map<String, Integer> getPlayerNumByLoginDates(int serverId, List<Date> dateList, int type);
 
     /**
      * 指定日期没登陆玩家id

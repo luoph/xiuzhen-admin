@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.GameStatConversionMapper">
+
+    <insert id="updateOrInsert" parameterType="list">
+        replace into `game_stat_conversion`
+        (channel,
+        sdk_channel,
+        server_id,
+        new_account_num,
+        new_player_num,
+        new_player_pay_num,
+        new_conversion_rate,
+        new_player_pay_rate,
+        count_date,
+        create_time)
+        VALUES
+        <foreach collection="list" item="it" separator=",">
+            (#{it.channel},
+            #{it.sdkChannel},
+            #{it.serverId},
+            #{it.newAccountNum},
+            #{it.newPlayerNum},
+            #{it.newPlayerPayNum},
+            #{it.newConversionRate},
+            #{it.newPlayerPayRate},
+            #{it.countDate},
+            now())
+        </foreach>
+    </insert>
+
+</mapper>
