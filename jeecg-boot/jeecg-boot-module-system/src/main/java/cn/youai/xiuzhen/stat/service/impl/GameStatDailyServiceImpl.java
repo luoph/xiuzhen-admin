@@ -48,13 +48,13 @@ public class GameStatDailyServiceImpl extends ServiceImpl<GameStatDailyMapper, G
         // 支付玩家数
         int payPlayerNum = payOrderService.channelPayPlayerNum(channel, serverId, date);
         // 当天登录角色数
-        int loginNum = logAccountService.channelLoginRegisterPlayerNum(channel, serverId, date, AccountLogType.LOGIN.getType());
+        int loginNum = logAccountService.channelLoginRegisterPlayerNum(channel, null, serverId, date, AccountLogType.LOGIN.getType());
         // 当天注册角色数
-        int registerPlayer = logAccountService.channelLoginRegisterPlayerNum(channel, serverId, date, AccountLogType.REGISTER.getType());
+        int registerPlayer = logAccountService.channelLoginRegisterPlayerNum(channel, null, serverId, date, AccountLogType.REGISTER.getType());
         // 注册付费总金额
         BigDecimal registerPayAmount = logAccountService.channelRegisterPayAmount(channel, serverId, date);
         // 注册付费玩家
-        int registerPayPlayer = logAccountService.channelRegisterPayPlayerNum(channel, serverId, date);
+        int registerPayPlayer = logAccountService.channelRegisterPayPlayerNum(channel, null, serverId, date);
         // 注册二次付费玩家
         int doublePayPlayer = logAccountService.channelDoublePayRegisterPlayer(channel, serverId, date);
         return GameStatDaily.of(channel, serverId, date, payAmount, payPlayerNum, loginNum, registerPlayer, registerPayAmount, registerPayPlayer, doublePayPlayer);

@@ -10,12 +10,6 @@
           AND `type` = 2
     </select>
 
-    <select id="selectRunningServerIds" resultType="java.lang.Integer">
-        SELECT DISTINCT(l.`server_id`)
-        FROM `log_account` l
-        WHERE l.`create_date` = DATE(#{countDate})
-    </select>
-
     <select id="selectRunningServerIdsByRange" resultType="java.lang.Integer">
         <![CDATA[
         SELECT DISTINCT(l.`server_id`)
@@ -59,32 +53,15 @@
         </where>
     </select>
 
-    <select id="serverLoginRegisterPlayerNum" resultType="int">
-        SELECT COUNT(DISTINCT l.`player_id`) AS counNum
-        FROM `log_account` l
-        WHERE l.`server_id` = #{serverId}
-          AND l.`type` = #{type}
-          AND l.`create_date` = DATE(#{date});
-    </select>
-
-    <select id="channelLoginRegisterPlayerNum" resultType="int">
+    <select id="channelLoginRegisterPlayerNum" resultType="java.lang.Integer">
         SELECT COUNT(DISTINCT l.`player_id`) AS counNum
         FROM `log_account` l
         LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = #{type}
         AND l.`create_date` = DATE(#{date})
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
-    </select>
-
-    <select id="serverRegisterPayAmount" resultType="java.math.BigDecimal">
-        SELECT IFNULL(sum(o.`pay_amount`), 0) AS payAmount
-        FROM `game_order` o
-            LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`server_id` = #{serverId}
-          AND p.`create_date` = DATE(#{date})
-          AND o.`server_id`= #{serverId}
-          AND o.`create_date` = DATE(#{date});
     </select>
 
     <select id="channelRegisterPayAmount" resultType="java.math.BigDecimal">
@@ -97,26 +74,18 @@
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
-    <select id="serverRegisterPayPlayerNum" resultType="int">
-        SELECT count(DISTINCT o.`player_id`) AS payAmount
-        FROM `game_order` o
-            JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`server_id` = #{serverId}
-          AND p.`create_date` = DATE(#{date})
-          AND o.`create_date` = DATE(#{date});
-    </select>
-
-    <select id="channelRegisterPayPlayerNum" resultType="int">
+    <select id="channelRegisterPayPlayerNum" resultType="java.lang.Integer">
         SELECT count(DISTINCT o.`player_id`) AS payAmount
         FROM `game_order` o
         JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`create_date` = DATE(#{date})
         AND o.`create_date` = DATE(#{date})
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
-    <select id="channelDoublePayRegisterPlayer" resultType="int">
+    <select id="channelDoublePayRegisterPlayer" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM (SELECT COUNT(o.`player_id`) AS num
         FROM `game_order` o

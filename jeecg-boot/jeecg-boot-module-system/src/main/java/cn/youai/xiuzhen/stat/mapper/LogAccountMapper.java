@@ -26,8 +26,6 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
 
     BigDecimal queryDau(@Param("getTime") Date getTime);
 
-    List<Integer> selectRunningServerIds(@Param("countDate") Date countDate);
-
     List<Integer> selectRunningServerIdsByRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     String queryPlayerIp(@Param("playerId") Long playerId, @Param("createDate") Date createDate);
@@ -41,20 +39,11 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
      * 当天登录/注册玩家数
      */
-    int serverLoginRegisterPlayerNum(@Param("serverId") int serverId, @Param("date") Date createTime, @Param("type") int type);
-
-    /**
-     * 当天登录/注册玩家数
-     */
     int channelLoginRegisterPlayerNum(@Param("channel") String channel,
+                                      @Param("sdkChannel") String sdkChannel,
                                       @Param("serverId") Integer serverId,
                                       @Param("date") Date createTime,
                                       @Param("type") int type);
-
-    /**
-     * 新增注册付费总额
-     */
-    BigDecimal serverRegisterPayAmount(@Param("serverId") int serverId, @Param("date") Date date);
 
     /**
      * 新增注册付费总额
@@ -63,15 +52,12 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
                                         @Param("serverId") Integer serverId,
                                         @Param("date") Date date);
 
-    /**
-     * 新增注册付费玩家
-     */
-    int serverRegisterPayPlayerNum(@Param("serverId") int serverId, @Param("date") Date date);
 
     /**
      * 新增注册付费玩家
      */
     int channelRegisterPayPlayerNum(@Param("channel") String channel,
+                                    @Param("sdkChannel") String sdkChannel,
                                     @Param("serverId") Integer serverId,
                                     @Param("date") Date date);
 

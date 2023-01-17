@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
@@ -24,8 +25,9 @@ import java.util.Date;
  * @date 2020-01-05
  */
 @Data
-@TableName("game_order")
 @Accessors(chain = true)
+@TableName("game_order")
+@ApiModel(value = "GameOrder", description = "充值订单")
 public class GameOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -23,8 +23,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("game_notice")
 @Accessors(chain = true)
+@TableName("game_notice")
 @ApiModel(value = "GameNotice", description = "游戏公告")
 public class GameNotice extends BaseEntity {
 

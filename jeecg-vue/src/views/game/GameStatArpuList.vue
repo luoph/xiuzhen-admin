@@ -4,7 +4,7 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="45">
-          <a-col :md="10" :sm="8">
+          <a-col :md="12" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
           </a-col>

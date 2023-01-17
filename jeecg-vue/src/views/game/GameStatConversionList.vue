@@ -6,16 +6,22 @@
         <a-row :gutter="24">
           <a-col :md="12" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
+            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+            <a-form-item label="Sdk渠道">
+              <a-select v-model="queryParam.sdkChannel" placeholder="请选择Sdk渠道">
+                <a-select-option v-for="sdkChannel in sdkChannelList" :key="sdkChannel" :value="sdkChannel">
+                  {{ sdkChannel }}
+                </a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
-            <a-form-item label="统计时间">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+            <a-form-item label="统计日期">
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -32,28 +38,26 @@
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
         </a-row>
       </a-form>
     </div>
-    <!-- 查询区域-END -->
-    <!-- 操作按钮区域 -->
-    <div class="table-operator">
-      <a-button type="primary" icon="download" @click="handleExportXls('战力日志')">导出</a-button>
-    </div>
+    <!--查询区域结束-->
     <!-- table区域-begin -->
     <div>
       <a-table
         ref="table"
         size="middle"
         bordered
-        rowKey="rowIndex"
+        rowKey="id"
         :columns="columns"
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
+        :scroll="{ x: 'max-content' }"
         @change="handleTableChange"
       />
     </div>
@@ -61,94 +65,134 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import { getAction } from '@/api/manage';
-import { filterObj } from '@/utils/util';
-
+import {getAction} from '@/api/manage';
+import {filterObj} from '@/utils/util';
+import moment from 'moment';
 import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
-import moment from 'moment/moment';
 
 export default {
-  name: 'GameStatCombatPowerLogList',
-  description: '战力日志',
+  description: '新增转化数据',
+  name: 'GameStatConversionList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    getAction,
-    ChannelServerSelector
+    ChannelServerSelector,
+    getAction
   },
   data() {
     return {
+      /* 排序参数 */
+      isorter: {
+        column: 'countDate',
+        order: 'desc'
+      },
       dayType: 7,
-      timeout: 60000,
-      // 表头
+      sdkChannelList: [],
       columns: [
         {
           title: '#',
-          dataIndex: 'id',
-          key: 'rowIndex',
-          width: 60,
+          dataIndex: '',
+          width: '4%',
           align: 'center',
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
         {
-          title: '玩家id',
+          title: '日期',
+          dataIndex: 'countDate',
+          width: '6%',
           align: 'center',
-          dataIndex: 'playerId'
+          customRender: function (text) {
+            return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
+          }
         },
         {
-          title: '玩家名',
-          align: 'center',
-          dataIndex: 'nickname'
+          title: '渠道',
+          dataIndex: 'channel',
+          width: '6%',
+          align: 'center'
         },
         {
-          title: '战力变更',
+          title: '区服',
+          dataIndex: 'serverId',
+          width: '6%',
           align: 'center',
-          dataIndex: 'delta'
+          customRender: function (text) {
+            return text === 0 ? '全部' : text;
+          }
         },
         {
-          title: '原战力',
+          title: '新增账号',
+          dataIndex: 'newAccountNum',
           align: 'center',
-          dataIndex: 'before'
+          width: '5%'
         },
         {
-          title: '新战力',
+          title: '新增角色',
+          dataIndex: 'newPlayerNum',
           align: 'center',
-          dataIndex: 'after'
+          width: '5%'
         },
         {
-          title: '模块id',
+          title: '新增付费角色数',
+          dataIndex: 'newPlayerPayNum',
           align: 'center',
-          dataIndex: 'attrType'
+          width: '5%'
         },
         {
-          title: '属性模块',
+          title: '账号角色转化率',
+          dataIndex: 'newConversionRate',
           align: 'center',
-          dataIndex: 'attrName'
+          width: '5%',
+          customRender: function (text) {
+            return text + '%';
+          }
         },
         {
-          title: '时间',
+          title: '新增付费率',
+          dataIndex: 'newPlayerPayRate',
           align: 'center',
-          dataIndex: 'createTime'
+          width: '5%',
+          customRender: function (text) {
+            return text + '%';
+          }
         }
       ],
       url: {
-        list: 'game/stat/combatPowerLog/list',
-        exportXlsUrl: 'game/stat/combatPowerLog/exportXls'
+        list: 'game/stat/conversion/list',
+        update: 'game/stat/conversion/update',
+        sdkChannels: 'game/account/sdkChannels'
       },
       dictOptions: {}
     };
   },
   computed: {},
+  created() {
+    this.querySdkChannelList();
+  },
   methods: {
     onSelectChannel: function (channel) {
       this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
+    },
+    querySdkChannelList() {
+      let that = this;
+      getAction(that.url.sdkChannels).then((res) => {
+        if (res.success) {
+          if (res.result instanceof Array) {
+            this.sdkChannelList = res.result;
+          } else if (res.result.records instanceof Array) {
+            this.sdkChannelList = res.result.records;
+          }
+        } else {
+          this.sdkChannelList = [];
+        }
+      });
     },
     getQueryParams() {
       if (this.dayType > 0) {
@@ -185,9 +229,27 @@ export default {
         this.queryParam.countDate_begin = start;
         this.queryParam.countDate_end = end;
       }
+    },
+    onClickUpdate() {
+      // 查询条件
+      const params = this.getQueryParams();
+      this.loading = true;
+      getAction(this.url.update, params, this.timeout)
+        .then((res) => {
+          if (res.success) {
+            this.$message.success(res.message);
+          } else {
+            this.$message.warning(res.message);
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+          this.searchQuery();
+        });
     }
   }
-};
+}
+;
 </script>
 
 <style scoped>
