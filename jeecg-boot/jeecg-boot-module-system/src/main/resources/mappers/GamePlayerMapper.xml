@@ -61,6 +61,7 @@
                 <if test="null != createDateRange.end"><![CDATA[AND p.`create_date` <= #{createDateRange.end}]]></if>
             </if>
         </where>
+        ORDER BY p.`create_time` DESC
     </select>
 
     <!-- 玩家日志查询映射结果 -->
