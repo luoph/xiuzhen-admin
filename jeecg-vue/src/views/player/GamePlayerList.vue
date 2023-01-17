@@ -11,7 +11,7 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="昵称">
-              <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname"/>
+              <a-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
