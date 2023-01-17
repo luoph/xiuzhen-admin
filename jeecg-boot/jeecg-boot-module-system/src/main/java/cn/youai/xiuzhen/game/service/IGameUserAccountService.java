@@ -7,6 +7,7 @@ import cn.youai.xiuzhen.game.entity.GameUserAccount;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -17,6 +18,8 @@ import java.util.Date;
  * @since 2023-01-17
  */
 public interface IGameUserAccountService extends IService<GameUserAccount> {
-    int userAccountNum(String channel, String sdkChannel, Date date);
+    int queryUserAccountNum(String channel, String sdkChannel, Date date);
+
+    List<String> querySdkChannels();
 
 }

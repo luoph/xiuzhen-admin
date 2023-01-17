@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.GameUserAccountMapper">
 
-    <select id="userAccountNum" resultType="java.lang.Integer">
+    <select id="queryUserAccountNum" resultType="java.lang.Integer">
         SELECT COUNT(*) AS counNum
         FROM `game_user_account` a
         <where>
@@ -13,6 +13,12 @@
             <if test="channel != null and channel != ''"><![CDATA[ AND a.`channel` = #{channel} ]]></if>
             <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND a.`sdk_channel` = #{sdkChannel} ]]></if>
         </where>
+    </select>
+
+    <select id="querySdkChannels" resultType="java.lang.String">
+        SELECT DISTINCT (`sdk_channel`)
+        FROM `game_user_account`
+        WHERE `sdk_channel` IS NOT NULL AND `sdk_channel` != ''
     </select>
 
 </mapper>

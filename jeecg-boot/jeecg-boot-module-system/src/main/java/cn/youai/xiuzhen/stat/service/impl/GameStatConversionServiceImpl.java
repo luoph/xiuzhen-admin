@@ -41,7 +41,7 @@ public class GameStatConversionServiceImpl extends ServiceImpl<GameStatConversio
 
     @Override
     public GameStatConversion getGameStatConversion(String channel, String sdkChannel, Integer serverId, Date date) {
-        int newAccountNum = userAccountService.userAccountNum(channel, sdkChannel, date);
+        int newAccountNum = userAccountService.queryUserAccountNum(channel, sdkChannel, date);
         // 当天注册角色数
         int newPlayerNum = logAccountService.channelLoginRegisterPlayerNum(channel, sdkChannel, serverId, date, AccountLogType.REGISTER.getType());
         // 新用户付费角色数

@@ -9,6 +9,15 @@
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
           </a-col>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="Sdk渠道">
+              <a-select v-model="queryParam.sdkChannel" placeholder="请选择Sdk渠道">
+                <a-select-option v-for="sdkChannel in sdkChannelList" :key="sdkChannel" :value="sdkChannel">
+                  {{ sdkChannel }}
+                </a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
               <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
@@ -80,6 +89,7 @@ export default {
         order: 'desc'
       },
       dayType: 7,
+      sdkChannelList: [],
       columns: [
         {
           title: '#',
@@ -153,18 +163,36 @@ export default {
       ],
       url: {
         list: 'game/stat/conversion/list',
-        update: 'game/stat/conversion/update'
+        update: 'game/stat/conversion/update',
+        sdkChannels: 'game/account/sdkChannels'
       },
       dictOptions: {}
     };
   },
   computed: {},
+  created() {
+    this.querySdkChannelList();
+  },
   methods: {
     onSelectChannel: function (channel) {
       this.queryParam.channel = channel;
     },
     onSelectServer: function (serverId) {
       this.queryParam.serverId = serverId;
+    },
+    querySdkChannelList() {
+      let that = this;
+      getAction(that.url.sdkChannels).then((res) => {
+        if (res.success) {
+          if (res.result instanceof Array) {
+            this.sdkChannelList = res.result;
+          } else if (res.result.records instanceof Array) {
+            this.sdkChannelList = res.result.records;
+          }
+        } else {
+          this.sdkChannelList = [];
+        }
+      });
     },
     getQueryParams() {
       if (this.dayType > 0) {
@@ -220,7 +248,8 @@ export default {
         });
     }
   }
-};
+}
+;
 </script>
 
 <style scoped>

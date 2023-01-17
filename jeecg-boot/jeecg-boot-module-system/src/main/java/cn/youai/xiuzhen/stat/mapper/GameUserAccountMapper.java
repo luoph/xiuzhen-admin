@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -18,6 +19,7 @@ import java.util.Date;
  * @since 2021-12-07
  */
 public interface GameUserAccountMapper extends BaseMapper<GameUserAccount> {
-    int userAccountNum(@Param("channel") String channel, @Param("sdkChannel") String sdkChannel, @Param("date") Date date);
+    int queryUserAccountNum(@Param("channel") String channel, @Param("sdkChannel") String sdkChannel, @Param("date") Date date);
 
+    List<String> querySdkChannels();
 }

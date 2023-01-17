@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -24,8 +25,13 @@ import java.util.Date;
 @DS("master")
 public class GameUserAccountServiceImpl extends ServiceImpl<GameUserAccountMapper, GameUserAccount> implements IGameUserAccountService {
     @Override
-    public int userAccountNum(String channel, String sdkChannel, Date date) {
-        return getBaseMapper().userAccountNum(channel, sdkChannel, date);
+    public int queryUserAccountNum(String channel, String sdkChannel, Date date) {
+        return getBaseMapper().queryUserAccountNum(channel, sdkChannel, date);
+    }
+
+    @Override
+    public List<String> querySdkChannels() {
+        return getBaseMapper().querySdkChannels();
     }
 
 }
