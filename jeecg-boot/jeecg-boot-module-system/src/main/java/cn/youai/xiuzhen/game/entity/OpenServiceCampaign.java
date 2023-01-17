@@ -1,5 +1,8 @@
 package cn.youai.xiuzhen.game.entity;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.youai.basics.utils.StringUtils;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,6 +13,8 @@ import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -102,5 +107,18 @@ public class OpenServiceCampaign extends BaseEntity {
 
     @TableField(exist = false)
     private List<OpenServiceCampaignType> typeList;
+
+    @SuppressWarnings("DuplicatedCode")
+    public boolean addServerId(Collection<Integer> serverIds) {
+        List<Integer> all = StringUtils.split2Int(getServerIds());
+        Collection<Integer> subtract = CollUtil.subtract(all, serverIds);
+        if (CollUtil.isEmpty(subtract)) {
+            return false;
+        }
+        all.addAll(serverIds);
+        Collections.sort(all);
+        setServerIds(StrUtil.join(",", all));
+        return true;
+    }
 
 }

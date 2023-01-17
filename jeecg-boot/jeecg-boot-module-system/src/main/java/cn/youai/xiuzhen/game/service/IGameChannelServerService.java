@@ -14,6 +14,9 @@ import java.util.List;
  * @date 2019-12-11
  */
 public interface IGameChannelServerService extends IService<GameChannelServer> {
+
+    void autoAddCampaignServerIds(List<Integer> serverIds);
+
     /**
      * 通过渠道id查询对应的服务器
      *

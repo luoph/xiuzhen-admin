@@ -263,13 +263,16 @@ export default {
         title: title,
         content: content,
         onOk: function () {
+          that.loading = true;
           getAction(url, parameter).then((res) => {
             if (res.success) {
               that.$message.success(res.message);
             } else {
               that.$message.error(res.message);
             }
-            that.loadData();
+          }).finally(()=>{
+            that.loading = false
+            that.searchQuery();
           });
         }
       });

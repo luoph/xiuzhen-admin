@@ -71,6 +71,7 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
     }
 
     @Override
+    @SuppressWarnings("DuplicatedCode")
     public void addCampaignServerIds(List<Integer> serverIds) {
         // 只处理 开服N天的活动
         List<GameCampaign> campaignList = queryCampaignListByTimeType(TimeType.OPEN_DAY);
@@ -79,21 +80,12 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
         }
 
         for (GameCampaign campaign : campaignList) {
-            List<Integer> serverIdList = StringUtils.split2Int(campaign.getServerIds());
-            // 计算差集
-            Collection<Integer> subtract = CollUtil.subtract(serverIds, serverIdList);
-            if (CollUtil.isEmpty(subtract)) {
-                continue;
+            boolean changed = campaign.addServerId(serverIds);
+            if (changed) {
+                updateCampaign(campaign);
+                // 同步到游戏服
+                syncCampaign(campaign);
             }
-
-            serverIdList.addAll(subtract);
-            log.info("addCampaignServerIds campaignId:{}, serverIds:{}", campaign.getId(), subtract);
-            Collections.sort(serverIdList);
-            campaign.setServerIds(StrUtil.join(",", serverIdList));
-            updateCampaign(campaign);
-
-            // 同步到游戏服
-            syncCampaign(campaign);
         }
     }
 

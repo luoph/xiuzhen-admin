@@ -286,13 +286,14 @@ export default {
         onOk: function () {
           that.loading = true;
           requestFunction(url, parameter).then((res) => {
-            that.loading = false;
             if (res.success) {
               that.$message.success(res.message);
             } else {
               that.$message.error(res.message);
             }
-            that.loadData();
+          }).finally(()=>{
+            that.loading = false
+            that.searchQuery();
           });
         }
       });

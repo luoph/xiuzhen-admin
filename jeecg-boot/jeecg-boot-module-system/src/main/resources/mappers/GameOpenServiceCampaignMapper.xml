@@ -2,4 +2,113 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameOpenServiceCampaignMapper">
 
+    <select id="queryCampaignDetailsFastly" resultType="cn.youai.xiuzhen.game.entity.OpenServiceCampaignDetail">
+        SELECT d.`id`,
+        g.`id` AS `campaign_id`,
+        t.`id` AS `campaign_type_id`,
+        g.`name`,
+        d.`tab_name`,
+        d.`time_type`,
+        d.`start_day`,
+        d.`duration`,
+        d.`start_time`,
+        d.`end_time`,
+        t.`type`,
+        g.`server_ids`,
+        g.`cross`
+        FROM `game_open_service_campaign` g
+        LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
+        LEFT JOIN `game_open_service_campaign_consume_detail` d ON t.`id` = d.`campaign_type_id`
+        WHERE d.`campaign_id` = g.`id`
+        <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
+        GROUP BY g.`id`
+
+        UNION ALL
+
+        SELECT d.`id`,
+        g.`id` AS `campaign_id`,
+        t.`id` AS `campaign_type_id`,
+        g.`name`,
+        d.`tab_name`,
+        d.`time_type`,
+        d.`start_day`,
+        d.`duration`,
+        d.`start_time`,
+        d.`end_time`,
+        t.`type`,
+        g.`server_ids`,
+        g.`cross`
+        FROM `game_open_service_campaign` g
+        LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
+        LEFT JOIN `game_open_service_campaign_gift_detail` d ON t.`id` = d.`campaign_type_id`
+        WHERE d.`campaign_id` = g.`id`
+        <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
+        GROUP BY g.`id`
+
+        UNION ALL
+
+        SELECT d.`id`,
+        g.`id` AS `campaign_id`,
+        t.`id` AS `campaign_type_id`,
+        g.`name`,
+        d.`tab_name`,
+        d.`time_type`,
+        d.`start_day`,
+        d.`duration`,
+        d.`start_time`,
+        d.`end_time`,
+        t.`type`,
+        g.`server_ids`,
+        g.`cross`
+        FROM `game_open_service_campaign` g
+        LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
+        LEFT JOIN `game_open_service_campaign_lottery_detail` d ON t.`id` = d.`campaign_type_id`
+        WHERE d.`campaign_id` = g.`id`
+        <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
+        GROUP BY g.`id`
+
+        UNION ALL
+
+        SELECT d.`id`,
+        g.`id` AS `campaign_id`,
+        t.`id` AS `campaign_type_id`,
+        g.`name`,
+        d.`tab_name`,
+        d.`time_type`,
+        d.`start_day`,
+        d.`duration`,
+        d.`start_time`,
+        d.`end_time`,
+        t.`type`,
+        g.`server_ids`,
+        g.`cross`
+        FROM `game_open_service_campaign` g
+        LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
+        LEFT JOIN `game_open_service_campaign_rank_detail` d ON t.`id` = d.`campaign_type_id`
+        WHERE d.`campaign_id` = g.`id`
+        <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
+        GROUP BY g.`id`
+
+        UNION ALL
+
+        SELECT d.`id`,
+        g.`id` AS `campaign_id`,
+        t.`id` AS `campaign_type_id`,
+        g.`name`,
+        d.`tab_name`,
+        d.`time_type`,
+        d.`start_day`,
+        d.`duration`,
+        d.`start_time`,
+        d.`end_time`,
+        t.`type`,
+        g.`server_ids`,
+        g.`cross`
+        FROM `game_open_service_campaign` g
+        LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
+        LEFT JOIN `game_open_service_campaign_single_gift_detail` d ON t.`id` = d.`campaign_type_id`
+        WHERE d.`campaign_id` = g.`id`
+        <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
+        GROUP BY g.`id`
+    </select>
 </mapper>

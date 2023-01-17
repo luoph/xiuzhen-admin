@@ -6,9 +6,13 @@ import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.mapper.GameChannelServerMapper;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
+import cn.youai.xiuzhen.game.service.IOpenServiceCampaignService;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +27,19 @@ import java.util.List;
 @Service
 @DS("master")
 public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerMapper, GameChannelServer> implements IGameChannelServerService {
+
+    @Autowired
+    private IGameCampaignService gameCampaignService;
+
+    @Autowired
+    private IOpenServiceCampaignService openServiceCampaignService;
+
+    @Async
+    @Override
+    public void autoAddCampaignServerIds(List<Integer> serverIds) {
+        gameCampaignService.addCampaignServerIds(serverIds);
+        openServiceCampaignService.addCampaignServerIds(serverIds);
+    }
 
     @Override
     public List<GameServerVO> selectServerListByChannelId(int channelId) {
