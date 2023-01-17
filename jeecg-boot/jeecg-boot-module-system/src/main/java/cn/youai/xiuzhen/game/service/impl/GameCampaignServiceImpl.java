@@ -80,8 +80,7 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
         }
 
         for (GameCampaign campaign : campaignList) {
-            List<Integer> serverIdList = StringUtils.split2Int(campaign.getServerIds());
-            boolean changed = campaign.addServerId(serverIdList);
+            boolean changed = campaign.addServerId(serverIds);
             if (changed) {
                 updateCampaign(campaign);
                 // 同步到游戏服
