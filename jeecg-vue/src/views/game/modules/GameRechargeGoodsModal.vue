@@ -66,6 +66,7 @@
             <a-select-option :value="16">16-开服目标活动-任务礼包</a-select-option>
             <a-select-option :value="17">17-系统直购礼包</a-select-option>
             <a-select-option :value="18">18-成长基金</a-select-option>
+            <a-select-option :value="19">19-节日活动-夺宝战令</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">

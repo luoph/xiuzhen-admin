@@ -262,6 +262,8 @@ export default {
               text = '17-系统直购礼包';
             } else if (value === 18) {
               text = '18-成长基金';
+            } else if (value === 19) {
+              text = '19-节日活动-夺宝战令';
             }
             return text;
           }
