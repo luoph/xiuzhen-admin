@@ -19,14 +19,20 @@
         LEFT JOIN `game_player` p ON v.`player_id` = p.`player_id`
         <where>
             <if test="entity != null">
+                <if test="entity.serverId != null and entity.serverId > 0">
+                    AND p.`server_id` = #{entity.serverId}
+                </if>
+                <if test="entity.playerId != null and entity.playerId > 0">
+                    AND p.`player_id` = #{entity.playerId}
+                </if>
                 <if test="entity.nickname != null and entity.nickname != ''">
                     AND p.nickname LIKE CONCAT('%',#{entity.nickname},'%')
                 </if>
                 <if test="entity.channel != null and entity.channel != ''">
                     AND p.channel = #{entity.channel}
                 </if>
-                <if test="entity.serverId != null and entity.serverId > 0">
-                    AND p.`server_id` = #{entity.serverId}
+                <if test="entity.sdkChannel != null and entity.sdkChannel != ''">
+                    AND p.`sdk_channel` = #{entity.sdkChannel}
                 </if>
             </if>
         </where>
