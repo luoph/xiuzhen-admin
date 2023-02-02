@@ -26,6 +26,9 @@
             <a-select-option :value="10">10-剧情挂机</a-select-option>
             <a-select-option :value="11">11-法宝秘境</a-select-option>
             <a-select-option :value="12">12-仙盟妖灵</a-select-option>
+            <a-select-option :value="13">13-九幽魔窟</a-select-option>
+            <a-select-option :value="14">14-天魔异巢</a-select-option>
+            <a-select-option :value="15">15-幽冥魔域</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="奖励类型" :labelCol="labelCol" :wrapperCol="wrapperCol">

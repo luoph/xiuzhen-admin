@@ -144,6 +144,12 @@ export default {
               text = '11-法宝秘境';
             } else if (value === 12) {
               text = '12-仙盟妖灵';
+            } else if (value === 13) {
+              text = '13-九幽魔窟';
+            } else if (value === 14) {
+              text = '14-天魔异巢';
+            } else if (value === 15) {
+              text = '15-幽冥魔域';
             }
             return text;
           }
