@@ -33,7 +33,8 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
-              <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
+              <a-button type="primary" icon="download" @click="handleExportXls('付费排行')">导出</a-button>
+              <a-button type="primary" icon="search" style="margin-left: 8px" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
@@ -208,6 +209,7 @@ export default {
         list: 'game/stat/rechargeRank/list',
         addVip: 'game/vip/addVip',
         deleteVip: 'game/vip/delete',
+        exportXlsUrl: 'game/stat/rechargeRank/exportXls'
       },
       dictOptions: {}
     };
