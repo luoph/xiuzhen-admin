@@ -59,6 +59,9 @@ public class GameVirtualOrder implements Serializable {
     @Excel(name = "商品id", width = 15)
     private java.lang.Integer goodsId;
 
+    @TableField(exist = false)
+    private String goodsIds;
+
     /**
      * 状态，0-失败 1-成功
      */

@@ -2,6 +2,7 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.youai.basics.model.Response;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.entity.GameServer;
@@ -96,21 +97,24 @@ public class GameVirtualOrderController extends JeecgController<GameVirtualOrder
             return Result.error("找不到区服信息:" + playerInfo.getServerId());
         }
 
-        ImmutableMap<String, Object> params = ImmutableMap.of("playerId", entity.getPlayerId(),
-                "goodsId", entity.getGoodsId());
-        try {
-            Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + fakeOrderUrl, params), Response.class);
-            if (response != null && response.isSuccess()) {
-                entity.setStatus(1);
-            } else {
-                entity.setStatus(0);
-            }
-        } catch (Exception e) {
-            entity.setStatus(0);
-            log.error("create virtual order error, playerId:" + entity.getPlayerId() + ", goodsId:" + entity.getGoodsId(), e);
+        List<Integer> goodsIdList = StringUtils.split2Int(entity.getGoodsIds());
+        if (goodsIdList.isEmpty()) {
+            return Result.error("订单号为空:" + entity.getGoodsIds());
         }
 
-        return super.add(entity);
+        goodsIdList.forEach(goodsId -> {
+            entity.setId(null).setGoodsId(goodsId);
+            ImmutableMap<String, Object> params = ImmutableMap.of("playerId", entity.getPlayerId(), "goodsId", goodsId);
+            try {
+                Response response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + fakeOrderUrl, params), Response.class);
+                entity.setStatus(response != null && response.isSuccess() ? 1 : 0);
+            } catch (Exception e) {
+                entity.setStatus(0);
+                log.error("create virtual order error, playerId:" + entity.getPlayerId() + ", goodsId:" + goodsId, e);
+            }
+            super.add(entity);
+        });
+        return Result.ok("充值成功");
     }
 
     @AutoLog(value = "虚拟充值订单-编辑")

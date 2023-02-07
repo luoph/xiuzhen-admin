@@ -5,12 +5,10 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['playerId', validatorRules.playerId]" placeholder="请输入玩家id" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="商品id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品id"
-                          style="width: 100%"/>
+          <a-input v-decorator="['goodsIds', validatorRules.goodsIds]" placeholder="请输入商品id（如：1001, 1002, 1003）" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
@@ -52,7 +50,7 @@ export default {
       validatorRules: {
         serverId: {},
         playerId: {rules: [{required: true, message: '请输入玩家id!'}]},
-        goodsId: {rules: [{required: true, message: '请输入商品id!'}]},
+        goodsIds: {rules: [{required: true, message: '请输入商品id!'}]},
         remark: {rules: [{required: true, message: '请输入备注!'}]}
       },
       url: {
@@ -72,7 +70,7 @@ export default {
       this.model = Object.assign({}, record);
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, 'playerId', 'goodsId', 'remark'));
+        this.form.setFieldsValue(pick(this.model, 'playerId', 'goodsIds', 'remark'));
       });
     },
     close() {
