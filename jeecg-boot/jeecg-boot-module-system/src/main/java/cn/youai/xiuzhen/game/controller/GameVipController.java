@@ -23,6 +23,7 @@ import okhttp3.Callback;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.jeecg.common.system.util.ExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -72,7 +73,8 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         Page<GameVip> page = new Page<>(pageNo, pageSize);
-        IPage<GameVip> pageList = pageList(page, entity, req);
+        IPage<GameVip> pageList = service.queryVipList(page, entity);
+        onload(pageList.getRecords());
         return Result.ok(pageList);
     }
 
@@ -161,7 +163,10 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
     @AutoLog(value = "VIP-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameVip entity) {
-        return super.exportXls(request, entity, GameVip.class, "VIP");
+        Page<GameVip> page = new Page<>(1, Integer.MAX_VALUE);
+        IPage<GameVip> pageList = service.queryVipList(page, entity);
+        onload(pageList.getRecords());
+        return ExcelUtils.exportXls(pageList, request.getParameter("selections"), GameVip.class, "VIP");
     }
 
     @AutoLog(value = "VIP-导入")
@@ -217,15 +222,15 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         }
     }
 
-    private IPage<GameVip> pageList(Page<GameVip> page, GameVip entity, HttpServletRequest req) {
+    @Override
+    protected void onload(List<GameVip> pageList) {
         Date now = DateUtils.now();
-        IPage<GameVip> pageList = service.queryVipList(page, entity);
-        Set<Long> orderIdList = pageList.getRecords().stream().filter(t -> t.getOrderId() != null && t.getOrderId() > 0)
+        Set<Long> orderIdList = pageList.stream().filter(t -> t.getOrderId() != null && t.getOrderId() > 0)
                 .map(GameVip::getOrderId).collect(Collectors.toSet());
         List<GameOrder> lastOrders = orderStatService.queryByIds(orderIdList);
         Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
 
-        for (GameVip t : pageList.getRecords()) {
+        for (GameVip t : pageList) {
             t.setPlayDays(DateUtils.daysBetween(t.getRegisterTime(), now))
                     .setLastLoginDays(DateUtils.daysBetween(t.getLastLoginTime(), now))
                     .setLastPayDays(DateUtils.daysBetween(t.getLastPayTime(), now));
@@ -234,7 +239,5 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
                 t.setLastPay(lastOrder.getPayAmount());
             }
         }
-        return pageList;
     }
-
 }
