@@ -17,7 +17,7 @@
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id" v-show="!isEdit">
           <a-input v-decorator="['serverIds', validatorRules.serverIds]" 
-              placeholder="区服Id（单个：1001    多个：1001, 1002, 1003    范围：1001-1003）" style="width: 100%"/>
+              placeholder="区服Id（e.g. 1001, 1002, 1003-1006）" style="width: 100%"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="位置权重">
           <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入位置权重（值越大越靠前）" style="width: 100%"/>

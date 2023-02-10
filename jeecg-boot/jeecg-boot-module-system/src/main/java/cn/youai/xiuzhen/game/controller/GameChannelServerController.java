@@ -2,7 +2,6 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.utils.StringUtils;
-import cn.youai.server.utils.DBHelper;
 import cn.youai.server.utils.SqlHelper;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameServer;
@@ -89,25 +88,33 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         }
 
         Set<Integer> serverIdSet = new HashSet<>();
-        if (serverIds.contains(StringUtils.SEPARATOR_HYPHEN)) {
-            List<Integer> serverIdDateRange = StringUtils.split2Int(serverIds, StringUtils.SEPARATOR_HYPHEN);
-            if (serverIdDateRange.size() != 2 || serverIdDateRange.get(0) > serverIdDateRange.get(1)) {
-                return Result.error("区服范围错误");
-            }
-            for (int i = serverIdDateRange.get(0); i <= serverIdDateRange.get(1); ++i) {
-                if (i > 0) {
+        List<String> strList = StringUtils.split2List(serverIds);
+        for (String str : strList) {
+            if (str.contains(StringUtils.SEPARATOR_HYPHEN)) {
+                List<Integer> serverIdDateRange = StringUtils.split2Int(str, StringUtils.SEPARATOR_HYPHEN);
+                if (serverIdDateRange.size() != 2) {
+                    continue;
+                }
+                int startServerId = serverIdDateRange.get(0);
+                int endServerId = serverIdDateRange.get(1);
+                serverIdSet.add(startServerId);
+                for (int i = startServerId + 1; i <= endServerId; ++i) {
                     serverIdSet.add(i);
                 }
+            } else {
+                try {
+                    serverIdSet.add(Integer.parseInt(str));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
-            serverIdSet = new HashSet<>(StringUtils.split2Int(serverIds));
         }
 
-        if (serverIdSet.isEmpty()) {
+        List<Integer> serverIdList = new ArrayList<>(serverIdSet).stream().filter(e -> e > 0).sorted(Comparator.comparing(e -> e)).collect(Collectors.toList());
+        if (serverIdList.isEmpty()) {
             return Result.error("请输入区服");
         }
 
-        List<Integer> serverIdList = new ArrayList<>(serverIdSet).stream().sorted(Comparator.comparing(e -> e)).collect(Collectors.toList());
         List<GameChannelServer> entities = new ArrayList<>(serverIdList.size());
         int position = getPrePosition(entity.getChannelId());
         for (int serverId : serverIdList) {
