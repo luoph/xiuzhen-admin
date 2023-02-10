@@ -26,9 +26,10 @@
     </select>
 
     <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
-        SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`
+        SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`, ifnull(sum(`go`.`pay_amount`), 0) as `total_pay_amount`
         FROM `game_player` p
         LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`
+        left join `game_order` `go` on `go`.`player_id` = p.`player_id` and `go`.`order_status` = 4
         <where>
             <if test="entity != null">
                 <if test="entity.channel != null and entity.channel != ''">
@@ -61,6 +62,7 @@
                 <if test="null != createDateRange.end"><![CDATA[AND p.`create_date` <= #{createDateRange.end}]]></if>
             </if>
         </where>
+        group by p.`player_id`
         ORDER BY p.`create_time` DESC
     </select>
 

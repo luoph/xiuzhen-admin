@@ -122,6 +122,10 @@ public class GamePlayer {
     @ApiModelProperty(value = "境界")
     private Integer realm;
 
+    @Excel(name = "累计充值", width = 15)
+    @TableField(exist = false)
+    private java.math.BigDecimal totalPayAmount;
+
     /**
      * 是否跳过战斗动画 0-否 1-是
      */
