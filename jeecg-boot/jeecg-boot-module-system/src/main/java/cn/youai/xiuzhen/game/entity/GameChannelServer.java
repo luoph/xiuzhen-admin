@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.entity;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -43,6 +44,10 @@ public class GameChannelServer extends BaseEntity {
     @Excel(name = "服务器id", width = 15)
     @ApiModelProperty(value = "服务器id")
     private java.lang.Integer serverId;
+
+    @ExcelIgnore
+    @TableField(exist = false)
+    private String serverIds;
     /**
      * 渠道id
      */
