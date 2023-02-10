@@ -68,4 +68,12 @@ public class PlayerBehaviorVO implements Serializable {
      */
     private Integer daysType;
 
+    public boolean isValidServerId() {
+        return null != serverId && serverId > 0;
+    }
+
+    public boolean isValidTime() {
+        return (null != daysType && daysType > 0) || (null != rangeDateBegin && null != rangeDateEnd);
+    }
+
 }

@@ -13,7 +13,7 @@
         </a-form-item>
         <a-form-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-radio-group @change="contentType($event.target.value)"
-                         v-decorator="['type', { initialValue: 1 }, validatorRules.type]" style="width: 100%">
+                         v-decorator="['type', { initialValue: 2 }, validatorRules.type]" style="width: 100%">
             <a-radio-button :value="1">有附件</a-radio-button>
             <a-radio-button :value="2">无附件</a-radio-button>
           </a-radio-group>

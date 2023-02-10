@@ -27,8 +27,7 @@
         ORDER BY `create_time` DESC LIMIT 1
     </select>
 
-    <select id="selectBehaviorCount"
-            resultType="cn.youai.xiuzhen.stat.entity.PlayerBehavior">
+    <select id="selectBehaviorCount" resultType="cn.youai.xiuzhen.stat.entity.PlayerBehavior">
         SELECT
         p.`server_id` server_id,
         p.`player_id` player_id,
@@ -151,5 +150,71 @@
         <if test="null != startTime"><![CDATA[AND `create_date` >= #{startTime}]]></if>
         <if test="null != endTime"><![CDATA[AND `create_date` <= #{endTime}]]></if>
         GROUP BY `server_id`;
+    </select>
+
+    <select id="selectBehaviorGroup" resultType="cn.youai.xiuzhen.stat.entity.PlayerBehavior">
+        SELECT
+        p.`server_id` server_id,
+        p.`player_id` player_id,
+        p.`nickname` nickName,
+        l.`type` `type`,
+        l.`value` `value`,
+        l.`create_date` create_date,
+        max(if(l.`type` = 1, l.`value`, 0)) `playerLevel`,
+        max(if(l.`type` = 2, l.`value`, 0)) `combatPower`,
+        max(if(l.`type` = 3, l.`value`, 0)) `reamLevel`,
+        max(if(l.`type` = 4, l.`value`, 0)) `mainStoryLevel`,
+        max(if(l.`type` = 5, l.`value`, 0)) `mapLevel`,
+        max(if(l.`type` = 6, l.`value`, 0)) `practiceYear`,
+        max(if(l.`type` = 7, l.`value`, 0)) `lingShanLevel`,
+        max(if(l.`type` = 8, l.`value`, 0)) `practiceValue`,
+        sum(if(l.`type` = 101, l.`value`, 0)) `onlineTime`,
+        sum(if(l.`type` = 102, l.`value`, 0)) * 0.01 `recharge`,
+        sum(if(l.`type` = 103, l.`value`, 0)) `consumeMoney`,
+        sum(if(l.`type` = 104, l.`value`, 0)) `experience`,
+        sum(if(l.`type` = 105, l.`value`, 0)) `gainRareStone`,
+        sum(if(l.`type` = 106, l.`value`, 0)) `costRareStone`,
+        count(l.`type` = 110 or null) `mainStoryCheck`,
+        count(l.`type` = 111 or null) `factionBanquet`,
+        count(l.`type` = 120 or null) `arenaBattle`,
+        count(l.`type` = 121 or null) `travelHill`,
+        count(l.`type` = 122 or null) `ghostWar`,
+        count(l.`type` = 123 or null) `teamBoss`,
+        count(l.`type` = 124 or null) `marryBoss`,
+        count(l.`type` = 125 or null) `qualifying`,
+        count(l.`type` = 130 or null) `mapExplore`,
+        count(l.`type` = 131 or null) `travelTimes`,
+        count(l.`type` = 132 or null) `godRoad`,
+        count(l.`type` = 133 or null) `tierMapExplore`,
+        count(l.`type` = 134 or null) `spiritStoneMapExplore`,
+        count(l.`type` = 135 or null) `practiceMapExplore`,
+        count(l.`type` = 136 or null) `matePractice`,
+        count(l.`type` = 137 or null) `weaponMapExplore`,
+        count(l.`type` = 140 or null) `mainStoryBoss`,
+        count(l.`type` = 141 or null) `petBoss`,
+        max(l.`type` = 142 or null) `spiritualWorldBoss`,
+        max(l.`type` = 143 or null) `worldBoss`,
+        count(l.`type` = 144 or null) `mateBoss`,
+        sum(if(l.`type` = 150, l.`value`, 0)) `refineDan`,
+        sum(if(l.`type` = 151, l.`value`, 0)) `refineEquip`,
+        sum(if(l.`type` = 160, l.`value`, 0)) `spiritStoneMapSweep`,
+        sum(if(l.`type` = 161, l.`value`, 0)) `practiceMapSweep`,
+        sum(if(l.`type` = 162, l.`value`, 0)) `tierMapSweep`,
+        sum(if(l.`type` = 163, l.`value`, 0)) `weaponMapSweep`,
+        count(l.`type` = 1010 or null) `immortalHigh`,
+        count(l.`type` = 1011 or null) `immortalLow`,
+        count(l.`type` = 1012 or null) `monthCardHigh`,
+        count(l.`type` = 1013 or null) `monthCardLow`
+        FROM `game_player` p
+        INNER JOIN `log_player` l ON p.`player_id` = l.`player_id`
+        <where>
+            <if test="serverId > 0">p.`server_id` = #{serverId}</if>
+            <if test="nickname != null and nickname != ''">AND p.`nickname` LIKE CONCAT('%', #{nickname},'%')</if>
+            <if test="playerId > 0">AND p.`player_id` = #{playerId}</if>
+            <if test="null != start"><![CDATA[AND l.`create_time` >= #{start}]]></if>
+            <if test="null != end"><![CDATA[AND l.`create_time` <= #{end}]]></if>
+        </where>
+        group by p.id, l.create_date
+        order by l.create_date desc
     </select>
 </mapper>

@@ -224,6 +224,12 @@ export default {
           dataIndex: 'realm'
         },
         {
+          title: '累计充值',
+          align: 'center',
+          width: 60,
+          dataIndex: 'totalPayAmount'
+        },
+        {
           title: '跳过动画',
           align: 'center',
           width: 60,

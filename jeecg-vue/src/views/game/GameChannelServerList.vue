@@ -197,7 +197,7 @@ export default {
 
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, 'serverId', 'delFlag'));
+        this.form.setFieldsValue(pick(this.model, 'serverId', 'serverIds', 'channelId', 'delFlag', 'position'));
       });
       // 当其它模块调用该模块时,调用此方法加载字典数据
       this.loadData();

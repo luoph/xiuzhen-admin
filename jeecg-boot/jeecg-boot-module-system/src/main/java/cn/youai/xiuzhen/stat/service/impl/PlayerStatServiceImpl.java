@@ -1,21 +1,27 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.stat.constant.PlayerLogType;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
+import cn.youai.xiuzhen.stat.entity.PlayerBehaviorVO;
 import cn.youai.xiuzhen.stat.mapper.GamePlayerMapper;
+import cn.youai.xiuzhen.stat.mapper.LogAccountMapper;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
 import cn.youai.xiuzhen.stat.service.IPlayerStatService;
 import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,7 +33,34 @@ public class PlayerStatServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
     @Autowired
     private ILogAccountService logAccountService;
 
-    // TODO 优化玩家行为分析
+    @Resource
+    private LogAccountMapper logAccountMapper;
+
+    @Override
+    public IPage<PlayerBehavior> queryPlayerBehavior(Page<PlayerBehavior> page, PlayerBehaviorVO entity) {
+        if (!entity.isValidServerId() && StringUtils.isBlank(entity.getNickname())) {
+            return page;
+        }
+
+        Integer days = entity.getDaysType();
+        Date rangeDateBegin = entity.getRangeDateBegin();
+        Date rangeDateEnd = entity.getRangeDateEnd();
+        if (null != days && days > 0) {
+            rangeDateBegin = DateUtils.addDays(DateUtils.now(), -days);
+            rangeDateEnd = DateUtils.now();
+        } else {
+            if (null == rangeDateBegin || null == rangeDateEnd) {
+                return page;
+            }
+            if (DateUtils.isSameDay(rangeDateBegin, rangeDateEnd)) {
+                rangeDateBegin = DateUtil.beginOfDay(rangeDateBegin);
+                rangeDateEnd = DateUtil.endOfDay(rangeDateEnd);
+            }
+        }
+        return logAccountMapper.selectBehaviorGroup(page, entity.getServerId(), entity.getNickname(), entity.getPlayerId(), rangeDateBegin, rangeDateEnd);
+    }
+
+    @Deprecated
     @Override
     public List<PlayerBehavior> queryPlayerBehavior(Date rangeDateBegin, Date rangeDateEnd, String nickname, Long playerId, int days, int serverId) {
         if (StringUtils.isBlank(nickname) && serverId <= 0) {
@@ -49,7 +82,7 @@ public class PlayerStatServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
         return getPlayerBehaviorList(playerBehaviorList);
     }
 
-
+    @Deprecated
     private List<PlayerBehavior> getPlayerBehaviorList(List<PlayerBehavior> list) {
         if (CollUtil.isEmpty(list)) {
             return Collections.emptyList();
@@ -87,6 +120,7 @@ public class PlayerStatServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
     /**
      * 获取数据处理
      */
+    @Deprecated
     private void getBehaviorTreating(List<PlayerBehavior> list, PlayerBehavior behavior) {
 
         // 数据筛选计算
@@ -228,5 +262,4 @@ public class PlayerStatServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
         long weaponMapSweep = list.stream().filter(i -> i.getType() == PlayerLogType.WEAPON_MAP_SWEEP.getType()).mapToLong(PlayerBehavior::getValue).sum();
         behavior.setWeaponMapSweep(weaponMapSweep);
     }
-
 }

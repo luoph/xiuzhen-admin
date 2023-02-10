@@ -70,7 +70,7 @@ public class WebsocketServerChecker {
             return;
         }
 
-        log.info("start checkServer");
+        log.info("[websocket] start checkServer");
         List<GameServer> serverList = serverService.selectGameServerList();
         Map<Integer, WebsocketCheckResult> checkResultMap = new HashMap<>();
         for (GameServer server : serverList) {
@@ -113,10 +113,10 @@ public class WebsocketServerChecker {
             if (StrUtil.isNotEmpty(larkForwardUrl)) {
                 String url = larkForwardUrl + "/lark/gameServer";
                 String response = OkHttpHelper.post(url, warningData);
-                log.info("request url:{}, response:{}", url, response);
+                log.info("[websocket] warning request url:{}, request:{}, response:{}", url, JSON.toJSONString(warningData), response);
             }
         }
 
-        log.info("finish checkServer, failed:{}", failedList.size());
+        log.info("[websocket] finish checkServer, failed:{}", failedList.size());
     }
 }

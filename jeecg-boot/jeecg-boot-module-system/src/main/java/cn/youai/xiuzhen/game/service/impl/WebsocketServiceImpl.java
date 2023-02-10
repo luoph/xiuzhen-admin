@@ -47,26 +47,26 @@ public class WebsocketServiceImpl implements WebsocketService {
             WebSocketClient client = new WebSocketClient(new URI(url)) {
                 @Override
                 public void onOpen(ServerHandshake handshakedata) {
-                    log.info("onOpen url:{}, data:{}", url, handshakedata);
+                    log.info("[websocket] onOpen url:{}, data:{}", url, handshakedata);
                 }
 
                 @Override
                 public void onMessage(String message) {
-                    log.info("onMessage {}", message);
+                    log.info("[websocket] onMessage {}", message);
                 }
 
                 @Override
                 public void onClose(int code, String reason, boolean remote) {
                     if (StringUtils.isNotBlank(reason)) {
-                        log.info("onClose url:{}, code:{}, reason:{}, remote:{}", url, code, reason, remote);
+                        log.info("[websocket] onClose url:{}, code:{}, reason:{}, remote:{}", url, code, reason, remote);
                     } else {
-                        log.info("onClose url:{}, code:{}, remote:{}", url, code, remote);
+                        log.info("[websocket] onClose url:{}, code:{}, remote:{}", url, code, remote);
                     }
                 }
 
                 @Override
                 public void onError(Exception ex) {
-                    log.error("onError error, url:" + url, ex);
+                    log.error("[websocket] onError error, url:" + url, ex);
                 }
             };
 
@@ -82,5 +82,4 @@ public class WebsocketServiceImpl implements WebsocketService {
             return false;
         }
     }
-
 }

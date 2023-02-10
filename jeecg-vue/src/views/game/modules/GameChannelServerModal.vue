@@ -7,16 +7,20 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="渠道id">
           <a-input :disabled="true" placeholder="请输入渠道id" v-decorator="['channelId', validatorRules.channelId]"/>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id">
-          <a-select :disabled="isEdit" placeholder="请选择区服Id" v-decorator="['serverId', {}]">
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id" v-show="isEdit">
+          <!-- <a-select :disabled="isEdit" placeholder="请选择区服Id" v-decorator="['serverId', {}]">
             <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
               {{ server.id + ' - ' + server.name }}
             </a-select-option>
-          </a-select>
+          </a-select> -->
+            <a-input v-decorator="['serverId', validatorRules.serverId]" placeholder="区服Id" style="width: 100%"/>
+        </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id" v-show="!isEdit">
+          <a-input v-decorator="['serverIds', validatorRules.serverIds]" 
+              placeholder="区服Id（e.g. 1001, 1002, 1003-1006）" style="width: 100%"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="位置权重">
-          <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入位置权重（值越大越靠前）"
-                          style="width: 100%"/>
+          <a-input-number v-decorator="['position', validatorRules.position]" placeholder="请输入位置权重（值越大越靠前）" style="width: 100%"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
           <a-select v-decorator="['delFlag', {}]" placeholder="请选择状态" :initialValue="0">
@@ -37,11 +41,11 @@ export default {
   name: 'GameChannelServerModal',
   data() {
     return {
+      form: this.$form.createForm(this),
       title: '操作',
       visible: false,
       isEdit: false,
       model: {},
-      serverList: [],
       labelCol: {
         xs: {span: 24},
         sm: {span: 5}
@@ -50,12 +54,11 @@ export default {
         xs: {span: 24},
         sm: {span: 16}
       },
-
       confirmLoading: false,
-      form: this.$form.createForm(this),
       validatorRules: {
-        serverId: {rules: [{required: true, message: '请输入区服Id!'}]},
-        position: {rules: [{required: true, message: '请输入位置权重!'}]}
+        serverId: {rules: [{required: false, message: '请输入区服Id!'}]},
+        serverIds: {rules: [{required: false, message: '请输入区服Id!'}]},
+        position: {rules: [{required: false, message: '请输入位置权重!'}]}
       },
       url: {
         add: 'game/channelServer/add',
@@ -66,7 +69,6 @@ export default {
     };
   },
   created() {
-    this.queryServerList();
   },
   methods: {
     add(channelId) {
@@ -79,7 +81,7 @@ export default {
       this.isEdit = this.model.id != null;
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, 'serverId', 'channelId', 'delFlag', 'position'));
+        this.form.setFieldsValue(pick(this.model, 'serverId', 'serverIds', 'channelId', 'delFlag', 'position'));
       });
     },
     close() {
@@ -103,6 +105,17 @@ export default {
           }
           let formData = Object.assign(this.model, values);
 
+          if (this.isEdit && (this.model.serverId == null || this.model.serverId == '')) {
+            that.$message.error("请输入区服id");
+            that.confirmLoading = false;
+            return;
+          }
+          if (!this.isEdit && (this.model.serverIds == null || this.model.serverIds == '')) {
+            that.$message.error("请输入区服id");
+            that.confirmLoading = false;
+            return;
+          }
+
           console.log(formData);
           httpAction(httpUrl, formData, method)
             .then((res) => {
@@ -122,20 +135,6 @@ export default {
     },
     handleCancel() {
       this.close();
-    },
-    queryServerList() {
-      let that = this;
-      getAction(that.url.serverListUrl).then((res) => {
-        if (res.success) {
-          if (res.result instanceof Array) {
-            this.serverList = res.result;
-          } else if (res.result.records instanceof Array) {
-            this.serverList = res.result.records;
-          }
-        } else {
-          this.serverList = [];
-        }
-      });
     }
   }
 };

@@ -1,12 +1,15 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.utils.StringUtils;
+import cn.youai.server.utils.SqlHelper;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -18,10 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -47,42 +47,98 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         IPage<GameChannelServer> pageList = super.pageList(entity, pageNo, pageSize, req);
+        onload(pageList.getRecords());
+        return Result.ok(pageList);
+    }
 
-        // 完善数据
-        if (CollUtil.isNotEmpty(pageList.getRecords())) {
-            Set<Integer> results = pageList.getRecords().stream().map(GameChannelServer::getServerId).collect(Collectors.toSet());
-            Collection<GameServer> servers = gameServerService.listByIds(results);
-            Map<Integer, GameServer> serverMap = servers.stream().collect(Collectors.toMap(GameServer::getId, Function.identity()));
-
-            for (GameChannelServer record : pageList.getRecords()) {
-                GameServer gameServer = serverMap.get(record.getServerId());
-                if (gameServer != null) {
-                    record.setServerName(gameServer.getName())
-                            .setOpenTime(gameServer.getOpenTime())
-                            .setOnlineTime(gameServer.getOnlineTime())
-                            .setServerStatus(gameServer.getStatus())
-                            .setIsMaintain(gameServer.getIsMaintain());
-                }
+    @Override
+    protected void onload(List<GameChannelServer> pageList) {
+        if (CollUtil.isEmpty(pageList)) {
+            return;
+        }
+        Set<Integer> results = pageList.stream().map(GameChannelServer::getServerId).collect(Collectors.toSet());
+        Collection<GameServer> servers = gameServerService.listByIds(results);
+        Map<Integer, GameServer> serverMap = servers.stream().collect(Collectors.toMap(GameServer::getId, Function.identity()));
+        for (GameChannelServer record : pageList) {
+            GameServer gameServer = serverMap.get(record.getServerId());
+            if (gameServer != null) {
+                record.setServerName(gameServer.getName())
+                        .setOpenTime(gameServer.getOpenTime())
+                        .setOnlineTime(gameServer.getOnlineTime())
+                        .setServerStatus(gameServer.getStatus())
+                        .setIsMaintain(gameServer.getIsMaintain());
             }
         }
-        return Result.ok(pageList);
+    }
+
+    private int getPrePosition(String channelId) {
+        GameChannelServer entity = service.getOne(Wrappers.<GameChannelServer>lambdaQuery().
+                eq(GameChannelServer::getChannelId, channelId)
+                .orderByDesc(GameChannelServer::getPosition)
+                .last(SqlHelper.limit()));
+        return null != entity ? entity.getPosition() : 0;
     }
 
     @AutoLog(value = "游戏渠道服配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameChannelServer entity) {
-        Result<?> result = super.add(entity);
-        if (result.isSuccess()) {
-            // 自动添加开服、节日活动
-            service.autoAddCampaignServerIds(CollUtil.newArrayList(entity.getServerId()));
+        String serverIds = entity.getServerIds();
+        if (StringUtils.isBlank(serverIds)) {
+            return Result.error("请输入区服");
         }
-        return result;
+
+        Set<Integer> serverIdSet = new HashSet<>();
+        List<String> strList = StringUtils.split2List(serverIds);
+        for (String str : strList) {
+            if (str.contains(StringUtils.SEPARATOR_HYPHEN)) {
+                List<Integer> serverIdDateRange = StringUtils.split2Int(str, StringUtils.SEPARATOR_HYPHEN);
+                if (serverIdDateRange.size() != 2) {
+                    continue;
+                }
+                int startServerId = serverIdDateRange.get(0);
+                int endServerId = serverIdDateRange.get(1);
+                serverIdSet.add(startServerId);
+                for (int i = startServerId + 1; i <= endServerId; ++i) {
+                    serverIdSet.add(i);
+                }
+            } else {
+                try {
+                    serverIdSet.add(Integer.parseInt(str));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        List<Integer> serverIdList = new ArrayList<>(serverIdSet).stream().filter(e -> e > 0).sorted(Comparator.comparing(e -> e)).collect(Collectors.toList());
+        if (serverIdList.isEmpty()) {
+            return Result.error("请输入区服");
+        }
+
+        List<GameChannelServer> entities = new ArrayList<>(serverIdList.size());
+        int position = getPrePosition(entity.getChannelId());
+        for (int serverId : serverIdList) {
+            entities.add(new GameChannelServer().setServerId(serverId).setChannelId(entity.getChannelId()).setPosition(++position).setDelFlag(entity.getDelFlag()).setNoNeedCount(entity.getNoNeedCount()));
+        }
+
+        if (!service.saveBatch(entities)) {
+            return Result.error("保存失败");
+        }
+
+        service.autoAddCampaignServerIds(serverIdList);
+        return Result.ok("添加成功！");
     }
 
     @AutoLog(value = "游戏渠道服配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameChannelServer entity) {
-        return super.edit(entity);
+        GameChannelServer dbEntity = getById(entity.getId());
+        boolean changeServerId = null != dbEntity && !Objects.equals(dbEntity.getServerId(), entity.getServerId());
+        Result<?> result = super.edit(entity);
+        if (result.isSuccess() && changeServerId) {
+            service.autoAddCampaignServerIds(CollUtil.newArrayList(entity.getServerId()));
+        }
+        return result;
     }
 
     @AutoLog(value = "游戏渠道服配置-通过id删除")

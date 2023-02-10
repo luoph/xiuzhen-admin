@@ -8,6 +8,8 @@ import cn.youai.xiuzhen.stat.entity.LogAccount;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigDecimal;
@@ -84,4 +86,11 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     List<Long> getPlayerIdsByNoLoginRangeDate(@Param("serverId") int serverId, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
     List<MergeServerVO> getServerLoginNum(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
+    IPage<PlayerBehavior> selectBehaviorGroup(Page<?> page,
+                                              @Param("serverId") Integer serverId,
+                                              @Param("nickname") String nickname,
+                                              @Param("playerId") Long playerId,
+                                              @Param("start") Date start,
+                                              @Param("end") Date end);
 }
