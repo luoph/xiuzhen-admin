@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.LogPlayerLevelMapper">
+
+    <select id="queryList" resultType="cn.youai.xiuzhen.stat.entity.LogPlayerLevel">
+        select gp.nickname, gp.create_time as registerTime, lpl.*, (lpl.`combat_power` + lpl.`combat_power_compensation`) as `totalCombatPower` from log_player_level lpl
+        left join game_player gp on gp.player_id = lpl.player_id
+        <where>
+            <if test="entity != null">
+                <if test="entity.serverId !=null and entity.serverId > 0">
+                    AND lpl.`server_id` = #{entity.serverId}
+                </if>
+                <if test="entity.playerId !=null and entity.playerId > 0">
+                    AND lpl.`player_id` = #{entity.playerId}
+                </if>
+                <if test="entity.nickname !=null and entity.nickname != ''">
+                    AND gp.nickname LIKE CONCAT('%',#{entity.nickname},'%')
+                </if>
+                <if test="levelRange != null">
+                    <if test="null != levelRange.min"><![CDATA[AND lpl.`level` >= #{levelRange.min}]]></if>
+                    <if test="null != levelRange.max"><![CDATA[AND lpl.`level` <= #{levelRange.max}]]></if>
+                </if>
+                <if test="combatPowerRange != null">
+                    <if test="null != combatPowerRange.min"><![CDATA[AND (lpl.`combat_power` + lpl.`combat_power_compensation`) >= #{combatPowerRange.min}]]></if>
+                    <if test="null != combatPowerRange.max"><![CDATA[AND (lpl.`combat_power` + lpl.`combat_power_compensation`) <= #{combatPowerRange.max}]]></if>
+                </if>
+                <if test="dateRange != null">
+                    <if test="null != dateRange.start"><![CDATA[AND lpl.`create_date` >= #{dateRange.start}]]></if>
+                    <if test="null != dateRange.end"><![CDATA[AND lpl.`create_date` <= #{dateRange.end}]]></if>
+                </if>
+            </if>
+        </where>
+    </select>
+</mapper>
