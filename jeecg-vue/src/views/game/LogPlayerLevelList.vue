@@ -204,6 +204,11 @@
             dataIndex: 'totalCombatPower'
           },
           {
+            title:'累计充值',
+            align:"center",
+            dataIndex: 'rechargeAmount'
+          },
+          {
             title:'创角时间',
             align:"center",
             dataIndex: 'registerTime'
