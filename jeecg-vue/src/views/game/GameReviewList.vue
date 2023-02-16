@@ -4,21 +4,20 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
-            <a-form-item label="游戏名称">
-              <j-input placeholder="请输入游戏名称" v-model="queryParam.name"></j-input>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="Sdk渠道名">
+              <j-input placeholder="请输入Sdk渠道名" v-model="queryParam.sdkChannel"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.yaAppId" placeholder="唯一标识"
-                                 dictCode="game_info,ya_simple_name,ya_app_id"/>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="版本号">
+              <j-input placeholder="请输入Sdk渠道名" v-model="queryParam.version"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="gameAppKey">
-                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"></a-input>
+            <a-col :md="4" :sm="8">
+              <a-form-item label="备注">
+                <j-input placeholder="请输入备注" v-model="queryParam.remark"/>
               </a-form-item>
             </a-col>
           </template>
@@ -39,10 +38,9 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-popconfirm title="刷新游戏配置" @confirm="refreshConfig()">
-        <a-button type="primary" icon="update">刷新游戏配置</a-button>
-      </a-popconfirm>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏信息')">导出</a-button> -->
+      <a-button @click="refreshConfig" type="primary" icon="sync">刷新审核配置</a-button>
+
+      <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload> -->
@@ -62,11 +60,17 @@
 
     <!-- table区域-begin -->
     <div>
+      <!-- <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+                <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+                >项
+                <a style="margin-left: 24px" @click="onClearSelected">清空</a>
+            </div>
+            :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
+
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
                :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
           <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
@@ -79,31 +83,47 @@
             </a-menu>
           </a-dropdown>
         </span>
+        <span slot="statusSlot" slot-scope="text, record">
+          <a-tag v-if="record.status === 0" color="red">OFF</a-tag>
+          <a-tag v-else-if="record.status === 1" color="green">ON</a-tag>
+        </span>
+        <span slot="ipTags" slot-scope="text, record">
+          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        </span>
       </a-table>
     </div>
     <!-- table区域-end -->
-
-    <!-- 表单区域 -->
-    <game-info-modal ref="modalForm" @ok="modalFormOk"></game-info-modal>
+    <game-review-modal ref="modalForm" @ok="modalFormOk"></game-review-modal>
   </a-card>
 </template>
 
 <script>
-import GameInfoModal from './modules/GameInfoModal';
+import {filterObj} from '@/utils/util';
+import JInput from '@/components/jeecg/JInput';
+import GameReviewModal from './modules/GameReviewModal';
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import {getAction} from '@/api/manage';
-import JInput from '@/components/jeecg/JInput';
+
+function filterGameIdText(options, text) {
+  if (options instanceof Array) {
+    for (let game of options) {
+      if (text === game.id) {
+        return game.name + '(' + game.id + ')';
+      }
+    }
+  }
+  return text;
+}
 
 export default {
-  name: 'GameInfoList',
+  name: 'GameReviewList',
   mixins: [JeecgListMixin],
-  components: {
-    JInput,
-    GameInfoModal
-  },
+  components: {JInput, GameReviewModal},
   data() {
     return {
-      description: '游戏信息管理页面',
+      description: '游戏审核配置管理页面',
+      gameList: [],
       // 表头
       columns: [
         {
@@ -117,92 +137,69 @@ export default {
           }
         },
         {
-          title: '游戏Id',
+          title: '游戏编号',
           align: 'center',
-          dataIndex: 'id'
+          width: 120,
+          dataIndex: 'gameId',
+          customRender: (text) => {
+            return filterGameIdText(this.gameList, text);
+          }
         },
         {
-          title: '游戏名称',
+          title: '名称',
           align: 'center',
+          width: 100,
           dataIndex: 'name'
         },
         {
-          title: '唯一标识',
+          title: 'sdk渠道',
           align: 'center',
-          dataIndex: 'yaSimpleName'
+          width: 100,
+          dataIndex: 'sdkChannel'
         },
         {
-          title: '审核渠道',
+          title: '版本号',
           align: 'center',
-          dataIndex: 'reviewChannel'
+          width: 100,
+          dataIndex: 'version'
         },
         {
-          title: '帐号登录地址',
+          title: '审核区服配置',
           align: 'center',
-          dataIndex: 'loginUrl'
+          width: 100,
+          dataIndex: 'profile',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
-          title: '角色信息地址',
+          title: '审核开关',
           align: 'center',
-          dataIndex: 'roleUrl'
+          width: 80,
+          dataIndex: 'status',
+          scopedSlots: {customRender: 'statusSlot'}
         },
         {
-          title: '实名认证地址',
+          title: '备注',
           align: 'center',
-          dataIndex: 'authUrl'
-        },
-        {
-          title: '支付验证地址',
-          align: 'center',
-          dataIndex: 'payUrl'
-        },
-        {
-          title: '账号注册地址',
-          align: 'center',
-          dataIndex: 'accountRegisterUrl'
-        },
-        {
-          title: '账号登录地址',
-          align: 'center',
-          dataIndex: 'accountLoginUrl'
-        },
-        {
-          title: '苹果登录回调',
-          align: 'center',
-          dataIndex: 'oauthRedirectUrl'
-        },
-        {
-          title: '游戏列表地址',
-          align: 'center',
-          dataIndex: 'serverUrl'
-        },
-        {
-          title: '公告列表地址',
-          align: 'center',
-          dataIndex: 'noticeUrl'
-        },
-        {
-          title: '关闭注册天数',
-          align: 'center',
-          dataIndex: 'offRegisterDay'
-        },
-        {
-          title: '描述',
-          align: 'center',
+          width: 120,
           dataIndex: 'remark'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 200,
           scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
-        list: 'game/info/list',
-        delete: 'game/info/delete',
-        deleteBatch: 'game/info/deleteBatch',
-        refreshConfig: 'game/info/refreshConfig'
+        list: 'game/review/list',
+        delete: 'game/review/delete',
+        deleteBatch: 'game/review/deleteBatch',
+        refreshConfig: 'game/info/refreshConfig',
+        // 游戏列表
+        gameInfoList: 'game/info/list',
       }
     };
   },
@@ -211,7 +208,31 @@ export default {
       return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
     }
   },
+  created() {
+    this.queryGameInfoList();
+  },
   methods: {
+    getQueryParams() {
+      var param = Object.assign({}, this.queryParam, this.isorter);
+      param.field = this.getQueryField();
+      param.pageNo = this.ipagination.current;
+      param.pageSize = this.ipagination.pageSize;
+      return filterObj(param);
+    },
+    queryGameInfoList() {
+      let that = this;
+      getAction(that.url.gameInfoList).then((res) => {
+        if (res.success) {
+          if (res.result instanceof Array) {
+            this.gameList = res.result;
+          } else if (res.result.records instanceof Array) {
+            this.gameList = res.result.records;
+          }
+        } else {
+          this.gameList = [];
+        }
+      });
+    },
     refreshConfig() {
       // 开始刷新游戏配置
       getAction(this.url.refreshConfig).then((res) => {
@@ -225,7 +246,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 @import '~@assets/less/common.less';
 </style>
