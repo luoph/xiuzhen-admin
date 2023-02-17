@@ -11,7 +11,7 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="版本号">
-              <j-input placeholder="请输入Sdk渠道名" v-model="queryParam.version"/>
+              <j-input placeholder="请输入版本号" v-model="queryParam.version"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
