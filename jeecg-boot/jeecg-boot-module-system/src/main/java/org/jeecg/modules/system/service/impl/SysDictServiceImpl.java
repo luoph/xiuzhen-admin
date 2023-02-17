@@ -54,14 +54,14 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     @Cacheable(value = CacheConstant.SYS_DICT_CACHE, key = "#code", unless = "#result == null ")
     public List<DictModel> queryDictItemsByCode(String code) {
         log.debug("无缓存dictCache的时候调用这里！");
-        return sysDictMapper.queryDictItemsByCode(code);
+        return DictModel.prettyText(sysDictMapper.queryDictItemsByCode(code));
     }
 
     @Override
     @Cacheable(value = CacheConstant.SYS_ENABLE_DICT_CACHE, key = "#code", unless = "#result == null ")
     public List<DictModel> queryEnableDictItemsByCode(String code) {
         log.debug("无缓存dictCache的时候调用这里！");
-        return sysDictMapper.queryEnableDictItemsByCode(code);
+        return DictModel.prettyText(sysDictMapper.queryEnableDictItemsByCode(code));
     }
 
     @Override
@@ -141,7 +141,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     @Override
     public List<DictModel> queryTableDictItemsByCodeAndFilter(String table, String text, String code, String filterSql) {
         log.debug("无缓存dictTableList的时候调用这里！");
-        return sysDictMapper.queryTableDictItemsByCodeAndFilter(table, text, code, filterSql);
+        return DictModel.prettyText(sysDictMapper.queryTableDictItemsByCodeAndFilter(table, text, code, filterSql));
     }
 
     /**
@@ -164,7 +164,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
             table = arr[0];
             filterSql = arr[1];
         }
-        return sysDictMapper.queryTableDictByKeysAndFilterSql(table, text, code, filterSql, keys);
+        return DictModel.prettyText(sysDictMapper.queryTableDictByKeysAndFilterSql(table, text, code, filterSql, keys));
         //update-end-author:taoyan date:20220113 for: @dict注解支持 dicttable 设置where条件
     }
 
@@ -251,12 +251,12 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
     @Override
     public List<DictModel> queryAllDepartBackDictModel() {
-        return baseMapper.queryAllDepartBackDictModel();
+        return DictModel.prettyText(baseMapper.queryAllDepartBackDictModel());
     }
 
     @Override
     public List<DictModel> queryAllUserBackDictModel() {
-        return baseMapper.queryAllUserBackDictModel();
+        return DictModel.prettyText(baseMapper.queryAllUserBackDictModel());
     }
 
 //	@Override
@@ -274,7 +274,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
         String filterSql = getFilterSql(table, text, code, condition, keyword);
         IPage<DictModel> pageList = baseMapper.queryTableDictWithFilter(page, table, text, code, filterSql);
-        return pageList.getRecords();
+        return DictModel.prettyText(pageList.getRecords());
     }
 
     /**
@@ -318,7 +318,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     public List<DictModel> queryAllTableDictItems(String table, String text, String code, String condition, String keyword) {
         String filterSql = getFilterSql(table, text, code, condition, keyword);
         List<DictModel> ls = baseMapper.queryAllTableDictItems(table, text, code, filterSql);
-        return ls;
+        return DictModel.prettyText(ls);
     }
 
     @Override
@@ -346,7 +346,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     public List<DictModel> queryDictTablePageList(DictQuery query, int pageSize, int pageNo) {
         Page<DictModel> page = new Page<>(pageNo, pageSize, false);
         Page<DictModel> pageList = baseMapper.queryDictTablePageList(page, query);
-        return pageList.getRecords();
+        return DictModel.prettyText(pageList.getRecords());
     }
 
     @Override
@@ -381,7 +381,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
             //字典表
             ls = this.queryDictItemsByCode(dictCode);
         }
-        return ls;
+        return DictModel.prettyText(ls);
     }
 
     @Override
@@ -396,7 +396,9 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
             if (params.length != 3 && params.length != 4) {
                 // 字典Code格式不正确
                 return null;
-            } else if (params.length == 4) {
+            }
+
+            if (params.length == 4) {
                 condition = params[3];
                 // update-begin-author:taoyan date:20220314 for: online表单下拉搜索框表字典配置#{sys_org_code}报错 #3500
                 if (condition.contains(SymbolConstant.SYS_VAR_PREFIX)) {
@@ -416,11 +418,9 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                 ls = this.queryAllTableDictItems(params[0], params[1], params[2], condition, keyword);
             }
             //update-end-author:taoyan date:20210329 for: 下拉搜索不支持表名后加查询条件
-            return ls;
-        } else {
-            // 字典Code格式不正确
-            return null;
+            return DictModel.prettyText(ls);
         }
+        return null;
     }
 
 }

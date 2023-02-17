@@ -159,7 +159,7 @@ public class SysDictController extends JeecgController<SysDict, ISysDictService>
     @RequestMapping(value = "/getDictItems/{dictCode}", method = RequestMethod.GET)
     public Result<List<DictModel>> getDictItems(@PathVariable("dictCode") String dictCode, @RequestParam(value = "sign", required = false) String sign, HttpServletRequest request) {
         log.info(" dictCode : " + dictCode);
-        Result<List<DictModel>> result = new Result<List<DictModel>>();
+        Result<List<DictModel>> result = new Result<>();
         //update-begin-author:taoyan date:20220317 for: VUEN-222【安全机制】字典接口、online报表、online图表等接口，加一些安全机制
         if (!dictQueryBlackListHandler.isPass(dictCode)) {
             return result.error500(dictQueryBlackListHandler.getError());

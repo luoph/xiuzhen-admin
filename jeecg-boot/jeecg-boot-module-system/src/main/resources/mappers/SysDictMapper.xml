@@ -7,6 +7,7 @@
         select s.item_value as "value", s.item_text as "text"
         from sys_dict_item s
         where dict_id = (select id from sys_dict where dict_code = #{code})
+        group by s.item_value
         order by s.sort_order asc
     </select>
 
@@ -16,6 +17,7 @@
         from sys_dict_item s
         where dict_id = (select id from sys_dict where dict_code = #{code})
           and s.status = 1
+        group by s.item_value
         order by s.sort_order asc
     </select>
 
@@ -42,6 +44,7 @@
         from sys_dict_item s
         where s.dict_id = (select id from sys_dict where dict_code = #{code})
           and s.item_value = #{key}
+        group by s.item_text
     </select>
 
     <!-- 通过字典code获取字典数据，可批量查询 -->
@@ -67,24 +70,27 @@
 
     <!--通过查询指定table的 text code 获取字典-->
     <select id="queryTableDictItemsByCode" parameterType="String" resultType="org.jeecg.common.system.vo.DictModel">
-        select CONCAT(${text}, "[", ${code}, "]") as "text", ${code} as "value"
+        select ${text} as "text", ${code} as "value"
         from ${table}
+        group by ${code}
     </select>
 
     <!--通过查询指定table的 text code 获取字典（指定查询条件）-->
     <select id="queryTableDictItemsByCodeAndFilter" parameterType="String"
             resultType="org.jeecg.common.system.vo.DictModel">
-        select CONCAT(${text}, "[", ${code}, "]") as "text", ${code} as "value" from ${table}
+        select ${text} as "text", ${code} as "value" from ${table}
         <if test="filterSql != null and filterSql != ''">
             where ${filterSql}
         </if>
+        group by ${code}
     </select>
 
     <!--通过查询指定table的 text code key 获取字典值-->
     <select id="queryTableDictTextByKey" parameterType="String" resultType="String">
-        select CONCAT(${text}, "[", ${code}, "]") as "text"
+        select ${text} as "text"
         from ${table}
         where ${code} = #{key}
+        group by ${text}
     </select>
 
     <!--通过查询指定table的 text code key 获取字典值，可批量查询
@@ -185,7 +191,7 @@
 
     <!-- 分页查询字典表数据 -->
     <select id="queryDictTablePageList" parameterType="Object" resultType="org.jeecg.common.system.vo.DictModel">
-        select CONCAT(${query.text} , "[", ${query.code}, "]") as "text", ${query.code} as "value" from ${query.table}
+        select ${query.text} as "text", ${query.code} as "value" from ${query.table}
         where 1 = 1
         <if test="query.keyword != null and query.keyword != ''">
             <bind name="bindKeyword" value="'%'+query.keyword+'%'"/>
@@ -194,29 +200,32 @@
         <if test="query.codeValue != null and query.codeValue != ''">
             and ${query.code} = #{query.codeValue}
         </if>
+        group by ${query.code}
     </select>
 
     <!--通过查询指定table的 text code 获取字典数据，且支持关键字和自定义查询条件查询 分页-->
     <select id="queryTableDictWithFilter" parameterType="String" resultType="org.jeecg.common.system.vo.DictModel">
-        select CONCAT(${text} , "[", ${code}, "]") as "text", ${code} as "value" from ${table}
+        select ${text} as "text", ${code} as "value" from ${table}
         <if test="filterSql != null and filterSql != ''">
             ${filterSql}
         </if>
+        group by ${code}
     </select>
 
     <!--通过查询指定table的 text code 获取字典数据，且支持关键字和自定义查询条件查询 获取所有 -->
     <select id="queryAllTableDictItems" parameterType="String" resultType="org.jeecg.common.system.vo.DictModel">
-        select CONCAT(${text} , "[", ${code}, "]") as "text", ${code} as "value" from ${table}
+        select ${text} as "text", ${code} as "value" from ${table}
         <if test="filterSql != null and filterSql != ''">
             ${filterSql}
         </if>
+        group by ${code}
     </select>
 
 
     <!-- 查询字典表的数据 支持设置过滤条件、设置存储值作为in查询条件 -->
     <select id="queryTableDictByKeysAndFilterSql" parameterType="String"
             resultType="org.jeecg.common.system.vo.DictModel">
-        select CONCAT(${text} , "[", ${code}, "]") as "text", ${code} as "value" from ${table} where ${code} IN (
+        select ${text} as "text", ${code} as "value" from ${table} where ${code} IN (
         <foreach item="key" collection="codeValues" separator=",">
             #{key}
         </foreach>
@@ -224,6 +233,7 @@
         <if test="filterSql != null and filterSql != ''">
             and ${filterSql}
         </if>
+        group by ${code}
     </select>
 
 
