@@ -64,6 +64,18 @@ public class GameReviewController extends JeecgController<GameReview, IGameRevie
         return super.queryById(id);
     }
 
+    @AutoLog(value = "游戏审核-修改状态")
+    @GetMapping(value = "/changeStatus")
+    public Result<?> changeStatus(@RequestParam(name = "id") String id, @RequestParam(name = "status") Integer status) {
+        GameReview entity = getById(id);
+        if (entity != null) {
+            entity.setStatus(status);
+            service.updateById(entity);
+            return Result.ok("操作成功！");
+        }
+        return Result.error("操作失败！");
+    }
+
     @AutoLog(value = "游戏审核-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameReview gameInfo) {

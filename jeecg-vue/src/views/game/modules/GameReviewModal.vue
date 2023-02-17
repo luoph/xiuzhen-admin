@@ -11,15 +11,19 @@
           <a-input v-decorator="['sdkChannel', validatorRules.sdkChannel]" placeholder="请输入Sdk渠道"/>
         </a-form-item>
         <a-form-item label="游戏编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['gameId', validatorRules.gameId]" placeholder="请输入游戏编号"
-                          style="width: 100%"/>
+          <j-dict-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
+                             dictCode="game_info,name,id"/>
         </a-form-item>
         <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['version', validatorRules.version]" placeholder="请输入版本号"
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="审核区服配置" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['profile', validatorRules.profile]" placeholder="请输入审核区服配置"/>
+          <j-search-select-tag
+            v-decorator="['profile', validatorRules.profile]" placeholder="请输入审核区服配置"
+            dict="game_channel,name,simple_name"
+            :async="true">
+          </j-search-select-tag>
         </a-form-item>
         <a-form-item label="审核开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="审核开关" v-decorator="['status', validatorRules.status]" initialValue="1">

@@ -6,19 +6,19 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="游戏名称">
-              <j-input placeholder="请输入游戏名称" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入游戏名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.yaAppId" placeholder="唯一标识"
-                                 dictCode="game_info,ya_simple_name,ya_app_id"/>
+              <j-dict-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"
+                                 dictCode="game_info,name,ya_simple_name"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="gameAppKey">
-                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"></a-input>
+                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"/>
               </a-form-item>
             </a-col>
           </template>
@@ -66,18 +66,17 @@
                :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
-          <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <!--          <a-divider type="vertical"/>-->
+          <!--          <a-dropdown>-->
+          <!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
+          <!--            <a-menu slot="overlay">-->
+          <!--              <a-menu-item>-->
+          <!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+          <!--                  <a>删除</a>-->
+          <!--                </a-popconfirm>-->
+          <!--              </a-menu-item>-->
+          <!--            </a-menu>-->
+          <!--          </a-dropdown>-->
         </span>
       </a-table>
     </div>
@@ -119,16 +118,19 @@ export default {
         {
           title: '游戏Id',
           align: 'center',
+          width: 80,
           dataIndex: 'id'
         },
         {
           title: '游戏名称',
           align: 'center',
+          width: 100,
           dataIndex: 'name'
         },
         {
           title: '唯一标识',
           align: 'center',
+          width: 100,
           dataIndex: 'yaSimpleName'
         },
         {
@@ -152,32 +154,32 @@ export default {
           dataIndex: 'authUrl'
         },
         {
-          title: '支付验证地址',
-          align: 'center',
-          dataIndex: 'payUrl'
-        },
-        {
-          title: '账号注册地址',
-          align: 'center',
-          dataIndex: 'accountRegisterUrl'
-        },
-        {
           title: '账号登录地址',
           align: 'center',
           dataIndex: 'accountLoginUrl'
         },
+        // {
+        //   title: '支付验证地址',
+        //   align: 'center',
+        //   dataIndex: 'payUrl'
+        // },
+        // {
+        //   title: '账号注册地址',
+        //   align: 'center',
+        //   dataIndex: 'accountRegisterUrl'
+        // },
+        // {
+        //   title: '苹果登录回调',
+        //   align: 'center',
+        //   dataIndex: 'oauthRedirectUrl'
+        // },
         {
-          title: '苹果登录回调',
-          align: 'center',
-          dataIndex: 'oauthRedirectUrl'
-        },
-        {
-          title: '游戏列表地址',
+          title: '区服列表地址',
           align: 'center',
           dataIndex: 'serverUrl'
         },
         {
-          title: '公告列表地址',
+          title: '公告地址',
           align: 'center',
           dataIndex: 'noticeUrl'
         },
@@ -187,12 +189,13 @@ export default {
           dataIndex: 'offRegisterDay'
         },
         {
-          title: '描述',
+          title: '备注',
           align: 'center',
           dataIndex: 'remark'
         },
         {
           title: '操作',
+          width: 80,
           dataIndex: 'action',
           align: 'center',
           scopedSlots: {customRender: 'action'}

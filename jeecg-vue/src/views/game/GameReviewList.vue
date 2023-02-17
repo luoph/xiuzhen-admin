@@ -5,6 +5,11 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
+            <a-form-item label="游戏编号">
+              <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
             <a-form-item label="Sdk渠道名">
               <j-input placeholder="请输入Sdk渠道名" v-model="queryParam.sdkChannel"/>
             </a-form-item>
@@ -72,22 +77,14 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <a v-if="record.status === 0" @click="changeStatus(record, 1)">开启审核</a>
+          <a v-else @click="changeStatus(record, 0)">关闭审核</a>
         </span>
         <span slot="statusSlot" slot-scope="text, record">
           <a-tag v-if="record.status === 0" color="red">OFF</a-tag>
           <a-tag v-else-if="record.status === 1" color="green">ON</a-tag>
         </span>
-        <span slot="ipTags" slot-scope="text, record">
+        <span slot="profileSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
@@ -168,9 +165,7 @@ export default {
           align: 'center',
           width: 100,
           dataIndex: 'profile',
-          customRender: (value) => {
-            return value || '--';
-          }
+          scopedSlots: {customRender: 'profileSlot'}
         },
         {
           title: '审核开关',
@@ -197,6 +192,7 @@ export default {
         list: 'game/review/list',
         delete: 'game/review/delete',
         deleteBatch: 'game/review/deleteBatch',
+        changeStatus: 'game/review/changeStatus',
         refreshConfig: 'game/info/refreshConfig',
         // 游戏列表
         gameInfoList: 'game/info/list',
@@ -231,6 +227,16 @@ export default {
         } else {
           this.gameList = [];
         }
+      });
+    },
+    changeStatus(record, value) {
+      getAction(this.url.changeStatus, {id: record.id, status: value}).then((res) => {
+        if (res.success) {
+          this.$message.success(res.message);
+        } else {
+          this.$message.error(res.message);
+        }
+        this.loadData();
       });
     },
     refreshConfig() {
