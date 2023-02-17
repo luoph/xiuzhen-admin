@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
 import org.jeecg.common.constant.TimeConstant;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -25,7 +26,7 @@ public final class JsonFileUtils {
      */
     public static void writeJsonFile(Object object, String folder, String fileName) {
         String content = JSON.toJSONString(object, TimeConstant.DEFAULT_TIME_FORMAT);
-        String filePath = folder + "/" + fileName + ".json";
+        File filePath = FileUtil.file(new File(folder), fileName + ".json");
         if (FileUtil.exist(filePath)) {
             FileUtil.del(filePath);
         }
@@ -33,10 +34,18 @@ public final class JsonFileUtils {
     }
 
     public static void deleteJsonFile(String folder, String fileName) {
-        String filePath = folder + "/" + fileName + ".json";
+        File filePath = FileUtil.file(new File(folder), fileName + ".json");
         if (FileUtil.exist(filePath)) {
             FileUtil.del(filePath);
         }
+    }
+
+    public static String readJsonString(String folder, String fileName) {
+        File filePath = FileUtil.file(new File(folder), fileName + ".json");
+        if (FileUtil.exist(filePath)) {
+            FileUtil.readUtf8String(filePath);
+        }
+        return null;
     }
 
 }

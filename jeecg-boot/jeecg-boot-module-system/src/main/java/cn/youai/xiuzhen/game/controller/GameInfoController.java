@@ -1,29 +1,17 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.youai.xiuzhen.game.entity.GameInfo;
-import cn.youai.xiuzhen.game.entity.GameReview;
-import cn.youai.xiuzhen.game.model.GameClientConfig;
-import cn.youai.xiuzhen.game.model.GameReviewConfig;
 import cn.youai.xiuzhen.game.service.IGameInfoService;
-import cn.youai.xiuzhen.game.service.IGameReviewService;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import net.dreamlu.mica.core.utils.$;
-import org.jeecg.JsonFileUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -36,12 +24,6 @@ import java.util.List;
 @Api(tags = "游戏信息")
 @RequestMapping("/game/info")
 public class GameInfoController extends JeecgController<GameInfo, IGameInfoService> {
-
-    @Autowired
-    private IGameReviewService reviewService;
-
-    @Value("${app.folder.game}")
-    private String gameFolder;
 
     @AutoLog(value = "游戏信息-列表查询")
     @GetMapping(value = "/list")
@@ -98,26 +80,9 @@ public class GameInfoController extends JeecgController<GameInfo, IGameInfoServi
     @GetMapping(value = "/refreshConfig")
     public Result<?> refreshConfig(HttpServletRequest req) {
         try {
-            List<GameInfo> gameInfoList = service.list();
-            for (GameInfo gameInfo : gameInfoList) {
-                GameClientConfig gameClientConfig = new GameClientConfig();
-                List<GameReview> reviewList = reviewService.list(Wrappers.<GameReview>lambdaQuery()
-                        .eq(GameReview::getGameId, gameInfo.getId())
-                        .eq(GameReview::getStatus, 1));
-                if (CollUtil.isNotEmpty(reviewList)) {
-                    List<GameReviewConfig> list = new ArrayList<>();
-                    for (GameReview it : reviewList) {
-                        GameReviewConfig reviewConfig = new GameReviewConfig();
-                        $.copy(it, reviewConfig);
-                        list.add(reviewConfig);
-                    }
-                    gameClientConfig.setReviewList(list);
-                }
-                $.copy(gameInfo, gameClientConfig);
-                JsonFileUtils.writeJsonFile(gameClientConfig, gameFolder, gameInfo.getYaSimpleName());
-            }
+            service.refreshConfig();
         } catch (Exception e) {
-            log.error("updateServerConfig error", e);
+            log.error("refreshConfig error", e);
             return Result.error(e.getMessage());
         }
         return Result.ok("刷新成功");
