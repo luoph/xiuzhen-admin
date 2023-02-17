@@ -14,7 +14,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class GameClientConfig {
 
-    private List<GameReviewConfig> reviewList;
+    private List<GameReviewConfig> reviews;
 
     private String name;
     private String loginUrl;

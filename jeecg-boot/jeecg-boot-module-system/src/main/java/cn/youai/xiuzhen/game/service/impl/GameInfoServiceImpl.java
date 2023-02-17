@@ -62,7 +62,7 @@ public class GameInfoServiceImpl extends ServiceImpl<GameInfoMapper, GameInfo> i
                     $.copy(it, reviewConfig);
                     list.add(reviewConfig);
                 }
-                gameClientConfig.setReviewList(list);
+                gameClientConfig.setReviews(list);
             }
             $.copy(gameInfo, gameClientConfig);
             JsonFileUtils.writeJsonFile(gameClientConfig, gameFolder, gameInfo.getYaSimpleName());
