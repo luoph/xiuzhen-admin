@@ -351,7 +351,7 @@ export default {
         getOnlineNum: 'game/gameServer/getOnlineNum',
         startMaintain: 'game/gameServer/startMaintain',
         stopMaintain: 'game/gameServer/stopMaintain',
-        gameInfoListUrl: 'game/gameInfo/list'
+        gameInfoListUrl: 'game/info/list'
       }
     };
   },

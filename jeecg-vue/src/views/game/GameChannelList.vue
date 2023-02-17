@@ -268,7 +268,7 @@ export default {
         updateServerCacheUrl: 'game/channel/updateServerCache',
         updateChatServerCacheUrl: 'game/channel/updateChatServerCache',
         // 游戏列表
-        gameInfoListUrl: 'game/gameInfo/list',
+        gameInfoListUrl: 'game/info/list',
         // 公告id
         noticeUrl: 'game/gameNotice/queryById',
         // 刷新渠道公告

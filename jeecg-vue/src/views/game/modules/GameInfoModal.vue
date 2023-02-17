@@ -111,8 +111,8 @@ export default {
         remark: {rules: [{required: false, message: '请输入描述!'}]}
       },
       url: {
-        add: 'game/gameInfo/add',
-        edit: 'game/gameInfo/edit'
+        add: 'game/info/add',
+        edit: 'game/info/edit'
       }
     };
   },
