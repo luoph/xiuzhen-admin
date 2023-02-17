@@ -6,18 +6,19 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="游戏名称">
-              <j-input placeholder="请输入游戏名称" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入游戏名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.yaAppId" placeholder="唯一标识" dictCode="game_info,ya_simple_name,ya_app_id" />
+              <j-dict-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"
+                                 dictCode="game_info,name,ya_simple_name"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="gameAppKey">
-                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"></a-input>
+                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"/>
               </a-form-item>
             </a-col>
           </template>
@@ -27,7 +28,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -38,7 +39,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-popconfirm title="刷新游戏配置" @confirm="updateGameConfig()">
+      <a-popconfirm title="刷新游戏配置" @confirm="refreshConfig()">
         <a-button type="primary" icon="update">刷新游戏配置</a-button>
       </a-popconfirm>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏信息')">导出</a-button> -->
@@ -48,34 +49,34 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete" />
+            <a-icon type="delete"/>
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down" />
+          <a-icon type="down"/>
         </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
-          <a-divider type="vertical" />
-          <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <!--          <a-divider type="vertical"/>-->
+          <!--          <a-dropdown>-->
+          <!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
+          <!--            <a-menu slot="overlay">-->
+          <!--              <a-menu-item>-->
+          <!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+          <!--                  <a>删除</a>-->
+          <!--                </a-popconfirm>-->
+          <!--              </a-menu-item>-->
+          <!--            </a-menu>-->
+          <!--          </a-dropdown>-->
         </span>
       </a-table>
     </div>
@@ -88,8 +89,8 @@
 
 <script>
 import GameInfoModal from './modules/GameInfoModal';
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
-import { getAction } from '@/api/manage';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {getAction} from '@/api/manage';
 import JInput from '@/components/jeecg/JInput';
 
 export default {
@@ -117,44 +118,26 @@ export default {
         {
           title: '游戏Id',
           align: 'center',
+          width: 80,
           dataIndex: 'id'
         },
         {
           title: '游戏名称',
           align: 'center',
+          width: 100,
           dataIndex: 'name'
         },
         {
           title: '唯一标识',
           align: 'center',
+          width: 100,
           dataIndex: 'yaSimpleName'
-        },
-        {
-          title: '微信审核版本',
-          align: 'center',
-          dataIndex: 'weixinReview'
         },
         {
           title: '审核渠道',
           align: 'center',
           dataIndex: 'reviewChannel'
         },
-        // {
-        //     title: "YA_APPID",
-        //     align: "center",
-        //     width: 120,
-        //     dataIndex: "yaAppId"
-        // },
-        // {
-        //     title: "YA_APPKEY",
-        //     align: "center",
-        //     dataIndex: "yaAppKey"
-        // },
-        // {
-        //     title: "gameAppKey",
-        //     align: "center",
-        //     dataIndex: "yaGameKey"
-        // },
         {
           title: '帐号登录地址',
           align: 'center',
@@ -171,32 +154,32 @@ export default {
           dataIndex: 'authUrl'
         },
         {
-          title: '支付验证地址',
-          align: 'center',
-          dataIndex: 'payUrl'
-        },
-        {
-          title: '账号注册地址',
-          align: 'center',
-          dataIndex: 'accountRegisterUrl'
-        },
-        {
           title: '账号登录地址',
           align: 'center',
           dataIndex: 'accountLoginUrl'
         },
+        // {
+        //   title: '支付验证地址',
+        //   align: 'center',
+        //   dataIndex: 'payUrl'
+        // },
+        // {
+        //   title: '账号注册地址',
+        //   align: 'center',
+        //   dataIndex: 'accountRegisterUrl'
+        // },
+        // {
+        //   title: '苹果登录回调',
+        //   align: 'center',
+        //   dataIndex: 'oauthRedirectUrl'
+        // },
         {
-          title: '苹果登录回调',
-          align: 'center',
-          dataIndex: 'oauthRedirectUrl'
-        },
-        {
-          title: '游戏列表地址',
+          title: '区服列表地址',
           align: 'center',
           dataIndex: 'serverUrl'
         },
         {
-          title: '公告列表地址',
+          title: '公告地址',
           align: 'center',
           dataIndex: 'noticeUrl'
         },
@@ -206,22 +189,23 @@ export default {
           dataIndex: 'offRegisterDay'
         },
         {
-          title: '描述',
+          title: '备注',
           align: 'center',
           dataIndex: 'remark'
         },
         {
           title: '操作',
+          width: 80,
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
-        list: 'game/gameInfo/list',
-        delete: 'game/gameInfo/delete',
-        deleteBatch: 'game/gameInfo/deleteBatch',
-        updateGameConfigUrl: 'game/gameInfo/updateGameConfig'
+        list: 'game/info/list',
+        delete: 'game/info/delete',
+        deleteBatch: 'game/info/deleteBatch',
+        refreshConfig: 'game/info/refreshConfig'
       }
     };
   },
@@ -231,9 +215,9 @@ export default {
     }
   },
   methods: {
-    updateGameConfig() {
+    refreshConfig() {
       // 开始刷新游戏配置
-      getAction(this.url.updateGameConfigUrl).then((res) => {
+      getAction(this.url.refreshConfig).then((res) => {
         if (res.success) {
           this.$message.success(res.message);
         } else {

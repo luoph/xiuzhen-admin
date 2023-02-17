@@ -20,11 +20,10 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="YA_GAME_KEY">
           <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', validatorRules.yaGameKey]"/>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="微信审核版本">
-          <a-input placeholder="请输入微信审核版本号" v-decorator="['weixinReview', validatorRules.weixinReview]"/>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="审核渠道">
-          <a-input placeholder="请输入审核渠道" v-decorator="['reviewChannel', validatorRules.reviewChannel]"/>
+        <a-form-item label="审核区服配置" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <j-dict-select-tag v-decorator="['reviewChannel', validatorRules.reviewChannel]"
+                             placeholder="请选择审核区服配置"
+                             dictCode="game_channel,name,simple_name"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="帐号登录地址">
           <a-input placeholder="请输入帐号登录地址(不包含域名)" v-decorator="['loginUrl', validatorRules.loginUrl]"/>
@@ -100,7 +99,6 @@ export default {
         yaAppKey: {rules: [{required: true, message: '请输入 YA_APPKEY!'}]},
         yaGameKey: {rules: [{required: true, message: '请输入 gameAppKey!'}]},
         yaSimpleName: {rules: [{required: true, message: '请输入 gameSimpleName!'}]},
-        weixinReview: {rules: [{required: false, message: '请输入微信审核版本!'}]},
         reviewChannel: {rules: [{required: false, message: '请输入审核渠道!'}]},
         loginUrl: {rules: [{required: true, message: '请输入帐号登录地址!'}]},
         roleUrl: {rules: [{required: true, message: '请输入角色信息地址!'}]},
@@ -115,8 +113,8 @@ export default {
         remark: {rules: [{required: false, message: '请输入描述!'}]}
       },
       url: {
-        add: 'game/gameInfo/add',
-        edit: 'game/gameInfo/edit'
+        add: 'game/info/add',
+        edit: 'game/info/edit'
       }
     };
   },
@@ -140,7 +138,6 @@ export default {
             'yaAppKey',
             'yaSimpleName',
             'yaGameKey',
-            'weixinReview',
             'reviewChannel',
             'loginUrl',
             'roleUrl',

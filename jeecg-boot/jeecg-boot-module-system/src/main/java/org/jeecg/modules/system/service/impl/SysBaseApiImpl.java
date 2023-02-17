@@ -286,20 +286,19 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 	@Override
 	public DictModel getParentDepartId(String departId) {
 		SysDepart depart = departMapper.getParentDepartId(departId);
-		DictModel model = new DictModel(depart.getId(),depart.getParentId());
-		return model;
+		return new DictModel(depart.getId(),depart.getParentId());
 	}
 
 	@Override
 	@Cacheable(value = CacheConstant.SYS_DICT_CACHE,key = "#code", unless = "#result == null ")
 	public List<DictModel> queryDictItemsByCode(String code) {
-		return sysDictService.queryDictItemsByCode(code);
+		return DictModel.prettyText(sysDictService.queryDictItemsByCode(code));
 	}
 
 	@Override
 	@Cacheable(value = CacheConstant.SYS_ENABLE_DICT_CACHE,key = "#code", unless = "#result == null ")
 	public List<DictModel> queryEnableDictItemsByCode(String code) {
-		return sysDictService.queryEnableDictItemsByCode(code);
+		return DictModel.prettyText(sysDictService.queryEnableDictItemsByCode(code));
 	}
 
 	@Override
@@ -309,12 +308,12 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 			table = QueryGenerator.getSqlRuleValue(table);
 		}
 		//update-end-author:taoyan date:20200820 for:【Online+系统】字典表加权限控制机制逻辑，想法不错 LOWCOD-799
-		return sysDictService.queryTableDictItemsByCode(table, text, code);
+		return DictModel.prettyText(sysDictService.queryTableDictItemsByCode(table, text, code));
 	}
 
 	@Override
 	public List<DictModel> queryAllDepartBackDictModel() {
-		return sysDictService.queryAllDepartBackDictModel();
+		return DictModel.prettyText(sysDictService.queryAllDepartBackDictModel());
 	}
 
 	@Override
@@ -579,7 +578,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 			list.add(new DictModel(dict.getDictCode(), dict.getDictName()));
 		}
 
-		return list;
+		return DictModel.prettyText(list);
 	}
 
 	@Override
@@ -591,7 +590,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
 	@Override
 	public List<DictModel> queryFilterTableDictInfo(String table, String text, String code, String filterSql) {
-		return sysDictService.queryTableDictItemsByCodeAndFilter(table,text,code,filterSql);
+		return DictModel.prettyText(sysDictService.queryTableDictItemsByCodeAndFilter(table,text,code,filterSql));
 	}
 
 	@Override
@@ -1133,7 +1132,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 		if (ls == null) {
 			ls = new ArrayList<>();
 		}
-		return ls;
+		return DictModel.prettyText(ls);
 	}
 
 	/**
@@ -1157,7 +1156,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 	 */
 	@Override
 	public List<DictModel> loadDictItemByKeyword(String dictCode, String keyword, Integer pageSize) {
-		return sysDictService.loadDict(dictCode, keyword, pageSize);
+		return DictModel.prettyText(sysDictService.loadDict(dictCode, keyword, pageSize));
 	}
 
 	@Override
@@ -1169,7 +1168,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
 
 	@Override
 	public List<DictModel> translateDictFromTableByKeys(String table, String text, String code, String keys) {
-		return sysDictService.queryTableDictTextByKeys(table, text, code, Arrays.asList(keys.split(",")));
+		return DictModel.prettyText(sysDictService.queryTableDictTextByKeys(table, text, code, Arrays.asList(keys.split(","))));
 	}
 
 	//-------------------------------------流程节点发送模板消息-----------------------------------------------

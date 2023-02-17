@@ -17,9 +17,9 @@
         <a-form-item label="大渠道描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入大渠道描述"></a-input>
         </a-form-item>
-        <a-form-item label="游戏编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['gameId', validatorRules.gameId]" placeholder="请输入游戏编号"
-                          style="width: 100%"/>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
+          <j-dict-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
+                             dictCode="game_info,name,id"/>
         </a-form-item>
         <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入版本号"

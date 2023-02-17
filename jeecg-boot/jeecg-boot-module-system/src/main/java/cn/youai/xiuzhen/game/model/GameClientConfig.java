@@ -3,6 +3,8 @@ package cn.youai.xiuzhen.game.model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * @author luopeihuan
  * @version 1.0
@@ -11,6 +13,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class GameClientConfig {
+
+    private List<GameReviewConfig> reviews;
+
     private String name;
     private String loginUrl;
     private String serverUrl;
@@ -22,6 +27,5 @@ public class GameClientConfig {
     private String accountRegisterUrl;
     private String accountLoginUrl;
     private Integer offRegisterDay;
-    private String weixinReview;
     private String reviewChannel;
 }

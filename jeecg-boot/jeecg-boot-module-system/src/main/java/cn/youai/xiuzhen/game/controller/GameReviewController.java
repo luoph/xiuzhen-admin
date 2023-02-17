@@ -1,7 +1,7 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.youai.xiuzhen.game.entity.GameInfo;
-import cn.youai.xiuzhen.game.service.IGameInfoService;
+import cn.youai.xiuzhen.game.entity.GameReview;
+import cn.youai.xiuzhen.game.service.IGameReviewService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -16,75 +16,76 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author jeecg-boot
  * @version V1.0
- * @description 游戏信息
- * @date 2019-12-11
+ * @description 游戏审核
+ * @date 2023-02-16
  */
 @Slf4j
 @RestController
-@Api(tags = "游戏信息")
-@RequestMapping("/game/info")
-public class GameInfoController extends JeecgController<GameInfo, IGameInfoService> {
+@Api(tags = "游戏审核")
+@RequestMapping("/game/review")
+public class GameReviewController extends JeecgController<GameReview, IGameReviewService> {
 
-    @AutoLog(value = "游戏信息-列表查询")
+    @AutoLog(value = "游戏审核-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameInfo entity,
+    public Result<?> queryPageList(GameReview entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
-    @AutoLog(value = "游戏信息-添加")
+    @AutoLog(value = "游戏审核-添加")
     @PostMapping(value = "/add")
-    public Result<?> add(@RequestBody GameInfo entity) {
+    public Result<?> add(@RequestBody GameReview entity) {
         return super.add(entity);
     }
 
-    @AutoLog(value = "游戏信息-编辑")
+    @AutoLog(value = "游戏审核-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameInfo entity) {
+    public Result<?> edit(@RequestBody GameReview entity) {
         return super.edit(entity);
     }
 
-    @AutoLog(value = "游戏信息-通过id删除")
+    @AutoLog(value = "游戏审核-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         return super.delete(id);
     }
 
-    @AutoLog(value = "游戏信息-批量删除")
+    @AutoLog(value = "游戏审核-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         return super.deleteBatch(ids);
     }
 
-    @AutoLog(value = "游戏信息-通过id查询")
+    @AutoLog(value = "游戏审核-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
         return super.queryById(id);
     }
 
-    @AutoLog(value = "游戏信息-导出")
-    @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, GameInfo gameInfo) {
-        return super.exportXls(request, gameInfo, GameInfo.class, "游戏信息");
+    @AutoLog(value = "游戏审核-修改状态")
+    @GetMapping(value = "/changeStatus")
+    public Result<?> changeStatus(@RequestParam(name = "id") String id, @RequestParam(name = "status") Integer status) {
+        GameReview entity = getById(id);
+        if (entity != null) {
+            entity.setStatus(status);
+            service.updateById(entity);
+            return Result.ok("操作成功！");
+        }
+        return Result.error("操作失败！");
     }
 
-    @AutoLog(value = "游戏信息-导入")
+    @AutoLog(value = "游戏审核-导出")
+    @RequestMapping(value = "/exportXls")
+    public ModelAndView exportXls(HttpServletRequest request, GameReview gameInfo) {
+        return super.exportXls(request, gameInfo, GameReview.class, "游戏审核");
+    }
+
+    @AutoLog(value = "游戏审核-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameInfo.class);
+        return super.importExcel(request, response, GameReview.class);
     }
 
-    @AutoLog(value = "游戏信息-刷新配置")
-    @GetMapping(value = "/refreshConfig")
-    public Result<?> refreshConfig(HttpServletRequest req) {
-        try {
-            service.refreshConfig();
-        } catch (Exception e) {
-            log.error("refreshConfig error", e);
-            return Result.error(e.getMessage());
-        }
-        return Result.ok("刷新成功");
-    }
 }

@@ -11,4 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IGameInfoService extends IService<GameInfo> {
 
+    void refreshConfig();
+
 }
