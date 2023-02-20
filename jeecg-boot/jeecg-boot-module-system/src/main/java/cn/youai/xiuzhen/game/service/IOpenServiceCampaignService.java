@@ -20,7 +20,7 @@ public interface IOpenServiceCampaignService extends IService<OpenServiceCampaig
 
     List<OpenServiceCampaign> queryCampaignList(Collection<Long> ids);
 
-    List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType);
+    List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType, int autoAddServer);
 
     void duplicate(OpenServiceCampaign other);
 

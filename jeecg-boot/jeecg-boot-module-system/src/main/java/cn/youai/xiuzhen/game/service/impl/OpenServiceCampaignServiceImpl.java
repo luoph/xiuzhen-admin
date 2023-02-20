@@ -68,8 +68,8 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
     }
 
     @Override
-    public List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType) {
-        return getBaseMapper().queryCampaignDetailsFastly(timeType);
+    public List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType, int autoAddServer) {
+        return getBaseMapper().queryCampaignDetailsFastly(timeType, autoAddServer);
     }
 
     @Override
@@ -158,7 +158,7 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
 
     @Override
     public void addCampaignServerIds(List<Integer> serverIds) {
-        List<OpenServiceCampaignDetail> detailList = queryCampaignDetailsFastly(TimeType.OPEN_DAY.getType());
+        List<OpenServiceCampaignDetail> detailList = queryCampaignDetailsFastly(TimeType.OPEN_DAY.getType(), 1);
         if (CollUtil.isEmpty(detailList)) {
             return;
         }

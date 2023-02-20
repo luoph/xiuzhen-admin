@@ -48,6 +48,7 @@ public class GameCampaign extends BaseEntity {
         this.status = other.getStatus();
         this.priority = other.getPriority();
         this.autoOpen = other.getAutoOpen();
+        this.autoAddServer = other.getAutoAddServer();
         this.timeType = other.getTimeType();
         this.startTime = other.getStartTime();
         this.endTime = other.getEndTime();
@@ -126,6 +127,12 @@ public class GameCampaign extends BaseEntity {
      */
     @Excel(name = "sdk渠道", width = 15)
     private String sdkChannels;
+
+    /**
+     * 是否自动添加新服
+     */
+    @Excel(name = "是否自动添加新服", width = 15)
+    private Integer autoAddServer;
 
     /**
      * 时间类型: 1.具体时间范围, 2.开服第N天

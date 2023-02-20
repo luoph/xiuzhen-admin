@@ -21,7 +21,7 @@ public interface IGameCampaignService extends IService<GameCampaign> {
 
     List<GameCampaignType> getGameCampaignTypeList(GameCampaign gameCampaign);
 
-    List<GameCampaign> queryCampaignListByTimeType(TimeType timeType);
+    List<GameCampaign> queryCampaignListByTimeType(TimeType timeType, int autoAddServer);
 
     /**
      * 自动添加区服id，活动类型（开服第N天）
