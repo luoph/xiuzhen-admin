@@ -53,8 +53,7 @@ public class GameInfoServiceImpl extends ServiceImpl<GameInfoMapper, GameInfo> i
         List<GameInfo> gameInfoList = list();
         for (GameInfo gameInfo : gameInfoList) {
             GameClientConfig gameClientConfig = new GameClientConfig();
-            List<GameReview> reviewList = reviewService.list(Wrappers.<GameReview>lambdaQuery()
-                    .eq(GameReview::getGameId, gameInfo.getId()).eq(GameReview::getStatus, 1));
+            List<GameReview> reviewList = reviewService.list(Wrappers.<GameReview>lambdaQuery().eq(GameReview::getGameId, gameInfo.getId()).eq(GameReview::getStatus, 1));
             if (CollUtil.isNotEmpty(reviewList)) {
                 List<GameReviewConfig> list = new ArrayList<>();
                 for (GameReview it : reviewList) {
@@ -68,31 +67,40 @@ public class GameInfoServiceImpl extends ServiceImpl<GameInfoMapper, GameInfo> i
             JsonFileUtils.writeJsonFile(gameClientConfig, gameFolder, gameInfo.getYaSimpleName());
         }
 
-        // 替换前端部署页面的 versionInfo.json
+        // 替换前端部署页面的 config.json
         if (StringUtils.isNotEmpty(frontendFolder) && FileUtil.exist(frontendFolder)) {
-            final List<File> subFiles = Arrays.stream(Objects.requireNonNull(new File(frontendFolder).listFiles()))
-                    .filter(File::isDirectory).collect(Collectors.toList());
-            for (File file : subFiles) {
-                File versionInfoFile = FileUtil.file(file, "versionInfo.json");
-                if (!FileUtil.exist(versionInfoFile)) {
+            final List<File> subDirList = Arrays.stream(Objects.requireNonNull(new File(frontendFolder).listFiles())).filter(File::isDirectory).collect(Collectors.toList());
+            for (File dir : subDirList) {
+                File revisionFile = FileUtil.file(dir, "revision.txt");
+                if (!FileUtil.exist(revisionFile)) {
                     continue;
                 }
 
-                String fileData = FileUtil.readUtf8String(versionInfoFile);
-                JSONObject versionInfoJson = JSON.parseObject(fileData);
-                String configUrl = versionInfoJson.getString("configUrl");
+                // 新版配置文件名 config.json，旧版本 versionInfo.json
+                File configFile = FileUtil.file(dir, "config.json");
+                if (!FileUtil.exist(configFile)) {
+                    configFile = FileUtil.file(dir, "versionInfo.json");
+                }
+
+                if (!FileUtil.exist(configFile)) {
+                    continue;
+                }
+
+                String fileData = FileUtil.readUtf8String(configFile);
+                JSONObject configJson = JSON.parseObject(fileData);
+                String configUrl = configJson.getString("configUrl");
                 if (StringUtils.isNotEmpty(configUrl)) {
                     String simpleName = FileNameUtil.getName(configUrl);
                     File gameConfigFile = FileUtil.file(new File(gameFolder), simpleName);
                     if (FileUtil.exist(gameConfigFile)) {
                         String gameConfig = FileUtil.readUtf8String(gameConfigFile);
                         if (StringUtils.isNotEmpty(gameConfig)) {
-                            versionInfoJson.put("gameConfig", JSON.parseObject(gameConfig));
+                            configJson.put("gameConfig", JSON.parseObject(gameConfig));
                         }
                     }
                 }
                 // 更新配置
-                FileUtil.writeUtf8String(JSON.toJSONString(versionInfoJson), versionInfoFile);
+                FileUtil.writeUtf8String(JSON.toJSONString(configJson), configFile);
             }
         }
     }

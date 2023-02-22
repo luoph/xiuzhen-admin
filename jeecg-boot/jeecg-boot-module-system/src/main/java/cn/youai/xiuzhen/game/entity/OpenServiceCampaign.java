@@ -37,9 +37,10 @@ public class OpenServiceCampaign extends BaseEntity {
     public OpenServiceCampaign(OpenServiceCampaign other) {
 //        this.id = other.id;
         this.name = other.name;
-//        this.cross = other.cross;
+        this.cross = other.cross;
 //        this.serverIds = other.serverIds;
 //        this.lastServerIds = other.lastServerIds;
+        this.autoAddServer = other.autoAddServer;
         this.icon = other.icon;
         this.status = other.status;
         this.priority = other.priority;
@@ -77,6 +78,12 @@ public class OpenServiceCampaign extends BaseEntity {
      */
     @Excel(name = "已刷新的服务器id", width = 15)
     private java.lang.String lastServerIds;
+
+    /**
+     * 是否自动添加新服
+     */
+    @Excel(name = "是否自动添加新服", width = 15)
+    private Integer autoAddServer;
 
     /**
      * 活动图标

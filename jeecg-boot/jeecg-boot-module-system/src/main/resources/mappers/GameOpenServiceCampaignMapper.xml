@@ -21,6 +21,7 @@
         LEFT JOIN `game_open_service_campaign_consume_detail` d ON t.`id` = d.`campaign_type_id`
         WHERE d.`campaign_id` = g.`id`
         <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
+        <if test="autoAddServer != null">AND g.`auto_add_server` = #{autoAddServer}</if>
         GROUP BY g.`id`
 
         UNION ALL

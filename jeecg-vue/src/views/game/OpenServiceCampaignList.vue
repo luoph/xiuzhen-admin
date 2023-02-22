@@ -205,6 +205,12 @@ export default {
           scopedSlots: { customRender: 'serverIdSlot' }
         },
         {
+          title: '是否自动添加新服',
+          align: 'center',
+          width: 30,
+          dataIndex: 'autoAddServer'
+        },
+        {
           title: '活动图标',
           align: 'center',
           dataIndex: 'icon',

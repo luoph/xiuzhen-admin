@@ -80,9 +80,9 @@ public class WebsocketServerChecker {
             }
         }
 
-        Set<Integer> failedList = checkResultMap.values().stream()
+        List<Integer> failedList = checkResultMap.values().stream()
                 .filter(t -> t.getFailed() >= warningTimes)
-                .map(WebsocketCheckResult::getServerId).collect(Collectors.toSet());
+                .map(WebsocketCheckResult::getServerId).sorted().collect(Collectors.toList());
 
         // 忽略某些服务器id
         if (CollUtil.isNotEmpty(ignoreServers)) {

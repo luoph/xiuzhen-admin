@@ -66,15 +66,15 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
     }
 
     @Override
-    public List<GameCampaign> queryCampaignListByTimeType(TimeType timeType) {
-        return list(Wrappers.<GameCampaign>lambdaQuery().eq(GameCampaign::getTimeType, timeType.getType()));
+    public List<GameCampaign> queryCampaignListByTimeType(TimeType timeType, int autoAddServer) {
+        return list(Wrappers.<GameCampaign>lambdaQuery().eq(GameCampaign::getTimeType, timeType.getType()).eq(GameCampaign::getAutoAddServer, autoAddServer));
     }
 
     @Override
     @SuppressWarnings("DuplicatedCode")
     public void addCampaignServerIds(List<Integer> serverIds) {
         // 只处理 开服N天的活动
-        List<GameCampaign> campaignList = queryCampaignListByTimeType(TimeType.OPEN_DAY);
+        List<GameCampaign> campaignList = queryCampaignListByTimeType(TimeType.OPEN_DAY, 1);
         if (CollUtil.isEmpty(campaignList)) {
             return;
         }

@@ -23,6 +23,12 @@
           <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
+        <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select placeholder="选择是否自动添加新服" v-decorator="['autoAddServer', validatorRules.autoAddServer]" initialValue="1">
+            <a-select-option :value="1">1-是</a-select-option>
+            <a-select-option :value="0">0-否</a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="sdk渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['sdkChannels', validatorRules.sdkChannels]" placeholder="请输入sdk渠道"></a-input>
         </a-form-item>
@@ -117,6 +123,7 @@ export default {
         name: {rules: [{required: true, message: '请输入活动名称（备注）!'}]},
         description: {rules: [{required: true, message: '请输入活动标语（描述）!'}]},
         serverIds: {rules: [{required: true, message: '请选择区服id！'}]},
+        autoAddServer: {rules: [{required: true, message: '请选择是否自动添加新服!'}]},
         showName: {rules: [{required: true, message: '请输入活动展示名称!'}]},
         icon: {rules: [{required: true, message: '请输入活动图标!'}]},
         banner: {rules: [{required: true, message: '请输入活动宣传图!'}]},
@@ -168,6 +175,7 @@ export default {
             'description',
             'showName',
             'serverIds',
+            'autoAddServer',
             'sdkChannels',
             'icon',
             'banner',
@@ -262,7 +270,7 @@ export default {
     },
     popupCallback(row) {
       this.form.setFieldsValue(
-        pick(row, 'type', 'name', 'description', 'showName', 'sdkChannels', 'icon', 'banner', 'status', 'autoOpen', 'timeType', 'startDay', 'duration', 'startTime', 'endTime', 'priority')
+        pick(row, 'type', 'name', 'description', 'showName', 'autoAddServer', 'sdkChannels', 'icon', 'banner', 'status', 'autoOpen', 'timeType', 'startDay', 'duration', 'startTime', 'endTime', 'priority')
       );
     },
     changeSelect(value) {

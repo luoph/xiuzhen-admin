@@ -94,7 +94,7 @@ export default {
         {
           title: '#',
           dataIndex: '',
-          width: '4%',
+          width: 80,
           align: 'center',
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
@@ -103,7 +103,7 @@ export default {
         {
           title: '日期',
           dataIndex: 'countDate',
-          width: '6%',
+          width: 100,
           align: 'center',
           customRender: function (text) {
             return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
@@ -112,13 +112,13 @@ export default {
         {
           title: '渠道',
           dataIndex: 'channel',
-          width: '6%',
+          width: 80,
           align: 'center'
         },
         {
           title: '区服',
           dataIndex: 'serverId',
-          width: '6%',
+          width: 80,
           align: 'center',
           customRender: function (text) {
             return text === 0 ? '全部' : text;
@@ -128,25 +128,25 @@ export default {
           title: '新增账号',
           dataIndex: 'newAccountNum',
           align: 'center',
-          width: '5%'
+          width: 80,
         },
         {
           title: '新增角色',
           dataIndex: 'newPlayerNum',
+          width: 80,
           align: 'center',
-          width: '5%'
         },
         {
           title: '新增付费角色数',
           dataIndex: 'newPlayerPayNum',
+          width: 80,
           align: 'center',
-          width: '5%'
         },
         {
           title: '账号角色转化率',
           dataIndex: 'newConversionRate',
           align: 'center',
-          width: '5%',
+          width: 80,
           customRender: function (text) {
             return text + '%';
           }
@@ -155,7 +155,7 @@ export default {
           title: '新增付费率',
           dataIndex: 'newPlayerPayRate',
           align: 'center',
-          width: '5%',
+          width: 80,
           customRender: function (text) {
             return text + '%';
           }
