@@ -215,6 +215,12 @@ export default {
           dataIndex: 'productId'
         },
         {
+          title: '商品名称',
+          align: 'center',
+          width: 80,
+          dataIndex: 'productName'
+        },
+        {
           title: '平台订单号',
           align: 'center',
           width: 240,

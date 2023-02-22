@@ -82,6 +82,12 @@ public class GameOrder implements Serializable {
     @Excel(name = "商品id", width = 15)
     private String productId;
 
+    @TableField(exist = false)
+    @ColumnWidth(15)
+    @ExcelProperty("商品名称")
+    @Excel(name = "商品名称", width = 15)
+    private String productName;
+
     /**
      * ip地址
      */
