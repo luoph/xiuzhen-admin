@@ -42,7 +42,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="累充统计是否判断vip" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="rechargeVip">
+            <a-form-model-item label="累充/单笔 统计判断vip" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="rechargeVip">
               <a-select placeholder="请选择累充统计是否判断vip: 0.否, 1.是" @change="handleRechargeVipChange" v-model="model.rechargeVip" initialValue="0">
                 <a-select-option :value="0">0-否</a-select-option>
                 <a-select-option :value="1">1-是</a-select-option>
@@ -50,15 +50,16 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="累充统计" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="rechargeType">
-              <a-select placeholder="请选择累充统计: 1.注册时间, 2.活动时间" @change="handleRechargeTypeChange" v-model="model.rechargeType" initialValue="1">
+            <a-form-model-item label="累充/单笔 统计" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="rechargeType">
+              <a-select placeholder="请选择累充/单笔统计: 1.注册时间, 2.活动时间, 3-单笔充值" @change="handleRechargeTypeChange" v-model="model.rechargeType" initialValue="1">
                 <a-select-option :value="1">1-注册时间</a-select-option>
                 <a-select-option :value="2">2-活动时间</a-select-option>
+                <a-select-option :value="3">3-单笔充值</a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="累充金额" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="rechargeAmount">
+            <a-form-model-item label="累充/单笔 金额" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="rechargeAmount">
               <a-input-number v-model="model.rechargeAmount" placeholder="请输入累充金额" style="width: 100%" />
             </a-form-model-item>
           </a-col>

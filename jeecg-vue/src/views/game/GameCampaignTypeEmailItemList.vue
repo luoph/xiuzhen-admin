@@ -197,6 +197,8 @@
                 text = '1-注册时间';
               } else if (value === 2) {
                 text = '2-活动时间';
+              } else if (value === 3) {
+                text = '3-单笔充值';
               }
               return text;
             }
