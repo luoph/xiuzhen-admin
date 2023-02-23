@@ -10,10 +10,14 @@
         </a-form-item>
         <a-form-item label="限制类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请选择限制类型" v-decorator="['limitType', validatorRules.limitType]" initialValue="4">
-            <a-select-option :value="0">0 - 通用</a-select-option>
+            <a-select-option :value="0">0 - 不限制</a-select-option>
             <a-select-option :value="1">1 - 指定渠道</a-select-option>
-            <a-select-option :value="2">2 - SERVER</a-select-option>
+            <a-select-option :value="2">2 - 指定区服</a-select-option>
+            <a-select-option :value="3">3 - 指定渠道 & 指定区服</a-select-option>
             <a-select-option :value="4">4 - 同一分组只能兑换一次</a-select-option>
+            <a-select-option :value="5">5 - 指定渠道 & 同一分组只能兑换一次</a-select-option>
+            <a-select-option :value="6">6 - 指定区服 & 同一分组只能兑换一次</a-select-option>
+            <a-select-option :value="7">7 - 指定渠道 & 指定区服 & 同一分组只能兑换一次</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="分组id" :labelCol="labelCol" :wrapperCol="wrapperCol">

@@ -12,10 +12,14 @@
           <a-col :md="4" :sm="8">
             <a-form-item label="限制类型">
               <a-select placeholder="请选择限制类型" v-model="queryParam.limitType">
-                <a-select-option :value="0">0 - 通用</a-select-option>
+                <a-select-option :value="0">0 - 不限制</a-select-option>
                 <a-select-option :value="1">1 - 指定渠道</a-select-option>
-                <a-select-option :value="2">2 - SERVER</a-select-option>
+                <a-select-option :value="2">2 - 指定区服</a-select-option>
+                <a-select-option :value="3">3 - 指定渠道&指定区服</a-select-option>
                 <a-select-option :value="4">4 - 同一分组只能兑换一次</a-select-option>
+                <a-select-option :value="5">5 - 指定渠道&同一分组只能兑换一次</a-select-option>
+                <a-select-option :value="5">6 - 指定区服&同一分组只能兑换一次</a-select-option>
+                <a-select-option :value="5">7 - 指定渠道&指定区服&同一分组只能兑换一次</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -37,7 +41,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -53,17 +57,20 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <span slot="statuSlot" slot-scope="text">
@@ -82,7 +89,7 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import RedeemActivityModal from './modules/RedeemActivityModal';
 
 export default {
@@ -138,8 +145,28 @@ export default {
         {
           title: '限制类型',
           align: 'center',
-          width: 90,
-          dataIndex: 'limitType'
+          width: 120,
+          dataIndex: 'limitType',
+          customRender: function (text) {
+            if (text === 1) {
+              return '不限制 [0]';
+            } else if (text === 1) {
+              return '指定渠道 [1]';
+            } else if (text === 2) {
+              return '指定区服 [2]';
+            } else if (text === 3) {
+              return '指定渠道&指定区服 [3]';
+            } else if (text === 4) {
+              return '同一分组只能兑换一次 [4]';
+            } else if (text === 5) {
+              return '指定渠道&同一分组只能兑换一次 [5]';
+            } else if (text === 6) {
+              return '指定区服&同一分组只能兑换一次 [6]';
+            } else if (text === 7) {
+              return '指定渠道&指定区服&同一分组只能兑换一次 [7]';
+            }
+            return '--';
+          }
         },
         {
           title: '分组id',
@@ -170,7 +197,7 @@ export default {
           align: 'center',
           width: 90,
           dataIndex: 'status',
-          scopedSlots: { customRender: 'statuSlot' }
+          scopedSlots: {customRender: 'statuSlot'}
         },
         {
           title: '奖励',
@@ -205,7 +232,7 @@ export default {
           align: 'center',
           fixed: 'right',
           width: 180,
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
