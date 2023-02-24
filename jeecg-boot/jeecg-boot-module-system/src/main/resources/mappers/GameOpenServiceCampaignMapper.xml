@@ -15,13 +15,13 @@
         d.`end_time`,
         t.`type`,
         g.`server_ids`,
-        g.`cross`
+        g.`cross`,
+        g.`auto_add_server_channels`
         FROM `game_open_service_campaign` g
         LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
         LEFT JOIN `game_open_service_campaign_consume_detail` d ON t.`id` = d.`campaign_type_id`
-        WHERE d.`campaign_id` = g.`id`
+        WHERE d.`campaign_id` = g.`id` and g.`auto_add_server_channels` is not null
         <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
-        <if test="autoAddServer != null">AND g.`auto_add_server` = #{autoAddServer}</if>
         GROUP BY g.`id`
 
         UNION ALL

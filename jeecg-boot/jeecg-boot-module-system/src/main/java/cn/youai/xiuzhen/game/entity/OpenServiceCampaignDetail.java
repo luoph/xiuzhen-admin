@@ -117,4 +117,7 @@ public class OpenServiceCampaignDetail extends BaseEntity {
      */
     @TableField(exist = false)
     private String serverIds;
+
+    @TableField(exist = false)
+    private String autoAddServerChannels;
 }

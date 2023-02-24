@@ -4,6 +4,7 @@ import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ import java.util.List;
 public interface IGameChannelService extends IService<GameChannel> {
 
     GameChannel selectChannel(String channel);
+
+    List<GameChannel> selectChannelList(Collection<Integer> channelIds);
 
     /**
      * 查询某个渠道的服务器

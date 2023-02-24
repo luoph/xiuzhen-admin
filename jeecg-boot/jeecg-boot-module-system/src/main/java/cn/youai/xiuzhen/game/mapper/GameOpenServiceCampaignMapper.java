@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface GameOpenServiceCampaignMapper extends BaseMapper<OpenServiceCampaign> {
 
-    List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(@Param("timeType") int timeType, @Param("autoAddServer") int autoAddServer);
+    List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(@Param("timeType") int timeType);
 
 }

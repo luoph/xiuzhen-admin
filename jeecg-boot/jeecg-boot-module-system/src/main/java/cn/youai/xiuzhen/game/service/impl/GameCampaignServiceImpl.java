@@ -66,21 +66,27 @@ public class GameCampaignServiceImpl extends ServiceImpl<GameCampaignMapper, Gam
     }
 
     @Override
-    public List<GameCampaign> queryCampaignListByTimeType(TimeType timeType, int autoAddServer) {
-        return list(Wrappers.<GameCampaign>lambdaQuery().eq(GameCampaign::getTimeType, timeType.getType()).eq(GameCampaign::getAutoAddServer, autoAddServer));
+    public List<GameCampaign> queryCampaignListByTimeType(TimeType timeType) {
+        return list(Wrappers.<GameCampaign>lambdaQuery().eq(GameCampaign::getTimeType, timeType.getType()).isNotNull(GameCampaign::getAutoAddServerChannels));
     }
 
     @Override
     @SuppressWarnings("DuplicatedCode")
-    public void addCampaignServerIds(List<Integer> serverIds) {
+    public void addCampaignServerIds(List<GameChannelServer> channelServers) {
         // 只处理 开服N天的活动
-        List<GameCampaign> campaignList = queryCampaignListByTimeType(TimeType.OPEN_DAY, 1);
+        List<GameCampaign> campaignList = queryCampaignListByTimeType(TimeType.OPEN_DAY);
         if (CollUtil.isEmpty(campaignList)) {
             return;
         }
 
         for (GameCampaign campaign : campaignList) {
-            boolean changed = campaign.addServerId(serverIds);
+            Set<String> autoAddServerChannelSet = StringUtils.split2Set(campaign.getAutoAddServerChannels());
+            List<Integer> autoAddServerIds = channelServers.stream().filter(e -> autoAddServerChannelSet.contains(e.getChannelSimpleName()))
+                    .map(GameChannelServer::getServerId).collect(Collectors.toList());
+            if (autoAddServerIds.isEmpty()) {
+                continue;
+            }
+            boolean changed = campaign.addServerId(autoAddServerIds);
             if (changed) {
                 updateCampaign(campaign);
                 // 同步到游戏服

@@ -41,6 +41,7 @@ public class OpenServiceCampaign extends BaseEntity {
 //        this.serverIds = other.serverIds;
 //        this.lastServerIds = other.lastServerIds;
         this.autoAddServer = other.autoAddServer;
+        this.autoAddServerChannels = other.autoAddServerChannels;
         this.icon = other.icon;
         this.status = other.status;
         this.priority = other.priority;
@@ -84,6 +85,12 @@ public class OpenServiceCampaign extends BaseEntity {
      */
     @Excel(name = "是否自动添加新服", width = 15)
     private Integer autoAddServer;
+
+    /**
+     * 自动添加新服的渠道
+     */
+    @Excel(name = "自动添加新服的渠道", width = 15)
+    private String autoAddServerChannels;
 
     /**
      * 活动图标

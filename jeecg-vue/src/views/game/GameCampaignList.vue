@@ -206,13 +206,13 @@ export default {
         {
           title: '活动名称',
           align: 'center',
-          width: 120,
+          width: 100,
           dataIndex: 'name'
         },
         {
           title: '活动标语（描述）',
           align: 'left',
-          width: 130,
+          width: 100,
           dataIndex: 'description'
         },
         {
@@ -257,15 +257,16 @@ export default {
           scopedSlots: {customRender: 'serverIdSlot'}
         },
         {
-          title: '是否自动添加新服',
+          title: '自动添加新服的渠道',
           align: 'center',
-          width: 30,
-          dataIndex: 'autoAddServer'
+          width: 50,
+          dataIndex: 'autoAddServerChannels',
+          scopedSlots: {customRender: 'serverIdSlot'}
         },
         {
           title: 'sdk渠道',
           align: 'center',
-          width: 80,
+          width: 50,
           dataIndex: 'sdkChannels',
           scopedSlots: {customRender: 'sdkChannelsSlot'}
         },

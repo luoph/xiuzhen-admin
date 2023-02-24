@@ -21,11 +21,17 @@
           <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
-        <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
+        <!-- <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择是否自动添加新服" v-decorator="['autoAddServer', validatorRules.autoAddServer]" initialValue="1">
             <a-select-option :value="1">1-是</a-select-option>
             <a-select-option :value="0">0-否</a-select-option>
           </a-select>
+        </a-form-item> -->
+        <a-form-item label="自动添加新服的渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <j-multi-select-tag
+            v-decorator="['autoAddServerChannels', validatorRules.autoAddServerChannels]" placeholder="请选择自动添加新服的渠道"
+            dictCode="game_channel,name,simple_name">
+          </j-multi-select-tag>
         </a-form-item>
         <a-form-item label="活动备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入活动备注"></a-input>
@@ -100,7 +106,7 @@ export default {
         name: {rules: [{required: true, message: '请输入活动名称!'}]},
         cross: {rules: [{required: true, message: '请选是否跨服'}]},
         serverIds: {rules: [{required: true, message: '请输入服务器id!'}]},
-        autoAddServer: {rules: [{required: true, message: '请选择是否自动添加新服!'}]},
+        autoAddServerChannels: {rules: [{required: false, message: '请选择自动添加新服的渠道!'}]},
         icon: {rules: [{required: true, message: '请输入活动图标!'}]},
         status: {rules: [{required: true, message: '请输入活动状态!'}]},
         autoOpen: {rules: [{required: true, message: '请输入自动开启!'}]},
@@ -138,7 +144,7 @@ export default {
         if (this.isEdit) {
           this.$refs.typeList.edit(record);
         }
-        this.form.setFieldsValue(pick(this.model, 'name', 'cross', 'serverIds', 'autoAddServer', 'icon', 'status', 'autoOpen', 'remark', 'priority'));
+        this.form.setFieldsValue(pick(this.model, 'name', 'cross', 'serverIds', 'autoAddServerChannels', 'icon', 'status', 'autoOpen', 'remark', 'priority'));
       });
     },
     close() {
@@ -189,7 +195,7 @@ export default {
       this.close();
     },
     popupCallback(row) {
-      this.form.setFieldsValue(pick(row, 'name', 'cross', 'serverIds', 'autoAddServer', 'icon', 'status', 'autoOpen', 'remark', 'priority'));
+      this.form.setFieldsValue(pick(row, 'name', 'cross', 'serverIds', 'autoAddServerChannels', 'icon', 'status', 'autoOpen', 'remark', 'priority'));
     },
     changeSelect(value) {
       this.model.serverIds = value.join(',');

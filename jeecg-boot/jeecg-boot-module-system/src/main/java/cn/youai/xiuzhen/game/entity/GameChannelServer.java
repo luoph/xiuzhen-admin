@@ -75,6 +75,9 @@ public class GameChannelServer extends BaseEntity {
     private String serverName;
 
     @TableField(exist = false)
+    private String channelSimpleName;
+
+    @TableField(exist = false)
     private Integer serverStatus;
 
     @TableField(exist = false)

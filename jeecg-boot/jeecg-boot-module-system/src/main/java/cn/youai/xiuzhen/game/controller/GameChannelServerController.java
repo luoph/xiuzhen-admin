@@ -125,7 +125,7 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
             return Result.error("保存失败");
         }
 
-        service.autoAddCampaignServerIds(serverIdList);
+        service.autoAddCampaignServerIds(entities);
         return Result.ok("添加成功！");
     }
 
@@ -136,7 +136,7 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         boolean changeServerId = null != dbEntity && !Objects.equals(dbEntity.getServerId(), entity.getServerId());
         Result<?> result = super.edit(entity);
         if (result.isSuccess() && changeServerId) {
-            service.autoAddCampaignServerIds(CollUtil.newArrayList(entity.getServerId()));
+            service.autoAddCampaignServerIds(CollUtil.newArrayList(entity));
         }
         return result;
     }

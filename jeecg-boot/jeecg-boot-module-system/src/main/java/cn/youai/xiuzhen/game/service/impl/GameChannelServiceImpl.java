@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -46,6 +47,11 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
     @Override
     public GameChannel selectChannel(String channel) {
         return getOne(QueryUtils.safeSelectOneQuery(Wrappers.<GameChannel>lambdaQuery().eq(GameChannel::getSimpleName, channel)));
+    }
+
+    @Override
+    public List<GameChannel> selectChannelList(Collection<Integer> channelIds) {
+        return list(Wrappers.<GameChannel>lambdaQuery().in(GameChannel::getId, channelIds));
     }
 
     @Override

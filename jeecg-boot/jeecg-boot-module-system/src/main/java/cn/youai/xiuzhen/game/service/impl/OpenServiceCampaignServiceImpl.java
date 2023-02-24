@@ -9,10 +9,7 @@ import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.constant.OpenServiceType;
 import cn.youai.xiuzhen.game.constant.TimeType;
-import cn.youai.xiuzhen.game.entity.GameServer;
-import cn.youai.xiuzhen.game.entity.OpenServiceCampaign;
-import cn.youai.xiuzhen.game.entity.OpenServiceCampaignDetail;
-import cn.youai.xiuzhen.game.entity.OpenServiceCampaignType;
+import cn.youai.xiuzhen.game.entity.*;
 import cn.youai.xiuzhen.game.mapper.GameOpenServiceCampaignMapper;
 import cn.youai.xiuzhen.game.service.IGameServerGroupService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
@@ -68,8 +65,8 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
     }
 
     @Override
-    public List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType, int autoAddServer) {
-        return getBaseMapper().queryCampaignDetailsFastly(timeType, autoAddServer);
+    public List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType) {
+        return getBaseMapper().queryCampaignDetailsFastly(timeType);
     }
 
     @Override
@@ -157,31 +154,38 @@ public class OpenServiceCampaignServiceImpl extends ServiceImpl<GameOpenServiceC
     }
 
     @Override
-    public void addCampaignServerIds(List<Integer> serverIds) {
-        List<OpenServiceCampaignDetail> detailList = queryCampaignDetailsFastly(TimeType.OPEN_DAY.getType(), 1);
+    public void addCampaignServerIds(List<GameChannelServer> channelServers) {
+        List<OpenServiceCampaignDetail> detailList = queryCampaignDetailsFastly(TimeType.OPEN_DAY.getType());
         if (CollUtil.isEmpty(detailList)) {
             return;
         }
 
-        Set<Long> campaignIds = new HashSet<>();
+        Map<Long, Collection<Integer>> campaignId2ServerIdsMap = new HashMap<>();
         for (OpenServiceCampaignDetail campaignDetail : detailList) {
-            if (campaignIds.contains(campaignDetail.getCampaignId())) {
+            if (campaignId2ServerIdsMap.containsKey(campaignDetail.getCampaignId())) {
+                continue;
+            }
+
+            Set<String> autoAddServerChannelSet = StringUtils.split2Set(campaignDetail.getAutoAddServerChannels());
+            List<Integer> autoAddServerIds = channelServers.stream().filter(e -> autoAddServerChannelSet.contains(e.getChannelSimpleName()))
+                    .map(GameChannelServer::getServerId).collect(Collectors.toList());
+            if (autoAddServerIds.isEmpty()) {
                 continue;
             }
 
             List<Integer> serverIdList = StringUtils.split2Int(campaignDetail.getServerIds());
             // 计算差集
-            Collection<Integer> subtract = CollUtil.subtract(serverIds, serverIdList);
+            Collection<Integer> subtract = CollUtil.subtract(autoAddServerIds, serverIdList);
             if (CollUtil.isEmpty(subtract)) {
                 continue;
             }
-            campaignIds.add(campaignDetail.getCampaignId());
+            campaignId2ServerIdsMap.put(campaignDetail.getCampaignId(), subtract);
         }
 
-        List<OpenServiceCampaign> campaignList = queryCampaignList(campaignIds);
+        List<OpenServiceCampaign> campaignList = queryCampaignList(campaignId2ServerIdsMap.keySet());
         List<OpenServiceCampaign> changeList = new ArrayList<>();
         for (OpenServiceCampaign campaign : campaignList) {
-            boolean add = campaign.addServerId(serverIds);
+            boolean add = campaign.addServerId(campaignId2ServerIdsMap.get(campaign.getId()));
             if (add) {
                 changeList.add(campaign);
             }

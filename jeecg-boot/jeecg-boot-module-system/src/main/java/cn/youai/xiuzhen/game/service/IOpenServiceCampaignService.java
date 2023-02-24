@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.service;
 
+import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaign;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignDetail;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignType;
@@ -20,7 +21,7 @@ public interface IOpenServiceCampaignService extends IService<OpenServiceCampaig
 
     List<OpenServiceCampaign> queryCampaignList(Collection<Long> ids);
 
-    List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType, int autoAddServer);
+    List<OpenServiceCampaignDetail> queryCampaignDetailsFastly(int timeType);
 
     void duplicate(OpenServiceCampaign other);
 
@@ -31,9 +32,9 @@ public interface IOpenServiceCampaignService extends IService<OpenServiceCampaig
     /**
      * 自动添加区服id，活动类型（开服第N天）
      *
-     * @param serverIds 区服id
+     * @param channelServers channelServers
      */
-    void addCampaignServerIds(List<Integer> serverIds);
+    void addCampaignServerIds(List<GameChannelServer> channelServers);
 
     void syncCampaign(OpenServiceCampaign campaign);
 }

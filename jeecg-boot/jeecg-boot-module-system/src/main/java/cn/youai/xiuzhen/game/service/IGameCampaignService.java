@@ -4,6 +4,7 @@ import cn.youai.xiuzhen.game.constant.TimeType;
 import cn.youai.xiuzhen.game.entity.GameCampaign;
 import cn.youai.xiuzhen.game.entity.GameCampaignServer;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
+import cn.youai.xiuzhen.game.entity.GameChannelServer;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -21,13 +22,13 @@ public interface IGameCampaignService extends IService<GameCampaign> {
 
     List<GameCampaignType> getGameCampaignTypeList(GameCampaign gameCampaign);
 
-    List<GameCampaign> queryCampaignListByTimeType(TimeType timeType, int autoAddServer);
+    List<GameCampaign> queryCampaignListByTimeType(TimeType timeType);
 
     /**
      * 自动添加区服id，活动类型（开服第N天）
-     * @param serverIds 区服id
+     * @param channelServers channelServers
      */
-    void addCampaignServerIds(List<Integer> serverIds);
+    void addCampaignServerIds(List<GameChannelServer> channelServers);
 
     void updateCampaign(GameCampaign gameCampaign);
 
