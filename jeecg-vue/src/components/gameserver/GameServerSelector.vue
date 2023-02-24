@@ -43,7 +43,7 @@ export default {
       serverList: [],
       allServerList: [],
       url: {
-        channelUrl: "game/channel/list?delFlag=0",
+        channelUrl: "game/channel/all",
         serverUrl: "game/gameServer/all",
         channelServerUrl: "game/channelServer/channelWithServer?channelId="
       }
@@ -53,7 +53,7 @@ export default {
     loadServerList() {
       let that = this;
       getAction(that.url.channelUrl).then(res => {
-        that.channelList = res.result.records;
+        that.channelList = res.result;
       });
       getAction(that.url.serverUrl).then(res => {
         that.allServerList = res.result;

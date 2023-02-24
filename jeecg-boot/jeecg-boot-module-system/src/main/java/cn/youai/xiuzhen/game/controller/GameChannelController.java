@@ -3,6 +3,8 @@ package cn.youai.xiuzhen.game.controller;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -82,6 +84,15 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameChannel.class);
+    }
+
+    @AutoLog(value = "游戏渠道-全部渠道")
+    @GetMapping(value = "/all")
+    public Result<?> all() {
+        Wrapper<GameChannel> query = Wrappers.<GameChannel>lambdaQuery()
+                .select(GameChannel::getId, GameChannel::getName, GameChannel::getSimpleName,
+                        GameChannel::getNoticeId);
+        return Result.ok(service.list(query));
     }
 
     @AutoLog(value = "游戏渠道-刷新所有渠道区服配置")

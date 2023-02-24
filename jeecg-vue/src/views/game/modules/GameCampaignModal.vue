@@ -24,7 +24,8 @@
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
         <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="选择是否自动添加新服" v-decorator="['autoAddServer', validatorRules.autoAddServer]" initialValue="1">
+          <a-select placeholder="选择是否自动添加新服" v-decorator="['autoAddServer', validatorRules.autoAddServer]"
+                    initialValue="1">
             <a-select-option :value="1">1-是</a-select-option>
             <a-select-option :value="0">0-否</a-select-option>
           </a-select>

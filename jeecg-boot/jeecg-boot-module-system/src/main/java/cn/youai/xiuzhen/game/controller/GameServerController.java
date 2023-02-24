@@ -112,7 +112,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok(pageList);
     }
 
-    @AutoLog(value = "游戏服配置-列表查询")
+    @AutoLog(value = "游戏服配置-全部区服")
     @GetMapping(value = "/all")
     public Result<?> all() {
         Wrapper<GameServer> query = Wrappers.<GameServer>lambdaQuery()
