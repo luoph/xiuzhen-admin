@@ -110,7 +110,7 @@ public class RedeemCodeController extends JeecgController<GameRedeemCode, IGameR
     @AutoLog(value = "激活码-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameRedeemCode.class);
+        return super.importExcel(request, response, GameRedeemCode.class, "激活码");
     }
 
 }

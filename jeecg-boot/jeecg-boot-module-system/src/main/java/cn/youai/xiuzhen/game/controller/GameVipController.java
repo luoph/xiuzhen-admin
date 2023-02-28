@@ -101,7 +101,9 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
             if (!vipMap.containsKey(playerId)) {
                 GamePlayer player = gamePlayerService.queryPlayer(playerId);
                 if (player != null && player.getStatus() == 1) {
-                    addList.add(new GameVip().setPlayerId(playerId));
+                    GameVip entity = new GameVip();
+                    entity.setPlayerId(playerId);
+                    addList.add(entity);
                     addPlayerIds.add(playerId);
                 }
             }
@@ -172,7 +174,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
     @AutoLog(value = "VIP-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameVip.class);
+        return super.importExcel(request, response, GameVip.class, "VIP");
     }
 
     private boolean refreshVipCache() {
@@ -231,9 +233,9 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
         Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
 
         for (GameVip t : pageList) {
-            t.setPlayDays(DateUtils.daysBetween(t.getRegisterTime(), now))
-                    .setLastLoginDays(DateUtils.daysBetween(t.getLastLoginTime(), now))
-                    .setLastPayDays(DateUtils.daysBetween(t.getLastPayTime(), now));
+            t.setPlayDays(DateUtils.daysBetween(t.getRegisterTime(), now));
+            t.setLastLoginDays(DateUtils.daysBetween(t.getLastLoginTime(), now));
+            t.setLastPayDays(DateUtils.daysBetween(t.getLastPayTime(), now));
             GameOrder lastOrder = orderMap.get(t.getOrderId());
             if (lastOrder != null) {
                 t.setLastPay(lastOrder.getPayAmount());

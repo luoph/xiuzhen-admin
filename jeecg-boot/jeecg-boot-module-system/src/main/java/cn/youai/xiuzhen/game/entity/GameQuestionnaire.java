@@ -19,9 +19,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  * @date 2021-01-13
  */
 @Data
-@Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
 @TableName("game_questionnaire")
+@EqualsAndHashCode(callSuper = true)
 public class GameQuestionnaire extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +28,7 @@ public class GameQuestionnaire extends BaseEntity {
     /**
      * id
      */
+    @Excel(name = "id", width = 15)
     @TableId(type = IdType.AUTO)
     private java.lang.Integer id;
 

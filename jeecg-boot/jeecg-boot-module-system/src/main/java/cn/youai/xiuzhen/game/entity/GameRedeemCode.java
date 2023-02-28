@@ -1,15 +1,14 @@
 package cn.youai.xiuzhen.game.entity;
 
+import com.alibaba.excel.annotation.ExcelIgnore;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecgframework.poi.excel.annotation.Excel;
-import org.jeecgframework.poi.excel.annotation.ExcelIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -22,15 +21,12 @@ import java.io.Serializable;
  */
 @Data
 @TableName("game_redeem_code")
-@Accessors(chain = true)
 public class GameRedeemCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     public GameRedeemCode() {
     }
-
-    ;
 
     public GameRedeemCode(Integer activityId, String code, Integer totalNum, Integer usedNum, Integer status) {
         this.activityId = activityId;
@@ -43,6 +39,7 @@ public class GameRedeemCode implements Serializable {
     /**
      * id
      */
+    @Excel(name = "id", width = 15)
     @TableId(type = IdType.AUTO)
     private java.lang.Long id;
 

@@ -83,7 +83,7 @@ public class GameSensitiveWordController extends JeecgController<GameSensitiveWo
     @AutoLog(value = "敏感词-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameSensitiveWord.class);
+        return super.importExcel(request, response, GameSensitiveWord.class, "敏感词");
     }
 
 }

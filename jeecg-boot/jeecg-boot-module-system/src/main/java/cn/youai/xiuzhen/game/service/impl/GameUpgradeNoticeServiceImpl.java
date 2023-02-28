@@ -52,6 +52,10 @@ public class GameUpgradeNoticeServiceImpl extends ServiceImpl<GameUpgradeNoticeM
 
         // 更新已刷新的服务器id
         gameUpgradeNotice.setLastServerIds(StrUtil.join(",", currentIds));
-        updateById(new GameUpgradeNotice().setId(gameUpgradeNotice.getId()).setLastServerIds(gameUpgradeNotice.getLastServerIds()));
+
+        GameUpgradeNotice entity = new GameUpgradeNotice();
+        entity.setId(gameUpgradeNotice.getId());
+        entity.setLastServerIds(gameUpgradeNotice.getLastServerIds());
+        updateById(entity);
     }
 }

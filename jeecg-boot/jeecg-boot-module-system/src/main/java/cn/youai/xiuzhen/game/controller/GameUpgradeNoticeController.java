@@ -89,7 +89,7 @@ public class GameUpgradeNoticeController extends JeecgController<GameUpgradeNoti
     @AutoLog(value = "更新公告-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameUpgradeNotice.class);
+        return super.importExcel(request, response, GameUpgradeNotice.class, "更新公告");
     }
 
     @AutoLog(value = "更新公告-开关")

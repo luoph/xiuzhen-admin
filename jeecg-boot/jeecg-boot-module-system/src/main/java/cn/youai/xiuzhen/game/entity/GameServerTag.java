@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 
@@ -17,7 +16,6 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @date 2022-03-25
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_server_tag")
 @ApiModel(value = "GameServerTag", description = "游戏服标签")
@@ -28,6 +26,7 @@ public class GameServerTag extends BaseEntity {
     /**
      * 自增主键
      */
+    @Excel(name = "id", width = 15)
     @TableId(type = IdType.AUTO)
     private java.lang.Integer id;
 

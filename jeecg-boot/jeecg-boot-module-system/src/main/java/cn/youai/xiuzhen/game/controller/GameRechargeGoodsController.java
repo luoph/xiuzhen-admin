@@ -98,7 +98,7 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
     @AutoLog(value = "充值商品-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameRechargeGoods.class);
+        return super.importExcel(request, response, GameRechargeGoods.class, "充值商品");
     }
 
     /**

@@ -95,7 +95,11 @@ public class GameQuestionnaireController extends JeecgController<GameQuestionnai
         // 更新已刷新的服务器id
         Collections.sort(currentIds);
         entity.setLastServerIds(StrUtil.join(",", currentIds));
-        service.updateById(new GameQuestionnaire().setId(entity.getId()).setLastServerIds(entity.getLastServerIds()));
+
+        GameQuestionnaire updateEntity = new GameQuestionnaire();
+        updateEntity.setId(entity.getId());
+        updateEntity.setLastServerIds(entity.getLastServerIds());
+        service.updateById(updateEntity);
 
         return Result.ok("同步成功!");
     }
@@ -127,7 +131,7 @@ public class GameQuestionnaireController extends JeecgController<GameQuestionnai
     @AutoLog(value = "问卷调查-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameQuestionnaire.class);
+        return super.importExcel(request, response, GameQuestionnaire.class, "问卷调查");
     }
 
 }

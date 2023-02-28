@@ -5,12 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.EqualsAndHashCode;
 import org.jeecg.common.constant.TimeConstant;
+import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
 
 /**
  * @author jeecg-boot
@@ -20,14 +19,15 @@ import java.io.Serializable;
  */
 @Data
 @TableName("game_upgrade_notice")
-@Accessors(chain = true)
-public class GameUpgradeNotice implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class GameUpgradeNotice extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * 自增id
      */
+    @Excel(name = "id", width = 15)
     @TableId(type = IdType.AUTO)
     private java.lang.Integer id;
 
@@ -82,32 +82,4 @@ public class GameUpgradeNotice implements Serializable {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date endTime;
-
-    /**
-     * createTime
-     */
-    @Excel(name = "createTime", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date createTime;
-
-    /**
-     * createBy
-     */
-    @Excel(name = "createBy", width = 15)
-    private java.lang.String createBy;
-
-    /**
-     * updateTime
-     */
-    @Excel(name = "updateTime", width = 20, format = TimeConstant.DEFAULT_TIME_FORMAT)
-    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
-    private java.util.Date updateTime;
-
-    /**
-     * updateBy
-     */
-    @Excel(name = "updateBy", width = 15)
-    private java.lang.String updateBy;
 }

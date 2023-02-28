@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
@@ -24,7 +23,6 @@ import java.util.Date;
  * @date 2023-01-13
  */
 @Data
-@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @TableName("game_vip")
 @ApiModel(value = "GameVip", description = "VIP")
@@ -35,6 +33,7 @@ public class GameVip extends BaseEntity {
     /**
      * 自增主键
      */
+    @Excel(name = "id", width = 15)
     @TableId(type = IdType.AUTO)
     private Integer id;
 

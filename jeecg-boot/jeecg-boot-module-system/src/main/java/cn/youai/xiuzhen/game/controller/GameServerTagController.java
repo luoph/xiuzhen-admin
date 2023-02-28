@@ -71,7 +71,7 @@ public class GameServerTagController extends JeecgController<GameServerTag, IGam
     @AutoLog(value = "游戏服标签-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameServerTag.class);
+        return super.importExcel(request, response, GameServerTag.class, "游戏服标签");
     }
 
 }
