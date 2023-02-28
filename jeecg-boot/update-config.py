@@ -105,7 +105,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
 
     parser = argparse.ArgumentParser(description='manual to this script')
-    parser.add_argument('--svn', type=str, default='svn://49.235.114.251:7690')
+    parser.add_argument('--svn', type=str, default='svn://139.9.66.217:7760')
     parser.add_argument('--profile', type=str, default='develop')
     parser.add_argument('--verbose', dest='verbose', type=str, default='False')
 
