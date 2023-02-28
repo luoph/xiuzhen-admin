@@ -31,6 +31,7 @@ public class GameStopServerRefundRecord implements Serializable {
     /**
      * id
      */
+    @Excel(name = "id", width = 15)
     @TableId(value = "id", type = IdType.AUTO)
     @ApiModelProperty(value = "id")
     private java.lang.Integer id;
