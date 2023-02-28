@@ -13,6 +13,7 @@ import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.annotation.HiddenField;
 import org.jeecg.common.system.annotation.Readonly;
+import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecg.common.system.query.QueryGenerator;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.jeecg.common.system.vo.LoginUser;
@@ -21,14 +22,18 @@ import org.jeecgframework.poi.excel.def.NormalExcelConstants;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.enmus.ExcelType;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -262,5 +267,47 @@ public class JeecgController<T, S extends IService<T>> {
             return Result.error("不支持数据更新！");
         }
         return ExcelUtils.importExcel(service, request, clazz);
+    }
+
+    protected Result<?> importExcel(HttpServletRequest request, HttpServletResponse response, Class<T> clazz, String sheetName) {
+        if (isReadOnly()) {
+            return Result.error("不支持数据更新！");
+        }
+
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile mf = multipartRequest.getFile("file");
+        if (mf == null) {
+            return Result.error("上传错误");
+        }
+
+        try {
+            List<?> dataList = ExcelUtils.readExcel(mf.getInputStream(), sheetName, clazz);
+            if (dataList.isEmpty()) {
+                return Result.error("导入数据为空");
+            }
+
+            boolean isAssignableFrom = BaseEntity.class.isAssignableFrom(clazz);
+            List<T> saveOrUpdateEntities = new ArrayList<>(dataList.size());
+            for (Object obj : dataList) {
+                if (isAssignableFrom) {
+                    BaseEntity entity = (BaseEntity) clazz.newInstance();
+                    BeanUtils.copyProperties(obj, entity);
+                    saveOrUpdateEntities.add((T) entity.clear());
+                } else {
+                    T entity = clazz.newInstance();
+                    BeanUtils.copyProperties(obj, entity);
+                    saveOrUpdateEntities.add(entity);
+                }
+            }
+
+            if (saveOrUpdateEntities.isEmpty()) {
+                return Result.error("导入数据为空，主活动id/子活动id错误！");
+            }
+            service.saveOrUpdateBatch(saveOrUpdateEntities);
+        } catch (IOException | InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+            return Result.error("文件导入失败！");
+        }
+        return Result.ok("导入成功");
     }
 }
