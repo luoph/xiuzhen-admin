@@ -48,4 +48,12 @@ public class BaseEntity implements Serializable {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private Date updateTime;
+
+    public BaseEntity clear() {
+        this.createBy = null;
+        this.createTime = null;
+        this.updateBy = null;
+        this.updateTime = null;
+        return this;
+    }
 }

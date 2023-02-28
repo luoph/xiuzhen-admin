@@ -145,10 +145,7 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
                     GameCampaignTypeBase entity = entityClass.newInstance();
                     BeanUtils.copyProperties(obj, entity);
                     if (Objects.equals(entity.getCampaignId(), campaignId) && Objects.equals(entity.getTypeId(), gameCampaignType.getId())) {
-                        entity.setCreateBy(null);
-                        entity.setCreateTime(null);
-                        entity.setUpdateBy(null);
-                        entity.setUpdateTime(null);
+                        entity.clear();
                         saveOrUpdateEntities.add(entity);
                     }
                 }
