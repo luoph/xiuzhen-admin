@@ -232,6 +232,13 @@ public class GamePlayer {
     private Date settleTime;
 
     /**
+     * 当前主线任务id
+     */
+    @Excel(name = "当前主线任务id", width = 15)
+    @ApiModelProperty(value = "当前主线任务id")
+    private Integer mainTaskId;
+
+    /**
      * 登录设备IP
      */
     @Excel(name = "登录设备IP", width = 15)

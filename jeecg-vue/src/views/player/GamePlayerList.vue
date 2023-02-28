@@ -230,34 +230,40 @@ export default {
           dataIndex: 'totalPayAmount'
         },
         {
-          title: '跳过动画',
+          title: '当前主线任务id',
           align: 'center',
           width: 60,
-          dataIndex: 'skipCartoon'
+          dataIndex: 'mainTaskId'
         },
-        {
-          title: '背包大小',
-          align: 'center',
-          width: 60,
-          dataIndex: 'backpackSize'
-        },
-        {
-          title: '背包等级',
-          align: 'center',
-          width: 60,
-          dataIndex: 'backpackLevel'
-        },
+        // {
+        //   title: '跳过动画',
+        //   align: 'center',
+        //   width: 60,
+        //   dataIndex: 'skipCartoon'
+        // },
+        // {
+        //   title: '背包大小',
+        //   align: 'center',
+        //   width: 60,
+        //   dataIndex: 'backpackSize'
+        // },
+        // {
+        //   title: '背包等级',
+        //   align: 'center',
+        //   width: 60,
+        //   dataIndex: 'backpackLevel'
+        // },
         {
           title: '修为值',
           align: 'center',
           dataIndex: 'practiceValue'
         },
-        {
-          title: '修炼年数',
-          align: 'center',
-          width: 60,
-          dataIndex: 'practiceYear'
-        },
+        // {
+        //   title: '修炼年数',
+        //   align: 'center',
+        //   width: 60,
+        //   dataIndex: 'practiceYear'
+        // },
         {
           title: '战力',
           align: 'center',
@@ -273,18 +279,18 @@ export default {
           align: 'center',
           dataIndex: 'spiritRootCode'
         },
-        {
-          title: '修为加持状态',
-          align: 'center',
-          width: 60,
-          dataIndex: 'practiceState'
-        },
-        {
-          title: '渡劫增加成功率',
-          align: 'center',
-          width: 60,
-          dataIndex: 'successRate'
-        },
+        // {
+        //   title: '修为加持状态',
+        //   align: 'center',
+        //   width: 60,
+        //   dataIndex: 'practiceState'
+        // },
+        // {
+        //   title: '渡劫增加成功率',
+        //   align: 'center',
+        //   width: 60,
+        //   dataIndex: 'successRate'
+        // },
         {
           title: '修为结算时间',
           align: 'center',
