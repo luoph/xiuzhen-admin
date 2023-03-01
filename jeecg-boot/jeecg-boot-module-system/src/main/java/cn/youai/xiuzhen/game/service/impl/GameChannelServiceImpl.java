@@ -101,6 +101,8 @@ public class GameChannelServiceImpl extends ServiceImpl<GameChannelMapper, GameC
         List<GameServerVO> servers = selectChannelServerList(channel.getId());
         servers = servers.stream().filter(t -> t.getOutdated() != OutdatedType.OFFLINE.getValue())
                 .collect(Collectors.toList());
+        // 处理 gm url 只下发路径，去掉host，否则客户端可能存在跨域问题
+
         UpdateConfig updateConfig = new UpdateConfig()
                 .setVersionCode(channel.getVersionCode())
                 .setVersionName(channel.getVersionName())

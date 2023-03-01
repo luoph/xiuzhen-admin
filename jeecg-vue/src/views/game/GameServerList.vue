@@ -283,6 +283,12 @@ export default {
           dataIndex: 'gmUrl'
         },
         {
+          title: '客户端GM',
+          align: 'left',
+          width: 120,
+          dataIndex: 'clientGm'
+        },
+        {
           title: '在线人数',
           align: 'center',
           width: 60,

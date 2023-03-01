@@ -71,12 +71,21 @@ public class GameServer extends BaseEntity {
     @Excel(name = "服务器Host", width = 15)
     @ApiModelProperty(value = "服务器Host")
     private java.lang.String host;
+
+    /**
+     * 客户端GM地址（处理跨域）
+     */
+    @Excel(name = "客户端GM", width = 15)
+    @ApiModelProperty(value = "客户端GM")
+    private java.lang.String clientGm;
+
     /**
      * 登录地址和端口
      */
     @Excel(name = "登录地址和端口", width = 15)
     @ApiModelProperty(value = "登录地址和端口")
     private java.lang.String loginUrl;
+
     /**
      * 服务器状态 0-正常 1-流畅 2-火爆 3-维护
      */
@@ -88,6 +97,7 @@ public class GameServer extends BaseEntity {
     @Excel(name = "维护状态", width = 15)
     @ApiModelProperty(value = "维护状态")
     private java.lang.Integer isMaintain;
+
     /**
      * 推荐标识 0-普遍 1-推荐 2-新服 3-推荐新服
      */
@@ -95,39 +105,46 @@ public class GameServer extends BaseEntity {
     @ApiModelProperty(value = "推荐标识")
     @Dict(dicCode = "recommend_status")
     private java.lang.Integer recommend;
+
     /**
      * 出错提示信息
      */
     @Excel(name = "出错提示信息", width = 15)
     @ApiModelProperty(value = "出错提示信息")
     private java.lang.String warning;
+
     /**
      * 客户端最小版本号
      */
     @Excel(name = "客户端最小版本号", width = 15)
     @ApiModelProperty(value = "客户端最小版本号")
     private java.lang.Integer minVersion;
+
     /**
      * 客户端最大版本号
      */
     @Excel(name = "客户端最大版本号", width = 15)
     @ApiModelProperty(value = "客户端最大版本号")
     private java.lang.Integer maxVersion;
+
     /**
      * 数据库主机
      */
     @HiddenField
     private java.lang.String dbHost;
+
     /**
      * 数据库端口
      */
     @HiddenField
     private java.lang.Integer dbPort;
+
     /**
      * 数据库用户名
      */
     @HiddenField
     private java.lang.String dbUser;
+
     /**
      * 数据库密码
      */

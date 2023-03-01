@@ -31,6 +31,9 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="GM地址">
           <a-input v-decorator="['gmUrl', validatorRules.gmUrl]"/>
         </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户端GM">
+          <a-input v-decorator="['clientGm', validatorRules.clientGm]"/>
+        </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服状态">
           <a-select placeholder="请选择区服状态" v-decorator="['status', validatorRules.status]">
             <a-select-option :value="0">正常</a-select-option>
@@ -204,6 +207,7 @@ export default {
         // dbPassword: {rules: [{required: true, message: "请输入数据库密码!"}]},
         // dbName: {rules: [{required: true, message: "请输入数据库名称!"}]},
         gmUrl: {rules: [{required: true, message: "请输入GM地址!"}]},
+        clientGm: {rules: [{required: false, message: "请输入客户端GM地址!"}]},
         gmIp: {rules: [{required: false, message: "请输入GM可用ip!"}]},
         recommend: {rules: [{required: true, message: "请选择推荐标识!"}]},
         gmPlayerId: {rules: [{required: false, message: "请输入GM可用玩家id!"}]},
@@ -245,6 +249,7 @@ export default {
             "gameId",
             "tagId",
             "host",
+            "clientGm",
             "loginUrl",
             "gmUrl",
             "status",
@@ -336,6 +341,7 @@ export default {
           "gameId",
           "tagId",
           "host",
+          "clientGm",
           "loginUrl",
           "gmUrl",
           "status",

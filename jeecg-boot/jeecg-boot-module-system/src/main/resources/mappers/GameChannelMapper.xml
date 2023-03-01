@@ -11,7 +11,7 @@
         UNIX_TIMESTAMP(s.`open_time`) AS `open_time`,
         UNIX_TIMESTAMP(s.`online_time`) AS `online_time`,
         s.`login_url`,
-        IF(s.`gm_status` = 1, s.`gm_url`, NULL) AS `gm_url`,
+        IF(s.`gm_status` = 1, s.`client_gm`, NULL) AS `gm_url`,
         s.`status`,
         s.`outdated`,
         s.`gm_url`,
