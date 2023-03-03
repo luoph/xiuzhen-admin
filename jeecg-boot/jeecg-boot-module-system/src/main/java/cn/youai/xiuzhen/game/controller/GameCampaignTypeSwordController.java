@@ -2,12 +2,14 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.server.utils.SqlHelper;
 import cn.youai.xiuzhen.game.constant.CampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.GameCampaignTypeSword;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeSwordService;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -52,13 +54,33 @@ public class GameCampaignTypeSwordController extends JeecgController<GameCampaig
     @AutoLog(value = "节日活动-限时剑仙-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaignTypeSword entity) {
+        if (entity.getUnlockCheckpointId() > 0 && entity.getUnlockCheckpointId() >= entity.getCheckpointId()) {
+            return Result.error("解锁关卡配置错误");
+        }
+        if (null == getGameCampaignTypeSword(entity)) {
+            return Result.error("解锁关卡配置错误");
+        }
         return super.add(entity);
     }
 
     @AutoLog(value = "节日活动-限时剑仙-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaignTypeSword entity) {
+        if (entity.getUnlockCheckpointId() > 0 && entity.getUnlockCheckpointId() >= entity.getCheckpointId()) {
+            return Result.error("解锁关卡配置错误");
+        }
+        if (null == getGameCampaignTypeSword(entity)) {
+            return Result.error("解锁关卡配置错误");
+        }
         return super.edit(entity);
+    }
+
+    private GameCampaignTypeSword getGameCampaignTypeSword(GameCampaignTypeSword entity) {
+        return service.getOne(Wrappers.<GameCampaignTypeSword>lambdaQuery()
+                .eq(GameCampaignTypeSword::getCampaignId, entity.getCampaignId())
+                .eq(GameCampaignTypeSword::getTypeId, entity.getTypeId())
+                .eq(GameCampaignTypeSword::getCheckpointId, entity.getUnlockCheckpointId())
+                .last(SqlHelper.limit()));
     }
 
     @AutoLog(value = "节日活动-限时剑仙-通过id删除")
