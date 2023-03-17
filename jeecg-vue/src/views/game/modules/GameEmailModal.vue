@@ -260,10 +260,15 @@ export default {
       this.content = null;
     },
     getItemTreeJson(item) {
-      this.itemTree = null;
-      this.itemTree = item;
+      // this.itemTree = null;
+      // this.itemTree = item;
+      if (null == this.itemTree) {
+        this.itemTree = item;
+      } else {
+        this.itemTree.push(item);
+      }
       this.form.setFieldsValue({
-        content: item
+        content: '[' + this.itemTree + ']'
       });
     },
     onServerSelected(value) {

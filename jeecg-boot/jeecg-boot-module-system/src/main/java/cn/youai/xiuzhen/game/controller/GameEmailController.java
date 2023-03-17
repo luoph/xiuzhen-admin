@@ -6,8 +6,10 @@ import cn.youai.basics.lock.LockUtils;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.conf.ConfItem;
+import cn.youai.server.model.ItemVO;
 import cn.youai.xiuzhen.game.entity.GameEmail;
 import cn.youai.xiuzhen.game.service.IGameEmailService;
+import cn.youai.xiuzhen.utils.RewardUtils;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -19,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -38,6 +42,19 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 
+    private void mergeItem(GameEmail entity) {
+        String content = entity.getContent();
+        if (StringUtils.isBlank(content)) {
+            return;
+        }
+        try {
+            List<ItemVO> itemList = JSON.parseArray(content, ItemVO.class);
+            entity.setContent(JSON.toJSONString(RewardUtils.merge(itemList)));
+        } catch (Exception e) {
+            log.error("merge() Exception", e);
+        }
+    }
+
     @AutoLog(value = "游戏邮件-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameEmail entity) {
@@ -46,6 +63,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         if (CollUtil.isEmpty(receiverIds)) {
             return Result.error("接收对象不允许为空！");
         }
+        mergeItem(entity);
         Response response = service.saveEmail(entity);
         if (!response.isSuccess()) {
             return Result.error(response.getDesc());
@@ -56,6 +74,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @AutoLog(value = "游戏邮件-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameEmail entity) {
+        mergeItem(entity);
         return super.edit(entity);
     }
 
@@ -93,13 +112,25 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
      * 获取道具树
      */
     @RequestMapping(value = "/itemTree", method = RequestMethod.GET)
-    public Result<?> itemTree(@RequestParam(name = "itemId", required = false) Integer itemId, @RequestParam(name = "itemName", required = false) String itemName) {
-        if (itemName != null) {
-            if ("".equals(itemName)) {
-                itemName = null;
-            }
+    public Result<?> itemTree(@RequestParam(name = "itemId", required = false) String itemId,
+                              @RequestParam(name = "itemName", required = false) String itemName) {
+        List<Integer> itemIdList = null;
+        if (StringUtils.isNotBlank(itemId)) {
+            String[] split = itemId.contains(StringUtils.SEPARATOR_COMMA) ? itemId.split(StringUtils.SEPARATOR_COMMA)
+                    : itemId.contains(" ") ? itemId.split(" ")
+                    : new String[]{itemId};
+            itemIdList = Arrays.stream(split).filter(StringUtils::isNotBlank).map(e -> Integer.valueOf(e.trim())).collect(Collectors.toList());
         }
-        List<ConfItem> items = GameConfigUtils.getConfItemList(itemId, itemName);
+
+        List<String> itemNameList = null;
+        if (StringUtils.isNotBlank(itemName)) {
+            String[] split = itemName.contains(StringUtils.SEPARATOR_COMMA) ? itemName.split(StringUtils.SEPARATOR_COMMA)
+                    : itemName.contains(" ") ? itemName.split(" ")
+                    : new String[]{itemName};
+            itemNameList = Arrays.stream(split).filter(StringUtils::isNotBlank).map(String::trim).collect(Collectors.toList());
+        }
+
+        List<ConfItem> items = GameConfigUtils.getConfItemList(itemIdList, itemNameList);
         return Result.ok(items);
     }
 
