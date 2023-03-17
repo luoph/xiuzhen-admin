@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -20,14 +20,15 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="区服Id">
-              <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
+            <a-form-item label="区服id">
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
@@ -52,7 +53,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -83,17 +84,20 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
+               :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
@@ -118,11 +122,11 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameRegisterInfoModal from './modules/GameRegisterInfoModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import JInput from '@/components/jeecg/JInput';
-import { filterObj } from '@/utils/util';
+import {filterObj} from '@/utils/util';
 
 export default {
   name: 'GameRegisterInfoList',
@@ -148,6 +152,11 @@ export default {
           }
         },
         {
+          title: '区服id',
+          align: 'center',
+          dataIndex: 'serverId'
+        },
+        {
           title: '玩家id',
           align: 'center',
           dataIndex: 'playerId'
@@ -161,11 +170,6 @@ export default {
           title: '帐号',
           align: 'center',
           dataIndex: 'account'
-        },
-        {
-          title: '区服Id',
-          align: 'center',
-          dataIndex: 'serverId'
         },
         {
           title: '注册IP',
@@ -231,7 +235,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {

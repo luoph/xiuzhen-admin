@@ -155,6 +155,12 @@ export default {
           }
         },
         {
+          title: '区服id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'serverId'
+        },
+        {
           title: '玩家id',
           align: 'center',
           width: 80,
@@ -195,12 +201,6 @@ export default {
           customRender: (value) => {
             return value || '--';
           }
-        },
-        {
-          title: '区服Id',
-          align: 'center',
-          width: 80,
-          dataIndex: 'serverId'
         },
         // {
         //     title: "支付订单号",
@@ -380,7 +380,7 @@ export default {
             } else {
               that.$message.error(res.message);
             }
-          }).finally(()=>{
+          }).finally(() => {
             that.loading = false
             that.searchQuery();
           });

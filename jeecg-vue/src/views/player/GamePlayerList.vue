@@ -176,6 +176,12 @@ export default {
           }
         },
         {
+          title: '区服id',
+          align: 'center',
+          fixed: 'left',
+          dataIndex: 'serverId'
+        },
+        {
           title: '玩家id',
           fixed: 'left',
           align: 'center',
@@ -186,12 +192,6 @@ export default {
           fixed: 'left',
           align: 'center',
           dataIndex: 'nickname'
-        },
-        {
-          title: '区服id',
-          align: 'center',
-          fixed: 'left',
-          dataIndex: 'serverId'
         },
         {
           title: '账号',
@@ -230,7 +230,7 @@ export default {
           dataIndex: 'totalPayAmount'
         },
         {
-          title: '当前主线任务id',
+          title: '主线任务id',
           align: 'center',
           width: 60,
           dataIndex: 'mainTaskId'
@@ -399,7 +399,7 @@ export default {
             } else {
               that.$message.error(res.message);
             }
-          }).finally(()=>{
+          }).finally(() => {
             that.loading = false
             that.searchQuery();
           });

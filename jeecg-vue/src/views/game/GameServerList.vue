@@ -11,9 +11,9 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="游戏服地址">
+            <a-form-item label="服务器ip">
               <j-search-select-tag
-                v-model="queryParam.host" placeholder="请输入游戏服地址"
+                v-model="queryParam.host" placeholder="请输入服务器ip"
                 dict="game_server,host,host"
                 :async="true">
               </j-search-select-tag>
@@ -249,63 +249,35 @@ export default {
           dataIndex: 'tag',
           scopedSlots: {customRender: 'tagSlot'}
         },
+        // {
+        //   title: '游戏编号',
+        //   align: 'center',
+        //   width: 100,
+        //   dataIndex: 'gameId',
+        //   customRender: (text) => {
+        //     return filterGameIdText(this.gameList, text);
+        //   }
+        // },
         {
-          title: '备注',
-          align: 'left',
-          width: 100,
-          dataIndex: 'remark'
-        },
-        {
-          title: '游戏编号',
-          align: 'center',
-          width: 100,
-          dataIndex: 'gameId',
-          customRender: (text) => {
-            return filterGameIdText(this.gameList, text);
-          }
-        },
-        {
-          title: '服务器Host',
+          title: '服务器ip',
           align: 'left',
           width: 120,
           dataIndex: 'host'
         },
         {
-          title: '长连接地址',
+          title: '连接地址',
           align: 'left',
           width: 120,
           dataIndex: 'loginUrl'
         },
         {
-          title: 'GM地址',
-          align: 'left',
-          width: 120,
-          dataIndex: 'gmUrl'
-        },
-        {
-          title: '客户端GM',
-          align: 'left',
-          width: 120,
-          dataIndex: 'clientGm'
-        },
-        {
-          title: '在线人数',
+          title: '在线数',
           align: 'center',
           width: 60,
           dataIndex: 'onlineNum',
           customRender: (text) => {
-            if (text === null || text === '' || text === undefined) {
-              return 'N/A';
-            }
-            return text;
+            return text === 0 ? text : text || 'N/A';
           }
-        },
-        {
-          title: 'GM开关',
-          align: 'left',
-          width: 60,
-          dataIndex: 'gmStatus',
-          scopedSlots: {customRender: 'gmSlot'}
         },
         {
           title: '运行状态',
@@ -329,6 +301,18 @@ export default {
           scopedSlots: {customRender: 'maintainSlot'}
         },
         {
+          title: '开服时间',
+          align: 'center',
+          width: 120,
+          dataIndex: 'openTime'
+        },
+        {
+          title: '上线时间',
+          align: 'center',
+          width: 120,
+          dataIndex: 'onlineTime'
+        },
+        {
           title: '推荐标识',
           align: 'center',
           width: 80,
@@ -348,16 +332,32 @@ export default {
           scopedSlots: {customRender: 'stopServerRefundSlot'}
         },
         {
-          title: '开服时间',
-          align: 'center',
-          width: 120,
-          dataIndex: 'openTime'
+          title: 'GM开关',
+          align: 'left',
+          width: 80,
+          dataIndex: 'gmStatus',
+          scopedSlots: {customRender: 'gmSlot'}
         },
         {
-          title: '上线时间',
-          align: 'center',
+          title: 'GM地址',
+          align: 'left',
           width: 120,
-          dataIndex: 'onlineTime'
+          dataIndex: 'gmUrl'
+        },
+        // {
+        //   title: '客户端GM',
+        //   align: 'left',
+        //   width: 120,
+        //   dataIndex: 'clientGm',
+        //   customRender: (text) => {
+        //     return text || '--';
+        //   }
+        // },
+        {
+          title: '备注',
+          align: 'left',
+          width: 100,
+          dataIndex: 'remark'
         },
         {
           title: '操作',

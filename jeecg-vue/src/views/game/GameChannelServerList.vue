@@ -10,8 +10,8 @@
           <a-form layout="inline" :form="form" @keyup.enter.native="searchQuery">
             <a-row :gutter="10">
               <a-col :md="10" :sm="8">
-                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Id">
-                  <a-input placeholder="请输入区服Id" v-model="queryParam.serverId"></a-input>
+                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服id">
+                  <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
                 </a-form-item>
               </a-col>
               <a-col :md="6" :sm="8">
@@ -110,7 +110,7 @@ export default {
           dataIndex: 'position'
         },
         {
-          title: '区服Id',
+          title: '区服id',
           align: 'center',
           dataIndex: 'serverId'
         },
