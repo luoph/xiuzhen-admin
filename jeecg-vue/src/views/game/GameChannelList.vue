@@ -149,6 +149,10 @@ export default {
     return {
       description: '游戏渠道管理页面',
       gameList: [],
+      isorter: {
+        column: 'id',
+        order: 'desc'
+      },
       // 表头
       columns: [
         {
