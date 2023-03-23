@@ -59,12 +59,18 @@ public class OpenServiceCampaignSingleGiftDetailController extends JeecgControll
     @AutoLog(value = "开服活动-单笔好礼活动参数-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignSingleGiftDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.add(entity);
     }
 
     @AutoLog(value = "开服活动-单笔好礼活动参数-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignSingleGiftDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.edit(entity);
     }
 

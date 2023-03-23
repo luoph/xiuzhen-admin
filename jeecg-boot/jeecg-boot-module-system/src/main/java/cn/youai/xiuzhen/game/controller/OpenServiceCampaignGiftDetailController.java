@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
+import cn.youai.xiuzhen.game.entity.OpenServiceCampaignConsumeDetail;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignGiftDetail;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignType;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignGiftDetailService;
@@ -59,12 +60,18 @@ public class OpenServiceCampaignGiftDetailController extends JeecgController<Ope
     @AutoLog(value = "开服活动-开服排行-活动明细(3级)-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignGiftDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.add(entity);
     }
 
     @AutoLog(value = "开服活动-开服排行-活动明细(3级)-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignGiftDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.edit(entity);
     }
 

@@ -57,12 +57,18 @@ public class GameCampaignTypeController extends JeecgController<GameCampaignType
         if (entity.getType() == CampaignType.THROWING_EGGS.getType() && StringUtils.isBlank(eggsIntegralGoods)) {
             return Result.error("积分商品丢失!");
         }
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.add(entity);
     }
 
     @AutoLog(value = "活动类型配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaignType entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.edit(entity);
     }
 

@@ -51,12 +51,18 @@ public class OpenServiceCampaignConsumeDetailController extends JeecgController<
     @AutoLog(value = "开服活动-消耗配置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignConsumeDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.add(entity);
     }
 
     @AutoLog(value = "开服活动-消耗配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignConsumeDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.edit(entity);
     }
 

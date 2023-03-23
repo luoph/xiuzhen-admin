@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
+import cn.youai.xiuzhen.game.entity.OpenServiceCampaignConsumeDetail;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignLotteryDetail;
 import cn.youai.xiuzhen.game.entity.OpenServiceCampaignType;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignLotteryDetailService;
@@ -51,12 +52,18 @@ public class OpenServiceCampaignLotteryDetailController extends JeecgController<
     @AutoLog(value = "开服夺宝详情-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody OpenServiceCampaignLotteryDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.add(entity);
     }
 
     @AutoLog(value = "开服夺宝详情-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody OpenServiceCampaignLotteryDetail entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.edit(entity);
     }
 

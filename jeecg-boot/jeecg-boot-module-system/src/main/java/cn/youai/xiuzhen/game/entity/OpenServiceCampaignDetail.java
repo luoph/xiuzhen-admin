@@ -120,4 +120,8 @@ public class OpenServiceCampaignDetail extends BaseEntity {
 
     @TableField(exist = false)
     private String autoAddServerChannels;
+
+    public boolean invalidTime() {
+        return null != this.startTime && null != this.endTime && this.startTime.after(this.endTime);
+    }
 }
