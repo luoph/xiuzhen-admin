@@ -154,6 +154,11 @@ export default {
           dataIndex: 'authUrl'
         },
         {
+          title: '敏感词检测地址',
+          align: 'center',
+          dataIndex: 'checkTextUrl'
+        },
+        {
           title: '账号登录地址',
           align: 'center',
           dataIndex: 'accountLoginUrl'
