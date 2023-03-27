@@ -22,7 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
@@ -59,7 +63,7 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
             return Collections.emptyMap();
         }
 
-        Map<Long, Response> responseMap = new HashMap<>(gameServerGroups.size());
+        Map<Long, Response> responseMap = new ConcurrentHashMap<>(gameServerGroups.size());
         CountDownLatch latch = new CountDownLatch(gameServerGroups.size());
         for (GameServerGroup gameServerGroup : gameServerGroups) {
             if (null == gameServerGroup || StringUtils.contains(gameServerGroup.getGmUrl(), "localhost") || StringUtils.contains(gameServerGroup.getGmUrl(), "127.0.0.1")) {

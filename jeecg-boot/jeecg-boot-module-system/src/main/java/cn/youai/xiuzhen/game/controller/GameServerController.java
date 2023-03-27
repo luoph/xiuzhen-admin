@@ -19,10 +19,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Call;
+import okhttp3.Callback;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +33,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -239,6 +245,51 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameServer.class);
+    }
+
+    private void updateOnlineNum(Collection<GameServer> servers, Map<Integer, GameServerTag> tagMap) {
+        CountDownLatch latch = new CountDownLatch(servers.size());
+        for (GameServer record : servers) {
+            // 设置标签
+            if (record.getTagId() != null) {
+                GameServerTag serverTag = tagMap.get(record.getTagId());
+                if (serverTag != null) {
+                    record.setTag(serverTag.getName());
+                }
+            }
+
+            // 已废弃服务器不统计在线人数
+            if (!onlineStat || record.skipCheck()) {
+                latch.countDown();
+                continue;
+            }
+
+            OkHttpHelper.getAsync(record.getGmUrl() + onlineNumUrl, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    log.error("onlineNum onFailure", e);
+                    latch.countDown();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+                    if (OkHttpHelper.isSuccess(response)) {
+                        assert response.body() != null;
+                        DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
+                        if (rsp != null) {
+                            record.setOnlineNum(rsp.getData());
+                        }
+                    }
+                    latch.countDown();
+                }
+            });
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            log.error("onlineNum error", e);
+        }
     }
 
 }
