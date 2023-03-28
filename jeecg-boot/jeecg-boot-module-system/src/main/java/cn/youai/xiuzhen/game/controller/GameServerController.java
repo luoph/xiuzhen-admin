@@ -96,25 +96,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         List<GameServerTag> serverTags = serverTagService.selectTags();
         Map<Integer, GameServerTag> tagMap = serverTags.stream().collect(Collectors.toMap(GameServerTag::getId, Function.identity(), (key1, key2) -> key2));
         IPage<GameServer> pageList = pageList(entity, pageNo, pageSize, req);
-        for (GameServer record : pageList.getRecords()) {
-            // 设置标签
-            if (record.getTagId() != null) {
-                GameServerTag serverTag = tagMap.get(record.getTagId());
-                if (serverTag != null) {
-                    record.setTag(serverTag.getName());
-                }
-            }
-
-            // 已废弃服务器不统计在线人数
-            if (!onlineStat || record.getOutdated() != OutdatedType.NORMAL.getValue()) {
-                record.setOnlineNum(0);
-            } else if (record.getOnlineStat() == 1) {
-                DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(record.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
-                if (response != null) {
-                    record.setOnlineNum(response.getData());
-                }
-            }
-        }
+        updateOnlineNum(pageList.getRecords(), tagMap);
         return Result.ok(pageList);
     }
 
