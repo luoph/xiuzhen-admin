@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -12,6 +13,8 @@ import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  * @author buliangliang
@@ -70,8 +73,9 @@ public class GameEmail extends BaseEntity {
 
     /**
      * 目标主体
+     * 服务器id/玩家id
      */
-    @Excel(name = "目标主体:服务器id/玩家id", width = 15)
+    @Excel(name = "目标主体", width = 15)
     private java.lang.String receiverIds;
 
     /**
@@ -89,6 +93,21 @@ public class GameEmail extends BaseEntity {
     @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
     private java.util.Date startTime;
+
+    /**
+     * 审核人员
+     */
+    @ApiModelProperty(value = "审核人员")
+    @Excel(name = "审核人员", width = 15)
+    private String reviewBy;
+
+    /**
+     * 审核时间
+     */
+    @Excel(name = "审核时间", width = 15, format = TimeConstant.DEFAULT_TIME_FORMAT)
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_TIME_FORMAT)
+    private Date reviewTime;
 
     /**
      * 结束时间

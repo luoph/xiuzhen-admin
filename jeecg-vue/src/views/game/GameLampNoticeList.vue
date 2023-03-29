@@ -11,20 +11,25 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="投放服务器">
-              <multiple-server-select v-model="queryParam.gameServerList" @changeSelect="change"></multiple-server-select>
+              <multiple-server-select v-model="queryParam.gameServerList"
+                                      @changeSelect="change"></multiple-server-select>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="开始时间">
-                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust" placeholder="请选择开始时间" v-model="queryParam.beginTime_begin"></j-date>
-                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust" placeholder="请选择开始时间" v-model="queryParam.beginTime_end"></j-date>
+                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust"
+                        placeholder="请选择开始时间" v-model="queryParam.beginTime_begin"></j-date>
+                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust"
+                        placeholder="请选择开始时间" v-model="queryParam.beginTime_end"></j-date>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="结束时间">
-                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust" placeholder="请选择结束时间" v-model="queryParam.endTime_begin"></j-date>
-                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust" placeholder="请选择结束时间" v-model="queryParam.endTime_end"></j-date>
+                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust"
+                        placeholder="请选择结束时间" v-model="queryParam.endTime_begin"></j-date>
+                <j-date :show-time="true" date-format="YYYY-MM-DD HH:mm:ss" class="query-group-cust"
+                        placeholder="请选择结束时间" v-model="queryParam.endTime_end"></j-date>
               </a-form-item>
             </a-col>
           </template>
@@ -34,7 +39,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -66,17 +71,19 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="resumeJob(record)" v-if="record.status == 1">已启动</a>
           <a @click="resumeJob(record)" v-if="record.status == 0">已关闭</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
           <a @click="handleEdit(record)">编辑</a>
         </span>
         <span slot="serverIdSlot" slot-scope="text, record">
@@ -92,10 +99,10 @@
 
 <script>
 import JInput from '@/components/jeecg/JInput';
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameLampNoticeModal from './modules/GameLampNoticeModal';
 import JDate from '@/components/jeecg/JDate.vue';
-import { getAction } from '@/api/manage';
+import {getAction} from '@/api/manage';
 
 import MultipleServerSelect from '@/components/gameserver/MultipleServerSelect';
 
@@ -139,7 +146,7 @@ export default {
           title: '投放服务器',
           align: 'left',
           dataIndex: 'gameServerList',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: {customRender: 'serverIdSlot'}
         },
         {
           title: '播放频率',
@@ -161,16 +168,16 @@ export default {
           title: '开始时间',
           align: 'center',
           dataIndex: 'beginTime',
-          customRender: function (text) {
-            return !text ? '' : text.length > 20 ? text.substr(0, 20) : text;
+          customRender: (value) => {
+            return value || '--';
           }
         },
         {
           title: '结束时间',
           align: 'center',
           dataIndex: 'endTime',
-          customRender: function (text) {
-            return !text ? '' : text.length > 20 ? text.substr(0, 20) : text;
+          customRender: (value) => {
+            return value || '--';
           }
         },
         {
@@ -179,7 +186,7 @@ export default {
           width: 180,
           fixed: 'right',
           dataIndex: 'action',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -210,7 +217,7 @@ export default {
         title: res.title,
         content: res.content,
         onOk: function () {
-          getAction(that.url.resume, { id: record.id }).then((res) => {
+          getAction(that.url.resume, {id: record.id}).then((res) => {
             if (res.success) {
               that.$message.success(res.message);
               that.loadData();

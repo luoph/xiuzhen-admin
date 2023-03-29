@@ -389,9 +389,8 @@ export default {
       });
     },
     getQueryParams() {
-      console.log(this.queryParam.createTimeRange);
-      console.log(this.queryParam.openTimeRange);
-
+      // console.log(this.queryParam.createTimeRange);
+      // console.log(this.queryParam.openTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
