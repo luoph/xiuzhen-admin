@@ -58,15 +58,6 @@ public interface ILogAccountService extends IService<LogAccount> {
     List<Long> getPlayerIdsByLoginDate(int serverId, Date date);
 
     /**
-     * 批量日期，查询每日活跃玩家
-     *
-     * @param serverId 服务器id
-     * @param dateList 批量日期
-     * @return Map<String, List < Long>> 日期-活跃玩家s
-     */
-    Map<String, List<Long>> getPlayerIdsByLoginDates(int serverId, List<JSONObject> dateList);
-
-    /**
      * 指定日期没登陆玩家id
      *
      * @param serverId   服务器

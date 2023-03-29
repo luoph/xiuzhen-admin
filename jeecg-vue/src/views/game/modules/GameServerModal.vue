@@ -56,8 +56,47 @@
             <a-select-option :value="3">推荐新服</a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服类型">
+          <a-select v-decorator="['type', {}]" placeholder="请选择区服类型">
+            <a-select-option :value="0">混服</a-select-option>
+            <a-select-option :value="1">专服</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
+          <a-date-picker showTime format="YYYY-MM-DD" v-decorator="['openTime', {}]"/>
+        </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上线时间">
+          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['onlineTime', {}]"/>
+        </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合并状态">
+          <a-select placeholder="合并状态" v-decorator="['outdated', validatorRules.outdated]" initialValue="0">
+            <a-select-option :value="0">上线中</a-select-option>
+            <a-select-option :value="1">已合并</a-select-option>
+            <a-select-option :value="2">已下线</a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="数数统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="" v-decorator="['taStatistics', validatorRules.taStatistics]" initialValue="1">
+            <a-select-option :value="0">关闭</a-select-option>
+            <a-select-option :value="1">开启</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="在线统计开关">
+          <a-select placeholder="在线统计开关" v-decorator="['onlineStat', validatorRules.payCallbackStatus]"
+                    initialValue="1">
+            <a-select-option :value="0">关闭</a-select-option>
+            <a-select-option :value="1">开启</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付回调开关">
+          <a-select placeholder="支付回调开关" v-decorator="['payCallbackStatus', validatorRules.payCallbackStatus]"
+                    initialValue="1">
+            <a-select-option :value="0">关闭</a-select-option>
+            <a-select-option :value="1">开启</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="删档返还开关">
+          <a-select v-decorator="['stopServerRefund', {}]" placeholder="请选择删档返还开关">
             <a-select-option :value="0">关闭</a-select-option>
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
@@ -74,9 +113,9 @@
         <a-form-item label="GM可用玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['gmPlayerId', validatorRules.gmPlayerId]"/>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">
-          <a-input placeholder="请输入出错提示信息" v-decorator="['warning', {}]"/>
-        </a-form-item>
+        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="出错提示信息">-->
+        <!--          <a-input placeholder="请输入出错提示信息" v-decorator="['warning', {}]"/>-->
+        <!--        </a-form-item>-->
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户端最小版本号">
           <a-input-number v-decorator="['minVersion', {}]"/>
         </a-form-item>
@@ -99,19 +138,6 @@
         <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">-->
         <!--          <a-input :disabled="isEdit" placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]"/>-->
         <!--        </a-form-item>-->
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服类型">
-          <a-select v-decorator="['type', {}]" placeholder="请选择区服类型">
-            <a-select-option :value="0">混服</a-select-option>
-            <a-select-option :value="1">专服</a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合并状态">
-          <a-select placeholder="合并状态" v-decorator="['outdated', validatorRules.outdated]" initialValue="0">
-            <a-select-option :value="0">上线中</a-select-option>
-            <a-select-option :value="1">已合并</a-select-option>
-            <a-select-option :value="2">已下线</a-select-option>
-          </a-select>
-        </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服后母服id">
           <a-input-number v-decorator="['pid', {}]"/>
         </a-form-item>
@@ -124,34 +150,8 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="单服活动结算时间">
           <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['singleSettleTime', {}]"/>
         </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="在线统计开关">
-          <a-select placeholder="在线统计开关" v-decorator="['onlineStat', validatorRules.payCallbackStatus]"
-                    initialValue="1">
-            <a-select-option :value="0">关闭</a-select-option>
-            <a-select-option :value="1">开启</a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="支付回调开关">
-          <a-select placeholder="支付回调开关" v-decorator="['payCallbackStatus', validatorRules.payCallbackStatus]"
-                    initialValue="1">
-            <a-select-option :value="0">关闭</a-select-option>
-            <a-select-option :value="1">开启</a-select-option>
-          </a-select>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="删档返还开关">
-          <a-select v-decorator="['stopServerRefund', {}]" placeholder="请选择删档返还开关">
-            <a-select-option :value="0">关闭</a-select-option>
-            <a-select-option :value="1">开启</a-select-option>
-          </a-select>
-        </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="扩展字段">
           <a-input placeholder="请输入扩展字段" v-decorator="['extra', {}]"/>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开服时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['openTime', {}]"/>
-        </a-form-item>
-        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="上线时间">
-          <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['onlineTime', {}]"/>
         </a-form-item>
         <a-form-item v-if="isEdit" :labelCol="labelCol" :wrapperCol="wrapperCol" label="创建时间">
           <a-date-picker :disabled="isEdit" showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['createTime', {}]"/>
@@ -186,10 +186,8 @@ export default {
         xs: {span: 24},
         sm: {span: 16}
       },
-
       confirmLoading: false,
       form: this.$form.createForm(this),
-
       validatorRules: {
         id: {rules: [{required: true, message: "请输入区服id"}]},
         gameId: {rules: [{required: true, message: "请选择游戏id!"}]},
@@ -207,6 +205,8 @@ export default {
         // dbPassword: {rules: [{required: true, message: "请输入数据库密码!"}]},
         // dbName: {rules: [{required: true, message: "请输入数据库名称!"}]},
         gmUrl: {rules: [{required: true, message: "请输入GM地址!"}]},
+        openTime: {rules: [{required: true, message: "请输入开服时间!"}]},
+        onlineTime: {rules: [{required: true, message: "请输入上线时间!"}]},
         clientGm: {rules: [{required: false, message: "请输入客户端GM地址!"}]},
         gmIp: {rules: [{required: false, message: "请输入GM可用ip!"}]},
         recommend: {rules: [{required: true, message: "请选择推荐标识!"}]},
@@ -255,7 +255,6 @@ export default {
             "status",
             "isMaintain",
             "recommend",
-            "warning",
             "minVersion",
             "maxVersion",
             "type",
@@ -303,7 +302,7 @@ export default {
           }
           let formData = Object.assign(this.model, values);
           // 时间格式化
-          formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD HH:mm:ss") : null;
+          formData.openTime = formData.openTime ? formData.openTime.format("YYYY-MM-DD") : null;
           formData.mergeTime = formData.mergeTime ? formData.mergeTime.format("YYYY-MM-DD HH:mm:ss") : null;
           formData.singleSettleTime = formData.singleSettleTime ? formData.singleSettleTime.format("YYYY-MM-DD HH:mm:ss") : null;
           formData.onlineTime = formData.onlineTime ? formData.onlineTime.format("YYYY-MM-DD HH:mm:ss") : null;

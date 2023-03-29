@@ -135,9 +135,9 @@
     <!-- table区域-end -->
 
     <!-- 表单区域 -->
-    <game-notice-modal ref="modalForm" @ok="modalFormOk"></game-notice-modal>
+    <game-notice-modal ref="modalForm" @ok="modalFormOk"/>
     <!-- html预览 -->
-    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"></game-html-preview-modal>
+    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"/>
   </a-card>
 </template>
 

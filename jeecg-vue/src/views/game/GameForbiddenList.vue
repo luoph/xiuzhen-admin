@@ -135,7 +135,7 @@
       </a-table>
     </div>
 
-    <gameForbidden-modal ref="modalForm" @ok="modalFormOk"></gameForbidden-modal>
+    <gameForbidden-modal ref="modalForm" @ok="modalFormOk"/>
   </a-card>
 </template>
 

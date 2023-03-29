@@ -257,26 +257,6 @@ export default {
     },
     initDictConfig() {
     },
-    requestUrlConfirm(url, parameter, title, content) {
-      let that = this;
-      this.$confirm({
-        title: title,
-        content: content,
-        onOk: function () {
-          that.loading = true;
-          getAction(url, parameter).then((res) => {
-            if (res.success) {
-              that.$message.success(res.message);
-            } else {
-              that.$message.error(res.message);
-            }
-          }).finally(()=>{
-            that.loading = false
-            that.searchQuery();
-          });
-        }
-      });
-    },
     refreshCache() {
       // 刷新VIP缓存
       let that = this;

@@ -12,14 +12,13 @@
           <a-col :md="6" :sm="8">
             <a-form-item label="唯一标识">
               <j-dict-select-tag v-model="queryParam.simpleName" placeholder="请选择唯一标识"
-                                 dictCode="game_channel,name,simple_name"/>
+                dictCode="game_channel,name,simple_name" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="公告id">
-                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId"
-                                style="width: 100%"></a-input-number>
+                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId" style="width: 100%"></a-input-number>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
@@ -34,7 +33,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -45,10 +44,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button @click="updateAllServer" type="primary" icon="sync">刷新服务器列表</a-button>
-      <a-button @click="updateIpWhitelist" type="primary" icon="sync">刷新IP白名单</a-button>
-      <a-button @click="updateServerCache" type="primary" icon="sync">刷新中心服区服缓存</a-button>
-      <a-button @click="updateChatServerCache" type="primary" icon="sync">刷新聊天服消息缓存</a-button>
+      <a-button @click="updateServerList" type="primary" icon="sync">刷新客户端区服列表</a-button>
+      <a-button @click="updateWhitelist" type="primary" icon="sync">刷新IP白名单</a-button>
+      <a-button @click="updateServerCache" type="primary" icon="sync">刷新区服缓存</a-button>
+      <a-button @click="updateChatServerCache" type="primary" icon="sync">刷新聊天消息缓存</a-button>
 
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -57,13 +56,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -78,22 +77,22 @@
             :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
 
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+        :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="editChannelServer(record)">区服列表</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="updateChannelServer(record)">刷新区服</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="editChannelNotice(record)">编辑公告</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="viewChannelNotice(record)">预览公告</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="refreshChannelNotice(record)">刷新公告</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -121,14 +120,14 @@
 </template>
 
 <script>
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameChannelModal from './modules/GameChannelModal';
 import GameNoticeModal from './modules/GameNoticeModal';
 import GameHtmlPreviewModal from './modules/GameHtmlPreviewModal';
 import GameChannelServerList from './GameChannelServerList';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
 
 function filterGameIdText(options, text) {
   if (options instanceof Array) {
@@ -144,7 +143,7 @@ function filterGameIdText(options, text) {
 export default {
   name: 'GameChannelList',
   mixins: [JeecgListMixin],
-  components: {JInput, GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList},
+  components: { JInput, GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList },
   data() {
     return {
       description: '游戏渠道管理页面',
@@ -241,7 +240,7 @@ export default {
           align: 'left',
           width: 280,
           dataIndex: 'ipWhitelist',
-          scopedSlots: {customRender: 'ipTags'}
+          scopedSlots: { customRender: 'ipTags' }
         },
         {
           title: '版本更新时间',
@@ -260,7 +259,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 200,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -271,7 +270,7 @@ export default {
         updateAllServerUrl: 'game/channel/updateAllServer',
         // 刷新渠道区服
         updateChannelServerUrl: 'game/channel/updateChannelServer',
-        updateIpWhitelistUrl: 'game/channel/updateIpWhitelist',
+        updateWhitelistUrl: 'game/channel/updateIpWhitelist',
         updateServerCacheUrl: 'game/channel/updateServerCache',
         updateChatServerCacheUrl: 'game/channel/updateChatServerCache',
         // 游戏列表
@@ -320,7 +319,7 @@ export default {
     // 编辑渠道公告
     editChannelNotice(record) {
       let that = this;
-      getAction(that.url.noticeUrl, {id: record.noticeId}).then((res) => {
+      getAction(that.url.noticeUrl, { id: record.noticeId }).then((res) => {
         if (res.success && res.result) {
           that.$refs.noticeModal.edit(res.result);
         } else {
@@ -331,7 +330,7 @@ export default {
     // 预览渠道公告
     viewChannelNotice(record) {
       let that = this;
-      getAction(that.url.noticeUrl, {id: record.noticeId}).then((res) => {
+      getAction(that.url.noticeUrl, { id: record.noticeId }).then((res) => {
         if (res.success && res.result) {
           that.$refs.htmlModal.title = '公告预览';
           that.$refs.htmlModal.edit(res.result.content);
@@ -340,45 +339,47 @@ export default {
         }
       });
     },
-    requestUrlConfirm(url, parameter, title, content) {
-      let that = this;
-      this.$confirm({
-        title: title,
-        content: content,
-        onOk: function () {
-          getAction(url, parameter).then((res) => {
-            if (res.success) {
-              that.$message.success(res.message);
-            } else {
-              that.$message.error(res.message);
-            }
-          });
-        }
-      });
-    },
     refreshChannelNotice(record) {
       // 刷新渠道公告
-      this.requestUrlConfirm(this.url.noticeRefreshUrl, {id: record.noticeId}, '是否刷新渠道公告？', '点击刷新渠道公告');
+      this.handleConfrimRequest(this.url.noticeRefreshUrl,
+        { id: record.noticeId },
+        '是否刷新渠道公告？',
+        '点击刷新渠道公告');
     },
     updateChannelServer(record) {
-      // 刷新服务器列表
-      this.requestUrlConfirm(this.url.updateChannelServerUrl, {id: record.id}, '是否刷新区服列表？', '点击确定刷新区服列表');
+      // 刷新客户端区服列表
+      this.handleConfrimRequest(this.url.updateChannelServerUrl,
+        { id: record.id },
+        '是否刷新区服列表？',
+        '点击确定刷新');
     },
-    updateAllServer() {
-      // 刷新服务器列表
-      this.requestUrlConfirm(this.url.updateAllServerUrl, {}, '是否刷新所有区服列表？', '点击确定刷新所有区服列表');
+    updateServerList() {
+      // 刷新客户端区服列表
+      this.handleConfrimRequest(this.url.updateAllServerUrl,
+        {},
+        '是否刷新客户端区服列表？',
+        '点击确定刷新');
     },
-    updateIpWhitelist() {
+    updateWhitelist() {
       // 刷新IP白名单配置
-      this.requestUrlConfirm(this.url.updateIpWhitelistUrl, {}, '是否刷新IP白名单？', '点击确定刷新IP白名单');
+      this.handleConfrimRequest(this.url.updateWhitelistUrl,
+        {},
+        '是否刷新IP白名单？',
+        '点击确定刷新');
     },
     updateServerCache() {
-      // 刷新中心服区服缓存
-      this.requestUrlConfirm(this.url.updateServerCacheUrl, {}, '是否刷新中心服区服缓存？', '点击确定刷新中心服区服缓存');
+      // 刷新区服缓存
+      this.handleConfrimRequest(this.url.updateServerCacheUrl,
+        {},
+        '是否刷新区服缓存？',
+        '点击确定刷新');
     },
     updateChatServerCache() {
-      // 刷新聊天服消息缓存
-      this.requestUrlConfirm(this.url.updateChatServerCacheUrl, {}, '是否刷新聊天服消息缓存？', '点击确定刷新聊天服消息缓存');
+      // 刷新聊天消息缓存
+      this.handleConfrimRequest(this.url.updateChatServerCacheUrl,
+        {},
+        '是否刷新聊天消息缓存？',
+        '点击确定刷新');
     }
   }
 };

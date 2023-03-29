@@ -3,10 +3,8 @@
  * 高级查询按钮调用 superQuery方法  高级查询组件ref定义为superQueryModal
  * data中url定义 list为查询列表  delete为删除单条记录  deleteBatch为批量删除
  */
-import {filterObj} from '@/utils/util';
-import {EXPORT_MIME_TYPE} from '@/utils/util';
-import {EXPORT_FILE_SUFFIX} from '@/utils/util';
-import {deleteAction, downFile, getAction, getFileAccessHttpUrl} from '@/api/manage'
+import {EXPORT_FILE_SUFFIX, EXPORT_MIME_TYPE, filterObj} from '@/utils/util';
+import {deleteAction, downFile, getAction, getFileAccessHttpUrl, postAction} from '@/api/manage'
 import Vue from 'vue'
 import {ACCESS_TOKEN, TENANT_ID} from "@/store/mutation-types"
 import store from '@/store'
@@ -268,6 +266,33 @@ export const JeecgListMixin = {
           that.loadData();
         } else {
           that.$message.warning(res.message);
+        }
+      });
+    },
+    handleConfrimRequest(url, parameter, title, content, method = 'get') {
+      let that = this;
+      let invoke = getAction;
+      if (method === 'post') {
+        invoke = postAction;
+      } else if (method === 'delete') {
+        invoke = deleteAction;
+      }
+      this.$confirm({
+        title: title,
+        content: content,
+        onOk: function () {
+          that.loading = true;
+          invoke(url, parameter).then((res) => {
+            that.loading = false;
+            if (res.success) {
+              that.$message.success(res.message);
+            } else {
+              that.$message.error(res.message);
+            }
+          }).finally(() => {
+            that.loading = false
+            that.searchQuery();
+          });
         }
       });
     },

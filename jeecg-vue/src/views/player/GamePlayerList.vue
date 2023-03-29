@@ -143,7 +143,7 @@
 
 <script>
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {deleteAction, getAction, postAction} from '@/api/manage';
+import {getAction} from '@/api/manage';
 import GamePlayerModal from './modules/GamePlayerModal';
 import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
@@ -367,44 +367,17 @@ export default {
       this.queryParam.createDate_end = dateString[1];
     },
     deleteVip(record) {
-      this.requestUrlConfirm(this.url.deleteVip,
+      this.handleConfrimRequest(this.url.deleteVip,
         {id: record.vipId},
         '是否删除VIP？',
         `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`,
         'delete');
     },
     addVip(record) {
-      this.requestUrlConfirm(this.url.addVip,
+      this.handleConfrimRequest(this.url.addVip,
         {playerIds: record.playerId},
         '是否添加VIP？',
         `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
-    },
-    requestUrlConfirm(url, parameter, title, content, method = 'get') {
-      let that = this;
-      let requestFunction = getAction;
-      if (method === 'post') {
-        requestFunction = postAction;
-      } else if (method === 'delete') {
-        requestFunction = deleteAction;
-      }
-      this.$confirm({
-        title: title,
-        content: content,
-        onOk: function () {
-          that.loading = true;
-          requestFunction(url, parameter).then((res) => {
-            that.loading = false;
-            if (res.success) {
-              that.$message.success(res.message);
-            } else {
-              that.$message.error(res.message);
-            }
-          }).finally(() => {
-            that.loading = false
-            that.searchQuery();
-          });
-        }
-      });
     },
   }
 };

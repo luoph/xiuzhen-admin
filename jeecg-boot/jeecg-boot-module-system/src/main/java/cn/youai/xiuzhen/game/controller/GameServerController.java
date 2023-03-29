@@ -240,6 +240,12 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
                 }
             }
 
+            if (GameServer.skipCallGm(record)) {
+                record.setOnlineNum(0);
+                latch.countDown();
+                continue;
+            }
+
             // 已废弃服务器不统计在线人数
             if (!onlineStat || record.skipCheck()) {
                 latch.countDown();
