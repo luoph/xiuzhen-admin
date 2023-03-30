@@ -443,18 +443,18 @@ public class SysDictController extends JeecgController<SysDict, ISysDictService>
      * @return
      * @功能：刷新缓存
      */
-    @RequestMapping(value = "/refleshCache")
-    public Result<?> refleshCache() {
+    @RequestMapping(value = "/refreshCache")
+    public Result<?> refreshCache() {
         Result<?> result = new Result<SysDict>();
         //清空字典缓存
-        Set keys = redisTemplate.keys(CacheConstant.SYS_DICT_CACHE + "*");
-        Set keys7 = redisTemplate.keys(CacheConstant.SYS_ENABLE_DICT_CACHE + "*");
-        Set keys2 = redisTemplate.keys(CacheConstant.SYS_DICT_TABLE_CACHE + "*");
-        Set keys21 = redisTemplate.keys(CacheConstant.SYS_DICT_TABLE_BY_KEYS_CACHE + "*");
-        Set keys3 = redisTemplate.keys(CacheConstant.SYS_DEPARTS_CACHE + "*");
-        Set keys4 = redisTemplate.keys(CacheConstant.SYS_DEPART_IDS_CACHE + "*");
-        Set keys5 = redisTemplate.keys("jmreport:cache:dict*");
-        Set keys6 = redisTemplate.keys("jmreport:cache:dictTable*");
+        Set<String> keys = redisTemplate.keys(CacheConstant.SYS_DICT_CACHE + "*");
+        Set<String> keys7 = redisTemplate.keys(CacheConstant.SYS_ENABLE_DICT_CACHE + "*");
+        Set<String> keys2 = redisTemplate.keys(CacheConstant.SYS_DICT_TABLE_CACHE + "*");
+        Set<String> keys21 = redisTemplate.keys(CacheConstant.SYS_DICT_TABLE_BY_KEYS_CACHE + "*");
+        Set<String> keys3 = redisTemplate.keys(CacheConstant.SYS_DEPARTS_CACHE + "*");
+        Set<String> keys4 = redisTemplate.keys(CacheConstant.SYS_DEPART_IDS_CACHE + "*");
+        Set<String> keys5 = redisTemplate.keys("jmreport:cache:dict*");
+        Set<String> keys6 = redisTemplate.keys("jmreport:cache:dictTable*");
         redisTemplate.delete(keys);
         redisTemplate.delete(keys2);
         redisTemplate.delete(keys21);
