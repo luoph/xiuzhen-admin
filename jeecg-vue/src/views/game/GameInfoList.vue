@@ -11,7 +11,7 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"
+              <j-search-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"
                                  dictCode="game_info,name,ya_simple_name"/>
             </a-form-item>
           </a-col>

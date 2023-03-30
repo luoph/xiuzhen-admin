@@ -21,7 +21,7 @@
           <a-input placeholder="请输入gameAppKey" v-decorator="['yaGameKey', validatorRules.yaGameKey]"/>
         </a-form-item>
         <a-form-item label="审核区服配置" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-dict-select-tag v-decorator="['reviewChannel', validatorRules.reviewChannel]"
+          <j-search-select-tag v-decorator="['reviewChannel', validatorRules.reviewChannel]"
                              placeholder="请选择审核区服配置"
                              dictCode="game_channel,name,simple_name"/>
         </a-form-item>

@@ -11,7 +11,7 @@
           <a-input v-decorator="['sdkChannel', validatorRules.sdkChannel]" placeholder="请输入Sdk渠道"/>
         </a-form-item>
         <a-form-item label="游戏编号" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-dict-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
+          <j-search-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
                              dictCode="game_info,name,id"/>
         </a-form-item>
         <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">

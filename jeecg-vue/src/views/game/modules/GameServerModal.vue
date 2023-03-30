@@ -19,8 +19,8 @@
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
           <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
-          <j-dict-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
-                             dictCode="game_info,name,id"/>
+          <j-search-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
+                               dictCode="game_info,name,id"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服Host">
           <a-input placeholder="请输入区服Host" v-decorator="['host', validatorRules.host]"/>

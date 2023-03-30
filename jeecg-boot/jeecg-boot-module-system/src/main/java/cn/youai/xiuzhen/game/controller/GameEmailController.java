@@ -104,13 +104,6 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         return super.delete(id);
     }
 
-    @AutoLog(value = "游戏邮件-批量删除")
-    @DeleteMapping(value = "/deleteBatch")
-    @RequiresPermissions("game:email:review")
-    public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
-    }
-
     @AutoLog(value = "游戏邮件-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
