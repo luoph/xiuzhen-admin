@@ -87,10 +87,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button @click="updateServerList" type="primary" icon="sync">前端区服列表</a-button>
+      <a-button @click="updateServerList" type="primary" icon="sync">区服列表</a-button>
       <a-button @click="updateWhitelist" type="primary" icon="sync">IP白名单</a-button>
       <a-button @click="updateServerCache" type="primary" icon="sync">区服缓存</a-button>
-      <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天消息缓存</a-button>
+      <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天缓存</a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync">
         刷新活动配置
       </a-button>
