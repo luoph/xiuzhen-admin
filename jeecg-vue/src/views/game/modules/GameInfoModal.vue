@@ -22,8 +22,7 @@
         </a-form-item>
         <a-form-item label="审核区服配置" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-search-select-tag v-decorator="['reviewChannel', validatorRules.reviewChannel]"
-                             placeholder="请选择审核区服配置"
-                             dictCode="game_channel,name,simple_name"/>
+                               placeholder="请选择审核区服配置" dict="game_channel,name,simple_name"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="帐号登录地址">
           <a-input placeholder="请输入帐号登录地址(不包含域名)" v-decorator="['loginUrl', validatorRules.loginUrl]"/>

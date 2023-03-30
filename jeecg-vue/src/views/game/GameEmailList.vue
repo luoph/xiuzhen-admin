@@ -40,8 +40,7 @@
               <j-search-select-tag
                 v-model="queryParam.createBy" placeholder="请选择创建人"
                 dict="sys_user,realname,username"
-                :async="false">
-              </j-search-select-tag>
+                :async="false"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -49,8 +48,7 @@
               <j-search-select-tag
                 v-model="queryParam.reviewBy" placeholder="请选择审核人"
                 dict="sys_user,realname,username"
-                :async="false">
-              </j-search-select-tag>
+                :async="false"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">

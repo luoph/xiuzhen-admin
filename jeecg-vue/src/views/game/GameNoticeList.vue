@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="公告类型">
-              <j-search-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type"/>
+              <j-dict-select-tag v-model="queryParam.noticeType" placeholder="请选择公告类型" dictCode="notice_type"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">

@@ -6,7 +6,8 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="游戏编号">
-              <j-search-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id"/>
+              <j-search-select-tag placeholder="请选择游戏编号" v-model="queryParam.gameId"
+                                   dict="game_info,name,id" :async="false"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">

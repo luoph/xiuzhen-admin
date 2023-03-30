@@ -19,7 +19,7 @@
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
           <j-search-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
-                             dictCode="game_info,name,id"/>
+                               dict="game_info,name,id"/>
         </a-form-item>
         <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入版本号"
