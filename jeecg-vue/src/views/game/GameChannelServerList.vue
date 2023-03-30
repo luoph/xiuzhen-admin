@@ -11,7 +11,7 @@
             <a-row :gutter="10">
               <a-col :md="10" :sm="8">
                 <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="区服id">
-                  <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
+                  <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
                 </a-form-item>
               </a-col>
               <a-col :md="6" :sm="8">

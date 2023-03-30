@@ -6,18 +6,18 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="名称">
-              <a-input placeholder="请输入名称" v-model="queryParam.name"></a-input>
+              <a-input placeholder="请输入名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="分组说明">
-              <a-input placeholder="请输入分组说明" v-model="queryParam.summary"></a-input>
+              <a-input placeholder="请输入分组说明" v-model="queryParam.summary"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="限制次数">
-                <a-input placeholder="请输入限制次数" v-model="queryParam.limitCount"></a-input>
+                <a-input placeholder="请输入限制次数" v-model="queryParam.limitCount"/>
               </a-form-item>
             </a-col>
           </template>

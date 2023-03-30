@@ -20,9 +20,9 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin"></a-input>
+              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin"/>
               <span class="query-group-split-cust"></span>
-              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end"></a-input>
+              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -87,18 +87,18 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button @click="updateServerList" type="primary" icon="sync">刷新客户端区服列表</a-button>
-      <a-button @click="updateWhitelist" type="primary" icon="sync">刷新IP白名单</a-button>
-      <a-button @click="updateServerCache" type="primary" icon="sync">刷新区服缓存</a-button>
-      <a-button @click="updateChatServerCache" type="primary" icon="sync">刷新聊天消息缓存</a-button>
+      <a-button @click="updateServerList" type="primary" icon="sync">前端区服列表</a-button>
+      <a-button @click="updateWhitelist" type="primary" icon="sync">IP白名单</a-button>
+      <a-button @click="updateServerCache" type="primary" icon="sync">区服缓存</a-button>
+      <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天消息缓存</a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync">
         刷新活动配置
       </a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">
         刷新游戏设置
       </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="syncPlayer" v-has="'game:server:admin'" type="primary"
-                icon="sync">同步角色数据
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="syncPlayer" v-has="'game:server:admin'"
+                icon="sync">同步角色
       </a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger"
                 icon="alert">开启维护
@@ -119,7 +119,6 @@
                 >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
-
       <a-table
         ref="table"
         size="middle"

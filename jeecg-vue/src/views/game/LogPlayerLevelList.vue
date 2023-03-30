@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="服务器id">
-              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
+              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"></a-input>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -21,17 +21,17 @@
           </a-col>
           <a-col :xl="6" :lg="6" :md="6" :sm="8">
             <a-form-item label="境界等级">
-              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.level_begin"></a-input>
+              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.level_begin"/>
               <span class="query-group-split-cust"></span>
-              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.level_end"></a-input>
+              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.level_end"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="16">
               <a-form-item label="战力范围">
-                <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin"></a-input>
+                <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin"/>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="最大战力值" class="query-group-cust" v-model="queryParam.combatPower_end"></a-input>
+                <a-input placeholder="最大战力值" class="query-group-cust" v-model="queryParam.combatPower_end"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">

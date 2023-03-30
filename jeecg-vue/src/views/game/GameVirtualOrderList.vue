@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -16,7 +16,7 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="商品id">
-              <a-input placeholder="请输商品id" v-model="queryParam.goodsId"></a-input>
+              <a-input placeholder="请输商品id" v-model="queryParam.goodsId"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">

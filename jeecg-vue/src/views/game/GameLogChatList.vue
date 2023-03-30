@@ -52,7 +52,7 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="消息">
-                <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent"></j-input>
+                <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent"/>
               </a-form-item>
             </a-col>
             <a-col :md="3" :sm="8"> </a-col>

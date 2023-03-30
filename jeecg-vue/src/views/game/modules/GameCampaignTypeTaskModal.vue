@@ -17,7 +17,7 @@
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-textarea>
+          <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"/>
         </a-form-item>
         <a-form-item label="moduleId" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['moduleId', validatorRules.moduleId]" placeholder="请输moduleId"
@@ -31,7 +31,7 @@
           <a-input-number v-decorator="['args', validatorRules.args]" placeholder="请输入任务参数" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
+          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"/>
         </a-form-item>
         <a-form-item label="跳转id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['jumpId', validatorRules.jumpId]" placeholder="请输入跳转id"

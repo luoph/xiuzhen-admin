@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="标题">
-              <j-input placeholder="请输入标题" v-model="queryParam.noticeTitle"></j-input>
+              <j-input placeholder="请输入标题" v-model="queryParam.noticeTitle"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">

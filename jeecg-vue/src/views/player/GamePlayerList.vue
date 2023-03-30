@@ -36,19 +36,19 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="等级">
-              <a-input placeholder="最小等级" class="query-group-cust" v-model="queryParam.level_begin"></a-input>
+              <a-input placeholder="最小等级" class="query-group-cust" v-model="queryParam.level_begin"/>
               <span class="query-group-split-cust"></span>
-              <a-input placeholder="最大等级" class="query-group-cust" v-model="queryParam.level_end"></a-input>
+              <a-input placeholder="最大等级" class="query-group-cust" v-model="queryParam.level_end"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="16">
               <a-form-item label="战力范围">
                 <a-input placeholder="最小战力值" class="query-group-cust"
-                         v-model="queryParam.combatPower_begin"></a-input>
+                         v-model="queryParam.combatPower_begin"/>
                 <span class="query-group-split-cust"></span>
                 <a-input placeholder="最大战力值" class="query-group-cust"
-                         v-model="queryParam.combatPower_end"></a-input>
+                         v-model="queryParam.combatPower_end"/>
               </a-form-item>
             </a-col>
             <a-col :md="8" :sm="8">

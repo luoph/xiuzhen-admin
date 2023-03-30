@@ -11,28 +11,28 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="公告ID">
-              <a-input placeholder="请输入ID" v-model="queryParam.id"></a-input>
+              <a-input placeholder="请输入ID" v-model="queryParam.id"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="标题">
-              <j-input placeholder="请输入标题" v-model="queryParam.title"></j-input>
+              <j-input placeholder="请输入标题" v-model="queryParam.title"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="开始时间">
-                <a-input placeholder="请输入开始时间" v-model="queryParam.beginTime"></a-input>
+                <a-input placeholder="请输入开始时间" v-model="queryParam.beginTime"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="结束时间">
-                <a-input placeholder="请输入结束时间" v-model="queryParam.endTime"></a-input>
+                <a-input placeholder="请输入结束时间" v-model="queryParam.endTime"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="公告内容">
-                <a-input placeholder="请输入公告内容" v-model="queryParam.content"></a-input>
+                <a-input placeholder="请输入公告内容" v-model="queryParam.content"/>
               </a-form-item>
             </a-col>
           </template>
@@ -54,7 +54,7 @@
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-popconfirm title="刷新公告配置列表" @confirm="updateNoticeConfig()">
-        <a-button type="primary" icon="update">刷新公告配置列表</a-button>
+        <a-button type="primary" icon="sync">公告配置</a-button>
       </a-popconfirm>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏公告')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -230,6 +230,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 140,
           scopedSlots: {customRender: 'action'}
         }
       ],
@@ -253,32 +254,18 @@ export default {
   methods: {
     updateNoticeConfig() {
       // 刷新公告配置
-      console.log('开始刷新公告配置');
       getAction(this.url.updateNoticeConfigUrl).then((res) => {
         if (res.success) {
-          this.$message.success('公告配置刷新成功');
+          this.$message.success('刷新成功');
         } else {
-          this.$message.error('公告配置刷新失败');
+          this.$message.error('刷新失败');
         }
         console.log('刷新公告配置完成', res);
       });
     },
     // 刷新公告
     refreshNotice(record) {
-      let that = this;
-      this.$confirm({
-        title: '是否刷新渠道公告？',
-        content: '点击刷新渠道公告',
-        onOk: function () {
-          getAction(that.url.noticeRefresh, {id: record.id}).then((res) => {
-            if (res.success) {
-              that.$message.success('公告刷新成功');
-            } else {
-              that.$message.error('公告刷新失败');
-            }
-          });
-        }
-      });
+      this.handleConfrimRequest(this.url.noticeRefresh, {id: record.id}, `是否刷新${record.title}？`, '点击确定刷新');
     },
     // 预览渠道公告
     handlePreview(record) {

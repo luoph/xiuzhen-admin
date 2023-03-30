@@ -4,11 +4,11 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="兑换码" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]" placeholder="请输入兑换码"></a-input>
+          <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]" placeholder="请输入兑换码"/>
         </a-form-item>
         <a-form-item label="渠道编码" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['channel', validatorRules.channel]"
-                   placeholder="请输入渠道编码"></a-input>
+                   placeholder="请输入渠道编码"/>
         </a-form-item>
         <a-form-item label="玩家id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="isEdit" v-decorator="['playerId', validatorRules.playerId]"

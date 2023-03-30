@@ -21,7 +21,7 @@
                          v-decorator="['sendTime', validatorRules.sendTime]" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="传闻内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"></a-input>
+          <a-input v-decorator="['message', validatorRules.message]" placeholder="请输入传闻内容"/>
         </a-form-item>
         <a-form-item label="传闻次数" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['num', validatorRules.num]" placeholder="请输入传闻次数" style="width: 100%"/>

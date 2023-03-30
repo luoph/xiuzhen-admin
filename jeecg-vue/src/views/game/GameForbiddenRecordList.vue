@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="服务器id">
-              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
+              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -37,13 +37,13 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="封禁值">
-              <j-input placeholder="请输入封禁值模糊查询" v-model="queryParam.banValue"></j-input>
+              <j-input placeholder="请输入封禁值模糊查询" v-model="queryParam.banValue"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="封禁原因">
-                <j-input placeholder="请输入封禁原因" v-model="queryParam.reason"></j-input>
+                <j-input placeholder="请输入封禁原因" v-model="queryParam.reason"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">

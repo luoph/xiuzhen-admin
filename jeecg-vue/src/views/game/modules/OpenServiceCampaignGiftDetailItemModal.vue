@@ -38,7 +38,7 @@
           <a-input v-decorator="['price', validatorRules.price]" placeholder="请输入价格"></a-input>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
+          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"/>
         </a-form-item>
       </a-form>
     </a-spin>

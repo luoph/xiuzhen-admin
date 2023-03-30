@@ -3,10 +3,10 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="激活码名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入激活码名称"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入激活码名称"/>
         </a-form-item>
         <a-form-item label="礼包说明" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['summary', validatorRules.summary]" placeholder="请输入礼包说明"></a-input>
+          <a-input v-decorator="['summary', validatorRules.summary]" placeholder="请输入礼包说明"/>
         </a-form-item>
         <a-form-item label="限制类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请选择限制类型" v-decorator="['limitType', validatorRules.limitType]" initialValue="4">
@@ -24,10 +24,10 @@
           <a-input-number :disabled="isIncludeGroupModel" v-decorator="['groupId', validatorRules.groupId]" placeholder="请输入分组id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="限制渠道id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['channelIds', validatorRules.channelIds]" placeholder="请输入限制渠道id, 使用半角','分割多个id"></a-textarea>
+          <a-textarea v-decorator="['channelIds', validatorRules.channelIds]" placeholder="请输入限制渠道id, 使用半角','分割多个id"/>
         </a-form-item>
         <a-form-item label="限制区服id" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入限制区服id, 使用半角','分割多个id"></a-textarea>
+          <a-textarea v-decorator="['serverIds', validatorRules.serverIds]" placeholder="请输入限制区服id, 使用半角','分割多个id"/>
         </a-form-item>
         <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
@@ -41,7 +41,7 @@
           <game-email-item-tree-modal ref="gameEmailItemTreeModal" @func="getItemTreeJson"></game-email-item-tree-modal>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-textarea>
+          <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"/>
         </a-form-item>
         <a-form-item label="开始时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-date placeholder="请选择开始时间" v-decorator="['startTime', validatorRules.startTime]" :trigger-change="true" style="width: 100%" />

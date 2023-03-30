@@ -15,7 +15,7 @@
           </a-col>
           <a-col :md="4" :sm="4">
             <a-form-item label="玩家名">
-              <a-input placeholder="请输入玩家名" v-model="queryParam.nickname"></a-input>
+              <a-input placeholder="请输入玩家名" v-model="queryParam.nickname"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="4">
@@ -28,7 +28,7 @@
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="内容">
-              <a-input placeholder="内容" v-model="queryParam.message"></a-input>
+              <a-input placeholder="内容" v-model="queryParam.message"/>
             </a-form-item>
           </a-col>
           <a-col :md="10" :sm="8">

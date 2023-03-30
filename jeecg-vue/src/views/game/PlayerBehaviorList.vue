@@ -10,12 +10,12 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="角色昵称">
-              <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname"></a-input>
+              <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="角色id">
-              <a-input placeholder="请输入角色id" v-model="queryParam.playerId"></a-input>
+              <a-input placeholder="请输入角色id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">

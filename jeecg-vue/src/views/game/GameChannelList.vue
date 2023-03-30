@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="渠道名称">
-              <j-input placeholder="请输入渠道名称" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入渠道名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -23,7 +23,7 @@
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="备注">
-                <j-input placeholder="请输入备注" v-model="queryParam.remark"></j-input>
+                <j-input placeholder="请输入备注" v-model="queryParam.remark"/>
               </a-form-item>
             </a-col>
           </template>
@@ -44,10 +44,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button @click="updateServerList" type="primary" icon="sync">刷新客户端区服列表</a-button>
-      <a-button @click="updateWhitelist" type="primary" icon="sync">刷新IP白名单</a-button>
-      <a-button @click="updateServerCache" type="primary" icon="sync">刷新区服缓存</a-button>
-      <a-button @click="updateChatServerCache" type="primary" icon="sync">刷新聊天消息缓存</a-button>
+      <a-button @click="updateServerList" type="primary" icon="sync">前端区服列表</a-button>
+      <a-button @click="updateWhitelist" type="primary" icon="sync">IP白名单</a-button>
+      <a-button @click="updateServerCache" type="primary" icon="sync">区服缓存</a-button>
+      <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天消息缓存</a-button>
 
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">

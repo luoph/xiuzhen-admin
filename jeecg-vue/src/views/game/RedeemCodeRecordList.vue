@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="兑换码">
-              <a-input placeholder="请输入兑换码" v-model="queryParam.code"></a-input>
+              <a-input placeholder="请输入兑换码" v-model="queryParam.code"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="渠道编码">
-              <a-input placeholder="请输入渠道编码" v-model="queryParam.channel"></a-input>
+              <a-input placeholder="请输入渠道编码" v-model="queryParam.channel"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -22,17 +22,17 @@
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="分组id">
-                <a-input placeholder="请输入分组id" v-model="queryParam.groupId"></a-input>
+                <a-input placeholder="请输入分组id" v-model="queryParam.groupId"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="区服id">
-                <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
+                <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="兑换ip">
-                <a-input placeholder="请输入兑换ip" v-model="queryParam.remoteIp"></a-input>
+                <a-input placeholder="请输入兑换ip" v-model="queryParam.remoteIp"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="16">

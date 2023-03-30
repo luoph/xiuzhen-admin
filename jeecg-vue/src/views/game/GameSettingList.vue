@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="key">
-              <j-input placeholder="请输入key" v-model="queryParam.dictKey"></j-input>
+              <j-input placeholder="请输入key" v-model="queryParam.dictKey"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="value">
-              <j-input placeholder="请输入value" v-model="queryParam.dictValue"></j-input>
+              <j-input placeholder="请输入value" v-model="queryParam.dictValue"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">

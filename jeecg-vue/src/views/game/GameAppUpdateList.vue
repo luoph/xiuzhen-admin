@@ -6,17 +6,17 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="应用名称">
-              <j-input placeholder="请输入应用名称模糊查询" v-model="queryParam.appName"></j-input>
+              <j-input placeholder="请输入应用名称模糊查询" v-model="queryParam.appName"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="应用包名">
-              <j-input placeholder="请输入应用包名" v-model="queryParam.packageName"></j-input>
+              <j-input placeholder="请输入应用包名" v-model="queryParam.packageName"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="版本号">
-              <a-input placeholder="请输入版本号" v-model="queryParam.versionCode"></a-input>
+              <a-input placeholder="请输入版本号" v-model="queryParam.versionCode"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -34,7 +34,7 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="版本名">
-                <j-input placeholder="请输入版本名" v-model="queryParam.versionName"></j-input>
+                <j-input placeholder="请输入版本名" v-model="queryParam.versionName"/>
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
@@ -63,7 +63,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button @click="updateConfig" type="danger" icon="sync">刷新客户端版本配置</a-button>
+      <a-button @click="updateConfig" type="danger" icon="sync">客户端版本配置</a-button>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('game_app_update')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>

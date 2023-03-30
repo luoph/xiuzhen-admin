@@ -27,7 +27,7 @@
                          v-decorator="['endTime', validatorRules.endTime]" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-textarea>
+          <a-textarea v-decorator="['description', validatorRules.description]" placeholder="请输入描述"/>
         </a-form-item>
         <a-form-item label="加成" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['addition', validatorRules.addition]" placeholder="请输入加成"

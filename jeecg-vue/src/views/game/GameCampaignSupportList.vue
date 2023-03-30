@@ -6,18 +6,18 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="活动id">
-              <a-input placeholder="请输入活动id" v-model="queryParam.campaignId"></a-input>
+              <a-input placeholder="请输入活动id" v-model="queryParam.campaignId"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="服务器id">
-              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"></a-input>
+              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="开启typeIds">
-                <a-input placeholder="请输入开启typeIds" v-model="queryParam.typeIds"></a-input>
+                <a-input placeholder="请输入开启typeIds" v-model="queryParam.typeIds"/>
               </a-form-item>
             </a-col>
           </template>

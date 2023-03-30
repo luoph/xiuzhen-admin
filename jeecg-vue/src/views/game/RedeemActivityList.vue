@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="激活码名称">
-              <a-input placeholder="请输入激活码名称" v-model="queryParam.name"></a-input>
+              <a-input placeholder="请输入激活码名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -26,12 +26,12 @@
           <template v-if="toggleSearchStatus">
             <a-col v-if="!isIncludeGroupModel" :md="4" :sm="8">
               <a-form-item label="分组id">
-                <a-input placeholder="请输入分组id" v-model="queryParam.groupId"></a-input>
+                <a-input placeholder="请输入分组id" v-model="queryParam.groupId"/>
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="活动状态">
-                <a-input placeholder="请输入活动状态" v-model="queryParam.status"></a-input>
+                <a-input placeholder="请输入活动状态" v-model="queryParam.status"/>
               </a-form-item>
             </a-col>
           </template>

@@ -13,7 +13,7 @@
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="开启typeIds" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['typeIds', validatorRules.typeIds]" placeholder="请输入开启typeIds"></a-input>
+          <a-input v-decorator="['typeIds', validatorRules.typeIds]" placeholder="请输入开启typeIds"/>
         </a-form-item>
       </a-form>
     </a-spin>

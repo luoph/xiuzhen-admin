@@ -11,17 +11,17 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="角色名">
-              <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="帐号">
-              <j-input placeholder="请输入帐号模糊查询" v-model="queryParam.account"></j-input>
+              <j-input placeholder="请输入帐号模糊查询" v-model="queryParam.account"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -33,17 +33,17 @@
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="渠道">
-                <a-input placeholder="请输入渠道" v-model="queryParam.ip"></a-input>
+                <a-input placeholder="请输入渠道" v-model="queryParam.ip"/>
               </a-form-item>
             </a-col>
             <!-- <a-col :md="4" :sm="8">
                             <a-form-item label="version_name">
-                                <a-input placeholder="请输入version_name" v-model="queryParam.versionName"></a-input>
+                                <a-input placeholder="请输入version_name" v-model="queryParam.versionName"/>
                             </a-form-item>
                         </a-col> -->
             <!-- <a-col :md="4" :sm="8">
                             <a-form-item label="version_code">
-                                <a-input placeholder="请输入version_code" v-model="queryParam.versionCode"></a-input>
+                                <a-input placeholder="请输入version_code" v-model="queryParam.versionCode"/>
                             </a-form-item>
                         </a-col> -->
           </template>

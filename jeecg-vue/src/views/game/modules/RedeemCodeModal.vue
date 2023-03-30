@@ -18,7 +18,7 @@
         </a-form-item>
         <a-form-item v-else label="激活码" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input :disabled="isEdit" v-decorator="['code', validatorRules.code]"
-                   placeholder="请输入激活码, 使用半角','分割多个激活码"></a-input>
+                   placeholder="请输入激活码, 使用半角','分割多个激活码"/>
         </a-form-item>
         <a-form-item label="可使用总数" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number :disabled="isEdit" v-decorator="['totalNum', validatorRules.totalNum]"

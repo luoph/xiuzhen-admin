@@ -24,10 +24,10 @@
                           placeholder="请输入最大兑换数量" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
+          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"/>
         </a-form-item>
         <a-form-item label="消耗列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['consume', validatorRules.consume]" placeholder="请输入消耗列表"></a-textarea>
+          <a-textarea v-decorator="['consume', validatorRules.consume]" placeholder="请输入消耗列表"/>
         </a-form-item>
         <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级"

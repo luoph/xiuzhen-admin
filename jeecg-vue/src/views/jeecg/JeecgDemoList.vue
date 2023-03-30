@@ -8,7 +8,7 @@
 
           <a-col :xl="6" :lg="7" :md="8" :sm="24">
             <a-form-item label="用户名">
-              <j-input placeholder="请输入名称模糊查询" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入名称模糊查询" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :xl="6" :lg="7" :md="8" :sm="24">

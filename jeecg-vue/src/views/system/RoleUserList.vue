@@ -33,7 +33,7 @@
         <!-- 操作按钮区域 -->
         <div class="table-operator" style="margin: 5px 0 10px 2px">
           <a-button @click="handleAdd" type="primary" icon="plus">新建角色</a-button>
-          <a-button @click="refreshCache" type="primary" icon="plus">刷新权限缓存</a-button>
+          <a-button @click="refreshCache" type="primary" icon="sync">权限缓存</a-button>
           <!--<a-button @click="handleEdit(model1)" type="primary" icon="plus">角色编辑</a-button>-->
           <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader"
                     :action="importExcelUrl" @change="handleImportExcel">
@@ -64,18 +64,15 @@
           <span slot="action" slot-scope="text, record">
             <a @click="handleOpen(record)">用户</a>
             <a-divider type="vertical"/>
-
+            <a @click="handlePerssion(record.id)">授权</a>
+            <a-divider type="vertical"/>
+            <a @click="handleEdit(record)">编辑</a>
+            <a-divider type="vertical"/>
             <a-dropdown>
               <a class="ant-dropdown-link">
                 更多 <a-icon type="down"/>
               </a>
               <a-menu slot="overlay">
-                <a-menu-item>
-                  <a @click="handlePerssion(record.id)">授权</a>
-                </a-menu-item>
-                <a-menu-item>
-                  <a @click="handleEdit(record)">编辑</a>
-                </a-menu-item>
                 <a-menu-item>
                   <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete1(record.id)">
                     <a>删除</a>

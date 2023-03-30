@@ -10,17 +10,17 @@
           </a-select>
         </a-form-item>
         <a-form-item label="活动展示名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称"></a-input>
+          <a-input v-decorator="['showName', validatorRules.showName]" placeholder="请输入活动展示名称"/>
         </a-form-item>
         <a-form-item label="活动标语（描述）" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['description', validatorRules.description]"
-                   placeholder="请输入活动标语（描述）"></a-input>
+                   placeholder="请输入活动标语（描述）"/>
         </a-form-item>
         <a-form-item label="活动名称（备注）" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称（备注）"/>
         </a-form-item>
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
+          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"/>
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
         <!-- <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -36,7 +36,7 @@
           </j-multi-select-tag>
         </a-form-item>
         <a-form-item label="sdk渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['sdkChannels', validatorRules.sdkChannels]" placeholder="请输入sdk渠道"></a-input>
+          <a-input v-decorator="['sdkChannels', validatorRules.sdkChannels]" placeholder="请输入sdk渠道"/>
         </a-form-item>
         <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择活动类型" @change="handleTimeTypeChange"
@@ -76,7 +76,7 @@
           <a-switch checkedChildren="启用" unCheckedChildren="禁用" @change="onAutoOpenChose" v-model="isAutoOpen"/>
         </a-form-item>
         <a-form-item label="优先级" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级"></a-input>
+          <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级"/>
         </a-form-item>
       </a-form>
 

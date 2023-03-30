@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col v-if="!isIncludeActivityModel" :md="6" :sm="8">
             <a-form-item label="激活码活动id">
-              <a-input placeholder="请输入激活码活动id" v-model="queryParam.activityId"></a-input>
+              <a-input placeholder="请输入激活码活动id" v-model="queryParam.activityId"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="激活码">
-              <a-input placeholder="请输入激活码" v-model="queryParam.code"></a-input>
+              <a-input placeholder="请输入激活码" v-model="queryParam.code"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">

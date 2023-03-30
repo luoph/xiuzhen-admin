@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="问卷调查地址">
-              <j-input placeholder="请输入问卷调查地址" v-model="queryParam.url"></j-input>
+              <j-input placeholder="请输入问卷调查地址" v-model="queryParam.url"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="备注">
-              <j-input placeholder="请输入备注" v-model="queryParam.remark"></j-input>
+              <j-input placeholder="请输入备注" v-model="queryParam.remark"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">

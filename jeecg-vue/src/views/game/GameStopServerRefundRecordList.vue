@@ -6,37 +6,37 @@
         <a-row :gutter="24">
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
             <a-form-item label="停服区服id">
-              <a-input placeholder="请输入停服区服id" v-model="queryParam.sourceServerId"></a-input>
+              <a-input placeholder="请输入停服区服id" v-model="queryParam.sourceServerId"/>
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
             <a-form-item label="停服的玩家id">
-              <a-input placeholder="请输入停服的玩家id" v-model="queryParam.sourcePlayerId"></a-input>
+              <a-input placeholder="请输入停服的玩家id" v-model="queryParam.sourcePlayerId"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="返还区服id">
-                <a-input placeholder="请输入返还区服id" v-model="queryParam.targetServerId"></a-input>
+                <a-input placeholder="请输入返还区服id" v-model="queryParam.targetServerId"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="返还的玩家id">
-                <a-input placeholder="请输入返还的玩家id" v-model="queryParam.targetPlayerId"></a-input>
+                <a-input placeholder="请输入返还的玩家id" v-model="queryParam.targetPlayerId"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="充值总金额">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sourceAmount_begin"></a-input>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sourceAmount_begin"/>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sourceAmount_end"></a-input>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sourceAmount_end"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="返还总仙玉">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetNum_begin"></a-input>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetNum_begin"/>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetNum_end"></a-input>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetNum_end"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
