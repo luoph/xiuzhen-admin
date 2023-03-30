@@ -1,6 +1,7 @@
 package org.jeecg.modules.system.controller;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -284,11 +285,11 @@ public class SysUserController extends JeecgController<SysUser, ISysUserService>
     }
 
     @RequestMapping(value = "/queryUserRole", method = RequestMethod.GET)
-    public Result<List<String>> queryUserRole(@RequestParam(name = "userid", required = true) String userid) {
+    public Result<List<String>> queryUserRole(@RequestParam(name = "userid") String userid) {
         Result<List<String>> result = new Result<>();
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         List<SysUserRole> userRole = sysUserRoleService.list(new QueryWrapper<SysUserRole>().lambda().eq(SysUserRole::getUserId, userid));
-        if (userRole == null || userRole.size() <= 0) {
+        if (CollUtil.isEmpty(userRole)) {
             result.error500("未找到用户相关角色信息");
         } else {
             for (SysUserRole sysUserRole : userRole) {

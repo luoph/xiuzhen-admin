@@ -94,7 +94,11 @@
       <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync">
         刷新活动配置
       </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">刷新游戏配置
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">
+        刷新游戏设置
+      </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="syncPlayer" v-has="'game:server:admin'" type="primary"
+                icon="sync">同步角色数据
       </a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger"
                 icon="alert">开启维护
@@ -350,6 +354,7 @@ export default {
         deleteBatch: 'game/gameServer/deleteBatch',
         updateActivity: 'game/gameServer/updateActivity',
         updateSetting: 'game/gameServer/updateSetting',
+        syncPlayer: 'game/gameServer/syncPlayer',
         getOnlineNum: 'game/gameServer/getOnlineNum',
         startMaintain: 'game/gameServer/startMaintain',
         stopMaintain: 'game/gameServer/stopMaintain',
@@ -417,6 +422,9 @@ export default {
     },
     updateSetting: function () {
       this.batchAction(this.url.updateSetting, false);
+    },
+    syncPlayer: function () {
+      this.batchAction(this.url.syncPlayer, false);
     },
     startMaintain: function () {
       this.batchAction(this.url.startMaintain, true, '确定开启维护状态？', '开启维护状态将导致所有玩家掉线');

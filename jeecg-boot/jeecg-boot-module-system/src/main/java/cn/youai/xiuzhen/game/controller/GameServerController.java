@@ -72,6 +72,9 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @Value("${app.update-setting-url:/setting/update}")
     private String updateSettingUrl;
 
+    @Value("${app.sync-player-url:/player/sync}")
+    private String syncPlayerUrl;
+
     @Value("${app.start-maintain-url:/game/startMaintain}")
     private String startMaintainUrl;
 
@@ -163,6 +166,15 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         Map<Integer, Response> responseMap = service.gameServerGet(ids, updateSettingUrl);
         log.info("updateSetting response:{}", responseMap);
         return Result.ok("刷新游戏配置成功！");
+    }
+
+    @AutoLog(value = "游戏服配置-同步玩家数据")
+    @GetMapping(value = "/syncPlayer")
+    @RequiresPermissions("game:server:admin")
+    public Result<?> syncPlayer(@RequestParam(name = "ids") String ids) {
+        Map<Integer, Response> responseMap = service.gameServerGet(ids, syncPlayerUrl);
+        log.info("syncPlayer response:{}", responseMap);
+        return Result.ok("同步玩家数据成功！");
     }
 
     @AutoLog(value = "游戏服配置-查询在线人数")
