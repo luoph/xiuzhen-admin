@@ -44,8 +44,14 @@
                 <if test="entity.playerId != null and entity.playerId > 0">
                     AND p.`player_id` = #{entity.playerId}
                 </if>
+                <if test="entity.account != null and entity.account != ''">
+                    AND p.`account` = #{entity.account}
+                </if>
                 <if test="entity.nickname != null and entity.nickname != ''">
                     AND p.`nickname` LIKE CONCAT('%', #{entity.nickname},'%')
+                </if>
+                <if test="entity.realm != null and entity.realm >= 0">
+                    AND p.`realm` >= #{entity.realm}
                 </if>
             </if>
             <if test="levelRange != null">
