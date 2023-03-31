@@ -22,7 +22,7 @@
           <a-col :md="6" :sm="8">
             <a-form-item label="渠道">
               <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name" :async="false"/>
+                                   dict="game_channel,name,simple_name"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
