@@ -20,15 +20,9 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="包渠道">
-              <a-select placeholder="请选择包渠道" v-model="queryParam.channel">
-                <a-select-option value="test">开发(develop)</a-select-option>
-                <a-select-option value="test">测试(test)</a-select-option>
-                <a-select-option value="plan">策划(plan)</a-select-option>
-                <a-select-option value="preview">预览(preview)</a-select-option>
-                <a-select-option value="youdian">优点(youdian)</a-select-option>
-                <a-select-option value="chenglong">乘龙(chenglong)</a-select-option>
-              </a-select>
+            <a-form-item label="渠道">
+              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
+                                   dict="game_channel,name,simple_name" :async="false"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -201,7 +195,7 @@ export default {
           dataIndex: 'platform'
         },
         {
-          title: '包渠道',
+          title: '渠道',
           align: 'center',
           dataIndex: 'channel'
         },

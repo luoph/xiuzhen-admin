@@ -19,6 +19,12 @@
               <j-input placeholder="请输入帐号模糊查询" v-model="queryParam.account"/>
             </a-form-item>
           </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="渠道">
+              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
+                                   dict="game_channel,name,simple_name" :async="false"/>
+            </a-form-item>
+          </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="区服id">
               <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
@@ -32,8 +38,8 @@
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
-              <a-form-item label="渠道">
-                <a-input placeholder="请输入渠道" v-model="queryParam.ip"/>
+              <a-form-item label="ip">
+                <a-input placeholder="请输入ip" v-model="queryParam.ip"/>
               </a-form-item>
             </a-col>
             <!-- <a-col :md="4" :sm="8">

@@ -19,9 +19,10 @@
               <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="渠道">
-              <a-input placeholder="请输入渠道编码" v-model="queryParam.channel"/>
+              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
+                                   dict="game_channel,name,simple_name" :async="false"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
