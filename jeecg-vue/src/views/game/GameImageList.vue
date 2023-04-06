@@ -14,18 +14,18 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="备注">
-              <j-input placeholder="请输入备注模糊查询" v-model="queryParam.remark"></j-input>
+              <j-input placeholder="请输入备注模糊查询" v-model="queryParam.remark"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-col :md="6" :sm="8">
                 <a-form-item label="图片名">
-                  <j-input placeholder="请输入图片名" v-model="queryParam.name"></j-input>
+                  <j-input placeholder="请输入图片名" v-model="queryParam.name"/>
                 </a-form-item>
               </a-col>
               <a-form-item label="相对路径">
-                <j-input placeholder="请输入相对路径" v-model="queryParam.imgUrl"></j-input>
+                <j-input placeholder="请输入相对路径" v-model="queryParam.imgUrl"/>
               </a-form-item>
             </a-col>
           </template>

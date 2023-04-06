@@ -62,7 +62,7 @@
           <a-input v-decorator="['skeleton', validatorRules.skeleton]" placeholder="请输入骨骼动画资源"></a-input>
         </a-form-item>
         <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+          <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"/>
         </a-form-item>
       </a-form>
 

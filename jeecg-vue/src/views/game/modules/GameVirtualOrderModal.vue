@@ -11,7 +11,7 @@
           <a-input v-decorator="['goodsIds', validatorRules.goodsIds]" placeholder="请输入商品id（如：1001, 1002, 1003）" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"></a-input>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注"/>
         </a-form-item>
       </a-form>
     </a-spin>

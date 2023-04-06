@@ -5,7 +5,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"/>
         </a-form-item>
         <a-form-item label="活动图标" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <img v-if="model.icon" :src="getImgView(model.icon)" :alt="getImgView(model.icon)" class="icon-image"/>
@@ -18,7 +18,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="区服ID" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"></a-input>
+          <a-input v-if="isEdit" v-decorator="['serverIds', validatorRules.serverIds]" placeholder="区服id"/>
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
         <!-- <a-form-item label="是否自动添加新服" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -34,7 +34,7 @@
           </j-multi-select-tag>
         </a-form-item>
         <a-form-item label="活动备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入活动备注"></a-input>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入活动备注"/>
         </a-form-item>
         <a-form-item label="活动状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请选择活动状态" v-decorator="['status', validatorRules.status]" initialValue="1">
@@ -50,7 +50,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="优先级" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级"></a-input>
+          <a-input v-decorator="['priority', validatorRules.priority]" placeholder="请输入优先级"/>
         </a-form-item>
       </a-form>
 

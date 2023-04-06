@@ -7,7 +7,7 @@
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入名称"></a-input>
         </a-form-item>
         <a-form-item label="分组说明" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['summary', validatorRules.summary]" placeholder="请输入分组说明"></a-textarea>
+          <a-textarea v-decorator="['summary', validatorRules.summary]" placeholder="请输入分组说明"/>
         </a-form-item>
         <a-form-item label="限制次数" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['limitCount', validatorRules.limitCount]" placeholder="请输入限制次数"

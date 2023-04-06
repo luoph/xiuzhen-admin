@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="活动id">
-              <a-input placeholder="请输入活动id" v-model="queryParam.campaignId"></a-input>
+              <a-input placeholder="请输入活动id" v-model="queryParam.campaignId"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="活动名称">
-              <j-input placeholder="请输入活动名称" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入活动名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -55,9 +55,9 @@
           <template v-if="toggleSearchStatus">
             <!-- <a-col :md="12" :sm="8">
                             <a-form-item label="排序">
-                                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sort_begin"></a-input>
+                                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sort_begin"/>
                                 <span class="query-group-split-cust"></span>
-                                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sort_end"></a-input>
+                                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sort_end"/>
                             </a-form-item>
                         </a-col> -->
             <a-col :md="8" :sm="8">

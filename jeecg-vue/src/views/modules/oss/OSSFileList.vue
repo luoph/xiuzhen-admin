@@ -6,12 +6,12 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="文件名称">
-              <a-input placeholder="请输入文件名称" v-model="queryParam.fileName"></a-input>
+              <a-input placeholder="请输入文件名称" v-model="queryParam.fileName"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="文件地址">
-              <a-input placeholder="请输入文件地址" v-model="queryParam.url"></a-input>
+              <a-input placeholder="请输入文件地址" v-model="queryParam.url"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">

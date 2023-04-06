@@ -109,7 +109,6 @@
 <script>
 import JInput from '@/components/jeecg/JInput';
 import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
 import {filterObj} from '@/utils/util';
 import GameSensitiveWordModal from './modules/GameSensitiveWordModal';
 
@@ -193,29 +192,9 @@ export default {
     },
     initDictConfig() {
     },
-    requestUrlConfirm(url, parameter, title, content) {
-      let that = this;
-      this.$confirm({
-        title: title,
-        content: content,
-        onOk: function () {
-          that.loading = true;
-          getAction(url, parameter).then((res) => {
-            if (res.success) {
-              that.$message.success(res.message);
-            } else {
-              that.$message.error(res.message);
-            }
-          }).finally(() => {
-            that.loading = false
-            that.searchQuery();
-          });
-        }
-      });
-    },
     refreshCache() {
-      // 刷新服务器列表
-      this.requestUrlConfirm(this.url.refresh, {}, '是否刷新敏感词缓存？', '点击确定刷新敏感词缓存');
+      // 刷新客户端区服列表
+      this.handleConfrimRequest(this.url.refresh, {}, '是否刷新敏感词缓存？', '点击确定刷新');
     }
   }
 };

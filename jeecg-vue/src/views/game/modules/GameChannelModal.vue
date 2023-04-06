@@ -5,28 +5,28 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="渠道名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入渠道名称"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入渠道名称"/>
         </a-form-item>
         <a-form-item label="唯一标识" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['simpleName', validatorRules.simpleName]" placeholder="请输入唯一标识"></a-input>
+          <a-input v-decorator="['simpleName', validatorRules.simpleName]" placeholder="请输入唯一标识"/>
         </a-form-item>
         <a-form-item label="公告Id" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['noticeId', validatorRules.noticeId]" placeholder="请输入公告Id"
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="大渠道描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入大渠道描述"></a-input>
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入大渠道描述"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="游戏编号">
-          <j-dict-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
-                             dictCode="game_info,name,id"/>
+          <j-search-select-tag v-decorator="['gameId', validatorRules.gameId]" placeholder="请选择游戏编号"
+                               dict="game_info,name,id"/>
         </a-form-item>
         <a-form-item label="版本号" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['versionCode', validatorRules.versionCode]" placeholder="请输入版本号"
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="版本名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['versionName', validatorRules.versionName]" placeholder="请输入版本名"></a-input>
+          <a-input v-decorator="['versionName', validatorRules.versionName]" placeholder="请输入版本名"/>
         </a-form-item>
         <a-form-item label="版本更新时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss"
@@ -46,10 +46,10 @@
         </a-form-item>
         <a-form-item label="IP白名单" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['ipWhitelist', validatorRules.ipWhitelist]"
-                      placeholder="请输入IP白名单(使用半角,分割)"></a-textarea>
+                      placeholder="请输入IP白名单(使用半角,分割)"/>
         </a-form-item>
         <a-form-item label="扩展字段" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['extra', validatorRules.extra]" placeholder="请输入扩展字段"></a-input>
+          <a-input v-decorator="['extra', validatorRules.extra]" placeholder="请输入扩展字段"/>
         </a-form-item>
       </a-form>
     </a-spin>

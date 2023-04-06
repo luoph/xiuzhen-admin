@@ -19,10 +19,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Call;
+import okhttp3.Callback;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +33,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -66,6 +72,9 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @Value("${app.update-setting-url:/setting/update}")
     private String updateSettingUrl;
 
+    @Value("${app.sync-player-url:/player/sync}")
+    private String syncPlayerUrl;
+
     @Value("${app.start-maintain-url:/game/startMaintain}")
     private String startMaintainUrl;
 
@@ -90,25 +99,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         List<GameServerTag> serverTags = serverTagService.selectTags();
         Map<Integer, GameServerTag> tagMap = serverTags.stream().collect(Collectors.toMap(GameServerTag::getId, Function.identity(), (key1, key2) -> key2));
         IPage<GameServer> pageList = pageList(entity, pageNo, pageSize, req);
-        for (GameServer record : pageList.getRecords()) {
-            // 设置标签
-            if (record.getTagId() != null) {
-                GameServerTag serverTag = tagMap.get(record.getTagId());
-                if (serverTag != null) {
-                    record.setTag(serverTag.getName());
-                }
-            }
-
-            // 已废弃服务器不统计在线人数
-            if (!onlineStat || record.getOutdated() != OutdatedType.NORMAL.getValue()) {
-                record.setOnlineNum(0);
-            } else if (record.getOnlineStat() == 1) {
-                DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(record.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
-                if (response != null) {
-                    record.setOnlineNum(response.getData());
-                }
-            }
-        }
+        updateOnlineNum(pageList.getRecords(), tagMap);
         return Result.ok(pageList);
     }
 
@@ -177,6 +168,15 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok("刷新游戏配置成功！");
     }
 
+    @AutoLog(value = "游戏服配置-同步玩家数据")
+    @GetMapping(value = "/syncPlayer")
+    @RequiresPermissions("game:server:admin")
+    public Result<?> syncPlayer(@RequestParam(name = "ids") String ids) {
+        Map<Integer, Response> responseMap = service.gameServerGet(ids, syncPlayerUrl);
+        log.info("syncPlayer response:{}", responseMap);
+        return Result.ok("同步玩家数据成功！");
+    }
+
     @AutoLog(value = "游戏服配置-查询在线人数")
     @GetMapping(value = "/getOnlineNum")
     public Result<?> getOnlineNum(@RequestParam(name = "id") String id) {
@@ -239,6 +239,57 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameServer.class);
+    }
+
+    private void updateOnlineNum(Collection<GameServer> servers, Map<Integer, GameServerTag> tagMap) {
+        CountDownLatch latch = new CountDownLatch(servers.size());
+        for (GameServer record : servers) {
+            // 设置标签
+            if (record.getTagId() != null) {
+                GameServerTag serverTag = tagMap.get(record.getTagId());
+                if (serverTag != null) {
+                    record.setTag(serverTag.getName());
+                }
+            }
+
+            if (GameServer.skipCallGm(record)) {
+                record.setOnlineNum(0);
+                latch.countDown();
+                continue;
+            }
+
+            // 已废弃服务器不统计在线人数
+            if (!onlineStat || record.skipCheck()) {
+                latch.countDown();
+                continue;
+            }
+
+            OkHttpHelper.getAsync(record.getGmUrl() + onlineNumUrl, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    log.error("onlineNum onFailure", e);
+                    latch.countDown();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+                    if (OkHttpHelper.isSuccess(response)) {
+                        assert response.body() != null;
+                        DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
+                        if (rsp != null) {
+                            record.setOnlineNum(rsp.getData());
+                        }
+                    }
+                    latch.countDown();
+                }
+            });
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            log.error("onlineNum error", e);
+        }
     }
 
 }

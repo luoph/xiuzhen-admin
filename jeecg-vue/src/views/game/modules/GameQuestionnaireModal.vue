@@ -9,7 +9,7 @@
           <game-server-selector v-model="model.serverIds" @onSelectServer="changeSelect"/>
         </a-form-item>
         <a-form-item label="问卷地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['url', validatorRules.url]" placeholder="请输入问卷调查地址"></a-textarea>
+          <a-textarea v-decorator="['url', validatorRules.url]" placeholder="请输入问卷调查地址"/>
         </a-form-item>
         <a-form-item label="状态" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="状态" v-decorator="['status', validatorRules.status]" initialValue="1">

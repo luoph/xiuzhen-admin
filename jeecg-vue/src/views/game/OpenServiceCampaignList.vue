@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="活动名称">
-              <j-input placeholder="请输入活动名称模糊查询" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入活动名称模糊查询" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -28,7 +28,7 @@
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="活动备注">
-                <j-input placeholder="请输入活动备注模糊查询" v-model="queryParam.remark"></j-input>
+                <j-input placeholder="请输入活动备注模糊查询" v-model="queryParam.remark"/>
               </a-form-item>
             </a-col>
             <a-col :md="12" :sm="16">

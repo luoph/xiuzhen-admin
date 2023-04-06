@@ -13,10 +13,10 @@
                           placeholder="请输入页签id" style="width: 100%"/>
         </a-form-item>
         <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入活动名称"/>
         </a-form-item>
         <a-form-item label="页签名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称"></a-input>
+          <a-input v-decorator="['tabName', validatorRules.tabName]" placeholder="请输入页签名称"/>
         </a-form-item>
         <a-form-item label="时间类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择活动类型" @change="handleTimeTypeChange"
@@ -50,14 +50,14 @@
         </a-form-item>
         <a-form-item label="消耗奖励邮件标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['consumeRewardEmailTitle', validatorRules.consumeRewardEmailTitle]"
-                      placeholder="请输入消耗奖励邮件标题"></a-textarea>
+                      placeholder="请输入消耗奖励邮件标题"/>
         </a-form-item>
         <a-form-item label="消耗奖励邮件内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['consumeRewardEmailContent', validatorRules.consumeRewardEmailContent]"
-                      placeholder="请输入消耗奖励邮件内容"></a-textarea>
+                      placeholder="请输入消耗奖励邮件内容"/>
         </a-form-item>
         <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+          <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"/>
         </a-form-item>
       </a-form>
 

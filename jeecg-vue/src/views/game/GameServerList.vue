@@ -7,23 +7,19 @@
           <a-col :md="4" :sm="8">
             <a-form-item label="游戏编号">
               <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
-              <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id"/>
+              <j-search-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dict="game_info,name,id"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
-            <a-form-item label="游戏服地址">
-              <j-search-select-tag
-                v-model="queryParam.host" placeholder="请输入游戏服地址"
-                dict="game_server,host,host"
-                :async="true">
-              </j-search-select-tag>
+            <a-form-item label="服务器ip">
+              <j-search-select-tag v-model="queryParam.host" placeholder="请输入服务器ip" dict="game_server,host,host"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin"></a-input>
+              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin"/>
               <span class="query-group-split-cust"></span>
-              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end"></a-input>
+              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -33,12 +29,6 @@
                 <a-select-option :value="1">已合服</a-select-option>
                 <a-select-option :value="2">已下线</a-select-option>
               </a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="名字">
-              <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
-              <j-dict-select-tag v-model="queryParam.id" placeholder="请选择名字" dictCode="game_server,name,id"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -63,16 +53,17 @@
                               :placeholder="['开始时间', '结束时间']" @change="onOpenDateChange"/>
             </a-form-item>
           </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="创建时间">
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+            </a-form-item>
+          </a-col>
           <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
-              </a-form-item>
-            </a-col>
             <a-col :md="4" :sm="8">
-              <a-form-item label="地址">
-                <j-input placeholder="请输入地址" v-model="queryParam.host"></j-input>
+              <a-form-item label="名字">
+                <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
+                <j-search-select-tag v-model="queryParam.id" placeholder="请选择名字" dict="game_server,name,id"/>
               </a-form-item>
             </a-col>
           </template>
@@ -93,18 +84,25 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button @click="updateServerList" type="primary" icon="sync">区服列表</a-button>
+      <a-button @click="updateWhitelist" type="primary" icon="sync">IP白名单</a-button>
+      <a-button @click="updateServerCache" type="primary" icon="sync">区服缓存</a-button>
+      <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天缓存</a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync">
         刷新活动配置
       </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">刷新游戏配置
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">
+        刷新游戏设置
+      </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="syncPlayer" v-has="'game:server:admin'"
+                icon="sync">同步角色
       </a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger"
-                icon="alert">开启维护!!!
+                icon="alert">开启维护
       </a-button>
       <a-button :disabled="selectedRowKeys.length <= 0" @click="stopMaintain" v-has="'game:server:admin'" type="danger"
-                icon="alert">结束维护!!!
+                icon="alert">结束维护
       </a-button>
-
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏服配置')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -118,7 +116,6 @@
                 >项
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
-
       <a-table
         ref="table"
         size="middle"
@@ -130,22 +127,20 @@
         :loading="loading"
         :scroll="{ x: 'max-content' }"
         @change="handleTableChange"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-      >
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
-          <a-divider type="vertical"/>
-          <a-dropdown>
-            <a class="ant-dropdown-link"> 更多 <a-icon type="down"/> </a>
-            <a-menu slot="overlay">
-              <a-menu-item>
-                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
-                  <a>删除</a>
-                </a-popconfirm>
-              </a-menu-item>
-            </a-menu>
-          </a-dropdown>
+          <!--          <a-divider type="vertical"/>-->
+          <!--          <a-dropdown>-->
+          <!--            <a class="ant-dropdown-link"> 更多 <a-icon type="down"/> </a>-->
+          <!--            <a-menu slot="overlay">-->
+          <!--              <a-menu-item>-->
+          <!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
+          <!--                  <a>删除</a>-->
+          <!--                </a-popconfirm>-->
+          <!--              </a-menu-item>-->
+          <!--            </a-menu>-->
+          <!--          </a-dropdown>-->
         </span>
         <span slot="tagSlot" slot-scope="text, record">
           <a-tag color="orange">{{ text }}</a-tag>
@@ -188,17 +183,6 @@ import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import {filterObj} from '@/utils/util';
 import {getAction} from '@/api/manage';
 import JInput from '@/components/jeecg/JInput';
-
-function filterGameIdText(options, text) {
-  if (options instanceof Array) {
-    for (let game of options) {
-      if (text === game.id) {
-        return game.name + '(' + game.id + ')';
-      }
-    }
-  }
-  return text;
-}
 
 export default {
   name: 'GameServerList',
@@ -250,66 +234,29 @@ export default {
           scopedSlots: {customRender: 'tagSlot'}
         },
         {
-          title: '备注',
+          title: '服务器ip',
           align: 'left',
-          width: 100,
-          dataIndex: 'remark'
-        },
-        {
-          title: '游戏编号',
-          align: 'center',
-          width: 100,
-          dataIndex: 'gameId',
-          customRender: (text) => {
-            return filterGameIdText(this.gameList, text);
-          }
-        },
-        {
-          title: '服务器Host',
-          align: 'left',
-          width: 120,
+          width: 140,
           dataIndex: 'host'
         },
         {
-          title: '长连接地址',
+          title: '连接地址',
           align: 'left',
-          width: 120,
+          width: 160,
           dataIndex: 'loginUrl'
         },
         {
-          title: 'GM地址',
-          align: 'left',
-          width: 120,
-          dataIndex: 'gmUrl'
-        },
-        {
-          title: '客户端GM',
-          align: 'left',
-          width: 120,
-          dataIndex: 'clientGm'
-        },
-        {
-          title: '在线人数',
+          title: '在线玩家',
           align: 'center',
           width: 60,
           dataIndex: 'onlineNum',
           customRender: (text) => {
-            if (text === null || text === '' || text === undefined) {
-              return 'N/A';
-            }
-            return text;
+            return text === 0 ? text : text || 'N/A';
           }
         },
         {
-          title: 'GM开关',
-          align: 'left',
-          width: 60,
-          dataIndex: 'gmStatus',
-          scopedSlots: {customRender: 'gmSlot'}
-        },
-        {
           title: '运行状态',
-          align: 'left',
+          align: 'center',
           width: 60,
           dataIndex: 'outdated',
           scopedSlots: {customRender: 'outdatedSlot'}
@@ -329,6 +276,18 @@ export default {
           scopedSlots: {customRender: 'maintainSlot'}
         },
         {
+          title: '开服时间',
+          align: 'center',
+          width: 120,
+          dataIndex: 'openTime'
+        },
+        {
+          title: '上线时间',
+          align: 'center',
+          width: 120,
+          dataIndex: 'onlineTime'
+        },
+        {
           title: '推荐标识',
           align: 'center',
           width: 80,
@@ -342,27 +301,45 @@ export default {
         },
         {
           title: '删档返还',
-          align: 'left',
+          align: 'center',
           width: 60,
           dataIndex: 'stopServerRefund',
           scopedSlots: {customRender: 'stopServerRefundSlot'}
         },
         {
-          title: '开服时间',
+          title: 'GM开关',
           align: 'center',
-          width: 120,
-          dataIndex: 'openTime'
+          width: 80,
+          dataIndex: 'gmStatus',
+          scopedSlots: {customRender: 'gmSlot'}
         },
         {
-          title: '上线时间',
-          align: 'center',
+          title: 'GM地址',
+          align: 'left',
           width: 120,
-          dataIndex: 'onlineTime'
+          dataIndex: 'gmUrl'
+        },
+        // {
+        //   title: '客户端GM',
+        //   align: 'left',
+        //   width: 120,
+        //   dataIndex: 'clientGm',
+        //   customRender: (text) => {
+        //     return text || '--';
+        //   }
+        // },
+        {
+          title: '备注',
+          align: 'left',
+          fixed: 'right',
+          width: 100,
+          dataIndex: 'remark'
         },
         {
           title: '操作',
           align: 'center',
           fixed: 'right',
+          width: 80,
           dataIndex: 'action',
           scopedSlots: {customRender: 'action'}
         }
@@ -373,9 +350,17 @@ export default {
         deleteBatch: 'game/gameServer/deleteBatch',
         updateActivity: 'game/gameServer/updateActivity',
         updateSetting: 'game/gameServer/updateSetting',
+        syncPlayer: 'game/gameServer/syncPlayer',
         getOnlineNum: 'game/gameServer/getOnlineNum',
         startMaintain: 'game/gameServer/startMaintain',
         stopMaintain: 'game/gameServer/stopMaintain',
+        // 刷新所有渠道区服
+        updateAllServerUrl: 'game/channel/updateAllServer',
+        // 刷新渠道区服
+        updateChannelServerUrl: 'game/channel/updateChannelServer',
+        updateWhitelistUrl: 'game/channel/updateIpWhitelist',
+        updateServerCacheUrl: 'game/channel/updateServerCache',
+        updateChatServerCacheUrl: 'game/channel/updateChatServerCache',
         gameInfoListUrl: 'game/info/list'
       }
     };
@@ -404,9 +389,8 @@ export default {
       });
     },
     getQueryParams() {
-      console.log(this.queryParam.createTimeRange);
-      console.log(this.queryParam.openTimeRange);
-
+      // console.log(this.queryParam.createTimeRange);
+      // console.log(this.queryParam.openTimeRange);
       var param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
@@ -435,11 +419,42 @@ export default {
     updateSetting: function () {
       this.batchAction(this.url.updateSetting, false);
     },
+    syncPlayer: function () {
+      this.batchAction(this.url.syncPlayer, false);
+    },
     startMaintain: function () {
       this.batchAction(this.url.startMaintain, true, '确定开启维护状态？', '开启维护状态将导致所有玩家掉线');
     },
     stopMaintain: function () {
       this.batchAction(this.url.stopMaintain, true, '确定关闭维护状态？', '关闭维护状态将允许玩家上线');
+    },
+    updateServerList() {
+      // 刷新客户端区服列表
+      this.handleConfrimRequest(this.url.updateAllServerUrl,
+        {},
+        '是否刷新客户端区服列表？',
+        '点击确定刷新');
+    },
+    updateWhitelist() {
+      // 刷新IP白名单配置
+      this.handleConfrimRequest(this.url.updateWhitelistUrl,
+        {},
+        '是否刷新IP白名单？',
+        '点击确定刷新');
+    },
+    updateServerCache() {
+      // 刷新区服缓存
+      this.handleConfrimRequest(this.url.updateServerCacheUrl,
+        {},
+        '是否刷新区服缓存？',
+        '点击确定刷新');
+    },
+    updateChatServerCache() {
+      // 刷新聊天消息缓存
+      this.handleConfrimRequest(this.url.updateChatServerCacheUrl,
+        {},
+        '是否刷新聊天消息缓存？',
+        '点击确定刷新');
     }
   }
 };

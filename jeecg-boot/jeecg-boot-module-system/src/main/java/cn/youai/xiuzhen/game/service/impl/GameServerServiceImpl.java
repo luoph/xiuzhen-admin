@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import okhttp3.Call;
 import okhttp3.Callback;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -71,18 +72,41 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     @Override
     public <T> Map<Integer, T> gameServerGet(Collection<Integer> serverIds, String path, Class<T> clazz) {
         Map<Integer, T> responseMap = new HashMap<>(serverIds.size());
+        CountDownLatch latch = new CountDownLatch(serverIds.size());
         for (Integer serverId : serverIds) {
             GameServer gameServer = getById(serverId);
             if (skipRequest(gameServer)) {
+                latch.countDown();
                 continue;
             }
 
-            try {
-                T response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + path), clazz);
-                responseMap.put(serverId, response);
-            } catch (Exception e) {
-                log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
-            }
+            OkHttpHelper.getAsync(gameServer.getGmUrl() + path, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    log.error("onlineNum onFailure", e);
+                    latch.countDown();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+                    if (OkHttpHelper.isSuccess(response)) {
+                        assert response.body() != null;
+                        try {
+                            T rspObj = JSON.parseObject(response.body().string(), clazz);
+                            responseMap.put(serverId, rspObj);
+                        } catch (Exception e) {
+                            log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
+                        }
+                    }
+                    latch.countDown();
+                }
+            });
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            log.error("gameServerGet error, serverIds:" + serverIds + ", path:" + path, e);
         }
         return responseMap;
     }

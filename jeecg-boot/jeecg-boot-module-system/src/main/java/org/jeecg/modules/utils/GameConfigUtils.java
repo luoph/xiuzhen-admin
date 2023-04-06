@@ -13,7 +13,10 @@ import com.googlecode.cqengine.query.QueryFactory;
 import com.googlecode.cqengine.query.logical.And;
 import com.googlecode.cqengine.query.option.QueryOptions;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.googlecode.cqengine.query.QueryFactory.equal;
 
@@ -43,6 +46,12 @@ public final class GameConfigUtils {
             return GameConfigUtils.getItemListByName(itemName);
         }
         return allItemList();
+    }
+
+    public static List<ConfItem> getConfItemList(List<Integer> itemIdList, List<String> itemNameList) {
+        return CollUtil.isNotEmpty(itemIdList) ? itemIdList.stream().map(GameConfigUtils::getItemById).filter(Objects::nonNull).collect(Collectors.toList())
+                : CollUtil.isNotEmpty(itemNameList) ? itemNameList.stream().map(GameConfigUtils::getItemListByName).filter(CollUtil::isNotEmpty).collect(ArrayList::new, ArrayList::addAll, ArrayList::addAll)
+                : allItemList();
     }
 
     public static List<ConfItem> getItemListByName(String itemName) {

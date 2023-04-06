@@ -4,16 +4,20 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="22" :sm="22">
             <a-form-item label="道具ID">
-              <a-input placeholder="请输入道具ID" v-model="queryParam.itemId"></a-input>
+              <a-input placeholder="请输入道具ID，以空格或逗号分隔可查询多个" v-model="queryParam.itemId"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :md="22" :sm="22">
             <a-form-item label="道具名">
-              <a-input placeholder="请输入道具名" v-model="queryParam.itemName"></a-input>
+              <a-input placeholder="请输入道具名，以空格或逗号分隔可查询多个" v-model="queryParam.itemName"></a-input>
             </a-form-item>
           </a-col>
+        </a-row>
+        <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <span style="float: right" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="getItemTree">查询</a-button>
@@ -173,9 +177,9 @@ export default {
         Items.push(json);
       }
 
-      let itemTreeResult = '[' + Items + ']';
-      console.log(itemTreeResult);
-      this.$emit('func', itemTreeResult);
+      // let itemTreeResult = '[' + Items + ']';
+      // console.log(itemTreeResult);
+      this.$emit('func', Items);
       this.showError = false;
       this.showSuccess = true;
       this.handleCancel();

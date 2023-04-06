@@ -95,6 +95,10 @@ public class GameInfo extends BaseEntity {
     @ApiModelProperty(value = "authUrl")
     private java.lang.String authUrl;
 
+    @Excel(name = "敏感词检测接口", width = 15)
+    @ApiModelProperty(value = "checkTextUrl")
+    private java.lang.String checkTextUrl;
+
     @Excel(name = "苹果登录回调", width = 15)
     @ApiModelProperty(value = "oauthRedirectUrl")
     private java.lang.String oauthRedirectUrl;

@@ -6,23 +6,24 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"></a-input>
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="商品id">
-              <a-input placeholder="请输商品id" v-model="queryParam.goodsId"></a-input>
+              <a-input placeholder="请输商品id" v-model="queryParam.goodsId"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="8" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
               </a-form-item>
             </a-col>
           </template>
@@ -32,7 +33,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -59,8 +60,9 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -81,11 +83,13 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
 
         <!-- <span slot="action" slot-scope="text, record">
@@ -110,10 +114,10 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameVirtualOrderModal from './modules/GameVirtualOrderModal';
 import JDate from '@/components/jeecg/JDate.vue';
-import { filterObj } from '@/utils/util';
+import {filterObj} from '@/utils/util';
 
 export default {
   name: 'GameVirtualOrderList',
@@ -140,42 +144,49 @@ export default {
         {
           title: '区服id',
           align: 'center',
+          width: 80,
           dataIndex: 'serverId'
         },
         {
           title: '玩家id',
           align: 'center',
+          width: 80,
           dataIndex: 'playerId'
         },
         {
           title: '玩家名',
           align: 'center',
-          width: 80,
+          width: 120,
           dataIndex: 'playerName'
         },
         {
           title: '商品id',
           align: 'center',
+          width: 80,
           dataIndex: 'goodsId'
         },
         {
           title: '状态',
           align: 'center',
+          width: 80,
           dataIndex: 'status'
         },
         {
           title: '备注',
           align: 'center',
+          width: 80,
           dataIndex: 'remark'
         },
         {
           title: '创建人',
           align: 'center',
+          width: 80,
           dataIndex: 'createBy'
         },
         {
           title: '创建时间',
           align: 'center',
+          width: 120,
           dataIndex: 'createTime'
         }
         // {

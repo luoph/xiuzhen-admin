@@ -6,7 +6,7 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="活动展示名称">
-              <j-input placeholder="活动展示名称" v-model="queryParam.showName"></j-input>
+              <j-input placeholder="活动展示名称" v-model="queryParam.showName"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">

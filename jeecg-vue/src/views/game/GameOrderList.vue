@@ -14,6 +14,12 @@
               <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
             </a-form-item>
           </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="渠道">
+              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
+                                   dict="game_channel,name,simple_name"/>
+            </a-form-item>
+          </a-col>
           <!-- <a-col :md="4" :sm="8">
             <a-form-item label="支付订单号">
               <a-input placeholder="请输入支付订单号" v-model="queryParam.orderId" />
@@ -130,7 +136,6 @@ import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameOrderModal from './modules/GameOrderModal';
-import {deleteAction, getAction, postAction} from "@api/manage";
 
 export default {
   name: 'PayOrderList',
@@ -153,6 +158,12 @@ export default {
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
+        },
+        {
+          title: '区服id',
+          align: 'center',
+          width: 80,
+          dataIndex: 'serverId'
         },
         {
           title: '玩家id',
@@ -195,12 +206,6 @@ export default {
           customRender: (value) => {
             return value || '--';
           }
-        },
-        {
-          title: '区服Id',
-          align: 'center',
-          width: 80,
-          dataIndex: 'serverId'
         },
         // {
         //     title: "支付订单号",
@@ -349,43 +354,17 @@ export default {
       this.queryParam.createDate_end = dateString[1];
     },
     deleteVip(record) {
-      this.requestUrlConfirm(this.url.deleteVip,
+      this.handleConfrimRequest(this.url.deleteVip,
         {id: record.vipId},
         '是否删除VIP？',
         `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`,
         'delete');
     },
     addVip(record) {
-      this.requestUrlConfirm(this.url.addVip,
+      this.handleConfrimRequest(this.url.addVip,
         {playerIds: record.playerId},
         '是否添加VIP？',
         `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
-    },
-    requestUrlConfirm(url, parameter, title, content, method = 'get') {
-      let that = this;
-      let requestFunction = getAction;
-      if (method === 'post') {
-        requestFunction = postAction;
-      } else if (method === 'delete') {
-        requestFunction = deleteAction;
-      }
-      this.$confirm({
-        title: title,
-        content: content,
-        onOk: function () {
-          that.loading = true;
-          requestFunction(url, parameter).then((res) => {
-            if (res.success) {
-              that.$message.success(res.message);
-            } else {
-              that.$message.error(res.message);
-            }
-          }).finally(()=>{
-            that.loading = false
-            that.searchQuery();
-          });
-        }
-      });
     },
   }
 };

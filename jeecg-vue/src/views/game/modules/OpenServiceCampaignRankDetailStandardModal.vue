@@ -31,10 +31,10 @@
           <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
+          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"/>
         </a-form-item>
         <a-form-item label="广告引导内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入广告引导内容"></a-textarea>
+          <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入广告引导内容"/>
         </a-form-item>
       </a-form>
     </a-spin>

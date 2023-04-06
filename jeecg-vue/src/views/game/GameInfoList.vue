@@ -9,27 +9,27 @@
               <j-input placeholder="请输入游戏名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"
-                                 dictCode="game_info,name,ya_simple_name"/>
-            </a-form-item>
-          </a-col>
-          <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="gameAppKey">
-                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"/>
-              </a-form-item>
-            </a-col>
-          </template>
+<!--          <a-col :md="6" :sm="8">-->
+<!--            <a-form-item label="唯一标识">-->
+<!--              <j-search-select-tag v-model="queryParam.yaSimpleName" placeholder="唯一标识"-->
+<!--                                   dictCode="game_info,ya_simple_name,name"/>-->
+<!--            </a-form-item>-->
+<!--          </a-col>-->
+<!--          <template v-if="toggleSearchStatus">-->
+<!--            <a-col :md="6" :sm="8">-->
+<!--              <a-form-item label="gameAppKey">-->
+<!--                <a-input placeholder="请输入gameAppKey" v-model="queryParam.yaGameKey"/>-->
+<!--              </a-form-item>-->
+<!--            </a-col>-->
+<!--          </template>-->
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
-              <a @click="handleToggleSearch" style="margin-left: 8px">
-                {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
-              </a>
+<!--              <a @click="handleToggleSearch" style="margin-left: 8px">-->
+<!--                {{ toggleSearchStatus ? '收起' : '展开' }}-->
+<!--                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>-->
+<!--              </a>-->
             </span>
           </a-col>
         </a-row>
@@ -40,7 +40,7 @@
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-popconfirm title="刷新游戏配置" @confirm="refreshConfig()">
-        <a-button type="primary" icon="update">刷新游戏配置</a-button>
+        <a-button type="primary" icon="sync">游戏配置</a-button>
       </a-popconfirm>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏信息')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -152,6 +152,11 @@ export default {
           title: '实名认证地址',
           align: 'center',
           dataIndex: 'authUrl'
+        },
+        {
+          title: '敏感词检测地址',
+          align: 'center',
+          dataIndex: 'checkTextUrl'
         },
         {
           title: '账号登录地址',

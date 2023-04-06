@@ -5,7 +5,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"></a-input>
+          <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"/>
         </a-form-item>
         <a-form-item label="描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['describe', validatorRules.describe]" placeholder="请输入描述"
@@ -260,10 +260,15 @@ export default {
       this.content = null;
     },
     getItemTreeJson(item) {
-      this.itemTree = null;
-      this.itemTree = item;
+      // this.itemTree = null;
+      // this.itemTree = item;
+      if (null == this.itemTree) {
+        this.itemTree = item;
+      } else {
+        this.itemTree.push(item);
+      }
       this.form.setFieldsValue({
-        content: item
+        content: '[' + this.itemTree + ']'
       });
     },
     onServerSelected(value) {

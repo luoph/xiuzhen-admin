@@ -32,7 +32,7 @@
           <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入奖励"/>
         </a-form-item>
         <a-form-item label="关卡名" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['checkpointName', validatorRules.checkpointName]" placeholder="请输入关卡名"></a-input>
+          <a-input v-decorator="['checkpointName', validatorRules.checkpointName]" placeholder="请输入关卡名"/>
         </a-form-item>
         <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%"/>

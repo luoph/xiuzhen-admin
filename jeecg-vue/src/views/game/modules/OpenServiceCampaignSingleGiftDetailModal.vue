@@ -58,7 +58,7 @@
           <a-textarea v-decorator="['emailContent']" rows="4" placeholder="请输入邮件描述"/>
         </a-form-item>
         <a-form-item label="帮助信息" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"></a-textarea>
+          <a-textarea v-decorator="['helpMsg', validatorRules.helpMsg]" placeholder="请输入帮助信息"/>
         </a-form-item>
       </a-form>
 

@@ -6,13 +6,13 @@
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="渠道名称">
-              <j-input placeholder="请输入渠道名称" v-model="queryParam.name"></j-input>
+              <j-input placeholder="请输入渠道名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="唯一标识">
-              <j-dict-select-tag v-model="queryParam.simpleName" placeholder="请选择唯一标识"
-                                 dictCode="game_channel,name,simple_name"/>
+            <a-form-item label="渠道标识">
+              <j-search-select-tag placeholder="请选择渠道标识" v-model="queryParam.simpleName"
+                                   dict="game_channel,name,simple_name"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -24,7 +24,7 @@
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="备注">
-                <j-input placeholder="请输入备注" v-model="queryParam.remark"></j-input>
+                <j-input placeholder="请输入备注" v-model="queryParam.remark"/>
               </a-form-item>
             </a-col>
           </template>
@@ -45,10 +45,10 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button @click="updateAllServer" type="primary" icon="sync">刷新服务器列表</a-button>
-      <a-button @click="updateIpWhitelist" type="primary" icon="sync">刷新IP白名单</a-button>
-      <a-button @click="updateServerCache" type="primary" icon="sync">刷新中心服区服缓存</a-button>
-      <a-button @click="updateChatServerCache" type="primary" icon="sync">刷新聊天服消息缓存</a-button>
+      <a-button @click="updateServerList" type="primary" icon="sync">区服列表</a-button>
+      <a-button @click="updateWhitelist" type="primary" icon="sync">IP白名单</a-button>
+      <a-button @click="updateServerCache" type="primary" icon="sync">区服缓存</a-button>
+      <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天缓存</a-button>
 
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -149,6 +149,10 @@ export default {
     return {
       description: '游戏渠道管理页面',
       gameList: [],
+      isorter: {
+        column: 'id',
+        order: 'desc'
+      },
       // 表头
       columns: [
         {
@@ -267,7 +271,7 @@ export default {
         updateAllServerUrl: 'game/channel/updateAllServer',
         // 刷新渠道区服
         updateChannelServerUrl: 'game/channel/updateChannelServer',
-        updateIpWhitelistUrl: 'game/channel/updateIpWhitelist',
+        updateWhitelistUrl: 'game/channel/updateIpWhitelist',
         updateServerCacheUrl: 'game/channel/updateServerCache',
         updateChatServerCacheUrl: 'game/channel/updateChatServerCache',
         // 游戏列表
@@ -336,45 +340,47 @@ export default {
         }
       });
     },
-    requestUrlConfirm(url, parameter, title, content) {
-      let that = this;
-      this.$confirm({
-        title: title,
-        content: content,
-        onOk: function () {
-          getAction(url, parameter).then((res) => {
-            if (res.success) {
-              that.$message.success(res.message);
-            } else {
-              that.$message.error(res.message);
-            }
-          });
-        }
-      });
-    },
     refreshChannelNotice(record) {
       // 刷新渠道公告
-      this.requestUrlConfirm(this.url.noticeRefreshUrl, {id: record.noticeId}, '是否刷新渠道公告？', '点击刷新渠道公告');
+      this.handleConfrimRequest(this.url.noticeRefreshUrl,
+        {id: record.noticeId},
+        '是否刷新渠道公告？',
+        '点击刷新渠道公告');
     },
     updateChannelServer(record) {
-      // 刷新服务器列表
-      this.requestUrlConfirm(this.url.updateChannelServerUrl, {id: record.id}, '是否刷新区服列表？', '点击确定刷新区服列表');
+      // 刷新客户端区服列表
+      this.handleConfrimRequest(this.url.updateChannelServerUrl,
+        {id: record.id},
+        '是否刷新区服列表？',
+        '点击确定刷新');
     },
-    updateAllServer() {
-      // 刷新服务器列表
-      this.requestUrlConfirm(this.url.updateAllServerUrl, {}, '是否刷新所有区服列表？', '点击确定刷新所有区服列表');
+    updateServerList() {
+      // 刷新客户端区服列表
+      this.handleConfrimRequest(this.url.updateAllServerUrl,
+        {},
+        '是否刷新客户端区服列表？',
+        '点击确定刷新');
     },
-    updateIpWhitelist() {
+    updateWhitelist() {
       // 刷新IP白名单配置
-      this.requestUrlConfirm(this.url.updateIpWhitelistUrl, {}, '是否刷新IP白名单？', '点击确定刷新IP白名单');
+      this.handleConfrimRequest(this.url.updateWhitelistUrl,
+        {},
+        '是否刷新IP白名单？',
+        '点击确定刷新');
     },
     updateServerCache() {
-      // 刷新中心服区服缓存
-      this.requestUrlConfirm(this.url.updateServerCacheUrl, {}, '是否刷新中心服区服缓存？', '点击确定刷新中心服区服缓存');
+      // 刷新区服缓存
+      this.handleConfrimRequest(this.url.updateServerCacheUrl,
+        {},
+        '是否刷新区服缓存？',
+        '点击确定刷新');
     },
     updateChatServerCache() {
-      // 刷新聊天服消息缓存
-      this.requestUrlConfirm(this.url.updateChatServerCacheUrl, {}, '是否刷新聊天服消息缓存？', '点击确定刷新聊天服消息缓存');
+      // 刷新聊天消息缓存
+      this.handleConfrimRequest(this.url.updateChatServerCacheUrl,
+        {},
+        '是否刷新聊天消息缓存？',
+        '点击确定刷新');
     }
   }
 };

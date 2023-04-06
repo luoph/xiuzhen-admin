@@ -38,11 +38,12 @@
         d.`end_time`,
         t.`type`,
         g.`server_ids`,
-        g.`cross`
+        g.`cross`,
+        g.`auto_add_server_channels`
         FROM `game_open_service_campaign` g
         LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
         LEFT JOIN `game_open_service_campaign_gift_detail` d ON t.`id` = d.`campaign_type_id`
-        WHERE d.`campaign_id` = g.`id`
+        WHERE d.`campaign_id` = g.`id` and g.`auto_add_server_channels` is not null
         <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
         GROUP BY g.`id`
 
@@ -60,11 +61,12 @@
         d.`end_time`,
         t.`type`,
         g.`server_ids`,
-        g.`cross`
+        g.`cross`,
+        g.`auto_add_server_channels`
         FROM `game_open_service_campaign` g
         LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
         LEFT JOIN `game_open_service_campaign_lottery_detail` d ON t.`id` = d.`campaign_type_id`
-        WHERE d.`campaign_id` = g.`id`
+        WHERE d.`campaign_id` = g.`id` and g.`auto_add_server_channels` is not null
         <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
         GROUP BY g.`id`
 
@@ -82,11 +84,12 @@
         d.`end_time`,
         t.`type`,
         g.`server_ids`,
-        g.`cross`
+        g.`cross`,
+        g.`auto_add_server_channels`
         FROM `game_open_service_campaign` g
         LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
         LEFT JOIN `game_open_service_campaign_rank_detail` d ON t.`id` = d.`campaign_type_id`
-        WHERE d.`campaign_id` = g.`id`
+        WHERE d.`campaign_id` = g.`id` and g.`auto_add_server_channels` is not null
         <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
         GROUP BY g.`id`
 
@@ -104,11 +107,12 @@
         d.`end_time`,
         t.`type`,
         g.`server_ids`,
-        g.`cross`
+        g.`cross`,
+        g.`auto_add_server_channels`
         FROM `game_open_service_campaign` g
         LEFT JOIN `game_open_service_campaign_type` t ON t.`campaign_id` = g.`id`
         LEFT JOIN `game_open_service_campaign_single_gift_detail` d ON t.`id` = d.`campaign_type_id`
-        WHERE d.`campaign_id` = g.`id`
+        WHERE d.`campaign_id` = g.`id` and g.`auto_add_server_channels` is not null
         <if test="timeType != null and timeType != 0">AND d.`time_type` = #{timeType}</if>
         GROUP BY g.`id`
     </select>

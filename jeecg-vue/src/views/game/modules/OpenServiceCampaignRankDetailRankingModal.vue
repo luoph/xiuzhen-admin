@@ -29,18 +29,18 @@
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
+          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"/>
         </a-form-item>
         <a-form-item label="稀有奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['rareReward', validatorRules.rareReward]"
-                      placeholder="请输入稀有奖励列表"></a-textarea>
+                      placeholder="请输入稀有奖励列表"/>
         </a-form-item>
         <a-form-item label="广告引导显示时长(秒)" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['adShowTime', validatorRules.adShowTime]"
                           placeholder="请输入广告引导显示时长(秒)" style="width: 100%"></a-input-number>
         </a-form-item>
         <a-form-item label="广告引导内容" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入广告引导内容"></a-textarea>
+          <a-textarea v-decorator="['message', validatorRules.message]" placeholder="请输入广告引导内容"/>
         </a-form-item>
       </a-form>
     </a-spin>

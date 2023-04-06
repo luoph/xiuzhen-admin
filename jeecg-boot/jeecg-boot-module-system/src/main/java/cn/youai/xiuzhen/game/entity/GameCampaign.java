@@ -190,4 +190,8 @@ public class GameCampaign extends BaseEntity {
         setServerIds(StrUtil.join(",", all));
         return true;
     }
+
+    public boolean invalidTime() {
+        return null != this.startTime && null != this.endTime && this.startTime.after(this.endTime);
+    }
 }

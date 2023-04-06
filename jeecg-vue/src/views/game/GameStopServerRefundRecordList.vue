@@ -5,38 +5,38 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
-            <a-form-item label="停服的服务器id">
-              <a-input placeholder="请输入停服的服务器id" v-model="queryParam.sourceServerId"></a-input>
+            <a-form-item label="停服区服id">
+              <a-input placeholder="请输入停服区服id" v-model="queryParam.sourceServerId"/>
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
             <a-form-item label="停服的玩家id">
-              <a-input placeholder="请输入停服的玩家id" v-model="queryParam.sourcePlayerId"></a-input>
+              <a-input placeholder="请输入停服的玩家id" v-model="queryParam.sourcePlayerId"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
-              <a-form-item label="返还的服务器id">
-                <a-input placeholder="请输入返还的服务器id" v-model="queryParam.targetServerId"></a-input>
+              <a-form-item label="返还区服id">
+                <a-input placeholder="请输入返还区服id" v-model="queryParam.targetServerId"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="返还的玩家id">
-                <a-input placeholder="请输入返还的玩家id" v-model="queryParam.targetPlayerId"></a-input>
+                <a-input placeholder="请输入返还的玩家id" v-model="queryParam.targetPlayerId"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="充值总金额">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sourceAmount_begin"></a-input>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sourceAmount_begin"/>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sourceAmount_end"></a-input>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sourceAmount_end"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="返还总仙玉">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetNum_begin"></a-input>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetNum_begin"/>
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetNum_end"></a-input>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetNum_end"/>
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
@@ -176,7 +176,7 @@
             }
           },
           {
-            title:'停服的服务器id',
+            title:'停服区服id',
             align:"center",
             dataIndex: 'sourceServerId'
           },
@@ -186,7 +186,7 @@
             dataIndex: 'sourcePlayerId'
           },
           {
-            title:'返还的服务器id',
+            title:'返还区服id',
             align:"center",
             dataIndex: 'targetServerId'
           },
@@ -262,9 +262,9 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'int',value:'sourceServerId',text:'停服的服务器id',dictCode:''})
+        fieldList.push({type:'int',value:'sourceServerId',text:'停服区服id',dictCode:''})
         fieldList.push({type:'int',value:'sourcePlayerId',text:'停服的玩家id',dictCode:''})
-        fieldList.push({type:'int',value:'targetServerId',text:'返还的服务器id',dictCode:''})
+        fieldList.push({type:'int',value:'targetServerId',text:'返还区服id',dictCode:''})
         fieldList.push({type:'int',value:'targetPlayerId',text:'返还的玩家id',dictCode:''})
         fieldList.push({type:'BigDecimal',value:'sourceAmount',text:'充值总金额',dictCode:''})
         fieldList.push({type:'int',value:'targetNum',text:'返还总仙玉',dictCode:''})

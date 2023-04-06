@@ -20,7 +20,7 @@
           <a-input v-decorator="['description', validatorRules.description]" placeholder="请输入描述"></a-input>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
+          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"/>
         </a-form-item>
         <a-form-item label="最小世界等级" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['minLevel', validatorRules.minLevel]" placeholder="请输入最小世界等级" style="width: 100%"/>

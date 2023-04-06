@@ -25,10 +25,10 @@
                           style="width: 100%"/>
         </a-form-item>
         <a-form-item label="任务描述" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入任务描述"></a-textarea>
+          <a-textarea v-decorator="['remark', validatorRules.remark]" placeholder="请输入任务描述"/>
         </a-form-item>
         <a-form-item label="奖励列表" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"></a-textarea>
+          <a-textarea v-decorator="['reward', validatorRules.reward]" placeholder="请输入奖励列表"/>
         </a-form-item>
       </a-form>
     </a-spin>

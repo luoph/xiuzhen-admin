@@ -15,10 +15,11 @@
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告标题">
-          <a-input placeholder="请输入标题" v-decorator="['title', {}]"/>
+          <a-input placeholder="请输入标题" v-decorator="['title', validatorRules.title]"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="公告内容">
-          <j-editor v-model="contentHtml"/>
+          <a-textarea placeholder="请输入公告内容" v-decorator="['content', validatorRules.content]"
+                      size="large" allowClear showCount :auto-size="{ minRows: 5, maxRows: 30 }"/>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="开始时间">
           <a-date-picker showTime format="YYYY-MM-DD HH:mm:ss" v-decorator="['beginTime', validatorRules.beginTime]"/>
@@ -60,7 +61,6 @@ export default {
       visible: false,
       isEdit: false,
       model: {},
-      contentHtml: '',
       labelCol: {
         xs: {span: 24},
         sm: {span: 5}
@@ -73,6 +73,7 @@ export default {
       form: this.$form.createForm(this),
       validatorRules: {
         noticeType: {rules: [{required: true, message: '请选择公告类型!'}]},
+        title: {rules: [{required: false, message: '请输入公告标题!'}]},
         content: {rules: [{required: true, message: '请输入公告内容!'}]},
         beginTime: {rules: [{required: true, message: '请输入开始时间!'}]},
         endTime: {rules: [{required: true, message: '请输入结束时间!'}]},
@@ -95,12 +96,9 @@ export default {
       this.form.resetFields();
       this.model = Object.assign({}, record);
       this.isEdit = this.model.id != null;
-      if (this.model.content) {
-        this.contentHtml = this.model.content;
-      }
       this.visible = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue(pick(this.model, 'noticeType', 'title', 'status', 'intervalSeconds'));
+        this.form.setFieldsValue(pick(this.model, 'noticeType', 'title', 'content', 'status', 'intervalSeconds'));
         // 时间格式化
         this.form.setFieldsValue({beginTime: this.model.beginTime ? moment(this.model.beginTime) : null});
         this.form.setFieldsValue({endTime: this.model.endTime ? moment(this.model.endTime) : null});
@@ -125,7 +123,6 @@ export default {
             httpUrl += this.url.edit;
             method = 'put';
           }
-          this.model.content = this.contentHtml;
           let formData = Object.assign(this.model, values);
 
           // 时间格式化
@@ -151,6 +148,9 @@ export default {
     },
     handleCancel() {
       this.close();
+    },
+    popupCallback(row) {
+      this.form.setFieldsValue(pick(row, 'noticeType', 'title', 'content', 'status', 'intervalSeconds'));
     }
   }
 };

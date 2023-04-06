@@ -5,7 +5,9 @@ import cn.youai.xiuzhen.game.constant.CampaignStatus;
 import cn.youai.xiuzhen.game.constant.SwitchStatus;
 import cn.youai.xiuzhen.game.constant.TimeType;
 import cn.youai.xiuzhen.game.entity.*;
-import cn.youai.xiuzhen.game.service.*;
+import cn.youai.xiuzhen.game.service.IGameCampaignService;
+import cn.youai.xiuzhen.game.service.IGameCampaignSupportService;
+import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -124,6 +126,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "节日活动信息-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameCampaign entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         return super.add(entity);
     }
 
@@ -136,6 +141,9 @@ public class GameCampaignController extends JeecgController<GameCampaign, IGameC
     @AutoLog(value = "节日活动信息-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameCampaign entity) {
+        if (entity.invalidTime()) {
+            return Result.error("时间错误!");
+        }
         service.updateCampaign(entity);
         return Result.ok("编辑成功!");
     }

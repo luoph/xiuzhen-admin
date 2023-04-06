@@ -86,28 +86,6 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public Map<String, List<Long>> getPlayerIdsByLoginDates(int serverId, List<JSONObject> dateList) {
-        if (CollectionUtil.isEmpty(dateList)) {
-            return null;
-        }
-        List<LogAccount> playerIdsByLoginDates = getBaseMapper().getPlayerIdsByLoginDates(serverId, dateList);
-        if (CollUtil.isNotEmpty(playerIdsByLoginDates)) {
-            Map<String, List<Long>> result = new HashMap<>(playerIdsByLoginDates.size());
-            playerIdsByLoginDates.forEach(e -> {
-                String formatDate = DateUtils.formatDate(e.getCreateDate(), DatePattern.NORM_DATE_PATTERN);
-                List<Long> longs = result.get(formatDate);
-                if (longs == null) {
-                    longs = new ArrayList<>();
-                }
-                longs.add(e.getPlayerId());
-                result.put(formatDate, longs);
-            });
-            return result;
-        }
-        return null;
-    }
-
-    @Override
     public List<MergeServerVO> getServerLoginNum(Date startTime, Date endTime) {
         return getBaseMapper().getServerLoginNum(DateUtils.dateOnly(startTime), DateUtils.dateOnly(endTime));
     }

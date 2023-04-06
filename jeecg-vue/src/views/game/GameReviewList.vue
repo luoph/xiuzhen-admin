@@ -6,7 +6,8 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="游戏编号">
-              <j-dict-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dictCode="game_info,name,id"/>
+              <j-search-select-tag placeholder="请选择游戏编号" v-model="queryParam.gameId"
+                                   dict="game_info,name,id"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -43,8 +44,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button @click="refreshConfig" type="primary" icon="sync">刷新审核配置</a-button>
-
+      <a-button @click="refreshConfig" type="primary" icon="sync">审核配置</a-button>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>

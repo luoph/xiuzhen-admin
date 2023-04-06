@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 import java.util.List;
 
 /**
@@ -20,6 +21,8 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DictModel implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    private static final String TEXT_PATTERN = "{0} [ {1} ]";
 
     public DictModel() {
         this.pretty = false;
@@ -60,7 +63,7 @@ public class DictModel implements Serializable {
 
     public static void prettyText(DictModel model) {
         if (!model.pretty && !StrUtil.equals(model.getText(), model.getValue())) {
-            model.setText(model.getText() + "[" + model.getValue() + "]");
+            model.setText(MessageFormat.format(TEXT_PATTERN, model.getText(), model.getValue()));
             model.pretty = true;
         }
     }

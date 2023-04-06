@@ -34,7 +34,7 @@
         </a-form-item>
         <a-form-item label="道具积分分类名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['itemTypeName', validatorRules.itemTypeName]"
-                   placeholder="请输入道具积分分类名称"></a-input>
+                   placeholder="请输入道具积分分类名称"/>
         </a-form-item>
       </a-form>
     </a-spin>

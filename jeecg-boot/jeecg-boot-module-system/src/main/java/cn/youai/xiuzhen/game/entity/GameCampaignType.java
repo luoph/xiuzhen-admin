@@ -176,4 +176,8 @@ public class GameCampaignType extends BaseEntity {
      */
     @TableField(exist = false)
     private String detailsData;
+
+    public boolean invalidTime() {
+        return null != this.startTime && null != this.endTime && this.startTime.after(this.endTime);
+    }
 }

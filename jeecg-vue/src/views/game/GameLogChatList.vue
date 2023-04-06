@@ -5,8 +5,8 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="3" :sm="8">
-            <a-form-item label="区服Id">
-              <a-input placeholder="请输入区服Id" v-model="queryParam.serverId" />
+            <a-form-item label="区服id">
+              <a-input placeholder="请输入区服id" v-model="queryParam.serverId" />
             </a-form-item>
           </a-col>
           <a-col :md="3" :sm="8">
@@ -52,7 +52,7 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="消息">
-                <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent"></j-input>
+                <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent"/>
               </a-form-item>
             </a-col>
             <a-col :md="3" :sm="8"> </a-col>
@@ -166,7 +166,7 @@ export default {
           }
         },
         {
-          title: '区服Id',
+          title: '区服id',
           align: 'center',
           width: 80,
           dataIndex: 'serverId'

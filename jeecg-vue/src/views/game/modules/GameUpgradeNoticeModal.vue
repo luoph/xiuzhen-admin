@@ -5,7 +5,7 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"></a-input>
+          <a-input v-decorator="['title', validatorRules.title]" placeholder="请输入标题"/>
         </a-form-item>
         <a-form-item label="正文" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-editor v-model="contentHtml"/>

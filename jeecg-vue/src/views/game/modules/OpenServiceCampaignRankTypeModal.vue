@@ -18,7 +18,7 @@
         </a-form-item>
         <a-form-item label="排行类型名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['rankTypeName', validatorRules.rankTypeName]"
-                   placeholder="请输入排行类型名称"></a-input>
+                   placeholder="请输入排行类型名称"/>
         </a-form-item>
       </a-form>
     </a-spin>
