@@ -269,6 +269,8 @@ export default {
               text = '18-成长基金';
             } else if (value === 19) {
               text = '19-节日活动-夺宝战令';
+            } else if (value === 20) {
+              text = '20-新战令';
             }
             return text;
           }
