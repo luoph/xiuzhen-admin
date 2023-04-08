@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.GameVpsMapper">
+
+    <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GameVps">
+        SELECT
+        (SELECT COUNT(*) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS game_server_num,
+        (SELECT GROUP_CONCAT(s.`id`) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS game_server_ids,
+        (SELECT COUNT(*) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_num,
+        (SELECT GROUP_CONCAT(g.`id`) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_ids,
+        v.*
+        FROM `game_vps` v
+        <where>
+            <if test="entity != null">
+                <if test="entity.name != null and entity.name != ''">
+                    AND v.`name` LIKE CONCAT('%',#{entity.name},'%')
+                </if>
+                <if test="entity.hostname != null and entity.hostname != ''">
+                    AND v.`hostname` LIKE CONCAT('%',#{entity.hostname},'%')
+                </if>
+                <if test="entity.os != null and entity.os != ''">
+                    AND v.`os` LIKE CONCAT('%',#{entity.os},'%')
+                </if>
+                <if test="entity.ip != null and entity.ip != ''">
+                    AND v.`ip` = #{entity.ip}
+                </if>
+            </if>
+            <if test="createTimeRange != null">
+                <if test="null != createTimeRange.start">
+                    <![CDATA[AND v.`create_time` >= #{createTimeRange.start}]]></if>
+                <if test="null != createTimeRange.end"><![CDATA[AND v.`create_time` <= #{createTimeRange.end}]]></if>
+            </if>
+        </where>
+        GROUP BY v.`ip`
+        ORDER BY v.`id`
+    </select>
+
+</mapper>

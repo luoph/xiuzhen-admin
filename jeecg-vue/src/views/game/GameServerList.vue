@@ -12,7 +12,7 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="服务器ip">
-              <j-search-select-tag v-model="queryParam.host" placeholder="请输入服务器ip" dict="game_server,host,host"/>
+              <j-search-select-tag placeholder="请选择服务器ip" v-model="queryParam.host" dict="game_vps,hostname,ip"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -389,9 +389,7 @@ export default {
       });
     },
     getQueryParams() {
-      // console.log(this.queryParam.createTimeRange);
-      // console.log(this.queryParam.openTimeRange);
-      var param = Object.assign({}, this.queryParam, this.isorter);
+      const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
 
@@ -459,6 +457,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 @import '~@assets/less/common.less';
 </style>

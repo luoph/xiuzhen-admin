@@ -103,8 +103,8 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="ipTags" slot-scope="text, record">
-          <a-tag v-if="!text" color="red">未设置</a-tag>
+        <span slot="splitTags" slot-scope="text, record">
+          <a-tag v-if="!text" color="red">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
       </a-table>
@@ -241,7 +241,7 @@ export default {
           align: 'left',
           width: 280,
           dataIndex: 'ipWhitelist',
-          scopedSlots: {customRender: 'ipTags'}
+          scopedSlots: {customRender: 'splitTags'}
         },
         {
           title: '版本更新时间',
