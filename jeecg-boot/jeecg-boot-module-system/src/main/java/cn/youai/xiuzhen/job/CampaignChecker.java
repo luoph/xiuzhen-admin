@@ -22,6 +22,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class CampaignChecker {
+    
     @Autowired
     private IGameCampaignService gameCampaignService;
 
