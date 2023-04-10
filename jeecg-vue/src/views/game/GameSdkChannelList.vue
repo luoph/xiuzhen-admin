@@ -4,7 +4,7 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="渠道">
               <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
                                    dict="game_channel,name,simple_name"/>

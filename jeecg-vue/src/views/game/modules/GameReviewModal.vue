@@ -20,7 +20,7 @@
         </a-form-item>
         <a-form-item label="审核区服配置" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-search-select-tag v-decorator="['profile', validatorRules.profile]" placeholder="请输入审核区服配置"
-                               dict="game_channel,name,simple_name" :async="true"/>
+                               dict="game_channel,name,simple_name"/>
         </a-form-item>
         <a-form-item label="审核开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="审核开关" v-decorator="['status', validatorRules.status]" initialValue="1">

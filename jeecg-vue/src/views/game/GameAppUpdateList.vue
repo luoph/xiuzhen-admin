@@ -4,17 +4,17 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <a-form-item label="应用名称">
               <j-input placeholder="请输入应用名称模糊查询" v-model="queryParam.appName"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <a-form-item label="应用包名">
               <j-input placeholder="请输入应用包名" v-model="queryParam.packageName"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <a-form-item label="版本号">
               <a-input placeholder="请输入版本号" v-model="queryParam.versionCode"/>
             </a-form-item>

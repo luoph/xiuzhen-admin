@@ -4,9 +4,9 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
-            <a-form-item label="渠道名称">
-              <j-input placeholder="请输入渠道名称" v-model="queryParam.name"/>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="渠道名">
+              <j-input placeholder="请输入渠道名" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
