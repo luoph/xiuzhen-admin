@@ -10,7 +10,7 @@
               <j-search-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dict="game_info,name,id"/>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="服务器ip">
               <j-search-select-tag placeholder="请选择服务器ip" v-model="queryParam.host" dict="game_vps,hostname,ip"/>
             </a-form-item>

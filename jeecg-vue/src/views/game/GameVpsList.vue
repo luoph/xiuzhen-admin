@@ -16,19 +16,24 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="公网ip">
-              <a-input placeholder="请输入ip" v-model="queryParam.ip"/>
+              <a-input placeholder="请输入公网ip" v-model="queryParam.ip"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="内网ip">
+              <a-input placeholder="请输入内网ip" v-model="queryParam.lan"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="系统">
                 <a-input placeholder="请输入系统" v-model="queryParam.os"/>
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="8">
+              <a-form-item label="创建时间">
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
               </a-form-item>
             </a-col>
           </template>
@@ -188,11 +193,6 @@ export default {
           align: 'left',
           dataIndex: 'crossServerIds',
           scopedSlots: {customRender: 'greenTags'}
-        },
-        {
-          title: '跨服数量',
-          align: 'center',
-          dataIndex: 'crossServerNum'
         },
         {
           title: '创建时间',

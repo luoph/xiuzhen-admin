@@ -5,7 +5,8 @@
     <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GameVps">
         SELECT
         (SELECT COUNT(*) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS game_server_num,
-        (SELECT GROUP_CONCAT(s.`id`) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS game_server_ids,
+        (SELECT GROUP_CONCAT(s.`id`) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS
+        game_server_ids,
         (SELECT COUNT(*) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_num,
         (SELECT GROUP_CONCAT(g.`id`) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_ids,
         v.*
@@ -13,16 +14,19 @@
         <where>
             <if test="entity != null">
                 <if test="entity.name != null and entity.name != ''">
-                    AND v.`name` LIKE CONCAT('%',#{entity.name},'%')
+                    AND v.`name` LIKE CONCAT('%', #{entity.name}, '%')
                 </if>
                 <if test="entity.hostname != null and entity.hostname != ''">
-                    AND v.`hostname` LIKE CONCAT('%',#{entity.hostname},'%')
-                </if>
-                <if test="entity.os != null and entity.os != ''">
-                    AND v.`os` LIKE CONCAT('%',#{entity.os},'%')
+                    AND v.`hostname` LIKE CONCAT('%', #{entity.hostname}, '%')
                 </if>
                 <if test="entity.ip != null and entity.ip != ''">
-                    AND v.`ip` = #{entity.ip}
+                    AND v.`ip` LIKE CONCAT('%', #{entity.ip}, '%')
+                </if>
+                <if test="entity.lan != null and entity.lan != ''">
+                    AND v.`lan` LIKE CONCAT('%', #{entity.lan}, '%')
+                </if>
+                <if test="entity.os != null and entity.os != ''">
+                    AND v.`os` LIKE CONCAT('%', #{entity.os}, '%')
                 </if>
             </if>
             <if test="createTimeRange != null">
