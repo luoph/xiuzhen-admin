@@ -9,13 +9,10 @@
             <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
                                      @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="Sdk渠道">
-              <a-select v-model="queryParam.sdkChannel" placeholder="请选择Sdk渠道">
-                <a-select-option v-for="sdkChannel in sdkChannelList" :key="sdkChannel" :value="sdkChannel">
-                  {{ sdkChannel }}
-                </a-select-option>
-              </a-select>
+              <j-search-select-tag placeholder="请选择Sdk渠道" v-model="queryParam.sdkChannel"
+                                   dict="game_sdk_channel,name,sdk_channel"/>
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
