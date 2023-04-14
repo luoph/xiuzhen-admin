@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.entity;
 
+import cn.youai.xiuzhen.game.monitor.DiskUsageInfo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,6 +11,10 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -84,4 +89,46 @@ public class GameVps extends BaseEntity {
     @Excel(name = "跨服Id", width = 15)
     private String crossServerIds;
 
+    @TableField(exist = false)
+    @Excel(name = "平台", width = 15)
+    private String platform;
+
+    @TableField(exist = false)
+    @Excel(name = "总内存", width = 15)
+    private String totalMem;
+
+    @TableField(exist = false)
+    @Excel(name = "CPU核心数", width = 15)
+    private Integer cpuCoreNum;
+
+    @TableField(exist = false)
+    @Excel(name = "CPU使用率", width = 15)
+    private BigDecimal cpuPer;
+
+    @TableField(exist = false)
+    @Excel(name = "内存使用率", width = 15)
+    private BigDecimal memPer;
+
+    @TableField(exist = false)
+    @Excel(name = "5分钟负载", width = 15)
+    private BigDecimal fiveLoad;
+
+    @TableField(exist = false)
+    @Excel(name = "15分钟负载", width = 15)
+    private BigDecimal fifteenLoad;
+
+    @TableField(exist = false)
+    @Excel(name = "启动时间", width = 15)
+    private Date bootTime;
+
+    @TableField(exist = false)
+    @Excel(name = "上传时间", width = 15)
+    private Date uploadTime;
+
+    @TableField(exist = false)
+    private String diskUsage;
+
+    @TableField(exist = false)
+    @Excel(name = "磁盘占用", width = 15)
+    private List<DiskUsageInfo> diskList;
 }

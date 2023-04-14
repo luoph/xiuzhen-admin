@@ -78,18 +78,13 @@
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
                :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
-          <!--          <a-divider type="vertical"/>-->
-          <!--          <a-dropdown>-->
-          <!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
-          <!--            <a-menu slot="overlay">-->
-          <!--              <a-menu-item>-->
-          <!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
-          <!--                  <a>删除</a>-->
-          <!--                </a-popconfirm>-->
-          <!--              </a-menu-item>-->
-          <!--            </a-menu>-->
-          <!--          </a-dropdown>-->
+          <a-button type="primary" size="small" @click="handleEdit(record)"> 编辑 </a-button>
+          <a-divider/>
+          <a-button size="small" @click="handleCopy(record)"> 复制 </a-button>
+          <a-divider/>
+          <a-button type="danger" size="small">
+            <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"><a>删除</a></a-popconfirm>
+          </a-button>
         </span>
         <span slot="blueTags" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未配置</a-tag>
@@ -99,11 +94,29 @@
           <a-tag v-if="!text" color="red">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green">{{ tag }}</a-tag>
         </span>
+        <span slot="loadSlot" slot-scope="text, record">
+          <a-tag color="blue">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
+        </span>
+        <span slot="perSlot" slot-scope="text, record">
+          <a-tag :color="text >= 80 ? 'red' : (text >= 60 ? 'orange': 'green')">{{ text }}</a-tag>
+        </span>
+        <span slot="diskSlot" slot-scope="text, record">
+           <div class="disk-usage-container">
+            <li v-for="(item, index) in text">
+              <a-tag color="blue">{{ item.fileSystem }} </a-tag> {{ item.avail }} / {{ item.diskSize }}
+              <div class="disk-usage-progress">
+                <a-progress :percent="item.usedPer" size="small"
+                            :stroke-color="item.usedPer >= 80 ? '#ff1744': (item.usedPer >= 60 ? '#f57c00': '#00c853')"/>
+              </div>
+              <a-divider v-if="index !== text.length - 1"/>
+            </li>
+           </div>
+        </span>
       </a-table>
     </div>
     <!-- table区域-end -->
     <!-- 表单区域 -->
-    <game-vps-modal ref="modalForm" @ok="modalFormOk"></game-vps-modal>
+    <game-vps-modal ref="modalForm" @ok="modalFormOk"/>
   </a-card>
 </template>
 
@@ -138,6 +151,7 @@ export default {
         {
           title: '名称',
           align: 'center',
+          width: 80,
           dataIndex: 'name'
         },
         {
@@ -152,6 +166,7 @@ export default {
           title: '公网ip',
           align: 'center',
           dataIndex: 'ip',
+          width: 140,
           customRender: (value) => {
             return value || '--';
           }
@@ -160,6 +175,7 @@ export default {
           title: '内网ip',
           align: 'center',
           dataIndex: 'lan',
+          width: 140,
           customRender: (value) => {
             return value || '--';
           }
@@ -167,37 +183,86 @@ export default {
         {
           title: '操作系统',
           align: 'center',
-          dataIndex: 'os',
+          dataIndex: 'platform',
           customRender: (value) => {
             return value || '--';
           }
         },
+        // {
+        //   title: '平台',
+        //   align: 'center',
+        //   dataIndex: 'platform',
+        //   customRender: (value) => {
+        //     return value || '--';
+        //   }
+        // },
         {
-          title: '游戏服数量',
+          title: '区服数',
           align: 'center',
+          width: 60,
           dataIndex: 'gameServerNum'
         },
         {
-          title: '跨服数量',
+          title: '跨服数',
           align: 'center',
+          width: 60,
           dataIndex: 'crossServerNum'
         },
         {
-          title: '游戏服id',
-          align: 'left',
+          title: '区服id',
+          align: 'center',
           dataIndex: 'gameServerIds',
           scopedSlots: {customRender: 'blueTags'}
         },
         {
           title: '跨服id',
-          align: 'left',
+          align: 'center',
           dataIndex: 'crossServerIds',
           scopedSlots: {customRender: 'greenTags'}
         },
         {
-          title: '创建时间',
+          title: 'CPU核数',
           align: 'center',
-          dataIndex: 'createTime'
+          width: 60,
+          dataIndex: 'cpuCoreNum'
+        },
+        {
+          title: 'CPU%',
+          align: 'center',
+          width: 60,
+          dataIndex: 'cpuPer',
+          scopedSlots: {customRender: 'perSlot'}
+        },
+        {
+          title: '内存%',
+          align: 'center',
+          width: 60,
+          dataIndex: 'memPer',
+          scopedSlots: {customRender: 'perSlot'}
+        },
+        {
+          title: '磁盘占用',
+          align: 'center',
+          dataIndex: 'diskList',
+          scopedSlots: {customRender: 'diskSlot'}
+        },
+        {
+          title: '负载(5/15)',
+          align: 'center',
+          width: 80,
+          dataIndex: '',
+          scopedSlots: {customRender: 'loadSlot'}
+        },
+        // {
+        //   title: '启动时间',
+        //   align: 'center',
+        //   dataIndex: 'bootTime'
+        // },
+        {
+          title: '状态更新时间',
+          align: 'center',
+          width: 100,
+          dataIndex: 'uploadTime'
         },
         {
           title: '操作',
@@ -240,4 +305,17 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.ant-divider-horizontal {
+  margin: 6px 0 6px 0;
+}
+
+.disk-usage-container {
+  min-width: 180px;
+  max-width: 320px;
+}
+
+.disk-usage-progress {
+  margin: 0px 20px 0px 20px;
+}
 </style>

@@ -31,7 +31,8 @@
         </a-form-item> -->
         <a-form-item label="自动添加新服的渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <j-multi-select-tag
-            v-decorator="['autoAddServerChannels', validatorRules.autoAddServerChannels]" placeholder="请选择自动添加新服的渠道"
+            v-decorator="['autoAddServerChannels', validatorRules.autoAddServerChannels]"
+            placeholder="请选择自动添加新服的渠道"
             dictCode="game_channel,name,simple_name">
           </j-multi-select-tag>
         </a-form-item>

@@ -320,9 +320,6 @@ export default {
       this.queryParam.createTime_begin = dateString[0];
       this.queryParam.createTime_end = dateString[1];
     },
-    handleCopy: function (record) {
-      this.$refs.modalForm.add(record);
-    },
     handleReview: function (id) {
       const that = this;
       getAction(that.url.review, {id: id})

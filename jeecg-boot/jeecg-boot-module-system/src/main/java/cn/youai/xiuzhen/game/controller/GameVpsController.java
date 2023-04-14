@@ -1,20 +1,30 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.DateRange;
+import cn.youai.basics.utils.SplitUtils;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.xiuzhen.game.entity.GameVps;
+import cn.youai.xiuzhen.game.monitor.DiskUsageInfo;
 import cn.youai.xiuzhen.game.service.IGameVpsService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author jeecg-boot
@@ -28,6 +38,12 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/game/vps")
 public class GameVpsController extends JeecgController<GameVps, IGameVpsService> {
 
+    @Value("${app.wgcloud.url}")
+    private String wgcloudUrl;
+
+    @Value("${app.wgcloud.token}")
+    private String wgToken;
+
     @AutoLog(value = "虚拟主机-列表查询")
     @GetMapping(value = "/list")
     public Result<?> queryPageList(GameVps entity,
@@ -36,7 +52,9 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
                                    HttpServletRequest req) {
         Page<GameVps> page = new Page<>(pageNo, pageSize);
         DateRange createTimeRange = PageQueryUtils.parseRange(req.getParameterMap(), "createTime");
-        return Result.ok(service.queryList(page, entity, createTimeRange));
+        IPage<GameVps> pageList = service.queryList(page, entity, createTimeRange);
+        pageList.getRecords().forEach(this::onload);
+        return Result.ok(pageList);
     }
 
     @AutoLog(value = "虚拟主机-添加")
@@ -79,5 +97,11 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameVps.class);
+    }
+
+    @Override
+    protected void onload(GameVps entity) {
+        super.onload(entity);
+        entity.setDiskList(DiskUsageInfo.parse(entity.getDiskUsage()));
     }
 }
