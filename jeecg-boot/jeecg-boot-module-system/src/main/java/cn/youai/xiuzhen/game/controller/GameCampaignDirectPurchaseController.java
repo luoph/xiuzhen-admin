@@ -8,6 +8,8 @@ import cn.youai.xiuzhen.game.entity.GameCampaignType;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
 import cn.youai.xiuzhen.game.service.IGameCampaignDirectPurchaseService;
 import cn.youai.xiuzhen.game.service.IGameCampaignTypeService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
@@ -35,7 +37,7 @@ import java.util.List;
 public class GameCampaignDirectPurchaseController extends JeecgController<GameCampaignDirectPurchase, IGameCampaignDirectPurchaseService> {
 
     @Autowired
-    private IGameCampaignTypeService gameCampaignTypeService;
+    private IGameCampaignTypeService campaignTypeService;
 
     @Value("${app.folder.temp}")
     private String tempFolder;
@@ -46,7 +48,15 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-        return super.queryPageList(entity, pageNo, pageSize, req);
+//        return super.queryPageList(entity, pageNo, pageSize, req);
+        IPage<GameCampaignDirectPurchase> page = pageList(entity, pageNo, pageSize, req);
+        if (CollUtil.isNotEmpty(page.getRecords())) {
+            GameCampaignType gameCampaignType = campaignTypeService.getOne(Wrappers.<GameCampaignType>lambdaQuery().eq(GameCampaignType::getId, entity.getTypeId()));
+            if (null != gameCampaignType) {
+                page.getRecords().forEach(e -> e.setCampaignType(gameCampaignType.getType()));
+            }
+        }
+        return Result.ok(page);
     }
 
     @AutoLog(value = "直购礼包-添加")
@@ -82,7 +92,7 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
     @AutoLog(value = "直购礼包-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameCampaignDirectPurchase entity) {
-        return super.exportXls(request, entity, GameCampaignDirectPurchase.class, CampaignType.valueOfServiceClass(service.getClass()).getName());
+        return super.exportXls(request, entity, GameCampaignDirectPurchase.class, CampaignType.valueOf(entity.getCampaignType()).getName());
     }
 
     @AutoLog(value = "直购礼包-导入")
@@ -94,7 +104,7 @@ public class GameCampaignDirectPurchaseController extends JeecgController<GameCa
     @AutoLog(value = "直购礼包-导入文本")
     @RequestMapping(value = "/importText", method = RequestMethod.POST)
     public Result<?> importText(@RequestBody ImportTextVO vo, HttpServletRequest request, HttpServletResponse response) {
-        GameCampaignType campaignType = gameCampaignTypeService.getById(vo.getId());
+        GameCampaignType campaignType = campaignTypeService.getById(vo.getId());
         if (campaignType == null) {
             return Result.error("未找得到对应的子活动配置!");
         }

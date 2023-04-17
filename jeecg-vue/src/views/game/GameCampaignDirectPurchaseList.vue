@@ -12,7 +12,9 @@
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
       <!-- <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
       <a-textarea class="import-text" v-model="importText" placeholder="输入Excel复制来的文本数据" :autoSize="{ minRows: 2, maxRows: 20 }"/> -->
-      <a-button type="primary" icon="download" @click="handleExportXls('节日活动-直购礼包')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls(model.type === 15 ? '节日活动-直购礼包' 
+      : model.type === 28 ? '节日活动-超值礼包' 
+      : '未知活动类型')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
                 @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
@@ -158,6 +160,11 @@ export default {
           dataIndex: 'reward'
         },
         {
+          title: '消耗列表',
+          align: 'center',
+          dataIndex: 'consume'
+        },
+        {
           title: '礼包折扣',
           align: 'center',
           dataIndex: 'discount'
@@ -246,6 +253,7 @@ export default {
       // typeId、活动id
       param.typeId = this.model.id;
       param.campaignId = this.model.campaignId;
+      param.campaignType = this.model.type;
       return filterObj(param);
     },
     getImgView(text) {

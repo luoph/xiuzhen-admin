@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,9 +29,11 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBaseDetail {
         this.type = other.getType();
         this.sort = other.getSort();
         this.reward = other.getReward();
+        this.consume = other.getConsume();
         this.goodsId = other.getGoodsId();
         this.color = other.getColor();
         this.discount = other.getDiscount();
+        this.campaignType = other.getCampaignType();
         this.setMinLevel(other.getMinLevel());
         this.setMaxLevel(other.getMaxLevel());
     }
@@ -78,6 +81,13 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBaseDetail {
     private java.lang.String reward;
 
     /**
+     * 消耗列表
+     */
+    @Excel(name = "消耗列表", width = 15)
+    @ExcelProperty("消耗列表")
+    private java.lang.String consume;
+
+    /**
      * 礼包折扣
      */
     @Excel(name = "礼包折扣", width = 15)
@@ -90,4 +100,8 @@ public class GameCampaignDirectPurchase extends GameCampaignTypeBaseDetail {
     @Excel(name = "图标颜色", width = 15)
     @ExcelProperty("图标颜色")
     private java.lang.Integer color;
+
+    @Excel(name = "活动类型", width = 15)
+    @TableField(exist = false)
+    private Integer campaignType;
 }

@@ -32,6 +32,9 @@
         <a-form-item label="奖励" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-textarea v-decorator="['reward']" rows="4" placeholder="请输入奖励"/>
         </a-form-item>
+        <a-form-item label="消耗" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-textarea v-decorator="['consume']" rows="4" placeholder="请输入消耗"/>
+        </a-form-item>
         <a-form-item label="礼包折扣" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['discount', validatorRules.discount]" placeholder="请输入礼包折扣"
                           style="width: 100%"/>
@@ -92,6 +95,7 @@ export default {
         type: {rules: [{required: true, message: '请输入礼包组类型!'}]},
         sort: {rules: [{required: true, message: '请输入组排序!'}]},
         reward: {rules: [{required: true, message: '请输入任务奖励!'}]},
+        consume: {rules: [{required: false, message: '请输入任务消耗!'}]},
         discount: {rules: [{required: true, message: '请输入礼包折扣!'}]},
         color: {rules: [{required: true, message: '请输入图标颜色!'}]},
         goodsId: {rules: [{required: true, message: '请选择商品Id'}]},
@@ -130,6 +134,7 @@ export default {
             'type',
             'sort',
             'reward',
+            'consume',
             'color',
             'discount',
             'minLevel',
@@ -181,7 +186,7 @@ export default {
     },
     popupCallback(row) {
       this.form.setFieldsValue(
-        pick(row, 'campaignId', 'typeId', 'goodsId', 'limitNum', 'price', 'discount', 'amount', 'name', 'type', 'sort', 'reward', 'color', 'discount', 'minLevel', 'maxLevel')
+        pick(row, 'campaignId', 'typeId', 'goodsId', 'limitNum', 'price', 'discount', 'amount', 'name', 'type', 'sort', 'reward', 'consume', 'color', 'discount', 'minLevel', 'maxLevel')
       );
     },
     selectGoods(e) {

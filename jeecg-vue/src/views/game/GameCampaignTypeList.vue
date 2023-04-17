@@ -49,6 +49,9 @@
                 <a-select-option :value="23">23-遗迹夺宝</a-select-option>
                 <a-select-option :value="24">24-阶段任务</a-select-option>
                 <a-select-option :value="25">25-夺宝战令</a-select-option>
+                <a-select-option :value="26">26-召唤活动</a-select-option>
+                <a-select-option :value="27">27-召唤排行</a-select-option>
+                <a-select-option :value="28">28-超值礼包</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -274,6 +277,12 @@ export default {
               re = '24-阶段任务';
             } else if (value === 25) {
               re = '25-夺宝战令';
+            } else if (value === 26) {
+              re = '26-召唤活动';
+            } else if (value === 27) {
+              re = '27-召唤排行';
+            } else if (value === 28) {
+              re = '28-超值礼包';
             }
             return re;
           }

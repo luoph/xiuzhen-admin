@@ -44,6 +44,9 @@ public enum CampaignType {
     RELIC_LOTTERY(23, "遗迹夺宝", IGameCampaignTypeRelicLotteryService.class, IGameCampaignTypeRelicLotteryMessageService.class),
     STAGE_TASK(24, "阶段任务", IGameCampaignTypeStageTaskService.class, IGameCampaignTypeStageTaskItemService.class),
     LOTTERY_TOKEN(25, "夺宝战令", IGameCampaignTypeLotteryTokenService.class),
+    SUMMON(26,"召唤活动", IGameCampaignTypeSummonService.class, IGameCampaignTypeSummonMessageService.class),
+    SUMMON_RANK(27,"召唤排行", IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
+    SPREE(28, "超值礼包", IGameCampaignDirectPurchaseService.class),
     // end
     ;
 

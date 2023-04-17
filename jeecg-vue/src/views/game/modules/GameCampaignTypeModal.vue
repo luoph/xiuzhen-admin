@@ -34,6 +34,9 @@
             <a-select-option :value="23">23-遗迹夺宝</a-select-option>
             <a-select-option :value="24">24-阶段任务</a-select-option>
             <a-select-option :value="25">25-夺宝战令</a-select-option>
+            <a-select-option :value="26">26-召唤活动</a-select-option>
+            <a-select-option :value="27">27-召唤排行</a-select-option>
+            <a-select-option :value="28">28-超值礼包</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -127,10 +130,10 @@
       <game-campaign-type-throwing-eggs-gift-list v-if="isEdit && model.type === 13" ref="throwingEggsGiftList"/>
       <game-campaign-type-party-task-list v-if="isEdit && model.type === 14" ref="partyTaskList"/>
       <game-campaign-type-party-progress-list v-if="isEdit && model.type === 14" ref="partyProgressList"/>
-      <game-campaign-direct-purchase-list v-if="isEdit && model.type === 15" ref="directPurchaseList"/>
+      <game-campaign-direct-purchase-list v-if="isEdit && (model.type === 15 || model.type === 28)" ref="directPurchaseList"/>
       <game-campaign-type-rebate-recharge-list v-if="isEdit && model.type === 16" ref="rebateRechargeList"/>
-      <game-campaign-type-marry-rank-list v-if="isEdit && (model.type === 17 || model.type === 18 || model.type === 21)" ref="marryRankList"/>
-      <game-campaign-type-marry-rank-reward-list v-if="isEdit && (model.type === 17 || model.type === 18 || model.type === 21)" ref="marryRankRewardList"/>
+      <game-campaign-type-marry-rank-list v-if="isEdit && (model.type === 17 || model.type === 18 || model.type === 21 || model.type === 27)" ref="marryRankList"/>
+      <game-campaign-type-marry-rank-reward-list v-if="isEdit && (model.type === 17 || model.type === 18 || model.type === 21 || model.type === 27)" ref="marryRankRewardList"/>
       <game-campaign-type-select-discount-item-list v-if="isEdit && model.type === 20" ref="selectDiscountItemList"/>
       <game-campaign-type-select-discount-message-list v-if="isEdit && model.type === 20" ref="selectDiscountMessageList"/>
       <game-campaign-type-email-item-list v-if="isEdit && model.type === 22" ref="emailItemList"/>
@@ -139,6 +142,8 @@
       <game-campaign-type-stage-task-list v-if="isEdit && model.type === 24" ref="stageTaskList"/>
       <game-campaign-type-stage-task-item-list v-if="isEdit && model.type === 24" ref="stageTaskItemList"/>
       <game-campaign-type-lottery-token-list v-if="isEdit && model.type === 25" ref="lotteryTokenList"/>
+      <game-campaign-type-summon-list v-if="isEdit && model.type === 26" ref="summonList"/>
+      <game-campaign-type-summon-message-list v-if="isEdit && model.type === 26" ref="summonMessageList"/>
     </a-spin>
   </a-modal>
 </template>
@@ -176,6 +181,8 @@ import GameCampaignTypeRelicLotteryMessageList from '../GameCampaignTypeRelicLot
 import GameCampaignTypeStageTaskList from '../GameCampaignTypeStageTaskList';
 import GameCampaignTypeStageTaskItemList from '../GameCampaignTypeStageTaskItemList';
 import GameCampaignTypeLotteryTokenList from '../GameCampaignTypeLotteryTokenList';
+import GameCampaignTypeSummonList from '../GameCampaignTypeSummonList';
+import GameCampaignTypeSummonMessageList from '../GameCampaignTypeSummonMessageList';
 
 export default {
   name: 'GameCampaignTypeModal',
@@ -208,7 +215,9 @@ export default {
     GameCampaignTypeRelicLotteryMessageList,
     GameCampaignTypeStageTaskList,
     GameCampaignTypeStageTaskItemList,
-    GameCampaignTypeLotteryTokenList
+    GameCampaignTypeLotteryTokenList,
+    GameCampaignTypeSummonList,
+    GameCampaignTypeSummonMessageList
   },
   data() {
     return {
@@ -347,6 +356,12 @@ export default {
           }
           if (this.$refs.lotteryTokenList) {
             this.$refs.lotteryTokenList.edit(record);
+          }
+          if (this.$refs.summonList) {
+            this.$refs.summonList.edit(record);
+          }
+          if (this.$refs.summonMessageList) {
+            this.$refs.summonMessageList.edit(record);
           }
         }
 

@@ -151,6 +151,12 @@ export default {
               text = '24-阶段任务';
             } else if (value === 25) {
               text = '25-夺宝战令';
+            } else if (value === 26) {
+              text = '26-召唤活动';
+            } else if (value === 27) {
+              text = '27-召唤排行';
+            } else if (value === 28) {
+              text = '28-超值礼包';
             }
             return text;
           }
