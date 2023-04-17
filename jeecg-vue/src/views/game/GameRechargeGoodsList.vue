@@ -271,6 +271,8 @@ export default {
               text = '19-节日活动-夺宝战令';
             } else if (value === 20) {
               text = '20-新战令';
+            } else if (value === 21) {
+              text = '21-超值礼包';
             }
             return text;
           }
