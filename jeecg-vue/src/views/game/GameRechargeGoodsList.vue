@@ -273,6 +273,8 @@ export default {
               text = '20-新战令';
             } else if (value === 21) {
               text = '21-超值礼包';
+            } else if (value === 22) {
+              text = '22-神游特权卡';
             }
             return text;
           }
