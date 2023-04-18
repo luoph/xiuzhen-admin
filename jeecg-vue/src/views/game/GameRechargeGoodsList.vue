@@ -144,6 +144,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -204,7 +206,6 @@ export default {
           title: '商品名称',
           align: 'center',
           fixed: 'left',
-          width: 120,
           dataIndex: 'name'
         },
         {
@@ -224,8 +225,7 @@ export default {
         },
         {
           title: '商品类型',
-          align: 'center',
-          width: 120,
+          align: 'left',
           dataIndex: 'goodsType',
           customRender: (value) => {
             let text = '--';

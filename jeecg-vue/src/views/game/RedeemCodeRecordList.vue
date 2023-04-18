@@ -189,12 +189,14 @@ export default {
         {
           title: '创建时间',
           align: 'center',
+          width: 240,
           dataIndex: 'createTime'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 180,
           scopedSlots: {customRender: 'action'}
         }
       ],

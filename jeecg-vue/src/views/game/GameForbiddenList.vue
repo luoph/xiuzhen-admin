@@ -121,6 +121,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -158,7 +160,7 @@ export default {
   },
   data() {
     return {
-      description: 'game_forbidden管理页面',
+      description: '封号禁言管理页面',
       // 表头
       columns: [
         {
@@ -174,7 +176,7 @@ export default {
         {
           title: '区服id',
           align: 'center',
-          width: 60,
+          width: 80,
           dataIndex: 'serverId'
         },
         {
@@ -195,7 +197,7 @@ export default {
         {
           title: '封禁依据',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'banKey',
           customRender: (value) => {
             let text = '--';
@@ -233,14 +235,13 @@ export default {
         {
           title: '封禁原因',
           align: 'center',
-          width: 120,
+          width: 240,
           dataIndex: 'reason',
           scopedSlots: {customRender: 'largeText'}
         },
         {
           title: '开始时间',
           align: 'center',
-          width: 120,
           dataIndex: 'startTime',
           customRender: (text) => {
             return text || '--';
@@ -266,7 +267,6 @@ export default {
         {
           title: '更新时间',
           align: 'center',
-          width: 120,
           dataIndex: 'updateTime',
           customRender: (text) => {
             return text || '--';
@@ -285,6 +285,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 160,
           scopedSlots: {customRender: 'action'}
         }
       ],

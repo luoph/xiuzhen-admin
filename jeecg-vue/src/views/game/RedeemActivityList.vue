@@ -57,8 +57,16 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table"
+               size="middle"
+               bordered
+               rowKey="id"
+               :columns="columns"
+               :dataSource="dataSource"
+               :scroll="{ x: 'max-content' }"
+               :pagination="ipagination"
+               :loading="loading"
+               @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
@@ -73,13 +81,15 @@
           </a-button>
         </template>
 
-        <span slot="statuSlot" slot-scope="text">
+        <span slot="statusSlot" slot-scope="text">
           <a-tag v-if="text === 0" color="red">无效</a-tag>
           <a-tag v-else color="green">有效</a-tag>
         </span>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
         </span>
       </a-table>
     </div>
@@ -129,13 +139,13 @@ export default {
         },
         {
           title: '激活码名称',
-          align: 'center',
-          width: 120,
+          align: 'left',
+          width: 160,
           dataIndex: 'name'
         },
         {
           title: '礼包说明',
-          align: 'center',
+          align: 'left',
           width: 180,
           dataIndex: 'summary',
           customRender: (value) => {
@@ -144,8 +154,8 @@ export default {
         },
         {
           title: '限制类型',
-          align: 'center',
-          width: 120,
+          align: 'left',
+          width: 140,
           dataIndex: 'limitType',
           customRender: function (text) {
             if (text === 1) {
@@ -195,14 +205,13 @@ export default {
         {
           title: '活动状态',
           align: 'center',
-          width: 90,
           dataIndex: 'status',
-          scopedSlots: {customRender: 'statuSlot'}
+          scopedSlots: {customRender: 'statusSlot'}
         },
         {
           title: '奖励',
-          align: 'center',
-          width: 320,
+          align: 'left',
+          width: 240,
           dataIndex: 'reward',
           customRender: (value) => {
             return value || '--';
@@ -211,7 +220,6 @@ export default {
         {
           title: '开始时间',
           align: 'center',
-          width: 180,
           dataIndex: 'startTime',
           customRender: (value) => {
             return value || '--';
@@ -220,7 +228,6 @@ export default {
         {
           title: '结束时间',
           align: 'center',
-          width: 180,
           dataIndex: 'endTime',
           customRender: (value) => {
             return value || '--';
@@ -231,7 +238,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           fixed: 'right',
-          width: 180,
+          width: 120,
           scopedSlots: {customRender: 'action'}
         }
       ],

@@ -81,10 +81,12 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="resumeJob(record)" v-if="record.status == 1">已启动</a>
-          <a @click="resumeJob(record)" v-if="record.status == 0">已关闭</a>
-          <a-divider type="vertical"/>
           <a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
+          <a @click="resumeJob(record)" v-if="record.status === 1">已启动</a>
+          <a @click="resumeJob(record)" v-else>已关闭</a>
         </span>
         <span slot="serverIdSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -139,7 +141,6 @@ export default {
         {
           title: '正文',
           align: 'left',
-          width: 400,
           dataIndex: 'noticeText'
         },
         {

@@ -115,6 +115,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a @click="handlePreview(record)">公告预览</a>
           <a-divider type="vertical"/>
           <a @click="refreshNotice(record)">刷新公告</a>

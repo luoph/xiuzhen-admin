@@ -10,7 +10,7 @@
                                    dict="game_channel,name,simple_name"/>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="Sdk渠道">
               <a-input placeholder="请输入Sdk渠道" v-model="queryParam.sdkChannel"/>
             </a-form-item>
@@ -74,6 +74,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -129,7 +131,6 @@ export default {
         {
           title: '名称',
           align: 'center',
-          width: 80,
           dataIndex: 'name',
           customRender: (value) => {
             return value || '--';
@@ -138,7 +139,6 @@ export default {
         {
           title: 'Sdk渠道',
           align: 'center',
-          width: 100,
           dataIndex: 'sdkChannel',
           customRender: (value) => {
             return value || '--';
@@ -147,7 +147,6 @@ export default {
         {
           title: '父渠道',
           align: 'center',
-          width: 100,
           dataIndex: 'channel',
           customRender: (value) => {
             return value || '--';
@@ -156,7 +155,7 @@ export default {
         {
           title: '上线时间',
           align: 'center',
-          width: 120,
+          width: 240,
           dataIndex: 'onlineTime',
           customRender: (value) => {
             return value || '--';
@@ -165,7 +164,6 @@ export default {
         {
           title: '备注',
           align: 'center',
-          width: 120,
           dataIndex: 'remark',
           customRender: (value) => {
             return value || '--';

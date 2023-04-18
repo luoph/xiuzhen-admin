@@ -130,7 +130,8 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <!--          <a-divider type="vertical"/>-->
+          <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
           <!--          <a-dropdown>-->
           <!--            <a class="ant-dropdown-link"> 更多 <a-icon type="down"/> </a>-->
           <!--            <a-menu slot="overlay">-->
@@ -236,19 +237,16 @@ export default {
         {
           title: '服务器ip',
           align: 'left',
-          width: 140,
           dataIndex: 'host'
         },
         {
           title: '连接地址',
           align: 'left',
-          width: 160,
           dataIndex: 'loginUrl'
         },
         {
           title: '在线玩家',
           align: 'center',
-          width: 60,
           dataIndex: 'onlineNum',
           customRender: (text) => {
             return text === 0 ? text : text || 'N/A';
@@ -284,7 +282,6 @@ export default {
         {
           title: '上线时间',
           align: 'center',
-          width: 120,
           dataIndex: 'onlineTime'
         },
         {
@@ -302,7 +299,6 @@ export default {
         {
           title: '删档返还',
           align: 'center',
-          width: 60,
           dataIndex: 'stopServerRefund',
           scopedSlots: {customRender: 'stopServerRefundSlot'}
         },
@@ -316,7 +312,6 @@ export default {
         {
           title: 'GM地址',
           align: 'left',
-          width: 120,
           dataIndex: 'gmUrl'
         },
         // {
@@ -330,7 +325,7 @@ export default {
         // },
         {
           title: '备注',
-          align: 'left',
+          align: 'center',
           fixed: 'right',
           width: 100,
           dataIndex: 'remark'
@@ -339,7 +334,7 @@ export default {
           title: '操作',
           align: 'center',
           fixed: 'right',
-          width: 80,
+          width: 120,
           dataIndex: 'action',
           scopedSlots: {customRender: 'action'}
         }

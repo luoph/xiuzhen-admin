@@ -58,6 +58,8 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
         </span>
       </a-table>
     </div>
@@ -94,6 +96,7 @@ export default {
         {
           title: '分组Id',
           align: 'center',
+          width: 160,
           dataIndex: 'id'
         },
         {
@@ -109,12 +112,14 @@ export default {
         {
           title: '限制次数',
           align: 'center',
+          width: 120,
           dataIndex: 'limitCount'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 180,
           scopedSlots: { customRender: 'action' }
         }
       ],

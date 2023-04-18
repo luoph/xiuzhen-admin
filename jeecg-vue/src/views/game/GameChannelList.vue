@@ -82,6 +82,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a @click="editChannelServer(record)">区服列表</a>
           <a-divider type="vertical"/>
           <a @click="updateChannelServer(record)">刷新区服</a>
@@ -111,12 +113,12 @@
     </div>
     <!-- table区域-end -->
 
-    <game-channel-modal ref="modalForm" @ok="modalFormOk"></game-channel-modal>
+    <game-channel-modal ref="modalForm" @ok="modalFormOk"/>
     <!-- 编辑公告 -->
-    <game-notice-modal ref="noticeModal" @ok="modalFormOk"></game-notice-modal>
+    <game-notice-modal ref="noticeModal" @ok="modalFormOk"/>
     <!-- html预览 -->
-    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"></game-html-preview-modal>
-    <game-channel-server-list ref="channelServerList"></game-channel-server-list>
+    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"/>
+    <game-channel-server-list ref="channelServerList"/>
   </a-card>
 </template>
 
@@ -239,14 +241,12 @@ export default {
         {
           title: 'IP白名单',
           align: 'left',
-          width: 280,
           dataIndex: 'ipWhitelist',
           scopedSlots: {customRender: 'splitTags'}
         },
         {
           title: '版本更新时间',
           align: 'center',
-          width: 120,
           dataIndex: 'versionUpdateTime'
         },
         {
@@ -259,7 +259,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          width: 200,
+          width: 220,
           scopedSlots: {customRender: 'action'}
         }
       ],
