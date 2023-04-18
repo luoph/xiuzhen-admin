@@ -107,7 +107,7 @@
           <a-tag v-if="!text" color="red">未设置</a-tag>
           <a-tag v-else v-for="tag in text.split(',')" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
-        <span slot="statuSlot" slot-scope="text">
+        <span slot="statusSlot" slot-scope="text">
           <a-tag v-if="text === 0" color="red">无效</a-tag>
           <a-tag v-else color="green">有效</a-tag>
         </span>
@@ -221,7 +221,7 @@ export default {
           title: '活动状态',
           align: 'center',
           dataIndex: 'status',
-          scopedSlots: { customRender: 'statuSlot' }
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '优先级',

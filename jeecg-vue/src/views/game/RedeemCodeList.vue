@@ -99,7 +99,7 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
 
-        <span slot="statuSlot" slot-scope="text">
+        <span slot="statusSlot" slot-scope="text">
           <a-tag v-if="text === 0" color="red">无效</a-tag>
           <a-tag v-else color="green">有效</a-tag>
         </span>
@@ -187,7 +187,7 @@ export default {
           title: '状态',
           align: 'center',
           dataIndex: 'status',
-          scopedSlots: { customRender: 'statuSlot' }
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '创建时间',
