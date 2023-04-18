@@ -11,7 +11,8 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="主机名">
-              <a-input placeholder="请输入主机名" v-model="queryParam.hostname"/>
+              <j-search-select-tag placeholder="请选择主机名" v-model="queryParam.hostname"
+                                   dict="game_vps,hostname,hostname"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -181,7 +182,7 @@ export default {
           }
         },
         {
-          title: '操作系统',
+          title: '系统',
           align: 'center',
           dataIndex: 'platform',
           customRender: (value) => {
