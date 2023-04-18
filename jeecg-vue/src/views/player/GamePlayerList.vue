@@ -170,7 +170,6 @@ export default {
           title: '#',
           dataIndex: '',
           key: 'rowIndex',
-          fixed: 'left',
           width: 60,
           align: 'center',
           customRender: function (t, r, index) {
@@ -180,18 +179,15 @@ export default {
         {
           title: '区服id',
           align: 'center',
-          fixed: 'left',
           dataIndex: 'serverId'
         },
         {
           title: '玩家id',
-          fixed: 'left',
           align: 'center',
           dataIndex: 'playerId'
         },
         {
           title: '角色昵称',
-          fixed: 'left',
           align: 'center',
           dataIndex: 'nickname'
         },
@@ -228,13 +224,11 @@ export default {
         {
           title: '累计充值',
           align: 'center',
-          width: 60,
           dataIndex: 'totalPayAmount'
         },
         {
           title: '主线任务id',
           align: 'center',
-          width: 60,
           dataIndex: 'mainTaskId'
         },
         // {
@@ -296,13 +290,11 @@ export default {
         {
           title: '修为结算时间',
           align: 'center',
-          width: 120,
           dataIndex: 'settleTime'
         },
         {
           title: '等级升级时间',
           align: 'center',
-          width: 120,
           dataIndex: 'levelUpdateTime',
           customRender: (value) => {
             return value || '--';
@@ -311,7 +303,6 @@ export default {
         {
           title: '登录时间',
           align: 'center',
-          width: 120,
           dataIndex: 'loginTime'
         },
         {
@@ -325,15 +316,14 @@ export default {
         {
           title: '创角时间',
           align: 'center',
-          width: 120,
           dataIndex: 'createTime'
         },
         {
           title: "操作",
-          width: 100,
           dataIndex: "action",
           align: "center",
           fixed: 'right',
+          width: 100,
           scopedSlots: {customRender: "action"}
         }
       ],

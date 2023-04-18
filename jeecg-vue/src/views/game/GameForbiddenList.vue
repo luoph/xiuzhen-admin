@@ -250,7 +250,6 @@ export default {
         {
           title: '结束时间',
           align: 'center',
-          width: 120,
           dataIndex: 'endTime',
           customRender: (text) => {
             return text || '--';
@@ -275,7 +274,7 @@ export default {
         {
           title: '操作人',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'createBy',
           customRender: (text) => {
             return text || '--';
@@ -285,7 +284,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          width: 160,
+          width: 200,
           scopedSlots: {customRender: 'action'}
         }
       ],

@@ -266,7 +266,7 @@ export default {
         {
           title: 'sdk渠道',
           align: 'center',
-          width: 50,
+          width: 100,
           dataIndex: 'sdkChannels',
           scopedSlots: {customRender: 'sdkChannelsSlot'}
         },
@@ -288,7 +288,7 @@ export default {
         {
           title: '时间类型',
           align: 'center',
-          width: 100,
+          width: 120,
           dataIndex: 'timeType',
           customRender: (value) => {
             let text = '--';
@@ -303,7 +303,6 @@ export default {
         {
           title: '活动时间',
           align: 'center',
-          width: 60,
           dataIndex: 'startDay',
           scopedSlots: {customRender: 'timeSlot'}
         },
@@ -334,7 +333,6 @@ export default {
         {
           title: '创建时间',
           align: 'center',
-          width: 100,
           dataIndex: 'createTime'
         },
         {

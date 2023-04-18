@@ -206,13 +206,13 @@ export default {
         {
           title: '开始时间',
           align: 'center',
-          width: 120,
+          width: 200,
           dataIndex: 'beginTime'
         },
         {
           title: '结束时间',
           align: 'center',
-          width: 120,
+          width: 200,
           dataIndex: 'endTime'
         },
         {

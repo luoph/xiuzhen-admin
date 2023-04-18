@@ -309,7 +309,6 @@ export default {
         {
           title: '活动时间',
           align: 'center',
-          width: 80,
           dataIndex: 'startDay',
           scopedSlots: { customRender: 'timeSlot' }
         },
@@ -340,7 +339,6 @@ export default {
         {
           title: '创建时间',
           align: 'center',
-          width: 120,
           dataIndex: 'createTime'
         },
         {

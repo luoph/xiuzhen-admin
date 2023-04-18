@@ -109,6 +109,9 @@
           <a-tag v-if="!text" color="red">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
+        <span slot="switchSlot" slot-scope="text, record">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
+        </span>
       </a-table>
     </div>
     <!-- table区域-end -->
@@ -176,19 +179,17 @@ export default {
         {
           title: '渠道名称',
           align: 'center',
-          width: 100,
           dataIndex: 'name'
         },
         {
           title: '唯一标识',
           align: 'center',
-          width: 100,
           dataIndex: 'simpleName'
         },
         {
           title: '游戏编号',
           align: 'center',
-          width: 120,
+          width: 140,
           dataIndex: 'gameId',
           customRender: (text) => {
             return filterGameIdText(this.gameList, text);
@@ -203,7 +204,7 @@ export default {
         {
           title: '版本号',
           align: 'center',
-          width: 80,
+          width: 120,
           dataIndex: 'versionCode'
         },
         {
@@ -230,13 +231,7 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'testLogin',
-          customRender: function (text) {
-            if (text === 0) {
-              return '关闭';
-            } else if (text === 1) {
-              return '开启';
-            }
-          }
+          scopedSlots: {customRender: 'switchSlot'},
         },
         {
           title: 'IP白名单',
@@ -247,12 +242,12 @@ export default {
         {
           title: '版本更新时间',
           align: 'center',
+          width: 240,
           dataIndex: 'versionUpdateTime'
         },
         {
           title: '备注',
           align: 'center',
-          width: 120,
           dataIndex: 'remark'
         },
         {

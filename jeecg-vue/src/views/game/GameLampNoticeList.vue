@@ -152,6 +152,7 @@ export default {
         {
           title: '播放频率',
           align: 'center',
+          width: 120,
           dataIndex: 'frequency',
           customRender: (value) => {
             return value || '--';
@@ -160,6 +161,7 @@ export default {
         {
           title: '循环播放周期',
           align: 'center',
+          width: 120,
           dataIndex: 'cyclePeriod',
           customRender: (value) => {
             return value || '--';
@@ -168,6 +170,7 @@ export default {
         {
           title: '开始时间',
           align: 'center',
+          width: 200,
           dataIndex: 'beginTime',
           customRender: (value) => {
             return value || '--';
@@ -176,6 +179,7 @@ export default {
         {
           title: '结束时间',
           align: 'center',
+          width: 200,
           dataIndex: 'endTime',
           customRender: (value) => {
             return value || '--';

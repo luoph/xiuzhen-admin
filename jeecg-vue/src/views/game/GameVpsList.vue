@@ -152,7 +152,6 @@ export default {
         {
           title: '名称',
           align: 'center',
-          width: 80,
           dataIndex: 'name'
         },
         {
@@ -224,20 +223,20 @@ export default {
         {
           title: 'CPU核数',
           align: 'center',
-          width: 60,
+          width: 80,
           dataIndex: 'cpuCoreNum'
         },
         {
           title: 'CPU%',
           align: 'center',
-          width: 60,
+          width: 80,
           dataIndex: 'cpuPer',
           scopedSlots: {customRender: 'perSlot'}
         },
         {
           title: '内存%',
           align: 'center',
-          width: 60,
+          width: 80,
           dataIndex: 'memPer',
           scopedSlots: {customRender: 'perSlot'}
         },
@@ -267,7 +266,7 @@ export default {
         },
         {
           title: '操作',
-          width: 80,
+          width: 120,
           dataIndex: 'action',
           align: 'center',
           scopedSlots: {customRender: 'action'}

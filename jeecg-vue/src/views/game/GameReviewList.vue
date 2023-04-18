@@ -93,9 +93,8 @@
             </a-menu>
           </a-dropdown>
         </span>
-        <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="record.status === 0" color="red">OFF</a-tag>
-          <a-tag v-else-if="record.status === 1" color="green">ON</a-tag>
+        <span slot="switchSlot" slot-scope="text, record">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
         </span>
         <span slot="profileSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -185,7 +184,7 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'status',
-          scopedSlots: {customRender: 'statusSlot'}
+          scopedSlots: {customRender: 'switchSlot'}
         },
         {
           title: '备注',

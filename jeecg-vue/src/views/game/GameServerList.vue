@@ -150,9 +150,8 @@
           <a-tag v-if="record.isMaintain === 1" color="red">维护中</a-tag>
           <a-tag v-else color="green">运行中</a-tag>
         </span>
-        <span slot="gmSlot" slot-scope="text, record">
-          <a-tag v-if="record.gmStatus === 0" color="red">OFF</a-tag>
-          <a-tag v-else-if="record.gmStatus === 1" color="green">ON</a-tag>
+        <span slot="switchSlot" slot-scope="text, record">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
         </span>
         <span slot="statusSlot" slot-scope="text, record">
           <a-tag v-if="record.status === 0" color="blue">正常</a-tag>
@@ -164,10 +163,6 @@
           <a-tag v-if="record.outdated === 0" color="green">上线中</a-tag>
           <a-tag v-else-if="record.outdated === 1" color="red">已合并</a-tag>
           <a-tag v-else-if="record.outdated === 2" color="red">已下线</a-tag>
-        </span>
-        <span slot="stopServerRefundSlot" slot-scope="text, record">
-          <a-tag v-if="record.stopServerRefund === 0" color="red">OFF</a-tag>
-          <a-tag v-else-if="record.stopServerRefund === 1" color="green">ON</a-tag>
         </span>
       </a-table>
     </div>
@@ -300,14 +295,14 @@ export default {
           title: '删档返还',
           align: 'center',
           dataIndex: 'stopServerRefund',
-          scopedSlots: {customRender: 'stopServerRefundSlot'}
+          scopedSlots: {customRender: 'switchSlot'}
         },
         {
           title: 'GM开关',
           align: 'center',
           width: 80,
           dataIndex: 'gmStatus',
-          scopedSlots: {customRender: 'gmSlot'}
+          scopedSlots: {customRender: 'switchSlot'}
         },
         {
           title: 'GM地址',
@@ -327,7 +322,7 @@ export default {
           title: '备注',
           align: 'center',
           fixed: 'right',
-          width: 100,
+          width: 120,
           dataIndex: 'remark'
         },
         {

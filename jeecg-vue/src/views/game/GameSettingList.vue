@@ -139,7 +139,6 @@ export default {
         {
           title: 'id',
           align: 'center',
-          width: 60,
           dataIndex: 'id'
         },
         {
@@ -164,7 +163,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          width: 200,
+          width: 240,
           scopedSlots: { customRender: 'action' }
         }
       ],

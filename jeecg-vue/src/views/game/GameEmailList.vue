@@ -180,20 +180,21 @@ export default {
         {
           title: '标题',
           align: 'left',
-          width: 180,
-          dataIndex: 'title'
+          width: 200,
+          dataIndex: 'title',
+          scopedSlots: {customRender: 'largeText'}
         },
         {
           title: '描述',
           align: 'left',
-          width: 180,
+          width: 240,
           dataIndex: 'describe',
           scopedSlots: {customRender: 'largeText'}
         },
         {
           title: '类型',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'type',
           customRender: function (text) {
             return text === 1 ? '有附件' : '无附件';
@@ -209,14 +210,14 @@ export default {
         {
           title: '状态',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'state',
           scopedSlots: {customRender: 'stateSlot'}
         },
         {
           title: '目标类型',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'receiverType',
           scopedSlots: {customRender: 'receiverTypeSlot'}
         },
@@ -230,7 +231,6 @@ export default {
         {
           title: '生效时间',
           align: 'center',
-          width: 120,
           dataIndex: 'sendTime',
           customRender: (value) => {
             return value || '--';
@@ -239,7 +239,6 @@ export default {
         {
           title: '开始时间',
           align: 'center',
-          width: 120,
           dataIndex: 'startTime',
           customRender: (value) => {
             return value || '--';
@@ -248,7 +247,6 @@ export default {
         {
           title: '结束时间',
           align: 'center',
-          width: 120,
           dataIndex: 'endTime',
           customRender: (value) => {
             return value || '--';
@@ -257,7 +255,6 @@ export default {
         {
           title: '创建时间',
           align: 'center',
-          width: 120,
           fixed: 'right',
           dataIndex: 'createTime',
           customRender: (value) => {
@@ -267,7 +264,7 @@ export default {
         {
           title: '创建人',
           align: 'center',
-          width: 100,
+          width: 120,
           fixed: 'right',
           dataIndex: 'createBy',
           customRender: (value) => {
@@ -277,7 +274,7 @@ export default {
         {
           title: '审核人',
           align: 'center',
-          width: 100,
+          width: 120,
           fixed: 'right',
           dataIndex: 'reviewBy',
           customRender: (value) => {
@@ -287,9 +284,9 @@ export default {
         {
           title: '操作',
           dataIndex: 'action',
-          width: 100,
           fixed: 'right',
           align: 'center',
+          width: 120,
           scopedSlots: {customRender: 'action'}
         }
       ],
