@@ -259,14 +259,14 @@ export default {
         //   dataIndex: 'bootTime'
         // },
         {
-          title: '状态更新时间',
+          title: '状态更新',
           align: 'center',
           width: 100,
           dataIndex: 'uploadTime'
         },
         {
           title: '操作',
-          width: 120,
+          width: 100,
           dataIndex: 'action',
           align: 'center',
           scopedSlots: {customRender: 'action'}

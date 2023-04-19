@@ -1,30 +1,32 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
-import cn.youai.basics.utils.SplitUtils;
-import cn.youai.basics.utils.StringUtils;
 import cn.youai.xiuzhen.game.entity.GameVps;
 import cn.youai.xiuzhen.game.monitor.DiskUsageInfo;
+import cn.youai.xiuzhen.game.monitor.ServerMonitor;
 import cn.youai.xiuzhen.game.service.IGameVpsService;
+import cn.youai.xiuzhen.game.service.IServerMonitorService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
+import net.dreamlu.mica.core.utils.$;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -37,6 +39,9 @@ import java.util.Map;
 @Api(tags = "虚拟主机")
 @RequestMapping("/game/vps")
 public class GameVpsController extends JeecgController<GameVps, IGameVpsService> {
+
+    @Autowired
+    private IServerMonitorService monitorService;
 
     @Value("${app.wgcloud.url}")
     private String wgcloudUrl;
@@ -53,7 +58,7 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
         Page<GameVps> page = new Page<>(pageNo, pageSize);
         DateRange createTimeRange = PageQueryUtils.parseRange(req.getParameterMap(), "createTime");
         IPage<GameVps> pageList = service.queryList(page, entity, createTimeRange);
-        pageList.getRecords().forEach(this::onload);
+        this.onload(pageList.getRecords());
         return Result.ok(pageList);
     }
 
@@ -100,8 +105,20 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
     }
 
     @Override
-    protected void onload(GameVps entity) {
-        super.onload(entity);
-        entity.setDiskList(DiskUsageInfo.parse(entity.getDiskUsage()));
+    protected void onload(List<GameVps> pageList) {
+        super.onload(pageList);
+        if (CollUtil.isEmpty(pageList)) {
+            return;
+        }
+
+        List<ServerMonitor> serverMonitors = monitorService.queryList();
+        Map<String, ServerMonitor> map = serverMonitors.stream().collect(Collectors.toMap(ServerMonitor::getHostname, Function.identity(), (key1, key2) -> key2));
+        for (GameVps entity : pageList) {
+            ServerMonitor serverMonitor = map.get(entity.getHostname());
+            if (serverMonitor != null) {
+                $.copy(serverMonitor, entity);
+                entity.setDiskList(DiskUsageInfo.parse(serverMonitor.getDiskUsage()));
+            }
+        }
     }
 }

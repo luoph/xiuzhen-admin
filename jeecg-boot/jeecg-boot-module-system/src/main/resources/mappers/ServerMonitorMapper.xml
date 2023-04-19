@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.game.mapper.ServerMonitorMapper">
+
+    <select id="queryList" resultType="cn.youai.xiuzhen.game.monitor.ServerMonitor">
+        SELECT s.`HOST_NAME_EXT`                     AS `host_name`,
+               s.`PLATFORM`                          AS `platform`,
+               s.`TOTAL_MEM`                         AS `total_mem`,
+               s.`CPU_CORE_NUM`                      AS `cpu_core_num`,
+               s.`CPU_PER`                           AS `cpu_per`,
+               s.`MEM_PER`                           AS `mem_per`,
+               s.`FIVE_LOAD`                         AS `five_load`,
+               s.`FIFTEEN_LOAD`                      AS `fifteen_load`,
+               s.`BOOT_TIME`                         AS `boot_time`,
+               s.`CREATE_TIME`                       AS `upload_time`,
+               (SELECT GROUP_CONCAT(CONCAT_WS(':', d.`FILE_STSTEM`, d.`DISK_SIZE`, d.`USED`, d.`AVAIL`))
+                FROM `disk_state` d
+                         INNER JOIN (SELECT d.`HOST_NAME`,
+                                            d.`FILE_STSTEM`,
+                                            MAX(d.`id`) AS `id`
+                                     FROM `disk_state` d
+                                     WHERE d.`FILE_STSTEM` NOT LIKE '/boot%'
+                                       AND d.`FILE_STSTEM` NOT LIKE '/snap%'
+                                     GROUP BY `HOST_NAME`, `FILE_STSTEM`) AS b
+                                    ON d.`id` = b.`id`
+                WHERE s.`HOST_NAME` = d.`HOST_NAME`) AS `disk_usage`
+        FROM `system_info` s
+        GROUP BY s.`HOST_NAME_EXT`
+    </select>
+
+</mapper>

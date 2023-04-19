@@ -9,27 +9,8 @@
         (SELECT GROUP_CONCAT(s.`id`) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS
         game_server_ids,
         (SELECT COUNT(*) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_num,
-        (SELECT GROUP_CONCAT(g.`id`) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_ids,
-        s.`PLATFORM` AS `platform`,
-        s.`TOTAL_MEM` AS `total_mem`,
-        s.`CPU_CORE_NUM` AS `cpu_core_num`,
-        s.`CPU_PER` AS `cpu_per`,
-        s.`MEM_PER` AS `mem_per`,
-        s.`FIVE_LOAD` AS `five_load`,
-        s.`FIFTEEN_LOAD` AS `fifteen_load`,
-        s.`BOOT_TIME` AS `boot_time`,
-        s.`CREATE_TIME` AS `upload_time`,
-        (SELECT GROUP_CONCAT(CONCAT_WS(':', d.`FILE_STSTEM`, d.`DISK_SIZE`, d.`USED`, d.`AVAIL`)) FROM
-        `wgcloud`.`disk_state` d
-        INNER JOIN (
-        SELECT d.`HOST_NAME`, d.`FILE_STSTEM`, MAX(d.`id`) AS `id`, MAX(`CREATE_TIME`) AS `CREATE_TIME` FROM
-        `wgcloud`.`disk_state` d
-        WHERE d.`FILE_STSTEM` NOT LIKE '/boot%' AND d.`FILE_STSTEM` NOT LIKE '/snap%'
-        GROUP BY `HOST_NAME`, `FILE_STSTEM`) AS b
-        ON d.`id`= b.`id` WHERE s.`HOST_NAME` = d.`HOST_NAME`
-        ) AS `disk_usage`
+        (SELECT GROUP_CONCAT(g.`id`) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_ids
         FROM `game_vps` v
-        LEFT JOIN `wgcloud`.`system_info` s ON v.`hostname` = s.`HOST_NAME_EXT`
         <where>
             <if test="entity != null">
                 <if test="entity.name != null and entity.name != ''">

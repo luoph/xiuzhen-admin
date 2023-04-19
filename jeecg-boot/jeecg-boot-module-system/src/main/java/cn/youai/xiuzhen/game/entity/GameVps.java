@@ -126,9 +126,6 @@ public class GameVps extends BaseEntity {
     private Date uploadTime;
 
     @TableField(exist = false)
-    private String diskUsage;
-
-    @TableField(exist = false)
     @Excel(name = "磁盘占用", width = 15)
     private List<DiskUsageInfo> diskList;
 }
