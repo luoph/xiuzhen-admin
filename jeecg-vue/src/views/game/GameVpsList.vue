@@ -99,15 +99,18 @@
           <a-tag color="blue">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
         </span>
         <span slot="perSlot" slot-scope="text, record">
-          <a-tag :color="text >= 80 ? 'red' : (text >= 60 ? 'orange': 'green')">{{ text }}</a-tag>
+            <a-progress type="circle" :width="70" :strokeWidth="8" stroke-linecap="square" :percent="text"
+                        :stroke-color="getPercentColor(text)"/>
         </span>
         <span slot="diskSlot" slot-scope="text, record">
            <div class="disk-usage-container">
             <li v-for="(item, index) in text">
-              <a-tag color="blue">{{ item.fileSystem }} </a-tag> {{ item.avail }} / {{ item.diskSize }}
+              <a-tag>{{ item.fileSystem }}</a-tag>
+              <a-tag :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag>
+              <a-tag>{{ item.diskSize }} </a-tag>
               <div class="disk-usage-progress">
-                <a-progress :percent="item.usedPer" size="small"
-                            :stroke-color="item.usedPer >= 80 ? '#ff1744': (item.usedPer >= 60 ? '#f57c00': '#00c853')"/>
+                <a-progress size="small" :strokeWidth="8" stroke-linecap="square" :percent="item.usedPer"
+                            :stroke-color="getPercentColor(item.usedPer)"/>
               </div>
               <a-divider v-if="index !== text.length - 1"/>
             </li>
@@ -166,7 +169,6 @@ export default {
           title: '公网ip',
           align: 'center',
           dataIndex: 'ip',
-          width: 140,
           customRender: (value) => {
             return value || '--';
           }
@@ -175,7 +177,6 @@ export default {
           title: '内网ip',
           align: 'center',
           dataIndex: 'lan',
-          width: 140,
           customRender: (value) => {
             return value || '--';
           }
@@ -299,6 +300,9 @@ export default {
       this.queryParam.createTime_begin = dateString[0];
       this.queryParam.createTime_end = dateString[1];
     },
+    getPercentColor(value) {
+      return value >= 80 ? '#FF5252' : (value >= 60 ? '#FFAB00' : '#00C853')
+    }
   }
 };
 </script>
@@ -311,11 +315,16 @@ export default {
 }
 
 .disk-usage-container {
-  min-width: 180px;
-  max-width: 320px;
+  min-width: 210px;
+  max-width: 360px;
 }
 
 .disk-usage-progress {
   margin: 0px 20px 0px 20px;
 }
+
+.circle-progress {
+  padding: 20px 20px 20px 20px;
+}
+
 </style>

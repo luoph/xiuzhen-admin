@@ -113,7 +113,7 @@ export default {
       description: '游戏Sdk渠道管理页面',
       gameList: [],
       isorter: {
-        column: 'createTime',
+        column: 'onlineTime',
         order: 'desc'
       },
       // 表头
