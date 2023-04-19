@@ -275,6 +275,8 @@ export default {
               text = '21-超值礼包';
             } else if (value === 22) {
               text = '22-神游特权卡';
+            } else if (value === 23) {
+              text = '23-gm特权卡';
             }
             return text;
           }

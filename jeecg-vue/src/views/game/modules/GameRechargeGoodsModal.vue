@@ -70,6 +70,7 @@
             <a-select-option :value="20">20-新战令</a-select-option>
             <a-select-option :value="21">21-超值礼包</a-select-option>
             <a-select-option :value="22">22-神游特权卡</a-select-option>
+            <a-select-option :value="23">23-gm特权卡</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
