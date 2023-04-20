@@ -179,6 +179,7 @@ export default {
         {
           title: '渠道名称',
           align: 'center',
+          width: 120,
           dataIndex: 'name'
         },
         {
@@ -204,7 +205,7 @@ export default {
         {
           title: '版本号',
           align: 'center',
-          width: 120,
+          width: 100,
           dataIndex: 'versionCode'
         },
         {
@@ -242,7 +243,7 @@ export default {
         {
           title: '版本更新时间',
           align: 'center',
-          width: 240,
+          width: 180,
           dataIndex: 'versionUpdateTime'
         },
         {
