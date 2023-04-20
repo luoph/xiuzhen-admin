@@ -16,9 +16,9 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+            <a-form-item label="上线时间">
+              <a-range-picker v-model="queryParam.onlineTimeRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -199,13 +199,13 @@ export default {
       param.pageSize = this.ipagination.pageSize;
 
       // 范围参数不传递后台
-      delete param.createTimeRange;
+      delete param.onlineTimeRange;
       return filterObj(param);
     },
-    onCreateDateChange: function (value, dateString) {
-      console.log(dateString[0], dateString[1]);
-      this.queryParam.createTime_begin = dateString[0];
-      this.queryParam.createTime_end = dateString[1];
+    onDateChange: function (value, dateString) {
+      // console.log(dateString[0], dateString[1]);
+      this.queryParam.onlineTime_begin = dateString[0];
+      this.queryParam.onlineTime_end = dateString[1];
     },
     handleSync() {
       this.handleConfrimRequest(this.url.sync,
