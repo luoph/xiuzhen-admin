@@ -317,6 +317,19 @@ export const JeecgListMixin = {
       this.$refs.modalForm.title = "新增";
       this.$refs.modalForm.disableSubmit = false;
     },
+    handleCopy: function (record) {
+      let entity = Object.assign({}, record);
+      if (entity != null) {
+        delete entity.id;
+        delete entity.createTime;
+        delete entity.createBy;
+        delete entity.updateTime;
+        delete entity.updateBy;
+      }
+      this.$refs.modalForm.edit(entity);
+      this.$refs.modalForm.title = "新增";
+      this.$refs.modalForm.disableSubmit = false;
+    },
     handleTableChange(pagination, filters, sorter) {
       // 分页、排序、筛选变化时触发
       // TODO 筛选

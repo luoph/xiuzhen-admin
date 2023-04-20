@@ -115,6 +115,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a @click="handlePreview(record)">公告预览</a>
           <a-divider type="vertical"/>
           <a @click="refreshNotice(record)">刷新公告</a>
@@ -204,13 +206,13 @@ export default {
         {
           title: '开始时间',
           align: 'center',
-          width: 120,
+          width: 200,
           dataIndex: 'beginTime'
         },
         {
           title: '结束时间',
           align: 'center',
-          width: 120,
+          width: 200,
           dataIndex: 'endTime'
         },
         {

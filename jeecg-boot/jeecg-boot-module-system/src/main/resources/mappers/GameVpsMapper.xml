@@ -4,12 +4,12 @@
 
     <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GameVps">
         SELECT
+        v.*,
         (SELECT COUNT(*) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS game_server_num,
         (SELECT GROUP_CONCAT(s.`id`) FROM `game_server` s WHERE v.`ip` = s.`host` AND s.`outdated` = 0) AS
         game_server_ids,
         (SELECT COUNT(*) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_num,
-        (SELECT GROUP_CONCAT(g.`id`) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_ids,
-        v.*
+        (SELECT GROUP_CONCAT(g.`id`) FROM `game_server_group` g WHERE v.`ip` = g.`host`) AS cross_server_ids
         FROM `game_vps` v
         <where>
             <if test="entity != null">
@@ -35,8 +35,7 @@
                 <if test="null != createTimeRange.end"><![CDATA[AND v.`create_time` <= #{createTimeRange.end}]]></if>
             </if>
         </where>
-        GROUP BY v.`ip`
-        ORDER BY v.`id`
+        GROUP BY v.`hostname`
     </select>
 
 </mapper>

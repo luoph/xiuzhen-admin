@@ -93,9 +93,6 @@ export default {
           dataIndex: 'countDate',
           width: '6%',
           align: 'center',
-          customRender: function (text) {
-            return !text ? '' : text.length > 10 ? text.substr(0, 10) : text;
-          }
         },
         {
           title: '渠道',

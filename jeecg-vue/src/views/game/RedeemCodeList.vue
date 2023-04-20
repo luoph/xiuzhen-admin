@@ -99,7 +99,7 @@
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
 
-        <span slot="statuSlot" slot-scope="text">
+        <span slot="statusSlot" slot-scope="text">
           <a-tag v-if="text === 0" color="red">无效</a-tag>
           <a-tag v-else color="green">有效</a-tag>
         </span>
@@ -107,6 +107,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -163,6 +165,7 @@ export default {
         {
           title: '激活码活动id',
           align: 'center',
+          width: 120,
           dataIndex: 'activityId'
         },
         {
@@ -184,11 +187,12 @@ export default {
           title: '状态',
           align: 'center',
           dataIndex: 'status',
-          scopedSlots: { customRender: 'statuSlot' }
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '创建时间',
           align: 'center',
+          width: 240,
           dataIndex: 'createTime'
         },
         {

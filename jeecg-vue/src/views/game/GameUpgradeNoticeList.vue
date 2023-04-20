@@ -20,12 +20,14 @@
           <template v-if="toggleSearchStatus">
             <a-col :md="12" :sm="8">
               <a-form-item label="开始时间">
-                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
+                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
               </a-form-item>
             </a-col>
             <a-col :md="12" :sm="8">
               <a-form-item label="结束时间">
-                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
+                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
+                                :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>
               </a-form-item>
             </a-col>
           </template>
@@ -35,7 +37,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -47,19 +49,20 @@
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('更新公告')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
+                @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete" />
+            <a-icon type="delete"/>
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down" />
+          <a-icon type="down"/>
         </a-button>
       </a-dropdown>
     </div>
@@ -67,8 +70,9 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -89,11 +93,13 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
         <span slot="serverIdSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -101,10 +107,12 @@
         </span>
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical" />
+          <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a @click="resumeJob(record)" v-if="record.status === 1">已启动</a>
-          <a @click="resumeJob(record)" v-if="record.status === 0">已关闭</a>
-          <a-divider type="vertical" />
+          <a @click="resumeJob(record)" v-else>已关闭</a>
+          <a-divider type="vertical"/>
           <!--                    <a-dropdown>-->
           <!--                        <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>-->
           <!--                        <a-menu slot="overlay">-->
@@ -125,10 +133,10 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameUpgradeNoticeModal from './modules/GameUpgradeNoticeModal';
 import JDate from '@/components/jeecg/JDate.vue';
-import { getAction } from '@api/manage';
+import {getAction} from '@api/manage';
 
 export default {
   name: 'GameUpgradeNoticeList',
@@ -154,19 +162,19 @@ export default {
         },
         {
           title: '标题',
-          align: 'center',
+          align: 'left',
           dataIndex: 'title'
         },
         {
           title: '奖励',
-          align: 'center',
+          align: 'left',
           dataIndex: 'reward'
         },
         {
           title: '服务器',
           align: 'center',
           dataIndex: 'serverIds',
-          scopedSlots: { customRender: 'serverIdSlot' }
+          scopedSlots: {customRender: 'serverIdSlot'}
         },
         {
           title: '开始时间',
@@ -192,7 +200,7 @@ export default {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: { customRender: 'action' }
+          scopedSlots: {customRender: 'action'}
         }
       ],
       url: {
@@ -227,7 +235,7 @@ export default {
     handleSyncCampaign: function (record) {
       const that = this;
       that.confirmLoading = true;
-      getAction(that.url.severSync, { id: record.id })
+      getAction(that.url.severSync, {id: record.id})
         .then((res) => {
           if (res.success) {
             that.$message.success('同步成功');
@@ -256,7 +264,7 @@ export default {
         title: res.title,
         content: res.content,
         onOk: function () {
-          getAction(that.url.openOrClose, { id: record.id }).then((res) => {
+          getAction(that.url.openOrClose, {id: record.id}).then((res) => {
             if (res.success) {
               that.$message.success(res.message);
               that.loadData();

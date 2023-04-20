@@ -248,7 +248,7 @@ export default {
           title: '封禁原因',
           align: 'center',
           dataIndex: 'reason',
-          width: 320,
+          width: 240,
           scopedSlots: { customRender: 'largeText' }
         },
         {

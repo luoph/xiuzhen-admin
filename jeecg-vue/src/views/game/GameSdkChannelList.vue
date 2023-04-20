@@ -10,15 +10,15 @@
                                    dict="game_channel,name,simple_name"/>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="Sdk渠道">
               <a-input placeholder="请输入Sdk渠道" v-model="queryParam.sdkChannel"/>
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+            <a-form-item label="上线时间">
+              <a-range-picker v-model="queryParam.onlineTimeRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -74,6 +74,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -111,7 +113,7 @@ export default {
       description: '游戏Sdk渠道管理页面',
       gameList: [],
       isorter: {
-        column: 'createTime',
+        column: 'onlineTime',
         order: 'desc'
       },
       // 表头
@@ -129,7 +131,6 @@ export default {
         {
           title: '名称',
           align: 'center',
-          width: 80,
           dataIndex: 'name',
           customRender: (value) => {
             return value || '--';
@@ -138,7 +139,6 @@ export default {
         {
           title: 'Sdk渠道',
           align: 'center',
-          width: 100,
           dataIndex: 'sdkChannel',
           customRender: (value) => {
             return value || '--';
@@ -147,7 +147,6 @@ export default {
         {
           title: '父渠道',
           align: 'center',
-          width: 100,
           dataIndex: 'channel',
           customRender: (value) => {
             return value || '--';
@@ -156,7 +155,7 @@ export default {
         {
           title: '上线时间',
           align: 'center',
-          width: 120,
+          width: 240,
           dataIndex: 'onlineTime',
           customRender: (value) => {
             return value || '--';
@@ -165,7 +164,6 @@ export default {
         {
           title: '备注',
           align: 'center',
-          width: 120,
           dataIndex: 'remark',
           customRender: (value) => {
             return value || '--';
@@ -201,13 +199,13 @@ export default {
       param.pageSize = this.ipagination.pageSize;
 
       // 范围参数不传递后台
-      delete param.createTimeRange;
+      delete param.onlineTimeRange;
       return filterObj(param);
     },
-    onCreateDateChange: function (value, dateString) {
-      console.log(dateString[0], dateString[1]);
-      this.queryParam.createTime_begin = dateString[0];
-      this.queryParam.createTime_end = dateString[1];
+    onDateChange: function (value, dateString) {
+      // console.log(dateString[0], dateString[1]);
+      this.queryParam.onlineTime_begin = dateString[0];
+      this.queryParam.onlineTime_end = dateString[1];
     },
     handleSync() {
       this.handleConfrimRequest(this.url.sync,

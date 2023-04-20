@@ -130,7 +130,8 @@
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <!--          <a-divider type="vertical"/>-->
+          <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
           <!--          <a-dropdown>-->
           <!--            <a class="ant-dropdown-link"> 更多 <a-icon type="down"/> </a>-->
           <!--            <a-menu slot="overlay">-->
@@ -149,9 +150,8 @@
           <a-tag v-if="record.isMaintain === 1" color="red">维护中</a-tag>
           <a-tag v-else color="green">运行中</a-tag>
         </span>
-        <span slot="gmSlot" slot-scope="text, record">
-          <a-tag v-if="record.gmStatus === 0" color="red">OFF</a-tag>
-          <a-tag v-else-if="record.gmStatus === 1" color="green">ON</a-tag>
+        <span slot="switchSlot" slot-scope="text, record">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
         </span>
         <span slot="statusSlot" slot-scope="text, record">
           <a-tag v-if="record.status === 0" color="blue">正常</a-tag>
@@ -163,10 +163,6 @@
           <a-tag v-if="record.outdated === 0" color="green">上线中</a-tag>
           <a-tag v-else-if="record.outdated === 1" color="red">已合并</a-tag>
           <a-tag v-else-if="record.outdated === 2" color="red">已下线</a-tag>
-        </span>
-        <span slot="stopServerRefundSlot" slot-scope="text, record">
-          <a-tag v-if="record.stopServerRefund === 0" color="red">OFF</a-tag>
-          <a-tag v-else-if="record.stopServerRefund === 1" color="green">ON</a-tag>
         </span>
       </a-table>
     </div>
@@ -236,19 +232,16 @@ export default {
         {
           title: '服务器ip',
           align: 'left',
-          width: 140,
           dataIndex: 'host'
         },
         {
           title: '连接地址',
           align: 'left',
-          width: 160,
           dataIndex: 'loginUrl'
         },
         {
           title: '在线玩家',
           align: 'center',
-          width: 60,
           dataIndex: 'onlineNum',
           customRender: (text) => {
             return text === 0 ? text : text || 'N/A';
@@ -284,7 +277,6 @@ export default {
         {
           title: '上线时间',
           align: 'center',
-          width: 120,
           dataIndex: 'onlineTime'
         },
         {
@@ -302,21 +294,19 @@ export default {
         {
           title: '删档返还',
           align: 'center',
-          width: 60,
           dataIndex: 'stopServerRefund',
-          scopedSlots: {customRender: 'stopServerRefundSlot'}
+          scopedSlots: {customRender: 'switchSlot'}
         },
         {
           title: 'GM开关',
           align: 'center',
           width: 80,
           dataIndex: 'gmStatus',
-          scopedSlots: {customRender: 'gmSlot'}
+          scopedSlots: {customRender: 'switchSlot'}
         },
         {
           title: 'GM地址',
           align: 'left',
-          width: 120,
           dataIndex: 'gmUrl'
         },
         // {
@@ -330,16 +320,16 @@ export default {
         // },
         {
           title: '备注',
-          align: 'left',
+          align: 'center',
           fixed: 'right',
-          width: 100,
+          width: 120,
           dataIndex: 'remark'
         },
         {
           title: '操作',
           align: 'center',
           fixed: 'right',
-          width: 80,
+          width: 120,
           dataIndex: 'action',
           scopedSlots: {customRender: 'action'}
         }

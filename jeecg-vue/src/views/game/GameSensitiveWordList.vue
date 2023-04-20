@@ -88,6 +88,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
@@ -102,7 +104,7 @@
       </a-table>
     </div>
 
-    <GameSensitiveWordModal ref="modalForm" @ok="modalFormOk"></GameSensitiveWordModal>
+    <GameSensitiveWordModal ref="modalForm" @ok="modalFormOk"/>
   </a-card>
 </template>
 
@@ -137,6 +139,7 @@ export default {
         {
           title: 'id',
           align: 'center',
+          width: 140,
           dataIndex: 'id'
         },
         {
@@ -152,17 +155,20 @@ export default {
         {
           title: '创建时间',
           align: 'center',
+          width: 240,
           dataIndex: 'createTime'
         },
         {
           title: '创建人',
           align: 'center',
+          width: 120,
           dataIndex: 'createBy'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 240,
           scopedSlots: {customRender: 'action'}
         }
       ],

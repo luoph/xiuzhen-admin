@@ -77,12 +77,24 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a v-if="record.status === 0" @click="changeStatus(record, 1)">开启审核</a>
           <a v-else @click="changeStatus(record, 0)">关闭审核</a>
+          <a-divider type="vertical"/>
+          <a-dropdown>
+            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a-menu slot="overlay">
+              <a-menu-item>
+                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
+                  <a>删除</a>
+                </a-popconfirm>
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
         </span>
-        <span slot="statusSlot" slot-scope="text, record">
-          <a-tag v-if="record.status === 0" color="red">OFF</a-tag>
-          <a-tag v-else-if="record.status === 1" color="green">ON</a-tag>
+        <span slot="switchSlot" slot-scope="text, record">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
         </span>
         <span slot="profileSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -172,7 +184,7 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'status',
-          scopedSlots: {customRender: 'statusSlot'}
+          scopedSlots: {customRender: 'switchSlot'}
         },
         {
           title: '备注',

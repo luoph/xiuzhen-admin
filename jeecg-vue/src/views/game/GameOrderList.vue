@@ -168,7 +168,6 @@ export default {
         {
           title: '玩家id',
           align: 'center',
-          width: 80,
           dataIndex: 'playerId'
         },
         {
@@ -183,7 +182,7 @@ export default {
         {
           title: '账号',
           align: 'center',
-          width: 80,
+          width: 160,
           dataIndex: 'account',
           customRender: (value) => {
             return value || '--';
@@ -192,7 +191,7 @@ export default {
         {
           title: '渠道',
           align: 'center',
-          width: 80,
+          width: 120,
           dataIndex: 'channel',
           customRender: (value) => {
             return value || '--';
@@ -222,13 +221,12 @@ export default {
         {
           title: '商品名称',
           align: 'center',
-          width: 80,
+          width: 120,
           dataIndex: 'productName'
         },
         {
           title: '平台订单号',
-          align: 'center',
-          width: 240,
+          align: 'left',
           dataIndex: 'queryId'
         },
         {
@@ -274,7 +272,6 @@ export default {
         {
           title: "ip地址",
           align: "center",
-          width: 80,
           dataIndex: "remoteIp",
           customRender: (value) => {
             return value || '--';
@@ -288,7 +285,6 @@ export default {
         {
           title: '支付时间',
           align: 'center',
-          width: 120,
           dataIndex: 'payTime',
           customRender: (value) => {
             return value || '--';
@@ -297,7 +293,6 @@ export default {
         {
           title: '发货时间',
           align: 'center',
-          width: 120,
           dataIndex: 'sendTime',
           customRender: (value) => {
             return value || '--';

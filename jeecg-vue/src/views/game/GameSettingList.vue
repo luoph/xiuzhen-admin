@@ -89,6 +89,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -135,29 +137,33 @@ export default {
           }
         },
         {
+          title: 'id',
+          align: 'center',
+          dataIndex: 'id'
+        },
+        {
           title: 'key',
           align: 'left',
-          width: 240,
+          width: 320,
           dataIndex: 'dictKey'
         },
         {
           title: 'value',
           align: 'left',
-          width: 400,
+          width: 480,
           dataIndex: 'dictValue',
           scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '描述',
           align: 'left',
-          width: 240,
           dataIndex: 'remark'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          width: 140,
+          width: 240,
           scopedSlots: { customRender: 'action' }
         }
       ],

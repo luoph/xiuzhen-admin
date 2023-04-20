@@ -81,10 +81,12 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="resumeJob(record)" v-if="record.status == 1">已启动</a>
-          <a @click="resumeJob(record)" v-if="record.status == 0">已关闭</a>
-          <a-divider type="vertical"/>
           <a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
+          <a @click="resumeJob(record)" v-if="record.status === 1">已启动</a>
+          <a @click="resumeJob(record)" v-else>已关闭</a>
         </span>
         <span slot="serverIdSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -139,7 +141,6 @@ export default {
         {
           title: '正文',
           align: 'left',
-          width: 400,
           dataIndex: 'noticeText'
         },
         {
@@ -151,6 +152,7 @@ export default {
         {
           title: '播放频率',
           align: 'center',
+          width: 120,
           dataIndex: 'frequency',
           customRender: (value) => {
             return value || '--';
@@ -159,6 +161,7 @@ export default {
         {
           title: '循环播放周期',
           align: 'center',
+          width: 120,
           dataIndex: 'cyclePeriod',
           customRender: (value) => {
             return value || '--';
@@ -167,6 +170,7 @@ export default {
         {
           title: '开始时间',
           align: 'center',
+          width: 200,
           dataIndex: 'beginTime',
           customRender: (value) => {
             return value || '--';
@@ -175,6 +179,7 @@ export default {
         {
           title: '结束时间',
           align: 'center',
+          width: 200,
           dataIndex: 'endTime',
           customRender: (value) => {
             return value || '--';

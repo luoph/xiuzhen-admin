@@ -127,17 +127,8 @@ export default {
     this.$form.createForm(this);
   },
   methods: {
-    add(record) {
-      if (record != null) {
-        delete record.id;
-        delete record.createTime;
-        delete record.createBy;
-        delete record.updateTime;
-        delete record.updateBy;
-        this.edit(record);
-      } else {
-        this.edit({});
-      }
+    add() {
+      this.edit({});
     },
     edit(record) {
       this.visible = true;

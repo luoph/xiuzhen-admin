@@ -11,7 +11,8 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="主机名">
-              <a-input placeholder="请输入主机名" v-model="queryParam.hostname"/>
+              <j-search-select-tag placeholder="请选择主机名" v-model="queryParam.hostname"
+                                   dict="game_vps,hostname,hostname"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -78,18 +79,13 @@
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
                :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
-          <!--          <a-divider type="vertical"/>-->
-          <!--          <a-dropdown>-->
-          <!--            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>-->
-          <!--            <a-menu slot="overlay">-->
-          <!--              <a-menu-item>-->
-          <!--                <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">-->
-          <!--                  <a>删除</a>-->
-          <!--                </a-popconfirm>-->
-          <!--              </a-menu-item>-->
-          <!--            </a-menu>-->
-          <!--          </a-dropdown>-->
+          <a-button type="primary" size="small" @click="handleEdit(record)"> 编辑 </a-button>
+          <a-divider/>
+          <a-button size="small" @click="handleCopy(record)"> 复制 </a-button>
+          <a-divider/>
+          <a-button type="danger" size="small">
+            <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"><a>删除</a></a-popconfirm>
+          </a-button>
         </span>
         <span slot="blueTags" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未配置</a-tag>
@@ -99,11 +95,32 @@
           <a-tag v-if="!text" color="red">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="green">{{ tag }}</a-tag>
         </span>
+        <span slot="loadSlot" slot-scope="text, record">
+          <a-tag color="blue">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
+        </span>
+        <span slot="perSlot" slot-scope="text, record">
+            <a-progress type="circle" :width="70" :strokeWidth="8" stroke-linecap="square" :percent="text"
+                        :stroke-color="getPercentColor(text)"/>
+        </span>
+        <span slot="diskSlot" slot-scope="text, record">
+           <div class="disk-usage-container">
+            <li v-for="(item, index) in text">
+              <a-tag>{{ item.fileSystem }}</a-tag>
+              <a-tag :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag>
+              <a-tag>{{ item.diskSize }} </a-tag>
+              <div class="disk-usage-progress">
+                <a-progress size="small" :strokeWidth="8" stroke-linecap="square" :percent="item.usedPer"
+                            :stroke-color="getPercentColor(item.usedPer)"/>
+              </div>
+              <a-divider v-if="index !== text.length - 1"/>
+            </li>
+           </div>
+        </span>
       </a-table>
     </div>
     <!-- table区域-end -->
     <!-- 表单区域 -->
-    <game-vps-modal ref="modalForm" @ok="modalFormOk"></game-vps-modal>
+    <game-vps-modal ref="modalForm" @ok="modalFormOk"/>
   </a-card>
 </template>
 
@@ -165,43 +182,92 @@ export default {
           }
         },
         {
-          title: '操作系统',
+          title: '系统',
           align: 'center',
-          dataIndex: 'os',
+          dataIndex: 'platform',
           customRender: (value) => {
             return value || '--';
           }
         },
+        // {
+        //   title: '平台',
+        //   align: 'center',
+        //   dataIndex: 'platform',
+        //   customRender: (value) => {
+        //     return value || '--';
+        //   }
+        // },
         {
-          title: '游戏服数量',
+          title: '区服数',
           align: 'center',
+          width: 60,
           dataIndex: 'gameServerNum'
         },
         {
-          title: '跨服数量',
+          title: '跨服数',
           align: 'center',
+          width: 60,
           dataIndex: 'crossServerNum'
         },
         {
-          title: '游戏服id',
-          align: 'left',
+          title: '区服id',
+          align: 'center',
           dataIndex: 'gameServerIds',
           scopedSlots: {customRender: 'blueTags'}
         },
         {
           title: '跨服id',
-          align: 'left',
+          align: 'center',
           dataIndex: 'crossServerIds',
           scopedSlots: {customRender: 'greenTags'}
         },
         {
-          title: '创建时间',
+          title: 'CPU核数',
           align: 'center',
-          dataIndex: 'createTime'
+          width: 80,
+          dataIndex: 'cpuCoreNum'
+        },
+        {
+          title: 'CPU%',
+          align: 'center',
+          width: 80,
+          dataIndex: 'cpuPer',
+          scopedSlots: {customRender: 'perSlot'}
+        },
+        {
+          title: '内存%',
+          align: 'center',
+          width: 80,
+          dataIndex: 'memPer',
+          scopedSlots: {customRender: 'perSlot'}
+        },
+        {
+          title: '磁盘占用',
+          align: 'center',
+          dataIndex: 'diskList',
+          scopedSlots: {customRender: 'diskSlot'}
+        },
+        {
+          title: '负载(5/15)',
+          align: 'center',
+          width: 80,
+          dataIndex: '',
+          scopedSlots: {customRender: 'loadSlot'}
+        },
+        // {
+        //   title: '启动时间',
+        //   align: 'center',
+        //   dataIndex: 'bootTime'
+        // },
+        {
+          title: '状态更新',
+          align: 'center',
+          width: 100,
+          dataIndex: 'uploadTime'
         },
         {
           title: '操作',
-          width: 80,
+          width: 100,
           dataIndex: 'action',
           align: 'center',
           scopedSlots: {customRender: 'action'}
@@ -234,10 +300,31 @@ export default {
       this.queryParam.createTime_begin = dateString[0];
       this.queryParam.createTime_end = dateString[1];
     },
+    getPercentColor(value) {
+      return value >= 80 ? '#FF5252' : (value >= 60 ? '#FFAB00' : '#00C853')
+    }
   }
 };
 </script>
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.ant-divider-horizontal {
+  margin: 6px 0 6px 0;
+}
+
+.disk-usage-container {
+  min-width: 210px;
+  max-width: 360px;
+}
+
+.disk-usage-progress {
+  margin: 0px 20px 0px 20px;
+}
+
+.circle-progress {
+  padding: 20px 20px 20px 20px;
+}
+
 </style>

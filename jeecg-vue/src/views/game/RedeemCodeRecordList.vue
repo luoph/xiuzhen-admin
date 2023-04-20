@@ -159,12 +159,18 @@ export default {
         {
           title: '渠道',
           align: 'center',
-          dataIndex: 'channel'
+          dataIndex: 'channel',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: 'Sdk渠道',
           align: 'center',
-          dataIndex: 'sdkChannel'
+          dataIndex: 'sdkChannel',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '玩家id',
@@ -184,17 +190,22 @@ export default {
         {
           title: '兑换IP',
           align: 'center',
-          dataIndex: 'remoteIp'
+          dataIndex: 'remoteIp',
+          customRender: (value) => {
+            return value || '--';
+          }
         },
         {
           title: '创建时间',
           align: 'center',
+          width: 240,
           dataIndex: 'createTime'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 180,
           scopedSlots: {customRender: 'action'}
         }
       ],

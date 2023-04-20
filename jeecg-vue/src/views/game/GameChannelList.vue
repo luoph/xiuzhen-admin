@@ -82,6 +82,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical"/>
+          <a @click="handleCopy(record)">复制</a>
+          <a-divider type="vertical"/>
           <a @click="editChannelServer(record)">区服列表</a>
           <a-divider type="vertical"/>
           <a @click="updateChannelServer(record)">刷新区服</a>
@@ -107,16 +109,19 @@
           <a-tag v-if="!text" color="red">未配置</a-tag>
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
+        <span slot="switchSlot" slot-scope="text, record">
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
+        </span>
       </a-table>
     </div>
     <!-- table区域-end -->
 
-    <game-channel-modal ref="modalForm" @ok="modalFormOk"></game-channel-modal>
+    <game-channel-modal ref="modalForm" @ok="modalFormOk"/>
     <!-- 编辑公告 -->
-    <game-notice-modal ref="noticeModal" @ok="modalFormOk"></game-notice-modal>
+    <game-notice-modal ref="noticeModal" @ok="modalFormOk"/>
     <!-- html预览 -->
-    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"></game-html-preview-modal>
-    <game-channel-server-list ref="channelServerList"></game-channel-server-list>
+    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"/>
+    <game-channel-server-list ref="channelServerList"/>
   </a-card>
 </template>
 
@@ -174,19 +179,17 @@ export default {
         {
           title: '渠道名称',
           align: 'center',
-          width: 100,
           dataIndex: 'name'
         },
         {
           title: '唯一标识',
           align: 'center',
-          width: 100,
           dataIndex: 'simpleName'
         },
         {
           title: '游戏编号',
           align: 'center',
-          width: 120,
+          width: 140,
           dataIndex: 'gameId',
           customRender: (text) => {
             return filterGameIdText(this.gameList, text);
@@ -201,7 +204,7 @@ export default {
         {
           title: '版本号',
           align: 'center',
-          width: 80,
+          width: 120,
           dataIndex: 'versionCode'
         },
         {
@@ -228,38 +231,30 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'testLogin',
-          customRender: function (text) {
-            if (text === 0) {
-              return '关闭';
-            } else if (text === 1) {
-              return '开启';
-            }
-          }
+          scopedSlots: {customRender: 'switchSlot'},
         },
         {
           title: 'IP白名单',
           align: 'left',
-          width: 280,
           dataIndex: 'ipWhitelist',
           scopedSlots: {customRender: 'splitTags'}
         },
         {
           title: '版本更新时间',
           align: 'center',
-          width: 120,
+          width: 240,
           dataIndex: 'versionUpdateTime'
         },
         {
           title: '备注',
           align: 'center',
-          width: 120,
           dataIndex: 'remark'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
-          width: 200,
+          width: 220,
           scopedSlots: {customRender: 'action'}
         }
       ],

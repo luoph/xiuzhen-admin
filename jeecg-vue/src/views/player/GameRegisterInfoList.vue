@@ -161,6 +161,7 @@ export default {
         {
           title: '区服id',
           align: 'center',
+          width: 100,
           dataIndex: 'serverId'
         },
         {
@@ -236,12 +237,14 @@ export default {
         {
           title: '创建时间',
           align: 'center',
+          width: 200,
           dataIndex: 'createTime'
         },
         {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
+          width: 120,
           scopedSlots: {customRender: 'action'}
         }
       ],
