@@ -199,20 +199,19 @@ export default {
         {
           title: '公告内容',
           align: 'left',
-          width: 600,
           dataIndex: 'content',
           scopedSlots: {customRender: 'htmlSlot'}
         },
         {
           title: '开始时间',
           align: 'center',
-          width: 200,
+          width: 180,
           dataIndex: 'beginTime'
         },
         {
           title: '结束时间',
           align: 'center',
-          width: 200,
+          width: 180,
           dataIndex: 'endTime'
         },
         {
