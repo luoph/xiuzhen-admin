@@ -8,12 +8,14 @@ import java.util.Set;
 
 /**
  * 通用api
+ *
  * @author: jeecg-boot
  */
 public interface CommonAPI {
 
     /**
      * 1查询用户角色信息
+     *
      * @param username
      * @return
      */
@@ -22,6 +24,7 @@ public interface CommonAPI {
 
     /**
      * 2查询用户权限信息
+     *
      * @param username
      * @return
      */
@@ -45,6 +48,7 @@ public interface CommonAPI {
 
     /**
      * 5根据用户账号查询用户信息
+     *
      * @param username
      * @return
      */
@@ -53,6 +57,7 @@ public interface CommonAPI {
 
     /**
      * 6字典表的 翻译
+     *
      * @param table
      * @param text
      * @param code
@@ -63,6 +68,7 @@ public interface CommonAPI {
 
     /**
      * 7普通字典的翻译
+     *
      * @param code
      * @param key
      * @return
@@ -71,8 +77,9 @@ public interface CommonAPI {
 
     /**
      * 8查询数据权限
-     * @param component 组件
-     * @param username 用户名
+     *
+     * @param component   组件
+     * @param username    用户名
      * @param requestPath 前段请求地址
      * @return
      */
@@ -81,6 +88,7 @@ public interface CommonAPI {
 
     /**
      * 9查询用户信息
+     *
      * @param username
      * @return
      */
@@ -88,6 +96,7 @@ public interface CommonAPI {
 
     /**
      * 10获取数据字典
+     *
      * @param code
      * @return
      */
@@ -95,6 +104,7 @@ public interface CommonAPI {
 
     /**
      * 获取有效的数据字典项
+     *
      * @param code
      * @return
      */
@@ -102,6 +112,7 @@ public interface CommonAPI {
 
     /**
      * 13获取表数据字典
+     *
      * @param table
      * @param text
      * @param code
@@ -111,18 +122,20 @@ public interface CommonAPI {
 
     /**
      * 14 普通字典的翻译，根据多个dictCode和多条数据，多个以逗号分割
+     *
      * @param dictCodes 例如：user_status,sex
-     * @param keys 例如：1,2,0
+     * @param keys      例如：1,2,0
      * @return
      */
     Map<String, List<DictModel>> translateManyDict(String dictCodes, String keys);
 
     /**
      * 15 字典表的 翻译，可批量
+     *
      * @param table
      * @param text
      * @param code
-     * @param keys 多个用逗号分割
+     * @param keys  多个用逗号分割
      * @return
      */
     List<DictModel> translateDictFromTableByKeys(String table, String text, String code, String keys);

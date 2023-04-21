@@ -334,7 +334,7 @@ public class OssBootUtil {
         } else {
             filePath = "https://" + bucketName + "." + endPoint + SymbolConstant.SINGLE_SLASH + fileUrl;
         }
-        PutObjectResult result = ossClient.putObject(bucketName, fileUrl.toString(),stream);
+        PutObjectResult result = ossClient.putObject(bucketName, fileUrl,stream);
         // 设置权限(公开读)
         ossClient.setBucketAcl(bucketName, CannedAccessControlList.PublicRead);
         if (result != null) {

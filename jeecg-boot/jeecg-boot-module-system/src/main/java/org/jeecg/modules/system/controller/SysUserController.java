@@ -91,10 +91,12 @@ public class SysUserController extends JeecgController<SysUser, ISysUserService>
     /**
      * 获取用户列表数据
      */
-    @PermissionData(pageComponent = "system/UserList")
+    @PermissionData(value = "system/UserList")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Result<IPage<SysUser>> queryPageList(SysUser user, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                                @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<IPage<SysUser>> queryPageList(SysUser user,
+                                                @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                                @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                                HttpServletRequest req) {
         Result<IPage<SysUser>> result = new Result<IPage<SysUser>>();
         QueryWrapper<SysUser> queryWrapper = QueryGenerator.initQueryWrapper(user, req.getParameterMap());
 

@@ -1,6 +1,8 @@
 package cn.youai.xiuzhen.game.monitor;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.jeecgframework.poi.excel.annotation.Excel;
@@ -18,6 +20,12 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 public class ServerMonitor {
+    /**
+     * 自增主键
+     */
+    @TableId(type = IdType.AUTO)
+    private java.lang.Long id;
+
     @TableField(exist = false)
     @Excel(name = "hostname", width = 15)
     private String hostname;

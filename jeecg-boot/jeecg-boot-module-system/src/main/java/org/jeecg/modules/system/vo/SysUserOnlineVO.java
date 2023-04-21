@@ -1,16 +1,14 @@
 package org.jeecg.modules.system.vo;
 
-import java.util.Date;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.jeecg.common.aspect.annotation.Dict;
+import org.jeecg.common.constant.TimeConstant;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.Data;
+import java.util.Date;
 
 /**
- *
  * @Author: chenli
  * @Date: 2020-06-07
  * @Version: V1.0
@@ -45,8 +43,8 @@ public class SysUserOnlineVO {
     /**
      * 生日
      */
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(timezone = TimeConstant.DEFAULT_TIMEZONE, pattern = TimeConstant.DEFAULT_DATE_FORMAT)
+    @DateTimeFormat(pattern = TimeConstant.DEFAULT_DATE_FORMAT)
     private Date birthday;
 
     /**

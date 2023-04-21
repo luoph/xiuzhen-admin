@@ -8,6 +8,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.jeecg.common.constant.CommonConstant;
 import org.jeecg.common.constant.DataBaseConstant;
 import org.jeecg.common.constant.SymbolConstant;
+import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.exception.JeecgBootException;
 import org.jeecg.common.system.util.JeecgDataAutorUtils;
 import org.jeecg.common.system.util.JwtUtil;
@@ -83,11 +84,6 @@ public class QueryGenerator {
     public static final String LIKE_MYSQL_SPECIAL_STRS = "_,%";
 
     /**
-     * 日期格式化yyyy-MM-dd
-     */
-    public static final String YYYY_MM_DD = "yyyy-MM-dd";
-
-    /**
      * to_date
      */
     public static final String TO_DATE = "to_date";
@@ -100,7 +96,7 @@ public class QueryGenerator {
     private static SimpleDateFormat getTime() {
         SimpleDateFormat time = LOCAL.get();
         if (time == null) {
-            time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            time = new SimpleDateFormat(TimeConstant.DEFAULT_TIME_FORMAT);
             LOCAL.set(time);
         }
         return time;
@@ -131,7 +127,6 @@ public class QueryGenerator {
      * <br>3.也可以不使用这个方法直接调用 {@link #initQueryWrapper}直接获取实例
      */
     public static void installMplus(QueryWrapper<?> queryWrapper, Object searchObj, Map<String, String[]> parameterMap) {
-
         /*
          * 注意:权限查询由前端配置数据规则 当一个人有多个所属部门时候 可以在规则配置包含条件 orgCode 包含 #{sys_org_code}
          * 但是不支持在自定义SQL中写orgCode in #{sys_org_code}
@@ -144,7 +139,9 @@ public class QueryGenerator {
         // 权限规则自定义SQL表达式
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
-                queryWrapper.and(i -> i.apply(getSqlRuleValue(ruleMap.get(c).getRuleValue())));
+                String ruleValue = ruleMap.get(c).getRuleValue();
+                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                queryWrapper.and(i -> i.apply(sqlRuleValue));
             }
         }
 
@@ -152,10 +149,10 @@ public class QueryGenerator {
         // update-begin--Author:taoyan  Date:20200923 for：issues/1671 如果字段加注解了@TableField(exist = false),不走DB查询-------
         // 定义实体字段和数据库字段名称的映射 高级查询中 只能获取实体字段 如果设置TableField注解 那么查询条件会出问题
         Map<String, String> fieldColumnMap = new HashMap<>(5);
-        for (int i = 0; i < origDescriptors.length; i++) {
+        for (PropertyDescriptor origDescriptor : origDescriptors) {
             // aliasName = origDescriptors[i].getName();  mybatis  不存在实体属性 不用处理别名的情况
-            name = origDescriptors[i].getName();
-            type = origDescriptors[i].getPropertyType().toString();
+            name = origDescriptor.getName();
+            type = origDescriptor.getPropertyType().toString();
             try {
                 if (judgedIsUselessField(name) || !PropertyUtils.isReadable(searchObj, name)) {
                     continue;
@@ -170,7 +167,7 @@ public class QueryGenerator {
                 fieldColumnMap.put(name, column);
                 // 数据权限查询
                 if (ruleMap.containsKey(name)) {
-                    addRuleToQueryWrapper(ruleMap.get(name), column, origDescriptors[i].getPropertyType(), queryWrapper);
+                    addRuleToQueryWrapper(ruleMap.get(name), column, origDescriptor.getPropertyType(), queryWrapper);
                 }
                 // 区间查询
                 doIntervalQuery(queryWrapper, parameterMap, type, name, column);
@@ -218,7 +215,6 @@ public class QueryGenerator {
         doSuperQuery(queryWrapper, parameterMap, fieldColumnMap);
         // update-end--Author:taoyan  Date:20200923 for：issues/1671 如果字段加注解了@TableField(exist = false),不走DB查询-------
     }
-
 
     /**
      * 区间查询
@@ -352,7 +348,7 @@ public class QueryGenerator {
                                 && oConvertUtils.isNotEmpty(rule.getRule())
                                 && oConvertUtils.isNotEmpty(rule.getVal())) {
 
-                            log.debug("SuperQuery ==> " + rule.toString());
+                            log.debug("SuperQuery ==> " + rule);
 
                             //update-begin-author:taoyan date:20201228 for: 【高级查询】 oracle 日期等于查询报错
                             Object queryValue = rule.getVal();
@@ -414,7 +410,7 @@ public class QueryGenerator {
             }
             // update-end--Author:sunjianlei  Date:20200325 for：高级查询的条件要用括号括起来，防止和用户的其他条件冲突 -------
         }
-        //log.info(" superQuery getCustomSqlSegment: "+ queryWrapper.getCustomSqlSegment());
+//        log.info("superQuery getCustomSqlSegment: "+ queryWrapper.getCustomSqlSegment());
     }
 
     /**
@@ -484,7 +480,7 @@ public class QueryGenerator {
 
         // update-begin--Author:taoyan  Date:20201229 for：initQueryWrapper组装sql查询条件错误 #284---------------------
         // 特殊处理：Oracle的表达式to_date('xxx','yyyy-MM-dd')含有逗号，会被识别为in查询，转为等于查询
-        if (rule == QueryRuleEnum.IN && val.indexOf(YYYY_MM_DD) >= 0 && val.indexOf(TO_DATE) >= 0) {
+        if (rule == QueryRuleEnum.IN && val.contains(TimeConstant.DEFAULT_DATE_FORMAT) && val.contains(TO_DATE)) {
             rule = QueryRuleEnum.EQ;
         }
         // update-end--Author:taoyan  Date:20201229 for：initQueryWrapper组装sql查询条件错误 #284---------------------
@@ -690,7 +686,7 @@ public class QueryGenerator {
      */
     public static Map<String, SysPermissionDataRuleModel> getRuleMap() {
         Map<String, SysPermissionDataRuleModel> ruleMap = new HashMap<>(5);
-        List<SysPermissionDataRuleModel> list = JeecgDataAutorUtils.loadDataSearchConditon();
+        List<SysPermissionDataRuleModel> list = JeecgDataAutorUtils.loadDataSearchCondition();
         if (list != null && list.size() > 0) {
             if (list.get(0) == null) {
                 return ruleMap;
@@ -706,6 +702,7 @@ public class QueryGenerator {
         return ruleMap;
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private static void addRuleToQueryWrapper(SysPermissionDataRuleModel dataRule, String name, Class propertyType, QueryWrapper<?> queryWrapper) {
         QueryRuleEnum rule = QueryRuleEnum.getByValue(dataRule.getRuleConditions());
         assert rule != null;
@@ -779,7 +776,7 @@ public class QueryGenerator {
         if (oConvertUtils.isEmpty(sql)) {
             return null;
         }
-        Set<String> varParams = new HashSet<String>();
+        Set<String> varParams = new HashSet<>();
         String regex = "\\#\\{\\w+\\}";
 
         Pattern p = Pattern.compile(regex);
@@ -994,8 +991,8 @@ public class QueryGenerator {
             }
         }
         String name, column;
-        for (int i = 0; i < origDescriptors.length; i++) {
-            name = origDescriptors[i].getName();
+        for (PropertyDescriptor origDescriptor : origDescriptors) {
+            name = origDescriptor.getName();
             if (judgedIsUselessField(name)) {
                 continue;
             }
@@ -1006,7 +1003,7 @@ public class QueryGenerator {
                 }
                 SysPermissionDataRuleModel dataRule = ruleMap.get(name);
                 QueryRuleEnum rule = QueryRuleEnum.getByValue(dataRule.getRuleConditions());
-                Class propType = origDescriptors[i].getPropertyType();
+                Class propType = origDescriptor.getPropertyType();
                 boolean isString = propType.equals(String.class);
                 Object value;
                 if (isString) {

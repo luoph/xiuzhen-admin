@@ -284,15 +284,15 @@ public class CommonUtils {
                 DatabaseMetaData md = connection.getMetaData();
                 String dbType = md.getDatabaseProductName().toUpperCase();
                 String sqlserver= "SQL SERVER";
-                if(dbType.indexOf(DataBaseConstant.DB_TYPE_MYSQL)>=0) {
+                if(dbType.contains(DataBaseConstant.DB_TYPE_MYSQL)) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_MYSQL;
-                }else if(dbType.indexOf(DataBaseConstant.DB_TYPE_ORACLE)>=0 ||dbType.indexOf(DataBaseConstant.DB_TYPE_DM)>=0) {
+                }else if(dbType.contains(DataBaseConstant.DB_TYPE_ORACLE) || dbType.contains(DataBaseConstant.DB_TYPE_DM)) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_ORACLE;
-                }else if(dbType.indexOf(DataBaseConstant.DB_TYPE_SQLSERVER)>=0||dbType.indexOf(sqlserver)>=0) {
+                }else if(dbType.contains(DataBaseConstant.DB_TYPE_SQLSERVER) || dbType.contains(sqlserver)) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_SQLSERVER;
-                }else if(dbType.indexOf(DataBaseConstant.DB_TYPE_POSTGRESQL)>=0) {
+                }else if(dbType.contains(DataBaseConstant.DB_TYPE_POSTGRESQL)) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_POSTGRESQL;
-                }else if(dbType.indexOf(DataBaseConstant.DB_TYPE_MARIADB)>=0) {
+                }else if(dbType.contains(DataBaseConstant.DB_TYPE_MARIADB)) {
                     DB_TYPE = DataBaseConstant.DB_TYPE_MARIADB;
                 }else {
                     log.error("数据库类型:[" + dbType + "]不识别!");

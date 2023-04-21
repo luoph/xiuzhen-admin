@@ -1,5 +1,8 @@
 package org.jeecg.common.util;
 
+import org.jeecg.common.constant.SymbolConstant;
+import org.springframework.util.StringUtils;
+
 import java.beans.PropertyEditorSupport;
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -8,9 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import org.jeecg.common.constant.SymbolConstant;
-import org.springframework.util.StringUtils;
 
 /**
  * 类描述：时间操作定义类
@@ -74,6 +74,7 @@ public class DateUtils extends PropertyEditorSupport {
 
     /**
      * 指定模式的时间格式
+     *
      * @param pattern
      * @return
      */
@@ -211,7 +212,7 @@ public class DateUtils extends PropertyEditorSupport {
     /**
      * 日期转换为字符串
      *
-     * @param date     日期
+     * @param date    日期
      * @param dateSdf 日期格式
      * @return 字符串
      */
