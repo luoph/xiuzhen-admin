@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.annotation.Readonly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,7 @@ public class GamePlayerController extends SimplePageController<GamePlayer> {
     @Override
     @AutoLog(value = "玩家信息-列表查询")
     @GetMapping(value = "/list")
+    @PermissionData(value = "player/GamePlayerList")
     public Result<?> queryPageList(GamePlayer entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
@@ -70,5 +72,4 @@ public class GamePlayerController extends SimplePageController<GamePlayer> {
     public ModelAndView exportXls(HttpServletRequest request, GamePlayer entity) {
         return super.exportXls(request, entity, GamePlayer.class, "玩家信息");
     }
-
 }

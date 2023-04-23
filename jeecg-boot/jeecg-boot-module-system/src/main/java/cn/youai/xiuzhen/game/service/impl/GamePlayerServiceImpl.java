@@ -13,6 +13,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -33,7 +34,8 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
 
     @Override
     public GamePlayer queryPlayer(long playerId) {
-        return getBaseMapper().queryPlayer(playerId);
+        String configAuth = QueryGenerator.getAllConfigAuth();
+        return getBaseMapper().queryPlayer(playerId, configAuth);
     }
 
     @Override
@@ -51,7 +53,12 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
     }
 
     @Override
-    public IPage<GamePlayer> queryList(Page<GamePlayer> page, GamePlayer entity, RangeValue<BigDecimal> levelRange, RangeValue<BigDecimal> combatPowerRange, DateRange createDateRange) {
-        return getBaseMapper().queryList(page, entity, levelRange, combatPowerRange, createDateRange);
+    public IPage<GamePlayer> queryList(Page<GamePlayer> page,
+                                       GamePlayer entity,
+                                       RangeValue<BigDecimal> levelRange,
+                                       RangeValue<BigDecimal> combatPowerRange,
+                                       DateRange createDateRange) {
+        String configAuth = QueryGenerator.getAllConfigAuth();
+        return getBaseMapper().queryList(page, entity, levelRange, combatPowerRange, createDateRange, configAuth);
     }
 }

@@ -24,7 +24,6 @@ import java.util.Map;
  * @since 2021-12-07
  */
 public interface IGamePlayerService extends IService<GamePlayer> {
-
     GamePlayer queryPlayer(long playerId);
 
     List<GamePlayer> queryPlayerList(Collection<Long> playerIds);

@@ -26,7 +26,7 @@ import java.util.List;
  * @since 2021-12-07
  */
 public interface GamePlayerMapper extends BaseMapper<GamePlayer> {
-    GamePlayer queryPlayer(@Param("playerId") Long playerId);
+    GamePlayer queryPlayer(@Param("playerId") Long playerId, @Param("configAuth") String configAuth);
 
     List<GamePlayer> queryPlayerList(@Param("playerIds") Collection<Long> playerIds);
 
@@ -39,6 +39,8 @@ public interface GamePlayerMapper extends BaseMapper<GamePlayer> {
                                 @Param("entity") GamePlayer entity,
                                 @Param("levelRange") RangeValue<BigDecimal> levelRange,
                                 @Param("combatPowerRange") RangeValue<BigDecimal> combatPowerRange,
-                                @Param("createDateRange") DateRange createDateRange);
+                                @Param("createDateRange") DateRange createDateRange,
+                                @Param("configAuth") String configAuth
+    );
 
 }
