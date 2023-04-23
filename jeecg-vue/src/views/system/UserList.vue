@@ -168,12 +168,9 @@
     </div>
     <!-- table区域-end -->
 
-    <user-modal ref="modalForm" @ok="modalFormOk"></user-modal>
-
-    <password-modal ref="passwordmodal" @ok="passwordModalOk"></password-modal>
-
-    <sys-user-agent-modal ref="sysUserAgentModal"></sys-user-agent-modal>
-
+    <user-modal ref="modalForm" @ok="modalFormOk"/>
+    <password-modal ref="passwordmodal" @ok="passwordModalOk"/>
+    <sys-user-agent-modal ref="sysUserAgentModal"/>
     <!-- 用户回收站 -->
     <user-recycle-bin-modal :visible.sync="recycleBinVisible" @ok="modalFormOk"/>
 
@@ -232,6 +229,9 @@ export default {
           align: "center",
           width: 100,
           dataIndex: 'realname',
+          customRender: (text) => {
+            return text || '--';
+          }
         },
         {
           title: '头像',
@@ -240,37 +240,68 @@ export default {
           dataIndex: 'avatar',
           scopedSlots: {customRender: "avatarslot"}
         },
-
+        {
+          title: '渠道',
+          align: "center",
+          width: 100,
+          dataIndex: 'channel',
+          customRender: (text) => {
+            return text || '--';
+          }
+        },
+        {
+          title: 'SDK渠道',
+          align: "center",
+          width: 100,
+          dataIndex: 'sdkChannel',
+          customRender: (text) => {
+            return text || '--';
+          }
+        },
         {
           title: '性别',
           align: "center",
           width: 80,
           dataIndex: 'sex_dictText',
-          sorter: true
+          customRender: (text) => {
+            return text || '--';
+          }
         },
         {
           title: '生日',
           align: "center",
           width: 100,
-          dataIndex: 'birthday'
+          dataIndex: 'birthday',
+          customRender: (text) => {
+            return text || '--';
+          }
         },
         {
           title: '手机号码',
           align: "center",
           width: 100,
-          dataIndex: 'phone'
+          dataIndex: 'phone',
+          customRender: (text) => {
+            return text || '--';
+          }
         },
         {
           title: '部门',
           align: "center",
           width: 180,
-          dataIndex: 'orgCodeTxt'
+          dataIndex: 'orgCodeTxt',
+          customRender: (text) => {
+            return text || '--';
+          }
         },
         {
           title: '负责部门',
           align: "center",
           width: 180,
-          dataIndex: 'departIds_dictText'
+          dataIndex: 'departIds_dictText',
+          customRender: (text) => {
+            return text || '--';
+          }
         },
         {
           title: '状态',
@@ -321,7 +352,7 @@ export default {
         let that = this;
         let isAdmin = false;
         that.selectionRows.forEach(function (row) {
-          if (row.username == 'admin') {
+          if (row.username === 'admin') {
             isAdmin = true;
           }
         });

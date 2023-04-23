@@ -185,29 +185,25 @@ public class SysUserController extends JeecgController<SysUser, ISysUserService>
     //Permissions("system:user:edit")
     @RequestMapping(value = "/edit", method = {RequestMethod.PUT, RequestMethod.POST})
     public Result<SysUser> edit(@RequestBody JSONObject jsonObject) {
-        Result<SysUser> result = new Result<SysUser>();
+        Result<SysUser> result = new Result<>();
         try {
             SysUser sysUser = sysUserService.getById(jsonObject.getString("id"));
             baseCommonService.addLog("编辑用户，username： " + sysUser.getUsername(), CommonConstant.LOG_TYPE_2, 2);
-            if (sysUser == null) {
-                result.error500("未找到对应实体");
-            } else {
-                SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
-                user.setUpdateTime(new Date());
-                //String passwordEncode = PasswordUtil.encrypt(user.getUsername(), user.getPassword(), sysUser.getSalt());
-                user.setPassword(sysUser.getPassword());
-                String roles = jsonObject.getString("selectedroles");
-                String departs = jsonObject.getString("selecteddeparts");
-                if (oConvertUtils.isEmpty(departs)) {
-                    //vue3.0前端只传递了departIds
-                    departs = user.getDepartIds();
-                }
-                //用户表字段org_code不能在这里设置他的值
-                user.setOrgCode(null);
-                // 修改用户走一个service 保证事务
-                sysUserService.editUser(user, roles, departs);
-                result.success("修改成功!");
+            SysUser user = JSON.parseObject(jsonObject.toJSONString(), SysUser.class);
+            user.setUpdateTime(new Date());
+            //String passwordEncode = PasswordUtil.encrypt(user.getUsername(), user.getPassword(), sysUser.getSalt());
+            user.setPassword(sysUser.getPassword());
+            String roles = jsonObject.getString("selectedroles");
+            String departs = jsonObject.getString("selecteddeparts");
+            if (oConvertUtils.isEmpty(departs)) {
+                //vue3.0前端只传递了departIds
+                departs = user.getDepartIds();
             }
+            //用户表字段org_code不能在这里设置他的值
+            user.setOrgCode(null);
+            // 修改用户走一个service 保证事务
+            sysUserService.editUser(user, roles, departs);
+            result.success("修改成功!");
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             result.error500("操作失败");

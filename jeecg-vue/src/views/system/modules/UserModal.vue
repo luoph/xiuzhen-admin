@@ -41,6 +41,16 @@
           <a-input placeholder="请输入用户姓名" v-model="model.realname"/>
         </a-form-model-item>
 
+        <a-form-model-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="channel">
+          <j-search-select-tag v-model="model.channel" placeholder="请输入渠道"
+                               dict="game_channel,name,simple_name"/>
+        </a-form-model-item>
+
+        <a-form-model-item label="SDK渠道" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="sdkChannel">
+          <j-search-select-tag placeholder="请选择Sdk渠道" v-model="model.sdkChannel"
+                               dict="game_sdk_channel,name,sdk_channel"/>
+        </a-form-model-item>
+
         <a-form-model-item label="工号" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="workNo">
           <a-input placeholder="请输入工号" v-model="model.workNo"/>
         </a-form-model-item>
@@ -179,6 +189,8 @@ export default {
         roles: {},
         workNo: [{required: false, message: '请输入工号'},
           {validator: this.validateWorkNo}],
+        channel: [{required: false, message: '请输入渠道!'}],
+        sdkChannel: [{required: false, message: '请输入SDK渠道!'}],
         telephone: [{pattern: /^0\d{2,3}-[1-9]\d{6,7}$/, message: '请输入正确的座机号码'},]
       },
       departIdShow: false,

@@ -247,6 +247,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             info.setSysUserCode(sysUser.getUsername());
             info.setSysUserName(sysUser.getRealname());
             info.setSysOrgCode(sysUser.getOrgCode());
+            info.setChannel(sysUser.getChannel());
+            info.setSdkChannel(sysUser.getSdkChannel());
         }
 
         //多部门支持in查询

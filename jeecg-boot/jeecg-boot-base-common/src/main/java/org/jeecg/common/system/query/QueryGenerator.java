@@ -1,5 +1,7 @@
 package org.jeecg.common.system.query;
 
+import cn.hutool.core.util.StrUtil;
+import cn.youai.basics.utils.SplitUtils;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -37,6 +39,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class QueryGenerator {
+
+    public static final Pattern SQL_PARAM_PATTERN = Pattern.compile("\\#\\{\\w+\\}");
+
     public static final String SQL_RULES_COLUMN = "SQL_RULES_COLUMN";
 
     public static final String BEGIN = "_begin";
@@ -91,7 +96,7 @@ public class QueryGenerator {
     /**
      * 时间格式化
      */
-    private static final ThreadLocal<SimpleDateFormat> LOCAL = new ThreadLocal<SimpleDateFormat>();
+    private static final ThreadLocal<SimpleDateFormat> LOCAL = new ThreadLocal<>();
 
     private static SimpleDateFormat getTime() {
         SimpleDateFormat time = LOCAL.get();
@@ -141,7 +146,9 @@ public class QueryGenerator {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
                 String ruleValue = ruleMap.get(c).getRuleValue();
                 String sqlRuleValue = getSqlRuleValue(ruleValue);
-                queryWrapper.and(i -> i.apply(sqlRuleValue));
+                if (StrUtil.isNotEmpty(sqlRuleValue)) {
+                    queryWrapper.and(i -> i.apply(sqlRuleValue));
+                }
             }
         }
 
@@ -715,14 +722,19 @@ public class QueryGenerator {
             addEasyQuery(queryWrapper, name, rule, objs);
         } else {
             if (propertyType.equals(String.class)) {
-                addEasyQuery(queryWrapper, name, rule, convertRuleValue(dataRule.getRuleValue()));
+                String ruleValue = convertRuleValue(dataRule.getRuleValue());
+                if (ruleValue != null) {
+                    addEasyQuery(queryWrapper, name, rule, ruleValue);
+                }
             } else if (propertyType.equals(Date.class)) {
                 String dateStr = convertRuleValue(dataRule.getRuleValue());
-                int length = 10;
-                if (dateStr.length() == length) {
-                    addEasyQuery(queryWrapper, name, rule, DateUtils.str2Date(dateStr, DateUtils.date_sdf.get()));
-                } else {
-                    addEasyQuery(queryWrapper, name, rule, DateUtils.str2Date(dateStr, DateUtils.datetimeFormat.get()));
+                if (dateStr != null) {
+                    int length = 10;
+                    if (dateStr.length() == length) {
+                        addEasyQuery(queryWrapper, name, rule, DateUtils.str2Date(dateStr, DateUtils.date_sdf.get()));
+                    } else {
+                        addEasyQuery(queryWrapper, name, rule, DateUtils.str2Date(dateStr, DateUtils.datetimeFormat.get()));
+                    }
                 }
             } else {
                 addEasyQuery(queryWrapper, name, rule, NumberUtils.parseNumber(dataRule.getRuleValue(), propertyType));
@@ -731,8 +743,7 @@ public class QueryGenerator {
     }
 
     public static String convertRuleValue(String ruleValue) {
-        String value = JwtUtil.getUserSystemData(ruleValue, null);
-        return value != null ? value : ruleValue;
+        return JwtUtil.getUserSystemData(ruleValue, null);
     }
 
     /**
@@ -757,12 +768,32 @@ public class QueryGenerator {
 
     public static String getSqlRuleValue(String sqlRule) {
         try {
-            Set<String> varParams = getSqlRuleParams(sqlRule);
-            assert varParams != null;
-            for (String var : varParams) {
-                String tempValue = convertRuleValue(var);
-                sqlRule = sqlRule.replace("#{" + var + "}", tempValue);
+            List<String> ruleList = SplitUtils.split(sqlRule, ",");
+            List<String> resultList = new ArrayList<>();
+            for (String rule : ruleList) {
+                rule = rule.trim();
+                Set<String> varParams = getSqlRuleParams(rule);
+                if (varParams == null) {
+                    resultList.add(rule);
+                } else {
+                    for (String var : varParams) {
+                        String tempValue = convertRuleValue(var);
+                        if (tempValue == null) {
+                            break;
+                        }
+                        rule = rule.replace("#{" + var + "}", tempValue);
+                    }
+
+                    if (!rule.contains(SymbolConstant.WELL_NUMBER)) {
+                        resultList.add(rule);
+                    }
+                }
             }
+
+            if (resultList.size() > 0) {
+                return StrUtil.join(" and ", resultList);
+            }
+            return "";
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -776,14 +807,13 @@ public class QueryGenerator {
         if (oConvertUtils.isEmpty(sql)) {
             return null;
         }
-        Set<String> varParams = new HashSet<>();
-        String regex = "\\#\\{\\w+\\}";
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(sql);
+        Set<String> varParams = new HashSet<>();
+        Matcher m = SQL_PARAM_PATTERN.matcher(sql);
         while (m.find()) {
             String var = m.group();
-            varParams.add(var.substring(var.indexOf("{") + 1, var.indexOf("}")));
+            varParams.add(var.substring(var.indexOf(SymbolConstant.LEFT_CURLY_BRACKET) + 1,
+                    var.indexOf(SymbolConstant.RIGHT_CURLY_BRACKET)));
         }
         return varParams;
     }
@@ -987,7 +1017,9 @@ public class QueryGenerator {
         String sqlAnd = " and ";
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
-                sb.append(sqlAnd).append(getSqlRuleValue(ruleMap.get(c).getRuleValue()));
+                String ruleValue = ruleMap.get(c).getRuleValue();
+                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                sb.append(sqlAnd).append(sqlRuleValue);
             }
         }
         String name, column;
@@ -1005,14 +1037,18 @@ public class QueryGenerator {
                 QueryRuleEnum rule = QueryRuleEnum.getByValue(dataRule.getRuleConditions());
                 Class propType = origDescriptor.getPropertyType();
                 boolean isString = propType.equals(String.class);
+
                 Object value;
                 if (isString) {
                     value = convertRuleValue(dataRule.getRuleValue());
                 } else {
                     value = NumberUtils.parseNumber(dataRule.getRuleValue(), propType);
                 }
-                String filedSql = getSingleSqlByRule(rule, oConvertUtils.camelToUnderline(column), value, isString);
-                sb.append(sqlAnd).append(filedSql);
+
+                if (value != null) {
+                    String filedSql = getSingleSqlByRule(rule, oConvertUtils.camelToUnderline(column), value, isString);
+                    sb.append(sqlAnd).append(filedSql);
+                }
             }
         }
         log.info("query auth sql is:" + sb);
@@ -1028,7 +1064,11 @@ public class QueryGenerator {
         PropertyDescriptor[] origDescriptors = PropertyUtils.getPropertyDescriptors(clazz);
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
-                queryWrapper.and(i -> i.apply(getSqlRuleValue(ruleMap.get(c).getRuleValue())));
+                String ruleValue = ruleMap.get(c).getRuleValue();
+                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                if (StrUtil.isNotEmpty(sqlRuleValue)) {
+                    queryWrapper.and(i -> i.apply(sqlRuleValue));
+                }
             }
         }
         String name, column;
@@ -1048,13 +1088,6 @@ public class QueryGenerator {
     }
 
     /**
-     * 转换sql中的系统变量
-     */
-    public static String convertSystemVariables(String sql) {
-        return getSqlRuleValue(sql);
-    }
-
-    /**
      * 获取所有配置的权限 返回sql字符串 不受字段限制 配置什么就拿到什么
      */
     public static String getAllConfigAuth() {
@@ -1069,7 +1102,10 @@ public class QueryGenerator {
                 continue;
             }
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
-                sb.append(sqlAnd).append(getSqlRuleValue(ruleValue));
+                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                if (StrUtil.isNotEmpty(sqlRuleValue)) {
+                    sb.append(sqlAnd).append(sqlRuleValue);
+                }
             } else {
                 boolean isString = false;
                 ruleValue = ruleValue.trim();
@@ -1079,8 +1115,10 @@ public class QueryGenerator {
                 }
                 QueryRuleEnum rule = QueryRuleEnum.getByValue(dataRule.getRuleConditions());
                 String value = convertRuleValue(ruleValue);
-                String filedSql = getSingleSqlByRule(rule, c, value, isString);
-                sb.append(sqlAnd).append(filedSql);
+                if (value != null) {
+                    String filedSql = getSingleSqlByRule(rule, c, value, isString);
+                    sb.append(sqlAnd).append(filedSql);
+                }
             }
         }
         log.info("query auth sql is = " + sb);

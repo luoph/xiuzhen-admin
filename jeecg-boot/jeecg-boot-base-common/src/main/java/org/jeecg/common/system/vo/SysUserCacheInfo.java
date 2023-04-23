@@ -16,6 +16,10 @@ public class SysUserCacheInfo {
 
     private String sysOrgCode;
 
+    private String channel;
+
+    private String sdkChannel;
+
     private List<String> sysMultiOrgCode;
 
     private boolean oneDepart;
@@ -68,4 +72,19 @@ public class SysUserCacheInfo {
         this.sysMultiOrgCode = sysMultiOrgCode;
     }
 
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getSdkChannel() {
+        return sdkChannel;
+    }
+
+    public void setSdkChannel(String sdkChannel) {
+        this.sdkChannel = sdkChannel;
+    }
 }

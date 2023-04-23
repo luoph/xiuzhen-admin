@@ -225,6 +225,8 @@ public class SysBaseApiImpl implements ISysBaseAPI {
             info.setSysUserCode(user.getUsername());
             info.setSysUserName(user.getRealname());
             info.setSysOrgCode(user.getOrgCode());
+            info.setChannel(user.getChannel());
+            info.setSdkChannel(user.getSdkChannel());
         } else {
             return null;
         }

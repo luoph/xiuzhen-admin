@@ -133,6 +133,14 @@ public interface DataBaseConstant {
     String TENANT_ID = "tenantId";
     String TENANT_ID_TABLE = "tenant_id";
 
+
+    /**
+     * 渠道
+     */
+    String CHANNEL = "channel";
+    String SDK_CHANNEL = "sdkChannel";
+    String SDK_CHANNEL_TABLE = "sdk_channel";
+
     /**
      * sql语句 where
      */

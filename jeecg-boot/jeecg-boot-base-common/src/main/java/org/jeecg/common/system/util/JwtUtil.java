@@ -227,6 +227,19 @@ public class JwtUtil {
             }
         }
         // 增加自定义参数 & 值替换
+        else if (key.equals(DataBaseConstant.CHANNEL)) {
+            if (user == null) {
+                returnValue = sysUser.getChannel();
+            } else {
+                returnValue = user.getChannel();
+            }
+        } else if (key.equals(DataBaseConstant.SDK_CHANNEL) || key.equalsIgnoreCase(DataBaseConstant.SDK_CHANNEL_TABLE)) {
+            if (user == null) {
+                returnValue = sysUser.getSdkChannel();
+            } else {
+                returnValue = user.getSdkChannel();
+            }
+        }
 
         // update-end-author:taoyan date:20210330 for:多租户ID作为系统变量
         if (returnValue != null) {
@@ -234,9 +247,4 @@ public class JwtUtil {
         }
         return returnValue;
     }
-
-//	public static void main(String[] args) {
-//		 String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjUzMzY1MTMsInVzZXJuYW1lIjoiYWRtaW4ifQ.xjhud_tWCNYBOg_aRlMgOdlZoWFFKB_givNElHNw3X0";
-//		 System.out.println(JwtUtil.getUsername(token));
-//	}
 }
