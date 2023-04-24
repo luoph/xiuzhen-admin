@@ -67,9 +67,7 @@
         <!-- 积木报表-->
         <jimureport-spring-boot-starter.version>1.5.2</jimureport-spring-boot-starter.version>
         <!-- 框架依赖 -->
-        <entities.version>0.0.26-SNAPSHOT</entities.version>
-        <web-starter.version>0.0.26-SNAPSHOT</web-starter.version>
-        <server-common.version>0.0.26-SNAPSHOT</server-common.version>
+        <framework.version>0.0.26</framework.version>
     </properties>
 
     <dependencies>
@@ -84,17 +82,17 @@
         <dependency>
             <groupId>cn.youai.server</groupId>
             <artifactId>entities</artifactId>
-            <version>${entities.version}</version>
+            <version>${framework.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.youai.server</groupId>
             <artifactId>web-starter</artifactId>
-            <version>${web-starter.version}</version>
+            <version>${framework.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.youai.server</groupId>
             <artifactId>server-common</artifactId>
-            <version>${server-common.version}</version>
+            <version>${framework.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>kryo</artifactId>
