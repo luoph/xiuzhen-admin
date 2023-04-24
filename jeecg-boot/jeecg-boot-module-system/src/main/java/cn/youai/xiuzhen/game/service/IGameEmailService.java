@@ -17,23 +17,16 @@ public interface IGameEmailService extends IService<GameEmail> {
 
     /**
      * 存储邮件
-     *
-     * @param gameEmail
-     * @return
      */
     Response saveEmail(GameEmail gameEmail);
 
     /**
      * 获取道具树形菜案
-     *
-     * @return
      */
     List<ConfItem> itemTree(Integer itemId, String itemName);
 
     /**
      * 发送邮件
-     *
-     * @param gameEmail
      */
     Response sendEmail(GameEmail gameEmail);
 }

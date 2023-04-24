@@ -16,6 +16,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import okhttp3.Call;
 import okhttp3.Callback;
+import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -57,6 +58,11 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     @Override
     public List<GameServer> selectChannelServerList(String configAuth) {
         return getBaseMapper().selectChannelServerList(configAuth);
+    }
+
+    @Override
+    public List<GameServer> selectChannelServerListByUser(SysUserCacheInfo user, String serverIds) {
+        return getBaseMapper().selectChannelServerListByUser(user, serverIds);
     }
 
     @Override

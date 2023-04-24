@@ -20,6 +20,8 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import net.dreamlu.mica.core.utils.$;
+import org.jeecg.common.system.util.JeecgDataAutorUtils;
+import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,6 +76,23 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
         if (CollUtil.isEmpty(receiverIdSet)) {
             response.setFailure("接受者未设置！");
             return response;
+        }
+
+        SysUserCacheInfo sysUser = JeecgDataAutorUtils.loadUserInfo();
+        if (StringUtils.isNotEmpty(sysUser.getChannel()) || StringUtils.isNotEmpty(sysUser.getSdkChannel())) {
+            if (entity.getReceiverType() == 1) {
+                List<GamePlayer> gamePlayers = gamePlayerService.selectPlayerListByUser(sysUser, entity.getReceiverIds());
+                if (CollUtil.size(gamePlayers) != CollUtil.size(receiverIdSet)) {
+                    response.setFailure("没有权限读取玩家信息！");
+                    return response;
+                }
+            } else if (entity.getReceiverType() == 2) {
+                List<GameServer> gameServers = gameServerService.selectChannelServerListByUser(sysUser, entity.getReceiverIds());
+                if (CollUtil.size(gameServers) != CollUtil.size(receiverIdSet)) {
+                    response.setFailure("没有权限读取区服信息！");
+                    return response;
+                }
+            }
         }
 
         if (save(entity)) {

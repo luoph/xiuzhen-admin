@@ -73,7 +73,8 @@ public class GameEmail extends BaseEntity {
 
     /**
      * 目标主体
-     * 服务器id/玩家id
+     * 1 - 玩家
+     * 2 - 区服
      */
     @Excel(name = "目标主体", width = 15)
     private java.lang.String receiverIds;

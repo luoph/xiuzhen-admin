@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.game.mapper;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
+import org.jeecg.common.system.vo.SysUserCacheInfo;
 
 import java.util.List;
 
@@ -26,6 +27,8 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
      */
     List<GameServer> selectChannelServerList(@Param("configAuth") String configAuth);
 
+    List<GameServer> selectChannelServerListByUser(@Param("user") SysUserCacheInfo user, @Param("serverIds") String serverIds);
+
     /**
      * 更新游戏服维护状态
      *
@@ -33,5 +36,4 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
      * @param isMaintain   是否维护
      */
     void updateGameServerMaintain(@Param("serverIdList") List<Integer> serverIdList, @Param("isMaintain") int isMaintain);
-
 }

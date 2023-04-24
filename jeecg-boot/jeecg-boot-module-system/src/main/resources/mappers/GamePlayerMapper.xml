@@ -25,6 +25,28 @@
         </where>
     </select>
 
+    <select id="selectPlayerListByUser" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
+        SELECT p.*
+        FROM `game_player` p
+        <where>
+            p.`status` = 1
+            <if test="user != null">
+                <if test="user.channel != null and user.channel != ''">
+                    AND p.`channel` = #{user.channel}
+                </if>
+                <if test="user.sdkChannel != null and user.sdkChannel != ''">
+                    AND p.`sdk_channel` = #{user.sdkChannel}
+                </if>
+            </if>
+            <if test="playerIds != null and playerIds != ''">
+                AND p.`id` in
+                <foreach item="item" index="index" collection="playerIds.split(',')" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
     <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
         SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`, ifnull(sum(`go`.`pay_amount`), 0) as `total_pay_amount`
         FROM `game_player` p
@@ -68,7 +90,7 @@
                 <if test="null != createDateRange.end"><![CDATA[AND p.`create_date` <= #{createDateRange.end}]]></if>
             </if>
         </where>
-        group by p.`player_id`
+        GROUP BY p.`player_id`
         ORDER BY p.`create_time` DESC
     </select>
 

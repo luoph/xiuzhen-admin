@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jeecg.common.system.query.QueryGenerator;
+import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -36,6 +37,11 @@ public class GamePlayerServiceImpl extends ServiceImpl<GamePlayerMapper, GamePla
     public GamePlayer queryPlayer(long playerId) {
         String configAuth = QueryGenerator.getAllConfigAuth();
         return getBaseMapper().queryPlayer(playerId, configAuth);
+    }
+
+    @Override
+    public List<GamePlayer> selectPlayerListByUser(SysUserCacheInfo user, String playerIds) {
+        return getBaseMapper().selectPlayerListByUser(user, playerIds);
     }
 
     @Override

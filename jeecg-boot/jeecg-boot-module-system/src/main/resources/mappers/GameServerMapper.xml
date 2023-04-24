@@ -5,8 +5,8 @@
     <select id="selectGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
         SELECT s.*
         FROM `game_server` s
-        LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
-        LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
+                 LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
+                 LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
     </select>
 
     <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
@@ -23,6 +23,26 @@
             ${configAuth}
         </if>
         GROUP BY `id`
+    </select>
+
+    <select id="selectChannelServerListByUser" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        SELECT c.`simple_name`, a.*
+        FROM `game_server` a
+        INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
+        WHERE a.`outdated` = 0
+        <if test="user != null">
+            <if test="user.channel != null and user.channel != ''">
+                AND c.`simple_name` = #{user.channel}
+            </if>
+        </if>
+        <if test="serverIds != null and serverIds != ''">
+            AND a.`id` in
+            <foreach item="item" index="index" collection="serverIds.split(',')" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        GROUP BY a.`id`
     </select>
 
     <update id="updateGameServerMaintain">

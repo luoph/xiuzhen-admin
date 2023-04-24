@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.jeecg.common.system.util.JwtUtil;
 import org.jeecg.modules.utils.GameConfigUtils;
@@ -41,6 +42,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 
     @AutoLog(value = "游戏邮件-列表查询")
     @GetMapping(value = "/list")
+    @PermissionData(value = "game/GameEmailList")
     public Result<?> queryPageList(GameEmail entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
@@ -60,6 +62,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 
     @AutoLog(value = "游戏邮件-添加")
     @PostMapping(value = "/add")
+    @PermissionData(value = "game/GameChannelList")
     public Result<?> add(@RequestBody GameEmail entity) {
         entity.setState(0).setReviewBy(null).setReviewTime(null);
         List<Long> receiverIds = StringUtils.split2Long(entity.getReceiverIds());
@@ -112,11 +115,14 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 
     @AutoLog(value = "游戏邮件-导出")
     @RequestMapping(value = "/exportXls")
+    @PermissionData(value = "game/GameEmailList")
+    @RequiresPermissions("game:email:review")
     public ModelAndView exportXls(HttpServletRequest request, GameEmail gameEmail) {
         return super.exportXls(request, gameEmail, GameEmail.class, "游戏邮件");
     }
 
     @AutoLog(value = "游戏邮件-导入")
+    @RequiresPermissions("game:email:review")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameEmail.class);
