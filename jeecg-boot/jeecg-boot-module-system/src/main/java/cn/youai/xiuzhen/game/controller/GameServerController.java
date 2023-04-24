@@ -14,9 +14,7 @@ import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.game.service.IGameServerTagService;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Call;
@@ -101,18 +99,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         IPage<GameServer> pageList = pageList(entity, pageNo, pageSize, req);
         updateOnlineNum(pageList.getRecords(), tagMap);
         return Result.ok(pageList);
-    }
-
-    @AutoLog(value = "游戏服配置-全部区服")
-    @GetMapping(value = "/all")
-    public Result<?> all() {
-        Wrapper<GameServer> query = Wrappers.<GameServer>lambdaQuery()
-                .eq(GameServer::getOutdated, OutdatedType.NORMAL.getValue())
-                .select(GameServer::getId, GameServer::getName, GameServer::getGameId,
-                        GameServer::getHost, GameServer::getStatus, GameServer::getOpenTime,
-                        GameServer::getOnlineTime)
-                .orderByAsc(GameServer::getId);
-        return Result.ok(service.list(query));
     }
 
     @AutoLog(value = "游戏服配置-待合服列表查询")

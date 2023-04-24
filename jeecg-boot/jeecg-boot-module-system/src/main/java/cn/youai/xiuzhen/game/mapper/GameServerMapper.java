@@ -15,14 +15,6 @@ import java.util.List;
 public interface GameServerMapper extends BaseMapper<GameServer> {
 
     /**
-     * 查询区服
-     *
-     * @param id 游戏服id
-     * @return GameServer
-     */
-    GameServer selectGameServerById(@Param("id") int id);
-
-    /**
      * 查询所有区服
      *
      * @return 区服列表
@@ -30,12 +22,9 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
     List<GameServer> selectGameServerList();
 
     /**
-     * 查询指定分组的所有区服
-     *
-     * @param groupId 分组id
-     * @return 区服列表
+     * 查找已关联到渠道的游戏服
      */
-    List<GameServer> selectGameServerByGroupId(@Param("groupId") long groupId);
+    List<GameServer> selectChannelServerList(@Param("configAuth") String configAuth);
 
     /**
      * 更新游戏服维护状态

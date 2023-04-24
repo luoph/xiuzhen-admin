@@ -43,18 +43,17 @@
     </div>
 
     <!-- 操作按钮区域 -->
-    <div class="table-operator">
+    <div class="table-operator" v-has="'game:channel:admin'">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button @click="updateServerList" type="primary" icon="sync">区服列表</a-button>
       <a-button @click="updateWhitelist" type="primary" icon="sync">IP白名单</a-button>
       <a-button @click="updateServerCache" type="primary" icon="sync">区服缓存</a-button>
       <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天缓存</a-button>
-
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏渠道')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
             </a-upload> -->
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <a-dropdown v-if="selectedRowKeys.length > 0" v-has="'game:channel:admin'">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
             <a-icon type="delete"/>
@@ -80,21 +79,21 @@
       <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
                :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
-          <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
-          <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
-          <a @click="editChannelServer(record)">区服列表</a>
-          <a-divider type="vertical"/>
-          <a @click="updateChannelServer(record)">刷新区服</a>
-          <a-divider type="vertical"/>
-          <a @click="editChannelNotice(record)">编辑公告</a>
-          <a-divider type="vertical"/>
+          <a @click="handleEdit(record)" v-has="'game:channel:admin'">编辑</a>
+          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a @click="handleCopy(record)" v-has="'game:channel:admin'">复制</a>
+          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a @click="editChannelServer(record)" v-has="'game:channel:admin'">区服列表</a>
+          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a @click="updateChannelServer(record)" v-has="'game:channel:admin'">刷新区服</a>
+          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a @click="editChannelNotice(record)" v-has="'game:channel:admin'">编辑公告</a>
+          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a @click="refreshChannelNotice(record)" v-has="'game:channel:admin'">刷新公告</a>
+          <a-divider type="vertical" v-has="'game:channel:admin'"/>
           <a @click="viewChannelNotice(record)">预览公告</a>
-          <a-divider type="vertical"/>
-          <a @click="refreshChannelNotice(record)">刷新公告</a>
-          <a-divider type="vertical"/>
-          <a-dropdown>
+          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-dropdown v-has="'game:channel:admin'">
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item>

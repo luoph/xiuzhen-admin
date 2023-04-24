@@ -1138,7 +1138,7 @@ public class QueryGenerator {
      * 获取class的字段（包括父类的）
      */
     private static List<Field> getClassFields(Class<?> clazz) {
-        List<Field> list = new ArrayList<Field>();
+        List<Field> list = new ArrayList<>();
         Field[] fields;
         do {
             fields = clazz.getDeclaredFields();

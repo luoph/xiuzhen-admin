@@ -43,8 +43,8 @@ export default {
       serverList: [],
       allServerList: [],
       url: {
-        channelUrl: "game/channel/all",
-        serverUrl: "game/gameServer/all",
+        channelUrl: "game/channel/allChannel",
+        serverUrl: "game/channel/allServer",
         channelServerUrl: "game/channelServer/channelWithServer?channelId="
       }
     };

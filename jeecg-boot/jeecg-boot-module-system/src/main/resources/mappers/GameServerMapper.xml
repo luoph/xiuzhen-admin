@@ -2,25 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameServerMapper">
 
-    <sql id="selectServer">
+    <select id="selectGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
         SELECT s.*
         FROM `game_server` s
-                 LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
-                 LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
-    </sql>
-
-    <select id="selectGameServerById" resultType="cn.youai.xiuzhen.game.entity.GameServer">
-        <include refid="selectServer"/>
-        WHERE s.`id` = #{id}
+        LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
+        LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
     </select>
 
-    <select id="selectGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
-        <include refid="selectServer"/>
-    </select>
-
-    <select id="selectGameServerByGroupId" resultType="cn.youai.xiuzhen.game.entity.GameServer">
-        <include refid="selectServer"/>
-        WHERE g.`group_id` = #{groupId}
+    <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        SELECT * FROM
+        (
+        SELECT c.`simple_name`, a.*
+        FROM `game_server` a
+        INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
+        WHERE a.`outdated` = 0
+        ) result
+        WHERE 1=1
+        <if test="configAuth != null and configAuth != ''">
+            ${configAuth}
+        </if>
+        GROUP BY `id`
     </select>
 
     <update id="updateGameServerMaintain">

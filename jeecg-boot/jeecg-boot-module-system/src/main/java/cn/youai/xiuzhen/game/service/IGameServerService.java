@@ -25,8 +25,10 @@ public interface IGameServerService extends IService<GameServer> {
      */
     List<GameServer> selectGameServerList();
 
-
-    List<GameServer> selectGameServerByGroupId(long groupId);
+    /**
+     * 查找已关联渠道的游戏服
+     */
+    List<GameServer> selectChannelServerList(String configAuth);
 
     /**
      * 批量请求 清除缓存接口

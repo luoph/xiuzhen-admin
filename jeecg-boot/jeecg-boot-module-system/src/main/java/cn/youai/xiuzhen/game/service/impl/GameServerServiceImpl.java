@@ -55,8 +55,8 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public List<GameServer> selectGameServerByGroupId(long groupId) {
-        return getBaseMapper().selectGameServerByGroupId(groupId);
+    public List<GameServer> selectChannelServerList(String configAuth) {
+        return getBaseMapper().selectChannelServerList(configAuth);
     }
 
     @Override
