@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.annotation.Readonly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class LogChatController extends SimplePageController<LogChat> {
 
     @AutoLog(value = "聊天日志-列表查询")
     @GetMapping(value = "/list")
+    @PermissionData(value = "game/GameLogChatList")
     public Result<?> queryPageList(LogChat entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,

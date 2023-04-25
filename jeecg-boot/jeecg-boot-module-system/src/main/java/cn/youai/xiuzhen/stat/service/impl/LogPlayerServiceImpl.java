@@ -8,6 +8,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -24,7 +25,8 @@ public class LogPlayerServiceImpl extends ServiceImpl<LogPlayerMapper, LogPlayer
 
     @Override
     public IPage<CombatPowerLog> selectCombatPowerLogList(Page<?> page, String channel, Integer serverId, Long playerId, Date start, Date end) {
-        return getBaseMapper().selectCombatPowerLogList(page, channel, serverId, playerId, start, end);
+        String configAuth = QueryGenerator.getAllConfigAuth();
+        return getBaseMapper().selectCombatPowerLogList(page, channel, serverId, playerId, start, end, configAuth);
     }
 
 }

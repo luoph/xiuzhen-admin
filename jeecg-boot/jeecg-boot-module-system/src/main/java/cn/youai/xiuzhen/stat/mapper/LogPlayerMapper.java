@@ -22,5 +22,7 @@ public interface LogPlayerMapper extends BaseMapper<LogPlayer> {
                                                    @Param("serverId") Integer serverId,
                                                    @Param("playerId") Long playerId,
                                                    @Param("start") Date start,
-                                                   @Param("end") Date end);
+                                                   @Param("end") Date end,
+                                                   @Param("configAuth") String configAuth
+    );
 }

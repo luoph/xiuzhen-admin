@@ -8,6 +8,9 @@
         LEFT JOIN `game_player` p ON l.`sender_id` = p.`player_id`
         <where>
             l.`chat_type` > 0 and l.`sender_id` > 0
+            <if test="configAuth != null and configAuth != ''">
+                ${configAuth}
+            </if>
             <if test="entity != null">
                 <if test="entity.serverId !=null and entity.serverId > 0">
                     AND l.`server_id` = #{entity.serverId}

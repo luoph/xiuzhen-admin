@@ -113,8 +113,8 @@
 
         <span slot="action" slot-scope="status, record">
           <a @click="handleEdit(record)">详情</a>
-          <a-divider type="vertical"/>
-          <a-dropdown>
+          <a-divider type="vertical" v-has="'game:vip:admin'"/>
+          <a-dropdown v-has="'game:vip:admin'">
             <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
             <a-menu slot="overlay">
               <a-menu-item :disabled="record.vipId > 0"

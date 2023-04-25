@@ -127,8 +127,8 @@
 
         <span slot="action" slot-scope="text, record">
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
-            <a-menu slot="overlay">
+            <a class="ant-dropdown-link">更多<a-icon type="down"/></a>
+            <a-menu slot="overlay" v-has="'game:vip:admin'">
               <a-menu-item :disabled="record.vipId > 0"
                            @click="addVip(record)">添加VIP</a-menu-item>
               <a-menu-item :disabled="record.vipId === 0"

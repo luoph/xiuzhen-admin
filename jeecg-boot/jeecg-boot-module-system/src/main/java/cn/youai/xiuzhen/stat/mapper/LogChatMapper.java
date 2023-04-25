@@ -15,6 +15,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface LogChatMapper extends BaseMapper<LogChat> {
 
-    IPage<LogChat> queryList(Page<?> page, @Param("entity") LogChat entity, @Param("dateRange") DateRange dateRange);
+    IPage<LogChat> queryList(Page<?> page, @Param("entity") LogChat entity, @Param("dateRange") DateRange dateRange, @Param("configAuth") String configAuth);
 
 }

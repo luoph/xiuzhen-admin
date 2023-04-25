@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.youai.basics.model.DateRange;
+import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.stat.entity.LogChat;
 import cn.youai.xiuzhen.stat.mapper.LogChatMapper;
 import cn.youai.xiuzhen.stat.service.ILogChatService;
@@ -8,6 +9,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,7 +24,8 @@ public class LogChatServiceImpl extends ServiceImpl<LogChatMapper, LogChat> impl
 
     @Override
     public IPage<LogChat> queryList(Page<?> page, LogChat entity, DateRange createDateRange) {
-        return getBaseMapper().queryList(page, entity, createDateRange);
+        String configAuth = QueryGenerator.installAuthJdbc(GameOrder.class);
+        return getBaseMapper().queryList(page, entity, createDateRange, configAuth);
     }
 
 }

@@ -22,5 +22,6 @@ public interface LogPlayerLevelMapper extends BaseMapper<LogPlayerLevel> {
                                     @Param("entity") LogPlayerLevel entity,
                                     @Param("levelRange") RangeValue<BigDecimal> levelRange,
                                     @Param("combatPowerRange") RangeValue<BigDecimal> combatPowerRange,
-                                    @Param("dateRange") DateRange dateRange);
+                                    @Param("dateRange") DateRange dateRange,
+                                    @Param("configAuth") String configAuth);
 }

@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.stat.controller;
 
+import cn.youai.basics.model.DateRange;
 import cn.youai.server.conf.ConfItem;
 import cn.youai.server.constant.ItemReduce;
 import cn.youai.server.constant.ItemRuleId;
@@ -7,9 +8,13 @@ import cn.youai.xiuzhen.core.controller.PlayerDataSourceController;
 import cn.youai.xiuzhen.stat.constant.OperationType;
 import cn.youai.xiuzhen.stat.entity.ItemLog;
 import cn.youai.xiuzhen.stat.service.IItemLogService;
+import cn.youai.xiuzhen.utils.PageQueryUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +36,35 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("player/itemLog")
 public class PlayerItemLogController extends PlayerDataSourceController<ItemLog, IItemLogService> {
+    /**
+     * 分页列表查询
+     */
+    @AutoLog(value = "道具日志-列表查询")
+    @GetMapping(value = "/list")
+    @PermissionData(value = "player/PlayerItemLogList")
+    public Result<?> queryPageList(ItemLog entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
+                                   HttpServletRequest req) {
+        if (null == entity.getPlayerId()) {
+            return Result.error("请输入玩家id！");
+        }
+
+        return queryPageList(entity.getPlayerId(), entity, pageNo, pageSize, req);
+    }
+
+    @AutoLog(value = "道具日志-导出")
+    @RequestMapping(value = "/exportXls")
+    @PermissionData(value = "player/PlayerItemLogList")
+    public ModelAndView exportXls(HttpServletRequest request, ItemLog entity) {
+        return super.exportXls(entity.getPlayerId(), request, entity, ItemLog.class, "道具日志");
+    }
+
+    @Override
+    protected IPage<ItemLog> pageList(Page<ItemLog> page, ItemLog entity, HttpServletRequest req) {
+        DateRange createTimeRange = PageQueryUtils.parseRange(req.getParameterMap(), "createTime");
+        return service.queryList(page, entity, createTimeRange);
+    }
 
     @Override
     protected void onload(ItemLog entity) {
@@ -51,27 +85,5 @@ public class PlayerItemLogController extends PlayerDataSourceController<ItemLog,
                 entity.setWayName(itemReduce.getName());
             }
         }
-    }
-
-    /**
-     * 分页列表查询
-     */
-    @AutoLog(value = "道具日志-列表查询")
-    @GetMapping(value = "/list")
-    public Result<?> queryPageList(ItemLog entity,
-                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
-                                   @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
-                                   HttpServletRequest req) {
-        if (null == entity.getPlayerId()) {
-            return Result.error("请输入玩家id！");
-        }
-
-        return queryPageList(entity.getPlayerId(), entity, pageNo, pageSize, req);
-    }
-
-    @AutoLog(value = "道具日志-导出")
-    @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, ItemLog entity) {
-        return super.exportXls(entity.getPlayerId(), request, entity, ItemLog.class, "道具日志");
     }
 }

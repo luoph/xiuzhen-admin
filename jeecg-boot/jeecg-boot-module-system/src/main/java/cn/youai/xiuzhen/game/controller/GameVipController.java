@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Call;
 import okhttp3.Callback;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
@@ -80,12 +81,14 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
 
     @AutoLog(value = "VIP-添加")
     @PostMapping(value = "/add")
+    @RequiresPermissions("game:vip:admin")
     public Result<?> add(@RequestBody GameVip entity) {
         return addVip(entity.getPlayerIds());
     }
 
     @AutoLog(value = "VIP-批量添加")
     @GetMapping(value = "/addVip")
+    @RequiresPermissions("game:vip:admin")
     public Result<?> addVip(@RequestParam(name = "playerIds") String playerIds) {
         Set<Long> playerIdSet = new HashSet<>(StringUtils.split2Long(playerIds));
         if (CollUtil.isEmpty(playerIdSet)) {
@@ -121,12 +124,14 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
 
     @AutoLog(value = "VIP-编辑")
     @PutMapping(value = "/edit")
+    @RequiresPermissions("game:vip:admin")
     public Result<?> edit(@RequestBody GameVip entity) {
         return Result.error("不支持编辑");
     }
 
     @AutoLog(value = "VIP-通过id删除")
     @DeleteMapping(value = "/delete")
+    @RequiresPermissions("game:vip:admin")
     public Result<?> delete(@RequestParam(name = "id") String id) {
         GameVip gameVip = service.getById(id);
         Result<?> result = super.delete(id);
@@ -146,6 +151,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
 
     @AutoLog(value = "VIP-批量删除")
     @DeleteMapping(value = "/deleteBatch")
+    @RequiresPermissions("game:vip:admin")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
         List<Long> idList = StringUtils.split2Long(ids);
         List<GameVip> gameVips = service.listByIds(idList);
@@ -164,6 +170,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
 
     @AutoLog(value = "VIP-导出")
     @RequestMapping(value = "/exportXls")
+    @RequiresPermissions("game:vip:admin")
     public ModelAndView exportXls(HttpServletRequest request, GameVip entity) {
         Page<GameVip> page = new Page<>(1, Integer.MAX_VALUE);
         IPage<GameVip> pageList = service.queryVipList(page, entity);
@@ -172,6 +179,7 @@ public class GameVipController extends JeecgController<GameVip, IGameVipService>
     }
 
     @AutoLog(value = "VIP-导入")
+    @RequiresPermissions("game:vip:admin")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         return super.importExcel(request, response, GameVip.class, "VIP");

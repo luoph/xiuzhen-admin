@@ -26,8 +26,11 @@
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         LEFT JOIN `game_vip` v ON o.`player_id` = v.`player_id`
-        left join `game_recharge_goods` grg on grg.`goods_id` = o.`product_id`
+        LEFT JOIN `game_recharge_goods` grg on grg.`goods_id` = o.`product_id`
         <where>
+            <if test="configAuth != null and configAuth != ''">
+                ${configAuth}
+            </if>
             <if test="entity != null">
                 <if test="entity.channel != null and entity.channel != ''">
                     AND o.`channel` = #{entity.channel}

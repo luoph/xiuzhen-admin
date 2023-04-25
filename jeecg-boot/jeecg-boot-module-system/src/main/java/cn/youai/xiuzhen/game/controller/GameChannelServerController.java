@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -180,15 +181,16 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
         return Result.ok(gameServers);
     }
 
-    @RequestMapping(value = "serverList")
-    public Result<?> serverList(@RequestParam(name = "channel", required = false) String channel) {
-        List<GameServerVO> gameServers = service.selectServerList(channel);
-        return Result.ok(gameServers);
-    }
-
     @RequestMapping(value = "channelList")
+    @PermissionData(value = "game/GameChannelList")
     public Result<?> channelList() {
         return Result.ok(service.selectChannelList());
     }
 
+    @RequestMapping(value = "serverList")
+    @PermissionData(value = "game/GameChannelList")
+    public Result<?> serverList(@RequestParam(name = "channel", required = false) String channel) {
+        List<GameServerVO> gameServers = service.selectServerList(channel);
+        return Result.ok(gameServers);
+    }
 }

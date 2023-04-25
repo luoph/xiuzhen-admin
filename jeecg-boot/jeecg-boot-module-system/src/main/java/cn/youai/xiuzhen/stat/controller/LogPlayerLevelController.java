@@ -13,6 +13,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,14 +40,11 @@ public class LogPlayerLevelController extends SimplePageController<LogPlayerLeve
     private ILogPlayerLevelService logPlayerLevelService;
 
     @GetMapping(value = "/list")
+    @PermissionData(value = "game/LogPlayerLevelList")
     public Result<?> queryPageList(LogPlayerLevel entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
-//        QueryWrapper<LogPlayerLevel> queryWrapper = QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
-//        Page<LogPlayerLevel> page = new Page<LogPlayerLevel>(pageNo, pageSize);
-//        IPage<LogPlayerLevel> test = logPlayerLevelService.queryList(page, null, null);
-//        IPage<LogPlayerLevel> pageList = logPlayerLevelService.page(page, queryWrapper);
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 

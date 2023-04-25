@@ -2,4 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.ItemLogMapper">
 
+    <select id="queryList" resultType="cn.youai.xiuzhen.stat.entity.ItemLog">
+        SELECT * FROM `backpack_log` bl
+        LEFT JOIN `player` p
+        ON bl.`player_id` = p.`id`
+        <where>
+            <if test="configAuth != null and configAuth != ''">
+                ${configAuth}
+            </if>
+            <if test="entity != null">
+                <if test="entity.playerId != null">
+                    AND bl.`player_id` = #{entity.playerId}
+                </if>
+                <if test="entity.itemId != null">
+                    AND bl.`item_id` = #{entity.itemId}
+                </if>
+                <if test="entity.way != null">
+                    AND bl.`way` = #{entity.way}
+                </if>
+                <if test="entity.type != null">
+                    AND bl.`type` = #{entity.type}
+                </if>
+            </if>
+            <if test="dateRange != null">
+                <if test="null != dateRange.start"><![CDATA[AND o.`create_date` >= #{dateRange.start}]]></if>
+                <if test="null != dateRange.end"><![CDATA[AND o.`create_date` <= #{dateRange.end}]]></if>
+            </if>
+        </where>
+        ORDER BY bl.`id` DESC
+    </select>
+
 </mapper>

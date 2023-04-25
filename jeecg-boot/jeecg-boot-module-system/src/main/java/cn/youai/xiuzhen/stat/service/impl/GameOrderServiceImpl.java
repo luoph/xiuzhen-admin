@@ -11,6 +11,7 @@ import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -43,7 +44,8 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
 
     @Override
     public IPage<GameOrder> queryList(Page<?> page, GameOrder entity, DateRange dateRange, RangeValue<BigDecimal> amountRange) {
-        return getBaseMapper().queryList(page, entity, dateRange, amountRange);
+        String configAuth = QueryGenerator.installAuthJdbc(GameOrder.class);
+        return getBaseMapper().queryList(page, entity, dateRange, amountRange, configAuth);
     }
 
     @Override

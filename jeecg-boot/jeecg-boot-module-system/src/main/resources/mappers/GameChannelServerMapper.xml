@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameChannelServerMapper">
 
     <select id="selectServerListByChannelId" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
         SELECT a.*
         FROM `game_server` a
-                 INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         WHERE b.`channel_id` = #{channelId}
-          AND b.`del_flag` = 0
-          AND a.`outdated` = 0
+        AND b.`del_flag` = 0
+        AND a.`outdated` = 0
         ORDER BY b.`position` DESC
     </select>
 
+    <select id="selectChannelList" resultType="cn.youai.xiuzhen.game.entity.GameChannel">
+        SELECT *
+        FROM `game_channel`
+        <where>
+            <if test="configAuth != null and configAuth != ''">
+                ${configAuth}
+            </if>
+        </where>
+    </select>
+
     <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
+        SELECT * FROM (
         <![CDATA[
-        SELECT a.*
+        SELECT c.`simple_name`, a.*
         FROM `game_server` a
-        INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
-        INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
+            INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+            INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
         WHERE b.`del_flag` = 0
         ]]>
         <if test="channel != null and channel != ''">
@@ -26,18 +37,12 @@
         </if>
         GROUP BY a.`id`
         ORDER BY b.`position` DESC
-    </select>
-
-    <select id="selectServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
-        <![CDATA[
-        SELECT a.*
-        FROM `game_server` a
-                 LEFT JOIN `game_channel_server` b ON a.`id` = b.`server_id`
-        WHERE a.`open_time` < NOW()
-          AND b.`channel_id` IS NOT NULL
-        GROUP BY a.`id`
-        ORDER BY a.`id` DESC
-        ]]>
+        ) Result
+        <where>
+            <if test="configAuth != null and configAuth != ''">
+                ${configAuth}
+            </if>
+        </where>
     </select>
 
     <select id="filterServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
@@ -75,9 +80,5 @@
         ORDER BY b.`position` DESC
     </select>
 
-    <select id="selectChannelList" resultType="cn.youai.xiuzhen.game.entity.GameChannel">
-        SELECT *
-        FROM `game_channel`
-    </select>
 
 </mapper>

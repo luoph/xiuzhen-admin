@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.annotation.Readonly;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class GameOrderController extends SimplePageController<GameOrder> {
      */
     @AutoLog(value = "充值订单-列表查询")
     @GetMapping(value = "/list")
+    @PermissionData(value = "game/GameOrderList")
     public Result<?> queryPageList(GameOrder entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
@@ -70,6 +72,7 @@ public class GameOrderController extends SimplePageController<GameOrder> {
 
     @AutoLog(value = "充值订单-导出")
     @RequestMapping(value = "/exportXls")
+    @PermissionData(value = "game/GameOrderList")
     public ModelAndView exportXls(HttpServletRequest request, GameOrder entity) {
         return super.exportXls(request, entity, GameOrder.class, "充值订单");
     }

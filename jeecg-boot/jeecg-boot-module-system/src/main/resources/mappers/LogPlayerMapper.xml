@@ -13,6 +13,9 @@
         LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
         <where>
             l.`type` = 9
+            <if test="configAuth != null and configAuth != ''">
+                ${configAuth}
+            </if>
             <if test="null != playerId and playerId > 0"><![CDATA[AND p.`player_id` = #{playerId}]]></if>
             <if test="null != serverId and serverId > 0"><![CDATA[AND p.`server_id` = #{serverId}]]></if>
             <if test="null != channel and channel != ''">AND p.`channel` = #{channel}</if>

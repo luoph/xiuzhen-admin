@@ -51,7 +51,8 @@ public class MultiDataSourceController<T, S extends IService<T>> {
         return QueryGenerator.initQueryWrapper(entity, req.getParameterMap());
     }
 
-    protected IPage<T> pageList(Page<T> page, QueryWrapper<T> queryWrapper) {
+    protected IPage<T> pageList(Page<T> page, T entity, HttpServletRequest req) {
+        QueryWrapper<T> queryWrapper = prepareQuery(entity, req);
         return service.page(page, queryWrapper);
     }
 
@@ -65,11 +66,10 @@ public class MultiDataSourceController<T, S extends IService<T>> {
      * @return {@linkplain Result}
      */
     public Result<?> queryPageList(T entity, Integer pageNo, Integer pageSize, Integer serverId, HttpServletRequest req) {
-        QueryWrapper<T> queryWrapper = prepareQuery(entity, req);
-        Page<T> page = new Page<>(pageNo, pageSize);
         try {
             useServerDatabase(serverId);
-            IPage<T> pageList = pageList(page, queryWrapper);
+            Page<T> page = new Page<>(pageNo, pageSize);
+            IPage<T> pageList = pageList(page, entity, req);
             onload(pageList.getRecords());
             return Result.ok(pageList);
         } finally {

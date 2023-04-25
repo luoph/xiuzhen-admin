@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ public class GameStatCombatPowerLogController extends SimplePageController<Comba
 
     @AutoLog(value = "战力日志-列表查询")
     @RequestMapping("/list")
+    @PermissionData(value = "game/GameStatCombatPowerLogList")
     public Result<?> queryPageList(CombatPowerLog entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
@@ -56,6 +58,7 @@ public class GameStatCombatPowerLogController extends SimplePageController<Comba
 
     @AutoLog(value = "战力日志-导出")
     @RequestMapping(value = "/exportXls")
+    @PermissionData(value = "game/GameStatCombatPowerLogList")
     public ModelAndView exportXls(HttpServletRequest req, CombatPowerLog entity) {
         return super.exportXls(req, entity, CombatPowerLog.class, "战力日志");
     }

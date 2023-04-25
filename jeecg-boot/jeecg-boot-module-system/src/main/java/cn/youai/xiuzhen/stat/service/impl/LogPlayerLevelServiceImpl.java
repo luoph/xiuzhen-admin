@@ -9,6 +9,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.jeecg.common.system.query.QueryGenerator;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ public class LogPlayerLevelServiceImpl extends ServiceImpl<LogPlayerLevelMapper,
 
     @Override
     public IPage<LogPlayerLevel> queryList(Page<?> page, LogPlayerLevel entity, RangeValue<BigDecimal> levelRange, RangeValue<BigDecimal> combatPowerRange, DateRange createDateRange) {
-        return getBaseMapper().queryList(page, entity, levelRange, combatPowerRange, createDateRange);
+        String configAuth = QueryGenerator.getAllConfigAuth();
+        return getBaseMapper().queryList(page, entity, levelRange, combatPowerRange, createDateRange, configAuth);
     }
 }

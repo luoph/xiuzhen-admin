@@ -31,7 +31,8 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
     IPage<GameOrder> queryList(Page<?> page,
                                @Param("entity") GameOrder entity,
                                @Param("dateRange") DateRange dateRange,
-                               @Param("amountRange") RangeValue<BigDecimal> amountRange);
+                               @Param("amountRange") RangeValue<BigDecimal> amountRange,
+                               @Param("configAuth") String configAuth);
 
     BigDecimal serverRangeAmount(@Param("serverId") int serverId,
                                  @Param("start") Date start,
