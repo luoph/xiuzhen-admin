@@ -328,10 +328,10 @@ export default {
         }
       ],
       url: {
-        list: 'player/playerInfo/list',
+        list: 'game/player/list',
         addVip: 'game/vip/addVip',
         deleteVip: 'game/vip/delete',
-        exportXlsUrl: 'player/playerInfo/exportXls'
+        exportXlsUrl: 'game/player/exportXls'
       },
       dictOptions: {}
     };

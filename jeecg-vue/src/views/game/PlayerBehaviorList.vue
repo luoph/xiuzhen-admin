@@ -380,8 +380,8 @@ export default {
         }
       ],
       url: {
-        list: 'game/player/behavior',
-        exportXlsUrl: 'game/player/exportXls'
+        list: 'game/behavior/list',
+        exportXlsUrl: 'game/behavior/exportXls'
       },
       dictOptions: {}
     };

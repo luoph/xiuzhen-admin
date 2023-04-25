@@ -402,7 +402,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                 condition = params[3];
                 // update-begin-author:taoyan date:20220314 for: online表单下拉搜索框表字典配置#{sys_org_code}报错 #3500
                 if (condition.contains(SymbolConstant.SYS_VAR_PREFIX)) {
-                    condition = QueryGenerator.getSqlRuleValue(condition);
+                    condition = QueryGenerator.getSqlRuleValue(condition, false);
                 }
                 // update-end-author:taoyan date:20220314 for: online表单下拉搜索框表字典配置#{sys_org_code}报错 #3500
             }

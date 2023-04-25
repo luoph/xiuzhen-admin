@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class PlayerRegisterInfoController extends JeecgController<GameRegisterIn
 
     @AutoLog(value = "玩家注册信息-列表查询")
     @GetMapping(value = "/list")
+    @PermissionData(value = "player/GameRegisterInfoList")
     public Result<?> queryPageList(GameRegisterInfo entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
@@ -47,12 +49,14 @@ public class PlayerRegisterInfoController extends JeecgController<GameRegisterIn
 
     @AutoLog(value = "玩家注册信息-导出")
     @RequestMapping(value = "/exportXls")
+    @PermissionData(value = "player/GameRegisterInfoList")
     public ModelAndView exportXls(HttpServletRequest request, GameRegisterInfo entity) {
         return super.exportXls(request, entity, GameRegisterInfo.class, "玩家注册信息");
     }
 
     @AutoLog(value = "登录流水-列表查询")
     @GetMapping(value = "/loginList")
+    @PermissionData(value = "player/GameRegisterInfoList")
     public Result<?> loginList(@RequestParam(name = "startDate", defaultValue = "") String startDate,
                                @RequestParam(name = "endDate", defaultValue = "") String endDate,
                                @RequestParam(name = "playerId", defaultValue = "0") Long playerId,

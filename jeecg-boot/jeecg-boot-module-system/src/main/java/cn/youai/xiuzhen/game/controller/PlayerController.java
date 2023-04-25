@@ -31,15 +31,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Slf4j
 @RestController
-@RequestMapping("game/player")
+@RequestMapping("game/behavior")
 public class PlayerController extends JeecgController<GamePlayer, IGamePlayerService> {
 
     @Autowired
     private IPlayerStatService playerStatService;
 
     @AutoLog(value = "玩家行为分析-查询")
-    @GetMapping(value = "/behavior")
-    public Result<?> queryBehavior(PlayerBehaviorVO entity,
+    @GetMapping(value = "/list")
+    public Result<?> queryPageList(PlayerBehaviorVO entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize) {
         if (!entity.isValidServerId()) {

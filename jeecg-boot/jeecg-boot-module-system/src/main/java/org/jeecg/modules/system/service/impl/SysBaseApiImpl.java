@@ -309,7 +309,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
     public List<DictModel> queryTableDictItemsByCode(String table, String text, String code) {
         //update-begin-author:taoyan date:20200820 for:【Online+系统】字典表加权限控制机制逻辑，想法不错 LOWCOD-799
         if (table.contains(SymbolConstant.SYS_VAR_PREFIX)) {
-            table = QueryGenerator.getSqlRuleValue(table);
+            table = QueryGenerator.getSqlRuleValue(table, false);
         }
         //update-end-author:taoyan date:20200820 for:【Online+系统】字典表加权限控制机制逻辑，想法不错 LOWCOD-799
         return DictModel.prettyText(sysDictService.queryTableDictItemsByCode(table, text, code));

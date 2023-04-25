@@ -145,7 +145,7 @@ public class QueryGenerator {
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
                 String ruleValue = ruleMap.get(c).getRuleValue();
-                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                String sqlRuleValue = getSqlRuleValue(ruleValue, true);
                 if (StrUtil.isNotEmpty(sqlRuleValue)) {
                     queryWrapper.and(i -> i.apply(sqlRuleValue));
                 }
@@ -766,7 +766,7 @@ public class QueryGenerator {
         return ruleValue;
     }
 
-    public static String getSqlRuleValue(String sqlRule) {
+    public static String getSqlRuleValue(String sqlRule, boolean quota) {
         try {
             List<String> ruleList = SplitUtils.split(sqlRule, ",");
             List<String> resultList = new ArrayList<>();
@@ -777,7 +777,8 @@ public class QueryGenerator {
                     resultList.add(rule);
                 } else {
                     for (String var : varParams) {
-                        String tempValue = convertRuleValue(var);
+                        String ruleValue = convertRuleValue(var);
+                        String tempValue = quota ? "'" + ruleValue + "'" : ruleValue;
                         if (tempValue == null) {
                             break;
                         }
@@ -1018,7 +1019,7 @@ public class QueryGenerator {
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
                 String ruleValue = ruleMap.get(c).getRuleValue();
-                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                String sqlRuleValue = getSqlRuleValue(ruleValue, true);
                 sb.append(sqlAnd).append(sqlRuleValue);
             }
         }
@@ -1065,7 +1066,7 @@ public class QueryGenerator {
         for (String c : ruleMap.keySet()) {
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
                 String ruleValue = ruleMap.get(c).getRuleValue();
-                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                String sqlRuleValue = getSqlRuleValue(ruleValue, true);
                 if (StrUtil.isNotEmpty(sqlRuleValue)) {
                     queryWrapper.and(i -> i.apply(sqlRuleValue));
                 }
@@ -1102,7 +1103,7 @@ public class QueryGenerator {
                 continue;
             }
             if (oConvertUtils.isNotEmpty(c) && c.startsWith(SQL_RULES_COLUMN)) {
-                String sqlRuleValue = getSqlRuleValue(ruleValue);
+                String sqlRuleValue = getSqlRuleValue(ruleValue, true);
                 if (StrUtil.isNotEmpty(sqlRuleValue)) {
                     sb.append(sqlAnd).append(sqlRuleValue);
                 }

@@ -32,7 +32,7 @@ import java.math.BigDecimal;
 @Slf4j
 @Readonly
 @RestController
-@RequestMapping("/player/playerInfo")
+@RequestMapping("/game/player")
 public class GamePlayerController extends SimplePageController<GamePlayer> {
 
     @Autowired
@@ -69,6 +69,7 @@ public class GamePlayerController extends SimplePageController<GamePlayer> {
 
     @AutoLog(value = "玩家信息-导出")
     @RequestMapping(value = "/exportXls")
+    @PermissionData(value = "player/GamePlayerList")
     public ModelAndView exportXls(HttpServletRequest request, GamePlayer entity) {
         return super.exportXls(request, entity, GamePlayer.class, "玩家信息");
     }

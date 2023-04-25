@@ -64,8 +64,8 @@ export default {
         openSound: {}
       },
       url: {
-        add: 'player/playerInfo/add',
-        edit: 'player/playerInfo/edit'
+        add: 'game/player/add',
+        edit: 'game/player/edit'
       }
     };
   },
