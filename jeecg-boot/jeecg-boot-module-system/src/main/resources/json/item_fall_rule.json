@@ -2428,5 +2428,284 @@
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
+    },
+    {
+        "id": 271,
+        "type": 278,
+        "reward_type": 3,
+        "title": "遗迹夺宝普通奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 272,
+        "type": 279,
+        "reward_type": 3,
+        "title": "遗迹夺宝大奖",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 273,
+        "type": 280,
+        "reward_type": 3,
+        "title": "阶段任务子任务奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 274,
+        "type": 281,
+        "reward_type": 3,
+        "title": "阶段任务大奖",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 275,
+        "type": 282,
+        "reward_type": 3,
+        "title": "夺宝战令普通奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 276,
+        "type": 283,
+        "reward_type": 3,
+        "title": "夺宝战令特殊奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 277,
+        "type": 284,
+        "reward_type": 3,
+        "title": "仙宗福赠奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 278,
+        "type": 285,
+        "reward_type": 3,
+        "title": "仙器秘境福赠",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 279,
+        "type": 286,
+        "reward_type": 3,
+        "title": "法宝秘境福赠",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 280,
+        "type": 287,
+        "reward_type": 3,
+        "title": "灵石秘境福赠",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 281,
+        "type": 288,
+        "reward_type": 3,
+        "title": "修为秘境福赠",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 282,
+        "type": 289,
+        "reward_type": 3,
+        "title": "六道剑阵-剑阵升阶奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 283,
+        "type": 290,
+        "reward_type": 3,
+        "title": "神体解封任务奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 284,
+        "type": 291,
+        "reward_type": 3,
+        "title": "神体膜拜奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 285,
+        "type": 292,
+        "reward_type": 3,
+        "title": "仙宗神体排行奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 286,
+        "type": 293,
+        "reward_type": 3,
+        "title": "飞剑熔炼",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 287,
+        "type": 294,
+        "reward_type": 3,
+        "title": "新战令普通奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 288,
+        "type": 295,
+        "reward_type": 3,
+        "title": "新战令特殊奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 289,
+        "type": 296,
+        "reward_type": 3,
+        "title": "新战令激活奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 290,
+        "type": 297,
+        "reward_type": 3,
+        "title": "开服首充豪礼奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 291,
+        "type": 298,
+        "reward_type": 3,
+        "title": "开服累充豪礼奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 292,
+        "type": 299,
+        "reward_type": 3,
+        "title": "白嫖真充兑换",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 293,
+        "type": 300,
+        "reward_type": 3,
+        "title": "神级召唤活动",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 294,
+        "type": 301,
+        "reward_type": 3,
+        "title": "召唤次数跨服排行",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 295,
+        "type": 302,
+        "reward_type": 3,
+        "title": "超值礼包",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 296,
+        "type": 303,
+        "reward_type": 3,
+        "title": "神游特权卡",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 297,
+        "type": 304,
+        "reward_type": 3,
+        "title": "刷充特权激活奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 298,
+        "type": 305,
+        "reward_type": 3,
+        "title": "刷充特权每日奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 299,
+        "type": 306,
+        "reward_type": 3,
+        "title": "无限真充奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 300,
+        "type": 307,
+        "reward_type": 3,
+        "title": "无限神充奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 301,
+        "type": 308,
+        "reward_type": 3,
+        "title": "无限累充奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
     }
 ]

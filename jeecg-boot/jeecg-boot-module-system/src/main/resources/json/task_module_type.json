@@ -229,1694 +229,1844 @@
     },
     {
         "id": 39,
+        "module_id": 20708,
+        "request": 0,
+        "name": "推演功法（开始推演即可完成任务）"
+    },
+    {
+        "id": 40,
         "module_id": 3,
         "request": 0,
         "name": "法宝业务"
     },
     {
-        "id": 40,
+        "id": 41,
         "module_id": 301,
         "request": 0,
         "name": "法宝精炼"
     },
     {
-        "id": 41,
+        "id": 42,
         "module_id": 30101,
         "request": 0,
         "name": "所有法宝累计精炼等级总和"
     },
     {
-        "id": 42,
+        "id": 43,
         "module_id": 30102,
         "request": 0,
         "name": "4件人界法宝均达到精炼等级"
     },
     {
-        "id": 43,
+        "id": 44,
         "module_id": 30103,
         "request": 0,
         "name": "法宝精炼次数"
     },
     {
-        "id": 44,
+        "id": 45,
         "module_id": 30104,
         "request": 0,
         "name": "法宝激活套装"
     },
     {
-        "id": 45,
+        "id": 46,
         "module_id": 302,
         "request": 0,
         "name": "拓星"
     },
     {
-        "id": 46,
+        "id": 47,
         "module_id": 30201,
         "request": 0,
         "name": "累计拓星等级"
     },
     {
-        "id": 47,
+        "id": 48,
         "module_id": 303,
         "request": 0,
         "name": "符文"
     },
     {
-        "id": 48,
+        "id": 49,
         "module_id": 30301,
         "request": 0,
         "name": "镶嵌符文总数量"
     },
     {
-        "id": 49,
+        "id": 50,
         "module_id": 30302,
         "request": 0,
         "name": "任意符文槽精炼等级"
     },
     {
-        "id": 50,
+        "id": 51,
         "module_id": 30303,
         "request": 0,
         "name": "符文精炼总等级"
     },
     {
-        "id": 51,
+        "id": 52,
         "module_id": 30304,
         "request": 0,
         "name": "符文精炼N次"
     },
     {
-        "id": 52,
+        "id": 53,
         "module_id": 30305,
         "request": 0,
         "name": "符文拓星总星级"
     },
     {
-        "id": 53,
+        "id": 54,
         "module_id": 304,
         "request": 0,
         "name": "追加"
     },
     {
-        "id": 54,
+        "id": 55,
         "module_id": 30401,
         "request": 0,
         "name": "法宝追加次数"
     },
     {
-        "id": 55,
+        "id": 56,
         "module_id": 305,
         "request": 0,
         "name": "法宝炼灵"
     },
     {
-        "id": 56,
+        "id": 57,
         "module_id": 30501,
         "request": 0,
         "name": "所有法宝累计炼灵次数"
     },
     {
-        "id": 57,
+        "id": 58,
         "module_id": 30502,
         "request": 0,
         "name": "炼灵法宝等级"
     },
     {
-        "id": 58,
+        "id": 59,
         "module_id": 306,
         "request": 0,
         "name": "法宝套装"
     },
     {
-        "id": 59,
+        "id": 60,
         "module_id": 30601,
         "request": 0,
         "name": "激活任意/指定ID的法宝套装"
     },
     {
-        "id": 60,
+        "id": 61,
         "module_id": 30602,
         "request": 0,
         "name": "装备任意/指定ID一件N阶以上法宝"
     },
     {
-        "id": 61,
+        "id": 62,
         "module_id": 30603,
         "request": 0,
         "name": "合成任意/指定ID一件法宝"
     },
     {
-        "id": 62,
+        "id": 63,
         "module_id": 30604,
         "request": 0,
         "name": "分解N次法宝"
     },
     {
-        "id": 63,
+        "id": 64,
         "module_id": 30605,
         "request": 0,
         "name": "激活任意一件法宝套装"
     },
     {
-        "id": 64,
+        "id": 65,
         "module_id": 307,
         "request": 0,
         "name": "法宝器灵"
     },
     {
-        "id": 65,
+        "id": 66,
         "module_id": 30701,
         "request": 0,
         "name": "器灵等级达到N级"
     },
     {
-        "id": 66,
+        "id": 67,
         "module_id": 30801,
         "request": 0,
         "name": "法宝铸灵次数"
     },
     {
-        "id": 67,
+        "id": 68,
         "module_id": 30802,
         "request": 0,
         "name": "法宝铸灵总等级"
     },
     {
-        "id": 68,
+        "id": 69,
         "module_id": 4,
         "request": 0,
         "name": "仙兽业务"
     },
     {
-        "id": 69,
+        "id": 70,
         "module_id": 401,
         "request": 0,
         "name": "仙兽"
     },
     {
-        "id": 70,
+        "id": 71,
         "module_id": 40101,
         "request": 0,
         "name": "仙兽召唤"
     },
     {
-        "id": 71,
+        "id": 72,
         "module_id": 40102,
         "request": 0,
         "name": "将仙兽升至X级"
     },
     {
-        "id": 72,
+        "id": 73,
         "module_id": 40103,
         "request": 0,
         "name": "将仙兽升至X星"
     },
     {
-        "id": 73,
+        "id": 74,
         "module_id": 40104,
         "request": 0,
         "name": "仙兽喂养次数"
     },
     {
-        "id": 74,
+        "id": 75,
         "module_id": 40105,
         "request": 0,
         "name": "所有仙兽总等级"
     },
     {
-        "id": 75,
+        "id": 76,
         "module_id": 40106,
         "request": 0,
         "name": "累计激活仙兽数量"
     },
     {
-        "id": 76,
+        "id": 77,
         "module_id": 40107,
         "request": 0,
         "name": "激活/升星仙兽羁绊升至X阶"
     },
     {
-        "id": 77,
+        "id": 78,
         "module_id": 40108,
         "request": 0,
         "name": "激活任意一只X品质仙兽"
     },
     {
-        "id": 78,
+        "id": 79,
         "module_id": 40109,
         "request": 0,
         "name": "升星任意一只X品质仙兽升至X星"
     },
     {
-        "id": 79,
+        "id": 80,
         "module_id": 402,
         "request": 0,
         "name": "仙兽装备"
     },
     {
-        "id": 80,
+        "id": 81,
         "module_id": 40201,
         "request": 0,
         "name": "将任意仙兽装备升至X级"
     },
     {
-        "id": 81,
+        "id": 82,
         "module_id": 40202,
         "request": 0,
         "name": "激活仙兽装备"
     },
     {
-        "id": 82,
+        "id": 83,
         "module_id": 40203,
         "request": 0,
         "name": "将任意仙兽装备升级X次"
     },
     {
-        "id": 83,
+        "id": 84,
         "module_id": 40204,
         "request": 0,
         "name": "升星仙兽装备至N阶"
     },
     {
-        "id": 84,
+        "id": 85,
         "module_id": 403,
         "request": 0,
         "name": "仙兽宫召唤仙兽次数"
     },
     {
-        "id": 85,
+        "id": 86,
         "module_id": 404,
         "request": 0,
         "name": "X界仙兽全部达到N星"
     },
     {
-        "id": 86,
+        "id": 87,
         "module_id": 5,
         "request": 0,
         "name": "仙盟业务"
     },
     {
-        "id": 87,
+        "id": 88,
         "module_id": 501,
         "request": 0,
         "name": "仙盟累计捐献次数"
     },
     {
-        "id": 88,
+        "id": 89,
         "module_id": 502,
         "request": 0,
         "name": "仙盟仙宴参加次数"
     },
     {
-        "id": 89,
+        "id": 90,
         "module_id": 503,
         "request": 0,
         "name": "累计挑战仙盟妖灵次数"
     },
     {
-        "id": 90,
+        "id": 91,
         "module_id": 504,
         "request": 0,
         "name": "加入仙盟"
     },
     {
-        "id": 91,
+        "id": 92,
         "module_id": 505,
         "request": 0,
         "name": "挑战仙盟妖兽次数"
     },
     {
-        "id": 92,
+        "id": 93,
         "module_id": 506,
         "request": 0,
         "name": "成为盟主"
     },
     {
-        "id": 93,
+        "id": 94,
         "module_id": 507,
         "request": 0,
         "name": "位面争霸仙盟达到第N名"
     },
     {
-        "id": 94,
+        "id": 95,
         "module_id": 508,
         "request": 0,
         "name": "位面争霸参与n次"
     },
     {
-        "id": 95,
+        "id": 96,
         "module_id": 509,
         "request": 0,
         "name": "挖掘宝藏的次数"
     },
     {
-        "id": 96,
+        "id": 97,
         "module_id": 510,
         "request": 0,
         "name": "开启宝藏的次数"
     },
     {
-        "id": 97,
+        "id": 98,
         "module_id": 511,
         "request": 0,
         "name": "协助宝藏的次数"
     },
     {
-        "id": 98,
+        "id": 99,
         "module_id": 512,
         "request": 0,
         "name": "宝藏被协助的次数"
     },
     {
-        "id": 99,
+        "id": 100,
         "module_id": 513,
         "request": 0,
         "name": "发布求助的次数"
     },
     {
-        "id": 100,
+        "id": 101,
         "module_id": 514,
         "request": 0,
         "name": "仙盟技能升级至X级"
     },
     {
-        "id": 101,
+        "id": 102,
         "module_id": 515,
         "request": 0,
         "name": "仙盟技能升级X次"
     },
     {
-        "id": 102,
+        "id": 103,
         "module_id": 6,
         "request": 0,
         "name": "储物袋内业务"
     },
     {
-        "id": 103,
+        "id": 104,
         "module_id": 601,
         "request": 0,
         "name": "仙术等级"
     },
     {
-        "id": 104,
+        "id": 105,
         "module_id": 60101,
         "request": 0,
         "name": "仙术等阶"
     },
     {
-        "id": 105,
+        "id": 106,
         "module_id": 60102,
         "request": 0,
         "name": "仙术等级升级X次"
     },
     {
-        "id": 106,
+        "id": 107,
         "module_id": 602,
         "request": 0,
         "name": "炼体"
     },
     {
-        "id": 107,
+        "id": 108,
         "module_id": 60201,
         "request": 0,
         "name": "天命等级"
     },
     {
-        "id": 108,
+        "id": 109,
         "module_id": 60202,
         "request": 0,
         "name": "聚灵等级"
     },
     {
-        "id": 109,
+        "id": 110,
         "module_id": 603,
         "request": 0,
         "name": "时装"
     },
     {
-        "id": 110,
+        "id": 111,
         "module_id": 60301,
         "request": 0,
         "name": "激活1件对应类型时装"
     },
     {
-        "id": 111,
+        "id": 112,
         "module_id": 60302,
         "request": 0,
         "name": "X级霓裳全激活到N星"
     },
     {
-        "id": 112,
+        "id": 113,
         "module_id": 60303,
         "request": 0,
         "name": "X级头像激活到N星"
     },
     {
-        "id": 113,
+        "id": 114,
         "module_id": 60304,
         "request": 0,
         "name": "X级聊天框激活到N星"
     },
     {
-        "id": 114,
+        "id": 115,
         "module_id": 60305,
         "request": 0,
         "name": "X级名帖激活到N星"
     },
     {
-        "id": 115,
+        "id": 116,
         "module_id": 604,
         "request": 0,
         "name": "飞剑"
     },
     {
-        "id": 116,
+        "id": 117,
         "module_id": 60401,
         "request": 0,
         "name": "飞剑打磨次数"
     },
     {
-        "id": 117,
+        "id": 118,
         "module_id": 60402,
         "request": 0,
         "name": "X界飞剑全部锻造到N星"
     },
     {
-        "id": 118,
+        "id": 119,
         "module_id": 60403,
         "request": 0,
         "name": "激活/升星飞剑羁绊至N星"
     },
     {
-        "id": 119,
+        "id": 120,
         "module_id": 60404,
         "request": 0,
         "name": "任意/指定飞剑幻化激活"
     },
     {
-        "id": 120,
+        "id": 121,
         "module_id": 60405,
         "request": 0,
         "name": "任意/指定飞剑幻化升至N星"
     },
     {
-        "id": 121,
+        "id": 122,
         "module_id": 60406,
         "request": 0,
         "name": "激活任意一把X品质飞剑"
     },
     {
-        "id": 122,
+        "id": 123,
         "module_id": 60407,
         "request": 0,
         "name": "升星任意一把X品质飞剑升至X星"
     },
     {
-        "id": 123,
+        "id": 124,
         "module_id": 605,
         "request": 0,
         "name": "秘术提升到N阶"
     },
     {
-        "id": 124,
+        "id": 125,
         "module_id": 7,
         "request": 0,
         "name": "斗法"
     },
     {
-        "id": 125,
+        "id": 126,
         "module_id": 701,
         "request": 0,
         "name": "神魔战场"
     },
     {
-        "id": 126,
+        "id": 127,
         "module_id": 70101,
         "request": 0,
         "name": "神魔战场累计胜利次数"
     },
     {
-        "id": 127,
+        "id": 128,
         "module_id": 70102,
         "request": 0,
         "name": "参与神魔战场次数"
     },
     {
-        "id": 128,
+        "id": 129,
+        "module_id": 70103,
+        "request": 0,
+        "name": "参与神魔战场次数"
+    },
+    {
+        "id": 130,
         "module_id": 702,
         "request": 0,
         "name": "福地夺宝"
     },
     {
-        "id": 129,
+        "id": 131,
         "module_id": 70201,
         "request": 0,
         "name": "福地夺宝掠夺次数"
     },
     {
-        "id": 130,
+        "id": 132,
         "module_id": 70202,
         "request": 0,
         "name": "福地夺宝达到周排名达到N名"
     },
     {
-        "id": 131,
+        "id": 133,
         "module_id": 703,
         "request": 0,
         "name": "游历上古遗迹次数"
     },
     {
-        "id": 132,
+        "id": 134,
         "module_id": 70301,
         "request": 0,
         "name": "上古遗迹掠夺次数"
     },
     {
-        "id": 133,
+        "id": 135,
         "module_id": 704,
         "request": 0,
         "name": "斗灵场"
     },
     {
-        "id": 134,
+        "id": 136,
         "module_id": 70401,
         "request": 0,
         "name": "斗灵场挑战N次"
     },
     {
-        "id": 135,
+        "id": 137,
         "module_id": 70402,
         "request": 0,
         "name": "斗灵场历史最高排名达到N"
     },
     {
-        "id": 136,
+        "id": 138,
         "module_id": 70403,
         "request": 0,
         "name": "斗灵场挑战获得胜利N次"
     },
     {
-        "id": 137,
+        "id": 139,
         "module_id": 705,
         "request": 0,
         "name": "天书秘境"
     },
     {
-        "id": 138,
+        "id": 140,
         "module_id": 70501,
         "request": 0,
         "name": "天书秘境挑战次数"
     },
     {
-        "id": 139,
+        "id": 141,
         "module_id": 70502,
         "request": 0,
         "name": "天书秘境累计伤害"
     },
     {
-        "id": 140,
+        "id": 142,
         "module_id": 70503,
         "request": 0,
         "name": "天书秘境单次伤害"
     },
     {
-        "id": 141,
+        "id": 143,
         "module_id": 706,
         "request": 0,
         "name": "谪仙台"
     },
     {
-        "id": 142,
+        "id": 144,
         "module_id": 70601,
         "request": 0,
         "name": "谪仙台挑战次数"
     },
     {
-        "id": 143,
+        "id": 145,
         "module_id": 70602,
         "request": 0,
         "name": "谪仙台历史段位(功能未实现)"
     },
     {
-        "id": 144,
+        "id": 146,
         "module_id": 70603,
         "request": 0,
         "name": "谪仙台历史最高排名达到N(功能未实现)"
     },
     {
-        "id": 145,
+        "id": 147,
         "module_id": 70604,
         "request": 0,
         "name": "谪仙台当前赛季段位"
     },
     {
-        "id": 146,
+        "id": 148,
+        "module_id": 70605,
+        "request": 0,
+        "name": "谪仙台参加次数"
+    },
+    {
+        "id": 149,
         "module_id": 8,
         "request": 0,
         "name": "封魔"
     },
     {
-        "id": 147,
+        "id": 150,
         "module_id": 801,
         "request": 0,
         "name": "北冥魔海"
     },
     {
-        "id": 148,
+        "id": 151,
         "module_id": 80101,
         "request": 0,
         "name": "挑战成功北冥魔海次数"
     },
     {
-        "id": 149,
+        "id": 152,
         "module_id": 802,
         "request": 0,
         "name": "不死魔巢"
     },
     {
-        "id": 150,
+        "id": 153,
         "module_id": 80201,
         "request": 0,
         "name": "挑战成功不死魔巢次数"
     },
     {
-        "id": 151,
+        "id": 154,
         "module_id": 803,
         "request": 0,
         "name": "魔王入侵"
     },
     {
-        "id": 152,
+        "id": 155,
         "module_id": 80301,
         "request": 0,
         "name": "参与魔王入侵次数"
     },
     {
-        "id": 153,
+        "id": 156,
         "module_id": 804,
         "request": 0,
         "name": "蛇陵魔窟"
     },
     {
-        "id": 154,
+        "id": 157,
         "module_id": 80401,
         "request": 0,
         "name": "挑战蛇灵魔窟的首领次数"
     },
     {
-        "id": 155,
+        "id": 158,
         "module_id": 80402,
         "request": 0,
         "name": "击败蛇灵魔窟的首领次数"
     },
     {
-        "id": 156,
+        "id": 159,
         "module_id": 9,
         "request": 0,
         "name": "秘境"
     },
     {
-        "id": 157,
+        "id": 160,
         "module_id": 901,
         "request": 0,
         "name": "符文秘境"
     },
     {
-        "id": 158,
+        "id": 161,
         "module_id": 90101,
         "request": 0,
         "name": "符文秘境关卡数"
     },
     {
-        "id": 159,
+        "id": 162,
         "module_id": 90102,
         "request": 0,
         "name": "傀儡扫荡次数"
     },
     {
-        "id": 160,
+        "id": 163,
         "module_id": 90103,
         "request": 0,
         "name": "挑战符文秘境次数"
     },
     {
-        "id": 161,
+        "id": 164,
         "module_id": 902,
         "request": 0,
         "name": "仙兽秘境"
     },
     {
-        "id": 162,
+        "id": 165,
         "module_id": 90201,
         "request": 0,
         "name": "仙兽秘境关卡数"
     },
     {
-        "id": 163,
+        "id": 166,
         "module_id": 90202,
         "request": 0,
         "name": "神游仙兽秘境次数"
     },
     {
-        "id": 164,
+        "id": 167,
         "module_id": 90203,
         "request": 0,
         "name": "挑战任意/指定仙兽秘境N次"
     },
     {
-        "id": 165,
+        "id": 168,
         "module_id": 903,
         "request": 0,
         "name": "丹药秘境"
     },
     {
-        "id": 166,
+        "id": 169,
         "module_id": 90301,
         "request": 0,
         "name": "挑战丹药秘境次数"
     },
     {
-        "id": 167,
+        "id": 170,
         "module_id": 90302,
         "request": 0,
         "name": "通关丹药秘境次数"
     },
     {
-        "id": 168,
+        "id": 171,
         "module_id": 904,
         "request": 0,
         "name": "仙器秘境"
     },
     {
-        "id": 169,
+        "id": 172,
         "module_id": 90401,
         "request": 0,
         "name": "挑战仙器秘境关卡次数"
     },
     {
-        "id": 170,
+        "id": 173,
         "module_id": 90402,
         "request": 0,
         "name": "累计挑战仙器秘境次数"
     },
     {
-        "id": 171,
+        "id": 174,
+        "module_id": 90403,
+        "request": 0,
+        "name": "通关指定大关卡中的小关卡数量"
+    },
+    {
+        "id": 175,
         "module_id": 905,
         "request": 0,
         "name": "灵石秘境"
     },
     {
-        "id": 172,
+        "id": 176,
         "module_id": 90501,
         "request": 0,
         "name": "挑战灵石秘境N次"
     },
     {
-        "id": 173,
+        "id": 177,
+        "module_id": 90502,
+        "request": 0,
+        "name": "通关指定大关卡中的小关卡数量"
+    },
+    {
+        "id": 178,
         "module_id": 906,
         "request": 0,
         "name": "修为秘境"
     },
     {
-        "id": 174,
+        "id": 179,
         "module_id": 90601,
         "request": 0,
         "name": "挑战修为秘境N次"
     },
     {
-        "id": 175,
+        "id": 180,
+        "module_id": 90602,
+        "request": 0,
+        "name": "通关指定大关卡中的小关卡数量"
+    },
+    {
+        "id": 181,
         "module_id": 907,
         "request": 0,
         "name": "炼体秘境"
     },
     {
-        "id": 176,
+        "id": 182,
         "module_id": 90701,
         "request": 0,
         "name": "挑战炼体秘境关卡数"
     },
     {
-        "id": 177,
+        "id": 183,
         "module_id": 90702,
         "request": 0,
         "name": "累计炼体秘境关卡数"
     },
     {
-        "id": 178,
+        "id": 184,
+        "module_id": 90703,
+        "request": 0,
+        "name": "通关指定大关卡中的小关卡数量"
+    },
+    {
+        "id": 185,
         "module_id": 908,
         "request": 0,
         "name": "仙术秘境"
     },
     {
-        "id": 179,
+        "id": 186,
         "module_id": 90801,
         "request": 0,
         "name": "挑战仙术秘境N次"
     },
     {
-        "id": 180,
+        "id": 187,
         "module_id": 90802,
         "request": 0,
         "name": "挑战仙术秘境至N层"
     },
     {
-        "id": 181,
+        "id": 188,
         "module_id": 10,
         "request": 0,
         "name": "套装（仙器）"
     },
     {
-        "id": 182,
+        "id": 189,
         "module_id": 1001,
         "request": 0,
         "name": "激活某套仙器"
     },
     {
-        "id": 183,
+        "id": 190,
         "module_id": 1002,
         "request": 0,
         "name": "激活指定仙器任意部位"
     },
     {
-        "id": 184,
+        "id": 191,
         "module_id": 1003,
         "request": 0,
         "name": "激活指定仙器的任意套装效果"
     },
     {
-        "id": 185,
+        "id": 192,
         "module_id": 1004,
         "request": 0,
         "name": "对仙器注灵"
     },
     {
-        "id": 186,
+        "id": 193,
         "module_id": 1005,
         "request": 0,
         "name": "激活指定仙器的指定部位"
     },
     {
-        "id": 187,
+        "id": 194,
         "module_id": 11,
         "request": 0,
         "name": "充值"
     },
     {
-        "id": 188,
+        "id": 195,
         "module_id": 1101,
         "request": 1,
         "name": "累计充值"
     },
     {
-        "id": 189,
+        "id": 196,
         "module_id": 1102,
         "request": 0,
         "name": "首充"
     },
     {
-        "id": 190,
+        "id": 197,
         "module_id": 1103,
         "request": 0,
         "name": "激活主角光环"
     },
     {
-        "id": 191,
+        "id": 198,
         "module_id": 1104,
         "request": 0,
         "name": "激活月卡"
     },
     {
-        "id": 192,
+        "id": 199,
         "module_id": 1105,
         "request": 0,
         "name": "每日累充（运营活动）"
     },
     {
-        "id": 193,
+        "id": 200,
         "module_id": 1106,
         "request": 0,
         "name": "仙福周卡"
     },
     {
-        "id": 194,
+        "id": 201,
         "module_id": 1107,
         "request": 0,
         "name": "每日累计充值达到N元"
     },
     {
-        "id": 195,
+        "id": 202,
         "module_id": 12,
         "request": 0,
         "name": "消耗道具"
     },
     {
-        "id": 196,
+        "id": 203,
         "module_id": 1201,
         "request": 1,
         "name": "累计消耗道具"
     },
     {
-        "id": 197,
+        "id": 204,
         "module_id": 14,
         "request": 0,
         "name": "飞升"
     },
     {
-        "id": 198,
+        "id": 205,
         "module_id": 1401,
         "request": 0,
         "name": "飞升至X界"
     },
     {
-        "id": 199,
+        "id": 206,
         "module_id": 15,
         "request": 0,
         "name": "福利"
     },
     {
-        "id": 200,
+        "id": 207,
         "module_id": 1501,
         "request": 0,
         "name": "灵石商人交易次数"
     },
     {
-        "id": 201,
+        "id": 208,
         "module_id": 16,
         "request": 0,
         "name": "聊天"
     },
     {
-        "id": 202,
+        "id": 209,
         "module_id": 1601,
         "request": 0,
         "name": "传音N次"
     },
     {
-        "id": 203,
+        "id": 210,
         "module_id": 17,
         "request": 0,
         "name": "圣灵"
     },
     {
-        "id": 204,
+        "id": 211,
         "module_id": 1701,
         "request": 0,
         "name": "圣灵升级N次"
     },
     {
-        "id": 205,
+        "id": 212,
         "module_id": 1702,
         "request": 0,
         "name": "圣灵升级至N级"
     },
     {
-        "id": 206,
+        "id": 213,
         "module_id": 1703,
         "request": 0,
         "name": "幻化指定圣灵形象"
     },
     {
-        "id": 207,
+        "id": 214,
         "module_id": 1704,
         "request": 0,
         "name": "圣灵XX全幻化到N星"
     },
     {
-        "id": 208,
+        "id": 215,
         "module_id": 1705,
         "request": 0,
         "name": "圣灵升至X星"
     },
     {
-        "id": 209,
+        "id": 216,
         "module_id": 70301,
         "request": 0,
         "name": "上古遗迹掠夺次数"
     },
     {
-        "id": 210,
+        "id": 217,
         "module_id": 18,
         "request": 0,
         "name": "论道"
     },
     {
-        "id": 211,
+        "id": 218,
         "module_id": 1801,
         "request": 0,
         "name": "与任意/指定仙侣进行论道N次"
     },
     {
-        "id": 212,
+        "id": 219,
         "module_id": 1802,
         "request": 0,
         "name": "仙缘试炼挑战任意/指定BOSS  N次"
     },
     {
-        "id": 213,
+        "id": 220,
         "module_id": 1803,
         "request": 0,
         "name": "与任意/指定仙侣的亲密度等级达到N级"
     },
     {
-        "id": 214,
+        "id": 221,
         "module_id": 1804,
         "request": 0,
         "name": "与任意/指定仙侣进行结缘"
     },
     {
-        "id": 215,
+        "id": 222,
         "module_id": 1805,
         "request": 0,
         "name": "结缘仙侣数量达到N个"
     },
     {
-        "id": 216,
+        "id": 223,
         "module_id": 1806,
         "request": 0,
         "name": "前往任意/指定仙山寻缘N次"
     },
     {
-        "id": 217,
+        "id": 224,
         "module_id": 1807,
         "request": 0,
         "name": "强化任意信物N次"
     },
     {
-        "id": 218,
+        "id": 225,
         "module_id": 1808,
         "request": 0,
         "name": "任意/指定部位信物最高等级达到N级"
     },
     {
-        "id": 219,
+        "id": 226,
         "module_id": 1809,
         "request": 0,
         "name": "所有信物等级总和达到N级"
     },
     {
-        "id": 220,
+        "id": 227,
         "module_id": 1810,
         "request": 0,
         "name": "合成任意/指定信物N次"
     },
     {
-        "id": 221,
+        "id": 228,
         "module_id": 1811,
         "request": 0,
         "name": "当日赠酒N次"
     },
     {
-        "id": 222,
+        "id": 229,
         "module_id": 1812,
         "request": 0,
         "name": "给N名道友赠酒"
     },
     {
-        "id": 223,
+        "id": 230,
         "module_id": 19,
         "request": 0,
         "name": "境界目标"
     },
     {
-        "id": 224,
+        "id": 231,
         "module_id": 1901,
         "request": 0,
         "name": "指定境界获得境界积分数"
     },
     {
-        "id": 225,
+        "id": 232,
         "module_id": 20,
         "request": 0,
         "name": "境界挑战"
     },
     {
-        "id": 226,
+        "id": 233,
         "module_id": 2001,
         "request": 0,
         "name": "通过元婴五阶境界挑战"
     },
     {
-        "id": 227,
+        "id": 234,
         "module_id": 2002,
         "request": 0,
         "name": "战力试炼"
     },
     {
-        "id": 228,
+        "id": 235,
         "module_id": 21,
         "request": 0,
         "name": "天书"
     },
     {
-        "id": 229,
+        "id": 236,
         "module_id": 2101,
         "request": 0,
         "name": "天书升级N次"
     },
     {
-        "id": 230,
+        "id": 237,
         "module_id": 2102,
         "request": 0,
         "name": "天书升级至N级"
     },
     {
-        "id": 231,
+        "id": 238,
         "module_id": 2103,
         "request": 0,
         "name": "激活指定天书外型"
     },
     {
-        "id": 232,
+        "id": 239,
         "module_id": 2104,
         "request": 0,
         "name": "X级天书激活到X星"
     },
     {
-        "id": 233,
+        "id": 240,
         "module_id": 2105,
         "request": 0,
         "name": "指定/任意共鸣效果达到N阶（激活算是1阶）"
     },
     {
-        "id": 234,
+        "id": 241,
         "module_id": 2201,
         "request": 0,
         "name": "结婚"
     },
     {
-        "id": 235,
+        "id": 242,
         "module_id": 220101,
         "request": 0,
         "name": "与其他玩家成功结缘N次"
     },
     {
-        "id": 236,
+        "id": 243,
         "module_id": 220102,
         "request": 0,
         "name": "累计发布红尘帖N次"
     },
     {
-        "id": 237,
+        "id": 244,
         "module_id": 220103,
         "request": 0,
         "name": "好感度等级提升N次"
     },
     {
-        "id": 238,
+        "id": 245,
         "module_id": 220104,
         "request": 0,
         "name": "好感度等级提升至N级"
     },
     {
-        "id": 239,
+        "id": 246,
         "module_id": 220105,
         "request": 0,
         "name": "结缘天数达到N天"
     },
     {
-        "id": 240,
+        "id": 247,
         "module_id": 220106,
         "request": 0,
         "name": "誓戒的等级达到N级"
     },
     {
-        "id": 241,
+        "id": 248,
         "module_id": 220107,
         "request": 0,
         "name": "誓戒的等级提升N次"
     },
     {
-        "id": 242,
+        "id": 249,
         "module_id": 220108,
         "request": 0,
         "name": "誓戒共鸣的阶段数达到N阶"
     },
     {
-        "id": 243,
+        "id": 250,
         "module_id": 220109,
         "request": 0,
         "name": "激活誓戒外观"
     },
     {
-        "id": 244,
+        "id": 251,
         "module_id": 220110,
         "request": 0,
         "name": "挑战金兰副本N次"
     },
     {
-        "id": 245,
+        "id": 252,
         "module_id": 220111,
         "request": 0,
         "name": "激活N个情饰"
     },
     {
-        "id": 246,
+        "id": 253,
         "module_id": 220112,
         "request": 0,
         "name": "将情饰升至N等级"
     },
     {
-        "id": 247,
+        "id": 254,
         "module_id": 220113,
         "request": 0,
         "name": "升级情饰N次"
     },
     {
-        "id": 248,
+        "id": 255,
         "module_id": 220114,
         "request": 0,
         "name": "将情饰升星至N星"
     },
     {
-        "id": 249,
+        "id": 256,
         "module_id": 220115,
         "request": 0,
         "name": "情饰的共鸣达到N阶"
     },
     {
-        "id": 250,
+        "id": 257,
         "module_id": 23,
         "request": 0,
         "name": "炼丹大师"
     },
     {
-        "id": 251,
+        "id": 258,
         "module_id": 2301,
         "request": 0,
         "name": "炼制丹药数"
     },
     {
-        "id": 252,
+        "id": 259,
         "module_id": 2302,
         "request": 0,
         "name": "炼制极品丹药数"
     },
     {
-        "id": 253,
+        "id": 260,
         "module_id": 2303,
         "request": 0,
         "name": "服用丹药数"
     },
     {
-        "id": 254,
+        "id": 261,
         "module_id": 2304,
         "request": 0,
         "name": "服用极品丹药数"
     },
     {
-        "id": 255,
+        "id": 262,
         "module_id": 2305,
         "request": 0,
         "name": "炼丹师等级"
     },
     {
-        "id": 256,
+        "id": 263,
         "module_id": 24,
         "request": 0,
         "name": "炼器大师"
     },
     {
-        "id": 257,
+        "id": 264,
         "module_id": 2401,
         "request": 0,
         "name": "炼器师等级"
     },
     {
-        "id": 258,
+        "id": 265,
         "module_id": 2402,
         "request": 0,
         "name": "炼制道具数量"
     },
     {
-        "id": 259,
+        "id": 266,
         "module_id": 25,
         "request": 0,
         "name": "砸蛋"
     },
     {
-        "id": 260,
+        "id": 267,
         "module_id": 2501,
         "request": 0,
         "name": "累计获得砸蛋值"
     },
     {
-        "id": 261,
+        "id": 268,
         "module_id": 26,
         "request": 0,
         "name": "灵气铸剑"
     },
     {
-        "id": 262,
+        "id": 269,
         "module_id": 2600,
         "request": 0,
         "name": "灵气铸剑-助成飞剑"
     },
     {
-        "id": 263,
+        "id": 270,
         "module_id": 2601,
         "request": 0,
         "name": "灵气铸剑领取指定/任意飞剑"
     },
     {
-        "id": 264,
+        "id": 271,
         "module_id": 2602,
         "request": 0,
         "name": "灵气铸剑完成指定飞剑任务个数"
     },
     {
-        "id": 265,
+        "id": 272,
         "module_id": 27,
         "request": 0,
         "name": "瞻仰"
     },
     {
-        "id": 266,
+        "id": 273,
         "module_id": 2701,
         "request": 0,
         "name": "瞻仰任意玩家N次"
     },
     {
-        "id": 267,
+        "id": 274,
         "module_id": 28,
         "request": 0,
         "name": "排行榜"
     },
     {
-        "id": 268,
+        "id": 275,
         "module_id": 2801,
         "request": 0,
         "name": "XX排行第N名（后台控制的运营活动）"
     },
     {
-        "id": 269,
+        "id": 276,
         "module_id": 29,
         "request": 0,
         "name": "圣装"
     },
     {
-        "id": 270,
+        "id": 277,
         "module_id": 2901,
         "request": 0,
         "name": "激活XX圣装到N阶"
     },
     {
-        "id": 271,
+        "id": 278,
         "module_id": 30,
         "request": 0,
         "name": "自创功法"
     },
     {
-        "id": 272,
+        "id": 279,
         "module_id": 3001,
         "request": 0,
         "name": "激活一个新的自创功法外观"
     },
     {
-        "id": 273,
+        "id": 280,
         "module_id": 3002,
         "request": 0,
         "name": "自创功法外观升星N次"
     },
     {
-        "id": 274,
+        "id": 281,
         "module_id": 3003,
         "request": 0,
         "name": "玩家首次合成出X神文"
     },
     {
-        "id": 275,
+        "id": 282,
         "module_id": 3004,
         "request": 0,
         "name": "玩家合成出神文X次"
     },
     {
-        "id": 276,
+        "id": 283,
         "module_id": 3005,
         "request": 0,
         "name": "玩家当前镶嵌在自创功法上的神文数"
     },
     {
-        "id": 277,
+        "id": 284,
         "module_id": 3006,
         "request": 0,
         "name": "玩家当前的自创功法等级"
     },
     {
-        "id": 278,
+        "id": 285,
         "module_id": 31,
         "request": 0,
         "name": "云游寻珍"
     },
     {
-        "id": 279,
+        "id": 286,
         "module_id": 3101,
         "request": 0,
         "name": "玩家触发每日定时刷新的灵犀点N次"
     },
     {
-        "id": 280,
+        "id": 287,
         "module_id": 3102,
         "request": 0,
         "name": "玩家触发特效&灵犀点N次"
     },
     {
-        "id": 281,
+        "id": 288,
         "module_id": 3103,
         "request": 0,
         "name": "玩家在云游寻珍进行搜寻N次"
     },
     {
-        "id": 282,
+        "id": 289,
         "module_id": 32,
         "request": 0,
         "name": "场外boss任务"
     },
     {
-        "id": 283,
+        "id": 290,
         "module_id": 3201,
         "request": 0,
         "name": "击杀对应boss"
     },
     {
-        "id": 284,
+        "id": 291,
         "module_id": 33,
         "request": 0,
         "name": "仙力转盘"
     },
     {
-        "id": 285,
+        "id": 292,
         "module_id": 3301,
         "request": 0,
         "name": "仙力转盘转N次"
     },
     {
-        "id": 286,
+        "id": 293,
         "module_id": 34,
         "request": 0,
         "name": "境界转盘转N次"
     },
     {
-        "id": 287,
+        "id": 294,
         "module_id": 3401,
         "request": 0,
         "name": "境界转盘转N次"
     },
     {
-        "id": 288,
+        "id": 295,
         "module_id": 35,
         "request": 0,
         "name": "升级仙兽之魂"
     },
     {
-        "id": 289,
+        "id": 296,
         "module_id": 3501,
         "request": 0,
         "name": "升级仙兽之魂N次"
     },
     {
-        "id": 290,
+        "id": 297,
         "module_id": 3502,
         "request": 0,
         "name": "升级仙兽之魂达到指定等级"
     },
     {
-        "id": 291,
+        "id": 298,
         "module_id": 36,
         "request": 0,
         "name": "升级飞剑之魂"
     },
     {
-        "id": 292,
+        "id": 299,
         "module_id": 3601,
         "request": 0,
         "name": "升级飞剑之魂N次"
     },
     {
-        "id": 293,
+        "id": 300,
         "module_id": 3602,
         "request": 0,
         "name": "升级飞剑之魂达到指定等级"
     },
     {
-        "id": 294,
+        "id": 301,
         "module_id": 37,
         "request": 0,
         "name": "领取功能解锁奖励"
     },
     {
-        "id": 295,
+        "id": 302,
         "module_id": 3701,
         "request": 0,
         "name": "领取指定/任意奖励"
     },
     {
-        "id": 296,
+        "id": 303,
         "module_id": 38,
         "request": 0,
         "name": "天魔异巢"
     },
     {
-        "id": 297,
+        "id": 304,
         "module_id": 3801,
         "request": 0,
         "name": "挑战任意/某一层天魔异巢N次"
     },
     {
-        "id": 298,
+        "id": 305,
         "module_id": 39,
         "request": 0,
         "name": "洞天福地"
     },
     {
-        "id": 299,
+        "id": 306,
         "module_id": 3901,
         "request": 0,
         "name": "挑战任意/品质洞天福地N次"
     },
     {
-        "id": 300,
+        "id": 307,
         "module_id": 3902,
         "request": 0,
         "name": "领取N次/品质洞天福地挂机奖励"
     },
     {
-        "id": 301,
+        "id": 308,
+        "module_id": 3903,
+        "request": 0,
+        "name": "掠夺任意/品质玩家的洞天福地N次"
+    },
+    {
+        "id": 309,
         "module_id": 40,
         "request": 0,
         "name": "幽冥魔域"
     },
     {
-        "id": 302,
+        "id": 310,
         "module_id": 4001,
         "request": 0,
         "name": "领取幽冥魔域1次归属奖励"
     },
     {
-        "id": 303,
+        "id": 311,
         "module_id": 4002,
         "request": 0,
         "name": "参与幽冥魔域（点击挑战即算）"
     },
     {
-        "id": 304,
+        "id": 312,
         "module_id": 50,
         "request": 0,
         "name": "天帝争霸"
     },
     {
-        "id": 305,
+        "id": 313,
         "module_id": 5001,
         "request": 0,
         "name": "报名参与天帝争霸N次（报名成功算完成1次）"
     },
     {
-        "id": 306,
+        "id": 314,
         "module_id": 5002,
         "request": 0,
         "name": "参与天帝争霸竞猜N次（竞猜1次算完成1次，一个赛季竞猜多次算完成多次）"
     },
     {
-        "id": 307,
+        "id": 315,
         "module_id": 5003,
         "request": 0,
         "name": "天帝争霸总决赛获得X位置"
     },
     {
-        "id": 308,
+        "id": 316,
         "module_id": 5004,
         "request": 0,
         "name": "天帝争霸资格赛获得第N名以上（大于等于N算完成任务）"
     },
     {
-        "id": 309,
+        "id": 317,
         "module_id": 60,
         "request": 0,
         "name": "就有魔窟"
     },
     {
-        "id": 310,
+        "id": 318,
         "module_id": 6001,
         "request": 0,
         "name": "参与击败一个九幽魔窟的boss"
     },
     {
-        "id": 311,
+        "id": 319,
         "module_id": 6002,
         "request": 0,
         "name": "获得一个九幽魔窟boss的伤害排名第一奖励"
     },
     {
-        "id": 312,
+        "id": 320,
         "module_id": 6003,
         "request": 0,
         "name": "获得一个九幽魔窟boss的最后一击奖励"
     },
     {
-        "id": 313,
+        "id": 321,
         "module_id": 6004,
         "request": 0,
         "name": "在挑战九幽魔窟boss中使用N个符咒"
     },
     {
-        "id": 314,
+        "id": 322,
         "module_id": 7001,
         "request": 0,
         "name": "领取成就阶段奖励"
     },
     {
-        "id": 315,
+        "id": 323,
         "module_id": 80,
         "request": 0,
         "name": "寻宝"
     },
     {
-        "id": 316,
+        "id": 324,
         "module_id": 8001,
         "request": 0,
         "name": "仙饰寻宝次数"
     },
     {
-        "id": 317,
+        "id": 325,
         "module_id": 8002,
         "request": 0,
         "name": "鉴宝次数"
     },
     {
-        "id": 318,
+        "id": 326,
         "module_id": 8003,
         "request": 0,
         "name": "仙兽秘宝开启次数"
     },
     {
-        "id": 319,
+        "id": 327,
         "module_id": 90,
         "request": 0,
         "name": "日常/周常"
     },
     {
-        "id": 320,
+        "id": 328,
         "module_id": 9001,
         "request": 0,
         "name": "获得日常/周常活跃度"
+    },
+    {
+        "id": 329,
+        "module_id": 100,
+        "request": 0,
+        "name": "夺宝奇兵"
+    },
+    {
+        "id": 330,
+        "module_id": 10001,
+        "request": 0,
+        "name": "夺宝N次"
+    },
+    {
+        "id": 331,
+        "module_id": 10002,
+        "request": 0,
+        "name": "夺宝N层"
+    },
+    {
+        "id": 332,
+        "module_id": 10003,
+        "request": 0,
+        "name": "夺宝至N层"
+    },
+    {
+        "id": 333,
+        "module_id": 10004,
+        "request": 0,
+        "name": "夺宝暴击N次"
+    },
+    {
+        "id": 334,
+        "module_id": 110,
+        "request": 0,
+        "name": "夺宝战令"
+    },
+    {
+        "id": 335,
+        "module_id": 11001,
+        "request": 0,
+        "name": "激活夺宝战令"
+    },
+    {
+        "id": 336,
+        "module_id": 120,
+        "request": 0,
+        "name": "神体"
+    },
+    {
+        "id": 337,
+        "module_id": 12001,
+        "request": 0,
+        "name": "激活任意/指定ID的神体"
+    },
+    {
+        "id": 338,
+        "module_id": 12002,
+        "request": 0,
+        "name": "激活N个神体"
+    },
+    {
+        "id": 339,
+        "module_id": 12003,
+        "request": 0,
+        "name": "升阶任意/指定ID的神体到N阶"
+    },
+    {
+        "id": 340,
+        "module_id": 12004,
+        "request": 0,
+        "name": "神体膜拜N次"
+    },
+    {
+        "id": 341,
+        "module_id": 12005,
+        "request": 0,
+        "name": "仙宗神体排名达到N名"
+    },
+    {
+        "id": 342,
+        "module_id": 130,
+        "request": 0,
+        "name": "夺宝奇兵"
+    },
+    {
+        "id": 343,
+        "module_id": 13001,
+        "request": 0,
+        "name": "神级召唤活动累计召唤N次"
+    },
+    {
+        "id": 344,
+        "module_id": 13002,
+        "request": 0,
+        "name": "神级召唤活动累计获得N次心仪大奖"
+    },
+    {
+        "id": 345,
+        "module_id": 13003,
+        "request": 0,
+        "name": "神级召唤活动累计获得X道具N次"
     }
 ]
