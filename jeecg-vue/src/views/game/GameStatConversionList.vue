@@ -5,7 +5,6 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="18" :sm="8">
-            <!--@ = v-on:数据绑定 不是事件-->
             <channel-server-selector ref="channelServerSelector"
                                      :show-sdk-channel="true"
                                      @onSelectChannel="onSelectChannel"

@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
+import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.util.ExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,19 +50,20 @@ public class GameStatRechargeRankController {
      * @param pageSize 分页大小
      * @return {@linkplain Result}
      */
-    @AutoLog(value = "付费排行-列表查询")
     @GetMapping(value = "/list")
+    @AutoLog(value = "付费排行-列表查询")
+    @PermissionData(value = "game/GameStatRechargeRankList")
     public Result<?> queryPageList(GameStatRechargeRank entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         Page<GameStatRechargeRank> page = new Page<>(pageNo, pageSize);
-        IPage<GameStatRechargeRank> pageList = pageList(page, entity, req);
-        return Result.ok(pageList);
+        return Result.ok(pageList(page, entity, req));
     }
 
     @AutoLog(value = "付费排行-导出")
     @RequestMapping(value = "/exportXls")
+    @PermissionData(value = "game/GameStatRechargeRankList")
     public ModelAndView exportXls(HttpServletRequest req, GameStatRechargeRank entity) {
         Page<GameStatRechargeRank> page = new Page<>(1, Integer.MAX_VALUE);
         IPage<GameStatRechargeRank> pageList = pageList(page, entity, req);
@@ -70,13 +72,13 @@ public class GameStatRechargeRankController {
 
     private IPage<GameStatRechargeRank> pageList(Page<GameStatRechargeRank> page, GameStatRechargeRank entity, HttpServletRequest req) {
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
-        int serverId = entity.getServerId() != null ? entity.getServerId() : 0;
-        Date now = DateUtils.now();
-        IPage<GameStatRechargeRank> pageList = orderStatService.queryRechargeRankList(page, entity.getChannel(), serverId, dateRange.getStart(), dateRange.getEnd());
+        IPage<GameStatRechargeRank> pageList = orderStatService.queryRechargeRankList(page, entity.getChannel(),
+                entity.getSdkChannel(), entity.getServerId(), dateRange);
         Set<Long> orderIdList = pageList.getRecords().stream().map(GameStatRechargeRank::getOrderId).collect(Collectors.toSet());
         List<GameOrder> lastOrders = orderStatService.queryByIds(orderIdList);
         Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
 
+        Date now = DateUtils.now();
         int rank = (int) ((pageList.getCurrent() - 1) * pageList.getSize()) + 1;
         for (GameStatRechargeRank t : pageList.getRecords()) {
             t.setRank(rank++)

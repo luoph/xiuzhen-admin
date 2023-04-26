@@ -3,13 +3,15 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
-        <a-row :gutter="45">
-          <a-col :md="12" :sm="8">
-            <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+        <a-row :gutter="24">
+          <a-col :md="18" :sm="8">
+            <channel-server-selector ref="channelServerSelector"
+                                     :show-sdk-channel="true"
+                                     @onSelectChannel="onSelectChannel"
+                                     @onSelectSdkChannel="onSelectSdkChannel"
                                      @onSelectServer="onSelectServer"/>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
               <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
@@ -31,7 +33,7 @@
               </a-radio-group>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="download" @click="handleExportXls('付费排行')">导出</a-button>
               <a-button type="primary" icon="search" style="margin-left: 8px" @click="searchQuery">查询</a-button>
@@ -220,11 +222,14 @@ export default {
     }
   },
   methods: {
-    onSelectChannel: function (channel) {
-      this.queryParam.channel = channel;
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
     },
-    onSelectServer: function (serverId) {
-      this.queryParam.serverId = serverId;
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
+    },
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
     },
     getQueryParams() {
       if (this.dayType > 0) {

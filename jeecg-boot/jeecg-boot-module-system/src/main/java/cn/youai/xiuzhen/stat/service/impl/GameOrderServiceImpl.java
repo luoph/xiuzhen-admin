@@ -73,27 +73,28 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
         return getBaseMapper().queryOrderStatByRange(StrUtil.join(",", serverIds), serverIds.size(), startDate, endDate);
     }
 
-    public GameStatRechargeSum queryStatRechargeGoodsSum(String channel, int serverId, int goodsGroup, Date start, Date end) {
+    public GameStatRechargeSum queryStatRechargeGoodsSum(String channel, Integer serverId, Integer goodsGroup, Date start, Date end) {
         return getBaseMapper().queryStatRechargeGoodsSum(channel, serverId, goodsGroup, start, end);
     }
 
     @Override
-    public List<GameStatRechargeGoods> queryStatRechargeGoods(String channel, int serverId, int goodsGroup, Date start, Date end) {
+    public List<GameStatRechargeGoods> queryStatRechargeGoods(String channel, Integer serverId, Integer goodsGroup, Date start, Date end) {
         return getBaseMapper().queryStatRechargeGoods(channel, serverId, goodsGroup, start, end);
     }
 
     @Override
-    public GameStatRechargeSum queryStatRechargeGradeSum(String channel, int serverId, Date start, Date end) {
+    public GameStatRechargeSum queryStatRechargeGradeSum(String channel, Integer serverId, Date start, Date end) {
         return getBaseMapper().queryStatRechargeGradeSum(channel, serverId, start, end);
     }
 
     @Override
-    public List<GameStatPlayerRechargeAmount> queryPlayerRechargeAmount(String channel, int serverId, Date start, Date end) {
+    public List<GameStatPlayerRechargeAmount> queryPlayerRechargeAmount(String channel, Integer serverId, Date start, Date end) {
         return getBaseMapper().queryPlayerRechargeAmount(channel, serverId, start, end);
     }
 
     @Override
-    public IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, int serverId, Date start, Date end) {
-        return getBaseMapper().queryRechargeRankList(page, channel, serverId, start, end);
+    public IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, String sdkChannel, Integer serverId, DateRange dateRange) {
+        String configAuth = QueryGenerator.getAllConfigAuth();
+        return getBaseMapper().queryRechargeRankList(page, channel, sdkChannel, serverId, dateRange, configAuth);
     }
 }

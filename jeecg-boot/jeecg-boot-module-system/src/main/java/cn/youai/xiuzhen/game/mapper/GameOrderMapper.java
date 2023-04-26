@@ -58,38 +58,39 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                               @Param("endTime") Date endTime);
 
     GameStatOrder queryOrderStatByRange(@Param("serverIds") String serverIds,
-                                        @Param("serverNum") int serverNum,
+                                        @Param("serverNum") Integer serverNum,
                                         @Param("startDate") Date startDate,
                                         @Param("endDate") Date endDate);
 
 
     GameStatRechargeSum queryStatRechargeGoodsSum(@Param("channel") String channel,
-                                                  @Param("serverId") int serverId,
-                                                  @Param("goodsGroup") int goodsGroup,
+                                                  @Param("serverId") Integer serverId,
+                                                  @Param("goodsGroup") Integer goodsGroup,
                                                   @Param("startDate") Date startDate,
                                                   @Param("endDate") Date endDate);
 
     List<GameStatRechargeGoods> queryStatRechargeGoods(@Param("channel") String channel,
-                                                       @Param("serverId") int serverId,
-                                                       @Param("goodsGroup") int goodsGroup,
+                                                       @Param("serverId") Integer serverId,
+                                                       @Param("goodsGroup") Integer goodsGroup,
                                                        @Param("startDate") Date startDate,
                                                        @Param("endDate") Date endDate);
 
     GameStatRechargeSum queryStatRechargeGradeSum(@Param("channel") String channel,
-                                                  @Param("serverId") int serverId,
+                                                  @Param("serverId") Integer serverId,
                                                   @Param("startDate") Date startDate,
                                                   @Param("endDate") Date endDate);
 
     List<GameStatPlayerRechargeAmount> queryPlayerRechargeAmount(@Param("channel") String channel,
-                                                                 @Param("serverId") int serverId,
+                                                                 @Param("serverId") Integer serverId,
                                                                  @Param("startDate") Date startDate,
                                                                  @Param("endDate") Date endDate);
 
     IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page,
                                                       @Param("channel") String channel,
-                                                      @Param("serverId") int serverId,
-                                                      @Param("startDate") Date startDate,
-                                                      @Param("endDate") Date endDate);
+                                                      @Param("sdkChannel") String sdkChannel,
+                                                      @Param("serverId") Integer serverId,
+                                                      @Param("dateRange") DateRange dateRange,
+                                                      @Param("configAuth") String configAuth);
 
     List<GameOrder> sumAmountGroupByPlayerId(@Param("serverIds") Set<Integer> serverIds);
 

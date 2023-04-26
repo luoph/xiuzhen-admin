@@ -48,16 +48,16 @@ public interface IGameOrderService extends IService<GameOrder> {
 
     GameStatOrder queryOrderStatByRange(List<Integer> serverIds, Date startDate, Date endDate);
 
-    GameStatRechargeSum queryStatRechargeGoodsSum(String channel, int serverId, int goodsGroup, Date start, Date end);
+    GameStatRechargeSum queryStatRechargeGoodsSum(String channel, Integer serverId, Integer goodsGroup, Date start, Date end);
 
-    List<GameStatRechargeGoods> queryStatRechargeGoods(String channel, int serverId, int goodsGroup, Date start, Date end);
+    List<GameStatRechargeGoods> queryStatRechargeGoods(String channel, Integer serverId, Integer goodsGroup, Date start, Date end);
 
-    GameStatRechargeSum queryStatRechargeGradeSum(String channel, int serverId, Date start, Date end);
+    GameStatRechargeSum queryStatRechargeGradeSum(String channel, Integer serverId, Date start, Date end);
 
-    List<GameStatPlayerRechargeAmount> queryPlayerRechargeAmount(String channel, int serverId, Date start, Date end);
+    List<GameStatPlayerRechargeAmount> queryPlayerRechargeAmount(String channel, Integer serverId, Date start, Date end);
 
     /**
      * 查询充值榜单
      */
-    IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, int serverId, Date start, Date end);
+    IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, String sdkChannel, Integer serverId, DateRange dateRange);
 }
