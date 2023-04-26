@@ -4,7 +4,7 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="20" :sm="8">
+          <a-col :md="18" :sm="8">
             <channel-server-selector ref="channelServerSelector"
                                      :show-sdk-channel="true"
                                      @onSelectChannel="onSelectChannel"

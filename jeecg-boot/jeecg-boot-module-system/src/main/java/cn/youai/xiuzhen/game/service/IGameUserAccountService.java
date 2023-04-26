@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2023-01-17
  */
 public interface IGameUserAccountService extends IService<GameUserAccount> {
-    int queryUserAccountNum(String channel, String sdkChannel, Date date);
+    int queryUserAccountNum(String channel, String sdkChannel, Date date, String configAuth);
 
     List<String> querySdkChannels();
 }

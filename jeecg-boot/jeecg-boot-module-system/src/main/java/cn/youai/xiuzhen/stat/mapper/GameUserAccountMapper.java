@@ -19,7 +19,10 @@ import java.util.List;
  * @since 2021-12-07
  */
 public interface GameUserAccountMapper extends BaseMapper<GameUserAccount> {
-    int queryUserAccountNum(@Param("channel") String channel, @Param("sdkChannel") String sdkChannel, @Param("date") Date date);
+    int queryUserAccountNum(@Param("channel") String channel,
+                            @Param("sdkChannel") String sdkChannel,
+                            @Param("date") Date date,
+                            @Param("configAuth") String configAuth);
 
     List<String> querySdkChannels();
 }

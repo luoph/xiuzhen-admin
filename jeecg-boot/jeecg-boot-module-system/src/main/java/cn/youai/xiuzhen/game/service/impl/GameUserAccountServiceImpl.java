@@ -25,8 +25,8 @@ import java.util.List;
 @DS("master")
 public class GameUserAccountServiceImpl extends ServiceImpl<GameUserAccountMapper, GameUserAccount> implements IGameUserAccountService {
     @Override
-    public int queryUserAccountNum(String channel, String sdkChannel, Date date) {
-        return getBaseMapper().queryUserAccountNum(channel, sdkChannel, date);
+    public int queryUserAccountNum(String channel, String sdkChannel, Date date, String configAuth) {
+        return getBaseMapper().queryUserAccountNum(channel, sdkChannel, date, configAuth);
     }
 
     @Override

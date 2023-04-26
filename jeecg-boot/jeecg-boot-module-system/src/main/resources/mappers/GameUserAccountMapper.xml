@@ -3,15 +3,13 @@
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.GameUserAccountMapper">
 
     <select id="queryUserAccountNum" resultType="java.lang.Integer">
-        SELECT COUNT(*) AS counNum
-        FROM `game_user_account` a
+        SELECT COUNT(*) AS countNum
+        FROM `game_user_account` p
         <where>
-            <![CDATA[
-            a.`create_time` >= DATE(#{date})
-            AND a.`create_time` < DATE(DATE_ADD(#{date}, INTERVAL 1 DAY))
-            ]]>
-            <if test="channel != null and channel != ''"><![CDATA[ AND a.`channel` = #{channel} ]]></if>
-            <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND a.`sdk_channel` = #{sdkChannel} ]]></if>
+            <if test="date != null">p.`create_date` = DATE(#{date})</if>
+            <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
+            <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+            <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         </where>
     </select>
 

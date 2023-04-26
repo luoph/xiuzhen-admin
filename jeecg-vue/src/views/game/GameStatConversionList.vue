@@ -4,16 +4,13 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="12" :sm="8">
+          <a-col :md="18" :sm="8">
             <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel"
+            <channel-server-selector ref="channelServerSelector"
+                                     :show-sdk-channel="true"
+                                     @onSelectChannel="onSelectChannel"
+                                     @onSelectSdkChannel="onSelectSdkChannel"
                                      @onSelectServer="onSelectServer"/>
-          </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="Sdk渠道">
-              <j-search-select-tag placeholder="请选择Sdk渠道" v-model="queryParam.sdkChannel"
-                                   dict="game_sdk_channel,name,sdk_channel"/>
-            </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
@@ -35,7 +32,6 @@
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
@@ -86,7 +82,6 @@ export default {
         order: 'desc'
       },
       dayType: 7,
-      sdkChannelList: [],
       columns: [
         {
           title: '#',
@@ -160,36 +155,22 @@ export default {
       ],
       url: {
         list: 'game/stat/conversion/list',
-        update: 'game/stat/conversion/update',
-        sdkChannels: 'game/account/sdkChannels'
       },
       dictOptions: {}
     };
   },
   computed: {},
   created() {
-    this.querySdkChannelList();
   },
   methods: {
-    onSelectChannel: function (channel) {
-      this.queryParam.channel = channel;
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
     },
-    onSelectServer: function (serverId) {
-      this.queryParam.serverId = serverId;
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
     },
-    querySdkChannelList() {
-      let that = this;
-      getAction(that.url.sdkChannels).then((res) => {
-        if (res.success) {
-          if (res.result instanceof Array) {
-            this.sdkChannelList = res.result;
-          } else if (res.result.records instanceof Array) {
-            this.sdkChannelList = res.result.records;
-          }
-        } else {
-          this.sdkChannelList = [];
-        }
-      });
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
     },
     getQueryParams() {
       if (this.dayType > 0) {

@@ -67,6 +67,7 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
     }
 
     @Override
+    @SuppressWarnings("DuplicatedCode")
     public Result<?> queryPageList(GameStatDaily entity, Integer pageNo, Integer pageSize, HttpServletRequest req) {
         // 刷新统计数据
         Date endDate = DateUtils.todayDate();
@@ -74,7 +75,7 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
         int days = DateUtils.daysBetween(dateRange.getStart(), dateRange.getEnd());
         if (days > MAX_DAYS) {
-            return Result.error("统计日期范围不支持超过" + MAX_DAYS + "天的数据查询");
+            return Result.error("不支持超过" + MAX_DAYS + "天的数据查询");
         }
         List<GameStatDaily> records = update(entity, dateRange, req);
         return Result.ok(PageQueryUtils.makePage(records));

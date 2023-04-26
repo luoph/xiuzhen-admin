@@ -54,7 +54,7 @@ public class GameSdkChannelController extends JeecgController<GameSdkChannel, IG
     }
 
     @Async
-    @Scheduled(cron = "0 0/10 * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     protected void doSync() {
         List<GameSdkChannel> gameSdkChannels = service.selectSdkChannelList();
         List<GameSdkChannel> existList = service.list();

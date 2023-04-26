@@ -44,11 +44,6 @@ public class GameUserAccountController extends JeecgController<GameUserAccount, 
         return super.queryById(id);
     }
 
-    @GetMapping(value = "/sdkChannels")
-    public Result<?> sdkChannels() {
-        return Result.ok(service.querySdkChannels());
-    }
-
     @AutoLog(value = "账号-导出")
     @RequestMapping(value = "/exportXls")
     public ModelAndView exportXls(HttpServletRequest request, GameUserAccount gameServer) {

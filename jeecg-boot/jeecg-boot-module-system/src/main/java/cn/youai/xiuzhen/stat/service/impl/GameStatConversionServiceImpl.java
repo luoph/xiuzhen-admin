@@ -24,7 +24,7 @@ import static cn.youai.enums.AccountLogType.REGISTER;
  * 每日数据统计 服务实现类
  * </p>
  *
- * @author buliangliang
+ * @author 新增数据（转化统计报表）
  * @since 2020-08-22
  */
 @Service
@@ -44,7 +44,8 @@ public class GameStatConversionServiceImpl extends ServiceImpl<GameStatConversio
     @Override
     public GameStatConversion getGameStatConversion(String channel, String sdkChannel, Integer serverId, Date date) {
         String configAuth = QueryGenerator.getAllConfigAuth();
-        int newAccountNum = userAccountService.queryUserAccountNum(channel, sdkChannel, date);
+        // 新增账号数
+        int newAccountNum = userAccountService.queryUserAccountNum(channel, sdkChannel, date, configAuth);
         // 当天注册角色数
         int newPlayerNum = logAccountService.loginRegisterPlayerNum(channel, sdkChannel, serverId, date, REGISTER.getType(), configAuth);
         // 新用户付费角色数
