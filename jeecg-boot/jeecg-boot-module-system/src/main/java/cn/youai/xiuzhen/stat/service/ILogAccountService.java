@@ -6,13 +6,11 @@ package cn.youai.xiuzhen.stat.service;
 import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import cn.youai.xiuzhen.stat.entity.LogAccount;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
-import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -35,22 +33,22 @@ public interface ILogAccountService extends IService<LogAccount> {
     /**
      * 登录注册角色数
      */
-    int channelLoginRegisterPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, int type);
+    int loginRegisterPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, int type, String configAuth);
 
     /**
      * 新注册付费总额
      */
-    BigDecimal channelRegisterPayAmount(String channel, Integer serverId, Date date);
+    BigDecimal registerPayAmount(String channel, String sdkChannel, Integer serverId, Date date, String configAuth);
 
     /**
      * 新注册付费玩家
      */
-    int channelRegisterPayPlayerNum(String channel, String sdkChannel, Integer serverId, Date date);
+    int registerPayPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, String configAuth);
 
     /**
      * 二次付费玩家
      */
-    int channelDoublePayRegisterPlayer(String channel, Integer serverId, Date date);
+    int doublePayRegisterPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, String configAuth);
 
     /**
      * 当前登陆玩家ids

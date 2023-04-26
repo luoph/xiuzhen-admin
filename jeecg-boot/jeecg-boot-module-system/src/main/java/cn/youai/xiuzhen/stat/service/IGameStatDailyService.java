@@ -21,5 +21,5 @@ public interface IGameStatDailyService extends IService<GameStatDaily> {
 
     int updateOrInsert(List<GameStatDaily> list);
 
-    GameStatDaily getGameStatDaily(String channel, Integer serverId, Date date);
+    GameStatDaily getGameStatDaily(String channel, String sdkChannel, Integer serverId, Date date);
 }

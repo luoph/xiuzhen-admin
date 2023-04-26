@@ -4,13 +4,17 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="12" :sm="8">
-            <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
+          <a-col :md="20" :sm="8">
+            <channel-server-selector ref="channelServerSelector"
+                                     :show-sdk-channel="true"
+                                     @onSelectChannel="onSelectChannel"
+                                     @onSelectSdkChannel="onSelectSdkChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
+                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -27,7 +31,6 @@
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="searchQuery">查询</a-button>
-              <a-button type="danger" icon="sync" style="margin-left: 8px" @click="onClickUpdate">刷新</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
           </a-col>
@@ -54,10 +57,10 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import { getAction } from '@/api/manage';
-import { filterObj } from '@/utils/util';
+import {getAction} from '@/api/manage';
+import {filterObj} from '@/utils/util';
 import moment from 'moment';
 import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
 
@@ -214,19 +217,21 @@ export default {
         }
       ],
       url: {
-        list: 'game/stat/daily/list',
-        update: 'game/stat/daily/update'
+        list: 'game/stat/daily/list'
       },
-      dictOptions: {}
+      dictOptions: {},
     };
   },
   computed: {},
   methods: {
-    onSelectChannel: function (channel) {
-      this.queryParam.channel = channel;
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
     },
-    onSelectServer: function (serverId) {
-      this.queryParam.serverId = serverId;
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
+    },
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
     },
     getQueryParams() {
       if (this.dayType > 0) {
@@ -263,23 +268,6 @@ export default {
         this.queryParam.countDate_begin = start;
         this.queryParam.countDate_end = end;
       }
-    },
-    onClickUpdate() {
-      // 查询条件
-      const params = this.getQueryParams();
-      this.loading = true;
-      getAction(this.url.update, params, this.timeout)
-        .then((res) => {
-          if (res.success) {
-            this.$message.success(res.message);
-          } else {
-            this.$message.warning(res.message);
-          }
-        })
-        .finally(() => {
-          this.loading = false;
-          this.searchQuery();
-        });
     }
   }
 };

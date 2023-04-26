@@ -59,13 +59,13 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public BigDecimal channelPayAmount(String channel, Integer serverId, Date date) {
-        return getBaseMapper().chanelPayAmount(channel, serverId, date);
+    public BigDecimal payAmount(String channel, String sdkChannel, Integer serverId, Date date, String configAuth) {
+        return getBaseMapper().payAmount(channel, sdkChannel, serverId, date, configAuth);
     }
 
     @Override
-    public int channelPayPlayerNum(String channel, Integer serverId, Date date) {
-        return getBaseMapper().channelPayPlayerNum(channel, serverId, date);
+    public int payPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, String configAuth) {
+        return getBaseMapper().payPlayerNum(channel, sdkChannel, serverId, date, configAuth);
     }
 
     @Override

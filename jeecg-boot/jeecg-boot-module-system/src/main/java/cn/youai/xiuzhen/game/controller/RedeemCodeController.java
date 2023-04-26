@@ -31,7 +31,10 @@ public class RedeemCodeController extends JeecgController<GameRedeemCode, IGameR
 
     @AutoLog(value = "激活码-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(GameRedeemCode entity, @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, HttpServletRequest req) {
+    public Result<?> queryPageList(GameRedeemCode entity,
+                                   @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
+                                   @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                                   HttpServletRequest req) {
         return super.queryPageList(entity, pageNo, pageSize, req);
     }
 

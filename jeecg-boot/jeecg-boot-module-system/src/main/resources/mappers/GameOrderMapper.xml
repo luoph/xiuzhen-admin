@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameOrderMapper">
 
     <select id="queryById" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
         SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`
         FROM `game_order` o
-                 LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE o.`id` = #{id}
     </select>
 
@@ -28,9 +28,7 @@
         LEFT JOIN `game_vip` v ON o.`player_id` = v.`player_id`
         LEFT JOIN `game_recharge_goods` grg on grg.`goods_id` = o.`product_id`
         <where>
-            <if test="configAuth != null and configAuth != ''">
-                ${configAuth}
-            </if>
+            <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">
                 <if test="entity.channel != null and entity.channel != ''">
                     AND o.`channel` = #{entity.channel}
@@ -86,21 +84,25 @@
         </where>
     </select>
 
-    <select id="chanelPayAmount" resultType="java.math.BigDecimal">
+    <select id="payAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE o.`create_date` = DATE (#{payDate})
+        <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
-    <select id="channelPayPlayerNum" resultType="int">
+    <select id="payPlayerNum" resultType="int">
         SELECT COUNT(DISTINCT o.`player_id`) AS num
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE o.`create_date` = DATE (#{payDate})
+        <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 

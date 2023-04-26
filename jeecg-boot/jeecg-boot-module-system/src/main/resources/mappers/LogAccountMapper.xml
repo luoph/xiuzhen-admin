@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.LogAccountMapper">
 
     <select id="queryDau" resultType="decimal">
         SELECT COUNT(DISTINCT (`player_id`)) dau
         FROM `log_account`
         WHERE `create_date` = #{getTime}
-          AND `type` = 2
+        AND `type` = 2
     </select>
 
     <select id="selectRunningServerIdsByRange" resultType="java.lang.Integer">
@@ -23,7 +23,7 @@
         SELECT `ip`
         FROM `log_account`
         WHERE `player_id` = #{playerId}
-          AND `create_date` = #{createDate}
+        AND `create_date` = #{createDate}
         ORDER BY `create_time` DESC LIMIT 1
     </select>
 
@@ -52,46 +52,52 @@
         </where>
     </select>
 
-    <select id="channelLoginRegisterPlayerNum" resultType="java.lang.Integer">
+    <select id="loginRegisterPlayerNum" resultType="java.lang.Integer">
         SELECT COUNT(DISTINCT l.`player_id`) AS counNum
         FROM `log_account` l
         LEFT JOIN `game_player` p ON l.`player_id` = p.`player_id`
         WHERE l.`type` = #{type}
         AND l.`create_date` = DATE(#{date})
+        <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
         <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
-    <select id="channelRegisterPayAmount" resultType="java.math.BigDecimal">
+    <select id="registerPayAmount" resultType="java.math.BigDecimal">
         SELECT IFNULL(sum(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`create_date` = DATE(#{date})
         AND o.`create_date` = DATE(#{date})
-        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
-        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
-    </select>
-
-    <select id="channelRegisterPayPlayerNum" resultType="java.lang.Integer">
-        SELECT count(DISTINCT o.`player_id`) AS payAmount
-        FROM `game_order` o
-        JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`create_date` = DATE(#{date})
-        AND o.`create_date` = DATE(#{date})
+        <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
         <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
     </select>
 
-    <select id="channelDoublePayRegisterPlayer" resultType="java.lang.Integer">
+    <select id="registerPayPlayerNum" resultType="java.lang.Integer">
+        SELECT count(DISTINCT o.`player_id`) AS payAmount
+        FROM `game_order` o
+        JOIN `game_player` p ON o.`player_id` = p.`player_id`
+        WHERE p.`create_date` = DATE(#{date})
+        AND o.`create_date` = DATE(#{date})
+        <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
+        <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
+        <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
+    </select>
+
+    <select id="doublePayRegisterPlayerNum" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM (SELECT COUNT(o.`player_id`) AS num
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`create_date` = DATE(#{date})
         AND o.`create_date` = DATE(#{date})
+        <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
         <if test="channel != null and channel != ''"><![CDATA[ AND p.`channel` = #{channel} ]]></if>
+        <if test="sdkChannel != null and sdkChannel != ''"><![CDATA[ AND p.`sdk_channel` = #{sdkChannel} ]]></if>
         <if test="serverId != null and serverId > 0"><![CDATA[ AND p.`server_id` = #{serverId} ]]></if>
         GROUP BY o.`player_id`) c
         WHERE c.`num` >= 2;
@@ -101,8 +107,8 @@
         SELECT l.`player_id`
         FROM `log_account` l
         WHERE l.`server_id` = #{serverId}
-          AND l.`type` = 2
-          AND l.`create_date` = #{date}
+        AND l.`type` = 2
+        AND l.`create_date` = #{date}
         GROUP BY l.`player_id`;
     </select>
 

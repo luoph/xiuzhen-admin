@@ -10,9 +10,7 @@
         FROM `log_player_level` lp
         LEFT JOIN `game_player` p ON p.`player_id` = lp.`player_id`
         <where>
-            <if test="configAuth != null and configAuth != ''">
-                ${configAuth}
-            </if>
+            <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">
                 <if test="entity.serverId !=null and entity.serverId > 0">
                     AND lp.`server_id` = #{entity.serverId}

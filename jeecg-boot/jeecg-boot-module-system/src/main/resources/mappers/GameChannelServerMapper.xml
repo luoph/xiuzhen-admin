@@ -17,42 +17,48 @@
         SELECT *
         FROM `game_channel`
         <where>
-            <if test="configAuth != null and configAuth != ''">
-                ${configAuth}
-            </if>
+            <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
         </where>
     </select>
 
-    <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
-        SELECT * FROM (
-        <![CDATA[
-        SELECT c.`simple_name`, a.*
+    <select id="selectSdkChannelList" resultType="cn.youai.xiuzhen.game.entity.GameSdkChannel">
+        SELECT s.`name`, s.`channel`, s.`sdk_channel`
+        FROM `game_sdk_channel` s
+        INNER JOIN `game_channel` c ON s.`channel` = c.`simple_name`
+        <where>
+            <if test="channels != null and channels.size() > 0">
+                c.`simple_name` IN
+                <foreach item="item" collection="channels" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        GROUP BY s.`channel`, s.`sdk_channel`
+        ORDER BY s.`sdk_channel`
+    </select>
+
+    <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        SELECT a.`id`, a.`name`, c.`simple_name` AS channel
         FROM `game_server` a
-            INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
-            INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
+        INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
+        INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
         WHERE b.`del_flag` = 0
-        ]]>
-        <if test="channel != null and channel != ''">
-            AND c.`simple_name` = #{channel}
+        <if test="channels != null and channels.size() > 0">
+            AND c.`simple_name` IN
+            <foreach item="item" collection="channels" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
         GROUP BY a.`id`
         ORDER BY b.`position` DESC
-        ) Result
-        <where>
-            <if test="configAuth != null and configAuth != ''">
-                ${configAuth}
-            </if>
-        </where>
     </select>
 
     <select id="filterServerList" resultType="cn.youai.xiuzhen.game.entity.GameServerVO">
-        <![CDATA[
         SELECT a.*
         FROM `game_server` a
         INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
         WHERE b.`del_flag` = 0
-        ]]>
         <if test="null != channel and '' != channel">
             AND c.`simple_name` = #{channel}
         </if>
@@ -64,13 +70,11 @@
     </select>
 
     <select id="selectServerListByChannel" resultType="cn.youai.xiuzhen.game.entity.GameServer">
-        <![CDATA[
         SELECT a.*
         FROM `game_server` a
         INNER JOIN `game_channel_server` b ON a.`id` = b.`server_id`
         INNER JOIN `game_channel` c ON b.`channel_id` = c.`id`
         WHERE b.`del_flag` = 0
-        ]]>
         <if test="channel != null and channel != '' ">
             AND c.`simple_name` = #{channel}
         </if>
@@ -79,6 +83,5 @@
         </if>
         ORDER BY b.`position` DESC
     </select>
-
 
 </mapper>

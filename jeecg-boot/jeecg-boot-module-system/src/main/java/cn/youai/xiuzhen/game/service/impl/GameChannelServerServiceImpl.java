@@ -1,9 +1,7 @@
 package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.youai.xiuzhen.game.entity.GameChannel;
-import cn.youai.xiuzhen.game.entity.GameChannelServer;
-import cn.youai.xiuzhen.game.entity.GameServerVO;
+import cn.youai.xiuzhen.game.entity.*;
 import cn.youai.xiuzhen.game.mapper.GameChannelServerMapper;
 import cn.youai.xiuzhen.game.service.IGameCampaignService;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
@@ -16,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -72,9 +67,13 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
     }
 
     @Override
-    public List<GameServerVO> selectServerList(String channel) {
-        String configAuth = QueryGenerator.installAuthJdbc(GameChannel.class);
-        return getBaseMapper().selectChannelServerList(channel, configAuth);
+    public List<GameSdkChannel> selectSdkChannelList(Collection<String> channels) {
+        return getBaseMapper().selectSdkChannelList(channels);
+    }
+
+    @Override
+    public List<GameServer> selectServerList(Collection<String> channels) {
+        return getBaseMapper().selectChannelServerList(channels);
     }
 
     @Override

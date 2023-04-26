@@ -41,34 +41,40 @@ public interface LogAccountMapper extends BaseMapper<LogAccount> {
     /**
      * 当天登录/注册玩家数
      */
-    int channelLoginRegisterPlayerNum(@Param("channel") String channel,
-                                      @Param("sdkChannel") String sdkChannel,
-                                      @Param("serverId") Integer serverId,
-                                      @Param("date") Date createTime,
-                                      @Param("type") int type);
+    int loginRegisterPlayerNum(@Param("channel") String channel,
+                               @Param("sdkChannel") String sdkChannel,
+                               @Param("serverId") Integer serverId,
+                               @Param("date") Date createTime,
+                               @Param("type") int type,
+                               @Param("configAuth") String configAuth);
 
     /**
      * 新增注册付费总额
      */
-    BigDecimal channelRegisterPayAmount(@Param("channel") String channel,
-                                        @Param("serverId") Integer serverId,
-                                        @Param("date") Date date);
+    BigDecimal registerPayAmount(@Param("channel") String channel,
+                                 @Param("sdkChannel") String sdkChannel,
+                                 @Param("serverId") Integer serverId,
+                                 @Param("date") Date date,
+                                 @Param("configAuth") String configAuth);
 
 
     /**
      * 新增注册付费玩家
      */
-    int channelRegisterPayPlayerNum(@Param("channel") String channel,
-                                    @Param("sdkChannel") String sdkChannel,
-                                    @Param("serverId") Integer serverId,
-                                    @Param("date") Date date);
+    int registerPayPlayerNum(@Param("channel") String channel,
+                             @Param("sdkChannel") String sdkChannel,
+                             @Param("serverId") Integer serverId,
+                             @Param("date") Date date,
+                             @Param("configAuth") String configAuth);
 
     /**
      * 注册二次付费玩家
      */
-    int channelDoublePayRegisterPlayer(@Param("channel") String channel,
-                                       @Param("serverId") Integer serverId,
-                                       @Param("date") Date date);
+    int doublePayRegisterPlayerNum(@Param("channel") String channel,
+                                   @Param("sdkChannel") String sdkChannel,
+                                   @Param("serverId") Integer serverId,
+                                   @Param("date") Date date,
+                                   @Param("configAuth") String configAuth);
 
     /**
      * 当前登陆玩家ids

@@ -19,9 +19,7 @@
         WHERE a.`outdated` = 0
         ) result
         WHERE 1=1
-        <if test="configAuth != null and configAuth != ''">
-            ${configAuth}
-        </if>
+        <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
         GROUP BY `id`
     </select>
 

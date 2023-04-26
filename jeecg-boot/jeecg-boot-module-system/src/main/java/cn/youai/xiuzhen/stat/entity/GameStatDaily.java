@@ -50,6 +50,11 @@ public class GameStatDaily implements Serializable {
     private String channel;
 
     /**
+     * SDK渠道
+     */
+    private String sdkChannel;
+
+    /**
      * 服务器id
      */
     private Integer serverId;
@@ -132,27 +137,28 @@ public class GameStatDaily implements Serializable {
      */
     private Date createTime;
 
-
     public static GameStatDaily of(String channel,
+                                   String sdkChannel,
                                    Integer serverId,
                                    Date date,
                                    BigDecimal payAmount,
                                    int payPlayerNum,
                                    int loginNum,
-                                   int registerPlayer,
-                                   BigDecimal registerPayAmount,
-                                   int registerPayPlayer,
+                                   int registerNum,
+                                   BigDecimal regPayAmount,
+                                   int regPayPlayerNum,
                                    int doublePayPlayer) {
         return new GameStatDaily()
                 .setChannel(StatisticType.channel(channel))
+                .setChannel(StatisticType.sdkChannel(sdkChannel))
                 .setServerId(StatisticType.serverId(serverId))
                 .setCountDate(date)
                 .setPayAmount(payAmount)
                 .setLoginNum(loginNum)
                 .setPayPlayerNum(payPlayerNum)
-                .setNewPlayerNum(registerPlayer)
-                .setNewPlayerPayNum(registerPayPlayer)
-                .setNewPlayerPayAmount(registerPayAmount)
+                .setNewPlayerNum(registerNum)
+                .setNewPlayerPayNum(regPayPlayerNum)
+                .setNewPlayerPayAmount(regPayAmount)
                 .setDoublePay(doublePayPlayer)
                 .setCreateTime(DateUtils.now())
                 .calc();

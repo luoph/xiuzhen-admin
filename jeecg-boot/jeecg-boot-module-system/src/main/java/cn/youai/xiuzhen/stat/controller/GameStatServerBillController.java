@@ -1,9 +1,10 @@
 package cn.youai.xiuzhen.stat.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.xiuzhen.game.entity.GameChannel;
-import cn.youai.xiuzhen.game.entity.GameServerVO;
+import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.stat.constant.StatisticType;
@@ -80,8 +81,8 @@ public class GameStatServerBillController {
             records.add(getServerBill(entity.getServerId(), dateRange));
         } else {
             if (StringUtils.isNotBlank(entity.getChannel())) {
-                List<GameServerVO> serverList = channelServerService.selectServerList(entity.getChannel());
-                for (GameServerVO server : serverList) {
+                List<GameServer> serverList = channelServerService.selectServerList(CollUtil.newArrayList(entity.getChannel()));
+                for (GameServer server : serverList) {
                     ServerBill serverBill = getServerBill(server.getId(), dateRange);
                     if (StringUtils.isNotEmpty(entity.getChannel())) {
                         serverBill.setChannel(entity.getChannel());

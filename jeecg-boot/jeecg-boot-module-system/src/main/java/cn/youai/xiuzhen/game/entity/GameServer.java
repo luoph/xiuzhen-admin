@@ -295,6 +295,10 @@ public class GameServer extends BaseEntity {
     @ApiModelProperty(value = "标签")
     private String tag;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value = "渠道")
+    private String channel;
+
     // 本地接口
     public boolean skipCheck() {
         return getOutdated() != OutdatedType.NORMAL.getValue()

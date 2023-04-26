@@ -1,12 +1,10 @@
 package cn.youai.xiuzhen.game.mapper;
 
-import cn.youai.xiuzhen.game.entity.GameChannel;
-import cn.youai.xiuzhen.game.entity.GameChannelServer;
-import cn.youai.xiuzhen.game.entity.GameServer;
-import cn.youai.xiuzhen.game.entity.GameServerVO;
+import cn.youai.xiuzhen.game.entity.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,13 +25,9 @@ public interface GameChannelServerMapper extends BaseMapper<GameChannelServer> {
 
     List<GameChannel> selectChannelList(@Param("configAuth") String configAuth);
 
-    /**
-     * 查询指定渠道的服务器列表
-     *
-     * @param channel    渠道
-     * @param configAuth 数据权限条件
-     */
-    List<GameServerVO> selectChannelServerList(@Param("channel") String channel, @Param("configAuth") String configAuth);
+    List<GameSdkChannel> selectSdkChannelList(@Param("channels") Collection<String> channels);
+
+    List<GameServer> selectChannelServerList(@Param("channels") Collection<String> channels);
 
     List<GameServerVO> filterServerList(@Param("channel") String channel, @Param("serverIds") List<Integer> serverIds);
 

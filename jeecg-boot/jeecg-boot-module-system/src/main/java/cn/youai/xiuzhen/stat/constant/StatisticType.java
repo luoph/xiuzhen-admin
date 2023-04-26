@@ -11,7 +11,10 @@ public enum StatisticType {
     /**
      * 统计类型
      */
-    DAILY("日常统计", 1), REMAIN("留存统计", 2), LTV("LTV统计", 3), REMAIN_DETAIL("留存详细统计", 4),
+    DAILY("日常统计", 1),
+    REMAIN("留存统计", 2),
+    LTV("LTV统计", 3),
+    REMAIN_DETAIL("留存详细统计", 4),
     ;
 
     private final String name;
@@ -36,6 +39,10 @@ public enum StatisticType {
 
     public static String channel(String channel) {
         return StringUtils.isBlank(channel) ? DEFAULT_CHANNEL : channel;
+    }
+
+    public static String sdkChannel(String sdkChannel) {
+        return StringUtils.isBlank(sdkChannel) ? DEFAULT_CHANNEL : sdkChannel;
     }
 
     public static int serverId(Integer serverId) {

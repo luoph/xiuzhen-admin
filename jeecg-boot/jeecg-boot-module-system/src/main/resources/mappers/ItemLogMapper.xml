@@ -7,9 +7,7 @@
         LEFT JOIN `player` p
         ON bl.`player_id` = p.`id`
         <where>
-            <if test="configAuth != null and configAuth != ''">
-                ${configAuth}
-            </if>
+            <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">
                 <if test="entity.playerId != null">
                     AND bl.`player_id` = #{entity.playerId}

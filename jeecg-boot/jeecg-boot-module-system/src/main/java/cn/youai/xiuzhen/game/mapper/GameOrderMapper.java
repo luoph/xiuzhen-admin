@@ -42,13 +42,17 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                   @Param("start") Date start,
                                   @Param("end") Date end);
 
-    BigDecimal chanelPayAmount(@Param("channel") String channel,
-                               @Param("serverId") Integer serverId,
-                               @Param("payDate") Date payDate);
+    BigDecimal payAmount(@Param("channel") String channel,
+                         @Param("sdkChannel") String sdkChannel,
+                         @Param("serverId") Integer serverId,
+                         @Param("payDate") Date payDate,
+                         @Param("configAuth") String configAuth);
 
-    int channelPayPlayerNum(@Param("channel") String channel,
-                            @Param("serverId") Integer serverId,
-                            @Param("payDate") Date payDate);
+    int payPlayerNum(@Param("channel") String channel,
+                     @Param("sdkChannel") String sdkChannel,
+                     @Param("serverId") Integer serverId,
+                     @Param("payDate") Date payDate,
+                     @Param("configAuth") String configAuth);
 
     List<MergeServerVO> getGameOrderRangeDate(@Param("startTime") Date startTime,
                                               @Param("endTime") Date endTime);

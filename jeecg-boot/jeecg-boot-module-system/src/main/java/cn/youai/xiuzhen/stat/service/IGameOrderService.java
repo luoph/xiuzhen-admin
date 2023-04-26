@@ -39,12 +39,12 @@ public interface IGameOrderService extends IService<GameOrder> {
 
     BigDecimal channelRangeAmount(String channel, Date start, Date end);
 
-    BigDecimal channelPayAmount(String channel, Integer serverId, Date date);
+    BigDecimal payAmount(String channel, String sdkChannel, Integer serverId, Date date, String configAuth);
 
     /**
      * 付费角色数
      */
-    int channelPayPlayerNum(String channel, Integer serverId, Date date);
+    int payPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, String configAuth);
 
     GameStatOrder queryOrderStatByRange(List<Integer> serverIds, Date startDate, Date endDate);
 

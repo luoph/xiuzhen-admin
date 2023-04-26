@@ -21,5 +21,4 @@ public interface IGameUserAccountService extends IService<GameUserAccount> {
     int queryUserAccountNum(String channel, String sdkChannel, Date date);
 
     List<String> querySdkChannels();
-
 }

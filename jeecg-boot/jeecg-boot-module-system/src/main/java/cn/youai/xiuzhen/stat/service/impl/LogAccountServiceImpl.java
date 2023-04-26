@@ -3,8 +3,6 @@
  */
 package cn.youai.xiuzhen.stat.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.youai.server.utils.DateUtils;
@@ -13,7 +11,6 @@ import cn.youai.xiuzhen.stat.entity.LogAccount;
 import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import cn.youai.xiuzhen.stat.mapper.LogAccountMapper;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
-import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -54,23 +51,23 @@ public class LogAccountServiceImpl extends ServiceImpl<LogAccountMapper, LogAcco
     }
 
     @Override
-    public int channelLoginRegisterPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, int type) {
-        return getBaseMapper().channelLoginRegisterPlayerNum(channel, sdkChannel, serverId, date, type);
+    public int loginRegisterPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, int type, String configAuth) {
+        return getBaseMapper().loginRegisterPlayerNum(channel, sdkChannel, serverId, date, type, configAuth);
     }
 
     @Override
-    public BigDecimal channelRegisterPayAmount(String channel, Integer serverId, Date date) {
-        return getBaseMapper().channelRegisterPayAmount(channel, serverId, date);
+    public BigDecimal registerPayAmount(String channel, String sdkChannel, Integer serverId, Date date, String configAuth) {
+        return getBaseMapper().registerPayAmount(channel, sdkChannel, serverId, date, configAuth);
     }
 
     @Override
-    public int channelRegisterPayPlayerNum(String channel, String sdkChannel, Integer serverId, Date date) {
-        return getBaseMapper().channelRegisterPayPlayerNum(channel, sdkChannel, serverId, date);
+    public int registerPayPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, String configAuth) {
+        return getBaseMapper().registerPayPlayerNum(channel, sdkChannel, serverId, date, configAuth);
     }
 
     @Override
-    public int channelDoublePayRegisterPlayer(String channel, Integer serverId, Date date) {
-        return getBaseMapper().channelDoublePayRegisterPlayer(channel, serverId, date);
+    public int doublePayRegisterPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, String configAuth) {
+        return getBaseMapper().doublePayRegisterPlayerNum(channel, sdkChannel, serverId, date, configAuth);
     }
 
     @Override

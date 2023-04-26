@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +14,8 @@ import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -126,4 +129,10 @@ public class GameChannel extends BaseEntity {
     @Excel(name = "分组", width = 15)
     @ApiModelProperty(value = "分组")
     private java.lang.String groupName;
+
+    @TableField(exist = false)
+    private List<GameServer> serverList;
+
+    @TableField(exist = false)
+    private List<GameSdkChannel> sdkChannelList;
 }

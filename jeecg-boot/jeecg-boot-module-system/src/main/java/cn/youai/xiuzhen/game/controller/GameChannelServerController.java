@@ -3,9 +3,10 @@ package cn.youai.xiuzhen.game.controller;
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.utils.SqlHelper;
+import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameChannelServer;
+import cn.youai.xiuzhen.game.entity.GameSdkChannel;
 import cn.youai.xiuzhen.game.entity.GameServer;
-import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -177,20 +178,24 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
      */
     @RequestMapping(value = "channelWithServer")
     public Result<?> channelWithServer(@RequestParam(name = "channelId") Integer channelId) {
-        List<GameServerVO> gameServers = service.selectServerListByChannelId(channelId);
-        return Result.ok(gameServers);
+        return Result.ok(service.selectServerListByChannelId(channelId));
     }
 
     @RequestMapping(value = "channelList")
     @PermissionData(value = "game/GameChannelList")
     public Result<?> channelList() {
-        return Result.ok(service.selectChannelList());
-    }
-
-    @RequestMapping(value = "serverList")
-    @PermissionData(value = "game/GameChannelList")
-    public Result<?> serverList(@RequestParam(name = "channel", required = false) String channel) {
-        List<GameServerVO> gameServers = service.selectServerList(channel);
-        return Result.ok(gameServers);
+        List<GameChannel> channels = service.selectChannelList();
+        Map<String, GameChannel> map = channels.stream().collect(Collectors.toMap(GameChannel::getSimpleName, Function.identity(), (key1, key2) -> key2));
+        List<GameSdkChannel> sdkChannels = service.selectSdkChannelList(map.keySet());
+        List<GameServer> servers = service.selectServerList(map.keySet());
+        Map<String, List<GameSdkChannel>> sdkChannelGroup = sdkChannels.stream().collect(Collectors.groupingBy(GameSdkChannel::getChannel, HashMap::new, Collectors.toCollection(ArrayList::new)));
+        Map<String, List<GameServer>> serverGroup = servers.stream().collect(Collectors.groupingBy(GameServer::getChannel, HashMap::new, Collectors.toCollection(ArrayList::new)));
+        map.forEach((k, v) -> {
+            List<GameSdkChannel> subSdkChannels = sdkChannelGroup.get(k);
+            v.setSdkChannelList(subSdkChannels != null ? subSdkChannels : CollUtil.newArrayList());
+            List<GameServer> subServers = serverGroup.get(k);
+            v.setServerList(subServers != null ? subServers : CollUtil.newArrayList());
+        });
+        return Result.ok(channels);
     }
 }
