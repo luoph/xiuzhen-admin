@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Param;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
+import org.jeecg.modules.system.entity.SysUser;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -28,7 +29,7 @@ import java.util.Map;
 public interface IGamePlayerService extends IService<GamePlayer> {
     GamePlayer queryPlayer(long playerId);
 
-    List<GamePlayer> selectPlayerListByUser(@Param("user") SysUserCacheInfo user, @Param("playerIds") String playerIds);
+    List<GamePlayer> selectPlayerListByUser(@Param("user") SysUser user, @Param("playerIds") String playerIds);
 
     List<GamePlayer> queryPlayerList(Collection<Long> playerIds);
 

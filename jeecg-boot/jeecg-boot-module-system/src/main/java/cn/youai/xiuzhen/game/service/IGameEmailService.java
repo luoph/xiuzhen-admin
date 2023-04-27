@@ -18,7 +18,7 @@ public interface IGameEmailService extends IService<GameEmail> {
     /**
      * 存储邮件
      */
-    Response saveEmail(GameEmail gameEmail);
+    Response saveEmail(GameEmail gameEmail, String username);
 
     /**
      * 获取道具树形菜案
@@ -28,5 +28,5 @@ public interface IGameEmailService extends IService<GameEmail> {
     /**
      * 发送邮件
      */
-    Response sendEmail(GameEmail gameEmail);
+    Response sendEmail(GameEmail gameEmail, String username);
 }

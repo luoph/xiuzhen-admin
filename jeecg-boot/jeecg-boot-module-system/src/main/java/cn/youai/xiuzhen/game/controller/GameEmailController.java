@@ -63,7 +63,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
     @AutoLog(value = "游戏邮件-添加")
     @PostMapping(value = "/add")
     @PermissionData(value = "game/GameChannelList")
-    public Result<?> add(@RequestBody GameEmail entity) {
+    public Result<?> add(@RequestBody GameEmail entity, HttpServletRequest req) {
         entity.setState(0).setReviewBy(null).setReviewTime(null);
         List<Long> receiverIds = StringUtils.split2Long(entity.getReceiverIds());
         if (CollUtil.isEmpty(receiverIds)) {
@@ -77,7 +77,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
             return Result.error("附格式错误！");
         }
 
-        Response response = service.saveEmail(entity);
+        Response response = service.saveEmail(entity, JwtUtil.getUserNameByToken(req));
         if (!response.isSuccess()) {
             return Result.error(response.getDesc());
         }
@@ -86,7 +86,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
 
     @AutoLog(value = "游戏邮件-编辑")
     @PutMapping(value = "/edit")
-    public Result<?> edit(@RequestBody GameEmail entity) {
+    public Result<?> edit(@RequestBody GameEmail entity, HttpServletRequest req) {
         if (entity.getState() != null && entity.getState() == 1) {
             return Result.error("邮件已发送！无法编辑！");
         }
@@ -170,7 +170,7 @@ public class GameEmailController extends JeecgController<GameEmail, IGameEmailSe
         ChainLock lock = LockUtils.getLock(getClass().getSimpleName(), "review", id);
         try {
             lock.lock();
-            Response response = service.sendEmail(entity);
+            Response response = service.sendEmail(entity, JwtUtil.getUserNameByToken(req));
             if (response.isSuccess()) {
                 entity.setState(1);
                 String username = JwtUtil.getUserNameByToken(req);

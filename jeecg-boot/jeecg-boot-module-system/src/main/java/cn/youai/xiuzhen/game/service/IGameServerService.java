@@ -5,6 +5,7 @@ import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.jeecg.common.system.vo.SysUserCacheInfo;
+import org.jeecg.modules.system.entity.SysUser;
 
 import java.util.Collection;
 import java.util.List;
@@ -31,7 +32,7 @@ public interface IGameServerService extends IService<GameServer> {
      */
     List<GameServer> selectChannelServerList(String configAuth);
 
-    List<GameServer> selectChannelServerListByUser(SysUserCacheInfo user, String serverIds);
+    List<GameServer> selectChannelServerListByUser(SysUser user, String serverIds);
 
     /**
      * 批量请求 清除缓存接口

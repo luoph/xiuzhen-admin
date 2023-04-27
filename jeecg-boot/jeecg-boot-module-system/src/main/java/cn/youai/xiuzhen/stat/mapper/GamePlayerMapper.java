@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.common.system.vo.SysUserCacheInfo;
+import org.jeecg.modules.system.entity.SysUser;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public interface GamePlayerMapper extends BaseMapper<GamePlayer> {
 
     List<GamePlayer> queryPlayerList(@Param("playerIds") Collection<Long> playerIds);
 
-    List<GamePlayer> selectPlayerListByUser(@Param("user") SysUserCacheInfo user, @Param("playerIds") String playerIds);
+    List<GamePlayer> selectPlayerListByUser(@Param("user") SysUser user, @Param("playerIds") String playerIds);
 
     List<PlayerBehavior> queryPlayerBehavior(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
                                              @Param("rangeDateEndTime") Date rangeDateEndTime,

@@ -20,8 +20,8 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import net.dreamlu.mica.core.utils.$;
-import org.jeecg.common.system.util.JeecgDataAutorUtils;
-import org.jeecg.common.system.vo.SysUserCacheInfo;
+import org.jeecg.modules.system.entity.SysUser;
+import org.jeecg.modules.system.service.ISysUserService;
 import org.jeecg.modules.utils.GameConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,8 +53,11 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     @Autowired
     private IGameServerService gameServerService;
 
+    @Autowired
+    private ISysUserService sysUserService;
+
     @Override
-    public Response saveEmail(GameEmail entity) {
+    public Response saveEmail(GameEmail entity, String username) {
         Response response = new Response();
         if (entity.getType() == MailType.ATTACHMENT.getType()) {
             String content = entity.getContent();
@@ -78,19 +81,21 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
             return response;
         }
 
-        SysUserCacheInfo sysUser = JeecgDataAutorUtils.loadUserInfo();
-        if (StringUtils.isNotEmpty(sysUser.getChannel()) || StringUtils.isNotEmpty(sysUser.getSdkChannel())) {
-            if (entity.getReceiverType() == 1) {
-                List<GamePlayer> gamePlayers = gamePlayerService.selectPlayerListByUser(sysUser, entity.getReceiverIds());
-                if (CollUtil.size(gamePlayers) != CollUtil.size(receiverIdSet)) {
-                    response.setFailure("没有权限读取玩家信息！");
-                    return response;
-                }
-            } else if (entity.getReceiverType() == 2) {
-                List<GameServer> gameServers = gameServerService.selectChannelServerListByUser(sysUser, entity.getReceiverIds());
-                if (CollUtil.size(gameServers) != CollUtil.size(receiverIdSet)) {
-                    response.setFailure("没有权限读取区服信息！");
-                    return response;
+        if (StringUtils.isNotEmpty(username)) {
+            SysUser sysUser = sysUserService.getUserByName(username);
+            if (sysUser != null && (StringUtils.isNotEmpty(sysUser.getChannel()) || StringUtils.isNotEmpty(sysUser.getSdkChannel()))) {
+                if (entity.getReceiverType() == 1) {
+                    List<GamePlayer> gamePlayers = gamePlayerService.selectPlayerListByUser(sysUser, entity.getReceiverIds());
+                    if (CollUtil.size(gamePlayers) != CollUtil.size(receiverIdSet)) {
+                        response.setFailure("没有权限读取玩家信息！");
+                        return response;
+                    }
+                } else if (entity.getReceiverType() == 2) {
+                    List<GameServer> gameServers = gameServerService.selectChannelServerListByUser(sysUser, entity.getReceiverIds());
+                    if (CollUtil.size(gameServers) != CollUtil.size(receiverIdSet)) {
+                        response.setFailure("没有权限读取区服信息！");
+                        return response;
+                    }
                 }
             }
         }
@@ -104,7 +109,7 @@ public class GameEmailServiceImpl extends ServiceImpl<GameEmailMapper, GameEmail
     }
 
     @Override
-    public Response sendEmail(GameEmail entity) {
+    public Response sendEmail(GameEmail entity, String username) {
         Response response = new Response();
         if (entity == null || entity.getState() == 1) {
             response.setErrorCode(ResponseCode.FAILURE);
