@@ -68,6 +68,20 @@ public class GameRechargeGoods extends BaseEntity {
     private Integer goodsGroup;
 
     /**
+     * 购买类型: 1.真实充值, 2.gm额度, 3.真实充值/gm额度
+     */
+    @ExcelProperty("购买类型")
+    @Excel(name = "购买类型", width = 15)
+    private Integer buyType;
+
+    /**
+     * gm额度
+     */
+    @ExcelProperty("gm额度")
+    @Excel(name = "gm额度", width = 15)
+    private Long gmCoin;
+
+    /**
      * 商品名
      */
     @ExcelProperty("商品名")
@@ -129,6 +143,13 @@ public class GameRechargeGoods extends BaseEntity {
     @ExcelProperty("是否记入累充")
     @Excel(name = "是否记入累充", width = 15)
     private Integer amountStat;
+
+    /**
+     * 累充统计类型
+     */
+    @ExcelProperty("累充统计类型")
+    @Excel(name = "累充统计类型", width = 15)
+    private String amountStatTypes;
 
     /**
      * 货币

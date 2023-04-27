@@ -73,11 +73,24 @@
             <a-select-option :value="23">23-GM特权卡</a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item label="购买类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select placeholder="选择购买类型" v-decorator="['buyType', validatorRules.buyType]" initialValue="1">
+            <a-select-option :value="1">1-真实充值</a-select-option>
+            <a-select-option :value="2">2-gm额度</a-select-option>
+            <a-select-option :value="3">3-真实充值/gm额度</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="gm额度" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['gmCoin', validatorRules.gmCoin]" placeholder="请输入gm额度" style="width: 100%" />
+        </a-form-item>
         <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请输入是否计入累充" v-decorator="['amountStat', validatorRules.amountStat]" initialValue="1">
             <a-select-option :value="0">是</a-select-option>
             <a-select-option :value="1">否</a-select-option>
           </a-select>
+        </a-form-item>
+        <a-form-item label="统计" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['amountStatTypes', validatorRules.amountStatTypes]" placeholder="e.g. [1, 2, 3]" style="width: 100%" />
         </a-form-item>
         <a-form-item label="兑换比例" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择兑换比例" v-decorator="['exchange', validatorRules.exchange]" initialValue="0">
@@ -138,6 +151,7 @@ export default {
         items: { rules: [{ required: false, message: '请输入奖励列表!' }] },
         goodsType: { rules: [{ required: true, message: '请选择商品类型!' }] },
         goodsGroup: { rules: [{ required: true, message: '请选择商品组别!' }] },
+        buyType: { rules: [{ required: true, message: '请选择购买类型!' }] },
         amountStat: { rules: [{ required: true, message: '请输入是否计入累充！' }] },
         exchange: { rules: [{ required: true, message: '请输入游戏币与人民币(元)的兑换比例!' }] },
         recommend: { rules: [{ required: false, message: '请输入特殊标记前端用!' }] },
@@ -177,7 +191,10 @@ export default {
             'items',
             'goodsType',
             'goodsGroup',
+            "buyType",
+            "gmCoin",
             'amountStat',
+            "amountStatTypes",
             'addition',
             'exchange',
             'recommend',
@@ -243,7 +260,10 @@ export default {
           'items',
           'goodsType',
           'goodsGroup',
+          "buyType",
+          "gmCoin",
           'amountStat',
+          "amountStatTypes",
           'addition',
           'exchange',
           'recommend',

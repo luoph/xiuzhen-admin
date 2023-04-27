@@ -282,6 +282,29 @@ export default {
           }
         },
         {
+          title: '购买类型',
+          align: 'center',
+          width: 90,
+          dataIndex: 'buyType',
+          customRender: (value) => {
+            let text = '--';
+            if (value === 1) {
+              text = '1-真实充值';
+            } else if (value === 2) {
+              text = '2-gm额度';
+            } else if (value === 3) {
+              text = '3-真实充值/gm额度';
+            }
+            return text;
+          }
+        },
+        {
+          title: 'gm额度',
+          align: 'center',
+          width: 80,
+          dataIndex: 'gmCoin'
+        },
+        {
           title: '内购SKU',
           align: 'center',
           width: 120,
@@ -355,6 +378,12 @@ export default {
             }
             return text;
           }
+        },
+        {
+          title: '统计',
+          align: 'center',
+          width: 80,
+          dataIndex: 'amountStatTypes'
         },
         {
           title: '兑换比例',
