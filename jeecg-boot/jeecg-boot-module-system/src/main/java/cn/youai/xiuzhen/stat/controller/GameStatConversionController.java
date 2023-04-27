@@ -45,11 +45,11 @@ public class GameStatConversionController extends JeecgController<GameStatConver
     }
 
     public List<GameStatConversion> update(GameStatConversion entity, DateRange dateRange, HttpServletRequest req) {
-        Date current = dateRange.getStart();
+        Date current = dateRange.getEnd();
         List<GameStatConversion> list = new ArrayList<>();
-        while (!current.after(dateRange.getEnd())) {
+        while (!current.before(dateRange.getStart())) {
             list.add(service.getGameStatConversion(entity.getChannel(), entity.getSdkChannel(), entity.getServerId(), current));
-            current = DateUtils.addDays(current, 1);
+            current = DateUtils.addDays(current, -1);
         }
 
         if (CollUtil.isNotEmpty(list)) {

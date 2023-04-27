@@ -74,9 +74,9 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
         Date endDate = DateUtils.todayDate();
         Date startDate = DateUtils.addDays(endDate, -2);
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
-        Date current = dateRange.getStart();
 
-        while (!current.after(dateRange.getEnd())) {
+        Date current = dateRange.getEnd();
+        while (!current.before(dateRange.getStart())) {
             if (entity.getServerId() != null && entity.getServerId() > 0) {
                 // 按照游戏服维度统计
                 service.calcServerRemain(entity.getServerId(), current);
@@ -84,7 +84,7 @@ public class GameStatRemainController extends JeecgController<GameStatRemain, IG
                 // 按照渠道维度统计
                 service.calcChannelRemain(entity.getChannel(), current);
             }
-            current = DateUtils.addDays(current, 1);
+            current = DateUtils.addDays(current, -1);
         }
 
         return Result.ok("更新成功");

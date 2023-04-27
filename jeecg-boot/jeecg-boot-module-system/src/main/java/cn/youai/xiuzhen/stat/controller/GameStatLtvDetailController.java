@@ -74,10 +74,10 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
         Date endDate = DateUtils.todayDate();
         Date startDate = DateUtils.addDays(endDate, -2);
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
-        Date current = dateRange.getStart();
 
+        Date current = dateRange.getEnd();
         Date todayDate = DateUtils.todayDate();
-        while (!current.after(dateRange.getEnd())) {
+        while (!current.before(dateRange.getStart())) {
             int days = DateUtils.daysBetweenNatural(current, todayDate);
             if (entity.getServerId() != null && entity.getServerId() > 0) {
                 // 按照游戏服维度统计
@@ -86,7 +86,7 @@ public class GameStatLtvDetailController extends JeecgController<GameStatLtvDeta
                 // 按照渠道维度统计
                 service.calcChannelLtvDetail(entity.getChannel(), current, days, true);
             }
-            current = DateUtils.addDays(current, 1);
+            current = DateUtils.addDays(current, -1);
         }
 
         return Result.ok("更新成功");

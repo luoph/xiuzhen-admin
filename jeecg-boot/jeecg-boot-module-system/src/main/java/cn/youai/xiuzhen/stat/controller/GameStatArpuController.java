@@ -73,9 +73,9 @@ public class GameStatArpuController extends JeecgController<GameStatArpu, IGameS
         Date endDate = DateUtils.todayDate();
         Date startDate = DateUtils.addDays(endDate, -7);
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate", startDate, endDate);
-        Date current = dateRange.getStart();
+        Date current = dateRange.getEnd();
 
-        while (!current.after(dateRange.getEnd())) {
+        while (!current.before(dateRange.getStart())) {
             if (entity.getServerId() != null && entity.getServerId() > 0) {
                 // 按照游戏服维度统计
                 service.calcServerArpu(entity.getServerId(), current);
@@ -83,7 +83,7 @@ public class GameStatArpuController extends JeecgController<GameStatArpu, IGameS
                 // 按照渠道维度统计
                 service.calcChannelArpu(entity.getChannel(), current);
             }
-            current = DateUtils.addDays(current, 1);
+            current = DateUtils.addDays(current, -1);
         }
 
         return Result.ok("更新成功");

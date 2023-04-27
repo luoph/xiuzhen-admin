@@ -46,11 +46,11 @@ public class GameStatDailyController extends JeecgController<GameStatDaily, IGam
     }
 
     private List<GameStatDaily> update(GameStatDaily entity, DateRange dateRange, HttpServletRequest req) {
-        Date current = dateRange.getStart();
+        Date current = dateRange.getEnd();
         List<GameStatDaily> list = new ArrayList<>();
-        while (!current.after(dateRange.getEnd())) {
+        while (!current.before(dateRange.getStart())) {
             list.add(service.getGameStatDaily(entity.getChannel(), entity.getSdkChannel(), entity.getServerId(), current));
-            current = DateUtils.addDays(current, 1);
+            current = DateUtils.addDays(current, -1);
         }
 
         if (CollUtil.isNotEmpty(list)) {

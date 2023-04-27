@@ -95,15 +95,15 @@ public class GameStatOrderController {
         Map<String, List<Date>> monthsMap = new HashMap<>();
         Map<String, List<Date>> yearMap = new HashMap<>();
 
-        Date current = dateRange.getStart();
+        Date current = dateRange.getEnd();
         List<GameStatOrder> records = CollUtil.newArrayList();
-        while (!current.after(dateRange.getEnd())) {
+        while (!current.before(dateRange.getStart())) {
             groupDate(monthsMap, StatDuration.MONTH.getTimeFormat(), current);
             groupDate(yearMap, StatDuration.YEAR.getTimeFormat(), current);
             GameStatOrder statOrder = queryGameStatOrder(StatDuration.DAY, entity.getChannel(), current, current);
             records.add(statOrder);
 
-            current = DateUtils.addDays(current, 1);
+            current = DateUtils.addDays(current, -1);
         }
         records.sort(Comparator.comparing(GameStatOrder::getStarDate, Comparator.reverseOrder()));
 
