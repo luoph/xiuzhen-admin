@@ -47,7 +47,7 @@
         </a-form-item>
         <a-form-item label="商品类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择商品类型" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0" showSearch allowClear style="width: 100%">
-            <a-select-option :value="0">0-仙玉</a-select-option>
+            <a-select-option :value="0">0-普通类型</a-select-option>
             <a-select-option :value="1">1-仙职</a-select-option>
             <a-select-option :value="2">2-月卡</a-select-option>
             <a-select-option :value="3">3-每日礼包</a-select-option>
@@ -70,7 +70,9 @@
             <a-select-option :value="20">20-新战令</a-select-option>
             <a-select-option :value="21">21-超值礼包</a-select-option>
             <a-select-option :value="22">22-神游特权卡</a-select-option>
-            <a-select-option :value="23">23-GM特权卡</a-select-option>
+            <a-select-option :value="23">23-gm特权卡</a-select-option>
+            <a-select-option :value="24">24-无限真充</a-select-option>
+            <a-select-option :value="25">25-无限神充</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="购买类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
