@@ -28,6 +28,9 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
 
     List<GameOrder> queryByIds(@Param("orderIds") Collection<Long> orderIds);
 
+    List<GameOrder> queryPlayerTotalPayAmount(@Param("playerIds") Collection<Long> playerIds);
+
+
     IPage<GameOrder> queryList(Page<?> page,
                                @Param("entity") GameOrder entity,
                                @Param("dateRange") DateRange dateRange,

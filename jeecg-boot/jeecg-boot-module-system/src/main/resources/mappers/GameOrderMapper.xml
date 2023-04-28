@@ -20,6 +20,16 @@
         </foreach>
     </select>
 
+    <select id="queryPlayerTotalPayAmount" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
+        SELECT o.`player_id`, IFNULL(SUM(o.`pay_amount`), 0) AS `total_pay_amount`
+        FROM `game_order` o
+        WHERE o.`player_id` IN
+        <foreach item="playerId" collection="playerIds" open="(" separator="," close=")">
+            #{playerId}
+        </foreach>
+        GROUP BY o.`player_id`
+    </select>
+
     <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GameOrder">
         SELECT o.*, p.`nickname`, p.`account`, p.`sdk_channel`,
         IFNULL(v.`id`, 0) AS `vip_id`, grg.`name` as `productName`
@@ -257,4 +267,5 @@
         </if>
         group by player_id
     </select>
+
 </mapper>

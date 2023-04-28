@@ -35,7 +35,7 @@ public class GameVip extends BaseEntity {
      */
     @Excel(name = "id", width = 15)
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 玩家id

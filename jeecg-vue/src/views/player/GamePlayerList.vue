@@ -4,19 +4,14 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+          <a-col :md="16" :sm="8">
+            <channel-server-selector ref="channelServerSelector"
+                                     :show-sdk-channel="true"
+                                     @onSelectChannel="onSelectChannel"
+                                     @onSelectSdkChannel="onSelectSdkChannel"
+                                     @onSelectServer="onSelectServer"/>
+          </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="渠道">
-              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="区服">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
-                                   dict="game_server,name,id"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
               <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
             </a-form-item>
@@ -139,22 +134,26 @@
       </a-table>
     </div>
 
-    <GamePlayerModal ref="modalForm" @ok="modalFormOk"></GamePlayerModal>
+    <GamePlayerModal ref="modalForm" @ok="modalFormOk"/>
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
-import GamePlayerModal from './modules/GamePlayerModal';
-import {filterObj} from '@/utils/util';
+
 import JInput from '@/components/jeecg/JInput';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import {filterObj} from '@/utils/util';
+import {getAction} from '@/api/manage';
+
+import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
+import GamePlayerModal from './modules/GamePlayerModal';
 
 export default {
   name: 'GamePlayerList',
   mixins: [JeecgListMixin],
   components: {
     GamePlayerModal,
+    ChannelServerSelector,
     getAction,
     JInput
   },
@@ -352,6 +351,15 @@ export default {
       // 范围参数不传递后台
       delete param.createDateRange;
       return filterObj(param);
+    },
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
+    },
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
+    },
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
     },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);

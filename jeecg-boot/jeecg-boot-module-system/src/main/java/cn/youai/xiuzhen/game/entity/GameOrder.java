@@ -210,4 +210,11 @@ public class GameOrder implements Serializable {
 
     @TableField(exist = false)
     private Long vipId;
+
+    /**
+     * 累计充值
+     */
+    @TableField(exist = false)
+    private BigDecimal totalPayAmount;
+
 }

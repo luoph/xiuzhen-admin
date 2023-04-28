@@ -27,6 +27,8 @@ public interface IGameOrderService extends IService<GameOrder> {
 
     List<GameOrder> queryByIds(Collection<Long> ids);
 
+    List<GameOrder> queryPlayerTotalPayAmount(Collection<Long> ids);
+
     /**
      * 订单列表查询
      */

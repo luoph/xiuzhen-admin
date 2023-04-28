@@ -1,18 +1,17 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.youai.basics.model.DateRange;
-import cn.youai.server.model.RangeValue;
-import cn.youai.xiuzhen.core.controller.SimplePageController;
+import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.entity.GamePlayer;
+import cn.youai.xiuzhen.game.entity.GameVip;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
-import cn.youai.xiuzhen.utils.PageQueryUtils;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import cn.youai.xiuzhen.game.service.IGameVipService;
+import cn.youai.xiuzhen.stat.service.IGameOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.annotation.Readonly;
+import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -33,10 +36,16 @@ import java.math.BigDecimal;
 @Readonly
 @RestController
 @RequestMapping("/game/player")
-public class GamePlayerController extends SimplePageController<GamePlayer> {
+public class GamePlayerController extends JeecgController<GamePlayer, IGamePlayerService> {
 
     @Autowired
     private IGamePlayerService gamePlayerService;
+
+    @Autowired
+    private IGameOrderService gameOrderService;
+
+    @Autowired
+    private IGameVipService gameVipService;
 
     @Override
     @AutoLog(value = "玩家信息-列表查询")
@@ -50,11 +59,22 @@ public class GamePlayerController extends SimplePageController<GamePlayer> {
     }
 
     @Override
-    protected IPage<GamePlayer> pageList(Page<GamePlayer> page, GamePlayer entity, HttpServletRequest req) {
-        DateRange createDateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
-        RangeValue<BigDecimal> levelRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "level");
-        RangeValue<BigDecimal> combatPowerRange = PageQueryUtils.parseNumberRange(req.getParameterMap(), "combatPower");
-        return gamePlayerService.queryList(page, entity, levelRange, combatPowerRange, createDateRange);
+    protected void onload(List<GamePlayer> pageList) {
+        Map<Long, GamePlayer> playerMap = pageList.stream().collect(Collectors.toMap(GamePlayer::getPlayerId, Function.identity(), (key1, key2) -> key2));
+
+        List<GameOrder> gameOrders = gameOrderService.queryPlayerTotalPayAmount(playerMap.keySet());
+        Map<Long, GameOrder> orderMap = gameOrders.stream().collect(Collectors.toMap(GameOrder::getPlayerId, Function.identity(), (key1, key2) -> key2));
+
+        List<GameVip> gameVips = gameVipService.queryVipList(playerMap.keySet());
+        Map<Long, GameVip> vipMap = gameVips.stream().collect(Collectors.toMap(GameVip::getPlayerId, Function.identity(), (key1, key2) -> key2));
+
+        playerMap.forEach((k, v) -> {
+            GameOrder gameOrder = orderMap.get(k);
+            v.setTotalPayAmount(gameOrder != null ? gameOrder.getTotalPayAmount() : BigDecimal.ZERO);
+
+            GameVip gameVip = vipMap.get(k);
+            v.setVipId(gameVip != null ? gameVip.getId() : 0L);
+        });
     }
 
     @AutoLog(value = "玩家信息-通过id查询")

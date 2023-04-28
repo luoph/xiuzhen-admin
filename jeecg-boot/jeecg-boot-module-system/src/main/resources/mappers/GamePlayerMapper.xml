@@ -48,10 +48,8 @@
     </select>
 
     <select id="queryList" resultType="cn.youai.xiuzhen.game.entity.GamePlayer">
-        SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`, ifnull(sum(`go`.`pay_amount`), 0) as `total_pay_amount`
+        SELECT p.*
         FROM `game_player` p
-        LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`
-        LEFT JOIN `game_order` `go` ON `go`.`player_id` = p.`player_id` AND `go`.`order_status` = 4
         <where>
             <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">

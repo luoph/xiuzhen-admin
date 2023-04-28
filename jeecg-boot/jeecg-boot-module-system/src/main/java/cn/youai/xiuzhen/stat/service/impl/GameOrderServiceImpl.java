@@ -43,6 +43,14 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
+    public List<GameOrder> queryPlayerTotalPayAmount(Collection<Long> playerIds) {
+        if (CollUtil.isEmpty(playerIds)) {
+            return new ArrayList<>();
+        }
+        return getBaseMapper().queryPlayerTotalPayAmount(playerIds);
+    }
+
+    @Override
     public IPage<GameOrder> queryList(Page<?> page, GameOrder entity, DateRange dateRange, RangeValue<BigDecimal> amountRange) {
         String configAuth = QueryGenerator.installAuthJdbc(GameOrder.class);
         return getBaseMapper().queryList(page, entity, dateRange, amountRange, configAuth);
