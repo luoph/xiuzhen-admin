@@ -6,7 +6,6 @@ package cn.youai.xiuzhen.stat.mapper;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.model.RangeValue;
 import cn.youai.xiuzhen.game.entity.GamePlayer;
-import cn.youai.xiuzhen.stat.entity.PlayerBehavior;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -15,7 +14,6 @@ import org.jeecg.modules.system.entity.SysUser;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,17 +31,10 @@ public interface GamePlayerMapper extends BaseMapper<GamePlayer> {
 
     List<GamePlayer> selectPlayerListByUser(@Param("user") SysUser user, @Param("playerIds") String playerIds);
 
-    List<PlayerBehavior> queryPlayerBehavior(@Param("rangeDateBeginTime") Date rangeDateBeginTime,
-                                             @Param("rangeDateEndTime") Date rangeDateEndTime,
-                                             @Param("playerId") Long playerId,
-                                             @Param("logTable") String logTable);
-
     IPage<GamePlayer> queryList(Page<GamePlayer> page,
                                 @Param("entity") GamePlayer entity,
                                 @Param("levelRange") RangeValue<BigDecimal> levelRange,
                                 @Param("combatPowerRange") RangeValue<BigDecimal> combatPowerRange,
-                                @Param("createDateRange") DateRange createDateRange,
-                                @Param("configAuth") String configAuth
-    );
-
+                                @Param("dateRange") DateRange dateRange,
+                                @Param("configAuth") String configAuth);
 }

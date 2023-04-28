@@ -51,7 +51,7 @@
         SELECT p.*, IFNULL(v.`id`, 0) AS `vip_id`, ifnull(sum(`go`.`pay_amount`), 0) as `total_pay_amount`
         FROM `game_player` p
         LEFT JOIN `game_vip` v ON p.`player_id` = v.`player_id`
-        left join `game_order` `go` on `go`.`player_id` = p.`player_id` and `go`.`order_status` = 4
+        LEFT JOIN `game_order` `go` ON `go`.`player_id` = p.`player_id` AND `go`.`order_status` = 4
         <where>
             <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">
@@ -85,46 +85,13 @@
                 <if test="null != combatPowerRange.min"><![CDATA[AND p.`combat_power` >= #{combatPowerRange.min}]]></if>
                 <if test="null != combatPowerRange.max"><![CDATA[AND p.`combat_power` <= #{combatPowerRange.max}]]></if>
             </if>
-            <if test="createDateRange != null">
-                <if test="null != createDateRange.start">
-                    <![CDATA[AND p.`create_date` >= #{createDateRange.start}]]></if>
-                <if test="null != createDateRange.end"><![CDATA[AND p.`create_date` <= #{createDateRange.end}]]></if>
+            <if test="dateRange != null">
+                <if test="null != dateRange.start"><![CDATA[AND p.`create_date` >= #{dateRange.start}]]></if>
+                <if test="null != dateRange.end"><![CDATA[AND p.`create_date` <= #{dateRange.end}]]></if>
             </if>
         </where>
         GROUP BY p.`player_id`
         ORDER BY p.`create_time` DESC
-    </select>
-
-    <!-- 玩家日志查询映射结果 -->
-    <resultMap id="PlayerLogResultMap" type="cn.youai.xiuzhen.stat.entity.PlayerBehavior">
-        <id column="id" property="id"/>
-        <result column="server_id" property="serverId"/>
-        <result column="player_id" property="playerId"/>
-        <result column="type" property="type"/>
-        <result column="value" property="value"/>
-        <result column="create_date" property="createDate"/>
-    </resultMap>
-
-    <select id="queryPlayerBehavior" resultMap="PlayerLogResultMap">
-        SELECT
-        `player_id`,
-        `server_id`,
-        `type`,
-        `value`,
-        `create_date`
-        FROM
-        ${logTable}
-        <where>
-            <if test="playerId > 0 ">
-                AND `player_id` = #{playerId}
-            </if>
-            <if test="rangeDateBeginTime != null">
-                AND `create_date` >= #{rangeDateBeginTime}
-            </if>
-            <if test="rangeDateEndTime !=null">
-                AND `create_date` &lt;= #{rangeDateEndTime}
-            </if>
-        </where>
     </select>
 
 </mapper>
