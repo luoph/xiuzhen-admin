@@ -4,17 +4,18 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <!-- <a-col :md="6" :sm="8">
-                <a-form-item label="服务器id">
-                <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"/>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="区服">
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
+                                   dict="game_server,name,id"/>
             </a-form-item>
-                </a-col> -->
-          <a-col :md="10" :sm="8">
-            <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
           </a-col>
-
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
+            <a-form-item label="封禁值">
+              <a-input placeholder="请输入封禁值" v-model="queryParam.banValue"/>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
             <a-form-item label="封禁功能">
               <a-select placeholder="请选择封禁功能" v-model="queryParam.type" initialValue="0">
                 <a-select-option :value="1">登录</a-select-option>
@@ -22,20 +23,15 @@
               </a-select>
             </a-form-item>
           </a-col>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="封禁期限">
+              <a-select placeholder="封禁期限" v-model="queryParam.isForever" initialValue="0">
+                <a-select-option :value="0">临时</a-select-option>
+                <a-select-option :value="1">永久</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
           <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="8">
-              <a-form-item label="封禁值">
-                <a-input placeholder="请输入封禁值" v-model="queryParam.banValue"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="6" :sm="8">
-              <a-form-item label="封禁期限">
-                <a-select placeholder="封禁期限" v-model="queryParam.isForever" initialValue="0">
-                  <a-select-option :value="0">临时</a-select-option>
-                  <a-select-option :value="1">永久</a-select-option>
-                </a-select>
-              </a-form-item>
-            </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="开始时间">
                 <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"

@@ -10,7 +10,7 @@
         <div class="table-page-search-wrapper">
           <a-form layout="inline" :form="form" @keyup.enter.native="searchQuery">
             <a-row :gutter="10">
-              <a-col :md="10" :sm="8">
+              <a-col :md="4" :sm="8">
                 <a-form-item label="区服">
                   <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
                                        dict="game_server,name,id"/>

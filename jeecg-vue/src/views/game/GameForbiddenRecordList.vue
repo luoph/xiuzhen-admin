@@ -5,8 +5,9 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
-            <a-form-item label="服务器id">
-              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"/>
+            <a-form-item label="区服">
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
+                                   dict="game_server,name,id"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -61,7 +62,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
               </a>
             </span>
           </a-col>
@@ -87,8 +88,9 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
-        >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
+        style="font-weight: 600">{{ selectedRowKeys.length }}</a
+      >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -109,11 +111,13 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
+               style="max-width: 80px; font-size: 12px; font-style: italic"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
+          </a-button>
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
@@ -143,7 +147,7 @@
 </template>
 
 <script>
-import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import GameForbiddenRecordModal from './modules/GameForbiddenRecordModal';
 import JInput from '@/components/jeecg/JInput';
 
@@ -249,7 +253,7 @@ export default {
           align: 'center',
           dataIndex: 'reason',
           width: 240,
-          scopedSlots: { customRender: 'largeText' }
+          scopedSlots: {customRender: 'largeText'}
         },
         {
           title: '开始时间',
@@ -294,7 +298,8 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {}
+    initDictConfig() {
+    }
   }
 };
 </script>

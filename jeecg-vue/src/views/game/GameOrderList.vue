@@ -57,10 +57,6 @@
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
-              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name"/>
-            </a-col>
-            <a-col :md="4" :sm="8">
               <a-form-item label="金额">
                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"/>
                 <span class="query-group-split-cust"></span>

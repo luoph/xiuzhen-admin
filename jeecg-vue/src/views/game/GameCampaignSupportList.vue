@@ -4,14 +4,15 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
+          <a-col :md="4" :sm="8">
             <a-form-item label="活动id">
               <a-input placeholder="请输入活动id" v-model="queryParam.campaignId"/>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="服务器id">
-              <a-input placeholder="请输入服务器id" v-model="queryParam.serverId"/>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="区服">
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
+                                   dict="game_server,name,id"/>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">

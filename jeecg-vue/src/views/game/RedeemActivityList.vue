@@ -9,7 +9,7 @@
               <a-input placeholder="请输入激活码名称" v-model="queryParam.name"/>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="限制类型">
               <a-select placeholder="请选择限制类型" v-model="queryParam.limitType">
                 <a-select-option :value="0">0 - 不限制</a-select-option>
