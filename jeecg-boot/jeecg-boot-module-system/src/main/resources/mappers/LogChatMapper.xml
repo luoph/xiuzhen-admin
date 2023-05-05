@@ -7,7 +7,7 @@
         FROM `log_chat` l
         LEFT JOIN `game_player` p ON l.`sender_id` = p.`player_id`
         <where>
-            l.`chat_type` > 0 and l.`sender_id` > 0
+            l.`chat_type` > 0 AND l.`sender_id` > 0 AND l.`msg_type` != 2
             <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
             <if test="entity != null">
                 <if test="entity.serverId !=null and entity.serverId > 0">

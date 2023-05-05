@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.stat.controller;
 
 import cn.youai.basics.model.DateRange;
+import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.core.controller.SimplePageController;
 import cn.youai.xiuzhen.stat.entity.LogChat;
 import cn.youai.xiuzhen.stat.service.ILogChatService;
@@ -48,8 +49,12 @@ public class LogChatController extends SimplePageController<LogChat> {
 
     @Override
     protected IPage<LogChat> pageList(Page<LogChat> page, LogChat entity, HttpServletRequest req) {
-        DateRange createDateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
-        return logChatService.queryList(page, entity, createDateRange);
+        DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
+        if (dateRange.getStart() == null && dateRange.getEnd() == null) {
+            dateRange.setEnd(DateUtils.todayDate());
+            dateRange.setStart(DateUtils.dateOnly(DateUtils.addDays(dateRange.getEnd(), -1)));
+        }
+        return logChatService.queryList(page, entity, dateRange);
     }
 
     @RequestMapping(value = "/exportXls")

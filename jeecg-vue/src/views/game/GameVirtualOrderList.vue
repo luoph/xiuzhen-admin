@@ -5,8 +5,9 @@
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
-            <a-form-item label="区服id">
-              <a-input placeholder="请输入区服id" v-model="queryParam.serverId"/>
+            <a-form-item label="区服">
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
+                                   dict="game_server,name,id"/>
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
