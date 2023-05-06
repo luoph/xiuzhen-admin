@@ -3,18 +3,17 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
+        <channel-server-selector
+          ref="channelServerSelector"
+          :show-sdk-channel="true"
+          @onSelectChannel="onSelectChannel"
+          @onSelectSdkChannel="onSelectSdkChannel"
+          @onSelectServer="onSelectServer"
+        />
         <a-row :gutter="24">
-          <a-col :md="16" :sm="8">
-            <channel-server-selector ref="channelServerSelector"
-                                     :show-sdk-channel="true"
-                                     @onSelectChannel="onSelectChannel"
-                                     @onSelectSdkChannel="onSelectSdkChannel"
-                                     @onSelectServer="onSelectServer"/>
-          </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -57,10 +56,10 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {getAction} from '@/api/manage';
-import {filterObj} from '@/utils/util';
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
 import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
 
@@ -119,19 +118,19 @@ export default {
           title: '新增账号',
           dataIndex: 'newAccountNum',
           align: 'center',
-          width: 80,
+          width: 80
         },
         {
           title: '新增角色',
           dataIndex: 'newPlayerNum',
           width: 80,
-          align: 'center',
+          align: 'center'
         },
         {
           title: '新增付费角色数',
           dataIndex: 'newPlayerPayNum',
           width: 80,
-          align: 'center',
+          align: 'center'
         },
         {
           title: '账号角色转化率',
@@ -153,14 +152,13 @@ export default {
         }
       ],
       url: {
-        list: 'game/stat/conversion/list',
+        list: 'game/stat/conversion/list'
       },
       dictOptions: {}
     };
   },
   computed: {},
-  created() {
-  },
+  created() {},
   methods: {
     onSelectChannel: function (value) {
       this.queryParam.channel = value;
@@ -183,10 +181,8 @@ export default {
       delete param.countDateRange;
       return filterObj(param);
     },
-    searchReset() {
-      this.queryParam = {};
+    onResetParams() {
       this.$refs.channelServerSelector.reset();
-      this.loadData(1);
     },
     onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];
@@ -225,8 +221,7 @@ export default {
         });
     }
   }
-}
-;
+};
 </script>
 
 <style scoped>

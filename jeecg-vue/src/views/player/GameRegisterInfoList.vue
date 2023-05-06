@@ -3,44 +3,38 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
+        <channel-server-selector
+          ref="channelServerSelector"
+          :show-sdk-channel="true"
+          @onSelectChannel="onSelectChannel"
+          @onSelectSdkChannel="onSelectSdkChannel"
+          @onSelectServer="onSelectServer"
+        />
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
-            <a-form-item label="渠道">
-              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="区服">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
-                                   dict="game_server,name,id"/>
-            </a-form-item>
-          </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="角色名">
-              <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name"/>
+              <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="帐号">
-              <j-input placeholder="请输入帐号模糊查询" v-model="queryParam.account"/>
+              <j-input placeholder="请输入帐号模糊查询" v-model="queryParam.account" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
+            <a-form-item label="注册IP">
+              <a-input placeholder="请输入ip" v-model="queryParam.ip" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
-              </a-form-item>
-            </a-col>
-            <a-col :md="4" :sm="8">
-              <a-form-item label="ip">
-                <a-input placeholder="请输入ip" v-model="queryParam.ip"/>
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
               </a-form-item>
             </a-col>
             <!-- <a-col :md="4" :sm="8">
@@ -60,7 +54,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -91,20 +85,17 @@
                 <a style="margin-left: 24px" @click="onClearSelected">清空</a>
             </div> -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
@@ -129,11 +120,12 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
 import GameRegisterInfoModal from './modules/GameRegisterInfoModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import JInput from '@/components/jeecg/JInput';
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'GameRegisterInfoList',
@@ -141,7 +133,8 @@ export default {
   components: {
     JDate,
     JInput,
-    GameRegisterInfoModal
+    GameRegisterInfoModal,
+    ChannelServerSelector
   },
   data() {
     return {
@@ -245,7 +238,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 120,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -269,6 +262,18 @@ export default {
       // 范围参数不传递后台
       delete param.createTimeRange;
       return filterObj(param);
+    },
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
+    },
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
+    },
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
+    },
+    onResetParams() {
+      this.$refs.channelServerSelector.reset();
     },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);

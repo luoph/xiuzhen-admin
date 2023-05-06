@@ -4,9 +4,9 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -19,7 +19,7 @@
               <a-input placeholder="请输入途径id" v-model="queryParam.way"></a-input>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="产销类型">
               <a-select placeholder="产销类型" v-model="queryParam.type" @change="resetWay">
                 <a-select-option value="">全部</a-select-option>
@@ -30,18 +30,15 @@
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
-              <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径"
-                                       @onSelectOptionSome="selectWay"/>
+              <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径" @onSelectOptionSome="selectWay" />
             </a-form-item>
             <a-form-item v-else-if="queryParam.type === '2'" key="2" label="消耗途径">
-              <a-select-read-json-some json-file="item_expend" placeholder="请选择途径"
-                                       @onSelectOptionSome="selectWay"/>
+              <a-select-read-json-some json-file="item_expend" placeholder="请选择途径" @onSelectOptionSome="selectWay" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -77,9 +74,9 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
 import ASelectReadJsonSome from '@comp/gameserver/ASelectReadJsonSome';
 

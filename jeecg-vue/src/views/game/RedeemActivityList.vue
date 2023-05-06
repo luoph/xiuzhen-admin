@@ -258,16 +258,11 @@ export default {
     }
   },
   methods: {
-    reset() {
-      this.queryParam = {};
-    },
-    searchReset() {
+    onResetParams() {
       let groupId = this.queryParam.groupId;
-      this.queryParam = {};
       if (this.isIncludeGroupModel) {
         this.queryParam.groupId = groupId;
       }
-      this.loadData(1);
     },
     handleAdd() {
       this.$refs.modalForm.edit({

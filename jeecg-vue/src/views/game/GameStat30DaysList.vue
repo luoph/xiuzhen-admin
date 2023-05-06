@@ -3,11 +3,8 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
+        <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
         <a-row :gutter="45">
-          <a-col :md="12" :sm="8">
-            <!--@ = v-on:数据绑定 不是事件-->
-            <channel-server-selector ref="channelServerSelector" @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer" />
-          </a-col>
           <a-col :md="5" :sm="5">
             <a-form-item label="统计类型">
               <a-select placeholder="统计类型" v-model="queryParam.type">
@@ -430,10 +427,8 @@ export default {
       delete param.countDateRange;
       return filterObj(param);
     },
-    searchReset() {
-      this.queryParam = {};
+    onResetParams() {
       this.$refs.channelServerSelector.reset();
-      this.loadData(1);
     },
     onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];

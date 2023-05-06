@@ -3,22 +3,17 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
+        <channel-server-selector
+          ref="channelServerSelector"
+          :show-sdk-channel="true"
+          @onSelectChannel="onSelectChannel"
+          @onSelectSdkChannel="onSelectSdkChannel"
+          @onSelectServer="onSelectServer"
+        />
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
               <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="区服">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
-                                   dict="game_server,name,id"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="渠道">
-              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name"/>
             </a-form-item>
           </a-col>
           <!-- <a-col :md="4" :sm="8">
@@ -26,7 +21,7 @@
               <a-input placeholder="请输入支付订单号" v-model="queryParam.orderId" />
             </a-form-item>
           </a-col> -->
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="平台订单号">
               <a-input placeholder="请输入平台订单号" v-model="queryParam.queryId"/>
             </a-form-item>
@@ -49,14 +44,14 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <template v-if="toggleSearchStatus">
+            <a-col :md="6" :sm="8">
             <a-form-item label="创建时间">
               <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD"
                               :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
             </a-form-item>
           </a-col>
-          <template v-if="toggleSearchStatus">
-            <a-col :md="4" :sm="8">
+            <a-col :md="6" :sm="8">
               <a-form-item label="金额">
                 <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.payAmount_begin"/>
                 <span class="query-group-split-cust"></span>
@@ -132,13 +127,15 @@ import {JeecgListMixin} from '@/mixins/JeecgListMixin';
 import {filterObj} from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameOrderModal from './modules/GameOrderModal';
+import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
 
 export default {
   name: 'PayOrderList',
   mixins: [JeecgListMixin],
   components: {
     JInput,
-    GameOrderModal
+    GameOrderModal,
+    ChannelServerSelector
   },
   data() {
     return {
@@ -338,6 +335,18 @@ export default {
       // 范围参数不传递后台
       delete param.createDateRange;
       return filterObj(param);
+    },
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
+    },
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
+    },
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
+    },
+    onResetParams() {
+      this.$refs.channelServerSelector.reset();
     },
     onDateChange: function (value, dateString) {
       console.log(dateString[0], dateString[1]);

@@ -6,45 +6,42 @@
         <a-row :gutter="24">
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
             <a-form-item label="停服区服id">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.sourceServerId"
-                                   dict="game_server,name,id"/>
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.sourceServerId" dict="game_server,name,id" />
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
             <a-form-item label="停服的玩家id">
-              <a-input placeholder="请输入停服的玩家id" v-model="queryParam.sourcePlayerId"/>
+              <a-input placeholder="请输入停服的玩家id" v-model="queryParam.sourcePlayerId" />
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
             <a-form-item label="返还区服id">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.targetServerId"
-                                   dict="game_server,name,id"/>
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.targetServerId" dict="game_server,name,id" />
             </a-form-item>
           </a-col>
           <a-col :xl="5" :lg="5" :md="5" :sm="5">
             <a-form-item label="返还的玩家id">
-              <a-input placeholder="请输入返还的玩家id" v-model="queryParam.targetPlayerId"/>
+              <a-input placeholder="请输入返还的玩家id" v-model="queryParam.targetPlayerId" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="充值总金额">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sourceAmount_begin"/>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.sourceAmount_begin" />
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sourceAmount_end"/>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.sourceAmount_end" />
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="返还总仙玉">
-                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetNum_begin"/>
+                <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.targetNum_begin" />
                 <span class="query-group-split-cust"></span>
-                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetNum_end"/>
+                <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.targetNum_end" />
               </a-form-item>
             </a-col>
             <a-col :xl="5" :lg="5" :md="5" :sm="5">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
                 <!-- <j-date placeholder="请选择开始日期" class="query-group-cust" v-model="queryParam.createTime_begin"></j-date>
                 <span class="query-group-split-cust"></span>
                 <j-date placeholder="请选择结束日期" class="query-group-cust" v-model="queryParam.createTime_end"></j-date> -->
@@ -52,12 +49,12 @@
             </a-col>
           </template>
           <a-col :xl="6" :lg="7" :md="4" :sm="8">
-            <span style="float: left;overflow: hidden;" class="table-page-search-submitButtons">
+            <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
               <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
               <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -74,26 +71,26 @@
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload> -->
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal"
-                     @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
-        <a-button style="margin-left: 8px"> 批量操作
-          <a-icon type="down"/>
+        <a-button style="margin-left: 8px">
+          批量操作
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
+      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -106,37 +103,28 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         class="j-table-force-nowrap"
-        @change="handleTableChange">
-
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
-        <template slot="imgSlot" slot-scope="text,record">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt=""
-               style="max-width:80px;font-size: 12px;font-style: italic;"/>
+        <template slot="imgSlot" slot-scope="text, record">
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无图片</span>
+          <img v-else :src="getImgView(text)" :preview="record.id" height="25px" alt="" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
-          <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
-          <a-button
-            v-else
-            :ghost="true"
-            type="primary"
-            icon="download"
-            size="small"
-            @click="downloadFile(text)">
-            下载
-          </a-button>
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无文件</span>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="downloadFile(text)"> 下载 </a-button>
         </template>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a @click="handleDetail(record)">详情</a>
@@ -149,7 +137,6 @@
             </a-menu>
           </a-dropdown>
         </span>
-
       </a-table>
     </div>
 
@@ -158,12 +145,11 @@
 </template>
 
 <script>
-
-import '@/assets/less/TableExpand.less'
-import {mixinDevice} from '@/utils/mixin'
-import {JeecgListMixin} from '@/mixins/JeecgListMixin'
-import {filterObj} from '@/utils/util'
-import GameStopServerRefundRecordModal from './modules/GameStopServerRefundRecordModal'
+import '@/assets/less/TableExpand.less';
+import { mixinDevice } from '@/utils/mixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { filterObj } from '@/utils/util';
+import GameStopServerRefundRecordModal from './modules/GameStopServerRefundRecordModal';
 
 export default {
   name: 'GameStopServerRefundRecordList',
@@ -181,44 +167,44 @@ export default {
           dataIndex: '',
           key: 'rowIndex',
           width: 60,
-          align: "center",
+          align: 'center',
           customRender: function (t, r, index) {
             return parseInt(index) + 1;
           }
         },
         {
           title: '停服区服id',
-          align: "center",
+          align: 'center',
           dataIndex: 'sourceServerId'
         },
         {
           title: '停服的玩家id',
-          align: "center",
+          align: 'center',
           dataIndex: 'sourcePlayerId'
         },
         {
           title: '返还区服id',
-          align: "center",
+          align: 'center',
           dataIndex: 'targetServerId'
         },
         {
           title: '返还的玩家id',
-          align: "center",
+          align: 'center',
           dataIndex: 'targetPlayerId'
         },
         {
           title: '充值总金额',
-          align: "center",
+          align: 'center',
           dataIndex: 'sourceAmount'
         },
         {
           title: '返还总仙玉',
-          align: "center",
+          align: 'center',
           dataIndex: 'targetNum'
         },
         {
           title: '创建时间',
-          align: "center",
+          align: 'center',
           dataIndex: 'createTime'
         }
         // ,
@@ -232,16 +218,15 @@ export default {
         // }
       ],
       url: {
-        list: "/game/gameStopServerRefundRecord/list",
-        delete: "/game/gameStopServerRefundRecord/delete",
-        deleteBatch: "/game/gameStopServerRefundRecord/deleteBatch",
-        exportXlsUrl: "/game/gameStopServerRefundRecord/exportXls",
-        importExcelUrl: "game/gameStopServerRefundRecord/importExcel",
-
+        list: '/game/gameStopServerRefundRecord/list',
+        delete: '/game/gameStopServerRefundRecord/delete',
+        deleteBatch: '/game/gameStopServerRefundRecord/deleteBatch',
+        exportXlsUrl: '/game/gameStopServerRefundRecord/exportXls',
+        importExcelUrl: 'game/gameStopServerRefundRecord/importExcel'
       },
       dictOptions: {},
-      superFieldList: [],
-    }
+      superFieldList: []
+    };
   },
   created() {
     this.getSuperFieldList();
@@ -249,7 +234,7 @@ export default {
   computed: {
     importExcelUrl: function () {
       return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}`;
-    },
+    }
   },
   methods: {
     getQueryParams() {
@@ -269,21 +254,20 @@ export default {
     onDateOk(value) {
       console.log(value);
     },
-    initDictConfig() {
-    },
+    initDictConfig() {},
     getSuperFieldList() {
       let fieldList = [];
-      fieldList.push({type: 'int', value: 'sourceServerId', text: '停服区服id', dictCode: ''})
-      fieldList.push({type: 'int', value: 'sourcePlayerId', text: '停服的玩家id', dictCode: ''})
-      fieldList.push({type: 'int', value: 'targetServerId', text: '返还区服id', dictCode: ''})
-      fieldList.push({type: 'int', value: 'targetPlayerId', text: '返还的玩家id', dictCode: ''})
-      fieldList.push({type: 'BigDecimal', value: 'sourceAmount', text: '充值总金额', dictCode: ''})
-      fieldList.push({type: 'int', value: 'targetNum', text: '返还总仙玉', dictCode: ''})
-      fieldList.push({type: 'date', value: 'createTime', text: '创建时间'})
-      this.superFieldList = fieldList
+      fieldList.push({ type: 'int', value: 'sourceServerId', text: '停服区服id', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'sourcePlayerId', text: '停服的玩家id', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'targetServerId', text: '返还区服id', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'targetPlayerId', text: '返还的玩家id', dictCode: '' });
+      fieldList.push({ type: 'BigDecimal', value: 'sourceAmount', text: '充值总金额', dictCode: '' });
+      fieldList.push({ type: 'int', value: 'targetNum', text: '返还总仙玉', dictCode: '' });
+      fieldList.push({ type: 'date', value: 'createTime', text: '创建时间' });
+      this.superFieldList = fieldList;
     }
   }
-}
+};
 </script>
 <style scoped>
 @import '~@assets/less/common.less';

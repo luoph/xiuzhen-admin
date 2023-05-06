@@ -4,18 +4,17 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="区服">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
-                                   dict="game_server,name,id"/>
+              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId" dict="game_server,name,id" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="封禁值">
-              <a-input placeholder="请输入封禁值" v-model="queryParam.banValue"/>
+              <a-input placeholder="请输入封禁值" v-model="queryParam.banValue" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="封禁功能">
               <a-select placeholder="请选择封禁功能" v-model="queryParam.type" initialValue="0">
                 <a-select-option :value="1">登录</a-select-option>
@@ -23,7 +22,7 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="封禁期限">
               <a-select placeholder="封禁期限" v-model="queryParam.isForever" initialValue="0">
                 <a-select-option :value="0">临时</a-select-option>
@@ -31,17 +30,20 @@
               </a-select>
             </a-form-item>
           </a-col>
+          <a-col :md="6" :sm="8">
+            <a-form-item label="操作人员">
+              <j-search-select-tag placeholder="请选择操作人员" v-model="queryParam.createBy" dict="sys_user,realname,username" />
+            </a-form-item>
+          </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="6" :sm="8">
               <a-form-item label="开始时间">
-                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange"/>
+                <a-range-picker v-model="queryParam.startTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onStartTimeChange" />
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="结束时间">
-                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange"/>
+                <a-range-picker v-model="queryParam.endTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onEndTimeChange" />
               </a-form-item>
             </a-col>
           </template>
@@ -51,7 +53,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -77,9 +79,8 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a
-      >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -100,13 +101,11 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <template slot="largeText" slot-scope="text">
           <div class="large-text-container">
@@ -116,11 +115,11 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -133,17 +132,17 @@
       </a-table>
     </div>
 
-    <gameForbidden-modal ref="modalForm" @ok="modalFormOk"/>
+    <gameForbidden-modal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameForbiddenModal from './modules/GameForbiddenModal';
 import JDate from '@/components/jeecg/JDate.vue';
 import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import {getAction} from '@/api/manage';
-import {filterObj} from '@/utils/util';
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'GameForbiddenList',
@@ -233,7 +232,7 @@ export default {
           align: 'center',
           width: 240,
           dataIndex: 'reason',
-          scopedSlots: {customRender: 'largeText'}
+          scopedSlots: { customRender: 'largeText' }
         },
         {
           title: '开始时间',
@@ -281,7 +280,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 200,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {

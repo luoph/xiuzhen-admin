@@ -1,6 +1,6 @@
 <template>
-  <a-row type="flex" :gutter="24">
-    <a-col :flex="2">
+  <a-row :gutter="24">
+    <a-col :span="8">
       <a-form-item label="渠道" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-select placeholder="请选择渠道" v-model="channel" @change="onSelectChannel">
           <a-select-option v-for="it in channelList" :key="it.name" :value="it.simpleName">
@@ -9,7 +9,7 @@
         </a-select>
       </a-form-item>
     </a-col>
-    <a-col :flex="2" v-if="showSdkChannel">
+    <a-col :span="8" v-if="showSdkChannel">
       <a-form-item label="SDK渠道" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-select placeholder="请选择SDK渠道" v-model="sdkChannel" @change="onSelectSdkChannel" showSearch allowClear style="width: 100%">
           <a-select-option v-for="it in sdkChannelList" :key="it.name" :value="it.sdkChannel">
@@ -18,7 +18,7 @@
         </a-select>
       </a-form-item>
     </a-col>
-    <a-col :flex="2" v-if="showServer">
+    <a-col :span="8" v-if="showServer">
       <a-form-item label="区服" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
         <a-select :mode="multiple ? 'multiple' : '-'" placeholder="请选择区服" v-model="serverId" @change="onSelectServer" showSearch allowClear style="width: 100%">
           <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">

@@ -3,21 +3,22 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
+        <channel-server-selector
+          ref="channelServerSelector"
+          :show-sdk-channel="true"
+          @onSelectChannel="onSelectChannel"
+          @onSelectSdkChannel="onSelectSdkChannel"
+          @onSelectServer="onSelectServer"
+        />
         <a-row :gutter="24">
           <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="玩家昵称">
-              <a-input placeholder="请输入玩家昵称" v-model="queryParam.nickname"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="渠道">
-              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name"/>
+              <a-input placeholder="请输入玩家昵称" v-model="queryParam.nickname" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -35,20 +36,19 @@
       <a-button type="primary" icon="sync" @click="refreshCache">刷新缓存</a-button>
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('VIP玩家')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
-                @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -56,9 +56,8 @@
     <!-- table区域-begin -->
     <div>
       <div class="ant-alert ant-alert-info" style="margin-bottom: 16px">
-        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a
-        style="font-weight: 600">{{ selectedRowKeys.length }}</a
-      >项
+        <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a
+        >项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
       </div>
 
@@ -79,13 +78,11 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="tagSlot" slot-scope="text, record">
           <a-tag color="orange">{{ text }}</a-tag>
@@ -105,17 +102,19 @@
 
 <script>
 import JInput from '@/components/jeecg/JInput';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
-import {filterObj} from '@/utils/util';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 import GameVipModal from './modules/GameVipModal';
+import ChannelServerSelector from '@/components/gameserver/ChannelServerSelector';
 
 export default {
   name: 'GameVipList',
   mixins: [JeecgListMixin],
   components: {
     JInput,
-    GameVipModal
+    GameVipModal,
+    ChannelServerSelector
   },
   data() {
     return {
@@ -235,7 +234,7 @@ export default {
           width: 100,
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -261,7 +260,17 @@ export default {
       param.pageSize = this.ipagination.pageSize;
       return filterObj(param);
     },
-    initDictConfig() {
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
+    },
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
+    },
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
+    },
+    onResetParams() {
+      this.$refs.channelServerSelector.reset();
     },
     refreshCache() {
       // 刷新VIP缓存

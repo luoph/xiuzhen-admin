@@ -3,23 +3,22 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
+        <channel-server-selector
+          ref="channelServerSelector"
+          :show-sdk-channel="true"
+          @onSelectChannel="onSelectChannel"
+          @onSelectSdkChannel="onSelectSdkChannel"
+          @onSelectServer="onSelectServer"
+        />
         <a-row :gutter="24">
-          <a-col :md="16" :sm="8">
-            <channel-server-selector ref="channelServerSelector"
-                                     :show-sdk-channel="true"
-                                     @onSelectChannel="onSelectChannel"
-                                     @onSelectSdkChannel="onSelectSdkChannel"
-                                     @onSelectServer="onSelectServer"/>
-          </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
-              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
             <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onDateChange"/>
+              <a-range-picker v-model="queryParam.countDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="12" :sm="8">
@@ -63,13 +62,11 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
         <span slot="tagSlot" slot-scope="text, record">
           <a-tag color="orange">{{ text }}</a-tag>
@@ -77,12 +74,10 @@
 
         <span slot="action" slot-scope="text, record">
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay" v-has="'game:vip:admin'">
-              <a-menu-item :disabled="record.vipId > 0"
-                           @click="addVip(record)">添加VIP</a-menu-item>
-              <a-menu-item :disabled="record.vipId === 0"
-                           @click="deleteVip(record)">删除VIP</a-menu-item>
+              <a-menu-item :disabled="record.vipId > 0" @click="addVip(record)">添加VIP</a-menu-item>
+              <a-menu-item :disabled="record.vipId === 0" @click="deleteVip(record)">删除VIP</a-menu-item>
             </a-menu>
           </a-dropdown>
         </span>
@@ -92,10 +87,10 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import {getAction} from '@/api/manage';
-import {filterObj} from '@/utils/util';
+import { getAction } from '@/api/manage';
+import { filterObj } from '@/utils/util';
 import moment from 'moment';
 import ChannelServerSelector from '@comp/gameserver/ChannelServerSelector';
 
@@ -204,7 +199,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           fixed: 'right',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -242,10 +237,8 @@ export default {
       delete param.countDateRange;
       return filterObj(param);
     },
-    searchReset() {
-      this.queryParam = {};
+    onResetParams() {
       this.$refs.channelServerSelector.reset();
-      this.loadData(1);
     },
     onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];
@@ -267,18 +260,11 @@ export default {
       }
     },
     deleteVip(record) {
-      this.handleConfrimRequest(this.url.deleteVip,
-        {id: record.vipId},
-        '是否删除VIP？',
-        `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`,
-        'delete');
+      this.handleConfrimRequest(this.url.deleteVip, { id: record.vipId }, '是否删除VIP？', `删除玩家: ${record.playerId}（${record.nickname}）的VIP特权`, 'delete');
     },
     addVip(record) {
-      this.handleConfrimRequest(this.url.addVip,
-        {playerIds: record.playerId},
-        '是否添加VIP？',
-        `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
-    },
+      this.handleConfrimRequest(this.url.addVip, { playerIds: record.playerId }, '是否添加VIP？', `添加玩家: ${record.playerId}（${record.nickname}）为VIP`);
+    }
   }
 };
 </script>
