@@ -4,34 +4,34 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="激活码名称">
-              <a-input placeholder="请输入激活码名称" v-model="queryParam.name"/>
+              <a-input placeholder="请输入激活码名称" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="8" :sm="8">
             <a-form-item label="限制类型">
-              <a-select placeholder="请选择限制类型" v-model="queryParam.limitType">
+              <a-select placeholder="请选择限制类型" v-model="queryParam.limitType" showSearch allowClear style="width: 100%">
                 <a-select-option :value="0">0 - 不限制</a-select-option>
                 <a-select-option :value="1">1 - 指定渠道</a-select-option>
                 <a-select-option :value="2">2 - 指定区服</a-select-option>
                 <a-select-option :value="3">3 - 指定渠道&指定区服</a-select-option>
                 <a-select-option :value="4">4 - 同一分组只能兑换一次</a-select-option>
                 <a-select-option :value="5">5 - 指定渠道&同一分组只能兑换一次</a-select-option>
-                <a-select-option :value="5">6 - 指定区服&同一分组只能兑换一次</a-select-option>
-                <a-select-option :value="5">7 - 指定渠道&指定区服&同一分组只能兑换一次</a-select-option>
+                <a-select-option :value="6">6 - 指定区服&同一分组只能兑换一次</a-select-option>
+                <a-select-option :value="7">7 - 指定渠道&指定区服&同一分组只能兑换一次</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col v-if="!isIncludeGroupModel" :md="4" :sm="8">
               <a-form-item label="分组id">
-                <a-input placeholder="请输入分组id" v-model="queryParam.groupId"/>
+                <a-input placeholder="请输入分组id" v-model="queryParam.groupId" />
               </a-form-item>
             </a-col>
             <a-col :md="4" :sm="8">
               <a-form-item label="活动状态">
-                <a-input placeholder="请输入活动状态" v-model="queryParam.status"/>
+                <a-input placeholder="请输入活动状态" v-model="queryParam.status" />
               </a-form-item>
             </a-col>
           </template>
@@ -41,7 +41,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a style="margin-left: 8px" @click="handleToggleSearch">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -57,28 +57,28 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table"
-               size="middle"
-               bordered
-               rowKey="id"
-               :columns="columns"
-               :dataSource="dataSource"
-               :scroll="{ x: 'max-content' }"
-               :pagination="ipagination"
-               :loading="loading"
-               @change="handleTableChange">
+      <a-table
+        ref="table"
+        size="middle"
+        bordered
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :scroll="{ x: 'max-content' }"
+        :pagination="ipagination"
+        :loading="loading"
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此图片</span>
-          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在"
-               style="max-width: 80px; font-size: 12px; font-style: italic"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="图片不存在" style="max-width: 80px; font-size: 12px; font-style: italic" />
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
-          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载
-          </a-button>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
 
         <span slot="statusSlot" slot-scope="text">
@@ -88,7 +88,7 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
         </span>
       </a-table>
@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import RedeemActivityModal from './modules/RedeemActivityModal';
 
 export default {
@@ -206,7 +206,7 @@ export default {
           title: '活动状态',
           align: 'center',
           dataIndex: 'status',
-          scopedSlots: {customRender: 'statusSlot'}
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '奖励',
@@ -239,7 +239,7 @@ export default {
           align: 'center',
           fixed: 'right',
           width: 120,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {

@@ -46,7 +46,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="商品类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="选择商品类型" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0">
+          <a-select placeholder="选择商品类型" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0" showSearch allowClear style="width: 100%">
             <a-select-option :value="0">0-普通类型</a-select-option>
             <a-select-option :value="1">1-仙职</a-select-option>
             <a-select-option :value="2">2-月卡</a-select-option>

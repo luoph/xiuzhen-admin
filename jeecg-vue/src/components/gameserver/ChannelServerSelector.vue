@@ -2,7 +2,7 @@
   <a-row :gutter="24">
     <a-col :span="8">
       <a-form-item label="渠道" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }">
-        <a-select placeholder="请选择渠道" v-model="channel" @change="onSelectChannel">
+        <a-select placeholder="请选择渠道" v-model="channel" @change="onSelectChannel" showSearch allowClear style="width: 100%">
           <a-select-option v-for="it in channelList" :key="it.name" :value="it.simpleName">
             {{ it.name + ' [' + it.simpleName + ']' }}
           </a-select-option>

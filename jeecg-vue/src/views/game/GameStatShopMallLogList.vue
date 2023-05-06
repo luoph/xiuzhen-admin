@@ -7,7 +7,7 @@
         <a-row :gutter="45">
           <a-col :md="6" :sm="8">
             <a-form-item label="商店类型">
-              <a-select placeholder="商店类型" v-model="queryParam.tabId">
+              <a-select placeholder="商店类型" v-model="queryParam.tabId" showSearch allowClear style="width: 100%">
                 <a-select-option :value="0">全部</a-select-option>
                 <a-select-option :value="101001">道具（101001）</a-select-option>
                 <a-select-option :value="101002">法宝（101002）</a-select-option>

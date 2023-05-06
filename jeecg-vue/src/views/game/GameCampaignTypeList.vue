@@ -24,7 +24,7 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="活动类型">
-              <a-select placeholder="选择活动类型" v-model="queryParam.type" default-value="1">
+              <a-select placeholder="选择活动类型" v-model="queryParam.type" default-value="1" showSearch allowClear style="width: 100%">
                 <a-select-option :value="1">1-登录礼包</a-select-option>
                 <a-select-option :value="2">2-累计充值</a-select-option>
                 <a-select-option :value="3">3-节日兑换</a-select-option>

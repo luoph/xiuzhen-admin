@@ -6,9 +6,9 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls(model.type === 5 ? '节日活动-修为加成' 
-      : model.type === 6 ? '节日活动-灵气加成'
-      : '未知活动类型')">导出</a-button>
+      <a-button type="primary" icon="download" @click="handleExportXls(model.type === 5 ? '节日活动-修为加成' : model.type === 6 ? '节日活动-灵气加成' : '未知活动类型')"
+        >导出</a-button
+      >
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
@@ -16,18 +16,19 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table 
-        ref="table" 
-        size="middle" 
-        bordered 
-        rowKey="id" 
-        :columns="columns" 
-        :dataSource="dataSource" 
-        :pagination="ipagination" 
-        :loading="loading" 
-        :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+      <a-table
+        ref="table"
+        size="middle"
+        bordered
+        rowKey="id"
+        :columns="columns"
+        :dataSource="dataSource"
+        :pagination="ipagination"
+        :loading="loading"
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
         class="j-table-force-nowrap"
-        @change="handleTableChange">
+        @change="handleTableChange"
+      >
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
@@ -181,7 +182,7 @@ export default {
   },
   computed: {
     importExcelUrl: function () {
-            return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
+      return `${window._CONFIG['domainURL']}/${this.url.importExcelUrl}?campaignId=${this.model.campaignId}&typeId=${this.model.id}`;
     }
   },
   methods: {

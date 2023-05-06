@@ -6,24 +6,23 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="游戏编号">
-              <j-search-select-tag placeholder="请选择游戏编号" v-model="queryParam.gameId"
-                                   dict="game_info,name,id"/>
+              <j-search-select-tag placeholder="请选择游戏编号" v-model="queryParam.gameId" dict="game_info,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="Sdk渠道名">
-              <j-input placeholder="请输入Sdk渠道名" v-model="queryParam.sdkChannel"/>
+              <j-input placeholder="请输入Sdk渠道名" v-model="queryParam.sdkChannel" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="版本号">
-              <j-input placeholder="请输入版本号" v-model="queryParam.version"/>
+              <j-input placeholder="请输入版本号" v-model="queryParam.version" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="备注">
-                <j-input placeholder="请输入备注" v-model="queryParam.remark"/>
+                <j-input placeholder="请输入备注" v-model="queryParam.remark" />
               </a-form-item>
             </a-col>
           </template>
@@ -33,7 +32,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -52,13 +51,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -72,18 +71,17 @@
             </div>
             :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a v-if="record.status === 0" @click="changeStatus(record, 1)">开启审核</a>
           <a v-else @click="changeStatus(record, 0)">关闭审核</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -94,7 +92,7 @@
           </a-dropdown>
         </span>
         <span slot="switchSlot" slot-scope="text, record">
-          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
         <span slot="profileSlot" slot-scope="text, record">
           <a-tag v-if="!text" color="red">未设置</a-tag>
@@ -108,11 +106,11 @@
 </template>
 
 <script>
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameReviewModal from './modules/GameReviewModal';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
 
 function filterGameIdText(options, text) {
   if (options instanceof Array) {
@@ -128,7 +126,7 @@ function filterGameIdText(options, text) {
 export default {
   name: 'GameReviewList',
   mixins: [JeecgListMixin],
-  components: {JInput, GameReviewModal},
+  components: { JInput, GameReviewModal },
   data() {
     return {
       description: '游戏审核配置管理页面',
@@ -177,14 +175,14 @@ export default {
           align: 'center',
           width: 100,
           dataIndex: 'profile',
-          scopedSlots: {customRender: 'profileSlot'}
+          scopedSlots: { customRender: 'profileSlot' }
         },
         {
           title: '审核开关',
           align: 'center',
           width: 80,
           dataIndex: 'status',
-          scopedSlots: {customRender: 'switchSlot'}
+          scopedSlots: { customRender: 'switchSlot' }
         },
         {
           title: '备注',
@@ -197,7 +195,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 200,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -207,7 +205,7 @@ export default {
         changeStatus: 'game/review/changeStatus',
         refreshConfig: 'game/info/refreshConfig',
         // 游戏列表
-        gameInfoList: 'game/info/list',
+        gameInfoList: 'game/info/list'
       }
     };
   },
@@ -242,7 +240,7 @@ export default {
       });
     },
     changeStatus(record, value) {
-      getAction(this.url.changeStatus, {id: record.id, status: value}).then((res) => {
+      getAction(this.url.changeStatus, { id: record.id, status: value }).then((res) => {
         if (res.success) {
           this.$message.success(res.message);
         } else {

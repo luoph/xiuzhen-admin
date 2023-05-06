@@ -7,7 +7,7 @@
         <a-row :gutter="45">
           <a-col :md="6" :sm="8">
             <a-form-item label="充值档位">
-              <a-select placeholder="充值档位" v-model="queryParam.grade">
+              <a-select placeholder="充值档位" v-model="queryParam.grade" showSearch allowClear style="width: 100%">
                 <a-select-option :value="0">不限制</a-select-option>
                 <a-select-option :value="1">0~6</a-select-option>
                 <a-select-option :value="2">7~29</a-select-option>

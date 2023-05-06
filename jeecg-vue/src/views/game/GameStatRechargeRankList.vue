@@ -34,7 +34,6 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
-              <a-button type="primary" icon="download" @click="handleExportXls('付费排行')">导出</a-button>
               <a-button type="primary" icon="search" style="margin-left: 8px" @click="searchQuery">查询</a-button>
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
             </span>
@@ -43,6 +42,12 @@
       </a-form>
     </div>
     <!-- 查询区域-END -->
+
+    <!-- 操作按钮区域 -->
+    <div class="table-operator">
+      <a-button type="primary" icon="download" @click="handleExportXls('付费排行')">导出</a-button>
+    </div>
+
     <!-- table区域-begin -->
     <div>
       <a-table
