@@ -169,7 +169,10 @@ export const JeecgListMixin = {
     },
     searchReset() {
       this.queryParam = {}
+      this.onResetParams();
       this.loadData(1);
+    },
+    onResetParams() {
     },
     doBatch: function (batchUrl, ids) {
       var that = this;

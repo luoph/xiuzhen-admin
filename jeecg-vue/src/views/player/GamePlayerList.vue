@@ -4,17 +4,12 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
-            <a-form-item label="渠道">
-              <j-search-select-tag placeholder="请选择渠道" v-model="queryParam.channel"
-                                   dict="game_channel,name,simple_name"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="区服">
-              <j-search-select-tag placeholder="请选择区服" v-model="queryParam.serverId"
-                                   dict="game_server,name,id"/>
-            </a-form-item>
+          <a-col :md="16" :sm="8">
+            <channel-server-selector ref="channelServerSelector"
+                                     :show-sdk-channel="true"
+                                     @onSelectChannel="onSelectChannel"
+                                     @onSelectSdkChannel="onSelectSdkChannel"
+                                     @onSelectServer="onSelectServer"/>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
@@ -356,6 +351,9 @@ export default {
       // 范围参数不传递后台
       delete param.createDateRange;
       return filterObj(param);
+    },
+    onResetParams() {
+      this.$refs.channelServerSelector.reset();
     },
     onSelectChannel: function (value) {
       this.queryParam.channel = value;
