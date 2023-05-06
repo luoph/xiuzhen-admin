@@ -232,6 +232,7 @@
         p.`nickname`,
         p.`level`,
         p.`server_id`,
+        p.`sid`,
         p.`channel`,
         p.`sdk_channel`,
         p.`create_time`,

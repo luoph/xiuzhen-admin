@@ -142,6 +142,11 @@ export default {
           dataIndex: 'serverId'
         },
         {
+          title: '创角区服',
+          align: 'center',
+          dataIndex: 'sid'
+        },
+        {
           title: '渠道',
           align: 'center',
           dataIndex: 'channel',

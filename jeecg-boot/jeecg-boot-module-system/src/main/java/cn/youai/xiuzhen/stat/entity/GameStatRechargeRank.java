@@ -32,6 +32,9 @@ public class GameStatRechargeRank implements Serializable {
     @Excel(name = "区服id", width = 15)
     private Integer serverId;
 
+    @Excel(name = "创角区服", width = 15)
+    private Integer sid;
+
     @Excel(name = "渠道", width = 15)
     private String channel;
 

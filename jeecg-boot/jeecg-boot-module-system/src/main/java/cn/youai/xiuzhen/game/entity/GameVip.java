@@ -66,6 +66,10 @@ public class GameVip extends BaseEntity {
     private Integer serverId;
 
     @TableField(exist = false)
+    @Excel(name = "创角区服", width = 15)
+    private Integer sid;
+
+    @TableField(exist = false)
     private Long orderId;
 
     @TableField(exist = false)
