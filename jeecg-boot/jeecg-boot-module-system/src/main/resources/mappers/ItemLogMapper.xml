@@ -23,8 +23,8 @@
                 </if>
             </if>
             <if test="dateRange != null">
-                <if test="null != dateRange.start"><![CDATA[AND o.`create_date` >= #{dateRange.start}]]></if>
-                <if test="null != dateRange.end"><![CDATA[AND o.`create_date` <= #{dateRange.end}]]></if>
+                <if test="null != dateRange.start"><![CDATA[AND bl.`create_date` >= #{dateRange.start}]]></if>
+                <if test="null != dateRange.end"><![CDATA[AND bl.`create_date` <= #{dateRange.end}]]></if>
             </if>
         </where>
         ORDER BY bl.`id` DESC
