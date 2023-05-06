@@ -11,12 +11,17 @@
           @onSelectServer="onSelectServer"
         />
         <a-row :gutter="24">
-          <a-col :md="6" :sm="8">
+          <a-col :md="5" :sm="8">
             <a-form-item label="玩家id">
               <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="5" :sm="8">
+            <a-form-item label="创角区服">
+              <j-search-select-tag placeholder="请选择创角区服" v-model="queryParam.sid" dict="game_server,name,id" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="6" :sm="8">
             <a-form-item label="昵称">
               <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.nickname" />
             </a-form-item>
@@ -31,7 +36,7 @@
               <a-input placeholder="请输入境界" v-model="queryParam.realm" />
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
+          <a-col :md="8" :sm="8">
             <a-form-item label="等级">
               <a-input placeholder="最小等级" class="query-group-cust" v-model="queryParam.level_begin" />
               <span class="query-group-split-cust"></span>
@@ -39,7 +44,7 @@
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
-            <a-col :md="6" :sm="16">
+            <a-col :md="8" :sm="16">
               <a-form-item label="战力范围">
                 <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin" />
                 <span class="query-group-split-cust"></span>
@@ -175,6 +180,11 @@ export default {
           title: '玩家id',
           align: 'center',
           dataIndex: 'playerId'
+        },
+        {
+          title: '创角区服',
+          align: 'center',
+          dataIndex: 'sid'
         },
         {
           title: '角色昵称',

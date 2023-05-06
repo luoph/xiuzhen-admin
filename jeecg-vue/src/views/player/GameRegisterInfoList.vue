@@ -11,22 +11,22 @@
           @onSelectServer="onSelectServer"
         />
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="玩家id">
               <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="角色名">
               <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="帐号">
               <j-input placeholder="请输入帐号模糊查询" v-model="queryParam.account" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="注册IP">
               <a-input placeholder="请输入ip" v-model="queryParam.ip" />
             </a-form-item>
