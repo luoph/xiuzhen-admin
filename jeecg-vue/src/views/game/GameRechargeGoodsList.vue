@@ -54,6 +54,10 @@
                 <a-select-option :value="21">21-超值礼包</a-select-option>
                 <a-select-option :value="22">22-神游特权卡</a-select-option>
                 <a-select-option :value="23">23-GM特权卡</a-select-option>
+                <a-select-option :value="24">24-无限真充</a-select-option>
+                <a-select-option :value="25">25-无限神充</a-select-option>
+                <a-select-option :value="26">26-GM充值工具-每日礼包</a-select-option>
+                <a-select-option :value="27">27-GM充值工具-GM专属资源礼包</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -277,6 +281,14 @@ export default {
               text = '22-神游特权卡';
             } else if (value === 23) {
               text = '23-GM特权卡';
+            } else if (value === 24) {
+              text = '24-无限真充';
+            } else if (value === 25) {
+              text = '25-无限神充';
+            } else if (value === 26) {
+              text = '26-GM充值工具-每日礼包';
+            } else if (value === 27) {
+              text = '27-GM充值工具-GM专属资源礼包';
             }
             return text;
           }

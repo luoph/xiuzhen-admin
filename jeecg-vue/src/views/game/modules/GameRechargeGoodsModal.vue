@@ -47,7 +47,7 @@
         </a-form-item>
         <a-form-item label="商品类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择商品类型" v-decorator="['goodsType', validatorRules.goodsType]" initialValue="0" showSearch allowClear style="width: 100%">
-            <a-select-option :value="0">0-普通类型</a-select-option>
+            <a-select-option :value="0">0-仙玉</a-select-option>
             <a-select-option :value="1">1-仙职</a-select-option>
             <a-select-option :value="2">2-月卡</a-select-option>
             <a-select-option :value="3">3-每日礼包</a-select-option>
@@ -70,20 +70,22 @@
             <a-select-option :value="20">20-新战令</a-select-option>
             <a-select-option :value="21">21-超值礼包</a-select-option>
             <a-select-option :value="22">22-神游特权卡</a-select-option>
-            <a-select-option :value="23">23-gm特权卡</a-select-option>
+            <a-select-option :value="23">23-GM特权卡</a-select-option>
             <a-select-option :value="24">24-无限真充</a-select-option>
             <a-select-option :value="25">25-无限神充</a-select-option>
+            <a-select-option :value="26">26-GM充值工具-每日礼包</a-select-option>
+            <a-select-option :value="27">27-GM充值工具-GM专属资源礼包</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="购买类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="选择购买类型" v-decorator="['buyType', validatorRules.buyType]" initialValue="1">
             <a-select-option :value="1">1-真实充值</a-select-option>
-            <a-select-option :value="2">2-gm额度</a-select-option>
+            <a-select-option :value="2">2-GM额度</a-select-option>
             <a-select-option :value="3">3-真实充值/gm额度</a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="gm额度" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input-number v-decorator="['gmCoin', validatorRules.gmCoin]" placeholder="请输入gm额度" style="width: 100%" />
+        <a-form-item label="GM额度" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['gmCoin', validatorRules.gmCoin]" placeholder="请输入GM额度" style="width: 100%" />
         </a-form-item>
         <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请输入是否计入累充" v-decorator="['amountStat', validatorRules.amountStat]" initialValue="1">
@@ -160,6 +162,7 @@ export default {
         goodsId: { rules: [{ required: true, message: '请输入商品Id' }] },
         sku: { rules: [{ required: true, message: '请输入SKU' }] },
         webSku: { rules: [{ required: false, message: '请输入网页支付SKU' }] },
+        gmCoin: { rules: [{ required: false, message: '请输入GM额度' }] },
         localPrice: { rules: [{ required: false, message: '请输入当地支付价格（内购）' }] },
         webLocalPrice: { rules: [{ required: false, message: '请输入当地支付价格（网页）' }] },
         displayPrice: { rules: [{ required: false, message: '请输入当地支付价格（内购）' }] },
@@ -193,10 +196,10 @@ export default {
             'items',
             'goodsType',
             'goodsGroup',
-            "buyType",
-            "gmCoin",
+            'buyType',
+            'gmCoin',
             'amountStat',
-            "amountStatTypes",
+            'amountStatTypes',
             'addition',
             'exchange',
             'recommend',
@@ -262,10 +265,10 @@ export default {
           'items',
           'goodsType',
           'goodsGroup',
-          "buyType",
-          "gmCoin",
+          'buyType',
+          'gmCoin',
           'amountStat',
-          "amountStatTypes",
+          'amountStatTypes',
           'addition',
           'exchange',
           'recommend',
