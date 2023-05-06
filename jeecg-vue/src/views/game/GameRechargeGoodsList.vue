@@ -30,7 +30,7 @@
           <a-col :md="6" :sm="8">
             <a-form-item label="商品类型">
               <a-select placeholder="请选择商品类型" v-model="queryParam.goodsType" initialValue="1" showSearch allowClear style="width: 100%">
-                <a-select-option :value="0">0-购买仙玉</a-select-option>
+                <a-select-option :value="0">0-仙玉</a-select-option>
                 <a-select-option :value="1">1-仙职</a-select-option>
                 <a-select-option :value="2">2-月卡</a-select-option>
                 <a-select-option :value="3">3-每日礼包</a-select-option>
@@ -49,6 +49,11 @@
                 <a-select-option :value="16">16-开服目标活动-任务礼包</a-select-option>
                 <a-select-option :value="17">17-系统直购礼包</a-select-option>
                 <a-select-option :value="18">18-成长基金</a-select-option>
+                <a-select-option :value="19">19-节日活动-夺宝战令</a-select-option>
+                <a-select-option :value="20">20-新战令</a-select-option>
+                <a-select-option :value="21">21-超值礼包</a-select-option>
+                <a-select-option :value="22">22-神游特权卡</a-select-option>
+                <a-select-option :value="23">23-GM特权卡</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -225,7 +230,7 @@ export default {
           customRender: (value) => {
             let text = '--';
             if (value === 0) {
-              text = '0-购买仙玉';
+              text = '0-仙玉';
             } else if (value === 1) {
               text = '1-仙职';
             } else if (value === 2) {
@@ -271,7 +276,7 @@ export default {
             } else if (value === 22) {
               text = '22-神游特权卡';
             } else if (value === 23) {
-              text = '23-gm特权卡';
+              text = '23-GM特权卡';
             }
             return text;
           }

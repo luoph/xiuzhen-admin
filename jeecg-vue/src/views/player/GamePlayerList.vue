@@ -33,7 +33,12 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="境界">
-              <a-input placeholder="请输入境界" v-model="queryParam.realm" />
+              <a-select placeholder="请选择境界" v-model="queryParam.realm" showSearch allowClear style="width: 100%">
+                <a-select-option :value="1">人界 [1]</a-select-option>
+                <a-select-option :value="2">灵界 [2]</a-select-option>
+                <a-select-option :value="3">仙界 [3]</a-select-option>
+                <a-select-option :value="4">圣界 [4]</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
@@ -218,8 +223,20 @@ export default {
         {
           title: '境界',
           align: 'center',
-          width: 60,
-          dataIndex: 'realm'
+          dataIndex: 'realm',
+          customRender: (value) => {
+            let text = '--';
+            if (value === 1) {
+              text = '人界 [1]';
+            } else if (value === 2) {
+              text = '灵界 [2]';
+            } else if (value === 3) {
+              text = '仙界 [3]';
+            } else if (value === 4) {
+              text = '圣界 [4]';
+            }
+            return text;
+          }
         },
         {
           title: '累计充值',

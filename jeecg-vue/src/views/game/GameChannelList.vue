@@ -6,25 +6,23 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="渠道名">
-              <j-input placeholder="请输入渠道名" v-model="queryParam.name"/>
+              <j-input placeholder="请输入渠道名" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="渠道标识">
-              <j-search-select-tag placeholder="请选择渠道标识" v-model="queryParam.simpleName"
-                                   dict="game_channel,name,simple_name"/>
+              <j-search-select-tag placeholder="请选择渠道标识" v-model="queryParam.simpleName" dict="game_channel,name,simple_name" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
-            <a-col :md="4" :sm="8">
+            <a-col :md="6" :sm="8">
               <a-form-item label="公告id">
-                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId"
-                                style="width: 100%"></a-input-number>
+                <a-input-number placeholder="请输入公告id" v-model="queryParam.noticeId" style="width: 100%"></a-input-number>
               </a-form-item>
             </a-col>
-            <a-col :md="4" :sm="8">
+            <a-col :md="6" :sm="8">
               <a-form-item label="备注">
-                <j-input placeholder="请输入备注" v-model="queryParam.remark"/>
+                <j-input placeholder="请输入备注" v-model="queryParam.remark" />
               </a-form-item>
             </a-col>
           </template>
@@ -34,7 +32,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -56,13 +54,13 @@
       <a-dropdown v-if="selectedRowKeys.length > 0" v-has="'game:channel:admin'">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
@@ -76,25 +74,24 @@
             </div>
             :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }" -->
 
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)" v-has="'game:channel:admin'">编辑</a>
-          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a @click="handleCopy(record)" v-has="'game:channel:admin'">复制</a>
-          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a @click="editChannelServer(record)" v-has="'game:channel:admin'">区服列表</a>
-          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a @click="updateChannelServer(record)" v-has="'game:channel:admin'">刷新区服</a>
-          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a @click="editChannelNotice(record)" v-has="'game:channel:admin'">编辑公告</a>
-          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a @click="refreshChannelNotice(record)" v-has="'game:channel:admin'">刷新公告</a>
-          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a @click="viewChannelNotice(record)">预览公告</a>
-          <a-divider type="vertical" v-has="'game:channel:admin'"/>
+          <a-divider type="vertical" v-has="'game:channel:admin'" />
           <a-dropdown v-has="'game:channel:admin'">
-            <a class="ant-dropdown-link">更多 <a-icon type="down"/></a>
+            <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
                 <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)">
@@ -109,30 +106,30 @@
           <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
         </span>
         <span slot="switchSlot" slot-scope="text, record">
-          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
       </a-table>
     </div>
     <!-- table区域-end -->
 
-    <game-channel-modal ref="modalForm" @ok="modalFormOk"/>
+    <game-channel-modal ref="modalForm" @ok="modalFormOk" />
     <!-- 编辑公告 -->
-    <game-notice-modal ref="noticeModal" @ok="modalFormOk"/>
+    <game-notice-modal ref="noticeModal" @ok="modalFormOk" />
     <!-- html预览 -->
-    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk"/>
-    <game-channel-server-list ref="channelServerList"/>
+    <game-html-preview-modal ref="htmlModal" @ok="modalFormOk" />
+    <game-channel-server-list ref="channelServerList" />
   </a-card>
 </template>
 
 <script>
-import {filterObj} from '@/utils/util';
+import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import GameChannelModal from './modules/GameChannelModal';
 import GameNoticeModal from './modules/GameNoticeModal';
 import GameHtmlPreviewModal from './modules/GameHtmlPreviewModal';
 import GameChannelServerList from './GameChannelServerList';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { getAction } from '@/api/manage';
 
 function filterGameIdText(options, text) {
   if (options instanceof Array) {
@@ -148,7 +145,7 @@ function filterGameIdText(options, text) {
 export default {
   name: 'GameChannelList',
   mixins: [JeecgListMixin],
-  components: {JInput, GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList},
+  components: { JInput, GameChannelModal, GameNoticeModal, GameHtmlPreviewModal, GameChannelServerList },
   data() {
     return {
       description: '游戏渠道管理页面',
@@ -231,13 +228,13 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'testLogin',
-          scopedSlots: {customRender: 'switchSlot'},
+          scopedSlots: { customRender: 'switchSlot' }
         },
         {
           title: 'IP白名单',
           align: 'left',
           dataIndex: 'ipWhitelist',
-          scopedSlots: {customRender: 'splitTags'}
+          scopedSlots: { customRender: 'splitTags' }
         },
         {
           title: '版本更新时间',
@@ -255,7 +252,7 @@ export default {
           dataIndex: 'action',
           align: 'center',
           width: 220,
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -315,7 +312,7 @@ export default {
     // 编辑渠道公告
     editChannelNotice(record) {
       let that = this;
-      getAction(that.url.noticeUrl, {id: record.noticeId}).then((res) => {
+      getAction(that.url.noticeUrl, { id: record.noticeId }).then((res) => {
         if (res.success && res.result) {
           that.$refs.noticeModal.edit(res.result);
         } else {
@@ -326,7 +323,7 @@ export default {
     // 预览渠道公告
     viewChannelNotice(record) {
       let that = this;
-      getAction(that.url.noticeUrl, {id: record.noticeId}).then((res) => {
+      getAction(that.url.noticeUrl, { id: record.noticeId }).then((res) => {
         if (res.success && res.result) {
           that.$refs.htmlModal.title = '公告预览';
           that.$refs.htmlModal.edit(res.result.content);
@@ -337,45 +334,27 @@ export default {
     },
     refreshChannelNotice(record) {
       // 刷新渠道公告
-      this.handleConfrimRequest(this.url.noticeRefreshUrl,
-        {id: record.noticeId},
-        '是否刷新渠道公告？',
-        '点击刷新渠道公告');
+      this.handleConfrimRequest(this.url.noticeRefreshUrl, { id: record.noticeId }, '是否刷新渠道公告？', '点击刷新渠道公告');
     },
     updateChannelServer(record) {
       // 刷新客户端区服列表
-      this.handleConfrimRequest(this.url.updateChannelServerUrl,
-        {id: record.id},
-        '是否刷新区服列表？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateChannelServerUrl, { id: record.id }, '是否刷新区服列表？', '点击确定刷新');
     },
     updateServerList() {
       // 刷新客户端区服列表
-      this.handleConfrimRequest(this.url.updateAllServerUrl,
-        {},
-        '是否刷新客户端区服列表？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateAllServerUrl, {}, '是否刷新客户端区服列表？', '点击确定刷新');
     },
     updateWhitelist() {
       // 刷新IP白名单配置
-      this.handleConfrimRequest(this.url.updateWhitelistUrl,
-        {},
-        '是否刷新IP白名单？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateWhitelistUrl, {}, '是否刷新IP白名单？', '点击确定刷新');
     },
     updateServerCache() {
       // 刷新区服缓存
-      this.handleConfrimRequest(this.url.updateServerCacheUrl,
-        {},
-        '是否刷新区服缓存？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateServerCacheUrl, {}, '是否刷新区服缓存？', '点击确定刷新');
     },
     updateChatServerCache() {
       // 刷新聊天消息缓存
-      this.handleConfrimRequest(this.url.updateChatServerCacheUrl,
-        {},
-        '是否刷新聊天消息缓存？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateChatServerCacheUrl, {}, '是否刷新聊天消息缓存？', '点击确定刷新');
     }
   }
 };

@@ -4,14 +4,14 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="key">
-              <j-input placeholder="请输入key" v-model="queryParam.dictKey"/>
+              <j-input placeholder="请输入key" v-model="queryParam.dictKey" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="value">
-              <j-input placeholder="请输入value" v-model="queryParam.dictValue"/>
+              <j-input placeholder="请输入value" v-model="queryParam.dictValue" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -90,7 +90,7 @@
           <a @click="handleEdit(record)">编辑</a>
           <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
