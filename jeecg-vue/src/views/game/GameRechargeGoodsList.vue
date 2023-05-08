@@ -213,6 +213,12 @@ export default {
           dataIndex: 'name'
         },
         {
+          title: '客户端商品名称',
+          align: 'center',
+          fixed: 'left',
+          dataIndex: 'clientName'
+        },
+        {
           title: '商品组别',
           align: 'center',
           width: 80,

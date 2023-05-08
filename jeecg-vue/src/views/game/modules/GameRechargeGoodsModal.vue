@@ -9,6 +9,9 @@
         <a-form-item label="商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称"></a-input>
         </a-form-item>
+        <a-form-item label="客户端商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['clientName', validatorRules.clientName]" placeholder="请输入客户端商品名称"></a-input>
+        </a-form-item>
         <a-form-item label="内购SKU" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['sku', validatorRules.sku]" placeholder="请输入内购SKU" style="width: 100%" />
         </a-form-item>
@@ -152,6 +155,7 @@ export default {
         price: { rules: [{ required: true, message: '请输入单价!' }] },
         discount: { rules: [{ required: false, message: '请输入折扣价格!' }] },
         name: { rules: [{ required: true, message: '请输入商品名称!' }] },
+        clientName: { rules: [{ required: true, message: '请输入客户端商品名称!' }] },
         items: { rules: [{ required: false, message: '请输入奖励列表!' }] },
         goodsType: { rules: [{ required: true, message: '请选择商品类型!' }] },
         goodsGroup: { rules: [{ required: true, message: '请选择商品组别!' }] },
@@ -193,6 +197,7 @@ export default {
             'price',
             'discount',
             'name',
+            'clientName',
             'items',
             'goodsType',
             'goodsGroup',
@@ -262,6 +267,7 @@ export default {
           'price',
           'discount',
           'name',
+          'clientName',
           'items',
           'goodsType',
           'goodsGroup',
