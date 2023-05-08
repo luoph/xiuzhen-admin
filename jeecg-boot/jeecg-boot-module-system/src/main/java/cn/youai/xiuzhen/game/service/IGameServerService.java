@@ -4,7 +4,6 @@ import cn.youai.basics.model.Response;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jeecg.modules.system.entity.SysUser;
 
 import java.util.Collection;
@@ -23,9 +22,11 @@ public interface IGameServerService extends IService<GameServer> {
     /**
      * 获取服务器列表
      *
-     * @return {@linkplain cn.youai.xiuzhen.game.entity.GameServer}列表
+     * @return {@linkplain GameServer}列表
      */
     List<GameServer> selectGameServerList();
+
+    List<GameServer> selectOnlineGameServerList();
 
     /**
      * 查找已关联渠道的游戏服
@@ -91,7 +92,7 @@ public interface IGameServerService extends IService<GameServer> {
 
     void updateGameServerMaintain(List<Integer> serverIds, int isMaintain);
 
-    Set<Integer> getAvailableServerIds();
+    Set<Integer> getOnlineServerIds();
 
     Set<Integer> getAllServerIds();
 

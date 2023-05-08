@@ -1,9 +1,7 @@
 package cn.youai.xiuzhen.game.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.jeecgframework.poi.excel.annotation.Excel;
 
 import java.util.List;
 
@@ -29,6 +27,7 @@ public class GameClientConfig {
     private String oauthRedirectUrl;
     private String accountRegisterUrl;
     private String accountLoginUrl;
+    private String rechargeGoodsUrl;
     private Integer offRegisterDay;
     private String reviewChannel;
 }

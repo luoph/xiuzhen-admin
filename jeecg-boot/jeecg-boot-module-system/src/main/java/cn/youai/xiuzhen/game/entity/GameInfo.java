@@ -111,6 +111,10 @@ public class GameInfo extends BaseEntity {
     @ApiModelProperty(value = "accountLoginUrl")
     private java.lang.String accountLoginUrl;
 
+    @Excel(name = "充值商品地址", width = 15)
+    @ApiModelProperty(value = "rechargeGoodsUrl")
+    private java.lang.String rechargeGoodsUrl;
+
     /**
      * gameSimpleName
      */

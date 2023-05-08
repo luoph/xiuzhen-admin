@@ -3,7 +3,6 @@ package cn.youai.xiuzhen.game.mapper;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
-import org.jeecg.common.system.vo.SysUserCacheInfo;
 import org.jeecg.modules.system.entity.SysUser;
 
 import java.util.List;
@@ -22,6 +21,11 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
      * @return 区服列表
      */
     List<GameServer> selectGameServerList();
+
+    /**
+     * 查询线上区服（排除已下线、已合并的区服）
+     */
+    List<GameServer> selectOnlineGameServerList();
 
     /**
      * 查找已关联到渠道的游戏服

@@ -56,6 +56,11 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
+    public List<GameServer> selectOnlineGameServerList() {
+        return getBaseMapper().selectOnlineGameServerList();
+    }
+
+    @Override
     public List<GameServer> selectChannelServerList(String configAuth) {
         return getBaseMapper().selectChannelServerList(configAuth);
     }
@@ -199,9 +204,8 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public Set<Integer> getAvailableServerIds() {
-        return selectGameServerList().stream().filter(t -> !t.skipCheck())
-                .map(GameServer::getId).collect(Collectors.toSet());
+    public Set<Integer> getOnlineServerIds() {
+        return selectOnlineGameServerList().stream().map(GameServer::getId).collect(Collectors.toSet());
     }
 
     @Override

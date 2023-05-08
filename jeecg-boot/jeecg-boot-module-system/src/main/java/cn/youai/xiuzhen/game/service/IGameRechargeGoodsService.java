@@ -3,7 +3,6 @@
  */
 package cn.youai.xiuzhen.game.service;
 
-import cn.youai.xiuzhen.game.constant.RechargeGoodsGroup;
 import cn.youai.xiuzhen.game.entity.GameRechargeGoods;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,6 +20,9 @@ import java.util.List;
 public interface IGameRechargeGoodsService extends IService<GameRechargeGoods> {
 
     List<GameRechargeGoods> selectByGoodsId(Collection<Integer> goodsIds);
+
     List<GameRechargeGoods> selectByGoodsType(Collection<Integer> goodsType);
+
+    void refreshConfig();
 
 }

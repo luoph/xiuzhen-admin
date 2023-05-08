@@ -2,14 +2,11 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.Response;
-import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.entity.GameRechargeGoods;
-import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.ImportTextVO;
 import cn.youai.xiuzhen.game.service.IGameRechargeGoodsService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
-import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author jeecg-boot
@@ -121,13 +120,13 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
         return result;
     }
 
-    @AutoLog(value = "充值商品-刷新游戏服充值商品")
+    @AutoLog(value = "充值商品-刷新商品配置")
     @GetMapping(value = "/updateGoods")
-    public Result<?> updateGoodsOptions() {
-        List<GameServer> gameServers = gameServerService.list();
-        for (GameServer gameServer : gameServers) {
-            JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + goodsRefresh), Response.class);
-        }
+    public Result<?> updateGoods() {
+        service.refreshConfig();
+        Set<Integer> onlineServerIds = gameServerService.getOnlineServerIds();
+        Map<Integer, Response> responseMap = gameServerService.gameServerGet(onlineServerIds, goodsRefresh);
+        log.info("updateGoods onlineServerIds:{}, responseMap:{}", onlineServerIds, responseMap);
         return Result.ok("刷新成功!");
     }
 

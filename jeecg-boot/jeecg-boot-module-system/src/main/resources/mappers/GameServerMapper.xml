@@ -5,8 +5,14 @@
     <select id="selectGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
         SELECT s.*
         FROM `game_server` s
-                 LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
-                 LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
+        LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
+        LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
+    </select>
+
+    <select id="selectOnlineGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
+        SELECT s.*
+        FROM `game_server` s
+        WHERE s.`outdated` = 0
     </select>
 
     <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">

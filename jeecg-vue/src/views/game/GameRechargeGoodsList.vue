@@ -435,14 +435,7 @@ export default {
   },
   methods: {
     updateGoods() {
-      // 查询条件
-      this.loading = true;
-      getAction(this.url.updateGoods).then((res) => {
-        if (res.code === 510) {
-          this.$message.warning(res.message);
-        }
-        this.loading = false;
-      });
+      this.handleConfrimRequest(this.url.updateGoods, {}, '是否刷新充值商品？', '点击确定刷新');
     },
     handleImportText() {
       let params = {

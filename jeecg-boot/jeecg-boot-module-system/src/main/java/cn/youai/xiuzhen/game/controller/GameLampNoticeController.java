@@ -33,7 +33,7 @@ public class GameLampNoticeController extends JeecgController<GameLampNotice, IG
     private IGameServerService gameServerService;
 
     private void sendLampNoticeUpdate() {
-        gameServerService.gameServerGet(gameServerService.getAvailableServerIds(), sendLampNoticeUpdate, null);
+        gameServerService.gameServerGet(gameServerService.getOnlineServerIds(), sendLampNoticeUpdate, null);
     }
 
     @AutoLog(value = "跑马灯消息-列表查询")
