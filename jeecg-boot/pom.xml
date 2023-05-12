@@ -67,7 +67,7 @@
         <!-- 积木报表-->
         <jimureport-spring-boot-starter.version>1.5.2</jimureport-spring-boot-starter.version>
         <!-- 框架依赖 -->
-        <framework.version>0.0.26</framework.version>
+        <framework.version>0.0.27-SNAPSHOT</framework.version>
     </properties>
 
     <dependencies>
