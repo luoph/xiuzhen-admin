@@ -157,6 +157,10 @@ export default {
               text = '27-召唤排行';
             } else if (value === 28) {
               text = '28-超值礼包';
+            } else if (value === 29) {
+              text = '29-单日仙玉返利';
+            } else if (value === 30) {
+              text = '30-单日道具返利';
             }
             return text;
           }

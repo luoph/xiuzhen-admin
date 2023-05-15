@@ -47,6 +47,8 @@ public enum CampaignType {
     SUMMON(26,"召唤活动", IGameCampaignTypeSummonService.class, IGameCampaignTypeSummonMessageService.class),
     SUMMON_RANK(27,"召唤排行", IGameCampaignTypeMarryRankService.class, IGameCampaignTypeMarryRankRewardService.class),
     SPREE(28, "超值礼包", IGameCampaignDirectPurchaseService.class),
+    SINGLE_DAY_RECHARGE_JADE_REBATE(29, "单日仙玉返利", IGameCampaignTypeSingleDayRechargeJadeRebateService.class),
+    SINGLE_DAY_RECHARGE_ITEM_REBATE(30, "单日道具返利", IGameCampaignTypeSingleDayRechargeItemRebateService.class),
     // end
     ;
 

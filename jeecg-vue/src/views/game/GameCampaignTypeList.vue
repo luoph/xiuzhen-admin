@@ -52,6 +52,8 @@
                 <a-select-option :value="26">26-召唤活动</a-select-option>
                 <a-select-option :value="27">27-召唤排行</a-select-option>
                 <a-select-option :value="28">28-超值礼包</a-select-option>
+                <a-select-option :value="29">29-单日仙玉返利</a-select-option>
+                <a-select-option :value="30">30-单日道具返利</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -283,6 +285,10 @@ export default {
               re = '27-召唤排行';
             } else if (value === 28) {
               re = '28-超值礼包';
+            } else if (value === 29) {
+              re = '29-单日仙玉返利';
+            } else if (value === 30) {
+              re = '30-单日道具返利';
             }
             return re;
           }

@@ -45,6 +45,7 @@
             <a-select-option :value="1">1-时间范围</a-select-option>
             <a-select-option :value="2">2-开服第N天</a-select-option>
           </a-select>
+          <a-form-item style="color: red">单日仙玉返利活动，（按日期配置时间）结束时间需配置多1天5分钟；（按开服配置时间）需配置多1天</a-form-item>
         </a-form-item>
         <a-form-item v-show="model.timeType === 1" label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-form-item>

@@ -43,6 +43,8 @@
             <a-select-option :value="26">26-召唤活动</a-select-option>
             <a-select-option :value="27">27-召唤排行</a-select-option>
             <a-select-option :value="28">28-超值礼包</a-select-option>
+            <a-select-option :value="29">29-单日仙玉返利</a-select-option>
+            <a-select-option :value="30">30-单日道具返利</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="活动名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -97,6 +99,7 @@
             <a-select-option :value="1">1-时间范围</a-select-option>
             <a-select-option :value="2">2-开服第N天</a-select-option>
           </a-select>
+          <a-form-item v-if="model.type === 29" style="color: red">单日仙玉返利活动，（按日期配置时间）结束时间需配置多1天5分钟；（按开服配置时间）需配置多1天</a-form-item>
         </a-form-item>
         <a-form-item v-show="model.timeType == 1" label="活动时间" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-form-item>
@@ -143,6 +146,8 @@
       <game-campaign-type-lottery-token-list v-if="isEdit && model.type === 25" ref="lotteryTokenList" />
       <game-campaign-type-summon-list v-if="isEdit && model.type === 26" ref="summonList" />
       <game-campaign-type-summon-message-list v-if="isEdit && model.type === 26" ref="summonMessageList" />
+      <game-campaign-type-single-day-recharge-jade-rebate-list v-if="isEdit && model.type === 29" ref="singleDayRechargeJadeRebateList" />
+      <game-campaign-type-single-day-recharge-item-rebate-list v-if="isEdit && model.type === 30" ref="singleDayRechargeItemRebateList" />
     </a-spin>
   </a-modal>
 </template>
@@ -182,6 +187,8 @@ import GameCampaignTypeStageTaskItemList from '../GameCampaignTypeStageTaskItemL
 import GameCampaignTypeLotteryTokenList from '../GameCampaignTypeLotteryTokenList';
 import GameCampaignTypeSummonList from '../GameCampaignTypeSummonList';
 import GameCampaignTypeSummonMessageList from '../GameCampaignTypeSummonMessageList';
+import GameCampaignTypeSingleDayRechargeJadeRebateList from '../GameCampaignTypeSingleDayRechargeJadeRebateList';
+import GameCampaignTypeSingleDayRechargeItemRebateList from '../GameCampaignTypeSingleDayRechargeItemRebateList';
 
 export default {
   name: 'GameCampaignTypeModal',
@@ -216,7 +223,9 @@ export default {
     GameCampaignTypeStageTaskItemList,
     GameCampaignTypeLotteryTokenList,
     GameCampaignTypeSummonList,
-    GameCampaignTypeSummonMessageList
+    GameCampaignTypeSummonMessageList,
+    GameCampaignTypeSingleDayRechargeJadeRebateList,
+    GameCampaignTypeSingleDayRechargeItemRebateList
   },
   data() {
     return {
@@ -360,6 +369,12 @@ export default {
           }
           if (this.$refs.summonMessageList) {
             this.$refs.summonMessageList.edit(record);
+          }
+          if (this.$refs.singleDayRechargeJadeRebateList) {
+            this.$refs.singleDayRechargeJadeRebateList.edit(record);
+          }
+          if (this.$refs.singleDayRechargeItemRebateList) {
+            this.$refs.singleDayRechargeItemRebateList.edit(record);
           }
         }
 
