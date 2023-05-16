@@ -89,6 +89,7 @@
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
+      <a-button type="primary" icon="delete" @click="deleteAll">删除全部</a-button>
       <a-button @click="updateGoods" type="primary" icon="sync">刷新商品配置</a-button>
       <a-button :disabled="!importText" type="primary" icon="import" @click="handleImportText()">导入文本</a-button>
       <a-dropdown v-if="selectedRowKeys.length > 0">
@@ -467,6 +468,7 @@ export default {
         list: 'game/gameRechargeGoods/list',
         delete: 'game/gameRechargeGoods/delete',
         deleteBatch: 'game/gameRechargeGoods/deleteBatch',
+        deleteAll: 'game/gameRechargeGoods/deleteAll',
         exportXlsUrl: 'game/gameRechargeGoods/exportXls',
         importExcelUrl: 'game/gameRechargeGoods/importExcel',
         updateGoods: 'game/gameRechargeGoods/updateGoods',
@@ -481,6 +483,9 @@ export default {
     }
   },
   methods: {
+    deleteAll() {
+      this.handleConfrimRequest(this.url.deleteAll, {}, '是否删除全部充值商品？', '点击确定删除全部', 'delete');
+    },
     updateGoods() {
       this.handleConfrimRequest(this.url.updateGoods, {}, '是否刷新充值商品？', '点击确定刷新');
     },

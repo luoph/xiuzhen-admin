@@ -82,6 +82,13 @@ public class GameRechargeGoodsController extends JeecgController<GameRechargeGoo
         return super.deleteBatch(ids);
     }
 
+    @AutoLog(value = "充值商品-删除全部")
+    @DeleteMapping(value = "/deleteAll")
+    public Result<?> deleteAll() {
+        service.remove(null);
+        return Result.ok("删除全部成功！");
+    }
+
     @AutoLog(value = "充值商品-通过id查询")
     @GetMapping(value = "/queryById")
     public Result<?> queryById(@RequestParam(name = "id") String id) {
