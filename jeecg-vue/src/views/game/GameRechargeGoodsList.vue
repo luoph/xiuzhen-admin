@@ -187,18 +187,30 @@ export default {
     return {
       description: '充值商品管理页面',
       importText: '',
+      /* 排序参数 */
+      isorter: {
+        column: 'id',
+        order: 'asc',
+      },
       // 表头
       columns: [
+        // {
+        //   title: '#',
+        //   dataIndex: '',
+        //   key: 'rowIndex',
+        //   fixed: 'left',
+        //   width: 40,
+        //   align: 'center',
+        //   customRender: function (t, r, index) {
+        //     return parseInt(index) + 1;
+        //   }
+        // },
         {
-          title: '#',
-          dataIndex: '',
-          key: 'rowIndex',
+          title:'id',
+          align:"center",
           fixed: 'left',
-          width: 40,
-          align: 'center',
-          customRender: function (t, r, index) {
-            return parseInt(index) + 1;
-          }
+          width: 80,
+          dataIndex: 'id'
         },
         {
           title: '商品Id',
