@@ -100,13 +100,14 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response)) {
-                        assert response.body() != null;
+                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
                         try {
                             T rspObj = JSON.parseObject(response.body().string(), clazz);
                             responseMap.put(serverId, rspObj);
                         } catch (Exception e) {
                             log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
+                        } finally {
+                            response.body().close();
                         }
                     }
                     latch.countDown();
@@ -151,15 +152,19 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             // 异步
             OkHttpHelper.getAsync(gameServer.getGmUrl() + path, params, new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NotNull Call call, IOException e) {
                     log.error("gameServerGet onFailure, url:" + gameServer.getGmUrl() + path, e);
                     latch.countDown();
                 }
 
                 @Override
-                public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
                     if (OkHttpHelper.isSuccess(response) && response.body() != null) {
-                        responseMap.put(serverId, JSON.parseObject(response.body().string(), clazz));
+                        try {
+                            responseMap.put(serverId, JSON.parseObject(response.body().string(), clazz));
+                        } finally {
+                            response.body().close();
+                        }
                     }
                     latch.countDown();
                 }

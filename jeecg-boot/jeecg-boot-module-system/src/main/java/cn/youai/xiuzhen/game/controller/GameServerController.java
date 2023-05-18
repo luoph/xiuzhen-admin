@@ -273,11 +273,15 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response)) {
-                        assert response.body() != null;
-                        DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
-                        if (rsp != null) {
-                            record.setOnlineNum(rsp.getData());
+                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
+                        try {
+                            DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
+                            if (rsp != null) {
+                                record.setOnlineNum(rsp.getData());
+                            }
+                        } finally {
+                            response.body().close();
+                            ;
                         }
                     }
                     latch.countDown();

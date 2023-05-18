@@ -18,6 +18,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import okhttp3.Call;
 import okhttp3.Callback;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -73,15 +74,19 @@ public class GameServerGroupServiceImpl extends ServiceImpl<GameServerGroupMappe
             // 异步
             OkHttpHelper.getAsync(gameServerGroup.getGmUrl() + path, params, new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NotNull Call call, IOException e) {
                     log.error("gameServerGroupGet onFailure", e);
                     latch.countDown();
                 }
 
                 @Override
-                public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response)) {
-                        responseMap.put(gameServerGroup.getId(), JSON.parseObject(response.body().string(), Response.class));
+                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
+                        try {
+                            responseMap.put(gameServerGroup.getId(), JSON.parseObject(response.body().string(), Response.class));
+                        } finally {
+                            response.body().close();
+                        }
                     }
                     latch.countDown();
                 }
