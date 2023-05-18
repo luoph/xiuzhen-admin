@@ -87,6 +87,13 @@ public class GameServer extends BaseEntity {
     private java.lang.String loginUrl;
 
     /**
+     * rpc地址
+     */
+    @Excel(name = "rpc地址", width = 15)
+    @ApiModelProperty(value = "rpc地址")
+    private java.lang.String rpcUrl;
+
+    /**
      * 服务器状态 0-正常 1-流畅 2-火爆 3-维护
      */
     @Excel(name = "服务器状态", width = 15)

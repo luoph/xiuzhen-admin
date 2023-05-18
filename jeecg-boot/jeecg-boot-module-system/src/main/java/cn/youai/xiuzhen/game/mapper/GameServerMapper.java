@@ -20,12 +20,14 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
      *
      * @return 区服列表
      */
-    List<GameServer> selectGameServerList();
+    List<GameServer> selectGameServerList(@Param("configAuth") List<Integer> serverIds);
 
     /**
      * 查询线上区服（排除已下线、已合并的区服）
      */
     List<GameServer> selectOnlineGameServerList();
+
+    List<GameServer> selectGameServerByPid(@Param("pids") List<Integer> pids);
 
     /**
      * 查找已关联到渠道的游戏服
@@ -34,11 +36,4 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
 
     List<GameServer> selectChannelServerListByUser(@Param("user") SysUser user, @Param("serverIds") String serverIds);
 
-    /**
-     * 更新游戏服维护状态
-     *
-     * @param serverIdList 游戏服id
-     * @param isMaintain   是否维护
-     */
-    void updateGameServerMaintain(@Param("serverIdList") List<Integer> serverIdList, @Param("isMaintain") int isMaintain);
 }

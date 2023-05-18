@@ -7,12 +7,32 @@
         FROM `game_server` s
         LEFT JOIN `game_server_group_item` gt ON s.`id` = gt.`server_id`
         LEFT JOIN `game_server_group` g ON gt.`group_id` = g.`id`
+        <where>
+            <if test="serverIds != null and serverIds.size() > 0">
+                s.`id` IN
+                <foreach item="item" collection="serverIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
     </select>
 
     <select id="selectOnlineGameServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
         SELECT s.*
         FROM `game_server` s
         WHERE s.`outdated` = 0
+    </select>
+
+    <select id="selectGameServerByPid" resultType="cn.youai.xiuzhen.game.entity.GameServer"
+            parameterType="java.lang.Integer">
+        SELECT s.*
+        FROM `game_server` s
+        <where>
+            s.`pid` IN
+            <foreach item="item" collection="pids" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
     </select>
 
     <select id="selectChannelServerList" resultType="cn.youai.xiuzhen.game.entity.GameServer">
@@ -48,11 +68,5 @@
         </if>
         GROUP BY a.`id`
     </select>
-
-    <update id="updateGameServerMaintain">
-        UPDATE `game_server` SET `is_maintain` = #{isMaintain}
-        WHERE `id` IN
-        <foreach item='item' index='index' collection='serverIdList' open='(' separator=',' close=')'>#{item}</foreach>
-    </update>
 
 </mapper>

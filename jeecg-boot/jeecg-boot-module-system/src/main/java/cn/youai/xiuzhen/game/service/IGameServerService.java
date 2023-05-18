@@ -19,12 +19,18 @@ import java.util.Set;
  */
 public interface IGameServerService extends IService<GameServer> {
 
+    void applyChange(GameServer entity);
+
     /**
      * 获取服务器列表
      *
      * @return {@linkplain GameServer}列表
      */
     List<GameServer> selectGameServerList();
+
+    List<GameServer> selectGameServerList(List<Integer> serverIds);
+
+    List<GameServer> selectGameServerByPid(List<Integer> pids);
 
     List<GameServer> selectOnlineGameServerList();
 
@@ -90,7 +96,7 @@ public interface IGameServerService extends IService<GameServer> {
 
     <T> Map<Integer, T> gameServerPost(Collection<Integer> serverIds, String path, Object data, Class<T> clazz);
 
-    void updateGameServerMaintain(List<Integer> serverIds, int isMaintain);
+    void updateGameServerMaintain(Collection<GameServer> servers, int isMaintain);
 
     Set<Integer> getOnlineServerIds();
 
