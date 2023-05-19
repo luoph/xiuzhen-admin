@@ -1,4 +1,6 @@
 {
+    "liveServer.settings.port": 5500,
+    "liveServer.settings.root": "dist/",
     "jslint.version": "latest",
     "jslint.enable": false,
     "cSpell.words": [
