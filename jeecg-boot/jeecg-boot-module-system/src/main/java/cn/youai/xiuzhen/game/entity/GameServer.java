@@ -135,6 +135,12 @@ public class GameServer extends BaseEntity {
     private java.lang.Integer maxVersion;
 
     /**
+     * mongodb
+     */
+    @HiddenField
+    private java.lang.String mongodb;
+
+    /**
      * 数据库主机
      */
     @HiddenField

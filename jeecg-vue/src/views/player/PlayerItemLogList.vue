@@ -164,8 +164,8 @@ export default {
         }
       ],
       url: {
-        list: 'player/itemLog/list',
-        exportXlsUrl: 'player/itemLog/exportXls'
+        list: 'player/backpackLog/list',
+        exportXlsUrl: 'player/backpackLog/exportXls'
       },
       dictOptions: {}
     };
