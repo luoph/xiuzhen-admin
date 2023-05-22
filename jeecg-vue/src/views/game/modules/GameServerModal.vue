@@ -28,6 +28,12 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="Websocket地址">
           <a-input placeholder="请输入Websocket地址" v-decorator="['loginUrl', validatorRules.loginUrl]"/>
         </a-form-item>
+        <a-form-item label="MySQL地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['mysql', validatorRules.mysql]"/>
+        </a-form-item>
+        <a-form-item label="MongoDB地址" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['mongodb', validatorRules.mongodb]"/>
+        </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="GM地址">
           <a-input v-decorator="['gmUrl', validatorRules.gmUrl]"/>
         </a-form-item>
@@ -122,22 +128,6 @@
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="客户端最大版本号">
           <a-input-number v-decorator="['maxVersion', {}]"/>
         </a-form-item>
-        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库Host">-->
-        <!--          <a-input :disabled="isEdit" placeholder="请输入数据库Host" v-decorator="['dbHost', validatorRules.dbHost]"/>-->
-        <!--        </a-form-item>-->
-        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库端口">-->
-        <!--          <a-input-number :disabled="isEdit" v-decorator="['dbPort', validatorRules.dbPort]"/>-->
-        <!--        </a-form-item>-->
-        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库用户名">-->
-        <!--          <a-input :disabled="isEdit" placeholder="请输入数据库用户名" v-decorator="['dbUser', validatorRules.dbUser]"/>-->
-        <!--        </a-form-item>-->
-        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库密码">-->
-        <!--          <a-input-password :disabled="isEdit" placeholder="请输入数据库密码"-->
-        <!--                            v-decorator="['dbPassword', validatorRules.dbPassword]"/>-->
-        <!--        </a-form-item>-->
-        <!--        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="数据库名">-->
-        <!--          <a-input :disabled="isEdit" placeholder="请输入数据库名" v-decorator="['dbName', validatorRules.dbName]"/>-->
-        <!--        </a-form-item>-->
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="合服后母服id">
           <a-input-number v-decorator="['pid', {}]"/>
         </a-form-item>
@@ -200,11 +190,9 @@ export default {
         isMaintain: {rules: [{required: true, message: "请选择是否开启维护!"}]},
         type: {rules: [{required: true, message: "请输入区服类型!"}]},
         outdated: {rules: [{required: true, message: "请选择是否废弃!"}]},
-        // dbHost: {rules: [{required: true, message: "请输入数据库Host!"}]},
-        // dbUser: {rules: [{required: true, message: "请输入数据库帐号!"}]},
-        // dbPassword: {rules: [{required: true, message: "请输入数据库密码!"}]},
-        // dbName: {rules: [{required: true, message: "请输入数据库名称!"}]},
         gmUrl: {rules: [{required: true, message: "请输入GM地址!"}]},
+        mysql: {rules: [{required: true, message: "请输入MySQL地址!"}]},
+        mongodb: {rules: [{required: true, message: "请输入MongoDB地址!"}]},
         openTime: {rules: [{required: true, message: "请输入开服时间!"}]},
         onlineTime: {rules: [{required: true, message: "请输入上线时间!"}]},
         clientGm: {rules: [{required: false, message: "请输入客户端GM地址!"}]},
@@ -262,6 +250,8 @@ export default {
             "reservePlayerId",
             "singleSettleTime",
             "pid",
+            "mysql",
+            "mongodb",
             "taStatistics",
             "gmStatus",
             "gmIp",
@@ -353,6 +343,8 @@ export default {
           "outdated",
           "reservePlayerId",
           "pid",
+          "mysql",
+          "mongodb",
           "taStatistics",
           "gmStatus",
           "gmIp",

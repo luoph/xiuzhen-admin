@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
-import org.jeecg.common.system.annotation.HiddenField;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -137,38 +136,17 @@ public class GameServer extends BaseEntity {
     /**
      * mongodb
      */
-    @HiddenField
+    @Excel(name = "mongodb", width = 15)
+    @ApiModelProperty(value = "mongodb")
     private java.lang.String mongodb;
 
     /**
-     * 数据库主机
+     * mysql
      */
-    @HiddenField
-    private java.lang.String dbHost;
+    @Excel(name = "mysql", width = 15)
+    @ApiModelProperty(value = "mysql")
+    private java.lang.String mysql;
 
-    /**
-     * 数据库端口
-     */
-    @HiddenField
-    private java.lang.Integer dbPort;
-
-    /**
-     * 数据库用户名
-     */
-    @HiddenField
-    private java.lang.String dbUser;
-
-    /**
-     * 数据库密码
-     */
-    @HiddenField
-    private java.lang.String dbPassword;
-    /**
-     * 数据库名
-     */
-    @Excel(name = "数据库名", width = 15)
-    @ApiModelProperty(value = "数据库名")
-    private java.lang.String dbName;
     /**
      * GM地址
      */

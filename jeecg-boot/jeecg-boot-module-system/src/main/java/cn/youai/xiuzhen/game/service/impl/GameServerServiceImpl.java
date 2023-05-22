@@ -53,6 +53,7 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     private ILogAccountService logAccountService;
 
     @Override
+    @SuppressWarnings("DuplicatedCode")
     public void applyChange(GameServer entity) {
         GameServer gameServer = getById(entity.getId());
         if (gameServer == null) {
@@ -74,23 +75,17 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         if (GameServerUtils.notEq(gameServer, entity, GameServer::getGmUrl)) {
             GameServerUtils.apply(childList, entity, GameServer::getGmUrl, GameServer::setGmUrl);
         }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getClientGm)) {
+            GameServerUtils.apply(childList, entity, GameServer::getClientGm, GameServer::setClientGm);
+        }
         if (GameServerUtils.notEq(gameServer, entity, GameServer::getRpcUrl)) {
             GameServerUtils.apply(childList, entity, GameServer::getRpcUrl, GameServer::setRpcUrl);
         }
-        if (GameServerUtils.notEq(gameServer, entity, GameServer::getDbHost)) {
-            GameServerUtils.apply(childList, entity, GameServer::getDbHost, GameServer::setDbHost);
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getMysql)) {
+            GameServerUtils.apply(childList, entity, GameServer::getMysql, GameServer::setMysql);
         }
-        if (GameServerUtils.notEq(gameServer, entity, GameServer::getDbPort)) {
-            GameServerUtils.apply(childList, entity, GameServer::getDbPort, GameServer::setDbPort);
-        }
-        if (GameServerUtils.notEq(gameServer, entity, GameServer::getDbName)) {
-            GameServerUtils.apply(childList, entity, GameServer::getDbName, GameServer::setDbName);
-        }
-        if (GameServerUtils.notEq(gameServer, entity, GameServer::getDbUser)) {
-            GameServerUtils.apply(childList, entity, GameServer::getDbUser, GameServer::setDbUser);
-        }
-        if (GameServerUtils.notEq(gameServer, entity, GameServer::getDbPassword)) {
-            GameServerUtils.apply(childList, entity, GameServer::getDbPassword, GameServer::setDbPassword);
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getMongodb)) {
+            GameServerUtils.apply(childList, entity, GameServer::getMongodb, GameServer::setMongodb);
         }
         if (GameServerUtils.notEq(gameServer, entity, GameServer::getIsMaintain)) {
             GameServerUtils.apply(childList, entity, GameServer::getIsMaintain, GameServer::setIsMaintain);
