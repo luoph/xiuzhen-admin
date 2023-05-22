@@ -52,6 +52,13 @@ public class MongoDataController<T extends IPlayerData> {
     }
 
     /**
+     * 数据权限检查
+     */
+    protected boolean hasPermission(GamePlayer player, LoginUser sysUser) {
+        return true;
+    }
+
+    /**
      * 分页列表查询
      */
     public Result<?> queryPageList(T entity,
@@ -65,6 +72,13 @@ public class MongoDataController<T extends IPlayerData> {
         GamePlayer player = playerService.queryPlayer(entity.getPlayerId());
         if (player == null) {
             return Result.error("找不到玩家！");
+        }
+
+        // 获取登录用户信息
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        boolean hasPermission = hasPermission(player, sysUser);
+        if (!hasPermission) {
+            return Result.error("无查询权限！");
         }
 
         MongoTemplate mongoTemplate = MongoDataSourceHelper.getInstance().getMongoTemplate(player.getServerId());
@@ -116,6 +130,13 @@ public class MongoDataController<T extends IPlayerData> {
             return null;
         }
 
+        // 获取登录用户信息
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        boolean hasPermission = hasPermission(player, sysUser);
+        if (!hasPermission) {
+            return null;
+        }
+
         MongoTemplate mongoTemplate = MongoDataSourceHelper.getInstance().getMongoTemplate(player.getServerId());
         if (mongoTemplate == null) {
             return null;
@@ -123,7 +144,6 @@ public class MongoDataController<T extends IPlayerData> {
 
         PageRequest page = PageRequest.of(0, Integer.MAX_VALUE, getSort());
         List<T> pageList = doQuery(entity, mongoTemplate, page, request);
-        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
         return ExcelUtils.exportXls(sysUser.getRealname(), pageList, request.getParameter("selections"), clazz, title);
     }
 
