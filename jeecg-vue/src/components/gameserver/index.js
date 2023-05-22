@@ -3,7 +3,6 @@ import ServerSelect from "./ServerSelect.vue";
 import MultipleServerSelect from "./MultipleServerSelect.vue";
 import GameChannelServer from "./GameChannelServer.vue";
 import ASelectReadJson from "./ASelectReadJson.vue";
-import JsonSelector from "./JsonSelector.vue";
 
 const ServerSelectList = {
     install: function (Vue) {
@@ -29,18 +28,11 @@ const ASelectReadJsonList = {
     }
 };
 
-const JsonSelectorList = {
-    install: function (Vue) {
-        Vue.component("JsonSelector", JsonSelector);
-    }
-};
-
 export default () => {
     return {
         ServerSelectList,
         MultipleServerSelectList,
         GameChannelServerList,
         ASelectReadJsonList,
-        JsonSelectorList
     };
 };

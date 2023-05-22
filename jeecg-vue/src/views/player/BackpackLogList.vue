@@ -9,7 +9,7 @@
               <a-input placeholder="请输入玩家id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
-          <a-col :md="4" :sm="8">
+          <a-col :md="6" :sm="8">
             <a-form-item label="道具id">
               <a-input placeholder="请输入道具id" v-model="queryParam.itemId"></a-input>
             </a-form-item>
@@ -26,8 +26,8 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="产销类型">
-              <a-select placeholder="产销类型" v-model="queryParam.type" @change="resetWay">
-                <a-select-option value="">全部</a-select-option>
+              <a-select placeholder="产销类型" v-model="queryParam.type" @change="resetWays">
+                <a-select-option value="0">全部</a-select-option>
                 <a-select-option value="1">获得</a-select-option>
                 <a-select-option value="2">消耗</a-select-option>
               </a-select>
@@ -78,8 +78,7 @@ import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
 import { filterObj } from '@/utils/util';
 import moment from 'moment';
-import ASelectReadJsonSome from '@comp/gameserver/ASelectReadJsonSome';
-import JsonSelector from '@comp/gameserver/JsonSelector';
+import JsonSelector from '@comp/game/JsonSelector';
 
 export default {
   name: 'PlayerItemLogList',
@@ -87,7 +86,6 @@ export default {
   description: '道具日志',
   components: {
     JDate,
-    ASelectReadJsonSome,
     JsonSelector,
     moment
   },
@@ -109,6 +107,24 @@ export default {
           title: '玩家id',
           align: 'center',
           dataIndex: 'playerId'
+        },
+        {
+          title: '昵称',
+          align: 'center',
+          dataIndex: 'nickname',
+          customRender: (value) => {
+            return value || '--';
+          }
+        },
+        {
+          title: '区服id',
+          align: 'center',
+          dataIndex: 'serverId'
+        },
+        {
+          title: '创角区服',
+          align: 'center',
+          dataIndex: 'sid'
         },
         {
           title: '道具id',

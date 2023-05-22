@@ -113,12 +113,16 @@ public class BackpackLogController extends MongoDataController<MgBackpackLog> {
         return super.exportXls(request, entity, MgBackpackLog.class, "道具日志");
     }
 
-    @SuppressWarnings("DuplicatedCode")
-    protected void onload(MgBackpackLog entity) {
+    @Override
+    protected void onload(MgBackpackLog entity, GamePlayer player) {
         ConfItem confItem = GameConfigUtils.getItemById(entity.getItemId());
         if (confItem != null) {
             entity.setItemName(confItem.getName());
         }
+
+        entity.setSid(player.getSid());
+        entity.setServerId(player.getServerId());
+        entity.setNickname(player.getNickname());
 
         // 设置产销点名字
         if (entity.getType() == OperationType.INCREASE.getType()) {

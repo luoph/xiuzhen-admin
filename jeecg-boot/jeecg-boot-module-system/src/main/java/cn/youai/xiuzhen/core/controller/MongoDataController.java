@@ -6,7 +6,6 @@ import cn.youai.xiuzhen.core.database.MongoDataSourceHelper;
 import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.system.annotation.Readonly;
@@ -19,7 +18,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -93,7 +91,7 @@ public class MongoDataController<T extends IPlayerData> {
 
         // PageRequest 是从0开始计数
         PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize, getSort());
-        List<T> pageList = doQuery(mongoTemplate, criteria, pageRequest);
+        List<T> pageList = doQuery(player, mongoTemplate, criteria, pageRequest);
         return Result.ok(PageQueryUtils.makePage(pageList, pageNo, pageSize, count));
     }
 
@@ -111,12 +109,15 @@ public class MongoDataController<T extends IPlayerData> {
             return Result.error("找不到数据源！");
         }
 
-        Criteria criteria = Criteria.where("id").is(id);
+        // mongodb 的 id 字段是 _id
+        Criteria criteria = Criteria.where("_id").is(id);
         List<T> list = mongoTemplate.find(Query.query(criteria), getEntityClass());
         T entity = CollUtil.isNotEmpty(list) ? list.get(0) : null;
         if (entity == null) {
             return Result.error("未找到数据");
         }
+
+        onload(entity, player);
         return Result.ok(entity);
     }
 
@@ -143,18 +144,18 @@ public class MongoDataController<T extends IPlayerData> {
         }
 
         PageRequest page = PageRequest.of(0, Integer.MAX_VALUE, getSort());
-        List<T> pageList = doQuery(entity, mongoTemplate, page, request);
+        List<T> pageList = doQuery(entity, player, mongoTemplate, page, request);
         return ExcelUtils.exportXls(sysUser.getRealname(), pageList, request.getParameter("selections"), clazz, title);
     }
 
-    protected void onload(List<T> pageList) {
+    protected void onload(List<T> pageList, GamePlayer player) {
         if (pageList == null) {
             return;
         }
-        pageList.forEach(this::onload);
+        pageList.forEach(t -> onload(t, player));
     }
 
-    protected void onload(T entity) {
+    protected void onload(T entity, GamePlayer player) {
     }
 
     protected Criteria queryCriteria(T entity, HttpServletRequest req) {
@@ -165,15 +166,14 @@ public class MongoDataController<T extends IPlayerData> {
         return Sort.by("createTime").descending();
     }
 
-    private List<T> doQuery(T entity, MongoTemplate template, PageRequest page, HttpServletRequest req) {
-        return doQuery(template, queryCriteria(entity, req), page);
+    private List<T> doQuery(T entity, GamePlayer player, MongoTemplate template, PageRequest page, HttpServletRequest req) {
+        return doQuery(player, template, queryCriteria(entity, req), page);
     }
 
-    private List<T> doQuery(MongoTemplate template, Criteria criteria, PageRequest page) {
+    private List<T> doQuery(GamePlayer player, MongoTemplate template, Criteria criteria, PageRequest page) {
         Query query = Query.query(criteria).with(page);
         List<T> pageList = template.find(query, getEntityClass());
-        pageList.forEach(this::onload);
-        onload(pageList);
+        onload(pageList, player);
         return pageList;
     }
 }

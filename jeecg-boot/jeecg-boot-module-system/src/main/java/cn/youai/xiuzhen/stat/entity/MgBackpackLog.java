@@ -30,6 +30,12 @@ public class MgBackpackLog implements IPlayerData, Serializable {
 
     private Long playerId;
 
+    private String nickname;
+
+    private Integer serverId;
+
+    private Integer sid;
+
     private Integer itemId;
 
     private String itemName;
