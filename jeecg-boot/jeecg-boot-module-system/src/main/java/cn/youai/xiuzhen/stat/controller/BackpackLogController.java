@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,7 +37,7 @@ import java.util.Set;
 @Readonly
 @RestController
 @RequestMapping("player/backpackLog")
-public class MgBackpackLogController extends MongoDataController<MgBackpackLog> {
+public class BackpackLogController extends MongoDataController<MgBackpackLog> {
 
     /**
      * 分页列表查询
@@ -77,10 +78,15 @@ public class MgBackpackLogController extends MongoDataController<MgBackpackLog> 
         if (entity.getItemId() != null && entity.getItemId() > 0) {
             criteria.and("itemId").is(entity.getItemId());
         }
+
         if (entity.getType() != null && entity.getType() > 0) {
             criteria.and("type").is(entity.getType());
         }
-        if (entity.getWay() != null && entity.getWay() > 0) {
+
+        if (StringUtils.isNotEmpty(entity.getWays())) {
+            List<Integer> wayList = StringUtils.split2Int(entity.getWays());
+            criteria.and("way").in(wayList);
+        } else if (entity.getWay() != null && entity.getWay() > 0) {
             criteria.and("way").is(entity.getWay());
         }
 

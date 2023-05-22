@@ -169,7 +169,6 @@ import { postAction } from '@api/manage';
 import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import GameRechargeGoodsModal from './modules/GameRechargeGoodsModal';
 import JInput from '@/components/jeecg/JInput';
-import { getAction } from '../../api/manage';
 
 export default {
   name: 'GameRechargeGoodsList',

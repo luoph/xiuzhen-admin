@@ -19,6 +19,11 @@
               <a-input placeholder="请输入途径id" v-model="queryParam.way"></a-input>
             </a-form-item>
           </a-col>
+          <a-col :md="8" :sm="8">
+            <a-form-item label="统计日期">
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+            </a-form-item>
+          </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="产销类型">
               <a-select placeholder="产销类型" v-model="queryParam.type" @change="resetWay">
@@ -29,16 +34,11 @@
             </a-form-item>
           </a-col>
           <a-col :md="8" :sm="8">
-            <a-form-item label="统计日期">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
             <a-form-item v-if="queryParam.type === '1'" key="1" label="产出途径">
-              <a-select-read-json-some json-file="item_fall_rule" placeholder="请选择途径" @onSelectOptionSome="selectWay" />
+              <json-selector file="item_fall_rule" :multiple="true" value="id" name="title" placeholder="请选择产出途径" @onJsonValueSelected="onSelectWays" />
             </a-form-item>
             <a-form-item v-else-if="queryParam.type === '2'" key="2" label="消耗途径">
-              <a-select-read-json-some json-file="item_expend" placeholder="请选择途径" @onSelectOptionSome="selectWay" />
+              <json-selector file="item_expend" :multiple="true" value="id" name="name" placeholder="请选择消耗途径" @onJsonValueSelected="onSelectWays" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -79,6 +79,7 @@ import JDate from '@/components/jeecg/JDate.vue';
 import { filterObj } from '@/utils/util';
 import moment from 'moment';
 import ASelectReadJsonSome from '@comp/gameserver/ASelectReadJsonSome';
+import JsonSelector from '@comp/gameserver/JsonSelector';
 
 export default {
   name: 'PlayerItemLogList',
@@ -87,6 +88,7 @@ export default {
   components: {
     JDate,
     ASelectReadJsonSome,
+    JsonSelector,
     moment
   },
   data() {
@@ -186,19 +188,19 @@ export default {
       return filterObj(param);
     },
     onDateChange(dates, dateStrings) {
-      console.log(dateStrings[0], dateStrings[1]);
+      // console.log(dateStrings[0], dateStrings[1]);
       this.queryParam.createTime_begin = dateStrings[0];
       this.queryParam.createTime_end = dateStrings[1];
     },
-    selectWay(way) {
-      if (way.length > 0) {
-        this.queryParam.wayName = way.join(',');
+    onSelectWays(list) {
+      if (list.length > 0) {
+        this.queryParam.ways = list.join(',');
       } else {
-        this.resetWay();
+        this.resetWays();
       }
     },
-    resetWay() {
-      this.queryParam.wayName = '';
+    resetWays() {
+      this.queryParam.ways = '';
     }
   }
 };

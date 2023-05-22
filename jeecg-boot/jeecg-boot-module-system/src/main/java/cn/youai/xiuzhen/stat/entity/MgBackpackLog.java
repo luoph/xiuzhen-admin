@@ -46,6 +46,11 @@ public class MgBackpackLog implements IPlayerData, Serializable {
      */
     private Integer way;
 
+    /**
+     * 途径多选
+     */
+    private String ways;
+
     private String wayName;
 
     private Long beforeNum;

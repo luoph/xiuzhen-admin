@@ -1,6 +1,6 @@
 <template>
   <a-select :placeholder="tips" @change="handlerSelect">
-    <a-select-option v-for="item in selectArray" :value="item.type">
+    <a-select-option v-for="item in selectArray" :key="item.type" :value="item.type">
       {{ item.name }}
     </a-select-option>
   </a-select>
