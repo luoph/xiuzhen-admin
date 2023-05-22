@@ -4,7 +4,9 @@ import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
 import com.baomidou.mybatisplus.extension.service.IService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.jeecg.common.api.vo.Result;
+import org.jeecg.common.system.vo.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019-4-21 8:13
  */
 @Slf4j
-@SuppressWarnings("unchecked")
 public class PlayerDataSourceController<T, S extends IService<T>> extends MultiDataSourceController<T, S> {
 
     @Autowired
@@ -44,7 +45,22 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
         if (player == null) {
             return Result.error("找不到玩家信息！");
         }
+
+        // 获取登录用户信息
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        boolean hasPermission = hasPermission(player, sysUser);
+        if (!hasPermission) {
+            return Result.error("无查询权限！");
+        }
+
         return super.queryPageList(entity, pageNo, pageSize, player.getServerId(), req);
+    }
+
+    /**
+     * 数据权限检查
+     */
+    protected boolean hasPermission(GamePlayer player, LoginUser sysUser) {
+        return true;
     }
 
     /**
@@ -124,6 +140,13 @@ public class PlayerDataSourceController<T, S extends IService<T>> extends MultiD
     protected ModelAndView exportXls(long playerId, HttpServletRequest request, T object, Class<T> clazz, String title) {
         GamePlayer player = playerService.queryPlayer(playerId);
         if (player == null) {
+            return null;
+        }
+
+        // 获取登录用户信息
+        LoginUser sysUser = (LoginUser) SecurityUtils.getSubject().getPrincipal();
+        boolean hasPermission = hasPermission(player, sysUser);
+        if (!hasPermission) {
             return null;
         }
 

@@ -1,9 +1,11 @@
 package cn.youai.xiuzhen.game.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.springboot.component.OkHttpHelper;
 import cn.youai.server.utils.DateUtils;
+import cn.youai.xiuzhen.game.constant.GameServerUtils;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.MergeServerVO;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
@@ -51,8 +53,58 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     private ILogAccountService logAccountService;
 
     @Override
+    @SuppressWarnings("DuplicatedCode")
+    public void applyChange(GameServer entity) {
+        GameServer gameServer = getById(entity.getId());
+        if (gameServer == null) {
+            return;
+        }
+        updateById(entity);
+        List<GameServer> childList = selectGameServerByPid(CollUtil.newArrayList(entity.getId()));
+        if (CollUtil.isEmpty(childList)) {
+            return;
+        }
+
+        // 同步父节点的修改到子节点
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getHost)) {
+            GameServerUtils.apply(childList, entity, GameServer::getHost, GameServer::setHost);
+        }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getLoginUrl)) {
+            GameServerUtils.apply(childList, entity, GameServer::getLoginUrl, GameServer::setLoginUrl);
+        }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getGmUrl)) {
+            GameServerUtils.apply(childList, entity, GameServer::getGmUrl, GameServer::setGmUrl);
+        }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getClientGm)) {
+            GameServerUtils.apply(childList, entity, GameServer::getClientGm, GameServer::setClientGm);
+        }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getRpcUrl)) {
+            GameServerUtils.apply(childList, entity, GameServer::getRpcUrl, GameServer::setRpcUrl);
+        }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getMysql)) {
+            GameServerUtils.apply(childList, entity, GameServer::getMysql, GameServer::setMysql);
+        }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getMongodb)) {
+            GameServerUtils.apply(childList, entity, GameServer::getMongodb, GameServer::setMongodb);
+        }
+        if (GameServerUtils.notEq(gameServer, entity, GameServer::getIsMaintain)) {
+            GameServerUtils.apply(childList, entity, GameServer::getIsMaintain, GameServer::setIsMaintain);
+        }
+    }
+
+    @Override
     public List<GameServer> selectGameServerList() {
-        return getBaseMapper().selectGameServerList();
+        return getBaseMapper().selectGameServerList(null);
+    }
+
+    @Override
+    public List<GameServer> selectGameServerList(List<Integer> serverIds) {
+        return getBaseMapper().selectGameServerList(serverIds);
+    }
+
+    @Override
+    public List<GameServer> selectGameServerByPid(List<Integer> pids) {
+        return getBaseMapper().selectGameServerByPid(pids);
     }
 
     @Override
@@ -100,13 +152,14 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response)) {
-                        assert response.body() != null;
+                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
                         try {
                             T rspObj = JSON.parseObject(response.body().string(), clazz);
                             responseMap.put(serverId, rspObj);
                         } catch (Exception e) {
                             log.error("gameServerGet error, serverId:" + serverId + ", path:" + path, e);
+                        } finally {
+                            response.body().close();
                         }
                     }
                     latch.countDown();
@@ -151,15 +204,19 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             // 异步
             OkHttpHelper.getAsync(gameServer.getGmUrl() + path, params, new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NotNull Call call, IOException e) {
                     log.error("gameServerGet onFailure, url:" + gameServer.getGmUrl() + path, e);
                     latch.countDown();
                 }
 
                 @Override
-                public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
                     if (OkHttpHelper.isSuccess(response) && response.body() != null) {
-                        responseMap.put(serverId, JSON.parseObject(response.body().string(), clazz));
+                        try {
+                            responseMap.put(serverId, JSON.parseObject(response.body().string(), clazz));
+                        } finally {
+                            response.body().close();
+                        }
                     }
                     latch.countDown();
                 }
@@ -199,8 +256,11 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
     }
 
     @Override
-    public void updateGameServerMaintain(List<Integer> serverIds, int isMaintain) {
-        getBaseMapper().updateGameServerMaintain(serverIds, isMaintain);
+    public void updateGameServerMaintain(Collection<GameServer> servers, int isMaintain) {
+        for (GameServer server : servers) {
+            server.setIsMaintain(isMaintain);
+        }
+        updateBatchById(servers);
     }
 
     @Override

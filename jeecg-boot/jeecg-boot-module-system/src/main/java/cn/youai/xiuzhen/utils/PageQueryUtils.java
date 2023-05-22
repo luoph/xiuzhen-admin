@@ -3,6 +3,7 @@ package cn.youai.xiuzhen.utils;
 import cn.hutool.core.date.DateUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.model.RangeValue;
+import cn.youai.server.utils.DateUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.jeecg.common.system.query.QueryGenerator;
@@ -15,6 +16,15 @@ import java.util.function.ToLongFunction;
 public final class PageQueryUtils {
 
     private PageQueryUtils() {
+    }
+
+    public static void addTime(DateRange dateRange) {
+        if (dateRange.getStart() != null) {
+            dateRange.setStart(DateUtils.startTimeOfDate(dateRange.getStart()));
+        }
+        if (dateRange.getEnd() != null) {
+            dateRange.setEnd(DateUtils.endTimeOfDate(dateRange.getEnd()));
+        }
     }
 
     public static DateRange parseRange(Map<String, String[]> parameterMap, String column, Date defaultStart, Date defaultEnd) {
@@ -68,6 +78,13 @@ public final class PageQueryUtils {
     public static <T> IPage<T> makePage(List<T> records) {
         IPage<T> pageList = new Page<>();
         pageList.setPages(1).setCurrent(1).setTotal(records.size()).setRecords(records);
+        return pageList;
+    }
+
+    public static <T> IPage<T> makePage(List<T> records, int pageNo, int pageSize, long totalCount) {
+        IPage<T> pageList = new Page<>();
+        int pageNum = (int) ((totalCount + pageSize) / pageSize);
+        pageList.setPages(pageNum).setCurrent(pageNo).setTotal(totalCount).setRecords(records);
         return pageList;
     }
 

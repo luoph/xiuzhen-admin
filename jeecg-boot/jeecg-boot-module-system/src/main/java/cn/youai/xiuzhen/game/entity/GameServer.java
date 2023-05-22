@@ -14,7 +14,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.jeecg.common.aspect.annotation.Dict;
 import org.jeecg.common.constant.TimeConstant;
-import org.jeecg.common.system.annotation.HiddenField;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -87,6 +86,13 @@ public class GameServer extends BaseEntity {
     private java.lang.String loginUrl;
 
     /**
+     * rpc地址
+     */
+    @Excel(name = "rpc地址", width = 15)
+    @ApiModelProperty(value = "rpc地址")
+    private java.lang.String rpcUrl;
+
+    /**
      * 服务器状态 0-正常 1-流畅 2-火爆 3-维护
      */
     @Excel(name = "服务器状态", width = 15)
@@ -128,34 +134,19 @@ public class GameServer extends BaseEntity {
     private java.lang.Integer maxVersion;
 
     /**
-     * 数据库主机
+     * mongodb
      */
-    @HiddenField
-    private java.lang.String dbHost;
+    @Excel(name = "mongodb", width = 15)
+    @ApiModelProperty(value = "mongodb")
+    private java.lang.String mongodb;
 
     /**
-     * 数据库端口
+     * mysql
      */
-    @HiddenField
-    private java.lang.Integer dbPort;
+    @Excel(name = "mysql", width = 15)
+    @ApiModelProperty(value = "mysql")
+    private java.lang.String mysql;
 
-    /**
-     * 数据库用户名
-     */
-    @HiddenField
-    private java.lang.String dbUser;
-
-    /**
-     * 数据库密码
-     */
-    @HiddenField
-    private java.lang.String dbPassword;
-    /**
-     * 数据库名
-     */
-    @Excel(name = "数据库名", width = 15)
-    @ApiModelProperty(value = "数据库名")
-    private java.lang.String dbName;
     /**
      * GM地址
      */

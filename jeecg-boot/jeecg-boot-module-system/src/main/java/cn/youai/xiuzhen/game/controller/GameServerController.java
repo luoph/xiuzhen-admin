@@ -1,6 +1,5 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DataResponse;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
@@ -35,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -131,10 +131,11 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         return Result.ok("添加成功！");
     }
 
+    @SuppressWarnings("DuplicatedCode")
     @AutoLog(value = "游戏服配置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameServer entity) {
-        service.updateById(entity);
+        service.applyChange(entity);
         GameServerCache.getInstance().reload(entity.getId());
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         return Result.ok("编辑成功!");
@@ -197,13 +198,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @RequiresPermissions("game:server:admin")
     public Result<?> startMaintain(@RequestParam(name = "ids") String ids) {
         List<Integer> serverIds = StringUtils.split2Int(ids);
-        if (CollUtil.isNotEmpty(serverIds)) {
-            service.updateGameServerMaintain(serverIds, 1);
-        }
-        channelService.updateAllChannelConfig();
-
-        Map<Integer, Response> responseMap = service.gameServerGet(ids, startMaintainUrl);
-        log.info("startMaintain response:{}", responseMap);
+        updateServerMaintain(serverIds, 1, startMaintainUrl);
         return Result.ok("开启维护状态成功！");
     }
 
@@ -212,13 +207,7 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     @GetMapping(value = "/stopMaintain")
     public Result<?> stopMaintain(@RequestParam(name = "ids") String ids) {
         List<Integer> serverIds = StringUtils.split2Int(ids);
-        if (CollUtil.isNotEmpty(serverIds)) {
-            service.updateGameServerMaintain(serverIds, 0);
-        }
-        channelService.updateAllChannelConfig();
-
-        Map<Integer, Response> responseMap = service.gameServerGet(ids, stopMaintainUrl);
-        log.info("stopMaintain response:{}", responseMap);
+        updateServerMaintain(serverIds, 0, stopMaintainUrl);
         return Result.ok("关闭维护状态成功！");
     }
 
@@ -273,11 +262,15 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response)) {
-                        assert response.body() != null;
-                        DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
-                        if (rsp != null) {
-                            record.setOnlineNum(rsp.getData());
+                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
+                        try {
+                            DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
+                            if (rsp != null) {
+                                record.setOnlineNum(rsp.getData());
+                            }
+                        } finally {
+                            response.body().close();
+                            ;
                         }
                     }
                     latch.countDown();
@@ -290,6 +283,20 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
         } catch (InterruptedException e) {
             log.error("onlineNum error", e);
         }
+    }
+
+    private void updateServerMaintain(List<Integer> serverIds, int maintain, String url) {
+        List<GameServer> allServers = new ArrayList<>();
+        allServers.addAll(service.selectGameServerList(serverIds));
+        allServers.addAll(service.selectGameServerByPid(serverIds));
+
+        Map<Integer, GameServer> serverMap = allServers.stream().collect(Collectors.toMap(GameServer::getId, Function.identity(), (key1, key2) -> key2));
+        service.updateGameServerMaintain(serverMap.values(), maintain);
+        channelService.updateAllChannelConfig();
+        GameServerCache.getInstance().loadAll();
+
+        Map<Integer, Response> responseMap = service.gameServerGet(serverMap.keySet(), url);
+        log.info("updateServerMaintain serverIds:{}, url:{}, response:{}", serverIds, url, responseMap);
     }
 
 }

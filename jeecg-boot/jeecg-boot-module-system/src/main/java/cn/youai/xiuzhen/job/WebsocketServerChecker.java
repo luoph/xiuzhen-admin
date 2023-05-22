@@ -71,7 +71,7 @@ public class WebsocketServerChecker {
         }
 
         log.info("[websocket] start checkServer");
-        List<GameServer> serverList = serverService.selectGameServerList();
+        List<GameServer> serverList = serverService.selectOnlineGameServerList();
         Map<Integer, WebsocketCheckResult> checkResultMap = new HashMap<>();
         for (GameServer server : serverList) {
             if (!server.skipCheck()) {

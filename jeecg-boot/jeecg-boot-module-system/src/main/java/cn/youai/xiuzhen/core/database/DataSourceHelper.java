@@ -13,6 +13,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.jeecg.common.util.SpringContextUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -28,9 +29,15 @@ import java.lang.reflect.Field;
 @Component
 public class DataSourceHelper implements InitializingBean {
 
-    private static final String JDBC_URL_PATTERN = "jdbc:mysql://%s:%d/%s?useSSL=false&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true";
+    private static final String MYSQL_URI_PATTERN = "jdbc:mysql://%s?useSSL=false&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&autoReconnect=true&allowMultiQueries=true&rewriteBatchedStatements=true";
 
     private static final ObjectReference<DataSourceHelper> REFERENCE = new ObjectReference<>();
+
+    @Value("${app.mysql.user}")
+    private String user;
+
+    @Value("${app.mysql.password}")
+    private String password;
 
     @Autowired
     private GameServerMapper gameServerMapper;
@@ -61,8 +68,8 @@ public class DataSourceHelper implements InitializingBean {
         if (dataSource == null) {
             GameServer gameServer = selectGameServerById(serverId);
             if (gameServer != null) {
-                String jdbcUrl = String.format(JDBC_URL_PATTERN, gameServer.getDbHost(), gameServer.getDbPort(), gameServer.getDbName());
-                dataSource = DataSourceConfig.createDataSource(jdbcUrl, gameServer.getDbUser(), gameServer.getDbPassword());
+                String jdbcUrl = String.format(MYSQL_URI_PATTERN, gameServer.getMysql());
+                dataSource = DataSourceConfig.createDataSource(jdbcUrl, user, password);
                 // 添加到数据源池
                 DataSourceConfig.addDataSource(DataSourceConfig.SERVER_DATA_SOURCE_KEY + serverId, dataSource);
             }

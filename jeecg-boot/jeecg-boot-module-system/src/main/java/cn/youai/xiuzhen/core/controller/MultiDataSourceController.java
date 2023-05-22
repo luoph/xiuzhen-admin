@@ -166,6 +166,7 @@ public class MultiDataSourceController<T, S extends IService<T>> {
             if (entity == null) {
                 return Result.error("未找到对应数据");
             }
+            onload(entity);
             return Result.ok(entity);
         } finally {
             useDefaultDatabase();
