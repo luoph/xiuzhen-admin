@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2019-4-21 8:13
  */
 @Slf4j
-@SuppressWarnings("unchecked")
 public class PlayerDataSourceController<T, S extends IService<T>> extends MultiDataSourceController<T, S> {
 
     @Autowired
