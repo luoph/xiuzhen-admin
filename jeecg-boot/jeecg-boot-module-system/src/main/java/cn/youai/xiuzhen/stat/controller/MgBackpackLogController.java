@@ -4,10 +4,7 @@ import cn.youai.basics.model.DateRange;
 import cn.youai.server.conf.ConfItem;
 import cn.youai.server.constant.ItemReduce;
 import cn.youai.server.constant.ItemRuleId;
-import cn.youai.server.utils.DateUtils;
-import cn.youai.xiuzhen.core.database.MongoDataSourceHelper;
-import cn.youai.xiuzhen.game.entity.GamePlayer;
-import cn.youai.xiuzhen.game.service.IGamePlayerService;
+import cn.youai.xiuzhen.core.controller.MongoDataController;
 import cn.youai.xiuzhen.stat.constant.OperationType;
 import cn.youai.xiuzhen.stat.entity.MgBackpackLog;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
@@ -16,20 +13,14 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.annotation.Readonly;
 import org.jeecg.modules.utils.GameConfigUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author jeecg-boot
@@ -41,10 +32,7 @@ import java.util.List;
 @Readonly
 @RestController
 @RequestMapping("player/backpackLog")
-public class MgBackpackLogController {
-
-    @Autowired
-    private IGamePlayerService gamePlayerService;
+public class MgBackpackLogController extends MongoDataController<MgBackpackLog> {
 
     /**
      * 分页列表查询
@@ -55,21 +43,13 @@ public class MgBackpackLogController {
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
                                    HttpServletRequest req) {
-        if (null == entity.getPlayerId()) {
-            return Result.error("请输入玩家id！");
-        }
+        return super.queryPageList(entity, pageNo, pageSize, req);
+    }
 
-        GamePlayer player = gamePlayerService.queryPlayer(entity.getPlayerId());
-        if (player == null) {
-            return Result.error("找不到玩家！");
-        }
-
+    @Override
+    protected Criteria queryCriteria(MgBackpackLog entity, HttpServletRequest req) {
         DateRange dageRange = PageQueryUtils.parseRange(req.getParameterMap(), "createTime");
         PageQueryUtils.addTime(dageRange);
-        MongoTemplate mongoTemplate = MongoDataSourceHelper.getInstance().getMongoTemplate(player.getServerId());
-        if (mongoTemplate == null) {
-            return Result.error("找不到数据源！");
-        }
 
         Criteria criteria = Criteria.where("playerId").is(entity.getPlayerId());
         if (entity.getItemId() != null && entity.getItemId() > 0) {
@@ -89,16 +69,20 @@ public class MgBackpackLogController {
         } else if (dageRange.getEnd() != null) {
             criteria.and("createTime").lte(dageRange.getEnd());
         }
+        return criteria;
+    }
 
-        // 查询总数
-        Query countQuery = Query.query(criteria);
-        long count = mongoTemplate.count(countQuery, MgBackpackLog.class);
-        // PageRequest 是从0开始计数
-        PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize, Sort.by("createTime").descending());
-        Query query = Query.query(criteria).with(pageRequest);
-        List<MgBackpackLog> list = mongoTemplate.find(query, MgBackpackLog.class);
-        list.forEach(this::onload);
-        return Result.ok(PageQueryUtils.makePage(list, pageNo, pageSize, count));
+    @Override
+    @AutoLog(value = "道具日志-通过id查询")
+    @GetMapping(value = "/queryById")
+    public Result<?> queryById(long playerId, String id) {
+        return super.queryById(playerId, id);
+    }
+
+    @AutoLog(value = "道具日志-导出")
+    @RequestMapping(value = "/exportXls")
+    public ModelAndView exportXls(HttpServletRequest request, MgBackpackLog entity) {
+        return super.exportXls(request, entity, MgBackpackLog.class, "道具日志");
     }
 
     @SuppressWarnings("DuplicatedCode")

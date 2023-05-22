@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.stat.entity;
 
+import cn.youai.xiuzhen.core.base.IPlayerData;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @Document(collection = "backpack_log")
-public class MgBackpackLog implements Serializable {
+public class MgBackpackLog implements IPlayerData, Serializable {
 
     private static final long serialVersionUID = 7925160499013709552L;
 
