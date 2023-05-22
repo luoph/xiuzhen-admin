@@ -29,7 +29,7 @@ TARGET_FILE = 'GameConfig.java'
 JSON_DIR = 'jeecg-boot-module-system/src/main/resources/json'
 
 # 其他的json
-OTHER_JSON = ['task_module_type', 'item_fall_rule']
+OTHER_JSON = ['task_module_type', 'item_fall_rule', 'item_expend']
 
 # 匹配代码行
 CODE_MATCH = 'ConfigTable.valueOf'
