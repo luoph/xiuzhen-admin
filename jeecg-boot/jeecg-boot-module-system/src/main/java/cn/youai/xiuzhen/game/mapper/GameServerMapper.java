@@ -20,7 +20,7 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
      *
      * @return 区服列表
      */
-    List<GameServer> selectGameServerList(@Param("configAuth") List<Integer> serverIds);
+    List<GameServer> selectGameServerList(@Param("serverIds") List<Integer> serverIds);
 
     /**
      * 查询线上区服（排除已下线、已合并的区服）
