@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.stat.controller;
 
 import cn.youai.basics.model.DateRange;
+import cn.youai.server.exception.AppException;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.core.controller.SimplePageController;
 import cn.youai.xiuzhen.stat.entity.LogChat;
@@ -48,11 +49,17 @@ public class LogChatController extends SimplePageController<LogChat> {
     }
 
     @Override
-    protected IPage<LogChat> pageList(Page<LogChat> page, LogChat entity, HttpServletRequest req) {
+    protected IPage<LogChat> pageList(Page<LogChat> page, LogChat entity, HttpServletRequest req) throws AppException {
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "createDate");
-        if (dateRange.getStart() == null && dateRange.getEnd() == null) {
+        if (dateRange.getEnd() == null) {
             dateRange.setEnd(DateUtils.todayDate());
-            dateRange.setStart(DateUtils.dateOnly(DateUtils.addDays(dateRange.getEnd(), -1)));
+        }
+        if (dateRange.getStart() == null) {
+            dateRange.setStart(DateUtils.todayDate());
+        }
+        int days = DateUtils.daysBetween(dateRange.getStart(), dateRange.getEnd());
+        if (days > 30) {
+            throw new AppException("不支持超过30天的数据查询");
         }
         return logChatService.queryList(page, entity, dateRange);
     }

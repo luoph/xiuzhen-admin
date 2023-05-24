@@ -5,7 +5,7 @@
     <select id="queryList" resultType="cn.youai.xiuzhen.stat.entity.LogChat">
         SELECT l.*, p.`account`, p.`level`, p.`sdk_channel`, p.`channel`
         FROM `log_chat` l
-        LEFT JOIN `game_player` p ON l.`sender_id` = p.`player_id`
+        JOIN `game_player` p ON l.`sender_id` = p.`player_id`
         <where>
             l.`chat_type` > 0 AND l.`sender_id` > 0 AND l.`msg_type` != 2
             <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
