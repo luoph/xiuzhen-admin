@@ -73,7 +73,7 @@ public class GameStatRechargeRankController {
     private IPage<GameStatRechargeRank> pageList(Page<GameStatRechargeRank> page, GameStatRechargeRank entity, HttpServletRequest req) {
         DateRange dateRange = PageQueryUtils.parseRange(req.getParameterMap(), "countDate");
         IPage<GameStatRechargeRank> pageList = orderStatService.queryRechargeRankList(page, entity.getChannel(),
-                entity.getSdkChannel(), entity.getServerId(), dateRange);
+                entity.getSdkChannel(), entity.getServerId(), entity.getPlayerId(), dateRange);
         Set<Long> orderIdList = pageList.getRecords().stream().map(GameStatRechargeRank::getOrderId).collect(Collectors.toSet());
         List<GameOrder> lastOrders = orderStatService.queryByIds(orderIdList);
         Map<Long, GameOrder> orderMap = lastOrders.stream().collect(Collectors.toMap(GameOrder::getId, Function.identity(), (key1, key2) -> key2));
