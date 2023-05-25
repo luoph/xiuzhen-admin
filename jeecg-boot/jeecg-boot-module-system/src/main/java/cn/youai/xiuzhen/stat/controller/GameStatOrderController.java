@@ -123,9 +123,9 @@ public class GameStatOrderController {
         if (CollUtil.isEmpty(serverIds)) {
             return GameStatOrder.zero(duration, start, end);
         } else {
-            GameStatOrder statOrder = orderStatService.queryOrderStatByRange(channel, serverId, start, end).calc();
+            GameStatOrder statOrder = orderStatService.queryOrderStatByRange(channel, serverId, start, end);
             statOrder.setServerNum(CollUtil.size(serverIds)).setDuration(duration).setStarDate(start).setEndDate(end);
-            return statOrder;
+            return statOrder.calc();
         }
     }
 
