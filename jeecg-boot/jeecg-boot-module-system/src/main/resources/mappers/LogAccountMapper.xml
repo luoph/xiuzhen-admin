@@ -4,7 +4,7 @@
 <mapper namespace="cn.youai.xiuzhen.stat.mapper.LogAccountMapper">
 
     <select id="queryDau" resultType="decimal">
-        SELECT COUNT(DISTINCT (`player_id`)) dau
+        SELECT COUNT(DISTINCT(`player_id`)) dau
         FROM `log_account`
         WHERE `create_date` = #{getTime}
         AND `type` = 2

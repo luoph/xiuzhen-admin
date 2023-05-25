@@ -48,7 +48,7 @@ public interface IGameOrderService extends IService<GameOrder> {
      */
     int payPlayerNum(String channel, String sdkChannel, Integer serverId, Date date, String configAuth);
 
-    GameStatOrder queryOrderStatByRange(List<Integer> serverIds, Date startDate, Date endDate);
+    GameStatOrder queryOrderStatByRange(String channel, Integer serverId, Date startDate, Date endDate);
 
     GameStatRechargeSum queryStatRechargeGoodsSum(String channel, Integer serverId, Integer goodsGroup, Date start, Date end);
 

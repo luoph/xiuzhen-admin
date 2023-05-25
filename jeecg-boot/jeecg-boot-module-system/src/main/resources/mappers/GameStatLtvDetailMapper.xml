@@ -28,12 +28,12 @@
         <![CDATA[
         SELECT #{serverId} AS serverId,
                #{days}     AS days,
-            DATE (#{registerDate}) AS registerDate,
-            IFNULL(SUM (o.`pay_amount`), 0) AS totalAmount
+            DATE(#{registerDate}) AS registerDate,
+            IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
             LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`server_id` = #{serverId}
-          AND p.`create_date` = DATE (#{registerDate})
+          AND p.`create_date` = DATE(#{registerDate})
           AND o.`create_date` <= DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
         ]]>
     </select>
@@ -42,12 +42,12 @@
         <![CDATA[
         SELECT #{channel} AS channel,
                #{days}    AS days,
-            DATE (#{registerDate}) AS registerDate,
-            IFNULL(SUM (o.`pay_amount`), 0) AS totalAmount
+            DATE(#{registerDate}) AS registerDate,
+            IFNULL(SUM(o.`pay_amount`), 0) AS totalAmount
         FROM `game_order` o
             LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
         WHERE p.`channel` = #{channel}
-          AND p.`create_date` = DATE (#{registerDate})
+          AND p.`create_date` = DATE(#{registerDate})
           AND o.`create_date` <= DATE(DATE_ADD(#{registerDate}, INTERVAL #{days} - 1 DAY))
         ]]>
     </select>

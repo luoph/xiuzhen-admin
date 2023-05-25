@@ -60,8 +60,8 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
     List<MergeServerVO> getGameOrderRangeDate(@Param("startTime") Date startTime,
                                               @Param("endTime") Date endTime);
 
-    GameStatOrder queryOrderStatByRange(@Param("serverIds") String serverIds,
-                                        @Param("serverNum") Integer serverNum,
+    GameStatOrder queryOrderStatByRange(@Param("channel") String channel,
+                                        @Param("serverId") Integer serverId,
                                         @Param("startDate") Date startDate,
                                         @Param("endDate") Date endDate);
 
