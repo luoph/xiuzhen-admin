@@ -61,5 +61,5 @@ public interface IGameOrderService extends IService<GameOrder> {
     /**
      * 查询充值榜单
      */
-    IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, String sdkChannel, Integer serverId, DateRange dateRange);
+    IPage<GameStatRechargeRank> queryRechargeRankList(Page<?> page, String channel, String sdkChannel, Integer serverId, Long playerId, DateRange dateRange);
 }

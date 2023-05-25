@@ -1,17 +1,16 @@
 package cn.youai.xiuzhen.core.controller;
 
+import cn.youai.server.exception.AppException;
 import cn.youai.xiuzhen.core.base.IServerData;
 import cn.youai.xiuzhen.core.database.DataSourceHelper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
-import org.jeecg.common.system.util.ExcelUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 多数据源查询基类
@@ -48,6 +47,8 @@ public abstract class SimpleMultiDataSourceController<T extends IServerData> ext
             IPage<T> pageList = pageList(page, entity, req);
             onload(pageList.getRecords());
             return Result.ok(pageList);
+        } catch (AppException e) {
+            return Result.error(e.getMessage());
         } finally {
             useDefaultDatabase();
         }

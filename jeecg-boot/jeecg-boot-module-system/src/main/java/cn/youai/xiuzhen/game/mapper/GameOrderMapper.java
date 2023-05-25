@@ -92,6 +92,7 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                                       @Param("channel") String channel,
                                                       @Param("sdkChannel") String sdkChannel,
                                                       @Param("serverId") Integer serverId,
+                                                      @Param("playerId") Long playerId,
                                                       @Param("dateRange") DateRange dateRange,
                                                       @Param("configAuth") String configAuth);
 

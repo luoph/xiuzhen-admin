@@ -7,19 +7,19 @@
           <a-col :md="4" :sm="8">
             <a-form-item label="游戏编号">
               <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
-              <j-search-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dict="game_info,name,id"/>
+              <j-search-select-tag v-model="queryParam.gameId" placeholder="请选择游戏编号" dict="game_info,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="服务器ip">
-              <j-search-select-tag placeholder="请选择服务器ip" v-model="queryParam.host" dict="game_vps,hostname,ip"/>
+              <j-search-select-tag placeholder="请选择服务器ip" v-model="queryParam.host" dict="game_vps,hostname,ip" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="区服id">
-              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin"/>
+              <a-input placeholder="请输入最小值" class="query-group-cust" v-model="queryParam.id_begin" />
               <span class="query-group-split-cust"></span>
-              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end"/>
+              <a-input placeholder="请输入最大值" class="query-group-cust" v-model="queryParam.id_end" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -32,38 +32,43 @@
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
+            <a-form-item label="维护状态">
+              <a-select placeholder="请选择维护状态" v-model="queryParam.isMaintain">
+                <a-select-option :value="0">正常</a-select-option>
+                <a-select-option :value="1">维护</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :md="4" :sm="8">
             <a-form-item label="标签">
-              <j-dict-select-tag v-model="queryParam.tagId" placeholder="请选择标签"
-                                 dictCode="game_server_tag,name,id"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="状态">
-              <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status"/>
-            </a-form-item>
-          </a-col>
-          <a-col :md="4" :sm="8">
-            <a-form-item label="类型">
-              <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type"/>
+              <j-dict-select-tag v-model="queryParam.tagId" placeholder="请选择标签" dictCode="game_server_tag,name,id" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="开服时间">
-              <a-range-picker v-model="queryParam.openTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onOpenDateChange"/>
+              <a-range-picker v-model="queryParam.openTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onOpenDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="创建时间">
-              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                              :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+              <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
+              <a-form-item label="状态">
+                <j-dict-select-tag v-model="queryParam.status" placeholder="请选择状态" dictCode="server_status" />
+              </a-form-item>
+            </a-col>
+            <a-col :md="4" :sm="8">
+              <a-form-item label="类型">
+                <j-dict-select-tag v-model="queryParam.type" placeholder="请选择类型" dictCode="server_type" />
+              </a-form-item>
+            </a-col>
+            <a-col :md="4" :sm="8">
               <a-form-item label="名字">
                 <!-- dictCode:表名,文本字段,取值字段,查询条件, 通过 ajaxGetDictItems 查询数据库 -->
-                <j-search-select-tag v-model="queryParam.id" placeholder="请选择名字" dict="game_server,name,id"/>
+                <j-search-select-tag v-model="queryParam.id" placeholder="请选择名字" dict="game_server,name,id" />
               </a-form-item>
             </a-col>
           </template>
@@ -73,7 +78,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -88,21 +93,11 @@
       <a-button @click="updateWhitelist" type="primary" icon="sync">IP白名单</a-button>
       <a-button @click="updateServerCache" type="primary" icon="sync">区服缓存</a-button>
       <a-button @click="updateChatServerCache" type="primary" icon="sync">聊天缓存</a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync">
-        刷新活动配置
-      </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync">
-        刷新游戏设置
-      </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="syncPlayer" v-has="'game:server:admin'"
-                icon="sync">同步角色
-      </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger"
-                icon="alert">开启维护
-      </a-button>
-      <a-button :disabled="selectedRowKeys.length <= 0" @click="stopMaintain" v-has="'game:server:admin'" type="danger"
-                icon="alert">结束维护
-      </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateActivity" type="primary" icon="sync"> 刷新活动配置 </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="updateSetting" type="primary" icon="sync"> 刷新游戏设置 </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="syncPlayer" v-has="'game:server:admin'" icon="sync">同步角色 </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="startMaintain" v-has="'game:server:admin'" type="danger" icon="alert">开启维护 </a-button>
+      <a-button :disabled="selectedRowKeys.length <= 0" @click="stopMaintain" v-has="'game:server:admin'" type="danger" icon="alert">结束维护 </a-button>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏服配置')">导出</a-button> -->
       <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -127,10 +122,11 @@
         :loading="loading"
         :scroll="{ x: 'max-content' }"
         @change="handleTableChange"
-        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }">
+        :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
+      >
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-          <a-divider type="vertical"/>
+          <a-divider type="vertical" />
           <a @click="handleCopy(record)">复制</a>
           <!--          <a-dropdown>-->
           <!--            <a class="ant-dropdown-link"> 更多 <a-icon type="down"/> </a>-->
@@ -151,7 +147,7 @@
           <a-tag v-else color="green">运行中</a-tag>
         </span>
         <span slot="switchSlot" slot-scope="text, record">
-          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1"/>
+          <a-switch checked-children="开" un-checked-children="关" :checked="text === 1" />
         </span>
         <span slot="statusSlot" slot-scope="text, record">
           <a-tag v-if="record.status === 0" color="blue">正常</a-tag>
@@ -175,9 +171,9 @@
 
 <script>
 import GameServerModal from './modules/GameServerModal';
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
-import {filterObj} from '@/utils/util';
-import {getAction} from '@/api/manage';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
+import { filterObj } from '@/utils/util';
+import { getAction } from '@/api/manage';
 import JInput from '@/components/jeecg/JInput';
 
 export default {
@@ -227,7 +223,7 @@ export default {
           align: 'center',
           width: 100,
           dataIndex: 'tag',
-          scopedSlots: {customRender: 'tagSlot'}
+          scopedSlots: { customRender: 'tagSlot' }
         },
         {
           title: '服务器ip',
@@ -252,21 +248,21 @@ export default {
           align: 'center',
           width: 60,
           dataIndex: 'outdated',
-          scopedSlots: {customRender: 'outdatedSlot'}
+          scopedSlots: { customRender: 'outdatedSlot' }
         },
         {
           title: '状态',
           align: 'center',
           width: 80,
           dataIndex: 'status',
-          scopedSlots: {customRender: 'statusSlot'}
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '维护状态',
           align: 'center',
           width: 80,
           dataIndex: 'isMaintain',
-          scopedSlots: {customRender: 'maintainSlot'}
+          scopedSlots: { customRender: 'maintainSlot' }
         },
         {
           title: '开服时间',
@@ -295,14 +291,14 @@ export default {
           title: '删档返还',
           align: 'center',
           dataIndex: 'stopServerRefund',
-          scopedSlots: {customRender: 'switchSlot'}
+          scopedSlots: { customRender: 'switchSlot' }
         },
         {
           title: 'GM开关',
           align: 'center',
           width: 80,
           dataIndex: 'gmStatus',
-          scopedSlots: {customRender: 'switchSlot'}
+          scopedSlots: { customRender: 'switchSlot' }
         },
         {
           title: 'GM地址',
@@ -331,7 +327,7 @@ export default {
           fixed: 'right',
           width: 120,
           dataIndex: 'action',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
@@ -418,31 +414,19 @@ export default {
     },
     updateServerList() {
       // 刷新客户端区服列表
-      this.handleConfrimRequest(this.url.updateAllServerUrl,
-        {},
-        '是否刷新客户端区服列表？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateAllServerUrl, {}, '是否刷新客户端区服列表？', '点击确定刷新');
     },
     updateWhitelist() {
       // 刷新IP白名单配置
-      this.handleConfrimRequest(this.url.updateWhitelistUrl,
-        {},
-        '是否刷新IP白名单？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateWhitelistUrl, {}, '是否刷新IP白名单？', '点击确定刷新');
     },
     updateServerCache() {
       // 刷新区服缓存
-      this.handleConfrimRequest(this.url.updateServerCacheUrl,
-        {},
-        '是否刷新区服缓存？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateServerCacheUrl, {}, '是否刷新区服缓存？', '点击确定刷新');
     },
     updateChatServerCache() {
       // 刷新聊天消息缓存
-      this.handleConfrimRequest(this.url.updateChatServerCacheUrl,
-        {},
-        '是否刷新聊天消息缓存？',
-        '点击确定刷新');
+      this.handleConfrimRequest(this.url.updateChatServerCacheUrl, {}, '是否刷新聊天消息缓存？', '点击确定刷新');
     }
   }
 };

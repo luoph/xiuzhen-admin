@@ -28,7 +28,7 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="账号">
-              <a-input placeholder="请输入账号" v-model="queryParam.account" />
+              <j-input placeholder="请输入账号模糊查询" v-model="queryParam.account" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
@@ -41,14 +41,22 @@
               </a-select>
             </a-form-item>
           </a-col>
-          <a-col :md="8" :sm="8">
-            <a-form-item label="等级">
-              <a-input placeholder="最小等级" class="query-group-cust" v-model="queryParam.level_begin" />
-              <span class="query-group-split-cust"></span>
-              <a-input placeholder="最大等级" class="query-group-cust" v-model="queryParam.level_end" />
-            </a-form-item>
-          </a-col>
           <template v-if="toggleSearchStatus">
+            <a-col :md="4" :sm="8">
+              <a-form-item label="状态">
+                <a-select placeholder="请选择状态" v-model="queryParam.status" showSearch allowClear style="width: 100%">
+                  <a-select-option :value="1">有效</a-select-option>
+                  <a-select-option :value="0">无效</a-select-option>
+                </a-select>
+              </a-form-item>
+            </a-col>
+            <a-col :md="8" :sm="8">
+              <a-form-item label="等级">
+                <a-input placeholder="最小等级" class="query-group-cust" v-model="queryParam.level_begin" />
+                <span class="query-group-split-cust"></span>
+                <a-input placeholder="最大等级" class="query-group-cust" v-model="queryParam.level_end" />
+              </a-form-item>
+            </a-col>
             <a-col :md="8" :sm="16">
               <a-form-item label="战力范围">
                 <a-input placeholder="最小战力值" class="query-group-cust" v-model="queryParam.combatPower_begin" />
@@ -123,7 +131,20 @@
           <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
           <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
         </template>
-
+        <span slot="strikeText" slot-scope="text, record">
+          <span v-if="record.status === 0" style="color: red">
+            <s>{{ text }}</s>
+          </span>
+          <span v-else>{{ text }}</span>
+        </span>
+        <span slot="statusSlot" slot-scope="text, record">
+          <a-tag v-if="text === 0" color="red">无效</a-tag>
+          <a-tag v-else color="green">有效</a-tag>
+        </span>
+        <template slot="fileSlot" slot-scope="text">
+          <span v-if="!text" style="font-size: 12px; font-style: italic">无此文件</span>
+          <a-button v-else :ghost="true" type="primary" icon="download" size="small" @click="uploadFile(text)"> 下载 </a-button>
+        </template>
         <span slot="action" slot-scope="text, record">
           <a-dropdown>
             <a class="ant-dropdown-link">更多<a-icon type="down" /></a>
@@ -177,29 +198,31 @@ export default {
           }
         },
         {
-          title: '区服id',
-          align: 'center',
-          dataIndex: 'serverId'
-        },
-        {
           title: '玩家id',
           align: 'center',
-          dataIndex: 'playerId'
-        },
-        {
-          title: '创角区服',
-          align: 'center',
-          dataIndex: 'sid'
+          dataIndex: 'playerId',
+          scopedSlots: { customRender: 'strikeText' }
         },
         {
           title: '角色昵称',
           align: 'center',
-          dataIndex: 'nickname'
+          dataIndex: 'nickname',
+          scopedSlots: { customRender: 'strikeText' }
         },
         {
           title: '账号',
           align: 'center',
           dataIndex: 'account'
+        },
+        {
+          title: '区服id',
+          align: 'center',
+          dataIndex: 'serverId'
+        },
+        {
+          title: '创角区服',
+          align: 'center',
+          dataIndex: 'sid'
         },
         {
           title: '渠道',
@@ -213,6 +236,13 @@ export default {
           customRender: (value) => {
             return value || '--';
           }
+        },
+        {
+          title: '状态',
+          align: 'center',
+          width: 60,
+          dataIndex: 'status',
+          scopedSlots: { customRender: 'statusSlot' }
         },
         {
           title: '等级',

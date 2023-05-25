@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.core.controller;
 
+import cn.youai.server.exception.AppException;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
@@ -26,19 +27,30 @@ public abstract class SimplePageController<T> {
                                    @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
                                    HttpServletRequest req) {
         Page<T> page = new Page<>(pageNo, pageSize);
-        IPage<T> pageList = pageList(page, entity, req);
+        IPage<T> pageList = null;
+        try {
+            pageList = pageList(page, entity, req);
+        } catch (AppException e) {
+            return Result.error(e.getMessage());
+        }
         onload(pageList.getRecords());
         return Result.ok(pageList);
     }
 
     protected ModelAndView exportXls(HttpServletRequest req, T entity, Class<T> clazz, String title) {
         Page<T> page = new Page<>(1, Integer.MAX_VALUE);
-        IPage<T> pageList = pageList(page, entity, req);
+        IPage<T> pageList = null;
+        try {
+            pageList = pageList(page, entity, req);
+        } catch (AppException e) {
+            log.error("exportXls error, title:" + title, e);
+            return null;
+        }
         onload(pageList.getRecords());
         return ExcelUtils.exportXls(pageList, req.getParameter("selections"), clazz, title);
     }
 
-    protected abstract IPage<T> pageList(Page<T> page, T entity, HttpServletRequest req);
+    protected abstract IPage<T> pageList(Page<T> page, T entity, HttpServletRequest req) throws AppException;
 
     protected void onload(List<T> pageList) {
         if (pageList == null) {

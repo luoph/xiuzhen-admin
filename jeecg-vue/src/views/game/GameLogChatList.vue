@@ -24,7 +24,7 @@
             <a-form-item label="消息类型">
               <a-select placeholder="请选择消息类型" v-model="queryParam.msgType" initialValue="1">
                 <a-select-option :value="1">普通文本</a-select-option>
-                <!--                <a-select-option :value="2">修真日志</a-select-option>-->
+                <!--<a-select-option :value="2">修真日志</a-select-option>-->
                 <a-select-option :value="3">分享</a-select-option>
               </a-select>
             </a-form-item>
@@ -35,18 +35,25 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="发送者名称">
-              <a-input placeholder="请输入发送者名称" v-model="queryParam.senderName" />
-            </a-form-item>
-          </a-col>
-          <a-col :md="6" :sm="8">
             <a-form-item label="接收者id">
               <a-input placeholder="请输入接收者id" v-model="queryParam.receiverId" />
             </a-form-item>
           </a-col>
-          <a-col :md="6" :sm="8">
-            <a-form-item label="接收者名称">
-              <a-input placeholder="请输入接收者名称" v-model="queryParam.receiverName" />
+          <a-col :md="8" :sm="8">
+            <a-form-item label="日期">
+              <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+            </a-form-item>
+          </a-col>
+          <a-col :md="12" :sm="8">
+            <a-form-item label="日期范围">
+              <a-radio-group v-model="dayRange" @change="onDayRangeChange">
+                <a-radio :value="-1">自定义</a-radio>
+                <a-radio :value="0">今天</a-radio>
+                <a-radio :value="3">近3天</a-radio>
+                <a-radio :value="7">近7天</a-radio>
+                <a-radio :value="15">近15天</a-radio>
+                <a-radio :value="30">近1月</a-radio>
+              </a-radio-group>
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
@@ -55,10 +62,14 @@
                 <j-input placeholder="请输入消息内容" v-model="queryParam.msgContent" />
               </a-form-item>
             </a-col>
-            <a-col :md="3" :sm="8"></a-col>
             <a-col :md="6" :sm="8">
-              <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createDateRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
+              <a-form-item label="发送者名称">
+                <a-input placeholder="请输入发送者名称" v-model="queryParam.senderName" />
+              </a-form-item>
+            </a-col>
+            <a-col :md="6" :sm="8">
+              <a-form-item label="接收者名称">
+                <a-input placeholder="请输入接收者名称" v-model="queryParam.receiverName" />
               </a-form-item>
             </a-col>
           </template>
@@ -141,6 +152,7 @@ import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import { filterObj } from '@/utils/util';
 import JInput from '@/components/jeecg/JInput';
 import { getAction } from '@/api/manage';
+import moment from 'moment';
 import GameForbidTalkModal from './modules/GameForbidTalkModal';
 
 export default {
@@ -153,6 +165,8 @@ export default {
   data() {
     return {
       description: '聊天日志管理页面',
+      timeout: 90000,
+      dayRange: 0,
       // 表头
       columns: [
         {
@@ -291,7 +305,9 @@ export default {
   methods: {
     initDictConfig() {},
     getQueryParams() {
-      console.log(this.queryParam.createDateRange);
+      if (this.dayRange >= 0) {
+        this.selectDayRange(this.dayRange);
+      }
       const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
@@ -299,10 +315,24 @@ export default {
       delete param.createDateRange;
       return filterObj(param);
     },
-    onDateChange: function (value, dateString) {
-      console.log(dateString[0], dateString[1]);
-      this.queryParam.createDate_begin = dateString[0];
-      this.queryParam.createDate_end = dateString[1];
+    onDateChange: function (value, date) {
+      this.queryParam.createDate_begin = date[0];
+      this.queryParam.createDate_end = date[1];
+      this.dayRange = -1;
+    },
+    onDayRangeChange(e) {
+      if (e.target.value >= 0) {
+        this.selectDayRange(e.target.value);
+      }
+    },
+    selectDayRange(dayRange) {
+      if (dayRange >= 0) {
+        const start = moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
+        const end = moment().format('YYYY-MM-DD');
+        this.queryParam.createDateRange = [start, end];
+        this.queryParam.createDate_begin = start;
+        this.queryParam.createDate_end = end;
+      }
     },
     forbidTalk(record) {
       // 禁言
