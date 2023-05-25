@@ -78,7 +78,7 @@
         SELECT IFNULL(SUM(o.`pay_amount`), 0) AS payAmount
         FROM `game_order` o
         LEFT JOIN `game_player` p ON o.`player_id` = p.`player_id`
-        WHERE p.`server_id` = #{serverId}
+        WHERE p.`sid` = #{serverId}
         <if test="start != null"><![CDATA[ AND o.`create_date` >= DATE(#{start}) ]]></if>
         <if test="end != null "><![CDATA[ AND o.`create_date` <= DATE(#{end}) ]]></if>
     </select>

@@ -252,6 +252,7 @@ export default {
     },
     onResetParams() {
       this.$refs.channelServerSelector.reset();
+      this.dayRange = -1;
     },
     onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];
@@ -265,7 +266,7 @@ export default {
     },
     selectDayRange(dayRange) {
       if (dayRange >= 0) {
-        const start = dayRange == 9999 ? null : moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
+        const start = dayRange >= 9999 ? '' : moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
         const end = moment().format('YYYY-MM-DD');
         this.queryParam.countDateRange = [start, end];
         this.queryParam.countDate_begin = start;

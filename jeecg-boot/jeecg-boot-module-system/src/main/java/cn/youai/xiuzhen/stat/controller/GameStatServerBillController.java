@@ -81,6 +81,8 @@ public class GameStatServerBillController {
             records.add(getServerBill(entity.getServerId(), dateRange));
         } else {
             if (StringUtils.isNotBlank(entity.getChannel())) {
+                // 按照渠道维度统计
+                records.add(getServerBill(entity.getChannel(), dateRange));
                 List<GameServer> serverList = channelServerService.selectServerList(CollUtil.newArrayList(entity.getChannel()));
                 for (GameServer server : serverList) {
                     ServerBill serverBill = getServerBill(server.getId(), dateRange);
@@ -89,17 +91,13 @@ public class GameStatServerBillController {
                     }
                     records.add(serverBill);
                 }
-
-                // 按照渠道维度统计
-                records.add(getServerBill(entity.getChannel(), dateRange));
             } else {
+                // 汇总
+                records.add(getServerBill("", dateRange).setChannel("所有渠道"));
                 List<GameChannel> channelList = channelService.list();
                 for (GameChannel channel : channelList) {
                     records.add(getServerBill(channel.getSimpleName(), dateRange));
                 }
-
-                // 汇总
-                records.add(getServerBill("", dateRange).setChannel("所有渠道"));
             }
         }
 
