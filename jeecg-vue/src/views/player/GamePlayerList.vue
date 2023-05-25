@@ -28,7 +28,7 @@
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="账号">
-              <a-input placeholder="请输入账号" v-model="queryParam.account" />
+              <j-input placeholder="请输入账号模糊查询" v-model="queryParam.account" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
