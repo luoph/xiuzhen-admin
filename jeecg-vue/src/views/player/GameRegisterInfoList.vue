@@ -17,8 +17,8 @@
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
-            <a-form-item label="角色名">
-              <j-input placeholder="请输入角色名模糊查询" v-model="queryParam.name" />
+            <a-form-item label="昵称">
+              <j-input placeholder="请输入昵称模糊查询" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -28,7 +28,7 @@
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="注册IP">
-              <a-input placeholder="请输入ip" v-model="queryParam.ip" />
+              <j-input placeholder="请输入ip模糊查询" v-model="queryParam.ip" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">

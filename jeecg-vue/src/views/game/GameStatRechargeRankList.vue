@@ -26,11 +26,11 @@
               <a-radio-group v-model="dayRange" @change="onDayRangeChange">
                 <a-radio :value="-1">自定义</a-radio>
                 <a-radio :value="0">今天</a-radio>
-                <a-radio :value="3">近3天</a-radio>
-                <a-radio :value="7">近7天</a-radio>
-                <a-radio :value="15">近15天</a-radio>
-                <a-radio :value="30">近1月</a-radio>
-                <a-radio :value="60">近2月</a-radio>
+                <a-radio :value="2">近3天</a-radio>
+                <a-radio :value="6">近7天</a-radio>
+                <a-radio :value="14">近15天</a-radio>
+                <a-radio :value="29">近1月</a-radio>
+                <a-radio :value="59">近2月</a-radio>
                 <a-radio :value="9999">开服以来</a-radio>
               </a-radio-group>
             </a-form-item>
@@ -53,18 +53,7 @@
 
     <!-- table区域-begin -->
     <div>
-      <a-table
-        ref="table"
-        size="middle"
-        bordered
-        rowKey="id"
-        :columns="columns"
-        :dataSource="dataSource"
-        :pagination="ipagination"
-        :loading="loading"
-        :scroll="{ x: 'max-content' }"
-        @change="handleTableChange"
-      >
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <template slot="htmlSlot" slot-scope="text">
           <div v-html="text"></div>
         </template>
@@ -129,7 +118,13 @@ export default {
         {
           title: '玩家id',
           align: 'center',
+          width: 140,
           dataIndex: 'playerId'
+        },
+        {
+          title: '昵称',
+          align: 'center',
+          dataIndex: 'nickname'
         },
         {
           title: '区服',
@@ -152,22 +147,17 @@ export default {
           dataIndex: 'sdkChannel'
         },
         {
-          title: '玩家昵称',
-          align: 'center',
-          dataIndex: 'nickname'
-        },
-        {
           title: '排名',
           align: 'center',
           dataIndex: 'rank'
         },
         {
-          title: '玩家等级',
+          title: '等级',
           align: 'center',
           dataIndex: 'level'
         },
         {
-          title: '充值总金额',
+          title: '支付总额',
           align: 'center',
           dataIndex: 'payAmount'
         },
@@ -177,32 +167,32 @@ export default {
           dataIndex: 'lastPay'
         },
         {
+          title: '最近充值时间',
+          align: 'center',
+          dataIndex: 'lastPayTime'
+        },
+        {
           title: '创角时间',
           align: 'center',
           dataIndex: 'createTime'
         },
         {
-          title: '最后登录时间',
+          title: '最近登录',
           align: 'center',
           dataIndex: 'lastLoginTime'
         },
         {
-          title: '最后充值时间',
-          align: 'center',
-          dataIndex: 'lastPayTime'
-        },
-        {
-          title: '创角天数',
+          title: '创角(天)',
           align: 'center',
           dataIndex: 'playDays'
         },
         {
-          title: '登录预警天数',
+          title: '登录预警(天)',
           align: 'center',
           dataIndex: 'lastLoginDays'
         },
         {
-          title: '充值预警天数',
+          title: '充值预警(天)',
           align: 'center',
           dataIndex: 'lastPayDays'
         },
@@ -252,6 +242,7 @@ export default {
     },
     onResetParams() {
       this.$refs.channelServerSelector.reset();
+      this.dayRange = 6;
     },
     onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];
@@ -265,7 +256,7 @@ export default {
     },
     selectDayRange(dayRange) {
       if (dayRange >= 0) {
-        const start = dayRange == 9999 ? null : moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
+        const start = dayRange >= 9999 ? '' : moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
         const end = moment().format('YYYY-MM-DD');
         this.queryParam.countDateRange = [start, end];
         this.queryParam.countDate_begin = start;

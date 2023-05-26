@@ -81,6 +81,8 @@ public class GameStatServerBillController {
             records.add(getServerBill(entity.getServerId(), dateRange));
         } else {
             if (StringUtils.isNotBlank(entity.getChannel())) {
+                // 按照渠道维度统计
+                records.add(getServerBill(entity.getChannel(), dateRange));
                 List<GameServer> serverList = channelServerService.selectServerList(CollUtil.newArrayList(entity.getChannel()));
                 for (GameServer server : serverList) {
                     ServerBill serverBill = getServerBill(server.getId(), dateRange);
@@ -89,17 +91,13 @@ public class GameStatServerBillController {
                     }
                     records.add(serverBill);
                 }
-
-                // 按照渠道维度统计
-                records.add(getServerBill(entity.getChannel(), dateRange));
             } else {
+                // 汇总
+                records.add(getServerBill("", dateRange).setChannel("所有渠道"));
                 List<GameChannel> channelList = channelService.list();
                 for (GameChannel channel : channelList) {
                     records.add(getServerBill(channel.getSimpleName(), dateRange));
                 }
-
-                // 汇总
-                records.add(getServerBill("", dateRange).setChannel("所有渠道"));
             }
         }
 
@@ -107,18 +105,26 @@ public class GameStatServerBillController {
     }
 
     private ServerBill getServerBill(int serverId, DateRange dateRange) {
-        ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
+        ServerBill serverBill = gameOrderStatService.serverRangeAmount(serverId, dateRange.getStart(), dateRange.getEnd());
+        if (dateRange.getStart() != null) {
+            serverBill.setStartDate(dateRange.getStart());
+        }
+        if (dateRange.getEnd() != null) {
+            serverBill.setEndDate(dateRange.getEnd());
+        }
         serverBill.setChannel(StatisticType.DEFAULT_CHANNEL).setServerId(serverId);
-        BigDecimal amount = gameOrderStatService.serverRangeAmount(serverId, dateRange.getStart(), dateRange.getEnd());
-        serverBill.setTotalAmount(amount);
-        return serverBill;
+        return serverBill.calc();
     }
 
     private ServerBill getServerBill(String channel, DateRange dateRange) {
-        ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
+        ServerBill serverBill = gameOrderStatService.channelRangeAmount(channel, dateRange.getStart(), dateRange.getEnd());
+        if (dateRange.getStart() != null) {
+            serverBill.setStartDate(dateRange.getStart());
+        }
+        if (dateRange.getEnd() != null) {
+            serverBill.setEndDate(dateRange.getEnd());
+        }
         serverBill.setChannel(channel).setServerId(StatisticType.DEFAULT_SERVER_ID);
-        BigDecimal amount = gameOrderStatService.channelRangeAmount(channel, dateRange.getStart(), dateRange.getEnd());
-        serverBill.setTotalAmount(amount);
-        return serverBill;
+        return serverBill.calc();
     }
 }

@@ -12,12 +12,15 @@
           </a-col>
           <a-col :md="12" :sm="8">
             <a-form-item label="日期范围">
-              <a-radio-group v-model="dayType" @change="onDayTypeChange">
-                <a-radio :value="0">自定义</a-radio>
-                <a-radio :value="7">近7天</a-radio>
-                <a-radio :value="15">近15天</a-radio>
-                <a-radio :value="30">近1月</a-radio>
-                <a-radio :value="60">近2月</a-radio>
+              <a-radio-group v-model="dayRange" @change="onDayRangeChange">
+                <a-radio :value="-1">自定义</a-radio>
+                <a-radio :value="0">今天</a-radio>
+                <a-radio :value="2">近3天</a-radio>
+                <a-radio :value="6">近7天</a-radio>
+                <a-radio :value="14">近15天</a-radio>
+                <a-radio :value="29">近1月</a-radio>
+                <a-radio :value="59">近2月</a-radio>
+                <a-radio :value="9999">开服以来</a-radio>
               </a-radio-group>
             </a-form-item>
           </a-col>
@@ -67,8 +70,9 @@ export default {
   },
   data() {
     return {
+      description: '服务器流水',
       timeout: 90000,
-      dayType: 7,
+      dayRange: 0,
       columns: [
         {
           title: '#',
@@ -112,9 +116,29 @@ export default {
           }
         },
         {
+          title: '充值玩家数',
+          align: 'center',
+          dataIndex: 'playerNum',
+        },
+        {
+          title: '充值区服数',
+          align: 'center',
+          dataIndex: 'serverNum',
+        },
+        {
+          title: '人均充值',
+          align: 'center',
+          dataIndex: 'playerAvg',
+        },
+        {
+          title: '服均充值',
+          align: 'center',
+          dataIndex: 'serverAvg',
+        },
+        {
           title: '流水总额',
           align: 'center',
-          dataIndex: 'totalAmount'
+          dataIndex: 'totalAmount',
         }
       ],
       url: {
@@ -136,8 +160,8 @@ export default {
       this.queryParam.serverId = serverId;
     },
     getQueryParams() {
-      if (this.dayType > 0) {
-        this.selectDayType(this.dayType);
+      if (this.dayRange >= 0) {
+        this.selectDayRange(this.dayRange);
       }
       const param = Object.assign({}, this.queryParam, this.isorter);
       param.pageNo = this.ipagination.current;
@@ -148,22 +172,25 @@ export default {
     },
     onResetParams() {
       this.$refs.channelServerSelector.reset();
+      this.dayRange = 0;
     },
     onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];
       this.queryParam.countDate_end = dateString[1];
-      this.dayType = 0;
+      this.dayRange = -1;
     },
-    onDayTypeChange(e) {
-      if (e.target.value > 0) {
-        this.selectDayType(e.target.value);
+    onDayRangeChange(e) {
+      if (e.target.value >= 0) {
+        this.selectDayRange(e.target.value);
       }
     },
-    selectDayType(dayType) {
-      if (dayType > 0) {
-        const start = moment().subtract(dayType, 'days').format('YYYY-MM-DD');
+    selectDayRange(dayRange) {
+      if (dayRange >= 0) {
+        const start = dayRange >= 9999 ? '' : moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
         const end = moment().format('YYYY-MM-DD');
         this.queryParam.countDateRange = [start, end];
+        this.queryParam.countDate_begin = start;
+        this.queryParam.countDate_end = end;
       }
     }
   }

@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.constant.StatDuration;
-import cn.youai.xiuzhen.game.entity.GameServerVO;
 import cn.youai.xiuzhen.game.service.IGameChannelServerService;
 import cn.youai.xiuzhen.stat.entity.GameStatOrder;
 import cn.youai.xiuzhen.stat.service.IGameOrderService;
@@ -26,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -100,16 +98,14 @@ public class GameStatOrderController {
         while (!current.before(dateRange.getStart())) {
             groupDate(monthsMap, StatDuration.MONTH.getTimeFormat(), current);
             groupDate(yearMap, StatDuration.YEAR.getTimeFormat(), current);
-            GameStatOrder statOrder = queryGameStatOrder(StatDuration.DAY, entity.getChannel(), current, current);
-            records.add(statOrder);
-
+            records.add(queryGameStatOrder(StatDuration.DAY, entity.getChannel(), entity.getServerId(), current, current));
             current = DateUtils.addDays(current, -1);
         }
         records.sort(Comparator.comparing(GameStatOrder::getStarDate, Comparator.reverseOrder()));
 
         // 增加按月、按年汇总
-        records.addAll(queryGroupMap(StatDuration.MONTH, entity.getChannel(), monthsMap));
-        records.addAll(queryGroupMap(StatDuration.YEAR, entity.getChannel(), yearMap));
+        records.addAll(queryGroupMap(StatDuration.MONTH, entity.getChannel(), entity.getServerId(), monthsMap));
+        records.addAll(queryGroupMap(StatDuration.YEAR, entity.getChannel(), entity.getServerId(), yearMap));
 
         // 格式化统计标识
         records.forEach(t -> t.setStatTime(DateUtils.formatDate(t.getStarDate(), t.getDuration().getViewFormat())));
@@ -122,31 +118,29 @@ public class GameStatOrderController {
         dateList.add(current);
     }
 
-    private GameStatOrder queryGameStatOrder(StatDuration duration, String channel, Date start, Date end) {
-        List<Integer> serverIds = logAccountService.selectRunningServerIdsByRange(start, end);
-        List<GameServerVO> serverList = channelServerService.filterServerList(channel, serverIds);
-        if (CollUtil.isEmpty(serverList)) {
+    private GameStatOrder queryGameStatOrder(StatDuration duration, String channel, Integer serverId, Date start, Date end) {
+        List<Integer> serverIds = serverId != null ? CollUtil.newArrayList(serverId) : logAccountService.selectRunningServerIdsByRange(start, end);
+        if (CollUtil.isEmpty(serverIds)) {
             return GameStatOrder.zero(duration, start, end);
         } else {
-            Set<Integer> idSet = serverList.stream().map(GameServerVO::getId).collect(Collectors.toSet());
-            GameStatOrder statOrder = orderStatService.queryOrderStatByRange(new ArrayList<>(idSet), start, end).calc();
-            statOrder.setDuration(duration).setStarDate(start).setEndDate(end);
-            return statOrder;
+            GameStatOrder statOrder = orderStatService.queryOrderStatByRange(channel, serverId, start, end);
+            statOrder.setServerNum(CollUtil.size(serverIds)).setDuration(duration).setStarDate(start).setEndDate(end);
+            return statOrder.calc();
         }
     }
 
-    private GameStatOrder queryGroupGameStateOrder(StatDuration duration, String channel, List<Date> list) {
+    private GameStatOrder queryGroupGameStateOrder(StatDuration duration, String channel, Integer serverId, List<Date> list) {
         list.sort(Comparator.comparing(Date::getTime));
         Date start = list.get(0);
         Date end = list.get(list.size() - 1);
-        return queryGameStatOrder(duration, channel, start, end);
+        return queryGameStatOrder(duration, channel, serverId, start, end);
     }
 
-    private List<GameStatOrder> queryGroupMap(StatDuration duration, String channel, Map<String, List<Date>> map) {
+    private List<GameStatOrder> queryGroupMap(StatDuration duration, String channel, Integer serverId, Map<String, List<Date>> map) {
         List<GameStatOrder> list = new ArrayList<>();
         for (String s : map.keySet()) {
             List<Date> dateList = map.get(s);
-            GameStatOrder statOrder = queryGroupGameStateOrder(duration, channel, dateList);
+            GameStatOrder statOrder = queryGroupGameStateOrder(duration, channel, serverId, dateList);
             list.add(statOrder);
         }
         return list;

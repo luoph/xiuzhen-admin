@@ -1,13 +1,13 @@
 package cn.youai.xiuzhen.stat.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.youai.basics.model.DateRange;
 import cn.youai.server.model.RangeValue;
 import cn.youai.xiuzhen.game.entity.GameOrder;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.stat.entity.*;
 import cn.youai.xiuzhen.stat.service.IGameOrderService;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -27,6 +27,7 @@ import java.util.List;
  * @date 2020-01-05
  */
 @Service
+@DS("shardingSphere")
 public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder> implements IGameOrderService {
 
     @Override
@@ -57,12 +58,12 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public BigDecimal serverRangeAmount(int serverId, Date start, Date end) {
+    public ServerBill serverRangeAmount(int serverId, Date start, Date end) {
         return getBaseMapper().serverRangeAmount(serverId, start, end);
     }
 
     @Override
-    public BigDecimal channelRangeAmount(String channel, Date start, Date end) {
+    public ServerBill channelRangeAmount(String channel, Date start, Date end) {
         return getBaseMapper().channelRangeAmount(channel, start, end);
     }
 
@@ -77,8 +78,8 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public GameStatOrder queryOrderStatByRange(List<Integer> serverIds, Date startDate, Date endDate) {
-        return getBaseMapper().queryOrderStatByRange(StrUtil.join(",", serverIds), serverIds.size(), startDate, endDate);
+    public GameStatOrder queryOrderStatByRange(String channel, Integer serverId, Date startDate, Date endDate) {
+        return getBaseMapper().queryOrderStatByRange(channel, serverId, startDate, endDate);
     }
 
     public GameStatRechargeSum queryStatRechargeGoodsSum(String channel, Integer serverId, Integer goodsGroup, Date start, Date end) {

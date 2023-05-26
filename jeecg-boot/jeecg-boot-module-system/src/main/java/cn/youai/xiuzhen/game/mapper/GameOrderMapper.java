@@ -37,11 +37,11 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
                                @Param("amountRange") RangeValue<BigDecimal> amountRange,
                                @Param("configAuth") String configAuth);
 
-    BigDecimal serverRangeAmount(@Param("serverId") int serverId,
+    ServerBill serverRangeAmount(@Param("serverId") int serverId,
                                  @Param("start") Date start,
                                  @Param("end") Date end);
 
-    BigDecimal channelRangeAmount(@Param("channel") String channel,
+    ServerBill channelRangeAmount(@Param("channel") String channel,
                                   @Param("start") Date start,
                                   @Param("end") Date end);
 
@@ -60,8 +60,8 @@ public interface GameOrderMapper extends BaseMapper<GameOrder> {
     List<MergeServerVO> getGameOrderRangeDate(@Param("startTime") Date startTime,
                                               @Param("endTime") Date endTime);
 
-    GameStatOrder queryOrderStatByRange(@Param("serverIds") String serverIds,
-                                        @Param("serverNum") Integer serverNum,
+    GameStatOrder queryOrderStatByRange(@Param("channel") String channel,
+                                        @Param("serverId") Integer serverId,
                                         @Param("startDate") Date startDate,
                                         @Param("endDate") Date endDate);
 

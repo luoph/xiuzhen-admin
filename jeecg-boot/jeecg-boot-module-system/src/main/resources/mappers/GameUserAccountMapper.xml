@@ -14,7 +14,7 @@
     </select>
 
     <select id="querySdkChannels" resultType="java.lang.String">
-        SELECT DISTINCT (`sdk_channel`)
+        SELECT DISTINCT(`sdk_channel`)
         FROM `game_user_account`
         WHERE `sdk_channel` IS NOT NULL AND `sdk_channel` != ''
     </select>
