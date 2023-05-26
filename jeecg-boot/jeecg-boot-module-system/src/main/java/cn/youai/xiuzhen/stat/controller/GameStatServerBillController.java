@@ -105,18 +105,26 @@ public class GameStatServerBillController {
     }
 
     private ServerBill getServerBill(int serverId, DateRange dateRange) {
-        ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
+        ServerBill serverBill = gameOrderStatService.serverRangeAmount(serverId, dateRange.getStart(), dateRange.getEnd());
+        if (dateRange.getStart() != null) {
+            serverBill.setStartDate(dateRange.getStart());
+        }
+        if (dateRange.getEnd() != null) {
+            serverBill.setEndDate(dateRange.getEnd());
+        }
         serverBill.setChannel(StatisticType.DEFAULT_CHANNEL).setServerId(serverId);
-        BigDecimal amount = gameOrderStatService.serverRangeAmount(serverId, dateRange.getStart(), dateRange.getEnd());
-        serverBill.setTotalAmount(amount);
-        return serverBill;
+        return serverBill.calc();
     }
 
     private ServerBill getServerBill(String channel, DateRange dateRange) {
-        ServerBill serverBill = new ServerBill().setStartDate(dateRange.getStart()).setEndDate(dateRange.getEnd());
+        ServerBill serverBill = gameOrderStatService.channelRangeAmount(channel, dateRange.getStart(), dateRange.getEnd());
+        if (dateRange.getStart() != null) {
+            serverBill.setStartDate(dateRange.getStart());
+        }
+        if (dateRange.getEnd() != null) {
+            serverBill.setEndDate(dateRange.getEnd());
+        }
         serverBill.setChannel(channel).setServerId(StatisticType.DEFAULT_SERVER_ID);
-        BigDecimal amount = gameOrderStatService.channelRangeAmount(channel, dateRange.getStart(), dateRange.getEnd());
-        serverBill.setTotalAmount(amount);
-        return serverBill;
+        return serverBill.calc();
     }
 }

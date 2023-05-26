@@ -58,12 +58,12 @@ public class GameOrderServiceImpl extends ServiceImpl<GameOrderMapper, GameOrder
     }
 
     @Override
-    public BigDecimal serverRangeAmount(int serverId, Date start, Date end) {
+    public ServerBill serverRangeAmount(int serverId, Date start, Date end) {
         return getBaseMapper().serverRangeAmount(serverId, start, end);
     }
 
     @Override
-    public BigDecimal channelRangeAmount(String channel, Date start, Date end) {
+    public ServerBill channelRangeAmount(String channel, Date start, Date end) {
         return getBaseMapper().channelRangeAmount(channel, start, end);
     }
 

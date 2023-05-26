@@ -37,9 +37,9 @@ public interface IGameOrderService extends IService<GameOrder> {
     /**
      * 付费金额总和
      */
-    BigDecimal serverRangeAmount(int serverId, Date start, Date end);
+    ServerBill serverRangeAmount(int serverId, Date start, Date end);
 
-    BigDecimal channelRangeAmount(String channel, Date start, Date end);
+    ServerBill channelRangeAmount(String channel, Date start, Date end);
 
     BigDecimal payAmount(String channel, String sdkChannel, Integer serverId, Date date, String configAuth);
 

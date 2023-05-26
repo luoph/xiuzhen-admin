@@ -116,9 +116,29 @@ export default {
           }
         },
         {
+          title: '充值玩家数',
+          align: 'center',
+          dataIndex: 'playerNum',
+        },
+        {
+          title: '充值区服数',
+          align: 'center',
+          dataIndex: 'serverNum',
+        },
+        {
+          title: '人均充值',
+          align: 'center',
+          dataIndex: 'playerAvg',
+        },
+        {
+          title: '服均充值',
+          align: 'center',
+          dataIndex: 'serverAvg',
+        },
+        {
           title: '流水总额',
           align: 'center',
-          dataIndex: 'totalAmount'
+          dataIndex: 'totalAmount',
         }
       ],
       url: {

@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.stat.entity;
 
+import cn.youai.xiuzhen.utils.BigDecimalUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -34,6 +35,26 @@ public class ServerBill implements Serializable {
     private Integer serverId;
 
     /**
+     * 玩家数
+     */
+    private Integer playerNum;
+
+    /**
+     * 人均充值
+     */
+    private BigDecimal playerAvg;
+
+    /**
+     * 区服数
+     */
+    private Integer serverNum;
+
+    /**
+     * 服均充值
+     */
+    private BigDecimal serverAvg;
+
+    /**
      * 统计日期
      */
     @Excel(name = "统计日期", width = 15, format = TimeConstant.DEFAULT_DATE_FORMAT)
@@ -55,5 +76,11 @@ public class ServerBill implements Serializable {
      * 累计支付金额
      */
     private BigDecimal totalAmount;
+
+    public ServerBill calc() {
+        this.playerAvg = BigDecimalUtils.divideZero(totalAmount, BigDecimal.valueOf(playerNum), false);
+        this.serverAvg = BigDecimalUtils.divideZero(totalAmount, BigDecimal.valueOf(serverNum), false);
+        return this;
+    }
 
 }
