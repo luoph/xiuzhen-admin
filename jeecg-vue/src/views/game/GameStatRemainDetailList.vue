@@ -23,10 +23,10 @@
             <a-form-item label="日期范围">
               <a-radio-group v-model="dayType" @change="onDayTypeChange">
                 <a-radio :value="0">自定义</a-radio>
-                <a-radio :value="7">近7天</a-radio>
-                <a-radio :value="15">近15天</a-radio>
-                <a-radio :value="30">近1月</a-radio>
-                <a-radio :value="60">近2月</a-radio>
+                <a-radio :value="6">近7天</a-radio>
+                <a-radio :value="14">近15天</a-radio>
+                <a-radio :value="29">近1月</a-radio>
+                <a-radio :value="59">近2月</a-radio>
               </a-radio-group>
             </a-form-item>
           </a-col>
@@ -84,7 +84,7 @@ export default {
         order: 'desc'
       },
       timeout: 90000,
-      dayType: 7,
+      dayType: 6,
       columns: [
         {
           title: '#',
