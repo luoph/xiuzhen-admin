@@ -327,7 +327,7 @@ export default {
     },
     selectDayRange(dayRange) {
       if (dayRange >= 0) {
-        const start = moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
+        const start = dayRange >= 9999 ? '' : moment().subtract(dayRange, 'days').format('YYYY-MM-DD');
         const end = moment().format('YYYY-MM-DD');
         this.queryParam.createDateRange = [start, end];
         this.queryParam.createDate_begin = start;

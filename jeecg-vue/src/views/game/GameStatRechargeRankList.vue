@@ -242,7 +242,7 @@ export default {
     },
     onResetParams() {
       this.$refs.channelServerSelector.reset();
-      this.dayRange = -1;
+      this.dayRange = 6;
     },
     onDateChange(date, dateString) {
       this.queryParam.countDate_begin = dateString[0];
