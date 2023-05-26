@@ -21,7 +21,7 @@
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="8" :sm="8">
-              <a-form-item label="创建时间">
+              <a-form-item label="时间">
                 <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onDateChange" />
               </a-form-item>
             </a-col>

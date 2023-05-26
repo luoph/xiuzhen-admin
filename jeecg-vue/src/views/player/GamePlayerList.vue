@@ -250,24 +250,24 @@ export default {
           width: 60,
           dataIndex: 'level'
         },
-        {
-          title: '境界',
-          align: 'center',
-          dataIndex: 'realm',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 1) {
-              text = '人界 [1]';
-            } else if (value === 2) {
-              text = '灵界 [2]';
-            } else if (value === 3) {
-              text = '仙界 [3]';
-            } else if (value === 4) {
-              text = '圣界 [4]';
-            }
-            return text;
-          }
-        },
+        // {
+        //   title: '境界',
+        //   align: 'center',
+        //   dataIndex: 'realm',
+        //   customRender: (value) => {
+        //     let text = '--';
+        //     if (value === 1) {
+        //       text = '人界 [1]';
+        //     } else if (value === 2) {
+        //       text = '灵界 [2]';
+        //     } else if (value === 3) {
+        //       text = '仙界 [3]';
+        //     } else if (value === 4) {
+        //       text = '圣界 [4]';
+        //     }
+        //     return text;
+        //   }
+        // },
         {
           title: '累计充值',
           align: 'center',
@@ -296,11 +296,11 @@ export default {
         //   width: 60,
         //   dataIndex: 'backpackLevel'
         // },
-        {
-          title: '修为值',
-          align: 'center',
-          dataIndex: 'practiceValue'
-        },
+        // {
+        //   title: '修为值',
+        //   align: 'center',
+        //   dataIndex: 'practiceValue'
+        // },
         // {
         //   title: '修炼年数',
         //   align: 'center',
@@ -312,16 +312,16 @@ export default {
           align: 'center',
           dataIndex: 'combatPower'
         },
-        {
-          title: '魅力值',
-          align: 'center',
-          dataIndex: 'charmValue'
-        },
-        {
-          title: '本命灵根',
-          align: 'center',
-          dataIndex: 'spiritRootCode'
-        },
+        // {
+        //   title: '魅力值',
+        //   align: 'center',
+        //   dataIndex: 'charmValue'
+        // },
+        // {
+        //   title: '本命灵根',
+        //   align: 'center',
+        //   dataIndex: 'spiritRootCode'
+        // },
         // {
         //   title: '修为加持状态',
         //   align: 'center',
@@ -334,6 +334,11 @@ export default {
         //   width: 60,
         //   dataIndex: 'successRate'
         // },
+        {
+          title: '创角时间',
+          align: 'center',
+          dataIndex: 'createTime'
+        },
         {
           title: '修为结算时间',
           align: 'center',
@@ -359,11 +364,6 @@ export default {
           customRender: (value) => {
             return value || '--';
           }
-        },
-        {
-          title: '创角时间',
-          align: 'center',
-          dataIndex: 'createTime'
         },
         {
           title: '操作',
