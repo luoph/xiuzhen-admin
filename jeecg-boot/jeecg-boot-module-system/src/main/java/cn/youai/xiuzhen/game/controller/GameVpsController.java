@@ -20,7 +20,6 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -48,12 +47,6 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
 
     @Autowired
     private IGameServerService serverService;
-
-    @Value("${app.wgcloud.url}")
-    private String wgcloudUrl;
-
-    @Value("${app.wgcloud.token}")
-    private String wgToken;
 
     @AutoLog(value = "虚拟主机-列表查询")
     @GetMapping(value = "/list")
