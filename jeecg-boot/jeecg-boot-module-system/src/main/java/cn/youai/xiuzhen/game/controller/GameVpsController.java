@@ -2,9 +2,12 @@ package cn.youai.xiuzhen.game.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.DateRange;
+import cn.youai.basics.utils.StringUtils;
+import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameVps;
 import cn.youai.xiuzhen.game.monitor.DiskUsageInfo;
 import cn.youai.xiuzhen.game.monitor.ServerMonitor;
+import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.game.service.IGameVpsService;
 import cn.youai.xiuzhen.game.service.IServerMonitorService;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
@@ -42,6 +45,9 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
 
     @Autowired
     private IServerMonitorService monitorService;
+
+    @Autowired
+    private IGameServerService serverService;
 
     @Value("${app.wgcloud.url}")
     private String wgcloudUrl;
@@ -118,6 +124,15 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
             if (serverMonitor != null) {
                 $.copy(serverMonitor, entity);
                 entity.setDiskList(DiskUsageInfo.parse(serverMonitor.getDiskUsage()));
+            }
+
+            List<Integer> serverIds = StringUtils.split2Int(entity.getGameServerIds());
+            if (CollUtil.isEmpty(serverIds)) {
+                entity.setOnlineNum(0);
+            } else {
+                List<GameServer> servers = serverService.selectGameServerList(serverIds);
+                serverService.updateOnlineNum(servers);
+                entity.setOnlineNum(servers.stream().mapToInt(GameServer::getOnlineNum).sum());
             }
         }
     }

@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.model.DataResponse;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.springboot.component.OkHttpHelper;
@@ -13,6 +14,7 @@ import cn.youai.xiuzhen.game.mapper.GameServerMapper;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.stat.service.ILogAccountService;
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,8 +46,14 @@ import java.util.stream.Collectors;
 @DS("master")
 public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameServer> implements IGameServerService {
 
+    private static final Type RESPONSE_ONLINE_NUM = new TypeReference<DataResponse<Integer>>() {
+    }.getType();
+
     @Value("${app.clean-cache-url}")
     private String cleanCacheUrl;
+
+    @Value("${app.online-num-url:/game/onlineNum}")
+    private String onlineNumUrl;
 
     @Resource
     private GameOrderMapper gameOrderMapper;
@@ -90,11 +99,6 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
         if (GameServerUtils.notEq(gameServer, entity, GameServer::getIsMaintain)) {
             GameServerUtils.apply(childList, entity, GameServer::getIsMaintain, GameServer::setIsMaintain);
         }
-    }
-
-    @Override
-    public List<GameServer> selectGameServerList() {
-        return getBaseMapper().selectGameServerList(null);
     }
 
     @Override
@@ -299,5 +303,56 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
 
     private boolean skipRequest(GameServer gameServer) {
         return gameServer == null || gameServer.skipCheck();
+    }
+
+    @Override
+    public void updateOnlineNum(Collection<GameServer> servers) {
+        if (CollUtil.isEmpty(servers)) {
+            return;
+        }
+
+        CountDownLatch latch = new CountDownLatch(servers.size());
+        for (GameServer record : servers) {
+            if (GameServer.skipCallGm(record)) {
+                record.setOnlineNum(0);
+                latch.countDown();
+                continue;
+            }
+
+            // 已废弃服务器不统计在线人数
+            if (record.skipCheck()) {
+                latch.countDown();
+                continue;
+            }
+
+            OkHttpHelper.getAsync(record.getGmUrl() + onlineNumUrl, new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    log.error("onlineNum onFailure", e);
+                    latch.countDown();
+                }
+
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
+                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
+                        try {
+                            DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
+                            if (rsp != null) {
+                                record.setOnlineNum(rsp.getData());
+                            }
+                        } finally {
+                            response.body().close();
+                        }
+                    }
+                    latch.countDown();
+                }
+            });
+        }
+
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            log.error("onlineNum error", e);
+        }
     }
 }

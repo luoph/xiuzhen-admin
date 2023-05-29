@@ -128,4 +128,8 @@ public class GameVps extends BaseEntity {
     @TableField(exist = false)
     @Excel(name = "磁盘占用", width = 15)
     private List<DiskUsageInfo> diskList;
+
+    @TableField(exist = false)
+    @Excel(name = "在线玩家", width = 15)
+    private Integer onlineNum;
 }

@@ -1,6 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
-import cn.youai.basics.model.DataResponse;
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.model.Response;
 import cn.youai.basics.utils.StringUtils;
 import cn.youai.enums.OutdatedType;
@@ -11,20 +11,15 @@ import cn.youai.xiuzhen.game.entity.GameServerTag;
 import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IGameServerService;
 import cn.youai.xiuzhen.game.service.IGameServerTagService;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Call;
-import okhttp3.Callback;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
 import org.jeecg.common.system.base.controller.JeecgController;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -32,13 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -56,9 +48,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     @Value("${app.server.online-stat:true}")
     private boolean onlineStat;
-
-    private static final Type RESPONSE_ONLINE_NUM = new TypeReference<DataResponse<Integer>>() {
-    }.getType();
 
     @Autowired
     private IGameChannelService channelService;
@@ -80,9 +69,6 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
 
     @Value("${app.stop-maintain-url:/game/stopMaintain}")
     private String stopMaintainUrl;
-
-    @Value("${app.online-num-url:/game/onlineNum}")
-    private String onlineNumUrl;
 
     @Value("${app.url.game-center}")
     private String gameCenterUrl;
@@ -187,8 +173,8 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
                 return Result.ok(String.valueOf(0));
             }
 
-            DataResponse<Integer> response = JSON.parseObject(OkHttpHelper.get(gameServer.getGmUrl() + onlineNumUrl), RESPONSE_ONLINE_NUM);
-            return Result.ok(String.valueOf(response.getData()));
+            service.updateOnlineNum(CollUtil.newArrayList(gameServer));
+            return Result.ok(String.valueOf(gameServer.getOnlineNum()));
         }
         return Result.ok('-');
     }
@@ -231,57 +217,18 @@ public class GameServerController extends JeecgController<GameServer, IGameServe
     }
 
     private void updateOnlineNum(Collection<GameServer> servers, Map<Integer, GameServerTag> tagMap) {
-        CountDownLatch latch = new CountDownLatch(servers.size());
+        if (onlineStat) {
+            service.updateOnlineNum(servers);
+        }
+
+        // 设置标签
         for (GameServer record : servers) {
-            // 设置标签
             if (record.getTagId() != null) {
                 GameServerTag serverTag = tagMap.get(record.getTagId());
                 if (serverTag != null) {
                     record.setTag(serverTag.getName());
                 }
             }
-
-            if (GameServer.skipCallGm(record)) {
-                record.setOnlineNum(0);
-                latch.countDown();
-                continue;
-            }
-
-            // 已废弃服务器不统计在线人数
-            if (!onlineStat || record.skipCheck()) {
-                latch.countDown();
-                continue;
-            }
-
-            OkHttpHelper.getAsync(record.getGmUrl() + onlineNumUrl, new Callback() {
-                @Override
-                public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                    log.error("onlineNum onFailure", e);
-                    latch.countDown();
-                }
-
-                @Override
-                public void onResponse(@NotNull Call call, @NotNull okhttp3.Response response) throws IOException {
-                    if (OkHttpHelper.isSuccess(response) && response.body() != null) {
-                        try {
-                            DataResponse<Integer> rsp = JSON.parseObject(response.body().string(), RESPONSE_ONLINE_NUM);
-                            if (rsp != null) {
-                                record.setOnlineNum(rsp.getData());
-                            }
-                        } finally {
-                            response.body().close();
-                            ;
-                        }
-                    }
-                    latch.countDown();
-                }
-            });
-        }
-
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            log.error("onlineNum error", e);
         }
     }
 

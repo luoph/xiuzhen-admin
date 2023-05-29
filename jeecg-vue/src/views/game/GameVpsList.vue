@@ -6,35 +6,33 @@
         <a-row :gutter="24">
           <a-col :md="4" :sm="8">
             <a-form-item label="名称">
-              <a-input placeholder="请输入名称" v-model="queryParam.name"/>
+              <a-input placeholder="请输入名称" v-model="queryParam.name" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="主机名">
-              <j-search-select-tag placeholder="请选择主机名" v-model="queryParam.hostname"
-                                   dict="game_vps,hostname,hostname"/>
+              <j-search-select-tag placeholder="请选择主机名" v-model="queryParam.hostname" dict="game_vps,hostname,hostname" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="公网ip">
-              <a-input placeholder="请输入公网ip" v-model="queryParam.ip"/>
+              <a-input placeholder="请输入公网ip" v-model="queryParam.ip" />
             </a-form-item>
           </a-col>
           <a-col :md="4" :sm="8">
             <a-form-item label="内网ip">
-              <a-input placeholder="请输入内网ip" v-model="queryParam.lan"/>
+              <a-input placeholder="请输入内网ip" v-model="queryParam.lan" />
             </a-form-item>
           </a-col>
           <template v-if="toggleSearchStatus">
             <a-col :md="4" :sm="8">
               <a-form-item label="系统">
-                <a-input placeholder="请输入系统" v-model="queryParam.os"/>
+                <a-input placeholder="请输入系统" v-model="queryParam.os" />
               </a-form-item>
             </a-col>
             <a-col :md="6" :sm="8">
               <a-form-item label="创建时间">
-                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD"
-                                :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange"/>
+                <a-range-picker v-model="queryParam.createTimeRange" format="YYYY-MM-DD" :placeholder="['开始时间', '结束时间']" @change="onCreateDateChange" />
               </a-form-item>
             </a-col>
           </template>
@@ -44,7 +42,7 @@
               <a-button type="primary" icon="reload" style="margin-left: 8px" @click="searchReset">重置</a-button>
               <a @click="handleToggleSearch" style="margin-left: 8px">
                 {{ toggleSearchStatus ? '收起' : '展开' }}
-                <a-icon :type="toggleSearchStatus ? 'up' : 'down'"/>
+                <a-icon :type="toggleSearchStatus ? 'up' : 'down'" />
               </a>
             </span>
           </a-col>
@@ -56,33 +54,31 @@
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <a-button type="primary" icon="download" @click="handleExportXls('虚拟主机信息')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl"
-                @change="handleImportExcel">
+      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel">
-            <a-icon type="delete"/>
+            <a-icon type="delete" />
             删除
           </a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px">
           批量操作
-          <a-icon type="down"/>
+          <a-icon type="down" />
         </a-button>
       </a-dropdown>
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource"
-               :pagination="ipagination" :loading="loading" @change="handleTableChange">
+      <a-table ref="table" size="middle" bordered rowKey="id" :columns="columns" :dataSource="dataSource" :pagination="ipagination" :loading="loading" @change="handleTableChange">
         <span slot="action" slot-scope="text, record">
           <a-button type="primary" size="small" @click="handleEdit(record)"> 编辑 </a-button>
-          <a-divider/>
+          <a-divider />
           <a-button size="small" @click="handleCopy(record)"> 复制 </a-button>
-          <a-divider/>
+          <a-divider />
           <a-button type="danger" size="small">
             <a-popconfirm title="确定删除吗?" @confirm="() => handleDelete(record.id)"><a>删除</a></a-popconfirm>
           </a-button>
@@ -99,36 +95,34 @@
           <a-tag color="blue">{{ record.fiveLoad }} / {{ record.fifteenLoad }}</a-tag>
         </span>
         <span slot="perSlot" slot-scope="text, record">
-            <a-progress type="circle" :width="70" :strokeWidth="8" stroke-linecap="square" :percent="text"
-                        :stroke-color="getPercentColor(text)"/>
+          <a-progress type="circle" :width="70" :strokeWidth="8" stroke-linecap="square" :percent="text" :stroke-color="getPercentColor(text)" />
         </span>
         <span slot="diskSlot" slot-scope="text, record">
-           <div class="disk-usage-container">
+          <div class="disk-usage-container">
             <li v-for="(item, index) in text">
               <a-tag>{{ item.fileSystem }}</a-tag>
               <a-tag :color="getPercentColor(item.usedPer)">{{ item.avail }}</a-tag>
               <a-tag>{{ item.diskSize }} </a-tag>
               <div class="disk-usage-progress">
-                <a-progress size="small" :strokeWidth="8" stroke-linecap="square" :percent="item.usedPer"
-                            :stroke-color="getPercentColor(item.usedPer)"/>
+                <a-progress size="small" :strokeWidth="8" stroke-linecap="square" :percent="item.usedPer" :stroke-color="getPercentColor(item.usedPer)" />
               </div>
-              <a-divider v-if="index !== text.length - 1"/>
+              <a-divider v-if="index !== text.length - 1" />
             </li>
-           </div>
+          </div>
         </span>
       </a-table>
     </div>
     <!-- table区域-end -->
     <!-- 表单区域 -->
-    <game-vps-modal ref="modalForm" @ok="modalFormOk"/>
+    <game-vps-modal ref="modalForm" @ok="modalFormOk" />
   </a-card>
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JInput from '@/components/jeecg/JInput';
-import GameVpsModal from "@views/game/modules/GameVpsModal.vue";
-import {filterObj} from "@/utils/util";
+import GameVpsModal from '@views/game/modules/GameVpsModal.vue';
+import { filterObj } from '@/utils/util';
 
 export default {
   name: 'GameVpsList',
@@ -181,14 +175,14 @@ export default {
             return value || '--';
           }
         },
-        {
-          title: '系统',
-          align: 'center',
-          dataIndex: 'platform',
-          customRender: (value) => {
-            return value || '--';
-          }
-        },
+        // {
+        //   title: '系统',
+        //   align: 'center',
+        //   dataIndex: 'platform',
+        //   customRender: (value) => {
+        //     return value || '--';
+        //   }
+        // },
         // {
         //   title: '平台',
         //   align: 'center',
@@ -210,16 +204,22 @@ export default {
           dataIndex: 'crossServerNum'
         },
         {
+          title: '在线玩家',
+          align: 'center',
+          width: 60,
+          dataIndex: 'onlineNum'
+        },
+        {
           title: '区服id',
           align: 'center',
           dataIndex: 'gameServerIds',
-          scopedSlots: {customRender: 'blueTags'}
+          scopedSlots: { customRender: 'blueTags' }
         },
         {
           title: '跨服id',
           align: 'center',
           dataIndex: 'crossServerIds',
-          scopedSlots: {customRender: 'greenTags'}
+          scopedSlots: { customRender: 'greenTags' }
         },
         {
           title: 'CPU核数',
@@ -232,27 +232,27 @@ export default {
           align: 'center',
           width: 80,
           dataIndex: 'cpuPer',
-          scopedSlots: {customRender: 'perSlot'}
+          scopedSlots: { customRender: 'perSlot' }
         },
         {
           title: '内存%',
           align: 'center',
           width: 80,
           dataIndex: 'memPer',
-          scopedSlots: {customRender: 'perSlot'}
+          scopedSlots: { customRender: 'perSlot' }
         },
         {
           title: '磁盘占用',
           align: 'center',
           dataIndex: 'diskList',
-          scopedSlots: {customRender: 'diskSlot'}
+          scopedSlots: { customRender: 'diskSlot' }
         },
         {
           title: '负载(5/15)',
           align: 'center',
           width: 80,
           dataIndex: '',
-          scopedSlots: {customRender: 'loadSlot'}
+          scopedSlots: { customRender: 'loadSlot' }
         },
         // {
         //   title: '启动时间',
@@ -270,13 +270,13 @@ export default {
           width: 100,
           dataIndex: 'action',
           align: 'center',
-          scopedSlots: {customRender: 'action'}
+          scopedSlots: { customRender: 'action' }
         }
       ],
       url: {
         list: 'game/vps/list',
         delete: 'game/vps/delete',
-        deleteBatch: 'game/vps/deleteBatch',
+        deleteBatch: 'game/vps/deleteBatch'
       }
     };
   },
@@ -301,7 +301,7 @@ export default {
       this.queryParam.createTime_end = dateString[1];
     },
     getPercentColor(value) {
-      return value >= 80 ? '#FF5252' : (value >= 60 ? '#FFAB00' : '#00C853')
+      return value >= 80 ? '#FF5252' : value >= 60 ? '#FFAB00' : '#00C853';
     }
   }
 };
@@ -326,5 +326,4 @@ export default {
 .circle-progress {
   padding: 20px 20px 20px 20px;
 }
-
 </style>

@@ -21,13 +21,6 @@ public interface IGameServerService extends IService<GameServer> {
 
     void applyChange(GameServer entity);
 
-    /**
-     * 获取服务器列表
-     *
-     * @return {@linkplain GameServer}列表
-     */
-    List<GameServer> selectGameServerList();
-
     List<GameServer> selectGameServerList(List<Integer> serverIds);
 
     List<GameServer> selectGameServerByPid(List<Integer> pids);
@@ -103,4 +96,6 @@ public interface IGameServerService extends IService<GameServer> {
     Set<Integer> getAllServerIds();
 
     List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount);
+
+    void updateOnlineNum(Collection<GameServer> servers);
 }
