@@ -294,6 +294,14 @@ export default {
           scopedSlots: { customRender: 'switchSlot' }
         },
         {
+          title: '版本类型',
+          align: 'center',
+          dataIndex: 'versionType',
+          customRender: (text) => {
+            return text === 1 ? '普通服' : text === 2 ? 'BT服' : 'N/A';
+          }
+        },
+        {
           title: 'GM开关',
           align: 'center',
           width: 80,

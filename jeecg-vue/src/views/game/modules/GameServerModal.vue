@@ -107,6 +107,12 @@
             <a-select-option :value="1">开启</a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="版本类型">
+          <a-select v-decorator="['versionType', {}]" placeholder="请选择版本类型">
+            <a-select-option :value="1">普通服</a-select-option>
+            <a-select-option :value="2">BT服</a-select-option>
+          </a-select>
+        </a-form-item>
         <a-form-item label="GM开关" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="" v-decorator="['gmStatus', validatorRules.gmStatus]" initialValue="0">
             <a-select-option :value="0">关闭</a-select-option>
@@ -203,7 +209,8 @@ export default {
         taStatistics: {rules: [{required: true, message: "请设置TA开关!"}]},
         onlineStat: {rules: [{required: true, message: "请设置在线统计开关!"}]},
         payCallbackStatus: {rules: [{required: true, message: "请设置支付回调开关!"}]},
-        stopServerRefund: {rules: [{required: false, message: "请设置删档返还开关!"}]}
+        stopServerRefund: {rules: [{required: false, message: "请设置删档返还开关!"}]},
+        versionType: {rules: [{required: false, message: "请设置版本类型!"}]}
       },
       url: {
         add: "game/gameServer/add",
@@ -259,7 +266,8 @@ export default {
             "payCallbackStatus",
             "onlineStat",
             "extra",
-            "stopServerRefund"
+            "stopServerRefund",
+            "versionType"
           )
         );
 
@@ -352,7 +360,8 @@ export default {
           "payCallbackStatus",
           "onlineStat",
           "extra",
-          "stopServerRefund"
+          "stopServerRefund",
+          "versionType"
         )
       );
     }

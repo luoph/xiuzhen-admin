@@ -258,6 +258,13 @@ public class GameServer extends BaseEntity {
     private java.lang.Integer stopServerRefund;
 
     /**
+     * 版本类型: 1.普通服, 2.BT服
+     */
+    @Excel(name = "版本类型", width = 15)
+    @ApiModelProperty(value = "版本类型")
+    private java.lang.Integer versionType;
+
+    /**
      * 扩展字段
      */
     @Excel(name = "扩展字段", width = 15)
