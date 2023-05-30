@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.youai.xiuzhen.game.mapper.GameStopServerRefundRecordMapper">
+    <select id="pageList" resultType="cn.youai.xiuzhen.game.entity.GameStopServerRefundRecord">
+        select r.*, p.account, p.nickname from `game_stop_server_refund_record` r
+        left join `game_player` p on r.target_player_id = p.player_id
+        <where>
+            <if test="entity != null">
+                <if test="entity.sourceServerId != null and entity.sourceServerId > 0">
+                    and r.`source_server_id` = #{entity.sourceServerId}
+                </if>
+                <if test="entity.sourcePlayerId != null and entity.sourcePlayerId > 0">
+                    and r.`source_player_id` = #{entity.sourcePlayerId}
+                </if>
+                <if test="entity.targetServerId != null and entity.targetServerId > 0">
+                    and r.`target_server_id` = #{entity.targetServerId}
+                </if>
+                <if test="entity.targetPlayerId != null and entity.targetPlayerId > 0">
+                    and r.`target_player_id` = #{entity.targetPlayerId}
+                </if>
 
+                <if test="sourceAmountRange != null">
+                    <if test="null != sourceAmountRange.min"><![CDATA[and r.`source_amount` >= #{sourceAmountRange.min}]]></if>
+                    <if test="null != sourceAmountRange.max"><![CDATA[and r.`source_amount` <= #{sourceAmountRange.max}]]></if>
+                </if>
+                <if test="targetNumRange != null">
+                    <if test="null != targetNumRange.min"><![CDATA[and r.`target_num` >= #{targetNumRange.min}]]></if>
+                    <if test="null != targetNumRange.max"><![CDATA[and r.`target_num` <= #{targetNumRange.max}]]></if>
+                </if>
+                <if test="createTimeRange != null">
+                    <if test="null != createTimeRange.start"><![CDATA[and r.`create_time` >= #{createTimeRange.start}]]></if>
+                    <if test="null != createTimeRange.end"><![CDATA[and r.`create_time` <= #{createTimeRange.end}]]></if>
+                </if>
+            </if>
+        </where>
+        order by r.create_time desc
+    </select>
 </mapper>

@@ -193,12 +193,30 @@ export default {
           dataIndex: 'targetPlayerId'
         },
         {
-          title: '充值总金额',
+          title: '返还的玩家账号',
           align: 'center',
-          dataIndex: 'sourceAmount'
+          dataIndex: 'targetPlayerId'
         },
         {
-          title: '返还总仙玉',
+          title: '返还的玩家昵称',
+          align: 'center',
+          dataIndex: 'account'
+        },
+        {
+          title: '充值总金额',
+          align: 'center',
+          dataIndex: 'nickname'
+        },
+        {
+          title: '停服区服版本类型',
+          align: 'center',
+          dataIndex: 'sourceServerVersionType',
+          customRender: (text) => {
+            return text === 1 ? '普通服' : text === 2 ? 'BT服' : 'N/A';
+          }
+        },
+        {
+          title: '返还总仙玉/代金券',
           align: 'center',
           dataIndex: 'targetNum'
         },

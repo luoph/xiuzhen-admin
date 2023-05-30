@@ -11,11 +11,11 @@ import cn.youai.server.model.ItemVO;
 import cn.youai.server.utils.ConvertUtils;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
+import cn.youai.xiuzhen.game.cache.GameSettingCache;
 import cn.youai.xiuzhen.game.cache.GameStopServerRefundRecordCache;
-import cn.youai.xiuzhen.game.entity.GameOrder;
-import cn.youai.xiuzhen.game.entity.GamePlayer;
-import cn.youai.xiuzhen.game.entity.GameServer;
-import cn.youai.xiuzhen.game.entity.GameStopServerRefundRecord;
+import cn.youai.xiuzhen.game.constant.GameServerVersionType;
+import cn.youai.xiuzhen.game.constant.GameSettingKey;
+import cn.youai.xiuzhen.game.entity.*;
 import cn.youai.xiuzhen.game.mapper.GameOrderMapper;
 import cn.youai.xiuzhen.game.mapper.GameStopServerRefundRecordMapper;
 import cn.youai.xiuzhen.game.service.IGamePlayerService;
@@ -101,6 +101,10 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
         List<GameStopServerRefundRecord> saveRecords = new ArrayList<>(account2GamePlayerMap.size());
         Map<Integer, List<HttpEmail>> httpEmails = new HashMap<>(gameServerIds.size());
 
+        GameSetting ratioGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_RATIO);
+        GameSetting emailTitleGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_EMAIL_TITLE);
+        GameSetting emailDescribeGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_EMAIL_DESCRIBE);
+
         account2GamePlayerMap.forEach((k, v) -> {
             // 需要返还的players
             List<GamePlayer> sourceGamePlayers = v.stream().filter(e -> gameServerIds.contains(e.getServerId())
@@ -124,12 +128,31 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
                     return;
                 }
 
-                long refundNum = getRefundNum(gameOrder.getTotalAmount());
+                GameServer sourceGameServer = GameServerCache.getInstance().get(sourceGamePlayer.getServerId());
+                GameServerVersionType versionType = GameServerVersionType.valueOf(sourceGameServer.getVersionType());
+                if (null == versionType) {
+                    log.error("checkSendStopServerRefund() error, gameServer.versionType is null. versionType={}", sourceGameServer.getVersionType());
+                    return;
+                }
+
+                if (versionType == GameServerVersionType.BT) {
+                    if (null == ratioGameSetting || null == emailTitleGameSetting || null == emailDescribeGameSetting) {
+                        log.error("checkSendStopServerRefund() error, bt refund GameSetting is null.");
+                        return;
+                    }
+                }
+
+                List<ItemVO> refundRewards = getRefundRewards(versionType, gameOrder.getTotalAmount());
+                if (CollUtil.isEmpty(refundRewards)) {
+                    return;
+                }
+                long refundNum = refundRewards.get(0).getNum();
                 if (refundNum <= 0) {
                     return;
                 }
 
                 saveRecords.add(new GameStopServerRefundRecord()
+                        .setSourceServerVersionType(versionType.getType())
                         .setSourceServerId(sourceGamePlayer.getServerId())
                         .setSourcePlayerId(sourceGamePlayer.getPlayerId())
                         .setTargetServerId(targetGamePlayer.getServerId())
@@ -137,10 +160,15 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
                         .setSourceAmount(BigDecimal.valueOf(gameOrder.getTotalAmount()))
                         .setTargetNum(refundNum).setCreateTime(current));
 
-                String rewards = JSON.toJSONString(CollUtil.newArrayList(ItemVO.valueOf(1002, refundNum)));
+                String rewards = JSON.toJSONString(refundRewards);
                 Object[] args = new Object[]{gameOrder.getTotalAmount().longValue(), refundNum};
-                HttpEmail httpEmail = new HttpEmail().setPlayerId(targetGamePlayer.getPlayerId()).setMailId(105).setRewards(rewards)
+                HttpEmail httpEmail = new HttpEmail().setPlayerId(targetGamePlayer.getPlayerId()).setRewards(rewards)
                         .setRuleId(ItemRuleId.GAME_STOP_SERVER_REFUND.getType()).setByteArgs(ConvertUtils.gzipJson(args));
+                if (versionType == GameServerVersionType.NORMAL) {
+                    httpEmail.setMailId(105);
+                } else if (versionType == GameServerVersionType.BT) {
+                    httpEmail.setTitle(emailTitleGameSetting.getDictValue()).setDescribe(emailDescribeGameSetting.getDictValue());
+                }
                 httpEmails.computeIfAbsent(targetGamePlayer.getServerId(), serverId -> new ArrayList<>()).add(httpEmail);
             });
         });
@@ -153,13 +181,26 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
         }
     }
 
+    private List<ItemVO> getRefundRewards(GameServerVersionType versionType, double totalAmount) {
+        int itemId = 0;
+        long refundNum = 0;
+        if (versionType == GameServerVersionType.NORMAL) {
+            itemId = 1002;
+            refundNum = getNormalRefundNum(totalAmount);
+        } else if (versionType == GameServerVersionType.BT) {
+            itemId = 1217;
+            refundNum = getBtRefundNum(totalAmount);
+        }
+        return refundNum > 0 ? CollUtil.newArrayList(ItemVO.valueOf(itemId, refundNum)) : null;
+    }
+
     /**
-     * 1000以内按总金额的1200%换算，超出部分按1500%换算
+     * 普通服: 1000以内按总金额的1200%换算，超出部分按1500%换算
      *
      * @param totalAmount 总充值金额
      * @return 返还仙玉数量
      */
-    private long getRefundNum(double totalAmount) {
+    private long getNormalRefundNum(double totalAmount) {
         double amountLe1000 = Math.min(totalAmount, 1000);
         long num = (long) (amountLe1000 * 12);
 
@@ -168,5 +209,14 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
             num += amountGt1000 * 15;
         }
         return num;
+    }
+
+    private long getBtRefundNum(double totalAmount) {
+        GameSetting gameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_RATIO);
+        if (null == gameSetting) {
+            log.error("getBtRefundNum() error, gameSetting is null. key={}", GameSettingKey.BT_STOP_SERVER_REFUND_RATIO);
+            return 0;
+        }
+        return (long) (Double.parseDouble(gameSetting.getDictValue()) * 0.01 * totalAmount);
     }
 }

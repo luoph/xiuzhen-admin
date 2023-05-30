@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -37,6 +38,13 @@ public class GameStopServerRefundRecord implements Serializable {
     private java.lang.Integer id;
 
     /**
+     * 停服区服版本类型: 1.普通服, 2.BT服
+     */
+    @Excel(name = "停服区服版本类型", width = 15)
+    @ApiModelProperty(value = "停服区服版本类型")
+    private java.lang.Integer sourceServerVersionType;
+
+    /**
      * 停服的服务器id
      */
     @Excel(name = "停服的服务器id", width = 15)
@@ -63,6 +71,22 @@ public class GameStopServerRefundRecord implements Serializable {
     @Excel(name = "返还的玩家id", width = 15)
     @ApiModelProperty(value = "返还的玩家id")
     private java.lang.Long targetPlayerId;
+
+    /**
+     * 玩家账号
+     */
+    @Excel(name = "玩家账号", width = 15)
+    @ApiModelProperty(value = "玩家账号")
+    @TableField(exist = false)
+    private String account;
+
+    /**
+     * 角色昵称
+     */
+    @Excel(name = "角色昵称", width = 15)
+    @ApiModelProperty(value = "角色昵称")
+    @TableField(exist = false)
+    private String nickname;
 
     /**
      * 充值总金额
