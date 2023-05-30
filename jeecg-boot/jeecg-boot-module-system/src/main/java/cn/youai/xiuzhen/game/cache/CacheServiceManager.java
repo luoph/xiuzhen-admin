@@ -9,6 +9,7 @@ package cn.youai.xiuzhen.game.cache;
 public final class CacheServiceManager {
 
     public static void loadAll() {
+        GameSettingCache.getInstance().loadAll();
         GameServerCache.getInstance().loadAll();
         GameStopServerRefundRecordCache.getInstance().loadAll();
     }

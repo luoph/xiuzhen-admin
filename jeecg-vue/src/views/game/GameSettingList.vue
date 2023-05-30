@@ -31,6 +31,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button type="primary" icon="plus" @click="handleAdd">新增</a-button>
+      <a-button @click="refresh" type="primary" icon="sync">刷新配置</a-button>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('游戏设置')">导出</a-button>
             <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
                 <a-button type="primary" icon="import">导入</a-button>
@@ -172,7 +173,8 @@ export default {
         delete: 'game/gameSetting/delete',
         deleteBatch: 'game/gameSetting/deleteBatch',
         exportXlsUrl: 'game/gameSetting/exportXls',
-        importExcelUrl: 'game/gameSetting/importExcel'
+        importExcelUrl: 'game/gameSetting/importExcel',
+        refresh: 'game/gameSetting/refresh'
       },
       dictOptions: {}
     };
@@ -183,7 +185,10 @@ export default {
     }
   },
   methods: {
-    initDictConfig() {}
+    initDictConfig() {},
+    refresh() {
+      this.handleConfrimRequest(this.url.refresh, {}, '是否刷新配置？', '点击确定刷新');
+    },
   }
 };
 </script>

@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.controller;
 
+import cn.youai.xiuzhen.game.cache.GameSettingCache;
 import cn.youai.xiuzhen.game.entity.GameSetting;
 import cn.youai.xiuzhen.game.service.IGameSettingService;
 import lombok.extern.slf4j.Slf4j;
@@ -35,25 +36,47 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @AutoLog(value = "游戏设置-添加")
     @PostMapping(value = "/add")
     public Result<?> add(@RequestBody GameSetting entity) {
-        return super.add(entity);
+        Result<?> result = super.add(entity);
+        if (result.isSuccess()) {
+            GameSettingCache.getInstance().put(entity.getDictKey(), entity);
+        }
+        return result;
     }
 
     @AutoLog(value = "游戏设置-编辑")
     @PutMapping(value = "/edit")
     public Result<?> edit(@RequestBody GameSetting entity) {
-        return super.edit(entity);
+        Result<?> result = super.edit(entity);
+        if (result.isSuccess()) {
+            GameSettingCache.getInstance().put(entity.getDictKey(), entity);
+        }
+        return result;
     }
 
     @AutoLog(value = "游戏设置-通过id删除")
     @DeleteMapping(value = "/delete")
     public Result<?> delete(@RequestParam(name = "id") String id) {
-        return super.delete(id);
+        Result<?> result = super.queryById(id);
+        if (!result.isSuccess()) {
+            return result;
+        }
+        result = super.delete(id);
+        if (result.isSuccess()) {
+            GameSetting entity = (GameSetting) result.getResult();
+            GameSettingCache.getInstance().remove(entity.getDictKey());
+        }
+        return result;
     }
 
     @AutoLog(value = "游戏设置-批量删除")
     @DeleteMapping(value = "/deleteBatch")
     public Result<?> deleteBatch(@RequestParam(name = "ids") String ids) {
-        return super.deleteBatch(ids);
+        Result<?> result = super.deleteBatch(ids);
+        if (result.isSuccess()) {
+            GameSettingCache.getInstance().clear();
+            GameSettingCache.getInstance().loadAll();
+        }
+        return result;
     }
 
     @AutoLog(value = "游戏设置-通过id查询")
@@ -71,6 +94,19 @@ public class GameSettingController extends JeecgController<GameSetting, IGameSet
     @AutoLog(value = "游戏设置-导入")
     @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
-        return super.importExcel(request, response, GameSetting.class);
+        Result<?> result = super.importExcel(request, response, GameSetting.class);
+        if (result.isSuccess()) {
+            GameSettingCache.getInstance().clear();
+            GameSettingCache.getInstance().loadAll();
+        }
+        return result;
+    }
+
+    @AutoLog(value = "游戏设置-刷新")
+    @GetMapping(value = "/refresh")
+    public Result<?> refresh() {
+        GameSettingCache.getInstance().clear();
+        GameSettingCache.getInstance().loadAll();
+        return Result.ok("刷新成功!");
     }
 }
