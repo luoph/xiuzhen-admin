@@ -8,7 +8,7 @@ import cn.youai.server.constant.ItemRuleId;
 import cn.youai.xiuzhen.core.controller.MongoDataController;
 import cn.youai.xiuzhen.game.entity.GamePlayer;
 import cn.youai.xiuzhen.stat.constant.OperationType;
-import cn.youai.xiuzhen.stat.entity.MgBackpackLog;
+import cn.youai.xiuzhen.stat.entity.BackpackLog;
 import cn.youai.xiuzhen.utils.PageQueryUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
@@ -37,14 +37,14 @@ import java.util.Set;
 @Readonly
 @RestController
 @RequestMapping("player/backpackLog")
-public class BackpackLogController extends MongoDataController<MgBackpackLog> {
+public class BackpackLogController extends MongoDataController<BackpackLog> {
 
     /**
      * 分页列表查询
      */
     @AutoLog(value = "道具日志-列表查询")
     @GetMapping(value = "/list")
-    public Result<?> queryPageList(MgBackpackLog entity,
+    public Result<?> queryPageList(BackpackLog entity,
                                    @RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo,
                                    @RequestParam(name = "pageSize", defaultValue = "20") Integer pageSize,
                                    HttpServletRequest req) {
@@ -70,7 +70,7 @@ public class BackpackLogController extends MongoDataController<MgBackpackLog> {
     }
 
     @Override
-    protected Criteria queryCriteria(MgBackpackLog entity, HttpServletRequest req) {
+    protected Criteria queryCriteria(BackpackLog entity, HttpServletRequest req) {
         DateRange dageRange = PageQueryUtils.parseRange(req.getParameterMap(), "createTime");
         PageQueryUtils.addTime(dageRange);
 
@@ -109,12 +109,12 @@ public class BackpackLogController extends MongoDataController<MgBackpackLog> {
 
     @AutoLog(value = "道具日志-导出")
     @RequestMapping(value = "/exportXls")
-    public ModelAndView exportXls(HttpServletRequest request, MgBackpackLog entity) {
-        return super.exportXls(request, entity, MgBackpackLog.class, "道具日志");
+    public ModelAndView exportXls(HttpServletRequest request, BackpackLog entity) {
+        return super.exportXls(request, entity, BackpackLog.class, "道具日志");
     }
 
     @Override
-    protected void onload(MgBackpackLog entity, GamePlayer player) {
+    protected void onload(BackpackLog entity, GamePlayer player) {
         ConfItem confItem = GameConfigUtils.getItemById(entity.getItemId());
         if (confItem != null) {
             entity.setItemName(confItem.getName());

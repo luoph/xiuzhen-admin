@@ -18,7 +18,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @Document(collection = "backpack_log")
-public class MgBackpackLog implements IPlayerData, Serializable {
+public class BackpackLog implements IPlayerData, Serializable {
 
     private static final long serialVersionUID = 7925160499013709552L;
 
