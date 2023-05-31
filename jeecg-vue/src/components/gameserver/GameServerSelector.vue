@@ -10,7 +10,7 @@
     <span> 区服 </span>
     <a-select mode="multiple" allowClear show-search v-model="selectValue" style="width: 100%" placeholder="请选择区服" @change="handleServerChange">
       <a-select-option value="all">所有</a-select-option>
-      <a-select-option v-for="server in serverList" :key="server.name" :value="server.id">
+      <a-select-option v-for="server in serverList" :key="server.name" :value="server.id + ''">
         {{ server.id + "-" + server.name }}
       </a-select-option>
     </a-select>
