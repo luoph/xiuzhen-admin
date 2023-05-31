@@ -68,6 +68,7 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
             return;
         }
 
+        log.info("[Refund] start checking...");
         // 充值总金额
         Map<Long, GameOrder> playerId2GameOrderMap = gameOrderMapper.sumAmountGroupByPlayerId(gameServerIds).stream()
                 .filter(e -> null != e.getTotalAmount() && e.getTotalAmount() > 0)
@@ -131,18 +132,20 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
                 GameServer sourceGameServer = GameServerCache.getInstance().get(sourceGamePlayer.getServerId());
                 GameServerVersionType versionType = GameServerVersionType.valueOf(sourceGameServer.getVersionType());
                 if (null == versionType) {
-                    log.error("checkSendStopServerRefund() error, gameServer.versionType is null. versionType={}", sourceGameServer.getVersionType());
+                    log.error("[Refund] checkSendStopServerRefund() error, gameServer.versionType is null. versionType={}", sourceGameServer.getVersionType());
                     return;
                 }
 
                 if (versionType == GameServerVersionType.BT) {
                     if (null == ratioGameSetting || null == emailTitleGameSetting || null == emailDescribeGameSetting) {
-                        log.error("checkSendStopServerRefund() error, bt refund GameSetting is null.");
+                        log.error("[Refund] checkSendStopServerRefund() error, bt refund GameSetting is null.");
                         return;
                     }
                 }
 
                 List<ItemVO> refundRewards = getRefundRewards(versionType, gameOrder.getTotalAmount());
+                log.info("[Refund] playerId:{} totalAmount:{}, versionType:{} refundRewards:{}",
+                        sourceGamePlayer.getPlayerId(), gameOrder.getTotalAmount(), versionType, JSON.toJSONString(refundRewards));
                 if (CollUtil.isEmpty(refundRewards)) {
                     return;
                 }
@@ -179,44 +182,15 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
             saveBatch(saveRecords);
             GameStopServerRefundRecordCache.getInstance().put(saveRecords);
         }
+
+        log.info("[Refund] finish checking");
     }
 
     private List<ItemVO> getRefundRewards(GameServerVersionType versionType, double totalAmount) {
-        int itemId = 0;
-        long refundNum = 0;
-        if (versionType == GameServerVersionType.NORMAL) {
-            itemId = 1002;
-            refundNum = getNormalRefundNum(totalAmount);
-        } else if (versionType == GameServerVersionType.BT) {
-            itemId = 1217;
-            refundNum = getBtRefundNum(totalAmount);
+        if (versionType == null) {
+            return new ArrayList<>();
         }
-        return refundNum > 0 ? CollUtil.newArrayList(ItemVO.valueOf(itemId, refundNum)) : null;
-    }
-
-    /**
-     * 普通服: 1000以内按总金额的1200%换算，超出部分按1500%换算
-     *
-     * @param totalAmount 总充值金额
-     * @return 返还仙玉数量
-     */
-    private long getNormalRefundNum(double totalAmount) {
-        double amountLe1000 = Math.min(totalAmount, 1000);
-        long num = (long) (amountLe1000 * 12);
-
-        double amountGt1000 = totalAmount - 1000;
-        if (amountGt1000 > 0) {
-            num += amountGt1000 * 15;
-        }
-        return num;
-    }
-
-    private long getBtRefundNum(double totalAmount) {
-        GameSetting gameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_RATIO);
-        if (null == gameSetting) {
-            log.error("getBtRefundNum() error, gameSetting is null. key={}", GameSettingKey.BT_STOP_SERVER_REFUND_RATIO);
-            return 0;
-        }
-        return (long) (Double.parseDouble(gameSetting.getDictValue()) * 0.01 * totalAmount);
+        long refundNum = versionType.getFunction().applyAsLong(totalAmount);
+        return refundNum > 0 ? CollUtil.newArrayList(ItemVO.valueOf(versionType.getItemId(), refundNum)) : new ArrayList<>();
     }
 }
