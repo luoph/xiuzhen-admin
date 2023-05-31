@@ -145,6 +145,15 @@
             <span class="large-text">{{ text || '--' }}</span>
           </div>
         </template>
+        <span slot="buyTypeSlot" slot-scope="text, record">
+          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <!-- <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag> -->
+          <span v-else v-for="tag in text.split(',').sort()" :key="tag">
+            <a-tag v-if="tag == 1" color="blue">{{ tag }}-真实充值</a-tag>
+            <a-tag v-if="tag == 2" color="blue">{{ tag }}-GM额度</a-tag>
+            <a-tag v-if="tag == 3" color="blue">{{ tag }}-代金券</a-tag>
+          </span>
+        </span>
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
@@ -316,23 +325,19 @@ export default {
           align: 'center',
           width: 90,
           dataIndex: 'buyType',
-          customRender: (value) => {
-            let text = '--';
-            if (value === 1) {
-              text = '1-真实充值';
-            } else if (value === 2) {
-              text = '2-gm额度';
-            } else if (value === 3) {
-              text = '3-真实充值/gm额度';
-            }
-            return text;
-          }
+          scopedSlots: {customRender: 'buyTypeSlot'}
         },
         {
           title: 'gm额度',
           align: 'center',
           width: 80,
           dataIndex: 'gmCoin'
+        },
+        {
+          title: '代金券',
+          align: 'center',
+          width: 80,
+          dataIndex: 'cashCoupon'
         },
         {
           title: '内购SKU',

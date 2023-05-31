@@ -81,14 +81,17 @@
           </a-select>
         </a-form-item>
         <a-form-item label="购买类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-select placeholder="选择购买类型" v-decorator="['buyType', validatorRules.buyType]" initialValue="1">
-            <a-select-option :value="1">1-真实充值</a-select-option>
-            <a-select-option :value="2">2-GM额度</a-select-option>
-            <a-select-option :value="3">3-真实充值/gm额度</a-select-option>
+          <a-select mode="multiple" placeholder="选择购买类型" v-decorator="['buyType', validatorRules.buyType]" @change="onSelectBuyType">
+            <a-select-option value="1">1-真实充值</a-select-option>
+            <a-select-option value="2">2-GM额度</a-select-option>
+            <a-select-option value="3">3-代金券</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="GM额度" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input-number v-decorator="['gmCoin', validatorRules.gmCoin]" placeholder="请输入GM额度" style="width: 100%" />
+        </a-form-item>
+        <a-form-item label="代金券" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input-number v-decorator="['cashCoupon', validatorRules.cashCoupon]" placeholder="请输入代金券" style="width: 100%" />
         </a-form-item>
         <a-form-item label="是否计入累充" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-select placeholder="请输入是否计入累充" v-decorator="['amountStat', validatorRules.amountStat]" initialValue="1">
@@ -167,6 +170,7 @@ export default {
         sku: { rules: [{ required: true, message: '请输入SKU' }] },
         webSku: { rules: [{ required: false, message: '请输入网页支付SKU' }] },
         gmCoin: { rules: [{ required: false, message: '请输入GM额度' }] },
+        cashCoupon: { rules: [{ required: false, message: '请输入代金券' }] },
         localPrice: { rules: [{ required: false, message: '请输入当地支付价格（内购）' }] },
         webLocalPrice: { rules: [{ required: false, message: '请输入当地支付价格（网页）' }] },
         displayPrice: { rules: [{ required: false, message: '请输入当地支付价格（内购）' }] },
@@ -203,6 +207,7 @@ export default {
             'goodsGroup',
             'buyType',
             'gmCoin',
+            'cashCoupon',
             'amountStat',
             'amountStatTypes',
             'addition',
@@ -216,6 +221,8 @@ export default {
             'currency'
           )
         );
+
+        this.form.setFieldsValue({buyType: null != this.model.buyType ? this.model.buyType.split(",").sort() : []});
       });
     },
     close() {
@@ -238,6 +245,8 @@ export default {
             method = 'put';
           }
           let formData = Object.assign(this.model, values);
+          formData.buyType = formData.buyType.join(',');
+
           console.log('表单提交数据', formData);
           httpAction(httpUrl, formData, method)
             .then((res) => {
@@ -273,6 +282,7 @@ export default {
           'goodsGroup',
           'buyType',
           'gmCoin',
+          'cashCoupon',
           'amountStat',
           'amountStatTypes',
           'addition',
@@ -286,7 +296,12 @@ export default {
           'currency'
         )
       );
-    }
+    },
+    onSelectBuyType(value) {
+      // this.form.setFieldsValue({
+      //   buyType: value.join(',')
+      // });
+    },
   }
 };
 </script>

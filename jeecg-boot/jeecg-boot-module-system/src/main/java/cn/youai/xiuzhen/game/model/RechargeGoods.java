@@ -34,8 +34,9 @@ public class RechargeGoods {
     private List<ItemVO> additions;
     private Integer exchange;
     private Integer recommend;
-    private Integer buyType;
+    private List<Integer> buyType;
     private Long gmCoin;
+    private Long cashCoupon;
     private Integer amountStat;
     private String amountStatTypes;
 }

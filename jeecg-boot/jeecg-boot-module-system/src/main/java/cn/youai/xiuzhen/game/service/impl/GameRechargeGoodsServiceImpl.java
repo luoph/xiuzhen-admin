@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.server.model.ItemVO;
 import cn.youai.xiuzhen.game.entity.GameRechargeGoods;
 import cn.youai.xiuzhen.game.mapper.GameRechargeGoodsMapper;
@@ -8,7 +9,6 @@ import cn.youai.xiuzhen.game.model.RechargeGoods;
 import cn.youai.xiuzhen.game.service.IGameRechargeGoodsService;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import net.dreamlu.mica.core.utils.$;
@@ -61,9 +61,11 @@ public class GameRechargeGoodsServiceImpl extends ServiceImpl<GameRechargeGoodsM
             if (StringUtils.isNotEmpty(it.getItems())) {
                 copy.setRewards(JSON.parseArray(it.getItems(), ItemVO.class));
             }
-
             if (StringUtils.isNotEmpty(it.getAddition())) {
                 copy.setAdditions(JSON.parseArray(it.getAddition(), ItemVO.class));
+            }
+            if (StringUtils.isNotEmpty(it.getBuyType())) {
+                copy.setBuyType(StringUtils.split2Int(it.getBuyType()));
             }
             goodsList.add(copy);
         }

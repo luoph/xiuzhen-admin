@@ -68,11 +68,11 @@ public class GameRechargeGoods extends BaseEntity {
     private Integer goodsGroup;
 
     /**
-     * 购买类型: 1.真实充值, 2.gm额度, 3.真实充值/gm额度
+     * 购买类型: 1.真实充值, 2.gm额度, 3.代金券
      */
     @ExcelProperty("购买类型")
     @Excel(name = "购买类型", width = 15)
-    private Integer buyType;
+    private String buyType;
 
     /**
      * gm额度
@@ -80,6 +80,13 @@ public class GameRechargeGoods extends BaseEntity {
     @ExcelProperty("gm额度")
     @Excel(name = "gm额度", width = 15)
     private Long gmCoin;
+
+    /**
+     * 代金券
+     */
+    @ExcelProperty("代金券")
+    @Excel(name = "代金券", width = 15)
+    private Long cashCoupon;
 
     /**
      * 商品名
