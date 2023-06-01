@@ -20,7 +20,6 @@ public class RechargeGoods {
     private Integer goodsId;
     private Integer goodsType;
     private String name;
-    private String clientName;
     private String sku;
     private String webSku;
     private BigDecimal price;
@@ -36,6 +35,4 @@ public class RechargeGoods {
     private Integer recommend;
     private Integer buyType;
     private Long gmCoin;
-    private Integer amountStat;
-    private String amountStatTypes;
 }

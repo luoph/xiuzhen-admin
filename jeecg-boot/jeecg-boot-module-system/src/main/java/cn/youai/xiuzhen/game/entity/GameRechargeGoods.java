@@ -89,13 +89,6 @@ public class GameRechargeGoods extends BaseEntity {
     private String name;
 
     /**
-     * 客户端商品名
-     */
-    @ExcelProperty("客户端商品名")
-    @Excel(name = "客户端商品名", width = 15)
-    private String clientName;
-
-    /**
      * 单价(创建订单实际价格)
      */
     @ExcelProperty("单价(创建订单实际价格)")

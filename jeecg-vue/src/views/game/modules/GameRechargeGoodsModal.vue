@@ -7,10 +7,10 @@
           <a-input-number v-decorator="['goodsId', validatorRules.goodsId]" placeholder="请输入商品Id" style="width: 100%" />
         </a-form-item>
         <a-form-item label="商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称"></a-input>
+          <a-input v-decorator="['name', validatorRules.name]" placeholder="请输入商品名称" />
         </a-form-item>
-        <a-form-item label="客户端商品名称" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-input v-decorator="['clientName', validatorRules.clientName]" placeholder="请输入客户端商品名称"></a-input>
+        <a-form-item label="备注" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-input v-decorator="['remark', validatorRules.remark]" placeholder="请输入备注" />
         </a-form-item>
         <a-form-item label="内购SKU" :labelCol="labelCol" :wrapperCol="wrapperCol">
           <a-input v-decorator="['sku', validatorRules.sku]" placeholder="请输入内购SKU" style="width: 100%" />
@@ -155,7 +155,7 @@ export default {
         price: { rules: [{ required: true, message: '请输入单价!' }] },
         discount: { rules: [{ required: false, message: '请输入折扣价格!' }] },
         name: { rules: [{ required: true, message: '请输入商品名称!' }] },
-        clientName: { rules: [{ required: true, message: '请输入客户端商品名称!' }] },
+        remark: { rules: [{ required: true, message: '请输入备注!' }] },
         items: { rules: [{ required: false, message: '请输入奖励列表!' }] },
         goodsType: { rules: [{ required: true, message: '请选择商品类型!' }] },
         goodsGroup: { rules: [{ required: true, message: '请选择商品组别!' }] },
@@ -197,7 +197,7 @@ export default {
             'price',
             'discount',
             'name',
-            'clientName',
+            'remark',
             'items',
             'goodsType',
             'goodsGroup',
@@ -267,7 +267,7 @@ export default {
           'price',
           'discount',
           'name',
-          'clientName',
+          'remark',
           'items',
           'goodsType',
           'goodsGroup',
