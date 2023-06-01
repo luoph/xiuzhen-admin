@@ -234,10 +234,10 @@ export default {
           dataIndex: 'name'
         },
         {
-          title: '客户端商品名称',
+          title: '备注',
           align: 'center',
           fixed: 'left',
-          dataIndex: 'clientName'
+          dataIndex: 'remark'
         },
         {
           title: '商品组别',
