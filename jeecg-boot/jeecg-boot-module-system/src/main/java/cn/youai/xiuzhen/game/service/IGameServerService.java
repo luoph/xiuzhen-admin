@@ -98,4 +98,6 @@ public interface IGameServerService extends IService<GameServer> {
     List<MergeServerVO> getMergeServerList(int days, int minAvgPlayers, double minAvgPayAmount);
 
     void updateOnlineNum(Collection<GameServer> servers);
+
+    void setChannelSimpleNameList(List<GameServer> gameServerList);
 }

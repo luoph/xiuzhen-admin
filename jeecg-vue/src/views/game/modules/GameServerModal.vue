@@ -102,9 +102,22 @@
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="删档返还开关">
-          <a-select v-decorator="['stopServerRefund', {}]" placeholder="请选择删档返还开关">
+          <a-select v-decorator="['stopServerRefund', validatorRules.stopServerRefund]" placeholder="请选择删档返还开关" initialValue="0">
             <a-select-option :value="0">关闭</a-select-option>
             <a-select-option :value="1">开启</a-select-option>
+          </a-select>
+        </a-form-item>
+        <a-form-item label="删档返还的渠道" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <j-multi-select-tag
+            v-decorator="['stopServerRefundChannel', validatorRules.stopServerRefundChannel]"
+            placeholder="请选择删档返还的渠道"
+            dictCode="game_channel, name, simple_name">
+          </j-multi-select-tag>
+        </a-form-item>
+        <a-form-item label="删档返还的区服版本" :labelCol="labelCol" :wrapperCol="wrapperCol">
+          <a-select mode="multiple" placeholder="选择删档返还的区服版本" v-decorator="['stopServerRefundVersionType', validatorRules.stopServerRefundVersionType]">
+            <a-select-option value="1">普通服</a-select-option>
+            <a-select-option value="2">BT服</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="版本类型">
@@ -209,7 +222,9 @@ export default {
         taStatistics: {rules: [{required: true, message: "请设置TA开关!"}]},
         onlineStat: {rules: [{required: true, message: "请设置在线统计开关!"}]},
         payCallbackStatus: {rules: [{required: true, message: "请设置支付回调开关!"}]},
-        stopServerRefund: {rules: [{required: false, message: "请设置删档返还开关!"}]},
+        stopServerRefund: {rules: [{required: true, message: "请设置删档返还开关!"}]},
+        stopServerRefundChannel: {rules: [{required: false, message: "请设置删档返还的渠道!"}]},
+        stopServerRefundVersionType: {rules: [{required: false, message: "请设置删档返还的区服版本!"}]},
         versionType: {rules: [{required: false, message: "请设置版本类型!"}]}
       },
       url: {
@@ -267,6 +282,8 @@ export default {
             "onlineStat",
             "extra",
             "stopServerRefund",
+            "stopServerRefundChannel",
+            "stopServerRefundVersionType",
             "versionType"
           )
         );
@@ -277,6 +294,7 @@ export default {
         this.form.setFieldsValue({mergeTime: this.model.mergeTime ? moment(this.model.mergeTime) : null});
         this.form.setFieldsValue({singleSettleTime: this.model.singleSettleTime ? moment(this.model.singleSettleTime) : null});
         this.form.setFieldsValue({createTime: this.model.createTime ? moment(this.model.createTime) : null});
+        this.form.setFieldsValue({stopServerRefundVersionType: null != this.model.stopServerRefundVersionType && '' != this.model.stopServerRefundVersionType ? this.model.stopServerRefundVersionType.split(",").sort() : []});
       });
     },
     close() {
@@ -304,6 +322,7 @@ export default {
           formData.mergeTime = formData.mergeTime ? formData.mergeTime.format("YYYY-MM-DD HH:mm:ss") : null;
           formData.singleSettleTime = formData.singleSettleTime ? formData.singleSettleTime.format("YYYY-MM-DD HH:mm:ss") : null;
           formData.onlineTime = formData.onlineTime ? formData.onlineTime.format("YYYY-MM-DD HH:mm:ss") : null;
+          formData.stopServerRefundVersionType = formData.stopServerRefundVersionType.join(',');
 
           // 创建时间参数不传递后台
           delete formData.createTime;
@@ -361,6 +380,8 @@ export default {
           "onlineStat",
           "extra",
           "stopServerRefund",
+          "stopServerRefundChannel",
+          "stopServerRefundVersionType",
           "versionType"
         )
       );

@@ -142,6 +142,18 @@
         <span slot="tagSlot" slot-scope="text, record">
           <a-tag color="orange">{{ text }}</a-tag>
         </span>
+        <span slot="serverIdSlot" slot-scope="text, record">
+          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        </span>
+        <span slot="versionTypeSlot" slot-scope="text, record">
+          <a-tag v-if="!text" color="red">未设置</a-tag>
+          <!-- <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag> -->
+          <span v-else v-for="tag in text.split(',').sort()" :key="tag">
+            <a-tag v-if="tag == 1" color="blue">{{ tag }}-普通服</a-tag>
+            <a-tag v-if="tag == 2" color="blue">{{ tag }}-BT服</a-tag>
+          </span>
+        </span>
         <span slot="maintainSlot" slot-scope="text, record">
           <a-tag v-if="record.isMaintain === 1" color="red">维护中</a-tag>
           <a-tag v-else color="green">运行中</a-tag>
@@ -292,6 +304,20 @@ export default {
           align: 'center',
           dataIndex: 'stopServerRefund',
           scopedSlots: { customRender: 'switchSlot' }
+        },
+        {
+          title: '删档返还的渠道',
+          align: 'center',
+          width: 80,
+          dataIndex: 'stopServerRefundChannel',
+          scopedSlots: {customRender: 'serverIdSlot'}
+        },
+        {
+          title: '删档返还的区服版本',
+          align: 'center',
+          width: 80,
+          dataIndex: 'stopServerRefundVersionType',
+          scopedSlots: {customRender: 'versionTypeSlot'}
         },
         {
           title: '版本类型',

@@ -36,4 +36,5 @@ public interface GameServerMapper extends BaseMapper<GameServer> {
 
     List<GameServer> selectChannelServerListByUser(@Param("user") SysUser user, @Param("serverIds") String serverIds);
 
+    List<GameServer> selectChannelSimpleName(@Param("serverIds") List<Integer> serverIds);
 }

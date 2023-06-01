@@ -4,12 +4,12 @@
 package cn.youai.xiuzhen.game.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.youai.basics.model.Response;
 import cn.youai.entities.HttpEmail;
 import cn.youai.enums.OutdatedType;
 import cn.youai.server.constant.ItemRuleId;
 import cn.youai.server.model.ItemVO;
 import cn.youai.server.utils.ConvertUtils;
-import cn.youai.server.utils.DBHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.cache.GameSettingCache;
@@ -27,6 +27,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.jeecg.common.util.dynamic.db.DBHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,7 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
 
     @Override
     public void checkSendStopServerRefund() {
-        // 需要处理'停服返还充值'的服务器
+        // 1.需要处理'停服返还充值'的服务器
         Set<Integer> stopGameServerIds = GameServerCache.getInstance().getStopServerRefundServerIds();
         if (stopGameServerIds.isEmpty()) {
             return;
@@ -71,22 +72,22 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
 
         log.info("[Refund] start checking...");
 
-        // 玩家充值总金额
+        // 2.玩家充值总金额
         Map<Long, GameOrder> playerId2GameOrderMap = getPlayerId2GameOrderMap(stopGameServerIds);
         if (playerId2GameOrderMap.isEmpty()) {
             return;
         }
 
-        // 已处理'停服返还充值'的玩家 GameStopServerRefundRecord.sourcePlayerId
+        // 3.已处理'停服返还充值'的玩家 GameStopServerRefundRecord.sourcePlayerId
         Set<Long> refundedPlayerIds = GameStopServerRefundRecordCache.getInstance().getRecordPlayerIds(stopGameServerIds);
 
-        // 需要处理'停服返还充值'的玩家 GamePlayer.account
+        // 4.需要处理'停服返还充值'的玩家 GamePlayer.account
         Set<String> gamePlayerAccounts = getGamePlayerAccounts(stopGameServerIds, playerId2GameOrderMap.keySet(), refundedPlayerIds);
         if (gamePlayerAccounts.isEmpty()) {
             return;
         }
 
-        // 需要处理'停服返还充值'的玩家 Map<account, List<GamePlayer>>
+        // 5.需要处理'停服返还充值'的玩家 Map<account, List<GamePlayer>>
         Map<String, List<GamePlayer>> account2GamePlayerMap = getAccount2GamePlayerMap(gamePlayerAccounts);
 
         Date current = DateUtils.now();
@@ -99,19 +100,28 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
             if (sourceGamePlayers.isEmpty()) {
                 return;
             }
-            // 返还到该服的 playerId
-            GamePlayer targetGamePlayer = getTargetGamePlayer(v, stopGameServerIds);
-            if (null == targetGamePlayer) {
-                return;
-            }
-            sourceGamePlayers.forEach(sourceGamePlayer -> gamePlayerRefund(playerId2GameOrderMap, sourceGamePlayer, targetGamePlayer, saveRecords, httpEmails, current));
+            sourceGamePlayers.forEach(sourceGamePlayer -> {
+                // 返还到该服的 playerId
+                GamePlayer targetGamePlayer = getTargetGamePlayer(sourceGamePlayer, v, stopGameServerIds);
+                if (null == targetGamePlayer) {
+                    return;
+                }
+                gamePlayerRefund(playerId2GameOrderMap, sourceGamePlayer, targetGamePlayer, saveRecords, httpEmails, current);
+            });
         });
 
-        httpEmails.forEach((k, v) -> gameServerService.gameServerPost(CollUtil.newArrayList(k), sendHttpEmailUrl, v));
         if (!saveRecords.isEmpty()) {
             log.info("add records:{}", JSON.toJSONString(saveRecords));
             DBHelper.saveBatch(saveRecords, getClass());
             GameStopServerRefundRecordCache.getInstance().put(saveRecords);
+            httpEmails.forEach((k, v) -> {
+                Map<Integer, Response> responseMap = gameServerService.gameServerPost(CollUtil.newArrayList(k), sendHttpEmailUrl, v);
+                responseMap.forEach((rspKey, rspValue) -> {
+                    if (rspValue.isSuccess()) {
+                        log.error("sendHttpEmail error, serverId={}, response={}", rspKey, rspValue);
+                    }
+                });
+            });
         }
 
         log.info("[Refund] finish checking");
@@ -164,6 +174,25 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
         return v.stream().filter(e -> {
             GameServer gameServer = GameServerCache.getInstance().get(e.getServerId());
             return null != gameServer && gameServer.getOutdated() == OutdatedType.NORMAL.getValue() && !stopGameServerIds.contains(e.getServerId());
+        }).min(Comparator.comparing(GamePlayer::getCreateTime)).orElse(null);
+    }
+
+    private GamePlayer getTargetGamePlayer(GamePlayer sourceGamePlayer, List<GamePlayer> v, Set<Integer> stopGameServerIds) {
+        GameServer sourceGameServer = GameServerCache.getInstance().get(sourceGamePlayer.getServerId());
+        if (null == sourceGameServer) {
+            return null;
+        }
+
+        List<String> stopServerRefundChannelList = sourceGameServer.getStopServerRefundChannelList();
+        List<Integer> stopServerRefundVersionTypeList = sourceGameServer.getStopServerRefundVersionTypeList();
+        if (CollUtil.isEmpty(stopServerRefundChannelList) || CollUtil.isEmpty(stopServerRefundVersionTypeList)) {
+            return null;
+        }
+        return v.stream().filter(e -> {
+            GameServer gameServer = GameServerCache.getInstance().get(e.getServerId());
+            return null != gameServer && gameServer.getOutdated() == OutdatedType.NORMAL.getValue() && !stopGameServerIds.contains(e.getServerId())
+                    && CollUtil.containsAny(stopServerRefundChannelList, gameServer.getChannelSimpleNameList())
+                    && stopServerRefundVersionTypeList.contains(gameServer.getVersionType());
         }).min(Comparator.comparing(GamePlayer::getCreateTime)).orElse(null);
     }
 

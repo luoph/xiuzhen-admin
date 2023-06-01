@@ -1,5 +1,6 @@
 package cn.youai.xiuzhen.game.cache;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.youai.basics.cache.BaseCache;
 import cn.youai.basics.cache.CacheFactory;
 import cn.youai.xiuzhen.game.entity.GameServer;
@@ -7,6 +8,7 @@ import cn.youai.xiuzhen.game.service.IGameServerService;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.jeecg.common.util.SpringContextUtils;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,11 +34,23 @@ public final class GameServerCache extends BaseCache<Integer, GameServer> {
 
     @Override
     public GameServer without(Integer serverId) {
-        return SpringContextUtils.getBean(IGameServerService.class).getOne(Wrappers.<GameServer>lambdaQuery().eq(GameServer::getId, serverId));
+        IGameServerService gameServerService = SpringContextUtils.getBean(IGameServerService.class);
+        GameServer gameServer = gameServerService.getOne(Wrappers.<GameServer>lambdaQuery().eq(GameServer::getId, serverId));
+        if (null != gameServer) {
+            gameServer.parseDate();
+            gameServerService.setChannelSimpleNameList(CollUtil.newArrayList(gameServer));
+        }
+        return gameServer;
     }
 
     public void loadAll() {
-        SpringContextUtils.getBean(IGameServerService.class).list().forEach(e -> put(e.getId(), e));
+        IGameServerService gameServerService = SpringContextUtils.getBean(IGameServerService.class);
+        List<GameServer> gameServerList = gameServerService.list();
+        gameServerService.setChannelSimpleNameList(gameServerList);
+        gameServerList.forEach(e -> {
+            e.parseDate();
+            put(e.getId(), e);
+        });
     }
 
     public Set<Integer> getStopServerRefundServerIds() {

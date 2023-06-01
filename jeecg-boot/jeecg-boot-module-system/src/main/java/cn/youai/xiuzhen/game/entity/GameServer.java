@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.entity;
 
 import cn.hutool.core.util.StrUtil;
+import cn.youai.basics.utils.StringUtils;
 import cn.youai.enums.OutdatedType;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -17,6 +18,11 @@ import org.jeecg.common.constant.TimeConstant;
 import org.jeecg.common.system.base.entity.BaseEntity;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author jeecg-boot
@@ -258,6 +264,26 @@ public class GameServer extends BaseEntity {
     private java.lang.Integer stopServerRefund;
 
     /**
+     * 停服返还的渠道
+     */
+    @Excel(name = "停服返还的渠道", width = 15)
+    @ApiModelProperty(value = "停服返还的渠道")
+    private java.lang.String stopServerRefundChannel;
+
+    @TableField(exist = false)
+    private List<String> stopServerRefundChannelList;
+
+    /**
+     * 停服返还的区服版本
+     */
+    @Excel(name = "停服返还的区服版本", width = 15)
+    @ApiModelProperty(value = "停服返还的区服版本")
+    private java.lang.String stopServerRefundVersionType;
+
+    @TableField(exist = false)
+    private List<Integer> stopServerRefundVersionTypeList;
+
+    /**
      * 版本类型: 1.普通服, 2.BT服
      */
     @Excel(name = "版本类型", width = 15)
@@ -297,6 +323,9 @@ public class GameServer extends BaseEntity {
     @ApiModelProperty(value = "渠道")
     private String channel;
 
+    @TableField(exist = false)
+    private List<String> channelSimpleNameList;
+
     // 本地接口
     public boolean skipCheck() {
         return getOutdated() != OutdatedType.NORMAL.getValue()
@@ -315,5 +344,10 @@ public class GameServer extends BaseEntity {
             return true;
         }
         return skipCallGm(gameServer.getGmUrl());
+    }
+
+    public void parseDate() {
+        this.stopServerRefundChannelList = StringUtils.isNotBlank(stopServerRefundChannel) ? Arrays.stream(stopServerRefundChannel.split(StringUtils.SEPARATOR_COMMA)).collect(Collectors.toList()) : new ArrayList<>();
+        this.stopServerRefundVersionTypeList = StringUtils.isNotBlank(stopServerRefundVersionType) ? Arrays.stream(stopServerRefundVersionType.split(StringUtils.SEPARATOR_COMMA)).map(Integer::parseInt).collect(Collectors.toList()) : new ArrayList<>();
     }
 }

@@ -355,4 +355,20 @@ public class GameServerServiceImpl extends ServiceImpl<GameServerMapper, GameSer
             log.error("onlineNum error", e);
         }
     }
+
+    @Override
+    public void setChannelSimpleNameList(List<GameServer> gameServerList) {
+        if (CollUtil.isEmpty(gameServerList)) {
+            return;
+        }
+        List<GameServer> gameServerChannelSimpleNameList = getBaseMapper().selectChannelSimpleName(gameServerList.stream().map(GameServer::getId).collect(Collectors.toList()));
+        Map<Integer, List<GameServer>> gameServerId2ChannelSimpleNameMap = gameServerChannelSimpleNameList.stream().collect(Collectors.groupingBy(GameServer::getId));
+        gameServerList.forEach(gameServer -> {
+            List<GameServer> channelSimpleNameList = gameServerId2ChannelSimpleNameMap.get(gameServer.getId());
+            if (CollUtil.isEmpty(channelSimpleNameList)) {
+                return;
+            }
+            gameServer.setChannelSimpleNameList(channelSimpleNameList.stream().map(GameServer::getChannel).collect(Collectors.toList()));
+        });
+    }
 }

@@ -1,6 +1,7 @@
 package cn.youai.xiuzhen.game.controller;
 
 import cn.youai.server.springboot.component.OkHttpHelper;
+import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.entity.GameChannel;
 import cn.youai.xiuzhen.game.entity.GameServer;
 import cn.youai.xiuzhen.game.entity.GameServerVO;
@@ -176,6 +177,8 @@ public class GameChannelController extends JeecgController<GameChannel, IGameCha
     }
 
     private void reloadServerCache() {
+        GameServerCache.getInstance().clear();
+        GameServerCache.getInstance().loadAll();
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadServer");
         OkHttpHelper.get(gameCenterUrl + "/gm/reloadChannel");
         OkHttpHelper.get(chatServerUrl + "/gm/reloadServerGroup");
