@@ -125,7 +125,7 @@ public class GameVpsController extends JeecgController<GameVps, IGameVpsService>
             } else {
                 List<GameServer> servers = serverService.selectGameServerList(serverIds);
                 serverService.updateOnlineNum(servers);
-                entity.setOnlineNum(servers.stream().mapToInt(GameServer::getOnlineNum).sum());
+                entity.setOnlineNum(servers.stream().filter(t -> t.getOnlineNum() != null).mapToInt(GameServer::getOnlineNum).sum());
             }
         }
     }
