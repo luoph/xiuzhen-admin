@@ -9,6 +9,7 @@ import cn.youai.enums.OutdatedType;
 import cn.youai.server.constant.ItemRuleId;
 import cn.youai.server.model.ItemVO;
 import cn.youai.server.utils.ConvertUtils;
+import cn.youai.server.utils.DBHelper;
 import cn.youai.server.utils.DateUtils;
 import cn.youai.xiuzhen.game.cache.GameServerCache;
 import cn.youai.xiuzhen.game.cache.GameSettingCache;
@@ -63,127 +64,168 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
     @Override
     public void checkSendStopServerRefund() {
         // 需要处理'停服返还充值'的服务器
-        Set<Integer> gameServerIds = GameServerCache.getInstance().getStopServerRefundServerIds();
-        if (gameServerIds.isEmpty()) {
+        Set<Integer> stopGameServerIds = GameServerCache.getInstance().getStopServerRefundServerIds();
+        if (stopGameServerIds.isEmpty()) {
             return;
         }
 
         log.info("[Refund] start checking...");
-        // 充值总金额
-        Map<Long, GameOrder> playerId2GameOrderMap = gameOrderMapper.sumAmountGroupByPlayerId(gameServerIds).stream()
-                .filter(e -> null != e.getTotalAmount() && e.getTotalAmount() > 0)
-                .collect(Collectors.toMap(GameOrder::getPlayerId, Function.identity(), (key1, key2) -> key2));
+
+        // 玩家充值总金额
+        Map<Long, GameOrder> playerId2GameOrderMap = getPlayerId2GameOrderMap(stopGameServerIds);
         if (playerId2GameOrderMap.isEmpty()) {
             return;
         }
 
         // 已处理'停服返还充值'的玩家 GameStopServerRefundRecord.sourcePlayerId
-        Set<Long> recordPlayerIds = GameStopServerRefundRecordCache.getInstance().getRecordPlayerIds(gameServerIds);
+        Set<Long> refundedPlayerIds = GameStopServerRefundRecordCache.getInstance().getRecordPlayerIds(stopGameServerIds);
 
-        // 需要处理'停服返还充值'的玩家 GamePlayer
-        LambdaQueryWrapper<GamePlayer> lambdaQuery = Wrappers.<GamePlayer>lambdaQuery()
-                .select(GamePlayer::getAccount)
-                .in(GamePlayer::getServerId, gameServerIds)
-                .in(GamePlayer::getPlayerId, playerId2GameOrderMap.keySet());
-        if (!recordPlayerIds.isEmpty()) {
-            lambdaQuery.notIn(GamePlayer::getPlayerId, recordPlayerIds);
-        }
-
-        Set<String> gamePlayerAccounts = gamePlayerService.list(lambdaQuery).stream().map(GamePlayer::getAccount).collect(Collectors.toSet());
+        // 需要处理'停服返还充值'的玩家 GamePlayer.account
+        Set<String> gamePlayerAccounts = getGamePlayerAccounts(stopGameServerIds, playerId2GameOrderMap.keySet(), refundedPlayerIds);
         if (gamePlayerAccounts.isEmpty()) {
             return;
         }
 
         // 需要处理'停服返还充值'的玩家 Map<account, List<GamePlayer>>
-        Map<String, List<GamePlayer>> account2GamePlayerMap = gamePlayerService.list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getAccount, gamePlayerAccounts))
-                .stream().collect(Collectors.groupingBy(GamePlayer::getAccount));
+        Map<String, List<GamePlayer>> account2GamePlayerMap = getAccount2GamePlayerMap(gamePlayerAccounts);
 
         Date current = DateUtils.now();
         List<GameStopServerRefundRecord> saveRecords = new ArrayList<>(account2GamePlayerMap.size());
-        Map<Integer, List<HttpEmail>> httpEmails = new HashMap<>(gameServerIds.size());
-
-        GameSetting ratioGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_RATIO);
-        GameSetting emailTitleGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_EMAIL_TITLE);
-        GameSetting emailDescribeGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_EMAIL_DESCRIBE);
+        Map<Integer, List<HttpEmail>> httpEmails = new HashMap<>(stopGameServerIds.size());
 
         account2GamePlayerMap.forEach((k, v) -> {
-            // 需要返还的players
-            List<GamePlayer> sourceGamePlayers = v.stream().filter(e -> gameServerIds.contains(e.getServerId())
-                    && !recordPlayerIds.contains(e.getPlayerId())).collect(Collectors.toList());
+            // 需要返还的 players
+            List<GamePlayer> sourceGamePlayers = getSourceGamePlayers(v, stopGameServerIds, refundedPlayerIds);
             if (sourceGamePlayers.isEmpty()) {
                 return;
             }
-
-            // 返还到该服的playerId
-            GamePlayer targetGamePlayer = v.stream().filter(e -> {
-                GameServer gameServer = GameServerCache.getInstance().get(e.getServerId());
-                return null != gameServer && gameServer.getOutdated() == OutdatedType.NORMAL.getValue() && !gameServerIds.contains(e.getServerId());
-            }).min(Comparator.comparing(GamePlayer::getCreateTime)).orElse(null);
+            // 返还到该服的 playerId
+            GamePlayer targetGamePlayer = getTargetGamePlayer(v, stopGameServerIds);
             if (null == targetGamePlayer) {
                 return;
             }
-
-            sourceGamePlayers.forEach(sourceGamePlayer -> {
-                GameOrder gameOrder = playerId2GameOrderMap.get(sourceGamePlayer.getPlayerId());
-                if (null == gameOrder || null == gameOrder.getTotalAmount() || gameOrder.getTotalAmount() <= 0) {
-                    return;
-                }
-
-                GameServer sourceGameServer = GameServerCache.getInstance().get(sourceGamePlayer.getServerId());
-                GameServerVersionType versionType = GameServerVersionType.valueOf(sourceGameServer.getVersionType());
-                if (null == versionType) {
-                    log.error("[Refund] checkSendStopServerRefund() error, gameServer.versionType is null. versionType={}", sourceGameServer.getVersionType());
-                    return;
-                }
-
-                if (versionType == GameServerVersionType.BT) {
-                    if (null == ratioGameSetting || null == emailTitleGameSetting || null == emailDescribeGameSetting) {
-                        log.error("[Refund] checkSendStopServerRefund() error, bt refund GameSetting is null.");
-                        return;
-                    }
-                }
-
-                List<ItemVO> refundRewards = getRefundRewards(versionType, gameOrder.getTotalAmount());
-                log.info("[Refund] playerId:{} totalAmount:{}, versionType:{} refundRewards:{}",
-                        sourceGamePlayer.getPlayerId(), gameOrder.getTotalAmount(), versionType, JSON.toJSONString(refundRewards));
-                if (CollUtil.isEmpty(refundRewards)) {
-                    return;
-                }
-                long refundNum = refundRewards.get(0).getNum();
-                if (refundNum <= 0) {
-                    return;
-                }
-
-                saveRecords.add(new GameStopServerRefundRecord()
-                        .setSourceServerVersionType(versionType.getType())
-                        .setSourceServerId(sourceGamePlayer.getServerId())
-                        .setSourcePlayerId(sourceGamePlayer.getPlayerId())
-                        .setTargetServerId(targetGamePlayer.getServerId())
-                        .setTargetPlayerId(targetGamePlayer.getPlayerId())
-                        .setSourceAmount(BigDecimal.valueOf(gameOrder.getTotalAmount()))
-                        .setTargetNum(refundNum).setCreateTime(current));
-
-                String rewards = JSON.toJSONString(refundRewards);
-                Object[] args = new Object[]{gameOrder.getTotalAmount().longValue(), refundNum};
-                HttpEmail httpEmail = new HttpEmail().setPlayerId(targetGamePlayer.getPlayerId()).setRewards(rewards)
-                        .setRuleId(ItemRuleId.GAME_STOP_SERVER_REFUND.getType()).setByteArgs(ConvertUtils.gzipJson(args));
-                if (versionType == GameServerVersionType.NORMAL) {
-                    httpEmail.setMailId(105);
-                } else if (versionType == GameServerVersionType.BT) {
-                    httpEmail.setTitle(emailTitleGameSetting.getDictValue()).setDescribe(emailDescribeGameSetting.getDictValue());
-                }
-                httpEmails.computeIfAbsent(targetGamePlayer.getServerId(), serverId -> new ArrayList<>()).add(httpEmail);
-            });
+            sourceGamePlayers.forEach(sourceGamePlayer -> gamePlayerRefund(playerId2GameOrderMap, sourceGamePlayer, targetGamePlayer, saveRecords, httpEmails, current));
         });
 
         httpEmails.forEach((k, v) -> gameServerService.gameServerPost(CollUtil.newArrayList(k), sendHttpEmailUrl, v));
         if (!saveRecords.isEmpty()) {
             log.info("add records:{}", JSON.toJSONString(saveRecords));
-            saveBatch(saveRecords);
+            DBHelper.saveBatch(saveRecords, getClass());
             GameStopServerRefundRecordCache.getInstance().put(saveRecords);
         }
 
         log.info("[Refund] finish checking");
+    }
+
+    // 玩家充值总金额
+    private Map<Long, GameOrder> getPlayerId2GameOrderMap(Set<Integer> gameServerIds) {
+        return gameOrderMapper.sumAmountGroupByPlayerId(gameServerIds).stream()
+                .filter(e -> null != e.getTotalAmount() && e.getTotalAmount() > 0)
+                .collect(Collectors.toMap(GameOrder::getPlayerId, Function.identity(), (key1, key2) -> key2));
+    }
+
+    /**
+     * 需要处理'停服返还充值'的玩家 GamePlayer.account
+     *
+     * @param gameServerIds     需要处理'停服返还充值'的服务器
+     * @param gamePlayerIds     充值玩家
+     * @param refundedPlayerIds 已处理'停服返还充值'的玩家 GameStopServerRefundRecord.sourcePlayerId
+     * @return Set<GamePlayer.account>
+     */
+    private Set<String> getGamePlayerAccounts(Set<Integer> gameServerIds, Set<Long> gamePlayerIds, Set<Long> refundedPlayerIds) {
+        if (CollUtil.isEmpty(gameServerIds) || CollUtil.isEmpty(gamePlayerIds)) {
+            return Collections.emptySet();
+        }
+        LambdaQueryWrapper<GamePlayer> lambdaQuery = Wrappers.<GamePlayer>lambdaQuery()
+                .select(GamePlayer::getAccount)
+                .in(GamePlayer::getServerId, gameServerIds)
+                .in(GamePlayer::getPlayerId, gamePlayerIds);
+        if (!refundedPlayerIds.isEmpty()) {
+            lambdaQuery.notIn(GamePlayer::getPlayerId, refundedPlayerIds);
+        }
+        return gamePlayerService.list(lambdaQuery).stream().map(GamePlayer::getAccount).collect(Collectors.toSet());
+    }
+
+    private Map<String, List<GamePlayer>> getAccount2GamePlayerMap(Set<String> gamePlayerAccounts) {
+        if (CollUtil.isEmpty(gamePlayerAccounts)) {
+            return Collections.emptyMap();
+        }
+        return gamePlayerService.list(Wrappers.<GamePlayer>lambdaQuery().in(GamePlayer::getAccount, gamePlayerAccounts))
+                .stream().collect(Collectors.groupingBy(GamePlayer::getAccount));
+    }
+
+    // 需要返还的 players
+    private List<GamePlayer> getSourceGamePlayers(List<GamePlayer> v, Set<Integer> stopGameServerIds, Set<Long> refundedPlayerIds) {
+        return v.stream().filter(e -> stopGameServerIds.contains(e.getServerId()) && !refundedPlayerIds.contains(e.getPlayerId())).collect(Collectors.toList());
+    }
+
+    // 返还到该服的 playerId
+    private GamePlayer getTargetGamePlayer(List<GamePlayer> v, Set<Integer> stopGameServerIds) {
+        return v.stream().filter(e -> {
+            GameServer gameServer = GameServerCache.getInstance().get(e.getServerId());
+            return null != gameServer && gameServer.getOutdated() == OutdatedType.NORMAL.getValue() && !stopGameServerIds.contains(e.getServerId());
+        }).min(Comparator.comparing(GamePlayer::getCreateTime)).orElse(null);
+    }
+
+    private void gamePlayerRefund(Map<Long, GameOrder> playerId2GameOrderMap,
+                                  GamePlayer sourceGamePlayer, GamePlayer targetGamePlayer,
+                                  List<GameStopServerRefundRecord> saveRecords, Map<Integer, List<HttpEmail>> httpEmails, Date current) {
+
+        GameOrder gameOrder = playerId2GameOrderMap.get(sourceGamePlayer.getPlayerId());
+        if (null == gameOrder || null == gameOrder.getTotalAmount() || gameOrder.getTotalAmount() <= 0) {
+            return;
+        }
+
+        GameServer sourceGameServer = GameServerCache.getInstance().get(sourceGamePlayer.getServerId());
+        GameServerVersionType versionType = GameServerVersionType.valueOf(sourceGameServer.getVersionType());
+        if (null == versionType) {
+            log.error("[Refund] checkSendStopServerRefund() error, gameServer.versionType is null. versionType={}", sourceGameServer.getVersionType());
+            return;
+        }
+
+        String title = null, describe = null;
+        if (versionType == GameServerVersionType.BT) {
+            GameSetting ratioGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_RATIO);
+            GameSetting emailTitleGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_EMAIL_TITLE);
+            GameSetting emailDescribeGameSetting = GameSettingCache.getInstance().get(GameSettingKey.BT_STOP_SERVER_REFUND_EMAIL_DESCRIBE);
+            if (null == ratioGameSetting || null == emailTitleGameSetting || null == emailDescribeGameSetting) {
+                log.error("[Refund] checkSendStopServerRefund() error, bt refund GameSetting is null.");
+                return;
+            }
+            title = emailTitleGameSetting.getDictValue();
+            describe = emailDescribeGameSetting.getDictValue();
+        }
+
+        List<ItemVO> refundRewards = getRefundRewards(versionType, gameOrder.getTotalAmount());
+        log.info("[Refund] playerId:{} totalAmount:{}, versionType:{} refundRewards:{}",
+                sourceGamePlayer.getPlayerId(), gameOrder.getTotalAmount(), versionType, JSON.toJSONString(refundRewards));
+        if (CollUtil.isEmpty(refundRewards)) {
+            return;
+        }
+        long refundNum = refundRewards.get(0).getNum();
+        if (refundNum <= 0) {
+            return;
+        }
+
+        saveRecords.add(new GameStopServerRefundRecord()
+                .setSourceServerVersionType(versionType.getType())
+                .setSourceServerId(sourceGamePlayer.getServerId())
+                .setSourcePlayerId(sourceGamePlayer.getPlayerId())
+                .setTargetServerId(targetGamePlayer.getServerId())
+                .setTargetPlayerId(targetGamePlayer.getPlayerId())
+                .setSourceAmount(BigDecimal.valueOf(gameOrder.getTotalAmount()))
+                .setTargetNum(refundNum).setCreateTime(current));
+
+        String rewards = JSON.toJSONString(refundRewards);
+        Object[] args = new Object[]{gameOrder.getTotalAmount().longValue(), refundNum};
+        HttpEmail httpEmail = new HttpEmail().setPlayerId(targetGamePlayer.getPlayerId()).setRewards(rewards)
+                .setRuleId(ItemRuleId.GAME_STOP_SERVER_REFUND.getType()).setByteArgs(ConvertUtils.gzipJson(args));
+        if (versionType == GameServerVersionType.NORMAL) {
+            httpEmail.setMailId(105);
+        } else if (versionType == GameServerVersionType.BT) {
+            httpEmail.setTitle(title).setDescribe(describe);
+        }
+        httpEmails.computeIfAbsent(targetGamePlayer.getServerId(), serverId -> new ArrayList<>()).add(httpEmail);
     }
 
     private List<ItemVO> getRefundRewards(GameServerVersionType versionType, double totalAmount) {
