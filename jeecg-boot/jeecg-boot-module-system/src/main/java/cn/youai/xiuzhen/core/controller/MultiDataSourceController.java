@@ -37,13 +37,13 @@ public class MultiDataSourceController<T, S extends IService<T>> {
         return annotation != null;
     }
 
-    private void useServerDatabase(Integer serverId) {
+    protected void useServerDatabase(Integer serverId) {
         if (serverId != null && serverId > 0) {
             DataSourceHelper.useServerDatabase(serverId);
         }
     }
 
-    private void useDefaultDatabase() {
+    protected void useDefaultDatabase() {
         DataSourceHelper.useDefaultDatabase();
     }
 

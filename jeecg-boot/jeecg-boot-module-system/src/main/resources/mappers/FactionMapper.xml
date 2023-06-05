@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.youai.xiuzhen.stat.mapper.FactionMapper">
+
+    <select id="queryList" resultType="cn.youai.xiuzhen.stat.entity.Faction">
+        select f.*, p.nickname as playerName, #{entity.serverId} as serverId
+        from faction f
+        left join player p on f.player_id = p.id
+        <where>
+            <if test="entity != null">
+                <if test="entity.factionId != null and entity.factionId > 0">
+                    and f.faction_id = #{entity.factionId}
+                </if>
+                <if test="entity.name != null and entity.name != ''">
+                    and f.name like concat('%', #{entity.name}, '%')
+                </if>
+            </if>
+        </where>
+    </select>
+</mapper>
