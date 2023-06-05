@@ -2068,5 +2068,35 @@
         "module_id": 13003,
         "request": 0,
         "name": "神级召唤活动累计获得X道具N次"
+    },
+    {
+        "id": 346,
+        "module_id": 140,
+        "request": 0,
+        "name": "引导任务"
+    },
+    {
+        "id": 347,
+        "module_id": 14001,
+        "request": 0,
+        "name": "购买仙职N礼包"
+    },
+    {
+        "id": 348,
+        "module_id": 14002,
+        "request": 0,
+        "name": "领取境界真充福利奖励"
+    },
+    {
+        "id": 349,
+        "module_id": 14003,
+        "request": 0,
+        "name": "购买直购商品"
+    },
+    {
+        "id": 350,
+        "module_id": 14004,
+        "request": 0,
+        "name": "领取开局奖励"
     }
 ]

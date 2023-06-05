@@ -2634,7 +2634,7 @@
         "title": "神级召唤活动",
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
-        "merge": 1
+        "merge": 0
     },
     {
         "id": 294,
@@ -2707,5 +2707,95 @@
         "describe": "储物袋已满，通过传书发放的道具",
         "notice_type": 3,
         "merge": 1
+    },
+    {
+        "id": 302,
+        "type": 309,
+        "reward_type": 3,
+        "title": "GM商城礼包",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 303,
+        "type": 310,
+        "reward_type": 3,
+        "title": "GM每日礼包",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 304,
+        "type": 311,
+        "reward_type": 3,
+        "title": "GM资源礼包",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 305,
+        "type": 312,
+        "reward_type": 3,
+        "title": "境界真充福利",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 306,
+        "type": 313,
+        "reward_type": 3,
+        "title": "充值转盘奖励（1次）",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 0,
+        "merge": 1
+    },
+    {
+        "id": 307,
+        "type": 314,
+        "reward_type": 3,
+        "title": "充值转盘财富值奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 308,
+        "type": 315,
+        "reward_type": 3,
+        "title": "开局奖励",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 2,
+        "merge": 1
+    },
+    {
+        "id": 309,
+        "type": 316,
+        "reward_type": 3,
+        "title": "单日仙玉返利",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 310,
+        "type": 317,
+        "reward_type": 3,
+        "title": "单日道具返利",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 1
+    },
+    {
+        "id": 311,
+        "type": 318,
+        "reward_type": 3,
+        "title": "充值转盘奖励(10次)",
+        "describe": "储物袋已满，通过传书发放的道具",
+        "notice_type": 3,
+        "merge": 0
     }
 ]
