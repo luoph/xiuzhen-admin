@@ -44,8 +44,8 @@ public class WebsocketServerChecker {
     @Value("${app.server-status-url:/game/status}")
     private String serverStatusUrl;
 
-    @Value("${app.url.lark-forward:}")
-    private String larkForwardUrl;
+    @Value("${app.url.workflow:}")
+    private String workflowUrl;
 
     @Value("${app.game-server.profile:}")
     private String profile;
@@ -110,8 +110,8 @@ public class WebsocketServerChecker {
                     .setServerIds(StrUtil.join(",", failedList))
                     .setResultList(resultList).setServerStatusList(serverStatusList);
 
-            if (StrUtil.isNotEmpty(larkForwardUrl)) {
-                String url = larkForwardUrl + "/lark/gameServer";
+            if (StrUtil.isNotEmpty(workflowUrl)) {
+                String url = workflowUrl + "/lark/gameServer";
                 String response = OkHttpHelper.post(url, warningData);
                 log.info("[websocket] warning request url:{}, request:{}, response:{}", url, JSON.toJSONString(warningData), response);
             }
