@@ -3,24 +3,27 @@
     <!-- 查询区域 -->
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
+        <channel-server-selector
+          ref="channelServerSelector"
+          :show-sdk-channel="true"
+          @onSelectChannel="onSelectChannel"
+          @onSelectSdkChannel="onSelectSdkChannel"
+          @onSelectServer="onSelectServer"
+        />
         <a-row :gutter="24">
-          <a-col :md="12" :sm="16">
-            <!--@ = v-on:数据绑定 不是事件-->
-            <game-channel-server @onSelectChannel="onSelectChannel" @onSelectServer="onSelectServer"/>
-          </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="角色昵称">
-              <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname"/>
+              <a-input placeholder="请输入角色昵称" v-model="queryParam.nickname" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="角色id">
-              <a-input placeholder="请输入角色id" v-model="queryParam.playerId"/>
+              <a-input placeholder="请输入角色id" v-model="queryParam.playerId" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
             <a-form-item label="创建日期">
-              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange"/>
+              <a-range-picker format="YYYY-MM-DD" :placeholder="['开始日期', '结束日期']" @change="onDateChange" />
             </a-form-item>
           </a-col>
           <a-col :md="6" :sm="8">
@@ -66,17 +69,17 @@
 </template>
 
 <script>
-import {JeecgListMixin} from '@/mixins/JeecgListMixin';
+import { JeecgListMixin } from '@/mixins/JeecgListMixin';
 import JDate from '@/components/jeecg/JDate.vue';
-import GameChannelServer from '@/components/gameserver/GameChannelServer';
-import {getAction} from '@/api/manage';
+import ChannelServerSelector from '@comp/gameserver/ChannelServerSelector';
+import { getAction } from '@/api/manage';
 
 export default {
   name: 'PlayerBehaviorList',
   mixins: [JeecgListMixin],
   components: {
     JDate,
-    GameChannelServer,
+    ChannelServerSelector,
     getAction
   },
   data() {
@@ -392,11 +395,17 @@ export default {
     }
   },
   methods: {
-    onSelectChannel: function (channelId) {
-      this.queryParam.channelId = channelId;
+    onSelectChannel: function (value) {
+      this.queryParam.channel = value;
     },
-    onSelectServer: function (serverId) {
-      this.queryParam.serverId = serverId;
+    onSelectSdkChannel: function (value) {
+      this.queryParam.sdkChannel = value;
+    },
+    onSelectServer: function (value) {
+      this.queryParam.serverId = value;
+    },
+    onResetParams() {
+      this.$refs.channelServerSelector.reset();
     },
     onDateChange: function (value, dateStr) {
       this.queryParam.rangeDateBegin = dateStr[0];

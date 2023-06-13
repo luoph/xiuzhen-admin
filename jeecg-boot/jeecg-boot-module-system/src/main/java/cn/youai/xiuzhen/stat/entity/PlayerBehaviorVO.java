@@ -27,7 +27,7 @@ public class PlayerBehaviorVO implements Serializable {
     /**
      * 渠道id
      */
-    private Integer channelId;
+    private String channel;
 
     /**
      * 服务器id
