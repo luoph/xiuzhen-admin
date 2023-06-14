@@ -49,7 +49,7 @@
                 #{item}
             </foreach>
         </if>
-        GROUP BY a.`id`
+        GROUP BY a.`id`, c.`simple_name`
         ORDER BY b.`position` DESC
     </select>
 

@@ -66,7 +66,7 @@
                 #{item}
             </foreach>
         </if>
-        GROUP BY a.`id`
+        GROUP BY a.`id`, c.`simple_name`
     </select>
 
     <select id="selectChannelSimpleName" resultType="cn.youai.xiuzhen.game.entity.GameServer">
