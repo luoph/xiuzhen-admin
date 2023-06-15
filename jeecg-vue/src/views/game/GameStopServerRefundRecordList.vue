@@ -195,17 +195,17 @@ export default {
         {
           title: '返还的玩家账号',
           align: 'center',
-          dataIndex: 'targetPlayerId'
+          dataIndex: 'account'
         },
         {
           title: '返还的玩家昵称',
           align: 'center',
-          dataIndex: 'account'
+          dataIndex: 'nickname'
         },
         {
           title: '充值总金额',
           align: 'center',
-          dataIndex: 'nickname'
+          dataIndex: 'sourceAmount'
         },
         {
           title: '停服区服版本类型',

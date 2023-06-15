@@ -117,7 +117,7 @@ public class GameStopServerRefundRecordServiceImpl extends ServiceImpl<GameStopS
             httpEmails.forEach((k, v) -> {
                 Map<Integer, Response> responseMap = gameServerService.gameServerPost(CollUtil.newArrayList(k), sendHttpEmailUrl, v);
                 responseMap.forEach((rspKey, rspValue) -> {
-                    if (rspValue.isSuccess()) {
+                    if (!rspValue.isSuccess()) {
                         log.error("sendHttpEmail error, serverId={}, response={}", rspKey, rspValue);
                     }
                 });
