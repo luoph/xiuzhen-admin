@@ -14,10 +14,15 @@
     </select>
 
     <select id="selectChannelList" resultType="cn.youai.xiuzhen.game.entity.GameChannel">
-        SELECT *
-        FROM `game_channel`
+        SELECT c.*
+        FROM `game_channel` c
         <where>
-            <if test="configAuth != null and configAuth != ''"><![CDATA[ ${configAuth } ]]></if>
+            <if test="channel != null and channel != ''">
+                c.`simple_name` IN
+                <foreach item="item" index="index" collection="channel.split(',')" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
         </where>
     </select>
 
@@ -29,6 +34,12 @@
             <if test="channels != null and channels.size() > 0">
                 c.`simple_name` IN
                 <foreach item="item" collection="channels" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="sdkChannel != null and sdkChannel != ''">
+                AND s.`sdk_channel` IN
+                <foreach item="item" index="index" collection="sdkChannel.split(',')" open="(" separator="," close=")">
                     #{item}
                 </foreach>
             </if>

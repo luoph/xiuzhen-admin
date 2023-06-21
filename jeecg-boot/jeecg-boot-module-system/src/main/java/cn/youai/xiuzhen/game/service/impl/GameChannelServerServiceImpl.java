@@ -9,7 +9,6 @@ import cn.youai.xiuzhen.game.service.IGameChannelService;
 import cn.youai.xiuzhen.game.service.IOpenServiceCampaignService;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.jeecg.common.system.query.QueryGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -61,14 +60,13 @@ public class GameChannelServerServiceImpl extends ServiceImpl<GameChannelServerM
     }
 
     @Override
-    public List<GameChannel> selectChannelList() {
-        String configAuth = QueryGenerator.installAuthJdbc(GameChannel.class);
-        return getBaseMapper().selectChannelList(configAuth);
+    public List<GameChannel> selectChannelList(String channel) {
+        return getBaseMapper().selectChannelList(channel);
     }
 
     @Override
-    public List<GameSdkChannel> selectSdkChannelList(Collection<String> channels) {
-        return getBaseMapper().selectSdkChannelList(channels);
+    public List<GameSdkChannel> selectSdkChannelList(Collection<String> channels, String sdkChannel) {
+        return getBaseMapper().selectSdkChannelList(channels, sdkChannel);
     }
 
     @Override

@@ -24,11 +24,11 @@ public interface IGameChannelServerService extends IService<GameChannelServer> {
      */
     List<GameServerVO> selectServerListByChannelId(int channelId);
 
-    List<GameChannel> selectChannelList();
+    List<GameChannel> selectChannelList(String channel);
 
     List<GameServer> selectServerList(Collection<String> channels);
 
-    List<GameSdkChannel> selectSdkChannelList(Collection<String> channels);
+    List<GameSdkChannel> selectSdkChannelList(Collection<String> channels, String sdkChannel);
 
     List<GameServerVO> filterServerList(String channel, List<Integer> serverIds);
 

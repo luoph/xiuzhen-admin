@@ -15,8 +15,10 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.jeecg.common.api.vo.Result;
 import org.jeecg.common.aspect.annotation.AutoLog;
-import org.jeecg.common.aspect.annotation.PermissionData;
 import org.jeecg.common.system.base.controller.JeecgController;
+import org.jeecg.common.system.util.JwtUtil;
+import org.jeecg.modules.system.entity.SysUser;
+import org.jeecg.modules.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,6 +40,9 @@ import java.util.stream.Collectors;
 @Api(tags = "游戏渠道服配置")
 @RequestMapping("/game/channelServer")
 public class GameChannelServerController extends JeecgController<GameChannelServer, IGameChannelServerService> {
+
+    @Autowired
+    private ISysUserService sysUserService;
 
     @Autowired
     private IGameServerService gameServerService;
@@ -182,12 +187,17 @@ public class GameChannelServerController extends JeecgController<GameChannelServ
     }
 
     @RequestMapping(value = "channelList")
-    @PermissionData(value = "game/GameChannelList")
-    public Result<?> channelList() {
-        List<GameChannel> channels = service.selectChannelList();
+    public Result<?> channelList(HttpServletRequest req) {
+        String username = JwtUtil.getUserNameByToken(req);
+        SysUser sysUser = sysUserService.getUserByName(username);
+        String channel = sysUser != null ? sysUser.getChannel(): null;
+        String sdkChannel = sysUser != null ? sysUser.getSdkChannel(): null;
+
+        List<GameChannel> channels = service.selectChannelList(channel);
         Map<String, GameChannel> map = channels.stream().collect(Collectors.toMap(GameChannel::getSimpleName, Function.identity(), (key1, key2) -> key2));
-        List<GameSdkChannel> sdkChannels = service.selectSdkChannelList(map.keySet());
+        List<GameSdkChannel> sdkChannels = service.selectSdkChannelList(map.keySet(), sdkChannel);
         List<GameServer> servers = service.selectServerList(map.keySet());
+
         Map<String, List<GameSdkChannel>> sdkChannelGroup = sdkChannels.stream().collect(Collectors.groupingBy(GameSdkChannel::getChannel, HashMap::new, Collectors.toCollection(ArrayList::new)));
         Map<String, List<GameServer>> serverGroup = servers.stream().collect(Collectors.groupingBy(GameServer::getChannel, HashMap::new, Collectors.toCollection(ArrayList::new)));
         map.forEach((k, v) -> {

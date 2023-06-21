@@ -23,9 +23,9 @@ public interface GameChannelServerMapper extends BaseMapper<GameChannelServer> {
      */
     List<GameServerVO> selectServerListByChannelId(@Param("channelId") int channelId);
 
-    List<GameChannel> selectChannelList(@Param("configAuth") String configAuth);
+    List<GameChannel> selectChannelList(@Param("channel") String channel);
 
-    List<GameSdkChannel> selectSdkChannelList(@Param("channels") Collection<String> channels);
+    List<GameSdkChannel> selectSdkChannelList(@Param("channels") Collection<String> channels, @Param("sdkChannel") String sdkChannel);
 
     List<GameServer> selectChannelServerList(@Param("channels") Collection<String> channels);
 
