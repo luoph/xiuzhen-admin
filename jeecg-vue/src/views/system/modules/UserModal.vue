@@ -1,92 +1,66 @@
 <template>
-  <a-drawer
-    :title="title"
-    :maskClosable="true"
-    :width="drawerWidth"
-    placement="right"
-    :closable="true"
-    @close="handleCancel"
-    :visible="visible"
-    style="height: 100%;">
-
+  <a-drawer :title="title" :maskClosable="true" :width="drawerWidth" placement="right" :closable="true" @close="handleCancel" :visible="visible" style="height: 100%">
     <template slot="title">
-      <div style="width: 100%;">
+      <div style="width: 100%">
         <span>{{ title }}</span>
-        <span style="display:inline-block;width:calc(100% - 51px);padding-right:10px;text-align: right">
-          <a-button @click="toggleScreen" icon="appstore" style="height:20px;width:20px;border:0px"></a-button>
+        <span style="display: inline-block; width: calc(100% - 51px); padding-right: 10px; text-align: right">
+          <a-button @click="toggleScreen" icon="appstore" style="height: 20px; width: 20px; border: 0px"></a-button>
         </span>
       </div>
-
     </template>
 
     <a-spin :spinning="confirmLoading">
       <a-form-model ref="form" :model="model" :rules="validatorRules">
-
         <a-form-model-item label="用户账号" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="username">
-          <a-input placeholder="请输入用户账号" v-model="model.username" :readOnly="!!model.id"/>
+          <a-input placeholder="请输入用户账号" v-model="model.username" :readOnly="!!model.id" />
         </a-form-model-item>
 
         <template v-if="!model.id">
           <a-form-model-item label="登录密码" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="password">
-            <a-input type="password" placeholder="请输入登录密码" v-model="model.password"/>
+            <a-input type="password" placeholder="请输入登录密码" v-model="model.password" />
           </a-form-model-item>
 
           <a-form-model-item label="确认密码" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="confirmpassword">
-            <a-input type="password" @blur="handleConfirmBlur" placeholder="请重新输入登录密码"
-                     v-model="model.confirmpassword"/>
+            <a-input type="password" @blur="handleConfirmBlur" placeholder="请重新输入登录密码" v-model="model.confirmpassword" />
           </a-form-model-item>
         </template>
 
         <a-form-model-item label="用户姓名" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="realname">
-          <a-input placeholder="请输入用户姓名" v-model="model.realname"/>
+          <a-input placeholder="请输入用户姓名" v-model="model.realname" />
         </a-form-model-item>
 
         <a-form-model-item label="渠道" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="channel">
-          <j-search-select-tag v-model="model.channel" placeholder="请输入渠道"
-                               dict="game_channel,name,simple_name"/>
+          <j-multi-select-tag placeholder="请输入渠道" v-model="model.channel" dictCode="game_channel,name,simple_name" />
         </a-form-model-item>
 
         <a-form-model-item label="SDK渠道" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="sdkChannel">
-          <j-search-select-tag placeholder="请选择Sdk渠道" v-model="model.sdkChannel"
-                               dict="game_sdk_channel,name,sdk_channel"/>
+          <j-multi-select-tag placeholder="请选择Sdk渠道" v-model="model.sdkChannel" dictCode="game_sdk_channel,name,sdk_channel" />
         </a-form-model-item>
 
         <a-form-model-item label="工号" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="workNo">
-          <a-input placeholder="请输入工号" v-model="model.workNo"/>
+          <a-input placeholder="请输入工号" v-model="model.workNo" />
         </a-form-model-item>
 
         <a-form-model-item label="手机号码" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="phone">
-          <a-input placeholder="请输入手机号码" v-model="model.phone"/>
+          <a-input placeholder="请输入手机号码" v-model="model.phone" />
         </a-form-model-item>
 
         <a-form-model-item label="职务" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-select-position placeholder="请选择职务" :multiple="false" v-model="model.post"/>
+          <j-select-position placeholder="请选择职务" :multiple="false" v-model="model.post" />
         </a-form-model-item>
 
         <a-form-model-item label="角色分配" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show="!roleDisabled">
-          <j-multi-select-tag
-            :disabled="disableSubmit"
-            v-model="model.selectedroles"
-            :options="rolesOptions"
-            placeholder="请选择角色">
-          </j-multi-select-tag>
+          <j-multi-select-tag :disabled="disableSubmit" v-model="model.selectedroles" :options="rolesOptions" placeholder="请选择角色"> </j-multi-select-tag>
         </a-form-model-item>
 
         <!--部门分配-->
         <a-form-model-item label="部门分配" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show="!departDisabled">
-          <j-select-depart v-model="model.selecteddeparts" :multi="true" @back="backDepartInfo" :backDepart="true"
-                           :treeOpera="true">>
-          </j-select-depart>
+          <j-select-depart v-model="model.selecteddeparts" :multi="true" @back="backDepartInfo" :backDepart="true" :treeOpera="true">> </j-select-depart>
         </a-form-model-item>
 
         <!--租户分配-->
         <a-form-model-item label="租户分配" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show="!departDisabled">
-          <j-multi-select-tag
-            :disabled="disableSubmit"
-            v-model="model.relTenantIds"
-            :options="tenantsOptions"
-            placeholder="请选择租户">
-          </j-multi-select-tag>
+          <j-multi-select-tag :disabled="disableSubmit" v-model="model.relTenantIds" :options="tenantsOptions" placeholder="请选择租户"> </j-multi-select-tag>
         </a-form-model-item>
 
         <a-form-model-item label="身份" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -95,13 +69,8 @@
             <a-radio :value="2">上级</a-radio>
           </a-radio-group>
         </a-form-model-item>
-        <a-form-model-item label="负责部门" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show="departIdShow==true">
-          <j-multi-select-tag
-            :disabled="disableSubmit"
-            v-model="model.departIds"
-            :options="nextDepartOptions"
-            placeholder="请选择负责部门">
-          </j-multi-select-tag>
+        <a-form-model-item label="负责部门" :labelCol="labelCol" :wrapperCol="wrapperCol" v-show="departIdShow == true">
+          <j-multi-select-tag :disabled="disableSubmit" v-model="model.departIds" :options="nextDepartOptions" placeholder="请选择负责部门"> </j-multi-select-tag>
         </a-form-model-item>
 
         <a-form-model-item label="头像" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -109,12 +78,7 @@
         </a-form-model-item>
 
         <a-form-model-item label="生日" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-date-picker
-            style="width: 100%"
-            placeholder="请选择生日"
-            v-model="model.birthday"
-            :format="dateFormat"
-            :getCalendarContainer="node => node.parentNode"/>
+          <a-date-picker style="width: 100%" placeholder="请选择生日" v-model="model.birthday" :format="dateFormat" :getCalendarContainer="(node) => node.parentNode" />
         </a-form-model-item>
 
         <a-form-model-item label="性别" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -125,25 +89,22 @@
         </a-form-model-item>
 
         <a-form-model-item label="邮箱" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="email">
-          <a-input placeholder="请输入邮箱" v-model="model.email"/>
+          <a-input placeholder="请输入邮箱" v-model="model.email" />
         </a-form-model-item>
 
         <a-form-model-item label="座机" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="telephone">
-          <a-input placeholder="请输入座机" v-model="model.telephone"/>
+          <a-input placeholder="请输入座机" v-model="model.telephone" />
         </a-form-model-item>
 
         <a-form-model-item label="工作流引擎" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <j-dict-select-tag v-model="model.activitiSync" placeholder="请选择是否同步工作流引擎" :type="'radio'"
-                             dictCode="activiti_sync"/>
+          <j-dict-select-tag v-model="model.activitiSync" placeholder="请选择是否同步工作流引擎" :type="'radio'" dictCode="activiti_sync" />
         </a-form-model-item>
-
       </a-form-model>
     </a-spin>
 
-
     <div class="drawer-bootom-button" v-show="!disableSubmit">
       <a-popconfirm title="确定放弃编辑？" @confirm="handleCancel" okText="确定" cancelText="取消">
-        <a-button style="margin-right: .8rem">取消</a-button>
+        <a-button style="margin-right: 0.8rem">取消</a-button>
       </a-popconfirm>
       <a-button @click="handleSubmit" type="primary" :loading="confirmLoading">提交</a-button>
     </div>
@@ -151,15 +112,15 @@
 </template>
 
 <script>
-import moment from 'moment'
-import Vue from 'vue'
-import {ACCESS_TOKEN} from "@/store/mutation-types"
-import {getAction} from '@/api/manage'
-import {addUser, duplicateCheck, editUser, queryall, queryUserRole} from '@/api/api'
-import {disabledAuthFilter} from "@/utils/authFilter"
+import moment from 'moment';
+import Vue from 'vue';
+import { ACCESS_TOKEN } from '@/store/mutation-types';
+import { getAction } from '@/api/manage';
+import { addUser, duplicateCheck, editUser, queryall, queryUserRole } from '@/api/api';
+import { disabledAuthFilter } from '@/utils/authFilter';
 
 export default {
-  name: "UserModal",
+  name: 'UserModal',
   components: {},
   data() {
     return {
@@ -169,62 +130,61 @@ export default {
       drawerWidth: 700,
       modaltoggleFlag: true,
       confirmDirty: false,
-      userId: "", //保存用户id
+      userId: '', //保存用户id
       disableSubmit: false,
-      dateFormat: "YYYY-MM-DD",
+      dateFormat: 'YYYY-MM-DD',
       validatorRules: {
-        username: [{required: true, message: '请输入用户账号!'},
-          {validator: this.validateUsername,}],
-        password: [{
-          required: true,
-          pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*).{8,}$/,
-          message: '密码至少8位数字、大小写字母组成!'
-        },
-          {validator: this.validateToNextPassword, trigger: 'change'}],
-        confirmpassword: [{required: true, message: '请重新输入登录密码!',},
-          {validator: this.compareToFirstPassword,}],
-        realname: [{required: true, message: '请输入用户名称!'}],
-        phone: [{required: false, message: '请输入手机号!'}, {validator: this.validatePhone}],
-        email: [{validator: this.validateEmail}],
+        username: [{ required: true, message: '请输入用户账号!' }, { validator: this.validateUsername }],
+        password: [
+          {
+            required: true,
+            pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*).{8,}$/,
+            message: '密码至少8位数字、大小写字母组成!'
+          },
+          { validator: this.validateToNextPassword, trigger: 'change' }
+        ],
+        confirmpassword: [{ required: true, message: '请重新输入登录密码!' }, { validator: this.compareToFirstPassword }],
+        realname: [{ required: true, message: '请输入用户名称!' }],
+        phone: [{ required: false, message: '请输入手机号!' }, { validator: this.validatePhone }],
+        email: [{ validator: this.validateEmail }],
         roles: {},
-        workNo: [{required: false, message: '请输入工号'},
-          {validator: this.validateWorkNo}],
-        channel: [{required: false, message: '请输入渠道!'}],
-        sdkChannel: [{required: false, message: '请输入SDK渠道!'}],
-        telephone: [{pattern: /^0\d{2,3}-[1-9]\d{6,7}$/, message: '请输入正确的座机号码'},]
+        workNo: [{ required: false, message: '请输入工号' }, { validator: this.validateWorkNo }],
+        channel: [{ required: false, message: '请输入渠道!' }],
+        sdkChannel: [{ required: false, message: '请输入SDK渠道!' }],
+        telephone: [{ pattern: /^0\d{2,3}-[1-9]\d{6,7}$/, message: '请输入正确的座机号码' }]
       },
       departIdShow: false,
-      title: "操作",
+      title: '操作',
       visible: false,
       model: {},
       labelCol: {
-        xs: {span: 24},
-        sm: {span: 5},
+        xs: { span: 24 },
+        sm: { span: 5 }
       },
       wrapperCol: {
-        xs: {span: 24},
-        sm: {span: 16},
+        xs: { span: 24 },
+        sm: { span: 16 }
       },
       uploadLoading: false,
       confirmLoading: false,
       headers: {},
       url: {
-        fileUpload: window._CONFIG['domainURL'] + "/sys/common/upload",
-        userWithDepart: "/sys/user/userDepartList", // 引入为指定用户查看部门信息需要的url
-        userId: "/sys/user/generateUserId", // 引入生成添加用户情况下的url
-        syncUserByUserName: "/act/process/extActProcess/doSyncUserByUserName",//同步用户到工作流
+        fileUpload: window._CONFIG['domainURL'] + '/sys/common/upload',
+        userWithDepart: '/sys/user/userDepartList', // 引入为指定用户查看部门信息需要的url
+        userId: '/sys/user/generateUserId', // 引入生成添加用户情况下的url
+        syncUserByUserName: '/act/process/extActProcess/doSyncUserByUserName', //同步用户到工作流
         queryTenantList: '/sys/tenant/queryList'
       },
       tenantsOptions: [],
       rolesOptions: [],
-      nextDepartOptions: [],
-    }
+      nextDepartOptions: []
+    };
   },
   created() {
     const token = Vue.ls.get(ACCESS_TOKEN);
-    this.headers = {"X-Access-Token": token}
-    this.initRoleList()
-    this.initTenantList()
+    this.headers = { 'X-Access-Token': token };
+    this.initRoleList();
+    this.initTenantList();
   },
   computed: {
     uploadAction: function () {
@@ -234,7 +194,7 @@ export default {
   methods: {
     add() {
       this.refresh();
-      this.edit({activitiSync: '1', userIdentity: 1});
+      this.edit({ activitiSync: '1', userIdentity: 1 });
     },
     edit(record) {
       let that = this;
@@ -242,14 +202,14 @@ export default {
       // 根据屏幕宽度自适应抽屉宽度
       this.resetScreenSize();
       that.userId = record.id;
-      that.model = Object.assign({}, {selectedroles: '', selecteddeparts: ''}, record);
+      that.model = Object.assign({}, { selectedroles: '', selecteddeparts: '' }, record);
       // 身份为上级显示负责部门，否则不显示
       this.departIdShow = this.model.userIdentity == 2;
-      if (record.hasOwnProperty("id")) {
+      if (record.hasOwnProperty('id')) {
         that.getUserRoles(record.id);
         that.getUserDeparts(record.id);
       }
-      console.log('that.model=', that.model)
+      console.log('that.model=', that.model);
     },
     isDisabledAuth(code) {
       return disabledAuthFilter(code);
@@ -274,65 +234,65 @@ export default {
     },
     //初始化租户字典
     initTenantList() {
-      getAction(this.url.queryTenantList).then(res => {
+      getAction(this.url.queryTenantList).then((res) => {
         if (res.success) {
           this.tenantsOptions = res.result.map((item, index, arr) => {
-            let c = {label: item.name, value: item.id + ""}
+            let c = { label: item.name, value: item.id + '' };
             return c;
-          })
-          console.log('this.tenantsOptions: ', this.tenantsOptions)
+          });
+          console.log('this.tenantsOptions: ', this.tenantsOptions);
         }
-      })
+      });
     },
     //初始化角色字典
     initRoleList() {
       queryall().then((res) => {
         if (res.success) {
           this.rolesOptions = res.result.map((item, index, arr) => {
-            let c = {label: item.roleName, value: item.id}
+            let c = { label: item.roleName, value: item.id };
             return c;
-          })
-          console.log('this.rolesOptions: ', this.rolesOptions)
+          });
+          console.log('this.rolesOptions: ', this.rolesOptions);
         }
       });
     },
     getUserRoles(userid) {
-      queryUserRole({userid: userid}).then((res) => {
+      queryUserRole({ userid: userid }).then((res) => {
         if (res.success) {
-          this.model.selectedroles = res.result.join(",");
-          console.log('that.model.selectedroles=', this.model.selectedroles)
+          this.model.selectedroles = res.result.join(',');
+          console.log('that.model.selectedroles=', this.model.selectedroles);
         }
       });
     },
     getUserDeparts(userid) {
       let that = this;
-      getAction(that.url.userWithDepart, {userId: userid}).then((res) => {
+      getAction(that.url.userWithDepart, { userId: userid }).then((res) => {
         if (res.success) {
           let departOptions = [];
-          let selectDepartKeys = []
+          let selectDepartKeys = [];
           for (let i = 0; i < res.result.length; i++) {
             selectDepartKeys.push(res.result[i].key);
             //新增负责部门选择下拉框
             departOptions.push({
               value: res.result[i].key,
               label: res.result[i].title
-            })
+            });
           }
-          that.model.selecteddeparts = selectDepartKeys.join(",")
+          that.model.selecteddeparts = selectDepartKeys.join(',');
           that.nextDepartOptions = departOptions;
-          console.log('that.nextDepartOptions=', that.nextDepartOptions)
+          console.log('that.nextDepartOptions=', that.nextDepartOptions);
         }
-      })
+      });
     },
     backDepartInfo(info) {
       this.model.departIds = this.model.selecteddeparts;
       this.nextDepartOptions = info.map((item, index, arr) => {
-        let c = {label: item.text, value: item.value + ""}
+        let c = { label: item.text, value: item.value + '' };
         return c;
-      })
+      });
     },
     refresh() {
-      this.userId = ""
+      this.userId = '';
       this.nextDepartOptions = [];
       this.departIdShow = false;
     },
@@ -348,12 +308,12 @@ export default {
     handleSubmit() {
       const that = this;
       // 触发表单验证
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
           that.confirmLoading = true;
           //如果是上级择传入departIds,否则为空
           if (this.model.userIdentity !== 2) {
-            this.model.departIds = "";
+            this.model.departIds = '';
           }
           let obj;
           if (!this.model.id) {
@@ -362,24 +322,26 @@ export default {
           } else {
             obj = editUser(this.model);
           }
-          obj.then((res) => {
-            if (res.success) {
-              that.$message.success(res.message);
-              that.$emit('ok');
-            } else {
-              that.$message.warning(res.message);
-            }
-          }).finally(() => {
-            that.confirmLoading = false;
-            that.close();
-          })
+          obj
+            .then((res) => {
+              if (res.success) {
+                that.$message.success(res.message);
+                that.$emit('ok');
+              } else {
+                that.$message.warning(res.message);
+              }
+            })
+            .finally(() => {
+              that.confirmLoading = false;
+              that.close();
+            });
         } else {
           return false;
         }
-      })
+      });
     },
     handleCancel() {
-      this.close()
+      this.close();
     },
     validateToNextPassword(rule, value, callback) {
       const confirmpassword = this.model.confirmpassword;
@@ -395,12 +357,12 @@ export default {
       if (value && value !== this.model.password) {
         callback('两次输入的密码不一样！');
       } else {
-        callback()
+        callback();
       }
     },
     validatePhone(rule, value, callback) {
       if (!value) {
-        callback()
+        callback();
       } else {
         if (new RegExp(/^1[3|4|5|7|8|9][0-9]\d{8}$/).test(value)) {
           var params = {
@@ -411,21 +373,25 @@ export default {
           };
           duplicateCheck(params).then((res) => {
             if (res.success) {
-              callback()
+              callback();
             } else {
-              callback("手机号已存在!")
+              callback('手机号已存在!');
             }
-          })
+          });
         } else {
-          callback("请输入正确格式的手机号码!");
+          callback('请输入正确格式的手机号码!');
         }
       }
     },
     validateEmail(rule, value, callback) {
       if (!value) {
-        callback()
+        callback();
       } else {
-        if (new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(value)) {
+        if (
+          new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/).test(
+            value
+          )
+        ) {
           var params = {
             tableName: 'sys_user',
             fieldName: 'email',
@@ -433,15 +399,15 @@ export default {
             dataId: this.userId
           };
           duplicateCheck(params).then((res) => {
-            console.log(res)
+            console.log(res);
             if (res.success) {
-              callback()
+              callback();
             } else {
-              callback("邮箱已存在!")
+              callback('邮箱已存在!');
             }
-          })
+          });
         } else {
-          callback("请输入正确格式的邮箱!")
+          callback('请输入正确格式的邮箱!');
         }
       }
     },
@@ -454,11 +420,11 @@ export default {
       };
       duplicateCheck(params).then((res) => {
         if (res.success) {
-          callback()
+          callback();
         } else {
-          callback("用户名已存在!")
+          callback('用户名已存在!');
         }
-      })
+      });
     },
     validateWorkNo(rule, value, callback) {
       var params = {
@@ -469,15 +435,15 @@ export default {
       };
       duplicateCheck(params).then((res) => {
         if (res.success) {
-          callback()
+          callback();
         } else {
-          callback("工号已存在!")
+          callback('工号已存在!');
         }
-      })
+      });
     },
     handleConfirmBlur(e) {
       const value = e.target.value;
-      this.confirmDirty = this.confirmDirty || !!value
+      this.confirmDirty = this.confirmDirty || !!value;
     },
     beforeUpload: function (file) {
       var fileType = file.type;
@@ -495,7 +461,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -535,5 +501,4 @@ export default {
 /deep/ .ant-drawer-body {
   padding-bottom: 53px;
 }
-
 </style>

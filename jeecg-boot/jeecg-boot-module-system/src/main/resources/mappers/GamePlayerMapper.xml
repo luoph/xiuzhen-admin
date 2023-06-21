@@ -32,14 +32,20 @@
             p.`status` = 1
             <if test="user != null">
                 <if test="user.channel != null and user.channel != ''">
-                    AND p.`channel` = #{user.channel}
+                    AND p.`channel` IN
+                    <foreach item="item" index="index" collection="user.channel.split(',')" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
                 </if>
                 <if test="user.sdkChannel != null and user.sdkChannel != ''">
-                    AND p.`sdk_channel` = #{user.sdkChannel}
+                    AND p.`sdk_channel` IN
+                    <foreach item="item" index="index" collection="user.sdkChannel.split(',')" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
                 </if>
             </if>
             <if test="playerIds != null and playerIds != ''">
-                AND p.`id` in
+                AND p.`id` IN
                 <foreach item="item" index="index" collection="playerIds.split(',')" open="(" separator="," close=")">
                     #{item}
                 </foreach>

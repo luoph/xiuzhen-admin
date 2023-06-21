@@ -162,7 +162,10 @@
             </a-menu>
           </a-dropdown>
         </span>
-
+        <span slot="tagSlot" slot-scope="text, record">
+          <a-tag v-if="!text">未设置</a-tag>
+          <a-tag v-else v-for="tag in text.split(',').sort()" :key="tag" color="blue">{{ tag }}</a-tag>
+        </span>
 
       </a-table>
     </div>
@@ -245,18 +248,14 @@ export default {
           align: "center",
           width: 100,
           dataIndex: 'channel',
-          customRender: (text) => {
-            return text || '--';
-          }
+          scopedSlots: {customRender: 'tagSlot'},
         },
         {
           title: 'SDK渠道',
           align: "center",
           width: 100,
           dataIndex: 'sdkChannel',
-          customRender: (text) => {
-            return text || '--';
-          }
+          scopedSlots: {customRender: 'tagSlot'},
         },
         {
           title: '性别',
