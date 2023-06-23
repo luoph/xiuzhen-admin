@@ -18,13 +18,13 @@
           <a-input-number v-decorator="['duration', validatorRules.duration]" placeholder="请输入封禁时长（秒）" style="width: 100%" />
         </a-form-item>
         <a-form-item label="选择时长" :labelCol="labelCol" :wrapperCol="wrapperCol">
-          <a-radio-group v-model="durationType" @change="onDurationChange">
-            <a-radio value="0">自定义</a-radio>
-            <a-radio value="86400">1天</a-radio>
-            <a-radio value="259200">3天</a-radio>
-            <a-radio value="604800">7天</a-radio>
-            <a-radio value="2592000">30天</a-radio>
-            <a-radio value="31536000">365天</a-radio>
+          <a-radio-group v-model="durationType" @change="onDurationChange" :defaultValue="7">
+            <a-radio :value="0">自定义</a-radio>
+            <a-radio :value="1">1天</a-radio>
+            <a-radio :value="3">3天</a-radio>
+            <a-radio :value="7">7天</a-radio>
+            <a-radio :value="30">30天</a-radio>
+            <a-radio :value="365">365天</a-radio>
           </a-radio-group>
         </a-form-item>
         <a-form-item label="封禁原因" :labelCol="labelCol" :wrapperCol="wrapperCol">
@@ -54,7 +54,7 @@ export default {
       visible: false,
       isEdit: false,
       model: {},
-      durationType: 0,
+      durationType: 7,
       labelCol: {
         xs: { span: 24 },
         sm: { span: 5 }
@@ -85,6 +85,10 @@ export default {
     edit(record) {
       this.form.resetFields();
       this.model = Object.assign({}, record);
+      if (this.durationType > 0) {
+        this.selectDuration(this.durationType);
+      }
+
       this.visible = true;
 
       this.$nextTick(() => {
@@ -150,7 +154,7 @@ export default {
     },
     selectDuration(value) {
       if (value > 0) {
-        this.model.duration = value;
+        this.model.duration = value * 24 * 60 * 60;
         this.popupCallback(this.model);
       }
     }
