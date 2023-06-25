@@ -104,7 +104,6 @@
       <a-table
         ref="table"
         size="middle"
-        :scroll="{ x: true }"
         bordered
         rowKey="id"
         :columns="columns"
@@ -112,7 +111,6 @@
         :pagination="ipagination"
         :loading="loading"
         :rowSelection="{ selectedRowKeys: selectedRowKeys, onChange: onSelectChange }"
-        class="j-table-force-nowrap"
         @change="handleTableChange"
       >
         <template slot="htmlSlot" slot-scope="status">
@@ -133,7 +131,7 @@
           <a-button type="danger" size="small" @click="forbidLogin(record)"> 封号 </a-button>
           <a-divider type="vertical" />
           <a-button size="small" @click="kickOff(record)"> 踢下线 </a-button>
-          <a-divider type="vertical" />
+          <a-divider />
           <a-button type="primary" size="small" @click="undoForbidTalk(record)"> 禁言撤回 </a-button>
           <a-divider type="vertical" />
           <a-button type="primary" size="small" @click="undoForbidLogin(record)"> 封号撤回 </a-button>
@@ -194,25 +192,22 @@ export default {
         {
           title: '发送者id',
           align: 'center',
-          width: 80,
           dataIndex: 'senderId'
         },
         {
           title: '发送者名称',
           align: 'center',
-          width: 120,
           dataIndex: 'senderName'
         },
         {
           title: '接收者id',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'receiverId'
         },
         {
           title: '接收者名称',
           align: 'center',
-          width: 120,
           dataIndex: 'receiverName'
         },
         {
@@ -256,13 +251,12 @@ export default {
         {
           title: '角色等级',
           align: 'center',
-          width: 80,
           dataIndex: 'level'
         },
         {
           title: 'Sdk渠道',
           align: 'center',
-          width: 80,
+          width: 100,
           dataIndex: 'sdkChannel'
         },
         {
@@ -274,14 +268,13 @@ export default {
         {
           title: '发送时间',
           align: 'center',
-          width: 120,
           dataIndex: 'createTime'
         },
         {
           title: '操作',
           align: 'center',
-          width: 320,
-          fixed: 'right',
+          width: 220,
+          // fixed: 'right',
           dataIndex: 'action',
           scopedSlots: { customRender: 'action' }
         }
@@ -392,4 +385,8 @@ export default {
 
 <style scoped>
 @import '~@assets/less/common.less';
+
+.ant-divider-horizontal {
+  margin: 6px 0 6px 0;
+}
 </style>
