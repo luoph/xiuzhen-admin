@@ -13,10 +13,10 @@
             <a-form-item label="聊天类型">
               <a-select placeholder="请选择聊天类型" v-model="queryParam.chatType" initialValue="1">
                 <!-- <a-select-option :value="0">传闻</a-select-option> -->
-                <a-select-option :value="1">世界聊天</a-select-option>
+                <a-select-option :value="1">世界</a-select-option>
                 <a-select-option :value="2">私聊</a-select-option>
-                <a-select-option :value="3">仙盟聊天</a-select-option>
-                <a-select-option :value="4">跨服聊天</a-select-option>
+                <a-select-option :value="3">仙盟</a-select-option>
+                <a-select-option :value="4">跨服</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -220,13 +220,13 @@ export default {
             if (value === 0) {
               re = '传闻';
             } else if (value === 1) {
-              re = '世界聊天';
+              re = '世界';
             } else if (value === 2) {
               re = '私聊';
             } else if (value === 3) {
-              re = '仙盟聊天';
+              re = '仙盟';
             } else if (value === 4) {
-              re = '跨服聊天';
+              re = '跨服';
             }
             return re;
           }
@@ -262,7 +262,7 @@ export default {
         {
           title: '消息内容',
           align: 'center',
-          width: 240,
+          width: 280,
           dataIndex: 'msgContent'
         },
         {
