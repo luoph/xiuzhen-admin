@@ -45,7 +45,7 @@
                 </if>
             </if>
             <if test="playerIds != null and playerIds != ''">
-                AND p.`id` IN
+                AND p.`player_id` IN
                 <foreach item="item" index="index" collection="playerIds.split(',')" open="(" separator="," close=")">
                     #{item}
                 </foreach>
