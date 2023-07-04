@@ -58,6 +58,7 @@
                 <a-select-option :value="25">25-无限神充</a-select-option>
                 <a-select-option :value="26">26-GM充值工具-每日礼包</a-select-option>
                 <a-select-option :value="27">27-GM充值工具-GM专属资源礼包</a-select-option>
+                <a-select-option :value="28">28-仙缘神通-礼包</a-select-option>
               </a-select>
             </a-form-item>
           </a-col>
@@ -316,6 +317,8 @@ export default {
               text = '26-GM充值工具-每日礼包';
             } else if (value === 27) {
               text = '27-GM充值工具-GM专属资源礼包';
+            } else if (value === 28) {
+              text = '28-仙缘神通-礼包';
             }
             return text;
           }

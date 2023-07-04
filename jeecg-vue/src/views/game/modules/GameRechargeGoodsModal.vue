@@ -78,6 +78,7 @@
             <a-select-option :value="25">25-无限神充</a-select-option>
             <a-select-option :value="26">26-GM充值工具-每日礼包</a-select-option>
             <a-select-option :value="27">27-GM充值工具-GM专属资源礼包</a-select-option>
+            <a-select-option :value="28">28-仙缘神通-礼包</a-select-option>
           </a-select>
         </a-form-item>
         <a-form-item label="购买类型" :labelCol="labelCol" :wrapperCol="wrapperCol">
